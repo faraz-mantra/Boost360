@@ -25,6 +25,24 @@ android {
         }
     }
 
+    flavorDimensions "default"
+    productFlavors {
+        partone {
+            dimension "default"
+            buildConfigField "String", "ZENDESK_URL", '"https://boost360.zendesk.com"'
+            buildConfigField "String", "ZENDESK_APPLICATION_ID", '"684341b544a77a2a73f91bd3bb2bc77141d4fc427decda49"'
+            buildConfigField "String", "ZENDESK_OAUTH_CLIENT_ID", '"mobile_sdk_client_6c56562cfec5c64c7857"'
+            buildConfigField "String", "ZOPIM_ACCOUNT_KEY", '"MJwgUJn9SKy2m9ooxsQgJSeTSR5hU3A5"'
+        }
+        jioonline {
+            dimension "default"
+            buildConfigField "String", "ZENDESK_URL", '"https://boost360.zendesk.com"'
+            buildConfigField "String", "ZENDESK_APPLICATION_ID", '"684341b544a77a2a73f91bd3bb2bc77141d4fc427decda49"'
+            buildConfigField "String", "ZENDESK_OAUTH_CLIENT_ID", '"mobile_sdk_client_6c56562cfec5c64c7857"'
+            buildConfigField "String", "ZOPIM_ACCOUNT_KEY", '"MJwgUJn9SKy2m9ooxsQgJSeTSR5hU3A5"'
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -39,8 +57,8 @@ android {
 
 dependencies {
     api project(path: ':presignin')
-    api project(path: ':dbcenterapi')
     api project(path: ':festive_poster')
+    api project(path: ':dbcenterapi')
     api project(path: ':instagram')
 
 

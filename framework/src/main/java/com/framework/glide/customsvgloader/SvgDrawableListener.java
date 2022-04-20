@@ -12,6 +12,7 @@ import com.bumptech.glide.request.target.ImageViewTarget;
 import com.bumptech.glide.request.target.Target;
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
+import com.framework.analytics.SentryController;
 
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class SvgDrawableListener implements RequestListener<CustomPictureDrawabl
     @Override
     public boolean onLoadFailed(
             GlideException e, Object model, Target<CustomPictureDrawable> target, boolean isFirstResource) {
+        SentryController.INSTANCE.captureException(e);
     ImageView view = ((ImageViewTarget<?>) target).getView();
     view.setLayerType(ImageView.LAYER_TYPE_NONE, null);
         return false;

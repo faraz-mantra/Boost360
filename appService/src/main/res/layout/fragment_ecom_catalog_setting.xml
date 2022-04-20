@@ -136,7 +136,9 @@
           android:background="@drawable/bg_rect_white_rounded_4"
           android:drawableEnd="@drawable/ic_down_arrow_gray"
           android:focusable="false"
-          android:hint="18%"
+          android:clickable="true"
+          android:hint="0%"
+          android:id="@+id/edt_text_slab"
           android:padding="@dimen/_14dp"
           android:singleLine="true"
           android:visibility="visible" />
@@ -145,7 +147,7 @@
           style="@style/Appointment_Text_Catalog_Heading"
           android:layout_marginTop="@dimen/size_10"
           android:text="@string/what_are_text_rates"
-          android:textColor="#747474"
+          android:textColor="@color/warm_grey"
           android:visibility="visible" />
 
         <com.framework.views.customViews.CustomTextView
@@ -156,7 +158,7 @@
         <com.framework.views.customViews.CustomTextView
           style="@style/Appointment_Text_Catalog_Heading"
           android:text="@string/how_does_default_rate_work"
-          android:textColor="#747474"
+          android:textColor="@color/warm_grey"
           android:visibility="visible" />
 
         <com.framework.views.customViews.CustomTextView

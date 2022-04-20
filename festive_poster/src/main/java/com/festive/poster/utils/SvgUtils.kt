@@ -18,7 +18,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.festive.poster.models.PosterModel
 import com.festive.poster.utils.SvgUtils.getSvgAsAString
 import com.framework.BaseApplication
-import com.framework.constants.Constants
+import com.framework.analytics.SentryController
 import com.framework.constants.PackageNames
 import com.framework.glide.customsvgloader.*
 import com.framework.utils.RegexUtils
@@ -90,6 +90,8 @@ object SvgUtils {
                 return result
             }
         }catch (e:Exception){
+            SentryController.captureException(e)
+
             Log.e(TAG, "getSvgAsAString: $e")
         }
 
@@ -116,6 +118,8 @@ object SvgUtils {
             }
 
         }catch (e:Exception){
+            SentryController.captureException(e)
+
             Log.e(TAG, "getInputStream: $e")
         }
         return null
@@ -216,7 +220,7 @@ object SvgUtils {
             if (svgString != null && !svgString.isEmpty()) {
                 svgString = SvgRenderCacheUtil.instance.replace(
                     svgString,
-                    model.keys,
+                    model.keys!!,
                     BaseApplication.instance,
                     model.isPurchased
                 )

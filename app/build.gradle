@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
-// Apply the Crashlytics Gradle plugin
 apply plugin: 'com.google.firebase.crashlytics'
 
 googleServices { disableVersionCheck = false }
@@ -28,6 +27,7 @@ allprojects {
 }
 
 android {
+
     signingConfigs {
         config {
             keyAlias 'nfmanage'
@@ -47,7 +47,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020117
+        versionCode 2020020122
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -70,60 +70,30 @@ android {
             signingConfig signingConfigs.config
         }
     }
-//    signingConfigs {
-//        debug {
-//            storeFile file(System.properties['user.home']+"/.android/custom_debug.keystore")
-//            storePassword ''
-//            keyAlias 'nfmanage'
-//            keyPassword ''
-//        }
-//    }
+
     flavorDimensions "default"
     productFlavors {
-
-//        parttwo {
-//            versionName "4.5.4"
-//            applicationId "com.sibername"
-//            dimension "default"
-//        }
-//        partthree {
-//            versionName "1.0.6"
-//            applicationId "com.kitsune.biz"
-//            dimension "default"
-//        }
-//        partfour {
-//            versionName "1.1.0"
-//            applicationId "com.digitalseoz"
-//            dimension "default"
-//        }
-//        partfive {
-//            versionName "1.0.4"
-//            applicationId "com.capture"
-//            dimension "default"
-//        }
-//        partsix {
-//            versionName "1.0.5"
-//            applicationId "com.trivone.assist"
-//            dimension "default"
-//        }
-//        partseven {
-//            versionName "1.0.5"
-//            applicationId "com.sukere"
-//            dimension "default"
-//        }
-//
-//        nowfloats_us {
-//            versionName "1.0.11"
-//            applicationId "com.redtim"
-//            versionCode 2018070028
-//            dimension "default"
-//            buildConfigField "String", "APXOR_BUNDLED_ID", '"0092e23d-20a6-49b9-82f9-afdc2d4872d3"'
-//        }
         partone {
-            versionName "6.0.13"
+            versionName "6.0.17"
             applicationId "com.biz2.nowfloats"
             dimension "default"
+            buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
+            resValue "string", "webengage_license_code", '~10a5cad2d'
+            resValue "string", "referrals_bid", '31445'
+            resValue "string", "referrals_bid_e", '355BCB8D72414FBD784338ADC28FCA09'
+            buildConfigField "int", "REFERRAL_CAMPAIGN_CODE", '26277'
+        }
+        jioonline {
+            versionName "1.0.0"
+            applicationId "com.jio.online"
+            dimension "default"
+            buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
+            buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
+            resValue "string", "webengage_license_code", 'aa131c37'
+            resValue "string", "referrals_bid", '31445'
+            resValue "string", "referrals_bid_e", '355BCB8D72414FBD784338ADC28FCA09'
+            buildConfigField "int", "REFERRAL_CAMPAIGN_CODE", '26277'
         }
     }
     packagingOptions {
@@ -160,10 +130,9 @@ dependencies {
     implementation project(':library')
     implementation files('libs/libraries/signpost-core-1.2.1.2.jar')
     implementation files('libs/libraries/signpost-commonshttp4-1.2.1.2.jar')
-    implementation project(':messagelibrary')
     //presignup library old flow
     implementation project(path: ':presignup')
-    //presignup library new flow
+
     api project(path: ':dashboard')
 
 
@@ -180,12 +149,12 @@ dependencies {
     implementation 'com.romandanylyk:pageindicatorview:0.2.0'
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
     implementation 'com.android.volley:volley:1.1.1'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v13:1.0.0'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
 
     //Google Library
     implementation 'com.google.android.gms:play-services-location:17.0.0'
@@ -197,11 +166,13 @@ dependencies {
     implementation 'io.github.inflationx:calligraphy3:3.1.1'
     implementation 'io.github.inflationx:viewpump:2.0.3'
     implementation 'com.j256.ormlite:ormlite-android:5.0'
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'com.makeramen:roundedimageview:1.5.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.4.2'
+    implementation 'com.facebook.android:facebook-android-sdk:5.15.3'
+    implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
     implementation 'com.facebook.android:facebook-android-sdk:5.15.3'
     implementation 'com.twitter.sdk.android:twitter-core:3.0.0'
     implementation 'com.wdullaer:materialdatetimepicker:1.0.1'
@@ -209,7 +180,6 @@ dependencies {
     implementation 'jp.wasabeef:recyclerview-animators:1.2.0@aar'
     implementation 'com.squareup.retrofit:retrofit:1.9.0'
     implementation 'com.squareup:otto:1.3.7'
-    //implementation 'com.squareup.okhttp:okhttp-urlconnection:2.3.0'
     implementation "com.squareup.okhttp3:okhttp-urlconnection:3.6.0"
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.daimajia.easing:library:1.0.1@aar'
@@ -221,11 +191,10 @@ dependencies {
     implementation 'org.honorato.multistatetogglebutton:multistatetogglebutton:0.2.2'
     implementation 'me.biubiubiu.justifytext:library:1.1'
     implementation 'com.github.clans:fab:1.6.4'
-    //implementation 'com.squareup.okhttp3:okhttp:3.7.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     //wenengage analytics
-    implementation 'com.webengage:android-sdk:3.+'
+    implementation 'com.webengage:android-sdk:3.19.1'
 
     implementation project(':florisboard')
     implementation project(':imagepicker')
@@ -239,10 +208,10 @@ dependencies {
 
     //sdp
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     implementation 'com.android.support:design:28.0.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
 
     api(group: "androidx.work", name: "work-runtime") {
         version {
@@ -255,6 +224,4 @@ dependencies {
     implementation "org.koin:koin-androidx-scope:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     implementation "org.koin:koin-androidx-fragment:$koin_version"
-    implementation 'androidx.room:room-runtime:2.3.0'
-    annotationProcessor 'androidx.room:room-compiler:2.3.0'
 }

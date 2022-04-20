@@ -37,6 +37,7 @@ import com.framework.firebaseUtils.caplimit_feature.getCapData
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.PREF_KEY_TWITTER_LOGIN
 import com.framework.pref.Key_Preferences.PREF_NAME_TWITTER
+import com.framework.utils.InAppReviewUtils
 import com.framework.utils.hasHTMLTags
 import com.framework.utils.hideKeyBoard
 import com.framework.utils.showKeyBoard
@@ -56,6 +57,7 @@ const val imagePost = "image_post"
 
 class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBinding, UpdatesViewModel>() {
 
+  private var totalUpdates: Int?=null
   private val REQ_CODE_SPEECH_INPUT = 122
   private var isUpdate: Boolean = false
   private var toSubscribers = MutableLiveData(false)
@@ -173,14 +175,15 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
   }
 
   private fun capLimitCheck() {
-    val featureUpdate = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureType.LATESTUPDATES)
+    val featureUpdate = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureKey.LATESTUPDATES)
     val capLimitUpdate = featureUpdate?.filterProperty(PropertiesItem.KeyType.LIMIT)
     if (isUpdate.not() && capLimitUpdate != null) {
       viewModel?.getMessageUpdates(sessionLocal.getRequestUpdate(PaginationScrollListener.PAGE_START))?.observeOnce(viewLifecycleOwner, {
         val data = it as? BusinessUpdateResponse
+        totalUpdates = data?.totalCount
         if (data?.totalCount != null && capLimitUpdate.getValueN() != null && data.totalCount!! >= capLimitUpdate.getValueN()!!) {
           baseActivity.hideKeyBoard()
-          showAlertCapLimit("Can't add the business update, please activate your premium Add-ons plan.",CapLimitFeatureResponseItem.FeatureType.LATESTUPDATES.name)
+          showAlertCapLimit("Can't add the business update, please activate your premium Add-ons plan.",CapLimitFeatureResponseItem.FeatureKey.LATESTUPDATES.name)
         }
       })
     }
@@ -381,13 +384,8 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
     val parentId = if (sessionLocal.iSEnterprise == "true") sessionLocal.fPParentId else null
     val isPictureMessage = postImage != null
     val request = PostUpdateTaskRequest(
-      clientId,
-      binding?.edtDesc?.text?.toString(),
-      isPictureMessage,
-      merchantId,
-      parentId,
-      toSubscribers.value,
-      socialShare
+      clientId, binding?.edtDesc?.text?.toString(), isPictureMessage,
+      merchantId, parentId, toSubscribers.value, socialShare
     )
     viewModel?.putBizMessageUpdate(request)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess() && it.stringResponse.isNullOrEmpty().not()) {
@@ -453,6 +451,14 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
     sessionLocal.storeFPDetails(msgPost, "")
     sessionLocal.storeFPDetails(imagePost, "")
   }
+
+
+  override fun onStop() {
+    if (totalUpdates?:0%3==0){
+      InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.in_app_review_third_update)
+    }
+    super.onStop()
+  }
 }
 
 
@@ -492,4 +498,6 @@ fun AppCompatActivity.startDigitalChannel(session: UserSessionManager, channelTy
     e.printStackTrace()
     SentryController.captureException(e)
   }
+
+
 }

@@ -44,5 +44,9 @@ class DeleteDraftBottomSheet : BaseBottomSheetDialog<BsheetDeleteDraftBinding, B
         binding?.btnNoStayHere?.setOnClickListener {
             dismiss()
         }
+
+        binding?.rivCloseBottomSheet?.setOnClickListener {
+            dismiss()
+        }
     }
 }

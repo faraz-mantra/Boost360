@@ -1,6 +1,7 @@
 package com.appservice.rest.services
 
 import com.appservice.model.MerchantSummaryResponse
+import com.appservice.model.VmnCallModel
 import com.appservice.model.aptsetting.*
 import com.appservice.model.product.ProductItemsResponseItem
 import com.appservice.model.serviceProduct.CatalogProduct
@@ -11,9 +12,12 @@ import com.appservice.model.updateBusiness.BusinessUpdateResponse
 import com.appservice.model.updateBusiness.DeleteBizMessageRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
 import com.appservice.rest.EndPoints
+import com.framework.pref.clientId
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
+import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -89,14 +93,25 @@ interface WithFloatTwoRemoteData {
     @QueryMap map: Map<String, String>,
   ): Observable<Response<UserFpDetailsResponse>>
 
+  @GET(EndPoints.BACKGROUND_IMAGE)
+  fun getBackgroundImages(@Query("fpId") fpId: String?, @Query("clientId") clientId: String?): Observable<Response<Array<String>>>
+
   @PUT(EndPoints.PUT_BIZ_MESSAGE)
   fun putBizMessageUpdate(@Body request: PostUpdateTaskRequest?): Observable<Response<Any>>
+
+  @PUT(EndPoints.PUT_BIZ_MESSAGE_V2)
+  fun putBizMessageUpdateV2(@Body request: PostUpdateTaskRequest?): Observable<Response<Any>>
 
   @GET(EndPoints.GET_CATALOG_STATUS)
   fun getCatalogStatus(
     @Path("fpid") fpid: String,
     @Query("clientId") clientId: String?,
   ): Observable<Response<AppointmentStatusResponse>>
+
+  @POST(EndPoints.UPDATE_GST_SLAB)
+  fun updateGstSlab(
+    @Body request: GstSlabRequest,
+  ): Observable<Response<ResponseBody>>
 
   @GET(EndPoints.GET_BIZ_WEB_UPDATE_BY_ID)
   fun getBizWebMessage(
@@ -121,6 +136,10 @@ interface WithFloatTwoRemoteData {
     @Body requestBody: RequestBody?,
   ): Observable<Response<String>>
 
+  @POST(EndPoints.PUT_BIZ_IMAGE_V2)
+  fun putBizImageUpdateV2(
+    @Body body:JsonObject
+    ): Observable<Response<String>>
 //  fun getDeliveryDetails(): Observable<Response<ResponseBody>>
 
   //TODO APPOINTMENT
@@ -170,5 +189,24 @@ interface WithFloatTwoRemoteData {
     @Query("clientId") clientId: String?,
     @Query("fpTag") fpTag: String?
   ): Observable<Response<MerchantSummaryResponse>>
+
+  @PUT(EndPoints.CREATE_BG_IMAGE)
+  fun createBGImage(
+    @Query("fpId") fpTag: String?,
+    @Query("clientId") cId: String? = clientId,
+    @Body body: RequestBody,
+  ): Observable<Response<ResponseBody>>
+
+  @POST(EndPoints.DELETE_BG_IMAGE)
+  fun deleteBackgroundImages(
+    @Body map: HashMap<String, String?>,
+  ): Observable<Response<ResponseBody>>
+
+
+  @GET("/Wildfire/v1/calls/tracker")
+  fun trackerCalls(
+    @QueryMap data: Map<String, String?>?):Observable<Response<ArrayList<VmnCallModel?>?>>
+
+
 
 }

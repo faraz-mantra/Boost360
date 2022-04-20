@@ -1,10 +1,13 @@
 package com.appservice.ui.aptsetting.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.appservice.R
 import com.appservice.model.aptsetting.AddBankAccountRequest
 import com.appservice.model.aptsetting.PaymentProfileResponse
@@ -18,6 +21,7 @@ import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 
@@ -43,7 +47,6 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
     super.onCreateView()
     setOnClickListener(binding?.submitBtn, binding?.layoutAccountUnderProcess?.verificationBtn)
     getAccountDetails()
-    sessionLocal = UserSessionManager(requireActivity())
   }
 
   private fun getAccountDetails() {
@@ -82,9 +85,7 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       R.id.menu_edit -> {
-        val bundle = Bundle()
-        bundle.putBoolean(IntentConstant.EDIT_ACCOUNT.name, true)
-        startFragmentActivity(FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS, bundle, false, isResult = false)
+        startFragmentActivity(FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS, isResult = true)
       }
       else -> {
       }
@@ -96,6 +97,18 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
     showProgress()
     hitApi(viewModel?.addBankAccount(sessionLocal.fPID, clientId = clientId, addBankAccountRequest!!), R.string.error_adding_bank_account)
 
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
+      if (data?.extras?.getBoolean(IntentConstant.IS_BACK_PRESS.name) == true) {
+        val intent = Intent()
+        intent.putExtra(IntentConstant.IS_UPDATED.name, true)
+        baseActivity.setResult(AppCompatActivity.RESULT_OK, intent)
+        baseActivity.onBackPressed()
+      }
+    }
   }
 
   override fun onSuccess(it: BaseResponse) {
@@ -121,16 +134,14 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
     } else {
       showSuccessVerificationStatus()
     }
-
+    onBankAccountAddedOrUpdated(paymentProfileResponse.result?.bankAccountDetails != null)
   }
+
 
   private fun onAddingBankAccount(it: BaseResponse) {
     hideProgress()
     if (it.isSuccess()) {
-      val bundle = Bundle()
-      bundle.putBoolean(IntentConstant.IS_EDIT.name, false)
-      startFragmentActivity(FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS, bundle, false, isResult = false)
+      startFragmentActivity(FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS, isResult = true)
     }
   }
-
 }

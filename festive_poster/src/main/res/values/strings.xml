@@ -18,7 +18,7 @@
     <string name="greeting_description">Greeting description*</string>
     <string name="website_address">Website address*</string>
     <string name="update_info">Update info</string>
-    <string name="you_have_not_purchased_any_festival_greeting_tempalate_as_yet">You have not purchased any festival greeting tempalate as yet.</string>
+    <string name="you_have_not_purchased_any_festival_greeting_tempalate_as_yet">You have not purchased any festival greeting template as yet.</string>
     <string name="buy_templates">Buy templates</string>
     <string name="currently_unavailable">Currently unavailable.</string>
     <string name="pay_using_debit_credit_card">Pay using debit/ credit card</string>
@@ -29,7 +29,6 @@
     <string name="order_confirmed">Order confirmed</string>
     <string name="what_are_the_festival_posters">What are the festival posters?</string>
     <string name="festive_poster_help_msg"><![CDATA[Festival posters are premium customisable digital greetings that you can share with your friends, family and specifically with your new & potential customers. Each such festival pack comes with 5 poster designs, available at a fixed price. Go ahead, use festive occasions to connect with those who matter the most to you and your business.]]></string>
-    <string name="understood">Understood</string>
     <string name="contact_support">Contact support</string>
     <string name="save">Save</string>
     <string name="view_pack">View pack</string>
@@ -44,6 +43,7 @@
 
     <string name="app_name">template</string>
     <string name="promo_updates">Promo updates</string>
+    <string name="update_studios">Update studio</string>
     <string name="for_today">For today</string>
     <string name="browse">Browse</string>
     <string name="find">Find</string>
@@ -56,7 +56,7 @@
     <string name="edit">Edit</string>
     <string name="edit_post">Edit Post</string>
     <string name="caption">Caption</string>
-    <string name="preview_and_post">Preview And Post</string>
+    <string name="preview_and_post">Preview and post</string>
     <string name="edit_template_text">Edit Template Text</string>
     <string name="header_1">Header 1</string>
     <string name="header_2">Header 2</string>
@@ -79,12 +79,13 @@
     <string name="update_posted_successfully">Update posted successfully!</string>
     <string name="also_promote_with_your_contacts_on">Also, promote with your contacts on:</string>
     <string name="insta_dm_dm">Insta DM</string>
-    <string name="more">More…</string>
+    <string name="more_dot">More…</string>
     <string name="placeholder_selected">%1$d selected</string>
     <string name="email_sub">Email subscribers</string>
     <string name="placeholder_recipients">%1$d recipients</string>
     <string name="no_recipients">%1$d recipients</string>
     <string name="post_on_placeholder_platform">Post on %1$d platform</string>
+    <string name="post_on_placeholder_platforms">Post on %1$d platforms</string>
     <string name="now">Now</string>
     <string name="placeholder_per_month">₹%1$d/month</string>
     <string name="placeholder_per_year">₹%1$d/year</string>
@@ -97,6 +98,19 @@
     <string name="type_in_the_caption_to_create_your_own_hashtags">Type ‘#’ in the caption to create your own hashtags</string>
     <string name="post_on">Post on</string>
     <string name="posted_15_mins_ago">Posted 15 mins ago</string>
+    <string name="ria_customer_mail">ria@nowfloats.com</string>
+    <string name="Create">Create</string>
+    <string name="you_ve_new_email_update_from">You\'ve new email update from</string>
+    <string name="explore_the_premium_update_specially_designed_for_you">Explore the premium update specially designed for you.</string>
+    <string name="for_regular_free_updates_click_on_create_and_keep_posting_like_always">For regular FREE updates, click on ‘Create’ and keep posting like always.</string>
+    <string name="type_what_you_re_looking_for">Type what you’re looking for...</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="view_more2">View more</string>
+    <string name="hashtags_help_improve_brand_visibility">Hashtags help improve brand visibility</string>
+    <string name="visit_website">Visit website</string>
+    <string name="_4m">4m</string>
+    <string name="not_connected">Not connected</string>
     <string name="my_website">My Website</string>
 
 </resources>

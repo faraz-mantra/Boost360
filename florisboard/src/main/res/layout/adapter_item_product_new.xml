@@ -42,15 +42,15 @@
               android:gravity="bottom">
 
             <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ctv_duration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_timer"
-                android:drawablePadding="4dp"
-                android:gravity="center_vertical"
-                android:paddingTop="4dp"
-                android:text="@string/_90_min"
-                android:textColor="@color/black_4a4a4a" />
+              android:id="@+id/ctv_duration"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:drawableStart="@drawable/ic_timer"
+              android:drawablePadding="4dp"
+              android:gravity="center_vertical"
+              android:paddingTop="4dp"
+              android:text="@string/_90_min"
+              android:textColor="@color/black_4a4a4a" />
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tv_name"

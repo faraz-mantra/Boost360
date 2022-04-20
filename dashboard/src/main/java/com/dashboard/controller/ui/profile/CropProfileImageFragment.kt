@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.SeekBar
 import androidx.lifecycle.lifecycleScope
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
@@ -20,6 +21,10 @@ import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.*
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils.rotateImage
+import com.framework.imagepicker.Utility
+import com.framework.utils.FileUtils.saveBitmap
+
 
 class CropProfileImageFragment : AppBaseFragment<FragmentCropProfileImageBinding, UserProfileViewModel>() {
 
@@ -55,15 +60,24 @@ class CropProfileImageFragment : AppBaseFragment<FragmentCropProfileImageBinding
     setOnClickListener(binding?.btnDone)
     imagePath = arguments?.getString(BK_IMAGE_PATH)
     bitmap = BitmapFactory.decodeFile(imagePath)
-    binding?.cropImg?.setImageBitmap(bitmap)
+    binding?.cropImg?.setImageBitmap(Utility.rotateImageIfRequired(bitmap!!, imagePath))
     viewListeners()
   }
 
 
   private fun viewListeners() {
-    binding?.slider?.addOnChangeListener { slider, value, fromUser ->
-      zoom(value)
-    }
+    binding?.slider?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+      override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
+        zoom(p1.toFloat() / 100)
+      }
+
+      override fun onStartTrackingTouch(p0: SeekBar?) {
+      }
+
+      override fun onStopTrackingTouch(p0: SeekBar?) {
+      }
+
+    })
   }
 
   override fun onClick(v: View) {
@@ -77,17 +91,18 @@ class CropProfileImageFragment : AppBaseFragment<FragmentCropProfileImageBinding
 
   private fun uploadImage() {
     lifecycleScope.launch(Dispatchers.Default) {
-      val imgFile = saveBitmap()
-      if (imgFile.exists()) {
+      bitmap = binding?.cropImg?.croppedImage
+      val imgFile = bitmap?.saveBitmap(baseActivity)
+      if (imgFile?.exists() == true) {
         withContext(Dispatchers.Main) {
           showProgress()
-          viewModel?.uploadProfileImage(clientId2, userSessionManager?.userProfileId, imgFile.name, imgFile.asRequestBody("image/*".toMediaTypeOrNull()))?.observeOnce(viewLifecycleOwner, {
+          viewModel?.uploadProfileImage(clientId2, userSessionManager?.userProfileId, imgFile.name, imgFile.asRequestBody("image/*".toMediaTypeOrNull()))?.observeOnce(viewLifecycleOwner) {
             Log.i(TAG, "uploadImage Response: " + Gson().toJson(it))
             hideProgress()
-            if (it.isSuccess()) requireActivity().onBackPressed()
-          })
+            if (it.isSuccess()) baseActivity.onBackPressed()
+          }
         }
-      }
+      }else showLongToast("Unable to store image, please try again!")
     }
   }
 
@@ -107,34 +122,4 @@ class CropProfileImageFragment : AppBaseFragment<FragmentCropProfileImageBinding
     }
 
   }
-
-  suspend fun saveBitmap(): File {
-    bitmap = binding?.cropImg?.croppedImage
-//    create a file to write bitmap data
-    val f = File(context?.cacheDir, "tempimg.jpg");
-    f.createNewFile();
-
-//    Convert bitmap to byte array
-    val bos = ByteArrayOutputStream()
-    bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-    val bitmapdata = bos.toByteArray();
-
-//    write the bytes in file
-    var fos: FileOutputStream? = null;
-    try {
-      fos = FileOutputStream(f);
-    } catch (e: FileNotFoundException) {
-      e.printStackTrace();
-    }
-    try {
-      fos?.write(bitmapdata);
-      fos?.flush();
-      fos?.close();
-    } catch (e: IOException) {
-      e.printStackTrace();
-    }
-    return f
-  }
-
-
 }

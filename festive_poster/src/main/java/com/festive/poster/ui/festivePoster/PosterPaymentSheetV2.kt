@@ -89,7 +89,7 @@ class PosterPaymentSheetV2 : AppBaseBottomSheetFragment<SheetPosterPaymentv2Bind
     showProgress()
     val templateIds=ArrayList<String>()
     sharedViewModel?.selectedPosterPack?.posterList?.forEach {
-      templateIds.add(it.id)
+      templateIds.add(it.id!!)
     }
 
     viewModel?.updatePurchaseStatus(session?.fPID,

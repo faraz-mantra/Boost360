@@ -2,6 +2,7 @@ package com.boost.presignin.ui.mobileVerification
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.ViewDataBinding
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
@@ -23,6 +24,8 @@ import com.framework.pref.clientId
 import com.framework.pref.clientIdThinksity
 import com.framework.pref.saveAccessTokenAuth
 import com.framework.webengageconstant.*
+import com.google.firebase.auth.FirebaseAuth
+import com.onboarding.nowfloats.model.googleAuth.FirebaseTokenResponse
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.set
@@ -67,23 +70,41 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
       clientId = clientId,
       fpId = this.floatingPointId
     )
-    viewModel?.createAccessToken(request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.createAccessToken(request)?.observeOnce(viewLifecycleOwner) {
       val result = it as? AccessTokenResponse
       if (it?.isSuccess() == true && result?.result != null) {
         session.saveAccessTokenAuth(result.result!!)
-        this.storeFpDetails()
+        registerFirebaseToken(this)
       } else {
         hideProgress()
         showLongToast(getString(R.string.access_token_create_error))
       }
-    })
+    }
+  }
+
+  private fun registerFirebaseToken(authTokenDataItem: AuthTokenDataItem) {
+    viewModel?.getFirebaseToken()?.observeOnce(viewLifecycleOwner) {
+      val response = it as? FirebaseTokenResponse
+      val token = response?.Result
+      Log.i("registerFirebaseToken", "registerFirebaseToken: $token")
+      FirebaseAuth.getInstance().signInWithCustomToken(token ?: "").addOnCompleteListener(baseActivity) { task ->
+        if (task.isSuccessful) {
+          // Sign in success, update UI with the signed-in user's information
+          Log.d("registerFirebaseToken", "signInWithCustomToken:success")
+        } else {
+          // If sign in fails, display a message to the user.
+          Log.w("registerFirebaseToken", "signInWithCustomToken:failure", task.exception)
+        }
+        authTokenDataItem.storeFpDetails()
+      }
+    }
   }
 
   private fun AuthTokenDataItem.storeFpDetails() {
     WebEngageController.trackEvent(PS_BUSINESS_ACCOUNT_CHOOSE, CHOOSE_BUSINESS, this.floatingPointId ?: "")
     val map = HashMap<String, String>()
     map["clientId"] = clientId
-    viewModel?.getFpDetails(this.floatingPointId ?: "", map)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getFpDetails(this.floatingPointId ?: "", map)?.observeOnce(viewLifecycleOwner) {
       val response = it as? UserFpDetailsResponse
       if (it.isSuccess() && response != null) {
         ProcessFPDetails(session).storeFPDetails(response)
@@ -96,7 +117,7 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
         hideProgress()
         showShortToast(getString(R.string.error_getting_fp_detail))
       }
-    })
+    }
   }
 
   private fun startService() {
@@ -115,6 +136,7 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
       baseActivity.finish()
       hideProgress()
     } catch (e: Exception) {
+      hideProgress()
       SentryController.captureException(e)
       e.printStackTrace()
     }

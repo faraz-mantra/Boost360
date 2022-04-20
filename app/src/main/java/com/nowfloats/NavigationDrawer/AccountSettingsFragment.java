@@ -151,7 +151,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         } else
                             startFragmentPaymentActivityNew(getActivity(), FragmentType.BUSINESS_KYC_VIEW, b1, false);
                         break;
-                    case "Boost extensions":
+                    case "JioOnline extensions":
                         intent = new Intent(mContext, Boost360ExtensionsActivity.class);
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -237,7 +237,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 .positiveText(getString(R.string.ok))
                 .negativeText(getString(R.string.cancel))
                 .negativeColorRes(R.color.black_4a4a4a)
-                .positiveColorRes(R.color.colorAccent_jio)
+                .positiveColorRes(R.color.colorAccentLight)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onNegative(MaterialDialog dialog) {
@@ -378,7 +378,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 .positiveText(postiveBtn)
                 .negativeText(negativeBtn)
                 .negativeColorRes(R.color.black_4a4a4a)
-                .positiveColorRes(R.color.colorAccent_jio)
+                .positiveColorRes(R.color.colorAccentLight)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {

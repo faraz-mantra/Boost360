@@ -14,6 +14,7 @@ import com.boost.presignin.ui.mobileVerification.FP_LIST_FRAGMENT
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.base.FRAGMENT_TYPE
+import com.framework.pref.APPLICATION_JIO_ID
 import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.*
 
@@ -66,23 +67,20 @@ class SuccessLoginNumberFragment : AuthBaseFragment<FragmentSuccessLoginBinding>
     when (v) {
       binding?.goDashboardBt -> {
         WebEngageController.trackEvent(PS_USER_LOGIN_SUCCESS_DASHBOARD_CLICK, CLICK, NO_EVENT_VALUE)
-        if (resultLogin?.authTokens?.size == 1) {
+        if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)) {
           authTokenData()?.createAccessTokenAuth()
-        } else {
-          navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
-            putInt(
-              FRAGMENT_TYPE,
-              FP_LIST_FRAGMENT
-            );putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, resultLogin)
-          })
+        }else {
+          if (resultLogin?.authTokens?.size == 1) {
+            authTokenData()?.createAccessTokenAuth()
+          } else {
+            navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
+              putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, resultLogin)
+            })
+          }
         }
       }
       binding?.changeNumberBtn -> {
-        WebEngageController.trackEvent(
-          PS_USER_LOGIN_SUCCESS_CHANGE_NUMBER_CLICK,
-          CLICK,
-          NO_EVENT_VALUE
-        )
+        WebEngageController.trackEvent(PS_USER_LOGIN_SUCCESS_CHANGE_NUMBER_CLICK, CLICK, NO_EVENT_VALUE)
         navigator?.startActivity(MobileVerificationActivity::class.java)
       }
     }

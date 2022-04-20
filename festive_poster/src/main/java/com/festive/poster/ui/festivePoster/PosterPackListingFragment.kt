@@ -98,8 +98,8 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
           response.Result.templatePacks.tags.forEach { pack_tag ->
             val templateList = ArrayList<PosterModel>()
             templates_response.Result.templates.forEach { template ->
-              var posterTag = template.tags.find { posterTag -> posterTag == pack_tag.tag }
-              if ( posterTag != null && template.active) {
+              var posterTag = template.tags?.find { posterTag -> posterTag == pack_tag.tag }
+              if ( posterTag != null && template.active == true) {
                 template.greeting_message = pack_tag.description
                 template.layout_id = RecyclerViewItemType.POSTER.getLayout()
                 templateList.add(template.clone()!!)

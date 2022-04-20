@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <style name="AppTheme_add_account" parent="AppTheme.account">
-    <item name="colorPrimary">@color/white</item>
-    <item name="colorPrimaryDark">@color/white</item>
-    <item name="android:windowLightStatusBar">true</item>
-    <item name="colorSecondary">@color/black_4a4a4a</item>
-    <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
-  </style>
 </resources>

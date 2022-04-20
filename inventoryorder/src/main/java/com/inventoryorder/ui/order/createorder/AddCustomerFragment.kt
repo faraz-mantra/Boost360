@@ -103,12 +103,17 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
       return
     }
 
+    if (!ValidationUtils.isValidName(name)) {
+      showShortToast(getString(R.string.please_enter_valid_customer_name))
+      return
+    }
+
     if (phone.isEmpty()) {
       showShortToast(getString(R.string.customer_phone_cannot_be_empty))
       return
     }
 
-    if (!ValidationUtils.isMobileNumberValid(phone?:"")) {
+    if (!ValidationUtils.isMobileNumberValid(phone ?: "")) {
       showShortToast(getString(R.string.please_enter_valid_phone))
       return
     }

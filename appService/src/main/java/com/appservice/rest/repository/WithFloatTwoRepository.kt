@@ -12,9 +12,12 @@ import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.WithFloatsApiTwoClient
 import com.appservice.rest.services.WithFloatTwoRemoteData
 import com.framework.base.BaseResponse
+import com.framework.pref.clientId
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.Retrofit
+import retrofit2.http.QueryMap
 
 object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBaseLocalService>() {
 
@@ -30,18 +33,27 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.deleteService(request), TaskCode.POST_UPDATE_SERVICE)
   }
 
-  fun getMerchantSummary(clientId: String?,fpTag:String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getMerchantSummary(clientId,fpTag), TaskCode.GET_MERCHANT_SUMMARY)
+  fun getMerchantSummary(clientId: String?, fpTag: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getMerchantSummary(clientId, fpTag), TaskCode.GET_MERCHANT_SUMMARY)
+  }
+
+  fun createBGImage(body: RequestBody, fpId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.createBGImage(fpId, body = body), TaskCode.CREATE_BG_IMAGE)
+  }
+
+  fun deleteBGImage(map: HashMap<String, String?>): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.deleteBackgroundImages(map), TaskCode.CREATE_BG_IMAGE)
+  }
+
+  fun trackerCalls(
+    @QueryMap data: Map<String, String?>?
+  ): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.trackerCalls(data), TaskCode.GET_MERCHANT_SUMMARY)
   }
 
   fun addUpdateImageProductService(
-    clientId: String?,
-    requestType: String?,
-    requestId: String?,
-    totalChunks: Int?,
-    currentChunkNumber: Int?,
-    productId: String?,
-    requestBody: RequestBody?,
+    clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?,
+    currentChunkNumber: Int?, productId: String?, requestBody: RequestBody?,
   ): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.addUpdateImageProductService(
@@ -102,13 +114,8 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   }
 
   fun addUpdateImageProduct(
-    clientId: String?,
-    requestType: String?,
-    requestId: String?,
-    totalChunks: Int?,
-    currentChunkNumber: Int?,
-    productId: String?,
-    requestBody: RequestBody?,
+    clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?,
+    currentChunkNumber: Int?, productId: String?, requestBody: RequestBody?,
   ): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.addUpdateImageProduct(
@@ -119,42 +126,50 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   }
 
   fun putBizMessageUpdate(request: PostUpdateTaskRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.putBizMessageUpdate(request), TaskCode.PUT_BIZ_MESSAGE_UPDATE)
+  }
+
+  fun putBizMessageUpdateV2(request: PostUpdateTaskRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.putBizMessageUpdate(request),
-      TaskCode.PUT_BIZ_MESSAGE_UPDATE
+      remoteDataSource.putBizMessageUpdateV2(request),
+      TaskCode.PUT_BIZ_MESSAGE_UPDATEV2
     )
   }
 
   fun getBizWebMessage(id: String?, clientId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.getBizWebMessage(id, clientId),
-      TaskCode.GET_BIZ_MESSAGE_WEB
-    )
+    return makeRemoteRequest(remoteDataSource.getBizWebMessage(id, clientId), TaskCode.GET_BIZ_MESSAGE_WEB)
   }
 
   fun deleteBizMessageUpdate(request: DeleteBizMessageRequest?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.deleteBizMessageUpdate(request),
-      TaskCode.DELETE_BIZ_MESSAGE_UPDATE
-    )
+    return makeRemoteRequest(remoteDataSource.deleteBizMessageUpdate(request), TaskCode.DELETE_BIZ_MESSAGE_UPDATE)
   }
 
   fun putBizImageUpdate(
-    clientId: String?,
-    requestType: String?,
-    requestId: String?,
-    totalChunks: Int?,
-    currentChunkNumber: Int?,
-    socialParmeters: String?,
-    bizMessageId: String?,
-    sendToSubscribers: Boolean?,
-    requestBody: RequestBody?,
+    clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?, currentChunkNumber: Int?,
+    socialParmeters: String?, bizMessageId: String?, sendToSubscribers: Boolean?, requestBody: RequestBody?,
   ): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.putBizImageUpdate(
         clientId, requestType, requestId, totalChunks, currentChunkNumber,
         socialParmeters, bizMessageId, sendToSubscribers, requestBody
       ), TaskCode.PUT_IMAGE_BIZ_UPDATE
+    )
+  }
+
+  fun putBizImageUpdateV2(
+    type: String?,
+    bizMessageId: String?,
+    imageBase64: String?,
+  ): Observable<BaseResponse> {
+    val jsonObject = JsonObject()
+    jsonObject.addProperty("type",type)
+    jsonObject.addProperty("clientId", clientId)
+    jsonObject.addProperty("bizMessageId", bizMessageId)
+    jsonObject.addProperty("imageBody",imageBase64)
+    return makeRemoteRequest(
+      remoteDataSource.putBizImageUpdateV2(
+        jsonObject
+      ), TaskCode.PUT_IMAGE_BIZ_UPDATE_V2
     )
   }
 
@@ -203,7 +218,15 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.getCatalogStatus(fpId!!, clientId), TaskCode.GET_APPOINTMENT_CATALOG_SETUP)
   }
 
+  fun updateGstSlab(request: GstSlabRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.updateGstSlab(request), TaskCode.UPDATE_GST_REQUEST)
+  }
+
   fun updateProductCategoryVerb(request: ProductCategoryVerbRequest): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.updateProductCategoryVerb(request), TaskCode.UPDATE_PRODUCT_CATEGORY_VERB)
+  }
+
+  fun getImages(fpId: String?, clientId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getBackgroundImages(fpId, clientId), TaskCode.GET_BACKGROUND_IMAGES)
   }
 }

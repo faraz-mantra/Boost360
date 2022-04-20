@@ -60,7 +60,7 @@
       android:background="@drawable/button_click_effect"
       android:padding="8dp"
       android:visibility="visible"
-      app:srcCompat="@drawable/ic_search_white" />
+      app:srcCompat="@drawable/ic_search_white_fposter" />
 
     <ImageView
       android:id="@+id/img_delete"

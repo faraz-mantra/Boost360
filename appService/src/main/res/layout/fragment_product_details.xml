@@ -139,7 +139,7 @@
               android:layout_marginTop="@dimen/size_36"
               android:drawablePadding="@dimen/size_4"
               android:drawableTint="@color/orange"
-              android:text="@string/product_name"
+              android:text="@string/product_name_"
               android:textColor="@color/black_4a4a4a"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_3" />
@@ -170,7 +170,7 @@
                 android:drawablePadding="@dimen/size_4"
                 android:drawableTint="@color/orange"
                 android:includeFontPadding="false"
-                android:text="@string/product_category"
+                android:text="@string/product_category_"
                 android:textColor="@color/black_4a4a4a"
                 app:fontFamily="@font/semi_bold"
                 app:textType="BODY_3" />
@@ -205,7 +205,7 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_3"
               android:layout_marginTop="@dimen/size_20"
-              android:text="@string/product_description"
+              android:text="@string/product_description_"
               android:textColor="@color/black_4a4a4a"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_3" />

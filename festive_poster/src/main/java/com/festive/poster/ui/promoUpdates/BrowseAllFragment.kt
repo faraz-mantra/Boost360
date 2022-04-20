@@ -1,33 +1,32 @@
 package com.festive.poster.ui.promoUpdates
 
 import android.os.Bundle
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.FragmentBrowseAllBinding
-import com.festive.poster.models.PosterDetailsModel
-import com.festive.poster.models.PosterModel
-import com.festive.poster.models.PosterPackModel
-import com.festive.poster.models.PosterPackTagModel
-import com.festive.poster.models.promoModele.TemplateModel
-import com.festive.poster.models.promoModele.TodaysPickModel
+import com.festive.poster.models.*
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
-import com.festive.poster.utils.WebEngageController
+import com.festive.poster.utils.*
+import com.festive.poster.viewmodels.PostUpdatesViewModel
 import com.framework.base.BaseActivity
-import com.framework.models.BaseViewModel
+import com.framework.pref.Key_Preferences
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
+import com.framework.utils.convertListObjToString
 import com.framework.utils.convertStringToList
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.Promotional_Update_Browse_All_Loaded
 import com.framework.webengageconstant.Promotional_Update_Category_Click
 import com.google.gson.Gson
 
-class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel>(),RecyclerItemClickListener {
+class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesViewModel>(),RecyclerItemClickListener {
 
+    private var session: UserSessionManager?=null
     private var selectedPos: Int=0
     private var posterRvAdapter: AppBaseRecyclerViewAdapter<PosterModel>?=null
     private var categoryAdapter: AppBaseRecyclerViewAdapter<PosterPackModel>?=null
@@ -37,8 +36,8 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel
         return R.layout.fragment_browse_all
     }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
+    override fun getViewModelClass(): Class<PostUpdatesViewModel> {
+        return PostUpdatesViewModel::class.java
     }
     companion object {
 
@@ -66,6 +65,29 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel
        setDataOnUi()
     }
 
+    override fun onResume() {
+        super.onResume()
+        session = UserSessionManager(requireActivity())
+
+        refreshUserWidgets()
+
+    }
+
+    private fun refreshUserWidgets() {
+        viewModel?.getUserDetails(session?.fpTag, clientId)?.observe(this) {
+            if (it.isSuccess()) {
+                val detail = it as? CustomerDetails
+                detail?.FPWebWidgets?.let { list ->
+                    session?.storeFPDetails(
+                        Key_Preferences.STORE_WIDGETS,
+                        convertListObjToString(list)
+                    )
+
+                }
+            }
+        }
+    }
+
     private fun setDataOnUi() {
         categoryList?.forEach {pack->
 
@@ -91,7 +113,7 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel
         binding?.tvCatTitle?.text = selectedItem?.tagsModel?.name
         binding?.tvCatSize?.text = selectedItem?.posterList?.size.toString()
         posterRvAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,
-            categoryList?.get(selectedPos)?.posterList!!)
+            categoryList?.get(selectedPos)?.posterList!!,this)
         binding?.rvPosters?.adapter = posterRvAdapter
         binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
     }
@@ -168,7 +190,7 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel
             )
         )
 
-        posterRvAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList)
+        posterRvAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList,this)
         binding?.rvPosters?.adapter = posterRvAdapter
         binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
 
@@ -186,6 +208,39 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, BaseViewModel
                 selectedPos = position
                 switchToSelectedItem()
             }
+            RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal->{
+                posterWhatsappShareClicked(item as PosterModel,
+                    requireActivity() as BaseActivity<*, *>
+                )
+            }
+            RecyclerViewActionType.POST_CLICKED.ordinal-> {
+                posterPostClicked(item as PosterModel, requireActivity() as BaseActivity<*, *>)
+                }
+            }
+
         }
+
+
+    override fun onChildClick(
+        childPosition: Int,
+        parentPosition: Int,
+        childItem: BaseRecyclerViewItem?,
+        parentItem: BaseRecyclerViewItem?,
+        actionType: Int
+    ) {
+        when(actionType){
+            RecyclerViewActionType.POSTER_LOVE_CLICKED.ordinal->{
+                callFavApi(childItem as PosterModel)
+            }
+        }
+    }
+
+    private fun callFavApi(posterModel: PosterModel) {
+        viewModel?.favPoster(session?.fPID,session?.fpTag,posterModel.id,)?.observe(viewLifecycleOwner){
+            if (it.isSuccess()){
+                posterModel.details?.Favourite= posterModel.details?.Favourite?.not() == true
+            }
+        }
+
     }
 }

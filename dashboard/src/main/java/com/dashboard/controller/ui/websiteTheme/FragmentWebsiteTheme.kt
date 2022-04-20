@@ -62,6 +62,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
 
   override fun onCreateView() {
     super.onCreateView()
+
     WebEngageController.trackEvent(WEBSITE_STYLE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(
       binding?.ctfPrimaryFont, binding?.ctfSecondaryFont,
@@ -276,7 +277,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
   }
 
   private fun openSuccessDialog() {
-    val websiteUpdateSheet = WebsiteThemeUpdatedSuccessfullySheet()
+    val websiteUpdateSheet = WebsiteThemeUpdatedSuccessfullySheet(isRepublishFlow = false)
     websiteUpdateSheet.onClicked = {
       when (it) {
         TypeSuccess.VISIT_WEBSITE.name -> {
@@ -285,7 +286,7 @@ class FragmentWebsiteTheme : AppBaseFragment<FragmentWebsiteThemeBinding, Websit
         TypeSuccess.CLOSE.name -> goBack()
       }
     }
-    websiteUpdateSheet.show(parentFragmentManager, WebSiteThemeResetBottomSheet::javaClass.name)
+    websiteUpdateSheet.show(baseActivity.supportFragmentManager, WebSiteThemeResetBottomSheet::javaClass.name)
   }
 
   private fun goBack() {

@@ -32,6 +32,7 @@ import com.appservice.model.serviceProduct.service.ItemsItem
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.capitalizeUtil
 import com.appservice.viewmodel.ProductViewModel
+import com.framework.constants.SupportVideoType
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -44,7 +45,6 @@ import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.*
-import com.onboarding.nowfloats.constant.SupportVideoType
 import java.util.*
 
 
@@ -314,13 +314,13 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
       }
       RecyclerViewActionType.PRODUCT_DATA_SHARE_CLICK.ordinal -> {
         shareProduct(
-          product?.Name, product?.Price.toString(), product?.ProductUrl, sessionLocal.userPrimaryMobile, product?.ImageUri,
+          product?.Name, "${product?.getDiscountedPrice()}", product?.ProductUrl, sessionLocal.userPrimaryMobile, product?.ImageUri,
           isWhatsApp = false, isService = false, isFb = false, activity = requireActivity()
         )
       }
       RecyclerViewActionType.PRODUCT_WHATS_APP_SHARE.ordinal -> {
         shareProduct(
-          product?.Name, product?.Price.toString(), product?.ProductUrl, sessionLocal.userPrimaryMobile, product?.ImageUri,
+          product?.Name, "${product?.getDiscountedPrice()}", product?.ProductUrl, sessionLocal.userPrimaryMobile, product?.ImageUri,
           isWhatsApp = true, isService = false, isFb = false, activity = requireActivity()
         )
       }

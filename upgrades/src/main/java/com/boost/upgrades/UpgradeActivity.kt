@@ -31,7 +31,6 @@ import com.boost.upgrades.utils.*
 import com.boost.upgrades.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.HOME_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
-import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils
@@ -41,6 +40,8 @@ import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.framework.pref.*
+import com.framework.utils.BuildConfigUtil
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -74,7 +75,7 @@ class UpgradeActivity : AppCompatActivity() {
   var deepLinkDay: Int = 7
   var compareBackListener: CompareBackListener? = null
 
-  var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+  var clientid: String = clientId
   private var widgetFeatureCode: String? = null
 
   private var initialLoadUpgradeActivity: Int = 0
@@ -87,10 +88,13 @@ class UpgradeActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_upgrade)
-
-    isDeepLink = intent.getBooleanExtra("isDeepLink", false)
-    deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
-    deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
+    if (packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)) {
+      Toast.makeText(this, "Coming soon...", Toast.LENGTH_LONG).show()
+      this.finish()
+    } else {
+      isDeepLink = intent.getBooleanExtra("isDeepLink", false)
+      deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
+      deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
 
     experienceCode = intent.getStringExtra("expCode")
     fpName = intent.getStringExtra("fpName")
@@ -107,12 +111,13 @@ class UpgradeActivity : AppCompatActivity() {
     widgetFeatureCode = intent.getStringExtra("buyItemKey")
     userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
 
-    progressDialog = ProgressDialog(this)
+      progressDialog = ProgressDialog(this)
 
-    prefs = SharedPrefs(this)
+      prefs = SharedPrefs(this)
 //    WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, NO_EVENT_VALUE)
-    initView()
-    initRazorPay()
+      initView()
+      initRazorPay()
+    }
   }
 
   infix fun setBackListener(compareBackListener: CompareBackListener?) {
@@ -189,7 +194,8 @@ class UpgradeActivity : AppCompatActivity() {
 
   private fun initRazorPay() {
     try {
-      razorpay = Razorpay(this, RAZORPAY_KEY)
+      val razorPayKey: String = BuildConfig.RAZORPAY_KEY
+      razorpay = Razorpay(this, razorPayKey)
     } catch (e: Exception) {
       SentryController.captureException(e)
       e.printStackTrace()

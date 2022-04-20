@@ -10,7 +10,9 @@ import android.os.Environment
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.framework.utils.DateUtils.getCurrentDate
 import com.inventoryorder.R
+import com.onboarding.nowfloats.utils.checkHttp
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -18,6 +20,7 @@ import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.math.floor
+
 
 const val ISO_8601_24H_FULL_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 var UTC: TimeZone? = null
@@ -85,7 +88,8 @@ fun String.capitalizeUtil(): String {
   val capMatcher: Matcher =
     Pattern.compile("([a-z])([a-z]*)", Pattern.CASE_INSENSITIVE).matcher(this)
   while (capMatcher.find()) {
-    capMatcher.appendReplacement(capBuffer,
+    capMatcher.appendReplacement(
+      capBuffer,
       capMatcher.group(1).toUpperCase(Locale.getDefault()) + capMatcher.group(2)
         .toLowerCase(Locale.getDefault())
     )
@@ -192,12 +196,15 @@ fun AddSuffixForDay(originalDay: String): String {
 
 
 fun String.getWebViewUrl(): String {
-  return (takeIf { checkIsFile().not() }?.let { this }
-    ?: "https://docs.google.com/viewer?url=$this").checkHttp()
+  return (takeIf { checkIsFile().not() }?.let { this } ?: "https://docs.google.com/viewer?url=$this").checkHttp()
 }
 
 fun String.checkHttp(): String {
-  return if ((this.startsWith("http://") || this.startsWith("https://")).not()) "http://$this" else this
+  return when {
+    (this.startsWith("http://") || this.startsWith("https://")).not() -> "https://$this"
+    this.startsWith("http://") -> this.replace("http", "https")
+    else -> this
+  }
 }
 
 fun String.checkIsFile(): Boolean {
@@ -215,6 +222,10 @@ fun String.getFileName(): String? {
   return substring(lastIndexOf("/") + 1)
 }
 
+fun String.getUrlExtension(): String? {
+  return if (this.contains(".")) this.substring(this.lastIndexOf(".") + 1) else ""
+}
+
 fun AppCompatActivity.startDownloadUri(url: String) {
   try {
     val downloader = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
@@ -224,7 +235,7 @@ fun AppCompatActivity.startDownloadUri(url: String) {
     request.setDescription(getString(R.string.boost_360_file))
     request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "boost360")
+    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "invoice_${getCurrentDate().time}.${url.getUrlExtension()}")
     downloader.enqueue(request)
     Toast.makeText(this, getString(R.string.invoice_downloading), Toast.LENGTH_SHORT).show()
   } catch (e: Exception) {

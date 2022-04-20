@@ -5,13 +5,13 @@ import android.text.Spanned
 import com.appservice.AppServiceApplication
 import com.appservice.R
 import com.appservice.constant.RecyclerViewItemType
+import com.appservice.recyclerView.AppBaseRecyclerViewItem
 import com.appservice.ui.aptsetting.ui.getProductType
 import com.appservice.utils.capitalizeUtil
 import com.framework.base.BaseResponse
 import com.framework.pref.UserSessionManager
 import com.framework.utils.fromHtml
 import com.google.gson.annotations.SerializedName
-import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
 
 data class AppointmentStatusResponse(
@@ -27,7 +27,7 @@ data class AppointmentStatusResponse(
     var title: String? = null,
     var tile: Any? = null,
     var isEnabled: Boolean? = false,
-  ) : Serializable, AppBaseRecyclerViewItem, com.appservice.recyclerView.AppBaseRecyclerViewItem {
+  ) : Serializable, AppBaseRecyclerViewItem {
 
     override fun getViewType(): Int {
       return RecyclerViewItemType.CATALOG_SETTING_TILES.getLayout()
@@ -70,11 +70,11 @@ data class ResultS(
 
   @field:SerializedName("PaymentCollectionSetup")
   var paymentCollectionSetup: PaymentCollectionSetup? = null
-) {
+) : Serializable {
 
   fun getAppointmentTilesArray(): ArrayList<AppointmentStatusResponse.TilesModel> {
     return arrayListOf(
-      AppointmentStatusResponse.TilesModel("catalog_setup", "Service categories, Catalog display text,applicable tax slabs", "Catalog Setup", this.catalogSetup),
+      AppointmentStatusResponse.TilesModel("catalog_setup", "Service categories, Catalog display text,applicable tax slabs", "Catalog setup", this.catalogSetup),
       AppointmentStatusResponse.TilesModel("payment_collection", "Preferred payment gateway", "Payment collection setup", this.paymentCollectionSetup),
       AppointmentStatusResponse.TilesModel("customer_invoice_setup", "GST declaration, Bank UPI for offline appointments,signature", "Customer invoice setup", this.customerInvoicesSetup)
 //      AppointmentStatusResponse.TilesModel("policies", "Refund, cancellation, privacy policies for your customers", "Policies for customers", this.policiesSetup)
@@ -83,7 +83,7 @@ data class ResultS(
 
   fun getEcommerceTilesArray(): ArrayList<AppointmentStatusResponse.TilesModel> {
     return arrayListOf(
-      AppointmentStatusResponse.TilesModel("catalog_setup_ecommerce", "Service categories, Catalog display text,applicable tax slabs", "Catalog Setup", this.catalogSetup),
+      AppointmentStatusResponse.TilesModel("catalog_setup_ecommerce", "Service categories, Catalog display text,applicable tax slabs", "Catalog setup", this.catalogSetup),
       AppointmentStatusResponse.TilesModel("payment_collection", "Preferred payment gateway", "Payment collection setup", this.paymentCollectionSetup),
       AppointmentStatusResponse.TilesModel("customer_invoice_setup", "GST declaration, Bank UPI for offline appointments,signature", "Customer invoice setup", this.customerInvoicesSetup),
       AppointmentStatusResponse.TilesModel("delivery_setup", "GST declaration, Bank UPI for offline appointments,signature", "Delivery setup", this.deliverySetup)
@@ -99,7 +99,7 @@ data class DeliverySetupTile(
   var isPickUpAllowed: Boolean? = null,
   @field:SerializedName("IsPending")
   var isPending: Boolean? = null
-) {
+) : Serializable {
 
   fun getTitle(): Spanned? {
     return fromHtml(if (this.isPending == true || this.isHomeDeliveryAllowed == false || isPickUpAllowed == false) "<pre> Mode: <span style=\"color: #EB5757;\"><em>not selected</em></span></pre>" else if (isHomeDeliveryAllowed == true && isPickUpAllowed == true) "Mode:<b> Home delivery, Self pickup</b>" else if (isHomeDeliveryAllowed == true) "Mode:<b> Home delivery</b>" else "Mode:<b> Self Pickup</b>")
@@ -115,7 +115,7 @@ data class PaymentCollectionSetup(
   var bankAccountNumber: String? = null,
   @field:SerializedName("IsPending")
   var isPending: Boolean? = null
-) {
+) : Serializable {
 
   fun getTitle(): Spanned? {
     return fromHtml("Payment gateway: <b>${if (paymentGateway.isNullOrEmpty()) "Pending" else "$paymentGateway"}</b>")
@@ -142,7 +142,7 @@ data class PoliciesSetup(
 
   @field:SerializedName("IsPending")
   var isPending: Boolean? = null
-)
+) : Serializable
 
 
 data class CatalogSetup(
@@ -154,7 +154,11 @@ data class CatalogSetup(
   var isDefaultGSTSlabSelected: Boolean? = null,
   @field:SerializedName("IsPending")
   var isPending: Boolean? = null
-) {
+) : Serializable {
+
+  fun getGstSlabInt():Int{
+    return defaultGSTSlab?.toInt()?:0
+  }
   fun getTitle(activity: Activity?): Spanned? {
     val s = UserSessionManager(activity ?: AppServiceApplication.instance)
     return fromHtml("Display text: <b>${if (productCategoryVerb.isNullOrEmpty()) getProductType(s.fP_AppExperienceCode) else "${productCategoryVerb?.capitalizeUtil()}"}</b>")
@@ -175,14 +179,14 @@ data class CustomerInvoicesSetup(
   var isTaxInvoiceSetupComplete: Boolean? = null,
   @field:SerializedName("IsPending")
   var isPending: Boolean? = null
-) {
+) : Serializable {
   fun getTitle(): Spanned? {
     return if (isGSTDeclarationComplete == false || getGstin().isEmpty()) fromHtml("<pre>GST declaration: <span style=\"color: #EB5757;\"><em>incomplete</em></span></pre>")
     else fromHtml("<pre>GST declaration: <strong>${getGstin()}</strong>&nbsp;</pre>")
   }
 
-  fun getGstin():String{
-   return if (gSTIN.isNullOrEmpty() || gSTIN.equals("null")) "" else gSTIN!!
+  fun getGstin(): String {
+    return if (gSTIN.isNullOrEmpty() || gSTIN.equals("null")) "" else gSTIN!!
   }
 
   fun getSubtitle(): Spanned? {
@@ -196,4 +200,4 @@ data class ConsultationSetup(
   var isGeneralAppointmentEnabled: Boolean? = null,
   @field:SerializedName("IsPending")
   var isPending: Boolean? = null
-)
+) : Serializable

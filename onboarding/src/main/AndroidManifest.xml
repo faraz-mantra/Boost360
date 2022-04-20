@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.onboarding.nowfloats">
+  xmlns:tools="http://schemas.android.com/tools"
+  package="com.onboarding.nowfloats">
 
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+  <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:largeHeap="true"
@@ -53,15 +53,15 @@
             android:theme="@style/Theme.AppCompat.Translucent"
             android:windowSoftInputMode="stateHidden" />
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
-        </provider>
-    </application>
+    <provider
+      android:name="androidx.core.content.FileProvider"
+      android:authorities="${applicationId}.provider"
+      android:exported="false"
+      android:grantUriPermissions="true">
+      <meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/provider_paths" />
+    </provider>
+  </application>
 
 </manifest>

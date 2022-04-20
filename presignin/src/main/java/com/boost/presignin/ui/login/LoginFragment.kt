@@ -27,6 +27,7 @@ import com.framework.webengageconstant.*
 import android.widget.Toast
 
 import android.view.View.OnFocusChangeListener
+import com.framework.pref.APPLICATION_JIO_ID
 
 class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
@@ -64,12 +65,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
     WebEngageController.trackEvent(PS_LOGIN_USERNAME_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.usernameEt?.onTextChanged { onDataChanged() }
     binding?.passEt?.onTextChanged { onDataChanged() }
-    setOnClickListener(
-      binding?.forgotTv,
-      binding?.loginBt,
-      binding?.loginWithNumberBtn,
-      binding?.helpTv
-    )
+    setOnClickListener(binding?.forgotTv, binding?.loginBt, binding?.loginWithNumberBtn, binding?.helpTv)
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
     backButton?.setOnClickListener { goBack() }
     binding?.passEt?.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
@@ -110,7 +106,8 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
   private fun loginApiVerify(userName: String?, password: String?) {
     showProgress()
     viewModel?.verifyUserProfile(
-      UserProfileVerificationRequest(loginKey = userName, loginSecret = password, clientId = clientId))?.observeOnce(viewLifecycleOwner, {
+      UserProfileVerificationRequest(loginKey = userName, loginSecret = password, clientId = clientId)
+    )?.observeOnce(viewLifecycleOwner) {
       val response = it as? VerificationRequestResult
       if (response?.isSuccess() == true && response.loginId.isNullOrEmpty().not() && response.authTokens.isNullOrEmpty().not()) {
         storeUserDetail(response)
@@ -118,23 +115,28 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
         hideProgress()
         showShortToast(getString(R.string.ensure_that_the_entered_username_and_password_))
       }
-    })
+    }
   }
 
   private fun storeUserDetail(response: VerificationRequestResult) {
-    hideProgress()
+//    hideProgress()
 //    if (response.profileProperties?.userMobile.isNullOrEmpty().not() && ValidationUtils.isMobileNumberValid(response.profileProperties?.userMobile!!)) {
 //      navigator?.startActivity(LoginActivity::class.java, Bundle().apply {
 //        putInt(FRAGMENT_TYPE, LOGIN_SUCCESS_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
 //      })
 //    } else {
-    if (response.authTokens!!.size == 1) {
+    if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)) {
       this.resultLogin = response
       authTokenData()?.createAccessTokenAuth()
     } else {
-      navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
-        putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
-      })
+      if (response.authTokens!!.size == 1) {
+        this.resultLogin = response
+        authTokenData()?.createAccessTokenAuth()
+      } else {
+        navigator?.startActivity(MobileVerificationActivity::class.java, Bundle().apply {
+          putInt(FRAGMENT_TYPE, FP_LIST_FRAGMENT);putSerializable(IntentConstant.EXTRA_FP_LIST_AUTH.name, response)
+        })
+      }
     }
 //    }
   }

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.fragment.app.FragmentManager
 import com.festive.poster.R
 import com.festive.poster.databinding.MtemplateProgressDialogBinding
+import com.framework.analytics.SentryController
 import com.framework.base.BaseDialogFragment
 import com.framework.models.BaseViewModel
 import com.framework.utils.ConversionUtils
@@ -47,6 +48,8 @@ class ProgressDialog : BaseDialogFragment<MtemplateProgressDialogBinding, BaseVi
     try {
       if (this.isVisible.not()) show(manager, ProgressDialog::class.java.simpleName)
     } catch (e: Exception) {
+      SentryController.captureException(e)
+
       Log.e(ProgressDialog::class.java.name, e.localizedMessage ?: "")
     }
   }
@@ -55,6 +58,8 @@ class ProgressDialog : BaseDialogFragment<MtemplateProgressDialogBinding, BaseVi
     try {
       if (isRemoving.not()) dismiss()
     } catch (e: Exception) {
+      SentryController.captureException(e)
+
       Log.e(ProgressDialog::class.java.name, e.localizedMessage ?: "")
     }
   }

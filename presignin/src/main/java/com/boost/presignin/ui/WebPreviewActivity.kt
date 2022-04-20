@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Message
+import android.util.Log
 import android.view.View
 import android.webkit.*
 import com.boost.presignin.R
@@ -16,6 +17,7 @@ import com.framework.analytics.SentryController
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.onboarding.nowfloats.utils.checkHttp
 
 class WebPreviewActivity : AppBaseActivity<ActivityWebPreviewBinding, BaseViewModel>() {
 
@@ -29,15 +31,13 @@ class WebPreviewActivity : AppBaseActivity<ActivityWebPreviewBinding, BaseViewMo
 
   override fun onCreateView() {
     val floatsRequest = intent.extras?.getSerializable("request") as? CategoryFloatsRequest
-    binding?.headingTv?.text = floatsRequest?.categoryDataModel?.category_Name
+    binding?.headingTv?.text = floatsRequest?.categoryDataModel?.getCategoryName()
     binding?.ctvUrl?.text = floatsRequest?.webSiteUrl
     binding?.closeIcon?.setOnClickListener { finish() }
     binding?.shareIcon?.setOnClickListener {
-      shareViaAnyApp(
-        null,
-        "${floatsRequest?.businessName} ${floatsRequest?.categoryDataModel?.category_descriptor} ${floatsRequest?.webSiteUrl}"
-      )
+      shareViaAnyApp(null, "${floatsRequest?.businessName} ${floatsRequest?.categoryDataModel?.category_descriptor} ${floatsRequest?.webSiteUrl}")
     }
+    if (floatsRequest?.webSiteUrl.isNullOrEmpty()) finish()
     loadData(floatsRequest?.webSiteUrl!!)
   }
 
@@ -55,12 +55,12 @@ class WebPreviewActivity : AppBaseActivity<ActivityWebPreviewBinding, BaseViewMo
     webSettings?.cacheMode = WebSettings.LOAD_DEFAULT
     webSettings?.domStorageEnabled = true
 
-    binding?.webview?.webChromeClient = object :WebChromeClient(){
+    binding?.webview?.webChromeClient = object : WebChromeClient() {
       override fun onCreateWindow(view: WebView?, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message?): Boolean {
         val result = view!!.hitTestResult
         val data = result.extra
-        val context= view.context
-        if (data!=null){
+        val context = view.context
+        if (data != null) {
           val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(data))
           context.startActivity(browserIntent)
         }
@@ -117,5 +117,9 @@ class WebPreviewActivity : AppBaseActivity<ActivityWebPreviewBinding, BaseViewMo
 
 
 fun String.checkHttp(): String {
-  return if ((this.startsWith("http://") || this.startsWith("https://")).not()) "http://$this" else this
+  return when {
+    (this.startsWith("http://") || this.startsWith("https://")).not() -> "https://$this"
+    this.startsWith("http://") -> this.replace("http", "https")
+    else -> this
+  }
 }

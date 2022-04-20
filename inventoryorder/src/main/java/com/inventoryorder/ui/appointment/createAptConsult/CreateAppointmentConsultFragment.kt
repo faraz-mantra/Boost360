@@ -21,6 +21,7 @@ import com.framework.utils.DateUtils.FORMAT_YYYY_MM_DD
 import com.framework.utils.DateUtils.parseDate
 import com.framework.utils.ValidationUtils.isEmailValid
 import com.framework.utils.ValidationUtils.isMobileNumberValid
+import com.framework.utils.ValidationUtils.isValidName
 import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.inventoryorder.R
@@ -58,7 +59,6 @@ import com.michalsvec.singlerowcalendar.selection.CalendarSelectionManager
 import com.michalsvec.singlerowcalendar.utils.DateUtils
 import kotlinx.android.synthetic.main.item_unavailable_calendar.view.*
 import java.util.*
-import java.util.regex.Pattern
 
 class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointmentConsultBinding>(), PopupMenu.OnMenuItemClickListener {
 
@@ -384,7 +384,7 @@ class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointme
 
   private fun updateBooking() {
     showProgress()
-    viewModel?.updateExtraPropertyOrder(AppConstant.CLIENT_ID_2, request = updateExtraPropertyRequest)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.updateExtraPropertyOrder(AppConstant.CLIENT_ID_ORDER, request = updateExtraPropertyRequest)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         WebEngageController.trackEvent(if (isVideoConsult) CONSULATION_UPDATED else APPOINTMENT_UPDATED, ADDED, TO_BE_ADDED)
         showLongToast(getString(R.string.apt_resceduled_success))
@@ -445,6 +445,10 @@ class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointme
         showLongToast(getString(R.string.patient_name_field_must_be_empty))
         return false
       }
+      !isValidName(patientName) -> {
+        showShortToast(getString(R.string.please_enter_valid_patient_name))
+        return false
+      }
       gender.isNullOrEmpty() -> {
         showLongToast(resources.getString(R.string.please_select_gender))
         return false
@@ -453,7 +457,7 @@ class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointme
         showLongToast(getString(R.string.age_field_must_not_be_empty))
         return false
       }
-      (age.toIntOrNull())?:0>150->{
+      (age.toIntOrNull() ?: 0) > 120 || (age.toIntOrNull() ?: 0) <= 0 -> {
         showLongToast(getString(R.string.enter_valid_age))
         return false
       }
@@ -463,10 +467,6 @@ class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointme
       }
       !isMobileNumberValid(patientMobile.toString()) -> {
         showLongToast(getString(R.string.phone_number_invalid))
-        return false
-      }
-      checkStringContainsDigits(patientName) -> {
-        showLongToast(getString(R.string.please_enter_valid_patient_name))
         return false
       }
 
@@ -639,8 +639,3 @@ fun UserSessionManager.getFilterRequest(offSet: Int, limit: Int): GetStaffListin
 }
 
 fun List<ItemsItemService>.findByIds(fooApiList: List<String>) = filter { fooApiList.any { v -> (v == it.id || it.isGeneralService) } }
-
-
-fun checkStringContainsDigits(input: String): Boolean {
-  return Pattern.compile("[0-9]").matcher(input).find()
-}

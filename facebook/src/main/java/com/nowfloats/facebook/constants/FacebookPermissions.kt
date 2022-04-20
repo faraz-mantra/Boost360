@@ -1,5 +1,7 @@
 package com.nowfloats.facebook.constants
 
+import java.util.ArrayList
+
 enum class FacebookPermissions {
   pages_manage_instant_articles,
   pages_manage_metadata,
@@ -19,6 +21,17 @@ enum class FacebookPermissions {
   pages_read_user_content,
   instagram_basic,
   instagram_content_publish,
-  instagram_manage_insights
+  instagram_manage_insights;
+
+  companion object {
+    fun fromName(name: String): FacebookPermissions? = values().firstOrNull { name.trim().contains(it.name) }
+    fun permissionValues(permissions: List<String>): ArrayList<FacebookPermissions> {
+      val listPermission = ArrayList<FacebookPermissions>()
+      permissions.forEach { fromName(it)?.apply { listPermission.add(this) } }
+      return listPermission
+    }
+  }
+
 }
+
 

@@ -35,22 +35,10 @@ data class DrScoreSetupData(
   enum class DrScoreType(var id: String, var title: String, var icon: Int) {
     BUSINESS_PROFILE("business_profile", "Business profile", R.drawable.ic_business_profile_dr),
     WEBSITE_CONTENT("website_content", "Website content", R.drawable.ic_edit_content_d),
-    ECOMMERCE_SETTINGS(
-      "enable_ecommerce",
-      "E-commerce settings",
-      R.drawable.ic_e_commerce_setting_dr
-    ),
-    CUSTOMER_INTERACTIONS(
-      "customer_interactions",
-      "Customer interactions",
-      R.drawable.ic_customer_interaction_dr
-    ),
-    MARKETING_ENGAGEMENT(
-      "marketing_enagement",
-      "Marketing & engagement",
-      R.drawable.ic_marketing_engage_dr
-    );
-    //Testing Data
+    ECOMMERCE_SETTINGS("enable_ecommerce", "E-commerce settings", R.drawable.ic_e_commerce_setting_dr),
+    CUSTOMER_INTERACTIONS("customer_interactions", "Customer interactions", R.drawable.ic_customer_interaction_dr),
+    MARKETING_ENGAGEMENT("marketing_enagement", "Marketing & engagement", R.drawable.ic_marketing_engage_dr);
+//    Testing Data
 //    BASIC_PROFILE("basic_profile", "Basic Profile", R.drawable.ic_add_home_d),
 //    ADVANCE_PROFILE("advanced_profile", "Advanced Profile", R.drawable.ic_edit_content_d);
 
@@ -73,10 +61,13 @@ fun DrScoreModel.getDrScoreData(drScoreUiList: ArrayList<DrScoreUiData>): ArrayL
   drs_segment?.forEach { segment ->
     val type = DrScoreSetupData.DrScoreType.fromId(segment.id)
     if (type != null) {
-      val drScoreItemList = ArrayList<DrScoreItem>()
+      var drScoreItemList = ArrayList<DrScoreItem>()
       segment.events.entries.forEach { event ->
         val drScoreUi = drScoreUiList.firstOrNull { it.id.equals(event.key, ignoreCase = true) }
         if (drScoreUi != null) drScoreItemList.add(DrScoreItem(drScoreUi, (event.value.state == 1)))
+      }
+      if(type.name == DrScoreSetupData.DrScoreType.BUSINESS_PROFILE.name){
+        drScoreItemList= ArrayList(drScoreItemList.sortedBy { DrScoreItem.DrScoreItemType.fromName(it.drScoreUiData?.id)?.priority?:0 })
       }
       list.add(DrScoreSetupData(type, segment.getScore(), drScoreItemList))
     }

@@ -189,11 +189,9 @@ class RegistrationBusinessGoogleBusinessFragment :
   override fun onGoogleLoginSuccess(result: GoogleSignInAccount?) {
     showProgress()
     val userId = result?.id
-    val request = GoogleAuthTokenRequest(
-      GoogleGraphPath.SERVER_CLIENT_ID,
-      GoogleGraphPath.SERVER_CLIENT_SECRET,
-      result?.serverAuthCode
-    )
+    val clientIdGoogle=  auth.google.BuildConfig.GOOGLE_SERVER_CLIENT_ID
+    val clientSecretGoogle=  auth.google.BuildConfig.GOOGLE_SERVER_CLIENT_SECRET
+    val request = GoogleAuthTokenRequest(clientIdGoogle, clientSecretGoogle, result?.serverAuthCode)
     viewModel?.getGoogleAuthToken(request)?.observeOnce(viewLifecycleOwner, Observer {
       val response = it as? GoogleAuthResponse
       if (response != null && response.access_token.isNullOrEmpty().not()) {

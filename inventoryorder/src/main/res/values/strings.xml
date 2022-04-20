@@ -148,6 +148,7 @@
   <string name="enter_customer_s_pincode">Enter customer’s pincode</string>
   <string name="shipping_address_is_same_as_billing_address">Shipping Address is same as billing Address</string>
   <string name="go_back">Go back</string>
+  <string name="go_back_1">Go back</string>
   <string name="next">Next</string>
   <string name="shipping_address">Shipping address</string>
   <string name="type_the_product_name">Type the product name</string>
@@ -265,6 +266,7 @@
   <string name="dummy_title">Mutton rogan josh</string>
   <string name="edit">Edit</string>
   <string name="customer_name_cannot_be_empty">Customer Name cannot be empty</string>
+  <string name="please_enter_valid_customer_name">Please enter a valid customer name.</string>
   <string name="customer_email_cannot_be_empty">Customer Email cannot be empty</string>
   <string name="customer_phone_cannot_be_empty">Customer phone number cannot be empty</string>
   <string name="customer_address_cannot_be_empty">Customer address cannot be empty</string>
@@ -438,9 +440,7 @@
   <string name="please_wait">Please wait...</string>
   <string name="share">Share</string>
   <string name="hash_xxxxxxxx"># XXXXXXX</string>
-  <string name="invoice_downloading">\"Invoice downloading.. \"</string>
-  <string name="boost_360_file">boost360 File</string>
-  <string name="boost_file">boost_file</string>
+  <string name="invoice_downloading">Invoice downloading..</string>
   <string name="permission_denied_to_read_your_external_storage">Permission denied to read your External storage</string>
   <string name="error_sharing_invoice">Error sharing invoice, please try again.</string>
   <string name="order_invoice">Order invoice</string>
@@ -528,6 +528,6 @@
   <string name="send_email">Send email</string>
   <string name="apt_resceduled_success">Your appointment is rescheduled successfully.</string>
   <string name="service_not_available">Service not available!</string>
-    <string name="no_data_found">No data found</string>
-    <string name="enter_valid_age">Enter valid age</string>
+  <string name="no_data_found">No data found</string>
+  <string name="enter_valid_age">Enter valid age</string>
 </resources>

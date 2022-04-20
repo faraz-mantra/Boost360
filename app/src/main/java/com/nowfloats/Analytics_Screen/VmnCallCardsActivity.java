@@ -23,7 +23,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.boost.upgrades.UpgradeActivity;
-import com.dashboard.utils.PremiumCode;
+import com.framework.constants.PremiumCode;
+import com.framework.constants.SupportVideoType;
+import com.framework.utils.InAppReviewUtils;
 import com.framework.views.customViews.CustomToolbar;
 import com.framework.views.zero.old.AppFragmentZeroCase;
 import com.framework.views.zero.old.AppOnZeroCaseClicked;
@@ -40,7 +42,6 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
-import com.onboarding.nowfloats.constant.SupportVideoType;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityVmnCallCardsBinding;
 
@@ -63,7 +64,7 @@ import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 /**
  * Created by Admin on 27-04-2017.
  */
-
+@Deprecated
 public class VmnCallCardsActivity extends AppCompatActivity implements View.OnClickListener, AppOnZeroCaseClicked {
 
   private static final String TAG = "VmnCallCardsActivity";
@@ -630,5 +631,13 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
   @Override
   public void appOnBackPressed() {
 
+  }
+
+  @Override
+  protected void onStop() {
+    super.onStop();
+    if (vmnCallAdapter.getItemCount()>1){
+      InAppReviewUtils.INSTANCE.showInAppReview(this, InAppReviewUtils.Events.in_app_review_out_of_customer_calls);
+    }
   }
 }

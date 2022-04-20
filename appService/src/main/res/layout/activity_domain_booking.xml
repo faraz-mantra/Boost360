@@ -1,231 +1,251 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true">
+
+    <include
+      android:id="@+id/app_bar"
+      layout="@layout/toolbar_domain"
+      title="@{@string/website_domain}"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+
+    <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:fillViewport="true"
+      android:scrollbars="none"
+      app:layout_constraintBottom_toTopOf="@+id/btn_book_old_domain"
+      app:layout_constraintTop_toBottomOf="@+id/app_bar">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:clickable="true"
-        android:focusable="true">
+        android:layout_height="wrap_content">
 
-        <include
-            android:id="@+id/app_bar"
-            layout="@layout/toolbar_domain"
-            title="@{@string/website_domain}"
+        <View
+          android:id="@+id/view4"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_90"
+          android:background="@color/black_4a4a4a"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.cardview.widget.CardView
+          android:id="@+id/layout_current_domain"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/size_15"
+          app:cardBackgroundColor="#F0F0F0"
+          app:cardCornerRadius="20dp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
+
+          <LinearLayout
+
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <androidx.core.widget.NestedScrollView
+            <LinearLayout
+              android:id="@+id/secondary_layout_one"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/all_side_curve_bg"
+              android:elevation="2dp"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+              android:padding="@dimen/size_16"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent">
+
+              <ImageView
+                android:layout_width="@dimen/size_40"
+                android:layout_height="@dimen/size_40"
+                app:srcCompat="@drawable/ic_custome_domain" />
+
+              <TextView
+                android:tag="com.userexperior.ueSecureView"
+                android:id="@+id/tv_domain_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_4"
+                android:fontFamily="@font/bold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/text_22"
+                tools:text="Test" />
+
+              <TextView
+                android:id="@+id/tv_domain_assigned"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/black_747474"
+                android:textSize="@dimen/text_16"
+                tools:text="Test" />
+            </LinearLayout>
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="4dp"
+              android:gravity="center"
+              android:text="@string/this_is_your_current_website_address"
+              android:textColor="@color/black_747474" />
+          </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <FrameLayout
+          android:id="@+id/iv_ria_steps"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_92"
+          android:layout_marginTop="@dimen/size_24"
+          android:visibility="visible"
+          app:layout_constraintTop_toBottomOf="@+id/layout_current_domain">
+
+          <com.framework.views.customViews.CustomCardView
+            android:layout_width="@dimen/size_80"
+            android:layout_height="@dimen/size_80"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="@dimen/size_40"
+            app:cardElevation="@dimen/size_1">
+
+            <com.framework.views.customViews.CustomImageView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:src="@drawable/ic_ria_circle" />
+          </com.framework.views.customViews.CustomCardView>
+
+          <com.framework.views.customViews.CustomImageView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:fillViewport="true"
-            android:scrollbars="none"
-            app:layout_constraintBottom_toTopOf="@+id/btn_book_old_domain"
-            app:layout_constraintTop_toBottomOf="@+id/app_bar">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <View
-                    android:id="@+id/view4"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_90"
-                    android:background="@color/black_4a4a4a"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="@dimen/size_22"
+            android:layout_gravity="bottom"
+            android:elevation="@dimen/size_2"
+            android:paddingHorizontal="@dimen/size_40"
+            android:src="@drawable/ria_domain_steps" />
+        </FrameLayout>
 
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/layout_current_domain"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/size_15"
-                    app:cardBackgroundColor="#F0F0F0"
-                    app:cardCornerRadius="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/rv_steps"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="24dp"
+          android:layout_marginTop="16dp"
+          android:layout_marginEnd="24dp"
+          android:visibility="visible"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/iv_ria_steps" />
 
-                    <LinearLayout
+        <LinearLayout
+          android:id="@+id/layout_buy_addon"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="24dp"
+          android:gravity="center"
+          android:orientation="vertical"
+          android:visibility="gone"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/layout_current_domain">
 
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+          <com.framework.views.customViews.CustomCardView
+            android:id="@+id/cardView3"
+            android:layout_width="@dimen/size_80"
+            android:layout_height="@dimen/size_80"
+            android:layout_marginTop="@dimen/size_24"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/size_40">
 
-                        <LinearLayout
-                            android:id="@+id/secondary_layout_one"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/all_side_curve_bg"
-                            android:elevation="2dp"
-                            android:gravity="center_horizontal"
-                            android:orientation="vertical"
-                            android:padding="@dimen/size_16"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
+            <com.framework.views.customViews.CustomImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:src="@drawable/ic_lock_gray_filled" />
 
-                            <ImageView
-                                android:layout_width="@dimen/size_40"
-                                android:layout_height="@dimen/size_40"
-                                app:srcCompat="@drawable/ic_custome_domain" />
+          </com.framework.views.customViews.CustomCardView>
 
-                            <TextView
-                                android:tag="com.userexperior.ueSecureView"
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/customTextView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_16"
+            android:gravity="center"
+            android:text="@string/make_a_custom_domain_your_website_address"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="@dimen/heading_5"
+            app:fontFamily="@font/semi_bold" />
 
-                                android:id="@+id/tv_domain_title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/size_4"
-                                android:fontFamily="@font/bold"
-                                android:gravity="center"
-                                android:includeFontPadding="false"
-                                android:textColor="@color/orange"
-                                android:textSize="@dimen/text_22"
-                                tools:text="ksnfksfbsjkdf" />
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/customTextView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_16"
+            android:gravity="center"
+            android:text="@string/buy_domain_addon_desc"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="@dimen/body_1" />
 
-                            <TextView
-                                android:id="@+id/tv_domain_assigned"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:textColor="@color/black_747474"
-                                android:textSize="@dimen/text_16"
-                                tools:text="ksnfksfbsjkdf" />
-                        </LinearLayout>
-
-                        <com.framework.views.customViews.CustomTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
-                            android:gravity="center"
-                            android:text="@string/this_is_your_current_website_address"
-                            android:textColor="@color/black_747474" />
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-
-                <com.framework.views.customViews.CustomImageView
-                    android:id="@+id/iv_ria_steps"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="24dp"
-                    android:src="@drawable/ria_domain_steps"
-                    android:visibility="visible"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_current_domain" />
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_steps"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="24dp"
-                    android:visibility="visible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/iv_ria_steps" />
-
-                <LinearLayout
-                    android:id="@+id/layout_buy_addon"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="24dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_current_domain">
-
-                    <com.framework.views.customViews.CustomCardView
-                        android:id="@+id/cardView3"
-                        android:layout_width="@dimen/size_80"
-                        android:layout_height="@dimen/size_80"
-                        android:layout_marginTop="@dimen/size_24"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardCornerRadius="@dimen/size_40">
-
-                        <com.framework.views.customViews.CustomImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_lock_gray_filled" />
-
-                    </com.framework.views.customViews.CustomCardView>
-
-                    <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/customTextView5"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/size_16"
-                        android:gravity="center"
-                        android:text="@string/make_a_custom_domain_your_website_address"
-                        android:textColor="@color/black_4a4a4a"
-                        android:textSize="@dimen/heading_5"
-                        app:fontFamily="@font/semi_bold" />
-
-                    <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/customTextView6"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/size_16"
-                        android:gravity="center"
-                        android:text="@string/buy_domain_addon_desc"
-                        android:textColor="@color/black_4a4a4a"
-                        android:textSize="@dimen/body_1" />
-
-                    <com.framework.views.customViews.CustomMaterialButton
-                        android:id="@+id/btn_buy_addon"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_54"
-                        android:layout_marginTop="@dimen/size_16"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:fontFamily="@font/semi_bold"
-                        android:text="@string/buy_add_on_lowercase"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        app:cornerRadius="@dimen/size_15" />
-                </LinearLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
-
-        <com.framework.views.customViews.CustomMaterialButton
-            android:id="@+id/btn_book_old_domain"
-            style="@style/CustomYellowButton"
-            android:layout_marginHorizontal="@dimen/size_30"
-            android:text="@string/add_a_domain_you_own"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/btn_book_new_domain"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <com.framework.views.customViews.CustomMaterialButton
-            android:id="@+id/btn_book_new_domain"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+          <com.framework.views.customViews.CustomMaterialButton
+            android:id="@+id/btn_buy_addon"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_54"
-            android:layout_marginHorizontal="@dimen/size_30"
-            android:layout_marginBottom="@dimen/size_8"
+            android:layout_marginTop="@dimen/size_16"
+            android:backgroundTint="@color/colorAccentLight"
             android:fontFamily="@font/semi_bold"
-            android:text="@string/book_a_new_domain"
+            android:text="@string/buy_add_on_lowercase"
             android:textAllCaps="false"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/body_1"
-            android:visibility="visible"
-            app:cornerRadius="@dimen/size_10"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:strokeColor="@color/colorPrimary" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:textColor="@color/white"
+            app:cornerRadius="@dimen/size_15" />
+        </LinearLayout>
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.framework.views.customViews.CustomMaterialButton
+      android:id="@+id/btn_book_old_domain"
+      style="@style/CustomYellowButton"
+      android:layout_marginHorizontal="@dimen/size_30"
+      android:text="@string/add_a_domain_you_own"
+      android:visibility="gone"
+      app:layout_constraintBottom_toTopOf="@+id/btn_book_new_domain"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+    <com.framework.views.customViews.CustomMaterialButton
+      android:id="@+id/btn_book_new_domain"
+      style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_54"
+      android:layout_marginHorizontal="@dimen/size_30"
+      android:layout_marginBottom="@dimen/size_8"
+      android:fontFamily="@font/semi_bold"
+      android:text="@string/book_a_new_domain"
+      android:textAllCaps="false"
+      android:textColor="@color/colorAccentLight"
+      android:textSize="@dimen/body_1"
+      android:visibility="visible"
+      app:cornerRadius="@dimen/size_10"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:strokeColor="@color/colorAccentLight" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

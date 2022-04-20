@@ -1,14 +1,11 @@
 package com.dashboard.controller.ui.more
 
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.view.*
 import android.widget.PopupWindow
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.LinearLayoutCompat
 import com.appservice.model.accountDetails.getBankDetail
@@ -16,7 +13,6 @@ import com.appservice.model.kycData.DataKyc
 import com.appservice.model.kycData.getBusinessKycDetail
 import com.appservice.ui.updatesBusiness.showDialog
 import com.boost.presignin.model.other.KYCDetails
-
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.RecyclerViewActionType
@@ -32,22 +28,21 @@ import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
-import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.models.UserProfileData
 import com.framework.models.UserProfileDataResult
 import com.framework.models.UserProfileDataResult.Companion.getMerchantProfileDetails
 import com.framework.models.UserProfileDataResult.Companion.saveMerchantProfileDetails
-import com.framework.pref.*
+import com.framework.pref.BASE_IMAGE_URL
+import com.framework.pref.Key_Preferences
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_IMAGE_URI
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
+import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 
 class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
-  val TWITTER_URL = "https://twitter.com/Nowfloats"
-  val TWITTER_ID_URL = "twitter://user?screen_name=nowfloats"
   private var usefulLinks: ArrayList<UsefulLinksItem>? = null
 
   override fun getLayout(): Int {
@@ -105,7 +100,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
 
   private fun setUserDetail(merchantProfileDetails: UserProfileDataResult?) {
     if (merchantProfileDetails?.ImageUrl.isNullOrEmpty().not()) {
-      binding?.rivUsersImage?.let { baseActivity.glideLoad(it, merchantProfileDetails?.ImageUrl ?: "", R.drawable.placeholder_image_n) }
+      binding?.rivUsersImage?.let { baseActivity.glideLoad(it, merchantProfileDetails?.ImageUrl ?: "", R.drawable.placeholder_image_n, isLoadBitmap = true) }
     } else {
       binding?.rivUsersImage?.setImageResource(R.drawable.ic_user_circle_dark_grey)
     }
@@ -145,10 +140,22 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       val data = it0 as? MoreSettingsResponse
       if (data != null) {
         usefulLinks = data.usefulLinks
+        isPaidUser()
         setHelpfulResources()
         binding?.rvAbout?.adapter = AppBaseRecyclerViewAdapter(baseActivity, data.aboutAppSection ?: arrayListOf(), this)
       } else showShortToast(getString(R.string.error_loading_more_page))
     })
+  }
+
+  private fun isPaidUser() {
+    if (session?.getStoreWidgets().isNullOrEmpty()) {
+      val index = usefulLinks?.indexOfFirst {
+        it.icon == UsefulLinksItem.IconType.refer_and_earn.name
+      }
+      if (index != null) {
+        usefulLinks?.removeAt(index)
+      }
+    }
   }
 
   private fun setHelpfulResources() {
@@ -243,8 +250,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       rate_us_on_google_play -> {
         rateGooglePlayStore()
       }
-      else -> {
-      }
+      else -> showShortToast(getString(R.string.coming_soon))
     }
   }
 
@@ -259,16 +265,24 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
 
   private fun followUsTwitter() {
     WebEngageController.trackEvent(ABOUT_BOOST_TWITTER_LIKE, CLICK, NO_EVENT_VALUE)
-    val intent = Intent(Intent.ACTION_VIEW)
-    try {
-      requireActivity().packageManager.getPackageInfo(getString(R.string.twitter_package), 0)
-      intent.data = Uri.parse(TWITTER_ID_URL)
-    } catch (e1: PackageManager.NameNotFoundException) {
-      intent.data = Uri.parse(TWITTER_URL)
-      e1.printStackTrace()
-    }
-    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
-    startActivity(intent)
+    if (getString(R.string.settings_twitter_url_id).isNotEmpty() || getString(R.string.settings_twitter_url).isNotEmpty()) {
+      try {
+        val twitterIntent = if (getString(R.string.settings_twitter_url_id).isEmpty() && getString(R.string.settings_twitter_url).isNotEmpty()) {
+          Intent(Intent.ACTION_VIEW, Uri.parse(baseActivity.getString(R.string.settings_twitter_url)))
+        } else {
+          try {
+            baseActivity.packageManager.getPackageInfo(baseActivity.getString(R.string.twitter_package), 0)
+            Intent(Intent.ACTION_VIEW, Uri.parse(baseActivity.getString(R.string.settings_twitter_url_id)))
+          } catch (e: Exception) {
+            Intent(Intent.ACTION_VIEW, Uri.parse(baseActivity.getString(R.string.settings_twitter_url)))
+          }
+        }
+        twitterIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
+        baseActivity.startActivity(twitterIntent)
+      } catch (e: Exception) {
+        showShortToast(baseActivity.getString(R.string.unable_to_open_twitter))
+      }
+    } else showShortToast(getString(R.string.coming_soon))
   }
 
   private fun rateGooglePlayStore() {
@@ -282,18 +296,22 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       val url = resources.getString(R.string.settings_rate_us_link)
       baseActivity.startMobileSite(session, url, ABOUT_BOOST_PLAY_STORE_RATING)
     }
+    //InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.in_app_review_rate_us_on_store)
+
   }
 
   private fun businessGoogleForm() {
     WebEngageController.trackEvent(BOOST_FEEDBACK_GOOGLE_FORM, CLICK, NO_EVENT_VALUE)
-    try {
-      val i = Intent(Intent.ACTION_VIEW)
-      i.data = Uri.parse(getString(R.string.google_form_help_business_boost))
-      startActivity(i)
-    } catch (e: Exception) {
-      e.printStackTrace()
-      showShortToast("Feedback Google form loading error, please try again!.")
-    }
+    if (getString(R.string.google_form_help_business_boost).isNotEmpty()) {
+      try {
+        val i = Intent(Intent.ACTION_VIEW)
+        i.data = Uri.parse(getString(R.string.google_form_help_business_boost))
+        startActivity(i)
+      } catch (e: Exception) {
+        e.printStackTrace()
+        showShortToast("Feedback Google form loading error, please try again!.")
+      }
+    } else showShortToast(getString(R.string.coming_soon))
   }
 
   private fun logoutUser() {
@@ -354,22 +372,6 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     }
     popupWindow.elevation = 5.0F
     popupWindow.showAsDropDown(anchor, 0, 10)
-  }
-
-  private fun likeUsFacebook(context: Context, review: String) {
-    WebEngageController.trackEvent(ABOUT_BOOST_FB_LIKE, CLICK, NO_EVENT_VALUE)
-    val facebookIntent: Intent = try {
-      context.packageManager.getPackageInfo(context.getString(R.string.facebook_package), 0)
-      Intent(Intent.ACTION_VIEW, Uri.parse(FACEBOOK_PAGE_WITH_ID))
-    } catch (e: Exception) {
-      Intent(Intent.ACTION_VIEW, Uri.parse(FACEBOOK_URL + review))
-    }
-    facebookIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
-    try {
-      context.startActivity(facebookIntent)
-    } catch (e: Exception) {
-      Toast.makeText(context, context.getString(R.string.unable_to_open_facebook), Toast.LENGTH_SHORT).show()
-    }
   }
 
   override fun onResume() {

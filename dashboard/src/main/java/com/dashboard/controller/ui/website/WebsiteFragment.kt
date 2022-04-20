@@ -2,39 +2,26 @@ package com.dashboard.controller.ui.website
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Typeface
 import android.graphics.Typeface.*
-import android.os.Build
-import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
-import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+import com.appservice.constant.FragmentType
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
-import com.dashboard.constant.IntentConstant
-import com.dashboard.constant.RecyclerViewActionType
-import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.getDomainName
-import com.dashboard.controller.ui.dashboard.checkIsPremiumUnlock
+import com.dashboard.controller.ui.websiteTheme.bottomsheet.*
+import com.dashboard.controller.ui.websiteTheme.dialog.WebViewDialog
 import com.dashboard.databinding.FragmentWebsiteBinding
-import com.dashboard.databinding.FragmentWebsitePagerBinding
 import com.dashboard.model.live.websiteItem.WebsiteActionItem
-import com.dashboard.model.live.websiteItem.WebsiteData
-import com.dashboard.model.live.websiteItem.WebsiteDataResponse
-import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
-import com.dashboard.recyclerView.BaseRecyclerViewItem
-import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.gone
-import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.pref.BASE_IMAGE_URL
@@ -58,7 +45,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   private var businessName: String? = null
   private var businessContact: String? = null
   private var popupWindow: PopupWindow? = null
-  private  val TAG = "WebsiteFragment"
+  private val TAG = "WebsiteFragment"
   override fun getLayout(): Int {
     return R.layout.fragment_website
   }
@@ -70,6 +57,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   override fun onCreateView() {
     super.onCreateView()
     Log.i(TAG, "onCreateView: ")
+    baseActivity.window.statusBarColor = getColor(R.color.website_toolbar_color)
     session = UserSessionManager(baseActivity)
     setOnClickListener(
       binding?.txtDomainName, binding?.btnProfileLogo, binding?.editProfile,
@@ -85,42 +73,46 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   private fun setupViewPager() {
     binding?.pager?.adapter = CategoriesPagerAdapter(baseActivity, childFragmentManager)
     binding?.tabLayout?.setupWithViewPager(binding?.pager)
-    for (i in 0..binding?.tabLayout?.tabCount!!){
-      val tab:TabLayout.Tab? = binding?.tabLayout?.getTabAt(i)
-      if (tab != null){
-        val tabTextView:TextView = TextView(baseActivity)
+    for (i in 0..binding?.tabLayout?.tabCount!!) {
+      val tab: TabLayout.Tab? = binding?.tabLayout?.getTabAt(i)
+      if (tab != null) {
+        val tabTextView: TextView = TextView(baseActivity)
         tab.customView = tabTextView
         tabTextView.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
         tabTextView.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
         tabTextView.text = tab.text
-        if (i == 0){
+        if (i == 0) {
           // This set the font style of the first tab
-          tabTextView.setTypeface(SANS_SERIF,BOLD)
+          tabTextView.setTypeface(SANS_SERIF, BOLD)
           tabTextView.setTextColor(getColor(R.color.colorAccent))
 
         }
-        if (i == 1){
+        if (i == 1) {
           // This set the font style of the first tab
-          tabTextView.setTypeface(null,NORMAL)
+          tabTextView.setTypeface(null, NORMAL)
         }
       }
     }
-    binding?.tabLayout!!.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+    binding?.tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
       override fun onTabSelected(tab: TabLayout.Tab?) {
         val text: TextView = tab?.customView as TextView
         text.setTypeface(null, BOLD)
         text.setTextColor(getColor(R.color.colorAccent))
 
       }
+
       override fun onTabUnselected(tab: TabLayout.Tab?) {
         val text: TextView = tab?.customView as TextView
         text.setTypeface(null, NORMAL)
-        text.setTextColor(getColor(R.color.black_4a4a4a                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ))
+        text.setTextColor(
+          getColor(R.color.black_4a4a4a)
+        )
 
       }
+
       override fun onTabReselected(tab: TabLayout.Tab?) {
       }
-  })
+    })
   }
 
   override fun onResume() {
@@ -152,7 +144,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     when (type) {
       WebsiteActionItem.IconType.service_product_catalogue -> baseActivity.startListServiceProduct(session)
       WebsiteActionItem.IconType.latest_update_tips -> session?.let { baseActivity.startUpdateLatestStory(it) }
-      WebsiteActionItem.IconType.all_images -> baseActivity.startBackgroundImageGallery(session)
+      WebsiteActionItem.IconType.all_images -> startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
       WebsiteActionItem.IconType.business_profile -> baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
       WebsiteActionItem.IconType.testimonials -> baseActivity.startTestimonial(session)
       WebsiteActionItem.IconType.custom_page -> baseActivity.startCustomPage(session)
@@ -249,12 +241,41 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       shareMore()
       this.popupWindow?.dismiss()
     }
+    val republishWebsiteBtn = this.popupWindow?.contentView?.findViewById<LinearLayoutCompat>(R.id.ll_republish)
+    republishWebsiteBtn?.setOnClickListener {
+      RepublishProgressBottomSheet().apply {
+        onRepublishSuccess = { openSuccessDialog() }
+        show(baseActivity.supportFragmentManager, RepublishProgressBottomSheet::javaClass.name)
+      }
+      this.popupWindow?.dismiss()
+    }
     this.popupWindow?.elevation = 5.0F
     this.popupWindow?.showAsDropDown(anchor, 0, 20)
   }
 
   private fun shareMore() {
-    ContentSharing.shareWebsiteTheme(requireActivity(), businessName!!, websiteLink!!, businessContact!!)
+    ContentSharing.shareWebsiteTheme(baseActivity, businessName ?: "", websiteLink ?: "", businessContact ?: "")
+  }
+
+  private fun openSuccessDialog() {
+    WebsiteThemeUpdatedSuccessfullySheet(isRepublishFlow = true).apply {
+      onClicked = {
+        when (it) {
+          TypeSuccess.VISIT_WEBSITE.name -> {
+            openWebViewDialog(binding?.txtDomainName?.text.toString(), session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME) ?: "")
+          }
+          TypeSuccess.CLOSE.name -> dismiss()
+        }
+      }
+      show(baseActivity.supportFragmentManager, WebSiteThemeResetBottomSheet::javaClass.name)
+    }
+  }
+
+  private fun openWebViewDialog(url: String, title: String) {
+    WebViewDialog().apply {
+      setData(url, title)
+      show(baseActivity.supportFragmentManager, WebViewDialog::javaClass.name)
+    }
   }
 }
 

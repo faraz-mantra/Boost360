@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="twitter_consumer_key">qhecWhz0QK6PcGcsrCL03K8V2</string>
-  <string name="twitter_consumer_secret">MMD73UQ3vvptgFYOtHSl7iZxnwxXguzffTgMSqLzYDElKXY5Ky</string>
+<!--  <string name="twitter_consumer_key">qhecWhz0QK6PcGcsrCL03K8V2</string>-->
+<!--  <string name="twitter_consumer_secret">MMD73UQ3vvptgFYOtHSl7iZxnwxXguzffTgMSqLzYDElKXY5Ky</string>-->
   <string name="website_domain_name">.redtim.com</string>
   <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
   <string name="app_name">RedTim</string>

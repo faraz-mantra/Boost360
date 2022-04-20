@@ -65,10 +65,9 @@
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvOrderAmount"
-                  android:tag="com.userexperior.ueSecureView"
-
-                  style="@style/wrap_wrap"
+                style="@style/wrap_wrap"
                 android:gravity="center"
+                android:tag="com.userexperior.ueSecureView"
                 android:textAlignment="center"
                 android:textColor="@color/black_4a4a4a"
                 android:textSize="24sp"
@@ -76,11 +75,10 @@
 
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvItemCount"
-                  android:tag="com.userexperior.ueSecureView"
-
-                  style="@style/wrap_wrap"
+                style="@style/wrap_wrap"
                 android:layout_marginStart="@dimen/size_4"
                 android:gravity="end"
+                android:tag="com.userexperior.ueSecureView"
                 android:textAlignment="textEnd"
                 android:textColor="@color/black_4a4a4a"
                 app:textType="BODY_1"
@@ -90,12 +88,12 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/orderDate"
-                android:tag="com.userexperior.ueSecureView"
+              style="@style/wrap_wrap"
 
-                style="@style/wrap_wrap"
               android:layout_marginStart="@dimen/size_14"
               android:layout_marginTop="@dimen/size_3"
               android:gravity="end"
+              android:tag="com.userexperior.ueSecureView"
               android:textAlignment="textEnd"
               android:textColor="@color/black_4a4a4a"
               app:fontFamily="@font/regular"
@@ -154,12 +152,12 @@
                   <!--                  android:drawablePadding="@dimen/size_8"-->
                   <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tvDeliveryType"
-                      android:tag="com.userexperior.ueSecureView"
-
-                      style="@style/wrap_wrap"
+                    style="@style/wrap_wrap"
 
                     android:includeFontPadding="false"
+
                     android:maxLines="1"
+                    android:tag="com.userexperior.ueSecureView"
                     android:textColor="@color/orange"
                     app:textType="BODY_1"
                     tools:text="Store Pickup" />
@@ -192,12 +190,12 @@
                   <!--                  android:drawablePadding="@dimen/size_8"-->
                   <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tvPaymentMode"
-                      android:tag="com.userexperior.ueSecureView"
+                    style="@style/wrap_wrap"
 
-                      style="@style/wrap_wrap"
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:maxLines="1"
+                    android:tag="com.userexperior.ueSecureView"
                     android:textColor="@color/orange"
                     app:textType="BODY_1"
                     tools:text="COD" />
@@ -231,13 +229,13 @@
                   <!--                  android:drawablePadding="@dimen/size_8"-->
                   <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tvOrderStatus"
-                      android:tag="com.userexperior.ueSecureView"
-
-                      style="@style/wrap_wrap"
+                    style="@style/wrap_wrap"
 
                     android:ellipsize="end"
+
                     android:includeFontPadding="false"
                     android:maxLines="1"
+                    android:tag="com.userexperior.ueSecureView"
                     android:textColor="@color/orange"
                     app:textType="BODY_1"
                     tools:text="Pending" />
@@ -265,9 +263,9 @@
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:background="@null"
+              android:fontFamily="@font/semi_bold"
               android:gravity="center"
               android:paddingTop="@dimen/size_14"
-              android:fontFamily="@font/semi_bold"
               android:paddingBottom="@dimen/size_14"
               android:text="@string/send_payment_link"
               android:textAlignment="gravity"
@@ -290,9 +288,9 @@
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:background="@null"
+              android:fontFamily="@font/semi_bold"
               android:gravity="center"
               android:paddingTop="@dimen/size_14"
-              android:fontFamily="@font/semi_bold"
               android:paddingBottom="@dimen/size_14"
               android:text="@string/cancel_order_normal"
               android:textAlignment="gravity"
@@ -345,10 +343,10 @@
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/tvCustomerName"
               style="@style/wrap_wrap"
-                android:tag="com.userexperior.ueSecureView"
+              android:layout_marginTop="@dimen/size_12"
 
-                android:layout_marginTop="@dimen/size_12"
               android:includeFontPadding="false"
+              android:tag="com.userexperior.ueSecureView"
               android:textColor="@color/black_4a4a4a"
               app:textType="BODY_1"
               tools:text="Mr, Sanghmitra Sharma" />
@@ -356,11 +354,10 @@
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/tvCustomerDetail"
               style="@style/match_wrap"
-                android:tag="com.userexperior.ueSecureView"
-
-                android:layout_marginTop="@dimen/size_6"
+              android:layout_marginTop="@dimen/size_6"
               android:includeFontPadding="false"
               android:lineSpacingExtra="4dp"
+              android:tag="com.userexperior.ueSecureView"
               android:textColor="@color/grey_dark_2"
               app:textType="BODY_1"
               tools:text="+91 654323 54546\nazgarhn@gmail.com" />
@@ -374,12 +371,12 @@
               <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvCustomerEmail"
                 style="@style/wrap_wrap"
+                android:layout_marginEnd="@dimen/size_30"
                 android:drawableStart="@drawable/ic_inbox_orange"
                 android:drawablePadding="@dimen/size_8"
                 android:drawableTint="@color/colorAccentLight"
                 android:includeFontPadding="false"
                 android:text="@string/email"
-                android:layout_marginEnd="@dimen/size_30"
                 android:textAllCaps="false"
                 android:textColor="@color/colorAccentLight"
                 app:textAllCaps="false"
@@ -407,11 +404,10 @@
 
             <include
               android:id="@+id/user_address"
-                android:tag="com.userexperior.ueSecureView"
-
-                style="@style/match_wrap"
+              style="@style/match_wrap"
               layout="@layout/layout_shipping_billing_address"
               android:layout_marginTop="@dimen/size_20"
+              android:tag="com.userexperior.ueSecureView"
               tools:ignore="IncludeLayoutParam" />
 
           </androidx.appcompat.widget.LinearLayoutCompat>
@@ -449,7 +445,7 @@
                 android:gravity="end"
                 android:text="@string/change"
                 android:textAllCaps="false"
-                android:textColor="@color/colorAccent_jio"
+                android:textColor="@color/colorAccentLight"
                 android:visibility="invisible"
                 app:textAllCaps="false"
                 app:textType="BODY_1" />
@@ -457,11 +453,10 @@
 
 
             <com.framework.views.viewgroups.BaseRecyclerView
-                android:tag="com.userexperior.ueSecureView"
-
-                android:id="@+id/recyclerViewOrderDetails"
+              android:id="@+id/recyclerViewOrderDetails"
               style="@style/match_wrap"
               android:overScrollMode="never"
+              android:tag="com.userexperior.ueSecureView"
               app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
               tools:itemCount="3"
               tools:listitem="@layout/item_order_details" />
@@ -488,22 +483,20 @@
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/tvShippingCost"
               style="@style/wrap_wrap"
+              android:tag="com.userexperior.ueSecureView"
               android:textColor="@color/warm_grey_10"
               app:fontFamily="@font/regular"
               app:textType="CAPTION"
-                android:tag="com.userexperior.ueSecureView"
-
-                tools:text="Shipping Cost: ₹0" />
+              tools:text="Shipping Cost: ₹0" />
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/tvTotalOrderAmount"
               style="@style/wrap_wrap"
               android:layout_marginTop="@dimen/size_2"
+              android:tag="com.userexperior.ueSecureView"
               android:textColor="@color/black_4a4a4a"
               app:textType="HEADING_6"
-                android:tag="com.userexperior.ueSecureView"
-
-                tools:text="Total amount: ₹976" />
+              tools:text="Total amount: ₹976" />
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <View

@@ -9,24 +9,25 @@ import com.google.gson.annotations.SerializedName
 
 open class PosterModel(
     @SerializedName("active")
-    val active: Boolean,
+    val active: Boolean?=null,
     @SerializedName("createdOn")
-    val createdOn: String,
+    val createdOn: String?=null,
     @SerializedName("details")
-    val details: PosterDetailsModel,
+    val details: PosterDetailsModel?=null,
     @SerializedName("id")
-    val id: String,
+    val id: String?=null,
     @SerializedName("keys")
-    var keys: List<PosterKeyModel>,
+    var keys: List<PosterKeyModel>?=null,
     @SerializedName("tags")
-    val tags: List<String>,
+    val tags: List<String>?=null,
     @SerializedName("updatedOn")
-    val updatedOn: String,
+    val updatedOn: String?=null,
     @SerializedName("variants")
-    val variants: List<PosterVariantModel>,
-    var greeting_message:String?,
-    var layout_id:Int
-): AppBaseRecyclerViewItem {
+    val variants: List<PosterVariantModel>?=null,
+    var greeting_message:String?=null,
+    var layout_id:Int,
+    var shouldShowFavOn:Boolean=false,
+    ): AppBaseRecyclerViewItem {
     override fun getViewType(): Int {
         return layout_id
     }
@@ -37,10 +38,12 @@ open class PosterModel(
     }
 
     var isPurchased:Boolean=false
-    get() = details.isPurchased
+    get() = details?.isPurchased == true
 
     fun url(): String? {
-        return variants.firstOrNull()?.svgUrl
+        return variants?.firstOrNull()?.svgUrl
     }
+
+
 
 }

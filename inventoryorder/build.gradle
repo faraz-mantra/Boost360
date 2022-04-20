@@ -24,6 +24,16 @@ android {
         }
     }
 
+    flavorDimensions "default"
+    productFlavors {
+        partone {
+            dimension "default"
+        }
+        jioonline {
+            dimension "default"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -38,5 +48,4 @@ android {
 
 dependencies {
     api project(path: ':onboarding')
-    implementation project(path: ':cart')
 }

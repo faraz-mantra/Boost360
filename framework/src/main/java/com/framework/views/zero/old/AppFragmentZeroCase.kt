@@ -38,7 +38,7 @@ class AppFragmentZeroCase : Fragment() {
       }
 
       fun isPremium(isPremium: Boolean?): AppZeroCaseBuilder {
-        arguments!!.putBoolean("isPremium", isPremium?:false)
+        arguments!!.putBoolean("isPremium", isPremium ?: false)
         return this
       }
 
@@ -87,7 +87,7 @@ class AppFragmentZeroCase : Fragment() {
   private lateinit var binding: FragmentZeroCaseBinding
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-   binding = FragmentZeroCaseBinding.inflate(inflater)
+    binding = FragmentZeroCaseBinding.inflate(inflater)
     binding.btnPrimary.setOnClickListener { onZeroCaseClicked?.primaryButtonClicked() }
     binding.btnSecondary.setOnClickListener { onZeroCaseClicked?.secondaryButtonClicked() }
     binding.btnTertiary.setOnClickListener { onZeroCaseClicked?.ternaryButtonClicked() }
@@ -139,7 +139,7 @@ class AppFragmentZeroCase : Fragment() {
         else binding.btnSecondary.background = ContextCompat.getDrawable(requireContext(), R.drawable.stroke_accent)
         binding.ctvBtnSecondaryTitle.text = button.secondaryButtonTitle
         if (button.secondaryButtonIconLeft != null)
-          binding.civIconLeftSecondary.apply { setImageDrawable(getDrawable(requireContext(), button.secondaryButtonIconLeft));setTintColor(getColor(R.color.colorAccent)) }
+          binding.civIconLeftSecondary.apply { setImageDrawable(getDrawable(requireContext(), button.secondaryButtonIconLeft));setTintColor(getColor(R.color.colorAccentLight)) }
       } else {
         binding.cvSecondary.gone()
       }
@@ -158,7 +158,11 @@ class AppFragmentZeroCase : Fragment() {
     } else {
       binding.llBtnContainer.visibility = View.GONE
     }
-  //  activity?.onBackPressedDispatcher?.addCallback(callback)
+    //  activity?.onBackPressedDispatcher?.addCallback(callback)
+  }
+
+  fun setRootBG(@ColorRes color: Int){
+      binding.rootLayout.setBackgroundColor(ContextCompat.getColor(requireActivity(),color))
   }
 
   var callback = object : OnBackPressedCallback(true) {
@@ -190,30 +194,31 @@ data class ZeroCaseButton(
 
 
 enum class AppZeroCases {
-  SERVICES, STAFF_LISTING, APPOINTMENT, PRODUCT,
+  SERVICES, STAFF_LISTING, DOCTOR_PROFILE_LISTING, APPOINTMENT, PRODUCT,
   MY_BANK_ACCOUNT, IMAGE_GALLERY, LATEST_NEWS_UPADATES, CUSTOMER_MESSAGES,
   TESTIMONIAL, NEWS_LETTER_SUBSCRIPTION, ORDERS, SEASONAL_OFFERS, BUSINESS_CALLS,
   UPCOMING_BATCHES, FACULTY_MANAGEMENT, TEAM_MEMBERS, DOCTOR_PROFILE, PROJECTS,
   CUSTOM_PAGES, CLIENT_LOGOS, WEBSITE_FAQ, RESTURANT_STORY, MENU_PICTURES,
-  BUSINESS_KEYBOARD, TABLE_BOOKING, ROOMS_LISTING,TOPPERS, RESTURANT_MENU,BROCHURES,SPA_SERVICES,
-  SALON_SERVICES,RESTAURANT_SERVICES,EDUCATION_SERVICES,HOSPITAL_SERVICES
+  BUSINESS_KEYBOARD, TABLE_BOOKING, ROOMS_LISTING, TOPPERS, RESTURANT_MENU, BROCHURES, SPA_SERVICES,
+  SALON_SERVICES, RESTAURANT_SERVICES, EDUCATION_SERVICES, HOSPITAL_SERVICES
 }
 
 
-class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
-                                private var onZeroCaseClicked: AppOnZeroCaseClicked,
-                                private var context: Context,private var isPremium: Boolean=true) {
+class AppRequestZeroCaseBuilder(
+  private var AppZeroCases: AppZeroCases,
+  private var onZeroCaseClicked: AppOnZeroCaseClicked,
+  private var context: Context, private var isPremium: Boolean = true
+) {
 
-  var title:String=""
-  var desc:String=""
-  var primaryButtonTitle:String=""
-  var primaryButtonIconLeft:Int=-1
+  var title: String = ""
+  var desc: String = ""
+  var primaryButtonTitle: String = ""
+  var primaryButtonIconLeft: Int = -1
 
-  constructor(AppZeroCases: AppZeroCases,
-              onZeroCaseClicked: AppOnZeroCaseClicked,
-              context: Context) : this(AppZeroCases,onZeroCaseClicked,context,true) {
+  constructor(
+    AppZeroCases: AppZeroCases, onZeroCaseClicked: AppOnZeroCaseClicked, context: Context
+  ) : this(AppZeroCases, onZeroCaseClicked, context, true)
 
-  }
   fun getRequest(): AppFragmentZeroCase.Companion.AppZeroCaseBuilder {
     when (AppZeroCases) {
       MY_BANK_ACCOUNT -> {
@@ -228,7 +233,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           .setButton(
             ZeroCaseButton(
               primaryButtonTitle = context.getString(R.string.add_bank_account),
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               primaryButtonIconLeft = R.drawable.ic_create_white,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(R.string.watch_how_it_works)
@@ -246,7 +251,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           .setButton(
             ZeroCaseButton(
               primaryButtonTitle = context.getString(R.string.upload_photos),
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               primaryButtonIconLeft = R.drawable.ic_create_white,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(R.string.watch_how_it_works)
@@ -264,7 +269,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           .setButton(
             ZeroCaseButton(
               primaryButtonTitle = context.getString(R.string.book_an_appointment),
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               primaryButtonIconLeft = R.drawable.ic_create_white,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(R.string.watch_how_it_works)
@@ -282,9 +287,9 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           .setToolBarTitle(context.getString(R.string.latest_news_and_updates))
           .isPremium(isPremium)
           .setButton(
-           ZeroCaseButton(
+            ZeroCaseButton(
               primaryButtonTitle = context.getString(R.string.post_an_update),
-              primaryButtonBackground = R.color.colorPrimary,
+              primaryButtonBackground = R.color.colorAccentLight,
               primaryButtonIconLeft = R.drawable.ic_create_white,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
@@ -304,7 +309,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           .setButton(
             ZeroCaseButton(
               primaryButtonTitle = context.getString(R.string.add_a_service),
-              primaryButtonBackground = R.color.colorPrimary,
+              primaryButtonBackground = R.color.colorAccentLight,
               primaryButtonIconLeft = R.drawable.ic_create_white,
               secondaryButtonIconLeft = R.drawable.ic_appointment_settings_secondary,
               secondaryButtonTitle = context.getString(
@@ -326,7 +331,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           .setButton(
             ZeroCaseButton(
               primaryButtonTitle = context.getString(R.string.add_a_product),
-              primaryButtonBackground = R.color.colorPrimary,
+              primaryButtonBackground = R.color.colorAccentLight,
               primaryButtonIconLeft = R.drawable.ic_create_white,
               secondaryButtonIconLeft = R.drawable.ic_appointment_settings_secondary,
               secondaryButtonTitle = context.getString(R.string.setup_ecommerce),
@@ -351,11 +356,11 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           )
       }
       TESTIMONIAL -> {
-        if (isPremium){
+        if (isPremium) {
           title = context.getString(R.string.you_havent_posted_testimonial_yet)
           primaryButtonTitle = context.getString(R.string.add_a_testimonial)
           primaryButtonIconLeft = R.drawable.ic_create_white
-        }else{
+        } else {
           title = context.getString(R.string.this_is_premium_feature)
           primaryButtonTitle = context.getString(R.string.activate_this_feature)
           primaryButtonIconLeft = R.drawable.ic_lockkey
@@ -368,9 +373,9 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
-              primaryButtonIconLeft =primaryButtonIconLeft,
+              primaryButtonIconLeft = primaryButtonIconLeft,
               primaryButtonTitle = primaryButtonTitle,
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -389,7 +394,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_newsletter_cta,
               primaryButtonTitle = context.getString(R.string.send_subscription_invite),
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -398,11 +403,11 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           )
       }
       STAFF_LISTING -> {
-        if (isPremium ){
+        if (isPremium) {
           title = context.getString(R.string.no_staff_member_listed_yet)
           primaryButtonTitle = context.getString(R.string.add_a_staff)
           primaryButtonIconLeft = R.drawable.ic_create_white
-        }else{
+        } else {
           title = context.getString(R.string.staff_listing_title)
           primaryButtonTitle = context.getString(R.string.activate_this_feature)
           primaryButtonIconLeft = R.drawable.ic_lockkey
@@ -418,11 +423,38 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = primaryButtonIconLeft,
               primaryButtonTitle = primaryButtonTitle,
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
               )
+            )
+          )
+      }
+      DOCTOR_PROFILE_LISTING -> {
+        if (isPremium) {
+          title = context.getString(R.string.no_doctor_profile_listed_yet)
+          primaryButtonTitle = context.getString(R.string.add_a_doctor)
+          primaryButtonIconLeft = R.drawable.ic_create_white
+        } else {
+          title = context.getString(R.string.staff_listing_title)
+          primaryButtonTitle = context.getString(R.string.activate_this_feature)
+          primaryButtonIconLeft = R.drawable.ic_lockkey
+        }
+
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(title)
+          .setDescription(context.getString(R.string.doctor_listing_desc))
+          .setIcon(R.drawable.ic_doc_hos_zero_case)
+          .setToolBarTitle(context.getString(R.string.tool_bar_doctor_listing))
+          .isPremium(isPremium)
+          .setListener(onZeroCaseClicked)
+          .setButton(
+            ZeroCaseButton(
+              primaryButtonIconLeft = primaryButtonIconLeft,
+              primaryButtonTitle = primaryButtonTitle,
+              primaryButtonBackground = R.color.colorAccentLight,
+              secondaryButtonIconLeft = R.drawable.exo_icon_play,
+              secondaryButtonTitle = context.getString(R.string.watch_how_it_works)
             )
           )
       }
@@ -437,7 +469,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_marketplace_cart,
               primaryButtonTitle = context.getString(R.string.create_an_offline_order),
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -456,7 +488,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_lockkey,
               primaryButtonTitle = "Add Offer",
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -465,8 +497,8 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           )
       }
       BUSINESS_CALLS -> {
-        var zeroCaseButton:ZeroCaseButton?=null
-        if (isPremium){
+        var zeroCaseButton: ZeroCaseButton? = null
+        if (isPremium) {
           title = context.getString(R.string.no_call_tracked_yet)
           zeroCaseButton = ZeroCaseButton(
             secondaryButtonIconLeft = R.drawable.exo_icon_play,
@@ -474,14 +506,14 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
               R.string.watch_how_it_works
             )
           )
-        }else{
+        } else {
           title = context.getString(R.string.this_is_premium_feature)
           primaryButtonTitle = context.getString(R.string.activate_this_feature)
           primaryButtonIconLeft = R.drawable.ic_lockkey
           zeroCaseButton = ZeroCaseButton(
-            primaryButtonIconLeft =primaryButtonIconLeft,
-            primaryButtonTitle =primaryButtonTitle,
-            primaryButtonBackground = R.color.colorAccent,
+            primaryButtonIconLeft = primaryButtonIconLeft,
+            primaryButtonTitle = primaryButtonTitle,
+            primaryButtonBackground = R.color.colorAccentLight,
             secondaryButtonIconLeft = R.drawable.exo_icon_play,
             secondaryButtonTitle = context.getString(
               R.string.watch_how_it_works
@@ -489,7 +521,8 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           )
         }
         return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(
-          title)
+          title
+        )
           .setDescription(context.getString(R.string.business_calls_description))
           .setIcon(R.drawable.ic_call_zero)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
@@ -502,11 +535,11 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
 
       //todo batch 2 screens
       UPCOMING_BATCHES -> {
-        if (isPremium){
+        if (isPremium) {
           title = context.getString(R.string.no_batch_create_yet)
           primaryButtonTitle = context.getString(R.string.create_a_batch)
           primaryButtonIconLeft = R.drawable.ic_create_white
-        }else{
+        } else {
           title = context.getString(R.string.this_is_premium_feature)
           primaryButtonTitle = context.getString(R.string.activate_this_feature)
           primaryButtonIconLeft = R.drawable.ic_lockkey
@@ -521,7 +554,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = primaryButtonIconLeft,
               primaryButtonTitle = primaryButtonTitle,
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -530,11 +563,11 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           )
       }
       FACULTY_MANAGEMENT -> {
-        if (isPremium){
+        if (isPremium) {
           title = context.getString(R.string.highlight_your_strength)
           primaryButtonTitle = context.getString(R.string.add_a_faculty_member)
           primaryButtonIconLeft = R.drawable.ic_create_white
-        }else{
+        } else {
           title = context.getString(R.string.this_is_premium_feature)
           primaryButtonTitle = context.getString(R.string.activate_this_feature)
           primaryButtonIconLeft = R.drawable.ic_lockkey
@@ -549,7 +582,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = primaryButtonIconLeft,
               primaryButtonTitle = primaryButtonTitle,
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -558,11 +591,11 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           )
       }
       TEAM_MEMBERS -> {
-        if (isPremium){
+        if (isPremium) {
           title = context.getString(R.string.introduce_your_team_members)
           primaryButtonTitle = context.getString(R.string.add_a_team_member)
           primaryButtonIconLeft = R.drawable.ic_create_white
-        }else{
+        } else {
           title = context.getString(R.string.this_is_premium_feature)
           primaryButtonTitle = context.getString(R.string.activate_this_feature)
           primaryButtonIconLeft = R.drawable.ic_lockkey
@@ -577,7 +610,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = primaryButtonIconLeft,
               primaryButtonTitle = primaryButtonTitle,
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -596,7 +629,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_lockkey,
               primaryButtonTitle = context.getString(R.string.activate_this_feature),
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -605,11 +638,11 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           )
       }
       PROJECTS -> {
-        if (isPremium){
+        if (isPremium) {
           title = context.getString(R.string.no_project_added_yet)
           primaryButtonTitle = context.getString(R.string.add_a_project)
           primaryButtonIconLeft = R.drawable.ic_create_white
-        }else{
+        } else {
           title = context.getString(R.string.this_is_premium_feature)
           primaryButtonTitle = context.getString(R.string.activate_this_feature)
           primaryButtonIconLeft = R.drawable.ic_lockkey
@@ -624,7 +657,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = primaryButtonIconLeft,
               primaryButtonTitle = primaryButtonTitle,
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -634,11 +667,11 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
       }
       TOPPERS -> {
 
-        if (isPremium){
+        if (isPremium) {
           title = context.getString(R.string.no_topper_student_listed_yet)
           primaryButtonTitle = context.getString(R.string.add_a_topper)
           primaryButtonIconLeft = R.drawable.ic_create_white
-        }else{
+        } else {
           title = context.getString(R.string.this_is_premium_feature)
           primaryButtonTitle = context.getString(R.string.activate_this_feature)
           primaryButtonIconLeft = R.drawable.ic_lockkey
@@ -654,7 +687,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = primaryButtonIconLeft,
               primaryButtonTitle = primaryButtonTitle,
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -674,7 +707,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_create_white,
               primaryButtonTitle = context.getString(R.string.create_custom_page),
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -693,7 +726,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_create_white,
               primaryButtonTitle = context.getString(R.string.add_client_logo),
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -712,7 +745,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_lockkey,
               primaryButtonTitle = context.getString(R.string.activate_this_feature),
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -731,7 +764,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_create_white,
               primaryButtonTitle = context.getString(R.string.add_restaurant_story),
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -750,7 +783,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_create_white,
               primaryButtonTitle = context.getString(R.string.upload_menu_pictures),
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -769,7 +802,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_lockkey,
               primaryButtonTitle = context.getString(R.string.activate_this_feature),
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -778,12 +811,12 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           )
       }
       TABLE_BOOKING -> {
-        if (isPremium){
+        if (isPremium) {
           title = context.getString(R.string.no_dine_in_table_booked_yet)
           desc = context.getString(R.string.book_table_desc)
           primaryButtonIconLeft = R.drawable.ic_create_white
           primaryButtonTitle = context.getString(R.string.book_a_table)
-        }else{
+        } else {
           title = context.getString(R.string.this_is_premium_feature)
           desc = context.getString(R.string.book_table_desc)
           primaryButtonIconLeft = R.drawable.ic_lockkey
@@ -799,7 +832,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = primaryButtonIconLeft,
               primaryButtonTitle = primaryButtonTitle,
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -818,7 +851,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_lockkey,
               primaryButtonTitle = context.getString(R.string.activate_this_feature),
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -837,7 +870,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_lockkey,
               primaryButtonTitle = context.getString(R.string.activate_this_feature),
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -846,12 +879,12 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           )
       }
       BROCHURES -> {
-        if (isPremium){
+        if (isPremium) {
           title = context.getString(R.string.no_brochure_added)
           desc = context.getString(R.string.allow_your_students_to_see)
           primaryButtonIconLeft = R.drawable.ic_create_white
           primaryButtonTitle = context.getString(R.string.add_a_brochure)
-        }else{
+        } else {
           title = context.getString(R.string.this_is_premium_feature)
           desc = context.getString(R.string.brochures_desc)
           primaryButtonIconLeft = R.drawable.ic_lockkey
@@ -867,7 +900,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             ZeroCaseButton(
               primaryButtonIconLeft = primaryButtonIconLeft,
               primaryButtonTitle = primaryButtonTitle,
-              primaryButtonBackground = R.color.colorAccent,
+              primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
@@ -884,7 +917,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           .setButton(
             ZeroCaseButton(
               primaryButtonTitle = context.getString(R.string.add_a_service),
-              primaryButtonBackground = R.color.colorPrimary,
+              primaryButtonBackground = R.color.colorAccentLight,
               primaryButtonIconLeft = R.drawable.ic_create_white,
               secondaryButtonIconLeft = R.drawable.ic_appointment_settings_secondary,
               secondaryButtonTitle = context.getString(
@@ -904,7 +937,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           .setButton(
             ZeroCaseButton(
               primaryButtonTitle = context.getString(R.string.add_a_service),
-              primaryButtonBackground = R.color.colorPrimary,
+              primaryButtonBackground = R.color.colorAccentLight,
               primaryButtonIconLeft = R.drawable.ic_create_white,
               secondaryButtonIconLeft = R.drawable.ic_appointment_settings_secondary,
               secondaryButtonTitle = context.getString(
@@ -915,7 +948,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
             )
           )
       }
-      SALON_SERVICES-> {
+      SALON_SERVICES -> {
         return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.lets_add_services_to_your_catalogue))
           .setDescription(context.getString(R.string.your_can_easily_add_detailed_information_about_your_services))
           .setIcon(R.drawable.ic_scissors)
@@ -924,7 +957,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           .setButton(
             ZeroCaseButton(
               primaryButtonTitle = context.getString(R.string.add_a_service),
-              primaryButtonBackground = R.color.colorPrimary,
+              primaryButtonBackground = R.color.colorAccentLight,
               primaryButtonIconLeft = R.drawable.ic_create_white,
               secondaryButtonIconLeft = R.drawable.ic_appointment_settings_secondary,
               secondaryButtonTitle = context.getString(
@@ -944,7 +977,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           .setButton(
             ZeroCaseButton(
               primaryButtonTitle = context.getString(R.string.add_a_service),
-              primaryButtonBackground = R.color.colorPrimary,
+              primaryButtonBackground = R.color.colorAccentLight,
               primaryButtonIconLeft = R.drawable.ic_create_white,
               secondaryButtonIconLeft = R.drawable.ic_appointment_settings_secondary,
               secondaryButtonTitle = context.getString(
@@ -964,7 +997,7 @@ class AppRequestZeroCaseBuilder(private var AppZeroCases: AppZeroCases,
           .setButton(
             ZeroCaseButton(
               primaryButtonTitle = context.getString(R.string.add_a_service),
-              primaryButtonBackground = R.color.colorPrimary,
+              primaryButtonBackground = R.color.colorAccentLight,
               primaryButtonIconLeft = R.drawable.ic_create_white,
               secondaryButtonIconLeft = R.drawable.ic_appointment_settings_secondary,
               secondaryButtonTitle = context.getString(

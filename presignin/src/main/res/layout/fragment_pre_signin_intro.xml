@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="@dimen/size_10"
         app:layout_constraintBottom_toTopOf="@id/presigin_intro_img"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -141,11 +142,11 @@
         android:layout_height="match_parent">
 
         <com.google.android.exoplayer2.ui.PlayerView
-            app:use_controller="false"
           android:id="@+id/video_view"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:layout_centerInParent="true" />
+          android:layout_centerInParent="true"
+          app:use_controller="false" />
 
       </RelativeLayout>
     </LinearLayout>

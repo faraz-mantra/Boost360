@@ -1,6 +1,5 @@
 package dev.patrickgold.florisboard.customization
 
-import android.app.Activity
 import android.content.ClipDescription
 import android.content.Context
 import android.content.Intent
@@ -33,7 +32,6 @@ import com.framework.pref.*
 import com.framework.utils.*
 import com.framework.views.customViews.CustomImageView
 import com.framework.views.dotsindicator.OffsetPageTransformer
-import com.google.gson.Gson
 import com.onboarding.nowfloats.extensions.capitalizeWords
 import com.onboarding.nowfloats.model.channel.statusResponse.CHANNEL_STATUS_SUCCESS
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse
@@ -49,6 +47,9 @@ import dev.patrickgold.florisboard.customization.adapter.FeaturesEnum
 import dev.patrickgold.florisboard.customization.adapter.OnItemClickListener
 import dev.patrickgold.florisboard.customization.adapter.SharedAdapter
 import dev.patrickgold.florisboard.customization.model.response.*
+import dev.patrickgold.florisboard.customization.model.response.moreAction.ActionItem
+import dev.patrickgold.florisboard.customization.model.response.moreAction.ActionItem.ActionData.Companion.fromType
+import dev.patrickgold.florisboard.customization.model.response.moreAction.MoreData
 import dev.patrickgold.florisboard.customization.model.response.staff.DataItem
 import dev.patrickgold.florisboard.customization.model.response.staff.FilterBy
 import dev.patrickgold.florisboard.customization.model.response.staff.GetStaffListingRequest
@@ -65,8 +66,6 @@ import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
 
-// keyborad ImePresenterImpl
-
 class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : OnItemClickListener {
 
   init {
@@ -79,16 +78,19 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   private lateinit var viewModel: BusinessFeaturesViewModel
   private var businessFeatureEnum: BusinessFeatureEnum? = null
   private val photosSet = mutableSetOf<Photo>()
+  private val moreItemList = mutableSetOf<MoreData>()
   private lateinit var mContext: Context
   private var florisBoard: FlorisBoard? = null
   private var session: UserSessionManager? = null
   private lateinit var currentSelectedFeature: BusinessFeatureEnum
   private var tagPosition: Int = 0
 
-  private lateinit var adapterProductService: SharedAdapter<Product>
+  private lateinit var adapterProduct: SharedAdapter<Product>
+  private lateinit var adapterService: SharedAdapter<ItemServices>
   private lateinit var adapterUpdates: SharedAdapter<FloatUpdate>
   private lateinit var adapterPhoto: SharedAdapter<Photo>
   private lateinit var adapterStaff: SharedAdapter<DataItem>
+  private lateinit var adapterMoreAction: SharedAdapter<MoreData>
   private lateinit var adapterBusinessCard: SharedAdapter<DigitalCardDataKeyboard>
   private var listenerRequest: RequestListener<Bitmap>? = null
 
@@ -122,50 +124,65 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     this.florisBoard = florisBoard
     this.viewModel = BusinessFeaturesViewModel(mContext)
     this.gridType = Photo.ViewGridType.FOUR_GRID
-    this.adapterProductService = SharedAdapter(arrayListOf(), this)
+
+    this.adapterProduct = SharedAdapter(arrayListOf(), this)
+    this.adapterService = SharedAdapter(arrayListOf(), this)
     this.adapterUpdates = SharedAdapter(arrayListOf(), this)
     this.adapterPhoto = SharedAdapter(arrayListOf(), this)
     this.adapterBusinessCard = SharedAdapter(arrayListOf(), this)
     this.adapterStaff = SharedAdapter(arrayListOf(), this)
+    this.adapterMoreAction = SharedAdapter(arrayListOf(), this)
     // initialize business features views
     this.binding = BusinessFeaturesLayoutBinding.bind(inputView.findViewById(R.id.business_features))
 
-    binding.productShareRvList.also {
-      it.adapter = this.adapterProductService
-      (it.layoutManager as? LinearLayoutManager)?.let { it1 -> it.paginationListenerProduct(it1) }
-    }
-    binding.updateRvList.also {
-      it.adapter = this.adapterUpdates
-      (it.layoutManager as? LinearLayoutManager)?.let { it1 -> it.paginationListenerProduct(it1) }
+    binding.rvKeyboard.productRvList.also {
+      it.adapter = this.adapterProduct
+      (it.layoutManager as? LinearLayoutManager)?.let { it1 -> it.paginationListener(it1) }
     }
 
-    binding.viewPagerProfile.also {
+    binding.rvKeyboard.serviceRvList.also {
+      it.adapter = this.adapterService
+      (it.layoutManager as? LinearLayoutManager)?.let { it1 -> it.paginationListener(it1) }
+    }
+
+    binding.rvKeyboard.updateRvList.also {
+      it.adapter = this.adapterUpdates
+      (it.layoutManager as? LinearLayoutManager)?.let { it1 -> it.paginationListener(it1) }
+    }
+
+    binding.businessCardView.viewPagerProfile.also {
       it.adapter = this.adapterBusinessCard
       it.offscreenPageLimit = 3
       it.setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
     }
 
-    binding.staffRvList.also {
+    binding.rvKeyboard.staffRvList.also {
       it.layoutManager = GridLayoutManager(mContext, 2, GridLayoutManager.VERTICAL, false)
       it.adapter = this.adapterStaff
-      (it.layoutManager as? LinearLayoutManager)?.let { it1 -> it.paginationListenerProduct(it1, false) }
+      (it.layoutManager as? LinearLayoutManager)?.let { it1 -> it.paginationListener(it1, false) }
     }
 
-    binding.rvListPhotos.also {
+    binding.rvPhotoView.rvListPhotos.also {
       it.layoutManager = GridLayoutManager(mContext, gridType.countGrid, GridLayoutManager.VERTICAL, false)
       it.adapter = this.adapterPhoto
     }
+
+    binding.moreActionView.rvMoreAction.also { it.adapter = this.adapterMoreAction }
+
+    this.binding.moreActionView.btnSetting.setOnClickListener { Toast.makeText(mContext, mContext.getString(R.string.coming_soon), Toast.LENGTH_SHORT).show() }
     getChannelAccessToken()
-    apiObserveServiceProduct()
+
+    apiObserveProduct()
+    apiObserveService()
     apiObserveUpdates()
     apiObservePhotos()
     apiObserveStaff()
+    apiObserveMoreAction()
     apiObserveUserDetails()
     errorObserveListener()
-    Log.i(TAG, "onRegisterInputView: ")
   }
 
-  private fun RecyclerView.paginationListenerProduct(layoutManager: LinearLayoutManager, isPagerSnap: Boolean = true) {
+  private fun RecyclerView.paginationListener(layoutManager: LinearLayoutManager, isPagerSnap: Boolean = true) {
     val listenerProduct = object : PaginationScrollListener(layoutManager) {
       override fun loadMoreItems() {
         if (!isLastPageD) {
@@ -176,8 +193,13 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
             adapterUpdates.addLoadingFooter(FloatUpdate().getLoaderItem())
             viewModel.getUpdates(session?.fPID, clientId, offSet, limit)
           } else if (currentSelectedFeature == BusinessFeatureEnum.INVENTORY_SERVICE) {
-            adapterProductService.addLoadingFooter(Product().getLoaderItem())
-            viewModel.getProducts(session?.fpTag, clientId, offSet, "SINGLE")
+            if (isProductType(session?.fP_AppExperienceCode)) {
+              adapterProduct.addLoadingFooter(Product().getLoaderItem())
+              viewModel.getProducts(session?.fpTag, clientId, offSet, "SINGLE")
+            } else {
+              adapterService.addLoadingFooter(ItemServices().getLoaderItem())
+              viewModel.getServices(session?.fpTag, session?.fPID, offset = offSet, limit = limit)
+            }
           } else if (currentSelectedFeature == BusinessFeatureEnum.STAFF) {
             adapterStaff.addLoadingFooter(DataItem().getLoaderItem())
             viewModel.getStaffList(getFilterRequest(offSet, limit))
@@ -197,43 +219,47 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   }
 
   fun showSelectedBusinessFeature(tagPosition: Int, businessFeatureEnum: BusinessFeatureEnum) {
-
     this.session = UserSessionManager(this.mContext)
     this.businessFeatureEnum = businessFeatureEnum
     this.tagPosition = tagPosition
     this.currentSelectedFeature = businessFeatureEnum
     this.listenerRequest = null
-    Log.i(TAG, "showSelectedBusinessFeature: ")
     val lastSyncTime = sharedPref.lastSyncTime
     if (session?.isUserLoggedIn == false) {
       updateUiNotLoginned()
     } else if (lastSyncTime == null || MethodUtils.getDaysDiff(System.currentTimeMillis(), lastSyncTime) >= 1) {
-      Log.i(TAG, "last sync is greater than 24 hour: " + lastSyncTime)
+      Log.i(TAG, "last sync is greater than 24 hour: $lastSyncTime")
       viewModel.getDetails(session?.fpTag, clientId)
-    } else {
-      loadDataBasesOnTab()
-    }
+    } else loadDataBasesOnTab()
   }
 
   private fun loadDataBasesOnTab() {
     resetAdapters()
-    binding.msgLayout.gone()
+    binding.lockView.msgLayout.gone()
     if (session?.getStoreWidgets()?.contains("BOOSTKEYBOARD") == true) {
       binding.businessFeatureProgress.visible()
       when (businessFeatureEnum) {
         BusinessFeatureEnum.INVENTORY_SERVICE -> {
           SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(tagPosition)?.text = getProductType(session?.fP_AppExperienceCode ?: "")
-          visibleSelectType(isI = true)
           initializePaging()
-          this.adapterProductService.clearList()
-          binding.productShareRvList.removeAllViewsInLayout()
-          viewModel.getProducts(session?.fpTag, clientId, offSet, "SINGLE")
+          if (isProductType(session?.fP_AppExperienceCode)) {
+            visibleSelectType(isIP = true)
+            this.adapterProduct.clearList()
+            binding.rvKeyboard.productRvList.removeAllViewsInLayout()
+            viewModel.getProducts(session?.fpTag, clientId, offSet, "SINGLE")
+          } else {
+            visibleSelectType(isIS = true)
+            this.adapterService.clearList()
+            binding.rvKeyboard.serviceRvList.removeAllViewsInLayout()
+            viewModel.getServices(session?.fpTag, session?.fPID, offset = offSet, limit = limit)
+          }
+
         }
         BusinessFeatureEnum.UPDATES -> {
           visibleSelectType(isII = true)
           initializePaging()
           this.adapterUpdates.clearList()
-          binding.updateRvList.removeAllViewsInLayout()
+          binding.rvKeyboard.updateRvList.removeAllViewsInLayout()
           viewModel.getUpdates(session?.fPID, clientId, offSet, limit)
         }
         BusinessFeatureEnum.PHOTOS -> {
@@ -244,6 +270,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         }
         BusinessFeatureEnum.BUSINESS_CARD -> {
           visibleSelectType(isIV = true)
+          viewModel.checkInternetForBusinessCard()
           this.adapterBusinessCard.clearList()
           if (messageBusiness.isEmpty() && _connectedChannels.isEmpty()) getChannelAccessToken(true)
           businessCardDataLoad()
@@ -253,159 +280,141 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
           if (session?.getStoreWidgets()?.contains("STAFFPROFILE") == true) {
             initializePaging()
             this.adapterStaff.clearList()
-            binding.staffRvList.removeAllViewsInLayout()
+            binding.rvKeyboard.staffRvList.removeAllViewsInLayout()
             viewModel.getStaffList(getFilterRequest(offSet, limit))
           } else {
             binding.businessFeatureProgress.gone()
             updateUiStaffNotRenewd()
           }
         }
+        BusinessFeatureEnum.MORE -> {
+          visibleSelectType(isVI = true)
+          val versionName: String = mContext.packageManager.getPackageInfo(mContext.packageName, 0).versionName
+          binding.moreActionView.txtVersion.text = "V$versionName"
+          this.moreItemList.clear()
+          this.adapterMoreAction.clearList()
+          viewModel.getMoreActionList(this.mContext, session?.fP_AppExperienceCode ?: "")
+        }
         else -> {
         }
       }
-
     } else {
-      Timber.i("Please add boost keyboard in your current plan.")
+      Timber.i("Please add keyboard in your current plan.")
       updateUiFeatureNotRenewed()
     }
   }
 
   private fun resetAdapters() {
-    adapterBusinessCard.clearList()
-    adapterPhoto.clearList()
-    adapterProductService.clearList()
-    adapterStaff.clearList()
-    adapterUpdates.clearList()
+    if (isProductType(session?.fP_AppExperienceCode)) this.adapterProduct.clearList() else this.adapterService.clearList()
+    this.adapterUpdates.clearList()
+    this.adapterPhoto.clearList()
+    this.adapterBusinessCard.clearList()
+    this.adapterStaff.clearList()
     SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(1)?.text = "${getProductType(session?.fP_AppExperienceCode ?: "")}"
-    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text = BusinessFeatureEnum.UPDATES.name
-    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(3)?.text = BusinessFeatureEnum.PHOTOS.name
-    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text = BusinessFeatureEnum.STAFF.name
+    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text = BusinessFeatureEnum.UPDATES.value
+    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(3)?.text = BusinessFeatureEnum.PHOTOS.value
+    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text = BusinessFeatureEnum.STAFF.value
     SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.view?.apply {
       visibility = if (isStaffVisible(session?.fP_AppExperienceCode ?: "")) View.VISIBLE else View.GONE
     }
+    SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(6)?.text = BusinessFeatureEnum.MORE.value
   }
 
 
   private fun updateUiErrorFetchingInformation() {
-    binding.msgLayout.visible()
-    binding.msgIcon.setImageResource(R.drawable.ic_linkbreak)
-    binding.msgTitle.text = mContext.getString(R.string.error_while_fetching_your_business)
-    binding.msgDesc.text = mContext.getString(R.string.please_click_on_retry_btn_below)
-    binding.msgBtn.text = mContext.getString(R.string.retry)
-    binding.msgBtn.icon = mContext.getDrawable(R.drawable.ic_arrowscounterclockwise)
-    binding.msgBtn.setOnClickListener {
-      loadDataBasesOnTab()
-    }
+    binding.lockView.msgLayout.visible()
+    binding.lockView.msgIcon.setImageResource(R.drawable.ic_linkbreak)
+    binding.lockView.msgTitle.text = mContext.getString(R.string.error_while_fetching_your_business)
+    binding.lockView.msgDesc.text = mContext.getString(R.string.please_click_on_retry_btn_below)
+    binding.lockView.msgBtn.text = mContext.getString(R.string.retry)
+    binding.lockView.msgBtn.icon = mContext.getDrawable(R.drawable.ic_arrowscounterclockwise)
+    binding.lockView.msgBtn.setOnClickListener { loadDataBasesOnTab() }
   }
 
   private fun updateUiInternetNotAvailable() {
-    binding.msgLayout.visible()
-
-    binding.msgIcon.setImageResource(R.drawable.ic_wifislash)
-    binding.msgTitle.text = mContext.getString(R.string.internet_not_available)
-    binding.msgDesc.text = mContext.getString(R.string.a_wifi_or_cellular)
-    binding.msgBtn.text = mContext.getString(R.string.open_settings)
-    binding.msgBtn.icon = mContext.getDrawable(R.drawable.ic_settings_white)
-
-
-    binding.msgBtn.setOnClickListener {
+    binding.lockView.msgLayout.visible()
+    binding.lockView.msgIcon.setImageResource(R.drawable.ic_wifislash)
+    binding.lockView.msgTitle.text = mContext.getString(R.string.internet_not_available)
+    binding.lockView.msgDesc.text = mContext.getString(R.string.a_wifi_or_cellular)
+    binding.lockView.msgBtn.text = mContext.getString(R.string.open_settings)
+    binding.lockView.msgBtn.icon = mContext.getDrawable(R.drawable.ic_settings_white)
+    binding.lockView.msgBtn.setOnClickListener {
       try {
-        mContext.startActivity(Intent(Settings.ACTION_DATA_ROAMING_SETTINGS).apply {
-          flags = Intent.FLAG_ACTIVITY_NEW_TASK;
-        })
+        mContext.startActivity(Intent(Settings.ACTION_DATA_ROAMING_SETTINGS).apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK; })
       } catch (e: Exception) {
+        Log.e(TAG, "updateUiInternetNotAvailable:  ${e.localizedMessage}")
         Toast.makeText(mContext, "Unable to find network settings. Please do it manually from phone's settings", Toast.LENGTH_LONG).show()
-        Log.e(TAG, "updateUiInternetNotAvailable: " + e.localizedMessage)
       }
     }
   }
 
   private fun updateUiNotLoginned() {
-    binding.msgLayout.visible()
-
-    binding.msgIcon.setImageResource(R.drawable.ic_storefront)
-    binding.msgTitle.text = mContext.getString(R.string.login_to_start_sharing)
-    binding.msgDesc.text = mContext.getString(R.string.with_business_keyboard)
-    binding.msgBtn.text = mContext.getString(R.string.login_to_boost)
-    binding.msgBtn.icon = mContext.getDrawable(R.drawable.ic_key)
-
-    binding.msgBtn.setOnClickListener {
-      MethodUtils.startBoostActivity(mContext)
-    }
+    binding.lockView.msgLayout.visible()
+    binding.lockView.msgIcon.setImageResource(R.drawable.ic_storefront)
+    binding.lockView.msgTitle.text = mContext.getString(R.string.login_to_start_sharing)
+    binding.lockView.msgDesc.text = mContext.getString(R.string.with_business_keyboard)
+    binding.lockView.msgBtn.text = mContext.getString(R.string.login_to_boost)
+    binding.lockView.msgBtn.icon = mContext.getDrawable(R.drawable.ic_key)
+    binding.lockView.msgBtn.setOnClickListener { startBoostActivity(mContext) }
   }
 
   private fun updateUiFeatureNotRenewed() {
-    binding.msgLayout.visible()
-
-    binding.msgIcon.setImageResource(R.drawable.ic_keyboard_renew)
-    binding.msgTitle.text = mContext.getString(R.string.feature_not_renewed)
-    binding.msgDesc.text = mContext.getString(R.string.with_business_keyboard)
-    binding.msgBtn.text = mContext.getString(R.string.renew_feature)
-    binding.msgBtn.icon = mContext.getDrawable(R.drawable.ic_lockkey)
-
-    binding.msgBtn.setOnClickListener {
-      MethodUtils.startKeyboardActivity(mContext)
-    }
+    binding.lockView.msgLayout.visible()
+    binding.lockView.msgIcon.setImageResource(R.drawable.ic_keyboard_renew)
+    binding.lockView.msgTitle.text = mContext.getString(R.string.feature_not_renewed)
+    binding.lockView.msgDesc.text = mContext.getString(R.string.with_business_keyboard)
+    binding.lockView.msgBtn.text = mContext.getString(R.string.renew_feature)
+    binding.lockView.msgBtn.icon = mContext.getDrawable(R.drawable.ic_lockkey)
+    binding.lockView.msgBtn.setOnClickListener { startKeyboardActivity(mContext) }
   }
 
   private fun updateUiStaffNotRenewd() {
-    binding.msgLayout.visible()
-    binding.msgIcon.setImageResource(R.drawable.ic_keyboard_renew)
-    binding.msgTitle.text = mContext.getString(R.string.staff_not_added_plan)
-    binding.msgDesc.text = mContext.getString(R.string.with_business_keyboard)
-    binding.msgBtn.text = mContext.getString(R.string.renew_feature)
-    binding.msgBtn.icon = mContext.getDrawable(R.drawable.ic_lockkey)
-
-    binding.msgBtn.setOnClickListener {
-      MethodUtils.startStaffActivity(mContext)
-
-    }
+    binding.lockView.msgLayout.visible()
+    binding.lockView.msgIcon.setImageResource(R.drawable.ic_keyboard_renew)
+    binding.lockView.msgTitle.text = mContext.getString(R.string.staff_not_added_plan)
+    binding.lockView.msgDesc.text = mContext.getString(R.string.with_business_keyboard)
+    binding.lockView.msgBtn.text = mContext.getString(R.string.renew_feature)
+    binding.lockView.msgBtn.icon = mContext.getDrawable(R.drawable.ic_lockkey)
+    binding.lockView.msgBtn.setOnClickListener { startStaffActivity(mContext) }
   }
 
-  private fun visibleSelectType(isI: Boolean = false, isII: Boolean = false, isIII: Boolean = false, isIV: Boolean = false, isV: Boolean = false) {
-    binding.productShareRvList.visibility = if (isI) View.VISIBLE else View.GONE
-    binding.updateRvList.visibility = if (isII) View.VISIBLE else View.GONE
-    binding.clSelectionLayout.visibility = if (isIII) View.VISIBLE else View.GONE
-    binding.rvListPhotos.visibility = if (isIII) View.VISIBLE else View.GONE
-    binding.businessCardView.visibility = if (isIV) View.VISIBLE else View.GONE
-    binding.staffRvList.visibility = if (isV) View.VISIBLE else View.GONE
+  private fun visibleSelectType(
+    isIP: Boolean = false, isIS: Boolean = false, isII: Boolean = false, isIII: Boolean = false,
+    isIV: Boolean = false, isV: Boolean = false, isVI: Boolean = false
+  ) {
+    binding.rvKeyboard.productRvList.visibility = if (isIP) View.VISIBLE else View.GONE
+    binding.rvKeyboard.serviceRvList.visibility = if (isIS) View.VISIBLE else View.GONE
+    binding.rvKeyboard.updateRvList.visibility = if (isII) View.VISIBLE else View.GONE
+    binding.rvPhotoView.root.visibility = if (isIII) View.VISIBLE else View.GONE
+    binding.businessCardView.root.visibility = if (isIV) View.VISIBLE else View.GONE
+    binding.rvKeyboard.staffRvList.visibility = if (isV) View.VISIBLE else View.GONE
+    binding.moreActionView.root.visibility = if (isVI) View.VISIBLE else View.GONE
   }
 
   private fun errorObserveListener() {
-    viewModel.error.observeForever {
-      Log.e(TAG, "errorObserveListener: " + it)
+    viewModel.error.observeForever { error ->
+      Log.e(TAG, "errorObserveListener: $error")
       binding.businessFeatureProgress.gone()
-      if (it == Constants.TOKEN_EXPIRED_MESSAGE) {
-        updateUiNotLoginned()
-      } else if (it.contains("failed to connect", ignoreCase = true) || it.contains("Unable to resolve host", ignoreCase = true)) {
-        updateUiInternetNotAvailable()
-      } else {
-        updateUiErrorFetchingInformation()
+      if (error.contains(this.businessFeatureEnum?.name ?: "", ignoreCase = true)) {
+        if (
+          error.contains(Constants.FAILED_TO_CONNECT, ignoreCase = true) ||
+          error.contains(Constants.UNABLE_TO_RESOLVED_HOST, ignoreCase = true) ||
+          error.contains(Constants.NO_INTERNET_CONNECTION, ignoreCase = true)
+        ) updateUiInternetNotAvailable()
+        else if (error.contains(Constants.TOKEN_EXPIRED_MESSAGE, ignoreCase = true)) updateUiNotLoginned()
+        else updateUiErrorFetchingInformation()
       }
     }
   }
 
-  /*private fun apiObserveMerchantSummary() {
-    viewModel.merchantSummary.observeForever {
-      Log.i(TAG, "apiObserveMerchantSummary: " + Gson().toJson(it))
-
-      val productCount = it.getCount(if (session?.isNonPhysicalProductExperienceCode == true)
-        "NoOfServices" else "NoOfProducts")
-      SmartbarView.getSmartViewBinding().
-      businessFeatureTabLayout.getTabAt(1)?.text =
-        "${getProductType(session?.fP_AppExperienceCode ?: "")}" +
-                " (${productCount})"
-
-    }
-  }*/
   private fun apiObserveUserDetails() {
     viewModel.details.observeForever {
-      Log.i(TAG, "apiObserveUserDetails: " + Gson().toJson(it.FPWebWidgets))
-      it.FPWebWidgets?.let { list ->
-        session?.storeFPDetails(Key_Preferences.STORE_WIDGETS, convertListObjToString(list))
+      Log.i(TAG, "apiObserveUserDetails: ${it?.FPWebWidgets}")
+      if (it != null) {
+        session?.storeFPDetails(Key_Preferences.STORE_WIDGETS, convertListObjToString(it.FPWebWidgets ?: arrayListOf()))
         SharedPrefUtil.fromBoostPref().getsBoostPref(mContext).lastSyncTime = System.currentTimeMillis()
         loadDataBasesOnTab()
-      }
+      } else loadDataBasesOnTab()
     }
   }
 
@@ -417,35 +426,74 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         this.photosSet.clear()
         this.photosSet.addAll(it)
         this.photosSet.map { it1 -> it1.gridType = this.gridType }
-        binding.rvListPhotos.layoutManager = GridLayoutManager(mContext, gridType.countGrid, GridLayoutManager.VERTICAL, false)
+        binding.rvPhotoView.rvListPhotos.layoutManager = GridLayoutManager(mContext, gridType.countGrid, GridLayoutManager.VERTICAL, false)
         this.adapterPhoto.notifyNewList(this.photosSet.toList())
-        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(3)?.text = BusinessFeatureEnum.PHOTOS.name + " (${photosSet.size})"
+        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(3)?.text = BusinessFeatureEnum.PHOTOS.value + " (${photosSet.size})"
       } else {
         if (businessFeatureEnum == BusinessFeatureEnum.INVENTORY_SERVICE) {
           this.adapterPhoto.notifyNewList(arrayListOf())
-          //  Toast.makeText(mContext, "List from api came empty", Toast.LENGTH_SHORT).show()
         }
       }
       clickListenerPhoto()
     }
   }
 
-  private fun apiObserveServiceProduct() {
+  private fun apiObserveMoreAction() {
+    viewModel.moreAction.observeForever {
+      Timber.e("photos - $it.")
+      binding.businessFeatureProgress.gone()
+      if (it.isNotEmpty()) {
+        this.moreItemList.clear()
+        this.moreItemList.addAll(it)
+        this.adapterMoreAction.notifyNewList(this.moreItemList.toList())
+        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(6)?.text = BusinessFeatureEnum.MORE.value
+      } else {
+        if (businessFeatureEnum == BusinessFeatureEnum.MORE) {
+          this.adapterMoreAction.notifyNewList(arrayListOf())
+        }
+      }
+    }
+  }
+
+  private fun apiObserveProduct() {
     viewModel.products.observeForever {
       Timber.i("products - $it.")
       binding.businessFeatureProgress.gone()
-      this.adapterProductService.removeLoaderN()
+      this.adapterProduct.removeLoaderN()
       if (it.Products.isNullOrEmpty().not()) {
-        if (isFirstPage) {
-          it.Products?.let { it1 -> this.adapterProductService.notifyNewList(it1) }
+        if (isFirstPage || it.isRefreshList) {
+          it.Products?.let { it1 -> this.adapterProduct.notifyNewList(it1) }
         } else {
-          it.Products?.let { it1 -> this.adapterProductService.addItems(it1) }
+          it.Products?.let { it1 -> this.adapterProduct.addItems(it1) }
         }
-        PAGING_TOTAL_ELEMENTS = this.adapterProductService.getListData().size
+        PAGING_TOTAL_ELEMENTS = it.TotalCount ?: 0
         SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(1)?.text = "${getProductType(session?.fP_AppExperienceCode ?: "")} (${it.TotalCount})"
       } else {
         if (businessFeatureEnum == BusinessFeatureEnum.INVENTORY_SERVICE && isFirstPage) {
-          this.adapterProductService.notifyNewList(arrayListOf())
+          this.adapterProduct.notifyNewList(arrayListOf())
+        }
+      }
+    }
+  }
+
+  private fun apiObserveService() {
+    viewModel.services.observeForever {
+      Timber.i("products - $it.")
+      binding.businessFeatureProgress.gone()
+      this.adapterService.removeLoaderN()
+      val dataService = it.result
+      val listItems = getCopyNewItems(dataService?.data)
+      if (listItems.isNullOrEmpty().not()) {
+        if (isFirstPage || it.isRefreshList) {
+          this.adapterService.notifyNewList(listItems)
+        } else {
+          this.adapterService.addItems(listItems)
+        }
+        PAGING_TOTAL_ELEMENTS = dataService?.paging?.count ?: 0
+        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(1)?.text = "${getProductType(session?.fP_AppExperienceCode ?: "")} (${dataService?.paging?.count})"
+      } else {
+        if (businessFeatureEnum == BusinessFeatureEnum.INVENTORY_SERVICE && isFirstPage) {
+          this.adapterService.notifyNewList(arrayListOf())
         }
       }
     }
@@ -461,7 +509,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         if (isFirstPage) this.adapterStaff.notifyNewList(it.data!!)
         else this.adapterStaff.addItems(it.data!!)
         isLastPageD = (this.adapterStaff.getListData().size == PAGING_TOTAL_ELEMENTS)
-        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text = BusinessFeatureEnum.STAFF.name + " (${it.paging?.count})"
+        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(4)?.text = BusinessFeatureEnum.STAFF.value + " (${it.paging?.count})"
       } else {
         if (businessFeatureEnum == BusinessFeatureEnum.STAFF && isFirstPage) {
           this.adapterStaff.notifyNewList(arrayListOf())
@@ -480,19 +528,12 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
         if (isFirstPage) this.adapterUpdates.notifyNewList(it.floats!!)
         else this.adapterUpdates.addItems(it.floats!!)
         isLastPageD = (this.adapterUpdates.getListData().size == PAGING_TOTAL_ELEMENTS)
-        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text = BusinessFeatureEnum.UPDATES.name + " (${it.totalCount})"
+        SmartbarView.getSmartViewBinding().businessFeatureTabLayout.getTabAt(2)?.text = BusinessFeatureEnum.UPDATES.value + " (${it.totalCount})"
       } else {
         if (businessFeatureEnum == BusinessFeatureEnum.UPDATES && isFirstPage) {
           this.adapterUpdates.notifyNewList(arrayListOf())
         }
       }
-    }
-  }
-
-  private fun <T : BaseRecyclerItem?> SharedAdapter<T>.removeLoaderN() {
-    if (isLoadingD) {
-      isLoadingD = false
-      this.removeLoader()
     }
   }
 
@@ -543,40 +584,40 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
 
       this.adapterBusinessCard.notifyNewList(cardList)
       binding.businessFeatureProgress.gone()
-      binding.btnShareImageBusiness.setOnClickListener { shareImageTextBusiness() }
-      binding.btnShareImageTextBusiness.setOnClickListener {
+      binding.businessCardView.btnShareImageBusiness.setOnClickListener { shareImageTextBusiness() }
+      binding.businessCardView.btnShareImageTextBusiness.setOnClickListener {
         if (finalShareMessage.isNotEmpty()) shareImageTextBusiness(finalShareMessage) else getVisitingMessageData(true)
       }
     }
   }
 
   private fun clickListenerPhoto() {
-    binding.btnSelectGrid.setOnClickListener {
+    binding.rvPhotoView.btnSelectGrid.setOnClickListener {
       tapPhotoSelect = tapPhotoSelect.not()
       visiblePhotoTopView()
     }
-    binding.btnChangeGridLayout.setOnClickListener {
+    binding.rvPhotoView.btnChangeGridLayout.setOnClickListener {
       tapPhotoSelect = tapPhotoSelect.not()
       visiblePhotoTopView()
     }
-    binding.btnShare.setOnClickListener { }
-    binding.photoGridOne.setOnClickListener { adapterNotifyGrid(Photo.ViewGridType.FIRST_GRID) }
-    binding.photoGridTwo.setOnClickListener { adapterNotifyGrid(Photo.ViewGridType.SECOND_GRID) }
-    binding.photoGridThree.setOnClickListener { adapterNotifyGrid(Photo.ViewGridType.THIRD_GRID) }
-    binding.photoGridFour.setOnClickListener { adapterNotifyGrid(Photo.ViewGridType.FOUR_GRID) }
+    binding.rvPhotoView.btnShare.setOnClickListener { }
+    binding.rvPhotoView.photoGridOne.setOnClickListener { adapterNotifyGrid(Photo.ViewGridType.FIRST_GRID) }
+    binding.rvPhotoView.photoGridTwo.setOnClickListener { adapterNotifyGrid(Photo.ViewGridType.SECOND_GRID) }
+    binding.rvPhotoView.photoGridThree.setOnClickListener { adapterNotifyGrid(Photo.ViewGridType.THIRD_GRID) }
+    binding.rvPhotoView.photoGridFour.setOnClickListener { adapterNotifyGrid(Photo.ViewGridType.FOUR_GRID) }
     visiblePhotoTopView()
   }
 
   private fun adapterNotifyGrid(grid: Photo.ViewGridType) {
     this.gridType = grid
     val bacRound = ContextCompat.getDrawable(mContext, R.drawable.ic_mask_bac_f)
-    binding.photoGridOne.apply { setGridImageIcon((gridType == Photo.ViewGridType.FIRST_GRID), bacRound) }
-    binding.photoGridTwo.apply { setGridImageIcon(gridType == Photo.ViewGridType.SECOND_GRID, bacRound) }
-    binding.photoGridThree.apply { setGridImageIcon(gridType == Photo.ViewGridType.THIRD_GRID, bacRound) }
-    binding.photoGridFour.apply { setGridImageIcon(gridType == Photo.ViewGridType.FOUR_GRID, bacRound) }
-    binding.imgGridImage.setImageResource(this.gridType.icon)
+    binding.rvPhotoView.photoGridOne.apply { setGridImageIcon((gridType == Photo.ViewGridType.FIRST_GRID), bacRound) }
+    binding.rvPhotoView.photoGridTwo.apply { setGridImageIcon(gridType == Photo.ViewGridType.SECOND_GRID, bacRound) }
+    binding.rvPhotoView.photoGridThree.apply { setGridImageIcon(gridType == Photo.ViewGridType.THIRD_GRID, bacRound) }
+    binding.rvPhotoView.photoGridFour.apply { setGridImageIcon(gridType == Photo.ViewGridType.FOUR_GRID, bacRound) }
+    binding.rvPhotoView.imgGridImage.setImageResource(this.gridType.icon)
     this.photosSet.map { it.gridType = this.gridType }
-    binding.rvListPhotos.layoutManager = GridLayoutManager(mContext, gridType.countGrid, GridLayoutManager.VERTICAL, false)
+    binding.rvPhotoView.rvListPhotos.layoutManager = GridLayoutManager(mContext, gridType.countGrid, GridLayoutManager.VERTICAL, false)
     this.adapterPhoto.notifyDataSetChanged()
   }
 
@@ -587,7 +628,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
 
 
   private fun shareImageTextBusiness(shareText: String = "") {
-    val bitmap = binding.viewPagerProfile.getChildAt(0)?.let { viewToBitmap(it) }
+    val bitmap = binding.businessCardView.viewPagerProfile.getChildAt(0)?.let { viewToBitmap(it) }
     try {
       val cropBitmap = bitmap?.let { Bitmap.createBitmap(it, 40, 0, bitmap.width - 80, bitmap.height) }
       val path = MediaStore.Images.Media.insertImage(mContext.contentResolver, cropBitmap, "boost_${Date().time}", null)
@@ -661,14 +702,53 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     }
   }
 
-  override fun onItemClick(pos: Int, item: BaseRecyclerItem) {
+  override fun onItemClick(pos: Int, item: BaseRecyclerItem, actionType: Int) {
     when (currentSelectedFeature) {
       BusinessFeatureEnum.UPDATES -> shareUpdates(item)
-      BusinessFeatureEnum.INVENTORY_SERVICE -> onClickedShareInventory(item)
+      BusinessFeatureEnum.INVENTORY_SERVICE -> onClickedShareInventory(item, actionType)
       BusinessFeatureEnum.PHOTOS -> onPhotoSelected(item)
       BusinessFeatureEnum.STAFF -> shareStaff(item)
       BusinessFeatureEnum.BUSINESS_CARD -> Timber.i("pos - $pos item = $item")
+      BusinessFeatureEnum.MORE -> clickHandleMore(pos, item, actionType)
       else -> {
+      }
+    }
+  }
+
+  private fun clickHandleMore(pos: Int, item: BaseRecyclerItem, actionType: Int) {
+    when (actionType) {
+      RecyclerViewActionType.MORE_ACTION_CLICK.ordinal -> {
+        val data = item as? ActionItem ?: return
+        when (fromType(data.type)) {
+          ActionItem.ActionData.BOOK_ORDER_ID -> startOrderCreateN(mContext)
+          ActionItem.ActionData.BOOK_CLINIC_APPOINTMENT_ID -> startBookAppointmentConsultN(mContext, false)
+          ActionItem.ActionData.BOOK_VIDEO_CONSULTATION_ID -> startBookAppointmentConsultN(mContext)
+          ActionItem.ActionData.ADD_TESTIMONIAL_ID -> startTestimonialN(mContext, true)
+          ActionItem.ActionData.REFUND_CANCELLATION_ID -> {
+            Toast.makeText(mContext, mContext.getString(R.string.coming_soon), Toast.LENGTH_SHORT).show()
+          }
+          ActionItem.ActionData.ALL_ORDERS_ID -> startOrderAptConsultListN(mContext, isOrder = true)
+          ActionItem.ActionData.IN_CLINIC_APPOINTMENT_ID -> startOrderAptConsultListN(mContext)
+          ActionItem.ActionData.VIDEO_CONSULTATION_ID -> startOrderAptConsultListN(mContext, isConsult = true)
+          ActionItem.ActionData.CUSTOMER_MESSAGE_ID -> startBusinessEnquiryN(mContext)
+          ActionItem.ActionData.CUSTOMER_CALLS_ID -> startVmnCallCardN(mContext)
+          ActionItem.ActionData.SERVICES_CATALOG_ID -> startListServiceProductN(mContext)
+          ActionItem.ActionData.UPDATES_TIPS_ID -> startUpdateLatestStoryN(mContext)
+          ActionItem.ActionData.STAFF_PROFILES_ID -> startListStaffN(mContext)
+          ActionItem.ActionData.ALL_IMAGES_ID -> startAllImageN(mContext)
+          ActionItem.ActionData.CUSTOMER_TESTIMONIALS_ID -> startTestimonialN(mContext)
+          ActionItem.ActionData.CUSTOM_PAGES_ID -> startCustomPageN(mContext)
+          ActionItem.ActionData.BUSINESS_TIMINGS_ID -> startBusinessHoursN(mContext)
+          ActionItem.ActionData.BUSINESS_ADDRESS_ID -> startBusinessAddressN(mContext)
+          ActionItem.ActionData.CONTACT_DETAILS_ID -> startBusinessContactInfoN(mContext)
+          ActionItem.ActionData.BASIC_BUSINESS_ID -> startBusinessProfileDetailEditN(mContext)
+        }
+      }
+      RecyclerViewActionType.EYE_MORE_ITEM_CLICK.ordinal -> {
+        Toast.makeText(mContext, mContext.getString(R.string.coming_soon), Toast.LENGTH_SHORT).show()
+      }
+      RecyclerViewActionType.SHARE_MORE_ITEM_CLICK.ordinal -> {
+        Toast.makeText(mContext, mContext.getString(R.string.coming_soon), Toast.LENGTH_SHORT).show()
       }
     }
   }
@@ -677,12 +757,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   private fun shareStaff(item: BaseRecyclerItem) {
     val staff = item as? DataItem
     if (NetworkUtils.isNetworkConnected()) {
-      val shareText = String.format(
-        "\uD83D\uDC81 *%s*%s\n\n%s",
-        staff?.name,
-        "\n${if (staff?.description.isNullOrEmpty()) "" else "_" + staff?.description + "_"}",
-        if (staff?.specialData().isNullOrEmpty()) "" else "*Specialization*:\n_${staff?.specialData()}_"
-      )
+      val shareText = getStaffShare(staff)
       pathToUriGet(staff?.image, shareText, BusinessFeatureEnum.STAFF)
     } else Toast.makeText(mContext, mContext.getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
   }
@@ -690,66 +765,33 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   private fun shareUpdates(item: BaseRecyclerItem) {
     val float = item as? FloatUpdate
     if (NetworkUtils.isNetworkConnected()) {
-      val shareText = String.format("*%s*", float?.message)
-      shareUpdates(float?.message!!,float?.url,session?.userProfileMobile,float?.imageUri)
-      pathToUriGet(float?.imageUri, shareText, BusinessFeatureEnum.UPDATES)
+      val templateBuilder = session?.shareUpdates(float?.message!!, float.url, session?.userProfileMobile, float.imageUri)
+      pathToUriGet(float?.imageUri, templateBuilder.toString(), BusinessFeatureEnum.UPDATES)
     } else Toast.makeText(mContext, mContext.getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
   }
 
-  private fun onClickedShareInventory(item: BaseRecyclerItem) {
-    Log.i(TAG, "onClickedShareInventory: ")
-    val product = item as? Product
+  private fun onClickedShareInventory(item: BaseRecyclerItem, actionType: Int) {
     if (NetworkUtils.isNetworkConnected()) {
-      val shareText = String.format("*%s*\n*%s* %s\n\n-------------\n%s\n", product?.name?.trim { it <= ' ' },
-        "${product?.getProductDiscountedPriceOrPrice()}", "${if (product?.discountAmount?.toDoubleOrNull() ?: 0.0 != 0.0) "~${product?.getProductPrice()}~" else ""}", product?.description?.trim { it <= ' ' })
+      when (actionType) {
+        RecyclerViewActionType.PRODUCT_SHARE_CLICK.ordinal -> {
+          val product = (item as? Product) ?: return
+          val templateBuilder = shareProduct(
+            product.name, product.getDiscountedPrice().toString(), product.productUrl, session?.userProfileMobile
+          )
+          pathToUriGet(product.imageUri, templateBuilder, BusinessFeatureEnum.INVENTORY_SERVICE)
+        }
+        RecyclerViewActionType.SERVICE_SHARE_CLICK.ordinal -> {
+          val serviceData = (item as? ItemServices)?.data ?: return
+          var fpDetails = session?.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
+          if (fpDetails.isNullOrEmpty()) fpDetails = "Services"
+          val templateBuilder = shareProduct(
+            serviceData.name, serviceData.discountedPrice?.toString() ?: "0.0", "${session?.getDomainName()}/all-$fpDetails", session?.userProfileMobile
+          )
+          pathToUriGet(serviceData.image, templateBuilder, BusinessFeatureEnum.INVENTORY_SERVICE)
+        }
+      }
 
-      shareProduct(product?.name,product?.price,product?.productUrl
-        ,session?.userProfileMobile,product?.imageUri)
     } else Toast.makeText(mContext, mContext.getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show()
-  }
-
-  fun shareProduct(
-    name: String? = null, price: String? = null, link: String? = null, vmn: String? = null, imageUri: String? = null,
-  ) {
-    val templateBuilder = StringBuilder()
-    if (name.isNullOrBlank().not()) {
-      templateBuilder.append("🆕 *Item name:* $name").append("\n")
-    }
-    if (price.isNullOrBlank().not()) {
-      templateBuilder.append("🏷️ *Price:* Rs.$price").append("\n")
-    }
-    if (vmn.isNullOrBlank().not()) {
-      templateBuilder.append("📞 Feel free to call $vmn if you need any help. ").append("\n")
-    }
-    if (link.isNullOrBlank().not()) {
-      templateBuilder.append("👉🏼 *Place your order here:* $link")
-    }
-    pathToUriGet(imageUri, templateBuilder.toString(), BusinessFeatureEnum.INVENTORY_SERVICE)
-
-  }
-
-  fun shareUpdates(
-    updateContent: String, link: String?,
-    vmn: String?, imageUri: String? = null
-  ) {
-    val subDomain = if (isService(session?.fP_AppExperienceCode)) "all-services" else "all-products"
-
-    val catalogLink= session?.getDomainName() + "/" + subDomain
-
-    val templateBuilder = StringBuilder()
-    if (updateContent.isBlank().not() && link.isNullOrBlank().not()) {
-      templateBuilder.append("👋🏼 Hey there!")
-      templateBuilder.append("${ContentSharing.truncateString(updateContent, 100)}: Read more $link")
-        .append("\n")
-    }
-    if (catalogLink.isBlank().not()) {
-      templateBuilder.append("🏷️ Check our online catalogue, $catalogLink").append("\n")
-    }
-    if (vmn.isNullOrBlank().not()) {
-      templateBuilder.append("📞 Feel free to call $vmn if you need any help. ")
-    }
-    pathToUriGet(imageUri, templateBuilder.toString(), BusinessFeatureEnum.UPDATES)
-
   }
 
   private fun pathToUriGet(imageUri: String?, shareText: String, type: BusinessFeatureEnum) {
@@ -787,7 +829,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     } else florisBoard?.currentInputConnection?.commitText(shareText, 1)
   }
 
-  fun commitImageWithText(contentUri: Uri, shareText: String, packageNames: Array<String>) {
+  private fun commitImageWithText(contentUri: Uri, shareText: String, packageNames: Array<String>) {
     florisBoard?.let {
       val inputContentInfo = InputContentInfoCompat(contentUri, ClipDescription(shareText, arrayOf("image/png")), null)
       var flags = 1
@@ -799,7 +841,6 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
       if (it.currentInputConnection != null) {
         it.currentInputConnection.commitText(shareText, 1)
       }
-      Log.i(TAG, "commitImageWithText: ")
       InputConnectionCompat.commitContent(it.currentInputConnection, it.currentInputEditorInfo, inputContentInfo, flags, null)
     }
   }
@@ -816,7 +857,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
               count += 1
               if (selectedImage.size == count && currentSelectedFeature == BusinessFeatureEnum.PHOTOS) {
                 doCommitContentMultiple(imageUriArray)
-                binding.btnCancel.performClick()
+                binding.rvPhotoView.btnCancel.performClick()
               }
               listenerRequest = null
               return false
@@ -828,7 +869,7 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
               count += 1
               if (selectedImage.size == count && currentSelectedFeature == BusinessFeatureEnum.PHOTOS) {
                 doCommitContentMultiple(imageUriArray)
-                binding.btnCancel.performClick()
+                binding.rvPhotoView.btnCancel.performClick()
               }
               listenerRequest = null
               return false
@@ -869,22 +910,22 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
   }
 
   private fun updateLayout() {
-    binding.btnImageShare.setOnClickListener { multipleImageToUriListGet() }
-    binding.btnCancel.setOnClickListener { removeSelected() }
+    binding.rvPhotoView.btnImageShare.setOnClickListener { multipleImageToUriListGet() }
+    binding.rvPhotoView.btnCancel.setOnClickListener { removeSelected() }
     visiblePhotoTopView()
   }
 
   private fun visiblePhotoTopView() {
     val selectedPhoto = photosSet.filter { it.selected }
     if (selectedPhoto.isNotEmpty()) {
-      binding.tabPhotoView.gone()
-      binding.changePhotoGridView.gone()
-      binding.containerShareImage.visible()
-      binding.btnImageShare.text = "Share ${selectedPhoto.size} ${if (selectedPhoto.size > 1) "images" else "image"}"
+      binding.rvPhotoView.tabPhotoView.gone()
+      binding.rvPhotoView.changePhotoGridView.gone()
+      binding.rvPhotoView.containerShareImage.visible()
+      binding.rvPhotoView.btnImageShare.text = "Share ${selectedPhoto.size} ${if (selectedPhoto.size > 1) "images" else "image"}"
     } else {
-      binding.containerShareImage.gone()
-      binding.changePhotoGridView.visibility = if (tapPhotoSelect) View.GONE else View.VISIBLE
-      binding.tabPhotoView.visibility = if (tapPhotoSelect) View.VISIBLE else View.GONE
+      binding.rvPhotoView.containerShareImage.gone()
+      binding.rvPhotoView.changePhotoGridView.visibility = if (tapPhotoSelect) View.GONE else View.VISIBLE
+      binding.rvPhotoView.tabPhotoView.visibility = if (tapPhotoSelect) View.VISIBLE else View.GONE
     }
   }
 
@@ -908,9 +949,10 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     viewModel.details.removeObserver {}
     viewModel.photos.removeObserver {}
     viewModel.products.removeObserver {}
+    viewModel.moreAction.removeObserver {}
   }
 
-  fun EditorInfo.getImageSupport(): Boolean {
+  private fun EditorInfo.getImageSupport(): Boolean {
     val mimeTypes: Array<String> = EditorInfoCompat.getContentMimeTypes(this)
     return mimeTypes.any { ClipDescription.compareMimeTypes(it, "image/*") }
   }
@@ -919,9 +961,14 @@ class BusinessFeaturesManager(inputView: InputView, florisBoard: FlorisBoard) : 
     return GetStaffListingRequest(FilterBy(offset = offSet, limit = limit), session?.fpTag, "")
   }
 
+  private fun <T : BaseRecyclerItem?> SharedAdapter<T>.removeLoaderN() {
+    if (isLoadingD) {
+      isLoadingD = false
+      this.removeLoader()
+    }
+  }
+
   fun getBindingRoot(): View {
     return binding.root
   }
-
-
 }

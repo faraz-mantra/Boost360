@@ -5,6 +5,8 @@ import com.appservice.recyclerView.AppBaseRecyclerViewItem
 import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import java.lang.Exception
+import kotlin.math.roundToInt
 
 data class ServiceListingResponse(
 
@@ -86,6 +88,20 @@ data class ItemsItem(
 
   fun getCategoryValue(): String {
     return if (category.isNullOrEmpty()) "No category" else category
+  }
+
+  fun getServiceOffPrice(): String {
+    return if (this.discountAmount == null || price != null) ""
+    else {
+      return try {
+        val offPercent = ((discountAmount).div((price?.toDouble()!!))).times(100)
+        if (offPercent.toInt() <= 0) {
+          ""
+        } else "${offPercent.roundToInt()}% OFF"
+      } catch (e: Exception) {
+        ""
+      }
+    }
   }
 }
 

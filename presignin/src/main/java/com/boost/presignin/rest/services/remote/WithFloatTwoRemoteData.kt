@@ -13,6 +13,7 @@ import com.boost.presignin.model.userprofile.BusinessProfileResponse
 import com.boost.presignin.model.userprofile.ConnectUserProfileResponse
 import com.boost.presignin.model.userprofile.ResponseMobileIsRegistered
 import com.boost.presignin.rest.EndPoints
+import com.onboarding.nowfloats.model.googleAuth.FirebaseTokenResponse
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -53,7 +54,7 @@ interface WithFloatTwoRemoteData {
   @GET(EndPoints.SEND_OTP_INDIA)
   fun sendOtpIndia(
     @Query("mobileNumber") number: Long?,
-    @Query("messageTemplate") messageTemplate: String? = "Your one time Boost 360 verification code is [OTP]. The code is valid for 10 minutes, Please DO NOT share this code with anyone.#W5izmPg6WcR",
+    @Query("messageTemplate") messageTemplate: String? = "Your one time Boost 360 verification code is [OTP]. The code is valid for 10 minutes, Please DO NOT share this code with anyone.#${com.boost.presignin.BuildConfig.APP_SIGNATURE_HASH}",
     @Query(value = "clientId") clientId: String?
   ): Observable<Response<ResponseBody>>
 
@@ -89,4 +90,9 @@ interface WithFloatTwoRemoteData {
   @Headers("Content-Type: application/json", "Accept: application/json")
   @POST(EndPoints.REGISTER_CHANNEL)
   fun post_RegisterRia(@Body map: HashMap<String?, String?>?): Observable<Response<Unit>>
+
+  @GET(EndPoints.GET_FIREBASE_TOKEN)
+  fun getFirebaseToken(
+    @Query("clientId") client_id: String?
+  ):Observable<Response<FirebaseTokenResponse>>
 }

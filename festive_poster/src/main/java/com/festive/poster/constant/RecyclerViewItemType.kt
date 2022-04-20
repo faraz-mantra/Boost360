@@ -15,11 +15,19 @@ enum class RecyclerViewItemType {
   BROWSE_TAB_TEMPLATE_CAT,
   BROWSE_ALL_TEMPLATE_CAT,
   SOCIAL_PLATFORM_POST_OPTIONS_LIST,
-  VIEWPAGER_TWITTER_PREVIEW,
+  TWITTER_PREVIEW,
   INSTAGRAM_PREVIEW,
   FB_PREVIEW,
   WEBSITE_PREVIEW,
-  GMB_PREVIEW;
+  EMAIL_PREVIEW,
+  GMB_PREVIEW,
+  FB_PREVIEW_NO_IMAGE,
+  WEBSITE_PREVIEW_NO_IMAGE,
+  EMAIL_PREVIEW_NO_IMAGE,
+  GMB_PREVIEW_NO_IMAGE,
+  TWITTER_PREVIEW_NO_IMAGE,
+  VIEW_MORE_POSTER,
+  FAV_CAT;
 
 
   @LayoutRes
@@ -36,11 +44,20 @@ enum class RecyclerViewItemType {
       BROWSE_TAB_TEMPLATE_CAT->R.layout.list_item_browse_tab_template_cat
       BROWSE_ALL_TEMPLATE_CAT->R.layout.list_item_browse_all_cat
       SOCIAL_PLATFORM_POST_OPTIONS_LIST -> R.layout.item_social_platform_promo_adap
-      VIEWPAGER_TWITTER_PREVIEW -> R.layout.social_preview_twitter
+      TWITTER_PREVIEW -> R.layout.social_preview_twitter
       INSTAGRAM_PREVIEW->R.layout.social_preview_instagram
       FB_PREVIEW->R.layout.social_preview_fb
       WEBSITE_PREVIEW->R.layout.social_preview_website
       GMB_PREVIEW->R.layout.social_preview_gmb
+      EMAIL_PREVIEW->R.layout.social_preview_email
+      FB_PREVIEW_NO_IMAGE->R.layout.social_preview_fb_no_image
+      WEBSITE_PREVIEW_NO_IMAGE->R.layout.social_preview_website_no_image
+      GMB_PREVIEW_NO_IMAGE->R.layout.social_preview_gmb_no_image
+      EMAIL_PREVIEW_NO_IMAGE->R.layout.social_preview_email_no_image
+      TWITTER_PREVIEW_NO_IMAGE -> R.layout.social_preview_twitter_no_image
+
+      VIEW_MORE_POSTER->R.layout.layout_view_more_template
+      FAV_CAT->R.layout.list_item_fav_cat
 
     }
   }

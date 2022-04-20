@@ -83,7 +83,6 @@ import retrofit.client.Response;
 import static com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItemKt.filterFeature;
 import static com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItemKt.getCapData;
 import static com.framework.utils.UtilKt.hideKeyBoard;
-import static com.framework.webengageconstant.EventLabelKt.ENTER_DIFFERENT_TITLE_AND_TRY_AGAIN;
 import static com.framework.webengageconstant.EventLabelKt.FAILED_TO_UPDATE_CUSTOMPAGE;
 import static com.framework.webengageconstant.EventLabelKt.SOMETHING_WENT_WRONG_PLEASE_TRY_AGAIN;
 import static com.framework.webengageconstant.EventLabelKt.SUCCESSFULLY_ADDED_CUSTOMPAGE;
@@ -286,19 +285,14 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                   Log.d("CUSTOM_PAGE_CHECK", "" + s);
                   materialProgress.dismiss();
                   if (response.getStatus() == 200 || response.getStatus() == 201 || response.getStatus() == 202) {
-                    if (s != null && !s.isEmpty()) {
-                      MixPanelController.track("CreateCustomPage", null);
-                      long time = System.currentTimeMillis();
-                      dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
-                      WebEngageController.trackEvent(POST_ACUSTOMPAGE, SUCCESSFULLY_ADDED_CUSTOMPAGE, session.getFpTag());
-                      Methods.showSnackBarPositive(activity, getString(R.string.page_successfully_created));
-                      isNewDataAdded = true;
-                      onCustomPageAddedOrUpdated();
-                      onBackPressed();
-                    } else {
-                      Methods.showSnackBarNegative(activity, getString(R.string.enter_different_title_try_again));
-                      WebEngageController.trackEvent(POST_ACUSTOMPAGE, ENTER_DIFFERENT_TITLE_AND_TRY_AGAIN, session.getFpTag());
-                    }
+                    MixPanelController.track("CreateCustomPage", null);
+                    long time = System.currentTimeMillis();
+                    dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
+                    WebEngageController.trackEvent(POST_ACUSTOMPAGE, SUCCESSFULLY_ADDED_CUSTOMPAGE, session.getFpTag());
+                    Methods.showSnackBarPositive(activity, getString(R.string.page_successfully_created));
+                    isNewDataAdded = true;
+                    onCustomPageAddedOrUpdated();
+                    onBackPressed();
                   } else {
                     Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
                     WebEngageController.trackEvent(POST_ACUSTOMPAGE, SOMETHING_WENT_WRONG_PLEASE_TRY_AGAIN, session.getFpTag());
@@ -538,7 +532,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     pageInterface2.getPageUrl(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), 0, 10, 1, new Callback<CustomPageLink>() {
       @Override
       public void success(CustomPageLink pageDetail, Response response) {
-        CapLimitFeatureResponseItem data = filterFeature(getCapData(), CapLimitFeatureResponseItem.FeatureType.CUSTOMPAGES);
+        CapLimitFeatureResponseItem data = filterFeature(getCapData(), CapLimitFeatureResponseItem.FeatureKey.CUSTOMPAGES);
         if (data != null && pageDetail != null) {
           PropertiesItem capLimitCustomPage = data.filterProperty(PropertiesItem.KeyType.LIMIT);
           if (pageDetail.getTotal() != null && capLimitCustomPage.getValueN() != null && pageDetail.getTotal() >= capLimitCustomPage.getValueN()) {
@@ -918,7 +912,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
       intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
     }
     intent.putExtra("profileUrl", session.getFPLogo());
-    intent.putExtra("buyItemKey", CapLimitFeatureResponseItem.FeatureType.CUSTOMPAGES.name());
+    intent.putExtra("buyItemKey", CapLimitFeatureResponseItem.FeatureKey.CUSTOMPAGES.name());
     startActivity(intent);
     new Handler().postDelayed(() -> progressDialog.dismiss(), 1000);
   }

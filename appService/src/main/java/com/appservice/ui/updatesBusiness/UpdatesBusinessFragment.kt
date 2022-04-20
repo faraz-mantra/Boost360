@@ -28,6 +28,7 @@ import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.UpdatesViewModel
 import com.framework.base.BaseResponse
+import com.framework.constants.SupportVideoType
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.firebaseUtils.firestore.FirestoreManager
@@ -41,7 +42,6 @@ import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.EVENT_NAME_UPDATE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
-import com.onboarding.nowfloats.constant.SupportVideoType
 import java.util.*
 
 class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener,AppOnZeroCaseClicked {
@@ -82,7 +82,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
     scrollPagingListener()
     listUpdateApi(offSet = offSet)
     binding?.btnAdd?.setOnClickListener {
-      startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, isResult = true)
+      startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2, isResult = true)
     }
     this.zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.LATEST_NEWS_UPADATES, this, baseActivity).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
@@ -264,7 +264,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
   }
 
   override fun primaryButtonClicked() {
-    startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, isResult = true)
+    startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2, isResult = true)
 
   }
 

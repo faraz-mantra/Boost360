@@ -143,7 +143,7 @@
           android:elevation="@dimen/_2sdp"
           android:hint="Description"
           android:imeOptions="actionNext"
-          android:inputType="textCapWords"
+          android:inputType="textCapWords|textCapSentences|textMultiLine"
           android:maxLines="1" />
       </LinearLayout>
 
@@ -187,7 +187,7 @@
           android:elevation="@dimen/_2sdp"
           android:hint="@string/review_title"
           android:imeOptions="actionNext"
-          android:inputType="textCapWords"
+          android:inputType="textCapWords|textCapSentences|textMultiLine"
           android:maxLines="1" />
       </LinearLayout>
 
@@ -230,7 +230,6 @@
           android:text="@string/_200_characters"
           android:textColor="#D8D8D8"
           android:gravity="top"
-          android:inputType="textCapWords|textMultiLine"
           android:textSize="@dimen/_10sdp" />
       </LinearLayout>
 
@@ -248,7 +247,7 @@
         android:gravity="top|left"
         android:hint="@string/enter_description"
         android:scrollbars="vertical"
-        android:inputType="textMultiLine"
+        android:inputType="textCapWords|textCapSentences|textMultiLine"
         android:maxLength="200" />
 
 

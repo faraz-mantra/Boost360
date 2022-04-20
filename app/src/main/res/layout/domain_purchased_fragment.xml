@@ -76,7 +76,7 @@
         android:layout_marginTop="@dimen/_30sdp"
         android:layout_marginEnd="@dimen/_30sdp"
         android:layout_marginBottom="@dimen/_15sdp"
-        android:background="@drawable/rounded_corner_button"
+        android:background="@drawable/create_account_button_style"
         android:gravity="center"
         android:padding="8dp"
         android:text="@string/have_an_existing_domain_n"

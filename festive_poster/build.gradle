@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 
 android {
@@ -25,6 +26,16 @@ android {
         }
     }
 
+    flavorDimensions "default"
+    productFlavors {
+        partone {
+            dimension "default"
+        }
+        jioonline {
+            dimension "default"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -38,9 +49,8 @@ android {
 }
 
 dependencies {
-
-    api project(path: ':resources')
-    implementation project(path: ':onboarding')
-
+    api project(path: ':onboarding')
+    api project(path: ':dbcenterapi')
+    implementation "com.github.skydoves:balloon:1.4.1"
 
 }

@@ -22,7 +22,7 @@
         android:id="@+id/linearLayoutCompat6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black_4a4a4a"
+        android:background="@color/website_toolbar_color"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:paddingStart="@dimen/size_16"
@@ -36,7 +36,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@drawable/bg_rounded_stroke">
+          android:background="@drawable/bg_rounded_stroke_website">
 
           <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -96,34 +96,33 @@
                   android:includeFontPadding="false"
                   android:lineSpacingExtra="-4dp"
                   android:maxLines="2"
-                  android:textColor="@color/white"
+                  android:textColor="@color/text_color_light_white_gray"
                   app:fontFamily="@font/semi_bold"
                   app:textType="HEADING_7"
                   tools:text="PLASTO INDIA AND POLYMERS" />
 
                 <com.framework.views.customViews.CustomTextView
-                  android:id="@+id/txt_domain_name"
+                    android:id="@+id/txt_domain_name"
                     android:tag="com.userexperior.ueSecureView"
-
                     android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginStart="@dimen/size_2"
-                  android:layout_marginTop="@dimen/size_2"
-                  android:drawableStart="@drawable/ic_website_accent_d"
-                  android:drawablePadding="@dimen/size_4"
-                  android:drawableTint="@color/white"
-                  android:ellipsize="end"
-                  android:gravity="center_vertical"
-                  android:includeFontPadding="false"
-                  android:maxLines="1"
-                  android:textAlignment="gravity"
-                  android:textColor="@color/white"
-                  app:autoSizeMaxTextSize="16sp"
-                  app:autoSizeMinTextSize="8sp"
-                  app:autoSizeStepGranularity="1sp"
-                  app:autoSizeTextType="uniform"
-                  tools:targetApi="m"
-                  tools:text="@string/www_sravansclinic_com" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_2"
+                    android:layout_marginTop="@dimen/size_2"
+                    android:drawableStart="@drawable/ic_website_accent_d"
+                    android:drawablePadding="@dimen/size_4"
+                    android:drawableTint="@color/text_color_light_white_gray"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/text_color_light_white_gray"
+                    app:autoSizeMaxTextSize="16sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeStepGranularity="1sp"
+                    app:autoSizeTextType="uniform"
+                    tools:targetApi="m"
+                    tools:text="@string/www_sravansclinic_com" />
 
               </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -138,7 +137,7 @@
               android:includeFontPadding="false"
               android:maxLines="2"
               android:fontFamily="@font/regular"
-              android:textColor="@color/pinkish_grey"
+              android:textColor="@color/website_desc"
               app:textType="CAPTION"
               tools:text="Dr. Shravans clinic is located in Jubilee Hills, Hyderabad. The clinic was establised in 2006 and is one of the most..." />
 
@@ -151,13 +150,13 @@
               android:layout_marginTop="@dimen/size_10"
               android:layout_marginBottom="@dimen/size_1"
               android:background="@drawable/bg_rounded_bottom"
-              android:backgroundTint="@color/gray_66666"
+              android:backgroundTint="@color/website_button_tint"
               android:fontFamily="@font/semi_bold"
               android:gravity="center_vertical"
               android:textAllCaps="false"
               android:paddingStart="@dimen/size_10"
               android:text="@string/business_profile_s"
-              android:textColor="@color/white"
+              android:textColor="@color/text_color_light_white"
               tools:ignore="RtlSymmetry" />
           </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -249,7 +248,7 @@
             android:fontFamily="@font/semi_bold"
             android:maxLines="2"
             android:text="@string/business_timings"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color_light_white"
             tools:targetApi="p" />
 
           <com.framework.views.customViews.CustomTextView
@@ -277,6 +276,7 @@
           <com.framework.views.customViews.CustomImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:tint="@color/colorLightGrey_jio"
             app:srcCompat="@drawable/ic_arrow_trans_website_d" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -301,7 +301,7 @@
             android:maxLines="2"
             android:layout_margin="@dimen/size_12"
             android:text="@string/website_customisation"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color_light_white"
             tools:targetApi="p" />
 
           <com.airbnb.lottie.LottieAnimationView
@@ -317,6 +317,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/size_12"
+            app:tint="@color/colorLightGrey_jio"
             app:srcCompat="@drawable/ic_arrow_trans_website_d" />
         </androidx.appcompat.widget.LinearLayoutCompat>
       </androidx.appcompat.widget.LinearLayoutCompat>

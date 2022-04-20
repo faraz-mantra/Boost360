@@ -25,17 +25,17 @@
         android:textSize="12sp" />
 
       <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/image_list"
-          android:tag="com.userexperior.ueSecureView"
-
+          android:id="@+id/image_list"
           android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/footer"
-        android:layout_below="@+id/label_logo"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/_50sdp"
-        android:scrollbars="none"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+          android:layout_height="match_parent"
+          android:layout_above="@+id/footer"
+          android:layout_below="@+id/label_logo"
+          android:clipToPadding="false"
+          android:paddingBottom="@dimen/_50sdp"
+          android:scrollbars="none"
+          android:tag="com.userexperior.ueSecureView"
+          app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
       <ProgressBar
         android:id="@+id/pb_loading"
@@ -43,7 +43,7 @@
         android:layout_height="50dp"
         android:layout_centerInParent="true"
         android:indeterminate="true"
-        android:indeterminateTint="@color/colorAccent_jio"
+        android:indeterminateTint="@color/colorAccentLight"
         android:visibility="gone" />
 
       <com.framework.views.fabButton.FloatingActionButton

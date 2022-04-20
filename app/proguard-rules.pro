@@ -24,14 +24,15 @@
 -dontpreverify
 -verbose
 
+#-printusage Users/apple/Documents/patchinfotech/AndroidProject/nowfloat/ProductionBranch/boost360-android-app/app/usage.txt
 -keep class twitter4j.** { *; }
 -dontwarn com.darsh.multipleimageselect.adapters.**
 -dontwarn twitter4j.**
 -dontwarn com.apxor.**
 -dontwarn org.apache.commons.codec.binary.Base64
 
--keep class androidx.core.app.CoreComponentFactory { *; }
--keep class * extends androidx.fragment.app.Fragment{}
+#-keep class androidx.core.app.CoreComponentFactory { *; }
+#-keep class * extends androidx.fragment.app.Fragment{}
 
 #-dontwarn com.demach.konotor
 #-dontwarn com.demach.konotor.KonotorFeedbackActivity
@@ -88,7 +89,27 @@
 -keep class com.nowfloats.CustomPage.Model.**{ *; }
 -keep class com.boost.presignin.model.**{ *; }
 -keep class sun.misc.Unsafe { *; }
--keepattributes Signature
+-keep class com.nowfloats.Analytics_Screen.model.** { *; }
+-keep class com.nowfloats.Analytics_Screen.Graph.model.** { *; }
+-keep class com.nowfloats.customerassistant.models.** { *; }
+-keep class com.nowfloats.education.model.** { *; }
+-keep class com.nowfloats.education.faculty.model.** { *; }
+-keep class com.nowfloats.education.batches.model.** { *; }
+-keep class com.nowfloats.education.toppers.model.** { *; }
+-keep class com.nowfloats.hotel.API.model.** { *; }
+-keep class com.nowfloats.managecustomers.models.** { *; }
+-keep class com.nowfloats.manufacturing.API.model.** { *; }
+-keep class com.nowfloats.on_boarding.models.** { *; }
+-keep class com.nowfloats.ProductGallery.Model.** { *; }
+-keep class com.nowfloats.Restaurants.API.model.** { *; }
+-keep class com.nowfloats.sellerprofile.model.** { *; }
+-keep class com.nowfloats.sync.model.** { *; }
+-keep class com.nowfloats.sync.rmodel.** { *; }
+-keep class com.nowfloats.webactions.models.** { *; }
+-keep class com.nowfloats.widget.** { *; }
+-keep class com.nowfloats.managenotification.OrderModel**
+-keep class com.nowfloats.NavigationDrawer.SiteMeter.SiteMeterModel**
+-keep class com.nowfloats.NavigationDrawer.PostModel**
 
 #-keep class com.google.gson.demach.** {
 #    <fields>;
@@ -104,8 +125,8 @@
 
 -keep class com.daimajia.androidanimations.** { *;}
 -keep class com.daimajia.easing.** { *;}
--keep class android.support.v4.** { *; }
--keep class android.support.v7.** { *; }
+#-keep class android.support.v4.** { *; }
+#-keep class android.support.v7.** { *; }
 
 
 
@@ -141,14 +162,14 @@
 -keep class * extends com.aviary.android.feather.sdk.widget.PackDetailLayout
 -keep class * extends com.aviary.android.feather.sdk.internal.services.BaseContextService
 -keep class * extends com.aviary.android.feather.sdk.internal.tracking.AbstractTracker
--keep class * extends android.app.Service
--keep class * extends android.os.AsyncTask
--keep class * extends android.app.Activity
--keep class * extends android.app.Application
--keep class * extends android.app.Service
--keep class * extends android.content.BroadcastReceiver
--keep class * extends android.content.ContentProvider
+#-keep class * extends android.app.Service
+#-keep class * extends android.os.AsyncTask
+#-keep class * extends android.app.Activity
+#-keep class * extends android.app.Application
+#-keep class * extends android.content.BroadcastReceiver
+#-keep class * extends android.content.ContentProvider
 -keep class com.android.vending.licensing.ILicensingService
+#-keep public class com.android.vending.billing.IInAppBillingService
 -keep class com.aviary.android.feather.sdk.internal.headless.moa.MoaResult
 -keep class com.aviary.android.feather.sdk.internal.headless.filters.NativeFilterProxy
 -keep class com.aviary.android.feather.sdk.utils.AviaryIntentConfigurationValidator
@@ -265,7 +286,7 @@
 # facebook sdk specific entries
 #
 
--keepnames class * implements java.io.Serializable
+#-keepclasseswithmembers class * implements java.io.Serializable
 
 -keepclassmembers class * implements java.io.Serializable {
     static final long serialVersionUID;
@@ -278,7 +299,6 @@
 }
 
 -keepclassmembers class com.facebook.Session {*;}
--keepattributes Signature
 -keep class com.facebook.model.** { *; }
 -keep class com.facebook.model.** { *; }
 
@@ -311,9 +331,9 @@
 -keepclassmembers enum com.j256.** { *; }
 -keep interface com.j256.**
 -keepclassmembers interface com.j256.** { *; }
--keepclassmembers class * {
-  public <init>(android.content.Context);
-}
+#-keepclassmembers class * {
+#  public <init>(android.content.Context);
+#}
 
 -keepclassmembers class com.anachat.chatsdk.internal.model.** {
    @com.j256.ormlite.field.DatabaseField <fields>;
@@ -353,42 +373,75 @@
 
 -dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder
 
-
 ## New progard rule
--keeppackagenames com.onboarding
--keeppackagenames com.dashboard
--keeppackagenames com.appservice
--keeppackagenames com.framework
--keeppackagenames com.resources
--keeppackagenames com.inventoryorder
--keeppackagenames com.boost.presignup
--keeppackagenames com.boost.presignin
--keeppackagenames dev.patrickgold.florisboard
+#-keeppackagenames com.onboarding
+#-keeppackagenames com.dashboard
+#-keeppackagenames com.appservice
+#-keeppackagenames com.framework
+#-keeppackagenames com.resources
+#-keeppackagenames com.inventoryorder
+#-keeppackagenames com.boost.presignup
+#-keeppackagenames com.boost.presignin
+#-keeppackagenames com.festive_poster
+#-keeppackagenames dev.patrickgold.florisboard
 
--keep class com.onboarding.** { *; }
--keep class com.dashboard.** { *; }
--keep class com.appservice.** { *; }
--keep class com.framework.** { *; }
--keep class com.resources.** { *; }
--keep class com.inventoryorder.** { *; }
+#-keep class com.onboarding.** { *; }
+#-keep class com.dashboard.** { *; }
+#-keep class com.appservice.** { *; }
+#-keep class com.resources.** { *; }
+#-keep class com.inventoryorder.** { *; }
+#-keep class com.festive_poster.** { *; }
+#-keep class com.boost.presignup.** { *; }
+#-keep class com.boost.presignin.** { *; }
+#-keep class com.framework.** { *; }
 -keep class dev.patrickgold.florisboard.** { *; }
+
 -keep class com.onboarding.nowfloats.model.** { <fields>; }
 -keep class com.inventoryorder.model.** { <fields>; }
 -keep class com.dashboard.model.** { <fields>; }
 -keep class com.appservice.model.** { <fields>; }
--keep class com.appservice.model.staffModel.** { <fields>; }
 -keep class com.boost.presignup.datamodel.** { <fields>; }
--keep class com.appservice.ui.model.** { <fields>; }
--keep class com.inventoryorder.ui.tutorials.model.** { <fields>; }
+-keep class com.inventoryorder.model.** { <fields>; }
 -keep class com.boost.presignin.model.** { <fields>; }
+-keep class com.festive.poster.models.** { <fields>; }
 -keep class dev.patrickgold.florisboard.customization.model.** { <fields>; }
+-keep class com.framework.models.** { <fields>; }
+-keep class com.nowfloats.facebook.models.** { <fields>; }
+
+-keep class com.appservice.ui.model.** { <fields>; }
+-keep class com.appservice.ui.domainbooking.model.** { <fields>; }
+-keep class com.inventoryorder.ui.tutorials.model.** { <fields>; }
+-keep class com.framework.rest.tokenCreate.** { <fields>; }
+-keep class com.boost.presignin.rest.response.** { <fields>; }
+-keep class com.dashboard.controller.ui.business.model.** { <fields>; }
+-keep class com.dashboard.controller.ui.customisationnav.model.** { <fields>; }
+-keep class com.dashboard.controller.ui.more.model.** { <fields>; }
+-keep class com.appservice.offers.models.** { <fields>; }
+-keep class com.inventoryorder.rest.response.** { <fields>; }
+-keep class com.onboarding.nowfloats.rest.response.** { <fields>; }
+-keep class auth.google.model.** { <fields>; }
+-keep class com.framework.pref.** { <fields>; }
+-keep class com.dashboard.controller.ui.ownerinfo.ConsultationHoursModel**
+-keep class com.appservice.ui.catalog.common.AppointmentModel**
+-keep class com.framework.base.BaseResponse**
+-keep class com.framework.base.BaseRequest**
+-keep class com.framework.views.bottombar.BottomBarItem**
+-keep class com.framework.firebaseUtils.** { *; }
+#-keep class com.framework.firebaseUtils.firestore.restApi.model.** { <fields>; }
+#-keep class com.framework.firebaseUtils.firestore.badges.BadgesModel**
+#-keep class com.framework.firebaseUtils.firestore.Disabled**
+#-keep class com.framework.firebaseUtils.firestore.Drs_segment**
+#-keep class com.framework.firebaseUtils.firestore.DrScoreModel**
+#-keep class com.framework.firebaseUtils.firestore.Error**
+#-keep class com.framework.firebaseUtils.firestore.Events**
+#-keep class com.framework.firebaseUtils.firestore.Metricdetail**
+#-keep class com.framework.firebaseUtils.caplimit_feature.PropertiesItem**
 
 ## New progard rule
 
 ##---------------Begin: proguard configuration for Gson  ----------
 # Gson uses generic type information stored in a class file when working with fields. Proguard
 # removes such information by default, so configure it to keep all of it.
--keepattributes Signature
 
 # For using GSON @Expose annotation
 -keepattributes *Annotation*
@@ -418,8 +471,6 @@
 ##------keyboard---------##
 -dontnote retrofit2.Platform
 -dontwarn retrofit2.Platform$Java8
--keepattributes Signature
--keepattributes Exceptions
 -keepattributes *Annotation*,EnclosingMethod,Signature
 -keepnames class com.fasterxml.jackson.** { *;  }
 -dontwarn com.fasterxml.jackson.databind.**
@@ -457,11 +508,14 @@
 #-dontwarn com.google.android.libraries.places.internal.jb
 
 ##------Upgrades---------##
--dontwarn com.boost.upgrades.**
--keeppackagenames com.boost.upgrades
--keep class com.boost.upgrades.** {*;}
+#-dontwarn com.boost.upgrades.**
+#-keeppackagenames com.boost.upgrades
+#-keep class com.boost.upgrades.** {*;}
 -keep class com.boost.upgrades.data.** { <fields>; }
+-keep class com.boost.upgrades.datamodule.** { <fields>; }
 
+##------dbcenterapi---------##
+-keep class com.boost.dbcenterapi.data.api_model.** { <fields>; }
 
 ##-----Appsflyer-----###
 -keep class com.appsflyer.** { *; }

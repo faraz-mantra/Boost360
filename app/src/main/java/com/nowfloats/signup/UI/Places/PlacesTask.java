@@ -32,7 +32,7 @@ public class PlacesTask extends AsyncTask<String, Void, String> {
         /*test key*/
 //        String key = "key=AIzaSyAOs1F-vvt8y8OI_owV-14d2U6C2zFTdcI";
         /*Live key*/
-        String key = "key=AIzaSyDEYXNicTu6UPd0-68OdMDGZZtUi3FWNlM";
+        String key = "key=";
         String input = "";
 
         try {

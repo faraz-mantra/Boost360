@@ -8,7 +8,7 @@ import java.lang.IllegalArgumentException
 
 class HistoryDetailsViewModelFactory(private val application: Application) :
   ViewModelProvider.Factory {
-  override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+  override fun <T : ViewModel> create(modelClass: Class<T>): T {
     if (modelClass.isAssignableFrom(HistoryDetailsViewModel::class.java)) {
       return HistoryDetailsViewModel(application) as T
     }

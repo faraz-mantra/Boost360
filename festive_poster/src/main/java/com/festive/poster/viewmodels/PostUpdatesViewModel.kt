@@ -3,9 +3,12 @@ package com.festive.poster.viewmodels
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.festive.poster.models.PostUpdateTaskRequest
+import com.festive.poster.reset.repo.NowFloatsRepository
+import com.festive.poster.reset.repo.UsCentralNowFloatsCloudRepo
 import com.festive.poster.reset.repo.WithFloatTwoRepository
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
+import com.framework.models.UpdateDraftBody
 import com.framework.models.toLiveData
 import com.onboarding.nowfloats.rest.repositories.CategoryRepository
 import com.onboarding.nowfloats.rest.repositories.ChannelRepository
@@ -18,6 +21,38 @@ class PostUpdatesViewModel : BaseViewModel() {
 
   fun putBizMessageUpdate(request: PostUpdateTaskRequest?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.putBizMessageUpdate(request).toLiveData()
+  }
+
+  fun getFavTemplates(floatingPointId: String?,floatingPointTag: String?,featureKey:String): LiveData<BaseResponse> {
+    return NowFloatsRepository.getFavTemplates(floatingPointId,floatingPointTag,featureKey).toLiveData()
+  }
+
+  fun putBizMessageUpdateV2(request: PostUpdateTaskRequest?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.putBizMessageUpdateV2(request).toLiveData()
+  }
+
+  fun favPoster(floatingPointId: String?,fpTag: String?,templateId: String?): LiveData<BaseResponse> {
+    return NowFloatsRepository.makeTempFav(floatingPointId,fpTag,templateId).toLiveData()
+  }
+
+  fun putBizImageUpdateV2(
+    type: String?,
+    bizMessageId: String?,
+    imageBase64: String?,
+    sendToSubscribers: Boolean?,
+    socialParmeters: String?
+  ): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.putBizImageUpdateV2(
+      type,bizMessageId,imageBase64,sendToSubscribers,socialParmeters
+    ).toLiveData()
+
+  }
+
+
+  fun updateDraft(updateDraftBody: UpdateDraftBody): LiveData<BaseResponse> {
+    return UsCentralNowFloatsCloudRepo.updateDraft(
+      updateDraftBody
+    ).toLiveData()
   }
 
   fun getUserDetails(fpTag: String?, clientId: String): LiveData<BaseResponse> {

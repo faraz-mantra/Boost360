@@ -9,12 +9,11 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
 
 class SocialPreviewModel(
-    val posterModel: PosterModel,
+    val posterImg: String?,
     val title:String?,
     val desc:String?,
-    val layout_id:Int,
     var shouldShow:Boolean,
-    var channelType:SocialPreviewChannel
+    var channelType:SocialPreviewChannel,
 ) : Serializable, AppBaseRecyclerViewItem {
 
     companion object{
@@ -31,6 +30,42 @@ class SocialPreviewModel(
 
 
     override fun getViewType(): Int {
-        return layout_id
+       return when(channelType){
+            SocialPreviewChannel.INSTAGRAM-> if (posterImg!=null){
+                RecyclerViewItemType.INSTAGRAM_PREVIEW.getLayout()
+            }else{
+                -1
+            }
+           SocialPreviewChannel.TWITTER->if (posterImg!=null){
+               RecyclerViewItemType.TWITTER_PREVIEW.getLayout()
+           }else{
+               RecyclerViewItemType.TWITTER_PREVIEW_NO_IMAGE.getLayout()
+           }
+           SocialPreviewChannel.GMB->if (posterImg!=null){
+               RecyclerViewItemType.GMB_PREVIEW.getLayout()
+           }else{
+               RecyclerViewItemType.GMB_PREVIEW_NO_IMAGE.getLayout()
+           }
+           SocialPreviewChannel.FACEBOOK->if (posterImg!=null){
+               RecyclerViewItemType.FB_PREVIEW.getLayout()
+           }else{
+               RecyclerViewItemType.FB_PREVIEW_NO_IMAGE.getLayout()
+           }
+           SocialPreviewChannel.WEBSITE->if (posterImg!=null){
+               RecyclerViewItemType.WEBSITE_PREVIEW.getLayout()
+           }else{
+               RecyclerViewItemType.WEBSITE_PREVIEW_NO_IMAGE.getLayout()
+           }
+           SocialPreviewChannel.EMAIL->if (posterImg!=null){
+               RecyclerViewItemType.EMAIL_PREVIEW.getLayout()
+           }else{
+               RecyclerViewItemType.EMAIL_PREVIEW_NO_IMAGE.getLayout()
+           }
+           else->{
+               RecyclerViewItemType.WEBSITE_PREVIEW.getLayout()
+           }
+
+        }
+
     }
 }

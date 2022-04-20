@@ -13,6 +13,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
+import android.view.*
 import android.widget.TextView
 import androidx.appcompat.view.ContextThemeWrapper
 import com.framework.base.BaseResponse
@@ -21,6 +23,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.firebaseUtils.firestore.FirestoreManager
+import com.framework.pref.APPLICATION_JIO_ID
 import com.framework.pref.clientId
 import com.framework.webengageconstant.MY_DIGITAL_CHANNEL
 import com.framework.webengageconstant.MY_DIGITAL_CHANNEL_LOAD
@@ -114,6 +117,13 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     WebEngageController.trackEvent(MY_DIGITAL_CHANNEL_LOAD, MY_DIGITAL_CHANNEL, NO_EVENT_VALUE)
     progress = ProgressChannelDialog.newInstance()
     binding?.syncBtn?.setOnClickListener { syncChannels() }
+    if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)){
+      binding?.disconnectedBg?.setBackgroundColor(getColor(R.color.colorAccent))
+      binding?.connectedBg?.setBackgroundColor(getColor(R.color.colorAccent))
+      baseActivity.getToolbar()?.setBackgroundColor(getColor(R.color.colorAccent))
+      baseActivity.window.statusBarColor = getColor(R.color.colorAccent)
+      baseActivity.getToolbar()?.getToolbarTitleTextView()?.gravity = Gravity.START
+    }
   }
 
   override fun onResume() {
@@ -352,8 +362,13 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
 
 
   private fun changeView(isConnect: Boolean) {
-    (baseActivity as? DigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorAccent else R.color.bg_dark_grey)
-    (baseActivity as? ContainerDigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorAccent else R.color.bg_dark_grey)
+    if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)){
+      (baseActivity as? DigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorPrimary else R.color.colorAccent)
+      (baseActivity as? ContainerDigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorPrimary else R.color.colorAccent)
+    }else{
+      (baseActivity as? DigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorPrimary else R.color.black_4a4a4a)
+      (baseActivity as? ContainerDigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorPrimary else R.color.black_4a4a4a)
+    }
     binding?.disconnectedBg?.visibility = if (isConnect) View.GONE else View.VISIBLE
     binding?.viewConnect?.visibility = if (isConnect) View.GONE else View.VISIBLE
     binding?.connectedRiya?.visibility = if (isConnect) View.VISIBLE else View.GONE

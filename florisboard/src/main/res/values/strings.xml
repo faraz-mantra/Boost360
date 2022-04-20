@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">Boost keyboard</string>
+  <string name="app_name_k">Boost keyboard</string>
 
   <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pause</string>
   <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Wait</string>
@@ -396,7 +396,6 @@
   <string name="enter_offer_price">Enter Offer Price</string>
   <string name="tv_done">Done</string>
 
-  <string name="client_id">2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21</string>
   <string name="please_login">Please Login</string>
   <string name="_90_min">90 min</string>
   <string name="view_details">View Details</string>
@@ -421,4 +420,7 @@
   <string name="login_to_start_sharing">Login to start sharing.</string>
   <string name="with_business_keyboard">With business keyboard, share deals, offers, product details quickly as you chat with potential customers on WhatsApp, Instagram, Telegram, Facebook Messenger, etc.</string>
   <string name="login_to_boost">Login to Boost 360</string>
+  <string name="powered_by">powered by</string>
+  <string name="unable_open_boost_app">Unable to open Boost App</string>
+  <string name="app_not_install">App is not installed</string>
 </resources>

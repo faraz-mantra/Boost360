@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="ButtonStyle.Red">
+    <item name="android:textSize">14sp</item>
+    <item name="android:stateListAnimator">@null</item>
+    <item name="android:gravity">center</item>
+    <item name="android:fontFamily">@font/semi_bold</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="paddingStart">@dimen/size_28</item>
+    <item name="paddingEnd">@dimen/size_28</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">@dimen/size_38</item>
+    <item name="height">@dimen/size_36</item>
+    <item name="textSize">14sp</item>
+    <item name="android:drawablePadding">8dp</item>
+    <item name="android:layout_gravity">center_horizontal</item>
+    <item name="android:textColor">@color/ButtoncolorAccent</item>
+    <item name="android:background">@drawable/rounded_stroke_grey_4_solid_error</item>
+  </style>
+
+  <style name="BrandedSwitch.control" parent="Theme.AppCompat.Light">
+    <!-- active thumb & track color (30% transparency) -->
+    <item name="colorControlActivated">@color/green</item>
+    <item name="colorSwitchThumbNormal">#cc0000</item>
+  </style>
+
+  <style name="EditTextCustomeStyle" parent="Widget.AppCompat.EditText">
+    <item name="android:background">@drawable/custome_edittext_selector</item>
+    <item name="android:fontFamily">@font/regular</item>
+    <item name="android:textSize">@dimen/_11sdp</item>
+    <item name="android:paddingStart">@dimen/_10sdp</item>
+    <item name="android:paddingEnd">@dimen/_8sdp</item>
+    <item name="android:paddingTop">@dimen/_8sdp</item>
+    <item name="android:paddingBottom">@dimen/_8sdp</item>
+    <item name="android:layout_marginStart">@dimen/_15sdp</item>
+    <item name="android:layout_marginEnd">@dimen/_15sdp</item>
+    <item name="android:layout_marginTop">@dimen/_5sdp</item>
+    <item name="colorSecondary">@color/black_4a4a4a</item>
+    <item name="android:layout_marginBottom">@dimen/_5sdp</item>
+    <item name="android:textCursorDrawable">@drawable/color_cursor_orange</item>
+  </style>
+
+</resources>

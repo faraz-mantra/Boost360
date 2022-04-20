@@ -56,7 +56,7 @@
   <color name="pinkish_grey">#BBBBBB</color>
   <color name="pinkish_grey_ten_alpha">#BBBBBB</color>
   <color name="marigold">#ffc800</color>
-  <color name="orange">#ffb900</color>
+  <color name="orange">@color/colorAccent</color>
   <color name="squash">#f7981c</color>
   <color name="orange_light_n">#FFD461</color>
   <color name="carmine">#9f041b</color>
@@ -87,8 +87,7 @@
   <color name="light_green_2">#00D34F</color>
   <color name="light_green_3">#99DC45</color>
   <color name="light_lemon">#EC9A81</color>
-  <color name="accent_lemon">#fef3ce</color>
-  <color name="accent_lemon_fff8e5">#fff8e5</color>
+  <color name="accent_lemon">#fff8e5</color>
   <color name="pinkish_grey_two">#bababa</color>
   <color name="scarlet_40">#66D0021B</color>
   <color name="scarlet">#D0021B</color>
@@ -155,15 +154,43 @@
   <color name="blue_4A90E2">#4A90E2</color>
   <color name="blue_52AAC6">#52AAC6</color>
   <color name="red_E39595">#E39595</color>
+  <color name="red_EB5757">#EB5757</color>
+
   <color name="red_button">#E39595</color>
   <color name="black_202A2A2A">#202A2A2A</color>
   <color name="black_322A2A2A">#322A2A2A</color>
   <color name="black_3C3C3C">#3C3C3C</color>
   <color name="colorAccentPositive">@color/colorAccent</color>
   <color name="colorAccentNegative">@color/black_4a4a4a</color>
-
   <color name="grey_bg">#F8F8F8</color>
   <color name="black_1e1e1e">#1E1E1E</color>
+
+  <color name="white_ECEFF1">#ECEFF1</color>
+  <color name="gray_727D82">#727D82</color>
+  <color name="gray_33727D82">#33727D82</color>
+  <color name="gray_DADADA">#dadada</color>
+  <color name="green_61CF96">#61CF96</color>
+  <color name="green_7ED321">#7ED321</color>
+  <color name="gray_B3B3B3">#B3B3B3</color>
+  <color name="black_66">#66000000</color>
+  <color name="white_E0E2E9">#E0E2E9</color>
+  <color name="gray_9DA4B2">#9DA4B2</color>
+  <color name="white_F4F8FA">#F4F8FA</color>
+  <color name="white_F7F7F4">#F7F7F4</color>
+  <color name="grey_4C4C4C">#4C4C4C</color>
+  <color name="light_grey_0068E01A">#0068E01A</color>
+  <color name="color_747474">#747474</color>
+
+  <color name="black_4a4a4a_jio">@color/black_4a4a4a</color>
+  <color name="primary_4a4a4a_jio">@color/black_4a4a4a</color>
+  <color name="gray_white_text_jio">@color/gray_text_hint</color>
+
+  <color name="dashboard_business_url">#4A4A4A</color>
+  <color name="colorLightGrey_jio">#E4E4E4</color>
+  <color name="light_grey_boost_jio">#DFDFDF</color>
+  <color name="orange_light">#FFF8E5</color>
+  <color name="color_888888">#888888</color>
+
   <color name="white_F5F8FD">#F5F8FD</color>
   <color name="black_09121F">#09121F</color>
   <color name="grey_09121F">#ECEFF1</color>
@@ -176,5 +203,12 @@
   <color name="color395996">#395996</color>
   <color name="color868686">#868686</color>
   <color name="color88888">#888888</color>
+
+  <color name="color191919">#191919</color>
+  <color name="colorFFF8E6">#FFF8E6</color>
+  <color name="colorAFAFAF">#AFAFAF</color>
+  <color name="colorE0E2E9">#E0E2E9</color>
+  <color name="colorEDF0F4">#EDF0F4</color>
+  <color name="colorF8E71C">#F8E71C</color>
 
 </resources>

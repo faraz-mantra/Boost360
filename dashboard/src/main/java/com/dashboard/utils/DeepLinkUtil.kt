@@ -7,10 +7,14 @@ import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.framework.pref.FACEBOOK_PAGE_WITH_ID
-import com.framework.pref.FACEBOOK_URL
+import androidx.fragment.app.Fragment
+import com.appservice.constant.FragmentType
+import com.dashboard.R
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.framework.webengageconstant.ABOUT_BOOST_FB_LIKE
+import com.framework.webengageconstant.CLICK
+import com.framework.webengageconstant.NO_EVENT_VALUE
 import java.util.*
 
 const val facebook_chat_main = "facebookchatMain"
@@ -80,6 +84,8 @@ const val deeplink_purchased_plans = "your_purchased_plans"
 const val deeplink_digital_channels = "digital_channels"
 const val deeplink_call_tracker_add_on = "call_tracker_add_on"
 const val deeplink_service_catalogue = "service_catalogue"
+const val deeplink_ecommerce_setting = "e_commerce_setting"
+const val deeplink_appointment_setting = "appointment_setting"
 const val deeplink_all_custom_pages = "all_custom_pages"
 const val deeplink_analytics_website_visits = "total_website_visits"
 const val deeplink_analytics_website_visitors = "total_website_visitors"
@@ -112,8 +118,7 @@ const val tag_for_partners = ".nowfloats.com"
 const val VISITS_TABLE = 0
 const val VISITORS_TABLE = 1
 
-class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSessionManager) {
-
+class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSessionManager,var baseFragment: Fragment) {
   private val TAG = "DeepLinkUtil"
   fun deepLinkPage(url: String, buyItemKey: String, isFromRia: Boolean) {
     Log.i(TAG, "deepLinkPage: " + url)
@@ -140,7 +145,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(facebookpage)) {
           likeUsFacebook(baseActivity, "/reviews/")
         } else if (url.contains(deeplink_update)) {
-          baseActivity.startPostUpdate(session)
+          baseActivity.startPostUpdate()
         } else if (url.contains(deeplink_featuredimage)) {
           baseActivity.startBusinessProfileDetailEdit(session)
         } else if (url.contains(addProduct)) {
@@ -231,6 +236,8 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startVmnCallCard(session)
         } else if (url.contains(deeplink_service_catalogue)) {
           baseActivity.startListServiceProduct(session)
+        } else if (url.contains(deeplink_ecommerce_setting) || url.contains(deeplink_appointment_setting)) {
+          baseActivity.startEcommerceAppointmentSetting(session)
         } else if (url.contains(deeplink_all_custom_pages)) {
           baseActivity.startCustomPage(session, false)
         } else if (url.contains(deeplink_analytics_website_visits)) {
@@ -238,7 +245,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_analytics_website_visitors)) {
           baseActivity.startSiteViewAnalytic(session, "UNIQUE")
         } else if (url.contains(deeplink_background_images)) {
-          baseActivity.startBackgroundImageGallery(session)
+          baseFragment.startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
         } else if (url.contains(deeplink_favicon)) {
           baseActivity.startFeviconImage(session)
         } else if (url.contains(deeplink_appointment_summary)) {
@@ -287,31 +294,30 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
 }
 
 fun likeUsFacebook(context: Context, review: String) {
-  val facebookIntent: Intent = try {
-    context.packageManager.getPackageInfo("com.facebook.katana", 0)
-    Intent(Intent.ACTION_VIEW, Uri.parse(FACEBOOK_PAGE_WITH_ID))
-  } catch (e: java.lang.Exception) {
-    Intent(Intent.ACTION_VIEW, Uri.parse(FACEBOOK_URL + review))
-  }
-  facebookIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
-  try {
-    context.startActivity(facebookIntent)
-  } catch (e: java.lang.Exception) {
-    Toast.makeText(context, "unable to open facebook", Toast.LENGTH_SHORT).show()
-  }
+  WebEngageController.trackEvent(ABOUT_BOOST_FB_LIKE, CLICK, NO_EVENT_VALUE)
+  if (context.getString(R.string.settings_facebook_page_id).isNotEmpty() || context.getString(R.string.settings_facebook_like_link).isNotEmpty()) {
+    val facebookIntent: Intent = try {
+      context.packageManager.getPackageInfo(context.getString(R.string.facebook_package), 0)
+      Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.settings_facebook_page_id)))
+    } catch (e: Exception) {
+      Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.settings_facebook_like_link) + review))
+    }
+    facebookIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
+    try {
+      context.startActivity(facebookIntent)
+    } catch (e: Exception) {
+      Toast.makeText(context, context.getString(R.string.unable_to_open_facebook), Toast.LENGTH_SHORT).show()
+    }
+  } else Toast.makeText(context, context.getString(R.string.coming_soon), Toast.LENGTH_SHORT).show()
 }
 
 fun AppCompatActivity.upgradeApp() {
   try {
     val appPackageName: String = this.packageName
     try {
-      this.startActivity(
-        Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName"))
-      )
+      this.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
     } catch (anfe: ActivityNotFoundException) {
-      this.startActivity(
-        Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName"))
-      )
+      this.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
     }
   } catch (e: Exception) {
     e.printStackTrace()

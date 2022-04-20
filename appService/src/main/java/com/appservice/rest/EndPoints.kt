@@ -54,6 +54,7 @@ object EndPoints {
 
   //TODO NFX API 2 WITH FLOAT
   const val WITH_FLOATS_TWO_BASE = "https://api2.withfloats.com/"
+  const val BACKGROUND_IMAGE = "discover/v1/floatingpoint/getBackgroundImages"
   const val CREATE_SERVICE = "Product/v1/Create"
   const val UPDATE_SERVICE = "Product/v1/Update"
   const val DELETE_SERVICE = "Product/v1/Delete"
@@ -62,14 +63,19 @@ object EndPoints {
   const val GET_NOTIFICATION = "Discover/v1/floatingpoint/notificationscount"
   const val GET_LATEST_UPDATES = "Discover/v1/floatingPoint/bizFloats"
   const val PUT_BIZ_MESSAGE = "discover/v1/FloatingPoint/createBizMessage"
+  const val PUT_BIZ_MESSAGE_V2 = "discover/v2/FloatingPoint/createBizMessage"
   const val PUT_BIZ_IMAGE = "discover/v1/FloatingPoint/createBizImage"
+  const val PUT_BIZ_IMAGE_V2 = "discover/v2/FloatingPoint/createBizImage"
   const val GET_BIZ_WEB_UPDATE_BY_ID = "discover/v1/bizFloatForWeb/{id}"
   const val DELETE_BIZ_MESSAGE_UPDATE = "discover/v1/floatingpoint/archiveMessage"
   const val GET_PRODUCT_LIST = "Product/v1/GetListings"
   const val GET_FP_DETAILS = "/Discover/v3/floatingPoint/nf-app/{fpid}"
   const val GET_CATALOG_STATUS = "discover/v9/business/settings/status/{fpid}"
+  const val UPDATE_GST_SLAB = "discover/v9/business/paymentProfile/gstSlab/update"
   const val POST_PRODUCT_CATEGORY_VERB = "Discover/v1/FloatingPoint/update/"
   const val GET_MERCHANT_SUMMARY = "/Support/v1/dashboard/GetMerchantSummary"
+  const val CREATE_BG_IMAGE="/Discover/v1/floatingPoint/createBackgroundImage"
+  const val DELETE_BG_IMAGE="/Discover/v1/floatingPoint/backgroundImage/delete"
 
   //TODO PRODUCT API 2 WITH FLOAT
   const val CREATE_PRODUCT = "Product/v1/Create"
@@ -148,5 +154,13 @@ object EndPoints {
   const val AZURE_WEBSITE_NET_URL = "https://withfloats-feature-processor-api.azurewebsites.net/"
   const val GET_FEATURE_DETAILS = "Features/v1/GetFeatureDetils"
   const val GET_FEATURE_DETAILS_2 = "Features/v1/GetFeatureDetails"
+
+  // RIA MEMORY APIs
+  const val RIA_MEMORY_BASE_URL="https://riamemory.withfloats.com"
+
+  //US CENTRAL
+  const val US_CENTRAL_BASE="https://us-central1-nowfloats-boost.cloudfunctions.net/"
+  const val UPDATE_DRAFT="onpostUpdateDraftApi"
+
 }
 

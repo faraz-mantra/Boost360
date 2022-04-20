@@ -6,7 +6,7 @@ data class PosterDetailsModel(
     @SerializedName("description")
     val Description: String,
     @SerializedName("favourite")
-    val Favourite: Boolean,
+    var Favourite: Boolean,
     @SerializedName("price")
     val Price: Double,
     @SerializedName("title")

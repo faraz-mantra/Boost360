@@ -4,8 +4,8 @@
       "category_key": "HEALTHCARE - GENERAL",
       "experience_code": "DOC",
       "webTemplateId": "59d74e153872831a6483491e",
-      "category_Name": "Doctors &\nHealth specialists",
-      "category_descriptor": "your healthcare business",
+      "category_Name": "Doctors &\nhealth specialists",
+      "category_descriptor": "E.g. Dentists, Gynecologists, ENT and others from health sector",
       "icon": "/icons/healthcare.svg",
       "channels": [
         {
@@ -194,8 +194,8 @@
       "category_key": "EDUCATION",
       "experience_code": "EDU",
       "webTemplateId": "5a952f3dac626704fc9b6d86",
-      "category_Name": "Education\n& e-Coaching",
-      "category_descriptor": "your education institute",
+      "category_Name": "Education and\ne-coaching\ninstitutes",
+      "category_descriptor": "E.g. Schools, Colleges, Coaching Institutes, Tuition classes, etc.",
       "icon": "/icons/edu.svg",
       "channels": [
         {
@@ -380,8 +380,8 @@
       "category_key": "HEALTHCARE - CLINICS",
       "experience_code": "HOS",
       "webTemplateId": "597f48fd38728384d4b85cdd",
-      "category_Name": "Clinics &\nHospitals",
-      "category_descriptor": "your healthcare business",
+      "category_Name": "Clinics and\nhospitals",
+      "category_descriptor": "E.g. Multi or Super speciality hospitals and others",
       "icon": "/icons/hospital.svg",
       "channels": [
         {
@@ -569,8 +569,8 @@
       "category_key": "SPA",
       "experience_code": "SPA",
       "webTemplateId": "5b34bd254030c804fbbd8414",
-      "category_Name": "Spas\n& Wellness",
-      "category_descriptor": "your spa",
+      "category_Name": "Wellness spa and\nherbal care",
+      "category_descriptor": "Ex: Wellness spa, herbal care, massage care, skin care, and others.",
       "icon": "/icons/spa.svg",
       "channels": [
         {
@@ -743,8 +743,8 @@
       "category_key": "HOTEL & MOTELS",
       "experience_code": "HOT",
       "webTemplateId": "5b3b2b6aec3c7704fee7ae93",
-      "category_Name": "Hotels\n& Motels",
-      "category_descriptor": "your hotel",
+      "category_Name": "Hotels, motels and\nhomestays",
+      "category_descriptor": "E.g. Hotels including loading facilities, Paying Guest Accommodations, etc.",
       "icon": "/icons/hotels.svg",
       "channels": [
         {
@@ -917,8 +917,8 @@
       "category_key": "FOOD & BEVERAGES",
       "experience_code": "CAF",
       "webTemplateId": "5ad9c409889084051f87a4b6",
-      "category_Name": "Restaurants\n& Cafes",
-      "category_descriptor": "your F&B business",
+      "category_Name": "Restaurants,\ncafes and\neateries",
+      "category_descriptor": "E.g. Family Restaurants, Tiffins/Breakfast centers, Cafes, etc.",
       "icon": "/icons/cafe.svg",
       "channels": [
         {
@@ -1083,8 +1083,8 @@
       "category_key": "SALON",
       "experience_code": "SAL",
       "webTemplateId": "5b34bd254030c804fbbd8414",
-      "category_Name": "Beauty\n& Salons",
-      "category_descriptor": "your salon",
+      "category_Name": "Beauty and\nmakeup salons",
+      "category_descriptor": "E.g. Hair Treatment, Facial, Pedicure, Manicure, Hair Styling, etc.",
       "icon": "/icons/salon.svg",
       "channels": [
         {
@@ -1253,8 +1253,8 @@
       "category_key": "MANUFACTURERS",
       "experience_code": "MFG",
       "webTemplateId": "590b3f09ee786c1d88879129",
-      "category_Name": "Manufacturing\n& Equipment",
-      "category_descriptor": "your manufacturing business",
+      "category_Name": "Manufacturers &\nequipment\nbusiness",
+      "category_descriptor": "E.g. Chemicals, Hardware, Industrial equipment manufacturers, etc.",
       "icon": "/icons/mfg.svg",
       "channels": [
         {
@@ -1416,14 +1416,11 @@
       ]
     },
     {
-      "sectionType": true
-    },
-    {
       "category_key": "OTHER RETAIL",
       "experience_code": "RTL",
       "webTemplateId": "5b864dd931bfd4054774ec1b",
-      "category_Name": "Other\n& Retail business",
-      "category_descriptor": "your retail business",
+      "category_Name": "Retail &\ne-commerce\nbusiness",
+      "category_descriptor": "E.g. Kirana Stores, General Stationary, Clothing stores, Boutiques, and others",
       "icon": "/icons/rtl.svg",
       "channels": [
         {
@@ -1568,8 +1565,8 @@
       "category_key": "OTHER SERVICES",
       "experience_code": "SVC",
       "webTemplateId": "5eda2675d0c6770001f67d91",
-      "category_Name": "Other\n& Service business",
-      "category_descriptor": "your services business",
+      "category_Name": "Professional\nservices\nproviders",
+      "category_descriptor": "E.g. Architectural & Home building services, Real-estate services, and others",
       "icon": "/icons/svc.svg",
       "channels": [
         {

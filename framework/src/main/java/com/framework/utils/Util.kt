@@ -1,16 +1,24 @@
 package com.framework.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.Notification
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
 import android.content.ContentValues
 import android.content.Context
+import android.content.*
+import android.content.ClipboardManager
+import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Context.INPUT_METHOD_SERVICE
-import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.content.res.TypedArray
 import android.graphics.*
 import android.graphics.drawable.Drawable
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.ColorFilter
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -18,51 +26,59 @@ import android.os.SystemClock
 import android.provider.MediaStore
 import android.text.*
 import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.util.Log
 import android.text.style.*
+import android.util.Base64.DEFAULT
+import android.util.Base64.encodeToString
+import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
-import androidx.annotation.FontRes
+import androidx.annotation.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.app.NotificationCompat
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.ColorUtils
+import androidx.core.view.WindowInsetsControllerCompat
+import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.SimpleColorFilter
 import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.framework.BaseApplication
+import com.framework.R
+import com.framework.analytics.SentryController
 import com.framework.constants.PackageNames
 import com.framework.views.customViews.CustomTextView
+import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.internal.notify
 import java.io.*
 import java.text.NumberFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import kotlin.collections.ArrayList
-import android.content.pm.PackageManager
-
-import android.content.pm.PackageInfo
-import androidx.annotation.RequiresApi
-import com.framework.R
-import java.util.regex.Pattern.UNICODE_CHARACTER_CLASS
 
 
-inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
 private const val TAG = "Util"
+
+inline fun <reified T> genericType() = object : TypeToken<T>() {}.type
+
 fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis: Long = 1000) {
   var lastClickTime: Long = 0
   this.setOnClickListener {
@@ -72,8 +88,35 @@ fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis:
   }
 }
 
-fun Double.roundToFloat(numFractionDigits: Int):Float = "%.${numFractionDigits}f".format(this, Locale.ENGLISH).toFloat()
+fun Double.roundToFloat(numFractionDigits: Int): Float = "%.${numFractionDigits}f".format(this, Locale.ENGLISH).toFloat()
 
+fun AppCompatEditText.onDone(callback: () -> Unit) {
+  imeOptions = EditorInfo.IME_ACTION_DONE
+  maxLines = 1
+  setOnEditorActionListener { _, actionId, _ ->
+    if (actionId == EditorInfo.IME_ACTION_DONE) {
+      callback.invoke()
+      true
+    }
+    false
+  }
+}
+
+@SuppressLint("ClickableViewAccessibility")
+fun AppCompatEditText.onRightDrawableClicked(onClicked: (view: AppCompatEditText) -> Unit) {
+  this.setOnTouchListener { v, event ->
+    var hasConsumed = false
+    if (v is AppCompatEditText) {
+      if (event.x >= v.width - v.totalPaddingRight) {
+        if (event.action == MotionEvent.ACTION_UP) {
+          onClicked(this)
+        }
+        hasConsumed = true
+      }
+    }
+    hasConsumed
+  }
+}
 fun Activity.hideKeyBoard() {
   val view = this.currentFocus
   if (view != null) {
@@ -128,6 +171,33 @@ fun AppCompatTextView.setIconifiedText(text: String, @DrawableRes iconResId: Int
   }.let { setText(it) }
 }
 
+
+fun makeSectionOfTextBold(text: String, textToBold: String, @ColorRes color: Int = android.R.color.black, @FontRes font: Int = R.font.semi_bold): SpannableStringBuilder? {
+  val builder = SpannableStringBuilder()
+  if (textToBold.isNotEmpty() && textToBold.trim { it <= ' ' } != "") {
+
+    //for counting start/end indexes
+    val testText = text.lowercase(Locale.US)
+    val testTextToBold = textToBold.lowercase(Locale.US)
+    val startingIndex = testText.indexOf(testTextToBold)
+    val endingIndex = startingIndex + testTextToBold.length
+    //for counting start/end indexes
+    if (startingIndex < 0 || endingIndex < 0) {
+      return builder.append(text)
+    } else if (startingIndex >= 0 && endingIndex >= 0) {
+      builder.append(text)
+      val font = ResourcesCompat.getFont(BaseApplication.instance, font)?.style ?: Typeface.BOLD
+      val color = ContextCompat.getColor(BaseApplication.instance, color)
+      builder.setSpan(StyleSpan(font), startingIndex, endingIndex, 0)
+      builder.setSpan(ForegroundColorSpan(color), startingIndex, endingIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
+  } else {
+    return builder.append(text)
+  }
+  return builder
+}
+
+
 fun getNumberFormat(value: String): String {
   return try {
     NumberFormat.getNumberInstance(Locale.US).format(value.toInt().toLong())
@@ -138,6 +208,10 @@ fun getNumberFormat(value: String): String {
 
 fun Double.roundTo(n: Int): Double {
   return "%.${n}f".format(this).toDouble()
+}
+
+fun Double.removeENotationAndRoundTo(n: Int): Double {
+  return "%.${n}f".format(this.toString().replace("E", "").toDouble()).toDouble()
 }
 
 fun CustomTextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
@@ -160,7 +234,7 @@ fun CustomTextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
       }
     }
     startIndexOfLink = this.text.toString().indexOf(link.first, startIndexOfLink + 1)
-//      if(startIndexOfLink == -1) continue // todo if you want to verify your texts contains links text
+//      if(startIndexOfLink == -1) continue //TODO if you want to verify your texts contains links text
     spannableString.setSpan(clickableSpan, startIndexOfLink, startIndexOfLink + link.first.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
   }
   this.movementMethod = LinkMovementMethod.getInstance() // without LinkMovementMethod, link can not click
@@ -253,11 +327,14 @@ suspend fun Bitmap.shareAsImage(packageName:String?=null,text: String?=null){
           }
         }
 
+      }else{
+        SentryController.captureException(e)
       }
     }
 
 }
-fun Bitmap.saveAsImageToAppFolder(destPath:String): File? {
+
+fun Bitmap.saveAsImageToAppFolder(destPath: String): File? {
   var uri: Uri? = null
   val file = File(destPath)
 
@@ -269,8 +346,8 @@ fun Bitmap.saveAsImageToAppFolder(destPath:String): File? {
     stream.flush()
     stream.close()
     return file
-  }catch (e: IOException) {
-    Log.d("IOException: " , e.message.toString())
+  } catch (e: IOException) {
+    Log.d("IOException: ", e.message.toString())
     file.delete()
     return null
   }
@@ -285,12 +362,11 @@ fun Bitmap.saveAsTempFile(): File? {
 }
 
 
-
 suspend fun Bitmap.saveImageToStorage(
 
-  filename: String=System.currentTimeMillis().toString()+".jpg",
-  showNoti:Boolean=false
-  ){
+  filename: String = System.currentTimeMillis().toString() + ".jpg",
+  showNoti: Boolean = false
+) {
   val noti_id = System.currentTimeMillis().toInt()
 
   try {
@@ -363,16 +439,16 @@ suspend fun Bitmap.saveImageToStorage(
   } catch (e: IOException) {
     Toast.makeText(BaseApplication.instance, "Failed To Save Image", Toast.LENGTH_SHORT).show()
     NotiUtils.notificationManager?.cancel(noti_id)
-
+    SentryController.captureException(e)
     e.printStackTrace()
   }
 }
 
-fun getFileViewerIntent(uri: Uri?,type:String): Intent {
+fun getFileViewerIntent(uri: Uri?, type: String): Intent {
   val newIntent = Intent(Intent.ACTION_VIEW)
   newIntent.setDataAndType(uri, type)
   newIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
- return newIntent
+  return newIntent
 }
 
 fun Intent.getPendingIntent(): PendingIntent? {
@@ -389,9 +465,27 @@ fun isService(category_code: String?): Boolean {
   }
 }
 
+inline fun <reified T> read(): T {
+  val value: String = readLine()!!
+  return when (T::class) {
+    Int::class -> value.toInt() as T
+    String::class -> value as T
+    // add other types here if need
+    else -> throw IllegalStateException("Unknown Generic Type")
+  }
+}
+
+fun makeCall(number: String?) {
+  val callIntent = Intent(Intent.ACTION_DIAL)
+  callIntent.addCategory(Intent.CATEGORY_DEFAULT)
+  callIntent.data = Uri.parse("tel:$number")
+  callIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+  BaseApplication.instance.startActivity(callIntent)
+}
+
 fun getAppVersionName(): String? {
   try {
-    val pInfo: PackageInfo = BaseApplication.instance.getPackageManager().getPackageInfo(BaseApplication.instance.packageName, 0)
+    val pInfo: PackageInfo = BaseApplication.instance.packageManager.getPackageInfo(BaseApplication.instance.packageName, 0)
     val version = pInfo.versionName
     return version
   } catch (e: PackageManager.NameNotFoundException) {
@@ -400,13 +494,94 @@ fun getAppVersionName(): String? {
   return null
 }
 
-fun spanBold(fullText:String,vararg boldTextList:String): SpannableString {
+
+
+
+@RequiresApi(Build.VERSION_CODES.Q)
+fun Drawable.setColorFilterApiQ(color: Int, blendMode:BlendMode){
+    colorFilter = BlendModeColorFilter(color, blendMode)
+}
+
+
+
+fun highlightHashTag(text: String?,@ColorRes colorId: Int,@FontRes fontId:Int): SpannableString {
+
+  val spannable = SpannableString(text?:"")
+
+  if (text.isNullOrEmpty().not()){
+    var last_index = 0
+    text?.trim()?.split(Regex("\\s+"))?.forEach {
+      Log.i(TAG, "addHashTagFunction: $it")
+      if (it.isNotEmpty() && it[0] == '#'){
+
+        spannable.setSpan(object : TypefaceSpan(null) {
+          override fun updateDrawState(ds: TextPaint) {
+            ds.typeface = Typeface.create(ResourcesCompat.getFont(BaseApplication.instance,
+              fontId), Typeface.NORMAL) // To change according to your need
+          }
+        }, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE) // To change according to your need
+
+//        val boldSpan = StyleSpan(Typeface
+//          .BOLD)
+        val foregroundSpan = ForegroundColorSpan(ContextCompat.getColor(BaseApplication.instance, colorId))
+        spannable.setSpan(foregroundSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+//        spannable.setSpan(boldSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+      }
+
+      last_index+=it.length-1
+
+    }
+  }
+
+  return spannable
+}
+
+
+
+
+
+inline fun <reified T> convertJsonToObj(json: String?) = Gson().fromJson<T>(json, object : TypeToken<T>() {}.type)
+fun Bitmap.zoom(percent: Float): Bitmap? {
+
+  val scaleFactor = percent // Set this to the zoom factor
+  val widthOffset = (scaleFactor / 2 * width).toInt()
+  val heightOffset = (scaleFactor / 2 * height).toInt()
+  val numWidthPixels: Int = width - 2 * widthOffset
+  val numHeightPixels: Int = height - 2 * heightOffset
+  return if (widthOffset > 0 && heightOffset > 0 && numHeightPixels > 0 && numWidthPixels > 0) {
+    val rescaledBitmap = Bitmap.createBitmap(
+      this, widthOffset, heightOffset, numWidthPixels, numHeightPixels, null, true
+    )
+    rescaledBitmap
+  } else {
+    this
+  }
+}
+
+fun gcd(num1: Int, num2: Int): Int {
+  var gcd = 1
+
+  var i = 1
+  while (i <= num1 && i <= num2) {
+    // Checks if i is factor of both integers
+    if (num1 % i == 0 && num2 % i == 0)
+      gcd = i
+    ++i
+  }
+  return gcd
+}
+
+fun spanBold(fullText: String, vararg boldTextList: String): SpannableString {
   val spannable = SpannableString(fullText)
-  boldTextList.forEach { boldText->
-    spannable.setSpan(StyleSpan(Typeface.BOLD),fullText.indexOf(boldText),fullText.indexOf(boldText)+boldText.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+  boldTextList.forEach { boldText ->
+    spannable.setSpan(StyleSpan(Typeface.BOLD), fullText.indexOf(boldText), fullText.indexOf(boldText) + boldText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
   }
   return spannable
 }
+
+
+
 
 fun spanColor(fullText:String,@ColorRes color: Int,vararg colorTextList:String): SpannableString {
   val spannable = SpannableString(fullText)
@@ -418,54 +593,151 @@ fun spanColor(fullText:String,@ColorRes color: Int,vararg colorTextList:String):
   return spannable
 }
 
-fun spanClick(fullText:String,function: () -> (Unit),vararg colorTextList:String): SpannableString {
+fun spanBoldNdColor(fullText:String,@ColorRes color: Int,text:String): SpannableString {
   val spannable = SpannableString(fullText)
-  colorTextList.forEach { text->
-    spannable.setSpan(object :ClickableSpan(){
-      override fun onClick(p0: View) {
-          function.invoke()
-      }
+    spannable.setSpan(StyleSpan(Typeface.BOLD),fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-    },fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-  }
-  return spannable
-}
-
-
-@RequiresApi(Build.VERSION_CODES.Q)
-fun Drawable.setColorFilterApiQ(color: Int, blendMode:BlendMode){
-    colorFilter = BlendModeColorFilter(color, blendMode)
-}
-
-fun showToast(text: String?,duration:Int =Toast.LENGTH_LONG){
-  if (text==null){
-    return
-  }
-  Toast.makeText(BaseApplication.instance, text, duration).show()
-}
-
-fun highlightHashTag(text: String?,@ColorRes colorId:Int): SpannableString {
-
-  val spannable = SpannableString(text?:"")
-
-  if (text.isNullOrEmpty().not()){
-    var last_index = 0
-    text?.trim()?.split(Regex("\\s+"))?.forEach {
-      Log.i(TAG, "addHashTagFunction: $it")
-      if (it.isNotEmpty() && it[0] == '#'){
-        val boldSpan = StyleSpan(Typeface
-          .BOLD)
-        val foregroundSpan = ForegroundColorSpan(ContextCompat.getColor(BaseApplication.instance, colorId))
-        spannable.setSpan(foregroundSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannable.setSpan(boldSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-      }
-
-      last_index+=it.length-1
-
-    }
-  }
+    spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(
+      BaseApplication.instance,color
+    )),fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
   return spannable
+}
+
+
+
+
+fun File.shareAsImage(context:Context,packageName: String?,text: String?){
+  val uri= FileProvider.getUriForFile(
+    context,
+    "${context.packageName}.provider", //(use your app signature + ".provider" )
+    this)
+  val intent = Intent(Intent.ACTION_SEND)
+  intent.type = "image/*"
+  intent.putExtra(Intent.EXTRA_STREAM, uri)
+  intent.putExtra(Intent.EXTRA_TEXT,text)
+  if (packageName!=null){
+    intent.setPackage(packageName)
+  }
+  context.startActivity(intent)
+}
+
+fun ImageView.loadUsingGlide(imgFile:String?,cache:Boolean=true){
+  val builder = Glide.with(this).load(imgFile)
+  if (cache.not()){
+    builder.apply(RequestOptions.skipMemoryCacheOf(true))
+      .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(this)
+  }else{
+    builder.into(this)
+
+  }
+}
+
+fun String.extractHashTag(): ArrayList<String> {
+  val MY_PATTERN = Pattern.compile("#(\\S+)");
+  val mat = MY_PATTERN.matcher(this);
+  val strs= ArrayList<String>();
+  while (mat.find()) {
+    //System.out.println(mat.group(1));
+    strs.add(mat.group(1));
+  }
+  return strs
+}
+
+fun Activity.setStatusBarColor(@ColorRes colorId: Int){
+  val window = window
+  window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+
+  window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+  window.statusBarColor = ContextCompat.getColor(this,colorId)
+  WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = isColorDark(colorId)
+
+
+}
+
+fun Fragment.setStatusBarColor(@ColorRes colorId: Int){
+  activity?.setStatusBarColor(colorId)
+}
+
+fun isColorDark(@ColorRes colorRes: Int): Boolean {
+  val color = ContextCompat.getColor(BaseApplication.instance,colorRes)
+  val whiteContrast = ColorUtils.calculateContrast(Color.WHITE, color)
+  val blackContrast = ColorUtils.calculateContrast(Color.BLACK, color)
+
+  return if (whiteContrast > blackContrast) false else true
+
+}
+
+fun TypedArray.use(block: TypedArray.() -> Unit) {
+  try {
+    block()
+  } finally {
+    this.recycle()
+  }
+}
+
+fun Context.getStyledAttributes(@StyleableRes attrs: IntArray, block: TypedArray.() -> Unit) =
+  this.obtainStyledAttributes(attrs).use(block)
+
+fun View.setClickableRipple() {
+  val attrs = intArrayOf(R.attr.selectableItemBackground)
+  context.getStyledAttributes(attrs) {
+    val backgroundResource = getResourceId(0, 0)
+    setBackgroundResource(backgroundResource)
+  }
+}
+
+fun File.toBase64(): String? {
+  val result: String?
+  inputStream().use { inputStream ->
+    val sourceBytes = inputStream.readBytes()
+    result = android.util.Base64.encodeToString(sourceBytes, android.util.Base64.DEFAULT)
+  }
+
+  return result
+}
+fun copyToClipBoard(text: String) {
+  val clipboard = BaseApplication.instance.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+  val clip: ClipData = ClipData.newPlainText("boost-label", text)
+  clipboard.setPrimaryClip(clip)
+  Toast.makeText(BaseApplication.instance, BaseApplication.instance.getString(R.string.copied_to_clipboard), Toast.LENGTH_SHORT).show()
+}
+
+fun Activity.checkPermission(permString: String): Boolean {
+  return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    checkSelfPermission(permString) == PackageManager.PERMISSION_GRANTED
+  } else {
+    true
+  }
+}
+
+fun Fragment.checkPermission(permString: String): Boolean {
+  return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    ActivityCompat.checkSelfPermission(requireContext(), permString) == PackageManager.PERMISSION_GRANTED
+  } else {
+    true
+  }
+}
+
+fun showToast(text: String?, dur: Int = Toast.LENGTH_LONG) {
+  if (text != null && text.isNotEmpty()) Toast.makeText(BaseApplication.instance, text, dur).show()
+}
+
+suspend fun runOnUi(func: () -> Unit) {
+  withContext(Dispatchers.Main) { func.invoke() }
+}
+
+fun fetchString(id: Int): String {
+  return BaseApplication.instance.getString(id)
+}
+
+fun fetchColor(id: Int): Int {
+  return ContextCompat.getColor(BaseApplication.instance,id)
+}
+fun showSnackBarNegative(context: Activity, msg: String?) {
+  val snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg ?: "", Snackbar.LENGTH_INDEFINITE)
+  snackBar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color))
+  snackBar.duration = 4000
+  snackBar.show()
 }
 

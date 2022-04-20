@@ -1,6 +1,6 @@
 package dev.patrickgold.florisboard.customization.util;
 
-import java.util.ArrayList;
+import com.framework.BuildConfig;
 
 /**
  * Created by Shimona on 01-06-2018.
@@ -11,7 +11,7 @@ public class Constants {
   public final static String BASE_IMAGE_URL = "https://content.withfloats.com";
 
 
-  public final static String clientId = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21";
+  public final static String clientId = BuildConfig.CLIENT_ID;
 
   public final static String HTTP_POST = "POST";
 
@@ -23,7 +23,10 @@ public class Constants {
 
   public static String storePrimaryImage = null;
 
-  public static int UNAUTHORIZED_STATUS_CODE= 401;
+  public static int UNAUTHORIZED_STATUS_CODE = 401;
 
-  public static String TOKEN_EXPIRED_MESSAGE= "Token Expired. Please Login Again";
+  public static String TOKEN_EXPIRED_MESSAGE = "Token Expired. Please Login Again";
+  public static String NO_INTERNET_CONNECTION = "Internet not available";
+  public static String FAILED_TO_CONNECT = "Failed to connect";
+  public static String UNABLE_TO_RESOLVED_HOST = "Unable to resolve host";
 }

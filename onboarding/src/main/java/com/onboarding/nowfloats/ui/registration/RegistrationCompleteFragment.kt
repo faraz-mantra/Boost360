@@ -45,8 +45,7 @@ import okhttp3.RequestBody
 import java.io.File
 import java.util.*
 
-class RegistrationCompleteFragment :
-  BaseRegistrationFragment<FragmentRegistrationCompleteBinding>() {
+class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrationCompleteBinding>() {
 
   private var businessImage: File? = null
   private var profileImage: File? = null
@@ -62,19 +61,15 @@ class RegistrationCompleteFragment :
     }
   }
 
-  @ExperimentalStdlibApi
   override fun onCreateView() {
     super.onCreateView()
     setOnClickListener(
-      binding?.menuView,
-      binding?.websiteBtnClick,
-      binding?.skipDashboard,
-      binding?.businessClick
+      binding?.menuView, binding?.websiteBtnClick,
+      binding?.skipDashboard, binding?.businessClick
     )
     setSetSelectedChannels(channels)
     val personName = (pref?.getString(PreferenceConstant.PERSON_NAME, "") ?: "").capitalizeWords()
-    binding?.congratsText?.text =
-      resources.getString(R.string.congratulations_new).plus("\n$personName").trim()
+    binding?.congratsText?.text = resources.getString(R.string.congratulations_new).plus("\n$personName").trim()
     requestFloatsModel?.contactInfo?.businessName?.let {
       binding?.businessName?.text = it
       binding?.businessNameInitial?.text = it.firstOrNull()?.toUpperCase()?.toString()

@@ -65,7 +65,7 @@ import com.boost.cart.ui.compare.ComparePackageFragment
 import com.boost.payment.PaymentActivity
 import com.framework.analytics.SentryController
 import com.boost.dbcenterapi.upgradeDB.model.*
-import com.framework.constants.Constants.MARKET_PLACE_ORIGIN_NAV_DATA
+import com.framework.constants.IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_title
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_value
 import kotlinx.android.synthetic.main.cart_fragment.igst_value
@@ -221,8 +221,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       prefs.storeCartOrderInfo(null)
       prefs.storeApplyedCouponDetails(null)
 //            totalCalculation()
-//      couponCode = ""
-//      couponServiceModel = null
+      couponCode = ""
+      couponServiceModel = null
 
       totalCalculationAfterCoupon()
     }
@@ -256,6 +256,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             createCartStateRenewal(renewalItems)
           } else createPurchaseOrder(null)
         } else {
+          Log.e("total >>", total.toString())
+          Log.e("cartList >>", ::cartList.isInitialized.toString())
+          Log.e("featuresList >>", ::featuresList.isInitialized.toString())
           Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
         }
       }
@@ -1620,7 +1623,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     })
 
     viewModel.getRenewValue().observe(this, Observer {
-      if (it != null) {
+//      if (it != null) {
+      if (!it.isNullOrEmpty()) {
         Log.i("getRenewValue >> ", it)
         if (it.equals("REMIND_ME")) {
 //                if(it.equals("REMIND_ME")  && proceedRenewPopup!!){
@@ -1693,6 +1697,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     //getting all features
     viewModel.updateAllFeaturesResult().observe(this, Observer {
+      Log.e("updateAllFeaturesResult", Gson().toJson(it).toString())
       if (it.isNullOrEmpty().not()) featuresList = it
     })
 

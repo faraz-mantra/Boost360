@@ -2,6 +2,10 @@
 <defaultsMap xmlns:tools="http://schemas.android.com/tools"
   tools:ignore="MissingDefaultResource">
   <entry>
+    <key>k_admin_url</key>
+    <value>https://developer.api.boostkit.dev/language/v1/upgrade/get-data?website=5e7a3cf46e0572000109a5b2</value>
+  </entry>
+  <entry>
     <key>festive_poster_name</key>
     <value>Share Festival Poster</value>
   </entry>
@@ -18,7 +22,60 @@
     <value>false</value>
   </entry>
   <entry>
+    <key>feature_error_handling_enable</key>
+    <value>false</value>
+  </entry>
+  <entry>
     <key>in_app_update_type_immediate</key>
     <value>false</value>
+  </entry>
+  <entry>
+    <key>new_onboarding_with_updated_categories_and_gui_active</key>
+    <value>false</value>
+  </entry>
+  <entry>
+    <key>permissions_facebook</key>
+    <value>email,public_profile,read_insights,pages_show_list,ads_management,pages_read_engagement,pages_manage_posts,pages_read_user_content,pages_manage_metadata</value>
+  </entry>
+
+  <!-- in app review events -->
+  <entry>
+    <key>in_app_review_website_preview_cross</key>
+    <value>true</value>
+  </entry>
+
+  <entry>
+    <key>in_app_review_third_update</key>
+    <value>true</value>
+  </entry>
+
+  <entry>
+    <key>in_app_review_out_of_customer_messages</key>
+    <value>true</value>
+  </entry>
+
+  <entry>
+    <key>in_app_review_out_of_customer_calls</key>
+    <value>true</value>
+  </entry>
+
+  <entry>
+    <key>in_app_review_out_of_customer_orders</key>
+    <value>true</value>
+  </entry>
+
+  <entry>
+    <key>in_app_review_rate_us_on_store</key>
+    <value>true</value>
+  </entry>
+
+  <entry>
+    <key>in_app_review_first_promo_update</key>
+    <value>true</value>
+  </entry>
+
+  <entry>
+    <key>in_app_review_first_purchase</key>
+    <value>true</value>
   </entry>
 </defaultsMap><!-- END xml_defaults -->

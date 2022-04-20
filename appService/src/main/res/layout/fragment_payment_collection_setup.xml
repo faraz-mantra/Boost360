@@ -215,7 +215,7 @@
               android:id="@+id/bank_added_status"
               style="@style/Appointment_Text_Subheading"
               android:fontFamily="@font/semi_bold"
-              tools:text="dsadbasjbdja" />
+              tools:text="Verify" />
           </LinearLayout>
 
           <com.framework.views.customViews.CustomImageView
@@ -226,7 +226,7 @@
             android:layout_marginTop="-10dp"
             android:layout_marginEnd="@dimen/size_10"
             android:src="@drawable/ic_arrow_right_grey_staff"
-            app:tint="@color/yellow_ffb900" />
+            app:tint="@color/colorAccent" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/bank_name_account_number"
@@ -234,8 +234,8 @@
             android:layout_marginTop="-2dp"
             android:fontFamily="@font/semi_bold"
             android:paddingHorizontal="@dimen/size_16"
-            android:textColor="@color/yellow_ffb900"
-            tools:text="dsajhdasjhdbasjd" />
+            android:textColor="@color/colorAccent"
+            tools:text="647665637867863" />
 
           <FrameLayout
             android:id="@+id/btn_add_account"
@@ -251,11 +251,12 @@
               style="@style/wrap_match"
               android:layout_gravity="center"
               android:drawableStart="@drawable/ic_bank_transparent"
+              android:drawableTint="@color/colorAccentLight"
               android:drawablePadding="@dimen/size_8"
               android:gravity="center"
               android:text="@string/add_a_bank_account"
               android:textAllCaps="true"
-              android:textColor="@color/yellow_ffb900" />
+              android:textColor="@color/colorAccentLight" />
           </FrameLayout>
 
         </LinearLayout>
@@ -288,7 +289,6 @@
       android:layout_marginHorizontal="@dimen/size_20"
       android:layout_marginVertical="@dimen/size_16"
       android:text="@string/confirm_and_save_details"
-      android:textAllCaps="false"
       android:visibility="visible"
       app:layout_constraintBottom_toBottomOf="parent" />
 

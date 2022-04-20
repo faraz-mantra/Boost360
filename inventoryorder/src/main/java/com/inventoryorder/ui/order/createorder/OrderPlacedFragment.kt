@@ -87,13 +87,13 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
 
   private fun getOrderDetails() {
     showProgress()
-    viewModel?.assuredPurchaseGetOrderDetails(preferenceData?.clientId, orderId)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.assuredPurchaseGetOrderDetails(preferenceData?.clientId, orderId)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         orderResponse = (it as? OrderDetailResponse)?.Data
         orderResponse?.let { it1 -> setData(it1) }
       } else showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
       hideProgress()
-    })
+    }
   }
 
   override fun onClick(v: View) {

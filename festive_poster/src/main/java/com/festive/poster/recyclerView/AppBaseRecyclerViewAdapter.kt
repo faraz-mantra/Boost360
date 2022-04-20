@@ -5,10 +5,7 @@ import android.view.ViewGroup
 import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.*
 import com.festive.poster.recyclerView.viewholders.*
-import com.festive.poster.ui.promoUpdates.holders.SoicalConnViewHolder
-import com.festive.poster.ui.promoUpdates.holders.TemplateForRVViewHolder
-import com.festive.poster.ui.promoUpdates.holders.TemplateForVPViewHolder
-import com.festive.poster.ui.promoUpdates.holders.TodaysPickTemplateListViewHolder
+import com.festive.poster.ui.promoUpdates.holders.*
 import com.framework.base.BaseActivity
 import java.util.*
 import kotlin.collections.ArrayList
@@ -31,16 +28,24 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW-> TodaysPickTemplateListViewHolder(binding as ListItemTodaysPickTemplateBinding)
       RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP-> TemplateForVPViewHolder(binding as ListItemTemplateForVpBinding)
       RecyclerViewItemType.TEMPLATE_VIEW_FOR_RV-> TemplateForRVViewHolder(binding as ListItemTemplateForRvBinding)
+      RecyclerViewItemType.VIEW_MORE_POSTER-> ViewMoreViewHolder(binding as LayoutViewMoreTemplateBinding)
 
       RecyclerViewItemType.SOCIAL_CONN-> SoicalConnViewHolder(binding as ListItemSocialConnBinding)
       RecyclerViewItemType.BROWSE_TAB_TEMPLATE_CAT->BrowseTabPosterCatViewHolder(binding as ListItemBrowseTabTemplateCatBinding)
       RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT->BrowseAllPosterCatViewHolder(binding as ListItemBrowseAllCatBinding)
       RecyclerViewItemType.SOCIAL_PLATFORM_POST_OPTIONS_LIST->SocialPlatformOptionListViewHolder(binding as ItemSocialPlatformPromoAdapBinding)
-      RecyclerViewItemType.VIEWPAGER_TWITTER_PREVIEW->TwitterPreviewViewHolder(binding as SocialPreviewTwitterBinding)
+      RecyclerViewItemType.TWITTER_PREVIEW->TwitterPreviewViewHolder(binding as SocialPreviewTwitterBinding)
       RecyclerViewItemType.FB_PREVIEW->FBPreviewViewHolder(binding as SocialPreviewFbBinding)
       RecyclerViewItemType.INSTAGRAM_PREVIEW->InstagramPreviewViewHolder(binding as SocialPreviewInstagramBinding)
       RecyclerViewItemType.GMB_PREVIEW->GMBPreviewViewHolder(binding as SocialPreviewGmbBinding)
       RecyclerViewItemType.WEBSITE_PREVIEW->WebsitePreviewViewHolder(binding as SocialPreviewWebsiteBinding)
+      RecyclerViewItemType.EMAIL_PREVIEW->EmailPreviewViewHolder(binding as SocialPreviewEmailBinding)
+      RecyclerViewItemType.TWITTER_PREVIEW_NO_IMAGE->TwitterPreviewNoImageViewHolder(binding as SocialPreviewTwitterNoImageBinding)
+      RecyclerViewItemType.FB_PREVIEW_NO_IMAGE->FBPreviewNoImageViewHolder(binding as SocialPreviewFbNoImageBinding)
+      RecyclerViewItemType.GMB_PREVIEW_NO_IMAGE->GMBPreviewNoImageViewHolder(binding as SocialPreviewGmbNoImageBinding)
+      RecyclerViewItemType.WEBSITE_PREVIEW_NO_IMAGE->WebsitePreviewNoImageViewHolder(binding as SocialPreviewWebsiteNoImageBinding)
+      RecyclerViewItemType.EMAIL_PREVIEW_NO_IMAGE->EmailPreviewNoImageViewHolder(binding as SocialPreviewEmailNoImageBinding)
+      RecyclerViewItemType.FAV_CAT->FavPosterCatViewHolder(binding as  ListItemFavCatBinding)
 
     }
   }

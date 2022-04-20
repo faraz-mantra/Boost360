@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/iv_mobile_overlay"
+      android:layout_width="@dimen/size_210"
+      android:layout_height="@dimen/size_290"
+      android:layout_marginTop="@dimen/size_12"
+      android:src="@drawable/rounded_mobile_preview_rectangle"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <com.framework.views.customViews.CustomCardView
+      android:id="@+id/iv_green_bar"
+      android:layout_width="0dp"
+      android:layout_height="@dimen/size_290"
+      android:layout_marginStart="@dimen/size_5"
+      android:layout_marginTop="@dimen/size_8"
+      android:layout_marginEnd="@dimen/size_5"
+      app:cardCornerRadius="@dimen/size_20"
+      app:layout_constraintEnd_toEndOf="@+id/iv_mobile_overlay"
+      app:layout_constraintStart_toStartOf="@+id/iv_mobile_overlay"
+      app:layout_constraintTop_toTopOf="@+id/iv_mobile_overlay">
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/img_mobile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY" />
+    </com.framework.views.customViews.CustomCardView>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

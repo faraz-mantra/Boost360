@@ -12,8 +12,7 @@ import kotlinx.android.synthetic.main.activity_fragment_container.*
 
 const val FRAGMENT_TYPE = "FRAGMENT_TYPE"
 
-abstract class FragmentContainerActivity :
-  BaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+abstract class FragmentContainerActivity : BaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   protected var type: Int? = null
 
@@ -59,5 +58,9 @@ abstract class FragmentContainerActivity :
 }
 
 fun Intent.setFragmentType(type: Int) {
+  this.putExtra(FRAGMENT_TYPE, type)
+}
+
+fun Intent.setFragmentType(type: String) {
   this.putExtra(FRAGMENT_TYPE, type)
 }

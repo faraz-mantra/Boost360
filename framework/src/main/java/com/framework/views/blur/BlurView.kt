@@ -1,13 +1,15 @@
 package com.framework.views.blur
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.Log
+import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
-import androidx.annotation.NonNull
 import com.framework.R
 import com.framework.views.blur.BlockingBlurController.Companion.TRANSPARENT
 
@@ -16,24 +18,21 @@ import com.framework.views.blur.BlockingBlurController.Companion.TRANSPARENT
  * Can have children and draw them over blurred background.
  */
 class BlurView : FrameLayout {
+
   var blurController: BlurController = NoOpController()
 
   @ColorInt
   private var overlayColor = 0
 
-  constructor(context: Context) : super(context) {
+  constructor(context: Context?) : super(context!!) {
     init(null, 0)
   }
 
-  constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+  constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs) {
     init(attrs, 0)
   }
 
-  constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-    context,
-    attrs,
-    defStyleAttr
-  ) {
+  constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context!!, attrs, defStyleAttr) {
     init(attrs, defStyleAttr)
   }
 
@@ -44,7 +43,7 @@ class BlurView : FrameLayout {
   }
 
   override fun draw(canvas: Canvas) {
-    val shouldDraw: Boolean = blurController.draw(canvas)
+    val shouldDraw = blurController.draw(canvas)
     if (shouldDraw) {
       super.draw(canvas)
     }
@@ -75,13 +74,10 @@ class BlurView : FrameLayout {
    * or (preferably) some of your layouts. The lower amount of Views are in the root, the better for performance.
    * @return [BlurView] to setup needed params.
    */
-  fun setupWith(@NonNull rootView: ViewGroup?): BlockingBlurController? {
-    val blurController: BlockingBlurController? =
-      rootView?.let { BlockingBlurController(this, it, overlayColor) }
+  fun setupWith(rootView: ViewGroup): BlurViewFacade {
+    val blurController: BlurController = BlockingBlurController(this, rootView, overlayColor)
     this.blurController.destroy()
-    if (blurController != null) {
-      this.blurController = blurController
-    }
+    this.blurController = blurController
     return blurController
   }
   // Setters duplicated to be able to conveniently change these settings outside of setupWith chain
@@ -116,5 +112,19 @@ class BlurView : FrameLayout {
 
   companion object {
     private val TAG = BlurView::class.java.simpleName
+  }
+}
+
+fun BlurView.setBlur(activity: Activity, value: Float) {
+  try {
+    val decorView: View? = activity.window?.decorView
+    val rootView: ViewGroup = (decorView?.findViewById(android.R.id.content) as? ViewGroup) ?: return
+    val windowBackground: Drawable? = decorView.background
+    this.setupWith(rootView).setFrameClearDrawable(windowBackground)
+//      ?.setBlurAlgorithm(RenderScriptBlur(activity))?.setBlurRadius(value)
+      ?.setBlurAlgorithm(SupportRenderScriptBlur(activity))?.setBlurRadius(value)
+      ?.setHasFixedTransformationMatrix(true)
+  } catch (e: Exception) {
+    e.printStackTrace()
   }
 }
