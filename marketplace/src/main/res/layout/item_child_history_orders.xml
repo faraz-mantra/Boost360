@@ -59,7 +59,7 @@
                         android:background="@drawable/backgroundwhite"
                         android:padding="8dp"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/emails" />
+                        tools:src="@drawable/emails" />
 
                 </RelativeLayout>
 

@@ -20,6 +20,8 @@
             android:background="@drawable/ic_cart_coupon_bg"
             android:gravity="center"
             android:text="FESTIVE"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
             android:textColor="@color/common_text_color"
             android:textSize="@dimen/txt_14sp"
             android:textStyle="bold" />

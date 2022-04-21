@@ -40,7 +40,7 @@
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_cart_pack_image" />
+                tools:src="@drawable/ic_cart_pack_image" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -146,9 +146,9 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_card_bg1"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_card_bg1" />
 
 
       </RelativeLayout>

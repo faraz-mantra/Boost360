@@ -3,16 +3,12 @@
 
 
   <stroke
-    android:width="1dip" android:color="#ffb900"
-    />
-
-  <gradient
-    android:startColor="#1af7981c" android:endColor="#1affc800"
+    android:width="1dip" android:color="@color/yellowBorder"
     />
 
   <corners
     android:radius="10dp" />
 
-  <solid android:color="#FFFCF6"/>
+  <solid android:color="@color/givefeedbackColorBG"/>
 
 </shape>

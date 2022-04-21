@@ -302,7 +302,7 @@
               android:gravity="end"
               android:lineSpacingExtra="1sp"
               android:text="Have a coupon code?"
-              android:textColor="@color/yellow"
+              android:textColor="@color/colorAccent1"
               android:textSize="@dimen/txt_12sp" />
 
           </androidx.appcompat.widget.LinearLayoutCompat>

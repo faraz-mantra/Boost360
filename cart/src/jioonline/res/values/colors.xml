@@ -349,7 +349,7 @@
     <color name="text_color_roboto_lt_30_edittext">#383838</color>
     <color name="hint_color_roboto_lt_30_edittext">#b6b6b6</color>
 
-    <color name="offer_border">@color/colorPrimary</color>
+    <color name="offer_border">@color/colorPrimary1</color>
     <color name="fullscreen_color">#a5000000</color>
     <color name="light_blue">#0068e0</color>
     <color name="warm_grey">#747474</color>

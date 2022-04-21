@@ -106,7 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:background="@color/yellow"
+            android:background="@color/colorAccent1"
             android:fontFamily="@font/semi_bold"
             android:gravity="center"
             android:paddingTop="@dimen/_10sdp"

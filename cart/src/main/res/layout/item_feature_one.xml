@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:layout_margin="2dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="2dp">
 
   <androidx.cardview.widget.CardView
     android:id="@+id/trip_cv"
@@ -35,7 +36,7 @@
               android:id="@+id/addons_profile_image"
               android:layout_width="@dimen/_38sdp"
               android:layout_height="@dimen/_38sdp"
-              android:src="@drawable/ic_cart_feature_one_image" />
+              tools:src="@drawable/ic_cart_feature_one_image" />
 
           <androidx.appcompat.widget.LinearLayoutCompat
               android:layout_width="match_parent"

@@ -821,7 +821,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/partner_viewpager"
                         app:progressMode="false"
-                        app:selectedDotColor="#ffb900" />
+                        app:selectedDotColor="@color/indicatorSelectorColorYellowGrey" />
 
                 </LinearLayout>
 

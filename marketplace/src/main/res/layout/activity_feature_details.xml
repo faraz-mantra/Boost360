@@ -253,7 +253,7 @@
                                 android:layout_height="60dp"
                                 android:layout_gravity="center"
                                 android:scaleType="fitXY"
-                                android:src="@drawable/addons"
+                                tools:src="@drawable/addons"
                                 android:textSize="@dimen/txt_14sp"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -962,7 +962,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:dotsColor="#ffb900"
+                        app:dotsColor="@color/gray_light"
                         app:dotsCornerRadius="8dp"
                         app:dotsSize="6dp"
                         app:dotsSpacing="4dp"

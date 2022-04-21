@@ -835,7 +835,7 @@
                             android:drawablePadding="@dimen/pad_5dp"
                             android:padding="@dimen/_10sdp"
                             android:text="Show less"
-                            android:textColor="@color/yellow"
+                            android:textColor="@color/colorAccent1"
                             android:textSize="@dimen/txt_12sp"
                             android:visibility="gone" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
