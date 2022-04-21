@@ -166,18 +166,17 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
                             FacebookPermissions.public_profile,
                             FacebookPermissions.read_insights,
                             FacebookPermissions.pages_show_list,
-                            FacebookPermissions.pages_manage_cta,
                             FacebookPermissions.ads_management,
                             FacebookPermissions.pages_read_engagement,
                             FacebookPermissions.pages_manage_posts,
                             FacebookPermissions.pages_read_user_content,
                             FacebookPermissions.pages_manage_metadata,
-                            FacebookPermissions.manage_pages,
-                            FacebookPermissions.business_management,
                             FacebookPermissions.instagram_basic,
                             FacebookPermissions.instagram_content_publish,
                             FacebookPermissions.instagram_manage_insights,
                             )
+
+
                     )
 
 
@@ -220,7 +219,7 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
         val response = facebookGraphResponse as? FacebookGraphUserPagesResponse
         val pages = response?.data ?: return
         if (pages.isEmpty().not()){
-            page = pages.get(1) ?: return
+            page = pages.firstOrNull() ?: return
             page?.id?.let { IGGraphManager.requestIGAccount(it,accessToken,this) }
         }else{
             openFailedState()

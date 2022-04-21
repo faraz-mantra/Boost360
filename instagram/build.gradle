@@ -20,6 +20,22 @@ android {
         consumerProguardFiles "consumer-rules.pro"
     }
 
+    flavorDimensions "default"
+    productFlavors {
+        partone {
+            dimension "default"
+        }
+        jioonline {
+            dimension "default"
+        }
+    }
+    
+    buildscript {
+        repositories {
+            mavenCentral()
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -38,7 +54,7 @@ android {
 dependencies {
 
 
-    api project(path: ':framework')
+    implementation project(path: ':framework')
 
 
 

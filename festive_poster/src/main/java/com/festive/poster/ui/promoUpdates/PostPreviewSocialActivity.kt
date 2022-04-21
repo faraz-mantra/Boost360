@@ -386,7 +386,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                     channelType = null
                     isConnected=false
                 }
-                title = getString(R.string.my_website)
+                title = it1.getName()
                 var data: ChannelAccessToken? = null
                 if (channelsAccessToken!=null){
                     when {
@@ -492,77 +492,6 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                             }
                             channelType = SocialPreviewChannel.GMB
                         }
-
-                        it1.getAccessTokenType() == ChannelsType.AccountType.googlemybusiness.name -> {
-                            val gmb = channelsAccessToken.googlemybusiness
-                            if (channelsAccessToken.googlemybusiness?.status?.equals(
-                                    CHANNEL_STATUS_SUCCESS,
-                                    true
-                                ) == true
-                            ) {
-                                data = ChannelAccessToken(
-                                    type = ChannelsType.AccountType.googlemybusiness.name,
-                                    token_expiry = null,
-                                    invalid = null,
-                                    token_response = ChannelTokenResponse(),
-                                    refresh_token = null,
-                                    userAccountName = gmb?.account?.accountName,
-                                    userAccountId = gmb?.account?.accountId,
-                                    LocationId = gmb?.account?.locationId,
-                                    LocationName = gmb?.account?.locationName,
-                                    userAccessTokenKey = null,
-                                    verified_location = null
-                                )
-                                title =gmb?.account?.accountName
-                                subTitle = gmb?.account?.accountId
-                                isConnected = true
-                                requestFloatsNew.channelAccessTokens?.add(data)
-                                it1.isSelected = true
-                                it1.channelAccessToken = data
-                                connectedChannels.add(ChannelsType.AccountType.googlemybusiness.name)
-
-                                layout_id = RecyclerViewItemType.GMB_PREVIEW.getLayout()
-
-
-                            }
-                            channelType = SocialPreviewChannel.GMB
-                        }
-
-                        it1.getAccessTokenType() == ChannelsType.AccountType.googlemybusiness.name -> {
-                            val gmb = channelsAccessToken.googlemybusiness
-                            if (channelsAccessToken.googlemybusiness?.status?.equals(
-                                    CHANNEL_STATUS_SUCCESS,
-                                    true
-                                ) == true
-                            ) {
-                                data = ChannelAccessToken(
-                                    type = ChannelsType.AccountType.googlemybusiness.name,
-                                    token_expiry = null,
-                                    invalid = null,
-                                    token_response = ChannelTokenResponse(),
-                                    refresh_token = null,
-                                    userAccountName = gmb?.account?.accountName,
-                                    userAccountId = gmb?.account?.accountId,
-                                    LocationId = gmb?.account?.locationId,
-                                    LocationName = gmb?.account?.locationName,
-                                    userAccessTokenKey = null,
-                                    verified_location = null
-                                )
-                                title =gmb?.account?.accountName
-                                subTitle = gmb?.account?.accountId
-                                isConnected = true
-                                requestFloatsNew.channelAccessTokens?.add(data)
-                                it1.isSelected = true
-                                it1.channelAccessToken = data
-                                connectedChannels.add(ChannelsType.AccountType.googlemybusiness.name)
-
-                                layout_id = RecyclerViewItemType.GMB_PREVIEW.getLayout()
-
-
-                            }
-                            channelType = SocialPreviewChannel.GMB
-                        }
-
                         it1.getAccessTokenType() == ChannelsType.AccountType.instagram.name -> {
                             val ig = channelsAccessToken.instagram
                             if (channelsAccessToken.instagram?.status?.equals(
@@ -584,7 +513,6 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                                 it1.channelAccessToken = data
                                 connectedChannels?.add(ChannelsType.AccountType.instagram.name)
 
-                                layout_id = RecyclerViewItemType.INSTAGRAM_PREVIEW.getLayout()
 
 
                             }
@@ -718,6 +646,9 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         if (uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.GMB}?.isChecked == true) socialShare += "GOOGLEMYBUSINESS."
 
         if (uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.TWITTER }?.isChecked == true) socialShare += "TWITTER."
+
+        if (uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.INSTAGRAM }?.isChecked == true) socialShare += "INSTAGRAM."
+
         val merchantId = if (session?.iSEnterprise == "true") null else session?.fPID
         val parentId = if (session?.iSEnterprise == "true") session?.fPParentId else null
         val sendToSubscribe = uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.EMAIL }?.isChecked

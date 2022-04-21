@@ -604,6 +604,18 @@ fun spanBoldNdColor(fullText:String,@ColorRes color: Int,text:String): Spannable
   return spannable
 }
 
+fun spanClick(fullText:String,function: () -> (Unit),vararg colorTextList:String): SpannableString {
+  val spannable = SpannableString(fullText)
+  colorTextList.forEach { text->
+    spannable.setSpan(object :ClickableSpan(){
+      override fun onClick(p0: View) {
+        function.invoke()
+      }
+
+    },fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+  }
+  return spannable
+}
 
 
 
