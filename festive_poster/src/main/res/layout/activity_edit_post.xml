@@ -10,16 +10,17 @@
         <LinearLayout
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:paddingVertical="@dimen/size_18"
             app:layout_constraintTop_toTopOf="parent">
 
 
             <com.framework.views.customViews.CustomImageView
                 android:id="@+id/iv_close_editing"
                 android:padding="8dp"
-                android:layout_marginStart="@dimen/size_8"
+                android:layout_marginStart="@dimen/size_7"
                 android:layout_width="@dimen/size_32"
                 android:layout_height="@dimen/size_32"
                 android:src="@drawable/ic_close_black" />
