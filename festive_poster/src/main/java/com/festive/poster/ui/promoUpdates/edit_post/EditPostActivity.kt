@@ -92,7 +92,7 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
         lifecycleScope.launch {
             binding!!.ivTemplate.setImageBitmap(SvgUtils.svgToBitmap(posterModel!!))
         }
-        binding?.captionLayout?.etInput?.setText(highlightHashTag(posterModel?.details?.Description,R.color.black_4a4a4a))
+        binding?.captionLayout?.etInput?.setText(highlightHashTag(posterModel?.details?.Description,R.color.black_4a4a4a,R.font.bold))
         binding?.captionLayout?.etInput?.requestFocus()
         val imm =
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -143,7 +143,7 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
     private fun initStt() {
         sttUtils = STTUtils(object : STTUtils.Callbacks{
             override fun onDone(text: String?) {
-                binding?.captionLayout?.etInput?.setText(highlightHashTag(text,R.color.black_4a4a4a))
+                binding?.captionLayout?.etInput?.setText(highlightHashTag(text,R.color.black_4a4a4a,R.font.bold))
             }
         })
         sttUtils?.init(this)

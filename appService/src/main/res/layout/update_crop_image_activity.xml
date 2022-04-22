@@ -9,7 +9,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar2"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_50"
+            android:layout_height="wrap_content"
             android:background="@color/black_333333"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -17,11 +17,12 @@
 
         <com.framework.views.customViews.CustomImageView
             android:id="@+id/customImageView6"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="@dimen/size_32"
+            android:layout_height="@dimen/size_32"
+            android:layout_marginStart="@dimen/size_8"
+            android:padding="8dp"
             app:tint="@color/white"
-            android:layout_marginStart="24dp"
-            android:src="@drawable/cross_nv_new"
+            android:src="@drawable/ic_close_black"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +32,7 @@
             android:id="@+id/customTextView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="13dp"
             android:text="@string/edit_image"
             android:textColor="@color/white"
             android:textSize="17sp"
@@ -56,11 +57,11 @@
         <com.theartofdev.edmodo.cropper.CropImageView
             android:id="@+id/iv_crop"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="341dp"
             app:cropShape="rectangle"
+            app:layout_constraintVertical_bias="0.37"
             app:cropFixAspectRatio="true"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
-            app:layout_constraintHeight_percent="0.4"
             app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
 
@@ -68,7 +69,7 @@
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="48dp"
+            android:layout_marginBottom="64dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent">
@@ -111,6 +112,7 @@
                 android:layout_width="60dp"
                 android:id="@+id/layout_tick"
                 android:layout_height="60dp"
+                android:layout_marginBottom="@dimen/size_11"
                 android:layout_marginHorizontal="24dp"
                 app:cardBackgroundColor="@color/colorPrimary"
                 app:cardCornerRadius="30dp">

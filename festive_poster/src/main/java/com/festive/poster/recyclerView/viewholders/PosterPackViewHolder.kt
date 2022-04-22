@@ -48,7 +48,7 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecycler
 //      binding.vpPoster.offscreenPageLimit = 1
       binding.vpPoster.adapter = adapter
       binding.vpPoster.layoutManager=LinearLayoutManager(binding.root.context,LinearLayoutManager.HORIZONTAL,false)
-      binding.vpPoster.addItemDecoration(LineItemDecoration())
+      binding.vpPoster.addItemDecoration(LineItemDecoration(24,6))
       //TabLayoutMediator(binding.dots, binding.vpPoster) { _, _ -> }.attach()
     }
     super.bind(position, item)

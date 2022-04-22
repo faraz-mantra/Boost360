@@ -3,16 +3,19 @@ package com.festive.poster.ui.promoUpdates
 import android.content.Intent
 import android.graphics.BlendMode
 import android.graphics.PorterDuff
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.TextViewCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.PreferenceConstant
 import com.festive.poster.databinding.FragmentPromoLandingPageBinding
-import com.festive.poster.models.PosterPackModel
 import com.festive.poster.models.promoModele.SocialConnModel
 import com.festive.poster.utils.WebEngageController
 import com.framework.base.setFragmentType
@@ -31,7 +34,9 @@ import com.skydoves.balloon.ArrowOrientation
 import com.skydoves.balloon.Balloon
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
+import java.lang.reflect.Type
 import kotlin.math.abs
+
 
 class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding, BaseViewModel>() {
 
@@ -72,10 +77,10 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
         binding.appbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             if (abs(verticalOffset) - appBarLayout.totalScrollRange ==0) {
                 //  Collapsed
-                binding.tabLayout.background = ContextCompat.getDrawable(requireActivity(),
+                binding.tabParent.background = ContextCompat.getDrawable(requireActivity(),
                     R.drawable.white_rect_background)
             } else {
-                binding.tabLayout.background = ContextCompat.getDrawable(requireActivity(),
+                binding.tabParent.background = ContextCompat.getDrawable(requireActivity(),
                     R.drawable.top_round_corner)
                 //Expanded
             }
@@ -147,20 +152,32 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
 
         binding?.tabLayout?.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
+
+              //  changeTabFont(tab,Typeface.BOLD)
+
                 val tabIconColor: Int =
                     ContextCompat.getColor(requireActivity(), R.color.colorPrimary)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                if (tab?.position==1){
+                    tab.icon = ContextCompat.getDrawable(requireActivity(),R.drawable.ic_circlesfour_active)
+                }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     tab!!.icon!!.setColorFilterApiQ(tabIconColor,BlendMode.SRC_IN)
                 }else{
                     tab!!.icon!!.setColorFilter(tabIconColor,PorterDuff.Mode.SRC_IN)
                 }
 
+
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+               // changeTabFont(tab,Typeface.NORMAL)
+
+
                 val tabIconColor: Int =
                     ContextCompat.getColor(requireActivity(), R.color.colorB3B3B3)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                if (tab?.position==1){
+                    tab.icon = ContextCompat.getDrawable(requireActivity(),R.drawable.ic_circlesfour_inactive)
+                }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     tab!!.icon!!.setColorFilterApiQ(tabIconColor,BlendMode.SRC_IN)
                 }else{
                     tab!!.icon!!.setColorFilter(tabIconColor,PorterDuff.Mode.SRC_IN)
@@ -176,7 +193,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
         TabLayoutMediator(binding!!.tabLayout, binding!!.viewPager) { currentTab, currentPosition ->
             currentTab.icon=when(currentPosition){
                 0->AppCompatResources.getDrawable(requireActivity(),R.drawable.ic_sundim)
-                1->AppCompatResources.getDrawable(requireActivity(),R.drawable.ic_circlesfour)
+                1->AppCompatResources.getDrawable(requireActivity(),R.drawable.ic_circlesfour_inactive)
                 2->AppCompatResources.getDrawable(requireActivity(),R.drawable.ic_pencilsimple)
                 else -> null
             }
@@ -188,11 +205,26 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
             }
         }.attach()
 
+
         if (PreferencesUtils.instance.getData(PreferenceConstant.FIRST_LAUNCH_PROMO,true)){
           //  setupTabBaloons(ToolTipType.FOR_TODAY)
             PreferencesUtils.instance.saveData(PreferenceConstant.FIRST_LAUNCH_PROMO,false)
         }
 
+    }
+
+    private fun changeTabFont(tab: TabLayout.Tab?,style:Int) {
+
+
+        for (i in 0 until tab?.view?.childCount!!) {
+            val tabViewChild = tab.view.getChildAt(i)
+            if (tabViewChild is TextView) {
+                tabViewChild.setTypeface(
+                   null,
+                    style
+                )
+            }
+        }
     }
 
     private fun setupTabBaloons(type:ToolTipType) {

@@ -11,9 +11,9 @@
     <style name="TemplateTheme" parent="BaseTheme"/>
     <style name="TabTextStyle" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
-        <item name="tabSelectedTextColor">@color/colorPrimary</item>
-        <item name="tabTextColor">@color/textGrey</item>
-        <item name="fontFamily">@font/regular</item>
+        <item name="tabSelectedTextColor">@color/color_border_ffb900</item>
+        <item name="tabTextColor">@color/colorB3B3B3</item>
+        <item name="textSize">14sp</item>
     </style>
 
     <style name="TextSizeSS">
@@ -310,9 +310,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/size_52</item>
         <item name="android:background">@color/colorPrimary</item>
-        <item name="background">@color/colorPrimary</item>
-        <item name="backgroundTint">@color/colorPrimary</item>
-        <item name="fontFamily">@font/inter_bold</item>
+        <item name="fontFamily">@font/bold</item>
         <item name="textSize">@dimen/text_16</item>
         <item name="android:gravity">center</item>
         <item name="android:letterSpacing">0</item>

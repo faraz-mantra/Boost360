@@ -1,56 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.framework.views.customViews.CustomCardView
         app:cardCornerRadius="@dimen/size_15"
-        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardElevation="@dimen/size_4"
         android:layout_marginHorizontal="@dimen/size_12"
         android:layout_marginVertical="@dimen/size_8"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="@dimen/size_150"
-        android:layout_height="@dimen/size_150"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:layout_height="@dimen/size_140">
+
+
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <com.framework.views.customViews.CustomImageView
-                android:layout_width="match_parent"
                 android:id="@+id/iv_icon"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                 />
+                android:src="@drawable/ic_dummy_browse_cat_icon" />
+
             <LinearLayout
-                android:gravity="center"
-                android:layout_centerInParent="true"
-                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <View
-                    android:background="@color/white"
                     android:layout_width="@dimen/size_50"
-                    android:layout_height="1dp"/>
+                    android:layout_height="1dp"
+                    android:background="@color/white" />
 
                 <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_marginVertical="@dimen/size_12"
-                    android:letterSpacing="0.4"
                     android:id="@+id/tv_title"
-
-                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/size_10"
-                    android:textColor="@color/white"
+
+                    android:layout_marginVertical="@dimen/size_12"
                     android:fontFamily="@font/bold"
-                    android:textAllCaps="true"
-                    android:layout_height="wrap_content"/>
+                    android:gravity="center"
+                    android:textColor="@color/white" />
+
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tv_size"
                     android:layout_width="wrap_content"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/regular"
-                    android:layout_height="wrap_content"/>
+                    android:includeFontPadding="false"
+                    android:textColor="@color/white" />
             </LinearLayout>
         </RelativeLayout>
     </com.framework.views.customViews.CustomCardView>

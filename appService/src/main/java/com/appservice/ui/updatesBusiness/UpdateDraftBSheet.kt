@@ -98,6 +98,9 @@ class UpdateDraftBSheet:AppBaseBottomSheetFragment<BsheetUpdateDraftBinding,Upda
         if (sessionManager?.fpTag!=null){
 
             viewModel?.updateDraft(updateDraftBody)?.observe(viewLifecycleOwner,{
+                if (updateDraftBody.content.isNullOrEmpty().not()){
+                    showLongToast(getString(R.string.your_post_was_saved_as_draft))
+                }
                 hideProgress()
                 requireActivity().finish()
             })

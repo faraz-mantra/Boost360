@@ -501,7 +501,7 @@ fun Drawable.setColorFilterApiQ(color: Int, blendMode:BlendMode){
 
 
 
-fun highlightHashTag(text: String?,@ColorRes colorId:Int): SpannableString {
+fun highlightHashTag(text: String?,@ColorRes colorId: Int,@FontRes fontId:Int): SpannableString {
 
   val spannable = SpannableString(text?:"")
 
@@ -510,11 +510,19 @@ fun highlightHashTag(text: String?,@ColorRes colorId:Int): SpannableString {
     text?.trim()?.split(Regex("\\s+"))?.forEach {
       Log.i(TAG, "addHashTagFunction: $it")
       if (it.isNotEmpty() && it[0] == '#'){
-        val boldSpan = StyleSpan(Typeface
-          .BOLD)
+
+        spannable.setSpan(object : TypefaceSpan(null) {
+          override fun updateDrawState(ds: TextPaint) {
+            ds.typeface = Typeface.create(ResourcesCompat.getFont(BaseApplication.instance,
+              fontId), Typeface.NORMAL) // To change according to your need
+          }
+        }, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE) // To change according to your need
+
+//        val boldSpan = StyleSpan(Typeface
+//          .BOLD)
         val foregroundSpan = ForegroundColorSpan(ContextCompat.getColor(BaseApplication.instance, colorId))
         spannable.setSpan(foregroundSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannable.setSpan(boldSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+//        spannable.setSpan(boldSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
       }
 
@@ -731,6 +739,9 @@ fun fetchString(id: Int): String {
   return BaseApplication.instance.getString(id)
 }
 
+fun fetchColor(id: Int): Int {
+  return ContextCompat.getColor(BaseApplication.instance,id)
+}
 fun showSnackBarNegative(context: Activity, msg: String?) {
   val snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg ?: "", Snackbar.LENGTH_INDEFINITE)
   snackBar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color))

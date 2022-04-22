@@ -52,7 +52,7 @@
     <string name="post">Post</string>
     <string name="connect">Connect</string>
     <string name="please_wait">Please Wait</string>
-    <string name="browse_all">Browse all</string>
+    <string name="browse_all">Browse All</string>
     <string name="edit">Edit</string>
     <string name="edit_post">Edit Post</string>
     <string name="caption">Caption</string>
@@ -79,12 +79,13 @@
     <string name="update_posted_successfully">Update posted successfully!</string>
     <string name="also_promote_with_your_contacts_on">Also, promote with your contacts on:</string>
     <string name="insta_dm_dm">Insta DM</string>
-    <string name="more">More…</string>
+    <string name="more_dot">More…</string>
     <string name="placeholder_selected">%1$d selected</string>
     <string name="email_sub">Email subscribers</string>
     <string name="placeholder_recipients">%1$d recipients</string>
     <string name="no_recipients">%1$d recipients</string>
     <string name="post_on_placeholder_platform">Post on %1$d platform</string>
+    <string name="post_on_placeholder_platforms">Post on %1$d platforms</string>
     <string name="now">Now</string>
     <string name="placeholder_per_month">₹%1$d/month</string>
     <string name="placeholder_per_year">₹%1$d/year</string>
@@ -106,6 +107,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="view_more2">View more</string>
+    <string name="hashtags_help_improve_brand_visibility">Hashtags help improve brand visibility</string>
+    <string name="visit_website">Visit website</string>
+    <string name="_4m">4m</string>
+    <string name="not_connected">Not connected</string>
 
     <string name="empty_string" />
     <string name="posted_updates">Posted updates</string>

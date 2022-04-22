@@ -1,5 +1,6 @@
 package com.festive.poster.ui.promoUpdates.holders
 
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
 import com.festive.poster.databinding.ListItemTodaysPickTemplateBinding
 import com.festive.poster.models.PosterPackModel
@@ -8,6 +9,7 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.framework.base.BaseActivity
+import com.framework.views.itemdecoration.LineItemDecoration
 import com.squareup.picasso.Picasso
 
 class TodaysPickTemplateListViewHolder(binding: ListItemTodaysPickTemplateBinding):
@@ -29,7 +31,9 @@ class TodaysPickTemplateListViewHolder(binding: ListItemTodaysPickTemplateBindin
                 }
             })
             binding.vpTemplate.adapter = adapter
-            binding.introIndicatorNew.setViewPager2(binding.vpTemplate)
+            binding.vpTemplate.layoutManager=
+                LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL,false)
+            binding.vpTemplate.addItemDecoration(LineItemDecoration(40,10))
         }
 
         super.bind(position, item)

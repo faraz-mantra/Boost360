@@ -3,57 +3,69 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="imageExist"
+            type="Boolean" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/r_layout"
-        android:layout_width="@dimen/size_250"
+        android:layout_width="190dp"
+        android:layout_marginTop="@dimen/size_20"
+        android:layout_marginBottom="@dimen/size_15"
+        android:layout_marginHorizontal="@dimen/size_10"
         android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:cardCornerRadius="@dimen/size_10"
+            android:layout_height="284dp"
+            app:cardUseCompatPadding="true"
+            app:cardPreventCornerOverlap="false"
+            app:cardElevation="@dimen/size_4"
+            app:cardCornerRadius="@dimen/size_8"
+            app:layout_constraintVertical_bias="0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="8dp">
+            >
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:orientation="vertical"
                 android:id="@+id/layout_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="32dp"
-                android:layout_marginHorizontal="16dp">
-
+                android:layout_marginHorizontal="9dp"
+                android:layout_marginTop="13dp"
+                android:orientation="vertical">
 
 
                 <com.framework.views.customViews.CustomTextView
                     android:layout_width="match_parent"
-                    android:textSize="7sp"
-                    android:gravity="center"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/regular"
-                    android:textColor="@color/color395996"
+                    android:gravity="center"
                     android:text="@string/you_ve_new_email_update_from"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="@color/color395996"
+                    android:textSize="7sp" />
 
                 <com.framework.views.customViews.CustomTextView
-                    android:layout_width="match_parent"
-                    android:textSize="10sp"
-                    android:gravity="center"
                     android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textColor="@color/black_4a4a4a"
-                    tools:text="Smiley Dent Clinic"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="10sp"
+                    tools:text="Smiley Dent Clinic" />
 
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/iv_svg"
                     android:layout_width="match_parent"
-                    android:layout_height="170dp"
-                    android:scaleType="fitXY"
+                    android:layout_height="152dp"
                     android:layout_marginTop="8dp"
+                    android:scaleType="fitXY"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -62,29 +74,59 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:ellipsize="end"
                     android:gravity="center"
+                    android:maxLines="3"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="6sp"
-                    app:fontFamily="@font/regular_medium"
+                    app:fontFamily="@font/regular"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_svg"
                     tools:text="50 to 60 percent off the entire site and store for Black Friday. Above that, you have free shipiing on all orders, plus an extra 20.
 
 #bigbilliondays #smile #2020 " />
+
+                <com.framework.views.customViews.CustomCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/size_5"
+                    app:cardBackgroundColor="@color/color_border_ffb900"
+                    app:cardCornerRadius="@dimen/size_4">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_14dp"
+                        android:layout_marginVertical="@dimen/size_4"
+                        android:fontFamily="@font/regular_medium"
+                        android:text="@string/visit_website"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textSize="6sp" />
+                </com.framework.views.customViews.CustomCardView>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </com.google.android.material.card.MaterialCardView>
 
 
-        <com.framework.views.customViews.CustomImageView
-            android:id="@+id/customImageView6"
-            android:layout_width="50dp"
-            android:elevation="@dimen/size_4"
-            android:layout_height="@dimen/size_50"
-            android:src="@drawable/ic_email_preview"
+        <com.framework.views.customViews.CustomCardView
+            android:layout_width="40dp"
+            app:cardCornerRadius="@dimen/size_20"
+            android:layout_height="@dimen/size_40"
             app:layout_constraintBottom_toBottomOf="@+id/materialCardView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView"
+            app:cardElevation="@dimen/size_4"
+            android:translationY="-4dp">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/customImageView6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_email_preview"
+                />
+        </com.framework.views.customViews.CustomCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

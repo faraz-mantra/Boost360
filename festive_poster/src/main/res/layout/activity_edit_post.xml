@@ -13,25 +13,26 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/size_16"
             android:paddingVertical="@dimen/size_18"
             app:layout_constraintTop_toTopOf="parent">
 
 
             <com.framework.views.customViews.CustomImageView
                 android:id="@+id/iv_close_editing"
-                android:layout_width="@dimen/size_15"
-                android:layout_height="@dimen/size_15"
+                android:padding="8dp"
+                android:layout_marginStart="@dimen/size_7"
+                android:layout_width="@dimen/size_32"
+                android:layout_height="@dimen/size_32"
                 android:src="@drawable/ic_close_black" />
 
             <com.framework.views.customViews.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_12"
+                android:layout_marginStart="13dp"
                 android:fontFamily="@font/bold"
                 android:text="@string/edit_post"
                 android:textSize="@dimen/text_18"
-                android:textColor="@color/black" />
+                android:textColor="@color/black_4a4a4a" />
         </LinearLayout>
 
         <ScrollView
@@ -55,7 +56,7 @@
                         android:id="@+id/iv_template"
                         android:layout_width="match_parent"
                         android:scaleType="fitXY"
-                        android:layout_height="@dimen/size_380"
+                        android:layout_height="375dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
@@ -149,9 +150,9 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="165dp"
+                    android:layout_height="149dp"
                     android:layout_marginHorizontal="@dimen/size_20"
-                    android:layout_marginTop="16dp">
+                    android:layout_marginTop="@dimen/size_20">
 
                     <include
                         android:id="@+id/caption_layout"
@@ -179,40 +180,51 @@
                     android:layout_marginVertical="@dimen/size_16"
                     android:background="@drawable/bg_tranparent_orange_no_border">
 
-                    <com.framework.views.customViews.CustomImageView
-                        android:id="@+id/iv_hashtag"
-                        android:layout_width="@dimen/size_25"
-                        android:layout_height="@dimen/size_25"
+                    <com.framework.views.customViews.CustomCardView
+                        android:id="@+id/customCardView2"
+                        android:layout_width="43dp"
+                        app:cardCornerRadius="@dimen/size_22"
+                        android:layout_height="43dp"
                         android:layout_marginStart="@dimen/size_20"
-                        android:src="@drawable/ic_hashtag_mock"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.framework.views.customViews.CustomImageView
+                            android:id="@+id/iv_hashtag"
+                            android:layout_width="@dimen/size_25"
+                            android:layout_height="@dimen/size_25"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_hashtag_mock" />
+
+                    </com.framework.views.customViews.CustomCardView>
+
 
                     <com.framework.views.customViews.CustomTextView
                         android:id="@+id/tv_hashtag_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_20"
                         android:layout_marginTop="@dimen/size_10"
                         android:fontFamily="@font/regular_medium"
-                        android:text="Hashtags help improve brand visibility"
+                        android:text="@string/hashtags_help_improve_brand_visibility"
                         android:textColor="@color/black_09121F"
-                        android:textSize="@dimen/text_10"
-                        app:layout_constraintStart_toEndOf="@+id/iv_hashtag"
+                        android:textSize="@dimen/text_12"
+                        android:layout_marginStart="@dimen/size_11"
+                        app:layout_constraintStart_toEndOf="@+id/customCardView2"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.framework.views.customViews.CustomTextView
                         android:id="@+id/tv_hashtag_subtitle"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_6"
                         android:layout_marginBottom="@dimen/size_10"
                         android:fontFamily="@font/regular_medium"
                         android:text="@string/type_in_the_caption_to_create_your_own_hashtags"
                         android:textColor="@color/grey_light_2"
-                        android:textSize="@dimen/text_10"
+                        android:textSize="@dimen/text_12"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@id/tv_hashtag_title"
                         app:layout_constraintTop_toBottomOf="@+id/tv_hashtag_title" />
 
@@ -235,10 +247,11 @@
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_preview_and_post"
             style="@style/yellow_squared_button"
-            android:text="@string/preview_and_post"
+            android:text="@string/done"
+            android:layout_height="@dimen/size_52"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="UnknownId" />
+             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

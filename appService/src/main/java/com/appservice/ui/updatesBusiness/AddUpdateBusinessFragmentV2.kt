@@ -242,7 +242,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     FirestoreManager.readDraft {
       if (activity != null && isAdded) {
 
-        binding!!.etUpdate.setText(highlightHashTag(it?.content, R.color.black_4a4a4a))
+        binding!!.etUpdate.setText(highlightHashTag(it?.content, R.color.black_4a4a4a,R.font.semi_bold))
         addHashTagFunction()
         binding!!.tvCount.text = (it?.content?.length ?: 0).toString()
 
@@ -293,7 +293,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   }
 
   fun toggleContinue(){
-    if (binding!!.etUpdate.text.toString().isNullOrEmpty()&&posterImagePath.isNullOrEmpty()){
+    if (binding!!.etUpdate.text.toString().isNullOrEmpty()){
       disableContinue()
     }else{
       enableContinue()

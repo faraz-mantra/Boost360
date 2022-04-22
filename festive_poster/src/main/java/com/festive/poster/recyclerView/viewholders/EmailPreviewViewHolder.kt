@@ -1,7 +1,6 @@
 package com.festive.poster.recyclerView.viewholders
 
 import com.festive.poster.R
-import com.festive.poster.databinding.ItemSocialPreviewViewpagerBinding
 import com.festive.poster.databinding.SocialPreviewEmailBinding
 import com.festive.poster.databinding.SocialPreviewFbBinding
 import com.festive.poster.databinding.SocialPreviewTwitterBinding
@@ -19,16 +18,10 @@ class EmailPreviewViewHolder(binding: SocialPreviewEmailBinding) :
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as SocialPreviewModel
-        if (model.posterImg.isNullOrEmpty()){
-            binding.materialCardView.minimumHeight=400
-
-            binding.ivSvg.gone()
-        }else{
-            binding.materialCardView.minimumHeight=800
-            binding.ivSvg.loadUsingGlide(model.posterImg,false)
-        }
+        binding.imageExist = model.posterImg.isNullOrEmpty().not()
+        binding.ivSvg.loadUsingGlide(model.posterImg,false)
         binding.materialCardView.requestLayout()
-        binding.tvCaption.text = highlightHashTag(model.desc, R.color.color395996)
+        binding.tvCaption.text = highlightHashTag(model.desc, R.color.color395996,R.font.regular)
         binding.tvTitle.text = model.title
 
         super.bind(position, item)
