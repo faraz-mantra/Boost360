@@ -349,7 +349,7 @@
             android:layout_marginTop="@dimen/size_2"
             android:layout_marginEnd="@dimen/size_5"
             app:srcCompat="@drawable/ic_alert_setting"
-            app:tint="@color/colorAccent" />
+            app:tint="@color/lemon_light" />
 
           <com.framework.views.customViews.CustomTextView
             android:layout_width="match_parent"
@@ -357,7 +357,8 @@
             android:includeFontPadding="false"
             android:text="@string/enable_website_payment_switched_desc"
             android:textColor="@color/gray_828282"
-            app:textType="BODY_1" />
+            android:fontFamily="@font/regular"
+            app:textType="CAPTION" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 

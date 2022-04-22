@@ -1,4 +1,4 @@
-package com.appservice.ui.aptsetting.ui
+package com.appservice.ui.ecommerce
 
 import android.app.Activity
 import android.content.Intent
@@ -7,7 +7,7 @@ import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
-import com.appservice.databinding.FragmentPaymentCollectionSetupV2Binding
+import com.appservice.databinding.FragmentEcommercePaymentCollectionSetupV2Binding
 import com.appservice.model.accountDetails.KYCDetails
 import com.appservice.model.aptsetting.AddPaymentAcceptProfileRequest
 import com.appservice.model.aptsetting.PaymentProfileResponse
@@ -24,13 +24,13 @@ import com.framework.utils.fromHtml
 import com.framework.utils.makeLinks
 import com.framework.webengageconstant.*
 
-class FragmentPaymentCollectionSetupV2 : AppBaseFragment<FragmentPaymentCollectionSetupV2Binding, AppointmentSettingsViewModel>() {
+class FragmentEcommercePaymentCollectionSetupV2 : AppBaseFragment<FragmentEcommercePaymentCollectionSetupV2Binding, AppointmentSettingsViewModel>() {
 
   private var isBankAdded: Boolean = false
   private var paymentResult: PaymentResult? = null
 
   override fun getLayout(): Int {
-    return R.layout.fragment_payment_collection_setup_v2
+    return R.layout.fragment_ecommerce_payment_collection_setup_v2
   }
 
   override fun getViewModelClass(): Class<AppointmentSettingsViewModel> {
@@ -38,8 +38,8 @@ class FragmentPaymentCollectionSetupV2 : AppBaseFragment<FragmentPaymentCollecti
   }
 
   companion object {
-    fun newInstance(): FragmentPaymentCollectionSetupV2 {
-      return FragmentPaymentCollectionSetupV2()
+    fun newInstance(): FragmentEcommercePaymentCollectionSetupV2 {
+      return FragmentEcommercePaymentCollectionSetupV2()
     }
   }
 
@@ -92,8 +92,8 @@ class FragmentPaymentCollectionSetupV2 : AppBaseFragment<FragmentPaymentCollecti
   private fun toggleViewAndTextChange(acceptDuringBooking: Boolean, acceptAfterBooking: Boolean) {
     binding?.togglePaymentBooking?.isOn = acceptDuringBooking
     binding?.togglePaymentAfter?.isOn = acceptAfterBooking
-    binding?.txtAcceptPaymentDesc?.text = getString(if (acceptDuringBooking) R.string.customers_payments_website_appointment_booking else R.string.select_payments_website_appointment_booking)
-    binding?.txtPaymentAfterDesc?.text = getString(if (acceptAfterBooking) R.string.customers_allowed_cash_qr_code_payment_time_service else R.string.select_payment_cash_qr_code_time_service)
+    binding?.txtAcceptPaymentDesc?.text = getString(if (acceptDuringBooking) R.string.customers_payments_website_appointment_checkout else R.string.select_payments_website_appointment_booking)
+    binding?.txtPaymentAfterDesc?.text = getString(if (acceptAfterBooking) R.string.customers_allowed_cash_qr_code_payment_time_delivery else R.string.select_payment_cash_qr_code_time_delivery)
     binding?.viewEnableSwitch?.visibility = if (acceptAfterBooking.not() && acceptDuringBooking.not()) View.VISIBLE else View.GONE
     when {
       acceptDuringBooking.not() -> {
