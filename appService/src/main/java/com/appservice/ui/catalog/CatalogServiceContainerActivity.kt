@@ -256,7 +256,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
         FragmentEcommerceCustomerInvoiceSetup.newInstance()
       }
       FragmentType.ECOMMERCE_PAYMENT_SETTINGS -> {
-        FragmentEcommercePaymentCollectionSetup.newInstance()
+//        FragmentEcommercePaymentCollectionSetup.newInstance()
+        FragmentEcommercePaymentCollectionSetupV2.newInstance()
       }
       FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_POLICIES -> {
         FragmentEcommerceCustomerPolicies.newInstance()

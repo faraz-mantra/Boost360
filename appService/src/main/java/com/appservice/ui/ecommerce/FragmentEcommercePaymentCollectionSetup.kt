@@ -26,6 +26,7 @@ import com.framework.pref.clientId
 import com.framework.utils.makeLinks
 import com.framework.webengageconstant.*
 
+@Deprecated("Migrated this class FragmentEcommercePaymentCollectionSetupV2")
 class FragmentEcommercePaymentCollectionSetup : AppBaseFragment<FragmentEcommercePaymentCollectionSetupBinding, AppointmentSettingsViewModel>() {
 
   var isEdit: Boolean = false
@@ -37,7 +38,6 @@ class FragmentEcommercePaymentCollectionSetup : AppBaseFragment<FragmentEcommerc
   }
 
   override fun getLayout(): Int {
-//    return R.layout.fragment_ecommerce_payment_collection_setup_v2
     return R.layout.fragment_ecommerce_payment_collection_setup
   }
 

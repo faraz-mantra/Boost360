@@ -928,7 +928,7 @@
   <string name="_4_products_under_this_category">4 products under this category</string>
   <string name="search">Search</string>
   <string name="catalog">Catalog</string>
-  <string name="money_for_all_your_online_order">Select how you want to collect money for all your online\norders.</string>
+  <string name="money_for_all_your_online_order">Select how you want to collect money for all your online orders.</string>
   <string name="select_how_you_want_to_recieve_money_for_all_your_online_appointments">Select how you want to receive money for all your online appointments.</string>
   <string name="i_understood">I understood</string>
   <string name="search_in_the_appointment_settings">Search in appointment settings</string>
@@ -1177,10 +1177,15 @@
   <string name="enter_name_as_per_pan_card">Enter name as per PAN card</string>
   <string name="gstin_information">GSTIN Information*</string>
   <string name="accept_payment_after_service">Accept payment after service</string>
+  <string name="accept_payment_delivery">Accept payment at delivery</string>
   <string name="customers_allowed_cash_qr_code_payment_time_service">Customers are allowed to make cash/QR code payment at the time of service completion.</string>
+  <string name="customers_allowed_cash_qr_code_payment_time_delivery">Customers are allowed to make cash/QR code payment at the time of product delivery.</string>
   <string name="select_payment_cash_qr_code_time_service">Select, if you want to allow customers to make cash/QR code payment at the time of service completion.</string>
+  <string name="select_payment_cash_qr_code_time_delivery">Select, if you want to allow customer to make cash/QR code payment at the time of product delivery.</string>
   <string name="accept_payments_during_booking">Accept payments during booking</string>
+  <string name="accept_payments_during_checkout">Accept payments at checkout</string>
   <string name="customers_payments_website_appointment_booking">Customers are allowed to make payments on the website during appointment booking.</string>
+  <string name="customers_payments_website_appointment_checkout">Customers are allowed to make payments on the website during checkout.</string>
   <string name="select_payments_website_appointment_booking">Select, if you want customer to make payments on the website during checkout.</string>
   <string name="bank_account_is_mandatory_to_enable_online_payments">Bank account is mandatory to enable online payments.</string>
   <string name="boost_payment_gateway_services_read_tnc">This bank account will be used for monetary transactions in case of online payment. We charge <b>3% as convenience fees</b> which includes bank charges for providing the Boost payment gateway services). <font color='#FFB900'><b><u>Read TnC.</u></b></font> </string>
@@ -1190,4 +1195,13 @@
   <string name="pending_verification">(Pending verification)</string>
   <string name="verify_">(Verify)</string>
   <string name="added_payment_setup">Added payment setup!</string>
+  <string name="during_home_delivery">During home delivery</string>
+  <string name="select_if_you_want_to_allow_customer_to_make_cash_payment_during_home_delivery">Select, if you want to allow customer to make cash payment during home delivery.</string>
+  <string name="accept_payments_online">Accept payments online</string>
+  <string name="on_website_checkout_page">On website checkout page</string>
+  <string name="select_if_you_want_customer_to_make_payments_on_the_website_during_checkout">Select, if you want customer to make payments on the website during checkout.</string>
+  <string name="via_custom_payment_link">Via custom payment link</string>
+  <string name="select_if_you_want_customer_to_pay_via_a_custom_payment_link_anytime_between_order_placement_and_delivery_learn_more">Select, if you want customer to pay via a custom payment link anytime between order placement and delivery. Learn More</string>
+  <string name="during_pickup_from_store">During pickup from store</string>
+  <string name="select_if_you_want_to_allow_customer_to_make_cash_payment_during_store_pickup">Select, if you want to allow customer to make cash payment during store pickup.</string>
 </resources>
