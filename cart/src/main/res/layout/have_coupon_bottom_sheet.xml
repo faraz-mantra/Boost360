@@ -46,18 +46,18 @@
   </com.google.android.material.textfield.TextInputLayout>
 
   <androidx.appcompat.widget.AppCompatTextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/cart_filled_Text_Field"
-    android:layout_marginTop="25dp"
-    android:background="@color/yellow"
-    android:fontFamily="@font/semi_bold"
-    android:gravity="center"
-    android:paddingTop="15dp"
-    android:paddingBottom="15dp"
-    android:text="Apply coupon"
-    android:textColor="@color/white"
-    android:textSize="@dimen/txt_14sp" />
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/cart_filled_Text_Field"
+      android:layout_marginTop="25dp"
+      android:background="@color/colorAccent1"
+      android:fontFamily="@font/semi_bold"
+      android:gravity="center"
+      android:paddingTop="15dp"
+      android:paddingBottom="15dp"
+      android:text="Apply coupon"
+      android:textColor="@color/white"
+      android:textSize="@dimen/txt_14sp" />
 
 
 </RelativeLayout>

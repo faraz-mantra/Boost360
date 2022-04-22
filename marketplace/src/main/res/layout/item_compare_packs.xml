@@ -137,6 +137,7 @@
                                 android:paddingStart="0dp"
                                 android:paddingEnd="@dimen/_5sdp"
                                 android:text="₹2,559/month"
+                                android:maxLines="1"
                                 android:textColor="@color/colorAccent1"
                                 android:textFontWeight="600"
                                 android:textSize="@dimen/txt_12sp"
@@ -148,6 +149,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/dot_grey"
                                 android:textSize="@dimen/_8sdp"
+                                android:maxLines="1"
                                 app:layout_constraintStart_toStartOf="@+id/money"
                                 app:layout_constraintTop_toBottomOf="@+id/money"
                                 tools:text="₹699/month" />

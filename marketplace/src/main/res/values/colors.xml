@@ -379,4 +379,9 @@
     <color name="yellowBorder">@color/yellow</color>
     <color name="searchBGborder">#FFB900</color>
 
+    <color name="indicatorSelectorColorYellowGrey">@color/colorAccent1</color>
+    <color name="indicatorNotSelectorColor">@color/gray_light</color>
+
+    <color name="givefeedbackColorBG">#FFFCF6</color>
+
 </resources>

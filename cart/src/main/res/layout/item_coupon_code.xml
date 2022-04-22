@@ -21,6 +21,8 @@
             android:fontFamily="@font/semi_bold"
             android:gravity="center"
             android:text="FESTIVE"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
             android:textColor="@color/common_text_color"
             android:textFontWeight="600"
             android:textSize="@dimen/txt_14sp" />

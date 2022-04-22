@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.boost.payment.R
 import com.boost.payment.PaymentActivity
 import com.boost.dbcenterapi.data.api_model.Razorpay.PaymentErrorModule
+import com.boost.payment.BuildConfig
 import com.boost.payment.ui.confirmation.OrderConfirmationFragment
 import com.boost.payment.ui.payment.PaymentViewModel
 import com.boost.payment.ui.popup.FailedTransactionPopUpFragment
@@ -169,7 +170,7 @@ class RazorPayWebView : DialogFragment() {
 
             try {
                 // Make webview visible before submitting payment details
-                razorpay.setWebView(razorpay_webview);
+                razorpay.setWebView(razorpay_webview)
                 razorpay.submit(data, object : PaymentResultListener {
 
                     override fun onPaymentSuccess(razorpayPaymentId: String) {

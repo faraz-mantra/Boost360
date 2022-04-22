@@ -131,9 +131,9 @@ class PackageViewPagerAdapter(
               holder.tv_inlcuded_add_on.visibility = View.GONE
             }
 
-            Glide.with(holder.itemView.context).load(it[0].primary_image).into(holder.image1)
-            Glide.with(holder.itemView.context).load(it[1].primary_image).into(holder.image2)
-            Glide.with(holder.itemView.context).load(it[2].primary_image).into(holder.image3)
+            Glide.with(holder.itemView.context).load(if(it.size>=1)it[0].primary_image else "").into(holder.image1)
+            Glide.with(holder.itemView.context).load(if(it.size>=2)it[1].primary_image else "").into(holder.image2)
+            Glide.with(holder.itemView.context).load(if(it.size>=3)it[2].primary_image else "").into(holder.image3)
             val list = StringBuilder()
             for (singleItem in it) {
               if(it.size>1){

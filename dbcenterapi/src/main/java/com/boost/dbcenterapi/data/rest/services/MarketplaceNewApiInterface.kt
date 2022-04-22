@@ -8,6 +8,7 @@ import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponResp
 import com.boost.dbcenterapi.data.api_model.getCouponResponse.GetCouponResponse
 import com.boost.dbcenterapi.data.rest.EndPoints
 import com.framework.base.BaseResponse
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.models.UserProfileData
 import com.framework.pref.clientId2
 import com.google.gson.JsonObject
@@ -19,9 +20,16 @@ import retrofit2.http.*
 
 interface MarketplaceNewApiInterface {
 
-  @Headers("Authorization: 591c0972ee786cbf48bd86cf", "Content-Type: application/json")
-  @GET("https://developer.api.boostkit.dev/language/v1/upgrade/get-data?website=5e7a3cf46e0572000109a5b2")
-  fun GetAllFeatures(): Observable<Response<GetAllFeaturesResponse>>
+//  @Headers("Authorization: 591c0972ee786cbf48bd86cf", "Content-Type: application/json")
+//  @GET("https://developer.api.boostkit.dev/language/v1/upgrade/get-data?website=5e7a3cf46e0572000109a5b2")
+//  fun GetAllFeatures(): Observable<Response<GetAllFeaturesResponse>>
+
+  @Headers("Content-Type: application/json")
+  @GET
+  fun GetAllFeatures(
+    @Header("Authorization") auth:String="591c0972ee786cbf48bd86cf",
+    @Url url: String? = FirebaseRemoteConfigUtil.kAdminUrl()
+  ): Observable<Response<GetAllFeaturesResponse>>
 
   @Headers(
     "Authorization: Basic YXBpbW9kaWZpZXI6dkVFQXRudF9yJ0RWZzcofg==",

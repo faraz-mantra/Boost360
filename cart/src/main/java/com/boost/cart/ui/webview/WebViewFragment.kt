@@ -11,6 +11,7 @@ import android.webkit.*
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
+import com.boost.cart.BuildConfig
 import com.boost.cart.CartActivity
 import com.boost.cart.R
 import com.boost.cart.base_class.BaseFragment
@@ -37,7 +38,7 @@ class WebViewFragment : BaseFragment() {
   ): View? {
     root = inflater.inflate(R.layout.web_view_fragment, container, false)
    // link = requireArguments().getString("link") ?: ""
-    link="https://www.getboost360.com/refund-policy/"
+    link= if(BuildConfig.FLAVOR.equals("jioonline")) "https://www.getboost360.com/refund-policy/" else "https://www.getboost360.com/refund-policy/"
     Log.i(TAG, "onCreateView: "+link)
     return root
   }
