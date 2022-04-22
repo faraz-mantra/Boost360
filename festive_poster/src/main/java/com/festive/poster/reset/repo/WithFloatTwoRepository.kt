@@ -80,8 +80,8 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.putBizImageUpdate(clientId, requestType, requestId, totalChunks, currentChunkNumber, socialParmeters, bizMessageId, sendToSubscribers, requestBody), TaskCode.PUT_IMAGE_BIZ_UPDATE)
   }
 
-  fun getPastUpdatesList(clientId: String?, fpId:String?):Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getPastUpdatesList(clientId = clientId, fpId = fpId), TaskCode.GET_PAST_UPDATES_LIST)
+  fun getPastUpdatesList(clientId: String?, fpId:String?, postType:Int?):Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getPastUpdatesList(clientId = clientId, fpId = fpId, postType = postType), TaskCode.GET_PAST_UPDATES_LIST)
   }
 
 

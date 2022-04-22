@@ -7,6 +7,7 @@ import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.databinding.FragmentUpdatesListingBinding
 import com.festive.poster.models.promoModele.PastUpdateModel
+import com.festive.poster.models.promoModele.PastUpdatesNewListingResponse
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
@@ -36,19 +37,22 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
     override fun onCreateView() {
         super.onCreateView()
         initUI()
-        apiCallPastUpdates()
-    }
-
-    private fun apiCallPastUpdates() {
-        viewModel?.getPastUpdatesList(clientId = clientId, fpId = sessionLocal.fPID)
-            ?.observeOnce( viewLifecycleOwner, {it ->
-            Log.i("pastUpdates", "PastUpdates: $it")
-        })
     }
 
     private fun initUI() {
-        val pastPostData = PastUpdateModel().getData(baseActivity)
-        binding?.rvPostListing?.adapter = AppBaseRecyclerViewAdapter(baseActivity, pastPostData, this)
+        apiCallPastUpdates()
+        //val pastPostData = PastUpdateModel().getData(baseActivity)
+    }
+
+    private fun apiCallPastUpdates() {
+        showProgress()
+        viewModel?.getPastUpdatesList(clientId = clientId, fpId = sessionLocal.fPID, postType = 0)
+            ?.observeOnce( viewLifecycleOwner, {it ->
+                if (it.isSuccess()){
+                    it as PastUpdatesNewListingResponse
+                }
+                Log.i("pastUpdates", "PastUpdates: $it")
+            })
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {

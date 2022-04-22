@@ -3,7 +3,7 @@ package com.festive.poster.reset.services
 import com.festive.poster.models.CustomerDetails
 import com.festive.poster.models.MerchantSummaryResponse
 import com.festive.poster.models.PostUpdateTaskRequest
-import com.festive.poster.models.promoModele.PastUpdatesListResponse
+import com.festive.poster.models.promoModele.PastUpdatesNewListingResponse
 import com.festive.poster.reset.EndPoints
 import com.google.gson.JsonObject
 import com.framework.base.BaseResponse
@@ -56,6 +56,10 @@ interface WithFloatTwoRemoteData {
   fun getMerchantSummary(
     @Query("clientId") clientId: String?, @Query("fpTag") fpTag: String?): Observable<Response<MerchantSummaryResponse>>
 
-  @GET(EndPoints.GET_PAST_UPDATES_LIST)
-  fun getPastUpdatesList(@Query("clientId") clientId: String?, @Query("fpId") fpId: String?):Observable<Response<PastUpdatesListResponse>>
+  @GET(EndPoints.GET_PAST_UPDATES_LIST_V5)
+  fun getPastUpdatesList(
+    @Query("clientId") clientId: String?,
+    @Query("fpId") fpId: String?,
+    @Query("postType") postType: Int?
+  ):Observable<Response<PastUpdatesNewListingResponse>>
 }

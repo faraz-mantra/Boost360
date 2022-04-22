@@ -1,35 +1,54 @@
 package com.festive.poster.models.promoModele
 
+import com.festive.poster.constant.RecyclerViewItemType
+import com.festive.poster.recyclerView.AppBaseRecyclerViewItem
+import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-data class PastUpdatesListResponse(
+data class PastUpdatesNewListingResponse(
+
+	@field:SerializedName("imageCount")
+	val imageCount: Int? = null,
 
 	@field:SerializedName("floats")
-	val floats: List<FloatsItem?>? = null,
+	val floats: List<PastPostItem?>? = null,
+
+	@field:SerializedName("postCount")
+	val postCount: Int? = null,
+
+	@field:SerializedName("textCount")
+	val textCount: Int? = null,
 
 	@field:SerializedName("totalCount")
 	val totalCount: Int? = null,
 
 	@field:SerializedName("moreFloatsAvailable")
 	val moreFloatsAvailable: Boolean? = null
+) : BaseResponse()
+
+data class Extradetails(
+
+	@field:SerializedName("socialparameter")
+	val socialparameter: String? = null
 )
 
-data class FloatsItem(
+data class PastPostItem(
 
 	@field:SerializedName("imageUri")
-	val imageUri: Any? = null,
+	val imageUri: String? = null,
 
 	@field:SerializedName("groupMessageId")
 	val groupMessageId: Any? = null,
 
 	@field:SerializedName("extradetails")
-	val extradetails: Any? = null,
+	val extradetails: Extradetails? = null,
 
 	@field:SerializedName("isHtmlString")
 	val isHtmlString: Boolean? = null,
 
 	@field:SerializedName("tileImageUri")
-	val tileImageUri: Any? = null,
+	val tileImageUri: String? = null,
 
 	@field:SerializedName("_id")
 	val id: String? = null,
@@ -51,4 +70,9 @@ data class FloatsItem(
 
 	@field:SerializedName("tags")
 	val tags: Any? = null
-)
+) : Serializable, AppBaseRecyclerViewItem {
+
+	override fun getViewType(): Int {
+		return RecyclerViewItemType.PAST_UPDATE_ITEM.getLayout()
+	}
+}
