@@ -28,6 +28,7 @@ import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.upgradeDB.model.YoutubeVideoModel
 import com.boost.dbcenterapi.utils.*
 import com.boost.dbcenterapi.utils.Utils.longToast
+import com.boost.marketplace.BuildConfig
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
@@ -219,7 +220,12 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //        }
 
         initializeVideosRecycler()
-        initializePartnerViewPager()
+        if(BuildConfig.FLAVOR.equals("jioonline")) {
+            initializePartnerViewPager()
+            partner_layout.visibility = View.VISIBLE
+        }else{
+            partner_layout.visibility = View.GONE
+        }
         initializeBannerViewPager()
         initializePackageViewPager()
         initializeFeatureDeals()
@@ -1561,8 +1567,12 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         viewModel.getPartnerZone().observe(this, androidx.lifecycle.Observer {
             Log.e("getPartnerZone", it.toString())
             if (it.size > 0) {
-                updatePartnerViewPager(it)
-                partner_layout.visibility = View.VISIBLE
+                if(BuildConfig.FLAVOR.equals("jioonline")){
+                    partner_layout.visibility = View.GONE
+                }else {
+                    updatePartnerViewPager(it)
+                    partner_layout.visibility = View.VISIBLE
+                }
             } else {
                 partner_layout.visibility = View.GONE
             }
