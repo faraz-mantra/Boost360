@@ -31,6 +31,7 @@ import com.framework.base.BaseResponse
 import com.framework.constants.SupportVideoType
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
@@ -42,6 +43,7 @@ import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.EVENT_NAME_UPDATE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
+import com.framework.webengageconstant.Post_Promotional_Update_Click
 import java.util.*
 
 class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener,AppOnZeroCaseClicked {
@@ -82,7 +84,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
     scrollPagingListener()
     listUpdateApi(offSet = offSet)
     binding?.btnAdd?.setOnClickListener {
-      startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2, isResult = true)
+      primaryButtonClicked()
     }
     this.zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.LATEST_NEWS_UPADATES, this, baseActivity).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
@@ -264,8 +266,16 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
   }
 
   override fun primaryButtonClicked() {
-    startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2, isResult = true)
-
+    if (FirebaseRemoteConfigUtil.featureUpdateStudioSelectedUsers(sessionLocal.fpTag)){
+      try {
+        val posterIntent = Intent(requireActivity(), Class.forName("com.festive.poster.ui.promoUpdates.PromoUpdatesActivity"))
+        startActivity(posterIntent)
+        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+      } catch (e: ClassNotFoundException) {
+        e.printStackTrace()
+      }
+    } else
+      startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, isResult = true)
   }
 
   override fun secondaryButtonClicked() {

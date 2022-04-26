@@ -12,6 +12,7 @@
             android:id="@+id/iv_category_icon"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:src="@drawable/ic_dummy_poster_cat_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
