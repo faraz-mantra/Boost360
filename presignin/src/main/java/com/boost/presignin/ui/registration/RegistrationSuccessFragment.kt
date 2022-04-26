@@ -119,7 +119,7 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
       clientId = clientId,
       fpId = authToken?.floatingPointId
     )
-    viewModel?.createAccessToken(request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.createAccessToken(request)?.observeOnce(viewLifecycleOwner) {
       val result = it as? AccessTokenResponse
       if (it?.isSuccess() == true && result?.result != null) {
         this.session?.saveAccessTokenAuth(result.result!!)
@@ -130,14 +130,14 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
         showLongToast(getString(R.string.access_token_create_error))
         hideProgress()
       }
-    })
+    }
   }
 
   private fun apiBusinessActivatePlan() {
-    viewModel?.getCategoriesPlan(baseActivity)?.observeOnce(viewLifecycleOwner, { res ->
+    viewModel?.getCategoriesPlan(baseActivity)?.observeOnce(viewLifecycleOwner) { res ->
       val responsePlan = res as? Plan15DaysResponse
       val request = getRequestPurchasedOrder(authToken?.floatingPointId!!, responsePlan)
-      viewModel?.postActivatePurchasedOrder(clientId, request)?.observeOnce(viewLifecycleOwner, {
+      viewModel?.postActivatePurchasedOrder(clientId, request)?.observeOnce(viewLifecycleOwner) {
         if (it.isSuccess()) {
           WebEngageController.trackEvent(
             PS_ACTIVATE_FREE_PURCHASE_PLAN,
@@ -146,14 +146,14 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
           )
         } else showLongToast(getString(R.string.unable_to_activate_business_plan))
         storeFpDetails()
-      })
-    })
+      }
+    }
   }
 
   private fun storeFpDetails() {
     val map = HashMap<String, String>()
     map["clientId"] = clientId
-    viewModel?.getFpDetails(authToken?.floatingPointId ?: "", map)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getFpDetails(authToken?.floatingPointId ?: "", map)?.observeOnce(viewLifecycleOwner) {
       val response = it as? UserFpDetailsResponse
       if (it.isSuccess() && response != null) {
         ProcessFPDetails(session!!).storeFPDetails(response)
@@ -165,7 +165,7 @@ class RegistrationSuccessFragment : AppBaseFragment<FragmentRegistrationSuccessB
         hideProgress()
         logout()
       }
-    })
+    }
   }
 
   private fun startDashboard() {

@@ -30,7 +30,8 @@ enum class RecyclerViewItemType {
   BACKGROUND_IMAGE_RV,
   BACKGROUND_IMAGE_FULL_SCREEN,
   GST_SLAB_SETTING,
-  VMN_CALL;
+  VMN_CALL,
+  TESTIMONIAL_ITEM;
 
 
   @LayoutRes
@@ -60,9 +61,10 @@ enum class RecyclerViewItemType {
       DOMAIN_NAME_SUGGESTIONS -> R.layout.item_domain_suggestions
       SIMILAR_DOMAIN_SUGGESTIONS -> R.layout.item_similar_domain_suggestions
       BACKGROUND_IMAGE_RV -> R.layout.list_item_background_images
-      BACKGROUND_IMAGE_FULL_SCREEN->R.layout.list_item_bg_image_full_screen
+      BACKGROUND_IMAGE_FULL_SCREEN -> R.layout.list_item_bg_image_full_screen
       GST_SLAB_SETTING -> R.layout.item_gst_slab
-      VMN_CALL->R.layout.single_item_vmn_call_item_v2
+      VMN_CALL -> R.layout.single_item_vmn_call_item_v2
+      TESTIMONIAL_ITEM -> R.layout.item_testimonial_list
     }
   }
 }

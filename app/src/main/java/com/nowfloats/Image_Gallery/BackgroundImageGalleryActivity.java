@@ -1,6 +1,5 @@
 package com.nowfloats.Image_Gallery;
 
-import static com.framework.base.FragmentContainerActivityKt.FRAGMENT_TYPE;
 import static com.framework.webengageconstant.EventLabelKt.ADDED;
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_DELETE_BACKGROUND_IMAGE;
 import static com.framework.webengageconstant.EventLabelKt.UPDATED_BUINSESS_LOGO;
@@ -24,7 +23,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,21 +36,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dashboard.constant.FragmentType;
-import com.dashboard.controller.DashboardFragmentContainerActivity;
 import com.framework.analytics.SentryController;
-import com.nguyenhoanglam.imagepicker.model.Config;
-import com.nguyenhoanglam.imagepicker.model.Image;
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
 import com.nowfloats.BusinessProfile.UI.API.UploadFaviconImage;
-import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
-import com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.EditImageActivity;
 import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.NotificationCenter.AlertArchive;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -67,7 +57,6 @@ import com.thinksity.R;
 import com.thinksity.databinding.ActivityBackgroundImageGalleryBinding;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

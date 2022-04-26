@@ -7,29 +7,7 @@ import com.appservice.constant.PreferenceConstant
 import com.appservice.viewmodel.TestimonialViewModel
 import com.framework.exceptions.IllegalFragmentTypeException
 
-open class BaseTestimonialFragment<binding : ViewDataBinding> :
-  AppBaseFragment<binding, TestimonialViewModel>() {
-
-
-  val fpId: String?
-    get() {
-      return pref?.getString(PreferenceConstant.KEY_FP_ID, "")
-    }
-
-  val fpTag: String?
-    get() {
-      return pref?.getString(PreferenceConstant.GET_FP_DETAILS_TAG, "")
-    }
-
-  val experienceCode: String?
-    get() {
-      return pref?.getString(PreferenceConstant.GET_FP_EXPERIENCE_CODE, "")
-    }
-
-  val webTemplateId: String?
-    get() {
-      return pref?.getString(PreferenceConstant.GET_FP_WEBTEMPLATE_ID, "")
-    }
+open class BaseTestimonialFragment<binding : ViewDataBinding> : AppBaseFragment<binding, TestimonialViewModel>() {
 
   override fun getLayout(): Int {
     return when (this) {
