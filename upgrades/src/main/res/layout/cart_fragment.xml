@@ -901,14 +901,13 @@
               android:textColor="@color/common_text_color" />
 
             <TextView
-                android:tag="com.userexperior.ueSecureView"
-
                 android:id="@+id/cart_amount_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:fontFamily="@font/open_sans"
                 android:padding="@dimen/_5sdp"
+                android:tag="com.userexperior.ueSecureView"
                 android:text="₹0"
                 android:textColor="@color/common_text_color"
                 tools:text="₹900" />

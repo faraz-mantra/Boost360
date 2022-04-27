@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/order_history"
+        android:icon="@drawable/ic_clock_counter_clockwise"
+        android:title="@string/my_order_history" />
+    <item
+        android:id="@+id/pricing_switch"
+        android:icon="@drawable/ic_currencyinr"
+        android:title="@string/switch_to_monthly_pricing" />
+</menu>

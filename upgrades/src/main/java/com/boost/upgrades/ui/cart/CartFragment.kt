@@ -163,8 +163,8 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
 
     progressDialog = ProgressDialog(requireContext())
 
-    cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this)
-    cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
+    cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, requireActivity())
+    cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this, requireActivity())
     cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
     prefs = SharedPrefs(activity as UpgradeActivity)
     WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART, PAGE_VIEW, NO_EVENT_VALUE)
@@ -201,6 +201,10 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
     observeLastPaymentDetails()
     checkRenewalItemDeepLinkClick()
     gst_layout.visibility = View.GONE
+    if(prefs.getYearPricing())
+      months_validity1.setText("Select validity (years)")
+    else
+      months_validity1.setText("Select validity (months)")
     //show applyed coupon code
     if (prefs.getApplyedCouponDetails() != null) {
       validCouponCode = prefs.getApplyedCouponDetails()
@@ -489,36 +493,42 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
 //            }
       } else if (bundles_in_cart) {
 //                if (default_validity_months < 12){
-        if (default_validity_months == 1) {
-          default_validity_months = default_validity_months + 2
+        if(prefs.getYearPricing()){
+          if(default_validity_months<5)
+            default_validity_months = default_validity_months + 1
+        }else {
+          if (default_validity_months == 1) {
+            default_validity_months = default_validity_months + 2
 //    }else if(default_validity_months % 12 == 0 && default_validity_months < 60){
-        } else if (default_validity_months >= 12 && default_validity_months < 60) {
-          if (default_validity_months % 12 == 0) {
-            default_validity_months = default_validity_months + 12
-          } else {
+          } else if (default_validity_months >= 12 && default_validity_months < 60) {
+            if (default_validity_months % 12 == 0) {
+              default_validity_months = default_validity_months + 12
+            } else {
 //            Log.v("validity_calculator", " "+ (default_validity_months - default_validity_months % 12)  + " "+default_validity_months + " "+ (default_validity_months % 12) )
-            default_validity_months = default_validity_months + ((12 - default_validity_months % 12))
-          }
-//        default_validity_months = default_validity_months+ 12
-        } else {
-//        if(default_validity_months < 60)
-          if (default_validity_months < 60 && default_validity_months < 12) {
-            if (default_validity_months % 3 == 0) {
-              default_validity_months = default_validity_months + 3
-            } else if (default_validity_months % 3 == 1) {
-              default_validity_months = default_validity_months + 2
-            } else if (default_validity_months % 3 == 2) {
-              default_validity_months = default_validity_months + 1
+              default_validity_months =
+                default_validity_months + ((12 - default_validity_months % 12))
             }
-          }
+//        default_validity_months = default_validity_months+ 12
+          } else {
+//        if(default_validity_months < 60)
+            if (default_validity_months < 60 && default_validity_months < 12) {
+              if (default_validity_months % 3 == 0) {
+                default_validity_months = default_validity_months + 3
+              } else if (default_validity_months % 3 == 1) {
+                default_validity_months = default_validity_months + 2
+              } else if (default_validity_months % 3 == 2) {
+                default_validity_months = default_validity_months + 1
+              }
+            }
 //          default_validity_months = default_validity_months+ 3
+          }
         }
 
 //            default_validity_months++
 //            months_validity.text = default_validity_months.toString() + " months"
         months_validity.setText(default_validity_months.toString())
         prefs.storeCartValidityMonths(default_validity_months.toString())
-        totalValidityDays = 30 * default_validity_months
+        totalValidityDays = if(prefs.getYearPricing()) (30 * default_validity_months) * 12 else 30 * default_validity_months
         prefs.storeMonthsValidity(totalValidityDays)
         prefs.storeCartOrderInfo(null)
 //                totalCalculation()
@@ -538,15 +548,19 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
         if (default_validity_months > 1) {
 //                    default_validity_months--
 //                    if(default_validity_months > 12 && default_validity_months % 12 == 0){
+        if(prefs.getYearPricing()){
+          if(default_validity_months>=1)
+            default_validity_months = default_validity_months - 1
+        }else {
           if (default_validity_months > 12) {
-//                        default_validity_months = default_validity_months - 12
+      //                        default_validity_months = default_validity_months - 12
             if (default_validity_months % 12 == 0) {
               default_validity_months = default_validity_months - 12
             } else {
               default_validity_months = default_validity_months - ((default_validity_months % 12))
             }
           } else {
-//                        default_validity_months = default_validity_months - 3
+      //                        default_validity_months = default_validity_months - 3
             if (default_validity_months <= 12) {
               if (default_validity_months % 3 == 0) {
                 default_validity_months = default_validity_months - 3
@@ -557,11 +571,12 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
               }
             }
           }
+        }
           if (default_validity_months < 1) {
             default_validity_months = 1
           }
 
-          totalValidityDays = 30 * default_validity_months
+          totalValidityDays = if(prefs.getYearPricing()) (30 * default_validity_months) * 12 else 30 * default_validity_months
           prefs.storeMonthsValidity(totalValidityDays)
           prefs.storeCartOrderInfo(null)
 //                    totalCalculation()
@@ -1840,6 +1855,7 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
           else
             total += item.price
         }
+
         cart_amount_title.text = "Cart total (" + cartList.size + " items)"
         cart_amount_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total)
         couponDiscountAmount = total * couponDisount / 100
@@ -1874,6 +1890,11 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
           else
             total += ((item.price / package_validity_months) * default_validity_months)
         }
+
+        if(prefs.getYearPricing()) {
+          total = total * 12
+        }
+
         cart_amount_title.text = "Cart total (" + cartList.size + " items)"
         cart_amount_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total)
         coupontotal = total
