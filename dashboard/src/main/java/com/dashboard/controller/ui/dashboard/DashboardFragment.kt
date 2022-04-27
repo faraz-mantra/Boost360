@@ -688,6 +688,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       }
       RecyclerViewActionType.PROMO_BANNER_CLICK.ordinal -> {
         val data = item as? DashboardMarketplaceBanner ?: return
+        WebEngageController.trackEvent(ADD_ON_MARKETPLACE_CARD_CLICK, CLICKED, NO_EVENT_VALUE)
         marketPlaceBannerClick(data)
       }
       RecyclerViewActionType.PROMO_BOOST_ACADEMY_CLICK.ordinal -> {
@@ -876,7 +877,19 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       QuickActionItem.QuickActionType.ADD_COURSE,
       QuickActionItem.QuickActionType.ADD_MENU,
       QuickActionItem.QuickActionType.ADD_ROOM_TYPE,
-      -> baseActivity.startAddServiceProduct(session)
+      ->{
+        val weEvent = if (type==QuickActionItem.QuickActionType.ADD_COURSE){
+          DASHBOARD_ADD_COURSE
+        }else if (type==QuickActionItem.QuickActionType.ADD_ROOM_TYPE){
+          DASHBOARD_ADD_ROOM
+        }else{
+          null
+        }
+        weEvent?.let {
+          WebEngageController.trackEvent(weEvent, CLICKED, NO_EVENT_VALUE)
+        }
+        baseActivity.startAddServiceProduct(session)
+      }
       QuickActionItem.QuickActionType.PLACE_APPOINTMENT -> baseActivity.startBookAppointmentConsult(session, false)
       QuickActionItem.QuickActionType.PLACE_CONSULT -> baseActivity.startBookAppointmentConsult(session, true)
       QuickActionItem.QuickActionType.ADD_PROJECT -> {
@@ -899,7 +912,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       QuickActionItem.QuickActionType.ADD_UPCOMING_BATCH -> baseActivity.startListBatches(session)
       QuickActionItem.QuickActionType.ADD_NEARBY_ATTRACTION -> baseActivity.startNearByView(session)
       QuickActionItem.QuickActionType.ADD_FACULTY_MEMBER -> baseActivity.startFacultyMember(session)
-      QuickActionItem.QuickActionType.PLACE_ORDER_BOOKING -> baseActivity.startOrderCreate(session)
+      QuickActionItem.QuickActionType.PLACE_ORDER_BOOKING ->{
+        WebEngageController.trackEvent(DASHBOARD_ADD_ORDER, CLICKED, NO_EVENT_VALUE)
+        baseActivity.startOrderCreate(session)
+      }
       QuickActionItem.QuickActionType.ADD_TABLE_BOOKING -> baseActivity.startBookTable(session,true)
       QuickActionItem.QuickActionType.ADD_STAFF_MEMBER->baseActivity.startAddStaff(session)
 
@@ -925,12 +941,17 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun clickRoiSummary(type: RoiSummaryData.RoiType) {
     when (type) {
       RoiSummaryData.RoiType.ENQUIRY -> baseActivity.startBusinessEnquiry(session)
-      RoiSummaryData.RoiType.TRACK_CALL -> baseActivity.startVmnCallCard(session)
+      RoiSummaryData.RoiType.TRACK_CALL ->{
+        WebEngageController.trackEvent(BUSINESS_REPORT_TRACKED_CALLS, CLICKED, NO_EVENT_VALUE)
+        baseActivity.startVmnCallCard(session)
+      }
       RoiSummaryData.RoiType.APT_ORDER -> baseActivity.startAptOrderSummary(session)
       RoiSummaryData.RoiType.CONSULTATION -> {
         showShortToast(getString(R.string.video_consultation_analytics_coming_soon))
       }
       RoiSummaryData.RoiType.APT_ORDER_WORTH -> {
+        WebEngageController.trackEvent(BUSINESS_REPORT_ORDER_APPOINTMENT_WORTH, CLICKED, NO_EVENT_VALUE)
+
 //        baseActivity.startRevenueSummary(session)
         showShortToast(getString(R.string.collection_analytics_coming_soon))
       }

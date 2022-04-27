@@ -219,8 +219,15 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       UsefulLinksItem.IconType.boost_academy -> showShortToast("Coming soon.")
       UsefulLinksItem.IconType.boost_keyboard -> baseActivity.startKeyboardActivity(session!!)
       UsefulLinksItem.IconType.my_bank_acccount -> baseActivity.startMyBankAccount(session!!)
-      UsefulLinksItem.IconType.refer_and_earn -> baseActivity.startReferralView(session!!)
-      UsefulLinksItem.IconType.ria_digital_assistant -> baseActivity.startHelpAndSupportActivity(session!!)
+      UsefulLinksItem.IconType.refer_and_earn ->{
+        WebEngageController.trackEvent(REFER_AND_EARN, CLICKED, NO_EVENT_VALUE)
+
+        baseActivity.startReferralView(session!!)
+      }
+      UsefulLinksItem.IconType.ria_digital_assistant ->{
+        WebEngageController.trackEvent(HELP_SUPPORT_PAGE, CLICKED, NO_EVENT_VALUE)
+        baseActivity.startHelpAndSupportActivity(session!!)
+      }
       UsefulLinksItem.IconType.training_and_certification -> trainingCertification()
       UsefulLinksItem.IconType.custom_website_domain -> baseActivity.startDomainDetail(session)
     }

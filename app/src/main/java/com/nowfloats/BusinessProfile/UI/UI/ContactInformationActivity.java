@@ -55,7 +55,9 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import static com.framework.webengageconstant.EventLabelKt.BUSINESS_DESCRIPTION;
+import static com.framework.webengageconstant.EventLabelKt.CLICK;
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
+import static com.framework.webengageconstant.EventNameKt.BUSINESS_CARD_EDIT_DETAILS_SAVE_INFO_CLICK;
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_CONTACT_ADDED;
 import static com.framework.webengageconstant.EventNameKt.DISPLAY_CONTACT_1;
 import static com.framework.webengageconstant.EventNameKt.DISPLAY_CONTACT_2;
@@ -65,6 +67,7 @@ import static com.framework.webengageconstant.EventNameKt.FACEBOOK_PAGE_URL;
 import static com.framework.webengageconstant.EventNameKt.OTHER_WEBSITE;
 import static com.framework.webengageconstant.EventNameKt.REGISTERED_CONTACT_NUMBER;
 import static com.framework.webengageconstant.EventNameKt.WHATSAPP_FOR_BUSINESS_NUMBER;
+import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
 import static com.framework.webengageconstant.EventValueKt.NULL;
 import static com.nowfloats.helper.ValidationUtilsKt.isEmailValid;
 import static com.nowfloats.helper.ValidationUtilsKt.isMobileNumberValid;
@@ -528,6 +531,7 @@ public class ContactInformationActivity extends BaseActivity {
 
 
     public void onSaveClick(View view) {
+        WebEngageController.trackEvent(BUSINESS_CARD_EDIT_DETAILS_SAVE_INFO_CLICK,CLICK,NO_EVENT_VALUE);
         if (!Methods.isOnline(this)) {
             return;
         }

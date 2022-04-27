@@ -373,6 +373,9 @@ class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointme
     viewModel?.postAppointment(clientId, orderInitiateRequest)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         WebEngageController.trackEvent(if (isVideoConsult) CONSULATION_CREATE else APPOINTMENT_CREATE, ADDED, TO_BE_ADDED)
+        if (isVideoConsult){
+          WebEngageController.trackEvent(VIDEO_CONSULTATION_CREATED, ADDED, NO_EVENT_VALUE)
+        }
         onInClinicAptConsultAddedOrUpdated(true)
         startSuccessScreen((it as? OrderInitiateResponse)?.data)
       } else {

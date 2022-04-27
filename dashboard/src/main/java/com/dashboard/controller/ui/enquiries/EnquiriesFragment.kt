@@ -188,14 +188,20 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
         session,
         isOrder = true
       )
-      CustomerActionItem.IconType.in_clinic_appointments -> baseActivity.startOrderAptConsultList(
-        session,
-        isConsult = false
-      )
-      CustomerActionItem.IconType.video_consultations -> baseActivity.startOrderAptConsultList(
-        session,
-        isConsult = true
-      )
+      CustomerActionItem.IconType.in_clinic_appointments ->{
+        WebEngageController.trackEvent(APPOINTMENT_PAGE, CLICKED, NO_EVENT_VALUE)
+        baseActivity.startOrderAptConsultList(
+          session,
+          isConsult = false
+        )
+      }
+      CustomerActionItem.IconType.video_consultations -> {
+        WebEngageController.trackEvent(CONSULTATION_PAGE, CLICKED, NO_EVENT_VALUE)
+        baseActivity.startOrderAptConsultList(
+          session,
+          isConsult = true
+        )
+      }
       CustomerActionItem.IconType.patient_customer_calls -> baseActivity.startVmnCallCard(session)
       CustomerActionItem.IconType.patient_customer_messages -> baseActivity.startBusinessEnquiry(
         session

@@ -31,8 +31,7 @@ import com.framework.utils.ContentSharing
 import com.framework.utils.changeLayersColor
 import com.framework.utils.fromHtml
 import com.framework.views.customViews.CustomImageView
-import com.framework.webengageconstant.DASHBOARD_WEBSITE_PAGE
-import com.framework.webengageconstant.PAGE_VIEW
+import com.framework.webengageconstant.*
 import com.google.android.material.tabs.TabLayout
 import java.util.*
 
@@ -64,6 +63,8 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       binding?.websiteThemeCustomization, binding?.businessTiming
     )
     WebEngageController.trackEvent(DASHBOARD_WEBSITE_PAGE, PAGE_VIEW, session?.fpTag)
+    WebEngageController.trackEvent(WEBSITE_PAGE_LOADED, PAGE_VIEW, NO_EVENT_VALUE)
+
     setupViewPager()
     this.websiteLink = fromHtml("<u>${session?.getDomainName()}</u>").toString()
     businessName = session?.fPName!!
@@ -207,7 +208,10 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     super.onClick(v)
     when (v) {
       binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
-      binding?.btnProfileLogo -> baseActivity.startBusinessLogo(session)
+      binding?.btnProfileLogo ->{
+        WebEngageController.trackEvent(BUSINESS_PROFILE, CLICKED, NO_EVENT_VALUE)
+        baseActivity.startBusinessLogo(session)
+      }
       binding?.editProfile -> baseActivity.startBusinessProfileDetailEdit(session)
       binding?.websiteThemeCustomization -> baseActivity.startWebsiteNav(session)
 //      binding?.contactDetail -> baseActivity.startBusinessInfoEmail(session)

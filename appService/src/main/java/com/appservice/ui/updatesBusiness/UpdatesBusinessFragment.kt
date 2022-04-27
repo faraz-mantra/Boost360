@@ -41,7 +41,9 @@ import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.EVENT_NAME_UPDATE_PAGE
+import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PAGE_VIEW
+import com.framework.webengageconstant.UPDATE
 import java.util.*
 
 class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener,AppOnZeroCaseClicked {
@@ -78,6 +80,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(EVENT_NAME_UPDATE_PAGE, PAGE_VIEW, sessionLocal.fpTag)
+    WebEngageController.trackEvent(UPDATE, PAGE_VIEW, NO_EVENT_VALUE)
     showProgress()
     scrollPagingListener()
     listUpdateApi(offSet = offSet)
