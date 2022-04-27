@@ -113,7 +113,7 @@ class MarketPlaceOfferFragment : BaseFragment("MarketPlaceMarketPlaceOfferFragme
         extra?.replace("S2to_date", getConvertedExpiryDateFormat(marketOffersData!!.expiry_date))
       Log.v("marketOffersDataValue", " " + extra)
 //            var extraInfoTermsNCond = marketOffersData?.extra_information?.trim()?.split("Terms and Conditions")?.toTypedArray()
-      var extraInfoTermsNCond = extra.trim()?.split("Terms and Conditions")?.toTypedArray()
+      var extraInfoTermsNCond = extra?.trim()?.split("Terms and Conditions")?.toTypedArray()
 
       Log.v("extraInfoTermsNCond", " " + extraInfoTermsNCond?.get(1))
       var termsContent = extraInfoTermsNCond?.get(1)?.split("s2")?.toTypedArray()

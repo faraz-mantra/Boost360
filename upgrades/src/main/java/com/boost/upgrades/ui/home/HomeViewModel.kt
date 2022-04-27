@@ -30,7 +30,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var allBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
     var allBackBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
     var allFeatureDealsResult: MutableLiveData<List<FeatureDeals>> = MutableLiveData()
-    var _totalActiveAddonsCount: MutableLiveData<Int> = MutableLiveData()
+//    var _totalActiveAddonsCount: MutableLiveData<Int> = MutableLiveData()
     var allVideoDetails: MutableLiveData<List<YoutubeVideoModel>> = MutableLiveData()
     var expertConnectDetails: MutableLiveData<ExpertConnect> = MutableLiveData()
     var promoBanners: MutableLiveData<List<PromoBanners>> = MutableLiveData()
@@ -101,9 +101,9 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         return feedbackLink
     }
 
-    fun getTotalActiveWidgetCount(): LiveData<Int> {
-        return _totalActiveAddonsCount
-    }
+//    fun getTotalActiveWidgetCount(): LiveData<Int> {
+//        return _totalActiveAddonsCount
+//    }
 
     fun cartResult(): LiveData<List<CartModel>> {
         return cartResult
@@ -232,34 +232,34 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                                         allAvailableFeaturesDownloadResult.postValue(it)
                                                                         updatesLoader.postValue(false)
 
-                                                                        compositeDisposable.add(
-                                                                                ApiService.GetFloatingPointWebWidgets(auth,fpid, clientId)
-                                                                                        .subscribeOn(Schedulers.io())
-                                                                                        .observeOn(AndroidSchedulers.mainThread())
-                                                                                        .subscribe(
-                                                                                                {
-                                                                                                    compositeDisposable.add(
-                                                                                                            AppDatabase.getInstance(getApplication())!!
-                                                                                                                    .featuresDao()
-                                                                                                                    .getallActivefeatureCount(it.Result)
-                                                                                                                    .subscribeOn(Schedulers.io())
-                                                                                                                    .observeOn(AndroidSchedulers.mainThread())
-                                                                                                                    .doOnSuccess {
-                                                                                                                        _totalActiveAddonsCount.postValue(it)
-                                                                                                                    }
-                                                                                                                    .doOnError {
-                                                                                                                        updatesError.postValue(it.message)
-                                                                                                                    }
-                                                                                                                    .subscribe()
-                                                                                                    )
-                                                                                                },
-                                                                                                {
-                                                                                                    updatesError.postValue(it.message)
-                                                                                                    updatesLoader.postValue(false)
-                                                                                                }
-                                                                                        )
-
-                                                                        )
+//                                                                        compositeDisposable.add(
+//                                                                                ApiService.GetFloatingPointWebWidgets(auth,fpid, clientId)
+//                                                                                        .subscribeOn(Schedulers.io())
+//                                                                                        .observeOn(AndroidSchedulers.mainThread())
+//                                                                                        .subscribe(
+//                                                                                                {
+//                                                                                                    compositeDisposable.add(
+//                                                                                                            AppDatabase.getInstance(getApplication())!!
+//                                                                                                                    .featuresDao()
+//                                                                                                                    .getallActivefeatureCount(it.Result)
+//                                                                                                                    .subscribeOn(Schedulers.io())
+//                                                                                                                    .observeOn(AndroidSchedulers.mainThread())
+//                                                                                                                    .doOnSuccess {
+//                                                                                                                        _totalActiveAddonsCount.postValue(it)
+//                                                                                                                    }
+//                                                                                                                    .doOnError {
+//                                                                                                                        updatesError.postValue(it.message)
+//                                                                                                                    }
+//                                                                                                                    .subscribe()
+//                                                                                                    )
+//                                                                                                },
+//                                                                                                {
+//                                                                                                    updatesError.postValue(it.message)
+//                                                                                                    updatesLoader.postValue(false)
+//                                                                                                }
+//                                                                                        )
+//
+//                                                                        )
 
                                                                     }
                                                                     .doOnError {

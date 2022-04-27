@@ -15,6 +15,7 @@ import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.utils.Constants
+import com.boost.upgrades.utils.SharedPrefs
 import com.bumptech.glide.Glide
 import java.text.NumberFormat
 import java.util.*
@@ -48,7 +49,7 @@ class UpgradeAdapter(
 
   override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
     val cryptocurrencyItem = upgradeList[position]
-    holder.upgradeListItem(cryptocurrencyItem)
+    holder.upgradeListItem(cryptocurrencyItem, activity)
 
     holder.itemView.setOnClickListener {
       val details = DetailsFragment.newInstance()
@@ -79,12 +80,15 @@ class UpgradeAdapter(
     private var context: Context = itemView.context
 
 
-    fun upgradeListItem(updateModel: FeaturesModel) {
+    fun upgradeListItem(updateModel: FeaturesModel, activity: UpgradeActivity) {
+      val prefs = SharedPrefs(activity)
       val discount = 100 - updateModel.discount_percent
-      val price = (discount * updateModel.price) / 100
+      val price = if(prefs.getYearPricing()) ((discount * updateModel.price) / 100) * 12 else (discount * updateModel.price) / 100
       upgradeDetails.text = updateModel.name
       upgradePrice.text =
-        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
+        if(prefs.getYearPricing())
+        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/year"
+      else "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
       if (updateModel.primary_image != null) {
         Glide.with(context).load(updateModel.primary_image).into(image)
       }
