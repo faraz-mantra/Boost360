@@ -104,8 +104,9 @@ class NetBankingPopUpFragement : DialogFragment(), NetBankingListener {
           Log.d("getPayretMap", " " + list.size)
           list.add(SingleNetBankData(it.key, it.value, null))
         }
-
       }
+//      Collections.sort(list, kotlin.Comparator.comparing(SingleNetBankData::bankName))
+      Collections.sort(list, { v1, v2 -> v1.bankName.compareTo(v2.bankName) })
       netBankingPopUpAdaptor.addupdates(list)
     })
   }
