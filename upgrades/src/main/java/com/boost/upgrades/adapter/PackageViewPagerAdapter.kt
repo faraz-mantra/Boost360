@@ -132,7 +132,10 @@ class PackageViewPagerAdapter(
                                         holder.bundlePriceLabel.visibility = View.GONE
                                         holder.bundleDiscount.setText(bundles.overall_discount_percent.toString() + "%")
                                     } else {
-                                        offeredBundlePrice = originalBundlePrice
+                                        if(prefs.getYearPricing())
+                                            offeredBundlePrice = originalBundlePrice * 12
+                                        else
+                                            offeredBundlePrice = originalBundlePrice
                                         holder.bundleDiscount.visibility = View.GONE
                                         holder.bundlePriceLabel.visibility = View.VISIBLE
                                     }
