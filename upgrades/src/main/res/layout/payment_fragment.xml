@@ -701,6 +701,81 @@
             app:layout_constraintTop_toBottomOf="@id/payment_view_dummy">
 
             <LinearLayout
+                android:id="@+id/hdfc_bank_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+              <ImageView
+                  android:id="@+id/hdfc_bank_image"
+                  android:layout_width="@dimen/_35sdp"
+                  android:layout_height="@dimen/_35sdp"
+                  android:background="@drawable/backgroundwhite"
+                  android:padding="8dp"
+                  android:scaleType="fitCenter" />
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:fontFamily="@font/open_sans"
+                  android:text="HDFC"
+                  android:textColor="@color/common_bold_text_color"
+                  android:textSize="@dimen/_9sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/icici_bank_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+              <ImageView
+                  android:id="@+id/icici_bank_image"
+                  android:layout_width="@dimen/_35sdp"
+                  android:layout_height="@dimen/_35sdp"
+                  android:background="@drawable/backgroundwhite"
+                  android:padding="8dp"
+                  android:scaleType="fitCenter" />
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:fontFamily="@font/open_sans"
+                  android:text="ICICI"
+                  android:textColor="@color/common_bold_text_color"
+                  android:textSize="@dimen/_9sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sbi_bank_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+              <ImageView
+                  android:id="@+id/sbi_bank_image"
+                  android:layout_width="@dimen/_35sdp"
+                  android:layout_height="@dimen/_35sdp"
+                  android:background="@drawable/backgroundwhite"
+                  android:padding="8dp"
+                  android:scaleType="fitCenter" />
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:fontFamily="@font/open_sans"
+                  android:text="SBI"
+                  android:textColor="@color/common_bold_text_color"
+                  android:textSize="@dimen/_9sdp" />
+            </LinearLayout>
+
+            <LinearLayout
               android:id="@+id/axis_bank_layout"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
@@ -726,56 +801,6 @@
             </LinearLayout>
 
             <LinearLayout
-              android:id="@+id/icici_bank_layout"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:gravity="center"
-              android:orientation="vertical">
-
-              <ImageView
-                android:id="@+id/icici_bank_image"
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:background="@drawable/backgroundwhite"
-                android:padding="8dp"
-                android:scaleType="fitCenter" />
-
-              <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans"
-                android:text="ICICI"
-                android:textColor="@color/common_bold_text_color"
-                android:textSize="@dimen/_9sdp" />
-            </LinearLayout>
-
-            <LinearLayout
-              android:id="@+id/hdfc_bank_layout"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:gravity="center"
-              android:orientation="vertical">
-
-              <ImageView
-                android:id="@+id/hdfc_bank_image"
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:background="@drawable/backgroundwhite"
-                android:padding="8dp"
-                android:scaleType="fitCenter" />
-
-              <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans"
-                android:text="HDFC"
-                android:textColor="@color/common_bold_text_color"
-                android:textSize="@dimen/_9sdp" />
-            </LinearLayout>
-
-            <LinearLayout
               android:id="@+id/citi_bank_layout"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
@@ -796,31 +821,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
                 android:text="City Union"
-                android:textColor="@color/common_bold_text_color"
-                android:textSize="@dimen/_9sdp" />
-            </LinearLayout>
-
-            <LinearLayout
-              android:id="@+id/sbi_bank_layout"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:gravity="center"
-              android:orientation="vertical">
-
-              <ImageView
-                android:id="@+id/sbi_bank_image"
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:background="@drawable/backgroundwhite"
-                android:padding="8dp"
-                android:scaleType="fitCenter" />
-
-              <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans"
-                android:text="SBI"
                 android:textColor="@color/common_bold_text_color"
                 android:textSize="@dimen/_9sdp" />
             </LinearLayout>
