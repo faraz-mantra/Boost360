@@ -679,7 +679,7 @@ class AppRequestZeroCaseBuilder(
 
         return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.engage_your_potential_customers))
           .setDescription(context.getString(R.string.you_can_create_customized_pages_that_highlight_specific_products_and_services_upload_blog_posts_display_pictures_and_videos_to_keep_visitors_engaged))
-          .setIcon(R.drawable.ic_phoneincoming)
+          .setIcon(R.drawable.ic_custom_pages)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
           .setListener(onZeroCaseClicked)
           .isPremium(isPremium)
@@ -827,7 +827,7 @@ class AppRequestZeroCaseBuilder(
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
-              primaryButtonIconLeft = R.drawable.ic_lockkey,
+              primaryButtonIconLeft = R.drawable.ic_create_white,
               primaryButtonTitle = context.getString(R.string.add_a_room),
               primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.ic_booking_setup,

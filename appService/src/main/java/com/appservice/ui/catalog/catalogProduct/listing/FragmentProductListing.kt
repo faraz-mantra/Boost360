@@ -174,7 +174,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     if (isFirstLoad) {
       finalList.clear()
       if (resultProduct.isNullOrEmpty().not()) {
-        setEmptyView(View.VISIBLE)
+        setEmptyView(View.GONE)
         setListProduct(resultProduct, totalCount)
       } else setEmptyView(View.VISIBLE)
     } else if (resultProduct.isNullOrEmpty().not()) {
@@ -192,7 +192,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     isLastPageD = (finalList.size == TOTAL_ELEMENTS)
     setAdapterNotify()
 
-    setToolbarTitle("${sessionLocal.getTitle()} ${if (TOTAL_ELEMENTS > 0) "(${TOTAL_ELEMENTS})" else ""}".capitalizeUtil())
+    setToolbarTitle("${sessionLocal.getListingTitle()} ${if (TOTAL_ELEMENTS > 0) "(${TOTAL_ELEMENTS})" else ""}".capitalizeUtil())
   }
 
 
@@ -305,9 +305,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
 
   override fun onResume() {
     super.onResume()
-    var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
-    if (fpDetails.isNullOrEmpty()) fpDetails = "Products"
-    setToolbarTitle("$fpDetails ${if (TOTAL_ELEMENTS > 0) "(${TOTAL_ELEMENTS})" else ""}".capitalizeUtil())
+    setToolbarTitle("${sessionLocal.getListingTitle()} ${if (TOTAL_ELEMENTS > 0) "(${TOTAL_ELEMENTS})" else ""}".capitalizeUtil())
   }
 
   override fun showProgress(title: String?, cancelable: Boolean?) {
@@ -383,7 +381,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
   }
 }
 
-fun UserSessionManager.getTitle(): String? {
+fun UserSessionManager.getListingTitle(): String? {
   var fpDetails = getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
   if (fpDetails.isNullOrEmpty()) fpDetails = getSingleProductTaxonomyFromServiceCode(fP_AppExperienceCode)
   return fpDetails
