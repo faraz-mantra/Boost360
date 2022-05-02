@@ -1142,4 +1142,5 @@
   <string name="the_total_number_of_clicks_on_your_contact_number_displayed_on_website">The total number of clicks on your contact number displayed on website</string>
   <string name="total_calls">Total Calls</string>
   <string name="missed_calls">Missed Calls</string>
+    <string name="food_menu">Food Menu</string>
 </resources>

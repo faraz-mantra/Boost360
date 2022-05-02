@@ -17,6 +17,7 @@ import com.appservice.ui.catalog.catalogProduct.addProduct.information.ProductIn
 import com.appservice.ui.catalog.catalogProduct.listing.FragmentProductCategory
 import com.appservice.ui.catalog.catalogProduct.listing.FragmentProductHome
 import com.appservice.ui.catalog.catalogProduct.listing.FragmentProductListing
+import com.appservice.ui.catalog.catalogProduct.listing.getTitle
 import com.appservice.ui.catalog.catalogService.ServiceCatalogHomeFragment
 import com.appservice.ui.catalog.catalogService.addService.ServiceDetailFragment
 import com.appservice.ui.catalog.catalogService.addService.information.ServiceInformationFragment
@@ -153,7 +154,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.ECOMMERCE_ADD_ACCOUNT_DETAILS -> getString(R.string.my_bank_account_)
       FragmentType.EDIT_ACCOUNT_DETAILS -> getString(R.string.my_bank_account_)
       FragmentType.SERVICE_CATALOG_HOME_FRAGMENT -> getString(R.string.catalog)
-      FragmentType.FRAGMENT_PRODUCT_LISTING -> getString(R.string.catalog)
+      FragmentType.FRAGMENT_PRODUCT_LISTING -> session.getTitle()
       FragmentType.FRAGMENT_PRODUCT_HOME -> getString(R.string.catalog)
       FragmentType.FRAGMENT_PRODUCT_CATEGORY -> getString(R.string.catalog)
       FragmentType.ECOMMERCE_DELIVERY_CONFIG -> getString(R.string.delivery_setup)

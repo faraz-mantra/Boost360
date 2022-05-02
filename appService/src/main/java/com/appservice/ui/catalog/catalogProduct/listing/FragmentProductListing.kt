@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
+import com.appservice.base.getSingleProductTaxonomyFromServiceCode
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.constant.RecyclerViewActionType
@@ -40,6 +41,8 @@ import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.ContentSharing.Companion.shareProduct
+import com.framework.utils.isHotelProfile
+import com.framework.utils.isRestaurantProfile
 import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
@@ -111,8 +114,19 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     layoutManagerN?.let { scrollPagingListener(it) }
     setOnClickListener(binding?.cbAddProduct)
     getProductListing(isFirst = true, skipBy = skip)
-    this.fragmentZeroCase = AppRequestZeroCaseBuilder(AppZeroCases.PRODUCT, this, baseActivity).getRequest().build()
+    this.fragmentZeroCase = AppRequestZeroCaseBuilder(getZerocaseType(), this, baseActivity).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, fragmentZeroCase, false)
+
+  }
+
+  fun getZerocaseType(): AppZeroCases {
+    if(isHotelProfile(sessionLocal.fP_AppExperienceCode)){
+      return AppZeroCases.ROOMS_LISTING
+    }else if(isRestaurantProfile(sessionLocal.fP_AppExperienceCode)){
+      return AppZeroCases.RESTAURANT_SERVICES
+    }else{
+      return AppZeroCases.PRODUCT
+    }
   }
 
 
@@ -160,7 +174,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     if (isFirstLoad) {
       finalList.clear()
       if (resultProduct.isNullOrEmpty().not()) {
-        setEmptyView(View.GONE)
+        setEmptyView(View.VISIBLE)
         setListProduct(resultProduct, totalCount)
       } else setEmptyView(View.VISIBLE)
     } else if (resultProduct.isNullOrEmpty().not()) {
@@ -177,10 +191,11 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     TOTAL_ELEMENTS = totalCount ?: 0
     isLastPageD = (finalList.size == TOTAL_ELEMENTS)
     setAdapterNotify()
-    var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
-    if (fpDetails.isNullOrEmpty()) fpDetails = "Products"
-    setToolbarTitle("$fpDetails ${if (TOTAL_ELEMENTS > 0) "(${TOTAL_ELEMENTS})" else ""}".capitalizeUtil())
+
+    setToolbarTitle("${sessionLocal.getTitle()} ${if (TOTAL_ELEMENTS > 0) "(${TOTAL_ELEMENTS})" else ""}".capitalizeUtil())
   }
+
+
 
 
   private fun setAdapterNotify() {
@@ -366,4 +381,10 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
 
   override fun appOnBackPressed() {
   }
+}
+
+fun UserSessionManager.getTitle(): String? {
+  var fpDetails = getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
+  if (fpDetails.isNullOrEmpty()) fpDetails = getSingleProductTaxonomyFromServiceCode(fP_AppExperienceCode)
+  return fpDetails
 }

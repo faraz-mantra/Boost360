@@ -34,7 +34,7 @@
   <string name="lets_add_services_to_your_catalogue">Let\'s add services to your catalogue.</string>
   <string name="your_can_easily_add_detailed_information_about_your_services">You can easily add detailed information about your services and their prices to enable online appointments.</string>
   <string name="services">Services</string>
-  <string name="appointment_setup">Enable online appointments</string>
+  <string name="appointment_setup">Appointment setup</string>
   <string name="watch_how_it_works">Watch how it works</string>
   <string name="add_a_service">Add a service</string>
   <string name="tool_bar_customer_messages">Customer Messages</string>
@@ -204,5 +204,12 @@
   <string name="upload_mouth_watering_pictures_of_your_menu_items_to_encourage_website_visitors_to_place_an_order">Upload mouth-watering pictures of your menu items to encourage website visitors to place an order.</string>
   <string name="effortlessly_promote_your_business">Effortlessly promote your business!</string>
   <string name="use_boost_s_business_keyboard_to_instantly_share_your_latest_products_services_and_updates_with_customers_through_whatsapp_hike_telegram_messenger_and_other_popular_messaging_apps">Use Boost’s Business Keyboard to instantly share your latest products, services, and updates with customers through WhatsApp, Hike, Telegram, Messenger, and other popular messaging apps.</string>
+    <string name="rooms_listing">Rooms Listing</string>
+  <string name="doctor_profile">Doctor Profile</string>
+  <string name="client_logos">Client Logos</string>
+  <string name="website_faqs">Website FAQs</string>
+  <string name="restaurant_story">Restaurant Story</string>
+  <string name="menu_pictures">Menu Pictures</string>
+  <string name="business_keyboard">Business Keyboard</string>
 
 </resources>
