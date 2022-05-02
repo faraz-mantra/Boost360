@@ -34,6 +34,7 @@ import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.freeaddons.FreeAddonsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.utils.*
+import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -63,8 +64,8 @@ class ComparePackageFragment : BaseFragment("MarketPlaceComparePackageFragment")
     var cartList: List<CartModel>? = null
 
     var badgeNumber = 0
-    var offeredBundlePrice = 0
-    var originalBundlePrice = 0
+    var offeredBundlePrice = 0.0
+    var originalBundlePrice = 0.0
     var featureCount = 0
     var cartCount = 0
 
@@ -492,22 +493,22 @@ class ComparePackageFragment : BaseFragment("MarketPlaceComparePackageFragment")
                                 .subscribe(
                                         {
 //                                            featuresList = it
-                                            var bundleMonthlyMRP = 0
+                                            var bundleMonthlyMRP = 0.0
                                             val minMonth:Int = if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
 
                                             for (singleItem in it) {
                                                 for (item in item!!.included_features) {
                                                     if (singleItem.feature_code == item.feature_code) {
-                                                        bundleMonthlyMRP += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt()
+                                                        bundleMonthlyMRP += RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),2)
                                                     }
                                                 }
                                             }
 
-                                            offeredBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
-                                            originalBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
+                                            offeredBundlePrice = (bundleMonthlyMRP * minMonth)
+                                            originalBundlePrice = (bundleMonthlyMRP * minMonth)
 
                                             if(item!!.overall_discount_percent > 0)
-                                                offeredBundlePrice = originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent/100)
+                                                offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent/100),2)
                                             else
                                                 offeredBundlePrice = originalBundlePrice
 
@@ -520,8 +521,8 @@ class ComparePackageFragment : BaseFragment("MarketPlaceComparePackageFragment")
                                                     item!!.name,
                                                     "",
                                                     item!!.primary_image!!.url,
-                                                    offeredBundlePrice.toDouble(),
-                                                    originalBundlePrice.toDouble(),
+                                                    offeredBundlePrice,
+                                                    originalBundlePrice,
                                                     item!!.overall_discount_percent,
                                                     1,
                                                     if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,

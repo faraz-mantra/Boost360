@@ -38,4 +38,13 @@ object RootUtil {
       process?.destroy()
     }
   }
+
+  fun round(value: Double, places: Int): Double {
+    var value = value
+    require(places >= 0)
+    val factor = Math.pow(10.0, places.toDouble()).toLong()
+    value = value * factor
+    val tmp = Math.round(value)
+    return tmp.toDouble() / factor
+  }
 }
