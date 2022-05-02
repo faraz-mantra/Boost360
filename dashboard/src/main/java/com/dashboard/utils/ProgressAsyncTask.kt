@@ -16,7 +16,6 @@ class ProgressAsyncTask(activity: AppCompatActivity) : AsyncTask<Void?, Void?, V
     progressDialog.setMessage("Loading. Please wait...")
     progressDialog.setCancelable(false)
     progressDialog.show()
-    progressDialog.window?.setGravity(Gravity.CENTER)
   }
 
   override fun doInBackground(vararg params: Void?): Void? {
