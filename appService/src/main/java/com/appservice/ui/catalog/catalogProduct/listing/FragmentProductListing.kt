@@ -161,13 +161,13 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
 
   private fun getProductListing(isFirst: Boolean = false, skipBy: Int? = null) {
     if (isFirst) showProgress()
-    viewModel?.getProductListingCount(fpTag, clientId, skipBy)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getProductListingCount(fpTag, clientId, skipBy)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         val data = it as? CatalogProductCountResponse
         setProductDataItems(data?.Products, data?.TotalCount, isFirst)
       } else if (isFirst) showShortToast(it.message())
       if (isFirst) hideProgress()
-    })
+    }
   }
 
   private fun setProductDataItems(resultProduct: ArrayList<CatalogProduct>?, totalCount: Int?, isFirstLoad: Boolean) {

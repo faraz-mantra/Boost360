@@ -3,7 +3,6 @@ package com.nowfloats.Restaurants.BookATable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -17,11 +16,12 @@ class BookATableActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_book_a_table)
-    initView()
+    val isAdd = intent.extras?.getBoolean("is_add") ?: false
+    initView(isAdd)
   }
 
-  fun initView() {
-    addFragment(BookATableFragment.newInstance(), "BOOK_A_TABLE_FRAGMENT")
+  fun initView(isAdd: Boolean) {
+    addFragment(BookATableFragment.newInstance(Bundle().apply { putBoolean("is_add", isAdd) }), "BOOK_A_TABLE_FRAGMENT")
 
     supportFragmentManager.addOnBackStackChangedListener {
       val currentFragment = supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
@@ -30,7 +30,6 @@ class BookATableActivity : AppCompatActivity() {
         Log.e("Add tag", ">>>$tag")
         tellFragments()
       } else finish()
-
     }
   }
 
@@ -83,5 +82,4 @@ class BookATableActivity : AppCompatActivity() {
         f.onBackPressed()
     }
   }
-
 }

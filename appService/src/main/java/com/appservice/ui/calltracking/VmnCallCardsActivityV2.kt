@@ -79,12 +79,9 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
     appFragmentZeroCase = AppRequestZeroCaseBuilder(AppZeroCases.BUSINESS_CALLS, this, this, isPremium).getRequest().build()
     addFragment(binding?.childContainer?.id, appFragmentZeroCase, false)
     WebEngageController.trackEvent(BUSINESS_CALLS, EVENT_LABEL_BUSINESS_CALLS, null)
-
     val phone = addPlus91(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER)) ?: ""
     binding?.tvTrackedCall?.text = makeSectionOfTextBold(getString(R.string.tracked_calls) + " " + phone, phone, R.color.colorPrimary)
-//    binding?.tvTrackedCall?.text = spanColor(getString(R.string.tracked_calls) + " " + phone, R.color.colorPrimary, phone ?: "")
     setOnClickListener(binding?.seeMoreLess, binding?.websiteHelper, binding?.phoneHelper)
-    //tracking calls
     showTrackedCalls()
     adapterCallView()
     websiteCallCount()
@@ -151,7 +148,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
   private val isPremium: Boolean
     get() {
       val keys = session.getStoreWidgets()
-      return keys != null && keys.contains(PremiumCode.CALLTRACKER.value).not()
+      return keys != null && keys.contains(PremiumCode.CALLTRACKER.value)
     }
 
   private fun showTrackedCalls() {
@@ -200,7 +197,6 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
       if (it.isSuccess() && vmnCallModels != null) {
         stopApiCall = false
         val size = vmnCallModels.size
-        Log.v("getCalls", " $size")
         stopApiCall = size < 100
         if (size <= 0 && offset == 0) {
           emptyView()
@@ -397,7 +393,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
-      com.appservice.constant.RecyclerViewActionType.VMN_PLAY_CLICKED.ordinal -> {
+      RecyclerViewActionType.VMN_PLAY_CLICKED.ordinal -> {
         if ((ExoPlayerUtils.player.isLoading || ExoPlayerUtils.player.isPlaying) && position != ExoPlayerUtils.player.currentMediaItem?.mediaId?.toInt()) {
           ExoPlayerUtils.player.pause()
         }

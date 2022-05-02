@@ -19,6 +19,7 @@ import com.appservice.ui.catalog.setFragmentType
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
 import com.appservice.ui.staffs.ui.startStaffFragmentActivity
+import com.appservice.ui.testimonial.startTestimonialFragmentActivity
 import com.appservice.ui.updatesBusiness.startUpdateFragmentActivity
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
@@ -416,16 +417,14 @@ fun AppCompatActivity.startProductGallery(session: UserSessionManager?) {
 }
 
 fun AppCompatActivity.startTestimonial(session: UserSessionManager?, isAdd: Boolean = false) {
-  try {
-    val text = if (isAdd) ADD_TESTIMONIAL_PAGE else TESTIMONIAL_PAGE
-    WebEngageController.trackEvent(text, CLICK, TO_BE_ADDED)
-    val webIntent = Intent(this, Class.forName("com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity"))
-    webIntent.putExtra("IS_ADD", isAdd)
-    startActivity(webIntent)
-    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-  } catch (e: ClassNotFoundException) {
-    e.printStackTrace()
-  }
+  val text = if (isAdd) ADD_TESTIMONIAL_PAGE else TESTIMONIAL_PAGE
+  WebEngageController.trackEvent(text, CLICK, TO_BE_ADDED)
+//    val webIntent = Intent(this, Class.forName("com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity"))
+//    webIntent.putExtra("IS_ADD", isAdd)
+//    startActivity(webIntent)
+//    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  val type = if (isAdd) com.appservice.constant.FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT else com.appservice.constant.FragmentType.TESTIMONIAL_LIST_FRAGMENT
+  this.startTestimonialFragmentActivity(type)
 }
 
 fun AppCompatActivity.startCustomPage(session: UserSessionManager?, isAdd: Boolean = false) {
@@ -561,10 +560,11 @@ fun Fragment.startFragmentActivity(type: com.appservice.constant.FragmentType, b
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
-fun AppCompatActivity.startBookTable(session: UserSessionManager?) {
+fun AppCompatActivity.startBookTable(session: UserSessionManager?, isAdd: Boolean = false) {
   try {
     WebEngageController.trackEvent(BOOK_TABLE_PAGE, CLICK, TO_BE_ADDED)
     val webIntent = Intent(this, Class.forName("com.nowfloats.Restaurants.BookATable.BookATableActivity"))
+    webIntent.putExtra("is_add", isAdd)
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
@@ -575,9 +575,8 @@ fun AppCompatActivity.startBookTable(session: UserSessionManager?) {
 fun AppCompatActivity.startPreSignUp(session: UserSessionManager?, isClearTask: Boolean = false) {
   try {
     WebEngageController.trackEvent(PRE_SIGN_UP_PAGE, START_VIEW, TO_BE_ADDED)
-    val webIntent: Intent = if(featureNewOnBoardingFlowEnable()) {
-      Intent(this, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity")).
-              putExtra("FRAGMENT_TYPE","INTRO_SLIDE_SHOW_FRAGMENT")
+    val webIntent: Intent = if (featureNewOnBoardingFlowEnable()) {
+      Intent(this, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity")).putExtra("FRAGMENT_TYPE", "INTRO_SLIDE_SHOW_FRAGMENT")
     } else {
       Intent(this, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
     }
@@ -863,8 +862,7 @@ fun UserSessionManager.getBundleDataKyc(): Bundle {
   session.fpEmail = fPEmail
   session.fpNumber = fPPrimaryContactNumber
   session.isSelfBrandedAdd = isSelfBrandedKycAdd ?: false
-  session.isPaymentGateway = getStoreWidgets()?.contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name)
-    ?: false
+  session.isPaymentGateway = getStoreWidgets()?.contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name) ?: false
   val bundle = Bundle()
   bundle.putSerializable(com.appservice.constant.IntentConstant.SESSION_DATA.name, session)
   return bundle

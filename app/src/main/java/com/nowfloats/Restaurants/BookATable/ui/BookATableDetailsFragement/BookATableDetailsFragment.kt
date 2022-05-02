@@ -71,7 +71,7 @@ class BookATableDetailsFragment : Fragment() {
       }
 
       override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        totalPeople = countList.get(position)
+        totalPeople = countList[position]
       }
 
     }
@@ -90,7 +90,7 @@ class BookATableDetailsFragment : Fragment() {
           .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
         myCalendar.get(Calendar.DAY_OF_MONTH)
       )
-      datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000)
+      datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
       datePickerDialog.show()
     }
 
@@ -124,7 +124,7 @@ class BookATableDetailsFragment : Fragment() {
       }
     }
 
-    ScreenType = arguments!!.getString("ScreenState")!!
+    ScreenType = arguments?.getString("ScreenState")?:""
     if (ScreenType != null && ScreenType.equals("edit")) {
       displayData()
     }
@@ -133,13 +133,13 @@ class BookATableDetailsFragment : Fragment() {
   }
 
   fun displayData() {
-    existingItemData = Gson().fromJson(arguments!!.getString("data"), Data::class.java)
+    existingItemData = Gson().fromJson(arguments?.getString("data"), Data::class.java)
 
-    itemId = existingItemData._id
+    itemId = existingItemData._id?:""
 
     user_name.setText(existingItemData.name)
     contact_number.setText(existingItemData.number)
-    table_count.setSelection(Integer.parseInt(existingItemData.totalPeople))
+    table_count.setSelection(Integer.parseInt(existingItemData.getTotalPeopleN()))
     date_value.setText(existingItemData.date)
     time_value.setText(existingItemData.time)
     message_value.setText(existingItemData.message)
@@ -159,9 +159,9 @@ class BookATableDetailsFragment : Fragment() {
         deleteRecord(itemId)
         return@OnClickListener
       }
-      activity!!.onBackPressed()
+      activity?.onBackPressed()
     })
-    back_button.setOnClickListener { activity!!.onBackPressed() }
+    back_button.setOnClickListener { activity?.onBackPressed() }
   }
 
   fun createNewTeamsAPI() {

@@ -78,6 +78,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.appservice.rest.repository.AzureWebsiteNewRepository
 import com.framework.analytics.SentryController
+import com.framework.extensions.runOnUiThread
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.models.toLiveData
 import java.text.SimpleDateFormat
@@ -584,13 +585,16 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                         }
                     }
                 }
-                if(paidUser){
+                runOnUiThread {
+                  if(paidUser){
                     bottom_box.visibility = View.VISIBLE
                     footer.visibility = View.VISIBLE
-                }else{
+                  }else{
                     bottom_box.visibility = View.GONE
                     footer.visibility = View.GONE
+                  }
                 }
+
             }
     }
 

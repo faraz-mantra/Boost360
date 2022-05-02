@@ -89,6 +89,7 @@ import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialUtils.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+@Deprecated
 public class TestimonialsFeedbackActivity extends AppCompatActivity implements TestimonialsFeedbackListener {
 
   private List<String> allTestimonialType = Arrays.asList("testimonials", "testimonial", "guestreviews");

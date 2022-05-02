@@ -17,8 +17,7 @@ import com.nowfloats.Restaurants.Interfaces.BookTableFragmentListener
 import com.thinksity.R
 
 
-class BookTableAdapter(var itemList: List<Data>, val listener: BookTableFragmentListener) :
-  RecyclerView.Adapter<BookTableAdapter.ViewHolder>() {
+class BookTableAdapter(var itemList: List<Data>, val listener: BookTableFragmentListener) : RecyclerView.Adapter<BookTableAdapter.ViewHolder>() {
 
   lateinit var context: Context
   private var menuPosition = -1
@@ -47,18 +46,19 @@ class BookTableAdapter(var itemList: List<Data>, val listener: BookTableFragment
   }
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    holder.menuOptionLayout.setVisibility(View.GONE)
+    val data = itemList[position]
+    holder.menuOptionLayout.visibility = View.GONE
     if (menuPosition == position) {
       if (menuStatus) {
-        holder.menuOptionLayout.setVisibility(View.VISIBLE)
+        holder.menuOptionLayout.visibility = View.VISIBLE
       } else {
-        holder.menuOptionLayout.setVisibility(View.GONE)
+        holder.menuOptionLayout.visibility = View.GONE
       }
     }
     holder.itemView.setOnClickListener { listener.itemMenuOptionStatus(-1, false) }
 
     holder.menuButton.setOnClickListener {
-      if (holder.menuOptionLayout.getVisibility() == View.GONE) {
+      if (holder.menuOptionLayout.visibility == View.GONE) {
         listener.itemMenuOptionStatus(position, true)
       } else {
         listener.itemMenuOptionStatus(position, false)
@@ -66,38 +66,33 @@ class BookTableAdapter(var itemList: List<Data>, val listener: BookTableFragment
     }
 
     holder.editButton.setOnClickListener {
-      listener.editOptionClicked(itemList.get(position))
+      listener.editOptionClicked(data)
     }
 
     holder.deleteButton.setOnClickListener {
-      listener.deleteOptionClicked(itemList.get(position))
+      listener.deleteOptionClicked(data)
     }
 
-    holder.userName.setText(itemList.get(position).name)
-    holder.dateValue.setText(itemList.get(position).date)
-    holder.timeValue.setText(itemList.get(position).time)
-    holder.messageValue.setText(itemList.get(position).message)
+    holder.userName.text = data.name
+    holder.dateValue.text = data.date
+    holder.timeValue.text = data.time
+    holder.messageValue.text = data.message
 
     if (itemList.get(position).totalPeople == "0") {
       holder.tableCount.visibility = View.GONE
     } else {
       holder.tableCount.visibility = View.VISIBLE
-      holder.tableCount.setText("+" + itemList.get(position).totalPeople)
+      holder.tableCount.text = "+" + data.getTotalPeopleN()
     }
 
 
-    val origCost = SpannableString(itemList.get(position).number)
+    val origCost = SpannableString(data.number)
 
-    origCost.setSpan(
-      UnderlineSpan(),
-      0,
-      origCost.length,
-      0
-    )
+    origCost.setSpan(UnderlineSpan(), 0, origCost.length, 0)
     holder.contactNumber.text = origCost
 
     holder.contactNumber.setOnClickListener {
-      val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + itemList.get(position).number))
+      val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + data.number))
       context.startActivity(intent)
     }
 
