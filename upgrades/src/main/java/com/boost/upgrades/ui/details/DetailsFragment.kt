@@ -312,14 +312,13 @@ class DetailsFragment : BaseFragment("MarketPlaceDetailsFragment"), DetailsFragm
   }
 
   fun spannableString(value: Int) {
-    val origCost = SpannableString("Original cost ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
+    val origCost: SpannableString
+    if(prefs.getYearPricing())
+     origCost = SpannableString("Original cost ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year")
+    else
+     origCost = SpannableString("Original cost ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
 
-    origCost.setSpan(
-      StrikethroughSpan(),
-      14,
-      origCost.length,
-      0
-    )
+    origCost.setSpan(StrikethroughSpan(), 14, origCost.length, 0)
     orig_cost.text = origCost
   }
 
