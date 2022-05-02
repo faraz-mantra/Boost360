@@ -154,7 +154,6 @@
               android:src="@drawable/circular_arrow_back" />
           </LinearLayout>
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
