@@ -34,6 +34,7 @@ import retrofit.RetrofitError;
 import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 
+@Deprecated
 public class ExistingDomainFragment extends Fragment {
 
     ProgressDialog vmnProgressBar;

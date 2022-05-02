@@ -48,6 +48,7 @@ import java.util.Locale;
  * Created by Admin on 23-06-2017.
  */
 
+@Deprecated
 public class VmnCall_v2Adapter extends RecyclerView.Adapter<VmnCall_v2Adapter.MyHolder> {
 
     private static final int DATE_HEADER_VIEW = 0, VMN_CALL_VIEW = 1;

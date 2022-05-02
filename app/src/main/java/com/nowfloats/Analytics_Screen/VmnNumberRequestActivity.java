@@ -31,6 +31,7 @@ import retrofit.client.Response;
  * Created by Admin on 13-09-2017.
  */
 
+@Deprecated
 public class VmnNumberRequestActivity extends AppCompatActivity {
 
     SharedPreferences pref;

@@ -16,10 +16,6 @@ import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.UpgradeActivity
 import com.framework.extensions.gone
 import com.framework.extensions.visible
-import com.framework.views.zero.FragmentZeroCase
-import com.framework.views.zero.OnZeroCaseClicked
-import com.framework.views.zero.RequestZeroCaseBuilder
-import com.framework.views.zero.ZeroCases
 import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
@@ -35,7 +31,6 @@ import com.nowfloats.Restaurants.BookATable.BookATableActivity
 import com.nowfloats.Restaurants.BookATable.adapter.BookTableAdapter
 import com.nowfloats.Restaurants.BookATable.ui.BookATableDetailsFragement.BookATableDetailsFragment
 import com.nowfloats.Restaurants.Interfaces.BookTableFragmentListener
-import com.nowfloats.util.Constants
 import com.nowfloats.util.Methods
 import com.thinksity.R
 import com.thinksity.databinding.BookATableFragmentBinding
@@ -60,6 +55,11 @@ class BookATableFragment : BaseFragment("BookATableFragment"), BookTableFragment
 
   companion object {
     fun newInstance() = BookATableFragment()
+    fun newInstance(bundle: Bundle? = null): BookATableFragment {
+      val fragment = BookATableFragment()
+      fragment.arguments = bundle
+      return fragment
+    }
   }
 
   override fun onCreateView(
@@ -75,7 +75,7 @@ class BookATableFragment : BaseFragment("BookATableFragment"), BookTableFragment
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-
+    val isAdd = arguments?.getBoolean("is_add") ?: false
     book_table_recycler.adapter = adapter
     session = UserSessionManager(requireContext(), requireActivity())
     zerothCaseFragmentZeroCase = AppRequestZeroCaseBuilder(AppZeroCases.TABLE_BOOKING, this, requireActivity(), isPremium()).getRequest().build()
@@ -97,6 +97,7 @@ class BookATableFragment : BaseFragment("BookATableFragment"), BookTableFragment
       book_table_recycler.visibility = View.GONE
       emptyView()
     }
+    if (isAdd) btn_add?.performClick()
   }
 
   private fun isPremium(): Boolean {
@@ -284,7 +285,7 @@ class BookATableFragment : BaseFragment("BookATableFragment"), BookTableFragment
     intent.putExtra("fpName", session!!.fpName)
     intent.putExtra("fpid", session!!.fpid)
     intent.putExtra("loginid", session!!.userProfileId)
-    intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(session?.storeWidgets?: arrayListOf()))
+    intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(session?.storeWidgets ?: arrayListOf()))
     intent.putExtra("fpTag", session!!.fpTag)
     if (session!!.userProfileEmail != null) {
       intent.putExtra("email", session!!.userProfileEmail)

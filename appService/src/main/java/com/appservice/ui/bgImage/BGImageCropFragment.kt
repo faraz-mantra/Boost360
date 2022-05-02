@@ -134,7 +134,7 @@ class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewMod
     super.onClick(v)
     when (v) {
       binding?.btnDone -> {
-        val imgFile = binding?.cropImg?.croppedImage?.saveBitmap(baseActivity)
+        val imgFile = binding?.cropImg?.croppedImage?.saveBitmap()
         if (imgFile?.exists() == true) {
           startBackgroundActivity(
             FragmentType.BACKGROUND_IMAGE_PREVIEW,
