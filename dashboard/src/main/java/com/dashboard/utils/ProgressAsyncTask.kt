@@ -4,6 +4,7 @@ package com.dashboard.utils
 
 import android.app.ProgressDialog
 import android.os.AsyncTask
+import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
 import com.dashboard.R
 
@@ -15,6 +16,7 @@ class ProgressAsyncTask(activity: AppCompatActivity) : AsyncTask<Void?, Void?, V
     progressDialog.setMessage("Loading. Please wait...")
     progressDialog.setCancelable(false)
     progressDialog.show()
+    progressDialog.window?.setGravity(Gravity.CENTER)
   }
 
   override fun doInBackground(vararg params: Void?): Void? {

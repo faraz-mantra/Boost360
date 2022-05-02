@@ -646,7 +646,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
     @SuppressLint("FragmentLiveDataObserve")
     fun initMvvm() {
 
-        viewModel.updatesError().observe(this, androidx.lifecycle.Observer {
+        viewModel.updatesError().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             //            Snackbar.make(root, viewModel.errorMessage, Snackbar.LENGTH_LONG).show()
 //            if (shimmer_view_container.isAnimationStarted) {
 //                shimmer_view_container.stopShimmerAnimation()
@@ -655,17 +655,17 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             longToast(requireContext(), "onFailure: " + it)
         })
 
-//        viewModel.upgradeResult().observe(this, androidx.lifecycle.Observer {
+//        viewModel.upgradeResult().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
 //            updateRecycler(it)
 //        })
 
-        viewModel.getAllAvailableFeatures().observe(this, androidx.lifecycle.Observer {
+        viewModel.getAllAvailableFeatures().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             all_recommended_addons.visibility = View.VISIBLE
             updateRecycler(it)
             updateAddonCategoryRecycler(it)
         })
 
-        viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
+        viewModel.getAllBundles().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             val list = arrayListOf<Bundles>()
             for (item in it) {
                 val temp = Gson().fromJson<List<IncludedFeature>>(
@@ -707,7 +707,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.getBackAllBundles().observe(this, androidx.lifecycle.Observer {
+        viewModel.getBackAllBundles().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             val list = arrayListOf<Bundles>()
             for (item in it) {
                 val temp = Gson().fromJson<List<IncludedFeature>>(
@@ -742,7 +742,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.getAllFeatureDeals().observe(this, androidx.lifecycle.Observer {
+        viewModel.getAllFeatureDeals().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it.size > 0) {
                 var cartItems: List<CartModel> = arrayListOf()
                 if (viewModel.cartResult.value != null) {
@@ -752,11 +752,11 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-//        viewModel.getTotalActiveWidgetCount().observe(this, androidx.lifecycle.Observer {
+//        viewModel.getTotalActiveWidgetCount().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
 //            total_active_widget_count.text = it.toString()
 //        })
 
-        viewModel.categoryResult().observe(this, androidx.lifecycle.Observer {
+        viewModel.categoryResult().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it != null) {
                 if(recommended_features_account_type.paint.measureText(Html.fromHtml(it!!.toLowerCase()).toString())> recommended_features_account_type.measuredWidth){
                     recommended_features_account_type.visibility = View.GONE
@@ -770,7 +770,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
 
         })
 
-        viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
+        viewModel.updatesLoader().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it) {
                 val status = "Loading. Please wait..."
                 progressDialog.setMessage(status)
@@ -781,7 +781,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.cartResult().observe(this, androidx.lifecycle.Observer {
+        viewModel.cartResult().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             UserSessionManager(requireActivity()).storeIntDetails(Key_Preferences.KEY_FP_CART_COUNT,it.size?:0)
             if (it != null && it.size > 0) {
 //                packageInCartStatus = false
@@ -996,7 +996,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }*/
         })
 
-        viewModel.cartResultBack().observe(this, androidx.lifecycle.Observer {
+        viewModel.cartResultBack().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             UserSessionManager(requireActivity()).storeIntDetails(Key_Preferences.KEY_FP_CART_COUNT,it.size?:0)
             if (it != null && it.size > 0) {
 //                packageInCartStatus = false
@@ -1205,12 +1205,12 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.getYoutubeVideoDetails().observe(this, androidx.lifecycle.Observer {
+        viewModel.getYoutubeVideoDetails().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             Log.e("getYoutubeVideoDetails", it.toString())
             updateVideosViewPager(it)
         })
 
-        viewModel.getExpertConnectDetails().observe(this, androidx.lifecycle.Observer {
+        viewModel.getExpertConnectDetails().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             Log.e("getYoutubeVideoDetails", it.toString())
             val expertConnectDetails = it
             if (it.is_online) {
@@ -1257,7 +1257,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.promoBannerAndMarketOfferResult().observe(this, androidx.lifecycle.Observer {
+        viewModel.promoBannerAndMarketOfferResult().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it.size > 0) {
                 if (shimmer_view_banner.isShimmerStarted) {
                     shimmer_view_banner.stopShimmer()
@@ -1276,7 +1276,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
         })
 
 
-        viewModel.getPromoBanners().observe(this, androidx.lifecycle.Observer {
+        viewModel.getPromoBanners().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             Log.e("getPromoBanners", it.toString())
             if (it.size > 0) {
                 if (shimmer_view_banner.isShimmerStarted) {
@@ -1296,7 +1296,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.getPartnerZone().observe(this, androidx.lifecycle.Observer {
+        viewModel.getPartnerZone().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             Log.e("getPartnerZone", it.toString())
             if (it.size > 0) {
                 updatePartnerViewPager(it)
@@ -1307,12 +1307,12 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.getFeedBackLink().observe(this, androidx.lifecycle.Observer {
+        viewModel.getFeedBackLink().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             Log.e("getFeedBackLink", it.toString())
             feedBackLink = it
         })
 
-        viewModel.getBundleExxists().observe(this,androidx.lifecycle.Observer{
+        viewModel.getBundleExxists().observe(viewLifecycleOwner,androidx.lifecycle.Observer{
             Log.d("getBundleExxists", it.toString())
         })
     }
