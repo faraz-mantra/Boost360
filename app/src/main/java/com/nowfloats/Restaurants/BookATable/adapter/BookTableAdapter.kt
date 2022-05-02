@@ -78,7 +78,7 @@ class BookTableAdapter(var itemList: List<Data>, val listener: BookTableFragment
     holder.timeValue.setText(itemList.get(position).time)
     holder.messageValue.setText(itemList.get(position).message)
 
-    if (itemList.get(position).totalPeople.equals("0")) {
+    if (itemList.get(position).totalPeople == "0") {
       holder.tableCount.visibility = View.GONE
     } else {
       holder.tableCount.visibility = View.VISIBLE
