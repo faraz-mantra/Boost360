@@ -1,5 +1,8 @@
 package com.nowfloats.Login;
 
+import static com.framework.utils.PreferencesUtilsKt.deleteAllData;
+import static com.nowfloats.util.Key_Preferences.MAIN_PRIMARY_CONTACT_NUM;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -48,9 +51,6 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-
-import static com.framework.utils.PreferencesUtilsKt.deleteAllData;
-import static com.nowfloats.util.Key_Preferences.MAIN_PRIMARY_CONTACT_NUM;
 
 /**
  * Created by Dell on 28-01-2015.
