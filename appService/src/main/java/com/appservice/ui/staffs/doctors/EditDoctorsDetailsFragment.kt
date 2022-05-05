@@ -9,7 +9,9 @@ import android.util.Base64
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -28,6 +30,7 @@ import com.appservice.viewmodel.StaffViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
@@ -55,7 +58,7 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
   private var isSignatureSelection: Boolean? = false
   private var profileimageUri: Uri? = null
   private var signatureUri: Uri? = null
-  private var isEdit: Boolean? = null
+  private var isEdit: Boolean = false
   private var staffProfileFile: File? = null
   private var staffSignatureFile: File? = null
   private var servicesList: ArrayList<DataItemService>? = null
@@ -92,15 +95,34 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
     getBundleData()
   }
 
+  private fun checkDoctorAdded() {
+    val request = GetStaffListingRequest(FilterBy(offset = 0, limit = 2), sessionLocal.fpTag, "")
+    viewModel?.getStaffList(request)?.observeOnce(viewLifecycleOwner) {
+      if ((it as? GetStaffListingResponse)?.result?.paging?.count ?: 0 >= 1) showAlertAddOneDoctor()
+    }
+  }
+
   private fun getBundleData() {
     sessionLocal = UserSessionManager(requireActivity())
     staffDetails = arguments?.getSerializable(IntentConstant.STAFF_DATA.name) as? StaffDetailsResult
     isEdit = (staffDetails != null && staffDetails?.id.isNullOrEmpty().not())
-    if (isEdit == true) {
+    if (isEdit) {
       updatePreviousData()
       baseActivity.getToolbar()?.getToolbarTitleTextView()?.gravity = Gravity.START
     }
     if (staffDetails == null) staffDetails = StaffDetailsResult()
+    if (isDoctor && isEdit.not()) checkDoctorAdded()
+  }
+
+  fun showAlertAddOneDoctor() {
+    AlertDialog.Builder(ContextThemeWrapper(baseActivity, R.style.CustomAlertDialogTheme)).apply {
+      setCancelable(false)
+      setTitle("You have exceeded limit!").setMessage(getString(R.string.add_only_one_doctor_profile)).setPositiveButton(getString(R.string.okay)) { dialog, _ ->
+        dialog.dismiss()
+        baseActivity.finish()
+      }
+      create().show()
+    }
   }
 
   private fun updatePreviousData() {
