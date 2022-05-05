@@ -354,28 +354,6 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     binding?.progress?.gone()
   }
 
-
-  private fun startStorePage() {
-    try {
-      showProgress("Loading. Please wait...")
-      val intent = Intent(baseActivity, Class.forName("com.boost.upgrades.UpgradeActivity"))
-      intent.putExtra("expCode", sessionLocal.fP_AppExperienceCode)
-      intent.putExtra("fpName", sessionLocal.fpTag)
-      intent.putExtra("fpid", sessionLocal.fPID)
-      intent.putExtra("fpTag", sessionLocal.fpTag)
-      intent.putExtra("accountType", sessionLocal.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
-      intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(sessionLocal.getStoreWidgets() ?: ArrayList()))
-      intent.putExtra("email", sessionLocal.fPEmail ?: getString(R.string.ria_customer_mail))
-      intent.putExtra("mobileNo", sessionLocal.fPPrimaryContactNumber ?: getString(R.string.ria_customer_number))
-      intent.putExtra("profileUrl", sessionLocal.fPLogo)
-      intent.putExtra("buyItemKey", "${StatusKyc.STAFFPROFILE.name}15")// feature key
-      baseActivity.startActivity(intent)
-      Handler().postDelayed({ hideProgress() }, 1000)
-    } catch (e: Exception) {
-      showLongToast("Unable to start upgrade activity.")
-    }
-  }
-
   fun getFilterRequest(offSet: Int, limit: Int): GetStaffListingRequest {
     return GetStaffListingRequest(FilterBy(offset = offSet, limit = limit), sessionLocal.fpTag, "")
   }
@@ -385,7 +363,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       WebEngageController.trackEvent(if (isDoctor) ADD_DOCTOR_PROFILE else ADD_STAFF_PROFILE, CLICK, NO_EVENT_VALUE)
       val type = if (isDoctor) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT
       startStaffFragmentActivity(type, isResult = true)
-    } else startStorePage()
+    } else startStorePage(if (isDoctor) StatusKyc.DOCTORBIO.name else "${StatusKyc.STAFFPROFILE.name}15")
   }
 
   override fun secondaryButtonClicked() {
