@@ -1162,4 +1162,5 @@
   <string name="add_customer_image">Add customer image</string>
   <string name="space_start"> *</string>
   <string name="add_only_one_doctor_profile">You can add only one doctor profile in this current feature.</string>
+  <string name="food_menu">Food Menu</string>
 </resources>

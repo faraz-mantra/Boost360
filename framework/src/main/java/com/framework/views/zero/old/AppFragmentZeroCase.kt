@@ -197,7 +197,7 @@ enum class AppZeroCases {
   SERVICES, STAFF_LISTING, DOCTOR_PROFILE_LISTING, APPOINTMENT, PRODUCT,
   MY_BANK_ACCOUNT, IMAGE_GALLERY, LATEST_NEWS_UPADATES, CUSTOMER_MESSAGES,
   TESTIMONIAL, NEWS_LETTER_SUBSCRIPTION, ORDERS, SEASONAL_OFFERS, BUSINESS_CALLS,
-  UPCOMING_BATCHES, FACULTY_MANAGEMENT, TEAM_MEMBERS, DOCTOR_PROFILE, PROJECTS,
+  UPCOMING_BATCHES, FACULTY_MANAGEMENT, TEAM_MEMBERS, PROJECTS,
   CUSTOM_PAGES, CLIENT_LOGOS, WEBSITE_FAQ, RESTURANT_STORY, MENU_PICTURES,
   BUSINESS_KEYBOARD, TABLE_BOOKING, ROOMS_LISTING, TOPPERS, RESTURANT_MENU, BROCHURES, SPA_SERVICES,
   SALON_SERVICES, RESTAURANT_SERVICES, EDUCATION_SERVICES, HOSPITAL_SERVICES
@@ -211,7 +211,6 @@ class AppRequestZeroCaseBuilder(
 ) {
 
   var title: String = ""
-  var desc: String = ""
   var primaryButtonTitle: String = ""
   var primaryButtonIconLeft: Int = -1
 
@@ -304,7 +303,6 @@ class AppRequestZeroCaseBuilder(
           .setIcon(R.drawable.ic_services_zero_case)
           .isPremium(isPremium)
           .setToolBarTitle(context.getString(R.string.services))
-          .setFooterText(context.getString(R.string.all_customer_payments_will_be_sent_to_this))
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
@@ -322,7 +320,7 @@ class AppRequestZeroCaseBuilder(
       }
       PRODUCT -> {
         return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.lets_add_product_to))
-          .setDescription(context.getString(R.string.product_description_))
+          .setDescription(context.getString(R.string.your_can_easily_add_detailed_information_about_your_services))
           .setIcon(R.drawable.ic_resource_package)
           .isPremium(isPremium)
           .setToolBarTitle(context.getString(R.string.product))
@@ -433,7 +431,7 @@ class AppRequestZeroCaseBuilder(
       }
       DOCTOR_PROFILE_LISTING -> {
         if (isPremium) {
-          title = context.getString(R.string.no_doctor_profile_listed_yet)
+          title = context.getString(R.string.establish_trust_with_patients)
           primaryButtonTitle = context.getString(R.string.add_a_doctor)
           primaryButtonIconLeft = R.drawable.ic_create_white
         } else {
@@ -443,9 +441,9 @@ class AppRequestZeroCaseBuilder(
         }
 
         return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(title)
-          .setDescription(context.getString(R.string.doctor_listing_desc))
+          .setDescription(context.getString(R.string.a_doctor_profile_makes_your_website_more_credible_resulting_in_increased_patient_traffic))
           .setIcon(R.drawable.ic_doc_hos_zero_case)
-          .setToolBarTitle(context.getString(R.string.tool_bar_doctor_listing))
+          .setToolBarTitle(context.getString(R.string.doctor_profile))
           .isPremium(isPremium)
           .setListener(onZeroCaseClicked)
           .setButton(
@@ -478,8 +476,9 @@ class AppRequestZeroCaseBuilder(
           )
       }
       SEASONAL_OFFERS -> {
-        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.seasonal_offers))
-          .setDescription(context.getString(R.string.seasonal_offer_description))
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder()
+          .setTitle(context.getString(R.string.attract_more_customers))
+          .setDescription(context.getString(R.string.increase_your_customer_base_with_promotions_and_offer_campaigns))
           .setIcon(R.drawable.ic_percent)
           .setToolBarTitle(context.getString(R.string.toolbar_seasonal_offers))
           .setListener(onZeroCaseClicked)
@@ -487,7 +486,7 @@ class AppRequestZeroCaseBuilder(
           .setButton(
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_lockkey,
-              primaryButtonTitle = "Add Offer",
+              primaryButtonTitle = context.getString(R.string.add_offer),
               primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
@@ -536,7 +535,7 @@ class AppRequestZeroCaseBuilder(
       //todo batch 2 screens
       UPCOMING_BATCHES -> {
         if (isPremium) {
-          title = context.getString(R.string.no_batch_create_yet)
+          title = context.getString(R.string.display_your_course_batches)
           primaryButtonTitle = context.getString(R.string.create_a_batch)
           primaryButtonIconLeft = R.drawable.ic_create_white
         } else {
@@ -545,7 +544,7 @@ class AppRequestZeroCaseBuilder(
           primaryButtonIconLeft = R.drawable.ic_lockkey
         }
         return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(title)
-          .setDescription(context.getString(R.string.upcoming_batches_description))
+          .setDescription(context.getString(R.string.list_the_upcoming_dates_of_your_courses_to_provide_students_and_parents_with_information_and_create_an_urgency_to_enrol_online))
           .setIcon(R.drawable.ic_usersfour)
           .setToolBarTitle(context.getString(R.string.upcoming_batches_tool_bar_title))
           .setListener(onZeroCaseClicked)
@@ -564,7 +563,7 @@ class AppRequestZeroCaseBuilder(
       }
       FACULTY_MANAGEMENT -> {
         if (isPremium) {
-          title = context.getString(R.string.highlight_your_strength)
+          title = context.getString(R.string.display_your_faculty_s_expertise)
           primaryButtonTitle = context.getString(R.string.add_a_faculty_member)
           primaryButtonIconLeft = R.drawable.ic_create_white
         } else {
@@ -573,7 +572,7 @@ class AppRequestZeroCaseBuilder(
           primaryButtonIconLeft = R.drawable.ic_lockkey
         }
         return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(title)
-          .setDescription(context.getString(R.string.faculty_management_description))
+          .setDescription(context.getString(R.string.when_students_find_out_about_a_faculty_member_s_qualifications_experience_or_awards_they_will_feel_more_comfortable_booking_a_course))
           .setIcon(R.drawable.ic_chalkboardteacher)
           .setToolBarTitle(context.getString(R.string.faculty_management_tool_bar_title))
           .setListener(onZeroCaseClicked)
@@ -618,28 +617,9 @@ class AppRequestZeroCaseBuilder(
             )
           )
       }
-      DOCTOR_PROFILE -> {
-        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.this_is_premium_feature))
-          .setDescription(context.getString(R.string.business_calls_description))
-          .setIcon(R.drawable.ic_diagnosis)
-          .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
-          .setListener(onZeroCaseClicked)
-          .isPremium(isPremium)
-          .setButton(
-            ZeroCaseButton(
-              primaryButtonIconLeft = R.drawable.ic_lockkey,
-              primaryButtonTitle = context.getString(R.string.activate_this_feature),
-              primaryButtonBackground = R.color.colorAccentLight,
-              secondaryButtonIconLeft = R.drawable.exo_icon_play,
-              secondaryButtonTitle = context.getString(
-                R.string.watch_how_it_works
-              )
-            )
-          )
-      }
       PROJECTS -> {
         if (isPremium) {
-          title = context.getString(R.string.no_project_added_yet)
+          title = context.getString(R.string.showcase_your_skills)
           primaryButtonTitle = context.getString(R.string.add_a_project)
           primaryButtonIconLeft = R.drawable.ic_create_white
         } else {
@@ -648,7 +628,7 @@ class AppRequestZeroCaseBuilder(
           primaryButtonIconLeft = R.drawable.ic_lockkey
         }
         return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(title)
-          .setDescription(context.getString(R.string.projects_zero_case_desc))
+          .setDescription(context.getString(R.string.highlight_your_expertise_by_listing_successfully_completed_projects_to_attract_potential_customers))
           .setIcon(R.drawable.ic_notebook)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
           .isPremium(isPremium)
@@ -668,7 +648,7 @@ class AppRequestZeroCaseBuilder(
       TOPPERS -> {
 
         if (isPremium) {
-          title = context.getString(R.string.no_topper_student_listed_yet)
+          title = context.getString(R.string.feature_your_best_students)
           primaryButtonTitle = context.getString(R.string.add_a_topper)
           primaryButtonIconLeft = R.drawable.ic_create_white
         } else {
@@ -697,16 +677,16 @@ class AppRequestZeroCaseBuilder(
       }
       CUSTOM_PAGES -> {
 
-        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.no_custom_page_created_yet))
-          .setDescription(context.getString(R.string.custom_page_desc))
-          .setIcon(R.drawable.ic_phoneincoming)
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.engage_your_potential_customers))
+          .setDescription(context.getString(R.string.you_can_create_customized_pages_that_highlight_specific_products_and_services_upload_blog_posts_display_pictures_and_videos_to_keep_visitors_engaged))
+          .setIcon(R.drawable.ic_custom_pages)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
           .setListener(onZeroCaseClicked)
           .isPremium(isPremium)
           .setButton(
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_create_white,
-              primaryButtonTitle = context.getString(R.string.create_custom_page),
+              primaryButtonTitle = context.getString(R.string.add_a_custom_page),
               primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
@@ -716,16 +696,16 @@ class AppRequestZeroCaseBuilder(
           )
       }
       CLIENT_LOGOS -> {
-        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.no_client_logo_added_yet))
-          .setDescription(context.getString(R.string.no_client_logo_desc))
-          .setIcon(R.drawable.ic_phoneincoming)
-          .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.show_off_your_clients))
+          .setDescription(context.getString(R.string.showcase_the_logos_of_your_top_clients_on_your_website_to_generate_trust_and_credibility_with_customers))
+          .setIcon(R.drawable.ic_client_logos)
+          .setToolBarTitle(context.getString(R.string.client_logos))
           .setListener(onZeroCaseClicked)
           .isPremium(isPremium)
           .setButton(
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_create_white,
-              primaryButtonTitle = context.getString(R.string.add_client_logo),
+              primaryButtonTitle = context.getString(R.string.add_a_logo),
               primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
@@ -735,16 +715,16 @@ class AppRequestZeroCaseBuilder(
           )
       }
       WEBSITE_FAQ -> {
-        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.this_is_premium_feature))
-          .setDescription(context.getString(R.string.business_calls_description))
-          .setIcon(R.drawable.ic_phoneincoming)
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.help_your_potential_customers))
+          .setDescription(context.getString(R.string.to_help_visitors_make_a_buying_decision_include_the_most_frequently_asked_questions_faqs_and_suitable_answers))
+          .setIcon(R.drawable.ic_faq)
           .isPremium(isPremium)
-          .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
+          .setToolBarTitle(context.getString(R.string.website_faqs))
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_lockkey,
-              primaryButtonTitle = context.getString(R.string.activate_this_feature),
+              primaryButtonTitle = context.getString(R.string.add_a_question),
               primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
@@ -754,16 +734,16 @@ class AppRequestZeroCaseBuilder(
           )
       }
       RESTURANT_STORY -> {
-        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.restaurant_story_title))
-          .setDescription(context.getString(R.string.restaurant_story_desc))
-          .setIcon(R.drawable.ic_phoneincoming)
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.storytelling_connects_with_people))
+          .setDescription(context.getString(R.string.share_a_compelling_story_behind_your_restaurant_to_build_a_personal_connection_with_visitors_and_turn_them_into_loyal_customers))
+          .setIcon(R.drawable.ic_rest_story)
           .isPremium(isPremium)
-          .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
+          .setToolBarTitle(context.getString(R.string.restaurant_story))
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
               primaryButtonIconLeft = R.drawable.ic_create_white,
-              primaryButtonTitle = context.getString(R.string.add_restaurant_story),
+              primaryButtonTitle = context.getString(R.string.tell_your_story),
               primaryButtonBackground = R.color.colorAccentLight,
               secondaryButtonIconLeft = R.drawable.exo_icon_play,
               secondaryButtonTitle = context.getString(
@@ -773,11 +753,11 @@ class AppRequestZeroCaseBuilder(
           )
       }
       MENU_PICTURES -> {
-        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.menu_picture_title))
-          .setDescription(context.getString(R.string.menu_picture_desc))
-          .setIcon(R.drawable.ic_phoneincoming)
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.make_your_food_irresistible))
+          .setDescription(context.getString(R.string.upload_mouth_watering_pictures_of_your_menu_items_to_encourage_website_visitors_to_place_an_order))
+          .setIcon(R.drawable.ic_rest_menu_pictures)
           .isPremium(isPremium)
-          .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
+          .setToolBarTitle(context.getString(R.string.menu_pictures))
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
@@ -793,10 +773,10 @@ class AppRequestZeroCaseBuilder(
       }
       BUSINESS_KEYBOARD -> {
         return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.this_is_premium_feature))
-          .setDescription(context.getString(R.string.keyboard_desc))
-          .setIcon(R.drawable.ic_phoneincoming)
+          .setDescription(context.getString(R.string.use_boost_s_business_keyboard_to_instantly_share_your_latest_products_services_and_updates_with_customers_through_whatsapp_hike_telegram_messenger_and_other_popular_messaging_apps))
+          .setIcon(R.drawable.ic_business_keyboard)
           .isPremium(isPremium)
-          .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
+          .setToolBarTitle(context.getString(R.string.business_keyboard))
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
@@ -812,18 +792,16 @@ class AppRequestZeroCaseBuilder(
       }
       TABLE_BOOKING -> {
         if (isPremium) {
-          title = context.getString(R.string.no_dine_in_table_booked_yet)
-          desc = context.getString(R.string.book_table_desc)
+          title = context.getString(R.string.enable_online_table_reservations)
           primaryButtonIconLeft = R.drawable.ic_create_white
           primaryButtonTitle = context.getString(R.string.book_a_table)
         } else {
           title = context.getString(R.string.this_is_premium_feature)
-          desc = context.getString(R.string.book_table_desc)
           primaryButtonIconLeft = R.drawable.ic_lockkey
           primaryButtonTitle = context.getString(R.string.activate_this_feature)
         }
         return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(title)
-          .setDescription(desc)
+          .setDescription(context.getString(R.string.the_key_to_a_happy_customer_is_convenience_and_no_waiting_time_at_the_restaurant))
           .setIcon(R.drawable.ic_phoneincoming)
           .isPremium(isPremium)
           .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
@@ -841,19 +819,23 @@ class AppRequestZeroCaseBuilder(
           )
       }
       ROOMS_LISTING -> {
-        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.this_is_premium_feature))
-          .setDescription(context.getString(R.string.business_calls_description))
-          .setIcon(R.drawable.ic_phoneincoming)
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.display_your_room_s_features))
+          .setDescription(context.getString(R.string.feature_all_available_rooms_and_their_amenities_so_that_guests_can_pick_and_book_conveniently_online))
+          .setIcon(R.drawable.ic_room_listing)
           .isPremium(isPremium)
-          .setToolBarTitle(context.getString(R.string.business_calls_tool_bar_title))
+          .setToolBarTitle(context.getString(R.string.rooms_listing))
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
-              primaryButtonIconLeft = R.drawable.ic_lockkey,
-              primaryButtonTitle = context.getString(R.string.activate_this_feature),
+              primaryButtonIconLeft = R.drawable.ic_create_white,
+              primaryButtonTitle = context.getString(R.string.add_a_room),
               primaryButtonBackground = R.color.colorAccentLight,
-              secondaryButtonIconLeft = R.drawable.exo_icon_play,
+              secondaryButtonIconLeft = R.drawable.ic_booking_setup,
               secondaryButtonTitle = context.getString(
+                R.string.booking_setup
+              ) ,
+              tertiaryButtonIconLeft = R.drawable.exo_icon_play,
+              tertiaryButtonTitle = context.getString(
                 R.string.watch_how_it_works
               )
             )
@@ -880,18 +862,16 @@ class AppRequestZeroCaseBuilder(
       }
       BROCHURES -> {
         if (isPremium) {
-          title = context.getString(R.string.no_brochure_added)
-          desc = context.getString(R.string.allow_your_students_to_see)
+          title = context.getString(R.string.engage_your_customers)
           primaryButtonIconLeft = R.drawable.ic_create_white
           primaryButtonTitle = context.getString(R.string.add_a_brochure)
         } else {
           title = context.getString(R.string.this_is_premium_feature)
-          desc = context.getString(R.string.brochures_desc)
           primaryButtonIconLeft = R.drawable.ic_lockkey
           primaryButtonTitle = context.getString(R.string.activate_this_feature)
         }
         return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(title)
-          .setDescription(desc)
+          .setDescription(context.getString(R.string.brochures_desc))
           .setIcon(R.drawable.ic_brochures)
           .setToolBarTitle(context.getString(R.string.digital_brochures))
           .isPremium(isPremium)
@@ -909,8 +889,8 @@ class AppRequestZeroCaseBuilder(
           )
       }
       SPA_SERVICES -> {
-        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.spa_zero_case_title))
-          .setDescription(context.getString(R.string.spa_zero_case_desc))
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.showcase_your_services))
+          .setDescription(context.getString(R.string.allow_your_customers_to_select_and_book_an_appointment_online_by_displaying_the_information_and_pricing_for_all_your_spa_services))
           .setIcon(R.drawable.ic_flowerlotus)
           .isPremium(isPremium)
           .setListener(onZeroCaseClicked)
@@ -929,8 +909,8 @@ class AppRequestZeroCaseBuilder(
           )
       }
       HOSPITAL_SERVICES -> {
-        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.no_service_created_yet))
-          .setDescription(context.getString(R.string.your_can_easily_add_detailed_information_about_your_services))
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.showcase_your_services))
+          .setDescription(context.getString(R.string.make_it_possible_for_patients_to_book_appointments_online_by_listing_your_services_and_their_details))
           .setIcon(R.drawable.ic_policy)
           .isPremium(isPremium)
           .setListener(onZeroCaseClicked)
@@ -949,8 +929,8 @@ class AppRequestZeroCaseBuilder(
           )
       }
       SALON_SERVICES -> {
-        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.lets_add_services_to_your_catalogue))
-          .setDescription(context.getString(R.string.your_can_easily_add_detailed_information_about_your_services))
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.showcase_your_services))
+          .setDescription(context.getString(R.string.allow_your_customers_to_select_and_book_an_appointment_online_by_displaying_the_information_and_pricing_for_all_your_services))
           .setIcon(R.drawable.ic_scissors)
           .isPremium(isPremium)
           .setListener(onZeroCaseClicked)
@@ -969,14 +949,14 @@ class AppRequestZeroCaseBuilder(
           )
       }
       RESTAURANT_SERVICES -> {
-        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.lets_add_food_item_to_this_menu))
-          .setDescription(context.getString(R.string.your_can_easily_add_detailed_information_about_your_services))
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.put_your_menu_on_display))
+          .setDescription(context.getString(R.string.create_a_menu_for_your_restaurant_website_by_adding_dishes_and_their_prices))
           .setIcon(R.drawable.ic_pizza)
           .isPremium(isPremium)
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
-              primaryButtonTitle = context.getString(R.string.add_a_service),
+              primaryButtonTitle = context.getString(R.string.add_a_dish),
               primaryButtonBackground = R.color.colorAccentLight,
               primaryButtonIconLeft = R.drawable.ic_create_white,
               secondaryButtonIconLeft = R.drawable.ic_appointment_settings_secondary,
@@ -989,14 +969,14 @@ class AppRequestZeroCaseBuilder(
           )
       }
       EDUCATION_SERVICES -> {
-        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.no_courses_added_yet))
-          .setDescription(context.getString(R.string.your_can_easily_add_detailed_information_about_your_services))
+        return AppFragmentZeroCase.Companion.AppZeroCaseBuilder().setTitle(context.getString(R.string.showcase_your_course_offerings))
+          .setDescription(context.getString(R.string.provide_all_the_details_about_your_courses_including_faculty_timings_duration_and_the_option_for_students_to_enroll_online))
           .setIcon(R.drawable.ic_book)
           .isPremium(isPremium)
           .setListener(onZeroCaseClicked)
           .setButton(
             ZeroCaseButton(
-              primaryButtonTitle = context.getString(R.string.add_a_service),
+              primaryButtonTitle = context.getString(R.string.add_a_course),
               primaryButtonBackground = R.color.colorAccentLight,
               primaryButtonIconLeft = R.drawable.ic_create_white,
               secondaryButtonIconLeft = R.drawable.ic_appointment_settings_secondary,
