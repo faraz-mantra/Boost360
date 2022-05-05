@@ -81,6 +81,7 @@ import com.framework.analytics.SentryController
 import com.framework.extensions.runOnUiThread
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.models.toLiveData
+import com.framework.utils.RootUtil
 import java.text.SimpleDateFormat
 
 
@@ -111,8 +112,8 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
     var feedBackLink: String? = null
     lateinit var prefs: SharedPrefs
     var packageInCartStatus = false
-    var offeredBundlePrice = 0
-    var originalBundlePrice = 0
+    var offeredBundlePrice = 0.0
+    var originalBundlePrice = 0.0
     var featuresList: List<FeaturesModel>? = null
     private var session: UserSessionManager? = null
     private var deepLinkUtil: DeepLinkUtil? = null
@@ -2773,24 +2774,23 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                 .subscribe(
                     {
                         featuresList = it
-                        var bundleMonthlyMRP = 0
+                        var bundleMonthlyMRP = 0.0
                         val minMonth: Int =
                             if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
 
                         for (singleItem in it) {
                             for (item in item!!.included_features) {
                                 if (singleItem.feature_code == item.feature_code) {
-                                    bundleMonthlyMRP += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt()
+                                    bundleMonthlyMRP += RootUtil.round(singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),2)
                                 }
                             }
                         }
 
-                        offeredBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
-                        originalBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
+                        offeredBundlePrice = (bundleMonthlyMRP * minMonth)
+                        originalBundlePrice = (bundleMonthlyMRP * minMonth)
 
                         if (item!!.overall_discount_percent > 0)
-                            offeredBundlePrice =
-                                originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100)
+                            offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100),2)
                         else
                             offeredBundlePrice = originalBundlePrice
 
@@ -2804,8 +2804,8 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                                 item!!.name,
                                 "",
                                 item!!.primary_image!!.url,
-                                offeredBundlePrice.toDouble(),
-                                originalBundlePrice.toDouble(),
+                                offeredBundlePrice,
+                                originalBundlePrice,
                                 item!!.overall_discount_percent,
                                 1,
                                 if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
