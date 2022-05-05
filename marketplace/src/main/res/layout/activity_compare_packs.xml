@@ -58,13 +58,13 @@
               android:background="@drawable/ic_cart" />
 
 
-              <com.nex3z.notificationbadge.NotificationBadge
-                  android:id="@+id/badge121"
-                  android:layout_width="28dp"
-                  android:layout_height="28dp"
-                  android:layout_alignParentTop="true"
-                  android:layout_alignParentEnd="true"
-                  app:nbMaxTextLength="2" />
+            <com.nex3z.notificationbadge.NotificationBadge
+                android:id="@+id/badge121"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                app:nbMaxTextLength="2" />
           </RelativeLayout>
 
 
@@ -73,7 +73,7 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="22dp"
               android:layout_marginLeft="@dimen/_5sdp"
-              android:fontFamily="@font/open_sans"
+              android:fontFamily="@font/regular"
               android:text="Comparing Packs"
               android:textColor="@color/white"
               android:textSize="@dimen/txt_18sp"
@@ -173,9 +173,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
-                android:fontFamily="@font/open_sans"
+                android:fontFamily="@font/regular"
                 android:text="Featured Packs"
-                android:textColor="#4a4a4a"
+                android:textColor="@color/common_text_color"
                 android:textFontWeight="600"
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold"
@@ -212,11 +212,11 @@
                 android:id="@+id/upgradeText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans"
+                android:fontFamily="@font/regular"
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="If you don’t upgrade to any of the premium plans listed above, you will be moved to our Free forever base plan. View features available in the Free plan here."
-                android:textColor="#747474"
+                android:textColor="@color/dot_grey"
                 android:textFontWeight="400"
                 android:textSize="@dimen/_11sdp"
                 android:visibility="gone"
@@ -247,7 +247,7 @@
         app:dotsWidthFactor="2.5"
         app:layout_constraintTop_toBottomOf="@+id/ly_content"
         app:progressMode="false"
-        app:selectedDotColor="@color/colorAccent"
+        app:selectedDotColor="@color/colorAccent1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

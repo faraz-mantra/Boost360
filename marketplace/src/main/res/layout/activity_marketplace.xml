@@ -210,7 +210,7 @@
                             android:drawablePadding="10dp"
                             android:includeFontPadding="false"
                             android:text="@string/my_current_plan"
-                            android:textColor="#FFB900"
+                            android:textColor="@color/yellow"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
@@ -294,7 +294,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="10dp"
-                                    app:dotsColor="#ffb900"
+                                    app:dotsColor="@color/yellow"
                                     app:dotsCornerRadius="8dp"
                                     app:dotsSize="6dp"
                                     app:dotsSpacing="4dp"
@@ -358,7 +358,7 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:fontFamily="@font/bold"
-                                                    android:textColor="#333333"
+                                                    android:textColor="@color/main_color_gray_dk"
                                                     android:textSize="18sp"
                                                     tools:text="6 items waiting in cart" />
 
@@ -400,7 +400,7 @@
                                                 android:fontFamily="@font/semi_bold"
                                                 android:gravity="center"
                                                 android:text="Talk to expert"
-                                                android:textColor="@color/orange"
+                                                android:textColor="@color/yellow"
                                                 android:textSize="14sp" />
 
                                             <View
@@ -418,7 +418,7 @@
                                                 android:fontFamily="@font/bold"
                                                 android:gravity="center"
                                                 android:text="Review cart"
-                                                android:textColor="@color/orange"
+                                                android:textColor="@color/yellow"
                                                 android:textSize="14sp" />
 
                                         </LinearLayout>
@@ -451,7 +451,7 @@
                     android:id="@+id/mp_package_rl_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#5E5E5E">
+                    android:background="@color/shimmer_bg_color">
 
                     <com.facebook.shimmer.ShimmerFrameLayout
                         android:id="@+id/shimmer_view_package"
@@ -554,7 +554,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#ffb900"
+                    android:background="@color/yellow"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -814,7 +814,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/partner_viewpager"
                         app:progressMode="false"
-                        app:selectedDotColor="#ffb900" />
+                        app:selectedDotColor="@color/yellow" />
 
                 </LinearLayout>
 
@@ -970,7 +970,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Need help to decide?"
-                                android:textColor="#FFFFFF"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
 
                             <TextView
@@ -979,7 +979,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/regular"
                                 android:text="Speak to our expert!"
-                                android:textColor="#FFFFFF"
+                                android:textColor="@color/white"
                                 android:textFontWeight="700"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
@@ -999,7 +999,7 @@
                                 android:paddingEnd="@dimen/_10sdp"
                                 android:text="Call Now"
                                 android:textAllCaps="true"
-                                android:textColor="#ffb900"
+                                android:textColor="@color/yellow"
                                 android:textSize="11sp"
                                 android:textStyle="bold" />
 
@@ -1065,7 +1065,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:text="@string/refer_nboost_360_n_get_n_20_off"
-                                    android:textColor="#FF9F00"
+                                    android:textColor="@color/refer_yellow_color"
                                     android:textSize="24sp"
                                     android:textStyle="bold" />
 
@@ -1125,7 +1125,7 @@
                             android:paddingEnd="30dp"
                             android:paddingBottom="10dp"
                             android:text="@string/view_referral_items"
-                            android:textColor="#FFB900"
+                            android:textColor="@color/yellow"
                             android:textFontWeight="700"
                             android:textSize="13sp"
                             android:textStyle="bold"
@@ -1192,7 +1192,7 @@
                             android:paddingEnd="30dp"
                             android:paddingBottom="10dp"
                             android:text="@string/give_feedback"
-                            android:textColor="#FFB900"
+                            android:textColor="@color/yellowBorder"
                             android:textFontWeight="700"
                             android:textSize="14sp"
                             android:textStyle="bold" />

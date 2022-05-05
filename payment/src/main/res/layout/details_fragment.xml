@@ -122,7 +122,7 @@
             android:id="@+id/title_appbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/semi_bold"
             android:paddingStart="@dimen/_10sdp"
             android:text="@string/facebook_lead_ads_upto_75_leads"
             android:textColor="@color/white"
@@ -285,7 +285,7 @@
               android:drawableLeft="@drawable/tag"
               android:drawablePadding="@dimen/_5sdp"
               android:text="@string/marketing"
-              android:textColor="#747474"
+              android:textColor="@color/dot_grey"
               android:textSize="12sp"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toTopOf="parent" />
@@ -296,7 +296,7 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/_5sdp"
               android:text="@string/facebook_lead_ads_upto_75_leads"
-              android:textColor="#2a2a2a"
+              android:textColor="@color/common_bold_text_color"
               android:textSize="@dimen/_14sdp"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="@+id/title_top_1"
@@ -331,7 +331,7 @@
               android:layout_marginStart="20dp"
               android:layout_marginTop="8dp"
               android:text="@string/add_now_for_99_month"
-              android:textColor="#0068e0"
+              android:textColor="@color/light_blue"
               android:textSize="12sp"
               app:layout_constraintStart_toStartOf="@+id/margin_grey"
               app:layout_constraintTop_toBottomOf="@+id/margin_grey" />
@@ -341,7 +341,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="@string/original_cost_799_month"
-              android:textColor="#9b9b9b"
+              android:textColor="@color/globalLight"
               android:textSize="@dimen/_10sdp"
               app:layout_constraintStart_toStartOf="@+id/money"
               app:layout_constraintTop_toBottomOf="@+id/money" />
@@ -381,7 +381,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/orange_button_click_effect"
-                android:fontFamily="@font/open_sans_semibold"
+                android:fontFamily="@font/semi_bold"
                 android:gravity="center"
                 android:paddingStart="@dimen/_30sdp"
                 android:paddingTop="@dimen/_10sdp"
@@ -428,7 +428,7 @@
           android:layout_weight="1"
           android:lineSpacingExtra="1sp"
           android:text="@string/learn_why_running_a_facebook_ad_campaign_is_always_a_good_idea"
-          android:textColor="#4a4a4a"
+          android:textColor="@color/common_text_color"
           android:textSize="@dimen/_10ssp" />
 
         <ImageView
@@ -468,7 +468,7 @@
           android:paddingEnd="20dp"
           android:paddingBottom="@dimen/_5sdp"
           android:text="@string/the_luxury_of_traveling_with_yacht_charter_companies"
-          android:textColor="#4a4a4a"
+          android:textColor="@color/common_text_color"
           android:textSize="@dimen/_13ssp"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
@@ -599,12 +599,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/review_layout"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:gravity="center_horizontal"
         android:paddingTop="@dimen/_20sdp"
         android:paddingBottom="@dimen/_20sdp"
         android:text="You haven't bought this addon"
-        android:textColor="#9b9b9b" />
+        android:textColor="@color/globalLight" />
 
     </RelativeLayout>
   </androidx.core.widget.NestedScrollView>

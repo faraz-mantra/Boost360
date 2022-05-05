@@ -210,7 +210,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     this.responseCreateProfile = response
     val request = getBusinessRequest()
     isSyncCreateFpApi = true
-    viewModel?.putCreateBusinessV6(response.result?.loginId, request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.putCreateBusinessV6(response.result?.loginId, request)?.observeOnce(viewLifecycleOwner) {
       val result = it as? FloatingPointCreateResponse
       if (result?.isSuccess() == true && result.authTokens.isNullOrEmpty().not()) {
         authToken = result.authTokens?.firstOrNull()
@@ -243,7 +243,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
         showShortToast(if (msg.isNotEmpty()) msg else getString(R.string.error_create_business_fp))
       }
       hideProgress()
-    })
+    }
   }
 
   private fun getBusinessRequest(): BusinessCreateRequest {

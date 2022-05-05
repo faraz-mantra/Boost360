@@ -26,7 +26,7 @@
       android:background="@drawable/ic_cart_applied_coupon_bg"
       android:gravity="center"
       android:text="FESTIVE"
-      android:textColor="#4A4A4A"
+      android:textColor="@color/common_text_color"
       android:textSize="@dimen/txt_14sp"
       android:textStyle="bold" />
 
@@ -37,7 +37,7 @@
       android:layout_gravity="center"
       android:layout_marginStart="13dp"
       android:text="You save: ₹98"
-      android:textColor="#7ED321"
+      android:textColor="@color/offer_border"
       android:textSize="@dimen/txt_12sp" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -72,9 +72,9 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:drawablePadding="5dp"
-      android:fontFamily="@font/open_sans_semibold"
+      android:fontFamily="@font/semi_bold"
       android:text="Congratulations! Coupon was applied successfully."
-      android:textColor="#FFB900"
+      android:textColor="@color/colorAccent1"
       android:textSize="@dimen/txt_12sp" />
 
 

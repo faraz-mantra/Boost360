@@ -18,7 +18,7 @@
       android:drawablePadding="5dp"
       android:lineSpacingExtra="1sp"
       android:text="Adding multiple product images and a detailed description helps customers make decisions faster"
-      android:textColor="#4A4A4A"
+      android:textColor="@color/common_text_color"
       android:textSize="@dimen/txt_16sp" />
   </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

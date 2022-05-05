@@ -26,6 +26,7 @@ class SharedPrefs(activity: Activity) {
   private val fp_email = "GET_FP_DETAILS_EMAIL"
 
   private val CART_ORDER_INFO = "CART_ORDER_INFO"
+  private val AUTORENEW_SUBSCRIPTION_ID = "AUTORENEW_SUBSCRIPTION_ID"
   private val CART_IDS = "CART_IDS"
   private val COUPON_IDS = "COUPON_IDS"
   private val CART_COUPON_DETAILS = "CART_COUPON_DETAILS"
@@ -142,6 +143,14 @@ class SharedPrefs(activity: Activity) {
     } else {
       return null
     }
+  }
+
+  fun storeAutoRenewSubscriptionID(subscriptionID: String?){
+    editor!!.putString(AUTORENEW_SUBSCRIPTION_ID, subscriptionID).apply()
+  }
+
+  fun getAutoRenewSubscriptionID(): String? {
+    return pref!!.getString(AUTORENEW_SUBSCRIPTION_ID, "")
   }
 
   fun storeGstApiResponse(result: Result?) {

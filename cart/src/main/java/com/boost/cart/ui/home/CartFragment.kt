@@ -225,7 +225,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             window.setStatusBarColor(getResources().getColor(R.color.common_text_color))
         }
 
-
         cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, ArrayList(), requireActivity().application)
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
         cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
@@ -255,6 +254,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity()).get(CartViewModel::class.java)
+        showProgress("Please wait...")
         Constants.COMPARE_BACK_VALUE = 1
 //    val list = arrayListOf<Bundles>()
         prefs.storeCompareState(1)
@@ -552,7 +552,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             } else if (et_email.text.toString().isEmpty()) {
                 et_email.setBackgroundResource(R.drawable.et_validity_error)
                 Toasty.error(requireContext(), "Email is Empty", Toast.LENGTH_SHORT).show()
-
+                cart_billing_details_edit_layout.visibility = View.VISIBLE
+                billing_details.visibility = View.VISIBLE
+                edit.visibility = View.GONE
+                billing_details.visibility = View.GONE
+                prefs.storeCartOrderInfo(null)
             } else {
                 months_validity.setBackgroundResource(R.drawable.et_validity)
                 if (prefs.getCartOrderInfo() != null) {
@@ -944,6 +948,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //                months_validity.text = default_validity_months.toString() + " months"
 
                 prefs.storeCartOrderInfo(null)
+                prefs.storeAutoRenewSubscriptionID(null)
 //                totalCalculation()
                 totalCalculationAfterCoupon()
                 Log.v("cart_amount_value1", " " + total)
@@ -996,6 +1001,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 }
 
                 prefs.storeCartOrderInfo(null)
+                prefs.storeAutoRenewSubscriptionID(null)
 //                totalCalculation()
                 totalCalculationAfterCoupon()
                 Log.v("cart_amount_value1", " " + total)
@@ -1046,6 +1052,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     totalValidityDays = 30 * default_validity_months
                     prefs.storeMonthsValidity(totalValidityDays)
                     prefs.storeCartOrderInfo(null)
+                    prefs.storeAutoRenewSubscriptionID(null)
                     feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
 //                    totalCalculation()
                     totalCalculationAfterCoupon()
@@ -1091,6 +1098,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     totalValidityDays = 30 * default_validity_months
                     prefs.storeMonthsValidity(totalValidityDays)
                     prefs.storeCartOrderInfo(null)
+                    prefs.storeAutoRenewSubscriptionID(null)
                     feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
 //                    totalCalculation()
                     totalCalculationAfterCoupon()
@@ -1141,6 +1149,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         totalValidityDays = 30 * default_validity_months
                         prefs.storeMonthsValidity(totalValidityDays)
                         prefs.storeCartOrderInfo(null)
+                        prefs.storeAutoRenewSubscriptionID(null)
                         totalCalculationAfterCoupon()
                         if (couponCode.isNotEmpty())
                             viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as CartActivity).fpid!!), couponCode)
@@ -1151,6 +1160,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         totalValidityDays = 30 * default_validity_months
                         prefs.storeMonthsValidity(totalValidityDays)
                         prefs.storeCartOrderInfo(null)
+                        prefs.storeAutoRenewSubscriptionID(null)
                         totalCalculationAfterCoupon()
                         if (couponCode.isNotEmpty())
                             viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as CartActivity).fpid!!), couponCode)
@@ -1373,6 +1383,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 if (createCustomerInfoRequest!!.BusinessDetails != null) {
 //          business_contact_number.setText(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber)
 //          business_email_address.setText(createCustomerInfoRequest!!.BusinessDetails!!.Email)
+                }
+                if(!createCustomerInfoRequest!!.BusinessDetails.Email.isNullOrEmpty()){
+                    et_email.setText(createCustomerInfoRequest!!.BusinessDetails.Email)
+                    email_value.setText(createCustomerInfoRequest!!.BusinessDetails.Email)
+                    cart_email_missing.visibility = View.GONE
                 }
                 if (createCustomerInfoRequest!!.AddressDetails != null) {
                     cart_business_city_name.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
@@ -2449,6 +2464,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 cartList = it as ArrayList<CartModel>
                 empty_cart.visibility = View.GONE
                 cart_main_layout.visibility = View.VISIBLE
+                item_count.visibility = View.VISIBLE
+                title.setGravity(Gravity.BOTTOM)
+                item_count.text = cartList.size.toString()+" items"
                 val features = arrayListOf<CartModel>()
                 val bundles = arrayListOf<CartModel>()
                 for (items in it) {
@@ -2573,7 +2591,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 }
                 event_attributes.put("cart ids", Utils.filterBraces(cartFullItems.toString()))
                 Log.v("events", event_attributes.toString())
-                viewModel.getRecommendedAddons(RecommendedAddonsRequest(recommendedAddonsWidgetKey, (activity as CartActivity).fpid, (activity as CartActivity).experienceCode))
+//                viewModel.getRecommendedAddons(RecommendedAddonsRequest(recommendedAddonsWidgetKey, (activity as CartActivity).fpid, (activity as CartActivity).experienceCode))
 //                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", event_attributes)
                 WebEngageController.trackEvent(event_name = EVENT_NAME_ADDONS_MARKETPLACE_FULL_CART_LOADED, EVENT_LABEL_ADDONS_MARKETPLACE_FULL_CART_LOADED, event_attributes)
 
@@ -2586,18 +2604,22 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 months_validity_edit_dsc.visibility = View.GONE
 //                months_validity.text = "- -"
                 months_validity.setText("- -")
+                item_count.visibility = View.GONE
+                title.setGravity(Gravity.CENTER_VERTICAL)
 
                 //clear coupon
                 validCouponCode = null
 
                 //remove saved orderdetails from prefs
                 prefs.storeCartOrderInfo(null)
+                prefs.storeAutoRenewSubscriptionID(null)
                 prefs.storeApplyedCouponDetails(null)
                 prefs.storeCartValidityMonths(null)
 
                 //clear viewModel data
                 viewModel.clearValidCouponResult()
             }
+            viewModel.updatesLoader.postValue(false)
         })
 
         viewModel.getPurchaseOrderResponse().observe(this, Observer {
@@ -2798,6 +2820,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             if (it != null) {
                 //clear stored cartOrderInfo
                 prefs.storeCartOrderInfo(null)
+                prefs.storeAutoRenewSubscriptionID(null)
 
                 //save coupon Details
                 prefs.storeApplyedCouponDetails(it)
@@ -2823,6 +2846,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 if (it != null) {
                     //clear stored cartOrderInfo
                     prefs.storeCartOrderInfo(null)
+                    prefs.storeAutoRenewSubscriptionID(null)
 
                     //save coupon Details
                     //         prefs.storeApplyedCouponDetails(it)
@@ -3050,7 +3074,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
     fun totalCalculationAfterCoupon() {
         if (::cartList.isInitialized) {
             total = 0.0
-            overalltotal = 0.0
             couponDiscountAmount = 0.0
             var couponDisount = 0
 //            if (validCouponCode != null) {
@@ -3066,33 +3089,29 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     else
                         total += ((item.price / package_validity_months) * default_validity_months)
                 }
-                cart_amount_title.text = "Cart total (" + cartList.size + " items)"
-                overalltotal = total + taxValue
-                cart_amount.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(overalltotal)
-                coupontotal = total
 
-                if (couponServiceModel != null)
-                    couponDiscountAmount = couponServiceModel?.couponDiscountAmt!!
-                else
-                    couponServiceModel = null
 //                couponDiscountAmount = total * couponDisount / 100
 //                couponDiscountAmount = couponServiceModel!!.couponDiscountAmt!!
 
 
                 if (couponServiceModel != null) {
+                    couponDiscountAmount = couponServiceModel?.couponDiscountAmt!!
                     coupon_discount_layout.visibility = View.VISIBLE
-                    coupon_discount_title.text =
-                            "'" + couponServiceModel?.coupon_key + "'" + " coupon discount"
+                    coupon_discount_title.text = "'" + couponServiceModel?.coupon_key + "'" + " coupon discount"
                     coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
                 } else {
+                    couponServiceModel = null
                     coupon_discount_layout.visibility = View.GONE
                 }
 
-                overalltotal -= couponDiscountAmount
                 Log.v("cart_amount_value", " " + total)
                 val temp = (total * 18) / 100
                 taxValue = Math.round(temp * 100) / 100.0
-                grandTotal = (Math.round((overalltotal) * 100) / 100.0)
+                grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
+                grandTotal -= couponDiscountAmount
+                cart_amount_title.text = "Cart total (" + cartList.size + " items)"
+                cart_amount.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total + taxValue)
+                coupontotal = total
                 //       igst_value.text = "+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue)
 //                order_total_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
                 cart_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
@@ -3122,6 +3141,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         couponDiwaliRedundant.remove(itemID)
         //remove saved orderdetails from prefs
         prefs.storeCartOrderInfo(null)
+        prefs.storeAutoRenewSubscriptionID(null)
         prefs.storeCartValidityMonths(null)
         //remove item from firebase
         CartFirestoreManager.removeDocument(itemID)
@@ -3169,6 +3189,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //                    totalCalculation()
                     totalCalculationAfterCoupon()
                     prefs.storeCartOrderInfo(null)
+                    prefs.storeAutoRenewSubscriptionID(null)
                     if (cartList.isEmpty()) {
                         empty_cart.visibility = View.VISIBLE
                         cart_main_layout.visibility = View.GONE
@@ -3220,6 +3241,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         intent.putExtra("customerId", customerId)
         intent.putExtra("amount", result.Result.TotalPrice)// pass in currency subunits. For example, paise. Amount: 1000 equals ₹10
         intent.putExtra("order_id", result.Result.OrderId)
+        intent.putExtra("netPrice", total)
+        if(couponServiceModel!=null) {
+            intent.putExtra("couponTitle","'" + couponServiceModel?.coupon_key + "'" + " coupon discount")
+            intent.putExtra("couponAmount", couponDiscountAmount)
+        }
+        intent.putExtra("discountText", total)
         intent.putExtra("transaction_id", result.Result.TransactionId)
         intent.putExtra("email", (activity as CartActivity).email)
         intent.putExtra("currency", "INR")

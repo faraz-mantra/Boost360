@@ -30,7 +30,7 @@
       android:id="@+id/addons_title"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:fontFamily="@font/open_sans_semibold"
+      android:fontFamily="@font/semi_bold"
       android:text="Missed Call IVR"
       android:textColor="@color/common_text_color"
       android:textSize="@dimen/_10sdp"
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_5sdp"
         android:background="@drawable/all_side_curve_percentage_bg"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:textColor="@color/common_text_color"
         android:textSize="@dimen/_6sdp"
         tools:text="60%" />
@@ -58,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_5sdp"
-        android:textColor="#0068e0"
+        android:textColor="@color/light_blue"
         android:textSize="@dimen/_8sdp"
         tools:text="₹101/month" />
 
@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_5sdp"
-        android:textColor="#9b9b9b"
+        android:textColor="@color/globalLight"
         android:textSize="@dimen/_8sdp"
         tools:text="₹299/month" />
 

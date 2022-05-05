@@ -1,6 +1,7 @@
 package com.boost.marketplace.adapter
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.text.SpannableString
@@ -36,10 +37,13 @@ class PackageRecyclerAdapter(
 )
     : RecyclerView.Adapter<PackageRecyclerAdapter.PagerViewHolder>() {
 
+    lateinit var context: Context
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {
         val item = LayoutInflater.from(parent?.context).inflate(
             R.layout.package_item, parent, false
         )
+        context = item.context
         return PagerViewHolder(item)
     }
 
@@ -56,7 +60,7 @@ class PackageRecyclerAdapter(
 //                    R.drawable.added_to_cart_grey
 //            )
 //
-//            holder.getNowButton.setTextColor(Color.parseColor("#bbbbbb"))
+//            holder.getNowButton.setTextColor(context.getResources().getColor(R.color.tv_color_BB))
 //            holder.getNowButton.setText("Added to cart")
 //
 //            homeListener.onPackageAddToCart(list.get(position),holder.primaryImageCopy)
@@ -193,7 +197,7 @@ class PackageRecyclerAdapter(
                                                 activity.application,
                                                 R.drawable.added_to_cart_grey
                                         )
-                                        holder.getNowButton.setTextColor(Color.parseColor("#bbbbbb"))
+                                        holder.getNowButton.setTextColor(context.getResources().getColor(R.color.tv_color_BB))
                                         holder.getNowButton.setText("Added To Cart")
                                         holder.getNowButton.setEnabled(false)
                                         holder.getNowButton.isEnabled = false

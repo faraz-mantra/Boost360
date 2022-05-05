@@ -24,6 +24,7 @@ import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 import java.util.ArrayList;
 
+@Deprecated
 public class DomainNotPurchaseFragment extends Fragment {
 
     private DomainNotPurchaseViewModel mViewModel;

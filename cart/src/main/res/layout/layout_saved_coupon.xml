@@ -51,10 +51,10 @@
             app:layout_constraintTop_toBottomOf="@id/iv_badge_bg"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:textColor="#7ED321"
+            android:textColor="@color/offer_border"
             android:textFontWeight="600"
             tools:text="ghjgjg"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/regular"
             android:textSize="24sp"
             />
         <androidx.appcompat.widget.AppCompatTextView
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="22dp"
             android:layout_marginTop="4dp"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/regular"
             android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@id/tv_badge_text"
             app:layout_constraintStart_toStartOf="parent"

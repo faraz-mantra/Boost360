@@ -59,7 +59,7 @@
                         android:background="@drawable/backgroundwhite"
                         android:padding="8dp"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/emails" />
+                        tools:src="@drawable/emails" />
 
                 </RelativeLayout>
 
@@ -87,10 +87,10 @@
                             android:id="@+id/title1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/open_sans"
+                            android:fontFamily="@font/regular"
                             android:text="In-clinic appointments"
                             android:maxLines="4"
-                            android:textColor="#2a2a2a"
+                            android:textColor="@color/textcolor_2a2a"
                             android:textSize="@dimen/_12sdp" />
 
                     </LinearLayout>
@@ -99,9 +99,9 @@
                         android:id="@+id/validity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans"
+                        android:fontFamily="@font/regular"
                         android:lineSpacingExtra="1.3sp"
-                        android:textColor="#2a2a2a"
+                        android:textColor="@color/textcolor_2a2a"
                         android:textSize="@dimen/_10sdp"
                         tools:text="Valid till jun 23,2022" />
 
@@ -112,9 +112,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:fontFamily="@font/open_sans_semibold"
+                    android:fontFamily="@font/semi_bold"
                     android:text="Time 1:10 PM"
-                    android:textColor="#747474"
+                    android:textColor="@color/coupon_text_color"
                     android:textSize="@dimen/_10sdp"
                     app:layout_constraintBottom_toTopOf="@+id/imageLayout"
                     app:layout_constraintEnd_toStartOf="@+id/btn_invoice"
@@ -133,7 +133,7 @@
                     android:gravity="center"
                     android:text="Invoice"
                     android:textAllCaps="false"
-                    android:textColor="#FFB900"
+                    android:textColor="@color/yellow"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:visibility="gone"/>

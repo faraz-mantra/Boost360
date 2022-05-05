@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#ffb900</color>
-    <color name="colorPrimaryDark">#d99d00</color>
-    <color name="colorAccent">#ffb900</color>
+    <color name="colorPrimary1">#4A4A4A</color>
+    <color name="colorPrimaryDark1">#0F000000</color>
+    <color name="colorAccent1">#ffb900</color>
+    <color name="colorTransparentPrimary1">#FF4A4A4A</color>
+
     <color name="primary">#FFFFFF</color>
     <color name="primaryDark">#FFFFFF</color>
     <color name="accent">#eeff41</color>
@@ -346,11 +348,15 @@
     <color name="text_color_roboto_lt_30_edittext">#383838</color>
     <color name="hint_color_roboto_lt_30_edittext">#b6b6b6</color>
 
+    <color name="offer_border">#7ED321</color>
     <color name="fullscreen_color">#a5000000</color>
     <color name="light_blue">#0068e0</color>
     <color name="warm_grey">#747474</color>
     <color name="orange">#FFB900</color>
     <color name="addons_toolbar">#FF9F00</color>
     <color name="addons_text_color">#ffb900</color>
+    <color name="copy_coupon_text_color">#828282</color>
+    <color name="tv_color_BB">#BBBBBB</color>
+    <color name="colorLightAccent">#FFF0C9</color>
 
 </resources>

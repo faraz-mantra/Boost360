@@ -49,19 +49,19 @@
         android:id="@+id/card_payment_addons_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:lineSpacingExtra="1.3sp"
         android:text="SBI Debit Card"
-        android:textColor="#2a2a2a" />
+        android:textColor="@color/common_bold_text_color" />
 
       <TextView
         android:id="@+id/card_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:lineSpacingExtra="1.3sp"
         android:text="***1854"
-        android:textColor="#2a2a2a"
+        android:textColor="@color/common_bold_text_color"
         android:textSize="@dimen/_8sdp" />
 
     </LinearLayout>

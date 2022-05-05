@@ -57,7 +57,7 @@
           android:id="@+id/business_type"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans_semibold"
+          android:fontFamily="@font/semi_bold"
           android:text="Activated"
           android:textSize="@dimen/_9sdp"
           android:visibility="gone" />
@@ -67,9 +67,9 @@
         android:id="@+id/widget_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:lineSpacingExtra="1.3sp"
-        android:textColor="#2a2a2a"
+        android:textColor="@color/common_bold_text_color"
         android:textSize="@dimen/_12sdp"
         tools:text="Facebook Ads (upto 75 leads)" />
 
@@ -88,7 +88,7 @@
     <!--                android:text="₹499 "-->
     <!--                android:padding="@dimen/_10sdp"-->
     <!--                android:textSize="@dimen/_9sdp"-->
-    <!--                android:fontFamily="@font/open_sans_semibold"/>-->
+    <!--                android:fontFamily="@font/semi_bold"/>-->
     <!--        </LinearLayout>-->
 
     <View

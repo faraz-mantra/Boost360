@@ -12,12 +12,13 @@
   <androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+      android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="60dp"
-      android:background="#4A4A4A"
+      android:background="@color/colorPrimary1"
       android:orientation="horizontal">
 
       <androidx.appcompat.widget.AppCompatImageView
@@ -133,7 +134,7 @@
         android:layout_marginTop="15dp"
         android:lineSpacingExtra="1sp"
         android:text="@string/how_it_works_text"
-        android:textColor="#4A4A4A"
+        android:textColor="@color/common_text_color"
         android:textSize="@dimen/txt_16sp" />
 
       <androidx.appcompat.widget.LinearLayoutCompat
@@ -157,12 +158,12 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center"
-          app:dotsColor="#ffb900"
+          app:dotsColor="@color/dot_grey"
           app:dotsCornerRadius="8dp"
           app:dotsSize="6dp"
           app:dotsSpacing="4dp"
           app:dotsWidthFactor="2.5"
-          app:selectedDotColor="@color/color_primary" />
+          app:selectedDotColor="@color/colorAccent1" />
 
       </androidx.appcompat.widget.LinearLayoutCompat>
 

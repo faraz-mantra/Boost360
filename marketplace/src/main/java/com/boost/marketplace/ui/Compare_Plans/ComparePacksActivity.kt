@@ -36,6 +36,7 @@ import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
+import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -76,8 +77,8 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
     var cartList: List<CartModel>? = null
 
     var badgeNumber = 0
-    var offeredBundlePrice = 0
-    var originalBundlePrice = 0
+    var offeredBundlePrice = 0.0
+    var originalBundlePrice = 0.0
     var featureCount = 0
     var cartCount = 0
 
@@ -550,22 +551,22 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
                         .subscribe(
                             {
 //                                            featuresList = it
-                                var bundleMonthlyMRP = 0
+                                var bundleMonthlyMRP = 0.0
                                 val minMonth:Int = if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
 
                                 for (singleItem in it) {
                                     for (item in item!!.included_features) {
                                         if (singleItem.feature_code == item.feature_code) {
-                                            bundleMonthlyMRP += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt()
+                                            bundleMonthlyMRP += RootUtil.round(singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0), 2)
                                         }
                                     }
                                 }
 
-                                offeredBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
-                                originalBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
+                                offeredBundlePrice = (bundleMonthlyMRP * minMonth)
+                                originalBundlePrice = (bundleMonthlyMRP * minMonth)
 
                                 if(item!!.overall_discount_percent > 0)
-                                    offeredBundlePrice = originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent/100)
+                                    offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent/100),2)
                                 else
                                     offeredBundlePrice = originalBundlePrice
 

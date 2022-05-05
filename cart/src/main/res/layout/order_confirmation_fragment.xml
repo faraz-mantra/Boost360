@@ -114,7 +114,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_3sdp"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:text="Order Successfully Placed"
         android:textColor="@color/common_text_color"
         android:textSize="@dimen/_15sdp" />
@@ -124,7 +124,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_3sdp"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:text="Payment Status Pending \n Go to Email to Complete Payment "
         android:textColor="@color/app_primary_color"
@@ -139,7 +139,7 @@
         android:gravity="center"
         android:lineSpacingExtra="@dimen/_3sdp"
         android:text="--"
-        android:textColor="#747474" />
+        android:textColor="@color/dot_grey" />
 
     </LinearLayout>
 
@@ -160,7 +160,7 @@
         android:gravity="center"
         android:lineSpacingExtra="@dimen/_3sdp"
         android:text="-- Order Date, Order ID, transaction Id, "
-        android:textColor="#747474"
+        android:textColor="@color/dot_grey"
         android:textSize="@dimen/_8sdp" />
     </LinearLayout>
 
@@ -171,7 +171,7 @@
       android:layout_margin="@dimen/_10sdp"
       android:background="@drawable/orange_button_click_effect"
       android:elevation="@dimen/_2sdp"
-      android:fontFamily="@font/open_sans_semibold"
+      android:fontFamily="@font/semi_bold"
       android:gravity="center"
       android:paddingStart="@dimen/_30sdp"
       android:paddingTop="@dimen/_10sdp"
@@ -191,12 +191,12 @@
       android:layout_margin="@dimen/_10sdp"
       android:background="@drawable/order_grey_button_click_effect"
       android:elevation="@dimen/_2sdp"
-      android:fontFamily="@font/open_sans_semibold"
+      android:fontFamily="@font/semi_bold"
       android:gravity="center"
       android:padding="@dimen/_10sdp"
       android:text="Need help?"
       android:textAllCaps="true"
-      android:textColor="#9b9b9b"
+      android:textColor="@color/globalLight"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />

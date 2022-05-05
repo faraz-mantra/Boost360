@@ -11,6 +11,8 @@ import androidx.lifecycle.MutableLiveData
 import com.boost.dbcenterapi.data.api_model.GetPaymentLink.PaymentLink
 import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
 import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
+import com.boost.dbcenterapi.data.api_model.autorenew.OrderAutoRenewRequest
+import com.boost.dbcenterapi.data.api_model.autorenew.OrderAutoRenewResponse
 import com.boost.dbcenterapi.data.api_model.customerId.create.CreateCustomerIDResponse
 import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.dbcenterapi.data.api_model.customerId.get.GetCustomerIDResponse
@@ -79,6 +81,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
   var closeBusinessPopupFlag: MutableLiveData<Boolean> = MutableLiveData()
 
   private var paymentLink: MutableLiveData<PaymentLink> = MutableLiveData()
+  private var orderForAutoRenewalResult: MutableLiveData<OrderAutoRenewResponse> = MutableLiveData()
 
   //    fun getPaymentMethods(): JSONObject {
   fun getPaymentMethods(): LiveData<JSONObject> {
@@ -218,6 +221,10 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
 
   fun updateLink(): LiveData<PaymentLink> {
     return paymentLink
+  }
+
+  fun orderForAutoRenewalResult(): LiveData<OrderAutoRenewResponse> {
+    return orderForAutoRenewalResult
   }
 
   fun writeStringAsFile(fileContents: String?, fileName: String?) {
@@ -541,6 +548,23 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
         .subscribe(
           {
             paymentLink.postValue(it)
+            updatesLoader.postValue(false)
+          }, {
+            updatesLoader.postValue(false)
+            updatesError.postValue(it.message)
+          })
+    )
+  }
+
+  fun markOrderForAutoRenewal(auth: String, request: OrderAutoRenewRequest) {
+    updatesLoader.postValue(true)
+    compositeDisposable.add(
+      ApiService.MarkOrderForAutoRenewal(auth, request)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(
+          {
+            orderForAutoRenewalResult.postValue(it)
             updatesLoader.postValue(false)
           }, {
             updatesLoader.postValue(false)

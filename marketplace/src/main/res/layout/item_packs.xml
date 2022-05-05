@@ -89,11 +89,11 @@
                         android:id="@+id/offer_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans_semibold"
+                        android:fontFamily="@font/semi_bold"
                         android:paddingStart="0dp"
                         android:paddingEnd="5dp"
                         android:text="₹2,099/month"
-                        android:textColor="#828282"
+                        android:textColor="@color/copy_coupon_text_color"
                         android:textFontWeight="600"
                         android:textSize="13sp" />
 
@@ -101,11 +101,11 @@
                         android:id="@+id/orig_cost"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans"
+                        android:fontFamily="@font/regular"
                         android:paddingStart="0dp"
                         android:paddingEnd="5dp"
                         android:text="₹2,559/month"
-                        android:textColor="#828282"
+                        android:textColor="@color/copy_coupon_text_color"
                         android:textFontWeight="400"
                         android:textSize="13sp" />
 

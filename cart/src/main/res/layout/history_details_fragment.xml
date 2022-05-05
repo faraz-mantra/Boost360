@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:text="Order Details"
         android:textColor="@color/white"
@@ -211,7 +211,7 @@
             android:id="@+id/total_list_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/regular"
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_5sdp"
             android:text="Total List Price"
@@ -222,7 +222,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/regular"
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_5sdp"
             android:textColor="@color/common_text_color"
@@ -233,7 +233,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/total_list_price"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/regular"
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_5sdp"
             android:text="Discount"
@@ -245,7 +245,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/history_details_MRPPrice"
             android:layout_alignParentEnd="true"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/regular"
             android:paddingTop="@dimen/_5sdp"
             android:paddingBottom="@dimen/_5sdp"
             tools:text="₹900" />
@@ -275,7 +275,7 @@
           <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/semi_bold"
             android:text="Total Paid"
             android:textColor="#0A68E0" />
 
@@ -284,7 +284,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/semi_bold"
             android:textColor="#0A68E0"
             tools:text="₹900" />
         </RelativeLayout>
@@ -331,7 +331,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/_10sdp"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:text="Payment via Net Banking"
           android:textColor="@color/common_text_color" />
 
@@ -339,7 +339,7 @@
           android:id="@+id/history_details_transaction_id"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans"
+          android:fontFamily="@font/regular"
           android:text="Transaction ID #BFDVNDN2434DR"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="@id/history_details_payment_type"
@@ -385,7 +385,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/_10sdp"
-          android:fontFamily="@font/open_sans_semibold"
+          android:fontFamily="@font/semi_bold"
           android:paddingTop="@dimen/_3sdp"
           android:paddingBottom="@dimen/_5sdp"
           android:text="Items Included ()"
@@ -435,7 +435,7 @@
           android:paddingTop="@dimen/_30sdp"
           android:paddingBottom="@dimen/_20sdp"
           android:text="Print Invoice"
-          android:textColor="#9B9B9B" />
+          android:textColor="@color/globalLight" />
       </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

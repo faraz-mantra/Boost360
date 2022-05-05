@@ -28,6 +28,7 @@ import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.upgradeDB.model.YoutubeVideoModel
 import com.boost.dbcenterapi.utils.*
 import com.boost.dbcenterapi.utils.Utils.longToast
+import com.boost.marketplace.BuildConfig
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
@@ -53,6 +54,7 @@ import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.getAccessTokenAuth
+import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -87,8 +89,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     var feedBackLink: String? = null
     lateinit var prefs: SharedPrefs
     var packageInCartStatus = false
-    var offeredBundlePrice = 0
-    var originalBundlePrice = 0
+    var offeredBundlePrice = 0.0
+    var originalBundlePrice = 0.0
     var featuresList: List<FeaturesModel>? = null
     private var itemsArrayList: ArrayList<String>? = ArrayList()
     private var packsArrayList: ArrayList<String>? = ArrayList()
@@ -218,7 +220,12 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //        }
 
         initializeVideosRecycler()
-        initializePartnerViewPager()
+        if(BuildConfig.FLAVOR.equals("jioonline")) {
+            initializePartnerViewPager()
+            partner_layout.visibility = View.VISIBLE
+        }else{
+            partner_layout.visibility = View.GONE
+        }
         initializeBannerViewPager()
         initializePackageViewPager()
         initializeFeatureDeals()
@@ -828,13 +835,16 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                         }
                     }
                 }
-                if(paidUser){
+                runOnUiThread {
+                  if(paidUser){
                     bottom_box.visibility = View.VISIBLE
                     footer.visibility = View.VISIBLE
-                }else{
+                  }else{
                     bottom_box.visibility = View.GONE
                     footer.visibility = View.GONE
+                  }
                 }
+
             }
     }
 
@@ -1557,8 +1567,12 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         viewModel.getPartnerZone().observe(this, androidx.lifecycle.Observer {
             Log.e("getPartnerZone", it.toString())
             if (it.size > 0) {
-                updatePartnerViewPager(it)
-                partner_layout.visibility = View.VISIBLE
+                if(BuildConfig.FLAVOR.equals("jioonline")){
+                    partner_layout.visibility = View.GONE
+                }else {
+                    updatePartnerViewPager(it)
+                    partner_layout.visibility = View.VISIBLE
+                }
             } else {
                 partner_layout.visibility = View.GONE
             }
@@ -2559,7 +2573,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                        applicationContext,
 //                        R.drawable.added_to_cart_grey
 //                )
-//                package_submit.setTextColor(Color.parseColor("#bbbbbb"))
+//                package_submit.setTextColor(context.getResources().getColor(R.color.tv_color_BB))
 //                package_submit.setText(getString(R.string.added_to_cart))
                                 badgeNumber = badgeNumber + 1
 //                badge121.setText(badgeNumber.toString())
@@ -2677,20 +2691,20 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 .subscribe(
                     {
                         featuresList = it
-                        var bundleMonthlyMRP = 0
+                        var bundleMonthlyMRP = 0.0
                         val minMonth: Int =
                             if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
 
                         for (singleItem in it) {
                             for (item in item!!.included_features) {
                                 if (singleItem.feature_code == item.feature_code) {
-                                    bundleMonthlyMRP += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt()
+                                    bundleMonthlyMRP += RootUtil.round(singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),2)
                                 }
                             }
                         }
 
-                        offeredBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
-                        originalBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
+                        offeredBundlePrice = (bundleMonthlyMRP * minMonth).toDouble()
+                        originalBundlePrice = (bundleMonthlyMRP * minMonth).toDouble()
 
                         if (item!!.overall_discount_percent > 0)
                             offeredBundlePrice =
@@ -3104,7 +3118,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             )
         }
     }
-
 
 }
 

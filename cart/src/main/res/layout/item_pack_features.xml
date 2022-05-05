@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:layout_margin="5dp">
-
-  <androidx.appcompat.widget.AppCompatImageView
-      android:id="@+id/imageView2"
-      android:layout_width="@dimen/_16sdp"
-      android:layout_height="@dimen/_16sdp"
-      android:layout_gravity="start"
-      android:layout_margin="@dimen/_5sdp"
-      android:src="@drawable/ic_cart_pack_features_image" />
-
-  <androidx.appcompat.widget.AppCompatTextView
-      android:id="@+id/title"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-      android:maxLines="1"
-      android:ellipsize="end"
-    android:text="Custom Domain With HTTPS Security"
-    android:gravity="center"
-      android:fontFamily="@font/open_sans"
-    android:textSize="@dimen/txt_12sp"
-    android:textColor="#4A4A4A"/>
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="10dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageView2"
+        android:layout_width="@dimen/_16sdp"
+        android:layout_height="@dimen/_16sdp"
+        android:layout_gravity="start|center_vertical"
+        tools:src="@drawable/ic_cart_pack_features_image" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="12dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/regular"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="Custom Domain With HTTPS Security"
+        android:textColor="@color/common_text_color"
+        android:textFontWeight="400"
+        android:textSize="12sp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

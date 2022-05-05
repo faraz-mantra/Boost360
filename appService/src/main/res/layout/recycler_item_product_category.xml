@@ -31,7 +31,7 @@
                     android:layout_width="0dp"
                     android:layout_height="35dp"
                     android:layout_weight="1"
-                    android:fontFamily="@font/open_sans_semibold"
+                    android:fontFamily="@font/semi_bold"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/size_16"
                     android:singleLine="true"

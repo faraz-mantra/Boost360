@@ -14,6 +14,7 @@ import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.home.MarketPlaceActivity
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
+import com.framework.utils.RootUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -48,7 +49,7 @@ class PackageViewPagerAdapter(
 //                    R.drawable.added_to_cart_grey
 //            )
 //
-//            holder.getNowButton.setTextColor(Color.parseColor("#bbbbbb"))
+//            holder.getNowButton.setTextColor(context.getResources().getColor(R.color.tv_color_BB))
 //            holder.getNowButton.setText("Added to cart")
 //
 //            homeListener.onPackageAddToCart(list.get(position),holder.primaryImageCopy)
@@ -113,8 +114,8 @@ class PackageViewPagerAdapter(
       itemsIds.add(item.feature_code)
     }
 
-    var offeredBundlePrice = 0
-    var originalBundlePrice = 0
+    var offeredBundlePrice = 0.0
+    var originalBundlePrice = 0.0
     val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) bundles.min_purchase_months!! else 1
     CompositeDisposable().add(
       AppDatabase.getInstance(activity.application)!!
@@ -130,9 +131,9 @@ class PackageViewPagerAdapter(
               holder.tv_inlcuded_add_on.visibility = View.GONE
             }
 
-            Glide.with(holder.itemView.context).load(it[0].primary_image).into(holder.image1)
-            Glide.with(holder.itemView.context).load(it[1].primary_image).into(holder.image2)
-            Glide.with(holder.itemView.context).load(it[2].primary_image).into(holder.image3)
+            Glide.with(holder.itemView.context).load(if(it.size>=1)it[0].primary_image else "").into(holder.image1)
+            Glide.with(holder.itemView.context).load(if(it.size>=2)it[1].primary_image else "").into(holder.image2)
+            Glide.with(holder.itemView.context).load(if(it.size>=3)it[2].primary_image else "").into(holder.image3)
             val list = StringBuilder()
             for (singleItem in it) {
               if(it.size>1){
@@ -144,12 +145,12 @@ class PackageViewPagerAdapter(
             for (singleItem in it) {
               for (item in bundles.included_features) {
                 if (singleItem.feature_code == item.feature_code) {
-                  originalBundlePrice += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt() * minMonth
+                  originalBundlePrice += RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)) * minMonth, 2)
                 }
               }
             }
             if (bundles.overall_discount_percent > 0) {
-              offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent / 100)
+              offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent / 100), 2)
               holder.bundleDiscount.visibility = View.VISIBLE
 //                                        holder.bundlePriceLabel.visibility = View.GONE
               holder.bundleDiscount.setText(bundles.overall_discount_percent.toString() + "% SAVING")
@@ -223,7 +224,7 @@ class PackageViewPagerAdapter(
 //                                                activity.application,
 //                                                R.drawable.added_to_cart_grey
 //                                        )
-//                                        holder.getNowButton.setTextColor(Color.parseColor("#bbbbbb"))
+//                                        holder.getNowButton.setTextColor(context.getResources().getColor(R.color.tv_color_BB))
 //                                        holder.getNowButton.setText("Added To Cart")
 ////                                        holder.getNowButton.setEnabled(false)
 ////                                        holder.getNowButton.isEnabled = false
@@ -240,7 +241,7 @@ class PackageViewPagerAdapter(
     )
   }
 
-  fun spannableString(holder: PagerViewHolder, value: Int, minMonth: Int) {
+  fun spannableString(holder: PagerViewHolder, value: Double, minMonth: Int) {
     val origCost: SpannableString
     if (minMonth > 1) {
       origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")

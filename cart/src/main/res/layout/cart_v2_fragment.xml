@@ -12,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/common_text_color"
+        android:background="@color/colorPrimary1"
         android:contentInsetStart="0dp"
         android:contentInsetEnd="0dp"
         android:elevation="@dimen/cardview_default_elevation"
@@ -52,6 +52,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="invisible"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
@@ -64,17 +65,33 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/title"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:text="Cart Summary"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18sp"
+                android:gravity="bottom"
                 android:layout_marginStart="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/item_count"
                 app:layout_constraintEnd_toStartOf="@+id/imageViewCart1"
                 app:layout_constraintStart_toEndOf="@+id/back_button12"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/item_count"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:fontFamily="@font/regular"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageViewCart1"
+                app:layout_constraintStart_toEndOf="@+id/back_button12" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -123,7 +140,7 @@
         <!--      android:id="@+id/empty_cart_title1"-->
         <!--      android:layout_width="wrap_content"-->
         <!--      android:layout_height="wrap_content"-->
-        <!--      android:fontFamily="@font/open_sans_semibold"-->
+        <!--      android:fontFamily="@font/semi_bold"-->
         <!--      android:text="Ohh! it feels so light"-->
         <!--      android:textColor="@color/common_text_color"-->
         <!--      android:textSize="@dimen/_13sdp"-->
@@ -134,10 +151,10 @@
         <!--    <TextView-->
         <!--      android:layout_width="wrap_content"-->
         <!--      android:layout_height="wrap_content"-->
-        <!--      android:fontFamily="@font/open_sans"-->
+        <!--      android:fontFamily="@font/regular"-->
         <!--      android:gravity="center"-->
         <!--      android:text="There's nothing in your bag, why don't \n you add something."-->
-        <!--      android:textColor="#9b9b9b"-->
+        <!--      android:textColor="@color/globalLight"-->
         <!--      android:textSize="@dimen/_11sdp"-->
         <!--      app:layout_constraintEnd_toEndOf="parent"-->
         <!--      app:layout_constraintStart_toStartOf="parent"-->
@@ -154,7 +171,7 @@
         <!--      android:clickable="true"-->
         <!--      android:elevation="@dimen/_2sdp"-->
         <!--      android:focusable="true"-->
-        <!--      android:fontFamily="@font/open_sans_semibold"-->
+        <!--      android:fontFamily="@font/semi_bold"-->
         <!--      android:gravity="center"-->
         <!--      android:paddingStart="@dimen/_20sdp"-->
         <!--      android:paddingTop="@dimen/_10sdp"-->
@@ -188,7 +205,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:fontFamily="@font/open_sans_semibold"
+                android:fontFamily="@font/semi_bold"
                 android:text="Nothing added to cart"
                 android:textColor="@color/common_text_color"
                 android:textSize="23sp" />
@@ -197,10 +214,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:fontFamily="@font/open_sans"
+                android:fontFamily="@font/regular"
                 android:gravity="center"
                 android:text="Compare &amp; add a pack that suites your\n growing business needs."
-                android:textColor="#4A4A4A"
+                android:textColor="@color/common_text_color"
                 android:textSize="14sp"
                 app:layout_constraintTop_toBottomOf="@id/empty_cart_title1" />
 
@@ -215,7 +232,7 @@
             <!--        android:clickable="true"-->
             <!--        android:elevation="@dimen/_2sdp"-->
             <!--        android:focusable="true"-->
-            <!--        android:fontFamily="@font/open_sans_bold"-->
+            <!--        android:fontFamily="@font/bold"-->
             <!--        android:gravity="center"-->
             <!--        android:paddingStart="@dimen/_20sdp"-->
             <!--        android:paddingTop="@dimen/_10sdp"-->
@@ -237,7 +254,7 @@
             <!--        android:background="@drawable/share_helper_click_effect"-->
             <!--        android:clickable="true"-->
             <!--        android:focusable="true"-->
-            <!--        android:fontFamily="@font/open_sans"-->
+            <!--        android:fontFamily="@font/regular"-->
             <!--        android:gravity="center"-->
             <!--        android:paddingStart="@dimen/_50sdp"-->
             <!--        android:paddingTop="@dimen/_10sdp"-->
@@ -245,7 +262,7 @@
             <!--        android:paddingBottom="@dimen/_10sdp"-->
             <!--        android:drawableStart="@drawable/ic_cart_call"-->
             <!--        android:text="Speak to an expert"-->
-            <!--        android:textColor="#FFB900"-->
+            <!--        android:textColor="@color/yellow"-->
             <!--        android:textSize="16sp" />-->
 
             <LinearLayout
@@ -276,7 +293,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans_bold"
+                        android:fontFamily="@font/bold"
                         android:gravity="center"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingTop="@dimen/_10sdp"
@@ -309,13 +326,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/open_sans_bold"
+                        android:fontFamily="@font/bold"
                         android:gravity="center"
                         android:paddingStart="10dp"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_10sdp"
                         android:text="Speak to an expert"
-                        android:textColor="#FFB900"
+                        android:textColor="@color/yellow"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -330,7 +347,7 @@
         android:id="@+id/cart_main_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -380,7 +397,7 @@
                     <!--                        android:layout_width="wrap_content"-->
                     <!--                        android:layout_height="wrap_content"-->
                     <!--                        android:layout_marginStart="@dimen/_5sdp"-->
-                    <!--                        android:fontFamily="@font/open_sans_semibold"-->
+                    <!--                        android:fontFamily="@font/semi_bold"-->
                     <!--                        android:paddingStart="@dimen/_5sdp"-->
                     <!--                        android:paddingTop="@dimen/_3sdp"-->
                     <!--                        android:paddingEnd="@dimen/_5sdp"-->
@@ -429,7 +446,7 @@
                     <!--              android:layout_width="wrap_content"-->
                     <!--              android:layout_height="wrap_content"-->
                     <!--              android:layout_marginStart="@dimen/_5sdp"-->
-                    <!--              android:fontFamily="@font/open_sans_semibold"-->
+                    <!--              android:fontFamily="@font/semi_bold"-->
                     <!--              android:paddingStart="@dimen/_5sdp"-->
                     <!--              android:paddingTop="@dimen/_3sdp"-->
                     <!--              android:paddingEnd="@dimen/_5sdp"-->
@@ -486,7 +503,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
-                        android:fontFamily="@font/open_sans_semibold"
+                        android:fontFamily="@font/semi_bold"
                         android:paddingStart="@dimen/_5sdp"
                         android:paddingTop="@dimen/_3sdp"
                         android:paddingEnd="@dimen/_5sdp"
@@ -558,7 +575,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/semi_bold"
                                 android:text="Choose validity"
-                                android:textColor="#4A4A4A"
+                                android:textColor="@color/common_text_color"
                                 android:textSize="@dimen/txt_14sp" />
 
                             <androidx.appcompat.widget.AppCompatTextView
@@ -567,7 +584,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
                                 android:text="(Valid till 16 May 22)"
-                                android:textColor="#828282"
+                                android:textColor="@color/copy_coupon_text_color"
                                 android:textSize="@dimen/txt_12sp" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -595,11 +612,13 @@
                                 android:paddingStart="14dp"
                                 android:paddingEnd="14dp"
                                 android:paddingTop="6dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_marginBottom="1dp"
                                 android:paddingBottom="6dp"
                                 android:background="@color/white"
-                                android:fontFamily="@font/open_sans_bold"
+                                android:fontFamily="@font/bold"
                                 tools:text="0 months"
-                                android:textColor="@color/orange"
+                                android:textColor="@color/colorAccent1"
                                 android:textSize="@dimen/_13sdp" />
 
                             <ImageView
@@ -626,6 +645,8 @@
                         android:background="@drawable/ic_cart_extra_off_bg"
                         android:gravity="center"
                         android:orientation="horizontal"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         app:layout_constraintEnd_toEndOf="@+id/ly1"
                         app:layout_constraintStart_toStartOf="@+id/ly1"
                         app:layout_constraintTop_toBottomOf="@+id/ly1">
@@ -647,7 +668,7 @@
                                 android:gravity="center"
                                 android:paddingTop="5dp"
                                 android:text="Choose 6 months or more to get extra 2% off"
-                                android:textColor="#FFB900" />
+                                android:textColor="@color/colorAccent1" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -661,7 +682,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:background="#FFF0C9"
+                    android:background="@color/colorLightAccent"
                     android:orientation="vertical"
                     android:visibility="gone"
                     tools:visibility="visible"
@@ -731,36 +752,35 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginTop="18dp"
-                            android:layout_marginBottom="14dp"
                             android:gravity="center"
                             android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans"
+                                android:fontFamily="@font/regular"
                                 android:lineSpacingExtra="1sp"
+                                android:padding="14dp"
                                 android:text="DISCOUNT COUPONS"
-                                android:textColor="#4A4A4A"
+                                android:textColor="@color/common_text_color"
                                 android:textSize="@dimen/txt_14sp"
                                 android:textStyle="normal" />
 
                             <androidx.appcompat.widget.LinearLayoutCompat
-                                android:layout_width="match_parent"
+                                android:id="@+id/cart_apply_coupon"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:padding="14dp"
                                 android:gravity="end">
 
                                 <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/cart_apply_coupon"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="end"
                                     android:fontFamily="@font/semi_bold"
                                     android:text="Have a coupon code?"
-                                    android:textColor="#FFB900"
+                                    android:textColor="@color/colorAccent1"
                                     android:textSize="@dimen/txt_12sp" />
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -801,7 +821,7 @@
                             android:padding="@dimen/_10sdp"
                             android:drawablePadding="@dimen/pad_5dp"
                             android:text="Show more"
-                            android:textColor="#FFB900"
+                            android:textColor="@color/colorAccent1"
                             android:textSize="@dimen/txt_12sp"
                             android:visibility="visible" />
                         <androidx.appcompat.widget.AppCompatTextView
@@ -815,7 +835,7 @@
                             android:drawablePadding="@dimen/pad_5dp"
                             android:padding="@dimen/_10sdp"
                             android:text="Show less"
-                            android:textColor="#FFB900"
+                            android:textColor="@color/colorAccent1"
                             android:textSize="@dimen/txt_12sp"
                             android:visibility="gone" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -841,7 +861,7 @@
                     <!--                        android:layout_width="wrap_content"-->
                     <!--                        android:layout_height="wrap_content"-->
                     <!--                        android:layout_marginStart="@dimen/_5sdp"-->
-                    <!--                        android:fontFamily="@font/open_sans_semibold"-->
+                    <!--                        android:fontFamily="@font/semi_bold"-->
                     <!--                        android:paddingStart="@dimen/_5sdp"-->
                     <!--                        android:paddingTop="@dimen/_3sdp"-->
                     <!--                        android:paddingEnd="@dimen/_5sdp"-->
@@ -875,7 +895,7 @@
                     <!--                            android:layout_width="0dp"-->
                     <!--                            android:layout_height="wrap_content"-->
                     <!--                            android:layout_weight="1"-->
-                    <!--                            android:fontFamily="@font/open_sans_semibold"-->
+                    <!--                            android:fontFamily="@font/semi_bold"-->
                     <!--                            android:paddingStart="@dimen/_5sdp"-->
                     <!--                            android:text="Fill in GSTIN"-->
                     <!--                            android:textColor="@color/common_text_color" />-->
@@ -886,7 +906,7 @@
                     <!--                            android:layout_height="wrap_content"-->
                     <!--                            android:padding="@dimen/_5sdp"-->
                     <!--                            android:text="Enter number"-->
-                    <!--                            android:textColor="#0068e0" />-->
+                    <!--                            android:textColor="@color/light_blue" />-->
 
                     <!--                    </LinearLayout>-->
 
@@ -909,7 +929,7 @@
                     <!--                            android:layout_width="0dp"-->
                     <!--                            android:layout_height="wrap_content"-->
                     <!--                            android:layout_weight="1"-->
-                    <!--                            android:fontFamily="@font/open_sans_semibold"-->
+                    <!--                            android:fontFamily="@font/semi_bold"-->
                     <!--                            android:paddingStart="@dimen/_10sdp"-->
                     <!--                            android:paddingTop="@dimen/_5sdp"-->
                     <!--                            android:paddingBottom="@dimen/_5sdp"-->
@@ -943,7 +963,7 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/open_sans"
+                            android:fontFamily="@font/regular"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:layout_marginStart="@dimen/_5sdp"
                             android:paddingTop="@dimen/_10sdp"
@@ -953,7 +973,7 @@
                             android:lineSpacingExtra="1sp"
                             android:text="BILLING DETAILS"
                             android:textFontWeight="600"
-                            android:textColor="#4A4A4A"
+                            android:textColor="@color/common_text_color"
                             android:textSize="@dimen/txt_14sp"
                             android:textStyle="normal"
                             app:layout_constraintTop_toTopOf="parent"
@@ -983,7 +1003,7 @@
                                 android:drawableStart="@drawable/ic_cart_billing_details_edit"
                                 android:gravity="end"
                                 android:text="Edit"
-                                android:textColor="#FFB900"
+                                android:textColor="@color/colorAccent1"
                                 android:textSize="@dimen/txt_12sp" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -1030,7 +1050,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Email address*"
-                                android:textColor="#828282"
+                                android:textColor="@color/copy_coupon_text_color"
                                 android:textSize="@dimen/txt_12sp" />
 
 
@@ -1045,10 +1065,10 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Not Provided"
-                                    android:textColor="#333333"
+                                    android:textColor="@color/main_color_gray_dk"
                                     android:lineHeight="16dp"
                                     android:textFontWeight="600"
-                                    android:fontFamily="@font/open_sans_semibold"
+                                    android:fontFamily="@font/semi_bold"
                                     android:textSize="@dimen/txt_12sp"
                                     android:visibility="visible"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -1063,7 +1083,7 @@
                                     android:textColor="#EB5757"
                                     android:lineHeight="16dp"
                                     android:textFontWeight="600"
-                                    android:fontFamily="@font/open_sans_semibold"
+                                    android:fontFamily="@font/semi_bold"
                                     android:textSize="@dimen/txt_12sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -1083,7 +1103,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="GSTIN"
-                                android:textColor="#828282"
+                                android:textColor="@color/copy_coupon_text_color"
                                 android:textSize="@dimen/txt_12sp" />
 
 
@@ -1098,7 +1118,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Not Provided"
-                                    android:textColor="#333333"
+                                    android:textColor="@color/main_color_gray_dk"
                                     android:textSize="@dimen/txt_12sp"
                                     android:visibility="visible"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -1110,7 +1130,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Not Provided"
-                                    android:textColor="#BBBBBB"
+                                    android:textColor="@color/tv_color_BB"
                                     android:textSize="@dimen/txt_12sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -1133,7 +1153,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Place of supply (state)*"
-                                android:textColor="#828282"
+                                android:textColor="@color/copy_coupon_text_color"
                                 android:textSize="@dimen/txt_12sp" />
 
 
@@ -1148,7 +1168,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Not Provided"
-                                    android:textColor="#333333"
+                                    android:textColor="@color/main_color_gray_dk"
                                     android:textSize="@dimen/txt_12sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -1159,7 +1179,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Not Provided"
-                                    android:textColor="#333333"
+                                    android:textColor="@color/main_color_gray_dk"
                                     android:textSize="@dimen/txt_12sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -1180,7 +1200,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Billing address*"
-                                android:textColor="#828282"
+                                android:textColor="@color/copy_coupon_text_color"
                                 android:textSize="@dimen/txt_12sp" />
 
 
@@ -1197,7 +1217,7 @@
                                     android:gravity="end"
                                     android:lines="2"
                                     android:text="Not provided"
-                                    android:textColor="#333333"
+                                    android:textColor="@color/main_color_gray_dk"
                                     android:textSize="12sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -1210,7 +1230,7 @@
                                     android:gravity="end"
                                     android:lines="2"
                                     android:text="Not provided"
-                                    android:textColor="#333333"
+                                    android:textColor="@color/main_color_gray_dk"
                                     android:textSize="12sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -1253,7 +1273,7 @@
                             android:fontFamily="@font/semi_bold"
                             android:lineSpacingExtra="1sp"
                             android:text="PAYABLE AMOUNT: "
-                            android:textColor="#4A4A4A"
+                            android:textColor="@color/common_text_color"
                             android:textSize="@dimen/txt_14sp" />
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -1263,7 +1283,7 @@
                             android:fontFamily="@font/semi_bold"
                             android:lineSpacingExtra="1sp"
                             android:text="₹4,399"
-                            android:textColor="#4A4A4A"
+                            android:textColor="@color/common_text_color"
                             android:textSize="@dimen/txt_14sp" />
 
                         <androidx.appcompat.widget.LinearLayoutCompat
@@ -1325,14 +1345,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="Cart total"
                                 android:textFontWeight="600"
-                                android:textColor="#333333"
+                                android:textColor="@color/main_color_gray_dk"
                                 android:textSize="@dimen/txt_12sp" />
 
                             <!--                            <androidx.appcompat.widget.AppCompatTextView-->
                             <!--                                android:layout_width="wrap_content"-->
                             <!--                                android:layout_height="wrap_content"-->
                             <!--                                android:text="(3 items)"-->
-                            <!--                                android:textColor="#333333"-->
+                            <!--                                android:textColor="@color/main_color_gray_dk"-->
                             <!--                                android:textSize="@dimen/txt_12sp" />-->
 
 
@@ -1349,7 +1369,7 @@
                                     android:fontFamily="@font/semi_bold"
                                     android:text="₹4,583"
                                     android:textFontWeight="600"
-                                    android:textColor="#333333"
+                                    android:textColor="@color/main_color_gray_dk"
                                     android:textSize="@dimen/txt_12sp" />
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -1370,7 +1390,7 @@
                                 android:text="(includes 18% GST)"
                                 android:paddingTop="2dp"
                                 android:textFontWeight="400"
-                                android:textColor="#828282"
+                                android:textColor="@color/copy_coupon_text_color"
                                 android:textSize="@dimen/txt_12sp" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -1388,7 +1408,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Long validity discount"
-                                android:textColor="#7ED321"
+                                android:textColor="@color/offer_border"
                                 android:textFontWeight="400"
                                 android:textSize="@dimen/txt_12sp" />
 
@@ -1397,7 +1417,7 @@
                                 android:layout_height="wrap_content"
                                 android:text=" (2%)"
                                 android:textFontWeight="400"
-                                android:textColor="#7ED321"
+                                android:textColor="@color/offer_border"
                                 android:textSize="@dimen/txt_12sp" />
 
 
@@ -1412,7 +1432,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="- ₹92"
                                     android:textFontWeight="600"
-                                    android:textColor="#7ED321"
+                                    android:textColor="@color/offer_border"
                                     android:textSize="@dimen/txt_12sp" />
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -1432,7 +1452,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="‘FESTIVE’ coupon discount"
-                                android:textColor="#7ED321"
+                                android:textColor="@color/offer_border"
                                 android:textFontWeight="400"
                                 android:textSize="@dimen/txt_12sp" />
 
@@ -1449,7 +1469,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="- ₹92"
                                     android:textFontWeight="600"
-                                    android:textColor="#7ED321"
+                                    android:textColor="@color/offer_border"
                                     android:textSize="@dimen/txt_12sp" />
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -1468,7 +1488,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Feature validity"
-                                android:textColor="#828282"
+                                android:textColor="@color/copy_coupon_text_color"
                                 android:textFontWeight="400"
                                 android:textSize="@dimen/txt_12sp" />
 
@@ -1486,7 +1506,7 @@
                                     android:fontFamily="@font/semi_bold"
                                     android:text="3 Months"
                                     android:textFontWeight="600"
-                                    android:textColor="#333333"
+                                    android:textColor="@color/main_color_gray_dk"
                                     android:textSize="@dimen/txt_12sp" />
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -1504,7 +1524,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Validity period"
-                                android:textColor="#828282"
+                                android:textColor="@color/copy_coupon_text_color"
                                 android:textFontWeight="400"
                                 android:textSize="@dimen/txt_12sp" />
 
@@ -1520,7 +1540,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="17 Nov ‘21 - 16 Feb ‘22"
-                                    android:textColor="#333333"
+                                    android:textColor="@color/main_color_gray_dk"
                                     android:textFontWeight="600"
                                     android:textSize="@dimen/txt_12sp" />
 
@@ -1561,7 +1581,7 @@
                             android:id="@+id/cart_total_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/open_sans_bold"
+                            android:fontFamily="@font/bold"
                             android:lineSpacingExtra="1sp"
                             android:text="Payable amount"
                             android:textFontWeight="700"
@@ -1579,7 +1599,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="end"
-                                android:fontFamily="@font/open_sans_bold"
+                                android:fontFamily="@font/bold"
                                 android:gravity="end"
                                 android:text="₹4,399"
                                 android:textFontWeight="700"
@@ -1668,7 +1688,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp"
-                    android:fontFamily="@font/open_sans_semibold"
+                    android:fontFamily="@font/semi_bold"
                     android:gravity="center"
                     android:text="Hooray! You save ₹198 with coupon &amp; long validity discount"
                     android:textColor="@color/white"
@@ -1692,9 +1712,9 @@
                     android:id="@+id/footer_grand_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_bold"
+                    android:fontFamily="@font/bold"
                     android:text="₹0"
-                    android:textColor="#333333"
+                    android:textColor="@color/main_color_gray_dk"
                     android:textSize="20sp"
                     android:textStyle="normal"
                     tools:text="₹4,940" />
@@ -1706,9 +1726,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:drawablePadding="5dp"
-                    android:fontFamily="@font/open_sans"
+                    android:fontFamily="@font/regular"
                     android:text="@string/view_details"
-                    android:textColor="#333333"
+                    android:textColor="@color/main_color_gray_dk"
                     android:textSize="10sp"
                     android:textStyle="normal"
                     app:layout_constraintStart_toStartOf="parent"

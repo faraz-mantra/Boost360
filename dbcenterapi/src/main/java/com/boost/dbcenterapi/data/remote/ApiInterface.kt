@@ -8,6 +8,8 @@ import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentThroughEm
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.dbcenterapi.data.api_model.RazorpayToken.RazorpayTokenResponse
+import com.boost.dbcenterapi.data.api_model.autorenew.OrderAutoRenewRequest
+import com.boost.dbcenterapi.data.api_model.autorenew.OrderAutoRenewResponse
 import com.boost.dbcenterapi.data.api_model.customerId.create.CreateCustomerIDResponse
 import com.boost.dbcenterapi.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.dbcenterapi.data.api_model.customerId.get.GetCustomerIDResponse
@@ -145,6 +147,13 @@ interface ApiInterface {
     @Query("clientId") clientId: String,
     @Query("orderNumber") orderNumber:String
   ):Observable<PaymentLink>
+
+  @Headers("Content-Type: application/json")
+  @POST("https://api.withfloats.com/payment/v1/floatingpoint/markOrderForAutoRenewal")
+  fun MarkOrderForAutoRenewal(
+    @Header("Authorization") auth: String,
+    @Body request: OrderAutoRenewRequest
+  ):Observable<OrderAutoRenewResponse>
 
 
 

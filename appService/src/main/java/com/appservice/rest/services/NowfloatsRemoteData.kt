@@ -8,9 +8,15 @@ import com.appservice.rest.EndPoints
 import com.appservice.model.serviceProduct.service.ServiceListingRequest
 import com.appservice.model.serviceProduct.service.ServiceListingResponse
 import com.appservice.model.serviceProduct.service.ServiceSearchListingResponse
+import com.appservice.model.testimonial.AddTestimonialImageRequest
+import com.appservice.model.testimonial.AddUpdateTestimonialRequest
+import com.appservice.model.testimonial.ListTestimonialRequest
+import com.appservice.model.testimonial.TestimonialAddResponse
+import com.appservice.model.testimonial.response.TestimonialListResponse
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -74,7 +80,7 @@ interface NowfloatsRemoteData {
 
   @POST(EndPoints.CREATE_PRODUCT)
   fun createProduct(@Body request: CatalogProduct?): Observable<Response<String>>
-//
+
 //    @GET(EndPoints.GET_PRODUCT_LISTING)
 //    fun getAllProducts(
 //            @Query("clientId") clientId: String?,
@@ -100,7 +106,28 @@ interface NowfloatsRemoteData {
     @Body requestBody: RequestBody?,
   ): Observable<Response<String>>
 
-
   @POST(EndPoints.DELETE_SECONDARY_IMAGE)
   fun deleteSecondaryImage(@Body request: DeleteSecondaryImageRequest?): Observable<Response<ServiceV1BaseResponse>>
+
+  //TODO Testimonial
+  @POST(EndPoints.GET_TESTIMONIAL_LIST)
+  fun getTestimonialList(@Body request: ListTestimonialRequest?): Observable<Response<TestimonialListResponse>>
+
+  @GET(EndPoints.GET_TESTIMONIAL_DETAIL)
+  fun getTestimonialDetail(@Query("testimonialId") testimonialId: String?): Observable<Response<Any>>
+
+  @POST(EndPoints.ADD_TESTIMONIAL)
+  fun addTestimonial(@Body request: AddUpdateTestimonialRequest?): Observable<Response<TestimonialAddResponse>>
+
+  @POST(EndPoints.UPDATE_TESTIMONIAL)
+  fun updateTestimonial(@Body request: AddUpdateTestimonialRequest?): Observable<Response<TestimonialAddResponse>>
+
+  @POST(EndPoints.ADD_IMAGE_TESTIMONIAL)
+  fun updateTestimonialImage(@Body request: AddTestimonialImageRequest?): Observable<Response<Any>>
+
+  @POST(EndPoints.DELETE_TESTIMONIAL)
+  fun deleteTestimonial(@Body request: MutableMap<String, String>?): Observable<Response<Any>>
+
+  @POST(EndPoints.DELETE_IMAGE_TESTIMONIAL)
+  fun deleteTestimonialImage(@Body request: MutableMap<String, String>?): Observable<Response<Any>>
 }

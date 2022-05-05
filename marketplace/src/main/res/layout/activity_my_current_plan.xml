@@ -10,13 +10,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F8F8F8">
+        android:background="@color/bg_color">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#4A4A4A"
+            android:background="@color/colorPrimary1"
             android:contentInsetStart="0dp"
             android:contentInsetEnd="0dp"
             app:contentInsetEnd="0dp"
@@ -40,7 +40,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"
-                        android:fontFamily="@font/open_sans_semibold"
+                        android:fontFamily="@font/semi_bold"
                         android:text="My current plan"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_11sdp"
@@ -117,6 +117,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
                     android:visibility="gone"
+                    tools:visibility="visible"
                     android:background="@drawable/search_background"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

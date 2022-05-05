@@ -66,9 +66,9 @@
           android:id="@+id/title"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans_semibold"
+          android:fontFamily="@font/semi_bold"
           android:text="SECURITY"
-          android:textColor="#FFB900"
+          android:textColor="@color/yellow"
           android:textSize="@dimen/_8sdp" />
       </LinearLayout>
 
@@ -76,9 +76,9 @@
         android:id="@+id/paid_addons_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/regular"
         android:lineSpacingExtra="1.3sp"
-        android:textColor="#2a2a2a"
+        android:textColor="@color/common_bold_text_color"
         android:textSize="@dimen/_10sdp"
         tools:text="Facebook Ads (upto 75 leads)" />
 

@@ -18,7 +18,7 @@
             android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:background="#4A4A4A"
+            android:background="@color/colorPrimary1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -26,8 +26,8 @@
                 android:id="@+id/collapsing_toolbar_details"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:contentScrim="@color/transparent_black_grey"
-                app:expandedTitleTextAppearance="@color/transparent_black_grey"
+                app:contentScrim="@color/colorTransparentPrimary1"
+                app:expandedTitleTextAppearance="@color/colorTransparentPrimary1"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:title="Facebook Lead Ads"
                 app:titleEnabled="true">
@@ -40,7 +40,7 @@
                         android:id="@+id/details_image_bg"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:background="#4A4A4A"
+                        android:background="@color/colorPrimary1"
                         android:scaleType="centerCrop"
                         android:src="@drawable/feature_details_bg"
                         app:layout_constraintDimensionRatio="2:1.2"
@@ -69,33 +69,33 @@
                         android:layout_height="match_parent"
                         android:background="@color/transparent">
 
-                        <!--                        <LinearLayout-->
-                        <!--                            android:id="@+id/details_title_image_layout"-->
-                        <!--                            android:layout_width="0dp"-->
-                        <!--                            android:layout_height="match_parent"-->
-                        <!--                            android:layout_margin="@dimen/_4sdp"-->
-                        <!--                            android:background="@color/transparent"-->
-                        <!--                            android:gravity="center"-->
-                        <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-                        <!--                            app:layout_constraintDimensionRatio="1:1"-->
-                        <!--                            app:layout_constraintLeft_toRightOf="@+id/imageView121"-->
-                        <!--                            app:layout_constraintTop_toTopOf="parent">-->
+<!--                        <LinearLayout-->
+<!--                            android:id="@+id/details_title_image_layout"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_margin="@dimen/_4sdp"-->
+<!--                            android:background="@color/transparent"-->
+<!--                            android:gravity="center"-->
+<!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                            app:layout_constraintDimensionRatio="1:1"-->
+<!--                            app:layout_constraintLeft_toRightOf="@+id/imageView121"-->
+<!--                            app:layout_constraintTop_toTopOf="parent">-->
 
-                        <!--                            <ImageView-->
-                        <!--                                android:id="@+id/title_image"-->
-                        <!--                                android:layout_width="wrap_content"-->
-                        <!--                                android:layout_height="wrap_content" />-->
-                        <!--                        </LinearLayout>-->
+<!--                            <ImageView-->
+<!--                                android:id="@+id/title_image"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content" />-->
+<!--                        </LinearLayout>-->
 
                         <TextView
                             android:id="@+id/title_appbar"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@color/transparent_black_grey"
-                            android:fontFamily="@font/open_sans_semibold"
-                            android:gravity="center_vertical"
+                            android:fontFamily="@font/semi_bold"
                             android:paddingStart="@dimen/_50sdp"
                             android:paddingEnd="@dimen/_50sdp"
+                            android:gravity="center_vertical"
+                            android:background="@color/colorTransparentPrimary1"
                             android:text="@string/facebook_lead_ads_upto_75_leads"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_11sdp"
@@ -121,7 +121,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:background="@drawable/upgrade_nav_icon_background_dark"
+                                android:background="@drawable/mp_nav_icon_background"
                                 android:gravity="center">
 
                                 <ImageView
@@ -162,7 +162,7 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/upgrade_nav_icon_background_dark"
+                                android:background="@drawable/mp_nav_icon_background"
                                 android:src="@drawable/arrow_white" />
                         </LinearLayout>
 
@@ -179,7 +179,6 @@
             android:layout_height="wrap_content"
             android:overScrollMode="never"
             app:behavior_overlapTop="104dp"
-            android:layout_marginBottom="80dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -254,7 +253,7 @@
                                 android:layout_height="60dp"
                                 android:layout_gravity="center"
                                 android:scaleType="fitXY"
-                                android:src="@drawable/addons"
+                                tools:src="@drawable/addons"
                                 android:textSize="@dimen/txt_14sp"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -265,9 +264,9 @@
                                 android:layout_height="wrap_content"
                                 android:drawableLeft="@drawable/tag"
                                 android:drawablePadding="@dimen/_5sdp"
-                                android:fontFamily="@font/open_sans"
+                                android:fontFamily="@font/regular"
                                 android:text="Business Identity"
-                                android:textColor="#828282"
+                                android:textColor="@color/dot_grey"
                                 android:textFontWeight="400"
                                 android:textSize="12sp"
                                 app:layout_constraintStart_toEndOf="@id/image1222"
@@ -280,9 +279,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="19dp"
                                 android:drawableStart="@drawable/ic_used_by"
-                                android:fontFamily="@font/open_sans"
+                                android:fontFamily="@font/regular"
                                 android:text="32,000+ people bought"
-                                android:textColor="#7ED321"
+                                android:textColor="@color/offer_border"
                                 android:textFontWeight="400"
                                 android:textSize="12sp"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -292,7 +291,7 @@
                                 android:id="@+id/title_top"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans"
+                                android:fontFamily="@font/regular"
                                 android:text="Staff profile"
                                 android:textColor="@color/common_text_color"
                                 android:textSize="@dimen/_20sdp"
@@ -306,24 +305,22 @@
                                 android:layout_marginTop="@dimen/_10sdp"
                                 app:layout_constraintStart_toEndOf="@id/image1222"
                                 app:layout_constraintTop_toBottomOf="@id/title_top">
-
                                 <TextView
                                     android:id="@+id/price"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/open_sans_semibold"
                                     android:text="₹2,999"
-                                    android:textColor="@color/common_text_color"
-                                    android:textSize="16sp" />
-
+                                    android:textSize="16sp"
+                                    android:fontFamily="@font/semi_bold"
+                                    android:textColor="@color/common_text_color"/>
                                 <TextView
                                     android:id="@+id/mrpPrice"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="10dp"
                                     android:text="₹2,999"
-                                    android:textColor="@color/common_text_color"
-                                    android:textSize="14sp" />
+                                    android:textSize="14sp"
+                                    android:textColor="@color/common_text_color"/>
 
                             </LinearLayout>
 
@@ -333,7 +330,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="19dp"
-                                android:fontFamily="@font/open_sans"
+                                android:fontFamily="@font/regular"
                                 android:maxLines="2"
                                 android:text="Create email accounts for your employees."
                                 android:textColor="@color/common_text_color"
@@ -346,10 +343,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@color/white"
-                                android:fontFamily="@font/open_sans_bold"
+                                android:fontFamily="@font/bold"
                                 android:paddingStart="10dp"
                                 android:text="Learn more"
-                                android:textColor="#FFB900"
+                                android:textColor="@color/colorAccent1"
                                 android:textSize="12dp"
                                 app:layout_constraintBottom_toBottomOf="@id/title_bottom3"
                                 app:layout_constraintEnd_toEndOf="@id/title_bottom3" />
@@ -360,11 +357,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="@dimen/_10sdp"
                                 android:background="@color/white"
-                                android:fontFamily="@font/open_sans_bold"
+                                android:fontFamily="@font/bold"
                                 android:padding="5dp"
                                 android:paddingStart="10dp"
                                 android:text="Show less"
-                                android:textColor="#FFB900"
+                                android:textColor="@color/colorAccent1"
                                 android:textSize="12dp"
                                 android:visibility="gone"
                                 app:layout_constraintEnd_toEndOf="@id/title_bottom3"
@@ -424,7 +421,7 @@
                             <!--                                        android:background="@drawable/rounded_border_red"-->
                             <!--                                        android:drawableStart="@drawable/ic_error_red"-->
                             <!--                                        android:drawablePadding="@dimen/_10sdp"-->
-                            <!--                                        android:fontFamily="@font/open_sans"-->
+                            <!--                                        android:fontFamily="@font/regular"-->
                             <!--                                        android:paddingStart="@dimen/_10sdp"-->
                             <!--                                        android:paddingTop="@dimen/_8sdp"-->
                             <!--                                        android:paddingEnd="@dimen/_10sdp"-->
@@ -450,7 +447,7 @@
                             <!--                                            android:layout_marginTop="2dp"-->
                             <!--                                            android:drawableStart="@drawable/ic_error_red"-->
                             <!--                                            android:drawablePadding="@dimen/_10sdp"-->
-                            <!--                                            android:fontFamily="@font/open_sans"-->
+                            <!--                                            android:fontFamily="@font/regular"-->
                             <!--                                            android:paddingStart="@dimen/_10sdp"-->
                             <!--                                            android:paddingTop="@dimen/_8sdp"-->
                             <!--                                            android:paddingEnd="@dimen/_10sdp"-->
@@ -468,7 +465,7 @@
                             <!--                                            android:layout_marginTop="2dp"-->
                             <!--                                            android:background="#F8F8F8"-->
                             <!--                                            android:drawablePadding="@dimen/_10sdp"-->
-                            <!--                                            android:fontFamily="@font/open_sans"-->
+                            <!--                                            android:fontFamily="@font/regular"-->
                             <!--                                            android:padding="@dimen/_10sdp"-->
                             <!--                                            android:text="You need to take action to activate this add-on.Go to in-app page."-->
                             <!--                                            android:textFontWeight="600"-->
@@ -491,7 +488,7 @@
                             <!--                                            android:layout_marginTop="2dp"-->
                             <!--                                            android:drawableStart="@drawable/ic_sync_blue"-->
                             <!--                                            android:drawablePadding="@dimen/_10sdp"-->
-                            <!--                                            android:fontFamily="@font/open_sans"-->
+                            <!--                                            android:fontFamily="@font/regular"-->
                             <!--                                            android:paddingStart="@dimen/_10sdp"-->
                             <!--                                            android:paddingTop="@dimen/_8sdp"-->
                             <!--                                            android:paddingEnd="@dimen/_10sdp"-->
@@ -509,7 +506,7 @@
                             <!--                                            android:layout_marginTop="2dp"-->
                             <!--                                            android:background="#F8F8F8"-->
                             <!--                                            android:drawablePadding="@dimen/_10sdp"-->
-                            <!--                                            android:fontFamily="@font/open_sans"-->
+                            <!--                                            android:fontFamily="@font/regular"-->
                             <!--                                            android:padding="@dimen/_10sdp"-->
                             <!--                                            android:text="We are working on syncing your information with this add-on. It may take some time to get updated.Contact support for help"-->
                             <!--                                            android:textFontWeight="600"-->
@@ -598,7 +595,7 @@
                             <!--                                        android:layout_marginEnd="@dimen/_9sdp"-->
                             <!--                                        android:layout_marginBottom="@dimen/_9sdp"-->
                             <!--                                        android:background="@drawable/ic_feature_discount"-->
-                            <!--                                        android:fontFamily="@font/open_sans_semibold"-->
+                            <!--                                        android:fontFamily="@font/semi_bold"-->
                             <!--                                        android:gravity="center"-->
                             <!--                                        android:text="19% Saving"-->
                             <!--                                        android:textColor="@color/white"-->
@@ -608,23 +605,23 @@
 
                             <!--                            </LinearLayout>-->
 
-                            <!--                            <TextView-->
-                            <!--                                android:id="@+id/add_item_to_cart"-->
-                            <!--                                android:layout_width="match_parent"-->
-                            <!--                                android:layout_height="wrap_content"-->
-                            <!--                                android:layout_marginTop="20dp"-->
-                            <!--                                android:background="@drawable/orange_button_click_effect"-->
-                            <!--                                android:fontFamily="@font/open_sans_semibold"-->
-                            <!--                                android:gravity="center"-->
-                            <!--                                android:paddingStart="@dimen/_30sdp"-->
-                            <!--                                android:paddingTop="@dimen/_10sdp"-->
-                            <!--                                android:paddingEnd="@dimen/_30sdp"-->
-                            <!--                                android:paddingBottom="@dimen/_10sdp"-->
-                            <!--                                android:text="Add To Cart"-->
-                            <!--                                android:textAllCaps="true"-->
-                            <!--                                android:textColor="@color/white"-->
-                            <!--                                app:layout_constraintBottom_toBottomOf="parent"-->
-                            <!--                                app:layout_constraintTop_toBottomOf="@id/title_bottom3" />-->
+<!--                            <TextView-->
+<!--                                android:id="@+id/add_item_to_cart"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginTop="20dp"-->
+<!--                                android:background="@drawable/orange_button_click_effect"-->
+<!--                                android:fontFamily="@font/semi_bold"-->
+<!--                                android:gravity="center"-->
+<!--                                android:paddingStart="@dimen/_30sdp"-->
+<!--                                android:paddingTop="@dimen/_10sdp"-->
+<!--                                android:paddingEnd="@dimen/_30sdp"-->
+<!--                                android:paddingBottom="@dimen/_10sdp"-->
+<!--                                android:text="Add To Cart"-->
+<!--                                android:textAllCaps="true"-->
+<!--                                android:textColor="@color/white"-->
+<!--                                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                                app:layout_constraintTop_toBottomOf="@id/title_bottom3" />-->
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -653,7 +650,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         android:drawablePadding="@dimen/_5sdp"
                         android:textFontWeight="600"
-                        android:fontFamily="@font/open_sans_semibold"
+                        android:fontFamily="@font/semi_bold"
                         app:layout_constraintTop_toTopOf="parent"/>
 
                     <TextView
@@ -666,7 +663,7 @@
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         android:textFontWeight="600"
-                        android:fontFamily="@font/open_sans_semibold"
+                        android:fontFamily="@font/semi_bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/edge_case_title"/>
 
@@ -676,7 +673,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/action_required"
                         android:textSize="12sp"
-                        android:fontFamily="@font/open_sans_semibold"
+                        android:fontFamily="@font/semi_bold"
                         android:textFontWeight="600"
                         android:textColor="@color/orange"
                         android:paddingStart="22dp"
@@ -699,7 +696,7 @@
                         android:id="@+id/benefit_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans_bold"
+                        android:fontFamily="@font/bold"
                         android:padding="@dimen/_15sdp"
                         android:text="Benefits For Your Business"
                         android:textColor="@color/main_color_gray_dk"
@@ -720,7 +717,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:dotsColor="#ffb900"
+                        app:dotsColor="@color/dot_grey"
                         app:dotsCornerRadius="8dp"
                         app:dotsSize="6dp"
                         app:dotsSpacing="4dp"
@@ -729,7 +726,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/benefits_viewpager"
                         app:progressMode="false"
-                        app:selectedDotColor="@color/color_primary" />
+                        app:selectedDotColor="@color/colorAccent1" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -743,7 +740,7 @@
                     android:background="@drawable/rounded_curve_bg"
                     android:drawableStart="@drawable/ic_help_white"
                     android:drawablePadding="@dimen/_6sdp"
-                    android:fontFamily="@font/open_sans_semibold"
+                    android:fontFamily="@font/semi_bold"
                     android:padding="@dimen/_10sdp"
                     android:text="Have a query? Call an expert"
                     android:textColor="@color/main_color_gray_dk"
@@ -762,7 +759,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#F8F8F8"
-                        android:fontFamily="@font/open_sans_bold"
+                        android:fontFamily="@font/bold"
                         android:padding="@dimen/_15sdp"
                         android:text="Packs with “Staff Management”"
                         android:textColor="@color/main_color_gray_dk"
@@ -795,7 +792,7 @@
                     android:drawableStart="@drawable/ic_filetext"
                     android:drawableEnd="@drawable/ic_arrow_right_grey"
                     android:drawablePadding="@dimen/_10sdp"
-                    android:fontFamily="@font/open_sans"
+                    android:fontFamily="@font/regular"
                     android:padding="16dp"
                     android:text="Learn how custom domain names can increase your credibility.   "
                     android:textColor="@color/common_text_color"
@@ -902,7 +899,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="@font/open_sans_semibold"
+                            android:fontFamily="@font/semi_bold"
                             android:padding="@dimen/_15sdp"
                             android:text="How To Use Staff Management?"
                             android:textColor="@color/main_color_gray_dk"
@@ -944,7 +941,7 @@
                         android:id="@+id/what_our_customer_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans_bold"
+                        android:fontFamily="@font/bold"
                         android:padding="@dimen/_15sdp"
                         android:text="What Our Customers Say"
                         android:textColor="@color/main_color_gray_dk"
@@ -965,7 +962,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:dotsColor="#ffb900"
+                        app:dotsColor="@color/gray_light"
                         app:dotsCornerRadius="8dp"
                         app:dotsSize="6dp"
                         app:dotsSpacing="4dp"
@@ -974,7 +971,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/what_our_customer_viewpager"
                         app:progressMode="false"
-                        app:selectedDotColor="@color/color_primary" />
+                        app:selectedDotColor="@color/colorAccent1" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -989,10 +986,9 @@
                         android:id="@+id/faq_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans_bold"
-                        android:paddingStart="@dimen/_15sdp"
-                        android:paddingTop="@dimen/_15sdp"
-                        android:text="Frequently Asked Questions"
+                        android:fontFamily="@font/bold"
+                        android:padding="@dimen/_15sdp"
+                        android:text="What Our Customers Say"
                         android:textColor="@color/main_color_gray_dk"
                         android:textFontWeight="600"
                         android:textSize="16sp"
@@ -1011,27 +1007,27 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!--                <LinearLayout-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:background="#d8d8d8"-->
-                <!--                    android:gravity="center"-->
-                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                    app:layout_constraintStart_toStartOf="parent"-->
-                <!--                    app:layout_constraintTop_toBottomOf="@id/faq_container">-->
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="#d8d8d8"-->
+<!--                    android:gravity="center"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/faq_container">-->
 
-                <!--                    <TextView-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:drawableEnd="@drawable/ic_down_arrow_gray"-->
-                <!--                        android:drawablePadding="@dimen/_10sdp"-->
-                <!--                        android:gravity="center"-->
-                <!--                        android:paddingStart="@dimen/_25sdp"-->
-                <!--                        android:paddingTop="@dimen/_50sdp"-->
-                <!--                        android:paddingEnd="@dimen/_25sdp"-->
-                <!--                        android:paddingBottom="@dimen/_25sdp"-->
-                <!--                        android:text="View add-on billing history" />-->
-                <!--                </LinearLayout>-->
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:drawableEnd="@drawable/ic_down_arrow_gray"-->
+<!--                        android:drawablePadding="@dimen/_10sdp"-->
+<!--                        android:gravity="center"-->
+<!--                        android:paddingStart="@dimen/_25sdp"-->
+<!--                        android:paddingTop="@dimen/_50sdp"-->
+<!--                        android:paddingEnd="@dimen/_25sdp"-->
+<!--                        android:paddingBottom="@dimen/_25sdp"-->
+<!--                        android:text="View add-on billing history" />-->
+<!--                </LinearLayout>-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
@@ -1039,33 +1035,34 @@
         <LinearLayout
             android:id="@+id/bottom_box"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_gravity="bottom"
+            android:layout_height="wrap_content"
             android:background="@color/white"
+            android:layout_gravity="bottom"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/_15sdp"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:gravity="center_vertical">
 
                 <TextView
                     android:id="@+id/final_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_semibold"
                     android:text="₹2,999"
-                    android:textColor="@color/black"
+                    android:fontFamily="@font/semi_bold"
                     android:textFontWeight="600"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/mrp_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="/staff/month" />
+                    android:text="/staff/month"
+                    />
 
             </LinearLayout>
 
@@ -1074,13 +1071,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:background="@drawable/orange_button_click_effect"
-                android:fontFamily="@font/open_sans_semibold"
+                android:background="@drawable/cta_button_click_effect"
+                android:fontFamily="@font/semi_bold"
                 android:gravity="center"
                 android:paddingStart="@dimen/_30sdp"
-                android:paddingTop="@dimen/_10sdp"
+                android:paddingTop="10dp"
                 android:paddingEnd="@dimen/_30sdp"
-                android:paddingBottom="@dimen/_10sdp"
+                android:paddingBottom="10dp"
                 android:text="Add To Cart"
                 android:textAllCaps="true"
                 android:textColor="@color/white"

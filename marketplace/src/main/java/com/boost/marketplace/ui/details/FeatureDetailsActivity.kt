@@ -21,7 +21,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
-import com.boost.cart.adapter.SimplePageTransformer
 import com.boost.cart.adapter.SimplePageTransformerSmall
 import com.boost.cart.adapter.ZoomOutPageTransformer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
@@ -240,7 +239,7 @@ class FeatureDetailsActivity :
                         applicationContext,
                         R.drawable.grey_button_click_effect
                     )
-                    add_item_to_cart.setTextColor(Color.parseColor("#bbbbbb"))
+                    add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
                     add_item_to_cart.text = getString(R.string.added_to_cart)
                     itemInCartStatus = true
 
@@ -486,7 +485,7 @@ class FeatureDetailsActivity :
                             this,
                             R.drawable.added_to_cart_grey
                         )
-                        add_item_to_cart.setTextColor(Color.parseColor("#bbbbbb"))
+                        add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
                         add_item_to_cart.text = getString(R.string.added_to_cart)
 //                        havent_bought_the_feature.visibility = View.INVISIBLE
                         itemInCartStatus = true
@@ -630,7 +629,7 @@ class FeatureDetailsActivity :
                     applicationContext,
                     R.drawable.grey_button_click_effect
                 )
-                add_item_to_cart.setTextColor(Color.parseColor("#bbbbbb"))
+                add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
                 add_item_to_cart.text = "ITEM BELONG TO PACKAGE"
                 add_item_to_cart.isEnabled = false
 //                havent_bought_the_feature.visibility = View.INVISIBLE
@@ -641,7 +640,7 @@ class FeatureDetailsActivity :
                 add_item_to_cart.visibility = View.VISIBLE
                 add_item_to_cart.background = ContextCompat.getDrawable(
                     applicationContext,
-                    R.drawable.orange_button_click_effect
+                    R.drawable.cta_button_click_effect
                 )
                 add_item_to_cart.setTextColor(Color.WHITE)
                 val discount = 100 - addonDetails!!.discount_percent

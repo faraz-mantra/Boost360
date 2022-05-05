@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:text="Renewals History"
         android:textColor="@color/common_text_color"
@@ -94,7 +94,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/_15sdp"
-      android:fontFamily="@font/open_sans_bold"
+      android:fontFamily="@font/bold"
       android:text="And up that goes"
       android:textColor="@color/common_text_color"
       android:textSize="@dimen/_14sdp" />
@@ -103,9 +103,9 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/_5sdp"
-      android:fontFamily="@font/open_sans"
+      android:fontFamily="@font/regular"
       android:text="There is nothing in your order history"
-      android:textColor="#9b9b9b"
+      android:textColor="@color/globalLight"
       android:textSize="@dimen/_12sdp" />
 
   </LinearLayout>
