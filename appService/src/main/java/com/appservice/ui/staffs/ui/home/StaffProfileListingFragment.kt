@@ -104,7 +104,8 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   private fun isLockStaff(): Boolean {
-    return (sessionLocal.getStoreWidgets()?.contains(StatusKyc.STAFFPROFILE.name) == true || isDoctor).not()
+    return if (isDoctor) (sessionLocal.getStoreWidgets()?.contains(StatusKyc.DOCTORBIO.name) == true).not()
+    else (sessionLocal.getStoreWidgets()?.contains(StatusKyc.STAFFPROFILE.name) == true).not()
   }
 
   private fun checkIsAddNewStaff() {
@@ -188,12 +189,12 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       onStaffAddedOrUpdated(listStaff.isNullOrEmpty().not())
       if (listStaff.isNullOrEmpty().not()) {
         removeLoader()
-        setEmptyView(isEmpty = false)
         TOTAL_ELEMENTS = resultStaff?.paging?.count ?: 0
         finalList.addAll(listStaff!!)
         list.clear()
         list.addAll(finalList)
         isLastPageD = (finalList.size == TOTAL_ELEMENTS)
+        setEmptyView(isEmpty = false)
         setAdapterNotify()
       } else if (isFirstLoad) setEmptyView(isEmpty = true)
     } else {
@@ -206,10 +207,10 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   private fun onStaffAddedOrUpdated(b: Boolean) {
-    if (isDoctor) return
     val instance = FirestoreManager
     if (instance.getDrScoreData()?.metricdetail == null) return
-    instance.getDrScoreData()?.metricdetail?.boolean_create_staff = b
+    if (isDoctor) instance.getDrScoreData()?.metricdetail?.boolean_create_doctor_e_profile = b
+    else instance.getDrScoreData()?.metricdetail?.boolean_create_staff = b
     instance.updateDocument()
   }
 
@@ -227,8 +228,8 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       isServiceEmpty -> {
         nonEmptyView()
         binding?.rvStaffList?.gone()
-        binding?.serviceEmpty?.root?.visible()
         binding?.addStaffDoctor?.gone()
+        binding?.serviceEmpty?.root?.visible()
       }
       isEmpty -> emptyView()
       else -> nonEmptyView()
@@ -236,9 +237,11 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   private fun nonEmptyView() {
+    binding?.childContainer?.gone()
+    binding?.serviceEmpty?.root?.gone()
     binding?.addStaffDoctor?.visible()
     binding?.mainlayout?.visible()
-    binding?.childContainer?.gone()
+    binding?.rvStaffList?.visible()
   }
 
   private fun emptyView() {

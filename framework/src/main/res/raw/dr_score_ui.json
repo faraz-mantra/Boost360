@@ -109,9 +109,9 @@
           "desc": "Explore how to manage all your online enquiries."
         },
         {
-          "id": "boolean_create_staff",
-          "title": "Add staff",
-          "desc": "Add detailed information about your staff to build credibility and trust amongst clients."
+          "id": "boolean_create_doctor_e_profile",
+          "title": "Add doctor e-profile",
+          "desc": "Add detailed information about your doctor to build credibility and trust amongst clients."
         }
       ]
     },

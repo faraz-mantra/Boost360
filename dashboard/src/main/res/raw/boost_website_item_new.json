@@ -30,10 +30,10 @@
           "premiumCode": ""
         },
         {
-          "title": "Image gallery",
+          "title": "Images gallery",
           "countType": "NoOfImages",
           "isFeature": false,
-          "desc": "Upload and manage all your website images in one place.",
+          "desc": "Keep updated to make your business stand out",
           "type": "all_images",
           "isLock": false,
           "premiumCode": ""
@@ -42,14 +42,14 @@
           "title": "Testimonials",
           "countType": "NoOfTestimonials",
           "isFeature": false,
-          "desc": "Add patient reviews and testimonials to improve trust.",
+          "desc": "Showcase customer reviews",
           "type": "testimonials",
           "isLock": false,
           "premiumCode": ""
         },
         {
           "title": "Website customisation",
-          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "desc": "Change the look & feel of your website",
           "type": "website_theme",
           "isLock": false,
           "isFeature": true,
@@ -59,7 +59,7 @@
           "title": "Custom pages",
           "countType": "NoOfCustomPages",
           "isFeature": false,
-          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "desc": "Add unique content to attract visitors",
           "type": "custom_page",
           "isLock": false,
           "premiumCode": ""
@@ -88,7 +88,7 @@
         },
         {
           "title": "Website customisation",
-          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "desc": "Change the look & feel of your website",
           "type": "website_theme",
           "isLock": false,
           "isFeature": true,
@@ -104,10 +104,10 @@
           "premiumCode": ""
         },
         {
-          "title": "Image gallery",
+          "title": "Images gallery",
           "countType": "NoOfImages",
           "isFeature": false,
-          "desc": "Upload and manage all your website images in one place.",
+          "desc": "Keep updated to make your business stand out",
           "type": "all_images",
           "isLock": false,
           "premiumCode": ""
@@ -116,7 +116,7 @@
           "title": "Testimonials",
           "countType": "NoOfTestimonials",
           "isFeature": false,
-          "desc": "Add patient reviews and testimonials to improve trust.",
+          "desc": "Showcase customer reviews",
           "type": "testimonials",
           "isLock": false,
           "premiumCode": ""
@@ -125,7 +125,7 @@
           "title": "Custom pages",
           "countType": "NoOfCustomPages",
           "isFeature": false,
-          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "desc": "Add unique content to attract visitors",
           "type": "custom_page",
           "isLock": false,
           "premiumCode": ""
@@ -139,33 +139,33 @@
           "title": "Product catalogue",
           "countType": "NoOfProducts",
           "isFeature": false,
-          "desc": "Add and manage products on your website catalogue. This will make it easier for customers to browse and order online.",
+          "desc": " Add and manage products here",
           "type": "service_product_catalogue",
           "isLock": false,
           "premiumCode": ""
         },
         {
           "title": "Website customisation",
-          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "desc": "Change the look & feel of your website",
           "type": "website_theme",
           "isLock": false,
           "isFeature": true,
           "premiumCode": ""
         },
         {
-          "title": "Updates & news",
+          "title": "Latest Updates",
           "countType": "NoOfUpdates",
           "isFeature": false,
-          "desc": "Add updates like product launches, new trends, offers etc. This is the information customers search online.",
+          "desc": "Add offers or talk about your products",
           "type": "latest_update_tips",
           "isLock": false,
           "premiumCode": ""
         },
         {
-          "title": "Image gallery",
+          "title": "Images gallery",
           "countType": "NoOfImages",
           "isFeature": false,
-          "desc": "Upload and manage all your website images in one place.",
+          "desc": "Keep updated to make your business stand out",
           "type": "all_images",
           "isLock": false,
           "premiumCode": ""
@@ -174,7 +174,7 @@
           "title": "Testimonials",
           "countType": "NoOfTestimonials",
           "isFeature": false,
-          "desc": "Add customer reviews and testimonials to improve trust.",
+          "desc": "Showcase customer reviews",
           "type": "testimonials",
           "isLock": false,
           "premiumCode": ""
@@ -183,7 +183,7 @@
           "title": "Custom pages",
           "countType": "NoOfCustomPages",
           "isFeature": false,
-          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "desc": "Add unique content to attract visitors",
           "type": "custom_page",
           "isLock": false,
           "premiumCode": ""
@@ -204,7 +204,7 @@
         },
         {
           "title": "Website customisation",
-          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "desc": "Change the look & feel of your website",
           "type": "website_theme",
           "isLock": false,
           "isFeature": true,
@@ -220,10 +220,10 @@
           "premiumCode": ""
         },
         {
-          "title": "Image gallery",
+          "title": "Images gallery",
           "countType": "NoOfImages",
           "isFeature": false,
-          "desc": "Upload and manage all your website images in one place.",
+          "desc": "Keep updated to make your business stand out",
           "type": "all_images",
           "isLock": false,
           "premiumCode": ""
@@ -232,7 +232,7 @@
           "title": "Testimonials",
           "countType": "NoOfTestimonials",
           "isFeature": false,
-          "desc": "Add student and parent testimonials to improve trust.",
+          "desc": "Showcase customer reviews",
           "type": "testimonials",
           "isLock": false,
           "premiumCode": ""
@@ -268,7 +268,7 @@
           "title": "Custom pages",
           "countType": "NoOfCustomPages",
           "isFeature": false,
-          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "desc": "Add unique content to attract visitors",
           "type": "custom_page",
           "isLock": false,
           "premiumCode": ""
@@ -289,7 +289,7 @@
         },
         {
           "title": "Website customisation",
-          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "desc": "Change the look & feel of your website",
           "type": "website_theme",
           "isLock": false,
           "isFeature": true,
@@ -305,10 +305,10 @@
           "premiumCode": ""
         },
         {
-          "title": "Image gallery",
+          "title": "Images gallery",
           "countType": "NoOfImages",
           "isFeature": false,
-          "desc": "Upload and manage all your website images in one place. Improve engagement on your website by adding images regularly.",
+          "desc": "Keep updated to make your business stand out",
           "type": "all_images",
           "isLock": false,
           "premiumCode": ""
@@ -317,7 +317,7 @@
           "title": "Testimonials",
           "countType": "NoOfTestimonials",
           "isFeature": false,
-          "desc": "Add customer reviews and testimonials to your website to improve trust.",
+          "desc": "Showcase customer reviews",
           "type": "testimonials",
           "isLock": false,
           "premiumCode": ""
@@ -367,33 +367,33 @@
           "title": "Product catalogue",
           "countType": "NoOfProducts",
           "isFeature": false,
-          "desc": "Add and manage products on your website catalogue. This will make it easier for customers to browse and order online.",
+          "desc": " Add and manage products here",
           "type": "service_product_catalogue",
           "isLock": false,
           "premiumCode": ""
         },
         {
           "title": "Website customisation",
-          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "desc": "Change the look & feel of your website",
           "type": "website_theme",
           "isLock": false,
           "isFeature": true,
           "premiumCode": ""
         },
         {
-          "title": "Updates & news",
+          "title": "Latest Updates",
           "countType": "NoOfUpdates",
           "isFeature": false,
-          "desc": "Add updates like new product launches, new trends, offers etc. This is the information customers search online.",
+          "desc": "Add offers or talk about your products",
           "type": "latest_update_tips",
           "isLock": false,
           "premiumCode": ""
         },
         {
-          "title": "Image gallery",
+          "title": "Images gallery",
           "countType": "NoOfImages",
           "isFeature": false,
-          "desc": "Upload and manage all your website images in one place.",
+          "desc": "Keep updated to make your business stand out",
           "type": "all_images",
           "isLock": false,
           "premiumCode": ""
@@ -411,7 +411,7 @@
           "title": "Testimonials",
           "countType": "NoOfTestimonials",
           "isFeature": false,
-          "desc": "Add customer reviews and testimonials to improve trust.",
+          "desc": "Showcase customer reviews",
           "type": "testimonials",
           "isLock": false,
           "premiumCode": ""
@@ -429,7 +429,7 @@
           "title": "Custom pages",
           "countType": "NoOfCustomPages",
           "isFeature": false,
-          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "desc": "Add unique content to attract visitors",
           "type": "custom_page",
           "isLock": false,
           "isFeature": false,
@@ -451,7 +451,7 @@
         },
         {
           "title": "Website customisation",
-          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "desc": "Change the look & feel of your website",
           "type": "website_theme",
           "isLock": false,
           "isFeature": true,
@@ -467,10 +467,10 @@
           "premiumCode": ""
         },
         {
-          "title": "Image gallery",
+          "title": "Images gallery",
           "countType": "NoOfImages",
           "isFeature": false,
-          "desc": "Upload and manage all your website images in one place.",
+          "desc": "Keep updated to make your business stand out",
           "type": "all_images",
           "isLock": false,
           "premiumCode": ""
@@ -479,7 +479,7 @@
           "title": "Testimonials",
           "countType": "NoOfTestimonials",
           "isFeature": false,
-          "desc": "Add customer reviews and testimonials to improve trust.",
+          "desc": "Showcase customer reviews",
           "type": "testimonials",
           "isLock": false,
           "premiumCode": ""
@@ -488,7 +488,7 @@
           "title": "Custom pages",
           "countType": "NoOfCustomPages",
           "isFeature": false,
-          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "desc": "Add unique content to attract visitors",
           "type": "custom_page",
           "isLock": false,
           "premiumCode": ""
@@ -509,7 +509,7 @@
         },
         {
           "title": "Website customisation",
-          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "desc": "Change the look & feel of your website",
           "type": "website_theme",
           "isLock": false,
           "isFeature": true,
@@ -525,10 +525,10 @@
           "premiumCode": ""
         },
         {
-          "title": "Image gallery",
+          "title": "Images gallery",
           "countType": "NoOfImages",
           "isFeature": false,
-          "desc": "Upload and manage all your website images in one place.",
+          "desc": "Keep updated to make your business stand out",
           "type": "all_images",
           "isLock": false,
           "premiumCode": ""
@@ -537,7 +537,7 @@
           "title": "Testimonials",
           "countType": "NoOfTestimonials",
           "isFeature": false,
-          "desc": "Add customer reviews and testimonials to improve trust.",
+          "desc": "Showcase customer reviews",
           "type": "testimonials",
           "isLock": false,
           "premiumCode": ""
@@ -546,7 +546,7 @@
           "title": "Custom pages",
           "countType": "NoOfCustomPages",
           "isFeature": false,
-          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "desc": "Add unique content to attract visitors",
           "type": "custom_page",
           "isLock": false,
           "premiumCode": ""
@@ -567,7 +567,7 @@
         },
         {
           "title": "Website customisation",
-          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "desc": "Change the look & feel of your website",
           "type": "website_theme",
           "isLock": false,
           "isFeature": true,
@@ -583,10 +583,10 @@
           "premiumCode": ""
         },
         {
-          "title": "Image gallery",
+          "title": "Images gallery",
           "countType": "NoOfImages",
           "isFeature": false,
-          "desc": "Upload and manage all your website images in one place.",
+          "desc": "Keep updated to make your business stand out",
           "type": "all_images",
           "isLock": false,
           "premiumCode": ""
@@ -595,7 +595,7 @@
           "title": "Testimonials",
           "countType": "NoOfTestimonials",
           "isFeature": false,
-          "desc": "Add customer reviews and testimonials to improve trust.",
+          "desc": "Showcase customer reviews",
           "type": "testimonials",
           "isLock": false,
           "premiumCode": ""
@@ -604,7 +604,7 @@
           "title": "Custom pages",
           "countType": "NoOfCustomPages",
           "isFeature": false,
-          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "desc": "Add unique content to attract visitors",
           "type": "custom_page",
           "isLock": false,
           "premiumCode": ""
@@ -633,7 +633,7 @@
         },
         {
           "title": "Website customisation",
-          "desc": "Make website yours by changing logo, favicon, fonts, colors, etc.",
+          "desc": "Change the look & feel of your website",
           "type": "website_theme",
           "isLock": false,
           "isFeature": true,
@@ -649,10 +649,10 @@
           "premiumCode": ""
         },
         {
-          "title": "Image gallery",
+          "title": "Images gallery",
           "countType": "NoOfImages",
           "isFeature": false,
-          "desc": "Upload and manage all your website images in one place.",
+          "desc": "Keep updated to make your business stand out",
           "type": "all_images",
           "isLock": false,
           "premiumCode": ""
@@ -661,7 +661,7 @@
           "title": "Testimonials",
           "countType": "NoOfTestimonials",
           "isFeature": false,
-          "desc": "Add customer reviews and testimonials to improve trust.",
+          "desc": "Showcase customer reviews",
           "type": "testimonials",
           "isLock": false,
           "premiumCode": ""
@@ -670,7 +670,7 @@
           "title": "Custom pages",
           "countType": "NoOfCustomPages",
           "isFeature": false,
-          "desc": "Add unique content to your website with the Boost WYSWIG editor.",
+          "desc": "Add unique content to attract visitors",
           "type": "custom_page",
           "isLock": false,
           "premiumCode": ""
