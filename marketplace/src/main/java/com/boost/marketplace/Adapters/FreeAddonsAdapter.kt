@@ -120,7 +120,7 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
       singleTitle.text = updateModel.name
       validity2.text="Valid till "+ updateModel.expiryDate
       Glide.with(context).load(updateModel.primary_image).into(image)
-      if (updateModel.status == 7) {
+      if (updateModel.status == 1) {
        img1.setImageResource(R.drawable.ic_active)
       }
       else {
