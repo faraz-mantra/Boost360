@@ -4,23 +4,22 @@ enum class DeepLink(var screenType:String){
 
     BOOSTKEYBOARD("Keyboard"),
     TESTIMONIALS("Testimonials"),
-    facebookpage("facebookpage"),
-    addProduct("addProduct"),
-    keyboardSettings("keyboardSettings"),
-    CUSTOMPAGES("addCustomPage"),
-    enquiries("enquiries_tab"),
-    subscribers("subscribers"),
-    new_subscribers("newsubscriber"),
-    IMAGEGALLERY("featuredimage"),
+    CUSTOMPAGES("all_custom_pages"),
+    TOB("customerenquires"),
+    IMAGEGALLERY("imagegallery"),
     SOCIALSHARE("social"),
-    LIMITED_CONTENT("manage_content"),
-    RIASUPPORTTEAM("ria_digital_assistant"),
+    PAYMENTGATEWAY("Payment_Gateway"),
+    ANALYTICS("total_website_visitors"),
+    PRODUCTCATALOGUESVC("service_catalogue"),
+    RIASUPPORTTEAM("Ria_Digital"),
     CONTACTDETAILS("contact_details"),
-    STAFFPROFILE("ic_staff_profile_d"),
-    CUSTOMERSUPPORT("premium_boost_support"),
-    ANALYTICS("search_analytics"),
-    PRODUCTCATALOGUE("productGallery"),
-    visits("visits");
+
+    LIMITED_CONTENT("manage_content"),
+    STAFFPROFILE("Staff_profile"),
+    STAFFPROFILE15("Staff_profile"),
+    CUSTOMERSUPPORT("expert_connect"),
+
+    ;
 
     companion object{
         fun getScreenType(featureKey:String?):String?= values().firstOrNull { featureKey == it.name }?.screenType

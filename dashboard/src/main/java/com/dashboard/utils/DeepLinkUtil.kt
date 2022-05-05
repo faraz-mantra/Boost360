@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.appservice.constant.FragmentType
-import com.boost.dbcenterapi.utils.DataLoader
 import com.dashboard.R
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
@@ -21,9 +20,12 @@ import java.util.*
 const val facebook_chat_main = "facebookchatMain"
 const val feedback_chat = "feedbackchat"
 const val deep_link_call_tracker = "callTracker"
-const val deeplink_manage_customer = "managecustomer"
+const val deeplink_customer_enquires = "customerenquires"
 const val keyboard = "Keyboard"
 const val testimonials = "Testimonials"
+const val payment_gateway = "Payment_Gateway"
+const val ria_digital ="Ria_Digital"
+const val staff_profile ="Staff_profile"
 const val facebook_chat = "facebookchat"
 const val third_party_queries = "thirdPartyQueries"
 const val facebookpage = "facebookpage"
@@ -140,8 +142,8 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startOrderCreate(session)
         } else if (url.contains(facebook_chat_main)) {
           //pending
-        } else if (url.contains(deeplink_manage_customer)) {
-          baseActivity.startManageCustomer(session)
+        } else if (url.contains(deeplink_customer_enquires)) {
+          baseActivity.startBusinessEnquiry(session)
         } else if (url.contains(feedback_chat)) {
           baseActivity.startHelpAndSupportActivity(session)
         } else if (url.contains(facebookpage)) {
@@ -288,6 +290,14 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startFestivePosterActivity(true)
         } else if (url.contains(deeplink_user_merchant_profile)) {
           baseActivity.startUserProfileDetail(session)
+        }else if (url.contains(testimonials)) {
+          baseActivity.startTestimonial(session)
+        }else if (url.contains(payment_gateway)) {
+          baseActivity.startSelfBrandedGateway(session)
+        }else if (url.contains(ria_digital)) {
+          baseActivity.startHelpAndSupportActivity(session)
+        }else if (url.contains(staff_profile)) {
+          baseActivity.startListStaff(session)
         }
       }
     } catch (e: Exception) {
