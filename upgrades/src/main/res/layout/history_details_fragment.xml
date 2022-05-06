@@ -273,11 +273,11 @@
           android:paddingBottom="@dimen/_10sdp">
 
           <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_semibold"
-            android:text="Total Paid"
-            android:textColor="#0A68E0" />
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/open_sans_semibold"
+              android:text="Total Paid"
+              android:textColor="#0A68E0" />
 
           <TextView
               android:id="@+id/history_details_selling_price"
