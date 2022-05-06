@@ -134,7 +134,7 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
     )?.observeOnce(viewLifecycleOwner, {
         val response = it as? GetTemplatesResponse
         response?.let {
-          dataList = response.Result.templates.toArrayList()
+          dataList = response.Result.templates?.toArrayList()
           dataList?.forEach { posterModel -> posterModel.isPurchased = true
             posterModel.greeting_message = sharedViewModel?.selectedPosterPack?.tagsModel?.description
             posterModel.shareLayout=true

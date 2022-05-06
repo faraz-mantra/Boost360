@@ -41,7 +41,7 @@ object SvgUtils {
         return requestBuilder
     }
 
-    fun loadImage(url: String, view: ImageView, model: List<PosterKeyModel>, isPurchased: Boolean){
+    fun loadImage(url: String, view: ImageView, model: List<PosterKeyModel>?, isPurchased: Boolean){
         val uri = Uri.parse(url)
         val listener = SvgDrawableListener(model, url,isPurchased)
         Log.d(TAG, "loadImage() called with: url = $url, model = $model $view")

@@ -43,13 +43,13 @@ class SvgRenderCacheUtil private constructor() {
 
     fun replace(
         svgString: String?,
-        posterKeys: List<PosterKeyModel>,
+        posterKeys: List<PosterKeyModel>?,
         context: Context,
         isPurchased: Boolean
     ): String? {
         var result =svgString
 
-        posterKeys.forEach {
+        posterKeys?.forEach {
             val replaceVal = if (it.custom!=null){
                 it.custom
             } else it.default
