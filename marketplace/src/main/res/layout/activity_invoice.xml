@@ -130,12 +130,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/progress_bar" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:fabSize="normal"
+            android:elevation="@dimen/_20sdp"
+            android:clickable="true"
+            android:src="@drawable/ic_invoice"
             android:layout_marginBottom="@dimen/_40sdp"
             android:layout_marginRight="@dimen/_20sdp"/>
 
