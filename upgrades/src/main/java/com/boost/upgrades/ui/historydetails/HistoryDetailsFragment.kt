@@ -97,7 +97,7 @@ class HistoryDetailsFragment : BaseFragment("MarketPlaceHistoryDetailsFragment")
       amountLayout1.append("(" + data.purchasedPackageDetails.WidgetPacks.size + "items)")
     }
     history_details_selling_price.setText(amountLayout1)
-    val mrpPrice =  data.baseAmount + data.discount + data.taxAmount //(data.paidAmount * (100 / (100 - data.discount)))
+    val mrpPrice =  data.baseAmount + data.taxAmount //(data.paidAmount * (100 / (100 - data.discount)))
     history_details_MRPPrice.setText(
       "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(mrpPrice)
     )
