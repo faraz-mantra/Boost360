@@ -104,7 +104,8 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   private fun isLockStaff(): Boolean {
-    return (sessionLocal.getStoreWidgets()?.contains(StatusKyc.STAFFPROFILE.name) == true || isDoctor).not()
+    return if (isDoctor) (sessionLocal.getStoreWidgets()?.contains(StatusKyc.DOCTORBIO.name) == true).not()
+    else (sessionLocal.getStoreWidgets()?.contains(StatusKyc.STAFFPROFILE.name) == true).not()
   }
 
   private fun checkIsAddNewStaff() {
@@ -188,12 +189,12 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       onStaffAddedOrUpdated(listStaff.isNullOrEmpty().not())
       if (listStaff.isNullOrEmpty().not()) {
         removeLoader()
-        setEmptyView(isEmpty = false)
         TOTAL_ELEMENTS = resultStaff?.paging?.count ?: 0
         finalList.addAll(listStaff!!)
         list.clear()
         list.addAll(finalList)
         isLastPageD = (finalList.size == TOTAL_ELEMENTS)
+        setEmptyView(isEmpty = false)
         setAdapterNotify()
       } else if (isFirstLoad) setEmptyView(isEmpty = true)
     } else {
@@ -206,10 +207,10 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   private fun onStaffAddedOrUpdated(b: Boolean) {
-    if (isDoctor) return
     val instance = FirestoreManager
     if (instance.getDrScoreData()?.metricdetail == null) return
-    instance.getDrScoreData()?.metricdetail?.boolean_create_staff = b
+    if (isDoctor) instance.getDrScoreData()?.metricdetail?.boolean_create_doctor_e_profile = b
+    else instance.getDrScoreData()?.metricdetail?.boolean_create_staff = b
     instance.updateDocument()
   }
 
@@ -227,8 +228,8 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       isServiceEmpty -> {
         nonEmptyView()
         binding?.rvStaffList?.gone()
-        binding?.serviceEmpty?.root?.visible()
         binding?.addStaffDoctor?.gone()
+        binding?.serviceEmpty?.root?.visible()
       }
       isEmpty -> emptyView()
       else -> nonEmptyView()
@@ -236,9 +237,11 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   private fun nonEmptyView() {
+    binding?.childContainer?.gone()
+    binding?.serviceEmpty?.root?.gone()
     binding?.addStaffDoctor?.visible()
     binding?.mainlayout?.visible()
-    binding?.childContainer?.gone()
+    binding?.rvStaffList?.visible()
   }
 
   private fun emptyView() {
@@ -351,28 +354,6 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     binding?.progress?.gone()
   }
 
-
-  private fun startStorePage() {
-    try {
-      showProgress("Loading. Please wait...")
-      val intent = Intent(baseActivity, Class.forName("com.boost.upgrades.UpgradeActivity"))
-      intent.putExtra("expCode", sessionLocal.fP_AppExperienceCode)
-      intent.putExtra("fpName", sessionLocal.fpTag)
-      intent.putExtra("fpid", sessionLocal.fPID)
-      intent.putExtra("fpTag", sessionLocal.fpTag)
-      intent.putExtra("accountType", sessionLocal.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
-      intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(sessionLocal.getStoreWidgets() ?: ArrayList()))
-      intent.putExtra("email", sessionLocal.fPEmail ?: getString(R.string.ria_customer_mail))
-      intent.putExtra("mobileNo", sessionLocal.fPPrimaryContactNumber ?: getString(R.string.ria_customer_number))
-      intent.putExtra("profileUrl", sessionLocal.fPLogo)
-      intent.putExtra("buyItemKey", "${StatusKyc.STAFFPROFILE.name}15")// feature key
-      baseActivity.startActivity(intent)
-      Handler().postDelayed({ hideProgress() }, 1000)
-    } catch (e: Exception) {
-      showLongToast("Unable to start upgrade activity.")
-    }
-  }
-
   fun getFilterRequest(offSet: Int, limit: Int): GetStaffListingRequest {
     return GetStaffListingRequest(FilterBy(offset = offSet, limit = limit), sessionLocal.fpTag, "")
   }
@@ -382,7 +363,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
       WebEngageController.trackEvent(if (isDoctor) ADD_DOCTOR_PROFILE else ADD_STAFF_PROFILE, CLICK, NO_EVENT_VALUE)
       val type = if (isDoctor) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT
       startStaffFragmentActivity(type, isResult = true)
-    } else startStorePage()
+    } else startStorePage(if (isDoctor) StatusKyc.DOCTORBIO.name else "${StatusKyc.STAFFPROFILE.name}15")
   }
 
   override fun secondaryButtonClicked() {

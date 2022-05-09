@@ -15,6 +15,7 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.interfaces.HomeListener
+import com.boost.upgrades.utils.SharedPrefs
 import com.bumptech.glide.Glide
 import com.framework.utils.RootUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -98,6 +99,7 @@ class PackageViewPagerAdapter(
     }
 
     fun getPackageInfoFromDB(holder: PagerViewHolder, bundles: Bundles) {
+        val prefs = SharedPrefs(activity)
         val itemsIds = arrayListOf<String>()
         for (item in bundles.included_features) {
             itemsIds.add(item.feature_code)
@@ -121,33 +123,49 @@ class PackageViewPagerAdapter(
                                             }
                                         }
                                     }
+
                                     if(bundles.overall_discount_percent > 0){
-                                        offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100),2)
+                                        offeredBundlePrice = (RootUtil.round(originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100),2))
+                                        if(prefs.getYearPricing())
+                                            offeredBundlePrice = offeredBundlePrice * 12
                                         holder.bundleDiscount.visibility = View.VISIBLE
                                         holder.bundlePriceLabel.visibility = View.GONE
                                         holder.bundleDiscount.setText(bundles.overall_discount_percent.toString() + "%")
                                     } else {
-                                        offeredBundlePrice = originalBundlePrice
+                                        if(prefs.getYearPricing())
+                                            offeredBundlePrice = originalBundlePrice * 12
+                                        else
+                                            offeredBundlePrice = originalBundlePrice
                                         holder.bundleDiscount.visibility = View.GONE
                                         holder.bundlePriceLabel.visibility = View.VISIBLE
                                     }
 
                                     if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1){
-                                        holder.offerPrice.setText("₹" +
-                                                NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
-                                                "/" + bundles.min_purchase_months + "mths")
+                                        if(prefs.getYearPricing())
+                                            holder.offerPrice.setText("₹" +
+                                                    NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
+                                                    "/year")
+                                        else
+                                            holder.offerPrice.setText("₹" +
+                                                    NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
+                                                    "/" + bundles.min_purchase_months + "mths")
                                         if (offeredBundlePrice != originalBundlePrice) {
-                                            spannableString(holder, originalBundlePrice, bundles.min_purchase_months)
+                                            spannableString(holder, if(prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice, bundles.min_purchase_months)
                                             holder.origCost.visibility = View.VISIBLE
                                         } else {
                                             holder.origCost.visibility = View.GONE
                                         }
                                     }else{
-                                        holder.offerPrice.setText("₹" +
-                                                NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)
-                                                + "/mth")
+                                        if(prefs.getYearPricing())
+                                            holder.offerPrice.setText("₹" +
+                                                    NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)
+                                                    + "/year")
+                                        else
+                                            holder.offerPrice.setText("₹" +
+                                                    NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)
+                                                    + "/mth")
                                         if (offeredBundlePrice != originalBundlePrice) {
-                                            spannableString(holder, originalBundlePrice, 1)
+                                            spannableString(holder, if(prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice, 1)
                                             holder.origCost.visibility = View.VISIBLE
                                         } else {
                                             holder.origCost.visibility = View.GONE
@@ -210,11 +228,18 @@ class PackageViewPagerAdapter(
     }
 
     fun spannableString(holder: PagerViewHolder, value: Double, minMonth: Int) {
+        val prefs = SharedPrefs(activity)
         val origCost: SpannableString
         if(minMonth > 1){
-            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")
+            if(prefs.getYearPricing())
+                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year")
+            else
+                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")
         }else{
-            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
+            if(prefs.getYearPricing())
+                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year")
+            else
+                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
         }
 
         origCost.setSpan(

@@ -17,6 +17,7 @@ import com.boost.upgrades.adapter.CompareItemAdapter
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.interfaces.CompareListener
+import com.boost.upgrades.utils.SharedPrefs
 import com.bumptech.glide.Glide
 import com.framework.utils.RootUtil
 //import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
@@ -28,35 +29,43 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.LinkedHashSet
 
-class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>, val activity: UpgradeActivity, val homeListener: CompareListener) : RecyclerView.Adapter<ParentCompareItemAdapter.ParentViewHolder>() {
+class ParentCompareItemAdapter(
+    var list: java.util.ArrayList<Bundles>,
+    val activity: UpgradeActivity,
+    val homeListener: CompareListener
+) : RecyclerView.Adapter<ParentCompareItemAdapter.ParentViewHolder>() {
     // An object of RecyclerView.RecycledViewPool
     // is created to share the Views
     // between the child and
     // the parent RecyclerViews
     private val viewPool = RecyclerView.RecycledViewPool()
-//    private var list = ArrayList<Bundles>()
+
+    //    private var list = ArrayList<Bundles>()
     private var featureList = ArrayList<FeaturesModel>()
 
-/*    init {
-        this.list = itemList as ArrayList<Bundles>
-    }*/
+    /*    init {
+            this.list = itemList as ArrayList<Bundles>
+        }*/
     override fun onCreateViewHolder(
-            viewGroup: ViewGroup,
-            i: Int): ParentViewHolder {
+        viewGroup: ViewGroup,
+        i: Int
+    ): ParentViewHolder {
 
         // Here we inflate the corresponding
         // layout of the parent item
         val view = LayoutInflater
-                .from(viewGroup.context)
-                .inflate(
-                        R.layout.package_fragment_adapter,
-                        viewGroup, false)
+            .from(viewGroup.context)
+            .inflate(
+                R.layout.package_fragment_adapter,
+                viewGroup, false
+            )
         return ParentViewHolder(view)
     }
 
     override fun onBindViewHolder(
-            parentViewHolder: ParentViewHolder,
-            position: Int) {
+        parentViewHolder: ParentViewHolder,
+        position: Int
+    ) {
 
         // Create an instance of the ParentItem
         // class for the given position
@@ -69,21 +78,23 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>, val acti
         val data = parentItem.name
 //        val items = data!!.split(" ".toRegex()).toTypedArray()
         val items = data!!.split(" ".toRegex())
-        if(items.size == 1){
+        if (items.size == 1) {
             parentViewHolder.PackageItemTitle.text = items[0]
-        }else if(items.size == 2){
+        } else if (items.size == 2) {
             parentViewHolder.PackageItemTitle.text = items[0] + " \n" + items[1]
-        }else if(items.size == 3){
+        } else if (items.size == 3) {
             parentViewHolder.PackageItemTitle.text = items[0] + " \n" + items[1] + " " + items[2]
-        }else if(items.size == 4){
-            parentViewHolder.PackageItemTitle.text = items[0] + " " + items[1]  + " \n"  +items[2] + " "  + items[3]
-        }else if(items.size == 5){
-            parentViewHolder.PackageItemTitle.text = items[0] + " " + items[1]  + " \n"  +items[2] + " "  + items[3] + " " +items[4]
+        } else if (items.size == 4) {
+            parentViewHolder.PackageItemTitle.text =
+                items[0] + " " + items[1] + " \n" + items[2] + " " + items[3]
+        } else if (items.size == 5) {
+            parentViewHolder.PackageItemTitle.text =
+                items[0] + " " + items[1] + " \n" + items[2] + " " + items[3] + " " + items[4]
         }
 
-        if(parentItem.desc != null){
+        if (parentItem.desc != null) {
             parentViewHolder.parent_item_title.text = parentItem.desc
-        }else{
+        } else {
             /*parentViewHolder.parent_item_title.text = "LEARN MORE"
             parentViewHolder.parent_item_title.setTextColor(activity.getResources().getColor(R.color.app_yellow_1))
             parentViewHolder.parent_item_title.setTextSize(activity.getResources().getDimension(R.dimen.txt_15sp))
@@ -95,73 +106,75 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>, val acti
 
         val listSamp = ArrayList<String>()
 
-        for( item in parentItem.included_features ){
+        for (item in parentItem.included_features) {
 //            Log.v("onBindViewHolder", " "+ item.feature_code)
             listSamp.add(item.feature_code)
         }
 
 //        getPackageInfoFromDB(parentViewHolder,parentItem)
 //        isItemAddedInCart(parentViewHolder,parentItem)
-        getPackageInfoFromDB(parentViewHolder,list.get(position))
-        isItemAddedInCart(parentViewHolder,list.get(position))
+        getPackageInfoFromDB(parentViewHolder, list.get(position))
+        isItemAddedInCart(parentViewHolder, list.get(position))
 
         val distinct: List<String> = LinkedHashSet(listSamp).toMutableList()
 
-        val layoutManager1 = LinearLayoutManager(parentViewHolder.ChildRecyclerView.context,
-                LinearLayoutManager.VERTICAL, false)
+        val layoutManager1 = LinearLayoutManager(
+            parentViewHolder.ChildRecyclerView.context,
+            LinearLayoutManager.VERTICAL, false
+        )
 //        val sectionAdapter1 = SectionedRecyclerViewAdapter()
         CompositeDisposable().add(
-                AppDatabase.getInstance(activity!!.application)!!
-                        .featuresDao()
-                        .getallFeaturesInList(distinct)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                {
-                                    val itemIds = java.util.ArrayList<String?>()
-                                    for (item in it) {
-                                        itemIds.add(item.feature_code)
-                                    }
-                                    for(listItems in it){
-                                        CompositeDisposable().add(
-                                                AppDatabase.getInstance(activity!!.application)!!
-                                                        .featuresDao()
+            AppDatabase.getInstance(activity!!.application)!!
+                .featuresDao()
+                .getallFeaturesInList(distinct)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        val itemIds = java.util.ArrayList<String?>()
+                        for (item in it) {
+                            itemIds.add(item.feature_code)
+                        }
+                        for (listItems in it) {
+                            CompositeDisposable().add(
+                                AppDatabase.getInstance(activity!!.application)!!
+                                    .featuresDao()
 //                                                        .getFeatureListTargetBusiness(listItems.target_business_usecase,itemIds)
-                                                        .getFeatureListForCompare(itemIds)
-                                                        .subscribeOn(Schedulers.io())
-                                                        .observeOn(AndroidSchedulers.mainThread())
-                                                        .subscribe({
-                                                            if (it != null) {
+                                    .getFeatureListForCompare(itemIds)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe({
+                                        if (it != null) {
 
-                                                                Log.v("getFeatureListTarget", " "+ itemIds )
-                                                               /* val section = MySection(listItems.target_business_usecase, it)
-                                                                sectionAdapter1.addSection(section)
-                                                                parentViewHolder.ChildRecyclerView
-                                                                        .setAdapter(sectionAdapter1)
-                                                                parentViewHolder.ChildRecyclerView
-                                                                        .setLayoutManager(layoutManager1)*/
+                                            Log.v("getFeatureListTarget", " " + itemIds)
+                                            /* val section = MySection(listItems.target_business_usecase, it)
+                                             sectionAdapter1.addSection(section)
+                                             parentViewHolder.ChildRecyclerView
+                                                     .setAdapter(sectionAdapter1)
+                                             parentViewHolder.ChildRecyclerView
+                                                     .setLayoutManager(layoutManager1)*/
 
-                                                                val sectionLayout = CompareItemAdapter(activity, it)
-                                                                parentViewHolder.ChildRecyclerView
-                                                                        .setAdapter(sectionLayout)
-                                                                parentViewHolder.ChildRecyclerView
-                                                                        .setLayoutManager(layoutManager1)
+                                            val sectionLayout = CompareItemAdapter(activity, it)
+                                            parentViewHolder.ChildRecyclerView
+                                                .setAdapter(sectionLayout)
+                                            parentViewHolder.ChildRecyclerView
+                                                .setLayoutManager(layoutManager1)
 
 
-                                                            } else {
+                                        } else {
 //                                                                Toasty.error(requireContext(), "Bundle Not Available To This Account", Toast.LENGTH_LONG).show()
-                                                            }
-                                                        }, {
-                                                            it.printStackTrace()
-                                                        })
-                                        )
-                                    }
-                                },
-                                {
-                                    it.printStackTrace()
+                                        }
+                                    }, {
+                                        it.printStackTrace()
+                                    })
+                            )
+                        }
+                    },
+                    {
+                        it.printStackTrace()
 
-                                }
-                        )
+                    }
+                )
         )
 
 
@@ -175,15 +188,18 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>, val acti
 
 
 
-parentViewHolder.package_submit.setOnClickListener{
-    parentViewHolder.package_submit.background = ContextCompat.getDrawable(
-            activity.application,
-            R.drawable.added_to_cart_grey
-    )
-    parentViewHolder.package_submit.setTextColor(Color.parseColor("#bbbbbb"))
-    parentViewHolder.package_submit.setText("Added To Cart")
-    homeListener.onPackageClicked(parentItem,parentViewHolder.package_profile_image_compare_new)
-}
+        parentViewHolder.package_submit.setOnClickListener {
+            parentViewHolder.package_submit.background = ContextCompat.getDrawable(
+                activity.application,
+                R.drawable.added_to_cart_grey
+            )
+            parentViewHolder.package_submit.setTextColor(Color.parseColor("#bbbbbb"))
+            parentViewHolder.package_submit.setText("Added To Cart")
+            homeListener.onPackageClicked(
+                parentItem,
+                parentViewHolder.package_profile_image_compare_new
+            )
+        }
 
     }
 
@@ -226,31 +242,39 @@ parentViewHolder.package_submit.setOnClickListener{
         val package_profile_image: ImageView
         val parent_item_title: TextView
         val tv_inlcuded_add_on: TextView
-        val package_profile_image_compare_new:ImageView
+        val package_profile_image_compare_new: ImageView
 
         init {
             PackageItemTitle = itemView
-                    .findViewById(
-                            R.id.package_title)
+                .findViewById(
+                    R.id.package_title
+                )
             ChildRecyclerView = itemView
-                    .findViewById(
-                            R.id.child_recyclerview)
+                .findViewById(
+                    R.id.child_recyclerview
+                )
             package_submit = itemView
-                    .findViewById(
-                            R.id.package_addCartNew)
+                .findViewById(
+                    R.id.package_addCartNew
+                )
             tv_price = itemView
-                    .findViewById(
-                            R.id.tv_price)
+                .findViewById(
+                    R.id.tv_price
+                )
             package_profile_image = itemView
-                    .findViewById(
-                            R.id.package_profile_image)
+                .findViewById(
+                    R.id.package_profile_image
+                )
             parent_item_title = itemView
-                    .findViewById(
-                            R.id.parent_item_title)
+                .findViewById(
+                    R.id.parent_item_title
+                )
             tv_inlcuded_add_on = itemView
-                    .findViewById(
-                            R.id.tv_inlcuded_add_on)
-            package_profile_image_compare_new = itemView.findViewById(R.id.package_profile_image_compare_new)
+                .findViewById(
+                    R.id.tv_inlcuded_add_on
+                )
+            package_profile_image_compare_new =
+                itemView.findViewById(R.id.package_profile_image_compare_new)
 
         }
     }
@@ -263,90 +287,128 @@ parentViewHolder.package_submit.setOnClickListener{
 
         var offeredBundlePrice = 0.0
         var originalBundlePrice = 0.0
-        val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1) bundles.min_purchase_months else 1
+        val minMonth: Int =
+            if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1) bundles.min_purchase_months else 1
         CompositeDisposable().add(
-                AppDatabase.getInstance(activity.application)!!
-                        .featuresDao()
-                        .getallFeaturesInList(itemsIds)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                {
-                                    for (singleItem in it) {
-                                        for (item in bundles.included_features) {
-                                            if (singleItem.feature_code == item.feature_code) {
-                                                originalBundlePrice += RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),2) * minMonth
-                                            }
-                                        }
-                                    }
-
-                                    if(bundles.overall_discount_percent > 0){
-                                        offeredBundlePrice = RootUtil.round((originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100)),2)
-
-                                    } else {
-                                        offeredBundlePrice = originalBundlePrice
-
-                                    }
-                                    if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1){
-                                        holder.tv_price.setText("₹" +
-                                                NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
-                                                "/" + bundles.min_purchase_months + " months")
-                                        holder.tv_inlcuded_add_on.setText("Includes these "+ it.size+ " add-ons")
-
-                                    }else{
-                                        holder.tv_price.setText("₹" +
-                                                NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)
-                                                + "/month")
-                                        holder.tv_inlcuded_add_on.setText("Includes these "+ it.size+ " add-ons")
-                                    }
-
-                                    if(bundles.primary_image != null && !bundles.primary_image.url.isNullOrEmpty()){
-                                        Glide.with(holder.itemView.context).load(bundles.primary_image.url).into(holder.package_profile_image)
-                                        Glide.with(holder.itemView.context).load(bundles.primary_image.url).into(holder.package_profile_image_compare_new)
-                                    } else {
-                                        holder.package_profile_image.setImageResource(R.drawable.rectangle_copy_18)
-                                        holder.package_profile_image_compare_new.setImageResource(R.drawable.rectangle_copy_18)
-                                    }
-                                },
-                                {
-                                    it.printStackTrace()
+            AppDatabase.getInstance(activity.application)!!
+                .featuresDao()
+                .getallFeaturesInList(itemsIds)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        val prefs = SharedPrefs(activity)
+                        for (singleItem in it) {
+                            for (item in bundles.included_features) {
+                                if (singleItem.feature_code == item.feature_code) {
+                                    originalBundlePrice += RootUtil.round(
+                                        (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
+                                        2
+                                    ) * minMonth
                                 }
-                        )
+                            }
+                        }
+
+                        if (bundles.overall_discount_percent > 0) {
+                            offeredBundlePrice = RootUtil.round(
+                                (originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent / 100)),
+                                2
+                            )
+                            if (prefs.getYearPricing())
+                                offeredBundlePrice = offeredBundlePrice * 12
+                        } else {
+                            if (prefs.getYearPricing())
+                                offeredBundlePrice = originalBundlePrice * 12
+                            else
+                                offeredBundlePrice = originalBundlePrice
+                        }
+                        if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1) {
+                            if (prefs.getYearPricing())
+                                holder.tv_price.setText(
+                                    "₹" +
+                                            NumberFormat.getNumberInstance(Locale.ENGLISH)
+                                                .format(offeredBundlePrice) +
+                                            "/year"
+                                )
+                            else
+                                holder.tv_price.setText(
+                                    "₹" +
+                                            NumberFormat.getNumberInstance(Locale.ENGLISH)
+                                                .format(offeredBundlePrice) +
+                                            "/" + bundles.min_purchase_months + " months"
+                                )
+                            holder.tv_inlcuded_add_on.setText("Includes these " + it.size + " add-ons")
+
+                        } else {
+                            if (prefs.getYearPricing())
+                                holder.tv_price.setText(
+                                    "₹" +
+                                            NumberFormat.getNumberInstance(Locale.ENGLISH)
+                                                .format(offeredBundlePrice)
+                                            + "/year"
+                                )
+                            else
+                                holder.tv_price.setText(
+                                    "₹" +
+                                            NumberFormat.getNumberInstance(Locale.ENGLISH)
+                                                .format(offeredBundlePrice)
+                                            + "/month"
+                                )
+                            holder.tv_inlcuded_add_on.setText("Includes these " + it.size + " add-ons")
+                        }
+
+                        if (bundles.primary_image != null && !bundles.primary_image.url.isNullOrEmpty()) {
+                            Glide.with(holder.itemView.context).load(bundles.primary_image.url)
+                                .into(holder.package_profile_image)
+                            Glide.with(holder.itemView.context).load(bundles.primary_image.url)
+                                .into(holder.package_profile_image_compare_new)
+                        } else {
+                            holder.package_profile_image.setImageResource(R.drawable.rectangle_copy_18)
+                            holder.package_profile_image_compare_new.setImageResource(R.drawable.rectangle_copy_18)
+                        }
+                    },
+                    {
+                        it.printStackTrace()
+                    }
+                )
         )
     }
 
-    fun isItemAddedInCart(holder: ParentViewHolder, bundles: Bundles){
+    fun isItemAddedInCart(holder: ParentViewHolder, bundles: Bundles) {
         /*val itemsIds = arrayListOf<String>()
         for (item in bundles.included_features) {
             itemsIds.add(item.feature_code)
         }*/
         CompositeDisposable().add(
-                AppDatabase.getInstance(activity.application)!!
-                        .cartDao()
-                        .getCartItems()
+            AppDatabase.getInstance(activity.application)!!
+                .cartDao()
+                .getCartItems()
 //                        .getAllCartItemsInList(itemsIds)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            for (singleItem in it) {
-                                Log.v("isItemAddedInCart", " "+ bundles!!.name + " "+ singleItem.item_id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    for (singleItem in it) {
+                        Log.v("isItemAddedInCart", " " + bundles!!.name + " " + singleItem.item_id)
 //                                for (item in bundles.included_features) {
 
-                                if (singleItem.item_id.equals(bundles!!._kid)) {
-                                    Log.v("isItemAddedInCar12", " item_id: "+ singleItem.item_id + " kid: "+ bundles!!._kid + " "+ bundles!!.name)
-                                    holder.package_submit.background = ContextCompat.getDrawable(
-                                            activity.application,
-                                            R.drawable.added_to_cart_grey
-                                    )
-                                    holder.package_submit.setTextColor(Color.parseColor("#bbbbbb"))
-                                    holder.package_submit.setText("Added To Cart")
-                                }
-//                                }
-                            }
-                        }, {
-
+                        if (singleItem.item_id.equals(bundles!!._kid)) {
+                            Log.v(
+                                "isItemAddedInCar12",
+                                " item_id: " + singleItem.item_id + " kid: " + bundles!!._kid + " " + bundles!!.name
+                            )
+                            holder.package_submit.background = ContextCompat.getDrawable(
+                                activity.application,
+                                R.drawable.added_to_cart_grey
+                            )
+                            holder.package_submit.setTextColor(Color.parseColor("#bbbbbb"))
+                            holder.package_submit.setText("Added To Cart")
                         }
-                        )
+//                                }
+                    }
+                }, {
+
+                }
+                )
         )
     }
 }

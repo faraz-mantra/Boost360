@@ -24,8 +24,7 @@ import com.inventoryorder.ui.tutorials.model.VIDEOSItem
 import com.inventoryorder.ui.tutorials.viewmodel.TutorialViewModel
 import java.util.*
 
-class LearnHowItWorkBottomSheet :
-  BaseBottomSheetDialog<BottomSheetLearnHowItWorksBinding, TutorialViewModel>() {
+class LearnHowItWorkBottomSheet : BaseBottomSheetDialog<BottomSheetLearnHowItWorksBinding, TutorialViewModel>() {
 
   private var data: LearnAboutAppointmentMgmt? = null
 
@@ -64,7 +63,7 @@ class LearnHowItWorkBottomSheet :
 
 
   private fun setData() {
-    viewModel?.getLearnStaffResponse()?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getLearnStaffResponse()?.observeOnce(viewLifecycleOwner) {
       this.data = it
       binding?.ctvHowItWorksContent?.text = data?.contents?.description
       val pagerAdapter = PagerAdapter(
@@ -75,9 +74,8 @@ class LearnHowItWorkBottomSheet :
       binding?.vpVideos?.adapter = pagerAdapter
       binding?.diPagerIndicator?.setViewPager(binding?.vpVideos!!)
       loadTips(data!!)
-      binding?.ctvVideosHeading?.text =
-        "${if (data?.contents?.videos?.size ?: 0 > 1) "VIDEOS" else "VIDEO"} (${data?.contents?.videos?.size})"
-    })
+      binding?.ctvVideosHeading?.text = "${if (data?.contents?.videos?.size ?: 0 > 1) "VIDEOS" else "VIDEO"} (${data?.contents?.videos?.size})"
+    }
   }
 
 

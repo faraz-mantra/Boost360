@@ -338,7 +338,6 @@
 
       <com.framework.views.roundedimageview.RoundedImageView
         android:id="@+id/civ_staff_profile_img"
-
         android:layout_width="@dimen/size_100"
         android:layout_height="@dimen/size_100"
         android:layout_marginStart="@dimen/size_20"
@@ -349,7 +348,7 @@
         app:riv_corner_radius="@dimen/size_8"
         app:riv_mutate_background="true"
         app:riv_oval="false"
-        tools:srcCompat="@drawable/dummy_staff_img" />
+        app:srcCompat="@drawable/placeholder_image_n" />
 
     </RelativeLayout>
   </androidx.core.widget.NestedScrollView>

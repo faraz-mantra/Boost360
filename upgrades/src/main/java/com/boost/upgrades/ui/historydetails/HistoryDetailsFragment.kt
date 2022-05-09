@@ -97,13 +97,13 @@ class HistoryDetailsFragment : BaseFragment("MarketPlaceHistoryDetailsFragment")
       amountLayout1.append("(" + data.purchasedPackageDetails.WidgetPacks.size + "items)")
     }
     history_details_selling_price.setText(amountLayout1)
-    val mrpPrice = (data.paidAmount * (100 / (100 - data.discount)))
+    val mrpPrice =  data.baseAmount + data.discount + data.taxAmount //(data.paidAmount * (100 / (100 - data.discount)))
     history_details_MRPPrice.setText(
       "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(mrpPrice)
     )
-    val discountAmount = mrpPrice - data.paidAmount
+//    val discountAmount = mrpPrice - data.paidAmount
     history_details_discount_amount.setText(
-      "- ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(discountAmount)
+      "- ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(data.discount)//discountAmount)
     )
     if (data.PaymentMethod != null) {
       history_details_payment_type.setText("Payment via " + data.PaymentMethod)

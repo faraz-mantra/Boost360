@@ -54,7 +54,7 @@
               "businessType": "doctor_profile",
               "isLock": false,
               "isHide": false,
-              "premiumCode": "",
+              "premiumCode": "DOCTORBIO",
               "title": "Doctor\ne-profile"
             },
             {
@@ -430,7 +430,7 @@
               "businessType": "doctor_profile",
               "isLock": false,
               "isHide": false,
-              "premiumCode": "",
+              "premiumCode": "DOCTORBIO",
               "title": "Doctor\ne-profile"
             },
             {
