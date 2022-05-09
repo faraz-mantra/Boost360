@@ -70,6 +70,7 @@ import com.boost.upgrades.data.api_model.paymentprofile.LastPaymentMethodDetails
 import com.boost.upgrades.ui.compare.ComparePackageFragment
 import com.boost.upgrades.utils.Constants.Companion.CHECKOUT_KYC_FRAGMENT
 import com.framework.analytics.SentryController
+import com.framework.utils.RootUtil
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_title
 import kotlinx.android.synthetic.main.cart_fragment.coupon_discount_value
 import kotlinx.android.synthetic.main.cart_fragment.igst_value
@@ -810,14 +811,14 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
   private fun createPurchaseOrder(cartStateId: String?) {
     Log.v("createPurchaseOrder1", " " + "createPurchaseOrder");
     var couponCode: String? = null
-    var couponDiscountPercentage: Int = 0
+    var couponDiscountPercentage: Double = 0.0
     if (validCouponCode != null) {
       couponCode = validCouponCode!!.coupon_key
-      couponDiscountPercentage = validCouponCode!!.discount_percent
+      couponDiscountPercentage = validCouponCode!!.discount_percent.toDouble()
     }
     if (couponServiceModel != null) {
       couponCode = couponServiceModel!!.coupon_key
-      couponDiscountPercentage = couponServiceModel!!.couponDiscountAmt!!.toInt()
+      couponDiscountPercentage = couponServiceModel!!.couponDiscountAmt!!
     }
     val purchaseOrders = ArrayList<PurchaseOrder>()
     val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
@@ -987,7 +988,7 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
                   for (singleFeature in featuresList) {
                     if (singleIndludedFeature.feature_code.equals(singleFeature.feature_code)) {
 
-                      val netPrice = (singleFeature.price - ((singleFeature.price * singleIndludedFeature.feature_price_discount_percent) / 100))
+                      val netPrice = RootUtil.round(((singleFeature.price - ((singleFeature.price * singleIndludedFeature.feature_price_discount_percent) / 100.0))),2)
 
                       //adding bundle netPrice
 //                      bundleNetPrice += netPrice * singleBundle.min_purchase_months
@@ -997,7 +998,7 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
 
                       //-----------------------//discount implementation
                       if (bundleDiscount > 0) {
-                        singleWidgetNetPrice = Math.round(singleWidgetNetPrice - ((singleWidgetNetPrice * bundleDiscount) / 100)).toDouble()
+                        singleWidgetNetPrice = RootUtil.round(singleWidgetNetPrice - ((singleWidgetNetPrice * bundleDiscount) / 100) ,2)
                       }
                       featureNetPrice += singleWidgetNetPrice
 
@@ -1069,9 +1070,9 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
       purchaseOrders.add(
         PurchaseOrder(
           couponCode,
-          couponDiscountPercentage, //showing couponcode percentage
+          RootUtil.round(couponDiscountPercentage,2), //showing couponcode percentage
           null,
-          featureNetPrice,
+          RootUtil.round(if(prefs.getYearPricing()) (featureNetPrice * (default_validity_months * 12)) else (featureNetPrice * default_validity_months),2),
           featureWidgetList
         )
       )
@@ -1097,7 +1098,7 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
         (activity as UpgradeActivity).fpid!!,
         PaymentDetails(
           "INR",
-          couponDiscountPercentage, //[Double] Discount Percentage of the the payment(Coupon code discount)
+          RootUtil.round(couponDiscountPercentage, 2), //[Double] Discount Percentage of the the payment(Coupon code discount)
           "RAZORPAY",
           TaxDetails(
             GSTINNumber,
@@ -1117,14 +1118,14 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
   private fun createPurchaseAutoSubscriptionOrder(cartStateId: String?) {
     Log.v("createPurchaseAuto", " " + "createPurchaseAutoSubscriptionOrder")
     var couponCode: String? = null
-    var couponDiscountPercentage: Int = 0
+    var couponDiscountPercentage: Double = 0.0
     if (validCouponCode != null) {
       couponCode = validCouponCode!!.coupon_key
-      couponDiscountPercentage = validCouponCode!!.discount_percent
+      couponDiscountPercentage = validCouponCode!!.discount_percent.toDouble()
     }
     if (couponServiceModel != null) {
       couponCode = couponServiceModel!!.coupon_key
-      couponDiscountPercentage = couponServiceModel!!.couponDiscountAmt!!.toInt()
+      couponDiscountPercentage = couponServiceModel!!.couponDiscountAmt!!
     }
     val purchaseOrders = ArrayList<PurchaseOrder>()
     val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
@@ -1305,7 +1306,7 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
 
                       //-----------------------//discount implementation
                       if (bundleDiscount > 0) {
-                        singleWidgetNetPrice = Math.round(singleWidgetNetPrice - ((singleWidgetNetPrice * bundleDiscount) / 100)).toDouble()
+                        singleWidgetNetPrice = singleWidgetNetPrice - ((singleWidgetNetPrice * bundleDiscount) / 100)
                       }
                       featureNetPrice += singleWidgetNetPrice
 
