@@ -20,12 +20,12 @@ class PosterViewHolder(binding: ListItemPosterBinding) :
         binding.ivWatermark.isVisible = !model.isPurchased
         model.keys.let {
             val url =
-                model.variants.firstOrNull()?.svgUrl
+                model.variants?.firstOrNull()?.svgUrl
                     ?: "https://siriablobstorage.blob.core.windows.net/svg-templates/61644f0c503d2a74e5b68963/DurgaPuja03.svg"
 //            val url ="https://siriablobstorage.blob.core.windows.net/svg-templates/61644f0c503d2a74e5b68963/DurgaPuja03.svg" // 63KB
 //            val url ="https://siriablobstorage.blob.core.windows.net/svg-templates/61644f3a503d2a74e5b68966/Dussehra01.svg" // 500KB
             SvgUtils.loadImage(url, binding.ivSvg, model.keys,model.isPurchased)
-            Log.d("PosterViewHolder", "bind() called ${model.keys.get(0)}")
+            Log.d("PosterViewHolder", "bind() called ${model.keys?.get(0)}")
         }
 
 //        Glide.with(binding.btnTapEdit.context).load(model.variants.firstOrNull()?.svgUrl?:"").
