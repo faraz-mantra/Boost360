@@ -82,7 +82,7 @@ public class SubscriberDetailsActivity extends AppCompatActivity implements View
       finish();
       return;
     }
-    mProgressBar = new ProgressDialog(this);
+    mProgressBar = new ProgressDialog(this,R.style.AppCompatAlertDialogStyle);
     mProgressBar.setIndeterminate(false);
     mProgressBar.setMessage(getString(R.string.please_wait));
     mProgressBar.setCanceledOnTouchOutside(false);
