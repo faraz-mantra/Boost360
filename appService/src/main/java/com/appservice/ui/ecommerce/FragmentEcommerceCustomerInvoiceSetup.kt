@@ -79,7 +79,7 @@ class FragmentEcommerceCustomerInvoiceSetup : AppBaseFragment<FragmentEcommerceC
         this.data = it as PaymentProfileResponse
         val gSTIN = data?.result?.taxDetails?.gSTDetails?.gSTIN
         val businessName = data?.result?.taxDetails?.gSTDetails?.businessName
-        if (gSTIN.isNullOrEmpty().not() || businessName.isNullOrEmpty().not()) {
+        if (gSTIN.isNullOrEmpty().not() && businessName.isNullOrEmpty().not()) {
           setGstData(gSTIN!!)
           setBusinessName(businessName!!)
         }

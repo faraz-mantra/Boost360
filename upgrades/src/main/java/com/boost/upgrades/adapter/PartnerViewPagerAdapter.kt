@@ -37,7 +37,7 @@ class PartnerViewPagerAdapter(
   }
 
   override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
-    Glide.with(holder.itemView.context).load(list.get(position).image.url).into(holder.primaryImage)
+    Glide.with(holder.itemView.context).load(list.get(position).image.url?:"").into(holder.primaryImage)
     holder.primaryImage.setOnClickListener {
       homeListener.onPartnerZoneClicked(list.get(position))
     }

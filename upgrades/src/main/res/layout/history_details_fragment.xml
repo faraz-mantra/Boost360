@@ -218,15 +218,15 @@
             android:textColor="@color/common_text_color" />
 
           <TextView
-            android:id="@+id/history_details_MRPPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:fontFamily="@font/open_sans"
-            android:paddingTop="@dimen/_5sdp"
-            android:paddingBottom="@dimen/_5sdp"
-            android:textColor="@color/common_text_color"
-            tools:text="₹2097" />
+              android:id="@+id/history_details_MRPPrice"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentEnd="true"
+              android:fontFamily="@font/open_sans"
+              android:paddingTop="@dimen/_5sdp"
+              android:paddingBottom="@dimen/_5sdp"
+              android:textColor="@color/common_text_color"
+              tools:text="₹2097" />
 
           <TextView
             android:id="@+id/coupon_discount_title"
@@ -240,15 +240,15 @@
             android:textColor="@color/common_text_color" />
 
           <TextView
-            android:id="@+id/history_details_discount_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/history_details_MRPPrice"
-            android:layout_alignParentEnd="true"
-            android:fontFamily="@font/open_sans"
-            android:paddingTop="@dimen/_5sdp"
-            android:paddingBottom="@dimen/_5sdp"
-            tools:text="₹900" />
+              android:id="@+id/history_details_discount_amount"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/history_details_MRPPrice"
+              android:layout_alignParentEnd="true"
+              android:fontFamily="@font/open_sans"
+              android:paddingTop="@dimen/_5sdp"
+              android:paddingBottom="@dimen/_5sdp"
+              tools:text="₹900" />
 
 
         </RelativeLayout>
@@ -280,13 +280,13 @@
             android:textColor="#0A68E0" />
 
           <TextView
-            android:id="@+id/history_details_selling_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:fontFamily="@font/open_sans_semibold"
-            android:textColor="#0A68E0"
-            tools:text="₹900" />
+              android:id="@+id/history_details_selling_price"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentEnd="true"
+              android:fontFamily="@font/open_sans_semibold"
+              android:textColor="#0A68E0"
+              tools:text="₹900" />
         </RelativeLayout>
 
       </LinearLayout>

@@ -1,5 +1,6 @@
 package com.boost.upgrades.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.interfaces.CartFragmentListener
+import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
@@ -23,14 +25,17 @@ import kotlin.collections.ArrayList
 
 class CartPackageAdaptor(
   list: List<CartModel>?,
-  val listener: CartFragmentListener
+  val listener: CartFragmentListener,
+  val activity: Activity
 ) : RecyclerView.Adapter<CartPackageAdaptor.upgradeViewHolder>() {
 
   private var bundlesList = ArrayList<CartModel>()
   private lateinit var context: Context
+  private lateinit var prefs: SharedPrefs
 
   init {
     this.bundlesList = list as ArrayList<CartModel>
+    this.prefs = SharedPrefs(activity)
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -50,14 +55,22 @@ class CartPackageAdaptor(
     val selectedBundle = bundlesList.get(position)
 
     holder.name.text = selectedBundle.item_name
-    val price = selectedBundle.price
-    val MRPPrice = selectedBundle.MRPPrice
+    val price = if(prefs.getYearPricing()) selectedBundle.price * 12 else selectedBundle.price
+    val MRPPrice = if(prefs.getYearPricing()) selectedBundle.MRPPrice * 12 else selectedBundle.MRPPrice
     if (selectedBundle.min_purchase_months > 1) {
-      holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-        .format(price) + "/" + selectedBundle.min_purchase_months + "mths"
+      if(prefs.getYearPricing())
+        holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+          .format(price) + "/year"
+      else
+        holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+          .format(price) + "/" + selectedBundle.min_purchase_months + "mths"
     } else {
-      holder.price.text =
-        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/mth"
+      if(prefs.getYearPricing())
+        holder.price.text =
+          "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/year"
+      else
+        holder.price.text =
+          "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/mth"
     }
 
     if (selectedBundle.link != null) {
@@ -120,12 +133,19 @@ class CartPackageAdaptor(
   fun spannableString(holder: upgradeViewHolder, value: Double, minMonth: Int) {
     val origCost: SpannableString
     if (minMonth > 1) {
-      origCost = SpannableString(
-        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths"
-      )
+      if(prefs.getYearPricing())
+        origCost = SpannableString(
+          "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year"
+        )
+      else
+        origCost = SpannableString(
+          "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths"
+        )
     } else {
-      origCost =
-        SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
+      if(prefs.getYearPricing())
+        origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year")
+      else
+        origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
     }
 
     origCost.setSpan(

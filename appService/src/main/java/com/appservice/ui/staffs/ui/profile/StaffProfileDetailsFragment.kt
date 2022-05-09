@@ -105,7 +105,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
         binding?.ctvStaffGenderAge?.text = staffDetails?.getGenderAndAge()
         binding?.ctvAboutHeading?.text = "About ${staffDetails?.name}"
         binding?.ctvAboutStaff?.text = staffDetails?.description
-        binding?.civStaffProfileImg?.let { activity?.glideLoad(it, staffDetails?.image ?: "", R.drawable.placeholder_image) }
+        binding?.civStaffProfileImg?.let { activity?.glideLoad(it, staffDetails?.image ?: "", R.drawable.placeholder_image_n) }
         binding?.ctvSpecialization?.text = staffDetails?.specialisations?.firstOrNull()?.value ?: ""
         if (staffDetails?.isAvailable == false) showInactiveProfile()
         fetchServices()

@@ -1204,4 +1204,6 @@
   <string name="select_if_you_want_customer_to_pay_via_a_custom_payment_link_anytime_between_order_placement_and_delivery_learn_more">Select, if you want customer to pay via a custom payment link anytime between order placement and delivery. Learn More</string>
   <string name="during_pickup_from_store">During pickup from store</string>
   <string name="select_if_you_want_to_allow_customer_to_make_cash_payment_during_store_pickup">Select, if you want to allow customer to make cash payment during store pickup.</string>
+  <string name="add_only_one_doctor_profile">You can add only one doctor profile in this current feature.</string>
+  <string name="food_menu">Food Menu</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.boost.upgrades.ui.home
 
+import android.R.attr
 import android.animation.Animator
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
@@ -7,6 +8,7 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.text.Spannable
@@ -14,9 +16,7 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.webkit.WebViewClient
 import android.widget.ImageView
 import android.widget.Toast
@@ -83,6 +83,10 @@ import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.models.toLiveData
 import com.framework.utils.RootUtil
 import java.text.SimpleDateFormat
+import android.R.attr.button
+import android.widget.PopupMenu
+import androidx.annotation.RequiresApi
+import com.boost.upgrades.ui.history.HistoryFragment
 
 
 class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, CompareBackListener {
@@ -161,12 +165,14 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
         return root
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
-
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window = requireActivity().window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.setStatusBarColor(getResources().getColor(R.color.common_text_color))
+        }
         //emptyCouponTable everytime for new coupon code
         viewModel.emptyCouponTable()
         setSpannableStrings()
@@ -180,8 +186,46 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
         shimmer_view_recomm_addons.startShimmer()
         shimmer_view_addon_category.startShimmer()
         WebEngageController.trackEvent(ADDONS_MARKETPLACE_HOME, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
-//        Glide.with(this).load(R.drawable.back_beau).apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3))).into(back_image)
 
+        imageViewOption1.setOnClickListener {
+            val popup = PopupMenu(requireContext(), imageViewOption1)
+            popup.getMenuInflater().inflate(R.menu.home_menu, popup.getMenu())
+            val menuOpts = popup.menu
+            if(prefs.getYearPricing()) {
+                menuOpts.getItem(1).setTitle(R.string.switch_to_monthly_pricing)
+            }else {
+                menuOpts.getItem(1).setTitle(R.string.switch_to_yearly_pricing)
+            }
+            popup.setForceShowIcon(true)
+            popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
+
+                when (item!!.itemId) {
+                    R.id.order_history -> {
+                        (activity as UpgradeActivity).addFragment(
+                            HistoryFragment.newInstance(),
+                            Constants.HISTORY_FRAGMENT
+                        )
+                    }
+                    R.id.pricing_switch -> {
+                        val menuOpts1 = popup.menu
+                        if(prefs.getYearPricing()) {
+                            menuOpts1.getItem(1).setTitle(R.string.switch_to_monthly_pricing)
+                            prefs.storeYearPricing(false)
+                        }else {
+                            menuOpts1.getItem(1).setTitle(R.string.switch_to_yearly_pricing)
+                            prefs.storeYearPricing(true)
+                        }
+                        prefs.storeCartValidityMonths("1")
+                        this@HomeFragment.upgradeAdapter.notifyDataSetChanged()
+                        this@HomeFragment.packageViewPagerAdapter.notifyDataSetChanged()
+                    }
+                }
+
+                true
+            })
+            popup.show() //showing popup menu
+
+        }
         imageView21.setOnClickListener {
             (activity as UpgradeActivity).finish()
         }
@@ -602,7 +646,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
     @SuppressLint("FragmentLiveDataObserve")
     fun initMvvm() {
 
-        viewModel.updatesError().observe(this, androidx.lifecycle.Observer {
+        viewModel.updatesError().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             //            Snackbar.make(root, viewModel.errorMessage, Snackbar.LENGTH_LONG).show()
 //            if (shimmer_view_container.isAnimationStarted) {
 //                shimmer_view_container.stopShimmerAnimation()
@@ -611,17 +655,17 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             longToast(requireContext(), "onFailure: " + it)
         })
 
-//        viewModel.upgradeResult().observe(this, androidx.lifecycle.Observer {
+//        viewModel.upgradeResult().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
 //            updateRecycler(it)
 //        })
 
-        viewModel.getAllAvailableFeatures().observe(this, androidx.lifecycle.Observer {
+        viewModel.getAllAvailableFeatures().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             all_recommended_addons.visibility = View.VISIBLE
             updateRecycler(it)
             updateAddonCategoryRecycler(it)
         })
 
-        viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
+        viewModel.getAllBundles().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             val list = arrayListOf<Bundles>()
             for (item in it) {
                 val temp = Gson().fromJson<List<IncludedFeature>>(
@@ -663,7 +707,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.getBackAllBundles().observe(this, androidx.lifecycle.Observer {
+        viewModel.getBackAllBundles().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             val list = arrayListOf<Bundles>()
             for (item in it) {
                 val temp = Gson().fromJson<List<IncludedFeature>>(
@@ -698,7 +742,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.getAllFeatureDeals().observe(this, androidx.lifecycle.Observer {
+        viewModel.getAllFeatureDeals().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it.size > 0) {
                 var cartItems: List<CartModel> = arrayListOf()
                 if (viewModel.cartResult.value != null) {
@@ -708,11 +752,11 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.getTotalActiveWidgetCount().observe(this, androidx.lifecycle.Observer {
-            total_active_widget_count.text = it.toString()
-        })
+//        viewModel.getTotalActiveWidgetCount().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+//            total_active_widget_count.text = it.toString()
+//        })
 
-        viewModel.categoryResult().observe(this, androidx.lifecycle.Observer {
+        viewModel.categoryResult().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it != null) {
                 if(recommended_features_account_type.paint.measureText(Html.fromHtml(it!!.toLowerCase()).toString())> recommended_features_account_type.measuredWidth){
                     recommended_features_account_type.visibility = View.GONE
@@ -726,7 +770,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
 
         })
 
-        viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
+        viewModel.updatesLoader().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it) {
                 val status = "Loading. Please wait..."
                 progressDialog.setMessage(status)
@@ -737,7 +781,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.cartResult().observe(this, androidx.lifecycle.Observer {
+        viewModel.cartResult().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             UserSessionManager(requireActivity()).storeIntDetails(Key_Preferences.KEY_FP_CART_COUNT,it.size?:0)
             if (it != null && it.size > 0) {
 //                packageInCartStatus = false
@@ -952,7 +996,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }*/
         })
 
-        viewModel.cartResultBack().observe(this, androidx.lifecycle.Observer {
+        viewModel.cartResultBack().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             UserSessionManager(requireActivity()).storeIntDetails(Key_Preferences.KEY_FP_CART_COUNT,it.size?:0)
             if (it != null && it.size > 0) {
 //                packageInCartStatus = false
@@ -1161,12 +1205,12 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.getYoutubeVideoDetails().observe(this, androidx.lifecycle.Observer {
+        viewModel.getYoutubeVideoDetails().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             Log.e("getYoutubeVideoDetails", it.toString())
             updateVideosViewPager(it)
         })
 
-        viewModel.getExpertConnectDetails().observe(this, androidx.lifecycle.Observer {
+        viewModel.getExpertConnectDetails().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             Log.e("getYoutubeVideoDetails", it.toString())
             val expertConnectDetails = it
             if (it.is_online) {
@@ -1213,7 +1257,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.promoBannerAndMarketOfferResult().observe(this, androidx.lifecycle.Observer {
+        viewModel.promoBannerAndMarketOfferResult().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it.size > 0) {
                 if (shimmer_view_banner.isShimmerStarted) {
                     shimmer_view_banner.stopShimmer()
@@ -1232,7 +1276,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
         })
 
 
-        viewModel.getPromoBanners().observe(this, androidx.lifecycle.Observer {
+        viewModel.getPromoBanners().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             Log.e("getPromoBanners", it.toString())
             if (it.size > 0) {
                 if (shimmer_view_banner.isShimmerStarted) {
@@ -1252,7 +1296,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.getPartnerZone().observe(this, androidx.lifecycle.Observer {
+        viewModel.getPartnerZone().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             Log.e("getPartnerZone", it.toString())
             if (it.size > 0) {
                 updatePartnerViewPager(it)
@@ -1263,12 +1307,12 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.getFeedBackLink().observe(this, androidx.lifecycle.Observer {
+        viewModel.getFeedBackLink().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             Log.e("getFeedBackLink", it.toString())
             feedBackLink = it
         })
 
-        viewModel.getBundleExxists().observe(this,androidx.lifecycle.Observer{
+        viewModel.getBundleExxists().observe(viewLifecycleOwner,androidx.lifecycle.Observer{
             Log.d("getBundleExxists", it.toString())
         })
     }
@@ -1282,7 +1326,6 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
         recycler.adapter = upgradeAdapter
         upgradeAdapter.notifyDataSetChanged()
         recycler.isFocusable = false
-        back_image.isFocusable = true
     }
 
     fun updateAddonCategoryRecycler(list: List<FeaturesModel>) {
@@ -1308,7 +1351,6 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
         addons_category_recycler.adapter = addonsCategoryAdapter
         addonsCategoryAdapter.notifyDataSetChanged()
         addons_category_recycler.isFocusable = false
-        back_image.isFocusable = true
     }
 
     private fun initializeRecycler() {
