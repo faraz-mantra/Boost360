@@ -29,8 +29,8 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="@string/add_customer_image"
-          android:textColor="@color/warm_grey"
-          app:textType="CAPTION" />
+          android:textColor="@color/black_4a4a4a"
+          app:textType="HEADING_6" />
 
         <FrameLayout
           android:layout_width="@dimen/size_180"
@@ -87,15 +87,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/customer_name"
-            android:textColor="@color/warm_grey"
-            app:textType="CAPTION" />
+            android:textColor="@color/black_4a4a4a"
+            app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=" *"
             android:textColor="@color/colorAccent"
-            app:textType="BODY_1" />
+            app:textType="HEADING_6" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.framework.views.customViews.CustomEditText
@@ -104,6 +104,7 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_4"
           android:background="@drawable/rounded_edit_stroke"
+          android:fontFamily="@font/regular"
           android:hint="@string/enter_name"
           android:inputType="textPersonName"
           android:singleLine="true" />
@@ -119,15 +120,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/company_occupation"
-            android:textColor="@color/warm_grey"
-            app:textType="CAPTION" />
+            android:textColor="@color/black_4a4a4a"
+            app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=" *"
             android:textColor="@color/colorAccent"
-            app:textType="BODY_1" />
+            app:textType="HEADING_6" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.framework.views.customViews.CustomEditText
@@ -136,6 +137,7 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_4"
           android:background="@drawable/rounded_edit_stroke"
+          android:fontFamily="@font/regular"
           android:hint="@string/enter_company_occupation"
           android:inputType="textCapSentences"
           android:singleLine="true" />
@@ -151,15 +153,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/testimonial_title_n"
-            android:textColor="@color/warm_grey"
-            app:textType="CAPTION" />
+            android:textColor="@color/black_4a4a4a"
+            app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=" *"
             android:textColor="@color/colorAccent"
-            app:textType="BODY_1" />
+            app:textType="HEADING_6" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.framework.views.customViews.CustomEditText
@@ -168,6 +170,7 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_4"
           android:background="@drawable/rounded_edit_stroke"
+          android:fontFamily="@font/regular"
           android:hint="@string/enter_testimonial_title"
           android:inputType="textCapSentences"
           android:singleLine="true" />
@@ -183,15 +186,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/testimonial_description"
-            android:textColor="@color/warm_grey"
-            app:textType="CAPTION" />
+            android:textColor="@color/black_4a4a4a"
+            app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/space_start"
             android:textColor="@color/colorAccent"
-            app:textType="BODY_1" />
+            app:textType="HEADING_6" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.framework.views.customViews.CustomEditText
@@ -200,6 +203,7 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_4"
           android:background="@drawable/rounded_edit_stroke"
+          android:fontFamily="@font/regular"
           android:gravity="top|start"
           android:hint="@string/enter_description"
           android:inputType="textMultiLine"
