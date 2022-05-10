@@ -1206,4 +1206,7 @@
   <string name="select_if_you_want_to_allow_customer_to_make_cash_payment_during_store_pickup">Select, if you want to allow customer to make cash payment during store pickup.</string>
   <string name="add_only_one_doctor_profile">You can add only one doctor profile in this current feature.</string>
   <string name="food_menu">Food Menu</string>
+    <string name="upload_pan_card_image">Upload pan card image</string>
+    <string name="upload_business_pan_card">Upload Business PAN card</string>
+    <string name="take_a_picture">Take a picture</string>
 </resources>

@@ -121,6 +121,7 @@ class FragmentAppointmentSettings : AppBaseFragment<FragmentAppointmentSettingsB
       IconType.customer_invoice_setup -> startFragmentActivity(FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE)
       IconType.payment_collection -> startFragmentActivity(FragmentType.APPOINTMENT_PAYMENT_SETTINGS)
       IconType.policies -> startFragmentActivity(FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES)
+      IconType.business_verification->startFragmentActivity(FragmentType.ECOMMERCE_BUSINESS_VERIFICATION)
       else -> {
       }
     }

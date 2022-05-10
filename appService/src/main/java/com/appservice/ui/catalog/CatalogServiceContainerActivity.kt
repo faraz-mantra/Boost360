@@ -12,6 +12,8 @@ import com.appservice.R
 import com.appservice.ui.aptsetting.ui.*
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
+import com.appservice.ui.businessVerification.BusinessVerificationFragment
+import com.appservice.ui.businessVerification.ScanPanCardV2Fragment
 import com.appservice.ui.catalog.catalogProduct.addProduct.ProductDetailFragment
 import com.appservice.ui.catalog.catalogProduct.addProduct.information.ProductInformationFragment
 import com.appservice.ui.catalog.catalogProduct.listing.*
@@ -269,9 +271,13 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS -> {
         FragmentAddAccountDetails.newInstance()
       }
-      FragmentType.EDIT_ACCOUNT_DETAILS -> {
-        FragmentEditBankDetails.newInstance()
+      FragmentType.ECOMMERCE_BUSINESS_VERIFICATION -> {
+        BusinessVerificationFragment.newInstance()
       }
+      FragmentType.CAMERA_VIEW -> {
+        ScanPanCardV2Fragment.newInstance()
+      }
+
       else -> throw IllegalFragmentTypeException()
     }
   }
@@ -285,12 +291,13 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   }
 }
 
-fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false,
+                                   isResult: Boolean = false,requestCode: Int=0) {
   val intent = Intent(activity, CatalogServiceContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-  if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
+  if (isResult.not()) startActivity(intent) else startActivityForResult(intent, requestCode)
 }
 
 fun startFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean, isResult: Boolean = false) {

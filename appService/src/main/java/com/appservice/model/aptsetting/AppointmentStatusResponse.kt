@@ -42,7 +42,8 @@ enum class IconType(var icon: Int) {
   delivery_setup(R.drawable.ic_delivery_ecomm_setup),
   consultation_settings(R.drawable.ic_consulation_setting_appt),
   catalog_setup(R.drawable.ic_business_services_pro),
-  catalog_setup_ecommerce(R.drawable.ic_ecom_catalog_setup);
+  catalog_setup_ecommerce(R.drawable.ic_ecom_catalog_setup),
+  business_verification(R.drawable.ic_business_verification);
 
   companion object {
     fun fromName(name: String?): IconType? =
@@ -78,8 +79,9 @@ data class ResultS(
       add(AppointmentStatusResponse.TilesModel("catalog_setup", "Service categories, Catalog display text,applicable tax slabs", "Catalog setup", catalogSetup))
       if (isDoctor) add(AppointmentStatusResponse.TilesModel("consultation_settings", "General appointment: #", "General appointments", consultationSetup))
       add(AppointmentStatusResponse.TilesModel("payment_collection", "Preferred payment gateway", "Payment collection setup", paymentCollectionSetup))
-      add(AppointmentStatusResponse.TilesModel("customer_invoice_setup", "GST declaration, Bank UPI for offline appointments,signature", "Customer invoice setup", customerInvoicesSetup))
+     // add(AppointmentStatusResponse.TilesModel("customer_invoice_setup", "GST declaration, Bank UPI for offline appointments,signature", "Customer invoice setup", customerInvoicesSetup))
       //add(AppointmentStatusResponse.TilesModel("policies", "Refund, cancellation, privacy policies for your customers", "Policies for customers", policiesSetup))    }
+    add(AppointmentStatusResponse.TilesModel("business_verification","desc","Business verification"))
     }
   }
 
@@ -87,9 +89,11 @@ data class ResultS(
     return arrayListOf(
       AppointmentStatusResponse.TilesModel("catalog_setup_ecommerce", "Service categories, Catalog display text,applicable tax slabs", "Catalog setup", this.catalogSetup),
       AppointmentStatusResponse.TilesModel("payment_collection", "Preferred payment gateway", "Payment collection setup", this.paymentCollectionSetup),
-      AppointmentStatusResponse.TilesModel("customer_invoice_setup", "GST declaration, Bank UPI for offline appointments,signature", "Customer invoice setup", this.customerInvoicesSetup),
+    //  AppointmentStatusResponse.TilesModel("customer_invoice_setup", "GST declaration, Bank UPI for offline appointments,signature", "Customer invoice setup", this.customerInvoicesSetup),
       AppointmentStatusResponse.TilesModel("delivery_setup", "GST declaration, Bank UPI for offline appointments,signature", "Delivery setup", this.deliverySetup)
       //AppointmentStatusResponse.TilesModel("policies", "Refund, cancellation, privacy policies for your customers", "Policies for customers", this.policiesSetup)
+      ,AppointmentStatusResponse.TilesModel("business_verification","desc","Business verification")
+
     )
   }
 }

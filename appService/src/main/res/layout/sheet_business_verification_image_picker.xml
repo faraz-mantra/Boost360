@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools">
+
+<data>
+
+</data>
+
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+  <com.framework.views.customViews.CustomImageView
+      android:id="@+id/iv_close"
+      android:layout_width="@dimen/size_40"
+      android:layout_height="@dimen/size_40"
+      android:src="@drawable/ic_close_dark_gray" />
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/size_16"
+      android:background="@drawable/bg_rounded_top_strock"
+      android:orientation="vertical"
+      android:padding="@dimen/size_24">
+
+
+    <com.framework.views.customViews.CustomTextView
+        android:id="@+id/tv_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/semi_bold"
+        android:layout_marginTop="@dimen/size_11"
+        android:text="@string/upload_business_pan_card"
+        android:textColor="@color/black_4a4a4a"
+        android:textSize="@dimen/size_20" />
+
+
+
+
+    <com.framework.views.customViews.CustomMaterialButton
+        android:id="@+id/btb_take_picture"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_38"
+        android:layout_marginTop="@dimen/size_22"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:backgroundTint="@color/yellow_ffb900"
+        app:cornerRadius="@dimen/size_10"
+        android:stateListAnimator="@null"
+        android:textSize="14sp"
+        app:iconGravity="textStart"
+        app:iconPadding="@dimen/size_10"
+        android:text="@string/take_a_picture"
+        android:textAllCaps="false"
+        app:icon="@drawable/ic_camera_white_border_no_fill"
+        android:textColor="@color/white"
+        />
+
+    <com.framework.views.customViews.CustomMaterialButton
+        android:id="@+id/btn_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_38"
+        android:layout_marginTop="@dimen/size_18"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/size_14"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/yellow_ffb900"
+        android:backgroundTint="@color/white"
+        app:cornerRadius="@dimen/size_10"
+        android:stateListAnimator="@null"
+        android:textSize="14sp"
+        app:iconGravity="textStart"
+        app:iconPadding="@dimen/size_10"
+        android:text="@string/upload_from_gallery"
+        android:textAllCaps="false"
+        app:icon="@drawable/ic_gallery_yellow_border_no_fill"
+        android:textColor="@color/yellow_ffb900"
+        />
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
