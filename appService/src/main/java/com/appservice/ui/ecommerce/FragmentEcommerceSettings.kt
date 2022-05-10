@@ -119,6 +119,7 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
       IconType.customer_invoice_setup -> startFragmentActivity(FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE)
       IconType.payment_collection -> startFragmentActivity(FragmentType.ECOMMERCE_PAYMENT_SETTINGS)
       IconType.policies -> startFragmentActivity(FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_POLICIES)
+      IconType.business_verification->startFragmentActivity(FragmentType.ECOMMERCE_BUSINESS_VERIFICATION)
       else -> {
       }
     }
