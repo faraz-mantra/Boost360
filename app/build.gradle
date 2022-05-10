@@ -59,7 +59,8 @@ android {
     buildTypes {
         applicationVariants.all { variant ->
             variant.outputs.all {
-                outputFileName = "NF-Boost-" + "${variant.name}-${variant.versionName}_${getDate()}.apk"
+//                outputFileName = "NF-Boost-" + "${variant.name}-${variant.versionName}_${getDate()}.apk"
+                outputFileName = "NF-Boost-" + "${variant.name}-${variant.versionName}.apk"
             }
         }
         release {
