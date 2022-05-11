@@ -216,18 +216,13 @@ class PackageFragmentNew : BaseFragment("MarketPlacePackageFragmentNew") {
                         originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent / 100),
                         2
                     )
-                    if (prefs.getYearPricing())
-                        offeredBundlePrice = offeredBundlePrice * 12
                 }else {
-                    if (prefs.getYearPricing())
-                        offeredBundlePrice = originalBundlePrice * 12
-                    else
                         offeredBundlePrice = originalBundlePrice
                 }
 
                 if (minMonth > 1) {
                     if (prefs.getYearPricing())
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/year")
+                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice * 12) + "/year")
                     else
                         offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/" + bundleData!!.min_purchase_months + "mths")
                     if (offeredBundlePrice != originalBundlePrice) {
@@ -240,7 +235,7 @@ class PackageFragmentNew : BaseFragment("MarketPlacePackageFragmentNew") {
                     updatePackageRecycler(it,bundleData!!.min_purchase_months!!)
                 } else {
                     if (prefs.getYearPricing())
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/year")
+                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice * 12) + "/year")
                     else
                         offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/mth")
                     if (offeredBundlePrice != originalBundlePrice) {
