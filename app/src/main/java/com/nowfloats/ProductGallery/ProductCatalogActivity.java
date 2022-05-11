@@ -61,6 +61,7 @@ import static com.framework.webengageconstant.EventNameKt.PRODUCT_CATALOGUE_LIST
 import static com.framework.webengageconstant.EventValueKt.EVENT_VALUE_MANAGE_CONTENT;
 import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
 
+@Deprecated
 public class ProductCatalogActivity extends AppCompatActivity implements WidgetKey.OnWidgetListener, AppOnZeroCaseClicked {
 
     // For sharing
