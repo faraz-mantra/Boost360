@@ -127,6 +127,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=" *"
+              android:visibility="invisible"
             android:textColor="@color/colorAccent"
             app:textType="HEADING_6" />
         </androidx.appcompat.widget.LinearLayoutCompat>
