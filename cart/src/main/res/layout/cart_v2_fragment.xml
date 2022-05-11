@@ -332,7 +332,7 @@
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_10sdp"
                         android:text="Speak to an expert"
-                        android:textColor="@color/yellow"
+                        android:textColor="@color/colorAccent1"
                         android:textSize="16sp" />
                 </LinearLayout>
 
