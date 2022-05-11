@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.DocumentsContract
 import com.framework.BaseApplication
+import com.framework.R
 import java.io.*
 
 //supported below and above android 11
@@ -186,4 +187,8 @@ object FileUtils {
     }
     return f
   }
+}
+
+fun getTempFile(extension:String):File{
+  return File(BaseApplication.instance.getExternalFilesDir(null)?.path+File.separator+"temp."+extension)
 }

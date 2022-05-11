@@ -1,6 +1,7 @@
 package com.appservice.ui.businessVerification
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.view.View
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -10,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.squareup.picasso.Picasso
 
 class BusinessVerificationFragment : AppBaseFragment<FragmentBusinessVerificationBinding, BaseViewModel>() {
 
@@ -31,7 +33,7 @@ class BusinessVerificationFragment : AppBaseFragment<FragmentBusinessVerificatio
 
   override fun onCreateView() {
     super.onCreateView()
-    setOnClickListener(binding?.uploadImageView)
+    setOnClickListener(binding?.uploadImageView,binding?.btnRetakePanImage)
   }
 
 
@@ -39,14 +41,22 @@ class BusinessVerificationFragment : AppBaseFragment<FragmentBusinessVerificatio
     super.onClick(v)
     when(v){
       binding?.uploadImageView->{
-        BusinessVerificationImagePickerSheet.newInstance {
-          binding?.uploadImageView?.gone()
-          binding?.imageView?.visible()
-          Glide.with(this).load(it).into(binding?.imagePanCard!!)
-        }.show(parentFragmentManager,
-        BusinessVerificationImagePickerSheet::class.java.name)
+        showImagePicker()
+      }
+
+      binding?.btnRetakePanImage->{
+        showImagePicker()
       }
     }
+  }
+
+  private fun showImagePicker() {
+    BusinessVerificationImagePickerSheet.newInstance {
+      binding?.uploadImageView?.gone()
+      binding?.imageView?.visible()
+      Glide.with(this).load(it).into(binding?.imagePanCard!!)
+    }.show(parentFragmentManager,
+      BusinessVerificationImagePickerSheet::class.java.name)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
