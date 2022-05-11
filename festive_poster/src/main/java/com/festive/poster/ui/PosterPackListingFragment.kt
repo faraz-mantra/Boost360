@@ -128,9 +128,12 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
         sharedViewModel?.posterPackLoadListener?.value = true
 
          // rearrangeList()
-          adapter = AppBaseRecyclerViewAdapter(baseActivity, dataList!!, this)
+        dataList?.let {
+          adapter = AppBaseRecyclerViewAdapter(baseActivity, it, this)
           binding?.rvPosters?.adapter = adapter
           binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
+        }
+
 
 
         hideShimmerAnimation()
@@ -186,7 +189,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
 
         if (item.isPurchased){
           //sharedViewModel?.keyValueSaved?.value=null
-          addFragment(R.id.container, PosterListFragment.newInstance(item.tagsModel.tag!!), true,true)
+          addFragment(R.id.container, PosterListFragment.newInstance(item.tagsModel.tag), true,true)
         }else{
           CustomizePosterSheet.newInstance(item.tagsModel.tag, item.isPurchased).show(baseActivity.supportFragmentManager, CustomizePosterSheet::class.java.name)
         }

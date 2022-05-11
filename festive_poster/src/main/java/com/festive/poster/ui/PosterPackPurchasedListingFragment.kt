@@ -106,10 +106,13 @@ class PosterPackPurchasedListingFragment: AppBaseFragment<FragmentPosterPackPurc
     }
 
     private fun setupList() {
-        binding?.emptyLayout?.isVisible = dataList.isNullOrEmpty()
-        val adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList!!,this)
-        binding?.rvPosters?.adapter = adapter
-        binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
+        dataList?.let {
+            binding?.emptyLayout?.isVisible = dataList.isNullOrEmpty()
+            val adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,it,this)
+            binding?.rvPosters?.adapter = adapter
+            binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
+        }
+
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
