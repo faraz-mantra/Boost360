@@ -2,6 +2,7 @@ package com.boost.presignin.ui.newOnboarding.categoryService
 
 import android.app.Service
 import android.content.Intent
+import android.os.Build
 import android.os.IBinder
 import androidx.appcompat.app.AppCompatActivity
 import com.boost.presignin.model.category.ApiCategoryResponse
@@ -9,6 +10,7 @@ import com.boost.presignin.model.category.saveCategoryLiveData
 import com.boost.presignin.rest.repository.BoostKitDevRepository
 import com.framework.models.toLiveData
 import com.framework.pref.UserSessionManager
+
 
 class CategoryService : Service() {
 
@@ -36,5 +38,9 @@ class CategoryService : Service() {
 }
 
 fun AppCompatActivity.startServiceCategory() {
-  startService(Intent(this, CategoryService::class.java))
+  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    startForegroundService(Intent(this, CategoryService::class.java))
+  } else {
+    startService(Intent(this, CategoryService::class.java))
+  }
 }
