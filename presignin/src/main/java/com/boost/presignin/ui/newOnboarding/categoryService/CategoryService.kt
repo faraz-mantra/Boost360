@@ -8,9 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.boost.presignin.model.category.ApiCategoryResponse
 import com.boost.presignin.model.category.saveCategoryLiveData
 import com.boost.presignin.rest.repository.BoostKitDevRepository
+import com.framework.analytics.SentryController
 import com.framework.models.toLiveData
 import com.framework.pref.UserSessionManager
-
+import java.lang.Exception
 
 class CategoryService : Service() {
 
@@ -38,9 +39,13 @@ class CategoryService : Service() {
 }
 
 fun AppCompatActivity.startServiceCategory() {
-  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-    startForegroundService(Intent(this, CategoryService::class.java))
-  } else {
-    startService(Intent(this, CategoryService::class.java))
+  try {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      startForegroundService(Intent(this, CategoryService::class.java))
+    } else {
+      startService(Intent(this, CategoryService::class.java))
+    }
+  } catch (e: Exception) {
+    SentryController.captureException(e)
   }
 }
