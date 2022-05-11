@@ -40,11 +40,7 @@ class CategoryService : Service() {
 
 fun AppCompatActivity.startServiceCategory() {
   try {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      startForegroundService(Intent(this, CategoryService::class.java))
-    } else {
-      startService(Intent(this, CategoryService::class.java))
-    }
+    startService(Intent(this, CategoryService::class.java))
   } catch (e: Exception) {
     SentryController.captureException(e)
   }
