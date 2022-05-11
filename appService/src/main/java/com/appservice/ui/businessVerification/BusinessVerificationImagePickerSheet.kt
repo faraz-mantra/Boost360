@@ -12,6 +12,8 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
 import java.io.ByteArrayInputStream
+import java.io.File
+import java.io.FileInputStream
 import java.io.InputStream
 
 class BusinessVerificationImagePickerSheet : BaseBottomSheetDialog<SheetBusinessVerificationImagePickerBinding, BaseViewModel>() {
@@ -27,19 +29,19 @@ class BusinessVerificationImagePickerSheet : BaseBottomSheetDialog<SheetBusiness
   }
 
   companion object {
-    fun newInstance(onImagePicked:(InputStream)->Unit): BusinessVerificationImagePickerSheet {
+    fun newInstance(onImagePicked:(Uri)->Unit): BusinessVerificationImagePickerSheet {
       return BusinessVerificationImagePickerSheet().apply {
         this.onImagePicked = onImagePicked
       }
     }
   }
 
-  lateinit var onImagePicked:(InputStream)->Unit
+  lateinit var onImagePicked:(Uri)->Unit
 
 
   override fun onCreateView() {
 
-    setOnClickListener(binding?.btnGallery,binding?.btbTakePicture)
+    setOnClickListener(binding?.btnGallery,binding?.btbTakePicture,binding?.ivClose)
   }
 
 
@@ -50,7 +52,11 @@ class BusinessVerificationImagePickerSheet : BaseBottomSheetDialog<SheetBusiness
         ImagePicker.with(this).galleryOnly().start(RC_GALLERY)
       }
       binding?.btbTakePicture->{
-        startFragmentActivity(FragmentType.CAMERA_VIEW, requestCode = ScanPanCardV2Fragment.RC_CODE)
+        startFragmentActivity(FragmentType.CAMERA_VIEW, isResult = true, requestCode = ScanPanCardV2Fragment.RC_CODE)
+      }
+
+      binding?.ivClose->{
+        dismiss()
       }
     }
   }
@@ -59,16 +65,16 @@ class BusinessVerificationImagePickerSheet : BaseBottomSheetDialog<SheetBusiness
     super.onActivityResult(requestCode, resultCode, data)
     if(requestCode==RC_GALLERY&&resultCode== RESULT_OK){
       data?.data?.let {
-        activity?.contentResolver?.openInputStream(it)?.let {
-            it1 -> onImagePicked.invoke(it1)
-        }
-
+        onImagePicked.invoke(it)
+        dismiss()
       }
     }
     if (requestCode==ScanPanCardV2Fragment.RC_CODE&&resultCode== RESULT_OK){
-      val bArr = data?.getByteArrayExtra(ScanPanCardV2Fragment.IMAGE_BYTE_ARRAY_KEY)
-      val inputStream = ByteArrayInputStream(bArr)
-      onImagePicked.invoke(inputStream)
+      val path:String? = data?.getStringExtra(ScanPanCardV2Fragment.IMAGE_PATH)
+      path?.let {
+        onImagePicked.invoke(Uri.fromFile(File(path)))
+        dismiss()
+      }
     }
   }
 

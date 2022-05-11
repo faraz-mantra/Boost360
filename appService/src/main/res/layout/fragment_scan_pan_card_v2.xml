@@ -51,10 +51,9 @@
       android:id="@+id/panCardScanCameraView"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@color/warm_grey"
         app:cameraMode="picture"
       android:keepScreenOn="true"
-      app:cameraRequestPermissions="true" />
+      />
 
     <com.framework.views.customViews.CustomImageView
       android:id="@+id/btn_click_photo"
