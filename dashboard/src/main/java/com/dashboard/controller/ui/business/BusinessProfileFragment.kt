@@ -119,9 +119,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       binding?.containerBusinessAddress?.visible()
     }
     var str = ""
-    if (session?.fPPrimaryContactNumber.isNullOrEmpty()
-        .not()
-    ) str += "• +91 ${session?.fPPrimaryContactNumber} (VMN)"
+    if (session?.fPPrimaryContactNumber.isNullOrEmpty().not()) str += "• +91 ${session?.fPPrimaryContactNumber} (VMN)"
     if (session?.fPPrimaryContactNumber.isNullOrEmpty()) {
       if (session?.getStoreWidgets()?.contains("CALLTRACKER") == true) {
         binding?.ctvActive?.text = getString(R.string.active)
@@ -134,12 +132,8 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     } else {
       binding?.ctvActive?.visible()
     }
-    if (session?.userPrimaryMobile.isNullOrEmpty()
-        .not()
-    ) str += "\n• +91 ${session?.userPrimaryMobile}"
-    if ((session?.userProfileEmail ?: session?.fPEmail).isNullOrEmpty()
-        .not()
-    ) str += "\n• ${session?.userProfileEmail ?: session?.fPEmail}"
+    if (session?.userPrimaryMobile.isNullOrEmpty().not()) str += "\n• +91 ${session?.userPrimaryMobile}"
+    if ((session?.userProfileEmail ?: session?.fPEmail).isNullOrEmpty().not()) str += "\n• ${session?.userProfileEmail ?: session?.fPEmail}"
     str += "\n• ${session?.getDomainName() ?: ""}"
     binding?.ctvBusinessContacts?.text = str.trimMargin()
 
@@ -156,13 +150,13 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     viewModel?.putUploadBusinessLogo(
       clientId2, fpId = FirestoreManager.fpId, reqType = "sequential", reqId = s_uuid, totalChunks = "1",
       currentChunkNumber = "1", file = RequestBody.create("image/png".toMediaTypeOrNull(), businessLogoImage.readBytes())
-    )?.observeOnce(viewLifecycleOwner, {
+    )?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         session?.storeFPDetails(GET_FP_DETAILS_LogoUrl, it.parseStringResponse()?.replace("\\", "")?.replace("\"", ""))
-        showSnackBarPositive( getString(R.string.business_image_uploaded))
-      } else showSnackBarNegative( it.message?:getString(R.string.something_went_wrong))
+        showSnackBarPositive(getString(R.string.business_image_uploaded))
+      } else showSnackBarNegative(it.message ?: getString(R.string.something_went_wrong))
       hideProgress()
-    })
+    }
   }
 
   private fun loadImage(imageUri: String) {
@@ -314,7 +308,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     }
     businessProfileUpdateRequest = BusinessProfileUpdateRequest(session?.fpTag, clientId2, updateItemList)
     viewModel?.updateBusinessProfile(businessProfileUpdateRequest!!)
-      ?.observeOnce(viewLifecycleOwner, {
+      ?.observeOnce(viewLifecycleOwner) {
         if (it.isSuccess()) {
           binding?.btnSavePublish?.isEnabled = false
           val response = it?.parseStringResponse()
@@ -338,7 +332,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
           showShortToast(baseActivity.getString(R.string.error_updating_business))
         }
         hideProgress()
-      })
+      }
   }
 
   private fun openImagePicker() {
