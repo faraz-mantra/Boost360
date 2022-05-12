@@ -135,13 +135,13 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     val featureProduct = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureKey.PRODUCTCATALOGUE)
     val capLimitProduct = featureProduct?.filterProperty(PropertiesItem.KeyType.LIMIT)
     if (isEdit?.not() == true && capLimitProduct != null && capLimitProduct.getValueN() != null) {
-      viewModel?.getAllProducts(getRequestProduct(capLimitProduct.getValueN()!!))?.observeOnce(viewLifecycleOwner, {
+      viewModel?.getAllProducts(getRequestProduct(capLimitProduct.getValueN()!!))?.observeOnce(viewLifecycleOwner) {
         val data = it.arrayResponse as? Array<ProductItemsResponseItem>
         if (data.isNullOrEmpty().not()) {
           baseActivity.hideKeyBoard()
           showAlertCapLimit("Can't add the product catalogue, please activate your premium Add-ons plan.", CapLimitFeatureResponseItem.FeatureKey.PRODUCTCATALOGUE.name)
         }
-      })
+      }
     }
   }
 
