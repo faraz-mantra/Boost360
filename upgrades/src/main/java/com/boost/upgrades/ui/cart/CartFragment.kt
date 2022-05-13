@@ -456,26 +456,32 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
       if (!bundles_in_cart) {
 //                if (default_validity_months < 12){
 //                    default_validity_months++
-        if (default_validity_months == 1) {
-          default_validity_months = default_validity_months + 2
-        } else if (default_validity_months >= 12 && default_validity_months < 60) {
-          if (default_validity_months % 12 == 0) {
-            default_validity_months = default_validity_months + 12
-          } else {
-            default_validity_months = default_validity_months + ((12 - default_validity_months % 12))
-          }
-//        default_validity_months = default_validity_months+ 12
-        } else {
-          if (default_validity_months < 60) {
-            if (default_validity_months % 3 == 0) {
-              default_validity_months = default_validity_months + 3
-            } else if (default_validity_months % 3 == 1) {
-              default_validity_months = default_validity_months + 2
-            } else if (default_validity_months % 3 == 2) {
-              default_validity_months = default_validity_months + 1
+        if(prefs.getYearPricing()){
+          if(default_validity_months<5)
+            default_validity_months = default_validity_months + 1
+        }else {
+          if (default_validity_months == 1) {
+            default_validity_months = default_validity_months + 2
+          } else if (default_validity_months >= 12 && default_validity_months < 60) {
+            if (default_validity_months % 12 == 0) {
+              default_validity_months = default_validity_months + 12
+            } else {
+              default_validity_months =
+                default_validity_months + ((12 - default_validity_months % 12))
             }
-          }
+//        default_validity_months = default_validity_months+ 12
+          } else {
+            if (default_validity_months < 60) {
+              if (default_validity_months % 3 == 0) {
+                default_validity_months = default_validity_months + 3
+              } else if (default_validity_months % 3 == 1) {
+                default_validity_months = default_validity_months + 2
+              } else if (default_validity_months % 3 == 2) {
+                default_validity_months = default_validity_months + 1
+              }
+            }
 //                        default_validity_months = default_validity_months+ 3
+          }
         }
 //                months_validity.text = default_validity_months.toString() + " months"
         months_validity.setText(default_validity_months.toString())
@@ -650,7 +656,10 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
       }
     }
     Log.v("package_validity_months", " " + package_validity_months)
-    months_validity.setFilters(arrayOf<InputFilter>(MinMaxFilter(package_validity_months, 60)))
+    if(prefs.getYearPricing())
+      months_validity.setFilters(arrayOf<InputFilter>(MinMaxFilter(1, 5)))
+    else
+      months_validity.setFilters(arrayOf<InputFilter>(MinMaxFilter(package_validity_months, 60)))
     months_validity.addTextChangedListener(object : TextWatcher {
       override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
       }
@@ -664,21 +673,21 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
         var n = 0
         try {
           n = validity.toInt()
-          if (n <= 60) {
-            default_validity_months = n
-          } else if (n > 60) {
-            default_validity_months = 60
+            if (n <= 60) {
+              default_validity_months = n
+            } else if (n > 60) {
+              default_validity_months = 60
 //                        months_validity.setText(default_validity_months)
-          } else if (n < package_validity_months) {
-            n = package_validity_months
-            default_validity_months = n
+            } else if (n < package_validity_months) {
+              n = package_validity_months
+              default_validity_months = n
 //                        months_validity.setText(package_validity_months)
-          }
+            }
 
 //                        months_validity.setText(n)
           if (!bundles_in_cart) {
 //                            months_validity.setText(default_validity_months.toString())
-            totalValidityDays = 30 * default_validity_months
+            totalValidityDays = if(prefs.getYearPricing()) (30 * default_validity_months) * 12 else 30 * default_validity_months
             prefs.storeMonthsValidity(totalValidityDays)
             prefs.storeCartOrderInfo(null)
             totalCalculationAfterCoupon()
@@ -688,7 +697,7 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
               totalCalculationAfterCoupon()
           } else if (bundles_in_cart) {
 //                            months_validity.setText(default_validity_months.toString())
-            totalValidityDays = 30 * default_validity_months
+            totalValidityDays = if(prefs.getYearPricing()) (30 * default_validity_months) * 12 else 30 * default_validity_months
             prefs.storeMonthsValidity(totalValidityDays)
             prefs.storeCartOrderInfo(null)
             totalCalculationAfterCoupon()
