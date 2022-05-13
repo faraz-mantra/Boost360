@@ -132,7 +132,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
 
 
   private fun visitingCardDetailText(shareChannelText: String?) {
-    viewModel?.getBoostVisitingMessage(baseActivity)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getBoostVisitingMessage(baseActivity)?.observeOnce(viewLifecycleOwner) {
       val response = it as? ShareUserDetailResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         val messageDetail = response.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }?.message
@@ -147,7 +147,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
           visitingCard(txt)
         }
       } else visitingCard(getString(R.string.business_card))
-    })
+    }
   }
 
 

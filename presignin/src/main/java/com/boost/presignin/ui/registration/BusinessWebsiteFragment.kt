@@ -30,6 +30,7 @@ import com.framework.extensions.observeOnce
 import com.framework.pref.*
 import com.framework.webengageconstant.*
 import com.invitereferrals.invitereferrals.InviteReferralsApi
+import org.json.JSONObject
 import java.util.*
 
 open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBinding, LoginSignUpViewModel>() {
@@ -199,7 +200,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
       floatsRequest?.requestProfile?.ProfileProperties?.userName,
       email, floatsRequest?.userBusinessMobile, 0, null, null
     )
-    InviteReferralsApi.getInstance(baseActivity).tracking("register", email, 0, null, null)
+    InviteReferralsApi.getInstance(baseActivity).tracking("register", email, 0, null, null,null, JSONObject())
   }
 
   private fun apiHitBusiness(businessProfileResponse: BusinessProfileResponse) {
