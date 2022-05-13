@@ -14,7 +14,6 @@ import com.appservice.model.staffModel.*
 import com.appservice.viewmodel.StaffViewModel
 import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
-import kotlinx.android.synthetic.main.fragment_kyc_details.*
 import java.util.*
 
 class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, StaffViewModel>(), RecyclerItemClickListener {
@@ -82,8 +81,8 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
   }
 
   private fun init() {
-    binding?.ctvHeading?.text = if (isDoctor) getString(R.string.select_what_services_that_the_doctor_will_provide) else getString(R.string.select_what_services_that_the_staff_will_provide)
-    binding?.ctvSubheading?.text = if (isDoctor) getString(R.string.doctor_service_customer_know_provide_service_looking_for) else getString(R.string.staff_service_customer_know_provide_service_looking_for)
+    binding?.ctvHeading?.text = if (isDoctorClinic) getString(R.string.select_what_services_that_the_doctor_will_provide) else getString(R.string.select_what_services_that_the_staff_will_provide)
+    binding?.ctvSubheading?.text = if (isDoctorClinic) getString(R.string.doctor_service_customer_know_provide_service_looking_for) else getString(R.string.staff_service_customer_know_provide_service_looking_for)
     fetchServices()
     setOnClickListener(binding?.flConfirmServices)
   }

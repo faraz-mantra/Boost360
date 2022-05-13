@@ -3,7 +3,6 @@ package com.appservice.ui.staffs.ui.home
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
@@ -37,7 +36,6 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.firebaseUtils.firestore.FirestoreManager
-import com.framework.pref.Key_Preferences
 import com.framework.pref.clientId
 import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
@@ -95,7 +93,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     if (isLockStaff().not()) {
       nonEmptyView()
       layoutManagerN = LinearLayoutManager(baseActivity)
-      WebEngageController.trackEvent(if (isDoctor) DOCTOR_PROFILE_LIST else STAFF_PROFILE_LIST, PAGE_VIEW, NO_EVENT_VALUE)
+      WebEngageController.trackEvent(if (isDoctorClinic) DOCTOR_PROFILE_LIST else STAFF_PROFILE_LIST, PAGE_VIEW, NO_EVENT_VALUE)
       getListServiceFilterApi()
       layoutManagerN?.let { scrollPagingListener(it) }
       swipeRefreshListener()
@@ -104,7 +102,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   }
 
   private fun isLockStaff(): Boolean {
-    return if (isDoctor) (sessionLocal.getStoreWidgets()?.contains(StatusKyc.DOCTORBIO.name) == true).not()
+    return if (isDoctorClinic) (sessionLocal.getStoreWidgets()?.contains(StatusKyc.DOCTORBIO.name) == true).not()
     else (sessionLocal.getStoreWidgets()?.contains(StatusKyc.STAFFPROFILE.name) == true).not()
   }
 
@@ -112,7 +110,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     val b = arguments?.getBoolean(IntentConstant.IS_ADD_NEW.name) ?: false
     if (b) {
       startStaffFragmentActivity(
-        if (isDoctor) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT,
+        if (isDoctorClinic) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT,
         clearTop = false, isResult = true
       )
     }
@@ -209,7 +207,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
   private fun onStaffAddedOrUpdated(b: Boolean) {
     val instance = FirestoreManager
     if (instance.getDrScoreData()?.metricdetail == null) return
-    if (isDoctor) instance.getDrScoreData()?.metricdetail?.boolean_create_doctor_e_profile = b
+    if (isDoctorClinic) instance.getDrScoreData()?.metricdetail?.boolean_create_doctor_e_profile = b
     else instance.getDrScoreData()?.metricdetail?.boolean_create_staff = b
     instance.updateDocument()
   }
@@ -297,9 +295,9 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, bundle = sendBundleData(), isResult = true)
       }
       binding?.addStaffDoctor -> {
-        WebEngageController.trackEvent(if (isDoctor) ADD_DOCTOR_PROFILE else ADD_STAFF_PROFILE, CLICK, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(if (isDoctorClinic) ADD_DOCTOR_PROFILE else ADD_STAFF_PROFILE, CLICK, NO_EVENT_VALUE)
         startStaffFragmentActivity(
-          if (isDoctor) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT,
+          if (isDoctorClinic) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT,
           clearTop = false,
           isResult = true
         )
@@ -360,14 +358,14 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   override fun primaryButtonClicked() {
     if (isLockStaff().not()) {
-      WebEngageController.trackEvent(if (isDoctor) ADD_DOCTOR_PROFILE else ADD_STAFF_PROFILE, CLICK, NO_EVENT_VALUE)
-      val type = if (isDoctor) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT
+      WebEngageController.trackEvent(if (isDoctorClinic) ADD_DOCTOR_PROFILE else ADD_STAFF_PROFILE, CLICK, NO_EVENT_VALUE)
+      val type = if (isDoctorClinic) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT
       startStaffFragmentActivity(type, isResult = true)
-    } else startStorePage(if (isDoctor) StatusKyc.DOCTORBIO.name else "${StatusKyc.STAFFPROFILE.name}15")
+    } else startStorePage(if (isDoctorClinic) StatusKyc.DOCTORBIO.name else "${StatusKyc.STAFFPROFILE.name}15")
   }
 
   override fun secondaryButtonClicked() {
-    if (isDoctor) showShortToast(getString(R.string.coming_soon)) else openHelpBottomSheet()
+    if (isDoctorClinic) showShortToast(getString(R.string.coming_soon)) else openHelpBottomSheet()
   }
 
   override fun ternaryButtonClicked() {

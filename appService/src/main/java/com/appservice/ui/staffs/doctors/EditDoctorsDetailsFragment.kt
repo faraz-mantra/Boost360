@@ -30,7 +30,6 @@ import com.appservice.viewmodel.StaffViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
@@ -38,7 +37,6 @@ import com.framework.pref.UserSessionManager
 import com.framework.utils.size
 import com.framework.utils.sizeInKb
 import com.framework.webengageconstant.*
-import kotlinx.android.synthetic.main.fragment_staff_details.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -250,7 +248,7 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
     viewModel?.updateStaffProfile(requestUpdate())?.observeOnce(viewLifecycleOwner, Observer {
       if (it.isSuccess()) {
         updateStaffTimings()
-        WebEngageController.trackEvent(if (isDoctor) DOCTOR_PROFILE_UPDATED else STAFF_PROFILE_UPDATED, ADDED, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(if (isDoctorClinic) DOCTOR_PROFILE_UPDATED else STAFF_PROFILE_UPDATED, ADDED, NO_EVENT_VALUE)
       } else showShortToast(it?.errorMessage() ?: getString(R.string.something_went_wrong))
     })
 
@@ -338,7 +336,7 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
         staffDetails?.id = t.result
         showShortToast(getString(R.string.profile_created))
         onStaffAddedOrUpdated()
-        WebEngageController.trackEvent(if (isDoctor) DOCTOR_PROFILE_CREATE else STAFF_PROFILE_CREATE, ADDED, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(if (isDoctorClinic) DOCTOR_PROFILE_CREATE else STAFF_PROFILE_CREATE, ADDED, NO_EVENT_VALUE)
       } else showShortToast(getString(R.string.something_went_wrong))
       hideProgress()
     }
