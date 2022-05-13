@@ -599,22 +599,27 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
 //                    months_validity.text = default_validity_months.toString() + " month"
       } else if (bundles_in_cart) {
         if (default_validity_months > package_validity_months) {
-          if (default_validity_months > 12) {
+          if(prefs.getYearPricing()){
+            if(default_validity_months>=1)
+              default_validity_months = default_validity_months - 1
+          }else {
+            if (default_validity_months > 12) {
 //                        default_validity_months = default_validity_months - 12
-            if (default_validity_months % 12 == 0) {
-              default_validity_months = default_validity_months - 12
+              if (default_validity_months % 12 == 0) {
+                default_validity_months = default_validity_months - 12
+              } else {
+                default_validity_months = default_validity_months - ((default_validity_months % 12))
+              }
             } else {
-              default_validity_months = default_validity_months - ((default_validity_months % 12))
-            }
-          } else {
 //                    default_validity_months = default_validity_months - 3
-            if (default_validity_months <= 12) {
-              if (default_validity_months % 3 == 0) {
-                default_validity_months = default_validity_months - 3
-              } else if (default_validity_months % 3 == 1) {
-                default_validity_months = default_validity_months - 1
-              } else if (default_validity_months % 3 == 2) {
-                default_validity_months = default_validity_months - 2
+              if (default_validity_months <= 12) {
+                if (default_validity_months % 3 == 0) {
+                  default_validity_months = default_validity_months - 3
+                } else if (default_validity_months % 3 == 1) {
+                  default_validity_months = default_validity_months - 1
+                } else if (default_validity_months % 3 == 2) {
+                  default_validity_months = default_validity_months - 2
+                }
               }
             }
           }
