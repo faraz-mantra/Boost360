@@ -33,7 +33,7 @@ class BusinessVerificationFragment : AppBaseFragment<FragmentBusinessVerificatio
 
   override fun onCreateView() {
     super.onCreateView()
-    setOnClickListener(binding?.uploadImageView,binding?.btnRetakePanImage)
+    setOnClickListener(binding?.uploadImageView,binding?.btnRetakePanImage,binding?.btnSubmit)
   }
 
 
@@ -47,7 +47,18 @@ class BusinessVerificationFragment : AppBaseFragment<FragmentBusinessVerificatio
       binding?.btnRetakePanImage->{
         showImagePicker()
       }
+      binding?.btnSubmit->{
+        submitVerificationData()
+      }
     }
+  }
+
+  private fun submitVerificationData() {
+    val email = binding?.edtPanNumber?.text?.toString()
+    val pancard = binding?.edtNameOnPanCard?.text?.toString()
+    val isRegGst = if (binding?.rGst?.isChecked==true) true else false
+
+
   }
 
   private fun showImagePicker() {
@@ -59,8 +70,5 @@ class BusinessVerificationFragment : AppBaseFragment<FragmentBusinessVerificatio
       BusinessVerificationImagePickerSheet::class.java.name)
   }
 
-  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
 
-  }
 }
