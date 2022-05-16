@@ -42,4 +42,8 @@
     <item name="colorControlActivated">@color/colorAccent</item>
   </style>
 
+  <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <item name="colorAccent">@color/colorAccent</item>
+  </style>
+
 </resources>

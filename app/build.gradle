@@ -47,7 +47,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020123
+        versionCode 2020020125
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -59,7 +59,8 @@ android {
     buildTypes {
         applicationVariants.all { variant ->
             variant.outputs.all {
-                outputFileName = "NF-Boost-" + "${variant.name}-${variant.versionName}_${getDate()}.apk"
+//                outputFileName = "NF-Boost-" + "${variant.name}-${variant.versionName}_${getDate()}.apk"
+                outputFileName = "NF-Boost-" + "${variant.name}-${variant.versionName}.apk"
             }
         }
         release {
@@ -74,7 +75,7 @@ android {
     flavorDimensions "default"
     productFlavors {
         partone {
-            versionName "6.0.18"
+            versionName "6.0.20.2"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
@@ -85,7 +86,7 @@ android {
             buildConfigField "int", "REFERRAL_CAMPAIGN_CODE", '26277'
         }
         jioonline {
-            versionName "1.0.0"
+            versionName "1.0.0.1"
             applicationId "com.jio.online"
             dimension "default"
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'

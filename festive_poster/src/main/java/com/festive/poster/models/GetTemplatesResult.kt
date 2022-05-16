@@ -6,9 +6,9 @@ import com.google.gson.annotations.SerializedName
 
 data class GetTemplatesResult(
     @SerializedName("tags")
-    val tags: List<PosterTagModel>,
+    val tags: List<PosterTagModel>?,
     @SerializedName("templates")
-    val templates: List<PosterModel>,
+    val templates: List<PosterModel>?,
     @SerializedName("totalCount")
     val totalCount: Int
 )

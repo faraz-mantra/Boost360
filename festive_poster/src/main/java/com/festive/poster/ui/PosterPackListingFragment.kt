@@ -97,9 +97,9 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
         templates_response?.let {
           response.Result.templatePacks.tags.forEach { pack_tag ->
             val templateList = ArrayList<PosterModel>()
-            templates_response.Result.templates.forEach { template ->
-              var posterTag = template.tags.find { posterTag -> posterTag == pack_tag.tag }
-              if ( posterTag != null && template.active) {
+            templates_response.Result.templates?.forEach { template ->
+              var posterTag = template.tags?.find { posterTag -> posterTag == pack_tag.tag }
+              if ( posterTag != null && template?.active == true) {
                 template.greeting_message = pack_tag.description
                 templateList.add(template.clone()!!)
               }
@@ -128,9 +128,12 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
         sharedViewModel?.posterPackLoadListener?.value = true
 
          // rearrangeList()
-          adapter = AppBaseRecyclerViewAdapter(baseActivity, dataList!!, this)
+        dataList?.let {
+          adapter = AppBaseRecyclerViewAdapter(baseActivity, it, this)
           binding?.rvPosters?.adapter = adapter
           binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
+        }
+
 
 
         hideShimmerAnimation()
@@ -186,7 +189,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
 
         if (item.isPurchased){
           //sharedViewModel?.keyValueSaved?.value=null
-          addFragment(R.id.container, PosterListFragment.newInstance(item.tagsModel.tag!!), true,true)
+          addFragment(R.id.container, PosterListFragment.newInstance(item.tagsModel.tag), true,true)
         }else{
           CustomizePosterSheet.newInstance(item.tagsModel.tag, item.isPurchased).show(baseActivity.supportFragmentManager, CustomizePosterSheet::class.java.name)
         }

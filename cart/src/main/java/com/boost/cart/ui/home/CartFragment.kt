@@ -226,9 +226,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         }
 
         cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, ArrayList(), requireActivity().application)
-        cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
+        cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this, requireActivity())
         cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
-        packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList())
+        packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList(), requireActivity())
         upgradeAdapter = UpgradeAdapter(ArrayList())
         prefs = SharedPrefs(activity as CartActivity)
         WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART, PAGE_VIEW, NO_EVENT_VALUE)
@@ -1793,14 +1793,14 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
     private fun createPurchaseOrder(cartStateId: String?) {
         Log.v("createPurchaseOrder1", " " + "createPurchaseOrder");
         var couponCode: String? = null
-        var couponDiscountPercentage: Int = 0
+        var couponDiscountPercentage = 0.0
         if (validCouponCode != null) {
             couponCode = validCouponCode!!.coupon_key
-            couponDiscountPercentage = validCouponCode!!.discount_percent
+            couponDiscountPercentage = validCouponCode!!.discount_percent.toDouble()
         }
         if (couponServiceModel != null) {
             couponCode = couponServiceModel!!.coupon_key
-            couponDiscountPercentage = couponServiceModel!!.couponDiscountAmt!!.toInt()
+            couponDiscountPercentage = couponServiceModel!!.couponDiscountAmt!!
         }
         val purchaseOrders = ArrayList<PurchaseOrder>()
         val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
@@ -2099,14 +2099,14 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
     private fun createPurchaseAutoSubscriptionOrder(cartStateId: String?) {
         Log.v("createPurchaseAuto", " " + "createPurchaseAutoSubscriptionOrder")
         var couponCode: String? = null
-        var couponDiscountPercentage: Int = 0
+        var couponDiscountPercentage: Double = 0.0
         if (validCouponCode != null) {
             couponCode = validCouponCode!!.coupon_key
-            couponDiscountPercentage = validCouponCode!!.discount_percent
+            couponDiscountPercentage = validCouponCode!!.discount_percent.toDouble()
         }
         if (couponServiceModel != null) {
             couponCode = couponServiceModel!!.coupon_key
-            couponDiscountPercentage = couponServiceModel!!.couponDiscountAmt!!.toInt()
+            couponDiscountPercentage = couponServiceModel!!.couponDiscountAmt!!
         }
         val purchaseOrders = ArrayList<PurchaseOrder>()
         val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>

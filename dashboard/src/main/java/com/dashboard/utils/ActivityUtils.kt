@@ -605,10 +605,11 @@ fun Fragment.startFragmentActivity(type: com.appservice.constant.FragmentType, b
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
-fun AppCompatActivity.startBookTable(session: UserSessionManager?) {
+fun AppCompatActivity.startBookTable(session: UserSessionManager?, isAdd: Boolean = false) {
   try {
     WebEngageController.trackEvent(BOOK_TABLE_PAGE, CLICK, TO_BE_ADDED)
     val webIntent = Intent(this, Class.forName("com.nowfloats.Restaurants.BookATable.BookATableActivity"))
+    webIntent.putExtra("is_add", isAdd)
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {

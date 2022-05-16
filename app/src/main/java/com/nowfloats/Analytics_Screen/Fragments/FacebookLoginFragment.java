@@ -266,7 +266,7 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
             @Override
             public void run() {
                 if (progressDialog == null) {
-                    progressDialog = new ProgressDialog(mContext);
+                    progressDialog = new ProgressDialog(mContext,R.style.AppCompatAlertDialogStyle);
                     progressDialog.setCanceledOnTouchOutside(false);
                 }
                 progressDialog.setMessage(message);

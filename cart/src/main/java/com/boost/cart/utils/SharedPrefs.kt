@@ -38,6 +38,7 @@ class SharedPrefs(activity: Activity) {
   private val compareStatus = "compareStatus"
   private val gstRegistered = "gstRegistered"
   private val expertContact = "expertContact"
+  private val yearPricing = "yearPricing"
   private val ADDED_PACK_DESC = "ADDED_PACK_DESC"
   private val GST_API_RESULT = "GST API RESULT"
   private val LAST_USED_PAYMENT_MODE = "LAST_USED_PAYMENT_MODE"
@@ -264,6 +265,15 @@ class SharedPrefs(activity: Activity) {
 
   fun getExpertContact(): String? {
     return pref!!.getString(expertContact, null)
+  }
+
+
+  fun storeYearPricing(value: Boolean){
+    editor!!.putBoolean(yearPricing, value).apply()
+  }
+
+  fun getYearPricing(): Boolean {
+    return pref!!.getBoolean(yearPricing, true)
   }
 
 }
