@@ -17,6 +17,7 @@ import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_2
+import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_6
 import com.framework.utils.DateUtils.FORMAT_YYYY_MM_DD
 import com.framework.utils.DateUtils.parseDate
 import com.framework.utils.ValidationUtils.isEmailValid
@@ -403,7 +404,9 @@ class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointme
 
   private fun startSuccessScreen(response: OrderItem?) {
     val extra = response?.Items?.firstOrNull()?.product()?.extraItemProductConsultation()
-    val scheduledDate = parseDate(extra?.scheduledDateTime, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL_2)
+    var scheduledDate = parseDate(extra?.scheduledDateTime, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL_6)
+    if (scheduledDate.isNullOrEmpty()) scheduledDate = parseDate(extra?.scheduledDateTime, FORMAT_YYYY_MM_DD, FORMAT_SERVER_TO_LOCAL_6)
+    scheduledDate = "$scheduledDate, ${extra?.startTime()?:""}"
     showLongToast(getString(R.string.booking_created))
     val bundle = Bundle()
     bundle.putString("ORDER_ID", response?.ReferenceNumber)

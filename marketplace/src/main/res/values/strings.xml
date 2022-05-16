@@ -37,4 +37,6 @@
     <string name="need_help_custom_domain">Need help?</string>
     <string name="call_an_expert"><u>&#160;Call an expert</u></string>
     <string name="learn_more"><u>Learn More</u></string>
+    <string name="switch_to_monthly_pricing">Switch to monthly pricing</string>
+    <string name="switch_to_yearly_pricing">Switch to annual pricing</string>
 </resources>

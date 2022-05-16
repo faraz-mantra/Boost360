@@ -2,30 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_add"
-        android:icon="@drawable/circular_menu_cart"
-        android:title="@string/cart"
-        app:actionLayout="@layout/custom_action_item_layout"
-        app:showAsAction="always"/>
+        android:id="@+id/order_history"
+        android:icon="@drawable/ic_clock_counter_clockwise"
+        android:title="@string/my_order_history" />
     <item
-        android:id="@+id/overflowMenu"
-        android:icon="@drawable/circular_menu_option"
-        android:title="@string/home_more_menu"
-        app:showAsAction="always">
-        <menu>
-            <item
-                android:id="@+id/order_history"
-                android:icon="@drawable/ic_clock_counter_clockwise"
-                android:title="@string/my_order_history" />
-            <item
-                android:id="@+id/offer_coupons"
-                android:icon="@drawable/ic_circle_wavy"
-                android:title="@string/view_offer_coupons" />
-            <item
-                android:id="@+id/help_section"
-                android:icon="@drawable/ic_help_white"
-                android:title="@string/need_help" />
-        </menu>
-    </item>
-
+        android:id="@+id/pricing_switch"
+        android:icon="@drawable/ic_currencyinr"
+        android:title="@string/switch_to_monthly_pricing" />
+    <item
+        android:id="@+id/offer_coupons"
+        android:icon="@drawable/ic_circle_wavy"
+        android:title="@string/view_offer_coupons" />
+    <item
+        android:id="@+id/help_section"
+        android:icon="@drawable/ic_help_white"
+        android:title="@string/need_help" />
 </menu>

@@ -163,8 +163,8 @@ object FileUtils {
     return false
   }
 
-  fun Bitmap.saveBitmap(context: Context): File {
-    val f = File(context.cacheDir, "tempimg.jpg");
+  fun Bitmap.saveBitmap(): File {
+    val f = File(BaseApplication.instance.cacheDir, "tempimg.jpg");
     f.createNewFile()
     //Convert bitmap to byte array
     val bos = ByteArrayOutputStream()

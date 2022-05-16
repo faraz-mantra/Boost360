@@ -117,7 +117,6 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
 
 
           dataList = getProjectsData.getData();
-          dataList.clear();
           if (dataList.size() > 0) {
             updateRecyclerView();
             nonEmptyView();

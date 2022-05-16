@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
+import com.appservice.base.getSingleProductTaxonomyFromServiceCode
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.constant.RecyclerViewActionType
@@ -36,10 +37,13 @@ import com.framework.constants.SupportVideoType
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.ContentSharing.Companion.shareProduct
+import com.framework.utils.isHotelProfile
+import com.framework.utils.isRestaurantProfile
 import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
@@ -111,8 +115,19 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     layoutManagerN?.let { scrollPagingListener(it) }
     setOnClickListener(binding?.cbAddProduct)
     getProductListing(isFirst = true, skipBy = skip)
-    this.fragmentZeroCase = AppRequestZeroCaseBuilder(AppZeroCases.PRODUCT, this, baseActivity).getRequest().build()
+    this.fragmentZeroCase = AppRequestZeroCaseBuilder(getZerocaseType(), this, baseActivity).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, fragmentZeroCase, false)
+
+  }
+
+  fun getZerocaseType(): AppZeroCases {
+    if (isHotelProfile(sessionLocal.fP_AppExperienceCode)) {
+      return AppZeroCases.ROOMS_LISTING
+    } else if (isRestaurantProfile(sessionLocal.fP_AppExperienceCode)) {
+      return AppZeroCases.RESTAURANT_SERVICES
+    } else {
+      return AppZeroCases.PRODUCT
+    }
   }
 
 
@@ -157,6 +172,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
   }
 
   private fun setProductDataItems(resultProduct: ArrayList<CatalogProduct>?, totalCount: Int?, isFirstLoad: Boolean) {
+    onServiceAddedOrUpdated(resultProduct?.size ?: 0)
     if (isFirstLoad) {
       finalList.clear()
       if (resultProduct.isNullOrEmpty().not()) {
@@ -177,9 +193,15 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
     TOTAL_ELEMENTS = totalCount ?: 0
     isLastPageD = (finalList.size == TOTAL_ELEMENTS)
     setAdapterNotify()
-    var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
-    if (fpDetails.isNullOrEmpty()) fpDetails = "Products"
-    setToolbarTitle("$fpDetails ${if (TOTAL_ELEMENTS > 0) "(${TOTAL_ELEMENTS})" else ""}".capitalizeUtil())
+
+    setToolbarTitle("${sessionLocal.getListingTitle()} ${if (TOTAL_ELEMENTS > 0) "(${TOTAL_ELEMENTS})" else ""}".capitalizeUtil())
+  }
+
+
+  private fun onServiceAddedOrUpdated(count: Int) {
+    val instance = FirestoreManager
+    instance.getDrScoreData()?.metricdetail?.number_products_added = count
+    instance.updateDocument()
   }
 
 
@@ -290,9 +312,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
 
   override fun onResume() {
     super.onResume()
-    var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
-    if (fpDetails.isNullOrEmpty()) fpDetails = "Products"
-    setToolbarTitle("$fpDetails ${if (TOTAL_ELEMENTS > 0) "(${TOTAL_ELEMENTS})" else ""}".capitalizeUtil())
+    setToolbarTitle("${sessionLocal.getListingTitle()} ${if (TOTAL_ELEMENTS > 0) "(${TOTAL_ELEMENTS})" else ""}".capitalizeUtil())
   }
 
   override fun showProgress(title: String?, cancelable: Boolean?) {
@@ -345,8 +365,10 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
         return true
       }
       R.id.menu_item_help -> {
-        startActivity(Intent(baseActivity, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
-          .putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name, SupportVideoType.PRODUCT_CATALOGUE.value))
+        startActivity(
+          Intent(baseActivity, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
+            .putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name, SupportVideoType.PRODUCT_CATALOGUE.value)
+        )
         return true
       }
       else -> super.onOptionsItemSelected(item)
@@ -366,4 +388,10 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
 
   override fun appOnBackPressed() {
   }
+}
+
+fun UserSessionManager.getListingTitle(): String? {
+  var fpDetails = getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
+  if (fpDetails.isNullOrEmpty()) fpDetails = getSingleProductTaxonomyFromServiceCode(fP_AppExperienceCode)
+  return fpDetails
 }

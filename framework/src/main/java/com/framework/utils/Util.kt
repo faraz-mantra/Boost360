@@ -647,3 +647,11 @@ fun spanColor(fullText: String, @ColorRes color: Int, vararg colorTextList: Stri
   }
   return spannable
 }
+
+fun String.capitalized(): String {
+  return this.replaceFirstChar {
+    if (it.isLowerCase())
+      it.titlecase(Locale.getDefault())
+    else it.toString()
+  }
+}

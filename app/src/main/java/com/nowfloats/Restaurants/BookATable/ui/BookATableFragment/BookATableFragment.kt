@@ -55,6 +55,11 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
 
   companion object {
     fun newInstance() = BookATableFragment()
+    fun newInstance(bundle: Bundle? = null): BookATableFragment {
+      val fragment = BookATableFragment()
+      fragment.arguments = bundle
+      return fragment
+    }
   }
 
   override fun onCreateView(
@@ -70,7 +75,7 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-
+    val isAdd = arguments?.getBoolean("is_add") ?: false
     book_table_recycler.adapter = adapter
     session = UserSessionManager(requireContext(), requireActivity())
     zerothCaseFragmentZeroCase = AppRequestZeroCaseBuilder(AppZeroCases.TABLE_BOOKING, this, requireActivity(), isPremium()).getRequest().build()
@@ -92,6 +97,7 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
       book_table_recycler.visibility = View.GONE
       emptyView()
     }
+    if (isAdd) btn_add?.performClick()
   }
 
   private fun isPremium(): Boolean {
@@ -279,7 +285,7 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
     intent.putExtra("fpName", session!!.fpName)
     intent.putExtra("fpid", session!!.fpid)
     intent.putExtra("loginid", session!!.userProfileId)
-    intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(session?.storeWidgets?: arrayListOf()))
+    intent.putStringArrayListExtra("userPurchsedWidgets", ArrayList(session?.storeWidgets ?: arrayListOf()))
     intent.putExtra("fpTag", session!!.fpTag)
     if (session!!.userProfileEmail != null) {
       intent.putExtra("email", session!!.userProfileEmail)

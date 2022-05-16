@@ -13,125 +13,75 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/app_bar_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:elevation="1dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent"
+            android:elevation="@dimen/_10sdp">
 
-            <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:id="@+id/collapsing_toolbar"
-                android:layout_width="match_parent"
+            <RelativeLayout
+                android:id="@+id/imageViewOption1"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                app:contentScrim="@color/globalText"
-                app:expandedTitleTextAppearance="@color/transparent"
-                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
+                android:foreground="?android:attr/selectableItemBackground"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:contentInsetStart="0dp"
-                    android:contentInsetEnd="0dp"
-                    app:contentInsetEnd="0dp"
-                    app:contentInsetStart="0dp"
-                    app:layout_collapseMode="parallax"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/circular_menu_option" />
+            </RelativeLayout>
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+            <RelativeLayout
+                android:id="@+id/imageViewCart1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@id/imageViewOption1"
+                app:layout_constraintTop_toTopOf="parent">
 
-                        <LinearLayout
-                            android:id="@+id/imageView21"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            android:gravity="center"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintDimensionRatio="1:1"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/circular_menu_back" />
-                        </LinearLayout>
-
-<!--                        <RelativeLayout-->
-<!--                            android:id="@+id/imageViewCart1"-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="match_parent"-->
-<!--                            android:foreground="?android:attr/selectableItemBackground"-->
-<!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                            app:layout_constraintDimensionRatio="1:1"-->
-<!--                            app:layout_constraintEnd_toStartOf="@id/menu_option"-->
-<!--                            app:layout_constraintTop_toTopOf="parent">-->
-
-<!--                            <ImageView-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_centerInParent="true"-->
-<!--                                android:layout_marginStart="@dimen/_6sdp"-->
-<!--                                android:layout_marginTop="@dimen/_6sdp"-->
-<!--                                android:layout_marginEnd="@dimen/_6sdp"-->
-<!--                                android:layout_marginBottom="@dimen/_6sdp"-->
-<!--                                android:background="@drawable/circular_menu_cart" />-->
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/circular_cart48" />
 
 
-<!--                            <com.nex3z.notificationbadge.NotificationBadge-->
-<!--                                android:id="@+id/badge"-->
-<!--                                android:layout_width="28dp"-->
-<!--                                android:layout_height="28dp"-->
-<!--                                android:layout_alignParentTop="true"-->
-<!--                                android:layout_alignParentEnd="true"-->
-<!--                                app:nbMaxTextLength="2" />-->
-<!--                        </RelativeLayout>-->
+                <com.nex3z.notificationbadge.NotificationBadge
+                    android:id="@+id/badge"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    app:nbMaxTextLength="2" />
+            </RelativeLayout>
 
-<!--                        &lt;!&ndash;                        <TextView&ndash;&gt;-->
-<!--                        &lt;!&ndash;                            android:layout_width="0dp"&ndash;&gt;-->
-<!--                        &lt;!&ndash;                            android:layout_height="wrap_content"&ndash;&gt;-->
-<!--                        &lt;!&ndash;                            android:fontFamily="@font/lato"&ndash;&gt;-->
-<!--                        &lt;!&ndash;                            android:text="Add-ons Store"&ndash;&gt;-->
-<!--                        &lt;!&ndash;                            android:textAllCaps="false"&ndash;&gt;-->
-<!--                        &lt;!&ndash;                            android:textColor="@color/white"&ndash;&gt;-->
-<!--                        &lt;!&ndash;                            android:textFontWeight="700"&ndash;&gt;-->
-<!--                        &lt;!&ndash;                            android:textSize="@dimen/txt_15sp"&ndash;&gt;-->
-<!--                        &lt;!&ndash;                            android:textStyle="bold"&ndash;&gt;-->
-<!--                        &lt;!&ndash;                            app:layout_constraintBottom_toBottomOf="parent"&ndash;&gt;-->
-<!--                        &lt;!&ndash;                            app:layout_constraintEnd_toStartOf="@+id/imageViewCart1"&ndash;&gt;-->
-<!--                        &lt;!&ndash;                            app:layout_constraintStart_toEndOf="@+id/imageView21"&ndash;&gt;-->
-<!--                        &lt;!&ndash;                            app:layout_constraintTop_toTopOf="parent" />&ndash;&gt;-->
+            <LinearLayout
+                android:id="@+id/imageView21"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center"
+                android:padding="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-<!--                        <LinearLayout-->
-<!--                            android:id="@+id/menu_option"-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="match_parent"-->
-<!--                            android:foreground="?android:attr/selectableItemBackground"-->
-<!--                            android:gravity="center"-->
-<!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                            app:layout_constraintDimensionRatio="1:1"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent">-->
-
-<!--                            <ImageView-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_margin="@dimen/_6sdp"-->
-<!--                                android:background="@drawable/circular_menu_option" />-->
-<!--                        </LinearLayout>-->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circular_arrow_back" />
+            </LinearLayout>
 
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                </androidx.appcompat.widget.Toolbar>
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
-        </com.google.android.material.appbar.AppBarLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

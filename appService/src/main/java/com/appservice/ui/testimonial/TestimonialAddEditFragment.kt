@@ -138,10 +138,10 @@ class TestimonialAddEditFragment : BaseTestimonialFragment<FragmentTestimonialAd
       showShortToast(getString(R.string.name_field_can_not_empty))
       return false
     }
-    if (titleDec.isNullOrEmpty()) {
+    /*if (titleDec.isNullOrEmpty()) {
       showShortToast(getString(R.string.company_field_can_not_empty))
       return false
-    }
+    }*/
     if (testimonialTitle.isNullOrEmpty()) {
       showShortToast(getString(R.string.testimonial_title_field_can_not_empty))
       return false

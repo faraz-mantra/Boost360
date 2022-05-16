@@ -80,7 +80,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
 
   private fun getSiteMeter() {
     if (FirestoreManager.getDrScoreData()?.drs_segment.isNullOrEmpty()) FirestoreManager.readDrScoreDocument()
-    viewModel?.getDrScoreUi(baseActivity)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getDrScoreUi(baseActivity)?.observeOnce(viewLifecycleOwner) {
       val response = it as? DrScoreUiDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         val drScoreData = FirestoreManager.getDrScoreData()
@@ -111,7 +111,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
 //        binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
 
       } else Snackbar.make(binding?.root!!, getString(R.string.digital_readiness_score_failed_to_load), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.retry)) { getSiteMeter() }.show()
-    })
+    }
 
   }
 
@@ -132,7 +132,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
 
 
   private fun visitingCardDetailText(shareChannelText: String?) {
-    viewModel?.getBoostVisitingMessage(baseActivity)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getBoostVisitingMessage(baseActivity)?.observeOnce(viewLifecycleOwner) {
       val response = it as? ShareUserDetailResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         val messageDetail = response.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }?.message
@@ -147,7 +147,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
           visitingCard(txt)
         }
       } else visitingCard(getString(R.string.business_card))
-    })
+    }
   }
 
 

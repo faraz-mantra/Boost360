@@ -9,21 +9,21 @@ import com.google.gson.annotations.SerializedName
 
 open class PosterModel(
     @SerializedName("active")
-    val active: Boolean,
+    val active: Boolean?,
     @SerializedName("createdOn")
-    val createdOn: String,
+    val createdOn: String?,
     @SerializedName("details")
-    val details: PosterDetailsModel,
+    val details: PosterDetailsModel?,
     @SerializedName("id")
-    val id: String,
+    val id: String?,
     @SerializedName("keys")
-    var keys: List<PosterKeyModel>,
+    var keys: List<PosterKeyModel>?,
     @SerializedName("tags")
-    val tags: List<String>,
+    val tags: List<String>?,
     @SerializedName("updatedOn")
-    val updatedOn: String,
+    val updatedOn: String?,
     @SerializedName("variants")
-    val variants: List<PosterVariantModel>,
+    val variants: List<PosterVariantModel>?,
     var greeting_message:String?,
     var shareLayout:Boolean=false
 ): AppBaseRecyclerViewItem {
@@ -37,6 +37,6 @@ open class PosterModel(
     }
 
     var isPurchased:Boolean=false
-    get() = details.isPurchased
+    get() = details?.isPurchased == true
 
 }

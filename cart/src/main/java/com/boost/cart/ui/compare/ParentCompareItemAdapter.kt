@@ -102,8 +102,8 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>, val acti
 
 //        getPackageInfoFromDB(parentViewHolder,parentItem)
 //        isItemAddedInCart(parentViewHolder,parentItem)
-        getPackageInfoFromDB(parentViewHolder,list.get(position))
-        isItemAddedInCart(parentViewHolder,list.get(position))
+        getPackageInfoFromDB(parentViewHolder, list.get(position))
+        isItemAddedInCart(parentViewHolder, list.get(position))
 
         val distinct: List<String> = LinkedHashSet(listSamp).toMutableList()
 

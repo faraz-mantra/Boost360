@@ -4,6 +4,7 @@ package com.dashboard.utils
 
 import android.app.ProgressDialog
 import android.os.AsyncTask
+import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
 import com.dashboard.R
 

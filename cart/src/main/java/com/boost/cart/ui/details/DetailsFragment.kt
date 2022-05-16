@@ -274,18 +274,27 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         )
         add_item_to_cart.setTextColor(Color.WHITE)
         val discount = 100 - addonDetails!!.discount_percent
-        val paymentPrice = (discount * addonDetails!!.price) / 100
-        money.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/month"
+        val paymentPrice = if(prefs.getYearPricing()) ((discount * addonDetails!!.price) / 100) * 12 else (discount * addonDetails!!.price) / 100
+        money.text =
+          if(prefs.getYearPricing())
+            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/year"
+        else
+            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/month"
 
         //hide or show MRP price
-        if (paymentPrice != addonDetails!!.price) {
+        val originalCost = if(prefs.getYearPricing()) (addonDetails!!.price * 12) else addonDetails!!.price
+        if (paymentPrice != originalCost) {
           orig_cost.visibility = View.VISIBLE
-          spannableString(addonDetails!!.price)
+          spannableString(originalCost)
         } else {
           orig_cost.visibility = View.INVISIBLE
         }
 
-        add_item_to_cart.text = "Add for ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/Month"
+        add_item_to_cart.text =
+          if(prefs.getYearPricing())
+            "Add for ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/Year"
+        else
+            "Add for ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/Month"
         havent_bought_the_feature.visibility = View.VISIBLE
       } else {
         add_item_to_cart.visibility = View.GONE
@@ -299,14 +308,13 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
   }
 
   fun spannableString(value: Int) {
-    val origCost = SpannableString("Original cost ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
+    val origCost: SpannableString
+    if(prefs.getYearPricing())
+     origCost = SpannableString("Original cost ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year")
+    else
+     origCost = SpannableString("Original cost ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
 
-    origCost.setSpan(
-      StrikethroughSpan(),
-      14,
-      origCost.length,
-      0
-    )
+    origCost.setSpan(StrikethroughSpan(), 14, origCost.length, 0)
     orig_cost.text = origCost
   }
 

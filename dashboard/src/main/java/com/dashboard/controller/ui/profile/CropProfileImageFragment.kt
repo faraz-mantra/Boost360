@@ -90,11 +90,13 @@ class CropProfileImageFragment : AppBaseFragment<FragmentCropProfileImageBinding
   }
 
   private fun uploadImage() {
-    lifecycleScope.launch(Dispatchers.Default) {
-      bitmap = binding?.cropImg?.croppedImage
-      val imgFile = bitmap?.saveBitmap(baseActivity)
+    bitmap = binding?.cropImg?.croppedImage
+
+    lifecycleScope.launch(Dispatchers.IO) {
+      val imgFile = bitmap?.saveBitmap()
       if (imgFile?.exists() == true) {
         withContext(Dispatchers.Main) {
+
           showProgress()
           viewModel?.uploadProfileImage(clientId2, userSessionManager?.userProfileId, imgFile.name, imgFile.asRequestBody("image/*".toMediaTypeOrNull()))?.observeOnce(viewLifecycleOwner) {
             Log.i(TAG, "uploadImage Response: " + Gson().toJson(it))

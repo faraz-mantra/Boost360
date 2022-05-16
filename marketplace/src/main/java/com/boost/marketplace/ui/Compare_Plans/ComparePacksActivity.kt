@@ -276,7 +276,7 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
                                 PrimaryImage(item.primary_image),
                                 item.target_business_usecase,
                                 Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                                null,item.desc
+                                null,item.desc?:""
                         ))
                     }
                     if (list.size > 0) {
@@ -340,7 +340,7 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
                     item.target_business_usecase,
                     Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
                     null,
-                    item.desc))
+                    item.desc?:""))
             }
             if (list.size > 0) {
 
@@ -426,7 +426,7 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
                                 PrimaryImage(item.primary_image),
                                 item.target_business_usecase,
                                 Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                                null,item.desc
+                                null,item.desc?:""
                             ))
                         }
                         if (list.size > 0) {
@@ -534,7 +534,7 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
     override fun onPackageClicked(item: Bundles?,imageView: ImageView) {
         if (!packageInCartStatus) {
             if (item != null) {
-                prefs.storeAddedPackageDesc(item.desc!!)
+                prefs.storeAddedPackageDesc(item.desc?:"")
 
                 val itemIds = arrayListOf<String>()
                 for(i in item.included_features){

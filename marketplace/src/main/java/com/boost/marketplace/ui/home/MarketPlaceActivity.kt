@@ -6,6 +6,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.text.Html
@@ -14,7 +15,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.rest.repository.AzureWebsiteNewRepository
@@ -28,6 +31,7 @@ import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.upgradeDB.model.YoutubeVideoModel
 import com.boost.dbcenterapi.utils.*
 import com.boost.dbcenterapi.utils.Utils.longToast
+import com.boost.marketplace.BuildConfig
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
@@ -82,7 +86,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     lateinit var videosListAdapter: VideosListAdapter
 
     //    private var deepLinkUtil: DeepLinkUtil? = null
-    lateinit var badge: NotificationBadge
+//    lateinit var badge: NotificationBadge
     var badgeNumber = 0
     var fpRefferalCode: String = ""
     var feedBackLink: String? = null
@@ -181,45 +185,99 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         WebEngageController.trackEvent(ADDONS_MARKETPLACE_HOME, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
 //        Glide.with(this).load(R.drawable.back_beau).apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3))).into(back_image)
 
+        imageViewOption1.setOnClickListener {
+            val popup = PopupMenu(this, imageViewOption1)
+            popup.getMenuInflater().inflate(R.menu.home_menu, popup.getMenu())
+            val menuOpts = popup.menu
+            if(prefs.getYearPricing()) {
+                menuOpts.getItem(1).setTitle(R.string.switch_to_monthly_pricing)
+            }else {
+                menuOpts.getItem(1).setTitle(R.string.switch_to_yearly_pricing)
+            }
+            popup.setForceShowIcon(true)
+            popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
+
+                when (item!!.itemId) {
+                    R.id.order_history -> {
+                        val intent= Intent(this, HistoryOrdersActivity::class.java)
+                        intent.putExtra("fpid",fpid)
+                        startActivity(intent)
+                    }
+                    R.id.pricing_switch -> {
+                        val menuOpts1 = popup.menu
+                        if(prefs.getYearPricing()) {
+                            menuOpts1.getItem(1).setTitle(R.string.switch_to_monthly_pricing)
+                            prefs.storeYearPricing(false)
+                        }else {
+                            menuOpts1.getItem(1).setTitle(R.string.switch_to_yearly_pricing)
+                            prefs.storeYearPricing(true)
+                        }
+                        prefs.storeCartValidityMonths("1")
+                        upgradeAdapter.notifyDataSetChanged()
+                        packageViewPagerAdapter.notifyDataSetChanged()
+                    }
+                    R.id.offer_coupons -> {
+                        startSpecificActivity(OfferCouponsActivity::class.java)
+                    }
+                    R.id.help_section -> {
+                        val videoshelp = HelpVideosBottomSheet()
+                        val args = Bundle()
+                        videoshelp.arguments= args
+                        videoshelp.show(this.supportFragmentManager, HelpVideosBottomSheet::class.java.name)
+                    }
+//                    else -> super.onOptionsItemSelected(item)
+                }
+
+                true
+            })
+            popup.show() //showing popup menu
+
+        }
+
         imageView21.setOnClickListener {
             finish()
         }
 
-//        imageViewCart1.setOnClickListener {
-//            val intent = Intent(
-//                applicationContext,
-//                CartActivity::class.java
-//            )
-//            intent.putExtra("fpid", fpid)
-//            intent.putExtra("expCode", experienceCode)
-//            intent.putExtra("isDeepLink", isDeepLink)
-//            intent.putExtra("deepLinkViewType", deepLinkViewType)
-//            intent.putExtra("deepLinkDay", deepLinkDay)
-//            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-//            intent.putExtra(
-//                "accountType",
-//                accountType
-//            )
-//            intent.putStringArrayListExtra(
-//                "userPurchsedWidgets",
-//                userPurchsedWidgets
-//            )
-//            if (email != null) {
-//                intent.putExtra("email", email)
-//            } else {
-//                intent.putExtra("email", "ria@nowfloats.com")
-//            }
-//            if (mobileNo != null) {
-//                intent.putExtra("mobileNo", mobileNo)
-//            } else {
-//                intent.putExtra("mobileNo", "9160004303")
-//            }
-//            intent.putExtra("profileUrl", profileUrl)
-//            startActivity(intent)
-//        }
+        imageViewCart1.setOnClickListener {
+            val intent = Intent(
+                applicationContext,
+                CartActivity::class.java
+            )
+            intent.putExtra("fpid", fpid)
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("isDeepLink", isDeepLink)
+            intent.putExtra("deepLinkViewType", deepLinkViewType)
+            intent.putExtra("deepLinkDay", deepLinkDay)
+            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                userPurchsedWidgets
+            )
+            if (email != null) {
+                intent.putExtra("email", email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                intent.putExtra("mobileNo", mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", profileUrl)
+            startActivity(intent)
+        }
 
         initializeVideosRecycler()
-        initializePartnerViewPager()
+        if(BuildConfig.FLAVOR.equals("jioonline")) {
+            initializePartnerViewPager()
+            partner_layout.visibility = View.VISIBLE
+        }else{
+            partner_layout.visibility = View.GONE
+        }
         initializeBannerViewPager()
         initializePackageViewPager()
         initializeFeatureDeals()
@@ -620,81 +678,81 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         return MarketPlaceHomeViewModel::class.java
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.home_menu, menu)
-        val menuItem = menu!!.findItem(R.id.action_add)
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.home_menu, menu)
+//        val menuItem = menu!!.findItem(R.id.action_add)
+//
+//        val actionView = menuItem.actionView
+//        badge = actionView.findViewById<View>(R.id.badge) as NotificationBadge
+//
+//
+//        actionView.setOnClickListener { onOptionsItemSelected(menuItem) }
+//        return true
+//    }
 
-        val actionView = menuItem.actionView
-        badge = actionView.findViewById<View>(R.id.badge) as NotificationBadge
-
-
-        actionView.setOnClickListener { onOptionsItemSelected(menuItem) }
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                finish()
-                true
-            }
-            R.id.action_add -> {
-                WebEngageController.trackEvent(ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED,EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED,NO_EVENT_VALUE)
-                val intent = Intent(
-                    applicationContext,
-                    CartActivity::class.java
-                )
-                intent.putExtra("fpid", fpid)
-                intent.putExtra("expCode", experienceCode)
-                intent.putExtra("isDeepLink", isDeepLink)
-                intent.putExtra("deepLinkViewType", deepLinkViewType)
-                intent.putExtra("deepLinkDay", deepLinkDay)
-                intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-                intent.putExtra(
-                    "accountType",
-                    accountType
-                )
-                intent.putStringArrayListExtra(
-                    "userPurchsedWidgets",
-                    userPurchsedWidgets
-                )
-                if (email != null) {
-                    intent.putExtra("email", email)
-                } else {
-                    intent.putExtra("email", "ria@nowfloats.com")
-                }
-                if (mobileNo != null) {
-                    intent.putExtra("mobileNo", mobileNo)
-                } else {
-                    intent.putExtra("mobileNo", "9160004303")
-                }
-                intent.putExtra("profileUrl", profileUrl)
-                startActivity(intent)
-                true
-            }
-            R.id.overflowMenu -> {
-                true
-            }
-            R.id.order_history -> {
-                val intent= Intent(this, HistoryOrdersActivity::class.java)
-                intent.putExtra("fpid",fpid)
-                startActivity(intent)
-                return true
-            }
-            R.id.offer_coupons -> {
-                startSpecificActivity(OfferCouponsActivity::class.java)
-                return true
-            }
-            R.id.help_section -> {
-                val videoshelp = HelpVideosBottomSheet()
-                val args = Bundle()
-                videoshelp.arguments= args
-                videoshelp.show(this.supportFragmentManager, HelpVideosBottomSheet::class.java.name)
-                return true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return when (item.itemId) {
+//            android.R.id.home -> {
+//                finish()
+//                true
+//            }
+//            R.id.action_add -> {
+//                WebEngageController.trackEvent(ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED,EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED,NO_EVENT_VALUE)
+//                val intent = Intent(
+//                    applicationContext,
+//                    CartActivity::class.java
+//                )
+//                intent.putExtra("fpid", fpid)
+//                intent.putExtra("expCode", experienceCode)
+//                intent.putExtra("isDeepLink", isDeepLink)
+//                intent.putExtra("deepLinkViewType", deepLinkViewType)
+//                intent.putExtra("deepLinkDay", deepLinkDay)
+//                intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+//                intent.putExtra(
+//                    "accountType",
+//                    accountType
+//                )
+//                intent.putStringArrayListExtra(
+//                    "userPurchsedWidgets",
+//                    userPurchsedWidgets
+//                )
+//                if (email != null) {
+//                    intent.putExtra("email", email)
+//                } else {
+//                    intent.putExtra("email", "ria@nowfloats.com")
+//                }
+//                if (mobileNo != null) {
+//                    intent.putExtra("mobileNo", mobileNo)
+//                } else {
+//                    intent.putExtra("mobileNo", "9160004303")
+//                }
+//                intent.putExtra("profileUrl", profileUrl)
+//                startActivity(intent)
+//                true
+//            }
+//            R.id.overflowMenu -> {
+//                true
+//            }
+//            R.id.order_history -> {
+//                val intent= Intent(this, HistoryOrdersActivity::class.java)
+//                intent.putExtra("fpid",fpid)
+//                startActivity(intent)
+//                return true
+//            }
+//            R.id.offer_coupons -> {
+//                startSpecificActivity(OfferCouponsActivity::class.java)
+//                return true
+//            }
+//            R.id.help_section -> {
+//                val videoshelp = HelpVideosBottomSheet()
+//                val args = Bundle()
+//                videoshelp.arguments= args
+//                videoshelp.show(this.supportFragmentManager, HelpVideosBottomSheet::class.java.name)
+//                return true
+//            }
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
 
 
     private fun initializeRecycler() {
@@ -1561,8 +1619,12 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         viewModel.getPartnerZone().observe(this, androidx.lifecycle.Observer {
             Log.e("getPartnerZone", it.toString())
             if (it.size > 0) {
-                updatePartnerViewPager(it)
-                partner_layout.visibility = View.VISIBLE
+                if(BuildConfig.FLAVOR.equals("jioonline")){
+                    partner_layout.visibility = View.GONE
+                }else {
+                    updatePartnerViewPager(it)
+                    partner_layout.visibility = View.VISIBLE
+                }
             } else {
                 partner_layout.visibility = View.GONE
             }

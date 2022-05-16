@@ -16,7 +16,9 @@ import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.cart.ui.details.DetailsFragment
 import com.boost.cart.utils.Constants
+import com.boost.cart.utils.SharedPrefs
 import com.bumptech.glide.Glide
+import com.framework.utils.RootUtil
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -32,10 +34,12 @@ class PackageAdaptor(
   var bundleData: Bundles
   var minMonth = 1
   private lateinit var context: Context
+  private lateinit var prefs: SharedPrefs
 
   init {
     this.upgradeList = cryptoCurrencies as ArrayList<FeaturesModel>
     this.bundleData = bundleData
+      this.prefs = SharedPrefs(activity)
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -97,11 +101,10 @@ class PackageAdaptor(
     for (item in bundleData.included_features) {
       if (item.feature_code.equals(upgradeList.get(position).feature_code)) {
         var mrpPrice = 0.0
-        var grandTotal = 0
-        val total =
-          (upgradeList.get(position).price - ((upgradeList.get(position).price * item.feature_price_discount_percent) / 100.0))
-        grandTotal += total.toInt() * minMonth
-        mrpPrice += upgradeList.get(position).price * minMonth
+        var grandTotal = 0.0
+        val total = (upgradeList.get(position).price - ((upgradeList.get(position).price * item.feature_price_discount_percent) / 100.0))
+        grandTotal = RootUtil.round(total * minMonth,2)
+        mrpPrice = RootUtil.round((upgradeList.get(position).price * minMonth).toDouble(), 2)
         if (item.feature_price_discount_percent > 0) {
           holder.discount.setText(item.feature_price_discount_percent.toString() + "%")
           holder.discount.visibility = View.VISIBLE
@@ -109,28 +112,26 @@ class PackageAdaptor(
           holder.discount.visibility = View.GONE
         }
         if (minMonth > 1) {
-          holder.price.setText(
-            "₹" +
-                NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal) +
-                "/" + minMonth + "mths"
-          )
+          if(prefs.getYearPricing())
+            holder.price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal * 12) + "/year")
+          else
+            holder.price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal) + "/" + minMonth + "mths")
         } else {
           if (grandTotal > 0)
-            holder.price.setText(
-              "₹" +
-                  NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal) +
-                  "/mth"
-            )
+            if(prefs.getYearPricing())
+            holder.price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal * 12) + "/year")
+          else
+            holder.price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal) + "/mth")
           else
             holder.price.visibility = View.GONE
         }
-        if (grandTotal != mrpPrice.toInt()) {
-          spannableString(holder, mrpPrice)
+        if (grandTotal != mrpPrice) {
+          spannableString(holder, mrpPrice * 12)
           holder.origCost.visibility = View.VISIBLE
         } else {
           holder.origCost.visibility = View.GONE
         }
-        if (grandTotal == 0) {
+        if (grandTotal == 0.0) {
           holder.price.visibility = View.GONE
         }
         break
@@ -141,14 +142,15 @@ class PackageAdaptor(
   fun spannableString(holder: upgradeViewHolder, value: Double) {
     val origCost: SpannableString
     if (minMonth > 1) {
-      origCost = SpannableString(
-        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-          .format(value) + "/" + minMonth + "months"
-      )
+        if(prefs.getYearPricing())
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year")
+        else
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "months")
     } else {
-      origCost = SpannableString(
-        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month"
-      )
+        if(prefs.getYearPricing())
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year")
+        else
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
     }
 
 

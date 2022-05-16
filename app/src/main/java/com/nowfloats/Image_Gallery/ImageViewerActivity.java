@@ -128,7 +128,7 @@ public class ImageViewerActivity extends AppCompatActivity {
       return;
     }
 
-    ProgressDialog dialog = new ProgressDialog(this);
+    ProgressDialog dialog = new ProgressDialog(this,R.style.AppCompatAlertDialogStyle);
     dialog.setMessage(getString(R.string.please_wait_));
     dialog.setCancelable(false);
     dialog.show();

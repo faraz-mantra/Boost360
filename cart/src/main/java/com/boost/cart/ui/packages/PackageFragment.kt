@@ -189,11 +189,15 @@ class PackageFragment : BaseFragment() {
             if (it.size > 0) {
                 featuresList = it
                 var bundleMonthlyMRP = 0.0
-                val minMonth:Int = if (bundleData!!.min_purchase_months != null && bundleData!!.min_purchase_months!! > 1) bundleData!!.min_purchase_months!! else 1
+                val minMonth: Int =
+                    if (bundleData!!.min_purchase_months != null && bundleData!!.min_purchase_months!! > 1) bundleData!!.min_purchase_months!! else 1
                 for (singleItem in it) {
                     for (item in bundleData!!.included_features) {
                         if (singleItem.feature_code == item.feature_code) {
-                            bundleMonthlyMRP += RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),2)
+                            bundleMonthlyMRP += RootUtil.round(
+                                (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
+                                2
+                            )
                         }
                     }
                 }
@@ -201,24 +205,39 @@ class PackageFragment : BaseFragment() {
                 offeredBundlePrice = (bundleMonthlyMRP * minMonth).toDouble()
                 originalBundlePrice = (bundleMonthlyMRP * minMonth).toDouble()
 
-                if(bundleData!!.overall_discount_percent > 0)
-                    offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent/100)
-                else
-                    offeredBundlePrice = originalBundlePrice
+                if (bundleData!!.overall_discount_percent > 0){
+                    offeredBundlePrice = (RootUtil.round(
+                        originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent / 100),
+                        2
+                    ))
+                    if(prefs.getYearPricing())
+                        offeredBundlePrice = offeredBundlePrice * 12
+            }else {
+                    if(prefs.getYearPricing())
+                        offeredBundlePrice = originalBundlePrice * 12
+                    else
+                        offeredBundlePrice = originalBundlePrice
+                }
 
                 if (minMonth > 1) {
-                    offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/" + bundleData!!.min_purchase_months + "mths")
+                    if(prefs.getYearPricing())
+                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/year")
+                    else
+                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/" + bundleData!!.min_purchase_months + "mths")
                     if (offeredBundlePrice != originalBundlePrice) {
-                        spannableString(originalBundlePrice, minMonth)
+                        spannableString(if(prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice, minMonth)
                         orig_cost.visibility = View.VISIBLE
                     } else {
                         orig_cost.visibility = View.GONE
                     }
                     updateRecycler(it,bundleData!!.min_purchase_months!!)
                 } else {
-                    offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/mth")
+                    if(prefs.getYearPricing())
+                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/year")
+                    else
+                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/mth")
                     if (offeredBundlePrice != originalBundlePrice) {
-                        spannableString(originalBundlePrice, 1)
+                        spannableString(if(prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice, 1)
                         orig_cost.visibility = View.VISIBLE
                     } else {
                         orig_cost.visibility = View.GONE
@@ -305,9 +324,15 @@ class PackageFragment : BaseFragment() {
     fun spannableString(value: Double, minMonth: Int) {
         val origCost: SpannableString
         if (minMonth > 1) {
-            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")
+            if(prefs.getYearPricing())
+                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year")
+            else
+                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")
         } else {
-            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
+            if(prefs.getYearPricing())
+                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year")
+            else
+                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
         }
         origCost.setSpan(
                 StrikethroughSpan(),
