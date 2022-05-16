@@ -7,7 +7,7 @@ import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.databinding.FragmentScanPanCardV2Binding
 import com.framework.models.BaseViewModel
-import com.framework.utils.getTempFile
+import com.framework.utils.FileUtils
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.FileCallback
 import com.otaliastudios.cameraview.PictureResult
@@ -42,7 +42,7 @@ class ScanPanCardV2Fragment : AppBaseFragment<FragmentScanPanCardV2Binding, Base
         super.onPictureTaken(result)
         binding?.panCardScanCameraView?.removeCameraListener(this)
         val intent = Intent()
-        result.toFile(getTempFile("jpg")) {
+        result.toFile(FileUtils.getTempFile("jpg")) {
           intent.putExtra(IMAGE_PATH,it?.path)
           requireActivity().setResult(RESULT_OK,intent)
           requireActivity().finish()
