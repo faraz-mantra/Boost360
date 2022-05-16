@@ -28,32 +28,25 @@
       android:orientation="vertical"
       android:padding="@dimen/size_24">
 
-      <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="@dimen/size_200"
-        android:layout_height="@dimen/size_140"
-          app:lottie_autoPlay="true"
-          app:lottie_rawRes="@raw/verificatioan_status_loader"
-        android:layout_marginVertical="@dimen/size_10"
-         />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/tv_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/semi_bold"
-        android:gravity="center"
-        android:text="Business verification underway"
+        android:text="@string/what_is_rcm"
         android:textColor="@color/black_4a4a4a"
         app:textType="HEADING_7" />
 
       <com.framework.views.customViews.CustomTextView
         android:layout_width="match_parent"
+          android:lineHeight="@dimen/size_19"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_4"
-        android:gravity="center"
-        android:text="This process usually takes 1 working day. Once verified we will notify you. If you want to make any change to above account details, please write to ria@nowfloats.com with this screenshot attached."
+        android:layout_marginTop="@dimen/size_18"
+        android:text="@string/rcm_help_desc"
         android:textColor="@color/gray_828282"
-        app:textType="CAPTION" />
+        app:textType="CAPTION"
+          tools:targetApi="p" />
 
 
       <com.framework.views.customViews.CustomButton
@@ -66,7 +59,7 @@
         android:gravity="center"
         android:paddingVertical="@dimen/size_12"
         android:stateListAnimator="@null"
-        android:text="Ok, I understood"
+        android:text="@string/i_understood"
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:textType="HEADING_6" />

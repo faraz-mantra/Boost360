@@ -61,7 +61,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:scaleType="fitXY"
-              android:src="@drawable/pan_card_dummy" />
+              tools:src="@drawable/pan_card_dummy" />
         </com.framework.views.customViews.CustomCardView>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -85,7 +85,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:includeFontPadding="false"
-              android:text="AAGCP768M"
+              tools:text="AAGCP768M"
               android:textColor="@color/greyish_brown"
               app:fontFamily="@font/regular"
               app:textType="HEADING_5" />
@@ -108,7 +108,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:includeFontPadding="false"
-          android:text="PROPIZIO REAL ESTATE PRIVATE LIMITED"
+          tools:text="PROPIZIO REAL ESTATE PRIVATE LIMITED"
           android:textColor="@color/greyish_brown"
           app:fontFamily="@font/regular"
           app:textType="HEADING_5" />
@@ -123,15 +123,38 @@
           app:fontFamily="@font/regular"
           app:textType="CAPTION" />
 
-      <com.framework.views.customViews.CustomTextView
-          android:id="@+id/gst_detail"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:includeFontPadding="false"
-          android:text="Not available"
-          android:textColor="@color/greyish_brown"
-          app:fontFamily="@font/regular"
-          app:textType="HEADING_5" />
+
+      <LinearLayout
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/gst_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            tools:text="Not available"
+            android:textAllCaps="true"
+            android:textColor="@color/greyish_brown"
+            app:fontFamily="@font/regular"
+            app:textType="HEADING_5" />
+
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/rcm_detail"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/size_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/rcm_applicable"
+            android:textColor="@color/greyish_brown"
+            app:fontFamily="@font/regular"
+            app:textType="BODY_1" />
+
+
+      </LinearLayout>
 
 
       <com.framework.views.customViews.CustomButton

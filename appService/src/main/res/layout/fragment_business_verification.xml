@@ -165,6 +165,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_2"
+              android:textColor="@color/black_2A2A2A"
             android:background="@drawable/rounded_edit_stroke"
             android:hint="@string/enter_pan_card_number"
             android:inputType="textCapCharacters"
@@ -189,6 +190,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_2"
+              android:textColor="@color/black_2A2A2A"
             android:background="@drawable/rounded_edit_stroke"
             android:hint="@string/enter_name_as_per_pan_card"
             android:inputType="textCapWords"
@@ -227,54 +229,75 @@
               android:text="@string/not_registered_with_gst" />
           </androidx.appcompat.widget.LinearLayoutCompat>
 
-          <com.framework.views.customViews.CustomTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_1"
-            android:layout_marginTop="@dimen/size_16"
-            android:text="@string/enter_your_business_gstin"
-            android:textColor="@color/black_4a4a4a"
-            app:fontFamily="@font/regular"
-            app:textType="BODY_1" />
-
-          <com.framework.views.customViews.CustomEditText
-            android:id="@+id/edt_gstin_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_2"
-            android:background="@drawable/rounded_edit_stroke"
-            android:hint="@string/enter_business_gstin"
-            android:inputType="textCapWords"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColorHint="@color/gray_text_hint"
-            app:fontFamily="@font/regular" />
-
-          <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_16"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <com.framework.views.customViews.CustomCheckBox
-              android:id="@+id/ckb_rcm_sales"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:buttonTint="@drawable/check_color_filter"
-              android:scaleX="1.04"
-              android:text="@string/rcm_applies_to_my_sales"
-              android:textColor="@color/black_4a4a4a"
-              app:textType="HEADING_6" />
+          <LinearLayout
+              android:id="@+id/layout_gst_detail"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
 
             <com.framework.views.customViews.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_1"
+                android:layout_marginTop="@dimen/size_16"
+                android:text="@string/enter_your_business_gstin"
+                android:textColor="@color/black_4a4a4a"
+                app:fontFamily="@font/regular"
+                app:textType="BODY_1" />
+
+            <com.framework.views.customViews.CustomEditText
+                android:id="@+id/edt_gstin_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_2"
+                android:background="@drawable/rounded_edit_stroke"
+                android:hint="@string/enter_business_gstin"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:textColor="@color/black_2A2A2A"
+                android:singleLine="true"
+                android:textColorHint="@color/gray_text_hint"
+                app:fontFamily="@font/regular" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_16"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+              <com.framework.views.customViews.CustomCheckBox
+                  android:id="@+id/ckb_rcm_sales"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:buttonTint="@drawable/check_color_filter"
+                  android:scaleX="1.04"
+                  android:text="@string/rcm_applies_to_my_sales"
+                  android:textColor="@color/black_4a4a4a"
+                  app:textType="HEADING_6" />
+
+              <com.framework.views.customViews.CustomTextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/what_s_this_n"
+                  android:textColor="@color/black_4a4a4a"
+                  app:textType="HEADING_6" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+          </LinearLayout>
+
+
+          <com.framework.views.customViews.CustomCheckBox
+              android:visibility="gone"
+              android:id="@+id/ckb_gst_not_reg"
+              android:layout_marginTop="@dimen/size_26"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="@string/what_s_this_n"
+              android:buttonTint="@drawable/check_color_filter"
+              android:scaleX="1.04"
+              android:text="@string/i_hereby_declare_that_i_ve_not_yet_registered_my_business_for_gst"
               android:textColor="@color/black_4a4a4a"
               app:textType="HEADING_6" />
-          </androidx.appcompat.widget.LinearLayoutCompat>
         </LinearLayout>
 
       </androidx.constraintlayout.widget.ConstraintLayout>
@@ -298,13 +321,9 @@
         app:cornerRadius="@dimen/size_10"
         android:stateListAnimator="@null"
         android:textSize="14sp"
-        app:iconGravity="textStart"
-        app:iconPadding="@dimen/size_10"
         android:letterSpacing="0"
         android:text="@string/submit_verification"
         android:textAllCaps="false"
-        app:iconTint="@color/white"
-        app:icon="@drawable/ic_camera_white_border_no_fill"
         android:textColor="@color/white"
         />
   </androidx.constraintlayout.widget.ConstraintLayout>

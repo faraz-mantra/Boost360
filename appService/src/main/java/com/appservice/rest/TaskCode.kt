@@ -1,6 +1,7 @@
 package com.appservice.rest
 
 enum class TaskCode {
+  PAN_GST_UPDATE,
   POST_CREATE_SERVICE,
   POST_UPDATE_SERVICE,
   GET_ACCOUNT_DETAILS,

@@ -1,6 +1,7 @@
 package com.appservice.rest.services
 
 import com.appservice.model.MerchantSummaryResponse
+import com.appservice.model.PanGstUpdateBody
 import com.appservice.model.VmnCallModel
 import com.appservice.model.aptsetting.*
 import com.appservice.model.product.ProductItemsResponseItem
@@ -22,6 +23,9 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface WithFloatTwoRemoteData {
+
+  @POST(EndPoints.PAN_GST_UPDATE)
+  fun panGstUpdate(@Body panGstUpdateBody: PanGstUpdateBody):Observable<Response<ResponseBody>>
 
   @POST(EndPoints.CREATE_SERVICE)
   fun createService(@Body request: CatalogProduct?): Observable<Response<String>>
