@@ -6,17 +6,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.AddonsListener
+import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
+import com.boost.marketplace.ui.browse.SearchActivity
 import com.bumptech.glide.Glide
 import java.text.NumberFormat
 import java.util.*
 
 
-class CompareItemAdapter(cryptoCurrencies: List<FeaturesModel>?,val addonsListener: AddonsListener) :
+class CompareItemAdapter(
+    cryptoCurrencies: List<FeaturesModel>?,
+    val addonsListener: AddonsListener,
+    val activity: ComparePacksActivity?,
+    val activity2: SearchActivity?,
+    val activity3: FragmentActivity?
+) :
     RecyclerView.Adapter<CompareItemAdapter.upgradeViewHolder>() {
+
 
     private var upgradeList = ArrayList<FeaturesModel>()
     var minMonth = 1
@@ -45,8 +56,16 @@ class CompareItemAdapter(cryptoCurrencies: List<FeaturesModel>?,val addonsListen
         // holder.title.setText(upgradeList.get(position).target_business_usecase)
 
         val cryptocurrencyItem = upgradeList[position]
-        holder.upgradeListItem(holder, cryptocurrencyItem)
+        if (activity != null) {
+            holder.upgradeListItem(holder, cryptocurrencyItem, activity, null, null)
 
+        } else if (activity2 != null) {
+            holder.upgradeListItem(holder, cryptocurrencyItem, null, activity2, null)
+
+        } else {
+            holder.upgradeListItem(holder, cryptocurrencyItem, null, null, activity3)
+
+        }
         Glide.with(context).load(upgradeList.get(position).primary_image).into(holder.image)
 //    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 //    if (position == upgradeList.size - 1) {
@@ -91,11 +110,33 @@ class CompareItemAdapter(cryptoCurrencies: List<FeaturesModel>?,val addonsListen
         val name = itemView.findViewById<TextView>(R.id.title)!!
         val price = itemView.findViewById<TextView>(R.id.price)!!
 
-        fun upgradeListItem(holder: upgradeViewHolder, updateModel: FeaturesModel) {
+        fun upgradeListItem(
+            holder: upgradeViewHolder,
+            updateModel: FeaturesModel,
+            activity: ComparePacksActivity?,
+            activity2: SearchActivity?,
+            activity3: FragmentActivity?
+        ) {
+            var prefs: SharedPrefs? = null
+
+            if (activity != null) {
+                prefs = SharedPrefs(activity)
+            } else if (activity2 != null) {
+                prefs = SharedPrefs(activity2)
+            } else {
+                prefs = SharedPrefs(activity3!!)
+
+            }
             val discount = 100 - updateModel.discount_percent
-            val price = (discount * updateModel.price) / 100
-            holder.price.text =
-                "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
+            var price = (discount * updateModel.price) / 100
+            if (prefs.getYearPricing()) {
+                price = price * 12
+                holder.price.text =
+                    "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/year"
+            } else {
+                holder.price.text =
+                    "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
+            }
 
         }
 

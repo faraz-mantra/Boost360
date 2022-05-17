@@ -89,7 +89,7 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: java.util.ArrayList()
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
 
-        featureAdaptor = CompareItemAdapter(allFeatures,this)
+        featureAdaptor = CompareItemAdapter(allFeatures,this,null,this,null)
         progressDialog = ProgressDialog(this)
         packageAdaptor = PackageRecyclerAdapter(allBundles, this, this)
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()

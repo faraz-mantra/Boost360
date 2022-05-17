@@ -18,9 +18,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.interfaces.CompareListener
+import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
 import com.framework.utils.RootUtil
@@ -30,12 +32,18 @@ import io.reactivex.schedulers.Schedulers
 import java.text.NumberFormat
 import java.util.*
 
-class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeListener: CompareListener,val addonsListener: AddonsListener) : RecyclerView.Adapter<ParentCompareItemAdapter.ParentViewHolder>() {
+class ParentCompareItemAdapter(
+    var list: java.util.ArrayList<Bundles>,
+    val homeListener: CompareListener,
+    val addonsListener: AddonsListener,
+    val activity: ComparePacksActivity
+) : RecyclerView.Adapter<ParentCompareItemAdapter.ParentViewHolder>() {
     // An object of RecyclerView.RecycledViewPool
     // is created to share the Views
     // between the child and
     // the parent RecyclerViews
     private val viewPool = RecyclerView.RecycledViewPool()
+
     //    private var list = ArrayList<Bundles>()
     private var featureList = ArrayList<FeaturesModel>()
     lateinit var context: Context
@@ -45,7 +53,8 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
         }*/
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
-        i: Int): ParentViewHolder {
+        i: Int
+    ): ParentViewHolder {
 
         // Here we inflate the corresponding
         // layout of the parent item
@@ -53,14 +62,16 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
             .from(viewGroup.context)
             .inflate(
                 R.layout.item_compare_packs,
-                viewGroup, false)
+                viewGroup, false
+            )
         context = view.context
         return ParentViewHolder(view)
     }
 
     override fun onBindViewHolder(
         parentViewHolder: ParentViewHolder,
-        position: Int) {
+        position: Int
+    ) {
 
         // Create an instance of the ParentItem
         // class for the given position
@@ -73,16 +84,18 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
         val data = parentItem.name
 //        val items = data!!.split(" ".toRegex()).toTypedArray()
         val items = data!!.split(" ".toRegex())
-        if(items.size == 1){
+        if (items.size == 1) {
             parentViewHolder.PackageItemTitle.text = items[0]
-        }else if(items.size == 2){
+        } else if (items.size == 2) {
             parentViewHolder.PackageItemTitle.text = items[0] + " \n" + items[1]
-        }else if(items.size == 3){
+        } else if (items.size == 3) {
             parentViewHolder.PackageItemTitle.text = items[0] + " \n" + items[1] + " " + items[2]
-        }else if(items.size == 4){
-            parentViewHolder.PackageItemTitle.text = items[0] + " " + items[1]  + " \n"  +items[2] + " "  + items[3]
-        }else if(items.size == 5){
-            parentViewHolder.PackageItemTitle.text = items[0] + " " + items[1]  + " \n"  +items[2] + " "  + items[3] + " " +items[4]
+        } else if (items.size == 4) {
+            parentViewHolder.PackageItemTitle.text =
+                items[0] + " " + items[1] + " \n" + items[2] + " " + items[3]
+        } else if (items.size == 5) {
+            parentViewHolder.PackageItemTitle.text =
+                items[0] + " " + items[1] + " \n" + items[2] + " " + items[3] + " " + items[4]
         }
 
 //        if(parentItem.desc != null){
@@ -99,7 +112,7 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
 
         val listSamp = ArrayList<String>()
 
-        for( item in parentItem.included_features ){
+        for (item in parentItem.included_features) {
 //            Log.v("onBindViewHolder", " "+ item.feature_code)
             listSamp.add(item.feature_code)
         }
@@ -107,19 +120,19 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
 //        getPackageInfoFromDB(parentViewHolder,parentItem)
 //        isItemAddedInCart(parentViewHolder,parentItem)
         try {
-            getPackageInfoFromDB(parentViewHolder,list.get(position))
+            getPackageInfoFromDB(parentViewHolder, list.get(position))
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
         try {
-            isItemAddedInCart(parentViewHolder,list.get(position))
+            isItemAddedInCart(parentViewHolder, list.get(position))
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
 
         val distinct: List<String> = LinkedHashSet(listSamp).toMutableList()
 
-        val layoutManager1 = GridLayoutManager(parentViewHolder.ChildRecyclerView.context,3,)
+        val layoutManager1 = GridLayoutManager(parentViewHolder.ChildRecyclerView.context, 3)
 //        val sectionAdapter1 = SectionedRecyclerViewAdapter()
         CompositeDisposable().add(
             AppDatabase.getInstance(Application())!!
@@ -133,7 +146,7 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
                         for (item in it) {
                             itemIds.add(item.feature_code)
                         }
-                        for(listItems in it){
+                        for (listItems in it) {
                             CompositeDisposable().add(
                                 AppDatabase.getInstance(Application())!!
                                     .featuresDao()
@@ -144,7 +157,7 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
                                     .subscribe({
                                         if (it != null) {
 
-                                            Log.v("getFeatureListTarget", " "+ itemIds )
+                                            Log.v("getFeatureListTarget", " " + itemIds)
                                             /* val section = MySection(listItems.target_business_usecase, it)
                                              sectionAdapter1.addSection(section)
                                              parentViewHolder.ChildRecyclerView
@@ -152,7 +165,8 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
                                              parentViewHolder.ChildRecyclerView
                                                      .setLayoutManager(layoutManager1)*/
 
-                                            val sectionLayout = CompareItemAdapter(it,addonsListener )
+                                            val sectionLayout =
+                                                CompareItemAdapter(it, addonsListener,activity,null,null)
                                             parentViewHolder.ChildRecyclerView
                                                 .setAdapter(sectionLayout)
                                             parentViewHolder.ChildRecyclerView
@@ -186,14 +200,19 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
 
 
 
-        parentViewHolder.package_submit.setOnClickListener{
+        parentViewHolder.package_submit.setOnClickListener {
             parentViewHolder.package_submit.background = ContextCompat.getDrawable(
                 context,
                 R.drawable.button_added_to_cart
             )
-            parentViewHolder.package_submit.setTextColor(context.getResources().getColor(R.color.tv_color_BB))
+            parentViewHolder.package_submit.setTextColor(
+                context.getResources().getColor(R.color.tv_color_BB)
+            )
             parentViewHolder.package_submit.setText(context.getString(R.string.added_to_cart))
-            homeListener.onPackageClicked(parentItem,parentViewHolder.package_profile_image_compare_new)
+            homeListener.onPackageClicked(
+                parentItem,
+                parentViewHolder.package_profile_image_compare_new
+            )
         }
 
     }
@@ -235,36 +254,44 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
         val package_submit: TextView
         val tv_price: TextView
         val package_profile_image: ImageView
+
         //        val parent_item_title: TextView
         val tv_inlcuded_add_on: TextView
-        val package_profile_image_compare_new:ImageView
-        val bundleDiscount :TextView
-        val origCost:TextView
+        val package_profile_image_compare_new: ImageView
+        val bundleDiscount: TextView
+        val origCost: TextView
 
 
         init {
             PackageItemTitle = itemView
                 .findViewById(
-                    R.id.package_title)
+                    R.id.package_title
+                )
             ChildRecyclerView = itemView
                 .findViewById(
-                    R.id.child_recyclerview)
+                    R.id.child_recyclerview
+                )
             package_submit = itemView
                 .findViewById(
-                    R.id.package_addCartNew)
+                    R.id.package_addCartNew
+                )
             tv_price = itemView
                 .findViewById(
-                    R.id.tv_price)
+                    R.id.tv_price
+                )
             package_profile_image = itemView
                 .findViewById(
-                    R.id.package_profile_image)
+                    R.id.package_profile_image
+                )
 //            parent_item_title = itemView
 //                    .findViewById(
 //                            R.id.parent_item_title)
             tv_inlcuded_add_on = itemView
                 .findViewById(
-                    R.id.tv_inlcuded_add_on)
-            package_profile_image_compare_new = itemView.findViewById(R.id.package_profile_image_compare_new)
+                    R.id.tv_inlcuded_add_on
+                )
+            package_profile_image_compare_new =
+                itemView.findViewById(R.id.package_profile_image_compare_new)
             bundleDiscount = itemView.findViewById(R.id.pack_discount_tv)
             origCost = itemView.findViewById(R.id.upgrade_list_orig_cost)
 
@@ -272,8 +299,8 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
     }
 
 
-
     fun getPackageInfoFromDB(holder: ParentViewHolder, bundles: Bundles) {
+        val prefs = SharedPrefs(activity)
         val itemsIds = arrayListOf<String>()
         for (item in bundles.included_features) {
             itemsIds.add(item.feature_code)
@@ -281,7 +308,8 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
 
         var offeredBundlePrice = 0.0
         var originalBundlePrice = 0.0
-        val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) bundles.min_purchase_months!! else 1
+        val minMonth: Int =
+            if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) bundles.min_purchase_months!! else 1
         CompositeDisposable().add(
             AppDatabase.getInstance(Application())!!
                 .featuresDao()
@@ -293,13 +321,21 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
                         for (singleItem in it) {
                             for (item in bundles.included_features) {
                                 if (singleItem.feature_code == item.feature_code) {
-                                    originalBundlePrice += RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)) * minMonth, 2)
+                                    originalBundlePrice += RootUtil.round(
+                                        (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)) * minMonth,
+                                        2
+                                    )
                                 }
                             }
                         }
 
-                        if(bundles.overall_discount_percent > 0){
-                            offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100),2)
+                        if (bundles.overall_discount_percent > 0) {
+                            offeredBundlePrice = RootUtil.round(
+                                originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent / 100),
+                                2
+                            )
+                            if (prefs.getYearPricing())
+                                offeredBundlePrice = offeredBundlePrice * 12
                             holder.bundleDiscount.visibility = View.VISIBLE
 //                                        holder.bundlePriceLabel.visibility = View.GONE
                             holder.bundleDiscount.setText(bundles.overall_discount_percent.toString() + "% OFF")
@@ -310,35 +346,69 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
                         }
 
 
-                        if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1){
-                            holder.tv_price.setText("₹" +
-                                    NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
-                                    "/" + bundles.min_purchase_months + " months")
-                            holder.tv_inlcuded_add_on.setText("Includes these "+ it.size+ " add-ons")
+                        if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) {
+                            if (prefs.getYearPricing())
+                                holder.tv_price.setText(
+                                    "₹" +
+                                            NumberFormat.getNumberInstance(Locale.ENGLISH)
+                                                .format(offeredBundlePrice) +
+                                            "/year"
+                                )
+                            else
+                                holder.tv_price.setText(
+                                    "₹" +
+                                            NumberFormat.getNumberInstance(Locale.ENGLISH)
+                                                .format(offeredBundlePrice) +
+                                            "/" + bundles.min_purchase_months + "mths"
+                                )
+
+                            holder.tv_inlcuded_add_on.setText("Includes these " + it.size + " add-ons")
 
                             if (offeredBundlePrice != originalBundlePrice) {
-                                spannableString(holder, originalBundlePrice, bundles.min_purchase_months!!)
+                                spannableString(
+                                    holder,
+                                    if (prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice,
+                                    bundles.min_purchase_months!!
+                                )
                                 holder.origCost.visibility = View.VISIBLE
                             } else {
                                 holder.origCost.visibility = View.GONE
                             }
 
-                        }else{
-                            holder.tv_price.setText("₹" +
-                                    NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)
-                                    + "/month")
-                            holder.tv_inlcuded_add_on.setText("Includes these "+ it.size+ " add-ons")
+                        } else {
+                            if (prefs.getYearPricing())
+                                holder.tv_price.setText(
+                                    "₹" +
+                                            NumberFormat.getNumberInstance(Locale.ENGLISH)
+                                                .format(offeredBundlePrice)
+                                            + "/year"
+                                )
+                            else
+                                holder.tv_price.setText(
+                                    "₹" +
+                                            NumberFormat.getNumberInstance(Locale.ENGLISH)
+                                                .format(offeredBundlePrice)
+                                            + "/mth"
+                                )
+
+                            holder.tv_inlcuded_add_on.setText("Includes these " + it.size + " add-ons")
                             if (offeredBundlePrice != originalBundlePrice) {
-                                spannableString(holder, originalBundlePrice, 1)
+                                spannableString(
+                                    holder,
+                                    if (prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice,
+                                    1
+                                )
                                 holder.origCost.visibility = View.VISIBLE
                             } else {
                                 holder.origCost.visibility = View.GONE
                             }
                         }
 
-                        if(bundles.primary_image != null && !bundles.primary_image!!.url.isNullOrEmpty()){
-                            Glide.with(holder.itemView.context).load(bundles.primary_image!!.url).into(holder.package_profile_image)
-                            Glide.with(holder.itemView.context).load(bundles.primary_image!!.url).into(holder.package_profile_image_compare_new)
+                        if (bundles.primary_image != null && !bundles.primary_image!!.url.isNullOrEmpty()) {
+                            Glide.with(holder.itemView.context).load(bundles.primary_image!!.url)
+                                .into(holder.package_profile_image)
+                            Glide.with(holder.itemView.context).load(bundles.primary_image!!.url)
+                                .into(holder.package_profile_image_compare_new)
                         } else {
                             holder.package_profile_image.setImageResource(R.drawable.rectangle_copy_18)
                             holder.package_profile_image_compare_new.setImageResource(R.drawable.rectangle_copy_18)
@@ -350,12 +420,20 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
                 )
         )
     }
+
     fun spannableString(holder: ParentViewHolder, value: Double, minMonth: Int) {
+        val prefs = SharedPrefs(activity)
         val origCost: SpannableString
-        if(minMonth > 1){
-            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")
-        }else{
-            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
+        if (minMonth > 1) {
+            if(prefs.getYearPricing())
+                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year")
+            else
+                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")
+        } else {
+            if(prefs.getYearPricing())
+                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year")
+            else
+                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
         }
 
         origCost.setSpan(
@@ -367,7 +445,7 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
         holder.origCost.setText(origCost)
     }
 
-    fun isItemAddedInCart(holder: ParentViewHolder, bundles: Bundles){
+    fun isItemAddedInCart(holder: ParentViewHolder, bundles: Bundles) {
         /*val itemsIds = arrayListOf<String>()
         for (item in bundles.included_features) {
             itemsIds.add(item.feature_code)
@@ -381,16 +459,21 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>,val homeL
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     for (singleItem in it) {
-                        Log.v("isItemAddedInCart", " "+ bundles!!.name + " "+ singleItem.item_id)
+                        Log.v("isItemAddedInCart", " " + bundles!!.name + " " + singleItem.item_id)
 //                                for (item in bundles.included_features) {
 
                         if (singleItem.item_id.equals(bundles!!._kid)) {
-                            Log.v("isItemAddedInCar12", " item_id: "+ singleItem.item_id + " kid: "+ bundles!!._kid + " "+ bundles!!.name)
+                            Log.v(
+                                "isItemAddedInCar12",
+                                " item_id: " + singleItem.item_id + " kid: " + bundles!!._kid + " " + bundles!!.name
+                            )
                             holder.package_submit.background = ContextCompat.getDrawable(
                                 context,
                                 R.drawable.button_added_to_cart
                             )
-                            holder.package_submit.setTextColor(context.getResources().getColor(R.color.tv_color_BB))
+                            holder.package_submit.setTextColor(
+                                context.getResources().getColor(R.color.tv_color_BB)
+                            )
                             holder.package_submit.setText(context.getString(R.string.added_to_cart))
                         }
 //                                }

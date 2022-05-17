@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.ui.home.MarketPlaceActivity
@@ -43,7 +44,7 @@ class UpgradeAdapter(
 
   override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
     val cryptocurrencyItem = upgradeList[position]
-    holder.upgradeListItem(cryptocurrencyItem)
+    holder.upgradeListItem(cryptocurrencyItem,activity)
 
     holder.itemView.setOnClickListener {
 //      val details = DetailsFragment.newInstance()
@@ -74,12 +75,15 @@ class UpgradeAdapter(
 
     private var context: Context = itemView.context
 
-    fun upgradeListItem(updateModel: FeaturesModel) {
+    fun upgradeListItem(updateModel: FeaturesModel,activity: MarketPlaceActivity) {
+      val prefs = SharedPrefs(activity)
       val discount = 100 - updateModel.discount_percent
-      val price = (discount * updateModel.price) / 100
+      val price = if(prefs.getYearPricing()) ((discount * updateModel.price) / 100) * 12 else (discount * updateModel.price) / 100
       upgradeDetails.text = updateModel.name
       upgradePrice.text =
-        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
+        if(prefs.getYearPricing())
+          "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/year"
+        else "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
       if (updateModel.primary_image != null) {
         Glide.with(context).load(updateModel.primary_image).into(image)
       }

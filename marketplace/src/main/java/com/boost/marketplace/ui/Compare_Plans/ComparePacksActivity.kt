@@ -126,7 +126,7 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
 
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        packageAdaptor = ParentCompareItemAdapter(ArrayList(),this,this)
+        packageAdaptor = ParentCompareItemAdapter(ArrayList(),this,this,this)
         binding?.shimmerViewCompare?.startShimmer()
         WebEngageController.trackEvent(ADDONS_MARKETPLACE_COMPARE_PACKAGE_LOADED, PAGE_VIEW, NO_EVENT_VALUE)
         prefs = SharedPrefs(this)

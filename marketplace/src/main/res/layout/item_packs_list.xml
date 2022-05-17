@@ -65,6 +65,7 @@
                     android:gravity="center"
                     app:layout_constraintTop_toBottomOf="@id/title"
                     tools:text="60/month"
+                    android:visibility="gone"
                     android:textColor="@color/common_text_color"
                     android:textFontWeight="600"
                     android:textSize="@dimen/txt_12sp" />

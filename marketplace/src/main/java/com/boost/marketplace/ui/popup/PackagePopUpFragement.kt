@@ -124,7 +124,7 @@ class PackagePopUpFragement : DialogFragment(),AddonsListener {
                        parentViewHolder.ChildRecyclerView
                                .setLayoutManager(layoutManager1)*/
 
-                      val sectionLayout = CompareItemAdapter(it,this)
+                      val sectionLayout = CompareItemAdapter(it,this,null,null,requireActivity())
                       child_recyclerview.setAdapter(sectionLayout)
                       child_recyclerview.setLayoutManager(layoutManager1)
 
@@ -158,7 +158,7 @@ class PackagePopUpFragement : DialogFragment(),AddonsListener {
 
     package_addCartNew.setOnClickListener{
       //  package_addCartNew.background = ContextCompat.getDrawable(activity.application, R.drawable.button_added_to_cart)
-      package_addCartNew.setTextColor(context!!.getResources().getColor(R.color.tv_color_BB))
+      package_addCartNew.setTextColor(requireContext().getResources().getColor(R.color.tv_color_BB))
       package_addCartNew.setText("Added To Cart")
 //    homeListener.onPackageClicked(parentItem,parentViewHolder.package_profile_image_compare_new)
     }
@@ -251,7 +251,7 @@ class PackagePopUpFragement : DialogFragment(),AddonsListener {
 //                                            activity.application,
 //                                            R.drawable.added_to_cart_grey
 //                                    )
-              package_addCartNew.setTextColor(context!!.getResources().getColor(R.color.tv_color_BB))
+              package_addCartNew.setTextColor(requireContext().getResources().getColor(R.color.tv_color_BB))
               package_addCartNew.setText("Added To Cart")
             }
 //                                }
