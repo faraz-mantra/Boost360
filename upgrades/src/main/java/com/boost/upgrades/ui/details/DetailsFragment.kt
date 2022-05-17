@@ -41,6 +41,7 @@ import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.IMAGE_PREVIEW_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.WEB_VIEW_FRAGMENT
 import com.boost.upgrades.utils.Utils.priceCalculatorForYear
+import com.boost.upgrades.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.framework.analytics.SentryController
@@ -279,11 +280,7 @@ class DetailsFragment : BaseFragment("MarketPlaceDetailsFragment"), DetailsFragm
         add_item_to_cart.setTextColor(Color.WHITE)
         val discount = 100 - addonDetails!!.discount_percent
         val paymentPrice = priceCalculatorForYear((discount * addonDetails!!.price) / 100.0, addonDetails!!.widget_type, requireActivity())
-        money.text =
-          if(prefs.getYearPricing())
-            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/year"
-        else
-            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/month"
+        money.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + yearlyOrMonthlyOrEmptyValidity(addonDetails!!.widget_type, requireActivity())
 
         //hide or show MRP price
         val originalCost = priceCalculatorForYear(addonDetails!!.price, addonDetails!!.widget_type, requireActivity())
@@ -294,11 +291,7 @@ class DetailsFragment : BaseFragment("MarketPlaceDetailsFragment"), DetailsFragm
           orig_cost.visibility = View.INVISIBLE
         }
 
-        add_item_to_cart.text =
-          if(prefs.getYearPricing())
-            "Add for ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/Year"
-        else
-            "Add for ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/Month"
+        add_item_to_cart.text = "Add for ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + yearlyOrMonthlyOrEmptyValidity(addonDetails!!.widget_type, requireActivity())
         havent_bought_the_feature.visibility = View.VISIBLE
       } else {
         add_item_to_cart.visibility = View.GONE
@@ -313,11 +306,7 @@ class DetailsFragment : BaseFragment("MarketPlaceDetailsFragment"), DetailsFragm
   }
 
   fun spannableString(value: Double) {
-    val origCost: SpannableString
-    if(prefs.getYearPricing())
-     origCost = SpannableString("Original cost ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year")
-    else
-     origCost = SpannableString("Original cost ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
+    val origCost = SpannableString("Original cost ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + yearlyOrMonthlyOrEmptyValidity(addonDetails!!.widget_type, requireActivity()))
 
     origCost.setSpan(StrikethroughSpan(), 14, origCost.length, 0)
     orig_cost.text = origCost

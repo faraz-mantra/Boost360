@@ -268,4 +268,15 @@ object Utils {
     }
     return 1
   }
+
+  fun yearlyOrMonthlyOrEmptyValidity(widgetType: String = "", activity: Activity): String{
+    val prefs = SharedPrefs(activity)
+    if(widgetType.equals("RECHARGE") || widgetType.equals("ONE_TIME")){
+      return ""
+    } else if (prefs.getYearPricing()){
+      return "/year"
+    } else {
+      return "/month"
+    }
+  }
 }
