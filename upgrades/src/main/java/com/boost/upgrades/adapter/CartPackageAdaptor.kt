@@ -55,8 +55,8 @@ class CartPackageAdaptor(
     val selectedBundle = bundlesList.get(position)
 
     holder.name.text = selectedBundle.item_name
-    val price = if(prefs.getYearPricing()) selectedBundle.price * 12 else selectedBundle.price
-    val MRPPrice = if(prefs.getYearPricing()) selectedBundle.MRPPrice * 12 else selectedBundle.MRPPrice
+    val price = selectedBundle.price
+    val MRPPrice = selectedBundle.MRPPrice
     if (selectedBundle.min_purchase_months > 1) {
       if(prefs.getYearPricing())
         holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)

@@ -26,8 +26,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentListener, val activity: Activity) :
-  RecyclerView.Adapter<CartAddonsAdaptor.upgradeViewHolder>() {
+class CartOnetimeAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentListener, val activity: Activity) :
+  RecyclerView.Adapter<CartOnetimeAdaptor.upgradeViewHolder>() {
 
   private var list = ArrayList<CartModel>()
   private lateinit var context: Context
@@ -56,13 +56,9 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
     holder.title.text = list.get(position).item_name
     val price = list.get(position).price * list.get(position).min_purchase_months
     val MRPPrice = list.get(position).MRPPrice * list.get(position).min_purchase_months
-    holder.price.text =
-      if(prefs.getYearPricing())
-      "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/year"
-    else
-        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
+    holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price)
     if (price != MRPPrice) {
-      spannableString(holder, MRPPrice, list.get(position).min_purchase_months)
+      spannableString(holder, MRPPrice)
       holder.MRPPrice.visibility = View.VISIBLE
     } else {
       holder.MRPPrice.visibility = View.GONE
@@ -109,25 +105,10 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
     }
   }
 
-  fun spannableString(holder: upgradeViewHolder, value: Double, minMonth: Int) {
-    val prefs = SharedPrefs(activity)
-    val origCost: SpannableString
-    if (minMonth > 1) {
-      val originalCost = value
-      origCost =
-        if(prefs.getYearPricing())
-          SpannableString(
-        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-          .format(originalCost) + "/year")
-      else
-          SpannableString(
-            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-              .format(originalCost) + "/" + minMonth + "months")
-    } else {
-      origCost = SpannableString(
-        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month"
+  fun spannableString(holder: upgradeViewHolder, value: Double) {
+    val origCost = SpannableString(
+        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value)
       )
-    }
 
     origCost.setSpan(
       StrikethroughSpan(),
