@@ -9,6 +9,8 @@ import com.framework.models.BaseViewModel
 
 class BusinessVerificationUnderwaySheet : BaseBottomSheetDialog<SheetBusinessVerificationUnderwayBinding, BaseViewModel>() {
 
+  lateinit var onSubmitClick:(Unit)->Unit
+
   override fun getLayout(): Int {
     return R.layout.sheet_business_verification_underway
   }
@@ -18,8 +20,10 @@ class BusinessVerificationUnderwaySheet : BaseBottomSheetDialog<SheetBusinessVer
   }
 
   companion object{
-    fun newInstance():BusinessVerificationUnderwaySheet{
-      return BusinessVerificationUnderwaySheet()
+    fun newInstance(onSubmitClickParam:(Unit)->Unit):BusinessVerificationUnderwaySheet{
+      return BusinessVerificationUnderwaySheet().apply {
+        onSubmitClick=onSubmitClickParam
+      }
     }
   }
   override fun onCreateView() {
@@ -31,6 +35,7 @@ class BusinessVerificationUnderwaySheet : BaseBottomSheetDialog<SheetBusinessVer
     when(v){
       binding?.btnSubmitSubmit->{
         dismiss()
+        onSubmitClick.invoke(Unit)
       }
     }
   }
