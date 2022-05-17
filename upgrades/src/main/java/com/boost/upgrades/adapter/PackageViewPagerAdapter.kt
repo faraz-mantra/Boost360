@@ -16,6 +16,7 @@ import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.interfaces.HomeListener
 import com.boost.upgrades.utils.SharedPrefs
+import com.boost.upgrades.utils.Utils
 import com.bumptech.glide.Glide
 import com.framework.utils.RootUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -119,23 +120,21 @@ class PackageViewPagerAdapter(
                                     for (singleItem in it) {
                                         for (item in bundles.included_features) {
                                             if (singleItem.feature_code == item.feature_code) {
-                                                originalBundlePrice += RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),2) * minMonth
+                                                originalBundlePrice += Utils.priceCalculatorForYear(RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),2) * minMonth, singleItem.widget_type, activity)
                                             }
                                         }
                                     }
 
                                     if(bundles.overall_discount_percent > 0){
-                                        offeredBundlePrice = (RootUtil.round(originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100),2))
-                                        if(prefs.getYearPricing())
-                                            offeredBundlePrice = offeredBundlePrice * 12
+                                        offeredBundlePrice = (RootUtil.round(originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100.0),2))
+//                                        if(prefs.getYearPricing())
+//                                            offeredBundlePrice = Utils.priceCalculatorForYear(offeredBundlePrice, "", activity)
                                         holder.bundleDiscount.visibility = View.VISIBLE
                                         holder.bundlePriceLabel.visibility = View.GONE
                                         holder.bundleDiscount.setText(bundles.overall_discount_percent.toString() + "%")
                                     } else {
-                                        if(prefs.getYearPricing())
-                                            offeredBundlePrice = originalBundlePrice * 12
-                                        else
-                                            offeredBundlePrice = originalBundlePrice
+                                        offeredBundlePrice = originalBundlePrice
+//                                        offeredBundlePrice = Utils.priceCalculatorForYear( originalBundlePrice,"",activity)
                                         holder.bundleDiscount.visibility = View.GONE
                                         holder.bundlePriceLabel.visibility = View.VISIBLE
                                     }
@@ -150,7 +149,7 @@ class PackageViewPagerAdapter(
                                                     NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
                                                     "/" + bundles.min_purchase_months + "mths")
                                         if (offeredBundlePrice != originalBundlePrice) {
-                                            spannableString(holder, if(prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice, bundles.min_purchase_months)
+                                            spannableString(holder, originalBundlePrice, bundles.min_purchase_months)
                                             holder.origCost.visibility = View.VISIBLE
                                         } else {
                                             holder.origCost.visibility = View.GONE
@@ -165,7 +164,7 @@ class PackageViewPagerAdapter(
                                                     NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)
                                                     + "/mth")
                                         if (offeredBundlePrice != originalBundlePrice) {
-                                            spannableString(holder, if(prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice, 1)
+                                            spannableString(holder, originalBundlePrice, 1)
                                             holder.origCost.visibility = View.VISIBLE
                                         } else {
                                             holder.origCost.visibility = View.GONE

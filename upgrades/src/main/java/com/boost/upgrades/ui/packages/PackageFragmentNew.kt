@@ -28,10 +28,7 @@ import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.ui.cart.CartFragment
-import com.boost.upgrades.utils.CircleAnimationUtil
-import com.boost.upgrades.utils.Constants
-import com.boost.upgrades.utils.SharedPrefs
-import com.boost.upgrades.utils.WebEngageController
+import com.boost.upgrades.utils.*
 import com.bumptech.glide.Glide
 import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
@@ -203,7 +200,11 @@ class PackageFragmentNew : BaseFragment("MarketPlacePackageFragmentNew") {
                 for (singleItem in it) {
                     for (item in bundleData!!.included_features) {
                         if (singleItem.feature_code == item.feature_code) {
-                            bundleMonthlyMRP += RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),2)
+                            bundleMonthlyMRP += Utils.priceCalculatorForYear(
+                                RootUtil.round(
+                                    (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
+                                    2
+                                ), singleItem.widget_type, requireActivity())
                         }
                     }
                 }
@@ -222,11 +223,11 @@ class PackageFragmentNew : BaseFragment("MarketPlacePackageFragmentNew") {
 
                 if (minMonth > 1) {
                     if (prefs.getYearPricing())
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice * 12) + "/year")
+                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/year")
                     else
                         offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/" + bundleData!!.min_purchase_months + "mths")
                     if (offeredBundlePrice != originalBundlePrice) {
-                        spannableString(if (prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice, minMonth)
+                        spannableString(originalBundlePrice, minMonth)
 //                        orig_cost.visibility = View.VISIBLE
                     } else {
 //                        orig_cost.visibility = View.GONE
@@ -235,11 +236,11 @@ class PackageFragmentNew : BaseFragment("MarketPlacePackageFragmentNew") {
                     updatePackageRecycler(it,bundleData!!.min_purchase_months!!)
                 } else {
                     if (prefs.getYearPricing())
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice * 12) + "/year")
+                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/year")
                     else
                         offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/mth")
                     if (offeredBundlePrice != originalBundlePrice) {
-                        spannableString(if (prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice, 1)
+                        spannableString(originalBundlePrice, 1)
 //                        orig_cost.visibility = View.VISIBLE
                     } else {
 //                        orig_cost.visibility = View.GONE
