@@ -40,6 +40,7 @@ import com.boost.upgrades.utils.*
 import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.IMAGE_PREVIEW_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.WEB_VIEW_FRAGMENT
+import com.boost.upgrades.utils.Utils.priceCalculatorForYear
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.framework.analytics.SentryController
@@ -165,7 +166,7 @@ class DetailsFragment : BaseFragment("MarketPlaceDetailsFragment"), DetailsFragm
 
           makeFlyAnimation(image1222Copy)
 
-          viewModel.addItemToCart1(addonDetails!!)
+          viewModel.addItemToCart1(addonDetails!!, requireActivity())
           val event_attributes: HashMap<String, Any> = HashMap()
           addonDetails!!.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
           event_attributes.put("Addon Price", addonDetails!!.price)
@@ -277,7 +278,7 @@ class DetailsFragment : BaseFragment("MarketPlaceDetailsFragment"), DetailsFragm
         )
         add_item_to_cart.setTextColor(Color.WHITE)
         val discount = 100 - addonDetails!!.discount_percent
-        val paymentPrice = if(prefs.getYearPricing()) ((discount * addonDetails!!.price) / 100) * 12 else (discount * addonDetails!!.price) / 100
+        val paymentPrice = priceCalculatorForYear((discount * addonDetails!!.price) / 100.0, addonDetails!!.widget_type, requireActivity())
         money.text =
           if(prefs.getYearPricing())
             "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/year"
@@ -285,7 +286,7 @@ class DetailsFragment : BaseFragment("MarketPlaceDetailsFragment"), DetailsFragm
             "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/month"
 
         //hide or show MRP price
-        val originalCost = if(prefs.getYearPricing()) (addonDetails!!.price * 12) else addonDetails!!.price
+        val originalCost = priceCalculatorForYear(addonDetails!!.price, addonDetails!!.widget_type, requireActivity())
         if (paymentPrice != originalCost) {
           orig_cost.visibility = View.VISIBLE
           spannableString(originalCost)
@@ -311,7 +312,7 @@ class DetailsFragment : BaseFragment("MarketPlaceDetailsFragment"), DetailsFragm
     }
   }
 
-  fun spannableString(value: Int) {
+  fun spannableString(value: Double) {
     val origCost: SpannableString
     if(prefs.getYearPricing())
      origCost = SpannableString("Original cost ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year")
@@ -535,7 +536,7 @@ class DetailsFragment : BaseFragment("MarketPlaceDetailsFragment"), DetailsFragm
     imagePreviewPopUpFragement.show((activity as UpgradeActivity).supportFragmentManager, IMAGE_PREVIEW_POPUP_FRAGMENT)
   }
 
-  private fun getDiscountedPrice(price: Int, discountPercent: Int): Int {
+  private fun getDiscountedPrice(price: Double, discountPercent: Int): Double {
     return price - ((discountPercent / 100) * price)
   }
 

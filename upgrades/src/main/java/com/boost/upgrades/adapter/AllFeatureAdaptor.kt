@@ -1,6 +1,5 @@
 package com.boost.upgrades.adapter
 
-import android.app.ActionBar
 import android.content.Context
 import android.graphics.Paint
 import android.os.Bundle
@@ -13,7 +12,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
@@ -21,6 +19,7 @@ import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.boost.upgrades.utils.SharedPrefs
+import com.boost.upgrades.utils.Utils.priceCalculatorForYear
 import com.bumptech.glide.Glide
 import java.text.NumberFormat
 import java.util.*
@@ -114,7 +113,7 @@ class AllFeatureAdaptor(
     fun upgradeListItem(updateModel: FeaturesModel, subscribedStatus: ArrayList<String>, activity: UpgradeActivity) {
       val prefs = SharedPrefs(activity)
       val discount = 100 - updateModel.discount_percent
-      val price = if(prefs.getYearPricing()) ((discount * updateModel.price) / 100) * 12 else (discount * updateModel.price) / 100
+      val price = priceCalculatorForYear((discount * updateModel.price) / 100, updateModel.widget_type, activity)
       upgradeTitle.text = updateModel.target_business_usecase
       upgradeDetails.text = updateModel.name
 
@@ -141,7 +140,7 @@ class AllFeatureAdaptor(
       if (updateModel.discount_percent > 0) {
         upgradeDiscount.visibility = View.VISIBLE
         upgradeDiscount.text = "" + updateModel.discount_percent + "%"
-        val mrpPrice = if(prefs.getYearPricing()) updateModel.price * 12 else updateModel.price
+        val mrpPrice = priceCalculatorForYear(updateModel.price, updateModel.widget_type, activity)
         upgradeMRP.text =
           if(prefs.getYearPricing())
           "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(mrpPrice) + "/year"
