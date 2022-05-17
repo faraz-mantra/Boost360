@@ -43,7 +43,7 @@ class BusinessVerificationFragment :
     super.onCreateView()
     setOnClickListener(binding?.uploadImageView,
       binding?.btnRetakePanImage,binding?.btnSubmit,
-    binding?.rGst,binding?.rNotRegisterGst)
+    binding?.rGst,binding?.rNotRegisterGst,binding?.rcmWhat)
     viewListeners()
   }
 
@@ -71,6 +71,9 @@ class BusinessVerificationFragment :
       binding?.btnSubmit->{
 
         submitVerificationData()
+      }
+      binding?.rcmWhat->{
+        RcmHelpSheet.newInstance().show(parentFragmentManager,RcmHelpSheet::class.java.name)
       }
     }
   }
@@ -109,7 +112,7 @@ class BusinessVerificationFragment :
     }
 
     if (isRegGst&&gstin.isNullOrEmpty()){
-      binding?.edtNameOnPanCard?.error = getString(R.string.mandatory_field)
+      binding?.edtGstinName?.error = getString(R.string.mandatory_field)
       return
     }
 
@@ -143,7 +146,7 @@ class BusinessVerificationFragment :
 
     val fileName = panImgUri?.getFileName(true)
     val fileExt = if (fileName?.lastIndexOf(".")?:-1>=0) fileName?.substring(
-      fileName.lastIndexOf("."),fileName.length-1) else null
+      fileName.lastIndexOf(".")+1,fileName.length) else null
 
     if (fileExt==null){
       showLongToast(getString(R.string.unsupported_file))
@@ -152,7 +155,7 @@ class BusinessVerificationFragment :
 
     val panGstUpdateBody = PanGstUpdateBody(clientId,sessionLocal.fPID!!,
       GSTDetails(sessionLocal.fpTag,isRegGst,null,null,null,gstin,rcm),
-      PanDetails(panImgBase64,fileName,fileExt,panName,pan)
+      PanDetails(panImgBase64,"pan",fileExt,panName,pan)
     )
 
     showProgress()
@@ -160,7 +163,9 @@ class BusinessVerificationFragment :
     viewModel?.panGstUpdate(panGstUpdateBody)?.observe(viewLifecycleOwner){
       hideProgress()
       if (it.isSuccess()){
-        BusinessVerificationUnderwaySheet.newInstance()
+        BusinessVerificationUnderwaySheet.newInstance{
+          activity?.finish()
+        }
           .show(parentFragmentManager,BusinessVerificationUnderwaySheet::class.java.name)
       }else{
         showLongToast(getString(R.string.something_went_wrong))

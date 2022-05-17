@@ -281,6 +281,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="@string/what_s_this_n"
+                  android:id="@+id/rcm_what"
                   android:textColor="@color/black_4a4a4a"
                   app:textType="HEADING_6" />
             </androidx.appcompat.widget.LinearLayoutCompat>

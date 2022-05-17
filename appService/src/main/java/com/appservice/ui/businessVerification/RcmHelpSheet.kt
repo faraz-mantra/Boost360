@@ -23,14 +23,20 @@ class RcmHelpSheet : BaseBottomSheetDialog<RcmHelpSheetBinding, BaseViewModel>()
       return RcmHelpSheet()
     }
   }
+
+
   override fun onCreateView() {
-    setOnClickListener(binding?.btnSubmitSubmit)
+    setOnClickListener(binding?.btnSubmitSubmit,binding?.ivClose)
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when(v){
       binding?.btnSubmitSubmit->{
+        dismiss()
+      }
+
+      binding?.ivClose->{
         dismiss()
       }
     }
