@@ -19,6 +19,7 @@ import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.boost.upgrades.utils.SharedPrefs
+import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.Utils.priceCalculatorForYear
 import com.bumptech.glide.Glide
 import java.text.NumberFormat
@@ -122,11 +123,7 @@ class AllFeatureAdaptor(
         upgradeSubscribedStatus.visibility = View.GONE
       }
       if (price > 0) {
-        upgradePrice.text =
-          if(prefs.getYearPricing())
-          "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/year"
-        else
-          "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
+        upgradePrice.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + Utils.yearlyOrMonthlyOrEmptyValidity(updateModel.widget_type, activity)
         pricingLayout.visibility = View.VISIBLE
 //                upgradeSubscribedStatus.visibility = View.GONE
       } else {
@@ -141,11 +138,7 @@ class AllFeatureAdaptor(
         upgradeDiscount.visibility = View.VISIBLE
         upgradeDiscount.text = "" + updateModel.discount_percent + "%"
         val mrpPrice = priceCalculatorForYear(updateModel.price, updateModel.widget_type, activity)
-        upgradeMRP.text =
-          if(prefs.getYearPricing())
-          "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(mrpPrice) + "/year"
-        else
-            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(mrpPrice) + "/month"
+        upgradeMRP.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(mrpPrice) + Utils.yearlyOrMonthlyOrEmptyValidity(updateModel.widget_type, activity)
         upgradeMRP.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
       } else {
         upgradeDiscount.visibility = View.GONE
