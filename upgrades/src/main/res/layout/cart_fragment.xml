@@ -380,6 +380,7 @@
                         android:paddingEnd="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
                         android:text="Validity based items"
+                        android:textAllCaps="true"
                         android:textColor="@color/common_text_color"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
