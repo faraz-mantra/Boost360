@@ -33,7 +33,7 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
     var allAvailableFeaturesDownloadResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
-    var _totalActiveAddonsCount: MutableLiveData<Int> = MutableLiveData()
+//    var _totalActiveAddonsCount: MutableLiveData<Int> = MutableLiveData()
     var allBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
     var allFeatureDealsResult: MutableLiveData<List<FeatureDeals>> = MutableLiveData()
     var allVideoDetails: MutableLiveData<List<YoutubeVideoModel>> = MutableLiveData()
@@ -111,9 +111,9 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
         return feedbackLink
     }
 
-    fun getTotalActiveWidgetCount(): LiveData<Int> {
-        return _totalActiveAddonsCount
-    }
+//    fun getTotalActiveWidgetCount(): LiveData<Int> {
+//        return _totalActiveAddonsCount
+//    }
 
     fun cartResult(): LiveData<List<CartModel>> {
         return cartResult
@@ -263,22 +263,22 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                                                 .observe(lifecycleOwner, Observer {
                                                     val response1 =
                                                         it as? GetFloatingPointWebWidgetsResponse
-                                                    CompositeDisposable().add(
-                                                        AppDatabase.getInstance(application)!!
-                                                            .featuresDao()
-                                                            .getallActivefeatureCount(response1!!.Result)
-                                                            .subscribeOn(Schedulers.io())
-                                                            .observeOn(AndroidSchedulers.mainThread())
-                                                            .doOnSuccess {
-                                                                _totalActiveAddonsCount.postValue(
-                                                                    it
-                                                                )
-                                                            }
-                                                            .doOnError {
-                                                                updatesError.postValue(it.message)
-                                                            }
-                                                            .subscribe()
-                                                    )
+//                                                    CompositeDisposable().add(
+//                                                        AppDatabase.getInstance(application)!!
+//                                                            .featuresDao()
+//                                                            .getallActivefeatureCount(response1!!.Result)
+//                                                            .subscribeOn(Schedulers.io())
+//                                                            .observeOn(AndroidSchedulers.mainThread())
+//                                                            .doOnSuccess {
+//                                                                _totalActiveAddonsCount.postValue(
+//                                                                    it
+//                                                                )
+//                                                            }
+//                                                            .doOnError {
+//                                                                updatesError.postValue(it.message)
+//                                                            }
+//                                                            .subscribe()
+//                                                    )
                                                 }
                                                 )
                                         }

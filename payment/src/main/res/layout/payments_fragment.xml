@@ -48,7 +48,8 @@
                 android:fontFamily="@font/semi_bold"
                 android:text="Payment Summary"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_11sdp"
+                android:textFontWeight="700"
+                android:textSize="@dimen/txt_16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/payment_toolbar_dummy_view"
                 app:layout_constraintStart_toEndOf="@id/back_button"
@@ -99,16 +100,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/pad_15dp"
+                    android:fontFamily="@font/regular"
                     android:paddingTop="4dp"
                     android:paddingBottom="5dp"
-                    android:fontFamily="@font/regular"
-                    android:textSize="@dimen/txt_12sp"
-                    android:textFontWeight="600"
-                    tools:text="fnkjsnfks"
-                    app:layout_constraintBottom_toTopOf="@id/auto_renew_extra_offers"
                     android:textColor="@color/common_text_color"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/txt_12sp"
+                    app:layout_constraintBottom_toTopOf="@id/auto_renew_extra_offers"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="fnkjsnfks" />
 
                 <ImageView
                     android:id="@+id/auto_renew_switch"
@@ -131,17 +132,17 @@
                     android:drawableStart="@drawable/ic_discount"
                     android:drawablePadding="@dimen/pad_5dp"
                     android:fontFamily="@font/regular"
-                    android:textFontWeight="600"
                     android:gravity="center_vertical"
                     android:paddingStart="5dp"
                     android:paddingTop="11dp"
                     android:paddingEnd="5dp"
                     android:paddingBottom="6dp"
-                    android:visibility="gone"
-                    tools:visibility="visible"
                     android:text="Enable auto-renewal to get extra 3% off"
+                    android:textFontWeight="600"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/auto_renew_title" />
+                    app:layout_constraintTop_toBottomOf="@id/auto_renew_title"
+                    tools:visibility="visible" />
 
 
                 <TextView
@@ -150,10 +151,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="@dimen/_6dp"
-                    android:textFontWeight="700"
-                    android:textSize="@dimen/txt_12sp"
                     android:drawableStart="@drawable/ic_calendar_auto_renew"
                     android:drawablePadding="@dimen/_5sdp"
+                    android:textFontWeight="700"
+                    android:textSize="@dimen/txt_12sp"
                     app:layout_constraintTop_toBottomOf="@id/auto_renew_extra_offers" />
 
                 <com.airbnb.lottie.LottieAnimationView
@@ -161,9 +162,9 @@
                     android:layout_width="100dp"
                     android:layout_height="0dp"
                     android:layout_gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:lottie_rawRes="@raw/congratulation_autorenew" />
 
 
@@ -195,6 +196,8 @@
                     android:text="Business Details"
                     android:textAllCaps="true"
                     android:textColor="@color/common_text_color"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/txt_14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -250,12 +253,13 @@
                         android:id="@+id/business_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
                         android:paddingStart="16dp"
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
-                        android:fontFamily="@font/regular"
                         android:text="Business name"
-                        android:textColor="@color/common_text_color" />
+                        android:textColor="@color/common_text_color"
+                        android:textFontWeight="400" />
 
                     <TextView
                         android:id="@+id/business_name_value"
@@ -268,7 +272,8 @@
                         android:gravity="end"
                         android:padding="@dimen/_5sdp"
                         android:text="Modern SPA"
-                        android:textColor="@color/common_text_color" />
+                        android:textColor="@color/common_text_color"
+                        android:textFontWeight="600" />
 
                     <TextView
                         android:id="@+id/business_name_missing"
@@ -280,6 +285,7 @@
                         android:text="Missing"
                         android:textAllCaps="true"
                         android:textColor="@color/global_red"
+                        android:textFontWeight="600"
                         android:textSize="@dimen/txt_12sp"
                         android:visibility="gone" />
 
@@ -288,12 +294,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/business_name_value"
-                    android:fontFamily="@font/regular"
+                        android:fontFamily="@font/regular"
                         android:paddingStart="16dp"
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
                         android:text="GSTIN"
-                        android:textColor="@color/common_text_color" />
+                        android:textColor="@color/common_text_color"
+                        android:textFontWeight="400" />
 
                     <TextView
                         android:id="@+id/business_gstin_value"
@@ -307,7 +314,8 @@
                         android:gravity="end"
                         android:padding="@dimen/_5sdp"
                         android:text="22AAAAA****A1Z5"
-                        android:textColor="@color/common_text_color" />
+                        android:textColor="@color/common_text_color"
+                        android:textFontWeight="600" />
 
                     <TextView
                         android:id="@+id/business_gstin_missing"
@@ -320,6 +328,7 @@
                         android:text="Missing"
                         android:textAllCaps="true"
                         android:textColor="@color/global_red"
+                        android:textFontWeight="600"
                         android:textSize="@dimen/txt_12sp"
                         android:visibility="gone" />
 
@@ -333,7 +342,8 @@
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
                         android:text="Email ID"
-                        android:textColor="@color/common_text_color" />
+                        android:textColor="@color/common_text_color"
+                        android:textFontWeight="400" />
 
                     <TextView
                         android:id="@+id/business_email_value"
@@ -347,7 +357,8 @@
                         android:gravity="end"
                         android:padding="@dimen/_5sdp"
                         android:text="hello@nowfloats.com"
-                        android:textColor="@color/common_text_color" />
+                        android:textColor="@color/common_text_color"
+                        android:textFontWeight="600" />
 
                     <TextView
                         android:id="@+id/business_email_missing"
@@ -360,6 +371,7 @@
                         android:text="Missing"
                         android:textAllCaps="true"
                         android:textColor="@color/global_red"
+                        android:textFontWeight="600"
                         android:textSize="@dimen/txt_12sp"
                         android:visibility="gone" />
 
@@ -373,7 +385,8 @@
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
                         android:text="Contact no."
-                        android:textColor="@color/common_text_color" />
+                        android:textColor="@color/common_text_color"
+                        android:textFontWeight="400" />
 
                     <TextView
                         android:id="@+id/business_mobile_value"
@@ -387,7 +400,8 @@
                         android:gravity="end"
                         android:padding="@dimen/_5sdp"
                         android:text="+1235678905"
-                        android:textColor="@color/common_text_color" />
+                        android:textColor="@color/common_text_color"
+                        android:textFontWeight="600" />
 
                     <TextView
                         android:id="@+id/business_mobile_missing"
@@ -400,6 +414,7 @@
                         android:text="Missing"
                         android:textAllCaps="true"
                         android:textColor="@color/global_red"
+                        android:textFontWeight="600"
                         android:textSize="@dimen/txt_12sp"
                         android:visibility="gone" />
 
@@ -413,7 +428,8 @@
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
                         android:text="Place of supply"
-                        android:textColor="@color/common_text_color" />
+                        android:textColor="@color/common_text_color"
+                        android:textFontWeight="400" />
 
                     <TextView
                         android:id="@+id/business_supply_place_value"
@@ -429,7 +445,8 @@
                         android:gravity="end"
                         android:padding="@dimen/_5sdp"
                         android:text="Telangana"
-                        android:textColor="@color/common_text_color" />
+                        android:textColor="@color/common_text_color"
+                        android:textFontWeight="600" />
 
                     <TextView
                         android:id="@+id/business_supply_place_missing"
@@ -442,6 +459,7 @@
                         android:text="Missing"
                         android:textAllCaps="true"
                         android:textColor="@color/global_red"
+                        android:textFontWeight="600"
                         android:textSize="@dimen/txt_12sp"
                         android:visibility="gone" />
 
@@ -455,7 +473,8 @@
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
                         android:text="Business address"
-                        android:textColor="@color/common_text_color" />
+                        android:textColor="@color/common_text_color"
+                        android:textFontWeight="400" />
 
                     <TextView
                         android:id="@+id/business_address_value"
@@ -472,7 +491,8 @@
                         android:gravity="end"
                         android:padding="@dimen/_5sdp"
                         android:text="Sample address"
-                        android:textColor="@color/common_text_color" />
+                        android:textColor="@color/common_text_color"
+                        android:textFontWeight="600" />
 
                     <TextView
                         android:id="@+id/business_address_missing"
@@ -613,39 +633,39 @@
                     android:id="@+id/ll1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
-
-                <TextView
-                    android:id="@+id/payment_subscription_details_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:fontFamily="@font/semi_bold"
-                    android:paddingStart="@dimen/_5sdp"
-                    android:paddingTop="16dp"
-                    android:paddingEnd="@dimen/_5sdp"
-                    android:paddingBottom="12dp"
-                    android:textFontWeight="600"
-                    android:text="PAYABLE AMOUNT: ₹4,399"
-                    android:textAllCaps="true"
-                    android:textSize="@dimen/txt_14sp"
-                    android:textColor="@color/black"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/arw1"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:padding="8dp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:src="@drawable/ic_top_arrow_black"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/payment_subscription_details_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:fontFamily="@font/semi_bold"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingTop="16dp"
+                        android:paddingEnd="@dimen/_5sdp"
+                        android:paddingBottom="12dp"
+                        android:text="PAYABLE AMOUNT: ₹4,399"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textFontWeight="600"
+                        android:textSize="@dimen/txt_14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/arw1"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_top_arrow_black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -653,236 +673,234 @@
                     android:id="@+id/clp1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ll1">
 
-                <View
-                    android:id="@+id/divider"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="#80A3A3A3"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
-
-                <RelativeLayout
-                    android:id="@+id/payment_subscription_full_amount_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/payment_amount_title"
+                    <View
+                        android:id="@+id/divider"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/regular"
-                        android:paddingStart="@dimen/_5sdp"
-                        android:paddingEnd="@dimen/_5sdp"
-                        android:paddingBottom="@dimen/_1sdp"
-                        android:text="Cart total (3 items)"
-                        android:textColor="@color/payment_title_color"
-                        android:textFontWeight="600"
-                        android:textSize="@dimen/txt_12sp" />
-
-                    <TextView
-                        android:id="@+id/gst_discount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/payment_amount_title"
-                        android:drawableEnd="@drawable/ic_gst_text_info_grey"
-                        android:drawablePadding="@dimen/_5sdp"
-                        android:fontFamily="@font/regular"
-                        android:paddingStart="@dimen/_5sdp"
-                        android:text="(includes 18% GST)"
-                        android:textColor="@color/payment_green"
-                        android:textFontWeight="400"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/payment_amount_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:fontFamily="@font/semi_bold"
-                        android:paddingEnd="@dimen/pad_5dp"
-                        android:text="₹900"
-                        android:textColor="@color/payment_title_color"
-                        android:textFontWeight="600"
-                        android:textSize="@dimen/txt_12sp" />
-
-                    <TextView
-                        android:id="@+id/long_validity_discount_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/gst_discount"
-                        android:fontFamily="@font/regular"
-                        android:padding="8dp"
-                        android:text="Long validity discount (2%)"
-                        android:textColor="@color/green"
-                        android:textFontWeight="400"
-                        android:textSize="@dimen/txt_12sp" />
-
-                    <TextView
-                        android:id="@+id/long_validity_discount_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/gst_discount"
-                        android:layout_alignParentEnd="true"
-                        android:fontFamily="@font/regular"
-                        android:padding="@dimen/pad_8dp"
-                        android:text="0"
-                        android:textColor="@color/green"
-                        android:textFontWeight="600"
-                        android:textSize="@dimen/txt_12sp" />
-
-                    <TextView
-                        android:id="@+id/coupon_discount_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/long_validity_discount_title"
-                        android:fontFamily="@font/regular"
-                        android:paddingStart="@dimen/_5sdp"
-                        android:paddingEnd="@dimen/_5sdp"
-                        android:paddingBottom="8dp"
-                        android:text="‘FESTIVE’ coupon discount"
-                        android:textColor="@color/green"
-                        android:textFontWeight="400"
-                        android:textSize="@dimen/txt_12sp" />
-
-                    <TextView
-                        android:id="@+id/coupon_discount_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/long_validity_discount_value"
-                        android:layout_alignParentEnd="true"
-                        android:fontFamily="@font/regular"
-                        android:paddingStart="@dimen/_5sdp"
-                        android:paddingEnd="@dimen/_5sdp"
-                        android:paddingBottom="8dp"
-                        android:text="₹36"
-                        android:textColor="@color/green"
-                        android:textFontWeight="600"
-                        android:textSize="@dimen/txt_12sp" />
-
-                    <TextView
-                        android:id="@+id/feature_validity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/coupon_discount_title"
-                        android:fontFamily="@font/regular"
-                        android:paddingStart="@dimen/_5sdp"
-                        android:paddingEnd="@dimen/_5sdp"
-                        android:paddingBottom="8dp"
-                        android:text="Feature validity"
-                        android:textColor="@color/body_grey"
-                        android:textFontWeight="400"
-                        android:textSize="@dimen/txt_12sp" />
-
-                    <TextView
-                        android:id="@+id/validity_months"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/coupon_discount_value"
-                        android:layout_alignParentEnd="true"
-                        android:fontFamily="@font/regular"
-                        android:paddingStart="@dimen/_5sdp"
-                        android:paddingEnd="@dimen/_5sdp"
-                        android:paddingBottom="8dp"
-                        android:text="3 Months"
-                        android:textColor="@color/payment_title_color"
-                        android:textFontWeight="600"
-                        android:textSize="@dimen/txt_12sp" />
-
-
-                    <TextView
-                        android:id="@+id/validity_period"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/feature_validity"
-                        android:fontFamily="@font/regular"
-                        android:paddingStart="@dimen/_5sdp"
-                        android:paddingEnd="@dimen/_5sdp"
-                        android:text="Validity period"
-                        android:textColor="@color/body_grey"
-                        android:textFontWeight="400"
-                        android:textSize="@dimen/txt_12sp" />
-
-                    <TextView
-                        android:id="@+id/validity_period_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/validity_months"
-                        android:layout_alignParentEnd="true"
-                        android:fontFamily="@font/semi_bold"
-                        android:paddingStart="@dimen/_5sdp"
-                        android:paddingEnd="@dimen/_5sdp"
-                        android:text="17 Nov ‘21 - 16 Feb ‘22"
-                        android:textColor="@color/payment_title_color"
-                        android:textFontWeight="600"
-                        android:textSize="@dimen/txt_12sp" />
-
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="#80A3A3A3"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/payment_subscription_full_amount_layout" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginTop="12dp"
-                    android:paddingBottom="12dp"
-                    android:paddingStart="@dimen/_5sdp"
-                    android:paddingEnd="@dimen/_5sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/payment_subscription_full_amount_layout">
-
-                    <TextView
-                        android:id="@+id/payment_total_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/bold"
-                        android:text="Payable amount"
-                        android:textColor="#323232"
-                        android:textSize="@dimen/txt_12sp"
-                        android:textFontWeight="700"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="#80A3A3A3"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/payment_total_value"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:id="@+id/payment_subscription_full_amount_layout"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/bold"
-                        android:text="₹900"
-                        android:textColor="#323232"
-                        android:textSize="@dimen/txt_12sp"
-                        android:textFontWeight="700"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/payment_amount_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/semi_bold"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:paddingBottom="@dimen/_1sdp"
+                            android:text="Cart total (3 items)"
+                            android:textColor="@color/payment_title_color"
+                            android:textFontWeight="600"
+                            android:textSize="@dimen/txt_12sp" />
+
+                        <TextView
+                            android:id="@+id/gst_discount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/payment_amount_title"
+                            android:drawableEnd="@drawable/ic_gst_text_info_grey"
+                            android:drawablePadding="@dimen/_5sdp"
+                            android:fontFamily="@font/regular"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:text="(includes 18% GST)"
+                            android:textColor="@color/payment_green"
+                            android:textFontWeight="400"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/payment_amount_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/semi_bold"
+                            android:paddingEnd="@dimen/pad_5dp"
+                            android:text="₹900"
+                            android:textColor="@color/payment_title_color"
+                            android:textFontWeight="600"
+                            android:textSize="@dimen/txt_12sp" />
+
+                        <TextView
+                            android:id="@+id/long_validity_discount_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/gst_discount"
+                            android:fontFamily="@font/regular"
+                            android:padding="8dp"
+                            android:text="Long validity discount (2%)"
+                            android:textColor="@color/green"
+                            android:textFontWeight="400"
+                            android:textSize="@dimen/txt_12sp" />
+
+                        <TextView
+                            android:id="@+id/long_validity_discount_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/gst_discount"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/semi_bold"
+                            android:padding="@dimen/pad_8dp"
+                            android:text="0"
+                            android:textColor="@color/green"
+                            android:textFontWeight="600"
+                            android:textSize="@dimen/txt_12sp" />
+
+                        <TextView
+                            android:id="@+id/coupon_discount_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/long_validity_discount_title"
+                            android:fontFamily="@font/regular"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:paddingBottom="8dp"
+                            android:text="‘FESTIVE’ coupon discount"
+                            android:textColor="@color/green"
+                            android:textFontWeight="400"
+                            android:textSize="@dimen/txt_12sp" />
+
+                        <TextView
+                            android:id="@+id/coupon_discount_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/long_validity_discount_value"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/semi_bold"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:paddingBottom="8dp"
+                            android:text="₹36"
+                            android:textColor="@color/green"
+                            android:textFontWeight="600"
+                            android:textSize="@dimen/txt_12sp" />
+
+                        <TextView
+                            android:id="@+id/feature_validity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/coupon_discount_title"
+                            android:fontFamily="@font/regular"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:paddingBottom="8dp"
+                            android:text="Feature validity"
+                            android:textColor="@color/body_grey"
+                            android:textFontWeight="400"
+                            android:textSize="@dimen/txt_12sp" />
+
+                        <TextView
+                            android:id="@+id/validity_months"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/coupon_discount_value"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/semi_bold"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:paddingBottom="8dp"
+                            android:text="3 Months"
+                            android:textColor="@color/payment_title_color"
+                            android:textFontWeight="600"
+                            android:textSize="@dimen/txt_12sp" />
+
+
+                        <TextView
+                            android:id="@+id/validity_period"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/feature_validity"
+                            android:fontFamily="@font/regular"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:text="Validity period"
+                            android:textColor="@color/body_grey"
+                            android:textFontWeight="400"
+                            android:textSize="@dimen/txt_12sp" />
+
+                        <TextView
+                            android:id="@+id/validity_period_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/validity_months"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/semi_bold"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:text="17 Nov ‘21 - 16 Feb ‘22"
+                            android:textColor="@color/payment_title_color"
+                            android:textFontWeight="600"
+                            android:textSize="@dimen/txt_12sp" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:background="#80A3A3A3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/payment_subscription_full_amount_layout" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginTop="12dp"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_5sdp"
+                        android:paddingBottom="12dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/payment_subscription_full_amount_layout">
+
+                        <TextView
+                            android:id="@+id/payment_total_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/bold"
+                            android:text="Payable amount"
+                            android:textColor="#323232"
+                            android:textFontWeight="700"
+                            android:textSize="@dimen/txt_12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/payment_total_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/bold"
+                            android:text="₹900"
+                            android:textColor="#323232"
+                            android:textFontWeight="700"
+                            android:textSize="@dimen/txt_12sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
             <LinearLayout
@@ -899,8 +917,8 @@
                     android:id="@+id/upi_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:layout_marginTop="8dp"
+                    android:background="@color/white"
                     android:elevation="@dimen/_2sdp"
                     tools:visibility="visible">
 
@@ -913,33 +931,33 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/upi_payment_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:fontFamily="@font/regular"
-                        android:paddingStart="@dimen/_5sdp"
-                        android:paddingTop="12dp"
-                        android:paddingEnd="@dimen/_5sdp"
-                        android:paddingBottom="12dp"
-                        android:textFontWeight="400"
-                        android:text="UPI"
-                        android:textAllCaps="true"
-                        android:textColor="@color/common_text_color"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        <TextView
+                            android:id="@+id/upi_payment_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:fontFamily="@font/regular"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:paddingTop="12dp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:paddingBottom="12dp"
+                            android:text="UPI"
+                            android:textAllCaps="true"
+                            android:textColor="@color/common_text_color"
+                            android:textFontWeight="400"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
-                        android:id="@+id/arw2"
-                        android:layout_width="@dimen/pad_30dp"
-                        android:layout_height="@dimen/pad_30dp"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_top_arrow_black"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="1:1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        <ImageView
+                            android:id="@+id/arw2"
+                            android:layout_width="@dimen/pad_30dp"
+                            android:layout_height="@dimen/pad_30dp"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_top_arrow_black"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -1095,221 +1113,221 @@
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <View
-                        android:id="@+id/upi_view_dummy"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#E6E6E6"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <LinearLayout
-                        android:id="@+id/upi_list_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        <View
+                            android:id="@+id/upi_view_dummy"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#E6E6E6"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <LinearLayout
-                            android:id="@+id/phonePe_layout"
-                            android:layout_width="0dp"
+                            android:id="@+id/upi_list_layout"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:paddingBottom="@dimen/_10sdp"
-                            android:orientation="vertical">
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                            <ImageView
-                                android:id="@+id/phonePe_image"
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:src="@drawable/ic_phonepe"
-                                android:padding="8dp"
-                                android:scaleType="fitCenter" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:id="@+id/phonePe_layout"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/regular"
-                                android:text="PhonePe"
-                                android:textFontWeight="400"
-                                android:textColor="@color/payment_light_gray"
-                                android:textSize="10sp" />
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:paddingBottom="@dimen/_10sdp">
+
+                                <ImageView
+                                    android:id="@+id/phonePe_image"
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
+                                    android:padding="8dp"
+                                    android:scaleType="fitCenter"
+                                    android:src="@drawable/ic_phonepe" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/regular"
+                                    android:text="PhonePe"
+                                    android:textColor="@color/payment_light_gray"
+                                    android:textFontWeight="400"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/google_pay_layout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:paddingBottom="@dimen/_10sdp">
+
+                                <ImageView
+                                    android:id="@+id/google_pay_image"
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
+                                    android:padding="8dp"
+                                    android:scaleType="fitCenter"
+                                    android:src="@drawable/ic_google_pay" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/regular"
+                                    android:text="Google Pay"
+                                    android:textColor="@color/payment_light_gray"
+                                    android:textFontWeight="400"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/paytm_layout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:paddingBottom="@dimen/_10sdp">
+
+                                <ImageView
+                                    android:id="@+id/paytm_image"
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
+                                    android:padding="8dp"
+                                    android:scaleType="fitCenter"
+                                    android:src="@drawable/ic_paytm" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/regular"
+                                    android:text="Paytm"
+                                    android:textColor="@color/payment_light_gray"
+                                    android:textFontWeight="400"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/bhim_upi_layout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:paddingBottom="@dimen/_10sdp">
+
+                                <ImageView
+                                    android:id="@+id/bhim_upi_image"
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
+                                    android:padding="8dp"
+                                    android:scaleType="fitCenter"
+                                    android:src="@drawable/ic_bhim_upi" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/regular"
+                                    android:text="BHIM UPI"
+                                    android:textColor="@color/payment_light_gray"
+                                    android:textFontWeight="400"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+
+
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/google_pay_layout"
-                            android:layout_width="0dp"
+                        <View
+                            android:id="@+id/upi_view_dummy2"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:background="#E6E6E6"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/upi_list_layout" />
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/saved_upi_recycler"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:paddingBottom="@dimen/_10sdp"
-                            android:orientation="vertical">
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:nestedScrollingEnabled="false"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/upi_view_dummy2" />
 
-                            <ImageView
-                                android:id="@+id/google_pay_image"
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:src="@drawable/ic_google_pay"
-                                android:padding="8dp"
-                                android:scaleType="fitCenter" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/regular"
-                                android:text="Google Pay"
-                                android:textFontWeight="400"
-                                android:textColor="@color/payment_light_gray"
-                                android:textSize="10sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/paytm_layout"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:paddingBottom="@dimen/_10sdp"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/paytm_image"
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:src="@drawable/ic_paytm"
-                                android:padding="8dp"
-                                android:scaleType="fitCenter" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/regular"
-                                android:text="Paytm"
-                                android:textFontWeight="400"
-                                android:textColor="@color/payment_light_gray"
-                                android:textSize="10sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/bhim_upi_layout"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:paddingBottom="@dimen/_10sdp"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/bhim_upi_image"
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:src="@drawable/ic_bhim_upi"
-                                android:padding="8dp"
-                                android:scaleType="fitCenter" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/regular"
-                                android:text="BHIM UPI"
-                                android:textFontWeight="400"
-                                android:textColor="@color/payment_light_gray"
-                                android:textSize="10sp" />
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                    <View
-                        android:id="@+id/upi_view_dummy2"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:background="#E6E6E6"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/upi_list_layout" />
-
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/saved_upi_recycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_2sdp"
-                        android:layout_marginBottom="@dimen/_2sdp"
-                        android:nestedScrollingEnabled="false"
-                        android:visibility="gone"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/upi_view_dummy2" />
-
-
-                    <TextView
-                        android:id="@+id/upi_pay_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="36dp"
-                        android:layout_marginEnd="36dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/mp_home_orange_btn_click_effect"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:fontFamily="@font/bold"
-                        android:gravity="center"
-                        android:paddingStart="20dp"
-                        android:paddingTop="10dp"
-                        android:paddingEnd="20dp"
-                        android:paddingBottom="10dp"
-                        android:visibility="gone"
-                        tools:visibility="gone"
-                        android:text="Proceed to pay ₹4,583"
-                        android:textColor="@color/white"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/saved_upi_recycler" />
-
-                    <View
-                        android:id="@+id/upi_view_dummy3"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:background="@color/material_grey_400"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/upi_pay_btn" />
-
-
-                    <!--                        <ImageView-->
-                    <!--                            android:layout_width="wrap_content"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:layout_marginEnd="@dimen/_10sdp"-->
-                    <!--                            app:srcCompat="@drawable/ic_add_circle_outline" />-->
-                    <LinearLayout
-                        android:id="@+id/add_upi_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/upi_view_dummy3">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/upi_pay_btn"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_plus_orange"
-                            android:drawablePadding="@dimen/_10sdp"
-                            android:fontFamily="@font/regular"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            android:paddingStart="@dimen/_30sdp"
-                            android:paddingTop="16dp"
-                            android:textFontWeight="400"
-                            android:textSize="@dimen/txt_14sp"
-                            android:paddingEnd="@dimen/_30sdp"
-                            android:paddingBottom="16dp"
-                            android:text="Add new UPI id"
-                            android:textColor="@color/colorPrimary1" />
-                    </LinearLayout>
+                            android:layout_marginStart="36dp"
+                            android:layout_marginEnd="36dp"
+                            android:layout_marginBottom="16dp"
+                            android:background="@drawable/mp_home_orange_btn_click_effect"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:fontFamily="@font/bold"
+                            android:gravity="center"
+                            android:paddingStart="20dp"
+                            android:paddingTop="10dp"
+                            android:paddingEnd="20dp"
+                            android:paddingBottom="10dp"
+                            android:text="Proceed to pay ₹4,583"
+                            android:textColor="@color/white"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/saved_upi_recycler"
+                            tools:visibility="gone" />
+
+                        <View
+                            android:id="@+id/upi_view_dummy3"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:background="@color/material_grey_400"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/upi_pay_btn" />
+
+
+                        <!--                        <ImageView-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_marginEnd="@dimen/_10sdp"-->
+                        <!--                            app:srcCompat="@drawable/ic_add_circle_outline" />-->
+                        <LinearLayout
+                            android:id="@+id/add_upi_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/upi_view_dummy3">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_plus_orange"
+                                android:drawablePadding="@dimen/_10sdp"
+                                android:fontFamily="@font/regular"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                android:paddingStart="@dimen/_30sdp"
+                                android:paddingTop="16dp"
+                                android:paddingEnd="@dimen/_30sdp"
+                                android:paddingBottom="16dp"
+                                android:text="Add new UPI id"
+                                android:textColor="@color/yellow"
+                                android:textFontWeight="400"
+                                android:textSize="@dimen/txt_14sp" />
+                        </LinearLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -1324,114 +1342,114 @@
                     android:background="@color/white"
                     android:elevation="@dimen/_2sdp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/upi2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_6sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/payment_payment_title"
-                        android:layout_width="wrap_content"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/upi2"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:fontFamily="@font/regular"
-                        android:paddingStart="@dimen/_5sdp"
-                        android:paddingTop="12dp"
-                        android:paddingEnd="@dimen/_5sdp"
-                        android:paddingBottom="12dp"
-                        android:text="Debit Cards &amp; Credit Cards"
-                        android:textAllCaps="true"
-                        android:textFontWeight="400"
-                        android:textSize="@dimen/txt_14sp"
-                        android:textColor="@color/common_text_color"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/arw3"
-                        android:layout_width="30dp"
-                        android:layout_height="@dimen/pad_30dp"
-                        android:padding="@dimen/_6sdp"
-                        android:src="@drawable/ic_top_arrow_black"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="1:1"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/payment_payment_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:fontFamily="@font/regular"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:paddingTop="12dp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:paddingBottom="12dp"
+                            android:text="Debit Cards &amp; Credit Cards"
+                            android:textAllCaps="true"
+                            android:textColor="@color/common_text_color"
+                            android:textFontWeight="400"
+                            android:textSize="@dimen/txt_14sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/arw3"
+                            android:layout_width="30dp"
+                            android:layout_height="@dimen/pad_30dp"
+                            android:padding="@dimen/_6sdp"
+                            android:src="@drawable/ic_top_arrow_black"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/clp3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/upi2">
 
 
-                    <View
-                        android:id="@+id/divider_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#E6E6E6"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/card_recycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_2sdp"
-                        android:layout_marginBottom="@dimen/_2sdp"
-                        android:nestedScrollingEnabled="false"
-                        android:visibility="gone"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <View
-                        android:id="@+id/card_view_dummy2"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/material_grey_400"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/card_recycler" />
-
-                    <LinearLayout
-                        android:id="@+id/add_new_cards"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/card_view_dummy2">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_plus_orange"
-                            android:drawablePadding="@dimen/_10sdp"
-                            android:fontFamily="@font/regular"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            android:gravity="center_vertical"
-                            android:paddingStart="@dimen/_30sdp"
-                            android:paddingTop="16dp"
-                            android:paddingEnd="@dimen/_30sdp"
-                            android:paddingBottom="16dp"
-                            android:text="Add a debit or credit card"
-                            android:textColor="@color/colorPrimary1"
-                            android:textFontWeight="400"
-                            android:textSize="14sp"
+                        <View
+                            android:id="@+id/divider_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#E6E6E6"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/card_view_dummy2" />
-                    </LinearLayout>
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/card_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:nestedScrollingEnabled="false"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/card_view_dummy2"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/material_grey_400"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/card_recycler" />
+
+                        <LinearLayout
+                            android:id="@+id/add_new_cards"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/card_view_dummy2">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_plus_orange"
+                                android:drawablePadding="@dimen/_10sdp"
+                                android:fontFamily="@font/regular"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                android:gravity="center_vertical"
+                                android:paddingStart="@dimen/_30sdp"
+                                android:paddingTop="16dp"
+                                android:paddingEnd="@dimen/_30sdp"
+                                android:paddingBottom="16dp"
+                                android:text="Add a debit or credit card"
+                                android:textColor="@color/colorPrimary1"
+                                android:textFontWeight="400"
+                                android:textSize="14sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/card_view_dummy2" />
+                        </LinearLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -1447,46 +1465,46 @@
                     android:elevation="@dimen/_2sdp"
                     tools:visibility="visible">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/upi4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_6sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/netbanking_title"
-                        android:layout_width="wrap_content"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/upi4"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:fontFamily="@font/regular"
-                        android:paddingStart="@dimen/_5sdp"
-                        android:paddingTop="12dp"
-                        android:paddingEnd="@dimen/_5sdp"
-                        android:paddingBottom="12dp"
-                        android:text="Net Banking"
-                        android:textFontWeight="400"
-                        android:textSize="@dimen/txt_14sp"
-                        android:textAllCaps="true"
-                        android:textColor="@color/common_text_color"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/arw4"
-                        android:layout_width="@dimen/pad_30dp"
-                        android:layout_height="@dimen/pad_30dp"
-                        android:padding="@dimen/_6sdp"
-                        android:src="@drawable/ic_top_arrow_black"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="1:1"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/netbanking_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:fontFamily="@font/regular"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:paddingTop="12dp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:paddingBottom="12dp"
+                            android:text="Net Banking"
+                            android:textAllCaps="true"
+                            android:textColor="@color/common_text_color"
+                            android:textFontWeight="400"
+                            android:textSize="@dimen/txt_14sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/arw4"
+                            android:layout_width="@dimen/pad_30dp"
+                            android:layout_height="@dimen/pad_30dp"
+                            android:padding="@dimen/_6sdp"
+                            android:src="@drawable/ic_top_arrow_black"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -1501,14 +1519,14 @@
                             android:id="@+id/layout_auto_renew_bank"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
                             android:layout_marginStart="16dp"
-                            android:visibility="gone"
                             android:layout_marginEnd="16dp"
                             android:paddingBottom="16dp"
-                            >
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
                             <View
                                 android:id="@+id/payment_view_dummy_auto_renew"
                                 android:layout_width="match_parent"
@@ -1517,86 +1535,86 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
+
                             <TextView
                                 android:id="@+id/tv_Auto_renew_note"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                android:textColor="@color/common_text_color"
-                                android:textSize="@dimen/txt_12sp"
-                                android:lineHeight="16dp"
                                 android:fontFamily="@font/regular"
-                                android:textFontWeight="400"
-                                app:layout_constraintTop_toBottomOf="@id/payment_view_dummy_auto_renew"
+                                android:lineHeight="16dp"
                                 android:text="You may be charged ₹5 to create mandate with your bank."
-                                />
+                                android:textColor="@color/common_text_color"
+                                android:textFontWeight="400"
+                                android:textSize="@dimen/txt_12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/payment_view_dummy_auto_renew" />
+
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/layout_bank"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
-                                app:layout_constraintTop_toBottomOf="@id/tv_Auto_renew_note"
-                                >
+                                app:layout_constraintTop_toBottomOf="@id/tv_Auto_renew_note">
 
                                 <ImageView
                                     android:id="@+id/iv1"
                                     android:layout_width="32dp"
                                     android:layout_height="32dp"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
                                     android:src="@drawable/ic_hdfc"
-                                    />
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
                                 <ImageView
                                     android:id="@+id/iv2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    app:layout_constraintStart_toEndOf="@id/iv1"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    android:src="@drawable/ic_sbi"
                                     android:layout_marginStart="-10dp"
-                                    />
+                                    android:src="@drawable/ic_sbi"
+                                    app:layout_constraintStart_toEndOf="@id/iv1"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
                                 <ImageView
                                     android:id="@+id/iv3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    app:layout_constraintStart_toEndOf="@id/iv2"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    android:src="@drawable/ic_icici"
                                     android:layout_marginStart="-10dp"
-                                    />
+                                    android:src="@drawable/ic_icici"
+                                    app:layout_constraintStart_toEndOf="@id/iv2"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
                                 <ImageView
                                     android:id="@+id/iv4"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    app:layout_constraintStart_toEndOf="@id/iv3"
-                                    app:layout_constraintTop_toTopOf="parent"
                                     android:layout_marginStart="-10dp"
                                     android:src="@drawable/ic_axis"
-                                    />
+                                    app:layout_constraintStart_toEndOf="@id/iv3"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
                                 <ImageView
                                     android:id="@+id/iv5"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    app:layout_constraintStart_toEndOf="@id/iv4"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    android:src="@drawable/ic_bank"
                                     android:layout_marginStart="-10dp"
-                                    />
+                                    android:src="@drawable/ic_bank"
+                                    app:layout_constraintStart_toEndOf="@id/iv4"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
                                 <TextView
                                     android:id="@+id/tv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    app:layout_constraintStart_toEndOf="@id/iv5"
                                     android:layout_marginStart="@dimen/pad_8dp"
+                                    android:lineHeight="16dp"
                                     android:text="100+ supported banks"
                                     android:textAlignment="center"
-                                    android:textSize="@dimen/txt_12sp"
-                                    android:lineHeight="16dp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
                                     android:textColor="@color/common_text_color"
-                                    app:layout_constraintTop_toTopOf="parent"/>
+                                    android:textSize="@dimen/txt_12sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/iv5"
+                                    app:layout_constraintTop_toTopOf="parent" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
                             <TextView
@@ -1609,209 +1627,209 @@
                                 android:gravity="center"
                                 android:lineHeight="24dp"
                                 android:paddingTop="12dp"
-                                android:visibility="visible"
                                 android:paddingBottom="12dp"
                                 android:text="Setup bank auto renewal"
                                 android:textColor="@color/colorAccent1"
                                 android:textFontWeight="700"
                                 android:textSize="@dimen/txt_16sp"
+                                android:visibility="visible"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/layout_bank"
 
-                              />
+                                />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <View
-                        android:id="@+id/payment_view_dummy"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:background="#E6E6E6"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <LinearLayout
-                        android:id="@+id/netbanking_top_banks_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="23dp"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/payment_view_dummy">
+                        <View
+                            android:id="@+id/payment_view_dummy"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:background="#E6E6E6"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <LinearLayout
-                            android:id="@+id/axis_bank_layout"
-                            android:layout_width="0dp"
+                            android:id="@+id/netbanking_top_banks_layout"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            android:layout_marginTop="23dp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/payment_view_dummy">
 
-                            <ImageView
-                                android:id="@+id/axis_bank_image"
-                                android:layout_width="@dimen/_35sdp"
-                                android:layout_height="@dimen/_35sdp"
-                                android:background="@drawable/backgroundwhite"
-                                android:padding="8dp"
-                                android:scaleType="fitCenter" />
+                            <LinearLayout
+                                android:id="@+id/axis_bank_layout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/axis_bank_image"
+                                    android:layout_width="@dimen/_35sdp"
+                                    android:layout_height="@dimen/_35sdp"
+                                    android:background="@drawable/backgroundwhite"
+                                    android:padding="8dp"
+                                    android:scaleType="fitCenter" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/regular"
+                                    android:text="Axis Bank"
+                                    android:textColor="@color/black"
+                                    android:textFontWeight="400"
+                                    android:textSize="@dimen/txt_12sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/icici_bank_layout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/icici_bank_image"
+                                    android:layout_width="@dimen/_35sdp"
+                                    android:layout_height="@dimen/_35sdp"
+                                    android:background="@drawable/backgroundwhite"
+                                    android:padding="8dp"
+                                    android:scaleType="fitCenter" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/regular"
+                                    android:text="ICICI"
+                                    android:textColor="@color/black"
+                                    android:textFontWeight="400"
+                                    android:textSize="@dimen/txt_12sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/hdfc_bank_layout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/hdfc_bank_image"
+                                    android:layout_width="@dimen/_35sdp"
+                                    android:layout_height="@dimen/_35sdp"
+                                    android:background="@drawable/backgroundwhite"
+                                    android:padding="8dp"
+                                    android:scaleType="fitCenter" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/regular"
+                                    android:text="HDFC"
+                                    android:textColor="@color/black"
+                                    android:textFontWeight="400"
+                                    android:textSize="@dimen/txt_12sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/citi_bank_layout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/citi_bank_image"
+                                    android:layout_width="@dimen/_35sdp"
+                                    android:layout_height="@dimen/_35sdp"
+                                    android:background="@drawable/backgroundwhite"
+                                    android:padding="8dp"
+                                    android:scaleType="fitCenter" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/regular"
+                                    android:text="City Union"
+                                    android:textColor="@color/black"
+                                    android:textFontWeight="400"
+                                    android:textSize="@dimen/txt_12sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/sbi_bank_layout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/sbi_bank_image"
+                                    android:layout_width="@dimen/_35sdp"
+                                    android:layout_height="@dimen/_35sdp"
+                                    android:background="@drawable/backgroundwhite"
+                                    android:padding="8dp"
+                                    android:scaleType="fitCenter" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/regular"
+                                    android:text="SBI"
+                                    android:textColor="@color/black"
+                                    android:textFontWeight="400"
+                                    android:textSize="@dimen/txt_12sp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/payment_view_dummy2"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@color/material_grey_400"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/netbanking_top_banks_layout" />
+
+                        <LinearLayout
+                            android:id="@+id/show_more_bank"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:gravity="end"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingTop="16dp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:paddingBottom="16dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/payment_view_dummy2">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/regular"
-                                android:text="Axis Bank"
+                                android:drawableEnd="@drawable/ic_right_arrow_black"
+                                android:drawablePadding="@dimen/_10sdp"
+                                android:fontFamily="@font/semi_bold"
+                                android:gravity="center_vertical"
+                                android:text="More banks"
+                                android:textColor="@color/common_text_color"
                                 android:textFontWeight="400"
-                                android:textColor="@color/black"
                                 android:textSize="@dimen/txt_12sp" />
+
                         </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/icici_bank_layout"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/icici_bank_image"
-                                android:layout_width="@dimen/_35sdp"
-                                android:layout_height="@dimen/_35sdp"
-                                android:background="@drawable/backgroundwhite"
-                                android:padding="8dp"
-                                android:scaleType="fitCenter" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/regular"
-                                android:text="ICICI"
-                                android:textFontWeight="400"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/txt_12sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/hdfc_bank_layout"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/hdfc_bank_image"
-                                android:layout_width="@dimen/_35sdp"
-                                android:layout_height="@dimen/_35sdp"
-                                android:background="@drawable/backgroundwhite"
-                                android:padding="8dp"
-                                android:scaleType="fitCenter" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/regular"
-                                android:text="HDFC"
-                                android:textFontWeight="400"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/txt_12sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/citi_bank_layout"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/citi_bank_image"
-                                android:layout_width="@dimen/_35sdp"
-                                android:layout_height="@dimen/_35sdp"
-                                android:background="@drawable/backgroundwhite"
-                                android:padding="8dp"
-                                android:scaleType="fitCenter" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/regular"
-                                android:text="City Union"
-                                android:textFontWeight="400"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/txt_12sp"/>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/sbi_bank_layout"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/sbi_bank_image"
-                                android:layout_width="@dimen/_35sdp"
-                                android:layout_height="@dimen/_35sdp"
-                                android:background="@drawable/backgroundwhite"
-                                android:padding="8dp"
-                                android:scaleType="fitCenter" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/regular"
-                                android:text="SBI"
-                                android:textFontWeight="400"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/txt_12sp" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <View
-                        android:id="@+id/payment_view_dummy2"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:background="@color/material_grey_400"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:visibility="gone"
-                        app:layout_constraintTop_toBottomOf="@id/netbanking_top_banks_layout" />
-
-                    <LinearLayout
-                        android:id="@+id/show_more_bank"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:gravity="end"
-                        android:paddingStart="@dimen/_10sdp"
-                        android:paddingTop="16dp"
-                        android:paddingEnd="@dimen/_10sdp"
-                        android:paddingBottom="16dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/payment_view_dummy2">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableEnd="@drawable/ic_right_arrow_black"
-                            android:drawablePadding="@dimen/_10sdp"
-                            android:fontFamily="@font/semi_bold"
-                            android:gravity="center_vertical"
-                            android:text="More banks"
-                            android:textFontWeight="400"
-                            android:textSize="@dimen/txt_12sp"
-                            android:textColor="@color/common_text_color" />
-
-                    </LinearLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -1875,191 +1893,191 @@
                     android:paddingBottom="@dimen/_4sdp"
                     tools:visibility="visible">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/upi5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_6sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/pay_by_link_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:fontFamily="@font/regular"
-                        android:paddingStart="@dimen/_5sdp"
-                        android:paddingTop="12dp"
-                        android:paddingEnd="@dimen/_5sdp"
-                        android:paddingBottom="12dp"
-                        android:text="Pay via payment link"
-                        android:textAllCaps="true"
-                        android:textFontWeight="400"
-                        android:textSize="@dimen/txt_14sp"
-                        android:textColor="@color/common_text_color"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/arw5"
-                        android:layout_width="30dp"
-                        android:layout_height="@dimen/pad_30dp"
-                        android:padding="@dimen/_6sdp"
-                        android:src="@drawable/ic_top_arrow_black"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="1:1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clp5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/upi5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
-
-                    <View
-                        android:id="@+id/pay_by_link_view1"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#75E6E6E6"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <View
-                        android:id="@+id/pay_by_link_view2"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:background="@color/material_grey_400"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/pay_by_link_view1" />
-
-<!--                    <LinearLayout-->
-<!--                        android:id="@+id/add_external_email"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:foreground="?android:attr/selectableItemBackground"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:paddingStart="@dimen/_10sdp"-->
-<!--                        android:paddingTop="@dimen/_10sdp"-->
-<!--                        android:paddingEnd="@dimen/_10sdp"-->
-<!--                        android:paddingBottom="@dimen/_5sdp"-->
-<!--                        android:visibility="gone"-->
-<!--                        tools:visibility="gone"-->
-<!--                        app:layout_constraintTop_toBottomOf="@id/pay_by_link_view2">-->
-
-<!--                        <ImageView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginEnd="@dimen/_10sdp"-->
-<!--                            app:srcCompat="@drawable/ic_add_circle_outline" />-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:fontFamily="@font/semi_bold"-->
-<!--                            android:text="Enter email id, to receive the link"-->
-<!--                            android:textColor="@color/common_text_color" />-->
-
-<!--                    </LinearLayout>-->
-
-                    <LinearLayout
-                        android:id="@+id/generate_payment_link"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/upi5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/pay_by_link_view2">
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
+                            android:id="@+id/pay_by_link_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_plus_orange"
-                            android:drawablePadding="@dimen/_5sdp"
-                            android:gravity="center"
+                            android:layout_marginStart="@dimen/_5sdp"
                             android:fontFamily="@font/regular"
-                            android:paddingStart="@dimen/_30sdp"
-                            android:paddingTop="16dp"
-                            android:paddingEnd="@dimen/_30sdp"
-                            android:paddingBottom="16dp"
-                            android:textSize="@dimen/txt_14sp"
+                            android:paddingStart="@dimen/_5sdp"
+                            android:paddingTop="12dp"
+                            android:paddingEnd="@dimen/_5sdp"
+                            android:paddingBottom="12dp"
+                            android:text="Pay via payment link"
+                            android:textAllCaps="true"
+                            android:textColor="@color/common_text_color"
                             android:textFontWeight="400"
-                            android:text="Click to generate a payment link"
-                            android:textColor="@color/colorPrimary1" />
+                            android:textSize="@dimen/txt_14sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    </LinearLayout>
+                        <ImageView
+                            android:id="@+id/arw5"
+                            android:layout_width="30dp"
+                            android:layout_height="@dimen/pad_30dp"
+                            android:padding="@dimen/_6sdp"
+                            android:src="@drawable/ic_top_arrow_black"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <LinearLayout
-                        android:id="@+id/final_payment_links"
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clp5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="16dp"
-                        android:paddingBottom="16dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/generate_payment_link">
+                        app:layout_constraintTop_toBottomOf="@+id/upi5">
 
-                        <TextView
-                            android:id="@+id/pay_link"
-                            android:layout_width="0dp"
+                        <View
+                            android:id="@+id/pay_by_link_view1"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#75E6E6E6"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/pay_by_link_view2"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:background="@color/material_grey_400"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/pay_by_link_view1" />
+
+                        <!--                    <LinearLayout-->
+                        <!--                        android:id="@+id/add_external_email"-->
+                        <!--                        android:layout_width="match_parent"-->
+                        <!--                        android:layout_height="wrap_content"-->
+                        <!--                        android:foreground="?android:attr/selectableItemBackground"-->
+                        <!--                        android:gravity="center_vertical"-->
+                        <!--                        android:paddingStart="@dimen/_10sdp"-->
+                        <!--                        android:paddingTop="@dimen/_10sdp"-->
+                        <!--                        android:paddingEnd="@dimen/_10sdp"-->
+                        <!--                        android:paddingBottom="@dimen/_5sdp"-->
+                        <!--                        android:visibility="gone"-->
+                        <!--                        tools:visibility="gone"-->
+                        <!--                        app:layout_constraintTop_toBottomOf="@id/pay_by_link_view2">-->
+
+                        <!--                        <ImageView-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_marginEnd="@dimen/_10sdp"-->
+                        <!--                            app:srcCompat="@drawable/ic_add_circle_outline" />-->
+
+                        <!--                        <TextView-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:fontFamily="@font/semi_bold"-->
+                        <!--                            android:text="Enter email id, to receive the link"-->
+                        <!--                            android:textColor="@color/common_text_color" />-->
+
+                        <!--                    </LinearLayout>-->
+
+                        <LinearLayout
+                            android:id="@+id/generate_payment_link"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1.6"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:drawableStart="@drawable/ic_links"
-                            android:drawablePadding="@dimen/_5sdp"
-                            android:text="rzp.io/1234567890asdfasdfasdfasdfasdf"
-                            android:maxLines="1"
-                            android:textFontWeight="400"
-                            android:textSize="@dimen/txt_14sp"
-                            android:singleLine="true"
-                            android:fontFamily="@font/regular"
-                            android:textColor="@color/colorPrimary1" />
+                            android:gravity="center"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/pay_by_link_view2">
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_plus_orange"
+                                android:drawablePadding="@dimen/_5sdp"
+                                android:fontFamily="@font/regular"
+                                android:gravity="center"
+                                android:paddingStart="@dimen/_30sdp"
+                                android:paddingTop="16dp"
+                                android:paddingEnd="@dimen/_30sdp"
+                                android:paddingBottom="16dp"
+                                android:text="Click to generate a payment link"
+                                android:textColor="@color/colorPrimary1"
+                                android:textFontWeight="400"
+                                android:textSize="@dimen/txt_14sp" />
 
-                        <TextView
-                            android:id="@+id/copy_link"
-                            android:layout_width="0dp"
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/final_payment_links"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_copy_link"
-                            android:drawablePadding="@dimen/_5sdp"
-                            android:text="Copy link"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:textSize="12sp"
-                            android:fontFamily="@font/regular"
-                            android:textFontWeight="400"
-                            android:textColor="@color/dot_grey" />
+                            android:paddingTop="16dp"
+                            android:paddingBottom="16dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/generate_payment_link">
+
+                            <TextView
+                                android:id="@+id/pay_link"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.6"
+                                android:drawableStart="@drawable/ic_links"
+                                android:drawablePadding="@dimen/_5sdp"
+                                android:fontFamily="@font/regular"
+                                android:maxLines="1"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:singleLine="true"
+                                android:text="rzp.io/1234567890asdfasdfasdfasdfasdf"
+                                android:textColor="@color/colorPrimary1"
+                                android:textFontWeight="400"
+                                android:textSize="@dimen/txt_14sp" />
 
 
-                        <TextView
-                            android:id="@+id/share"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_share_link"
-                            android:drawablePadding="@dimen/_5sdp"
-                            android:fontFamily="@font/regular"
-                            android:text="Share link"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:textSize="12sp"
-                            android:textFontWeight="400"
-                            android:textColor="@color/dot_grey" />
+                            <TextView
+                                android:id="@+id/copy_link"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableStart="@drawable/ic_copy_link"
+                                android:drawablePadding="@dimen/_5sdp"
+                                android:fontFamily="@font/regular"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:text="Copy link"
+                                android:textColor="@color/dot_grey"
+                                android:textFontWeight="400"
+                                android:textSize="12sp" />
 
-                    </LinearLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                            <TextView
+                                android:id="@+id/share"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableStart="@drawable/ic_share_link"
+                                android:drawablePadding="@dimen/_5sdp"
+                                android:fontFamily="@font/regular"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:text="Share link"
+                                android:textColor="@color/dot_grey"
+                                android:textFontWeight="400"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

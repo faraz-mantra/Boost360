@@ -356,5 +356,7 @@
     <color name="payment_green">#828282</color>
     <color name="body_grey">#828282</color>
     <color name="payment_light_gray">#747474</color>
+    <color name="tv_color_2a">#2A2A2A</color>
+    <color name="tv_color_74">#747474</color>
 
 </resources>
