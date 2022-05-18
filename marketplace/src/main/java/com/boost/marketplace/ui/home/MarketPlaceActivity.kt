@@ -189,9 +189,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             }else {
                 menuOpts.getItem(1).setTitle(R.string.switch_to_yearly_pricing)
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                popup.setForceShowIcon(true)
-            }
+            popup.setForceShowIcon(true)
             popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
 
                 when (item!!.itemId) {
