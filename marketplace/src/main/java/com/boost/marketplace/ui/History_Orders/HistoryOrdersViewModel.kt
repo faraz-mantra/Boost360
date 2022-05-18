@@ -33,7 +33,7 @@ class HistoryOrdersViewModel: BaseViewModel() {
         return purchaseResult
     }
 
-    fun loadPurchasedItems(auth:String,fpid: String, clientId: String) {
+    fun loadPurchasedItems(auth:String,fpid: String) {
         updatesLoader.postValue(true)
         compositeDisposable.add(
             ApiService.getPurchasedOrdersV2(auth,fpid)

@@ -246,19 +246,20 @@ class MyCurrentPlanActivity :
             val paidItemsCount = totalPaidItemList!!.size
 
             if (paidItemsCount != null && paidItemsCount > 0) {
-//                if (shimmer_view_paidaddon.isShimmerStarted) {
-//                    shimmer_view_paidaddon.stopShimmer()
-//                    shimmer_view_paidaddon.visibility = View.GONE
-//                }
+                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
+                    binding?.shimmerViewHistory?.stopShimmer()
+                    binding?.shimmerViewHistory?.visibility = View.GONE
+                    binding?.nestedscroll?.visibility=View.VISIBLE
+                }
                 binding?.paidTitle1?.text = totalPaidItemList!!.size.toString() + " Premium add-ons"
                 binding?.paidSubtitle1?.text =
                     totalPaidItemList!!.size.toString() + " Activated, 0 Syncing and 0 needs Attention"
 //                premium_account_flag.visibility = View.VISIBLE
             } else {
-//                if (shimmer_view_paidaddon.isShimmerStarted) {
-//                    shimmer_view_paidaddon.stopShimmer()
-//                    shimmer_view_paidaddon.visibility = View.GONE
-//                }
+                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
+                    binding?.shimmerViewHistory?.stopShimmer()
+                    binding?.shimmerViewHistory?.visibility = View.GONE
+                }
                 binding?.paidTitle1?.text = "No Premium add-ons active."
                 binding?.paidSubtitle1?.text = "check out the recommended add-ons for your business"
             }
@@ -283,17 +284,18 @@ class MyCurrentPlanActivity :
                 totalActiveFreeWidgetCount!!.toString() + " Activated, 0 Syncing and 0 needs Attention"
             if (totalFreeItemList != null) {
                 if (totalFreeItemList!!.size > 0) {
-//                    if (shimmer_view_freeaddon.isShimmerStarted) {
-//                        shimmer_view_freeaddon.stopShimmer()
-//                        shimmer_view_freeaddon.visibility = View.GONE
-//                    }
+                    if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
+                        binding?.shimmerViewHistory?.stopShimmer()
+                        binding?.shimmerViewHistory?.visibility = View.GONE
+                        binding?.nestedscroll?.visibility=View.VISIBLE
+                    }
                     updateFreeAddonsRecycler(totalFreeItemList!!)
                     binding?.expandableView?.visibility = View.VISIBLE
                 } else {
-//                    if (shimmer_view_freeaddon.isShimmerStarted) {
-//                        shimmer_view_freeaddon.stopShimmer()
-//                        shimmer_view_freeaddon.visibility = View.GONE
-//                    }
+                    if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
+                        binding?.shimmerViewHistory?.stopShimmer()
+                        binding?.shimmerViewHistory?.visibility = View.GONE
+                    }
                     binding?.expandableView?.visibility = View.INVISIBLE
                     updateFreeAddonsRecycler(totalFreeItemList!!)
                 }

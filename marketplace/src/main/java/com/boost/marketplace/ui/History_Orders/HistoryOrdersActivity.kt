@@ -78,8 +78,7 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Histo
         try {
             viewModel.loadPurchasedItems(
                 (this).getAccessToken() ?:"",
-                intent.getStringExtra("fpid")?:"" ,
-                clientid
+                intent.getStringExtra("fpid")?:""
             )
         } catch (e: Exception) {
             SentryController.captureException(e)
