@@ -36,11 +36,21 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseVi
             object : TypeToken<FeaturesModel>() {}.type
         )
         binding?.addonsTitle?.text = singleAddon.name
-        binding?.title?.text=singleAddon.status.toString()
+       // binding?.title?.text=singleAddon.status.toString()
         binding?.addonsDesc?.text = singleAddon.description_title
-        binding?.title3?.text=singleAddon.activatedDate
-        binding?.title4?.text=singleAddon.expiryDate
+        val date1= singleAddon.activatedDate?.substring(0,10)
+        binding?.title3?.text=date1
+        val date= singleAddon.expiryDate?.substring(0,10)
+        binding?.title4?.text=date
+       // binding?.title4?.text=singleAddon.expiryDate
         Glide.with(baseActivity).load(singleAddon.primary_image).into(binding!!.addonsIcon)
+        if (singleAddon.status == 1) {
+            binding!!.imageView3.setImageResource(R.drawable.ic_active)
+        }
+        else {
+            binding!!.imageView3.setImageResource(R.drawable.ic_action_required)
+        }
+
         dialog.behavior.isDraggable = true
         setOnClickListener(
             binding?.btnUseThisFeature,
@@ -75,12 +85,7 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseVi
            e.printStackTrace()
        }
         }else{
-            Toasty.error(
-                requireContext(),
-                "Coming Soon...",
-                Toast.LENGTH_SHORT,
-                true
-            ).show();
+            Toasty.error(requireContext(), "Coming Soon...", Toast.LENGTH_SHORT, true).show();
         }
     }
 

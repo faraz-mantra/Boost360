@@ -16,12 +16,13 @@
             android:id="@+id/titleDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textFontWeight="700"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/semi_bold"
             android:text="Today"
             android:textColor="@color/common_text_color"
-            android:textSize="@dimen/_15sdp"
+            android:textSize="@dimen/_16sdp"
             app:layout_constraintBottom_toTopOf="@+id/main_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +47,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:itemCount="1"
+                tools:itemCount="3"
                 tools:listitem="@layout/item_child_history_orders"
                 tools:visibility="visible">
 

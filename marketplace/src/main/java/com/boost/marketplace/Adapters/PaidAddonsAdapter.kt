@@ -117,12 +117,20 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
     private var image = itemView.findViewById<ImageView>(R.id.single_paidaddon_image)!!
     var mainlayout=itemView.findViewById<ConstraintLayout>(R.id.main_layout)
     var detailsView=itemView.findViewById<ConstraintLayout>(R.id.detailsView)
+    var img1=itemView.findViewById<ImageView>(R.id.img1)!!
     private var context: Context = itemView.context
 
     fun upgradeListItem(updateModel: FeaturesModel) {
       upgradeTitle.text = updateModel.name
-      validity2.text=updateModel.expiryDate
+      val date= updateModel.expiryDate?.substring(0,10)
+      validity2.text="Valid till "+ date
       Glide.with(context).load(updateModel.primary_image).into(image)
+      if (updateModel.status == 1) {
+        img1.setImageResource(R.drawable.ic_active)
+      }
+      else {
+        img1.setImageResource(R.drawable.ic_action_required)
+      }
 
     }
   }

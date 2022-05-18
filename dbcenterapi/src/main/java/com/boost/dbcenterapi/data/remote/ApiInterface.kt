@@ -3,6 +3,7 @@ package com.boost.dbcenterapi.data.remote
 import com.boost.dbcenterapi.data.api_model.GetFloatingPointWebWidgets.response.GetFloatingPointWebWidgetsResponse
 import com.boost.dbcenterapi.data.api_model.GetPaymentLink.PaymentLink
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
+import com.boost.dbcenterapi.data.api_model.GetPurchaseOrderV2.GetPurchaseOrderResponseV2
 import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
 import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
@@ -70,6 +71,14 @@ interface ApiInterface {
     @Header("Authorization") authHeader: String,
     @Path("customer_id") customerId: String
   ): Observable<RazorpayTokenResponse>
+
+  @Headers("Content-Type: application/json")
+  @GET("https://api.withfloats.com/Payment/v10/floatingpoint/PurchaseOrders")
+  fun getPurchasedOrdersV2(
+    @Header("Authorization") auth: String,
+    @Query("FloatingPointId") floatingPointId: String
+    //@Query("clientId") clientId: String
+  ): Observable<GetPurchaseOrderResponseV2>
 
   @Headers("Content-Type: application/json")
   @GET("https://api.withfloats.com/Payment/v10/floatingpoint/PurchaseOrders/{floatingPointId}")

@@ -1,6 +1,12 @@
 package com.boost.marketplace.ui.Invoice
 
+import android.app.DownloadManager
+import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
+import android.os.Environment
 import android.view.View
 import android.webkit.*
 import android.widget.Toast
@@ -11,9 +17,11 @@ import com.framework.extensions.gone
 import com.framework.extensions.visible
 import kotlinx.android.synthetic.main.activity_website_view.*
 
+
 class InvoiceActivity : AppBaseActivity<ActivityInvoiceBinding, InvoiceViewModel>() {
 
     var link: String? = null
+    var manager: DownloadManager? = null
 
 
     override fun getLayout(): Int {
@@ -39,7 +47,6 @@ class InvoiceActivity : AppBaseActivity<ActivityInvoiceBinding, InvoiceViewModel
         webSettings?.domStorageEnabled = true
 
         link = intent.getStringExtra("link") ?: ""
-      //  link ="https://www.getboost360.com/"
 
         if (link != null) {
             webview.settings.javaScriptEnabled = true
@@ -70,7 +77,7 @@ class InvoiceActivity : AppBaseActivity<ActivityInvoiceBinding, InvoiceViewModel
                     super.onReceivedError(view, request, error)
                 }
             }
-            webview.loadUrl(link!!)
+            webview.loadUrl("http://docs.google.com/gview?embedded=true&url="+link!!)
         } else {
             Toast.makeText(applicationContext, "Link is Empty!!", Toast.LENGTH_LONG).show()
             finish()
@@ -81,8 +88,46 @@ class InvoiceActivity : AppBaseActivity<ActivityInvoiceBinding, InvoiceViewModel
         }
 
         binding?.download?.setOnClickListener {
-            Toast.makeText(this,"ComingSoon",Toast.LENGTH_LONG).show()
+
+            Toast.makeText(applicationContext, "Downloading", Toast.LENGTH_LONG).show()
+            manager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+            val uri: Uri = Uri.parse(link)
+            val request: DownloadManager.Request = DownloadManager.Request(uri)
+            val title:String=URLUtil.guessFileName(link,null,"application/pdf")
+            request.setTitle(title)
+            request.setDescription("Downloading Please wait")
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,title)
+            val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+            request.setMimeType("application/pdf")
+            request.allowScanningByMediaScanner()
+            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_WIFI)
+            downloadManager.enqueue(request);
+          //  downloadInvoice(link,"Invoice")
         }
+        binding?.shareInvoice?.setOnClickListener {
+            val pdfIntent = Intent(Intent.ACTION_SEND)
+            pdfIntent.type = "application/pdf"
+//          pdfIntent.putExtra(Intent.EXTRA_STREAM, link);
+            pdfIntent.putExtra(Intent.EXTRA_TEXT, link)
+            startActivity(Intent.createChooser(pdfIntent, "Share via"))
+        }
+    }
+    fun downloadInvoice(url: String?, title: String) {
+        val request = DownloadManager.Request(Uri.parse(url))
+        val tempTitle = title.replace("", "_")
+        request.setTitle(tempTitle)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            request.allowScanningByMediaScanner()
+            request.setDescription("Downloading Please wait")
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+        }
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "$tempTitle.pdf")
+        val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+        request.setMimeType("application/pdf")
+        request.allowScanningByMediaScanner()
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_WIFI)
+        downloadManager.enqueue(request)
     }
 
 }

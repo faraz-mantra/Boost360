@@ -36,11 +36,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textFontWeight="700"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:fontFamily="@font/semi_bold"
                     android:text="Invoice"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_11sdp"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/web_addons_back"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -57,7 +58,6 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/arrow_white" />
@@ -84,6 +84,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="20dp"
                             android:background="@drawable/ic_info_offers"
+                            android:padding="@dimen/_9sdp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -96,6 +97,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="20dp"
                             android:background="@drawable/dwnld1"
+                            android:clickable="true"
+                            android:enabled="true"
+                            android:focusable="true"
+                            android:padding="@dimen/_9sdp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/history"
                             app:layout_constraintTop_toTopOf="parent"
@@ -130,14 +135,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/progress_bar" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.framework.views.fabButton.FloatingActionButton
+            android:id="@+id/share_invoice"
+            style="@style/wrap_wrap"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/_25ssp"
+            android:backgroundTint="@color/colorAccentLight"
+            android:clickable="true"
+            android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:fabSize="normal"
-            android:layout_marginBottom="@dimen/_40sdp"
-            android:layout_marginRight="@dimen/_20sdp"/>
+            app:fabIcon="@drawable/ic_inv_share"
+            app:fabSize="normal" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

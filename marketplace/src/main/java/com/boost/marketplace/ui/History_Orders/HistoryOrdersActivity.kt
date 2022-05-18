@@ -1,15 +1,14 @@
 package com.boost.marketplace.ui.History_Orders
 
 import android.os.Build
-import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.Result
+import com.boost.dbcenterapi.data.api_model.GetPurchaseOrderV2.GetPurchaseOrderResponseV2
 import com.boost.dbcenterapi.recycleritem.BaseRecyclerViewItem
 import com.boost.dbcenterapi.recycleritem.RecyclerItemClickListener
 import com.boost.marketplace.Adapters.HistoryOrdersParentAdapter
@@ -79,8 +78,7 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Histo
         try {
             viewModel.loadPurchasedItems(
                 (this).getAccessToken() ?:"",
-                intent.getStringExtra("fpid")?:"" ,
-                clientid
+                intent.getStringExtra("fpid")?:""
             )
         } catch (e: Exception) {
             SentryController.captureException(e)
@@ -92,8 +90,16 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Histo
 
     private fun initMVVM() {
         viewModel.updateResult().observe(this, Observer {
-            updateRecycler(it)
+
+            if(it.Result.WidgetDetails.isNotEmpty()){
+                updateRecycler(it)
+                binding?.emptyHistory?.visibility=View.GONE
+            }
+            else{
+                binding?.emptyHistory?.visibility=View.VISIBLE
+            }
         })
+
         viewModel.updatesLoader().observe(this, Observer {
             if (!it) {
                 if (binding?.shimmerViewHistory!!.isShimmerStarted) {
@@ -104,13 +110,13 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Histo
         })
     }
 
-    fun updateRecycler(result: GetPurchaseOrderResponse) {
-        if (result.StatusCode == 200 && result.Result != null) {
+    fun updateRecycler(Result: GetPurchaseOrderResponseV2) {
+        if (Result.StatusCode == 200 && Result.Result != null) {
             if (binding?.shimmerViewHistory?.isShimmerStarted!!) {
                 binding?.shimmerViewHistory!!.stopShimmer()
                 binding?.shimmerViewHistory!!.visibility = View.GONE
             }
-            historyAdapter?.addupdates(result.Result)
+            historyAdapter?.addupdates(Result.Result.WidgetDetails)
             historyAdapter?.notifyDataSetChanged()
             binding?.orderHistoryRecycler?.setFocusable(false)
             binding?.orderHistoryRecycler?.visibility = View.VISIBLE
@@ -140,5 +146,7 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Histo
     }
 
     override fun viewHistoryItem(item: Result) {
+
     }
+
 }
