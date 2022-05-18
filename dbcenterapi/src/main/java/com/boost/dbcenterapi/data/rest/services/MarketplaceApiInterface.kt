@@ -1,8 +1,8 @@
 package com.boost.dbcenterapi.data.rest.services
 
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
 import com.boost.dbcenterapi.data.api_model.GetFloatingPointWebWidgets.response.GetFloatingPointWebWidgetsResponse
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
+import com.boost.dbcenterapi.data.api_model.GetPurchaseOrderV2.GetPurchaseOrderResponseV2
 import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
 import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
@@ -17,14 +17,7 @@ import com.boost.dbcenterapi.data.api_model.stateCode.GetStates
 import com.boost.dbcenterapi.data.renewalcart.CreateCartResponse
 import com.boost.dbcenterapi.data.renewalcart.CreateCartStateRequest
 import com.boost.dbcenterapi.data.renewalcart.RenewalPurchasedResponse
-import com.boost.dbcenterapi.data.rest.EndPoints
-import com.framework.base.BaseResponse
-import com.framework.models.UserProfileData
-import com.framework.pref.clientId2
-import com.google.gson.JsonObject
 import io.reactivex.Observable
-import okhttp3.RequestBody
-import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -75,6 +68,14 @@ interface MarketplaceApiInterface {
     @Header("Authorization") authHeader: String,
     @Path("customer_id") customerId: String
   ): Observable<Response<RazorpayTokenResponse>>
+
+  @Headers("Content-Type: application/json")
+  @GET("https://api.withfloats.com/Payment/v10/floatingpoint/PurchaseOrders")
+  fun getPurchasedOrdersV2(
+    @Header("Authorization") auth: String,
+    @Query("FloatingPointId") floatingPointId: String
+    //@Query("clientId") clientId: String
+  ): Observable<Response<GetPurchaseOrderResponseV2>>
 
   @Headers("Content-Type: application/json")
   @GET("https://api.withfloats.com/Payment/v10/floatingpoint/PurchaseOrders/{floatingPointId}")

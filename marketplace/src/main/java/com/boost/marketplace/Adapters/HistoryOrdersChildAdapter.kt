@@ -1,5 +1,6 @@
 package com.boost.marketplace.Adapters
 
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -9,22 +10,27 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.Result
+import com.boost.dbcenterapi.data.api_model.GetPurchaseOrderV2.WidgetDetail
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.marketplace.R
 import com.boost.marketplace.ui.Invoice.InvoiceActivity
+import com.bumptech.glide.Glide
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import java.lang.Long
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.Int
 
-class HistoryOrdersChildAdapter(itemList: List<Result>?) :
+class HistoryOrdersChildAdapter(itemList: List<WidgetDetail>?) :
     RecyclerView.Adapter<HistoryOrdersChildAdapter.upgradeViewHolder>() {
 
-    private var list = ArrayList<Result>()
+    private var list = ArrayList<WidgetDetail>()
     private lateinit var context: Context
 
     init {
-        this.list = itemList as ArrayList<Result>
+        this.list = itemList as ArrayList<WidgetDetail>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -41,84 +47,48 @@ class HistoryOrdersChildAdapter(itemList: List<Result>?) :
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
 
-        //  val itemLists = StringBuilder()
-//        if (list.get(position).orderId != null) {
-//            holder.orderId.setText("Order id #" + list.get(position).orderId!!.replace("order_", ""))
-//        }
-//        if (list.get(position).purchasedPackageDetails.WidgetPacks.size > 1) {
-//            for (item in 0 until list.get(position).purchasedPackageDetails.WidgetPacks.size) {
-//                itemLists.append(list.get(position).purchasedPackageDetails.WidgetPacks.get(item).Name)
-//                if (item != list.get(position).purchasedPackageDetails.WidgetPacks.size - 1) {
-//                    itemLists.append(", ")
-//                }
-//            }
-////            holder.itemCount.setText("+" + (list.size - 1) + " more")
-////            holder.itemCount.visibility = View.VISIBLE
-////        } else {
-////            itemLists.append(list.get(position).purchasedPackageDetails.WidgetPacks.get(0).Name)
-////            holder.itemCount.visibility = View.GONE
-//        }
-
-
-        holder.title1.text = list.get(position).NameOfWidget
-        var default_validity_months= list.get(position).totalMonthsValidity.toInt()
+        val default_validity_months= list.get(position).Expiry.Value
         val oneMonthFromNow = Calendar.getInstance()
         oneMonthFromNow.add(Calendar.MONTH, default_validity_months)
         val nowFormat = SimpleDateFormat("dd MMM yy")
         nowFormat.setTimeZone(Calendar.getInstance().getTimeZone())
         val oneMonthFormat = SimpleDateFormat("dd MMM yy")
         oneMonthFormat.setTimeZone(oneMonthFromNow.getTimeZone())
-        holder.validity.setText("(Valid till " + nowFormat.format(oneMonthFromNow.time) + ")")
-//            list.get(position).purchasedPackageDetails.WidgetPacks.get(position).ExpiryInMths.toString()
-
-
-//        CompositeDisposable().add(
-//            AppDatabase.getInstance(Application())!!
-//                .widgetDao()
-//                .getCartItemById(list.get(position).purchasedPackageDetails.WidgetPacks.get(position).WidgetKey)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({
-//                    Glide.with(context).load(it.get(position).image).into(holder.single_paidaddon_image)
-//                }, {
-//                    it.printStackTrace()
-//                })
-//        )
-
+        holder.validity.setText("Valid till " + nowFormat.format(oneMonthFromNow.time))
 
         val dataString = list.get(position).CreatedOn
         val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
         val dateFormat = SimpleDateFormat("'Time' hh:mm a")
         holder.itemDate.setText(dateFormat.format(date))
 
-      //  holder.validity.text = list.get(position).totalMonthsValidity.toString()
-        /*val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-        val output = SimpleDateFormat("dd-MMM-yyyy (hh:mm a)")
-
-        var d: Date? = null
-        try {
-            d = input.parse(list.get(position).CreatedOn)
-            holder.itemDate.setText(output.format(d))
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }*/
-
-
         holder.button.setOnClickListener {
             val intent = Intent(context, InvoiceActivity::class.java)
-            intent.putExtra("link", list!!.get(position).invoiceUrl)
+            intent.putExtra("link", list.get(position).InvoiceLink)
             context.startActivity(intent)
         }
+
+        CompositeDisposable().add(
+            AppDatabase.getInstance(Application())!!
+                .featuresDao()
+                .getFeaturesItemByFeatureCode(list.get(position).WidgetKey)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                           holder.title1.text = it.name
+                           Glide.with(context).load(it.primary_image).into(holder.single_paidaddon_image)
+
+                }, {
+                    it.printStackTrace()
+                })
+        )
     }
 
-
-    fun addupdates(purchaseResult: List<Result>) {
+    fun addupdates(purchaseResult: List<WidgetDetail>) {
         val initPosition = list.size
         list.clear()
         list.addAll(purchaseResult)
         notifyItemRangeInserted(initPosition, list.size)
     }
-
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

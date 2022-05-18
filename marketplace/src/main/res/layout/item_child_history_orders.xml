@@ -87,10 +87,11 @@
                             android:id="@+id/title1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textFontWeight="600"
                             android:fontFamily="@font/regular"
                             android:text="In-clinic appointments"
                             android:maxLines="4"
-                            android:textColor="@color/textcolor_2a2a"
+                            android:textColor="@color/common_text_color"
                             android:textSize="@dimen/_12sdp" />
 
                     </LinearLayout>
@@ -99,10 +100,11 @@
                         android:id="@+id/validity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="600"
                         android:fontFamily="@font/regular"
                         android:lineSpacingExtra="1.3sp"
-                        android:textColor="@color/textcolor_2a2a"
-                        android:textSize="@dimen/_10sdp"
+                        android:textColor="@color/coupon_text_color"
+                        android:textSize="@dimen/_11sdp"
                         tools:text="Valid till jun 23,2022" />
 
                 </LinearLayout>
@@ -111,11 +113,12 @@
                     android:id="@+id/item_orderId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textFontWeight="400"
                     android:ellipsize="end"
                     android:fontFamily="@font/semi_bold"
                     android:text="Time 1:10 PM"
                     android:textColor="@color/coupon_text_color"
-                    android:textSize="@dimen/_10sdp"
+                    android:textSize="@dimen/_11sdp"
                     app:layout_constraintBottom_toTopOf="@+id/imageLayout"
                     app:layout_constraintEnd_toStartOf="@+id/btn_invoice"
                     app:layout_constraintHorizontal_bias="0.071"
@@ -136,7 +139,7 @@
                     android:textColor="@color/yellow"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:visibility="gone"/>
+                    android:visibility="visible"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

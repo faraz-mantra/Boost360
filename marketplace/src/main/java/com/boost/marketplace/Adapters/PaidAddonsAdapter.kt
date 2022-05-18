@@ -122,7 +122,8 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
 
     fun upgradeListItem(updateModel: FeaturesModel) {
       upgradeTitle.text = updateModel.name
-      validity2.text="Valid till "+ updateModel.expiryDate
+      val date= updateModel.expiryDate?.substring(0,10)
+      validity2.text="Valid till "+ date
       Glide.with(context).load(updateModel.primary_image).into(image)
       if (updateModel.status == 1) {
         img1.setImageResource(R.drawable.ic_active)

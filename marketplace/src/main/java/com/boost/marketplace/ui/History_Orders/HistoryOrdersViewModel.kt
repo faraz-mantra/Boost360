@@ -2,7 +2,7 @@ package com.boost.marketplace.ui.History_Orders
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
+import com.boost.dbcenterapi.data.api_model.GetPurchaseOrderV2.GetPurchaseOrderResponseV2
 import com.boost.dbcenterapi.data.remote.ApiInterface
 import com.boost.dbcenterapi.utils.Utils
 import com.framework.models.BaseViewModel
@@ -12,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 import org.json.JSONObject
 
 class HistoryOrdersViewModel: BaseViewModel() {
-    private var purchaseResult: MutableLiveData<GetPurchaseOrderResponse> = MutableLiveData()
+    private var purchaseResult: MutableLiveData<GetPurchaseOrderResponseV2> = MutableLiveData()
     private var _upiPayment: MutableLiveData<JSONObject> = MutableLiveData()
     private var _cardData: MutableLiveData<JSONObject> = MutableLiveData()
     private var _netBankingData: MutableLiveData<JSONObject> = MutableLiveData()
@@ -29,14 +29,14 @@ class HistoryOrdersViewModel: BaseViewModel() {
         return updatesLoader
     }
 
-    fun updateResult(): LiveData<GetPurchaseOrderResponse> {
+    fun updateResult(): LiveData<GetPurchaseOrderResponseV2> {
         return purchaseResult
     }
 
     fun loadPurchasedItems(auth:String,fpid: String, clientId: String) {
         updatesLoader.postValue(true)
         compositeDisposable.add(
-            ApiService.getPurchasedOrders(auth,fpid, clientId)
+            ApiService.getPurchasedOrdersV2(auth,fpid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
