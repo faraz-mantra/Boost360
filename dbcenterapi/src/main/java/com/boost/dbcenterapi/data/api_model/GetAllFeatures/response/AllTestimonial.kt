@@ -1,17 +1,15 @@
 package com.boost.dbcenterapi.data.api_model.GetAllFeatures.response
 
-data class DiscountCoupons(
+data class AllTestimonial(
     val _kid: String,
     val _parentClassId: String,
     val _parentClassName: String,
     val _propertyName: String,
-    val code: String,
     val createdon: String,
-    val description: String?,
-    val discount_percent: Int,
     val isarchived: Boolean,
+    val name: String,
+    val text: String,
+    val title: String,
     val updatedon: String,
-    val websiteid: String,
-    val termsandconditions: String?,
-    val title: String?
+    val websiteid: String
 )
