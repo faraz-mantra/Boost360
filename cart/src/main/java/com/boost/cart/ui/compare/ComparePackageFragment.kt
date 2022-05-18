@@ -498,7 +498,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
                                             for (singleItem in it) {
                                                 for (item in item!!.included_features) {
                                                     if (singleItem.feature_code == item.feature_code) {
-                                                        bundleMonthlyMRP += RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),2)
+                                                        bundleMonthlyMRP += Utils.priceCalculatorForYear(RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),2), singleItem.widget_type, requireActivity())
                                                     }
                                                 }
                                             }

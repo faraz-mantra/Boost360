@@ -682,7 +682,7 @@ class FeatureDetailsActivity :
         }
     }
 
-    fun spannableString(value: Int) {
+    fun spannableString(value: Double) {
         val origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
 
         origCost.setSpan(
@@ -836,7 +836,7 @@ class FeatureDetailsActivity :
 
     }
 
-    private fun getDiscountedPrice(price: Int, discountPercent: Int): Int {
+    private fun getDiscountedPrice(price: Double, discountPercent: Int): Double {
         return price - ((discountPercent / 100) * price)
     }
 

@@ -15,7 +15,7 @@ data class Feature(
   val isarchived: Boolean,
   val learn_more_link: LearnMoreLink,
   val name: String,
-  val price: Int,
+  val price: Double,
   val primary_image: PrimaryImage?,
   val secondary_images: List<SecondaryImage>?,
   val target_business_usecase: String,
@@ -27,5 +27,6 @@ data class Feature(
   val feature_banner: FeatureBanner,
   val total_installs: String,
   val extended_properties: List<ExtendedProperty>?,
-  val exclusive_to_categories: List<String>?
+  val exclusive_to_categories: List<String>?,
+  val widget_type: String?
 )

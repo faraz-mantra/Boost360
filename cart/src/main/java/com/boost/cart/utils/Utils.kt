@@ -237,4 +237,38 @@ object Utils {
     var couponid = coupon.replace("\"", "")
     return couponid
   }
+
+  fun priceCalculatorForYear(price: Double,widgetType: String = "",activity: Activity): Double{
+    val prefs = SharedPrefs(activity)
+    if(prefs.getYearPricing() && !(widgetType.equals("RECHARGE") || widgetType.equals("ONE_TIME"))){
+      return price * 12
+    }
+    return  price
+  }
+
+  fun monthCalculatorForAddons(months: Int,widgetType: String = ""): Int{
+    if(!(widgetType.equals("RECHARGE") || widgetType.equals("ONE_TIME"))){
+      return months
+    }
+    return 1
+  }
+
+  fun expiryCalculator(months: Int, widgetType: String = "", activity: Activity): Int{
+    val prefs = SharedPrefs(activity)
+    if(prefs.getYearPricing() && !(widgetType.equals("RECHARGE") || widgetType.equals("ONE_TIME"))){
+      return months * 12
+    }
+    return 1
+  }
+
+  fun yearlyOrMonthlyOrEmptyValidity(widgetType: String = "", activity: Activity): String{
+    val prefs = SharedPrefs(activity)
+    if(widgetType.equals("RECHARGE") || widgetType.equals("ONE_TIME")){
+      return ""
+    } else if (prefs.getYearPricing()){
+      return "/year"
+    } else {
+      return "/month"
+    }
+  }
 }

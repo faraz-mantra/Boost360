@@ -18,6 +18,8 @@ import com.boost.cart.R
 import com.boost.cart.ui.details.DetailsFragment
 import com.boost.cart.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.boost.cart.utils.SharedPrefs
+import com.boost.cart.utils.Utils
+import com.boost.cart.utils.Utils.priceCalculatorForYear
 import com.boost.dbcenterapi.upgradeDB.model.*
 import com.bumptech.glide.Glide
 import java.text.NumberFormat
@@ -112,7 +114,7 @@ class AllFeatureAdaptor(
     fun upgradeListItem(updateModel: FeaturesModel, subscribedStatus: ArrayList<String>, activity: CartActivity) {
       val prefs = SharedPrefs(activity)
       val discount = 100 - updateModel.discount_percent
-      val price = if(prefs.getYearPricing()) ((discount * updateModel.price) / 100) * 12 else (discount * updateModel.price) / 100
+      val price = priceCalculatorForYear((discount * updateModel.price) / 100, updateModel.widget_type, activity)
       upgradeTitle.text = updateModel.target_business_usecase
       upgradeDetails.text = updateModel.name
 
@@ -121,11 +123,7 @@ class AllFeatureAdaptor(
         upgradeSubscribedStatus.visibility = View.GONE
       }
       if (price > 0) {
-        upgradePrice.text =
-          if(prefs.getYearPricing())
-          "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/year"
-        else
-          "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
+        upgradePrice.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + Utils.yearlyOrMonthlyOrEmptyValidity(updateModel.widget_type, activity)
         pricingLayout.visibility = View.VISIBLE
 //                upgradeSubscribedStatus.visibility = View.GONE
       } else {
@@ -139,12 +137,8 @@ class AllFeatureAdaptor(
       if (updateModel.discount_percent > 0) {
         upgradeDiscount.visibility = View.VISIBLE
         upgradeDiscount.text = "" + updateModel.discount_percent + "%"
-        val mrpPrice = if(prefs.getYearPricing()) updateModel.price * 12 else updateModel.price
-        upgradeMRP.text =
-          if(prefs.getYearPricing())
-          "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(mrpPrice) + "/year"
-        else
-            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(mrpPrice) + "/month"
+        val mrpPrice = priceCalculatorForYear(updateModel.price, updateModel.widget_type, activity)
+        upgradeMRP.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(mrpPrice) + Utils.yearlyOrMonthlyOrEmptyValidity(updateModel.widget_type, activity)
         upgradeMRP.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
       } else {
         upgradeDiscount.visibility = View.GONE
