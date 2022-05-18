@@ -171,7 +171,7 @@
             android:inputType="textCapCharacters"
             android:maxLines="1"
             android:singleLine="true"
-            android:textAllCaps="false"
+            android:textAllCaps="true"
             android:textColorHint="@color/gray_text_hint"
             app:fontFamily="@font/regular" />
 
@@ -256,6 +256,7 @@
                 android:maxLines="1"
                 android:textColor="@color/black_2A2A2A"
                 android:singleLine="true"
+                android:textAllCaps="true"
                 android:textColorHint="@color/gray_text_hint"
                 app:fontFamily="@font/regular" />
 
