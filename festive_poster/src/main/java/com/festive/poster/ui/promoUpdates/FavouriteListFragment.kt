@@ -28,7 +28,7 @@ class FavouriteListFragment: AppBaseFragment<FragmentFavouriteListBinding, PostU
     private var selectedPos: Int=0
     private var posterRvAdapter: AppBaseRecyclerViewAdapter<PosterModel>?=null
     private var categoryAdapter: AppBaseRecyclerViewAdapter<FavouriteTemplatesDetail>?=null
-    var categoryList:ArrayList<FavouriteTemplatesDetail>?=null
+    var categoryList=ArrayList<FavouriteTemplatesDetail>()
 
     override fun getLayout(): Int {
         return R.layout.fragment_favourite_list
@@ -38,12 +38,14 @@ class FavouriteListFragment: AppBaseFragment<FragmentFavouriteListBinding, PostU
         return PostUpdatesViewModel::class.java
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+
+    override fun onCreateView() {
+        super.onCreateView()
+        session = UserSessionManager(requireActivity())
         binding.rvCat.layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false)
         binding.rvPosters.layoutManager = LinearLayoutManager(requireActivity())
         getFavTemp()
-
     }
 
     private fun getFavTemp() {
@@ -52,8 +54,8 @@ class FavouriteListFragment: AppBaseFragment<FragmentFavouriteListBinding, PostU
                 if (it.isSuccess()){
                     it as GetFavTemplateResponse
                     it.Result?.FavouriteTemplatesDetails?.let { list ->
-                        categoryList?.addAll(list)
-                        categoryAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,categoryList!!)
+                        categoryList.addAll(list)
+                        categoryAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,categoryList)
                         binding.rvCat.adapter =categoryAdapter
 
                     }
