@@ -81,7 +81,19 @@ data class FeaturesModel(
   var exclusive_to_categories: String? = null,
 
   @ColumnInfo(name = "widget_type")
-  var widget_type: String = ""
+  var widget_type: String = "",
+
+  @ColumnInfo(name = "benefits")
+  var benefits: String? = null,
+
+  @ColumnInfo(name = "all_testimonials")
+  var all_testimonials: String? = null,
+
+  @ColumnInfo(name = "all_frequently_asked_questions")
+  var all_frequently_asked_questions: String? = null,
+
+  @ColumnInfo(name = "how_to_use_steps")
+  var how_to_use_steps: String? = null
 
 ): Serializable, AppBaseRecyclerViewItem {
 
