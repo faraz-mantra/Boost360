@@ -582,3 +582,7 @@ const val PS_SIGNUP_LAUNCHING_TRANSITION = "Ps_Signup_launching_transition"
 const val PS_SIGNUP_SUCCESS_PREVIEW_CLICK = "PS_SIGNUP_SUCCESS_PREVIEW_CLICK"
 const val PS_SIGNUP_SUCCESS_FINISH_CLICK = "PS_SIGNUP_SUCCESS_FINISH_CLICK"
 const val PS_BUSINESS_PROFILE_PAGE_LOAD = "Ps_Business profile page load"
+
+
+const val ECOM_BUSINESS_VERIFICATION_LOAD="Ecom_Business_Verification_Load"
+const val ECOM_BUSINESS_VERIFICATION_UPDATE="Ecom_Business_Verification_Update"

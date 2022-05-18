@@ -10,13 +10,16 @@ import com.appservice.databinding.FragmentBusinessVerificationBinding
 import com.appservice.model.GSTDetails
 import com.appservice.model.PanDetails
 import com.appservice.model.PanGstUpdateBody
+import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.BusinessVerificationViewModel
 import com.bumptech.glide.Glide
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.pref.clientId
 import com.framework.utils.FileUtils.getFileName
+import com.framework.utils.ValidationUtils
 import com.framework.utils.toBase64
+import com.framework.webengageconstant.*
 
 class BusinessVerificationFragment :
   AppBaseFragment<FragmentBusinessVerificationBinding, BusinessVerificationViewModel>() {
@@ -41,6 +44,7 @@ class BusinessVerificationFragment :
 
   override fun onCreateView() {
     super.onCreateView()
+    WebEngageController.trackEvent(ECOM_BUSINESS_VERIFICATION_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.uploadImageView,
       binding?.btnRetakePanImage,binding?.btnSubmit,
     binding?.rGst,binding?.rNotRegisterGst,binding?.rcmWhat)
@@ -116,6 +120,16 @@ class BusinessVerificationFragment :
       return
     }
 
+    if (ValidationUtils.isPanNumberValid(pan).not()){
+      binding?.edtPanNumber?.error = getString(R.string.enter_valid_pan_num)
+      return
+    }
+
+    if (ValidationUtils.isGstValid(gstin).not()){
+      binding?.edtGstinName?.error = getString(R.string.enter_valid_gstin_number)
+      return
+    }
+
     val bundle = Bundle().apply {
       putParcelable(ConfirmBusinessVerificationSheet.IMG_URI,panImgUri)
       putString(ConfirmBusinessVerificationSheet.PAN,pan)
@@ -163,6 +177,8 @@ class BusinessVerificationFragment :
     viewModel?.panGstUpdate(panGstUpdateBody)?.observe(viewLifecycleOwner){
       hideProgress()
       if (it.isSuccess()){
+        WebEngageController.trackEvent(ECOM_BUSINESS_VERIFICATION_UPDATE, PAGE_VIEW, NO_EVENT_VALUE)
+
         BusinessVerificationUnderwaySheet.newInstance{
           activity?.finish()
         }

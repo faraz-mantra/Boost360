@@ -54,7 +54,7 @@ class ConfirmBusinessVerificationSheet : BaseBottomSheetDialog<SheetConfirmBusin
   }
   override fun onCreateView() {
     initUi()
-    setOnClickListener(binding?.btnSubmitSubmit)
+    setOnClickListener(binding?.btnSubmitSubmit,binding?.ivClose)
   }
 
   private fun initUi() {
@@ -68,7 +68,7 @@ class ConfirmBusinessVerificationSheet : BaseBottomSheetDialog<SheetConfirmBusin
     }else{
       binding?.gstDetail?.isAllCaps = true
       binding?.gstDetail?.text = gst
-      binding?.rcmDetail?.isVisible=true
+      binding?.rcmDetail?.isVisible= rcm == true
     }
 
 
@@ -79,6 +79,9 @@ class ConfirmBusinessVerificationSheet : BaseBottomSheetDialog<SheetConfirmBusin
     when(v){
       binding?.btnSubmitSubmit->{
         onSubmitClick.invoke(Unit)
+        dismiss()
+      }
+      binding?.ivClose->{
         dismiss()
       }
     }
