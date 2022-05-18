@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
@@ -70,7 +71,7 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPlaceHomeViewModel>(),
-    RecyclerStringItemClickListener, CompareBackListener, HomeListener,AddonsListener {
+    RecyclerStringItemClickListener, CompareBackListener, HomeListener, AddonsListener {
 
     lateinit var packageViewPagerAdapter: PackageViewPagerAdapter
     lateinit var featureDealsAdapter: FeatureDealsAdapter
@@ -138,8 +139,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         profileUrl = intent.getStringExtra("profileUrl")
         accountType = intent.getStringExtra("accountType")
         isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
-        isOpenHomeFragment = intent.getBooleanExtra("isComingFromOrderConfirm",false)
-        isOpenAddOnsFragment = intent.getBooleanExtra("isComingFromOrderConfirmActivation",false)
+        isOpenHomeFragment = intent.getBooleanExtra("isComingFromOrderConfirm", false)
+        isOpenAddOnsFragment = intent.getBooleanExtra("isComingFromOrderConfirmActivation", false)
         //user buying item directly
         widgetFeatureCode = intent.getStringExtra("buyItemKey")
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
@@ -161,7 +162,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         featureDealsAdapter = FeatureDealsAdapter(ArrayList(), ArrayList(), this, this)
         partnerViewPagerAdapter = PartnerViewPagerAdapter(ArrayList(), this, this)
         bannerViewPagerAdapter = BannerViewPagerAdapter(ArrayList(), this, this)
-        upgradeAdapter = UpgradeAdapter(ArrayList(), this,this)
+        upgradeAdapter = UpgradeAdapter(ArrayList(), this, this)
         addonsCategoryAdapter = AddonsCategoryAdapter(this, ArrayList(), this)
         videosListAdapter = VideosListAdapter(ArrayList(), this)
 
@@ -184,28 +185,27 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             val popup = PopupMenu(this, imageViewOption1)
             popup.getMenuInflater().inflate(R.menu.home_menu, popup.getMenu())
             val menuOpts = popup.menu
-            if(prefs.getYearPricing()) {
+            if (prefs.getYearPricing()) {
                 menuOpts.getItem(1).setTitle(R.string.switch_to_monthly_pricing)
-            }else {
+            } else {
                 menuOpts.getItem(1).setTitle(R.string.switch_to_yearly_pricing)
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                popup.setForceShowIcon(true)
-            }
+            popup.setForceShowIcon(true)
+
             popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
 
                 when (item!!.itemId) {
                     R.id.order_history -> {
-                        val intent= Intent(this, HistoryOrdersActivity::class.java)
-                        intent.putExtra("fpid",fpid)
+                        val intent = Intent(this, HistoryOrdersActivity::class.java)
+                        intent.putExtra("fpid", fpid)
                         startActivity(intent)
                     }
                     R.id.pricing_switch -> {
                         val menuOpts1 = popup.menu
-                        if(prefs.getYearPricing()) {
+                        if (prefs.getYearPricing()) {
                             menuOpts1.getItem(1).setTitle(R.string.switch_to_monthly_pricing)
                             prefs.storeYearPricing(false)
-                        }else {
+                        } else {
                             menuOpts1.getItem(1).setTitle(R.string.switch_to_yearly_pricing)
                             prefs.storeYearPricing(true)
                         }
@@ -219,8 +219,11 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                     R.id.help_section -> {
                         val videoshelp = HelpVideosBottomSheet()
                         val args = Bundle()
-                        videoshelp.arguments= args
-                        videoshelp.show(this.supportFragmentManager, HelpVideosBottomSheet::class.java.name)
+                        videoshelp.arguments = args
+                        videoshelp.show(
+                            this.supportFragmentManager,
+                            HelpVideosBottomSheet::class.java.name
+                        )
                     }
 //                    else -> super.onOptionsItemSelected(item)
                 }
@@ -269,10 +272,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         }
 
         initializeVideosRecycler()
-        if(BuildConfig.FLAVOR.equals("jioonline")) {
+        if (BuildConfig.FLAVOR.equals("jioonline")) {
             initializePartnerViewPager()
             partner_layout.visibility = View.VISIBLE
-        }else{
+        } else {
             partner_layout.visibility = View.GONE
         }
         initializeBannerViewPager()
@@ -628,7 +631,11 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //            mp_view_cart_rl.visibility = View.GONE
 //        }
         mp_review_cart_tv.setOnClickListener {
-            WebEngageController.trackEvent(ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED,EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED,NO_EVENT_VALUE)
+            WebEngageController.trackEvent(
+                ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED,
+                EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED,
+                NO_EVENT_VALUE
+            )
             val intent = Intent(
                 applicationContext,
                 CartActivity::class.java
@@ -761,10 +768,11 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     }
 
 
-  fun startSpecificActivity(otherActivityClass: Class<*>?) {
-    val intent = Intent(applicationContext, otherActivityClass)
-    startActivity(intent)
-  }
+    fun startSpecificActivity(otherActivityClass: Class<*>?) {
+        val intent = Intent(applicationContext, otherActivityClass)
+        startActivity(intent)
+    }
+
     fun startReferralView() {
         try {
             WebEngageController.trackEvent(REFER_A_FRIEND_CLICK, CLICK, TO_BE_ADDED)
@@ -878,20 +886,20 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                         val hours = minutes / 60
                         val days = hours / 24
 
-                        if(days>0){
+                        if (days > 0) {
                             paidUser = true
                             break
                         }
                     }
                 }
                 runOnUiThread {
-                  if(paidUser){
-                    bottom_box.visibility = View.VISIBLE
-                    footer.visibility = View.VISIBLE
-                  }else{
-                    bottom_box.visibility = View.GONE
-                    footer.visibility = View.GONE
-                  }
+                    if (paidUser) {
+                        bottom_box.visibility = View.VISIBLE
+                        footer.visibility = View.VISIBLE
+                    } else {
+                        bottom_box.visibility = View.GONE
+                        footer.visibility = View.GONE
+                    }
                 }
 
             }
@@ -1013,7 +1021,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                    recommended_features_account_type.setText(Html.fromHtml(it!!.toLowerCase()))
 //                    recommended_features_additional_tv.visibility = View.GONE
 //                }
-                recommended_features_additional_tv.text = Html.fromHtml("Top "+it!!.toLowerCase()+" features")
+                recommended_features_additional_tv.text =
+                    Html.fromHtml("Top " + it!!.toLowerCase() + " features")
             }
 
         })
@@ -1616,9 +1625,9 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         viewModel.getPartnerZone().observe(this, androidx.lifecycle.Observer {
             Log.e("getPartnerZone", it.toString())
             if (it.size > 0) {
-                if(BuildConfig.FLAVOR.equals("jioonline")){
+                if (BuildConfig.FLAVOR.equals("jioonline")) {
                     partner_layout.visibility = View.GONE
-                }else {
+                } else {
                     updatePartnerViewPager(it)
                     partner_layout.visibility = View.VISIBLE
                 }
@@ -1906,7 +1915,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                ?: NO_EVENT_VALUE)
 
 
-
         val event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()
         item!!.name?.let { it1 -> event_attributes.put("Package Name", it1) }
         item!!.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
@@ -2081,9 +2089,18 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                                                            packageFragment,
 //                                                            PACKAGE_FRAGMENT
 //                                                        )
-                                                        val intent = Intent(this, ComparePacksActivity::class.java)
-                                                        intent.putExtra("bundleData", Gson().toJson(selectedBundle))
-                                                        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+                                                        val intent = Intent(
+                                                            this,
+                                                            ComparePacksActivity::class.java
+                                                        )
+                                                        intent.putExtra(
+                                                            "bundleData",
+                                                            Gson().toJson(selectedBundle)
+                                                        )
+                                                        intent.putStringArrayListExtra(
+                                                            "userPurchsedWidgets",
+                                                            userPurchsedWidgets
+                                                        )
                                                         startActivity(intent)
 
                                                     }, {
@@ -2159,9 +2176,18 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                                                        packageFragment,
 //                                                        PACKAGE_FRAGMENT
 //                                                    )
-                                                    val intent = Intent(this, ComparePacksActivity::class.java)
-                                                    intent.putExtra("bundleData", Gson().toJson(selectedBundle))
-                                                    intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+                                                    val intent = Intent(
+                                                        this,
+                                                        ComparePacksActivity::class.java
+                                                    )
+                                                    intent.putExtra(
+                                                        "bundleData",
+                                                        Gson().toJson(selectedBundle)
+                                                    )
+                                                    intent.putStringArrayListExtra(
+                                                        "userPurchsedWidgets",
+                                                        userPurchsedWidgets
+                                                    )
                                                     startActivity(intent)
 
                                                 }, {
@@ -2208,7 +2234,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                            )
 
                             val intent = Intent(this, WebViewActivity::class.java)
-                            intent.putExtra("title","")
+                            intent.putExtra("title", "")
                             intent.putExtra("link", item!!.cta_web_link)
                             startActivity(intent)
                         }
@@ -2257,8 +2283,11 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                                        MARKET_OFFER_FRAGMENT
 //                                    )
 
-                                    val intent = Intent(this,MarketPlaceOffersActivity::class.java)
-                                    intent.putExtra("marketOffersData", Gson().toJson(selectedMarketOfferModel))
+                                    val intent = Intent(this, MarketPlaceOffersActivity::class.java)
+                                    intent.putExtra(
+                                        "marketOffersData",
+                                        Gson().toJson(selectedMarketOfferModel)
+                                    )
                                     startActivity(intent)
 
                                 }, {
@@ -2380,7 +2409,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                                        )
                                         val intent = Intent(this, ComparePacksActivity::class.java)
                                         intent.putExtra("bundleData", Gson().toJson(it))
-                                        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+                                        intent.putStringArrayListExtra(
+                                            "userPurchsedWidgets",
+                                            userPurchsedWidgets
+                                        )
                                         startActivity(intent)
 
                                     }, {
@@ -2410,7 +2442,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                Constants.WEB_VIEW_FRAGMENT
 //            )
             val intent = Intent(this, com.boost.marketplace.ui.webview.WebViewActivity::class.java)
-            intent.putExtra("title","")
+            intent.putExtra("title", "")
             intent.putExtra("link", item!!.cta_web_link)
             startActivity(intent)
         }
@@ -2488,10 +2520,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
         val dialogCard = VideosPopUpBottomSheet()
         val args = Bundle()
-        args.putString("fpid",fpid)
-        args.putString("expCode",experienceCode)
-        args.putString("fptag",fpTag)
-        args.putString("title",videoItem.title)
+        args.putString("fpid", fpid)
+        args.putString("expCode", experienceCode)
+        args.putString("fptag", fpTag)
+        args.putString("title", videoItem.title)
         args.putString("link", videoItem.youtube_link)
         dialogCard.arguments = args
         dialogCard.show(this.supportFragmentManager, VideosPopUpBottomSheet::class.java.name)
@@ -2523,11 +2555,11 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                             if (it == 0) {
 //                                makeFlyAnimation(imageView)
                                 try {
-                                    callBundleCart(item,imageView)
+                                    callBundleCart(item, imageView)
                                 } catch (e: Exception) {
                                     SentryController.captureException(e)
                                 }
-                            }else{
+                            } else {
 
                             }
                         }, {
@@ -2726,7 +2758,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //
 //    }
 
-    fun callBundleCart(item: Bundles, imageView: ImageView){
+    fun callBundleCart(item: Bundles, imageView: ImageView) {
         val itemIds = arrayListOf<String>()
         for (i in item.included_features) {
             itemIds.add(i.feature_code)
@@ -2747,7 +2779,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                         for (singleItem in it) {
                             for (item in item!!.included_features) {
                                 if (singleItem.feature_code == item.feature_code) {
-                                    bundleMonthlyMRP += RootUtil.round(singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),2)
+                                    bundleMonthlyMRP += RootUtil.round(
+                                        singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),
+                                        2
+                                    )
                                 }
                             }
                         }
@@ -2883,7 +2918,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                                        )
                                         val intent = Intent(this, ComparePacksActivity::class.java)
                                         intent.putExtra("bundleData", Gson().toJson(selectedBundle))
-                                        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+                                        intent.putStringArrayListExtra(
+                                            "userPurchsedWidgets",
+                                            userPurchsedWidgets
+                                        )
                                         startActivity(intent)
 //                                                        bundleData = Gson().fromJson<Bundles>(Gson().toJson(it), object : TypeToken<Bundles>() {}.type)
 //                                                        packageAdaptor = PackageAdaptor((activity as UpgradeActivity), ArrayList(), Gson().fromJson<Bundles>(Gson().toJson(it), object : TypeToken<Bundles>() {}.type))
@@ -2982,7 +3020,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                                        )
                                         val intent = Intent(this, ComparePacksActivity::class.java)
                                         intent.putExtra("bundleData", Gson().toJson(selectedBundle))
-                                        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+                                        intent.putStringArrayListExtra(
+                                            "userPurchsedWidgets",
+                                            userPurchsedWidgets
+                                        )
                                         startActivity(intent)
 
 
@@ -3019,14 +3060,23 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                                                            details,
 //                                                            Constants.DETAILS_FRAGMENT
 //                                                        )
-                                                        val intent = Intent(this, FeatureDetailsActivity::class.java)
+                                                        val intent = Intent(
+                                                            this,
+                                                            FeatureDetailsActivity::class.java
+                                                        )
 
                                                         intent.putExtra("fpid", fpid)
                                                         intent.putExtra("expCode", experienceCode)
                                                         intent.putExtra("isDeepLink", isDeepLink)
-                                                        intent.putExtra("deepLinkViewType", deepLinkViewType)
+                                                        intent.putExtra(
+                                                            "deepLinkViewType",
+                                                            deepLinkViewType
+                                                        )
                                                         intent.putExtra("deepLinkDay", deepLinkDay)
-                                                        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+                                                        intent.putExtra(
+                                                            "isOpenCardFragment",
+                                                            isOpenCardFragment
+                                                        )
                                                         intent.putExtra(
                                                             "accountType",
                                                             accountType
@@ -3038,12 +3088,18 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                         if (email != null) {
                                                             intent.putExtra("email", email)
                                                         } else {
-                                                            intent.putExtra("email", "ria@nowfloats.com")
+                                                            intent.putExtra(
+                                                                "email",
+                                                                "ria@nowfloats.com"
+                                                            )
                                                         }
                                                         if (mobileNo != null) {
                                                             intent.putExtra("mobileNo", mobileNo)
                                                         } else {
-                                                            intent.putExtra("mobileNo", "9160004303")
+                                                            intent.putExtra(
+                                                                "mobileNo",
+                                                                "9160004303"
+                                                            )
                                                         }
                                                         intent.putExtra("profileUrl", profileUrl)
 
@@ -3119,11 +3175,16 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                                                                            MARKET_OFFER_FRAGMENT
 //                                                                        )
 //
-                                                                        val intent = Intent(this, MarketPlaceOffersActivity::class.java)
-                                                                        intent.putExtra("marketOffersData",
+                                                                        val intent = Intent(
+                                                                            this,
+                                                                            MarketPlaceOffersActivity::class.java
+                                                                        )
+                                                                        intent.putExtra(
+                                                                            "marketOffersData",
                                                                             Gson().toJson(
                                                                                 selectedMarketOfferModel
-                                                                            ))
+                                                                            )
+                                                                        )
                                                                         startActivity(intent)
 
 
@@ -3144,8 +3205,11 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                                                                    webViewFragment,
 //                                                                    Constants.WEB_VIEW_FRAGMENT
 //                                                                )
-                                                                val intent = Intent(this, com.boost.marketplace.ui.webview.WebViewActivity::class.java)
-                                                                intent.putExtra("title","")
+                                                                val intent = Intent(
+                                                                    this,
+                                                                    com.boost.marketplace.ui.webview.WebViewActivity::class.java
+                                                                )
+                                                                intent.putExtra("title", "")
                                                                 intent.putExtra("link", item)
                                                                 startActivity(intent)
                                                             }
