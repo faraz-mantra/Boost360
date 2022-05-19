@@ -26,7 +26,6 @@ open class PosterModel(
     val variants: List<PosterVariantModel>?=null,
     var greeting_message:String?=null,
     var layout_id:Int,
-    var shouldShowFavOn:Boolean=false,
     ): AppBaseRecyclerViewItem {
     override fun getViewType(): Int {
         return layout_id

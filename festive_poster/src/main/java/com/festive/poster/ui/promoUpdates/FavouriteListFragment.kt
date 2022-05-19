@@ -1,11 +1,13 @@
 package com.festive.poster.ui.promoUpdates
 
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.Constants
 import com.festive.poster.constant.RecyclerViewActionType
+import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.FragmentFavouriteListBinding
 import com.festive.poster.models.FavouriteTemplatesDetail
 import com.festive.poster.models.GetFavTemplateResponse
@@ -49,19 +51,61 @@ class FavouriteListFragment: AppBaseFragment<FragmentFavouriteListBinding, PostU
     }
 
     private fun getFavTemp() {
+        showProgress()
         viewModel?.getFavTemplates(session?.fPID,session?.fpTag,Constants.PROMO_WIDGET_KEY)
             ?.observe(viewLifecycleOwner) {
+                hideProgress()
                 if (it.isSuccess()){
                     it as GetFavTemplateResponse
+
                     it.Result?.FavouriteTemplatesDetails?.let { list ->
                         categoryList.addAll(list)
-                        categoryAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,categoryList)
+                        applyAttributesToTemplates()
+                        groupTemplatesToAllTag()
+                        if (categoryList.isEmpty()){
+                            zerothCase(true)
+                            return@let
+                        }else{
+                            zerothCase(false)
+                        }
+                        categoryAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,categoryList,this)
                         binding.rvCat.adapter =categoryAdapter
-
+                        switchToSelectedItem()
                     }
 
                 }
 
+        }
+    }
+
+    private fun groupTemplatesToAllTag() {
+        val allTemplates = ArrayList<PosterModel>()
+        categoryList.forEach {
+            if (it.tag!="All"&&it.templateDetails!=null){
+                allTemplates.addAll(it.templateDetails!!)
+            }
+        }
+        categoryList.find { it.tag=="All" }?.apply {
+            templateDetails=allTemplates
+            tagName="All"
+        }
+
+    }
+
+    private fun applyAttributesToTemplates() {
+        categoryList.forEach {
+            it.templateDetails?.forEach { template->
+                template.layout_id = RecyclerViewItemType.TEMPLATE_VIEW_FOR_FAV.getLayout()
+            }
+
+        }
+    }
+
+    private fun zerothCase(b: Boolean) {
+        if (b){
+            binding.layoutZeroth.isVisible=true
+        }else{
+            binding.layoutZeroth.isVisible=false
         }
     }
 
@@ -88,10 +132,7 @@ class FavouriteListFragment: AppBaseFragment<FragmentFavouriteListBinding, PostU
             RecyclerViewActionType.FAV_CAT_CLICKED.ordinal->{
                 WebEngageController.trackEvent(Promotional_Update_Category_Click)
 
-                categoryList?.forEach { it.isSelected =false }
-                categoryList?.get(position)?.isSelected=true
-                categoryAdapter?.notifyDataSetChanged()
-                selectedPos = position
+                selectedPos=position
                 switchToSelectedItem()
             }
             RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal->{
@@ -107,13 +148,19 @@ class FavouriteListFragment: AppBaseFragment<FragmentFavouriteListBinding, PostU
     }
 
     private fun switchToSelectedItem() {
-        val selectedItem = categoryList?.get(selectedPos)
-        selectedItem?.isSelected =true
-        binding.tvCatTitle.text = selectedItem?.tag
-        binding.tvCatSize.text = selectedItem?.count.toString()
-        posterRvAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,
-            categoryList?.get(selectedPos)?.templateDetails!!,this)
-        binding.rvPosters.adapter = posterRvAdapter
-        binding.rvPosters.layoutManager = LinearLayoutManager(requireActivity())
+        categoryList.forEach { it.isSelected =false }
+        categoryList.get(selectedPos).isSelected=true
+        categoryAdapter?.notifyDataSetChanged()
+        categoryList.get(selectedPos).templateDetails?.let {
+            val selectedItem = categoryList.get(selectedPos)
+            selectedItem.isSelected =true
+            binding.tvCatTitle.text = selectedItem.tag
+            binding.tvCatSize.text = selectedItem.count.toString()
+            posterRvAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,
+                it,this)
+            binding.rvPosters.adapter = posterRvAdapter
+            binding.rvPosters.layoutManager = LinearLayoutManager(requireActivity())
+        }
+
     }
 }

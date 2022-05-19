@@ -11,6 +11,7 @@ enum class RecyclerViewItemType {
   TODAYS_PICK_TEMPLATE_VIEW,
   TEMPLATE_VIEW_FOR_VP,
   TEMPLATE_VIEW_FOR_RV,
+  TEMPLATE_VIEW_FOR_FAV,
   SOCIAL_CONN,
   BROWSE_TAB_TEMPLATE_CAT,
   BROWSE_ALL_TEMPLATE_CAT,
@@ -40,6 +41,7 @@ enum class RecyclerViewItemType {
       TODAYS_PICK_TEMPLATE_VIEW -> R.layout.list_item_todays_pick_template
       TEMPLATE_VIEW_FOR_VP -> R.layout.list_item_template_for_vp
       TEMPLATE_VIEW_FOR_RV -> R.layout.list_item_template_for_rv
+      TEMPLATE_VIEW_FOR_FAV -> R.layout.list_item_template_for_fav
       SOCIAL_CONN -> R.layout.list_item_social_conn
       BROWSE_TAB_TEMPLATE_CAT->R.layout.list_item_browse_tab_template_cat
       BROWSE_ALL_TEMPLATE_CAT->R.layout.list_item_browse_all_cat

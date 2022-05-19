@@ -5,6 +5,7 @@ import android.graphics.PorterDuff
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.festive.poster.R
@@ -71,13 +72,19 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseVi
 
     fun observeFragmentStack() {
         supportFragmentManager.addOnBackStackChangedListener {
+            binding?.ivLove?.isVisible =true
+
             when (getTopFragment()) {
                 is PromoLandingPageFragment -> {
                     binding?.tvToolbarTitle?.text = getString(R.string.update_studios)
                 }
                 is BrowseAllFragment -> {
                     binding?.tvToolbarTitle?.text = getString(R.string.browse_all)
+                }
+                is FavouriteListFragment->{
+                    binding?.tvToolbarTitle?.text = getString(R.string.favourites)
 
+                    binding?.ivLove?.isVisible =false
                 }
             }
         }

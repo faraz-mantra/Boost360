@@ -111,5 +111,8 @@
     <string name="visit_website">Visit website</string>
     <string name="_4m">4m</string>
     <string name="not_connected">Not connected</string>
+    <string name="you_have_not_saved_any_template_as_favorites">You have not saved any\ntemplate as favorites</string>
+    <string name="favourited_on">"Favourited on: "</string>
+    <string name="favourites">Favourites</string>
 
 </resources>

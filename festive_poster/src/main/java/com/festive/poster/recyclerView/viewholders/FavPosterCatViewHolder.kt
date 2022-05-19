@@ -29,6 +29,9 @@ class FavPosterCatViewHolder(binding: ListItemFavCatBinding) :
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     val model = item as FavouriteTemplatesDetail
+
+      binding.tvCount.text =model.count.toString()
+
     if (model.isSelected){
          getColor(R.color.color4ACDFF)?.let {
         binding.borderCard.strokeColor=it

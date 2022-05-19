@@ -5,6 +5,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.view.isVisible
 import com.festive.poster.R
 import com.festive.poster.constant.RecyclerViewActionType
+import com.festive.poster.databinding.ListItemTemplateForFavBinding
 import com.festive.poster.databinding.ListItemTemplateForRvBinding
 import com.festive.poster.models.PosterModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
@@ -18,15 +19,18 @@ import com.framework.webengageconstant.Promotional_Update_Post_Click
 import com.framework.webengageconstant.Promotional_Update_WhatsApp_Share_Click
 
 
-class TemplateForRVViewHolder(binding: ListItemTemplateForRvBinding):
-    AppBaseRecyclerViewHolder<ListItemTemplateForRvBinding>(binding) {
+class TemplateForFavViewHolder(binding: ListItemTemplateForFavBinding):
+    AppBaseRecyclerViewHolder<ListItemTemplateForFavBinding>(binding) {
 
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as PosterModel
         val variant = model.variants?.firstOrNull()
 
-
+        if (model.details?.markedAsFavouriteOn!=null){
+            binding.tvFav.text =activity?.getString(R.string.favourited_on)+DateUtils.parseDate(model.details?.markedAsFavouriteOn,
+                DateUtils.FORMAT_SERVER_1_DATE,DateUtils.FORMAT__DD__MM__YYYY)
+        }
         if (model.details?.Favourite == true){
             binding.ivLove.setTintColor(getColor(R.color.colorEB5757)!!)
         }else{
