@@ -2,7 +2,6 @@ package com.appservice.ui.staffs.ui.profile
 
 import android.content.Intent
 import android.graphics.*
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -57,7 +56,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
   override fun onCreateView() {
     super.onCreateView()
     sessionLocal = UserSessionManager(requireActivity())
-    WebEngageController.trackEvent(if (isDoctor) DOCTOR_PROFILE_DETAIL else STAFF_PROFILE_DETAIL, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(if (isDoctorClinic) DOCTOR_PROFILE_DETAIL else STAFF_PROFILE_DETAIL, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.civMenu, binding?.ctvEdit, binding?.ctvEditLeaves, binding?.ctvEditServices, binding?.ctvEditTiming)
     getStaffDetail()
   }
@@ -110,7 +109,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
         if (staffDetails?.isAvailable == false) showInactiveProfile()
         fetchServices()
         setTimings()
-        if (isDoctor) setDoctorsData()
+        if (isDoctorClinic) setDoctorsData()
       } else showShortToast(res.errorMessage() ?: getString(R.string.something_went_wrong))
       hideProgress()
     }
@@ -278,7 +277,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
       binding?.ctvEdit -> {
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.STAFF_DATA.name, staffDetails)
-        startStaffFragmentActivity(requireActivity(), if (isDoctor) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT, bundle, false, isResult = true, Constants.STAFF_PROFILE_UPDATED_DATA)
+        startStaffFragmentActivity(requireActivity(), if (isDoctorClinic) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT, bundle, false, isResult = true, Constants.STAFF_PROFILE_UPDATED_DATA)
       }
       binding?.ctvEditLeaves -> {
 
@@ -312,7 +311,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
     this.popupWindow = PopupWindow(view, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
     val markAsActive = this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.mark_as_active)
     val removeStaff = this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.remove_staff_profile)
-    if (isDoctor) removeStaff?.text = getString(R.string.remove_doctor)
+    if (isDoctorClinic) removeStaff?.text = getString(R.string.remove_doctor)
     markAsActive?.setOnClickListener {
       staffDetails?.isAvailable = true
       showInactiveConfirmation()
@@ -350,7 +349,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
     val removeStaffConfirmationBottomSheet = RemoveStaffConfirmationBottomSheet()
     removeStaffConfirmationBottomSheet.onClicked = { removeStaffProfile() }
     val bundle = Bundle()
-    bundle.putBoolean(IntentConstant.STAFF_DATA.name, isDoctor)
+    bundle.putBoolean(IntentConstant.STAFF_DATA.name, isDoctorClinic)
     removeStaffConfirmationBottomSheet.arguments = bundle
     removeStaffConfirmationBottomSheet.show(this@StaffProfileDetailsFragment.parentFragmentManager, RemoveStaffConfirmationBottomSheet::class.java.name)
   }

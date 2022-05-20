@@ -37,6 +37,7 @@ import com.framework.constants.SupportVideoType
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
@@ -120,11 +121,11 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
   }
 
   fun getZerocaseType(): AppZeroCases {
-    if(isHotelProfile(sessionLocal.fP_AppExperienceCode)){
+    if (isHotelProfile(sessionLocal.fP_AppExperienceCode)) {
       return AppZeroCases.ROOMS_LISTING
-    }else if(isRestaurantProfile(sessionLocal.fP_AppExperienceCode)){
+    } else if (isRestaurantProfile(sessionLocal.fP_AppExperienceCode)) {
       return AppZeroCases.RESTAURANT_SERVICES
-    }else{
+    } else {
       return AppZeroCases.PRODUCT
     }
   }
@@ -171,6 +172,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
   }
 
   private fun setProductDataItems(resultProduct: ArrayList<CatalogProduct>?, totalCount: Int?, isFirstLoad: Boolean) {
+    onServiceAddedOrUpdated(resultProduct?.size ?: 0)
     if (isFirstLoad) {
       finalList.clear()
       if (resultProduct.isNullOrEmpty().not()) {
@@ -196,6 +198,11 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
   }
 
 
+  private fun onServiceAddedOrUpdated(count: Int) {
+    val instance = FirestoreManager
+    instance.getDrScoreData()?.metricdetail?.number_products_added = count
+    instance.updateDocument()
+  }
 
 
   private fun setAdapterNotify() {
@@ -358,8 +365,10 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
         return true
       }
       R.id.menu_item_help -> {
-        startActivity(Intent(baseActivity, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
-          .putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name, SupportVideoType.PRODUCT_CATALOGUE.value))
+        startActivity(
+          Intent(baseActivity, Class.forName("com.onboarding.nowfloats.ui.supportVideo.SupportVideoPlayerActivity"))
+            .putExtra(com.onboarding.nowfloats.constant.IntentConstant.SUPPORT_VIDEO_TYPE.name, SupportVideoType.PRODUCT_CATALOGUE.value)
+        )
         return true
       }
       else -> super.onOptionsItemSelected(item)

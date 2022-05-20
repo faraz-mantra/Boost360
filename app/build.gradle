@@ -59,7 +59,8 @@ android {
     buildTypes {
         applicationVariants.all { variant ->
             variant.outputs.all {
-                outputFileName = "NF-Boost-" + "${variant.name}-${variant.versionName}_${getDate()}.apk"
+//                outputFileName = "NF-Boost-" + "${variant.name}-${variant.versionName}_${getDate()}.apk"
+                outputFileName = "NF-Boost-" + "${variant.name}-${variant.versionName}.apk"
             }
         }
         release {
@@ -73,7 +74,7 @@ android {
     flavorDimensions "default"
     productFlavors {
         partone {
-            versionName "6.0.20.1"
+            versionName "6.0.20.6"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'

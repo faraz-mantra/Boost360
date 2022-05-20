@@ -76,7 +76,7 @@ class MyAddonsFragment : BaseFragment("MarketPlaceMyAddonsFragment"), MyAddonsLi
     viewModel = ViewModelProviders.of(requireActivity(), myAddonsViewModelFactory)
       .get(MyAddonsViewModel::class.java)
 
-    progressDialog = ProgressDialog(requireContext())
+    progressDialog = ProgressDialog(requireContext(),R.style.AppCompatAlertDialogStyle)
     var purchasedPack = requireArguments().getStringArrayList("userPurchsedWidgets")
     if (purchasedPack != null) {
       purchasedPackages = purchasedPack

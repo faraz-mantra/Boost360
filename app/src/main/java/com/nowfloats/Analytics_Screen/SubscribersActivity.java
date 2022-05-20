@@ -138,7 +138,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     }
 
     mProgressBar = (ProgressBar) findViewById(R.id.pb_subscriber);
-    progressDialog = new ProgressDialog(this);
+    progressDialog = new ProgressDialog(this, R.style.AppCompatAlertDialogStyle);
     progressDialog.setMessage(getString(R.string.loading));
     mRecyclerView = (RecyclerView) findViewById(R.id.lv_subscribers);
 

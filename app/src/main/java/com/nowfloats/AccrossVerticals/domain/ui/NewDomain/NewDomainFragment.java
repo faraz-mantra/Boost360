@@ -67,7 +67,7 @@ public class NewDomainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        vmnProgressBar = new ProgressDialog(requireContext());
+        vmnProgressBar = new ProgressDialog(requireContext(),R.style.AppCompatAlertDialogStyle);
         vmnProgressBar.setIndeterminate(true);
         vmnProgressBar.setMessage(getString(R.string.please_wait));
         vmnProgressBar.setCancelable(false);
