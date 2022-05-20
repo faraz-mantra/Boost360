@@ -68,5 +68,14 @@
   <string name="view_offer_coupons">View offer coupons</string>
   <string name="switch_to_monthly_pricing">Switch to monthly pricing</string>
   <string name="switch_to_yearly_pricing">Switch to annual pricing</string>
+    <string name="card_number">Card Number*</string>
+  <string name="name_on_card">Name on Card*</string>
+  <string name="expiry_month">Expiry Month*</string>
+  <string name="expiry_year">Expiry Year*</string>
+  <string name="cvv">CVV*</string>
+  <string name="last_3_digits_printed_non_the_back_of_the_card">Last 3 digits printed\non the back of the card</string>
+  <string name="save_this_card_for_faster_payment">Save this card for faster payment</string>
+  <string name="pay_now">PAY NOW</string>
+  <string name="invalid_card_number">Invalid Card Number</string>
 
 </resources>

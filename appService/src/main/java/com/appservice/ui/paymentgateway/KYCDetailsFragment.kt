@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -99,6 +100,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     session = arguments?.getSerializable(IntentConstant.SESSION_DATA.name) as? SessionData
     isEdit = arguments?.getBoolean(IntentConstant.IS_EDIT.name) ?: false
     isInstaMojoAccount = arguments?.getBoolean("isInstaMojoAccount")
+    setupUI()
     if (isEdit) {
       getKycDetails()
     } else getUserDetails()
@@ -126,6 +128,14 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
       binding?.btnAnotherAccount,
       binding?.btnMyAccount
     )
+  }
+
+  private fun setupUI() {
+    changeColorOfSubstring(R.string.pan_number_individual_or_company, R.color.colorAccent, "*", binding?.tvPanNum!!)
+    changeColorOfSubstring(R.string.name_as_mentioned_on_pan_card, R.color.colorAccent, "*", binding?.tvNameOnPanNum!!)
+    changeColorOfSubstring(R.string.latest_bank_statement_last_1_month, R.color.colorAccent, "*", binding?.tvLatestBankStatement!!)
+    changeColorOfSubstring(R.string.account_holder_s_name, R.color.colorAccent, "*", binding?.tvAccountHolderName!!)
+    changeColorOfSubstring(R.string.ifsc_code, R.color.colorAccent, "*", binding?.tvIfscCode!!)
   }
 
   override fun onClick(v: View) {

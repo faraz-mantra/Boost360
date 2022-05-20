@@ -22,6 +22,7 @@ import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
+import com.festive.poster.utils.changeColorOfSubstring
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.base.BaseActivity
@@ -221,6 +222,9 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
     val sheet = BottomSheetDialog(requireActivity(), R.style.BottomSheetTheme)
     val sheetBinding = DataBindingUtil.inflate<SheetEditShareMessageBinding>(layoutInflater, R.layout.sheet_edit_share_message, null, false)
     sheet.setContentView(sheetBinding.root)
+
+    changeColorOfSubstring(R.string.greeting_description, R.color.colorAccent, "*", sheetBinding?.customTextView!!)
+
     sheetBinding.etDesc.setText(dataList?.get(position)?.greeting_message)
     sheetBinding.tvUpdateInfo.setOnClickListener {
       dataList?.get(position)?.greeting_message = sheetBinding.etDesc.text.toString()

@@ -45,6 +45,7 @@ import com.appservice.ui.bankaccount.startFragmentAccountActivity
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.*
 import com.appservice.utils.WebEngageController
+import com.appservice.utils.changeColorOfSubstring
 import com.appservice.utils.getBitmap
 import com.appservice.viewmodel.ProductViewModel
 import com.framework.exceptions.NoNetworkException
@@ -115,6 +116,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     super.onCreateView()
     WebEngageController.trackEvent(PRODUCT_CATALOGUE_ADD_PAGE, ADDED, NO_EVENT_VALUE)
     getBundleData()
+    setupUIColor()
     getPickUpAddress()
     binding?.vwChangeDeliverConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     binding?.vwPaymentConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
@@ -129,6 +131,12 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     initProductToggleView()
     listenerEditText()
     capLimitCheck()
+  }
+
+  private fun setupUIColor() {
+    changeColorOfSubstring(R.string.product_category_, R.color.colorAccent, "*", binding?.tvProductCategoryVw!!)
+    changeColorOfSubstring(R.string.product_description_, R.color.colorAccent, "*", binding?.tvProductDescVw!!)
+    changeColorOfSubstring(R.string.product_name_, R.color.colorAccent, "*", binding?.tvProductNameVw!!)
   }
 
   private fun capLimitCheck() {
