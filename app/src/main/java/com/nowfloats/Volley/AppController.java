@@ -36,6 +36,8 @@ import com.thinksity.R;
 import com.webengage.sdk.android.WebEngageActivityLifeCycleCallbacks;
 import com.webengage.sdk.android.WebEngageConfig;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.lang.reflect.Method;
 
@@ -132,7 +134,7 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
 
         //Invite Referral
         InviteReferralsApplication.register(this);
-        InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null);
+        InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null,null, new JSONObject());
         //Koin
         KoinBaseApplication.initModule(this);
         //ContextApplication.initSdk(this, this);

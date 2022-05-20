@@ -151,7 +151,7 @@ dependencies {
 
     // Referral Library: invitereferrals
     api 'com.android.installreferrer:installreferrer:2.2'
-    api 'com.invitereferrals.invitereferrals:invitereferrals:v29-1.0.7'
+    api 'com.invitereferrals.invitereferrals:invitereferrals:v1.0.12'
 
     //webengage analytics
     api 'com.webengage:android-sdk:3.19.1'

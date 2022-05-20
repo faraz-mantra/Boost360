@@ -127,11 +127,12 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
 
   private fun setupList() {
     showShimmerAnimation()
-    viewModel?.getTemplates(
-      session?.fPID,
-      session?.fpTag,
-      arrayListOf(packTag!!)
-    )?.observeOnce(viewLifecycleOwner, {
+    packTag?.let {
+      viewModel?.getTemplates(
+        session?.fPID,
+        session?.fpTag,
+        arrayListOf(it)
+      )?.observeOnce(viewLifecycleOwner, {
         val response = it as? GetTemplatesResponse
         response?.let {
           dataList = response.Result.templates?.toArrayList()
@@ -140,13 +141,18 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
             posterModel.shareLayout=true
 
           }
-          adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>, dataList!!, this)
-          binding?.rvPosters?.adapter = adapter
-          binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
-          adapter?.notifyDataSetChanged()
+          dataList?.let {data->
+            adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>, data, this)
+            binding?.rvPosters?.adapter = adapter
+            binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
+            adapter?.notifyDataSetChanged()
+          }
+
         }
         hideShimmerAnimation()
-    })
+      })
+    }
+
 
 
   }

@@ -33,9 +33,14 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
     get() {
       return isStaffType(sessionLocal.fP_AppExperienceCode)
     }
+  protected val isDoctorClinic: Boolean
+    get() {
+      return isDoctorClinicProfile(sessionLocal.fP_AppExperienceCode)
+    }
+
   protected val isDoctor: Boolean
     get() {
-      return isDoctorProfile(sessionLocal.fP_AppExperienceCode)
+      return  sessionLocal.fP_AppExperienceCode.equals("DOC", true)
     }
 
   protected val pref: SharedPreferences?
@@ -169,7 +174,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
   }
 }
 
-fun isDoctorProfile(category_code: String?): Boolean {
+fun isDoctorClinicProfile(category_code: String?): Boolean {
   return (category_code.equals("DOC", true) || category_code.equals("HOS", true))
 }
 

@@ -18,6 +18,7 @@ import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.interfaces.CompareListener
 import com.boost.upgrades.utils.SharedPrefs
+import com.boost.upgrades.utils.Utils
 import com.bumptech.glide.Glide
 import com.framework.utils.RootUtil
 //import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
@@ -301,10 +302,10 @@ class ParentCompareItemAdapter(
                         for (singleItem in it) {
                             for (item in bundles.included_features) {
                                 if (singleItem.feature_code == item.feature_code) {
-                                    originalBundlePrice += RootUtil.round(
+                                    originalBundlePrice += Utils.priceCalculatorForYear(RootUtil.round(
                                         (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
                                         2
-                                    ) * minMonth
+                                    ) * minMonth, singleItem.widget_type, activity)
                                 }
                             }
                         }
@@ -314,12 +315,7 @@ class ParentCompareItemAdapter(
                                 (originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent / 100)),
                                 2
                             )
-                            if (prefs.getYearPricing())
-                                offeredBundlePrice = offeredBundlePrice * 12
                         } else {
-                            if (prefs.getYearPricing())
-                                offeredBundlePrice = originalBundlePrice * 12
-                            else
                                 offeredBundlePrice = originalBundlePrice
                         }
                         if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1) {
