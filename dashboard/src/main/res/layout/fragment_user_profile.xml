@@ -101,6 +101,7 @@
         </com.framework.views.customViews.CustomCardView>
 
         <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_full_name_vw"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginHorizontal="@dimen/size_2"
@@ -201,6 +202,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_mobile_number_vw"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginHorizontal="@dimen/size_2"

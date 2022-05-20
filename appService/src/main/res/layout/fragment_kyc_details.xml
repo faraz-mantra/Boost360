@@ -97,14 +97,15 @@
           app:layout_constraintTop_toBottomOf="@id/cardview_pan_card_image">
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_1"
-            android:layout_marginTop="@dimen/size_14"
-            android:text="@string/pan_number_individual_or_company"
-            android:textColor="@color/warm_grey"
-            app:fontFamily="@font/regular"
-            app:textType="BODY_1" />
+              android:id="@+id/tv_pan_num"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_1"
+              android:layout_marginTop="@dimen/size_14"
+              android:text="@string/pan_number_individual_or_company"
+              android:textColor="@color/warm_grey"
+              app:fontFamily="@font/regular"
+              app:textType="BODY_1" />
 
           <com.framework.views.customViews.CustomEditText
             android:id="@+id/edt_pan_number"
@@ -121,14 +122,15 @@
             app:fontFamily="@font/regular" />
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_1"
-            android:layout_marginTop="@dimen/size_16"
-            android:text="@string/name_as_mentioned_on_pan_card"
-            android:textColor="@color/warm_grey"
-            app:fontFamily="@font/regular"
-            app:textType="BODY_1" />
+              android:id="@+id/tv_name_on_pan_num"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_1"
+              android:layout_marginTop="@dimen/size_16"
+              android:text="@string/name_as_mentioned_on_pan_card"
+              android:textColor="@color/warm_grey"
+              app:fontFamily="@font/regular"
+              app:textType="BODY_1" />
 
           <com.framework.views.customViews.CustomEditText
             android:id="@+id/edt_name_on_pan_card"
@@ -275,6 +277,7 @@
               app:fontFamily="@font/regular" />
 
             <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_account_holder_name"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_1"
@@ -298,6 +301,7 @@
               app:fontFamily="@font/regular" />
 
             <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_ifsc_code"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_1"
@@ -378,14 +382,15 @@
           </LinearLayout>
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_1"
-            android:layout_marginTop="@dimen/size_16"
-            android:text="@string/latest_bank_statement_last_1_month"
-            android:textColor="@color/warm_grey"
-            app:fontFamily="@font/regular"
-            app:textType="BODY_1" />
+              android:id="@+id/tv_latest_bank_statement"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_1"
+              android:layout_marginTop="@dimen/size_16"
+              android:text="@string/latest_bank_statement_last_1_month"
+              android:textColor="@color/warm_grey"
+              app:fontFamily="@font/regular"
+              app:textType="BODY_1" />
 
 
           <androidx.constraintlayout.widget.ConstraintLayout

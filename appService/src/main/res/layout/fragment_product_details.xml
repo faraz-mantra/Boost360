@@ -133,16 +133,17 @@
             android:paddingEnd="@dimen/size_20">
 
             <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginStart="@dimen/size_3"
-              android:layout_marginTop="@dimen/size_36"
-              android:drawablePadding="@dimen/size_4"
-              android:drawableTint="@color/orange"
-              android:text="@string/product_name_"
-              android:textColor="@color/black_4a4a4a"
-              app:fontFamily="@font/semi_bold"
-              app:textType="BODY_3" />
+                android:id="@+id/tv_product_name_vw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_3"
+                android:layout_marginTop="@dimen/size_36"
+                android:drawablePadding="@dimen/size_4"
+                android:drawableTint="@color/orange"
+                android:text="@string/product_name_"
+                android:textColor="@color/black_4a4a4a"
+                app:fontFamily="@font/semi_bold"
+                app:textType="BODY_3" />
 
             <com.framework.views.customViews.CustomTextField
               android:id="@+id/tv_product_name"
@@ -165,6 +166,7 @@
               android:orientation="vertical">
 
               <com.framework.views.customViews.CustomTextView
+                  android:id="@+id/tv_product_category_vw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/size_4"
@@ -201,6 +203,7 @@
               tools:ignore="UnusedAttribute" />
 
             <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_product_desc_vw"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_3"

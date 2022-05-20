@@ -4,6 +4,7 @@ import android.view.View
 import com.appservice.R
 import com.appservice.model.aptsetting.RequestAddWareHouseAddress
 import com.appservice.databinding.BottomSheetAddWarehouseBinding
+import com.appservice.utils.changeColorOfSubstring
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.framework.utils.ValidationUtils
@@ -22,7 +23,14 @@ class BottomSheetAddWareHouse : BaseBottomSheetDialog<BottomSheetAddWarehouseBin
   }
 
   override fun onCreateView() {
+    setupUIColor()
     setOnClickListener(binding?.btnCancel, binding?.btnSaveChanges)
+  }
+
+  private fun setupUIColor() {
+    changeColorOfSubstring(R.string.warehouse_name, R.color.colorAccent, "*", binding?.ctvWarehouseName!!)
+    changeColorOfSubstring(R.string.warehouse_address, R.color.colorAccent, "*", binding?.ctvWarehouseAddress!!)
+    changeColorOfSubstring(R.string.contact_number, R.color.colorAccent, "*", binding?.ctvContactNumber!!)
   }
 
   override fun onClick(v: View) {

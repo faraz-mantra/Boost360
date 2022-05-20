@@ -26,6 +26,7 @@ import com.appservice.ui.staffs.doctors.bottomsheet.AppointmentBookingBottomShee
 import com.appservice.ui.staffs.ui.Constants
 import com.appservice.ui.staffs.ui.startStaffFragmentActivity
 import com.appservice.utils.WebEngageController
+import com.appservice.utils.changeColorOfSubstring
 import com.appservice.viewmodel.StaffViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -93,6 +94,16 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
       binding?.ctfBookingWindow, binding?.btnSave
     )
     getBundleData()
+    setupUIColor()
+  }
+
+  private fun setupUIColor() {
+    changeColorOfSubstring(R.string.name_doctor, R.color.colorAccent, "*", binding?.tvDoctorName!!)
+    changeColorOfSubstring(R.string.description, R.color.colorAccent, "*", binding?.tvDoctorDesc!!)
+    changeColorOfSubstring(R.string.speciality, R.color.colorAccent, "*", binding?.tvDoctorSpeciality!!)
+    changeColorOfSubstring(R.string.business_license, R.color.colorAccent, "*", binding?.tvDoctorLicense!!)
+    changeColorOfSubstring(R.string.upload_signature_, R.color.colorAccent, "*", binding?.tvDoctorUploadSignature!!)
+    changeColorOfSubstring(R.string.appointment_booking_window_for_patients, R.color.colorAccent, "*", binding?.tvDoctorBookingWindow!!)
   }
 
   private fun checkDoctorAdded() {

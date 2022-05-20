@@ -17,6 +17,7 @@ import com.festive.poster.models.PosterCustomizationModel
 import com.festive.poster.models.PosterModel
 import com.festive.poster.utils.MarketPlaceUtils
 import com.festive.poster.utils.WebEngageController
+import com.festive.poster.utils.changeColorOfSubstring
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.base.BaseActivity
@@ -94,8 +95,16 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
     isAlreadyPurchased = arguments?.getBoolean(BK_IS_PURCHASED) == true
     creatorName = arguments?.getString(BK_CREATOR_NAME)
     sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
+    setupUIColor()
     setUserDetails()
     setOnClickListener(binding?.ivCancel, binding?.uploadSelfie, binding?.tvUpdateInfo, binding?.imgEdit)
+  }
+
+  private fun setupUIColor() {
+    changeColorOfSubstring(R.string.your_name_star, R.color.colorAccent, "*", binding?.tvYourNameVw!!)
+    changeColorOfSubstring(R.string.display_email_id, R.color.colorAccent, "*", binding?.tvDisplayEmailVw!!)
+    changeColorOfSubstring(R.string.display_whatsapp_number, R.color.colorAccent, "*", binding?.tvDisplayWhatsappVw!!)
+    changeColorOfSubstring(R.string.website_address, R.color.colorAccent, "*", binding?.tvWebsiteAddressVw!!)
   }
 
   private fun setUserDetails() {

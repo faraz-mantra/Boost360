@@ -28,6 +28,7 @@ import com.appservice.ui.catalog.widgets.*
 import com.appservice.model.serviceProduct.service.ItemsItem
 import com.appservice.model.serviceProduct.service.ServiceSearchListingResponse
 import com.appservice.utils.WebEngageController
+import com.appservice.utils.changeColorOfSubstring
 import com.appservice.utils.getBitmap
 import com.appservice.viewmodel.ServiceViewModelV1
 import com.framework.base.BaseResponse
@@ -83,6 +84,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     super.onCreateView()
     WebEngageController.trackEvent(SERVICE_CATALOGUE_ADD, ADDED, NO_EVENT_VALUE)
     getBundleData()
+    setupUIColor()
     setOnClickListener(
       binding?.selectDeliveryConfig,
       binding?.vwSavePublish,
@@ -95,6 +97,13 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     initServiceToggle()
     listenerEditText()
     capLimitCheck()
+  }
+
+  private fun setupUIColor() {
+    changeColorOfSubstring(R.string.service_name_, R.color.colorAccent, "*", binding?.tvServiceNameVw!!)
+    changeColorOfSubstring(R.string.service_category_, R.color.colorAccent, "*", binding?.tvServiceCategoryVw!!)
+    changeColorOfSubstring(R.string.service_description_, R.color.colorAccent, "*", binding?.tvServiceDescVw!!)
+    changeColorOfSubstring(R.string.service_duration_minutes, R.color.colorAccent, "*", binding?.tvServiceDurationVw!!)
   }
 
   private fun capLimitCheck() {
