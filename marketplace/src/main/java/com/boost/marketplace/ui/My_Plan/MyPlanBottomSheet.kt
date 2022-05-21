@@ -75,7 +75,7 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseVi
     }
 
     private fun Usefeature() {
-        val screenType= getScreenType(singleAddon.feature_code)
+        val screenType= singleAddon.feature_code?.let { getScreenType(it) }
         if (screenType.isNullOrEmpty().not()){
        try {
            val intent = Intent(requireActivity(), Class.forName("com.dashboard.controller.DeepLinkTransActivity"))
