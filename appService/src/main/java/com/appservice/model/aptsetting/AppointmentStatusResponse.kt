@@ -79,9 +79,9 @@ data class ResultS(
       add(AppointmentStatusResponse.TilesModel("catalog_setup", "Service categories, Catalog display text,applicable tax slabs", "Catalog setup", catalogSetup))
       if (isDoctor) add(AppointmentStatusResponse.TilesModel("consultation_settings", "General appointment: #", "General appointments", consultationSetup))
       add(AppointmentStatusResponse.TilesModel("payment_collection", "Preferred payment gateway", "Payment collection setup", paymentCollectionSetup))
-     // add(AppointmentStatusResponse.TilesModel("customer_invoice_setup", "GST declaration, Bank UPI for offline appointments,signature", "Customer invoice setup", customerInvoicesSetup))
+      //add(AppointmentStatusResponse.TilesModel("customer_invoice_setup", "GST declaration, Bank UPI for offline appointments,signature", "Customer invoice setup", customerInvoicesSetup))
       //add(AppointmentStatusResponse.TilesModel("policies", "Refund, cancellation, privacy policies for your customers", "Policies for customers", policiesSetup))    }
-    add(AppointmentStatusResponse.TilesModel("business_verification","desc","Business verification"))
+      add(AppointmentStatusResponse.TilesModel("business_verification", "desc", "Business verification", customerInvoicesSetup))
     }
   }
 
@@ -89,10 +89,10 @@ data class ResultS(
     return arrayListOf(
       AppointmentStatusResponse.TilesModel("catalog_setup_ecommerce", "Service categories, Catalog display text,applicable tax slabs", "Catalog setup", this.catalogSetup),
       AppointmentStatusResponse.TilesModel("payment_collection", "Preferred payment gateway", "Payment collection setup", this.paymentCollectionSetup),
-    //  AppointmentStatusResponse.TilesModel("customer_invoice_setup", "GST declaration, Bank UPI for offline appointments,signature", "Customer invoice setup", this.customerInvoicesSetup),
-      AppointmentStatusResponse.TilesModel("delivery_setup", "GST declaration, Bank UPI for offline appointments,signature", "Delivery setup", this.deliverySetup)
+      AppointmentStatusResponse.TilesModel("delivery_setup", "GST declaration, Bank UPI for offline appointments,signature", "Delivery setup", this.deliverySetup),
+      //AppointmentStatusResponse.TilesModel("customer_invoice_setup", "GST declaration, Bank UPI for offline appointments,signature", "Customer invoice setup", this.customerInvoicesSetup),
       //AppointmentStatusResponse.TilesModel("policies", "Refund, cancellation, privacy policies for your customers", "Policies for customers", this.policiesSetup)
-      ,AppointmentStatusResponse.TilesModel("business_verification","desc","Business verification")
+      AppointmentStatusResponse.TilesModel("business_verification", "desc", "Business verification", customerInvoicesSetup)
 
     )
   }
@@ -179,28 +179,54 @@ data class CatalogSetup(
 
 
 data class CustomerInvoicesSetup(
-  @field:SerializedName("IsGSTDeclarationComplete")
-  var isGSTDeclarationComplete: Boolean? = null,
   @field:SerializedName("GSTIN")
   var gSTIN: String? = null,
+  @field:SerializedName("GSTINVerificationStatus")
+  var GSTINVerificationStatus: String? = null,
+  @field:SerializedName("PANNo")
+  var panNo: String? = null,
+  @field:SerializedName("PANVerificationStatus")
+  var PANVerificationStatus: String? = null,
   @field:SerializedName("IsTaxInvoiceSetupComplete")
   var isTaxInvoiceSetupComplete: Boolean? = null,
   @field:SerializedName("IsPending")
   var isPending: Boolean? = null
 ) : Serializable {
 
-  fun getTitle(): Spanned? {
-    return fromHtml("GST declaration: <i><b>${if (isGSTDeclarationComplete == true) "${getGstin()}" else "<font color='#${getColorInactive()}'>Setup incomplete</font>"}</b></i>")
+  fun isGSTDeclarationComplete(): Boolean {
+    return GSTINVerificationStatus.equals("PENDING").not()
+  }
 
+  fun isPANVerificationStatus(): Boolean {
+    return PANVerificationStatus.equals("PENDING").not()
+  }
+
+  fun getTitle(): Spanned? {
+    return fromHtml("GST declaration: <i><b>${if (addedStatus()) "${getGstinTextStatus()}" else "<font color='#${getColorInactive()}'>Setup incomplete</font>"}</b></i>")
   }
 
   fun getGstin(): String {
     return if (gSTIN.isNullOrEmpty() || gSTIN.equals("null")) "" else gSTIN!!
   }
 
-  fun getSubtitle(): Spanned? {
-    return fromHtml("Tax invoice: <i><b>${if (isTaxInvoiceSetupComplete == true) "Setup completed" else "<font color='#${getColorInactive()}'>Setup incomplete</font>"}</b></i>")
+  fun getGstinTextStatus(): String {
+    return if (isGSTDeclarationComplete()) getGstin() else "Verification pending"
+  }
 
+  fun getPanNumberStatus(): String {
+    return if (isPANVerificationStatus()) getGstin() else "Verification pending"
+  }
+
+  fun getPanNumber(): String {
+    return if (panNo.isNullOrEmpty() || panNo.equals("null")) "" else panNo!!
+  }
+
+  fun getSubtitle(): Spanned? {
+    return fromHtml("PAN No: <i><b>${if (addedStatus()) "${getPanNumberStatus()}" else "<font color='#${getColorInactive()}'>Setup incomplete</font>"}</b></i>")
+  }
+
+  fun addedStatus(): Boolean {
+    return (getGstin().isEmpty() || getPanNumber().isEmpty()).not()
   }
 }
 

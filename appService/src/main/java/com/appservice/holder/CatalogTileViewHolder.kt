@@ -53,7 +53,7 @@ class CatalogTileViewHolder(binding: RecyclerItemEcomAptSettingsBinding) : AppBa
         binding.ctvCatalogSetupSubheading.text = customerInvoicesSetup?.getTitle()
         binding.ctvCatalogSetupSubheading2.text = customerInvoicesSetup?.getSubtitle()
         binding.ctvCatalogSetupSubheading2.visible()
-        when (customerInvoicesSetup?.isTaxInvoiceSetupComplete == false) {
+        when (customerInvoicesSetup?.addedStatus() == false) {
           true -> {
             binding.civSetupCheck.gone();binding.ctvPending.visible()
           }
