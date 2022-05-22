@@ -70,28 +70,25 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
 
   private fun getStatusData() {
     if (isFirst) showProgress()
-    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner) {
       val dataItem = it as? AppointmentStatusResponse
       if (dataItem?.isSuccess() == true && dataItem.result != null) {
         setUpRecyclerView(dataItem.result!!.getEcommerceTilesArray())
       } else showShortToast("E-commerce setting data getting error!")
       isFirst = false
       hideProgress()
-    })
+    }
   }
 
   private fun filterList(newText: String?) {
     filteredList?.clear()
     if (newText?.isNotEmpty() == true) {
       copyList?.forEach {
-        if (it.title?.toLowerCase(Locale.ROOT)?.contains(newText.toLowerCase(Locale.ROOT)) == true) {
-          filteredList?.add(it)
-        }
+        if (it.title?.toLowerCase(Locale.ROOT)?.contains(newText.toLowerCase(Locale.ROOT)) == true) filteredList?.add(it)
       }
       adapter?.updateList(filteredList ?: arrayListOf())
     } else {
       adapter?.updateList(finalList ?: arrayListOf())
-
     }
   }
 
@@ -119,7 +116,7 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
       IconType.customer_invoice_setup -> startFragmentActivity(FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE)
       IconType.payment_collection -> startFragmentActivity(FragmentType.ECOMMERCE_PAYMENT_SETTINGS)
       IconType.policies -> startFragmentActivity(FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_POLICIES)
-      IconType.business_verification->startFragmentActivity(FragmentType.ECOMMERCE_BUSINESS_VERIFICATION)
+      IconType.business_verification -> startFragmentActivity(FragmentType.ECOMMERCE_BUSINESS_VERIFICATION)
       else -> {
       }
     }

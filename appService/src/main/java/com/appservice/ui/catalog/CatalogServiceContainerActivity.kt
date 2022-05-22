@@ -60,19 +60,13 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE,
       FragmentType.APPOINTMENT_PAYMENT_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES, FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME, FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS,
       FragmentType.EDIT_ACCOUNT_DETAILS, FragmentType.FRAGMENT_PRODUCT_LISTING, FragmentType.FRAGMENT_PRODUCT_HOME, FragmentType.FRAGMENT_PRODUCT_CATEGORY,
-      -> R.style.CatalogTheme
+      FragmentType.ECOMMERCE_BUSINESS_VERIFICATION, FragmentType.CAMERA_VIEW -> R.style.CatalogTheme
       FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> R.style.CatalogTheme_Information
       FragmentType.SERVICE_CATALOG_HOME_FRAGMENT -> R.style.OffersThemeBase
       FragmentType.APPOINTMENT_SETTINGS -> R.style.CatalogTheme_FragmentAppointment
-      FragmentType.ECOMMERCE_SETTINGS,
-      FragmentType.ECOMMERCE_DELIVERY_CONFIG,
-      FragmentType.ECOMMERCE_PAYMENT_SETTINGS,
-      FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_POLICIES,
-      FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE,
-      FragmentType.ECOMMERCE_CATALOG_SETTINGS,
-      FragmentType.ECOMMERCE_ADD_ACCOUNT_DETAILS,
-      FragmentType.CONSULTATION_APT_SETTINGS
-      -> R.style.EcommerceSettings
+      FragmentType.ECOMMERCE_SETTINGS, FragmentType.ECOMMERCE_DELIVERY_CONFIG, FragmentType.ECOMMERCE_PAYMENT_SETTINGS,
+      FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_POLICIES, FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE, FragmentType.ECOMMERCE_CATALOG_SETTINGS,
+      FragmentType.ECOMMERCE_ADD_ACCOUNT_DETAILS, FragmentType.CONSULTATION_APT_SETTINGS -> R.style.EcommerceSettings
       else -> super.customTheme()
     }
   }
@@ -84,31 +78,24 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
-      FragmentType.SERVICE_LISTING, FragmentType.CREATE_CATEGORY,
-      -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.SERVICE_LISTING, FragmentType.CREATE_CATEGORY -> ContextCompat.getColor(this, R.color.colorPrimary)
       FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> ContextCompat.getColor(this, R.color.color_primary)
-      FragmentType.SERVICE_CATALOG_HOME_FRAGMENT,
-      FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE, FragmentType.FRAGMENT_PRODUCT_LISTING, FragmentType.FRAGMENT_PRODUCT_HOME, FragmentType.FRAGMENT_PRODUCT_CATEGORY,
+      FragmentType.SERVICE_CATALOG_HOME_FRAGMENT, FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE,
+      FragmentType.FRAGMENT_PRODUCT_LISTING, FragmentType.FRAGMENT_PRODUCT_HOME, FragmentType.FRAGMENT_PRODUCT_CATEGORY,
       FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME, FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS, FragmentType.EDIT_ACCOUNT_DETAILS,
       FragmentType.APPOINTMENT_SETTINGS, FragmentType.APPOINTMENT_PAYMENT_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES,
-      FragmentType.ECOMMERCE_SETTINGS,
-      FragmentType.ECOMMERCE_DELIVERY_CONFIG,
-      FragmentType.ECOMMERCE_PAYMENT_SETTINGS,
-      FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_POLICIES,
-      FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE,
-      FragmentType.ECOMMERCE_CATALOG_SETTINGS,
-      FragmentType.ECOMMERCE_ADD_ACCOUNT_DETAILS,
-      FragmentType.CONSULTATION_APT_SETTINGS,
-      -> ContextCompat.getColor(this, R.color.colorAccent)
+      FragmentType.ECOMMERCE_SETTINGS, FragmentType.ECOMMERCE_DELIVERY_CONFIG, FragmentType.ECOMMERCE_PAYMENT_SETTINGS,
+      FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_POLICIES, FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE, FragmentType.ECOMMERCE_CATALOG_SETTINGS,
+      FragmentType.ECOMMERCE_ADD_ACCOUNT_DETAILS, FragmentType.CONSULTATION_APT_SETTINGS, FragmentType.ECOMMERCE_BUSINESS_VERIFICATION,
+      FragmentType.CAMERA_VIEW -> ContextCompat.getColor(this, R.color.colorAccent)
       else -> super.getToolbarBackgroundColor()
     }
   }
 
   override fun getToolbarTitleColor(): Int? {
     return when (type) {
-      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_LISTING,
-      FragmentType.SERVICE_DETAIL_VIEW,
-      -> ContextCompat.getColor(this, R.color.white)
+      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_LISTING, FragmentType.CAMERA_VIEW,
+      FragmentType.SERVICE_DETAIL_VIEW, FragmentType.ECOMMERCE_BUSINESS_VERIFICATION -> ContextCompat.getColor(this, R.color.white)
       else -> super.getToolbarTitleColor()
     }
   }
@@ -118,16 +105,10 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_LISTING, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS,
       FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES,
       FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_CATALOG_HOME_FRAGMENT, FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE,
-      FragmentType.APPOINTMENT_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME, FragmentType.APPOINTMENT_PAYMENT_SETTINGS, FragmentType.EDIT_ACCOUNT_DETAILS, FragmentType.FRAGMENT_PRODUCT_LISTING, FragmentType.FRAGMENT_PRODUCT_HOME, FragmentType.FRAGMENT_PRODUCT_CATEGORY,
-      FragmentType.ECOMMERCE_SETTINGS,
-      FragmentType.ECOMMERCE_DELIVERY_CONFIG,
-      FragmentType.ECOMMERCE_PAYMENT_SETTINGS,
-      FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_POLICIES,
-      FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE,
-      FragmentType.ECOMMERCE_CATALOG_SETTINGS,
-      FragmentType.ECOMMERCE_CATALOG_SETTINGS,
-      FragmentType.CONSULTATION_APT_SETTINGS,
-      -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
+      FragmentType.APPOINTMENT_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_ACCOUNT_ADD_HOME, FragmentType.APPOINTMENT_PAYMENT_SETTINGS, FragmentType.EDIT_ACCOUNT_DETAILS,
+      FragmentType.FRAGMENT_PRODUCT_LISTING, FragmentType.FRAGMENT_PRODUCT_HOME, FragmentType.FRAGMENT_PRODUCT_CATEGORY, FragmentType.ECOMMERCE_SETTINGS, FragmentType.ECOMMERCE_DELIVERY_CONFIG,
+      FragmentType.ECOMMERCE_PAYMENT_SETTINGS, FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_POLICIES, FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE, FragmentType.ECOMMERCE_CATALOG_SETTINGS,
+      FragmentType.ECOMMERCE_BUSINESS_VERIFICATION, FragmentType.CONSULTATION_APT_SETTINGS, FragmentType.CAMERA_VIEW -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
       else -> super.getNavigationIcon()
     }
   }
@@ -161,6 +142,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.FRAGMENT_PRODUCT_CATEGORY -> getString(R.string.catalog)
       FragmentType.ECOMMERCE_DELIVERY_CONFIG -> getString(R.string.delivery_setup)
       FragmentType.CONSULTATION_APT_SETTINGS -> getString(R.string.consultation_settings)
+      FragmentType.ECOMMERCE_BUSINESS_VERIFICATION -> getString(R.string.business_verification)
+      FragmentType.CAMERA_VIEW -> getString(R.string.take_photo_pancard)
       else -> super.getToolbarTitle()
     }
   }
@@ -256,7 +239,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
         FragmentEcommerceCustomerInvoiceSetup.newInstance()
       }
       FragmentType.ECOMMERCE_PAYMENT_SETTINGS -> {
-//        FragmentEcommercePaymentCollectionSetup.newInstance()
+//      FragmentEcommercePaymentCollectionSetup.newInstance()
         FragmentEcommercePaymentCollectionSetupV2.newInstance()
       }
       FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_POLICIES -> {
@@ -291,8 +274,10 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   }
 }
 
-fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false,
-                                   isResult: Boolean = false,requestCode: Int=0) {
+fun Fragment.startFragmentActivity(
+  type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false,
+  isResult: Boolean = false, requestCode: Int = 0
+) {
   val intent = Intent(activity, CatalogServiceContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)

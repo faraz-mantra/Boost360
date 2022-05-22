@@ -1,12 +1,12 @@
-package com.appservice.model
+package com.appservice.model.panGst
 
 data class PanGstUpdateBody(
     val ClientId: String,
     val FloatingPointId: String,
-    val GSTDetails: GSTDetails?,
-    val PanDetails: PanDetails?
+    val GSTDetails: GSTDetailsRequest?,
+    val PanDetails: PanDetailsRequest?
 )
-data class GSTDetails(
+data class GSTDetailsRequest(
     val BusinessName: String?,
     val BusinessRegister: Boolean?,
     val DocumentContent: String?,
@@ -16,7 +16,7 @@ data class GSTDetails(
     val RcmApply: Boolean?
 )
 
-data class PanDetails(
+data class PanDetailsRequest(
     val DocumentContent: String?,
     val DocumentName: String?,
     val FileType: String?,
