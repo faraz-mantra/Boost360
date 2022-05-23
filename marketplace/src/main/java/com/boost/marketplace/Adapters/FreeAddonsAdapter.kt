@@ -107,7 +107,7 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
   class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     var singleTitle = itemView.findViewById<TextView>(R.id.free_addons_name)!!
-    var validity2 = itemView.findViewById<TextView>(R.id.validity2)!!
+//    var validity2 = itemView.findViewById<TextView>(R.id.validity2)!!
     var image = itemView.findViewById<ImageView>(R.id.single_freeaddon_image)!!
     var mainLayout=itemView.findViewById<ConstraintLayout>(R.id.main_layout)
     var detailsView=itemView.findViewById<ConstraintLayout>(R.id.detailsView)
@@ -119,15 +119,13 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
     fun upgradeListItem(updateModel: FeaturesModel) {
       singleTitle.text = updateModel.name
       val date= updateModel.expiryDate?.substring(0,10)
-      validity2.text="Valid till "+ date
       Glide.with(context).load(updateModel.primary_image).into(image)
       if (updateModel.status == 1) {
        img1.setImageResource(R.drawable.ic_active)
       }
       else {
-        img1.setImageResource(R.drawable.ic_action_required)
+        img1.setImageResource(R.drawable.ic_action_req)
       }
-
     }
   }
 

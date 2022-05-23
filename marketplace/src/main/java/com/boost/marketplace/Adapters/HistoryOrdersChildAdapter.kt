@@ -81,6 +81,8 @@ class HistoryOrdersChildAdapter(itemList: List<WidgetDetail>?) :
                     it.printStackTrace()
                 })
         )
+     //   holder.single_paidaddon_image.setColorFilter(Color.rgb(123, 123, 123), android.graphics.PorterDuff.Mode.MULTIPLY);
+
     }
 
     fun addupdates(purchaseResult: List<WidgetDetail>) {

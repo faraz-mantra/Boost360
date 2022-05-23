@@ -35,6 +35,7 @@ const val featured_image ="Featured_Image"
 const val doctor_profile ="Doctor_Profile"
 const val trip_advisor ="Trip_Advisor"
 const val nearby_places ="Nearby_Places"
+const val business_kyc ="Business_Kyc"
 const val facebook_chat = "facebookchat"
 const val third_party_queries = "thirdPartyQueries"
 const val facebookpage = "facebookpage"
@@ -325,6 +326,8 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startListTripAdvisor(session)
         }else if (url.contains(nearby_places)) {
           baseActivity.startNearByView(session)
+        }else if (url.contains(business_kyc)) {
+          baseActivity.startBusinessKycBoost(session)
         }
       }
     } catch (e: Exception) {

@@ -16,7 +16,7 @@ enum class DeepLink(var screenType:String){
     STAFFPROFILE("Staff_Profile"),
     STAFFPROFILE15("Staff_Profile"),
     TIMINGS("hours"),
-    PRODUCTCATALOGUE("deeplink_service_catalogue"),
+    PRODUCTCATALOGUE("service_catalogue"),
     SUBSCRIBERCOUNT("newsubscriber"),
     DOMAINPURCHASE("domain_booking"),
     CALLTRACKER("callTracker"),
@@ -40,21 +40,16 @@ enum class DeepLink(var screenType:String){
     TRIPADVISORREVIEWS("Trip_Advisor"),
     PLACESTOLOOKAROUND("Nearby_Places"),
     IVR("call_tracker_add_on"),
+    APPOINTMENTENGINE("APPOINTMENT_FRAGMENT"),
+    PRODUCTCATALOGUEMENU("service_catalogue"),
+    BOOKINGENGINE("APPOINTMENT_FRAGMENT"),
+    DEFAULTSSL("Business_Kyc"),
+    PRODUCTCATALOGUECOURSES("service_catalogue"),
+   // PRODUCTCATALOGUE("service_catalogue"),
 
-
-    //comingsoon
     //AppointmentSettings
-    //MembershipPlans
     //product onboarding and training
-    //Business info email?
-    //Facultymanagement
-    //popularcourses
-    //Digitalmenu
-    //DigitalAppointmentBookingand management
-    //nowfloatsdatasecurity
     //unlimitedwebsitebandwidth  WEBSITEBANDWIDTH
-    //Room booking  BOOKINGENGINE
-    // Room listing
 
     ;
 

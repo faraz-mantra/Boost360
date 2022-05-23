@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:id="@+id/cslayout"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/_10sdp"
                 app:layout_constraintTop_toBottomOf="@id/addons_icon">
 
@@ -224,41 +224,41 @@
 
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/cslayout1"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:background="@drawable/ic_action_white_bg"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="@+id/cslayout"
+            app:layout_constraintStart_toStartOf="@+id/cslayout"
+            app:layout_constraintTop_toBottomOf="@id/cslayout">
+
+
+            <TextView
+                android:id="@+id/action_required"
                 android:layout_width="match_parent"
-                android:id="@+id/cslayout1"
+                android:layout_height="@dimen/_25sdp"
+                android:padding="@dimen/_10ssp"
+                android:background="@drawable/ic_action_red_bg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:drawableStart="@drawable/ic_action_req"/>
+
+            <TextView
+                android:id="@+id/action_text"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:background="@drawable/ic_action_white_bg"
-                android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintEnd_toEndOf="@+id/cslayout"
-                app:layout_constraintStart_toStartOf="@+id/cslayout"
-                app:layout_constraintTop_toBottomOf="@id/cslayout">
+                android:padding="@dimen/_6ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/action_required"
+                android:text="Please activate this feature by setting up your adding a custom domain to your website."/>
 
-
-                <TextView
-                    android:id="@+id/action_required"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_25sdp"
-                    android:padding="@dimen/_10ssp"
-                    android:background="@drawable/ic_action_red_bg"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginBottom="@dimen/_15sdp"
-                    android:drawableStart="@drawable/ic_action_req"/>
-
-                <TextView
-                    android:id="@+id/action_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/_6ssp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/action_required"
-                    android:text="Please activate this feature by setting up your adding a custom domain to your website."/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <Button
@@ -281,7 +281,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/mp_home_share_click_effect"
                 android:enabled="true"
                 android:gravity="center"
