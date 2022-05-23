@@ -71,7 +71,7 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
   }
 
   private fun getWebsiteData() {
-    viewModel?.getBoostWebsiteItem(baseActivity)?.observeOnce(viewLifecycleOwner, { it0 ->
+    viewModel?.getBoostWebsiteItem(baseActivity)?.observeOnce(viewLifecycleOwner) { it0 ->
       val response = it0 as? WebsiteDataResponse
       Log.i(TAG, "getWebsiteData: error" + Gson().toJson(response?.data))
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
@@ -82,7 +82,7 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
           setAdapterCustomer(if (position == 0) data?.actionItem!!.filter { it.isFeature == false } else data?.actionItem!!.filter { it.isFeature == true })
         }
       } else showShortToast(getString(R.string.something_went_wrong_camel_case))
-    })
+    }
   }
 
 
@@ -91,12 +91,12 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
     Log.i(TAG, "setAdapterCustomer: ")
     val merchantSummary = getMerchantSummaryWebsite()
     setupList(merchantSummary, actionItem)
-    viewModel?.getMerchantSummary(clientId, session?.fpTag)?.observeOnce(viewLifecycleOwner, {
-      Log.i(TAG, "merchantsummary: ")
+    viewModel?.getMerchantSummary(clientId, session?.fpTag)?.observeOnce(viewLifecycleOwner) {
+      Log.i(TAG, "merchantman: ")
       val response = it as? MerchantSummaryResponse
       response?.saveMerchantSummary()
       setupList(response, actionItem)
-    })
+    }
   }
 
   private fun setupList(response: MerchantSummaryResponse?, actionItem: ArrayList<WebsiteActionItem>) {

@@ -34,6 +34,7 @@ import com.framework.utils.showKeyBoard
 import com.framework.views.blur.setBlur
 import com.framework.webengageconstant.*
 import com.invitereferrals.invitereferrals.InviteReferralsApi
+import org.json.JSONObject
 
 class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Binding, LoginSignUpViewModel>() {
 
@@ -240,7 +241,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
       categoryFloatsReq?.requestProfile?.ProfileProperties?.userName,
       email, categoryFloatsReq?.userBusinessMobile, 0, null, null
     )
-    InviteReferralsApi.getInstance(baseActivity).tracking("register", email, 0, null, null)
+    InviteReferralsApi.getInstance(baseActivity).tracking("register", email, 0, null, null, null, JSONObject())
   }
 
   private fun apiHitCreateMerchantProfile() {

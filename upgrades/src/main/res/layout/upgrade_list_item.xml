@@ -1,95 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/cardView"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:layout_margin="@dimen/_5sdp"
-  android:background="@drawable/all_side_small_curve_bg"
-  android:clickable="true"
-  android:elevation="@dimen/_2sdp"
-  android:focusable="true"
-  android:paddingBottom="0dp">
-
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/main_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/_5sdp"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    android:layout_margin="@dimen/_5sdp"
+    android:background="@drawable/all_side_small_curve_bg"
+    android:clickable="true"
+    android:elevation="@dimen/_2sdp"
+    android:focusable="true"
+    android:paddingBottom="0dp">
 
-    <RelativeLayout
-      android:id="@+id/imageLayout"
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-      android:layout_marginStart="@dimen/_3sdp"
-      android:layout_marginTop="0dp"
-      android:layout_marginEnd="@dimen/_3sdp"
-      android:layout_marginBottom="@dimen/_6sdp"
-      app:layout_constraintDimensionRatio="1:1"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
-
-      <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/backgroundwhite"
-        android:padding="@dimen/_6sdp"
-        android:scaleType="fitCenter"
-        tools:src="@drawable/rectangle_copy_18" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/_3sdp"
-      android:layout_marginEnd="@dimen/_3sdp"
-      android:gravity="center_vertical"
-      android:orientation="vertical"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/imageLayout">
-
-      <TextView
-        android:id="@+id/details"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:fontFamily="@font/open_sans_semibold"
-        android:lineSpacingExtra="1.3sp"
-        android:maxLines="2"
-        android:textColor="@color/common_text_color"
-        android:textFontWeight="600"
-        android:textSize="@dimen/txt_12sp"
-        tools:text="Facebook Ads (upto 75 leads)" />
+        android:padding="@dimen/_5sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="@dimen/pad_10dp">
+        <RelativeLayout
+            android:id="@+id/imageLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="@dimen/_3sdp"
+            android:layout_marginBottom="@dimen/_6sdp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-          android:id="@+id/upgrade_list_price"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="@dimen/_7sdp"
-          android:fontFamily="@font/open_sans"
-          android:textColor="@color/addons_text_color"
-          android:textFontWeight="400"
-          android:textSize="@dimen/txt_11sp"
-          tools:text="₹400/month" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/backgroundwhite"
+                android:padding="@dimen/_6sdp"
+                android:scaleType="fitCenter"
+                tools:src="@drawable/rectangle_copy_18" />
 
-      </LinearLayout>
+        </RelativeLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_3sdp"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageLayout">
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/open_sans_semibold"
+                android:lineSpacingExtra="1.3sp"
+                android:maxLines="2"
+                android:textColor="@color/common_text_color"
+                android:textFontWeight="600"
+                android:textSize="@dimen/txt_12sp"
+                tools:text="Facebook Ads (upto 75 leads)" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/pad_10dp">
+
+                <TextView
+                    android:id="@+id/upgrade_list_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_7sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="@color/addons_text_color"
+                    android:textFontWeight="400"
+                    android:textSize="@dimen/txt_11sp"
+                    android:visibility="gone"
+                    tools:text="₹400/month" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -16,6 +16,7 @@ import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.SharedPrefs
+import com.boost.upgrades.utils.Utils
 import com.bumptech.glide.Glide
 import java.text.NumberFormat
 import java.util.*
@@ -83,7 +84,7 @@ class UpgradeAdapter(
     fun upgradeListItem(updateModel: FeaturesModel, activity: UpgradeActivity) {
       val prefs = SharedPrefs(activity)
       val discount = 100 - updateModel.discount_percent
-      val price = if(prefs.getYearPricing()) ((discount * updateModel.price) / 100) * 12 else (discount * updateModel.price) / 100
+      val price = Utils.priceCalculatorForYear((discount * updateModel.price) / 100, updateModel.widget_type, activity)
       upgradeDetails.text = updateModel.name
       upgradePrice.text =
         if(prefs.getYearPricing())

@@ -87,6 +87,7 @@ import android.R.attr.button
 import android.widget.PopupMenu
 import androidx.annotation.RequiresApi
 import com.boost.upgrades.ui.history.HistoryFragment
+import com.boost.upgrades.utils.Utils.priceCalculatorForYear
 
 
 class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, CompareBackListener {
@@ -2823,7 +2824,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                         for (singleItem in it) {
                             for (item in item!!.included_features) {
                                 if (singleItem.feature_code == item.feature_code) {
-                                    bundleMonthlyMRP += RootUtil.round(singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),2)
+                                    bundleMonthlyMRP += priceCalculatorForYear(RootUtil.round(singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),2), singleItem.widget_type, requireActivity())
                                 }
                             }
                         }

@@ -51,7 +51,7 @@ data class FeaturesModel(
   var discount_percent: Int = 0,
 
   @ColumnInfo(name = "price")
-  var price: Int = 0,
+  var price: Double = 0.0,
 
   @ColumnInfo(name = "time_to_activation")
   var time_to_activation: Int? = null,
@@ -75,5 +75,8 @@ data class FeaturesModel(
   var extended_properties: String? = null,
 
   @ColumnInfo(name = "exclusive_to_categories")
-  var exclusive_to_categories: String? = null
+  var exclusive_to_categories: String? = null,
+
+  @ColumnInfo(name = "widget_type")
+  var widget_type: String = ""
 )
