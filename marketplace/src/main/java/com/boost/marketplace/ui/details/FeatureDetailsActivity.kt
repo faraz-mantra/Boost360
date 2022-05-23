@@ -339,7 +339,7 @@ class FeatureDetailsActivity :
             }
             if (addonDetails != null && addonDetails?.how_to_use_steps != null) {
                 how_to_use_title_layout.visibility = VISIBLE
-                how_to_use_arrow.setOnClickListener {
+                how_to_use_title_layout.setOnClickListener {
                     if(how_to_use_recycler.visibility == VISIBLE){
                         how_to_use_arrow.setImageResource(R.drawable.ic_arrow_down_gray)
                         how_to_use_recycler.visibility = GONE
