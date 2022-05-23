@@ -26,7 +26,7 @@
             android:theme="@style/AppThemeChannel"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.registration.instagram.RegistrationBusinessInstagramFragment"
+            android:name=".ui.registration.instagram.RegistrationBusinessInstagramActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeChannel"
             android:windowSoftInputMode="adjustPan" />

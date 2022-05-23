@@ -13,7 +13,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.view.*
 import android.widget.TextView
 import androidx.appcompat.view.ContextThemeWrapper
@@ -21,7 +20,6 @@ import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
-import com.framework.extensions.visible
 import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.APPLICATION_JIO_ID
 import com.framework.pref.clientId
@@ -52,7 +50,7 @@ import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
 import com.onboarding.nowfloats.rest.response.category.ResponseDataCategory
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
-import com.onboarding.nowfloats.ui.registration.instagram.RegistrationBusinessInstagramFragment
+import com.onboarding.nowfloats.ui.registration.instagram.RegistrationBusinessInstagramActivity
 import com.onboarding.nowfloats.ui.startFragmentActivity
 import com.onboarding.nowfloats.ui.updateChannel.ContainerDigitalChannelActivity
 import com.onboarding.nowfloats.ui.updateChannel.DigitalChannelActivity
@@ -507,7 +505,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
           FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE,
           bundle
         )
-        channels.haveInstagram()-> startActivity(Intent(requireActivity(),RegistrationBusinessInstagramFragment::class.java))
+        channels.haveInstagram()-> startActivity(Intent(requireActivity(),RegistrationBusinessInstagramActivity::class.java))
         channels.haveFacebookShop() -> startFragmentActivity(
           FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP,
           bundle

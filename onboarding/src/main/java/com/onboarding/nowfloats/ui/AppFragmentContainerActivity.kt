@@ -13,7 +13,6 @@ import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
-import com.framework.utils.ConversionUtils
 import com.framework.views.customViews.CustomToolbar
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
@@ -23,7 +22,7 @@ import com.onboarding.nowfloats.model.navigator.ScreenModel
 import com.onboarding.nowfloats.ui.category.CategorySelectorFragment
 import com.onboarding.nowfloats.ui.channel.ChannelPickerFragment
 import com.onboarding.nowfloats.ui.registration.*
-import com.onboarding.nowfloats.ui.registration.instagram.RegistrationBusinessInstagramFragment
+import com.onboarding.nowfloats.ui.registration.instagram.RegistrationBusinessInstagramActivity
 
 open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
@@ -44,7 +43,7 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
   private var registrationBusinessGoogleBusinessFragment: RegistrationBusinessGoogleBusinessFragment? = null
   private var registrationBusinessFacebookPageFragment: RegistrationBusinessFacebookPageFragment? = null
   private var registrationBusinessFacebookShopFragment: RegistrationBusinessFacebookShopFragment? = null
-  private var registrationBusinessInstagramFragment: RegistrationBusinessInstagramFragment? = null
+  private var registrationBusinessInstagramFragment: RegistrationBusinessInstagramActivity? = null
 
   private var registrationBusinessTwitterDetailsFragment: RegistrationBusinessTwitterDetailsFragment? = null
   private var registrationBusinessWhatsAppFragment: RegistrationBusinessWhatsAppFragment? = null

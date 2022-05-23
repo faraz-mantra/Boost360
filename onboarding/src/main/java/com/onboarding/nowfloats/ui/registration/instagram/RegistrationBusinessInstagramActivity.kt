@@ -2,6 +2,7 @@ package com.onboarding.nowfloats.ui.registration.instagram
 
 import android.util.Log
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
@@ -11,19 +12,28 @@ import com.onboarding.nowfloats.base.AppBaseFragment
 import com.onboarding.nowfloats.databinding.ActivityInstagramContainerBinding
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.request.getType
+import com.onboarding.nowfloats.model.supportVideo.FeatureSupportVideoResponse
+import com.onboarding.nowfloats.model.supportVideo.FeaturevideoItem
 import com.onboarding.nowfloats.ui.registration.BaseRegistrationFragment
+import com.onboarding.nowfloats.viewmodel.InstagramSetupViewModel
 
-class RegistrationBusinessInstagramFragment:
+class RegistrationBusinessInstagramActivity:
     AppBaseActivity<ActivityInstagramContainerBinding,BaseViewModel>() {
     
     override var TAG = "RegistrationBusinessIns"
+    private var instViewModel: InstagramSetupViewModel?=null
+
     override fun getLayout(): Int {
         return R.layout.activity_instagram_container
     }
 
 
+
     override fun onCreateView() {
         super.onCreateView()
+        instViewModel =ViewModelProvider(this).get(InstagramSetupViewModel::class.java)
+
+        getVideosFromServer()
         observeBackStack()
 
         addFragmentReplace(binding?.container?.id,IGIntroScreenFragment.newInstance(),true)
@@ -37,6 +47,20 @@ class RegistrationBusinessInstagramFragment:
                 }else{
                     onBackPressed()
                 }
+            }
+        }
+    }
+
+    private fun getVideosFromServer() {
+        showProgress()
+        instViewModel?.getSupportVideos()
+        instViewModel?.supportVideosLd?.observe(this){ it ->
+            hideProgress()
+            if (it.isSuccess()&&it.error==null&&it is FeatureSupportVideoResponse){
+               instViewModel?.setGuideVideos(it)
+
+            }else{
+                showLongToast(getString(R.string.something_went_wrong))
             }
         }
     }

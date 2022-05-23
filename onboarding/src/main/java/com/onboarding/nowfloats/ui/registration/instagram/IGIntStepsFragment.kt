@@ -7,6 +7,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModelProvider
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookException
@@ -31,6 +32,7 @@ import com.onboarding.nowfloats.base.AppBaseFragment
 import com.onboarding.nowfloats.databinding.FragmentIgIntStepsBinding
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRequest
+import com.onboarding.nowfloats.viewmodel.InstagramSetupViewModel
 import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
 
 class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCreateViewModel>(),
@@ -47,6 +49,7 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
     private var session:UserSessionManager?=null
     private var channelAccessToken =
         ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.instagram.name.toLowerCase())
+    private var instViewModel:InstagramSetupViewModel?=null
 
     enum class Step{
         STEP1,
@@ -80,6 +83,8 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
 
     override fun onCreateView() {
         super.onCreateView()
+
+        instViewModel = ViewModelProvider(requireActivity()).get(InstagramSetupViewModel::class.java)
         session = UserSessionManager(requireActivity())
         registerFacebookLoginCallback(this, callbackManager)
 
@@ -89,9 +94,15 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
 
     }
 
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         callbackManager.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun loadVideo(){
+
     }
 
     private fun setupUi() {

@@ -16,7 +16,7 @@ data class FeatureSupportVideoResponse(
 ):Serializable, BaseResponse(){
 
 	companion object {
-		fun saveSupportVideoData(user: List<FeaturevideoItem>?) {
+		fun saveSupportVideoData(user: List<FeaturevideoItem?>?) {
 			PreferencesUtils.instance.saveData(SUPPORT_VIDEO_DATA, convertListObjToString(user?.toList() ?: ArrayList()) ?: "")
 		}
 
@@ -77,7 +77,7 @@ data class DataItem(
 	val schemaid: String? = null,
 
 	@field:SerializedName("featurevideo")
-	val featurevideo: List<FeaturevideoItem>? = null,
+	val featurevideo: List<FeaturevideoItem?>? = null,
 
 	@field:SerializedName("_kid")
 	val kid: String? = null,

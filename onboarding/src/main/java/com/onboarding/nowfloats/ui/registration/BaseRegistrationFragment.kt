@@ -24,7 +24,6 @@ import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.navigator.ScreenModel
 import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen
 import com.onboarding.nowfloats.model.navigator.ScreenModel.Screen.BUSINESS_INFO
-import com.onboarding.nowfloats.ui.registration.instagram.RegistrationBusinessInstagramFragment
 import com.onboarding.nowfloats.ui.startFragmentActivity
 import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
 
