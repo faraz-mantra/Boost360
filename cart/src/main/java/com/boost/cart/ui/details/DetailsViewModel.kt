@@ -64,8 +64,8 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
     fun addItemToCart1(updatesModel: FeaturesModel, activity: Activity) {
         updatesLoader.postValue(false)
         val discount = 100 - updatesModel.discount_percent
-        val paymentPrice = Utils.priceCalculatorForYear((discount * updatesModel.price) / 100.0, updatesModel.widget_type, activity)
-        val mrpPrice = Utils.priceCalculatorForYear(updatesModel.price, updatesModel.widget_type, activity)
+        val paymentPrice = Utils.priceCalculatorForYear((discount * updatesModel.price) / 100.0, updatesModel.widget_type!!, activity)
+        val mrpPrice = Utils.priceCalculatorForYear(updatesModel.price, updatesModel.widget_type!!, activity)
         val cartItem = CartModel(
             updatesModel.feature_id,
             updatesModel.boost_widget_key,
@@ -80,7 +80,7 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
             1,
             "features",
             updatesModel.extended_properties,
-            updatesModel.widget_type
+            updatesModel.widget_type!!
         )
 
 
@@ -103,8 +103,8 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
     fun addItemToCart(updatesModel: FeaturesModel, activity: Activity) {
         updatesLoader.postValue(false)
         val discount = 100 - updatesModel.discount_percent
-        val paymentPrice = Utils.priceCalculatorForYear((discount * updatesModel.price) / 100.0, updatesModel.widget_type, activity)
-        val mrpPrice = Utils.priceCalculatorForYear(updatesModel.price, updatesModel.widget_type, activity)
+        val paymentPrice = Utils.priceCalculatorForYear((discount * updatesModel.price) / 100.0, updatesModel.widget_type!!, activity)
+        val mrpPrice = Utils.priceCalculatorForYear(updatesModel.price, updatesModel.widget_type!!, activity)
         val cartItem = CartModel(
             updatesModel.feature_id,
             updatesModel.boost_widget_key,
@@ -119,7 +119,7 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
             1,
             "features",
             updatesModel.extended_properties,
-            updatesModel.widget_type
+            updatesModel.widget_type!!
         )
 
         CompositeDisposable().add(

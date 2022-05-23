@@ -114,7 +114,7 @@ class AllFeatureAdaptor(
     fun upgradeListItem(updateModel: FeaturesModel, subscribedStatus: ArrayList<String>, activity: CartActivity) {
       val prefs = SharedPrefs(activity)
       val discount = 100 - updateModel.discount_percent
-      val price = priceCalculatorForYear((discount * updateModel.price) / 100, updateModel.widget_type, activity)
+      val price = priceCalculatorForYear((discount * updateModel.price) / 100, updateModel.widget_type!!, activity)
       upgradeTitle.text = updateModel.target_business_usecase
       upgradeDetails.text = updateModel.name
 
@@ -123,7 +123,7 @@ class AllFeatureAdaptor(
         upgradeSubscribedStatus.visibility = View.GONE
       }
       if (price > 0) {
-        upgradePrice.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + Utils.yearlyOrMonthlyOrEmptyValidity(updateModel.widget_type, activity)
+        upgradePrice.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + Utils.yearlyOrMonthlyOrEmptyValidity(updateModel.widget_type!!, activity)
         pricingLayout.visibility = View.VISIBLE
 //                upgradeSubscribedStatus.visibility = View.GONE
       } else {
@@ -137,8 +137,8 @@ class AllFeatureAdaptor(
       if (updateModel.discount_percent > 0) {
         upgradeDiscount.visibility = View.VISIBLE
         upgradeDiscount.text = "" + updateModel.discount_percent + "%"
-        val mrpPrice = priceCalculatorForYear(updateModel.price, updateModel.widget_type, activity)
-        upgradeMRP.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(mrpPrice) + Utils.yearlyOrMonthlyOrEmptyValidity(updateModel.widget_type, activity)
+        val mrpPrice = priceCalculatorForYear(updateModel.price, updateModel.widget_type!!, activity)
+        upgradeMRP.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(mrpPrice) + Utils.yearlyOrMonthlyOrEmptyValidity(updateModel.widget_type!!, activity)
         upgradeMRP.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
       } else {
         upgradeDiscount.visibility = View.GONE

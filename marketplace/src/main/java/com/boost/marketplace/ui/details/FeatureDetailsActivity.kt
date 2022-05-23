@@ -13,6 +13,8 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.StrikethroughSpan
 import android.text.style.UnderlineSpan
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
@@ -23,9 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.SimplePageTransformerSmall
 import com.boost.cart.adapter.ZoomOutPageTransformer
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.LearnMoreLink
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
 import com.boost.dbcenterapi.data.remote.ApiInterface
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
@@ -130,7 +130,7 @@ class FeatureDetailsActivity :
         reviewAdaptor = ReviewViewPagerAdapter(ArrayList())
         howToUseAdapter = HowToUseAdapter(this, ArrayList())
         faqAdapter = FAQAdapter(this, ArrayList())
-        benefitAdaptor = BenefitsViewPagerAdapter(arrayListOf("Testing","Testing1","Testing2","Testing3","Testing4","Testing5"), this)
+        benefitAdaptor = BenefitsViewPagerAdapter(ArrayList(), this)
 //    localStorage = LocalStorage.getInstance(applicationContext)!!
         singleWidgetKey = intent.extras?.getString("itemId")
         prefs = SharedPrefs(this)
@@ -142,28 +142,27 @@ class FeatureDetailsActivity :
     private fun initView() {
 
         loadData()
+        initMvvm()
 
         initializeSecondaryImage()
         initializePackageRecycler()
-        initializeViewPager()
-        initializeHowToUseRecycler()
-        initializeFAQRecycler()
-        initializeCustomerViewPager()
-        initMvvm()
+
         featureEdgeCase()
 
         val callExpertString = SpannableString("Have a query? Call an expert")
 
         callExpertString.setSpan(
             UnderlineSpan(),
-            callExpertString.length-14,
+            callExpertString.length - 14,
             callExpertString.length,
             0
         )
-        callExpertString.setSpan( ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent)),
-            callExpertString.length-14,
+        callExpertString.setSpan(
+            ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent)),
+            callExpertString.length - 14,
             callExpertString.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        );
 
         query_text.setText(callExpertString)
         query_text.setOnClickListener {
@@ -190,15 +189,12 @@ class FeatureDetailsActivity :
         }
         )
 
-//        abcText.text = getString(R.string.addons_description)
 
         add_item_to_cart.setOnClickListener {
             if (!itemInCartStatus) {
                 if (addonDetails != null) {
-                    //clear cartOrderInfo from SharedPref to requestAPI again
                     prefs.storeCartOrderInfo(null)
 
-//                    makeFlyAnimation(image1222Copy)
 
                     viewModel.addItemToCart1(addonDetails!!)
                     val event_attributes: HashMap<String, Any> = HashMap()
@@ -229,11 +225,9 @@ class FeatureDetailsActivity :
                             NO_EVENT_VALUE
                         )
                     badgeNumber = badgeNumber + 1
-//                    badge121.setText(badgeNumber.toString())
-//                    badge121.visibility = View.VISIBLE
+
                     Constants.CART_VALUE = badgeNumber
 
-//                    localStorage.addCartItem(addons_list!!.get(itemId))
 
                     add_item_to_cart.background = ContextCompat.getDrawable(
                         applicationContext,
@@ -243,7 +237,6 @@ class FeatureDetailsActivity :
                     add_item_to_cart.text = getString(R.string.added_to_cart)
                     itemInCartStatus = true
 
-//                    WebEngageController.trackEvent(ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART, FEATURE_KEY , event_attributes)
                 }
             }
         }
@@ -299,15 +292,6 @@ class FeatureDetailsActivity :
 
         widgetLearnMore.setOnClickListener {
             if (widgetLearnMoreLink != null && widgetLearnMoreLink!!.length > 0) {
-//                val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
-//                val args = Bundle()
-//                args.putString("title", widgetLearnMore.text.toString())
-//                args.putString("link", widgetLearnMoreLink)
-//                webViewFragment.arguments = args
-//                (activity as UpgradeActivity).addFragment(
-//                    webViewFragment,
-//                    WEB_VIEW_FRAGMENT
-//                )
                 val intent = Intent(this, WebViewActivity::class.java)
                 intent.putExtra("title", widgetLearnMore.text.toString())
                 intent.putExtra("link", widgetLearnMoreLink)
@@ -321,29 +305,7 @@ class FeatureDetailsActivity :
             }
         }
 
-//        cost_per_month.setOnClickListener {
-//            cost_per_month.background =
-//                ContextCompat.getDrawable(applicationContext, R.drawable.rounded_stroke_orange_4)
-//            cost_per_month_check.setImageResource(R.drawable.ic_checked)
-//            cost_per_year.background =
-//                ContextCompat.getDrawable(applicationContext, R.drawable.rounded_border_gray)
-//            cost_per_year_check.setImageResource(R.drawable.rounded_border_gray)
-//            cost_per_year_discount.background =
-//                ContextCompat.getDrawable(applicationContext, R.drawable.ic_feature_discount_grey)
-//        }
-//
-//        cost_per_year.setOnClickListener {
-//            cost_per_month.background =
-//                ContextCompat.getDrawable(applicationContext, R.drawable.rounded_border_gray)
-//            cost_per_month_check.setImageResource(R.drawable.rounded_border_gray)
-//            cost_per_year.background =
-//                ContextCompat.getDrawable(applicationContext, R.drawable.rounded_stroke_orange_4)
-//            cost_per_year_check.setImageResource(R.drawable.ic_checked)
-//            cost_per_year_discount.background =
-//                ContextCompat.getDrawable(applicationContext, R.drawable.ic_feature_discount)
-//        }
     }
-
 
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -355,6 +317,60 @@ class FeatureDetailsActivity :
                 viewModel.getCartItems()
             }
             addonDetails = it
+            if (addonDetails != null && addonDetails?.benefits != null) {
+                benefit_container.visibility = VISIBLE
+                initializeViewPager()
+                val benefits = Gson().fromJson<List<String>>(
+                    addonDetails?.benefits!!,
+                    object : TypeToken<List<String>>() {}.type
+                )
+                benefitAdaptor.addupdates(benefits)
+                benefitAdaptor.notifyDataSetChanged()
+            }
+            if (addonDetails != null && addonDetails?.all_testimonials != null) {
+                what_our_customer_container.visibility = VISIBLE
+                initializeCustomerViewPager()
+                val testimonials = Gson().fromJson<List<AllTestimonial>>(
+                    addonDetails?.all_testimonials,
+                    object : TypeToken<List<AllTestimonial>>() {}.type
+                )
+                reviewAdaptor.addupdates(testimonials)
+                reviewAdaptor.notifyDataSetChanged()
+            }
+            if (addonDetails != null && addonDetails?.how_to_use_steps != null) {
+                how_to_use_title_layout.visibility = VISIBLE
+                how_to_use_arrow.setOnClickListener {
+                    if(how_to_use_recycler.visibility == VISIBLE){
+                        how_to_use_arrow.setImageResource(R.drawable.ic_arrow_down_gray)
+                        how_to_use_recycler.visibility = GONE
+                    }else{
+                        how_to_use_arrow.setImageResource(R.drawable.ic_arrow_up_gray)
+                        how_to_use_recycler.visibility = VISIBLE
+                    }
+                }
+                initializeHowToUseRecycler()
+                if (addonDetails!!.target_business_usecase != null) {
+                    tv_how_to_use_title.text =
+                        "How To Use " + addonDetails!!.target_business_usecase
+                }
+                val steps = Gson().fromJson<List<HowToUseStep>>(
+                    addonDetails?.how_to_use_steps,
+                    object : TypeToken<List<HowToUseStep>>() {}.type
+                )
+                howToUseAdapter.addupdates(steps)
+                howToUseAdapter.notifyDataSetChanged()
+            }
+
+            if (addonDetails != null && addonDetails?.all_frequently_asked_questions != null) {
+                faq_container.visibility = VISIBLE
+                initializeFAQRecycler()
+                val faq = Gson().fromJson<List<AllFrequentlyAskedQuestion>>(
+                    addonDetails?.all_frequently_asked_questions,
+                    object : TypeToken<List<AllFrequentlyAskedQuestion>>() {}.type
+                )
+                faqAdapter.addupdates(faq)
+                faqAdapter.notifyDataSetChanged()
+            }
             if (addonDetails != null) {
                 val learnMoreLinkType = object : TypeToken<LearnMoreLink>() {}.type
                 val learnMoreLink: LearnMoreLink? =
@@ -422,7 +438,7 @@ class FeatureDetailsActivity :
                 ) {
                     title_bottom2.text = "Less than 100 businesses have added this"
                 } else {
-                    title_bottom2.text = "Used by "+addonDetails!!.total_installs + " businesses"
+                    title_bottom2.text = "Used by " + addonDetails!!.total_installs + " businesses"
                 }
 
                 loadCostToButtons()
@@ -571,7 +587,6 @@ class FeatureDetailsActivity :
         benefits_indicator.setViewPager2(benefits_viewpager)
         benefits_viewpager.offscreenPageLimit = 1
 
-//        benefits_viewpager.setPageTransformer(ZoomOutPageTransformer())
         benefits_viewpager.setPageTransformer(SimplePageTransformerSmall())
 
         val itemDecoration = HorizontalMarginItemDecoration(
@@ -579,7 +594,6 @@ class FeatureDetailsActivity :
             R.dimen.viewpager_current_item_horizontal_margin
         )
         benefits_viewpager.addItemDecoration(itemDecoration)
-//        viewpager.setPageTransformer(ZoomOutPageTransformer())
     }
 
 
@@ -595,17 +609,16 @@ class FeatureDetailsActivity :
             R.dimen.viewpager_current_item_horizontal_margin
         )
         what_our_customer_viewpager.addItemDecoration(itemDecoration)
-//        viewpager.setPageTransformer(ZoomOutPageTransformer())
     }
 
 
     fun addUpdatePacks(list: ArrayList<BundlesModel>) {
-        if(list.size>0) {
+        if (list.size > 0) {
             featurePacksAdapter.addupdates(list, addonDetails?.name ?: "")
             pack_recycler.adapter = featurePacksAdapter
             featurePacksAdapter.notifyDataSetChanged()
             pack_container.visibility = View.VISIBLE
-        }else{
+        } else {
             pack_container.visibility = View.GONE
         }
     }
@@ -665,8 +678,10 @@ class FeatureDetailsActivity :
                     mrpPrice.visibility = View.INVISIBLE
                 }
 
-                price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice)
-                final_price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice)
+                price.text =
+                    "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice)
+                final_price.text =
+                    "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice)
 //                add_item_to_cart.text = "Add for ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/Month"
 //                havent_bought_the_feature.visibility = View.VISIBLE
             } else {
@@ -683,7 +698,9 @@ class FeatureDetailsActivity :
     }
 
     fun spannableString(value: Double) {
-        val origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
+        val origCost = SpannableString(
+            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month"
+        )
 
         origCost.setSpan(
             StrikethroughSpan(),
@@ -726,70 +743,119 @@ class FeatureDetailsActivity :
         imagePreviewPopUpFragement.show(supportFragmentManager, IMAGE_PREVIEW_POPUP_FRAGMENT)
     }
 
-    fun featureEdgeCase(){
+    fun featureEdgeCase() {
         val edgeState = "AutoRenewalOn"
-        when(edgeState){
-            "ActionRequired"->{
+        when (edgeState) {
+            "ActionRequired" -> {
                 edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 edge_case_title.setText("Action Required")
                 edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.red))
-                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_error_red, 0, 0, 0 )
+                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
                 edge_case_desc.setText("You need to take action to activate this feature.")
                 edge_case_desc.setText("There is an internal error inside Boost 360. We are working to resolve this issue.")
             }
-            "SomethingWentWrong!"->{
+            "SomethingWentWrong!" -> {
                 edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 edge_case_title.setText("Something went wrong!")
                 edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.red))
-                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_error_red, 0, 0, 0 )
+                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
                 edge_case_desc.setText("There is an internal error inside Boost 360. We are working to resolve this issue.")
 
             }
-            "active"->{
+            "active" -> {
                 edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
                 edge_case_title.setText("Feature is currently active")
                 edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.green))
-                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checked, 0, 0, 0 )
-                edge_case_desc.setText("Feature validity expiring on Aug 23, 2021. You\n" +
-                        "can extend validity by renewing it for a\n" +
-                        "longer duration.")
+                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_checked,
+                    0,
+                    0,
+                    0
+                )
+                edge_case_desc.setText(
+                    "Feature validity expiring on Aug 23, 2021. You\n" +
+                            "can extend validity by renewing it for a\n" +
+                            "longer duration."
+                )
 
             }
-            "expired"->{
+            "expired" -> {
                 edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 edge_case_title.setText("Feature expired on Aug 23, 2021")
                 edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.red))
-                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_error_red, 0, 0, 0 )
-                edge_case_desc.setText("You need to renew this feature to continue\n" +
-                        "using a custom domain. Your domain may be\n" +
-                        "lost if you don’t renew it.")
+                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
+                edge_case_desc.setText(
+                    "You need to renew this feature to continue\n" +
+                            "using a custom domain. Your domain may be\n" +
+                            "lost if you don’t renew it."
+                )
             }
-            "Syncing"->{
+            "Syncing" -> {
                 edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_skyblue_white_bg)
                 edge_case_title.setText("Syncing information")
                 edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.light_blue2))
-                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sync_blue, 0, 0, 0 )
+                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_sync_blue,
+                    0,
+                    0,
+                    0
+                )
                 edge_case_desc.setText("We are working on syncing your information for this feature. It may take some time to get updated. Contact support for help.")
             }
-            "AutoRenewalOn"->{
+            "AutoRenewalOn" -> {
                 edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
                 edge_case_title.setText("Auto renewal is turned on")
                 edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.green))
-                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checked, 0, 0, 0 )
+                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_checked,
+                    0,
+                    0,
+                    0
+                )
                 edge_case_desc.setText("We are working on syncing your information for this feature. It may take some time to get updated. Contact support for help.")
             }
-            "AddedToCart"->{
+            "AddedToCart" -> {
                 edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_orange_white_bg)
                 edge_case_title.setText("Feature is currently in cart. ")
-                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.common_text_color))
-                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cart_black, 0, 0, 0 )
+                edge_case_title.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.common_text_color
+                    )
+                )
+                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_cart_black,
+                    0,
+                    0,
+                    0
+                )
                 edge_case_desc.setText("Feature is currently in cart. ")
             }
-            "PartOfPackage"->{
+            "PartOfPackage" -> {
                 edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
                 edge_case_title.setText("Feature is part of “Online Classic”")
                 edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.green))
-                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checked, 0, 0, 0 )
+                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_checked,
+                    0,
+                    0,
+                    0
+                )
                 edge_case_desc.setText("")
             }
         }
@@ -810,7 +876,7 @@ class FeatureDetailsActivity :
         val args = Bundle()
         args.putString("bundleData", Gson().toJson(item))
         packagePopup.arguments = args
-        packagePopup.show(supportFragmentManager,"PACKAGE_POPUP")
+        packagePopup.show(supportFragmentManager, "PACKAGE_POPUP")
 
 //        val intent = Intent(this, ComparePacksActivity::class.java)
 //        intent.putExtra("bundleData", Gson().toJson(item))

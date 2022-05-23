@@ -276,11 +276,11 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         )
         add_item_to_cart.setTextColor(Color.WHITE)
         val discount = 100 - addonDetails!!.discount_percent
-        val paymentPrice = priceCalculatorForYear((discount * addonDetails!!.price) / 100.0, addonDetails!!.widget_type, requireActivity())
-        money.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + yearlyOrMonthlyOrEmptyValidity(addonDetails!!.widget_type, requireActivity())
+        val paymentPrice = priceCalculatorForYear((discount * addonDetails!!.price) / 100.0, addonDetails!!.widget_type!!, requireActivity())
+        money.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + yearlyOrMonthlyOrEmptyValidity(addonDetails!!.widget_type!!, requireActivity())
 
         //hide or show MRP price
-        val originalCost = priceCalculatorForYear(addonDetails!!.price, addonDetails!!.widget_type, requireActivity())
+        val originalCost = priceCalculatorForYear(addonDetails!!.price, addonDetails!!.widget_type!!, requireActivity())
         if (paymentPrice != originalCost) {
           orig_cost.visibility = View.VISIBLE
           spannableString(originalCost)
@@ -288,7 +288,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
           orig_cost.visibility = View.INVISIBLE
         }
 
-        add_item_to_cart.text = "Add for ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + yearlyOrMonthlyOrEmptyValidity(addonDetails!!.widget_type, requireActivity())
+        add_item_to_cart.text = "Add for ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + yearlyOrMonthlyOrEmptyValidity(addonDetails!!.widget_type!!, requireActivity())
         havent_bought_the_feature.visibility = View.VISIBLE
       } else {
         add_item_to_cart.visibility = View.GONE
@@ -302,7 +302,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
   }
 
   fun spannableString(value: Double) {
-    val origCost = SpannableString("Original cost ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + yearlyOrMonthlyOrEmptyValidity(addonDetails!!.widget_type, requireActivity()))
+    val origCost = SpannableString("Original cost ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + yearlyOrMonthlyOrEmptyValidity(addonDetails!!.widget_type!!, requireActivity()))
 
     origCost.setSpan(StrikethroughSpan(), 14, origCost.length, 0)
     orig_cost.text = origCost

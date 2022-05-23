@@ -33,7 +33,8 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
     var allAvailableFeaturesDownloadResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
-//    var _totalActiveAddonsCount: MutableLiveData<Int> = MutableLiveData()
+
+    //    var _totalActiveAddonsCount: MutableLiveData<Int> = MutableLiveData()
     var allBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
     var allFeatureDealsResult: MutableLiveData<List<FeatureDeals>> = MutableLiveData()
     var allVideoDetails: MutableLiveData<List<YoutubeVideoModel>> = MutableLiveData()
@@ -234,7 +235,21 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                                     ) else null,
                                     if (item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) Gson().toJson(
                                         item.exclusive_to_categories
-                                    ) else null
+                                    ) else null,
+                                    item.widget_type,
+                                    if (item.benefits != null && item.benefits!!.size > 0) Gson().toJson(
+                                        item.benefits
+                                    ) else null,
+                                    if (item.all_testimonials != null && item.all_testimonials!!.size > 0) Gson().toJson(
+                                        item.all_testimonials
+                                    ) else null,
+                                    if (item.all_frequently_asked_questions != null && item.all_frequently_asked_questions!!.size > 0) Gson().toJson(
+                                        item.all_frequently_asked_questions
+                                    ) else null,
+                                    if (item.how_to_use_steps != null && item.how_to_use_steps!!.size > 0) Gson().toJson(
+                                        item.how_to_use_steps
+                                    ) else null,
+                                    item.how_to_use_title
                                 )
                             )
                         }
@@ -385,7 +400,7 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                                 .subscribe()
                         }
 
-                     //   saving videoGallery
+                        //   saving videoGallery
 //                        if (response.Data[0].video_gallery != null && response.Data[0].video_gallery.size > 0) {
 //                            val videoGallery = arrayListOf<YoutubeVideoModel>()
 //                            for (singleVideoDetails in response.Data[0].video_gallery) {
@@ -954,53 +969,53 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
 
     fun GetHelp() {
         if (Utils.isConnectedToInternet(application)) {
-                CompositeDisposable().add(
-                    NewApiService.GetHelp()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            {
-                                if (it.Data[0].featurevideo != null && it.Data[0].featurevideo.size > 0) {
-                                    val videoGallery = arrayListOf<YoutubeVideoModel>()
-                                    for (singleVideoDetails in it.Data[0].featurevideo) {
-                                        videoGallery.add(
-                                            YoutubeVideoModel(
-                                                singleVideoDetails._kid,
-                                                singleVideoDetails.videodescription,
-                                                singleVideoDetails.videodurationseconds.toString(),
-                                                singleVideoDetails.videotitle,
-                                                singleVideoDetails.videourl.url,
-                                                singleVideoDetails.thumbnailimage.url
-                                            )
+            CompositeDisposable().add(
+                NewApiService.GetHelp()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            if (it.Data[0].featurevideo != null && it.Data[0].featurevideo.size > 0) {
+                                val videoGallery = arrayListOf<YoutubeVideoModel>()
+                                for (singleVideoDetails in it.Data[0].featurevideo) {
+                                    videoGallery.add(
+                                        YoutubeVideoModel(
+                                            singleVideoDetails._kid,
+                                            singleVideoDetails.videodescription,
+                                            singleVideoDetails.videodurationseconds.toString(),
+                                            singleVideoDetails.videotitle,
+                                            singleVideoDetails.videourl.url,
+                                            singleVideoDetails.thumbnailimage.url
                                         )
-                                    }
-
-                                    Completable.fromAction {
-                                        AppDatabase.getInstance(application)!!
-                                            .youtubeVideoDao()
-                                            .insertAllYoutubeVideos(videoGallery)
-                                    }
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .doOnComplete {
-                                            Log.i("insertAllYoutubeVideos", "Successfully")
-                                            allVideoDetails.postValue(videoGallery)
-                                            updatesLoader.postValue(false)
-                                        }
-                                        .doOnError {
-                                            Log.i("insertAllYoutubeVideos", "failed")
-                                            updatesError.postValue(it.message)
-                                            updatesLoader.postValue(false)
-                                        }
-                                        .subscribe()
+                                    )
                                 }
-                            },
-                            {
-                                Log.e("GetAllVideos", "error" + it.message)
-                                updatesLoader.postValue(false)
-                            })
-                )
-            } else {
+
+                                Completable.fromAction {
+                                    AppDatabase.getInstance(application)!!
+                                        .youtubeVideoDao()
+                                        .insertAllYoutubeVideos(videoGallery)
+                                }
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .doOnComplete {
+                                        Log.i("insertAllYoutubeVideos", "Successfully")
+                                        allVideoDetails.postValue(videoGallery)
+                                        updatesLoader.postValue(false)
+                                    }
+                                    .doOnError {
+                                        Log.i("insertAllYoutubeVideos", "failed")
+                                        updatesError.postValue(it.message)
+                                        updatesLoader.postValue(false)
+                                    }
+                                    .subscribe()
+                            }
+                        },
+                        {
+                            Log.e("GetAllVideos", "error" + it.message)
+                            updatesLoader.postValue(false)
+                        })
+            )
+        } else {
             CompositeDisposable().add(
                 AppDatabase.getInstance(application)!!
                     .youtubeVideoDao()
