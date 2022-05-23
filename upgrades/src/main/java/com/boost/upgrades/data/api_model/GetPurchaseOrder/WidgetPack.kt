@@ -8,7 +8,7 @@ data class WidgetPack(
   val ExpiryInDays: Int,
   val ExpiryInMths: Int,
   val Name: String,
-  val Price: Int,
+  val Price: Double,
   val Properties: Any,
   val WidgetKey: String
 )

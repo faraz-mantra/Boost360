@@ -143,13 +143,13 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     val featureProduct = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureKey.PRODUCTCATALOGUE)
     val capLimitProduct = featureProduct?.filterProperty(PropertiesItem.KeyType.LIMIT)
     if (isEdit?.not() == true && capLimitProduct != null && capLimitProduct.getValueN() != null) {
-      viewModel?.getAllProducts(getRequestProduct(capLimitProduct.getValueN()!!))?.observeOnce(viewLifecycleOwner, {
+      viewModel?.getAllProducts(getRequestProduct(capLimitProduct.getValueN()!!))?.observeOnce(viewLifecycleOwner) {
         val data = it.arrayResponse as? Array<ProductItemsResponseItem>
         if (data.isNullOrEmpty().not()) {
           baseActivity.hideKeyBoard()
           showAlertCapLimit("Can't add the product catalogue, please activate your premium Add-ons plan.", CapLimitFeatureResponseItem.FeatureKey.PRODUCTCATALOGUE.name)
         }
-      })
+      }
     }
   }
 
@@ -340,14 +340,14 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       } else if (productIdAdd.isNullOrEmpty().not() && errorType == "uploadImageSingle") {
         uploadImageSingle(productIdAdd)
       } else {
-        viewModel?.createProduct(product)?.observeOnce(viewLifecycleOwner, {
+        viewModel?.createProduct(product)?.observeOnce(viewLifecycleOwner) {
           val productId = it.stringResponse
           if (it.isSuccess() && productId.isNullOrEmpty().not()) {
             WebEngageController.trackEvent(PRODUCT_CATALOGUE_CREATED, ADDED, NO_EVENT_VALUE)
             productIdAdd = productId
             addGstService(productId)
           } else showError(getString(R.string.product_adding_error_try_again))
-        })
+        }
       }
     } else {
       val updates = ArrayList<UpdateValue>()
@@ -361,12 +361,12 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         clientId, productId = product?.productId,
         productType = product?.productType, updates = updates
       )
-      viewModel?.updateProduct(request)?.observeOnce(viewLifecycleOwner, {
+      viewModel?.updateProduct(request)?.observeOnce(viewLifecycleOwner) {
         if ((it.isSuccess())) {
           WebEngageController.trackEvent(PRODUCT_CATALOGUE_UPDATED, ADDED, NO_EVENT_VALUE)
           updateGstService(product?.productId)
         } else showError(getString(R.string.product_updating_error_try_again))
-      })
+      }
     }
   }
 
@@ -414,13 +414,13 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     viewModel?.addUpdateProductImage(
       clientId, requestType = "sequential", requestId = deviceId, totalChunks = 1,
       currentChunkNumber = 1, productId = productId, requestBody = getRequestServiceImage(productImage)
-    )?.observeOnce(viewLifecycleOwner, {
+    )?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) uploadSecondaryImage(productId)
       else {
         if (isEdit == false) errorType = "uploadImageSingle"
         showError(getString(R.string.product_image_uploading_error))
       }
-    })
+    }
   }
 
   private fun getRequestServiceImage(serviceImage: File?): RequestBody {

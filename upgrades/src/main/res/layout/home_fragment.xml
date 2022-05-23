@@ -425,9 +425,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <include
-                            layout="@layout/data_place2"
-                            android:layout_height="match_parent" />
+                        <include layout="@layout/data_place2" />
 
                         <include layout="@layout/data_place2" />
 
