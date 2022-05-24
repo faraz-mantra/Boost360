@@ -65,7 +65,7 @@ class BrowseParentFeaturesAdapter(
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        val adapter = BrowseChildFeaturesAdapter(ArrayList(it.subList(0,4)) , addonsListener)
+                        val adapter = BrowseChildFeaturesAdapter(ArrayList(it.subList(0,4)) , addonsListener, activity)
                         holder.recyclerview.adapter = adapter
                         adapter.notifyDataSetChanged()
                     }, {
@@ -80,7 +80,7 @@ class BrowseParentFeaturesAdapter(
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        val adapter = BrowseChildFeaturesAdapter(it, addonsListener)
+                        val adapter = BrowseChildFeaturesAdapter(it, addonsListener, activity)
                         holder.recyclerview.adapter = adapter
                         adapter.notifyDataSetChanged()
                     }, {

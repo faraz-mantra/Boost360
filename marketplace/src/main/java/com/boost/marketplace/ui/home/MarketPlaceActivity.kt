@@ -156,6 +156,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         initView()
     }
 
+    @SuppressLint("NewApi")
     private fun initView() {
         packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList(), this, this)
         featureDealsAdapter = FeatureDealsAdapter(ArrayList(), ArrayList(), this, this)
@@ -2776,7 +2777,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                     1,
                                     if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
                                     "bundles",
-                                    null
+                                    null,
+                                    ""
                                 )
                             )
                         } catch (e: Exception) {

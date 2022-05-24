@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
 import com.boost.cart.interfaces.CartFragmentListener
 import com.boost.cart.utils.SharedPrefs
+import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.WidgetModel
 import com.boost.dbcenterapi.utils.WebEngageController
@@ -55,12 +56,9 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
     val price = list.get(position).price * list.get(position).min_purchase_months
     val MRPPrice = list.get(position).MRPPrice * list.get(position).min_purchase_months
     holder.price.text =
-      if(prefs.getYearPricing())
-      "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/year"
-    else
-        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
+      "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + yearlyOrMonthlyOrEmptyValidity(list.get(position).widget_type, activity)
     if (price != MRPPrice) {
-      spannableString(holder, MRPPrice, list.get(position).min_purchase_months)
+      spannableString(holder, MRPPrice, list.get(position))
       holder.MRPPrice.visibility = View.VISIBLE
     } else {
       holder.MRPPrice.visibility = View.GONE
@@ -117,25 +115,10 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
     }
   }
 
-  fun spannableString(holder: upgradeViewHolder, value: Double, minMonth: Int) {
-    val prefs = SharedPrefs(activity)
-    val origCost: SpannableString
-    if (minMonth > 1) {
-      val originalCost = value
-      origCost =
-        if(prefs.getYearPricing())
-          SpannableString(
+  fun spannableString(holder: upgradeViewHolder, value: Double, singleItem: CartModel) {
+    val origCost = SpannableString(
         "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-          .format(originalCost) + "/year")
-      else
-          SpannableString(
-            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-              .format(originalCost) + "/" + minMonth + "months")
-    } else {
-      origCost = SpannableString(
-        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month"
-      )
-    }
+          .format(value) + yearlyOrMonthlyOrEmptyValidity(singleItem.widget_type, activity))
 
     origCost.setSpan(
       StrikethroughSpan(),

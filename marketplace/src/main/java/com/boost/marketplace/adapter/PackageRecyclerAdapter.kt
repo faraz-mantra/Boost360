@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.utils.WebEngageController
@@ -22,6 +23,7 @@ import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
 import com.boost.marketplace.ui.home.MarketPlaceActivity
 import com.bumptech.glide.Glide
+import com.framework.utils.RootUtil
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.FEATURE_PACKS_CLICKED
 import com.google.gson.Gson
@@ -108,8 +110,8 @@ class PackageRecyclerAdapter(
             itemsIds.add(item.feature_code)
         }
 
-        var offeredBundlePrice = 0
-        var originalBundlePrice = 0
+        var offeredBundlePrice = 0.0
+        var originalBundlePrice = 0.0
         val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) bundles.min_purchase_months!! else 1
         CompositeDisposable().add(
                 AppDatabase.getInstance(activity.application)!!
@@ -122,12 +124,19 @@ class PackageRecyclerAdapter(
                                     for (singleItem in it) {
                                         for (item in bundles.included_features) {
                                             if (singleItem.feature_code == item.feature_code) {
-                                                originalBundlePrice += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt() * minMonth
+                                                originalBundlePrice += Utils.priceCalculatorForYear(
+                                                    RootUtil.round(
+                                                    (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
+                                                    2
+                                                ) * minMonth, singleItem.widget_type, activity)
                                             }
                                         }
                                     }
                                     if(bundles.overall_discount_percent > 0){
-                                        offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100)
+                                        offeredBundlePrice = RootUtil.round(
+                                            originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent / 100.0),
+                                            2
+                                        )
                                         holder.bundleDiscount.visibility = View.VISIBLE
 //                                        holder.bundlePriceLabel.visibility = View.GONE
                                         holder.bundleDiscount.setText(bundles.overall_discount_percent.toString() + "%")
@@ -142,7 +151,7 @@ class PackageRecyclerAdapter(
                                                 NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
                                                 "/" + bundles.min_purchase_months + "mths")
                                         if (offeredBundlePrice != originalBundlePrice) {
-                                            spannableString(holder, originalBundlePrice, bundles.min_purchase_months!!)
+                                            spannableString(holder, originalBundlePrice)
                                             holder.origCost.visibility = View.VISIBLE
                                         } else {
                                             holder.origCost.visibility = View.GONE
@@ -152,7 +161,7 @@ class PackageRecyclerAdapter(
                                                 NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)
                                                 + "/mth")
                                         if (offeredBundlePrice != originalBundlePrice) {
-                                            spannableString(holder, originalBundlePrice, 1)
+                                            spannableString(holder, originalBundlePrice)
                                             holder.origCost.visibility = View.VISIBLE
                                         } else {
                                             holder.origCost.visibility = View.GONE
@@ -214,13 +223,12 @@ class PackageRecyclerAdapter(
         )
     }
 
-    fun spannableString(holder: PagerViewHolder, value: Int, minMonth: Int) {
-        val origCost: SpannableString
-        if(minMonth > 1){
-            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")
-        }else{
-            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
-        }
+    fun spannableString(holder: PagerViewHolder, value: Double) {
+        val origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + Utils.yearlyOrMonthlyOrEmptyValidity(
+                "",
+                activity
+            )
+            )
 
         origCost.setSpan(
                 StrikethroughSpan(),

@@ -23,6 +23,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.SimplePageTransformerSmall
 import com.boost.cart.adapter.ZoomOutPageTransformer
+import com.boost.cart.utils.Utils.priceCalculatorForYear
+import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.LearnMoreLink
@@ -200,7 +202,7 @@ class FeatureDetailsActivity :
 
 //                    makeFlyAnimation(image1222Copy)
 
-                    viewModel.addItemToCart1(addonDetails!!)
+                    viewModel.addItemToCart1(addonDetails!!, this)
                     val event_attributes: HashMap<String, Any> = HashMap()
                     addonDetails!!.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
                     event_attributes.put("Addon Price", addonDetails!!.price)
@@ -426,7 +428,6 @@ class FeatureDetailsActivity :
                 }
 
                 loadCostToButtons()
-                mrpPrice
                 if (learnMoreLink != null) {
                     widgetLearnMore.text = learnMoreLink.link_description
                     widgetLearnMoreLink = learnMoreLink.link
@@ -644,7 +645,7 @@ class FeatureDetailsActivity :
                 )
                 add_item_to_cart.setTextColor(Color.WHITE)
                 val discount = 100 - addonDetails!!.discount_percent
-                val paymentPrice = (discount * addonDetails!!.price) / 100
+                val paymentPrice = priceCalculatorForYear((discount * addonDetails!!.price) / 100.0, addonDetails!!.widget_type, this)
 //                cost_per_month.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
 //                    .format(paymentPrice) + "/unit/month"
 //                cost_per_year.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
@@ -657,15 +658,16 @@ class FeatureDetailsActivity :
 //                }
 
                 //hide or show MRP price
-                if (paymentPrice != addonDetails!!.price) {
+                val originalCost = priceCalculatorForYear(addonDetails!!.price, addonDetails!!.widget_type, this)
+                if (paymentPrice != originalCost) {
                     mrp_price.visibility = View.VISIBLE
-                    spannableString(addonDetails!!.price)
+                    spannableString(originalCost)
                 } else {
-                    mrp_price.text = "/month"
+                    mrp_price.text = yearlyOrMonthlyOrEmptyValidity(addonDetails!!.widget_type, this)
                     mrpPrice.visibility = View.INVISIBLE
                 }
 
-                price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice)
+                price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + yearlyOrMonthlyOrEmptyValidity(addonDetails!!.widget_type, this)
                 final_price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice)
 //                add_item_to_cart.text = "Add for ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/Month"
 //                havent_bought_the_feature.visibility = View.VISIBLE
@@ -683,7 +685,7 @@ class FeatureDetailsActivity :
     }
 
     fun spannableString(value: Double) {
-        val origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
+        val origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + yearlyOrMonthlyOrEmptyValidity(addonDetails!!.widget_type, this))
 
         origCost.setSpan(
             StrikethroughSpan(),

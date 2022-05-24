@@ -51,6 +51,8 @@ import com.boost.cart.utils.Constants.Companion.COUPON_POPUP_FRAGEMENT
 import com.boost.cart.utils.Constants.Companion.SCHEMA_ID
 import com.boost.cart.utils.Constants.Companion.WEBSITE_ID
 import com.boost.cart.utils.DateUtils.parseDate
+import com.boost.cart.utils.Utils.monthCalculatorForAddons
+import com.boost.cart.utils.Utils.yearOrMonthText
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.ExtendedProperty
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
@@ -911,41 +913,38 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             if (!bundles_in_cart) {
 //                if (default_validity_months < 12){
 //                    default_validity_months++
-                if (default_validity_months == 1) {
-                    default_validity_months = default_validity_months + 2
-                } else if (default_validity_months >= 12 && default_validity_months < 36) {
-                    if (default_validity_months % 12 == 0) {
-                        default_validity_months = default_validity_months + 12
-                    } else {
-                        default_validity_months = default_validity_months + ((12 - default_validity_months % 12))
-                    }
-//        default_validity_months = default_validity_months+ 12
-                } else {
-                    if (default_validity_months < 36) {
-                        if (default_validity_months % 3 == 0) {
-                            default_validity_months = default_validity_months + 3
-                        } else if (default_validity_months % 3 == 1) {
-                            default_validity_months = default_validity_months + 2
-                        } else if (default_validity_months % 3 == 2) {
-                            default_validity_months = default_validity_months + 1
+                if(prefs.getYearPricing()){
+                    if(default_validity_months<5)
+                        default_validity_months = default_validity_months + 1
+                }else {
+                    if (default_validity_months == 1) {
+                        default_validity_months = default_validity_months + 2
+                    } else if (default_validity_months >= 12 && default_validity_months < 36) {
+                        if (default_validity_months % 12 == 0) {
+                            default_validity_months = default_validity_months + 12
+                        } else {
+                            default_validity_months =
+                                default_validity_months + ((12 - default_validity_months % 12))
                         }
-                    }
+//        default_validity_months = default_validity_months+ 12
+                    } else {
+                        if (default_validity_months < 36) {
+                            if (default_validity_months % 3 == 0) {
+                                default_validity_months = default_validity_months + 3
+                            } else if (default_validity_months % 3 == 1) {
+                                default_validity_months = default_validity_months + 2
+                            } else if (default_validity_months % 3 == 2) {
+                                default_validity_months = default_validity_months + 1
+                            }
+                        }
 //                        default_validity_months = default_validity_months+ 3
+                    }
                 }
-                if (default_validity_months > 1) {
-                    months_validity.setText(default_validity_months.toString() + " months")
+                    months_validity.setText(default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), false))
                     prefs.storeCartValidityMonths(default_validity_months.toString())
-                    totalValidityDays = 30 * default_validity_months
+                    totalValidityDays = 30 * if(prefs.getYearPricing()) default_validity_months * 12 else default_validity_months
                     prefs.storeMonthsValidity(totalValidityDays)
-                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
-                } else {
-                    months_validity.setText(default_validity_months.toString() + " month")
-                    prefs.storeCartValidityMonths(default_validity_months.toString())
-                    totalValidityDays = 30 * default_validity_months
-                    prefs.storeMonthsValidity(totalValidityDays)
-                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Month"
-                }
-//                months_validity.text = default_validity_months.toString() + " months"
+                feature_validity.text = default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), true)
 
                 prefs.storeCartOrderInfo(null)
                 prefs.storeAutoRenewSubscriptionID(null)
@@ -960,45 +959,42 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //            }
             } else if (bundles_in_cart) {
 //                if (default_validity_months < 12){
-                if (default_validity_months == 1) {
-                    default_validity_months = default_validity_months + 2
+                if(prefs.getYearPricing()){
+                    if(default_validity_months<5)
+                        default_validity_months = default_validity_months + 1
+                }else {
+                    if (default_validity_months == 1) {
+                        default_validity_months = default_validity_months + 2
 //    }else if(default_validity_months % 12 == 0 && default_validity_months < 60){
-                } else if (default_validity_months >= 12 && default_validity_months < 36) {
-                    if (default_validity_months % 12 == 0) {
-                        default_validity_months = default_validity_months + 12
-                    } else {
+                    } else if (default_validity_months >= 12 && default_validity_months < 36) {
+                        if (default_validity_months % 12 == 0) {
+                            default_validity_months = default_validity_months + 12
+                        } else {
 //            Log.v("validity_calculator", " "+ (default_validity_months - default_validity_months % 12)  + " "+default_validity_months + " "+ (default_validity_months % 12) )
-                        default_validity_months = default_validity_months + ((12 - default_validity_months % 12))
-                    }
-//        default_validity_months = default_validity_months+ 12
-                } else {
-//        if(default_validity_months < 60)
-                    if (default_validity_months < 36 && default_validity_months < 12) {
-                        if (default_validity_months % 3 == 0) {
-                            default_validity_months = default_validity_months + 3
-                        } else if (default_validity_months % 3 == 1) {
-                            default_validity_months = default_validity_months + 2
-                        } else if (default_validity_months % 3 == 2) {
-                            default_validity_months = default_validity_months + 1
+                            default_validity_months =
+                                default_validity_months + ((12 - default_validity_months % 12))
                         }
-                    }
+//        default_validity_months = default_validity_months+ 12
+                    } else {
+//        if(default_validity_months < 60)
+                        if (default_validity_months < 36 && default_validity_months < 12) {
+                            if (default_validity_months % 3 == 0) {
+                                default_validity_months = default_validity_months + 3
+                            } else if (default_validity_months % 3 == 1) {
+                                default_validity_months = default_validity_months + 2
+                            } else if (default_validity_months % 3 == 2) {
+                                default_validity_months = default_validity_months + 1
+                            }
+                        }
 //          default_validity_months = default_validity_months+ 3
+                    }
                 }
 
-//            default_validity_months
-                if (default_validity_months > 1) {
-                    months_validity.setText(default_validity_months.toString() + " months")
-                    prefs.storeCartValidityMonths(default_validity_months.toString())
-                    totalValidityDays = 30 * default_validity_months
-                    prefs.storeMonthsValidity(totalValidityDays)
-                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
-                } else {
-                    months_validity.setText(default_validity_months.toString() + " month")
-                    prefs.storeCartValidityMonths(default_validity_months.toString())
-                    totalValidityDays = 30 * default_validity_months
-                    prefs.storeMonthsValidity(totalValidityDays)
-                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Month"
-                }
+                months_validity.setText(default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), false))
+                prefs.storeCartValidityMonths(default_validity_months.toString())
+                totalValidityDays = 30 * if(prefs.getYearPricing()) default_validity_months * 12 else default_validity_months
+                prefs.storeMonthsValidity(totalValidityDays)
+                feature_validity.text = default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), true)
 
                 prefs.storeCartOrderInfo(null)
                 prefs.storeAutoRenewSubscriptionID(null)
@@ -1026,22 +1022,28 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 if (default_validity_months > 1) {
 //                    default_validity_months--
 //                    if(default_validity_months > 12 && default_validity_months % 12 == 0){
-                    if (default_validity_months > 12) {
+                    if(prefs.getYearPricing()){
+                        if(default_validity_months>=1)
+                            default_validity_months = default_validity_months - 1
+                    }else {
+                        if (default_validity_months > 12) {
 //                        default_validity_months = default_validity_months - 12
-                        if (default_validity_months % 12 == 0) {
-                            default_validity_months = default_validity_months - 12
+                            if (default_validity_months % 12 == 0) {
+                                default_validity_months = default_validity_months - 12
+                            } else {
+                                default_validity_months =
+                                    default_validity_months - ((default_validity_months % 12))
+                            }
                         } else {
-                            default_validity_months = default_validity_months - ((default_validity_months % 12))
-                        }
-                    } else {
 //                        default_validity_months = default_validity_months - 3
-                        if (default_validity_months <= 12) {
-                            if (default_validity_months % 3 == 0) {
-                                default_validity_months = default_validity_months - 3
-                            } else if (default_validity_months % 3 == 1) {
-                                default_validity_months = default_validity_months - 1
-                            } else if (default_validity_months % 3 == 2) {
-                                default_validity_months = default_validity_months - 2
+                            if (default_validity_months <= 12) {
+                                if (default_validity_months % 3 == 0) {
+                                    default_validity_months = default_validity_months - 3
+                                } else if (default_validity_months % 3 == 1) {
+                                    default_validity_months = default_validity_months - 1
+                                } else if (default_validity_months % 3 == 2) {
+                                    default_validity_months = default_validity_months - 2
+                                }
                             }
                         }
                     }
@@ -1049,11 +1051,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         default_validity_months = 1
                     }
 
-                    totalValidityDays = 30 * default_validity_months
+                    totalValidityDays = if(prefs.getYearPricing()) (30 * default_validity_months) * 12 else 30 * default_validity_months
                     prefs.storeMonthsValidity(totalValidityDays)
                     prefs.storeCartOrderInfo(null)
                     prefs.storeAutoRenewSubscriptionID(null)
-                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
+                    feature_validity.text = default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), true)
 //                    totalCalculation()
                     totalCalculationAfterCoupon()
                     if (couponCode.isNotEmpty())
@@ -1061,13 +1063,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //                    Toasty.warning(requireContext(), "Validity reduced by 1 month.", Toast.LENGTH_SHORT, true).show()
                 }
                 if (default_validity_months > 1) {
-                    months_validity.setText(default_validity_months.toString() + " months")
+                    months_validity.setText(default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), false))
                     prefs.storeCartValidityMonths(default_validity_months.toString())
-                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
+                    feature_validity.text = default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), true)
                 } else {
-                    months_validity.setText(default_validity_months.toString() + " month")
+                    months_validity.setText(default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), false))
                     prefs.storeCartValidityMonths(default_validity_months.toString())
-                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Month"
+                    feature_validity.text = default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), true)
                 }
             } else if (bundles_in_cart) {
                 if (default_validity_months > package_validity_months) {
@@ -1099,7 +1101,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     prefs.storeMonthsValidity(totalValidityDays)
                     prefs.storeCartOrderInfo(null)
                     prefs.storeAutoRenewSubscriptionID(null)
-                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
+                    feature_validity.text = default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), true)
 //                    totalCalculation()
                     totalCalculationAfterCoupon()
                     if (couponCode.isNotEmpty())
@@ -1107,18 +1109,21 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //                Toasty.warning(requireContext(), "Validity reduced by 3 month(s).", Toast.LENGTH_SHORT, true).show()
                 }
                 if (default_validity_months > 1) {
-                    months_validity.setText(default_validity_months.toString() + " months")
+                    months_validity.setText(default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), false))
                     prefs.storeCartValidityMonths(default_validity_months.toString())
-                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Months"
+                    feature_validity.text = default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), true)
                 } else {
-                    months_validity.setText(default_validity_months.toString() + " month")
+                    months_validity.setText(default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), false))
                     prefs.storeCartValidityMonths(default_validity_months.toString())
-                    feature_validity.text = ((totalValidityDays / 30).toString()) + " Month"
+                    feature_validity.text = default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), true)
                 }
             }
         }
         Log.v("package_validity_months", " " + package_validity_months)
-        months_validity.setFilters(arrayOf<InputFilter>(MinMaxFilter(package_validity_months, 36)))
+        if(prefs.getYearPricing())
+            months_validity.setFilters(arrayOf<InputFilter>(MinMaxFilter(1, 5)))
+        else
+            months_validity.setFilters(arrayOf<InputFilter>(MinMaxFilter(package_validity_months, 60)))
         months_validity.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
@@ -1146,7 +1151,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //                        months_validity.setText(n)
                     if (!bundles_in_cart) {
 //                            months_validity.setText(default_validity_months.toString())
-                        totalValidityDays = 30 * default_validity_months
+                        totalValidityDays = if(prefs.getYearPricing()) (30 * default_validity_months) * 12 else 30 * default_validity_months
                         prefs.storeMonthsValidity(totalValidityDays)
                         prefs.storeCartOrderInfo(null)
                         prefs.storeAutoRenewSubscriptionID(null)
@@ -1157,7 +1162,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                             totalCalculationAfterCoupon()
                     } else if (bundles_in_cart) {
 //                            months_validity.setText(default_validity_months.toString())
-                        totalValidityDays = 30 * default_validity_months
+                        totalValidityDays = if(prefs.getYearPricing()) (30 * default_validity_months) * 12 else 30 * default_validity_months
                         prefs.storeMonthsValidity(totalValidityDays)
                         prefs.storeCartOrderInfo(null)
                         prefs.storeAutoRenewSubscriptionID(null)
@@ -2516,68 +2521,41 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     }
                     if (default_validity_months > 0) {
                         if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
-                            if (Integer.parseInt(prefs.getCartValidityMonths()!!) == 1) {
-                                months_validity.setText(prefs.getCartValidityMonths().toString() + " month")
-                                feature_validity.text = prefs.getCartValidityMonths().toString() + " Month"
-                            } else {
-                                months_validity.setText(prefs.getCartValidityMonths().toString() + " months")
-                                feature_validity.text = prefs.getCartValidityMonths().toString() + " Months"
-                            }
-
+                                months_validity.setText(prefs.getCartValidityMonths() + yearOrMonthText(default_validity_months, requireActivity(), false))
+                                feature_validity.text = prefs.getCartValidityMonths() + yearOrMonthText(default_validity_months, requireActivity(), true)
                         } else {
-                            if (default_validity_months == 1) {
-                                months_validity.setText(default_validity_months.toString() + " month")
-                                feature_validity.text = default_validity_months.toString() + " Month"
-                            } else {
-                                months_validity.setText(default_validity_months.toString() + " months")
-                                feature_validity.text = default_validity_months.toString() + " Months"
-                            }
-
-
+                                months_validity.setText(default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), false))
+                                feature_validity.text = default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), true)
                         }
-                    }
-//                        months_validity.text = default_validity_months.toString() + " months"
-                    else {
+                    } else {
                         if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
-                            months_validity.setText(prefs.getCartValidityMonths() + " month")
-                            feature_validity.text = prefs.getCartValidityMonths().toString() + " Month"
-
+                            months_validity.setText(prefs.getCartValidityMonths() + yearOrMonthText(default_validity_months, requireActivity(), false))
+                            feature_validity.text = prefs.getCartValidityMonths() + yearOrMonthText(default_validity_months, requireActivity(), true)
                         } else {
-                            months_validity.setText(default_validity_months.toString() + " month")
-                            feature_validity.text = default_validity_months.toString() + " Month"
+                            months_validity.setText(default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), false))
+                            feature_validity.text = default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), true)
 
                         }
                     }
-//                        months_validity.text = default_validity_months.toString() + " month"
-//                    months_validity_edit_inc.visibility = View.GONE
-//                    months_validity_edit_dsc.visibility = View.GONE
                     package_layout.visibility = View.VISIBLE
                 } else {
                     bundles_in_cart = false
                     default_validity_months = if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toInt() else 1
-//                    months_validity.text = default_validity_months.toString() + " month"
-
                     if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
                         Log.e("getCartValidityMonths", prefs.getCartValidityMonths()!!)
-                        months_validity.setText(prefs.getCartValidityMonths() + " month")
-                        feature_validity.text = prefs.getCartValidityMonths().toString() + " Month"
-
+                        months_validity.setText(prefs.getCartValidityMonths() + yearOrMonthText(default_validity_months, requireActivity(), false))
+                        feature_validity.text = prefs.getCartValidityMonths().toString() + yearOrMonthText(default_validity_months, requireActivity(), true)
                     } else {
                         Log.e("default_validity_months", default_validity_months.toString())
-                        months_validity.setText(default_validity_months.toString() + " month")
-                        feature_validity.text = default_validity_months.toString() + " Month"
-
+                        months_validity.setText(default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), false))
+                        feature_validity.text = default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), true)
                     }
-//          months_validity.setText(default_validity_months.toString())
                     months_validity_edit_inc.visibility = View.VISIBLE
                     months_validity_edit_dsc.visibility = View.VISIBLE
                     package_layout.visibility = View.GONE
                 }
-//                totalCalculation()
                 totalCalculationAfterCoupon()
                 loadOfferCoupons()
-
-//                var event_attributes: HashMap<String, Double> = HashMap()
 
                 event_attributes.put("cart size", it.size.toDouble())
                 cartFullItems.clear()
@@ -3085,14 +3063,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             if (cartList != null && cartList.size > 0) {
                 for (item in cartList) {
                     if (!bundles_in_cart && item.item_type.equals("features"))
-                        total += (item.price * default_validity_months)
+                        total += (item.price * monthCalculatorForAddons(default_validity_months, item.widget_type))
                     else
-                        total += ((item.price / package_validity_months) * default_validity_months)
+                        total += ((item.price / package_validity_months) * monthCalculatorForAddons(default_validity_months, item.widget_type))
                 }
 
 //                couponDiscountAmount = total * couponDisount / 100
 //                couponDiscountAmount = couponServiceModel!!.couponDiscountAmt!!
-
 
                 if (couponServiceModel != null) {
                     couponDiscountAmount = couponServiceModel?.couponDiscountAmt!!
@@ -3120,10 +3097,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
                 val revenue = Math.round(grandTotal * 100).toInt() / 100
                 event_attributes.put("total amount", revenue)
-                event_attributes.put("cart validity months", default_validity_months)
+                event_attributes.put("cart validity months", if(prefs.getYearPricing()) default_validity_months * 12 else default_validity_months)
 
                 val oneMonthFromNow = Calendar.getInstance()
-                oneMonthFromNow.add(Calendar.MONTH, default_validity_months)
+                oneMonthFromNow.add(Calendar.MONTH, if(prefs.getYearPricing()) default_validity_months * 12 else default_validity_months)
                 val nowFormat = SimpleDateFormat("dd MMM yy")
                 nowFormat.setTimeZone(Calendar.getInstance().getTimeZone())
                 val oneMonthFormat = SimpleDateFormat("dd MMM yy")

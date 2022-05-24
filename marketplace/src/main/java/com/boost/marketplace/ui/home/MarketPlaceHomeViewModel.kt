@@ -759,7 +759,8 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
             1,
             minMonth,
             "features",
-            updatesModel.extended_properties
+            updatesModel.extended_properties,
+            updatesModel.widget_type
         )
 
 
@@ -797,7 +798,8 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
             1,
             minMonth,
             "features",
-            updatesModel.extended_properties
+            updatesModel.extended_properties,
+            updatesModel.widget_type
         )
 
         try {

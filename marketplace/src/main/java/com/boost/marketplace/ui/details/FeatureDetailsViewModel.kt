@@ -1,10 +1,12 @@
 package com.boost.marketplace.ui.details
 
+import android.app.Activity
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
@@ -101,10 +103,19 @@ class FeatureDetailsViewModel: BaseViewModel() {
 
 
 
-    fun addItemToCart1(updatesModel: FeaturesModel) {
+    fun addItemToCart1(updatesModel: FeaturesModel, activity: Activity) {
         updatesLoader.postValue(false)
         val discount = 100 - updatesModel.discount_percent
-        val paymentPrice = (discount * updatesModel.price) / 100.0
+        val paymentPrice = Utils.priceCalculatorForYear(
+            ((discount * updatesModel.price) / 100),
+            updatesModel.widget_type,
+            activity
+        )
+        val mrpPrice = Utils.priceCalculatorForYear(
+            updatesModel.price,
+            updatesModel.widget_type,
+            activity
+        )
         val cartItem = CartModel(
             updatesModel.feature_id,
             updatesModel.boost_widget_key,
@@ -113,12 +124,13 @@ class FeatureDetailsViewModel: BaseViewModel() {
             updatesModel.description,
             updatesModel.primary_image,
             paymentPrice,
-            updatesModel.price.toDouble(),
+            mrpPrice,
             updatesModel.discount_percent,
             1,
             1,
             "features",
-            updatesModel.extended_properties
+            updatesModel.extended_properties,
+            updatesModel.widget_type
         )
 
 
@@ -157,7 +169,8 @@ class FeatureDetailsViewModel: BaseViewModel() {
             1,
             1,
             "features",
-            updatesModel.extended_properties
+            updatesModel.extended_properties,
+            updatesModel.widget_type
         )
 
         CompositeDisposable().add(

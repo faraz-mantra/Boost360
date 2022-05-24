@@ -1,5 +1,6 @@
 package com.boost.marketplace.Adapters
 
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.boost.cart.utils.Utils.priceCalculatorForYear
+import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.R
@@ -22,11 +25,8 @@ import java.util.*
 class CompareItemAdapter(
     cryptoCurrencies: List<FeaturesModel>?,
     val addonsListener: AddonsListener,
-    val activity: ComparePacksActivity?,
-    val activity2: SearchActivity?,
-    val activity3: FragmentActivity?
-) :
-    RecyclerView.Adapter<CompareItemAdapter.upgradeViewHolder>() {
+    val activity: Activity
+) : RecyclerView.Adapter<CompareItemAdapter.upgradeViewHolder>() {
 
 
     private var upgradeList = ArrayList<FeaturesModel>()
@@ -56,42 +56,9 @@ class CompareItemAdapter(
         // holder.title.setText(upgradeList.get(position).target_business_usecase)
 
         val cryptocurrencyItem = upgradeList[position]
-        if (activity != null) {
-            holder.upgradeListItem(holder, cryptocurrencyItem, activity, null, null)
-
-        } else if (activity2 != null) {
-            holder.upgradeListItem(holder, cryptocurrencyItem, null, activity2, null)
-
-        } else {
-            holder.upgradeListItem(holder, cryptocurrencyItem, null, null, activity3)
-
-        }
+        holder.upgradeListItem(holder, cryptocurrencyItem, activity)
         Glide.with(context).load(upgradeList.get(position).primary_image).into(holder.image)
-//    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
-//    if (position == upgradeList.size - 1) {
-//      holder.view.visibility = View.INVISIBLE
-//    }
-
-//    holder.arrow_icon.setOnClickListener {
-//      val details = DetailsFragment.newInstance()
-//      val args = Bundle()
-//      args.putString("itemId", upgradeList.get(position).feature_code)
-//      args.putBoolean("packageView", true)
-//      details.arguments = args
-//
-//      activity.addFragment(details, Constants.DETAILS_FRAGMENT)
-//    }
         holder.itemView.setOnClickListener {
-//      val details = DetailsFragment.newInstance()
-//      val args = Bundle()
-//      args.putString("itemId", upgradeList.get(position).feature_code)
-//      args.putBoolean("packageView", true)
-//      details.arguments = args
-
-            //  activity.addFragment(details, Constants.DETAILS_FRAGMENT)
-//            val intent = Intent(context, FeatureDetailsActivity::class.java)
-//            intent.putExtra("itemId", upgradeList.get(position).boost_widget_key)
-//            context.startActivity(intent)
             addonsListener.onAddonsClicked(upgradeList.get(position))
         }
     }
@@ -113,30 +80,12 @@ class CompareItemAdapter(
         fun upgradeListItem(
             holder: upgradeViewHolder,
             updateModel: FeaturesModel,
-            activity: ComparePacksActivity?,
-            activity2: SearchActivity?,
-            activity3: FragmentActivity?
+            activity: Activity
         ) {
-            var prefs: SharedPrefs? = null
-
-            if (activity != null) {
-                prefs = SharedPrefs(activity)
-            } else if (activity2 != null) {
-                prefs = SharedPrefs(activity2)
-            } else {
-                prefs = SharedPrefs(activity3!!)
-
-            }
             val discount = 100 - updateModel.discount_percent
             var price = (discount * updateModel.price) / 100
-            if (prefs.getYearPricing()) {
-                price = price * 12
-                holder.price.text =
-                    "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/year"
-            } else {
-                holder.price.text =
-                    "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
-            }
+            price = priceCalculatorForYear(price, updateModel.widget_type, activity)
+            holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + yearlyOrMonthlyOrEmptyValidity(updateModel.widget_type, activity)
 
         }
 

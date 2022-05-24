@@ -3,12 +3,15 @@ package com.boost.marketplace.ui.popup
 import android.app.Application
 import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.StrikethroughSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
@@ -17,6 +20,7 @@ import com.boost.marketplace.Adapters.ParentCompareItemAdapter
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.AddonsListener
 import com.bumptech.glide.Glide
+import com.framework.utils.RootUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -124,13 +128,11 @@ class PackagePopUpFragement : DialogFragment(),AddonsListener {
                        parentViewHolder.ChildRecyclerView
                                .setLayoutManager(layoutManager1)*/
 
-                      val sectionLayout = CompareItemAdapter(it,this,null,null,requireActivity())
+                      val sectionLayout = CompareItemAdapter(it,this, requireActivity())
                       child_recyclerview.setAdapter(sectionLayout)
                       child_recyclerview.setLayoutManager(layoutManager1)
 
 
-                    } else {
-//                                                                Toasty.error(requireContext(), "Bundle Not Available To This Account", Toast.LENGTH_LONG).show()
                     }
                   }, {
                     it.printStackTrace()
@@ -161,6 +163,7 @@ class PackagePopUpFragement : DialogFragment(),AddonsListener {
       package_addCartNew.setTextColor(requireContext().getResources().getColor(R.color.tv_color_BB))
       package_addCartNew.setText("Added To Cart")
 //    homeListener.onPackageClicked(parentItem,parentViewHolder.package_profile_image_compare_new)
+
     }
 
     back_btn.setOnClickListener {
@@ -174,8 +177,8 @@ class PackagePopUpFragement : DialogFragment(),AddonsListener {
       itemsIds.add(item.feature_code)
     }
 
-    var offeredBundlePrice = 0
-    var originalBundlePrice = 0
+    var offeredBundlePrice = 0.0
+    var originalBundlePrice = 0.0
     val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) bundles.min_purchase_months!! else 1
     CompositeDisposable().add(
       AppDatabase.getInstance(Application())!!
@@ -188,28 +191,44 @@ class PackagePopUpFragement : DialogFragment(),AddonsListener {
             for (singleItem in it) {
               for (item in bundles.included_features) {
                 if (singleItem.feature_code == item.feature_code) {
-                  originalBundlePrice += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt() * minMonth
+                  originalBundlePrice += Utils.priceCalculatorForYear(
+                    RootUtil.round(
+                    (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
+                    2
+                  ) * minMonth, singleItem.widget_type, requireActivity())
                 }
               }
             }
 
             if(bundles.overall_discount_percent > 0){
-              offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100)
-
+              offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent / 100), 2)
             } else {
               offeredBundlePrice = originalBundlePrice
 
             }
             if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1){
-              tv_price.setText("₹" +
-                      NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
-                      "/" + bundles.min_purchase_months + " months")
+              tv_price.setText(
+                "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                  .format(offeredBundlePrice) + Utils.yearlyOrMonthlyOrEmptyValidity(
+                  "",
+                  requireActivity()
+                )
+              )
               tv_inlcuded_add_on.setText("Includes these "+ it.size+ " add-ons")
+              if (offeredBundlePrice != originalBundlePrice) {
+                spannableString(originalBundlePrice)
+                upgrade_list_orig_cost.visibility = View.VISIBLE
+              } else {
+                upgrade_list_orig_cost.visibility = View.GONE
+              }
 
             }else{
               tv_price.setText("₹" +
                       NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)
-                      + "/month")
+                      + Utils.yearlyOrMonthlyOrEmptyValidity(
+                "",
+                requireActivity()
+              ))
               tv_inlcuded_add_on.setText("Includes these "+ it.size+ " add-ons")
             }
 
@@ -262,6 +281,21 @@ class PackagePopUpFragement : DialogFragment(),AddonsListener {
         )
     )
   }
+
+  fun spannableString(value: Double) {
+    val origCost = SpannableString(
+        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + Utils.yearlyOrMonthlyOrEmptyValidity("", requireActivity())
+      )
+
+    origCost.setSpan(
+      StrikethroughSpan(),
+      0,
+      origCost.length,
+      0
+    )
+    upgrade_list_orig_cost.setText(origCost)
+  }
+
 
   override fun onAddonsClicked(item: FeaturesModel) {
     TODO("Not yet implemented")

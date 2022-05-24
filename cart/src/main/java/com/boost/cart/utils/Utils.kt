@@ -271,4 +271,34 @@ object Utils {
       return "/month"
     }
   }
+
+  fun yearOrMonthText(months: Int, activity: Activity, capital: Boolean): String{
+    val prefs = SharedPrefs(activity)
+    if(capital) {
+      return if (months > 1) {
+        if (prefs.getYearPricing())
+          " Years"
+        else
+          " Months"
+      } else {
+        if (prefs.getYearPricing())
+          " Year"
+        else
+          " Month"
+      }
+    } else {
+      return if (months > 1) {
+        if (prefs.getYearPricing())
+          " years"
+        else
+          " months"
+      } else {
+        if (prefs.getYearPricing())
+          " year"
+        else
+          " month"
+      }
+    }
+
+  }
 }

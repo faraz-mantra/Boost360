@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.boost.cart.utils.Utils
+import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PrimaryImage
@@ -21,6 +23,7 @@ import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
+import com.framework.utils.RootUtil
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -121,9 +124,9 @@ class FeaturePacksAdapter(
       itemsIds.add(item.feature_code)
     }
 
-    var offeredBundlePrice = 0
-    var originalBundlePrice = 0
-//    val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) bundles.min_purchase_months!! else 1
+    var offeredBundlePrice = 0.0
+    var originalBundlePrice = 0.0
+    val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) bundles.min_purchase_months!! else 1
 //    val minMonth: Int = 12
     CompositeDisposable().add(
       AppDatabase.getInstance(activity.application)!!
@@ -137,20 +140,27 @@ class FeaturePacksAdapter(
               for (item in includedFeatures) {
                 if (singleItem.feature_code == item.feature_code) {
 //                  originalBundlePrice += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt() * minMonth
-                  originalBundlePrice += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt()
+                  originalBundlePrice += Utils.priceCalculatorForYear(
+                    RootUtil.round(
+                    (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
+                    2
+                  ) * minMonth, singleItem.widget_type, activity)
                 }
               }
             }
             if (bundles.overall_discount_percent > 0) {
-              offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent / 100)
+              offeredBundlePrice = RootUtil.round(
+                (originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent / 100.0)),
+                2
+              )
               holder.discount.visibility = View.VISIBLE
               holder.discount.setText(bundles.overall_discount_percent.toString() + "%\nSAVING")
             } else {
               offeredBundlePrice = originalBundlePrice
               holder.discount.visibility = View.GONE
             }
-            holder.price.setText("₹"+offeredBundlePrice+"/month")
-            val mrpPriceString = SpannableString("₹"+originalBundlePrice+"/month")
+            holder.price.setText("₹" + offeredBundlePrice + yearlyOrMonthlyOrEmptyValidity("",activity))
+            val mrpPriceString = SpannableString("₹" + originalBundlePrice + yearlyOrMonthlyOrEmptyValidity("",activity))
             mrpPriceString.setSpan(StrikethroughSpan(), 0, mrpPriceString.length, 0)
             holder.mrpPrice.setText(mrpPriceString)
           },

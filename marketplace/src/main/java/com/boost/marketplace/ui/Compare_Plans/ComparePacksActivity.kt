@@ -585,7 +585,8 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
                                     1,
                                     if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
                                     "bundles",
-                                    null
+                                    null,
+                                    ""
                                 ))
                                 val event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()
                                 item!!.name?.let { it1 -> event_attributes.put("Package Name", it1) }

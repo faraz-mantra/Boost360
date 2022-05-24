@@ -15,6 +15,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.boost.cart.utils.Utils
+import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
@@ -166,7 +168,11 @@ class ParentCompareItemAdapter(
                                                      .setLayoutManager(layoutManager1)*/
 
                                             val sectionLayout =
-                                                CompareItemAdapter(it, addonsListener,activity,null,null)
+                                                CompareItemAdapter(
+                                                    it,
+                                                    addonsListener,
+                                                    activity
+                                                )
                                             parentViewHolder.ChildRecyclerView
                                                 .setAdapter(sectionLayout)
                                             parentViewHolder.ChildRecyclerView
@@ -321,21 +327,19 @@ class ParentCompareItemAdapter(
                         for (singleItem in it) {
                             for (item in bundles.included_features) {
                                 if (singleItem.feature_code == item.feature_code) {
-                                    originalBundlePrice += RootUtil.round(
-                                        (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)) * minMonth,
+                                    originalBundlePrice += Utils.priceCalculatorForYear(RootUtil.round(
+                                        (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
                                         2
-                                    )
+                                    ) * minMonth, singleItem.widget_type, activity)
                                 }
                             }
                         }
 
                         if (bundles.overall_discount_percent > 0) {
                             offeredBundlePrice = RootUtil.round(
-                                originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent / 100),
+                                originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent / 100.0),
                                 2
                             )
-                            if (prefs.getYearPricing())
-                                offeredBundlePrice = offeredBundlePrice * 12
                             holder.bundleDiscount.visibility = View.VISIBLE
 //                                        holder.bundlePriceLabel.visibility = View.GONE
                             holder.bundleDiscount.setText(bundles.overall_discount_percent.toString() + "% OFF")
@@ -347,28 +351,19 @@ class ParentCompareItemAdapter(
 
 
                         if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) {
-                            if (prefs.getYearPricing())
-                                holder.tv_price.setText(
-                                    "₹" +
-                                            NumberFormat.getNumberInstance(Locale.ENGLISH)
-                                                .format(offeredBundlePrice) +
-                                            "/year"
+                            holder.tv_price.setText(
+                                "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                                    .format(offeredBundlePrice) + yearlyOrMonthlyOrEmptyValidity(
+                                    "",
+                                    activity
                                 )
-                            else
-                                holder.tv_price.setText(
-                                    "₹" +
-                                            NumberFormat.getNumberInstance(Locale.ENGLISH)
-                                                .format(offeredBundlePrice) +
-                                            "/" + bundles.min_purchase_months + "mths"
-                                )
-
+                            )
                             holder.tv_inlcuded_add_on.setText("Includes these " + it.size + " add-ons")
 
                             if (offeredBundlePrice != originalBundlePrice) {
                                 spannableString(
                                     holder,
-                                    if (prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice,
-                                    bundles.min_purchase_months!!
+                                    originalBundlePrice
                                 )
                                 holder.origCost.visibility = View.VISIBLE
                             } else {
@@ -376,27 +371,21 @@ class ParentCompareItemAdapter(
                             }
 
                         } else {
-                            if (prefs.getYearPricing())
                                 holder.tv_price.setText(
                                     "₹" +
                                             NumberFormat.getNumberInstance(Locale.ENGLISH)
                                                 .format(offeredBundlePrice)
-                                            + "/year"
-                                )
-                            else
-                                holder.tv_price.setText(
-                                    "₹" +
-                                            NumberFormat.getNumberInstance(Locale.ENGLISH)
-                                                .format(offeredBundlePrice)
-                                            + "/mth"
+                                            + yearlyOrMonthlyOrEmptyValidity(
+                                        "",
+                                        activity
+                                    )
                                 )
 
                             holder.tv_inlcuded_add_on.setText("Includes these " + it.size + " add-ons")
                             if (offeredBundlePrice != originalBundlePrice) {
                                 spannableString(
                                     holder,
-                                    if (prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice,
-                                    1
+                                    originalBundlePrice
                                 )
                                 holder.origCost.visibility = View.VISIBLE
                             } else {
@@ -421,20 +410,10 @@ class ParentCompareItemAdapter(
         )
     }
 
-    fun spannableString(holder: ParentViewHolder, value: Double, minMonth: Int) {
-        val prefs = SharedPrefs(activity)
-        val origCost: SpannableString
-        if (minMonth > 1) {
-            if(prefs.getYearPricing())
-                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year")
-            else
-                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")
-        } else {
-            if(prefs.getYearPricing())
-                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year")
-            else
-                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
-        }
+    fun spannableString(holder: ParentViewHolder, value: Double) {
+        val origCost = SpannableString(
+                    "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + yearlyOrMonthlyOrEmptyValidity("", activity)
+                )
 
         origCost.setSpan(
             StrikethroughSpan(),

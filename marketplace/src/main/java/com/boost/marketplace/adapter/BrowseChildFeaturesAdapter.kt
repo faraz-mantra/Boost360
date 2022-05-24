@@ -1,11 +1,14 @@
 package com.boost.marketplace.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.boost.cart.utils.Utils.priceCalculatorForYear
+import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.AddonsListener
@@ -13,7 +16,7 @@ import com.bumptech.glide.Glide
 import java.text.NumberFormat
 import java.util.*
 
-class BrowseChildFeaturesAdapter(list:List<FeaturesModel>,val addonsListener: AddonsListener): RecyclerView.Adapter<BrowseChildFeaturesAdapter.ViewHolder>() {
+class BrowseChildFeaturesAdapter(list:List<FeaturesModel>,val addonsListener: AddonsListener, val activity: Activity): RecyclerView.Adapter<BrowseChildFeaturesAdapter.ViewHolder>() {
 
   private var featuresList = ArrayList<FeaturesModel>()
   lateinit var context: Context
@@ -30,7 +33,7 @@ class BrowseChildFeaturesAdapter(list:List<FeaturesModel>,val addonsListener: Ad
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val cryptocurrencyItem = featuresList[position]
-    holder.upgradeListItem(cryptocurrencyItem)
+    holder.upgradeListItem(cryptocurrencyItem, activity)
 
     holder.itemView.setOnClickListener {
 //      val intent = Intent(this.context, FeatureDetailsActivity::class.java)
@@ -51,12 +54,12 @@ class BrowseChildFeaturesAdapter(list:List<FeaturesModel>,val addonsListener: Ad
 
     private var context: Context = itemView.context
 
-    fun upgradeListItem(updateModel: FeaturesModel) {
+    fun upgradeListItem(updateModel: FeaturesModel, activity: Activity) {
       val discount = 100 - updateModel.discount_percent
-      val price = (discount * updateModel.price) / 100
+      val price = priceCalculatorForYear(((discount * updateModel.price) / 100), updateModel.widget_type, activity)
       mv_title.text = updateModel.name
       mv_price.text =
-        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
+        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + yearlyOrMonthlyOrEmptyValidity(updateModel.widget_type, activity)
       if (updateModel.primary_image != null) {
         Glide.with(context).load(updateModel.primary_image).into(mv_image)
       }
