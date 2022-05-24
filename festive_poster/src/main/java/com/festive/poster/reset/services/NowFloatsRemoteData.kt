@@ -1,5 +1,6 @@
 package com.festive.poster.reset.services
 
+import com.festive.poster.models.GetFavTemplateResponse
 import com.festive.poster.models.PosterModel
 import com.festive.poster.models.response.GetTemplateViewConfigResponse
 import com.festive.poster.models.response.GetTemplatesResponse
@@ -26,6 +27,17 @@ interface NowFloatsRemoteData {
   fun getTemplates(
     @Body body:JsonObject?,
     ): Observable<Response<GetTemplatesResponse>>
+
+
+  @POST(EndPoints.GET_FAV_TEMPLATES)
+  fun getFavTemp(
+    @Body body:JsonObject?,
+    ): Observable<Response<GetFavTemplateResponse>>
+
+  @POST(EndPoints.FAV_TEMPLATE)
+  fun favPoster(
+    @Body body:JsonObject?,
+    ): Observable<Response<BaseResponse>>
 
   @POST(EndPoints.UPLOAD_IMAGE)
   fun uploadImage(

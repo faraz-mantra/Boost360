@@ -1,14 +1,27 @@
 package com.festive.poster.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.festive.poster.R
+import com.festive.poster.models.PosterModel
+import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
+import com.framework.BaseApplication
+import com.framework.analytics.SentryController
+import com.framework.constants.IntentConstants.IK_CAPTION_KEY
+import com.framework.constants.IntentConstants.IK_POSTER
+import com.framework.constants.IntentConstants.IK_TAGS
+import com.framework.constants.IntentConstants.IK_UPDATE_TYPE
+import com.framework.constants.IntentConstants.MARKET_PLACE_ORIGIN_ACTIVITY
+import com.framework.constants.IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.ADDON_MARKETPLACE_PAGE_CLICK
 import com.framework.webengageconstant.CLICK
 import com.framework.webengageconstant.TO_BE_ADDED
+import com.google.gson.Gson
 import java.util.ArrayList
 
 object MarketPlaceUtils {
@@ -55,7 +68,45 @@ object MarketPlaceUtils {
             context.startActivity(intent)
            // overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         } catch (e: Exception) {
+            SentryController.captureException(e)
+
             e.printStackTrace()
         }
+    }
+
+    fun launchCartActivity(activity:Activity,originActivityName:String,
+                           posterImgPath:String?,caption:String?,tags:List<String>?,updateType:String?){
+        val session = UserSessionManager(BaseApplication.instance)
+        val intent = Intent(
+            activity,
+            Class.forName("com.boost.cart.CartActivity")
+        )
+        intent.putExtra("fpid", session.fPID)
+        intent.putExtra("expCode", session.fP_AppExperienceCode)
+        intent.putExtra("isDeepLink", false)
+        intent.putExtra(MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
+            putString(MARKET_PLACE_ORIGIN_ACTIVITY,originActivityName)
+            putString(IK_POSTER,posterImgPath)
+            putString(IK_CAPTION_KEY,caption)
+            putString(IK_TAGS,Gson().toJson(tags))
+            putString(IK_UPDATE_TYPE,updateType)
+
+        })
+        intent.putStringArrayListExtra(
+            "userPurchsedWidgets",
+            session.getStoreWidgets() as ArrayList<String>?
+        )
+        if (session.userProfileEmail != null) {
+            intent.putExtra("email", session.userProfileEmail)
+        } else {
+            intent.putExtra("email", BaseApplication.instance.getString(R.string.ria_customer_mail))
+        }
+        if (session.userPrimaryMobile != null) {
+            intent.putExtra("mobileNo", session.userPrimaryMobile)
+        } else {
+            intent.putExtra("mobileNo", BaseApplication.instance.getString(R.string.ria_customer_mail))
+        }
+        intent.putExtra("profileUrl",session.fPLogo)
+        activity.startActivity(intent)
     }
 }

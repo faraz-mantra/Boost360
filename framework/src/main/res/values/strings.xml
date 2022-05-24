@@ -212,4 +212,6 @@
   <string name="menu_pictures">Menu Pictures</string>
   <string name="business_keyboard">Business Keyboard</string>
 
+  <string name="speech_prompt">Say something</string>
+  <string name="speech_not_supported">Speech to text not supported</string>
 </resources>

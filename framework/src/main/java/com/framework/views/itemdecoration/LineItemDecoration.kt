@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 
-class LineItemDecoration : RecyclerView.ItemDecoration() {
+class LineItemDecoration(val width:Int,val spacing:Int) : RecyclerView.ItemDecoration() {
     private val colorActive = Color.parseColor("#FCAF17")
     private val colorInactive = Color.parseColor("#DADADA")
 
@@ -29,12 +29,12 @@ class LineItemDecoration : RecyclerView.ItemDecoration() {
     /**
      * Indicator width.
      */
-    private val mIndicatorItemLength = DP * 24
+    private val mIndicatorItemLength = DP * width
 
     /**
      * Padding between indicators.
      */
-    private val mIndicatorItemPadding = DP * 6
+    private val mIndicatorItemPadding = DP * spacing
 
     /**
      * Some more natural animation interpolation

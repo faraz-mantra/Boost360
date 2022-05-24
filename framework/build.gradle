@@ -182,4 +182,8 @@ dependencies {
 
     //ExoPlayer
     api 'com.google.android.exoplayer:exoplayer:2.16.0'
+
+    //keyboard show/hide listener
+    api 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC3'
+
 }

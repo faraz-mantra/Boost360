@@ -34,11 +34,37 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
     )
   }
 
-  fun getTemplateConfig(floatingPointId: String?,floatingPointTag: String?): Observable<BaseResponse> {
+  fun getFavTemplates(floatingPointId: String?,floatingPointTag: String?,featureKey:String): Observable<BaseResponse> {
+
+    val body = JsonObject().apply {
+      addProperty("floatingPointId",floatingPointId)
+      addProperty("floatingPointTag",floatingPointTag)
+      addProperty("featureKey",featureKey)
+    }
+    return NowFloatsRepository.makeRemoteRequest(
+      remoteDataSource.getFavTemp(body),
+      TaskCode.GET_FAV_TEMPLATES
+    )
+  }
+
+  fun makeTempFav(floatingPointId: String?,floatingPointTag: String?,templateId: String?): Observable<BaseResponse> {
+
+    val body = JsonObject().apply {
+      addProperty("floatingPointId",floatingPointId)
+      addProperty("floatingPointTag",floatingPointTag)
+      addProperty("templateId",templateId)
+    }
+    return NowFloatsRepository.makeRemoteRequest(
+      remoteDataSource.favPoster(body),
+      TaskCode.GET_TEMPLATES
+    )
+  }
+
+  fun getTemplateConfig(fKey:String,floatingPointId: String?,floatingPointTag: String?): Observable<BaseResponse> {
     val body =JsonObject().apply {
       addProperty("floatingPointId",floatingPointId)
       addProperty("floatingPointTag",floatingPointTag)
-      addProperty("featureKey","FESTIVEPOSTERS")
+      addProperty("featureKey",fKey)
     }
     return NowFloatsRepository.makeRemoteRequest(
       remoteDataSource.getTemplateViewConfig(body),

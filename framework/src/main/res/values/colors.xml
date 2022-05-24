@@ -59,5 +59,16 @@
   <color name="grey_BBBBBB">#BBBBBB</color>
   <color name="gray_828282">#828282</color>
   <color name="color_error_code">#eb5757</color>
+  <color name="colorB3B3B3">#B3B3B3</color>
+  <color name="grey_E0E2E9">#E0E2E9</color>
+  <color name="grey_DADADA">#DADADA</color>
+  <color name="grey_09121F">#ECEFF1</color>
+  <color name="colorFCAF17">#FCAF17</color>
+  <color name="colorFCAF17Op70">#B3FCAF17</color>
+  <color name="colorPrimary_20">#33FFB900</color>
+  <color name="black_4a4a4a_20">#334A4A4A</color>
+  <color name="black_09121F">#09121F</color>
+  <color name="white_F5F7FA">#F5F7FA</color>
+  <color name="black_4a4a4a_40">#664A4A4A</color>
 
 </resources>
