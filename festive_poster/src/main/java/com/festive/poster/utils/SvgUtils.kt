@@ -180,29 +180,29 @@ object SvgUtils {
         if (url==null||model==null){
             return
         }
-            url?.let {
-                CoroutineScope(Dispatchers.IO).launch {
-                        val b = svgToBitmap(model)
-                        withContext(Dispatchers.Default) {
-                            when (packageName) {
-                                PackageNames.INSTAGRAM ->{
-                                    b?.shareAsImage(
-                                        PackageNames.INSTAGRAM,
-                                        text = model.greeting_message
-                                    )
-                                }
-                                PackageNames.WHATSAPP ->{
-                                    b?.shareAsImage(
-                                        PackageNames.WHATSAPP,
-                                        text = RegexUtils.addStarToNumbers(model.greeting_message)
-                                    )
-                                }
-                                "" -> b?.shareAsImage(text = model.greeting_message)
-                                else -> b?.saveImageToStorage(showNoti = true)
-                            }
+        url.let {
+            CoroutineScope(Dispatchers.IO).launch {
+                val b = svgToBitmap(model)
+                withContext(Dispatchers.Default) {
+                    when (packageName) {
+                        PackageNames.INSTAGRAM ->{
+                            b?.shareAsImage(
+                                PackageNames.INSTAGRAM,
+                                text = model.greeting_message
+                            )
                         }
+                        PackageNames.WHATSAPP ->{
+                            b?.shareAsImage(
+                                PackageNames.WHATSAPP,
+                                text = RegexUtils.addStarToNumbers(model.greeting_message)
+                            )
+                        }
+                        "" -> b?.shareAsImage(text = model.greeting_message)
+                        else -> b?.saveImageToStorage(showNoti = true)
                     }
                 }
+            }
+        }
 
             }
 

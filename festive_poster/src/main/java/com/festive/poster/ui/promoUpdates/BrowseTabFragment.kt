@@ -107,7 +107,7 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
             ?.observeOnce(this) {
                 val response = it as? GetTemplateViewConfigResponse
                 response?.let {
-                    val tagArray = prepareTagForApi(response.Result.allTemplates.tags)
+                    val tagArray = prepareTagForApi(response.Result.allTemplates?.tags)
                     fetchTemplates(tagArray, response)
                 }
 
@@ -126,10 +126,10 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
         binding!!.shimmerLayout.stopShimmer()
     }
 
-    private fun prepareTagForApi(tags: List<PosterPackTagModel>): ArrayList<String> {
+    private fun prepareTagForApi(tags: List<PosterPackTagModel>?): ArrayList<String> {
         val list = ArrayList<String>()
-        tags.forEach {
-            list.add(it.tag)
+        tags?.forEach {
+            it.tag?.let { it1 -> list.add(it1) }
         }
         return list
     }
@@ -140,9 +140,9 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
                 dataList = ArrayList()
                 val templates_response = it as? GetTemplatesResponse
                 templates_response?.let {
-                    response.Result.allTemplates.tags.forEach { pack_tag ->
+                    response.Result.allTemplates?.tags?.forEach { pack_tag ->
                         val templateList = ArrayList<PosterModel>()
-                        templates_response.Result.templates.forEach { template ->
+                        templates_response.Result.templates?.forEach { template ->
                             var posterTag =
                                 template.tags?.find { posterTag -> posterTag == pack_tag.tag }
                             if (posterTag != null && template.active == true) {
@@ -151,11 +151,11 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
                                 templateList.add(template.clone()!!)
                             }
                         }
-                        dataList?.add(
+                        dataList.add(
                             PosterPackModel(
                                 pack_tag,
                                 templateList.toArrayList(),
-                                isPurchased = pack_tag.isPurchased,
+                                isPurchased = pack_tag.isPurchased==true,
                                 list_layout = RecyclerViewItemType.BROWSE_TAB_TEMPLATE_CAT.getLayout()
                             )
                         )

@@ -11,7 +11,7 @@ import com.framework.utils.convertStringToList
 import com.framework.utils.convertStringToObj
 
 open class PosterPackModel(
-  val tagsModel: PosterPackTagModel,
+  val tagsModel: PosterPackTagModel?,
   var posterList: ArrayList<PosterModel>? = null,
   var price: Double = 0.0,
   var isPurchased: Boolean = false,

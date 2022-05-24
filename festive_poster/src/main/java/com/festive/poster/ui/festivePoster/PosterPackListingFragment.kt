@@ -82,7 +82,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
         Log.i(TAG, "template config: ${Gson().toJson(it)}")
           val response = it as? GetTemplateViewConfigResponse
           response?.let {
-            val tagArray = prepareTagForApi(response.Result.templatePacks.tags)
+            val tagArray = prepareTagForApi(response.Result.templatePacks?.tags)
             fetchTemplates(tagArray, response)
         }
 
@@ -95,9 +95,9 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
         dataList = ArrayList()
         val templates_response = it as? GetTemplatesResponse
         templates_response?.let {
-          response.Result.templatePacks.tags.forEach { pack_tag ->
+          response.Result.templatePacks?.tags?.forEach { pack_tag ->
             val templateList = ArrayList<PosterModel>()
-            templates_response.Result.templates.forEach { template ->
+            templates_response.Result.templates?.forEach { template ->
               var posterTag = template.tags?.find { posterTag -> posterTag == pack_tag.tag }
               if ( posterTag != null && template.active == true) {
                 template.greeting_message = pack_tag.description
@@ -105,7 +105,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
                 templateList.add(template.clone()!!)
               }
             }
-            dataList?.add(PosterPackModel(pack_tag, templateList.toArrayList(),isPurchased = pack_tag.isPurchased,list_layout = RecyclerViewItemType.POSTER_PACK.getLayout()))
+            dataList?.add(PosterPackModel(pack_tag, templateList.toArrayList(),isPurchased = pack_tag.isPurchased==true,list_layout = RecyclerViewItemType.POSTER_PACK.getLayout()))
 
           }
           getPriceOfPosterPacks()
@@ -119,7 +119,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
       response?.let {
         dataList?.forEach { pack ->
           val feature_festive = response.Data.firstOrNull()?.features?.find { feature ->
-            feature.feature_code == pack.tagsModel.tag
+            feature.feature_code == pack.tagsModel?.tag
           }
           pack.price = feature_festive?.price ?: 0.0
 
@@ -140,7 +140,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
   }
 
   private fun rearrangeList() {
-    dataList?.sortBy { it.tagsModel.tag }
+    dataList?.sortBy { it.tagsModel?.tag }
   }
 
   private fun getGreetingMessages(tag: String): String {
@@ -170,10 +170,10 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
   }*/
 
 
-  private fun prepareTagForApi(tags: List<PosterPackTagModel>): ArrayList<String> {
+  private fun prepareTagForApi(tags: List<PosterPackTagModel>?): ArrayList<String> {
     val list = ArrayList<String>()
-    tags.forEach {
-      list.add(it.tag)
+    tags?.forEach {
+      it.tag?.let { tag -> list.add(tag) }
     }
     return list
   }
@@ -188,10 +188,12 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
         if (item.isPurchased){
           //sharedViewModel?.keyValueSaved?.value=null
           addFragment(R.id.container,
-              PosterListFragment.newInstance(item.tagsModel.tag!!), true,true)
+              PosterListFragment.newInstance(item.tagsModel?.tag!!), true,true)
         }else{
-          CustomizePosterSheet.newInstance(item.tagsModel.tag, item.isPurchased)
+          item.tagsModel?.tag?.let {
+            CustomizePosterSheet.newInstance(it, item.isPurchased)
               .show(baseActivity.supportFragmentManager, CustomizePosterSheet::class.java.name)
+          }
         }
       }
     }
@@ -205,8 +207,10 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
         parentItem as PosterPackModel
         sharedViewModel?.selectedPosterPack = parentItem
         sharedViewModel?.selectedPoster = childItem as PosterModel
-        CustomizePosterSheet.newInstance(parentItem.tagsModel.tag, parentItem.isPurchased)
+        parentItem.tagsModel?.tag?.let {
+          CustomizePosterSheet.newInstance(it, parentItem.isPurchased)
             .show(requireActivity().supportFragmentManager, CustomizePosterSheet::class.java.name)
+        }
       }
     }
   }

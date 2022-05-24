@@ -65,7 +65,7 @@ class PosterPackPurchasedListingFragment: AppBaseFragment<FragmentPosterPackPurc
             if (iconPos>8){
                 iconPos=0
             }
-            posterPackModel.tagsModel.drawableIcon=getIcon(iconPos)
+            posterPackModel.tagsModel?.drawableIcon=getIcon(iconPos)
             dataList?.add(PurchasedPosterPackModel(posterPackModel.tagsModel,posterPackModel.posterList,posterPackModel.price))
         }
     }
@@ -119,8 +119,11 @@ class PosterPackPurchasedListingFragment: AppBaseFragment<FragmentPosterPackPurc
             RecyclerViewActionType.POSTER_PACK_PURCHASED_CLICK.ordinal->{
                 sharedViewModel?.selectedPosterPack = item as PosterPackModel
                 sharedViewModel?.keyValueSaved?.value=null
-                addFragment(R.id.container,
-                    PosterListFragment.newInstance(item.tagsModel.tag),true,true)
+                item.tagsModel?.tag?.let {
+                    addFragment(R.id.container,
+                        PosterListFragment.newInstance(item.tagsModel.tag),true,true)
+                }
+
             }
         }
     }
