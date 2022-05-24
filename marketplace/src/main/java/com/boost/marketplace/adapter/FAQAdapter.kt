@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.AllFrequentlyAskedQuestion
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.HomeListener
@@ -21,14 +22,14 @@ import io.reactivex.schedulers.Schedulers
 
 class FAQAdapter(
   val activity: Activity,
-  cryptoCurrencies: List<String>?
+  cryptoCurrencies: List<AllFrequentlyAskedQuestion>?
 ) : RecyclerView.Adapter<FAQAdapter.upgradeViewHolder>() {
 
-  private var upgradeList = ArrayList<String>()
+  private var upgradeList = ArrayList<AllFrequentlyAskedQuestion>()
   private lateinit var context: Context
 
   init {
-    this.upgradeList = cryptoCurrencies as ArrayList<String>
+    this.upgradeList = cryptoCurrencies as ArrayList<AllFrequentlyAskedQuestion>
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -41,10 +42,12 @@ class FAQAdapter(
   }
 
   override fun getItemCount(): Int {
-    return 5//upgradeList.size
+    return upgradeList.size
   }
 
   override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
+    holder.title.text = upgradeList[position].question
+    holder.desc.text = upgradeList[position].answer
     holder.title.setOnClickListener {
       if(holder.desc.isVisible) {
         holder.desc.visibility = View.GONE
@@ -54,14 +57,16 @@ class FAQAdapter(
     }
     holder.downArrow.setOnClickListener {
       if(holder.desc.isVisible) {
+        holder.downArrow.setImageResource(R.drawable.ic_arrow_down_gray)
         holder.desc.visibility = View.GONE
       }else{
+        holder.downArrow.setImageResource(R.drawable.ic_arrow_up_gray)
         holder.desc.visibility = View.VISIBLE
       }
     }
   }
 
-  fun addupdates(upgradeModel: List<String>) {
+  fun addupdates(upgradeModel: List<AllFrequentlyAskedQuestion>) {
     val initPosition = upgradeList.size
     upgradeList.clear()
     upgradeList.addAll(upgradeModel)

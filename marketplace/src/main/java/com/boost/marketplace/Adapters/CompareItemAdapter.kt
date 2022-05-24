@@ -84,8 +84,8 @@ class CompareItemAdapter(
         ) {
             val discount = 100 - updateModel.discount_percent
             var price = (discount * updateModel.price) / 100
-            price = priceCalculatorForYear(price, updateModel.widget_type, activity)
-            holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + yearlyOrMonthlyOrEmptyValidity(updateModel.widget_type, activity)
+            price = priceCalculatorForYear(price, updateModel.widget_type?:"", activity)
+            holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + yearlyOrMonthlyOrEmptyValidity(updateModel.widget_type?:"", activity)
 
         }
 

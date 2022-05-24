@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
 import com.boost.cart.interfaces.CartFragmentListener
 import com.boost.cart.utils.SharedPrefs
+import com.boost.cart.utils.Utils
 import com.boost.cart.utils.WebEngageController
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.WidgetModel
@@ -52,8 +53,16 @@ class CartOnetimeAdaptor(cardItems: List<CartModel>?, val listener: CartFragment
     Glide.with(context).load(list.get(position).link).placeholder(R.drawable.boost_360_insignia)
       .into(holder.image)
     holder.title.text = list.get(position).item_name
-    val price = list.get(position).price * list.get(position).min_purchase_months
-    val MRPPrice = list.get(position).MRPPrice * list.get(position).min_purchase_months
+    val price = Utils.priceCalculatorForYear(
+      list.get(position).price * list.get(position).min_purchase_months,
+      list.get(position).widget_type,
+      activity
+    )
+    val MRPPrice = Utils.priceCalculatorForYear(
+      list.get(position).MRPPrice * list.get(position).min_purchase_months,
+      list.get(position).widget_type,
+      activity
+    )
     holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price)
     if (price != MRPPrice) {
       spannableString(holder, MRPPrice)

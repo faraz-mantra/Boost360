@@ -238,7 +238,7 @@ object Utils {
     return couponid
   }
 
-  fun priceCalculatorForYear(price: Double,widgetType: String = "",activity: Activity): Double{
+  fun priceCalculatorForYear(price: Double,widgetType: String? = "",activity: Activity): Double{
     val prefs = SharedPrefs(activity)
     if(prefs.getYearPricing() && !(widgetType.equals("RECHARGE") || widgetType.equals("ONE_TIME"))){
       return price * 12
@@ -246,14 +246,14 @@ object Utils {
     return  price
   }
 
-  fun monthCalculatorForAddons(months: Int,widgetType: String = ""): Int{
+  fun monthCalculatorForAddons(months: Int,widgetType: String? = ""): Int{
     if(!(widgetType.equals("RECHARGE") || widgetType.equals("ONE_TIME"))){
       return months
     }
     return 1
   }
 
-  fun expiryCalculator(months: Int, widgetType: String = "", activity: Activity): Int{
+  fun expiryCalculator(months: Int, widgetType: String? = "", activity: Activity): Int{
     val prefs = SharedPrefs(activity)
     if(prefs.getYearPricing() && !(widgetType.equals("RECHARGE") || widgetType.equals("ONE_TIME"))){
       return months * 12
@@ -261,7 +261,7 @@ object Utils {
     return 1
   }
 
-  fun yearlyOrMonthlyOrEmptyValidity(widgetType: String = "", activity: Activity): String{
+  fun yearlyOrMonthlyOrEmptyValidity(widgetType: String? = "", activity: Activity): String{
     val prefs = SharedPrefs(activity)
     if(widgetType.equals("RECHARGE") || widgetType.equals("ONE_TIME")){
       return ""

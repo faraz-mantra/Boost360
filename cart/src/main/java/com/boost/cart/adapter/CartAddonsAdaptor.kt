@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
 import com.boost.cart.interfaces.CartFragmentListener
 import com.boost.cart.utils.SharedPrefs
+import com.boost.cart.utils.Utils.priceCalculatorForYear
 import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.WidgetModel
@@ -49,14 +50,12 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
   }
 
   override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
-    val prefs = SharedPrefs(activity)
     Glide.with(context).load(list.get(position).link).placeholder(R.drawable.boost_360_insignia)
       .into(holder.image)
     holder.title.text = list.get(position).item_name
-    val price = list.get(position).price * list.get(position).min_purchase_months
-    val MRPPrice = list.get(position).MRPPrice * list.get(position).min_purchase_months
-    holder.price.text =
-      "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + yearlyOrMonthlyOrEmptyValidity(list.get(position).widget_type, activity)
+    val price = priceCalculatorForYear(list.get(position).price * list.get(position).min_purchase_months, list.get(position).widget_type, activity)
+    val MRPPrice = priceCalculatorForYear(list.get(position).MRPPrice * list.get(position).min_purchase_months, list.get(position).widget_type, activity)
+    holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + yearlyOrMonthlyOrEmptyValidity(list.get(position).widget_type, activity)
     if (price != MRPPrice) {
       spannableString(holder, MRPPrice, list.get(position))
       holder.MRPPrice.visibility = View.VISIBLE

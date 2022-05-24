@@ -106,16 +106,8 @@ class FeatureDetailsViewModel: BaseViewModel() {
     fun addItemToCart1(updatesModel: FeaturesModel, activity: Activity) {
         updatesLoader.postValue(false)
         val discount = 100 - updatesModel.discount_percent
-        val paymentPrice = Utils.priceCalculatorForYear(
-            ((discount * updatesModel.price) / 100),
-            updatesModel.widget_type,
-            activity
-        )
-        val mrpPrice = Utils.priceCalculatorForYear(
-            updatesModel.price,
-            updatesModel.widget_type,
-            activity
-        )
+        val paymentPrice = ((discount * updatesModel.price) / 100)
+        val mrpPrice =  updatesModel.price
         val cartItem = CartModel(
             updatesModel.feature_id,
             updatesModel.boost_widget_key,
@@ -130,7 +122,7 @@ class FeatureDetailsViewModel: BaseViewModel() {
             1,
             "features",
             updatesModel.extended_properties,
-            updatesModel.widget_type
+            updatesModel.widget_type?:""
         )
 
 
@@ -170,7 +162,7 @@ class FeatureDetailsViewModel: BaseViewModel() {
             1,
             "features",
             updatesModel.extended_properties,
-            updatesModel.widget_type
+            updatesModel.widget_type?:""
         )
 
         CompositeDisposable().add(

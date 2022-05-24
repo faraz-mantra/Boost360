@@ -48,5 +48,5 @@ data class CartModel(
   var extended_properties: String? = null,
 
   @ColumnInfo(name = "widget_type")
-  var widget_type: String = ""
+  var widget_type: String? = ""
 )

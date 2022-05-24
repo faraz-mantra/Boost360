@@ -82,7 +82,21 @@ object DataLoader {
                                         ) else null,
                                         if (item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) Gson().toJson(
                                             item.exclusive_to_categories
-                                        ) else null
+                                        ) else null,
+                                        item.widget_type,
+                                        if (item.benefits != null && item.benefits!!.size > 0) Gson().toJson(
+                                            item.benefits
+                                        ) else null,
+                                        if (item.all_testimonials != null && item.all_testimonials!!.size > 0) Gson().toJson(
+                                            item.all_testimonials
+                                        ) else null,
+                                        if (item.all_frequently_asked_questions != null && item.all_frequently_asked_questions!!.size > 0) Gson().toJson(
+                                            item.all_frequently_asked_questions
+                                        ) else null,
+                                        if (item.how_to_use_steps != null && item.how_to_use_steps!!.size > 0) Gson().toJson(
+                                            item.how_to_use_steps
+                                        ) else null,
+                                        item.how_to_use_title
                                     )
                                 )
                             }
