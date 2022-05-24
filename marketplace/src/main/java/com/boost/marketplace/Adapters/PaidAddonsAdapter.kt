@@ -16,6 +16,7 @@ import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.MyAddonsListener
 import com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity
 import com.bumptech.glide.Glide
+import com.framework.utils.DateUtils
 
 
 class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
@@ -48,17 +49,6 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
     val cryptocurrencyItem = list[position]
     holder.upgradeListItem(cryptocurrencyItem)
 
-
-//        holder.itemView.setOnClickListener{
-//            val details = DetailsFragment.newInstance()
-//            val args = Bundle()
-//            args.putInt("pos", position)
-//            details.arguments = args
-//            activity.addFragment(details , Constants.DETAILS_FRAGMENT)
-////            val intent = Intent(this.context, Details::class.java)
-////            intent.putExtra("position",position)
-////            startActivity(this.context, intent, null)
-//        }
     holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
     if (list.size - 1 == position) {
       holder.view.visibility = View.GONE
@@ -122,16 +112,17 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
 
     fun upgradeListItem(updateModel: FeaturesModel) {
       upgradeTitle.text = updateModel.name
-      val date= updateModel.expiryDate?.substring(0,10)
-      validity2.text="Valid till "+ date
+
+      val date: String? =DateUtils.parseDate(updateModel.expiryDate, DateUtils.FORMAT_SERVER_DATE1, DateUtils.FORMAT1_DD_MM_YYYY)
+      validity2.text="Valid till"+date
+
       Glide.with(context).load(updateModel.primary_image).into(image)
       if (updateModel.status == 1) {
         img1.setImageResource(R.drawable.ic_active)
       }
       else {
-        img1.setImageResource(R.drawable.ic_action_required)
+        img1.setImageResource(R.drawable.ic_action_req)
       }
-
     }
   }
 

@@ -83,35 +83,14 @@
                     android:id="@+id/free_addons_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textFontWeight="600"
                     android:fontFamily="@font/regular"
                     android:lineSpacingExtra="1.3sp"
-                    android:textColor="@color/common_bold_text_color"
-                    android:textSize="@dimen/_10sdp"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="14sp"
                     android:visibility="visible"
                     tools:text="Facebook Adss (upto 75 leads)" />
 
-                <LinearLayout
-                    android:id="@+id/paid_addons_activate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    tools:visibility="visible">
-
-                    <TextView
-                        android:id="@+id/validity2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/regular"
-                        android:gravity="start"
-                        android:textFontWeight="400"
-                        android:text="Valid till jun 23,2022"
-                        android:textColor="@color/dot_grey"
-                        android:textSize="@dimen/_8sdp" />
->>>>>>> 3e7d37116c1b02bda4236b6187ad79c446ade09a
-
-
-
-                </LinearLayout>
 
             </LinearLayout>
 

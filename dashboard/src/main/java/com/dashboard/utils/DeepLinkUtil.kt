@@ -24,8 +24,18 @@ const val deeplink_customer_enquires = "customerenquires"
 const val keyboard = "Keyboard"
 const val testimonials = "Testimonials"
 const val payment_gateway = "Payment_Gateway"
-const val ria_digital ="Ria_Digital"
-const val staff_profile ="Staff_profile"
+const val digital_brochure= "Digital_Brochure"
+const val projectteam= "ProjectTeam"
+const val staff_profile ="Staff_Profile"
+const val our_toppers ="Our_Toppers"
+const val upcoming_batches ="Upcoming_Batches"
+const val faculty ="Faculty"
+const val latest_updates ="Latest_Updates"
+const val featured_image ="Featured_Image"
+const val doctor_profile ="Doctor_Profile"
+const val trip_advisor ="Trip_Advisor"
+const val nearby_places ="Nearby_Places"
+const val business_kyc ="Business_Kyc"
 const val facebook_chat = "facebookchat"
 const val third_party_queries = "thirdPartyQueries"
 const val facebookpage = "facebookpage"
@@ -292,12 +302,32 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startUserProfileDetail(session)
         }else if (url.contains(testimonials)) {
           baseActivity.startTestimonial(session)
-        }else if (url.contains(payment_gateway)) {
+        } else if (url.contains(projectteam)) {
+          baseActivity.startListProjectAndTeams(session)
+        }else if (url.contains(digital_brochure)) {
+          baseActivity.startAddDigitalBrochure(session)
+        } else if (url.contains(payment_gateway)) {
           baseActivity.startSelfBrandedGateway(session)
-        }else if (url.contains(ria_digital)) {
-          baseActivity.startHelpAndSupportActivity(session)
         }else if (url.contains(staff_profile)) {
           baseActivity.startListStaff(session)
+        }else if (url.contains(our_toppers)) {
+          baseActivity.startListToppers(session)
+        }else if (url.contains(upcoming_batches)) {
+          baseActivity.startListBatches(session)
+        }else if (url.contains(faculty)) {
+          baseActivity.startFacultyMember(session)
+        }else if (url.contains(latest_updates)) {
+          baseActivity.startUpdateLatestStory(session)
+        }else if (url.contains(featured_image)) {
+          baseActivity.startFeatureLogo(session)
+        }else if (url.contains(doctor_profile)) {
+          baseActivity.startListDoctors(session)
+        }else if (url.contains(trip_advisor)) {
+          baseActivity.startListTripAdvisor(session)
+        }else if (url.contains(nearby_places)) {
+          baseActivity.startNearByView(session)
+        }else if (url.contains(business_kyc)) {
+          baseActivity.startBusinessKycBoost(session)
         }
       }
     } catch (e: Exception) {

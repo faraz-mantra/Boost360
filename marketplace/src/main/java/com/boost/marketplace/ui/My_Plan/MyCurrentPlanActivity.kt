@@ -344,11 +344,11 @@ class MyCurrentPlanActivity :
     }
 
     override fun onFreeAddonsClicked(item: FeaturesModel) {
-        val dialogCard = MyPlanBottomSheet()
+        val dialogCard = MyPlanBottomSheetFreeAddons()
         val args = Bundle()
         args.putString("bundleData", Gson().toJson(item))
         dialogCard.arguments = args
-        dialogCard.show(this@MyCurrentPlanActivity.supportFragmentManager, MyPlanBottomSheet::class.java.name)
+        dialogCard.show(this@MyCurrentPlanActivity.supportFragmentManager, MyPlanBottomSheetFreeAddons::class.java.name)
     }
 
     override fun onPaidAddonsClicked(item: FeaturesModel) {

@@ -216,7 +216,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/_5sdp">
+                android:paddingTop="@dimen/_2sdp"
+                android:paddingStart="@dimen/_1sdp"
+                android:paddingEnd="@dimen/_1sdp">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
@@ -419,6 +421,82 @@
                                 app:layout_constraintTop_toTopOf="@+id/expandableView1"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent" />
+
+                            <LinearLayout
+                                android:id="@+id/empty_features"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/paid_single_dummy_view1"
+                                android:visibility="gone"
+                                tools:visibility="gone">
+
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_30sdp"
+                                    app:srcCompat="@drawable/ic_myplan_zeroth" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_15sdp"
+                                    android:layout_marginStart="@dimen/_25ssp"
+                                    android:layout_marginEnd="@dimen/_25ssp"
+                                    android:textFontWeight="600"
+                                    android:gravity="center"
+                                    android:textAlignment="center"
+                                    android:fontFamily="@font/regular"
+                                    android:text="No premium feature is part of your current plan"
+                                    android:textColor="@color/tv_color_BB"
+                                    android:textSize="16sp" />
+
+                                <Button
+                                    android:id="@+id/btn_Use_this_feature"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_15sdp"
+                                    android:layout_marginStart="@dimen/_25sdp"
+                                    android:layout_marginEnd="@dimen/_25sdp"
+                                    android:background="@drawable/cta_button_click_effect"
+                                    android:enabled="true"
+                                    android:textSize="@dimen/_12sdp"
+                                    android:text="Browse premium packs"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/white"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/cslayout1" />
+
+                                <Button
+                                    android:id="@+id/btn_feature_details"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="@dimen/_8sdp"
+                                    android:layout_marginStart="@dimen/_25sdp"
+                                    android:layout_marginEnd="@dimen/_25sdp"
+                                    android:layout_marginBottom="@dimen/_30sdp"
+                                    android:background="@drawable/mp_home_share_click_effect"
+                                    android:enabled="true"
+                                    android:gravity="center"
+                                    android:textSize="@dimen/_12sdp"
+                                    android:text="Check feature"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/colorAccent1"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintHorizontal_bias="0.228"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/btn_Use_this_feature" />
+
+                            </LinearLayout>
+
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/premium_recycler"

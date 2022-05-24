@@ -83,10 +83,11 @@
                     android:id="@+id/paid_addons_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textFontWeight="600"
                     android:fontFamily="@font/regular"
                     android:lineSpacingExtra="1.3sp"
-                    android:textColor="@color/common_bold_text_color"
-                    android:textSize="@dimen/_10sdp"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="14sp"
                     android:visibility="visible"
                     tools:text="Facebook Adss (upto 75 leads)" />
 
@@ -106,7 +107,7 @@
                         android:text="Valid till jun 23,2022"
                         android:textFontWeight="400"
                         android:textColor="@color/dot_grey"
-                        android:textSize="@dimen/_8sdp" />
+                        android:textSize="@dimen/txt_12sp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -125,6 +126,8 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
