@@ -148,6 +148,9 @@ data class FeaturevideoItem(
 	@field:SerializedName("videourl")
 	val videourl: Videourl? = null,
 
+	@field:SerializedName("thumbnailimage")
+	val thumbnailimage: Videourl? = null,
+
 	@field:SerializedName("categories")
 	val categories: List<Any>? = null,
 

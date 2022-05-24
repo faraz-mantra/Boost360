@@ -25,19 +25,19 @@ class InstagramSetupViewModel : BaseViewModel() {
         CreateInstagrampage("feature.CreateInstagrampage__instagram"),
     }
 
-    private fun getVideosUrl(step: IGIntStepsFragment.Step): Videourl? {
+    fun getVideo(step: IGIntStepsFragment.Step): FeaturevideoItem? {
        return when(step){
             IGIntStepsFragment.Step.STEP1->{
-                igGuideVideos?.find { it?.videodescription==InstagramVideoIdentifier.CreateInstagrampage.value }?.videourl
+                igGuideVideos?.find { it?.helpsectionidentifier==InstagramVideoIdentifier.CreateInstagrampage.value }
             }
            IGIntStepsFragment.Step.STEP2->{
-               igGuideVideos?.find { it?.videodescription==InstagramVideoIdentifier.SwitchtoProfessinalAccount.value }?.videourl
+               igGuideVideos?.find { it?.helpsectionidentifier==InstagramVideoIdentifier.SwitchtoProfessinalAccount.value }
            }
            IGIntStepsFragment.Step.STEP3->{
-               igGuideVideos?.find { it?.videodescription==InstagramVideoIdentifier.TwoFactorAuthentication.value }?.videourl
+               igGuideVideos?.find { it?.helpsectionidentifier==InstagramVideoIdentifier.TwoFactorAuthentication.value }
            }
            IGIntStepsFragment.Step.STEP4->{
-               igGuideVideos?.find { it?.videodescription==InstagramVideoIdentifier.ConnectYourFacebookPageRender.value }?.videourl
+               igGuideVideos?.find { it?.helpsectionidentifier==InstagramVideoIdentifier.ConnectYourFacebookPageRender.value }
            }
            else->{
                null

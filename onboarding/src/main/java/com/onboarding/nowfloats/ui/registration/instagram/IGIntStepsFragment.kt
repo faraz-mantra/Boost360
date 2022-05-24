@@ -6,17 +6,20 @@ import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.framework.BaseApplication
+import com.framework.extensions.gone
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.spanBold
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
 import com.nowfloats.facebook.FacebookLoginHelper
 import com.nowfloats.facebook.constants.FacebookGraphRequestType
 import com.nowfloats.facebook.constants.FacebookPermissions
@@ -35,11 +38,13 @@ import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRe
 import com.onboarding.nowfloats.viewmodel.InstagramSetupViewModel
 import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
 
+
 class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCreateViewModel>(),
     FacebookLoginHelper,FacebookGraphManager.GraphRequestUserAccountCallback,
     IGGraphManager.GraphRequestIGAccountCallback,IGGraphManager.GraphRequestIGUserCallback {
 
 
+    private var player: ExoPlayer?=null
     private var igName: String?=null
     private var igId: String?=null
     private var accessToken: AccessToken?=null
@@ -83,14 +88,16 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
 
     override fun onCreateView() {
         super.onCreateView()
-
         instViewModel = ViewModelProvider(requireActivity()).get(InstagramSetupViewModel::class.java)
         session = UserSessionManager(requireActivity())
+        player = ExoPlayer.Builder(requireActivity()).build()
+        binding.player.player = player
+
         registerFacebookLoginCallback(this, callbackManager)
 
         currentStep = arguments?.getString(BK_STEP)
         setupUi()
-        setOnClickListener(binding!!.btnBack,binding!!.btnNext)
+        setOnClickListener(binding!!.btnBack,binding!!.btnNext,binding.ivPlayBtn)
 
     }
 
@@ -101,7 +108,19 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
         callbackManager.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun loadVideo(){
+    private fun loadVideo(step: Step){
+
+       val video= instViewModel?.getVideo(step)
+
+        Glide.with(this).load(video?.thumbnailimage?.url)
+            .into(binding?.thumbnail)
+
+        video?.videourl?.url?.let {
+            val mediaItem = MediaItem.fromUri(it)
+            player!!.setMediaItem(mediaItem)
+            player!!.prepare()
+        }?:showLongToast(getString(R.string.unable_to_play_video))
+
 
     }
 
@@ -116,6 +135,7 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
                 binding!!.tvBtnDesc.text = getString(R.string.logged_in_to_your_instagram_account)
                 binding!!.btnNext.text = getString(R.string.goto_step2)
                 nextStep = Step.STEP2
+                loadVideo(Step.STEP1)
             }
             Step.STEP2.name->{
                 binding!!.tvTitle.text = getString(R.string.switch_to_professional_account)
@@ -125,6 +145,8 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
                 binding!!.tvBtnDesc.text = getString(R.string.switched_your_account)
                 binding!!.btnNext.text = getString(R.string.goto_step3)
                 nextStep = Step.STEP3
+                loadVideo(Step.STEP2)
+
             }
             Step.STEP3.name->{
                 binding!!.tvTitle.text = getString(R.string.set_up_two_factor_authentication)
@@ -137,6 +159,8 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
                 binding!!.tvBtnDesc.text = getString(R.string.completed_two_factor_authentication)
                 binding!!.btnNext.text = getString(R.string.goto_step4)
                 nextStep = Step.STEP4
+                loadVideo(Step.STEP3)
+
             }
             Step.STEP4.name->{
                 val boldText1 = "Settings ➜ Instagram ➜ Connect to Instagram."
@@ -154,6 +178,8 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
                 binding!!.btnNext.setBackgroundColor(ContextCompat.getColor(requireActivity(),R.color.colorPrimary))
                 binding!!.btnNext.setTextColor(ContextCompat.getColor(requireActivity(),R.color.white))
                 nextStep = Step.NEXT_SCREEN
+                loadVideo(Step.STEP4)
+
 
             }
 
@@ -163,6 +189,9 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
     override fun onClick(v: View) {
         super.onClick(v)
         when(v){
+            binding.ivPlayBtn->{
+                playVideo()
+            }
             binding!!.btnBack->{
                 requireActivity().onBackPressed()
             }
@@ -198,6 +227,16 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
                 }
 
             }
+        }
+    }
+
+    private fun playVideo() {
+        try {
+            binding.thumbnail.gone()
+            binding.ivPlayBtn.gone()
+            player?.play()
+        }catch (e:Exception){
+
         }
     }
 
@@ -301,4 +340,13 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
     }
 
 
+    override fun onPause() {
+        super.onPause()
+        player?.pause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        player?.release()
+    }
 }

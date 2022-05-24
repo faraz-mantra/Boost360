@@ -87,10 +87,26 @@
                     app:cardCornerRadius="@dimen/size_10"
                     android:layout_height="match_parent">
 
-                    <com.google.android.exoplayer2.ui.PlayerView
+                    <com.google.android.exoplayer2.ui.StyledPlayerView
+                        android:id="@+id/player"
                         android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:show_buffering="when_playing"
+                        app:use_controller="true"
+                        app:show_shuffle_button="true"/>
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:scaleType="fitXY"
+                        android:layout_width="match_parent"
+                        android:id="@+id/thumbnail"
                         android:layout_height="match_parent"/>
 
+                    <com.framework.views.customViews.CustomImageView
+                        android:id="@+id/iv_play_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_white_play_yellow_fill"
+                        android:layout_height="wrap_content"/>
                 </com.framework.views.customViews.CustomCardView>
 
             </androidx.cardview.widget.CardView>
