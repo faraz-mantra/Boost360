@@ -27,7 +27,7 @@ class BrowseTabPosterCatViewHolder(binding: ListItemBrowseTabTemplateCatBinding)
     val model = item as PosterPackModel
 
 //    Picasso.get().load(model.tagsModel.icon).into(binding.ivIcon)
-    binding.tvTitle.text=model.tagsModel.name
+    binding.tvTitle.text=model.tagsModel?.name
     binding.tvSize.text = "(${model.posterList?.size})"
     binding.root.setOnClickListener {
       listener?.onItemClick(position,model,RecyclerViewActionType.BROWSE_TAB_POSTER_CAT_CLICKED.ordinal)

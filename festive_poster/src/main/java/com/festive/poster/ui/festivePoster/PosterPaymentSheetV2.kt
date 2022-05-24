@@ -53,7 +53,7 @@ class PosterPaymentSheetV2 : AppBaseBottomSheetFragment<SheetPosterPaymentv2Bind
     val posterPack = sharedViewModel?.selectedPosterPack
     posterPack?.let {
       binding?.tvPrice?.text = it.price.toInt().toString()
-      binding?.tvPackName?.text = getString(R.string.for_pack_of_posters, it.tagsModel.name)
+      binding?.tvPackName?.text = getString(R.string.for_pack_of_posters, it.tagsModel?.name)
       binding?.tvPayLaterPrice?.text = getString(R.string.get_the_poster_pack_now_amp_pay_later, it.price.toInt().toString())
       binding?.tvPackSize?.text = getString(R.string.of_size_posters,it.posterList?.size.toString())
       val number = when {

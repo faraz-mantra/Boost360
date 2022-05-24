@@ -9,7 +9,7 @@ import com.framework.pref.UserSessionManager
 import com.framework.utils.convertStringToList
 
 open class PurchasedPosterPackModel(
-  tagsModel: PosterPackTagModel,
+  tagsModel: PosterPackTagModel?,
   posterList: ArrayList<PosterModel>? = null,
   price: Double = 0.0,
 ) : PosterPackModel(tagsModel,posterList,price,true,RecyclerViewItemType.POSTER_PACK_PURCHASED.getLayout()),AppBaseRecyclerViewItem {

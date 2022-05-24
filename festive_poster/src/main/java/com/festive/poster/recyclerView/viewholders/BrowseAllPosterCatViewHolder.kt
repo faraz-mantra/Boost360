@@ -39,7 +39,7 @@ class BrowseAllPosterCatViewHolder(binding: ListItemBrowseAllCatBinding) :
       binding.borderCard.strokeColor=0
       binding.root.alpha = 0.5F
     }
-    binding.tvTitle.text = model.tagsModel.name
+    binding.tvTitle.text = model.tagsModel?.name
 
     binding.root.setOnClickListener {
       listener?.onItemClick(position,model,RecyclerViewActionType.BROWSE_ALL_POSTER_CAT_CLICKED.ordinal)

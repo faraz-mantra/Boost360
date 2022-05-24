@@ -73,6 +73,9 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
   override fun onCreateView() {
     super.onCreateView()
     packTag = arguments?.getString(BK_TAG)
+    if (packTag==null){
+      return
+    }
     WebEngageController.trackEvent(FESTIVAL_POSTER_PURCHASED_GALLERY, event_value = HashMap())
     sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
     session = UserSessionManager(requireActivity())
@@ -135,16 +138,19 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
     )?.observeOnce(viewLifecycleOwner, {
         val response = it as? GetTemplatesResponse
         response?.let {
-          dataList = response.Result.templates.toArrayList()
+          dataList = response.Result.templates?.toArrayList()
           dataList?.forEach { posterModel -> posterModel.isPurchased = true
             posterModel.greeting_message = sharedViewModel?.selectedPosterPack?.tagsModel?.description
             posterModel.layout_id = RecyclerViewItemType.POSTER_SHARE.getLayout()
 
           }
-          adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>, dataList!!, this)
-          binding?.rvPosters?.adapter = adapter
-          binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
-          adapter?.notifyDataSetChanged()
+          dataList?.let {
+            adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>, it, this)
+            binding?.rvPosters?.adapter = adapter
+            binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
+            adapter?.notifyDataSetChanged()
+          }
+
         }
         hideShimmerAnimation()
     })
@@ -196,7 +202,7 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
 
   private fun downloadSelectedPoster() {
     SvgUtils.shareUncompressedSvg(selectedPosterModelForDownload?.variants?.firstOrNull()?.svgUrl,
-      selectedPosterModelForDownload!!,requireContext())
+      selectedPosterModelForDownload,requireContext())
   }
 
   override fun onRequestPermissionsResult(

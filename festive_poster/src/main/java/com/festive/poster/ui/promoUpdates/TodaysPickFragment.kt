@@ -133,7 +133,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
             ?.observeOnce(viewLifecycleOwner) {
                 val response = it as? GetTemplateViewConfigResponse
                 response?.let {
-                    val tagArray = prepareTagForApi(response.Result.todayPick.tags)
+                    val tagArray = prepareTagForApi(response.Result.todayPick?.tags)
                     fetchTemplates(tagArray, response)
                 }
 
@@ -154,10 +154,10 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
         binding!!.cardBrowseAllTemplate.visible()
     }
 
-    private fun prepareTagForApi(tags: List<PosterPackTagModel>): ArrayList<String> {
+    private fun prepareTagForApi(tags: List<PosterPackTagModel>?): ArrayList<String> {
         val list = ArrayList<String>()
-        tags.forEach {
-            list.add(it.tag)
+        tags?.forEach {
+            it.tag?.let { tag -> list.add(tag) }
         }
         return list
     }
@@ -170,12 +170,12 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
 
                 val templates_response = it as? GetTemplatesResponse
                 templates_response?.let {
-                    response.Result.todayPick.tags.forEach { pack_tag ->
+                    response.Result.todayPick?.tags?.forEach { pack_tag ->
                         val templateList = ArrayList<PosterModel>()
-                        templates_response.Result.templates.forEach { template ->
+                        templates_response.Result.templates?.forEach { template ->
                             var posterTag =
                                 template.tags?.find { posterTag -> posterTag == pack_tag.tag }
-                            if (posterTag != null && template?.active == true) {
+                            if (posterTag != null && template.active == true) {
                                 template.greeting_message = pack_tag.description
                                 template.layout_id =
                                     RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP.getLayout()
@@ -195,7 +195,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                                 PosterPackModel(
                                     pack_tag,
                                     filterdList,
-                                    isPurchased = pack_tag.isPurchased,
+                                    isPurchased = pack_tag.isPurchased==true,
                                     list_layout = RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()
                                 )
                             )
@@ -204,7 +204,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                                 PosterPackModel(
                                     pack_tag,
                                     templateList,
-                                    isPurchased = pack_tag.isPurchased,
+                                    isPurchased = pack_tag.isPurchased==true,
                                     list_layout = RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()
                                 )
                             )
@@ -265,9 +265,12 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
             RecyclerViewActionType.POSTER_VIEW_MORE_CLICKED.ordinal->{
                 parentItem as PosterPackModel
 
-                addFragment(R.id.container,
-                    BrowseAllFragment.newInstance(originalList!!,parentPosition),
-                    true,true)
+                originalList?.let {
+                    addFragment(R.id.container,
+                        BrowseAllFragment.newInstance(it,parentPosition),
+                        true,true)
+                }
+
 
             }
             RecyclerViewActionType.POST_CLICKED.ordinal-> {

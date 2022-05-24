@@ -21,7 +21,7 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecycler
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     val model = item as PosterPackModel
-    binding.tvPosterHeading.text = model.tagsModel.name
+    binding.tvPosterHeading.text = model.tagsModel?.name
     binding.layoutPurchased.isVisible = model.isPurchased
     binding.tvPrice.text = "Pack of ${model.posterList?.size} posters for ₹${model.price.toInt()}"
   //  setupVp(binding.vpPoster)
@@ -33,7 +33,7 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecycler
     } else {
       binding.btnGetPack.setBackgroundColor(getColor(R.color.colorPrimary)!!)
       binding.btnGetPack.setTextColor(getColor(R.color.white)!!)
-      binding.btnGetPack.text = "Get ${model.tagsModel.name} Posters Pack"
+      binding.btnGetPack.text = "Get ${model.tagsModel?.name} Posters Pack"
     }
     binding.btnGetPack.setOnClickListener {
       listener?.onItemClick(position, item, RecyclerViewActionType.GET_POSTER_PACK_CLICK.ordinal)

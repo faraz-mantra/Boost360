@@ -18,9 +18,9 @@ class TodaysPickTemplateListViewHolder(binding: ListItemTodaysPickTemplateBindin
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as PosterPackModel
-        binding.tvCatTitle.text = model.tagsModel.name
+        binding.tvCatTitle.text = model.tagsModel?.name
 //        Picasso.get().load(model.tagsModel.icon).into(binding.ivCategoryIcon)
-        binding.tvCatDesc.text = model.tagsModel.description
+        binding.tvCatDesc.text = model.tagsModel?.description
         //binding.ivCategoryIcon.setImageResource(R.drawable.ic_dummy_poster_cat_icon)
         //binding.tvCatDesc.text = "Post about offers or friday sale upto 50% discount  on selected products"
         model.posterList?.let {
