@@ -31,7 +31,10 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    intent?.extras?.getInt(FRAGMENT_TYPE)?.let { type = FragmentType.values()[it] }
+    intent?.extras?.getString(FRAGMENT_TYPE)?.let { type = FragmentType.fromValue(it) }
+   if (type==null){
+     intent?.extras?.getInt(FRAGMENT_TYPE)?.let { type = FragmentType.values()[it] }
+   }
     super.onCreate(savedInstanceState)
   }
 
@@ -49,6 +52,13 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getToolbar(): CustomToolbar? {
     return binding?.appBarLayout?.toolbar
+  }
+
+  override fun isHideToolbar(): Boolean {
+    if (type==FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2){
+      return true
+    }
+    return super.isHideToolbar()
   }
 
   override fun getToolbarBackgroundColor(): Int? {
@@ -103,8 +113,9 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
     return when (type) {
       FragmentType.UPDATE_BUSINESS_FRAGMENT -> UpdatesBusinessFragment.newInstance()
       FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT -> AddUpdateBusinessFragment.newInstance()
+      FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2 -> AddUpdateBusinessFragmentV2.newInstance()
       FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> DetailUpdateBusinessFragment.newInstance()
-      else -> UpdatesBusinessFragment.newInstance()
+      else -> AddUpdateBusinessFragmentV2.newInstance()
     }
   }
 

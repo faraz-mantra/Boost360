@@ -6,10 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.festive.poster.models.PosterPackModel
 import com.festive.poster.models.PosterPackTagModel
 import com.festive.poster.models.response.GetTemplatesResponse
-import com.festive.poster.reset.repo.DevBoostRepository
-import com.festive.poster.reset.repo.FeatureProcessorRepository
-import com.festive.poster.reset.repo.NowFloatsRepository
-import com.festive.poster.reset.repo.WithFloatsRepository
+import com.festive.poster.reset.repo.*
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
@@ -31,14 +28,26 @@ class FestivePosterViewModel: BaseViewModel() {
         return NowFloatsRepository.getTemplates(floatingPointId,floatingPointTag,tags).toLiveData()
     }
 
-    fun getTemplateConfig(floatingPointId: String?,floatingPointTag: String?): LiveData<BaseResponse> {
-        return NowFloatsRepository.getTemplateConfig(floatingPointId,floatingPointTag).toLiveData()
+    fun getFavTemplates(floatingPointId: String?,floatingPointTag: String?,featureKey:String): LiveData<BaseResponse> {
+        return NowFloatsRepository.getFavTemplates(floatingPointId,floatingPointTag,featureKey).toLiveData()
+    }
+
+    fun makeTemplateFav(floatingPointId: String?,floatingPointTag: String?,templateId:String?): LiveData<BaseResponse> {
+        return NowFloatsRepository.makeTempFav(floatingPointId,floatingPointTag,templateId).toLiveData()
+    }
+
+
+    fun getTemplateConfig(fKey:String,floatingPointId: String?,floatingPointTag: String?): LiveData<BaseResponse> {
+        return NowFloatsRepository.getTemplateConfig(fKey,floatingPointId,floatingPointTag).toLiveData()
     }
 
     fun getFeatureDetails(fpId:String?,clientId:String?): LiveData<BaseResponse> {
         return FeatureProcessorRepository.getFeatureDetails(fpId,clientId).toLiveData()
     }
 
+    fun getUserDetails(fpTag: String?, clientId: String): LiveData<BaseResponse> {
+        return WithFloatTwoRepository.getUserDetails(fpTag,clientId).toLiveData()
+    }
     fun getUpgradeData(): LiveData<BaseResponse> {
         return DevBoostRepository.getUpgradeData().toLiveData()
     }

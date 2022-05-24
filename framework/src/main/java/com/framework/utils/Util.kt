@@ -3,12 +3,18 @@ package com.framework.utils
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.PendingIntent
+import android.content.ActivityNotFoundException
+import android.content.ContentValues
+import android.content.Context
 import android.content.*
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.res.TypedArray
+import android.graphics.*
+import android.graphics.drawable.Drawable
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.ColorFilter
@@ -21,17 +27,19 @@ import android.provider.MediaStore
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.*
+import android.util.Base64.DEFAULT
+import android.util.Base64.encodeToString
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
-import androidx.annotation.FontRes
+import androidx.annotation.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
@@ -39,14 +47,20 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.ColorUtils
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.SimpleColorFilter
 import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.framework.BaseApplication
 import com.framework.R
+import com.framework.analytics.SentryController
 import com.framework.constants.PackageNames
 import com.framework.views.customViews.CustomTextView
 import com.google.android.material.snackbar.Snackbar
@@ -73,6 +87,8 @@ fun View.setNoDoubleClickListener(listener: View.OnClickListener, blockInMillis:
     listener.onClick(this)
   }
 }
+
+fun Double.roundToFloat(numFractionDigits: Int): Float = "%.${numFractionDigits}f".format(this, Locale.ENGLISH).toFloat()
 
 fun AppCompatEditText.onDone(callback: () -> Unit) {
   imeOptions = EditorInfo.IME_ACTION_DONE
@@ -101,9 +117,6 @@ fun AppCompatEditText.onRightDrawableClicked(onClicked: (view: AppCompatEditText
     hasConsumed
   }
 }
-
-fun Double.roundToFloat(numFractionDigits: Int): Float = "%.${numFractionDigits}f".format(this, Locale.ENGLISH).toFloat()
-
 fun Activity.hideKeyBoard() {
   val view = this.currentFocus
   if (view != null) {
@@ -275,47 +288,49 @@ fun View.toBitmap(): Bitmap? {
   return returnedBitmap
 }
 
-suspend fun Bitmap.shareAsImage(packageName: String? = null, text: String? = null) {
-  val imagesFolder = File(BaseApplication.instance.getExternalFilesDir(null), "shared_images")
-  var uri: Uri? = null
-  try {
-    imagesFolder.mkdirs()
-    val file = File(imagesFolder, "shareimage${System.currentTimeMillis()}.jpg")
-    val stream = FileOutputStream(file)
-    compress(Bitmap.CompressFormat.JPEG, 100, stream)
-    stream.flush()
-    stream.close()
-    uri = FileProvider.getUriForFile(BaseApplication.instance, "${BaseApplication.instance.packageName}.provider", file)
-    val intent = Intent(Intent.ACTION_SEND)
-    intent.putExtra(Intent.EXTRA_STREAM, uri)
-    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    intent.type = "image/*"
-    packageName?.let {
-      intent.`package` = packageName
-    }
-    text?.let {
-      intent.putExtra(Intent.EXTRA_TEXT, text)
-    }
-    BaseApplication.instance.startActivity(intent)
-  } catch (e: Exception) {
-    Log.d("IOException: ", e.message.toString())
-    if (e is ActivityNotFoundException) {
-      withContext(Dispatchers.Main) {
-        when (packageName) {
-          PackageNames.WHATSAPP -> {
-            Toast.makeText(BaseApplication.instance, "Whatsapp is not installed on your device", Toast.LENGTH_LONG).show()
+suspend fun Bitmap.shareAsImage(packageName:String?=null,text: String?=null){
+    val imagesFolder = File(BaseApplication.instance.getExternalFilesDir(null), "shared_images")
+    var uri: Uri? = null
+    try {
+      imagesFolder.mkdirs()
+      val file = File(imagesFolder, "shareimage${System.currentTimeMillis()}.jpg")
+      val stream = FileOutputStream(file)
+      compress(Bitmap.CompressFormat.JPEG, 100, stream)
+      stream.flush()
+      stream.close()
+      uri = FileProvider.getUriForFile(BaseApplication.instance, "${BaseApplication.instance.packageName}.provider", file)
+      val intent = Intent(Intent.ACTION_SEND)
+      intent.putExtra(Intent.EXTRA_STREAM, uri)
+      intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+      intent.type = "image/*"
+      packageName?.let {
+        intent.`package`= packageName
+      }
+      text?.let {
+        intent.putExtra(Intent.EXTRA_TEXT,text)
+      }
+      BaseApplication.instance.startActivity(intent)
+    } catch (e: Exception) {
+      Log.d("IOException: " , e.message.toString())
+      if (e is ActivityNotFoundException){
+        withContext(Dispatchers.Main){
+          when(packageName){
+            PackageNames.WHATSAPP->{
+              Toast.makeText(BaseApplication.instance,"Whatsapp is not installed on your device",Toast.LENGTH_LONG).show()
 
-          }
-          PackageNames.INSTAGRAM -> {
-            Toast.makeText(BaseApplication.instance, "Instagram is not installed on your device", Toast.LENGTH_LONG).show()
+            }
+            PackageNames.INSTAGRAM->{
+              Toast.makeText(BaseApplication.instance,"Instagram is not installed on your device",Toast.LENGTH_LONG).show()
 
+            }
           }
         }
-      }
 
+      }else{
+        SentryController.captureException(e)
+      }
     }
-  }
 
 }
 
@@ -337,6 +352,12 @@ fun Bitmap.saveAsImageToAppFolder(destPath: String): File? {
     return null
   }
 
+
+}
+
+fun Bitmap.saveAsTempFile(): File? {
+ return saveAsImageToAppFolder(
+    BaseApplication.instance.externalCacheDir?.toString()+File.separator+"tempimage.png")
 
 }
 
@@ -418,7 +439,7 @@ suspend fun Bitmap.saveImageToStorage(
   } catch (e: IOException) {
     Toast.makeText(BaseApplication.instance, "Failed To Save Image", Toast.LENGTH_SHORT).show()
     NotiUtils.notificationManager?.cancel(noti_id)
-
+    SentryController.captureException(e)
     e.printStackTrace()
   }
 }
@@ -473,6 +494,51 @@ fun getAppVersionName(): String? {
   return null
 }
 
+@RequiresApi(Build.VERSION_CODES.Q)
+fun Drawable.setColorFilterApiQ(color: Int, blendMode:BlendMode){
+    colorFilter = BlendModeColorFilter(color, blendMode)
+}
+
+
+
+fun highlightHashTag(text: String?,@ColorRes colorId: Int,@FontRes fontId:Int): SpannableString {
+
+  val spannable = SpannableString(text?:"")
+
+  if (text.isNullOrEmpty().not()){
+    var last_index = 0
+    text?.trim()?.split(Regex("\\s+"))?.forEach {
+      Log.i(TAG, "addHashTagFunction: $it")
+      if (it.isNotEmpty() && it[0] == '#'){
+
+        spannable.setSpan(object : TypefaceSpan(null) {
+          override fun updateDrawState(ds: TextPaint) {
+            ds.typeface = Typeface.create(ResourcesCompat.getFont(BaseApplication.instance,
+              fontId), Typeface.NORMAL) // To change according to your need
+          }
+        }, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE) // To change according to your need
+
+//        val boldSpan = StyleSpan(Typeface
+//          .BOLD)
+        val foregroundSpan = ForegroundColorSpan(ContextCompat.getColor(BaseApplication.instance, colorId))
+        spannable.setSpan(foregroundSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+//        spannable.setSpan(boldSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+      }
+
+      last_index+=it.length-1
+
+    }
+  }
+
+  return spannable
+}
+
+
+
+
+
+inline fun <reified T> convertJsonToObj(json: String?) = Gson().fromJson<T>(json, object : TypeToken<T>() {}.type)
 fun Bitmap.zoom(percent: Float): Bitmap? {
 
   val scaleFactor = percent // Set this to the zoom factor
@@ -511,6 +577,133 @@ fun spanBold(fullText: String, vararg boldTextList: String): SpannableString {
   return spannable
 }
 
+
+
+
+fun spanColor(fullText:String,@ColorRes color: Int,vararg colorTextList:String): SpannableString {
+  val spannable = SpannableString(fullText)
+  colorTextList.forEach { text->
+    spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(
+      BaseApplication.instance,color
+    )),fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+  }
+  return spannable
+}
+
+fun spanBoldNdColor(fullText:String,@ColorRes color: Int,text:String): SpannableString {
+  val spannable = SpannableString(fullText)
+  spannable.setSpan(StyleSpan(Typeface.BOLD),fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+  spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(
+    BaseApplication.instance,color
+  )),fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+  return spannable
+}
+
+fun spanClick(fullText:String,function: () -> (Unit),vararg colorTextList:String): SpannableString {
+  val spannable = SpannableString(fullText)
+  colorTextList.forEach { text->
+    spannable.setSpan(object :ClickableSpan(){
+      override fun onClick(p0: View) {
+        function.invoke()
+      }
+
+    },fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+  }
+  return spannable
+}
+
+
+fun File.shareAsImage(context:Context,packageName: String?,text: String?){
+  val uri= FileProvider.getUriForFile(
+    context,
+    "${context.packageName}.provider", //(use your app signature + ".provider" )
+    this)
+  val intent = Intent(Intent.ACTION_SEND)
+  intent.type = "image/*"
+  intent.putExtra(Intent.EXTRA_STREAM, uri)
+  intent.putExtra(Intent.EXTRA_TEXT,text)
+  if (packageName!=null){
+    intent.setPackage(packageName)
+  }
+  context.startActivity(intent)
+}
+
+fun ImageView.loadUsingGlide(imgFile:String?,cache:Boolean=true){
+  val builder = Glide.with(this).load(imgFile)
+  if (cache.not()){
+    builder.apply(RequestOptions.skipMemoryCacheOf(true))
+      .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(this)
+  }else{
+    builder.into(this)
+
+  }
+}
+
+fun String.extractHashTag(): ArrayList<String> {
+  val MY_PATTERN = Pattern.compile("#(\\S+)");
+  val mat = MY_PATTERN.matcher(this);
+  val strs= ArrayList<String>();
+  while (mat.find()) {
+    //System.out.println(mat.group(1));
+    strs.add(mat.group(1));
+  }
+  return strs
+}
+
+fun Activity.setStatusBarColor(@ColorRes colorId: Int){
+  val window = window
+  window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+
+  window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+  window.statusBarColor = ContextCompat.getColor(this,colorId)
+  WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = isColorDark(colorId)
+
+
+}
+
+fun Fragment.setStatusBarColor(@ColorRes colorId: Int){
+  activity?.setStatusBarColor(colorId)
+}
+
+fun isColorDark(@ColorRes colorRes: Int): Boolean {
+  val color = ContextCompat.getColor(BaseApplication.instance,colorRes)
+  val whiteContrast = ColorUtils.calculateContrast(Color.WHITE, color)
+  val blackContrast = ColorUtils.calculateContrast(Color.BLACK, color)
+
+  return if (whiteContrast > blackContrast) false else true
+
+}
+
+fun TypedArray.use(block: TypedArray.() -> Unit) {
+  try {
+    block()
+  } finally {
+    this.recycle()
+  }
+}
+
+fun Context.getStyledAttributes(@StyleableRes attrs: IntArray, block: TypedArray.() -> Unit) =
+  this.obtainStyledAttributes(attrs).use(block)
+
+fun View.setClickableRipple() {
+  val attrs = intArrayOf(R.attr.selectableItemBackground)
+  context.getStyledAttributes(attrs) {
+    val backgroundResource = getResourceId(0, 0)
+    setBackgroundResource(backgroundResource)
+  }
+}
+
+fun File.toBase64(): String? {
+  val result: String?
+  inputStream().use { inputStream ->
+    val sourceBytes = inputStream.readBytes()
+    result = android.util.Base64.encodeToString(sourceBytes, android.util.Base64.DEFAULT)
+  }
+
+  return result
+}
 fun copyToClipBoard(text: String) {
   val clipboard = BaseApplication.instance.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
   val clip: ClipData = ClipData.newPlainText("boost-label", text)
@@ -546,6 +739,9 @@ fun fetchString(id: Int): String {
   return BaseApplication.instance.getString(id)
 }
 
+fun fetchColor(id: Int): Int {
+  return ContextCompat.getColor(BaseApplication.instance,id)
+}
 fun showSnackBarNegative(context: Activity, msg: String?) {
   val snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg ?: "", Snackbar.LENGTH_INDEFINITE)
   snackBar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color))
@@ -553,21 +749,6 @@ fun showSnackBarNegative(context: Activity, msg: String?) {
   snackBar.show()
 }
 
-fun spanColor(fullText: String, @ColorRes color: Int, vararg colorTextList: String): SpannableString {
-  val spannable = SpannableString(fullText)
-  try {
-    colorTextList.forEach { text ->
-      spannable.setSpan(
-        ForegroundColorSpan(
-          ContextCompat.getColor(BaseApplication.instance, color)
-        ), fullText.indexOf(text), fullText.indexOf(text) + text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-      )
-    }
-  } catch (e: Exception) {
-    e.printStackTrace()
-  }
-  return spannable
-}
 
 fun String.capitalized(): String {
   return this.replaceFirstChar {

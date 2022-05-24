@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="imageExist"
+            type="Boolean" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="190dp"
+        android:layout_marginTop="@dimen/size_20"
+        android:layout_marginBottom="@dimen/size_15"
+        android:layout_marginHorizontal="@dimen/size_10"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView"
+            android:layout_width="match_parent"
+            android:layout_height="284dp"
+            app:cardUseCompatPadding="true"
+            app:cardElevation="@dimen/size_4"
+            app:cardPreventCornerOverlap="false"
+            app:cardCornerRadius="@dimen/size_8"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/layout_content"
+                android:layout_marginTop="12dp"
+                >
+
+                <com.framework.views.customViews.CustomCardView
+                    android:id="@+id/customCardView"
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    app:cardCornerRadius="@dimen/size_8"
+                    android:layout_marginStart="@dimen/_6dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="match_parent"
+                        android:src="@drawable/ic_fposter_profile_img_placeholder"
+                        android:layout_height="match_parent"/>
+                </com.framework.views.customViews.CustomCardView>
+
+
+                <com.framework.views.customViews.CustomImageView
+                    android:src="@drawable/ic_instagram_three_dot"
+                    android:id="@+id/customImageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/size_12"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="#BDC5CD" />
+
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/bold"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/customCardView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Payal Jain" />
+
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/customTextView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:textSize="4dp"
+                    app:layout_constraintStart_toStartOf="@+id/tv_name"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_name"
+                    android:text="15 mins" />
+
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_goneMarginTop="14dp"
+                    android:layout_marginHorizontal="@dimen/size_9"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="7sp"
+                    android:maxLines="5"
+                    android:ellipsize="end"
+                    app:fontFamily="@font/regular_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_poster"
+                    tools:text="50 to 60 percent off the entire site and store for Black Friday. Above that, you have free shipiing on all orders, plus an extra 20.
+
+#bigbilliondays #smile #2020 " />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/iv_poster"
+                    android:layout_width="match_parent"
+                    android:layout_height="152dp"
+                    android:scaleType="fitXY"
+
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintHeight_percent="0.65"
+                    app:layout_constraintTop_toBottomOf="@+id/customCardView" />
+
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/customTextView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:text="@string/buy"
+                    android:layout_marginStart="@dimen/size_10"
+                    android:textColor="@color/color4285F4"
+                    android:textSize="8sp"
+                    app:fontFamily="@font/regular_medium"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_caption" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/size_8"
+                    android:src="@drawable/ic_gmb_share"
+                    app:layout_constraintBottom_toBottomOf="@+id/customTextView14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/customTextView14" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+
+        <com.framework.views.customViews.CustomCardView
+            android:layout_width="40dp"
+            app:cardCornerRadius="@dimen/size_20"
+            android:layout_height="@dimen/size_40"
+            app:layout_constraintBottom_toBottomOf="@+id/materialCardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView"
+            app:cardElevation="@dimen/size_4"
+            android:translationY="-4dp">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/customImageView6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_gmb_preview"
+                />
+        </com.framework.views.customViews.CustomCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

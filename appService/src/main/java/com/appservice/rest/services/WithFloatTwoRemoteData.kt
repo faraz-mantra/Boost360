@@ -99,6 +99,9 @@ interface WithFloatTwoRemoteData {
   @PUT(EndPoints.PUT_BIZ_MESSAGE)
   fun putBizMessageUpdate(@Body request: PostUpdateTaskRequest?): Observable<Response<Any>>
 
+  @PUT(EndPoints.PUT_BIZ_MESSAGE_V2)
+  fun putBizMessageUpdateV2(@Body request: PostUpdateTaskRequest?): Observable<Response<Any>>
+
   @GET(EndPoints.GET_CATALOG_STATUS)
   fun getCatalogStatus(
     @Path("fpid") fpid: String,
@@ -133,6 +136,10 @@ interface WithFloatTwoRemoteData {
     @Body requestBody: RequestBody?,
   ): Observable<Response<String>>
 
+  @POST(EndPoints.PUT_BIZ_IMAGE_V2)
+  fun putBizImageUpdateV2(
+    @Body body:JsonObject
+    ): Observable<Response<String>>
 //  fun getDeliveryDetails(): Observable<Response<ResponseBody>>
 
   //TODO APPOINTMENT

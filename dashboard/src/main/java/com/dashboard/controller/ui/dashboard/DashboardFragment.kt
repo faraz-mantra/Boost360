@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.appservice.ui.updatesBusiness.AddUpdateBusinessFragment
+import com.appservice.ui.updatesBusiness.AddUpdateBusinessFragmentV2
 import com.bumptech.glide.Glide
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
@@ -51,6 +53,7 @@ import com.framework.constants.PremiumCode
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.festivePosterName
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.festivePosterVisibility
 import com.framework.glide.util.glideLoad
@@ -862,7 +865,12 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun quickActionClick(type: QuickActionItem.QuickActionType) {
     when (type) {
-      QuickActionItem.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(session)
+      QuickActionItem.QuickActionType.POST_NEW_UPDATE ->{
+        if (FirebaseRemoteConfigUtil.featureUpdateStudioSelectedUsers(session?.fpTag))
+            baseActivity.startPromotionUpdates()
+        else
+           baseActivity.startPostUpdate()
+      }
       QuickActionItem.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
       QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startTestimonial(session, true)
       QuickActionItem.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCustomPage(session, true)

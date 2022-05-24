@@ -10,5 +10,5 @@ data class GetTemplatesResult(
     @SerializedName("templates")
     val templates: List<PosterModel>?,
     @SerializedName("totalCount")
-    val totalCount: Int
+    val totalCount: Int?
 )
