@@ -637,9 +637,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_border_red_white_bg"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:padding="@dimen/_15sdp"
-                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginStart="16dp"
+                    android:padding="16dp"
+                    android:layout_marginEnd="16dp"
                     android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@id/header">
 
@@ -702,7 +702,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/bold"
-                        android:padding="@dimen/_15sdp"
+                        android:padding="16dp"
                         android:text="Benefits For Your Business"
                         android:textColor="@color/main_color_gray_dk"
                         android:textFontWeight="600"
@@ -765,7 +765,7 @@
                         android:layout_height="wrap_content"
                         android:background="#F8F8F8"
                         android:fontFamily="@font/bold"
-                        android:padding="@dimen/_15sdp"
+                        android:padding="16dp"
                         android:text="Packs with “Staff Management”"
                         android:textColor="@color/main_color_gray_dk"
                         android:textFontWeight="600"
@@ -908,7 +908,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/semi_bold"
-                            android:padding="@dimen/_15sdp"
+                            android:padding="16dp"
                             tools:text="How To Use Staff Management?"
                             android:textColor="@color/main_color_gray_dk"
                             android:textFontWeight="600"
@@ -954,7 +954,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/bold"
-                        android:padding="@dimen/_15sdp"
+                        android:padding="16dp"
                         android:text="What Our Customers Say"
                         android:textColor="@color/main_color_gray_dk"
                         android:textFontWeight="600"
@@ -1001,7 +1001,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/bold"
-                        android:padding="@dimen/_15sdp"
+                        android:padding="16dp"
                         android:text="Frequently Asked Questions"
                         android:textColor="@color/main_color_gray_dk"
                         android:textFontWeight="600"
@@ -1013,7 +1013,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_curve_bg"
-                        android:layout_margin="@dimen/_15sdp"
+                        android:layout_margin="16dp"
                         tools:listitem="@layout/faq_item"
                         android:layout_marginBottom="@dimen/_15sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -1052,6 +1052,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:layout_gravity="bottom"
+            android:visibility="visible"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -1099,5 +1100,35 @@
                 app:layout_constraintTop_toBottomOf="@id/title_bottom3" />
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/bottom_box_only_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_gravity="bottom"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/add_item_to_cart_new"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/cta_button_click_effect"
+                android:fontFamily="@font/semi_bold"
+                android:gravity="center"
+                android:paddingStart="@dimen/_30sdp"
+                android:paddingTop="10dp"
+                android:paddingEnd="@dimen/_30sdp"
+                android:paddingBottom="10dp"
+                android:text="Add To Cart"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_bottom3" />
+
+        </LinearLayout>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
