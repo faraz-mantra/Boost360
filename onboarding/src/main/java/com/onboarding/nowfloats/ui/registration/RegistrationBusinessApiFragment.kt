@@ -119,6 +119,8 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
         ChannelType.WAB -> connectedWhatsApp != null
         ChannelType.T_FEED -> connectedChannelsAccessTokens?.contains(ChannelAccessToken.AccessTokenType.twitter)
         ChannelType.G_BUSINESS -> connectedChannelsAccessTokens?.contains(ChannelAccessToken.AccessTokenType.googlemybusiness)
+        ChannelType.INSTAGRAM -> connectedChannelsAccessTokens?.contains(ChannelAccessToken.AccessTokenType.instagram)
+
         null -> false
       }
       if (isSelected == true) connectedChannels.add(channel)

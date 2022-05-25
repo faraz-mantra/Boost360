@@ -107,7 +107,7 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> :
       currentPage = arguments?.getInt(IntentConstant.CURRENT_PAGES) ?: currentPage
       totalPages = arguments?.getInt(IntentConstant.TOTAL_PAGES) ?: totalPages
       if (this !is RegistrationCompleteFragment) {
-        if (this !is RegistrationBusinessApiFragment) setToolbarTitle(resources.getString(R.string.step) + " $currentPage/$totalPages")
+        //if (this !is RegistrationBusinessApiFragment) setToolbarTitle(resources.getString(R.string.step) + " $currentPage/$totalPages")
       }
     }
   }
@@ -140,6 +140,14 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> :
       requestFloatsModel
     )
     startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE, getBundle())
+  }
+
+  protected fun gotoInstagram() {
+    NavigatorManager.pushToStackAndSaveRequest(
+      ScreenModel(getPreviousScreen(), getToolbarTitle()),
+      requestFloatsModel
+    )
+    startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_INSTAGRAM, getBundle())
   }
 
   protected fun gotoGoogleBusinessPage() {
@@ -214,6 +222,8 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> :
       is RegistrationBusinessWebsiteFragment -> Screen.BUSINESS_SUBDOMAIN
       is RegistrationBusinessGoogleBusinessFragment -> Screen.BUSINESS_GOOGLE_PAGE
       is RegistrationBusinessFacebookPageFragment -> Screen.BUSINESS_FACEBOOK_PAGE
+   //   is RegistrationBusinessInstagramFragment -> Screen.BUSINESS_INSTAGRAM
+
       is RegistrationBusinessFacebookShopFragment -> Screen.BUSINESS_FACEBOOK_SHOP
       is RegistrationBusinessTwitterDetailsFragment -> Screen.BUSINESS_TWITTER
       is RegistrationBusinessWhatsAppFragment -> Screen.BUSINESS_WHATSAPP

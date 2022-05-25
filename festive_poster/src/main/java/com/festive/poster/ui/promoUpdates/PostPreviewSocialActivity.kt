@@ -188,6 +188,9 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                         SocialPreviewChannel.TWITTER->{
                             socialShare += "Twitter"
                         }
+                        SocialPreviewChannel.INSTAGRAM->{
+                            socialShare += "Instagram"
+                        }
 
                     }
                     if (index==checkedItems.size-1){
@@ -492,6 +495,32 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                             }
                             channelType = SocialPreviewChannel.GMB
                         }
+                        it1.getAccessTokenType() == ChannelsType.AccountType.instagram.name -> {
+                            val ig = channelsAccessToken.instagram
+                            if (channelsAccessToken.instagram?.status?.equals(
+                                    CHANNEL_STATUS_SUCCESS,
+                                    true
+                                ) == true
+                            ) {
+                                data = ChannelAccessToken(
+                                    type = ChannelsType.AccountType.instagram.name,
+                                    userAccessTokenKey = null,
+                                    userAccountId = ig?.account?.accountId,
+                                    userAccountName = ig?.account?.accountName
+                                )
+                                title = getString(R.string.instagram)
+                                subTitle = ig?.account?.accountName
+                                isConnected = true
+                                requestFloatsNew.channelAccessTokens?.add(data)
+                                it1.isSelected = true
+                                it1.channelAccessToken = data
+                                connectedChannels?.add(ChannelsType.AccountType.instagram.name)
+
+
+
+                            }
+                            channelType = SocialPreviewChannel.INSTAGRAM
+                        }
 
                     }
 
@@ -620,6 +649,9 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         if (uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.GMB}?.isChecked == true) socialShare += "GOOGLEMYBUSINESS."
 
         if (uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.TWITTER }?.isChecked == true) socialShare += "TWITTER."
+
+        if (uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.INSTAGRAM }?.isChecked == true) socialShare += "INSTAGRAM."
+
         val merchantId = if (session?.iSEnterprise == "true") null else session?.fPID
         val parentId = if (session?.iSEnterprise == "true") session?.fPParentId else null
         val sendToSubscribe = uiChBoxChannelList?.find { it.channelType==SocialPreviewChannel.EMAIL }?.isChecked

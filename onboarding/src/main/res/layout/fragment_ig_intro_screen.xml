@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/customImageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/ic_instagram"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:textSize="18sp"
+            app:fontFamily="@font/semi_bold"
+            android:textColor="@color/black_333333"
+            android:gravity="center"
+            android:text="@string/connect_your_instagram_professional_account_with_boost_360"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/customImageView2" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:background="@color/white_f8f8f8"
+            app:layout_constraintHeight_percent="0.6"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_features"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/dot_indicator"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.framework.views.dotsindicator.DotsIndicator
+                android:id="@+id/dot_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
+                app:dotsColor="@color/light_grey_1"
+                app:dotsCornerRadius="@dimen/_6dp"
+                app:dotsSize="@dimen/size_5"
+                app:dotsSpacing="@dimen/size_2"
+                app:dotsWidthFactor="2.5"
+                app:layout_constraintBottom_toTopOf="@+id/btn_next"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:progressMode="false"
+                app:selectedDotColor="@color/colorPrimary" />
+
+            <com.framework.views.customViews.CustomMaterialButton
+                android:id="@+id/btn_next"
+                android:text="@string/get_started"
+                style="@style/PrimaryButtonNormal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_50"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

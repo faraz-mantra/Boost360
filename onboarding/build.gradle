@@ -53,6 +53,8 @@ dependencies {
     api project(path: ':facebook')
     api project(path: ':twitter')
     api project(path: ':google')
+    api project(path: ':instagram')
+
 }
 
 repositories {

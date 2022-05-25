@@ -105,6 +105,10 @@ fun ChannelModel.isFacebookShop(): Boolean {
   return getType() == ChannelType.FB_SHOP
 }
 
+fun ChannelModel.isInstagram(): Boolean {
+  return getType() == ChannelType.INSTAGRAM
+}
+
 fun ChannelModel.isFacebookPage(): Boolean {
   return getType() == ChannelType.FB_PAGE
 }
@@ -127,6 +131,8 @@ fun ChannelModel.getName(): String {
     ChannelType.WAB -> instance.resources.getString(R.string.whatsapp_business)
     ChannelType.T_FEED -> instance.resources.getString(R.string.twitter_profile)
     ChannelType.G_BUSINESS -> instance.resources.getString(R.string.google_business)
+    ChannelType.INSTAGRAM -> instance.resources.getString(R.string.instagram)
+
     null -> ""
   }
 }
@@ -140,6 +146,8 @@ fun ChannelModel.getName1(): String {
     ChannelType.WAB -> instance.resources.getString(R.string.whatsapp_business1)
     ChannelType.T_FEED -> instance.resources.getString(R.string.twitter_profile1)
     ChannelType.G_BUSINESS -> instance.resources.getString(R.string.google_business_n1)
+    ChannelType.INSTAGRAM -> instance.resources.getString(R.string.instagram)
+
     null -> ""
   }
 }
@@ -153,6 +161,8 @@ fun ChannelModel.getNameAlternate(): String {
     ChannelType.WAB -> "WA Profile"
     ChannelType.T_FEED -> "Twitter"
     ChannelType.G_BUSINESS -> "Maps"
+    ChannelType.INSTAGRAM -> "Instagram"
+
     null -> ""
   }
 }
@@ -166,6 +176,8 @@ fun ChannelModel.getAccessTokenType(): String {
     ChannelType.WAB -> ChannelType.WAB.name
     ChannelType.T_FEED -> ChannelAccessToken.AccessTokenType.twitter.name
     ChannelType.G_BUSINESS -> ChannelAccessToken.AccessTokenType.googlemybusiness.name
+    ChannelType.INSTAGRAM -> ChannelAccessToken.AccessTokenType.instagram.name
+
     null -> ""
   }
 }
@@ -206,6 +218,11 @@ fun ChannelModel.getDrawable(context: Context?): Drawable? {
     ChannelType.G_BUSINESS -> ResourcesCompat.getDrawable(
       context.resources,
       R.drawable.ic_google_maps_n,
+      context.theme
+    )
+    ChannelType.INSTAGRAM -> ResourcesCompat.getDrawable(
+      context.resources,
+      R.drawable.ic_instagram_white_circle,
       context.theme
     )
     else -> null
@@ -299,6 +316,9 @@ fun ChannelModel.getDrawableInActiveNew(context: Context?): Drawable? {
 
 fun Iterable<ChannelModel>.haveFacebookShop(): Boolean {
   return filterTo(ArrayList(), { it.isFacebookShop() }).isNotEmpty()
+}
+fun Iterable<ChannelModel>.haveInstagram(): Boolean {
+  return filterTo(ArrayList(), { it.isInstagram() }).isNotEmpty()
 }
 
 fun Iterable<ChannelModel>.haveFacebookPage(): Boolean {

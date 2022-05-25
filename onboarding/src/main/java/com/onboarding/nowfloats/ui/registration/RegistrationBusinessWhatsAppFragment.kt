@@ -10,13 +10,23 @@ import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessWhatsappBinding
 import com.onboarding.nowfloats.extensions.afterTextChanged
 import com.framework.extensions.drawableEnd
+import com.framework.extensions.observeOnce
+import com.framework.pref.WA_KEY
+import com.framework.views.DotProgressBar
+import com.framework.webengageconstant.DIGITAL_CHANNELS
+import com.framework.webengageconstant.WHATS_APP_CONNECTED
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
+import com.onboarding.nowfloats.model.ProcessApiSyncModel
 import com.onboarding.nowfloats.model.channel.ChannelModel
+import com.onboarding.nowfloats.model.channel.ChannelType
+import com.onboarding.nowfloats.model.channel.getType
 import com.onboarding.nowfloats.model.channel.isWhatsAppChannel
 import com.onboarding.nowfloats.model.channel.request.ChannelActionData
+import com.onboarding.nowfloats.model.channel.request.UpdateChannelActionDataRequest
 import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
+import com.onboarding.nowfloats.utils.WebEngageController
 
 class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRegistrationBusinessWhatsappBinding>() {
 
@@ -47,12 +57,11 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
         ?.andThen(
           binding?.whatsappEntransactional?.fadeIn(100)
             ?.mergeWith(binding?.confirmBtn?.fadeIn(400L, confirmButtonAlpha))
-        )
-        ?.andThen(binding?.skip?.fadeIn(50L))?.doOnComplete {
+        )?.doOnComplete {
           baseActivity.showKeyBoard(binding?.number)
         }?.subscribe()
     }
-    setOnClickListener(binding?.confirmBtn, binding?.skip)
+    setOnClickListener(binding?.confirmBtn)
 
     binding?.number?.afterTextChanged { checkValidNumber(it) }
   }
@@ -77,12 +86,10 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
     if (isNumberValid) {
       binding?.number?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_valid)
       binding?.confirmBtn?.alpha = alpha
-      binding?.skip?.text = resources.getString(R.string.skip)
       whatsAppData.active_whatsapp_number = binding?.number?.text?.toString()
     } else {
       binding?.number?.drawableEnd = null
       binding?.confirmBtn?.alpha = 0.3f
-      binding?.skip?.text = resources.getString(R.string.i_don_t_have_one_will_do_later)
     }
   }
 
@@ -106,10 +113,6 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
           gotoBusinessApiCallDetails()
         }else showShortToast(getString(R.string.phone_number_invalid))
       }
-      binding?.skip -> {
-        updateInfo()
-        gotoBusinessApiCallDetails()
-      }
     }
   }
 
@@ -118,7 +121,34 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
       requestFloatsModel?.channelActionDatas?.add(whatsAppData)
       requestFloatsModel?.whatsappEntransactional = binding?.whatsappEntransactional?.isChecked
     }
-    super.gotoBusinessApiCallDetails()
+
+    apiProcessChannelWhatsApp()
+
+  }
+
+  private fun apiProcessChannelWhatsApp() {
+    showProgress()
+    if (requestFloatsModel?.channelActionDatas.isNullOrEmpty().not()) {
+      val dataRequest = UpdateChannelActionDataRequest(
+        requestFloatsModel?.channelActionDatas?.firstOrNull(),
+        requestFloatsModel?.getWebSiteId()
+      )
+      viewModel?.postUpdateWhatsappRequest(dataRequest, WA_KEY)
+        ?.observeOnce(viewLifecycleOwner) {
+          hideProgress()
+          if (it.isSuccess()) {
+
+            requestFloatsModel?.fpTag?.let {
+              WebEngageController.trackEvent(
+                WHATS_APP_CONNECTED,
+                DIGITAL_CHANNELS,
+                it
+              )
+            }
+            requireActivity().finish()
+          }
+        }
+    }
   }
 
   override fun updateInfo() {

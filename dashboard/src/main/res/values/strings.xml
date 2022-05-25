@@ -94,8 +94,10 @@
   <string name="fb_shop_sync_not_activated_yet">Fb shop sync not\nactivated yet</string>
   <string name="fb_twitter_sync_not_activated_yet">Twitter sync not\nactivated yet</string>
   <string name="fb_gmb_sync_not_activated_yet">GMB sync not\nactivated yet</string>
+  <string name="ig_sync_not_activated_yet">Instagram sync not\nactivated yet</string>
   <string name="total_twitter_followers">Total Twitter followers</string>
   <string name="total_fp_page_followers">Customers who interacted with your Facebook page</string>
+  <string name="total_ig_page_followers">Customers who interacted with your Instagram</string>
   <string name="total_fp_shop_followers">Customers who interacted with your Facebook shop</string>
   <string name="total_gmb_followers">Customers who interacted with your GMB</string>
   <string name="social_media_promotion">Social media promotion</string>

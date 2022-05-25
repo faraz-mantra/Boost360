@@ -26,7 +26,8 @@ enum class RecyclerViewItemType {
   VISITING_CARD_SEVEN_ITEM,
   VISITING_CARD_EIGHT_ITEM,
   VISITING_CARD_NINE_ITEM,
-  VISITING_CARD_TEN_ITEM;
+  VISITING_CARD_TEN_ITEM,
+  IG_FEATURES;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -54,6 +55,8 @@ enum class RecyclerViewItemType {
       VISITING_CARD_EIGHT_ITEM -> R.layout.item_visiting_card_eight
       VISITING_CARD_NINE_ITEM -> R.layout.item_visiting_card_nine
       VISITING_CARD_TEN_ITEM -> R.layout.item_visiting_card_ten
+      IG_FEATURES->R.layout.list_item_ig_features
+
     }
   }
 }

@@ -30,9 +30,16 @@ object ChannelRepository : AppBaseRepository<ChannelRemoteDataSource, ChannelLoc
       AccessTokenType.twitter -> postUpdateTwitterAccessToken(request)
       AccessTokenType.googlemap,
       AccessTokenType.googlesearch,
-      AccessTokenType.googlemybusiness,
-      -> postUpdateGoogleMyBusinessToken(request)
+      AccessTokenType.googlemybusiness-> postUpdateGoogleMyBusinessToken(request)
+        AccessTokenType.instagram->postUpdateInstagramAccessToken(request)
     }
+  }
+
+  private fun postUpdateInstagramAccessToken(request: UpdateChannelAccessTokenRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.updateChannelAccessToken(request = request),
+      Taskcode.POST_UPDATE_INSTAGRAM_TOKEN
+    )
   }
 
   fun getChannelsAccessToken(nowfloatsId: String?): Observable<BaseResponse> {

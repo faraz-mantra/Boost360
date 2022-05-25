@@ -6,6 +6,7 @@ import android.view.View
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
+import com.framework.pref.UserSessionManager
 import com.framework.utils.NetworkUtils
 import com.framework.webengageconstant.DIGITAL_CHANNELS
 import com.framework.webengageconstant.FAILED
@@ -22,10 +23,7 @@ import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.getDrawable
 import com.onboarding.nowfloats.model.channel.haveWhatsAppChannels
 import com.onboarding.nowfloats.model.channel.isTwitterChannel
-import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
-import com.onboarding.nowfloats.model.channel.request.clear
-import com.onboarding.nowfloats.model.channel.request.getType
-import com.onboarding.nowfloats.model.channel.request.isLinked
+import com.onboarding.nowfloats.model.channel.request.*
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.ui.InternetErrorDialog
 import com.onboarding.nowfloats.utils.WebEngageController
@@ -66,9 +64,9 @@ class RegistrationBusinessTwitterDetailsFragment :
             channelAccessToken.profilePicture
           )
         }?.andThen(binding?.linkTwitter?.fadeIn(500L))
-        ?.andThen(binding?.skip?.fadeIn(100L))?.subscribe()
+        ?.subscribe()
     }
-    setOnClickListener(binding?.skip, binding?.linkTwitter)
+    setOnClickListener(binding?.linkTwitter)
     setSelectedTwitterChannels(channels)
     setSavedData()
   }
@@ -107,7 +105,6 @@ class RegistrationBusinessTwitterDetailsFragment :
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.skip -> gotoNextScreen(true)
       binding?.linkTwitter -> {
         if (channelAccessToken.isLinked()) {
           gotoNextScreen()
@@ -122,11 +119,23 @@ class RegistrationBusinessTwitterDetailsFragment :
   }
 
   private fun gotoNextScreen(isSkip: Boolean = false) {
-    if (channelAccessToken.isLinked() && isSkip.not()) requestFloatsModel?.channelAccessTokens?.add(
+    /*if (channelAccessToken.isLinked() && isSkip.not()) requestFloatsModel?.channelAccessTokens?.add(
       channelAccessToken
     )
 
-    if (channels.haveWhatsAppChannels()) gotoWhatsAppCallDetails() else gotoBusinessApiCallDetails()
+    if (channels.haveWhatsAppChannels()) gotoWhatsAppCallDetails() else gotoBusinessApiCallDetails()*/
+    showProgress()
+    val userSession = UserSessionManager(requireActivity())
+    viewModel?.updateChannelAccessToken(
+      UpdateChannelAccessTokenRequest(
+      channelAccessToken,clientId!!,userSession.fPID!!
+    )
+    )?.observe(viewLifecycleOwner) {
+      hideProgress()
+      if (it.isSuccess()){
+        requireActivity().finish()
+      }
+    }
   }
 
   override fun onTwitterLoginSuccess(result: Result<TwitterSession>?) {
@@ -154,14 +163,13 @@ class RegistrationBusinessTwitterDetailsFragment :
       )
     }
     val binding = binding?.twitterSuccess ?: return
-    this.binding?.skip?.gone()
     binding.maimView.visible()
     binding.maimView.alpha = 1F
     binding.disconnect.setOnClickListener { disconnectTwitter(binding) }
     this.binding?.title?.text = resources.getString(R.string.twitter_connected)
     this.binding?.subTitle?.text =
       resources.getString(R.string.twitter_allows_digital_business_boost)
-    this.binding?.linkTwitter?.text = resources.getString(R.string.save_continue)
+    this.binding?.linkTwitter?.text = resources.getString(R.string.view_updated_channels)
     binding.profileTitle.text = name
     selectedChannel?.let { channels ->
       if (channels.isNotEmpty()) {
@@ -175,7 +183,6 @@ class RegistrationBusinessTwitterDetailsFragment :
   }
 
   private fun disconnectTwitter(twitterSuccess: SuccessSocialLayoutBinding) {
-    binding?.skip?.visible()
     twitterSuccess.maimView.gone()
     this.binding?.title?.text = resources.getString(R.string.do_you_already_have_a_twitter_profile)
     binding?.subTitle?.text = resources.getString(R.string.twitter_account_business_Skip)

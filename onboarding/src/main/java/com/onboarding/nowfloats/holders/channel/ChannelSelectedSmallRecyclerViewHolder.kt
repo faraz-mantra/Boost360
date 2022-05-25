@@ -27,7 +27,7 @@ class ChannelSelectedSmallRecyclerViewHolder(binding: ItemSelectedChannelSmallBi
     if (model?.status != "SUCCESS" && model?.isWhatsAppChannel()!!) {
       binding.image.makeGreyscale()
     } else if (model.status != "SUCCESS" && (model.isFacebookPage() || model.isFacebookShop() ||
-          model.isGoogleBusinessChannel() || model.isTwitterChannel())
+          model.isGoogleBusinessChannel() || model.isTwitterChannel()||model.isInstagram())
     ) {
       binding.image.makeGreyscale()
     }

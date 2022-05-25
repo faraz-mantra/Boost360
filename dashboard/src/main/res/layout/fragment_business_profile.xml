@@ -486,6 +486,14 @@
                 android:tag="twitter"
                 app:srcCompat="@drawable/ic_twitter_n" />
 
+              <com.framework.views.customViews.CustomImageView
+                  android:id="@+id/civ_instagram"
+                  android:layout_width="@dimen/size_36"
+                  android:layout_height="@dimen/size_36"
+                  android:layout_marginStart="@dimen/size_2"
+                  android:tag="instagram"
+                  app:srcCompat="@drawable/ic_instagram_white_circle_dashboard" />
+
             </LinearLayout>
 
             <com.framework.views.customViews.CustomTextView
@@ -545,6 +553,14 @@
                 android:layout_marginStart="@dimen/size_2"
                 android:tag="twitter"
                 app:srcCompat="@drawable/ic_twitter_n" />
+
+              <com.framework.views.customViews.CustomImageView
+                  android:id="@+id/civ_instagram_disabled"
+                  android:layout_width="@dimen/size_36"
+                  android:layout_height="@dimen/size_36"
+                  android:layout_marginStart="@dimen/size_2"
+                  android:tag="instagram"
+                  app:srcCompat="@drawable/ic_instagram_white_circle_dashboard" />
 
             </LinearLayout>
 

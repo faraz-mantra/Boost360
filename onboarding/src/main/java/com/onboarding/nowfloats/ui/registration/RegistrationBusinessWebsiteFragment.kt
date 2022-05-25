@@ -181,7 +181,10 @@ class RegistrationBusinessWebsiteFragment :
                   channels.haveFacebookPage() -> {
                     gotoFacebookPage()
                   }
-                  channels.haveFacebookShop() -> {
+                  channels.haveInstagram() -> {
+                    gotoInstagram()
+                  }
+                    channels.haveFacebookShop() -> {
                     gotoFacebookShop()
                   }
                   channels.haveTwitterChannels() -> {

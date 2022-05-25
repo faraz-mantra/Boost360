@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="instagram_connection">Instagram connection</string>
+    <string name="connect_your_instagram_professional_account_with_boost_360">Connect your Instagram professional account with Boost 360</string>
+    <string name="get_started">Get Started</string>
+    <string name="step_1">Step 1</string>
+    <string name="step_2">Step 2</string>
+    <string name="step_3">Step 3</string>
+    <string name="step_4">Step 4</string>
+    <string name="create_your_instagram_page">Create your Instagram page</string>
+    <string name="create_your_instagram_account_or_log_in_if_you_already_have_one">Create your Instagram account. Or log in if you already have one.</string>
+    <string name="watch_video_for_instructions">Watch video for instructions</string>
+    <string name="logged_in_to_your_instagram_account">Logged in to your Instagram account?</string>
+    <string name="goto_step2">Go to step 2</string>
+    <string name="goto_step3">Go to step 3</string>
+    <string name="goto_step4">Go to step 4</string>
+
+    <string name="switch_to_professional_account">Switch to professional account</string>
+    <string name="connect_your_facebook_page_with_instagram">Connect your Facebook page with Instagram</string>
+    <string name="your_instagram_page_is_initially_a_personal_account_to_start_posting_your_business_updates_via_boost_360_you_need_to_convert_it_to_a_professional_account_from_instagram_go_to_settings_switch_to_professional_account">Your Instagram page is initially a personal account. To start posting your business updates via Boost 360, you need to convert it to a professional account. From Instagram go to Settings ➜ Switch to Professional Account.</string>
+    <string name="set_up_two_factor_authentication">Set up two-factor authentication</string>
+    <string name="next_set_up_two_factor_authentication_in_your_instagram_account_go_to_settings_security_two_factor_authentication_tap_on_get_started_and_enable_text_message">Next, set up two-factor authentication. In your Instagram account go to Settings ➜ Security ➜ Two-factor Authentication. Tap on Get Started and Enable Text Message.</string>
+    <string name="linking_your_instagram_page_to_facebook_makes_it_easier_to_operate_your_social_media_accounts_to_connect_open_your_facebook_page_and_go_to_settings_instagram_connect_to_instagram">Linking your Instagram page to Facebook makes it easier to operate your social media accounts. To connect, open your Facebook page and go to Settings ➜ Instagram ➜ Connect to Instagram.</string>
+    <string name="switched_your_account">Switched your account?</string>
+    <string name="completed_two_factor_authentication">Completed two-factor authentication?</string>
+    <string name="connected_facebook_with_instagram_if_yes_then_just_tap_on_authorise_boost_360_button_below_to_allow_boost_360_to_access_sync_your_instagram_account_info_post_updates_on_your_behalf_and_read_related_channel_insights"><![CDATA[Connected Facebook with Instagram?\n\nIf yes, then just tap on ‘Authorise Boost 360’ button below to allow Boost 360 to access & sync your instagram account info, post updates on your behalf and read related channel insights.\n]]></string>
+    <string name="autho_boost_360">Authorise Boost 360</string>
+    <string name="instagram_integration_successful">Instagram integration successful</string>
+    <string name="congratulations_boost_360_is_successfully_connected_to_your_instagram_account_placeholder">Congratulations, Boost 360 is successfully connected to your Instagram account %1$s</string>
+    <string name="all_your_business_updates_will_be_auto_posted_on_your_instagram_account">All your business updates will be auto-posted on your Instagram account.</string>
+    <string name="view_instagram_dashboard">View Instagram dashboard</string>
+    <string name="need_help_contact_support_for_assistance">Need help? Contact support for assistance.</string>
+    <string name="re_check_previous_steps">Re-check previous steps</string>
+    <string name="looks_like_the_process_has_not_been_completed_properly_you_will_not_be_able_to_integrate_boost_360_with_instagram_if_you_do_not_complete_the_previous_steps">Looks like the process has not been completed properly. You will not be able to integrate Boost 360 with Instagram if you do not complete the previous steps.</string>
+    <string name="instagram_integration_failed">Instagram integration failed</string>
+</resources>

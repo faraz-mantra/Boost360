@@ -63,6 +63,7 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
   private var toSubscribers = MutableLiveData(false)
   private var fbStatusEnabled = MutableLiveData(false)
   private var twitterSharingEnabled = MutableLiveData(false)
+  private var igSharingEnabled = MutableLiveData(false)
   private var fbPageStatusEnable =MutableLiveData(false)
   private var updateFloat: UpdateFloat? = null
   private var postImagePath: String? = null
@@ -102,7 +103,7 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
     WebEngageController.trackEvent(EVENT_NAME_UPDATE_CREATE, PAGE_VIEW, sessionLocal.fpTag)
     setOnClickListener(
       binding?.btnCamera, binding?.btnEditPhoto, binding?.btnFpStatus, binding?.btnFpPageStatus,
-      binding?.btnGoogleVoice, binding?.btnRemovePhoto, binding?.btnSubscription, binding?.btnTwitter
+      binding?.btnGoogleVoice, binding?.btnRemovePhoto, binding?.btnSubscription, binding?.btnTwitter,binding?.btnInstagram
     )
     binding?.edtDesc?.afterTextChanged { str ->
       if (isUpdate.not()) sessionLocal.storeFPDetails(msgPost, str)
@@ -159,6 +160,17 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
       if (!firsTime)
       showShortToast(getString(if (it) R.string.twitter_enabled else R.string.twitter_disabled))
     })
+
+    igSharingEnabled.observe(viewLifecycleOwner,{
+      if (it){
+       // WebEngageController.trackEvent(TWITTER_SHARING_ACTIVATED, HAS_CLICKED_TWITTER_SHARING_ON, sessionLocal.fpTag)
+        binding?.btnInstagram?.setImageResource(R.drawable.ic_ig_active)
+      }else{
+        binding?.btnInstagram?.setImageResource(R.drawable.ic_ig_inactive)
+      }
+      if (!firsTime)
+        showShortToast(getString(if (it) R.string.ig_enabled else R.string.ig_disabled))
+    })
     Handler().postDelayed({ firsTime=false },1000)
   }
 
@@ -201,20 +213,20 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
 
 
   private fun initializeSocial() {
-    if (sessionLocal.facebookName.isNullOrEmpty()
-        .not() && (sessionLocal.getIntDetails("fbStatus") == 1 || sessionLocal.getIntDetails("fbStatus") == 3)
-    ) {
+    if (sessionLocal.isFBUserActive)
+     {
       fbStatusEnabled.postValue(true)
     }
-    if (sessionLocal.facebookPage.isNullOrEmpty()
-        .not() && sessionLocal.getIntDetails("fbPageStatus") == 1
-    ) {
+    if (sessionLocal.isFBPageActive) {
       fbPageStatusEnable.postValue(true)
 
     }
-    if (mSharedPreferences?.getBoolean(PREF_KEY_TWITTER_LOGIN, false) == true) {
+    if (sessionLocal.isTwitterActive) {
       twitterSharingEnabled.postValue(true)
 
+    }
+    if (sessionLocal.isIGActive) {
+      igSharingEnabled.postValue(true)
     }
   }
 
@@ -255,25 +267,28 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
 
       binding?.btnGoogleVoice -> promptSpeechInput()
       binding?.btnFpStatus -> {
-        if (sessionLocal.facebookName.isNullOrEmpty()
-            .not() && (sessionLocal.getIntDetails("fbStatus") == 1 || sessionLocal.getIntDetails("fbStatus") == 3)
-        ) {
+        if (sessionLocal.isFBUserActive) {
           fbStatusEnabled.postValue(fbStatusEnabled.value?.not())
 
         } else baseActivity.startDigitalChannel(sessionLocal)
       }
       binding?.btnFpPageStatus -> {
-        if (sessionLocal.facebookPage.isNullOrEmpty()
-            .not() && sessionLocal.getIntDetails("fbPageStatus") == 1
-        ) {
+        if (sessionLocal.isFBPageActive) {
           fbPageStatusEnable.postValue(fbPageStatusEnable.value?.not())
 
 
         } else baseActivity.startDigitalChannel(sessionLocal)
       }
       binding?.btnTwitter -> {
-        if (mSharedPreferences?.getBoolean(PREF_KEY_TWITTER_LOGIN, false) == true) {
+        if (sessionLocal.isTwitterActive) {
           twitterSharingEnabled.postValue(twitterSharingEnabled.value?.not())
+
+
+        } else baseActivity.startDigitalChannel(sessionLocal)
+      }
+      binding?.btnInstagram -> {
+        if (sessionLocal.isIGActive) {
+          igSharingEnabled.postValue(igSharingEnabled.value?.not())
 
 
         } else baseActivity.startDigitalChannel(sessionLocal)
@@ -364,6 +379,7 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
     if (fbStatusEnabled.value == true) socialShare += "FACEBOOK."
     if (fbPageStatusEnable.value == true) socialShare += "FACEBOOK_PAGE."
     if (twitterSharingEnabled.value == true) socialShare += "TWITTER."
+    if (igSharingEnabled.value == true) socialShare += "INSTAGRAM."
     val merchantId = if (sessionLocal.iSEnterprise == "true") null else sessionLocal.fPID
     val parentId = if (sessionLocal.iSEnterprise == "true") sessionLocal.fPParentId else null
     val isPictureMessage = postImage != null

@@ -1186,4 +1186,7 @@
   <string name="space_start"> *</string>
   <string name="add_only_one_doctor_profile">You can add only one doctor profile in this current feature.</string>
   <string name="food_menu">Food Menu</string>
+
+  <string name="ig_disabled">Instagram disabled</string>
+  <string name="ig_enabled">Instagram enabled</string>
 </resources>

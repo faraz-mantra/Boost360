@@ -983,6 +983,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           "https://twitter.com/${data.channelAccessToken?.userAccountName?.trim()}"
         else if (data.isFacebookPage()) website =
           "https://www.facebook.com/${data.channelAccessToken?.userAccountId?.trim()}"
+        else if (data.isInstagram()) website =
+          "https://www.instagram.com/${data.channelAccessToken?.userAccountName?.trim()}"
       }
       bottomSheetWebView(title, website)
     }
@@ -1090,6 +1092,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         }
         if (response?.channels?.facebookshop?.status == CHANNEL_STATUS_SUCCESS) {
           connectedChannels.add(ChannelsType.AccountType.facebookshop.name)
+        }
+        if (response?.channels?.instagram?.status == CHANNEL_STATUS_SUCCESS) {
+          connectedChannels.add(ChannelsType.AccountType.instagram.name)
         }
       }
       getWhatsAppData(urlString, isBusinessCardShare, isEnquiriesShare, shareType)

@@ -138,6 +138,10 @@ class DigitalChannelInfoDialog :
           .not()
       ) {
         url = channelModel?.websiteUrl
+      }else if (channelModel!!.isInstagram() && channelModel?.channelAccessToken?.userAccountName.isNullOrEmpty()
+          .not()
+      ) {
+        url = "https://www.instagram.com/${channelModel?.channelAccessToken?.userAccountName}"
       }
     }
     url?.let {

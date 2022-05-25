@@ -43,5 +43,13 @@
       android:tag="twitter"
       app:srcCompat="@drawable/ic_twitter_n" />
 
+    <com.framework.views.customViews.CustomImageView
+        android:id="@+id/civ_instagram"
+        android:layout_width="@dimen/size_18"
+        android:layout_height="@dimen/size_18"
+        android:layout_marginStart="@dimen/size_4"
+        android:tag="instagram"
+        app:srcCompat="@drawable/ic_instagram_white_circle_onboarding" />
+
   </LinearLayout>
 </layout>

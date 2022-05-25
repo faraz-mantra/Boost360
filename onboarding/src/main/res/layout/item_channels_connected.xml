@@ -90,7 +90,8 @@
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="@dimen/size_12"
         android:padding="@dimen/size_4"
-        app:srcCompat="@drawable/ic_info_n" />
+          android:tint="@color/grey_300"
+        app:srcCompat="@drawable/ic_more_vert" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

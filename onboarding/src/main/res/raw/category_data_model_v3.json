@@ -43,6 +43,12 @@
           "priority": "recommended",
           "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
           "isSelected": false
+        },
+        {
+          "type": "INSTAGRAM",
+          "priority": "recommended",
+          "moreDesc": "IG DESC",
+          "isSelected": false
         }
       ],
       "sections": [
@@ -227,6 +233,12 @@
           "priority": "recommended",
           "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
           "isSelected": false
+        },
+        {
+          "type": "INSTAGRAM",
+          "priority": "recommended",
+          "moreDesc": "IG DESC",
+          "isSelected": false
         }
       ],
       "sections": [
@@ -405,6 +417,12 @@
           "type": "T_FEED",
           "priority": "important",
           "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
+          "isSelected": false
+        },
+        {
+          "type": "INSTAGRAM",
+          "priority": "recommended",
+          "moreDesc": "IG DESC",
           "isSelected": false
         }
       ],
@@ -590,6 +608,12 @@
           "priority": "learn_more",
           "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
           "isSelected": false
+        },
+        {
+          "type": "INSTAGRAM",
+          "priority": "recommended",
+          "moreDesc": "IG DESC",
+          "isSelected": false
         }
       ],
       "sections": [
@@ -757,6 +781,12 @@
           "type": "T_FEED",
           "priority": "recommended",
           "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
+          "isSelected": false
+        },
+        {
+          "type": "INSTAGRAM",
+          "priority": "recommended",
+          "moreDesc": "IG DESC",
           "isSelected": false
         }
       ],
@@ -926,6 +956,12 @@
           "priority": "recommended",
           "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
           "isSelected": false
+        },
+        {
+          "type": "INSTAGRAM",
+          "priority": "recommended",
+          "moreDesc": "IG DESC",
+          "isSelected": false
         }
       ],
       "sections": [
@@ -1085,6 +1121,12 @@
           "type": "T_FEED",
           "priority": "recommended",
           "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
+          "isSelected": false
+        },
+        {
+          "type": "INSTAGRAM",
+          "priority": "recommended",
+          "moreDesc": "IG DESC",
           "isSelected": false
         }
       ],
@@ -1250,6 +1292,12 @@
           "priority": "learn_more",
           "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
           "isSelected": false
+        },
+        {
+          "type": "INSTAGRAM",
+          "priority": "recommended",
+          "moreDesc": "IG DESC",
+          "isSelected": false
         }
       ],
       "sections": [
@@ -1410,6 +1458,12 @@
           "priority": "recommended",
           "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
           "isSelected": false
+        },
+        {
+          "type": "INSTAGRAM",
+          "priority": "recommended",
+          "moreDesc": "IG DESC",
+          "isSelected": false
         }
       ],
       "sections": [
@@ -1549,6 +1603,12 @@
           "type": "T_FEED",
           "priority": "recommended",
           "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
+          "isSelected": false
+        },
+        {
+          "type": "INSTAGRAM",
+          "priority": "recommended",
+          "moreDesc": "IG DESC",
           "isSelected": false
         }
       ],

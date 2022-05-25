@@ -18,7 +18,10 @@ enum class FacebookPermissions {
   ads_management,
   pages_read_engagement,
   pages_manage_posts,
-  pages_read_user_content;
+  pages_read_user_content,
+  instagram_basic,
+  instagram_content_publish,
+  instagram_manage_insights;
 
   companion object {
     fun fromName(name: String): FacebookPermissions? = values().firstOrNull { name.trim().contains(it.name) }

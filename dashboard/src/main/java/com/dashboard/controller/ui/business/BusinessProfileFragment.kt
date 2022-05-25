@@ -233,6 +233,8 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     binding?.civWhatsappBusinessDisabled?.colorFilter = filter
     binding?.civTwitterDisabled?.colorFilter = filter
     binding?.civGooogleBusinessDisabled?.colorFilter = filter
+    binding?.civInstagramDisabled?.colorFilter = filter
+
   }
 
   override fun onClick(v: View) {

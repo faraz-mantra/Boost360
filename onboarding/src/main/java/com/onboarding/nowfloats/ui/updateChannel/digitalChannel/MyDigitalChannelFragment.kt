@@ -3,6 +3,7 @@ package com.onboarding.nowfloats.ui.updateChannel.digitalChannel
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.SpannableString
@@ -12,7 +13,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.view.*
 import android.widget.TextView
 import androidx.appcompat.view.ContextThemeWrapper
@@ -20,7 +20,6 @@ import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
-import com.framework.extensions.visible
 import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.APPLICATION_JIO_ID
 import com.framework.pref.clientId
@@ -51,13 +50,14 @@ import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
 import com.onboarding.nowfloats.rest.response.category.ResponseDataCategory
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
+import com.onboarding.nowfloats.ui.registration.instagram.RegistrationBusinessInstagramActivity
 import com.onboarding.nowfloats.ui.startFragmentActivity
 import com.onboarding.nowfloats.ui.updateChannel.ContainerDigitalChannelActivity
 import com.onboarding.nowfloats.ui.updateChannel.DigitalChannelActivity
+import com.onboarding.nowfloats.utils.SocialChannelUtils
 import com.onboarding.nowfloats.utils.WebEngageController
 import com.onboarding.nowfloats.viewmodel.category.CategoryViewModel
 import io.reactivex.Completable
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -114,7 +114,6 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     super.onCreateView()
     WebEngageController.trackEvent(MY_DIGITAL_CHANNEL_LOAD, MY_DIGITAL_CHANNEL, NO_EVENT_VALUE)
     progress = ProgressChannelDialog.newInstance()
-    updateRequestGetChannelData()
     binding?.syncBtn?.setOnClickListener { syncChannels() }
     if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)){
       binding?.disconnectedBg?.setBackgroundColor(getColor(R.color.colorAccent))
@@ -125,6 +124,11 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     }
   }
 
+  override fun onResume() {
+    super.onResume()
+    updateRequestGetChannelData()
+
+  }
   private fun updateRequestGetChannelData() {
     val bundle = arguments
     val isUpdate = bundle?.getBoolean(PreferenceConstant.IS_UPDATE)
@@ -250,30 +254,43 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
               connectedChannels.add(ChannelsType.AccountType.twitter.name)
             }
           }
-          it1.getAccessTokenType() == ChannelsType.AccountType.googlemybusiness.name -> {
-            val gmb = channelsAccessToken.googlemybusiness
-            if (channelsAccessToken.googlemybusiness?.status?.equals(
+          it1.getAccessTokenType() == ChannelsType.AccountType.instagram.name -> {
+            val gmb = channelsAccessToken.instagram
+            if (channelsAccessToken.instagram?.status?.equals(
                 CHANNEL_STATUS_SUCCESS,
                 true
               ) == true
             ) {
               data = ChannelAccessToken(
-                type = ChannelsType.AccountType.googlemybusiness.name,
+                type = ChannelsType.AccountType.instagram.name,
                 token_expiry = null,
                 invalid = null,
                 token_response = ChannelTokenResponse(),
                 refresh_token = null,
                 userAccountName = gmb?.account?.accountName,
                 userAccountId = gmb?.account?.accountId,
-                LocationId = gmb?.account?.locationId,
-                LocationName = gmb?.account?.locationName,
                 userAccessTokenKey = null,
                 verified_location = null
               )
               requestFloatsNew.channelAccessTokens?.add(data)
               it1.isSelected = true
               it1.channelAccessToken = data
-              connectedChannels.add(ChannelsType.AccountType.googlemybusiness.name)
+              connectedChannels.add(ChannelsType.AccountType.instagram.name)
+            }
+          }
+          it1.getAccessTokenType() == ChannelsType.AccountType.facebookpage.name -> {
+            val fbPage = channelsAccessToken.facebookpage
+            if (fbPage?.status?.equals(CHANNEL_STATUS_SUCCESS, true) == true) {
+              data = ChannelAccessToken(
+                type = ChannelsType.AccountType.facebookpage.name,
+                userAccessTokenKey = null,
+                userAccountId = fbPage.account?.accountId,
+                userAccountName = fbPage.account?.accountName
+              )
+              requestFloatsNew.channelAccessTokens?.add(data)
+              it1.isSelected = true
+              it1.channelAccessToken = data
+              connectedChannels.add(ChannelsType.AccountType.facebookpage.name)
             }
           }
         }
@@ -337,49 +354,10 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         ?.andThen(binding?.noteTxt?.fadeIn(100L)?.mergeWith(binding?.noteAboutTxt?.fadeIn(100L)))
         ?.subscribe()
     }
-    setSharePrefDataFpPageAndTwitter(channelsAccessToken)
+    SocialChannelUtils.storeSocialStatus(channelsAccessToken)
   }
 
-  private fun setSharePrefDataFpPageAndTwitter(channelsAccessToken: ChannelsType?) {
-    val editorFp = pref?.edit()
-    editorFp?.putBoolean("fbShareEnabled", false)
-    editorFp?.putString("fbAccessId", null)
-    editorFp?.putBoolean("fbPageShareEnabled", false)
-    editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, "")
-    editorFp?.putString("fbPageAccessId", null)
-    editorFp?.putInt("fbStatus", 0)
-    val fpPage = channelsAccessToken?.facebookpage
-    if (fpPage != null && fpPage.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
-      editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, fpPage.account?.accountName ?: "")
-      editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, true)
-      editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 1)
-      editorFp?.putString("fbPageAccessId", fpPage.account?.accountId ?: "")
-    } else {
-      editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, null)
-      editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, false)
-      editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 0)
-    }
-    val timeLine = channelsAccessToken?.facebookusertimeline
-    if (timeLine != null && timeLine.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
-      editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, timeLine.account?.accountName)
-      if (timeLine.account?.accountName.isNullOrEmpty()
-          .not()
-      ) editorFp?.putBoolean("fbShareEnabled", true)
-      editorFp?.putString("fbAccessId", timeLine.account?.accountId)
-    }
-    editorFp?.apply()
 
-    val twitter = channelsAccessToken?.twitter
-    val editorTwitter = mPrefTwitter?.edit()
-    if (twitter != null && twitter.status.equals(CHANNEL_STATUS_SUCCESS, true)) {
-      editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, twitter.account?.accountName)
-      editorTwitter?.putBoolean(PreferenceConstant.PREF_KEY_TWITTER_LOGIN, true)
-    } else {
-      editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, null)
-      editorTwitter?.putBoolean(PreferenceConstant.PREF_KEY_TWITTER_LOGIN, false)
-    }
-    editorTwitter?.apply()
-  }
 
   private fun changeView(isConnect: Boolean) {
     if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)){
@@ -450,23 +428,28 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
           alert.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getColor(R.color.colorAccentLight))
           return
         }
+        //goToConnectionScreen(channel)
         listDisconnect?.map {
           if (channel.getType() == it.getType()) {
-            it.isSelected = it.isSelected?.not()
+            it.isSelected = true
             it.isSelectedClick = false
-          };it.recyclerViewType = RecyclerViewItemType.CHANNEL_ITEM_DISCONNECT.getLayout(); it
+          }else{
+            it.isSelected = false
+            it.isSelectedClick =true
+          };
+          it.recyclerViewType = RecyclerViewItemType.CHANNEL_ITEM_DISCONNECT.getLayout(); it
         }
         adapterDisconnect?.notifyItemChanged(position)
         val count = listDisconnect?.filter { it.isSelected == true }?.size ?: 0
         if (count > 0) {
           if (count == 1) binding?.syncBtn?.text = "${resources.getString(R.string.continue_syncing)} $count ${resources.getString(R.string.string_channel)}"
           else binding?.syncBtn?.text = "${resources.getString(R.string.continue_syncing)} $count ${resources.getString(R.string.string_channels)}"
-          binding?.syncBtn?.visible()
         } else binding?.syncBtn?.gone()
         if (channelTypeClick.isNotEmpty()) {
           channelTypeClick = ""
           binding?.syncBtn?.performClick()
         }
+        syncChannels()
       }
       RecyclerViewActionType.CHANNEL_DISCONNECT_WHY_CLICKED.ordinal -> openWhyChannelDialog(channel)
       RecyclerViewActionType.CHANNEL_CONNECT_CLICKED.ordinal -> {
@@ -504,6 +487,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
       selectedChannels.let { channels ->
         if (channels.haveGoogleBusinessChannel()) totalPages++
         if (channels.haveFacebookShop()) totalPages++
+        if (channels.haveInstagram()) totalPages++
         if (channels.haveFacebookPage()) totalPages++
         if (channels.haveTwitterChannels()) totalPages++
         if (channels.haveWhatsAppChannels()) totalPages++
@@ -521,6 +505,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
           FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE,
           bundle
         )
+        channels.haveInstagram()-> startActivity(Intent(requireActivity(),RegistrationBusinessInstagramActivity::class.java))
         channels.haveFacebookShop() -> startFragmentActivity(
           FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP,
           bundle

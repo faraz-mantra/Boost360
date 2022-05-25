@@ -52,7 +52,7 @@ data class ChannelAccessToken(
   )
 
   enum class AccessTokenType {
-    facebookpage, facebookshop, twitter, googlemybusiness, googlesearch, googlemap
+    facebookpage, facebookshop, twitter, googlemybusiness, googlesearch, googlemap, instagram
   }
 
   override fun writeToParcel(parcel: Parcel, flags: Int) {

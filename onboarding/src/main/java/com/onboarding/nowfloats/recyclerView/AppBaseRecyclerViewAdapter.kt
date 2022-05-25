@@ -9,6 +9,7 @@ import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType.*
 import com.onboarding.nowfloats.databinding.*
 import com.onboarding.nowfloats.holders.CityRecyclerViewHolder
+import com.onboarding.nowfloats.holders.IGFeaturesViewHolder
 import com.onboarding.nowfloats.holders.apiprocess.ApiProcessChannelRecyclerViewHolder
 import com.onboarding.nowfloats.holders.apiprocess.ApiProcessRecyclerViewHolder
 import com.onboarding.nowfloats.holders.category.CategoryRecyclerViewHolder
@@ -53,6 +54,8 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       VISITING_CARD_EIGHT_ITEM -> VisitingCardEightViewHolder(binding as ItemVisitingCardEightBinding)
       VISITING_CARD_NINE_ITEM -> VisitingCardNineViewHolder(binding as ItemVisitingCardNineBinding)
       VISITING_CARD_TEN_ITEM -> VisitingCardTenViewHolder(binding as ItemVisitingCardTenBinding)
+      IG_FEATURES-> IGFeaturesViewHolder(binding as ListItemIgFeaturesBinding)
+
     }
   }
 

@@ -12,6 +12,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.glide.util.glideLoad
+import com.framework.pref.UserSessionManager
 import com.framework.utils.NetworkUtils
 import com.framework.utils.PreferencesUtils
 import com.framework.webengageconstant.*
@@ -68,9 +69,9 @@ class RegistrationBusinessFacebookPageFragment :
             channelAccessToken.profilePicture
           )
         }?.andThen(binding?.linkFacebook?.fadeIn(500L))
-        ?.andThen(binding?.skip?.fadeIn(100L))?.subscribe()
+        ?.subscribe()
     }
-    setOnClickListener(binding?.skip, binding?.linkFacebook)
+    setOnClickListener( binding?.linkFacebook)
     setSetSelectedFacebookChannels(channels)
     setSavedData()
   }
@@ -111,11 +112,7 @@ class RegistrationBusinessFacebookPageFragment :
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.skip -> {
-        //linking facebook profile Skip Event Tracker.
-        WebEngageController.trackEvent(LINKING_FACEBOOK_PROFILE, BUTTON, SKIP)
-        gotoNextScreen(true)
-      }
+
       binding?.linkFacebook -> {
         //linking facebook profile Yes Event Tracker.
         WebEngageController.trackEvent(LINKING_FACEBOOK_PROFILE, BUTTON, YES)
@@ -132,15 +129,27 @@ class RegistrationBusinessFacebookPageFragment :
   }
 
   private fun gotoNextScreen(isSkip: Boolean = false) {
-    if (channelAccessToken.isLinked() && isSkip.not()) requestFloatsModel?.channelAccessTokens?.add(
+   /* if (channelAccessToken.isLinked() && isSkip.not()) requestFloatsModel?.channelAccessTokens?.add(
       channelAccessToken
     )
 
     when {
+      channels.haveInstagram() -> gotoInstagram()
       channels.haveFacebookShop() -> gotoFacebookShop()
       channels.haveTwitterChannels() -> gotoTwitterDetails()
       channels.haveWhatsAppChannels() -> gotoWhatsAppCallDetails()
       else -> gotoBusinessApiCallDetails()
+    }*/
+
+    showProgress()
+    val userSession = UserSessionManager(requireActivity())
+    viewModel?.updateChannelAccessToken(UpdateChannelAccessTokenRequest(
+      channelAccessToken,clientId!!,userSession.fPID!!
+    ))?.observe(viewLifecycleOwner) {
+      hideProgress()
+      if (it.isSuccess()){
+        requireActivity().finish()
+      }
     }
   }
 
@@ -202,14 +211,13 @@ class RegistrationBusinessFacebookPageFragment :
       )
     }
     val binding = binding?.facebookPageSuccess ?: return
-    this.binding?.skip?.gone()
     binding.maimView.visible()
     binding.maimView.alpha = 1F
     binding.disconnect.setOnClickListener { disconnectFacebookPage() }
     this.binding?.title?.text = resources.getString(R.string.facebook_page_connected)
     this.binding?.subTitle?.text =
       resources.getString(R.string.facebook_page_allows_digital_business_boost)
-    this.binding?.linkFacebook?.text = resources.getString(R.string.save_continue)
+    this.binding?.linkFacebook?.text = resources.getString(R.string.view_updated_channels)
     binding.profileTitle.text = name
     binding.channelType.setImageResource(R.drawable.ic_facebook_page_n)
     if (profilePicture?.isNotBlank() == true) {
@@ -219,7 +227,6 @@ class RegistrationBusinessFacebookPageFragment :
 
   private fun disconnectFacebookPage() {
     logoutFacebook()
-    binding?.skip?.visible()
     binding?.facebookPageSuccess?.maimView?.gone()
     this.binding?.title?.text = resources.getString(R.string.do_you_already_have_a_facebook_page)
     binding?.subTitle?.text = resources.getString(R.string.facebook_page_connect_later_Skip)

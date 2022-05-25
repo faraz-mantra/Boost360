@@ -186,6 +186,12 @@
           android:layout_marginHorizontal="@dimen/size_6"
           android:paddingHorizontal="@dimen/size_8"
           app:srcCompat="@drawable/twitter_icon_n_inactive" />
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/btn_instagram"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:paddingHorizontal="@dimen/size_8"
+            app:srcCompat="@drawable/ic_ig_inactive" />
       </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
