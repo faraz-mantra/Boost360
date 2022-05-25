@@ -47,23 +47,25 @@ import com.appservice.ui.catalog.widgets.*
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.changeColorOfSubstring
 import com.appservice.utils.getBitmap
+import com.appservice.utils.getExtension
 import com.appservice.viewmodel.ProductViewModel
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.glide.util.glideLoad
-import com.framework.imagepicker.ImagePicker
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.firebaseUtils.caplimit_feature.PropertiesItem
 import com.framework.firebaseUtils.caplimit_feature.filterFeature
 import com.framework.firebaseUtils.caplimit_feature.getCapData
+import com.framework.glide.util.glideLoad
+import com.framework.imagepicker.ImagePicker
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_TAG
 import com.framework.pref.clientId
 import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -76,7 +78,6 @@ import org.json.JSONObject
 import java.io.File
 import java.nio.charset.Charset
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, ProductViewModel>() {
 
@@ -181,34 +182,25 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun getPickUpAddress() {
-    showProgress()
-    viewModel?.getPickUpAddress(sessionLocal.fPID)?.observeOnce(viewLifecycleOwner, Observer {
-      if ((it.error is NoNetworkException).not()) {
-        val response = it as? PickUpAddressResponse
-        pickUpDataAddress = if ((it.isSuccess()) && response?.data.isNullOrEmpty().not()) {
-          response?.data
-        } else ArrayList()
-        getPaymentGatewayKyc()
-      } else {
-        showError(resources.getString(R.string.internet_connection_not_available))
-        baseActivity.finish()
-      }
-    })
+    viewModel?.getPickUpAddress(sessionLocal.fPID)?.observeOnce(viewLifecycleOwner) {
+      val response = it as? PickUpAddressResponse
+      pickUpDataAddress = if ((it.isSuccess()) && response?.data.isNullOrEmpty().not()) response?.data else ArrayList()
+      getPaymentGatewayKyc()
+    }
   }
 
   private fun getPaymentGatewayKyc() {
-    showProgress()
     viewModel?.userAccountDetails(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, Observer {
-      if ((it.error is NoNetworkException).not()) {
-        val response = it as? AccountDetailsResponse
-        if ((it.isSuccess()) && response?.result?.bankAccountDetails != null) {
-          bankAccountDetail = response.result?.bankAccountDetails
-        }
+      val response = it as? AccountDetailsResponse
+      if ((it.isSuccess()) && response?.result?.bankAccountDetails != null) {
+        bankAccountDetail = response.result?.bankAccountDetails
       }
-      if (isEdit == true) getAddPreviousData()
-      else {
+      if (isEdit == false) {
         setBankAccountData()
         hideProgress()
+      } else {
+        showProgress()
+        getAddPreviousData()
       }
     })
   }
@@ -228,27 +220,20 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun getAddPreviousData() {
-    viewModel?.getProductImage(String.format("{'_pid':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, {
-      if ((it.error is NoNetworkException).not()) {
-        val response = it as? ProductImageResponse
-        if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-          secondaryDataImage = response.data
-        }
-        viewModel?.getProductGstDetail(String.format("{'product_id':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, Observer { it1 ->
-          if ((it1.error is NoNetworkException).not()) {
-            val response2 = it1 as? ProductGstResponse
-            if (response2?.isSuccess() == true && response2.data.isNullOrEmpty().not()) {
-              gstProductData = response2.data?.first()
-            }
-          } else showError(resources.getString(R.string.internet_connection_not_available))
-          hideProgress()
-          updateUiPreviousDat()
-        })
-      } else {
-        hideProgress()
-        showError(resources.getString(R.string.internet_connection_not_available))
+    viewModel?.getProductImage(String.format("{'_pid':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner) {
+      val response = it as? ProductImageResponse
+      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+        secondaryDataImage = response.data
       }
-    })
+      viewModel?.getProductGstDetail(String.format("{'product_id':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner) { it1 ->
+        val response2 = it1 as? ProductGstResponse
+        if (response2?.isSuccess() == true && response2.data.isNullOrEmpty().not()) {
+          gstProductData = response2.data?.first()
+        }
+        hideProgress()
+        updateUiPreviousDat()
+      }
+    }
   }
 
   private fun updateUiPreviousDat() {
@@ -436,10 +421,9 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       val secondaryImageList = ArrayList<String>()
       images.forEach { fileData ->
         val secondaryFile = fileData.getFile()
-        val fileNew = takeIf { secondaryFile?.name.isNullOrEmpty().not() }?.let { secondaryFile?.name } ?: "service_${Date()}.jpg"
-        val requestProfile = secondaryFile?.let { it.asRequestBody("image/*".toMediaTypeOrNull()) }
-        val body = requestProfile?.let { MultipartBody.Part.createFormData("file", fileNew, it) }
-        viewModel?.uploadImageProfile(fileNew, body)?.observeOnce(viewLifecycleOwner, Observer {
+        val fileNew = secondaryFile?.name ?: "product_${Date().time}.${secondaryFile?.absolutePath?.getExtension() ?: "png"}"
+        val filePart = MultipartBody.Part.createFormData("file", fileNew, RequestBody.create("image/*".toMediaTypeOrNull(), secondaryFile!!))
+        viewModel?.uploadImageProfile(fileNew, filePart)?.observeOnce(viewLifecycleOwner) {
           checkPosition += 1
           if (it.isSuccess()) {
             val response = getResponse(it.responseBody) ?: ""
@@ -448,7 +432,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
           if (checkPosition == images.size) {
             addImageToProduct(productId, secondaryImageList)
           }
-        })
+        }
       }
     } else addImageToProduct(productId, ArrayList())
   }
@@ -458,23 +442,23 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       var checkPosition = 0
       secondaryImageList.forEach { image ->
         val request = ProductImageRequest(ActionDataI(ImageI(url = image, description = ""), productId), sessionLocal.fPID)
-        viewModel?.addProductImage(request)?.observeOnce(viewLifecycleOwner, Observer {
+        viewModel?.addProductImage(request)?.observeOnce(viewLifecycleOwner) {
           checkPosition += 1
           if (it.isSuccess()) {
             Log.d(ProductDetailFragment::class.java.name, "$it")
           } else showLongToast(getString(R.string.add_secondary_image_data_error_please_try_again))
           if (checkPosition == secondaryImageList.size) {
-            showLongToast(if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
-                R.string.product_saved_successfully
-              ))
+            showLongToast(if (isEdit == true) getString(R.string.product_updated_successfully) else getString(R.string.product_saved_successfully))
             goBack()
           }
-        })
+        }
       }
     } else {
-      showLongToast(if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
+      showLongToast(
+        if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
           R.string.product_saved_successfully
-        ))
+        )
+      )
       goBack()
     }
   }

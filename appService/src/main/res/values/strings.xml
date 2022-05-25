@@ -1163,4 +1163,10 @@
   <string name="space_start"> *</string>
   <string name="add_only_one_doctor_profile">You can add only one doctor profile in this current feature.</string>
   <string name="food_menu">Food Menu</string>
+  <string name="product_packing_dimensions">Product packing dimensions</string>
+  <string name="digital_channels_syncing">Digital channels syncing</string>
+  <string name="select_the_channels_where_you_want_to_sync_this_service">Select the channels where you want to sync this service</string>
+  <string name="jiolocal">JioLocal</string>
+  <string name="facebook_page_shop">Facebook Page Shop</string>
+  <string name="google_merchant_center">Google Merchant Center</string>
 </resources>
