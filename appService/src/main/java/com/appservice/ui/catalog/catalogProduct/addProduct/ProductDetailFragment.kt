@@ -176,12 +176,13 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       binding?.discountEdt?.setText("")
       return
     }
-//    val finalAmount = String.format("%.1f", (amountD - ((amountD * distD) / 100))).toFloatOrNull() ?: 0F
+    //val finalAmount = String.format("%.1f", (amountD - ((amountD * distD) / 100))).toFloatOrNull() ?: 0F
     val finalAmount = String.format("%.1f", (amountD - distD)).toFloatOrNull() ?: 0F
     binding?.finalPriceTxt?.setText("$currencyType $finalAmount")
   }
 
   private fun getPickUpAddress() {
+    if (isEdit == true) showProgress()
     viewModel?.getPickUpAddress(sessionLocal.fPID)?.observeOnce(viewLifecycleOwner) {
       val response = it as? PickUpAddressResponse
       pickUpDataAddress = if ((it.isSuccess()) && response?.data.isNullOrEmpty().not()) response?.data else ArrayList()
@@ -198,10 +199,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       if (isEdit == false) {
         setBankAccountData()
         hideProgress()
-      } else {
-        showProgress()
-        getAddPreviousData()
-      }
+      } else getAddPreviousData()
     })
   }
 
