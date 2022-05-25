@@ -195,6 +195,7 @@ class FeatureDetailsActivity :
         add_item_to_cart.setOnClickListener {
             if (!itemInCartStatus) {
                 if (addonDetails != null) {
+                    makeFlyAnimation(addon_icon)
                     prefs.storeCartOrderInfo(null)
                     viewModel.addItemToCart1(addonDetails!!, this)
                     val event_attributes: HashMap<String, Any> = HashMap()
@@ -380,6 +381,8 @@ class FeatureDetailsActivity :
                     )
                 Glide.with(this).load(addonDetails!!.primary_image)
                     .into(image1222)
+                Glide.with(this).load(addonDetails!!.primary_image)
+                    .into(addon_icon)
 
                 Glide.with(this).load(addonDetails!!.feature_banner)
                     .transition(DrawableTransitionOptions.withCrossFade())

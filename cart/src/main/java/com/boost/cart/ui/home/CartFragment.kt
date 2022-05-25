@@ -151,6 +151,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
     lateinit var cartPackageAdaptor: CartPackageAdaptor
     lateinit var cartAddonsAdaptor: CartAddonsAdaptor
     lateinit var cartRenewalAdaptor: CartRenewalAdaptor
+    lateinit var cartRechargeAdaptor: CartRechargeAdaptor
+    lateinit var cartOnetimeAdaptor: CartOnetimeAdaptor
+
     lateinit var packageViewPagerAdapter: PackageViewPagerAdapter
 
     lateinit var upgradeAdapter: UpgradeAdapter
@@ -227,9 +230,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             window.setStatusBarColor(getResources().getColor(R.color.common_text_color))
         }
 
-        cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, ArrayList(), requireActivity().application)
+        cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, ArrayList(), requireActivity())
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this, requireActivity())
         cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
+        cartRechargeAdaptor = CartRechargeAdaptor(ArrayList(), this, requireActivity())
+        cartOnetimeAdaptor = CartOnetimeAdaptor(ArrayList(), this, requireActivity())
         packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList(), requireActivity())
         upgradeAdapter = UpgradeAdapter(ArrayList())
         prefs = SharedPrefs(activity as CartActivity)
@@ -265,6 +270,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         initializePackageRecycler()
         initializeAddonsRecycler()
         initializeRenewalRecycler()
+        initializeRechargeRecycler()
+        initializeOnetimeRecycler()
         initializeErrorObserver()
         initializePackageViewPager()
 
@@ -1763,9 +1770,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     renewalList.forEach { renewal -> list.add(saveRenewalData(renewal)) }
                     cartList = list
                     total_months_layout.visibility = View.GONE
-                    renewal_layout.visibility = View.VISIBLE
-                    addons_layout.visibility = View.GONE
-                    package_layout.visibility = View.GONE
+                    cart_renewal_recycler.visibility = View.VISIBLE
+                    cart_package_recycler.visibility = View.GONE
+                    cart_addons_recycler.visibility = View.GONE
                     updateRenewal(cartList)
 //                    totalCalculation()
                     totalCalculationAfterCoupon()
@@ -2471,13 +2478,16 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 cart_main_layout.visibility = View.VISIBLE
                 item_count.visibility = View.VISIBLE
                 title.setGravity(Gravity.BOTTOM)
-                item_count.text = cartList.size.toString()+" items"
+                item_count.text = cartList.size.toString() + " items"
                 val features = arrayListOf<CartModel>()
                 val bundles = arrayListOf<CartModel>()
                 for (items in it) {
                     if (items.item_type.equals("features")) {
                         couponDiwaliRedundant.clear()
-                        if (items.feature_code.equals("WILDFIRE_FB_LEAD_ADS") || items.feature_code.equals("WILDFIRE") || items.feature_code.equals("DICTATE")) {
+                        if (items.feature_code.equals("WILDFIRE_FB_LEAD_ADS") || items.feature_code.equals(
+                                "WILDFIRE"
+                            ) || items.feature_code.equals("DICTATE")
+                        ) {
                             Log.v("couponDiwaliRedundant", " " + items.item_id)
 //                            couponDiwaliRedundant.add(items.feature_code)
                             couponDiwaliRedundant.put(items.feature_code, items.item_name)
@@ -2491,15 +2501,54 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     }
                 }
                 if (features.size > 0) {
-                    updateAddons(features)
-                    addons_layout.visibility = View.VISIBLE
+                    val addons = arrayListOf<CartModel>()
+                    val recharge = arrayListOf<CartModel>()
+                    val onetime = arrayListOf<CartModel>()
+                    for (singleItem in features) {
+                        if (singleItem.widget_type.equals("RECHARGE")) {
+                            //recharge list
+                            recharge.add(singleItem)
+                        } else if (singleItem.widget_type.equals("ONE_TIME")) {
+                            //onetime list
+                            onetime.add(singleItem)
+                        } else {
+                            // rest of the features
+                            addons.add(singleItem)
+                        }
+                    }
+                    if (addons.size > 0) {
+                        updateAddons(addons)
+                        cart_addons_recycler.visibility = View.VISIBLE
+                    } else {
+                        cart_addons_recycler.visibility = View.GONE
+                    }
+                    if (recharge.size > 0) {
+                        updateRecharge(recharge)
+                        recharge_layout.visibility = View.VISIBLE
+                    } else {
+                        recharge_layout.visibility = View.GONE
+                    }
+                    if (onetime.size > 0) {
+                        updateOnetime(onetime)
+                        onetime_layout.visibility = View.VISIBLE
+                    } else {
+                        onetime_layout.visibility = View.GONE
+                    }
+                    if (bundles.size == 0 && addons.size == 0) {
+                        total_months_layout.visibility = View.GONE
+                        validity_layout.visibility = View.GONE
+                    } else {
+                        total_months_layout.visibility = View.VISIBLE
+                        validity_layout.visibility = View.VISIBLE
+                    }
                 } else {
-                    addons_layout.visibility = View.GONE
+                    cart_addons_recycler.visibility = View.GONE
+                    recharge_layout.visibility = View.GONE
+                    onetime_layout.visibility = View.GONE
                 }
                 Constants.COMPARE_CART_COUNT = bundles.size
                 if (bundles.size > 0) {
                     bundles_in_cart = true
-                    updatePackage(bundles)
                     for (bundle in bundles) {
                         package_validity_months = bundle.min_purchase_months
                         if (bundle.min_purchase_months > default_validity_months) {
@@ -2537,7 +2586,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
                         }
                     }
-                    package_layout.visibility = View.VISIBLE
                 } else {
                     bundles_in_cart = false
                     default_validity_months = if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toInt() else 1
@@ -2552,8 +2600,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     }
                     months_validity_edit_inc.visibility = View.VISIBLE
                     months_validity_edit_dsc.visibility = View.VISIBLE
-                    package_layout.visibility = View.GONE
                 }
+                //update package recyclerview
+                updatePackage(bundles)
                 totalCalculationAfterCoupon()
                 loadOfferCoupons()
 
@@ -2980,6 +3029,16 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         cartAddonsAdaptor.notifyDataSetChanged()
     }
 
+    fun updateRecharge(features: List<CartModel>) {
+        cartRechargeAdaptor.addupdates(features)
+        cartRechargeAdaptor.notifyDataSetChanged()
+    }
+
+    fun updateOnetime(features: List<CartModel>) {
+        cartOnetimeAdaptor.addupdates(features)
+        cartOnetimeAdaptor.notifyDataSetChanged()
+    }
+
 
     private fun initializePackageRecycler() {
         val gridLayoutManager = GridLayoutManager(requireContext(), 1)
@@ -3010,6 +3069,24 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         }
     }
 
+    private fun initializeRechargeRecycler() {
+        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
+        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        recharge_addons_recycler.apply {
+            layoutManager = gridLayoutManager
+            recharge_addons_recycler.adapter = cartRechargeAdaptor
+        }
+    }
+
+    private fun initializeOnetimeRecycler() {
+        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
+        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        onetime_addons_recycler.apply {
+            layoutManager = gridLayoutManager
+            onetime_addons_recycler.adapter = cartOnetimeAdaptor
+        }
+    }
+
     private fun initializeErrorObserver() {
         viewModel.updatesError().observeOnce(Observer { Toasty.error(requireContext(), it, Toast.LENGTH_SHORT).show() })
     }
@@ -3032,6 +3109,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     else
                         total += item.price
                 }
+                if(prefs.getYearPricing())
+                    total *= 12
                 cart_amount_title.text = "Cart total (" + cartList.size + " items)"
                 cart_amount.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total)
                 couponDiscountAmount = total * couponDisount / 100
@@ -3063,9 +3142,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             if (cartList != null && cartList.size > 0) {
                 for (item in cartList) {
                     if (!bundles_in_cart && item.item_type.equals("features"))
-                        total += (item.price * monthCalculatorForAddons(default_validity_months, item.widget_type))
+                        total += (item.price * monthCalculatorForAddons(if(prefs.getYearPricing()) default_validity_months * 12 else default_validity_months, item.widget_type))
                     else
-                        total += ((item.price / package_validity_months) * monthCalculatorForAddons(default_validity_months, item.widget_type))
+                        total += ((item.price / package_validity_months) * monthCalculatorForAddons(if(prefs.getYearPricing()) default_validity_months * 12 else default_validity_months, item.widget_type))
                 }
 
 //                couponDiscountAmount = total * couponDisount / 100

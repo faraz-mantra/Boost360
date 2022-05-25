@@ -304,7 +304,6 @@
         android:id="@+id/package_addCartNew"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
         android:background="@drawable/orange_button_click_effect"
         android:fontFamily="@font/semi_bold"
         android:gravity="center"

@@ -4,11 +4,14 @@ import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Build
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import com.boost.cart.CartActivity
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.dbcenterapi.utils.Constants
 import com.boost.dbcenterapi.utils.Utils
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.BrowseParentFeaturesAdapter
@@ -43,10 +46,6 @@ class BrowseFeaturesActivity :
 
     var deepLinkViewType: String = ""
     var deepLinkDay: Int = 7
-
-
-
-
 
     lateinit var adapter: BrowseParentFeaturesAdapter
     lateinit var progressDialog: ProgressDialog
@@ -189,6 +188,27 @@ class BrowseFeaturesActivity :
                 progressDialog.dismiss()
             }
         })
+
+        viewModel.cartResult().observe(this, androidx.lifecycle.Observer {
+            cart_list = it
+            itemInCartStatus = false
+            if (cart_list != null && cart_list!!.size > 0) {
+                badge121.visibility = View.VISIBLE
+                for (item in cart_list!!) {
+                    if (item.feature_code == singleWidgetKey) {
+                        itemInCartStatus = true
+                        break
+                    }
+                }
+                badgeNumber = cart_list!!.size
+                badge121.setText(badgeNumber.toString())
+                Constants.CART_VALUE = badgeNumber
+            } else {
+                badgeNumber = 0
+                badge121.visibility = View.GONE
+                itemInCartStatus = false
+            }
+        })
     }
 
 
@@ -229,6 +249,11 @@ class BrowseFeaturesActivity :
         adapter.notifyDataSetChanged()
         browse_features_rv.isFocusable = false
 //        back_image.isFocusable = true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getCartItems()
     }
 
     override fun onAddonsClicked(item: FeaturesModel) {

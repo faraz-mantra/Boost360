@@ -149,7 +149,7 @@ class PackageRecyclerAdapter(
                                     if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1){
                                         holder.offerPrice.setText("₹" +
                                                 NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
-                                                "/" + bundles.min_purchase_months + "mths")
+                                                Utils.yearlyOrMonthlyOrEmptyValidity("", activity))
                                         if (offeredBundlePrice != originalBundlePrice) {
                                             spannableString(holder, originalBundlePrice)
                                             holder.origCost.visibility = View.VISIBLE
@@ -159,7 +159,7 @@ class PackageRecyclerAdapter(
                                     }else{
                                         holder.offerPrice.setText("₹" +
                                                 NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)
-                                                + "/mth")
+                                                + Utils.yearlyOrMonthlyOrEmptyValidity("", activity))
                                         if (offeredBundlePrice != originalBundlePrice) {
                                             spannableString(holder, originalBundlePrice)
                                             holder.origCost.visibility = View.VISIBLE

@@ -17,6 +17,7 @@ import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.cart.interfaces.CompareListener
+import com.boost.cart.utils.Utils
 import com.bumptech.glide.Glide
 import com.framework.utils.RootUtil
 //import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
@@ -275,7 +276,11 @@ parentViewHolder.package_submit.setOnClickListener{
                                     for (singleItem in it) {
                                         for (item in bundles.included_features) {
                                             if (singleItem.feature_code == item.feature_code) {
-                                                originalBundlePrice += RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),2) * minMonth
+                                                originalBundlePrice += Utils.priceCalculatorForYear(RootUtil.round(
+                                                    (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),2)
+                                                        * minMonth,
+                                                    singleItem.widget_type?:"",
+                                                    activity)
                                             }
                                         }
                                     }
@@ -290,13 +295,13 @@ parentViewHolder.package_submit.setOnClickListener{
                                     if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1){
                                         holder.tv_price.setText("₹" +
                                                 NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
-                                                "/" + bundles.min_purchase_months + " months")
+                                                Utils.yearlyOrMonthlyOrEmptyValidity("", activity))
                                         holder.tv_inlcuded_add_on.setText("Includes these "+ it.size+ " add-ons")
 
                                     }else{
                                         holder.tv_price.setText("₹" +
                                                 NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)
-                                                + "/month")
+                                                + Utils.yearlyOrMonthlyOrEmptyValidity("", activity))
                                         holder.tv_inlcuded_add_on.setText("Includes these "+ it.size+ " add-ons")
                                     }
 

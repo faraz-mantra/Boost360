@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.boost.dbcenterapi.data.api_model.GetFloatingPointWebWidgets.response.GetFloatingPointWebWidgetsResponse
 import com.boost.dbcenterapi.data.rest.repository.MarketplaceRepository
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
@@ -19,6 +20,7 @@ class BrowseFeaturesViewModel: BaseViewModel()  {
     var allAvailableFeaturesDownloadResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
+    var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
 
     lateinit var application: Application
     lateinit var lifecycleOwner: LifecycleOwner
@@ -32,6 +34,10 @@ class BrowseFeaturesViewModel: BaseViewModel()  {
 
     fun getAllAvailableFeatures(): LiveData<List<FeaturesModel>> {
         return allAvailableFeaturesDownloadResult
+    }
+
+    fun cartResult(): LiveData<List<CartModel>> {
+        return cartResult
     }
 
     fun updatesError(): LiveData<String> {
@@ -52,6 +58,26 @@ class BrowseFeaturesViewModel: BaseViewModel()  {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess {
                     allAvailableFeaturesDownloadResult.postValue(it)
+                    updatesLoader.postValue(false)
+                }
+                .doOnError {
+                    updatesError.postValue(it.message)
+                    updatesLoader.postValue(false)
+                }
+                .subscribe()
+        )
+    }
+
+    fun getCartItems() {
+        updatesLoader.postValue(false)
+        CompositeDisposable().add(
+            AppDatabase.getInstance(application)!!
+                .cartDao()
+                .getCartItems()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess {
+                    cartResult.postValue(it)
                     updatesLoader.postValue(false)
                 }
                 .doOnError {
