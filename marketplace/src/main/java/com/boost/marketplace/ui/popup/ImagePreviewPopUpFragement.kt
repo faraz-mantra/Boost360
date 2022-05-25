@@ -35,8 +35,8 @@ class ImagePreviewPopUpFragement : DialogFragment() {
 
     initialLoad = true
 
-    currentPos = arguments!!.getInt("position")
-    list = arguments!!.getStringArrayList("list") as ArrayList<String>
+    currentPos = requireArguments().getInt("position")
+    list = requireArguments().getStringArrayList("list") as ArrayList<String>
     imagePreviewAdapter = ImagePreviewAdapter(list)
 
     return root

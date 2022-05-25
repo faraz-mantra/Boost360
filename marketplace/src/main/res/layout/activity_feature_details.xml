@@ -1052,7 +1052,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:layout_gravity="bottom"
-            android:visibility="visible"
+            android:visibility="gone"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -1106,7 +1106,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:layout_gravity="bottom"
-            android:visibility="gone"
+            android:visibility="visible"
             android:orientation="horizontal">
 
 

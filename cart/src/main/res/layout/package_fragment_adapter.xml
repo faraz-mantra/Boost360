@@ -132,7 +132,6 @@
                         android:layout_height="@dimen/pad_70dp"
                         android:src="@drawable/group"
                         android:layout_margin="20dp"
-
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
