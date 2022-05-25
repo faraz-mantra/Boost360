@@ -111,7 +111,7 @@ fun File.getMimeType(): String? {
 
 fun String.getExtension(): String? {
   val strLength = lastIndexOf(".")
-  return if (strLength > 0) substring(strLength + 1).toLowerCase() else null
+  return if (strLength > 0) substring(strLength + 1).lowercase(Locale.getDefault()) else null
 }
 
 fun String.getFileName(): String? {

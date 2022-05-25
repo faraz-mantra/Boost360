@@ -48,17 +48,11 @@ class ServiceViewModelV1 : BaseViewModel() {
   }
 
   fun addUpdateImageProductService(
-    clientId: String?,
-    requestType: String?,
-    requestId: String?,
-    totalChunks: Int?,
-    currentChunkNumber: Int?,
-    productId: String?,
-    requestBody: RequestBody?,
+    clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?,
+    currentChunkNumber: Int?, productId: String?, requestBody: RequestBody?,
   ): LiveData<BaseResponse> {
     return NowfloatsApiRepository.addUpdateImageProductService(
-      clientId, requestType, requestId, totalChunks,
-      currentChunkNumber, productId, requestBody
+      clientId, requestType, requestId, totalChunks, currentChunkNumber, productId, requestBody
     ).toLiveData()
   }
 
