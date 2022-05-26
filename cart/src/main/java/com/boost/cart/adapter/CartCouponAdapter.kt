@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
 import com.boost.cart.interfaces.ApplyCouponListener
@@ -27,7 +28,7 @@ class CartCouponAdapter(private val mList: List<Data>, private val total: Double
         val amount = (total * (offerCoupons.discountPercent!! / 100.0f))
         val df = DecimalFormat()
         df.setMaximumFractionDigits(2)
-        holder.cashBacktextView.text = "Save: ₹" + df.format(amount)
+        holder.cashBacktextView.text = "Max Save: ₹" + df.format(amount)
         var date = mList[position].termsandconditions?.split("till ")
         var expiredDate = date?.get(1)
         var percent = mList[position].title?.split(" ")
@@ -48,7 +49,7 @@ class CartCouponAdapter(private val mList: List<Data>, private val total: Double
         val couponCodetextView: TextView = itemView.findViewById(R.id.offer_coupn_code_tv)
         val cashBacktextView: TextView = itemView.findViewById(R.id.offer_cb_tv)
         val learnMoretextView: TextView = itemView.findViewById(R.id.offer_learn_more_tv)
-        val apply_coupon: TextView = itemView.findViewById(R.id.apply_coupon)
+        val apply_coupon: LinearLayoutCompat = itemView.findViewById(R.id.apply_coupon)
 
     }
 }

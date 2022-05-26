@@ -52,6 +52,7 @@ import com.boost.cart.utils.Constants.Companion.SCHEMA_ID
 import com.boost.cart.utils.Constants.Companion.WEBSITE_ID
 import com.boost.cart.utils.DateUtils.parseDate
 import com.boost.cart.utils.Utils.monthCalculatorForAddons
+import com.boost.cart.utils.Utils.priceCalculatorForYear
 import com.boost.cart.utils.Utils.yearOrMonthText
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.ExtendedProperty
@@ -84,6 +85,7 @@ import com.framework.extensions.underlineText
 import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -1852,7 +1854,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 val widget = Widget(
                         data?.category
                                 ?: "", ConsumptionConstraint("DAYS", 30), "", item.description_title,
-                        item.discount, Expiry("MONTHS", default_validity_months), listOf(), true, true, item.item_name
+                        item.discount, Expiry("MONTHS", Utils.expiryCalculator(default_validity_months, item.widget_type, requireActivity())), listOf(), true, true, item.item_name
                         ?: "",
                         item.price, item.MRPPrice, if (outputExtendedPropsRenew.size > 0) outputExtendedPropsRenew else null, 1, "MONTHLY", item.boost_widget_key
                         ?: "", item.item_id
@@ -1901,7 +1903,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 if (item.item_type.equals("features")) {
                     var mrp_price = item.MRPPrice
                     val discount = 100 - item.discount
-                    var netPrice = (discount * mrp_price) / 100
+                    var netPrice = (discount * mrp_price) / 100.0
 
                     var validity_days = 30
                     var net_quantity = 1
@@ -1921,15 +1923,15 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
                     if (!bundles_in_cart && default_validity_months > 1) {
                         validity_days = 30 * default_validity_months
-                        totalValidityDays = validity_days
+                        totalValidityDays = monthCalculatorForAddons(validity_days, item.widget_type)
                         Log.v("totalValidityDays", " " + totalValidityDays)
                         netPrice = netPrice * default_validity_months
-                        net_quantity = default_validity_months
+                        net_quantity = monthCalculatorForAddons(default_validity_months, item.widget_type)
                         mrp_price = mrp_price * default_validity_months
                     }
 
                     //adding widget netprice to featureNetprice to get GrandTotal In netPrice.
-                    featureNetPrice += netPrice
+                    featureNetPrice += priceCalculatorForYear(netPrice, item.widget_type, requireActivity())
 
                     featureWidgetList.add(
                             Widget(
@@ -1943,7 +1945,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                     item.discount,
                                     Expiry(
                                             "MONTHS",
-                                            default_validity_months
+                                        Utils.expiryCalculator(default_validity_months, item.widget_type, requireActivity())
                                     ),
                                     listOf(),
                                     true,
@@ -1981,7 +1983,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                     for (singleFeature in featuresList) {
                                         if (singleIndludedFeature.feature_code.equals(singleFeature.feature_code)) {
 
-                                            val netPrice = (singleFeature.price - ((singleFeature.price * singleIndludedFeature.feature_price_discount_percent) / 100))
+                                            val netPrice = RootUtil.round(((singleFeature.price - ((singleFeature.price * singleIndludedFeature.feature_price_discount_percent) / 100.0))),2)
 
                                             //adding bundle netPrice
 //                      bundleNetPrice += netPrice * singleBundle.min_purchase_months
@@ -1991,9 +1993,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
                                             //-----------------------//discount implementation
                                             if (bundleDiscount > 0) {
-                                                singleWidgetNetPrice = Math.round(singleWidgetNetPrice - ((singleWidgetNetPrice * bundleDiscount) / 100)).toDouble()
+                                                singleWidgetNetPrice = RootUtil.round(singleWidgetNetPrice - ((singleWidgetNetPrice * bundleDiscount) / 100) ,2)
                                             }
-                                            featureNetPrice += singleWidgetNetPrice
+                                            featureNetPrice += priceCalculatorForYear(singleWidgetNetPrice, singleFeature.widget_type, requireActivity())
 
 //                      bundleWidgetList.add(Widget(
                                             featureWidgetList.add(
@@ -2007,7 +2009,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                                             singleFeature.description_title,
                                                             singleIndludedFeature.feature_price_discount_percent,
                                                             Expiry(
-                                                                    "MONTHS", default_validity_months
+                                                                    "MONTHS", Utils.expiryCalculator(default_validity_months, item.widget_type, requireActivity())
                                                             ),
                                                             listOf(),
                                                             true,
@@ -2063,9 +2065,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             purchaseOrders.add(
                     PurchaseOrder(
                             couponCode,
-                            couponDiscountPercentage, //showing couponcode percentage
+                            RootUtil.round(couponDiscountPercentage,2), //showing couponcode percentage
                             null,
-                            featureNetPrice,
+                            RootUtil.round(featureNetPrice,2),
                             featureWidgetList
                     )
             )
@@ -2091,7 +2093,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         (activity as CartActivity).fpid!!,
                         PaymentDetails(
                                 "INR",
-                                couponDiscountPercentage, //[Double] Discount Percentage of the the payment(Coupon code discount)
+                                RootUtil.round(couponDiscountPercentage, 2), //[Double] Discount Percentage of the the payment(Coupon code discount)
                                 "RAZORPAY",
                                 TaxDetails(
                                         GSTINNumber,
@@ -2159,7 +2161,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 val widget = Widget(
                         data?.category
                                 ?: "", ConsumptionConstraint("DAYS", 30), "", item.description_title,
-                        item.discount, Expiry("MONTHS", default_validity_months), listOf(), true, true, item.item_name
+                        item.discount, Expiry("MONTHS", Utils.expiryCalculator(default_validity_months, item.widget_type, requireActivity())), listOf(), true, true, item.item_name
                         ?: "",
                         item.price, item.MRPPrice, if (outputExtendedProps1.size > 0) outputExtendedProps1 else null, 1, "MONTHLY", item.boost_widget_key
                         ?: "", item.item_id
@@ -2236,7 +2238,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     }
 
                     //adding widget netprice to featureNetprice to get GrandTotal In netPrice.
-                    featureNetPrice += netPrice
+                    featureNetPrice += priceCalculatorForYear(netPrice, item.widget_type, requireActivity())
 
                     featureWidgetList.add(
                             Widget(
@@ -2250,7 +2252,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                     item.discount,
                                     Expiry(
                                             "MONTHS",
-                                            default_validity_months
+                                        Utils.expiryCalculator(default_validity_months, item.widget_type, requireActivity())
                                     ),
                                     listOf(),
                                     true,
@@ -2300,7 +2302,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                             if (bundleDiscount > 0) {
                                                 singleWidgetNetPrice = Math.round(singleWidgetNetPrice - ((singleWidgetNetPrice * bundleDiscount) / 100)).toDouble()
                                             }
-                                            featureNetPrice += singleWidgetNetPrice
+                                            featureNetPrice += priceCalculatorForYear(singleWidgetNetPrice, singleFeature.widget_type, requireActivity())
 
 //                      bundleWidgetList.add(Widget(
                                             featureWidgetList.add(
@@ -2314,7 +2316,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                                             singleFeature.description_title,
                                                             singleIndludedFeature.feature_price_discount_percent,
                                                             Expiry(
-                                                                    "MONTHS", default_validity_months
+                                                                    "MONTHS",
+                                                                Utils.expiryCalculator(default_validity_months, item.widget_type, requireActivity())
                                                             ),
                                                             listOf(),
                                                             true,
@@ -3160,11 +3163,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     coupon_discount_layout.visibility = View.GONE
                 }
 
+                total -= couponDiscountAmount
                 Log.v("cart_amount_value", " " + total)
                 val temp = (total * 18) / 100
                 taxValue = Math.round(temp * 100) / 100.0
                 grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
-                grandTotal -= couponDiscountAmount
                 cart_amount_title.text = "Cart total (" + cartList.size + " items)"
                 cart_amount.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total + taxValue)
                 coupontotal = total
