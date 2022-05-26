@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.boost.marketplace.R
-import kotlinx.android.synthetic.main.layout_speak_expert_bottomsheet.*
+import kotlinx.android.synthetic.main.popup_request_callback_custom_domain.*
 
 
-class CallTrackingHelpBottomSheet : DialogFragment() {
+class RequestCallbackBottomSheet : DialogFragment() {
     lateinit var root: View
 
     companion object {
-        fun newInstance() = CallTrackingHelpBottomSheet()
+        fun newInstance() = RequestCallbackBottomSheet()
     }
 
     override fun onStart() {
@@ -29,12 +29,10 @@ class CallTrackingHelpBottomSheet : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        root = inflater.inflate(R.layout.layout_speak_expert_bottomsheet, container, false)
-
+        root = inflater.inflate(R.layout.layout_request_callback_bottomsheet_call_track, container, false)
 
         return root
     }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         back_btn.setOnClickListener {
@@ -45,6 +43,5 @@ class CallTrackingHelpBottomSheet : DialogFragment() {
         }
 
     }
-
 
 }

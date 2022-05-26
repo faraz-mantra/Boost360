@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_curve_bg_grey"
+        android:background="@drawable/rounded_curve_bg_grey_new"
         android:fontFamily="@font/regular"
         android:padding="@dimen/_10sdp"
         android:paddingStart="@dimen/_10sdp"

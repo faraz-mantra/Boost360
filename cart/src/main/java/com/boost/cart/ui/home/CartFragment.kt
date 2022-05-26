@@ -928,7 +928,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 }else {
                     if (default_validity_months == 1) {
                         default_validity_months = default_validity_months + 2
-                    } else if (default_validity_months >= 12 && default_validity_months < 36) {
+                    } else if (default_validity_months >= 12 && default_validity_months < 60) {
                         if (default_validity_months % 12 == 0) {
                             default_validity_months = default_validity_months + 12
                         } else {
@@ -937,7 +937,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         }
 //        default_validity_months = default_validity_months+ 12
                     } else {
-                        if (default_validity_months < 36) {
+                        if (default_validity_months < 60) {
                             if (default_validity_months % 3 == 0) {
                                 default_validity_months = default_validity_months + 3
                             } else if (default_validity_months % 3 == 1) {
@@ -975,7 +975,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     if (default_validity_months == 1) {
                         default_validity_months = default_validity_months + 2
 //    }else if(default_validity_months % 12 == 0 && default_validity_months < 60){
-                    } else if (default_validity_months >= 12 && default_validity_months < 36) {
+                    } else if (default_validity_months >= 12 && default_validity_months < 60) {
                         if (default_validity_months % 12 == 0) {
                             default_validity_months = default_validity_months + 12
                         } else {
@@ -986,7 +986,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //        default_validity_months = default_validity_months+ 12
                     } else {
 //        if(default_validity_months < 60)
-                        if (default_validity_months < 36 && default_validity_months < 12) {
+                        if (default_validity_months < 60 && default_validity_months < 12) {
                             if (default_validity_months % 3 == 0) {
                                 default_validity_months = default_validity_months + 3
                             } else if (default_validity_months % 3 == 1) {
@@ -1146,10 +1146,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 var n = 0
                 try {
                     n = validity.toInt()
-                    if (n <= 36) {
+                    if (n <= 60) {
                         default_validity_months = n
-                    } else if (n > 36) {
-                        default_validity_months = 36
+                    } else if (n > 60) {
+                        default_validity_months = 60
 //                        months_validity.setText(default_validity_months)
                     } else if (n < package_validity_months) {
                         n = package_validity_months

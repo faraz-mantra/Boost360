@@ -17,14 +17,15 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.SimplePageTransformerSmall
 import com.boost.cart.adapter.ZoomOutPageTransformer
+import com.boost.cart.ui.popup.CouponPopUpFragment
 import com.boost.cart.utils.Utils.priceCalculatorForYear
 import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
@@ -38,7 +39,12 @@ import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityFeatureDetailsBinding
 import com.boost.marketplace.infra.utils.Constants.Companion.IMAGE_PREVIEW_POPUP_FRAGMENT
+import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.interfaces.DetailsFragmentListener
+import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
+import com.boost.marketplace.ui.details.call_track.CallTrackingHelpBottomSheet
+import com.boost.marketplace.ui.details.call_track.RequestCallbackBottomSheet
+import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.webview.WebViewActivity
@@ -51,23 +57,22 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_feature_details.*
-import kotlinx.android.synthetic.main.activity_feature_details.app_bar_layout
-import kotlinx.android.synthetic.main.activity_feature_details.bottom_box
-import kotlinx.android.synthetic.main.activity_marketplace.*
 import retrofit2.Retrofit
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class FeatureDetailsActivity :
     AppBaseActivity<ActivityFeatureDetailsBinding, FeatureDetailsViewModel>(),
-    DetailsFragmentListener {
+    DetailsFragmentListener, CompareListener {
 
     lateinit var retrofit: Retrofit
     lateinit var ApiService: ApiInterface
 
-    //  lateinit var localStorage: LocalStorage
+    val callTrackingHelpBottomSheet = CallTrackingHelpBottomSheet()
+    val requestCallbackBottomSheet = RequestCallbackBottomSheet()
+
+
+    //  lateinit voar localStorage: LocalStorage
     var singleWidgetKey: String? = null
     var badgeNumber = 0
     var addonDetails: FeaturesModel? = null
@@ -168,7 +173,24 @@ class FeatureDetailsActivity :
 
         query_text.setText(callExpertString)
         query_text.setOnClickListener {
-
+            val from = 900
+            val to = 1800
+            val date = Date()
+            val c = Calendar.getInstance()
+            c.time = date
+            val t = c[Calendar.HOUR_OF_DAY] * 100 + c[Calendar.MINUTE]
+            val isBetween = to > from && t >= from && t <= to || to < from && (t >= from || t <= to)
+            if (isBetween) {
+                callTrackingHelpBottomSheet.show(
+                    supportFragmentManager,
+                    CallTrackingHelpBottomSheet::class.java.getName()
+                )
+            } else {
+                requestCallbackBottomSheet.show(
+                    supportFragmentManager,
+                    RequestCallbackBottomSheet::class.java.getName()
+                )
+            }
         }
 
         app_bar_layout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
@@ -195,63 +217,174 @@ class FeatureDetailsActivity :
         add_item_to_cart.setOnClickListener {
             if (!itemInCartStatus) {
                 if (addonDetails != null) {
-                    makeFlyAnimation(addon_icon)
-                    prefs.storeCartOrderInfo(null)
-                    viewModel.addItemToCart1(addonDetails!!, this)
-                    val event_attributes: HashMap<String, Any> = HashMap()
-                    addonDetails!!.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
-                    event_attributes.put("Addon Price", addonDetails!!.price)
-                    event_attributes.put(
-                        "Addon Discounted Price",
-                        getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent)
-                    )
-                    event_attributes.put("Addon Discount %", addonDetails!!.discount_percent)
-                    event_attributes.put("Addon Validity", 1)
-                    event_attributes.put("Addon Feature Key", addonDetails!!.boost_widget_key)
-                    addonDetails!!.target_business_usecase?.let { it1 ->
-                        event_attributes.put(
-                            "Addon Tag",
-                            it1
-                        )
+                    when {
+                        addonDetails?.boost_widget_key?.equals("IVR")!! -> {
+                            startActivity(Intent(this, CallTrackingActivity::class.java))
+                        }
+                        addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
+                            startActivity(Intent(this, CustomDomainActivity::class.java))
+                        } else -> {
+                            makeFlyAnimation(addon_icon)
+                            prefs.storeCartOrderInfo(null)
+                            viewModel.addItemToCart1(addonDetails!!, this)
+                            val event_attributes: HashMap<String, Any> = HashMap()
+                            addonDetails!!.name?.let { it1 ->
+                                event_attributes.put(
+                                    "Addon Name",
+                                    it1
+                                )
+                            }
+                            event_attributes.put("Addon Price", addonDetails!!.price)
+                            event_attributes.put(
+                                "Addon Discounted Price",
+                                getDiscountedPrice(
+                                    addonDetails!!.price,
+                                    addonDetails!!.discount_percent
+                                )
+                            )
+                            event_attributes.put(
+                                "Addon Discount %",
+                                addonDetails!!.discount_percent
+                            )
+                            event_attributes.put("Addon Validity", 1)
+                            event_attributes.put(
+                                "Addon Feature Key",
+                                addonDetails!!.boost_widget_key
+                            )
+                            addonDetails!!.target_business_usecase?.let { it1 ->
+                                event_attributes.put(
+                                    "Addon Tag",
+                                    it1
+                                )
+                            }
+                            WebEngageController.trackEvent(
+                                ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
+                                ADDONS_MARKETPLACE,
+                                event_attributes
+                            )
+                            if (addonDetails!!.feature_code == "CUSTOM_PAYMENTGATEWAY")
+                                WebEngageController.trackEvent(
+                                    SELF_BRANDED_PAYMENT_GATEWAY_REQUESTED,
+                                    SELF_BRANDED_PAYMENT_GATEWAY,
+                                    NO_EVENT_VALUE
+                                )
+                            badgeNumber = badgeNumber + 1
+
+                            Constants.CART_VALUE = badgeNumber
+
+
+                            add_item_to_cart.background = ContextCompat.getDrawable(
+                                applicationContext,
+                                R.drawable.grey_button_click_effect
+                            )
+                            add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
+                            add_item_to_cart.text = getString(R.string.added_to_cart)
+                            itemInCartStatus = true
+                            makeFlyAnimation(addon_icon)
+                            Glide.with(this).load(addonDetails!!.primary_image)
+                                .into(image1222)
+
+                        }
                     }
-                    WebEngageController.trackEvent(
-                        ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
-                        ADDONS_MARKETPLACE,
-                        event_attributes
-                    )
-                    if (addonDetails!!.feature_code == "CUSTOM_PAYMENTGATEWAY")
-                        WebEngageController.trackEvent(
-                            SELF_BRANDED_PAYMENT_GATEWAY_REQUESTED,
-                            SELF_BRANDED_PAYMENT_GATEWAY,
-                            NO_EVENT_VALUE
-                        )
-                    badgeNumber = badgeNumber + 1
 
-                    Constants.CART_VALUE = badgeNumber
-
-
-                    add_item_to_cart.background = ContextCompat.getDrawable(
-                        applicationContext,
-                        R.drawable.grey_button_click_effect
-                    )
-                    add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
-                    add_item_to_cart.text = getString(R.string.added_to_cart)
-                    itemInCartStatus = true
 
                 }
             }
         }
 
+        add_item_to_cart_new.setOnClickListener {
+            if (!itemInCartStatus) {
+                if (addonDetails != null) {
+                    when {
+                        addonDetails?.boost_widget_key?.equals("IVR")!! -> {
+                            startActivity(Intent(this, CallTrackingActivity::class.java))
+                        }
+                        addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
+                            startActivity(Intent(this, CustomDomainActivity::class.java))
+                        }
+                        else -> {
+                            prefs.storeCartOrderInfo(null)
+                            viewModel.addItemToCart1(addonDetails!!, this)
+                            val event_attributes: HashMap<String, Any> = HashMap()
+                            addonDetails!!.name?.let { it1 ->
+                                event_attributes.put(
+                                    "Addon Name",
+                                    it1
+                                )
+                            }
+                            event_attributes.put("Addon Price", addonDetails!!.price)
+                            event_attributes.put(
+                                "Addon Discounted Price",
+                                getDiscountedPrice(
+                                    addonDetails!!.price,
+                                    addonDetails!!.discount_percent
+                                )
+                            )
+                            event_attributes.put(
+                                "Addon Discount %",
+                                addonDetails!!.discount_percent
+                            )
+                            event_attributes.put("Addon Validity", 1)
+                            event_attributes.put(
+                                "Addon Feature Key",
+                                addonDetails!!.boost_widget_key
+                            )
+                            addonDetails!!.target_business_usecase?.let { it1 ->
+                                event_attributes.put(
+                                    "Addon Tag",
+                                    it1
+                                )
+                            }
+                            WebEngageController.trackEvent(
+                                ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
+                                ADDONS_MARKETPLACE,
+                                event_attributes
+                            )
+                            if (addonDetails!!.feature_code == "CUSTOM_PAYMENTGATEWAY")
+                                WebEngageController.trackEvent(
+                                    SELF_BRANDED_PAYMENT_GATEWAY_REQUESTED,
+                                    SELF_BRANDED_PAYMENT_GATEWAY,
+                                    NO_EVENT_VALUE
+                                )
+                            badgeNumber = badgeNumber + 1
+
+                            Constants.CART_VALUE = badgeNumber
+
+
+                            add_item_to_cart_new.background = ContextCompat.getDrawable(
+                                applicationContext,
+                                R.drawable.grey_button_click_effect
+                            )
+                            add_item_to_cart_new.setTextColor(getResources().getColor(R.color.tv_color_BB))
+                            add_item_to_cart_new.text = getString(R.string.added_to_cart)
+                            itemInCartStatus = true
+                            makeFlyAnimation(addon_icon)
+                            Glide.with(this).load(addonDetails!!.primary_image)
+                                .into(image1222)
+
+                        }
+                    }
+
+
+                }
+            }
+        }
+
+
         learn_more_btn.setOnClickListener {
             learn_more_btn.visibility = View.GONE
             learn_less_btn.visibility = View.VISIBLE
             title_bottom3.maxLines = 20
+            bottom_box.visibility = VISIBLE
+            bottom_box_only_btn.visibility = GONE
         }
 
         learn_less_btn.setOnClickListener {
             learn_more_btn.visibility = View.VISIBLE
             learn_less_btn.visibility = View.GONE
             title_bottom3.maxLines = 2
+            bottom_box.visibility = GONE
+            bottom_box_only_btn.visibility = VISIBLE
         }
 
         imageView121.setOnClickListener {
@@ -341,10 +474,10 @@ class FeatureDetailsActivity :
             if (addonDetails != null && addonDetails?.how_to_use_steps != null) {
                 how_to_use_title_layout.visibility = VISIBLE
                 how_to_use_title_layout.setOnClickListener {
-                    if(how_to_use_recycler.visibility == VISIBLE){
+                    if (how_to_use_recycler.visibility == VISIBLE) {
                         how_to_use_arrow.setImageResource(R.drawable.ic_arrow_down_gray)
                         how_to_use_recycler.visibility = GONE
-                    }else{
+                    } else {
                         how_to_use_arrow.setImageResource(R.drawable.ic_arrow_up_gray)
                         how_to_use_recycler.visibility = VISIBLE
                     }
@@ -499,12 +632,22 @@ class FeatureDetailsActivity :
                 badge121.visibility = View.VISIBLE
                 for (item in cart_list!!) {
                     if (item.feature_code == singleWidgetKey) {
-                        add_item_to_cart.background = ContextCompat.getDrawable(
-                            this,
-                            R.drawable.added_to_cart_grey
-                        )
-                        add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
-                        add_item_to_cart.text = getString(R.string.added_to_cart)
+                        if (bottom_box.visibility == VISIBLE) {
+                            add_item_to_cart.background = ContextCompat.getDrawable(
+                                this,
+                                R.drawable.added_to_cart_grey
+                            )
+                            add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
+                            add_item_to_cart.text = getString(R.string.added_to_cart)
+                        } else {
+                            add_item_to_cart_new.background = ContextCompat.getDrawable(
+                                this,
+                                R.drawable.added_to_cart_grey
+                            )
+                            add_item_to_cart_new.setTextColor(getResources().getColor(R.color.tv_color_BB))
+                            add_item_to_cart_new.text = getString(R.string.added_to_cart)
+                        }
+
 //                        havent_bought_the_feature.visibility = View.INVISIBLE
                         itemInCartStatus = true
                         break
@@ -640,26 +783,51 @@ class FeatureDetailsActivity :
 //                unit_container.visibility = View.GONE
 //                orig_cost.visibility = View.GONE
 //                details_discount.visibility = View.GONE
-                add_item_to_cart.background = ContextCompat.getDrawable(
-                    applicationContext,
-                    R.drawable.grey_button_click_effect
-                )
-                add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
-                add_item_to_cart.text = "ITEM BELONG TO PACKAGE"
-                add_item_to_cart.isEnabled = false
+                if (bottom_box.visibility == VISIBLE) {
+                    add_item_to_cart.background = ContextCompat.getDrawable(
+                        applicationContext,
+                        R.drawable.grey_button_click_effect
+                    )
+                    add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
+                    add_item_to_cart.text = "ITEM BELONG TO PACKAGE"
+                    add_item_to_cart.isEnabled = false
+                } else {
+                    add_item_to_cart_new.background = ContextCompat.getDrawable(
+                        applicationContext,
+                        R.drawable.grey_button_click_effect
+                    )
+                    add_item_to_cart_new.setTextColor(getResources().getColor(R.color.tv_color_BB))
+                    add_item_to_cart_new.text = "ITEM BELONG TO PACKAGE"
+                    add_item_to_cart_new.isEnabled = false
+                }
+
 //                havent_bought_the_feature.visibility = View.INVISIBLE
                 return
             }
 
             if (addonDetails!!.is_premium) {
-                add_item_to_cart.visibility = View.VISIBLE
-                add_item_to_cart.background = ContextCompat.getDrawable(
-                    applicationContext,
-                    R.drawable.cta_button_click_effect
-                )
-                add_item_to_cart.setTextColor(Color.WHITE)
+                if (bottom_box.visibility == VISIBLE) {
+                    add_item_to_cart.visibility = View.VISIBLE
+                    add_item_to_cart.background = ContextCompat.getDrawable(
+                        applicationContext,
+                        R.drawable.cta_button_click_effect
+                    )
+                    add_item_to_cart.setTextColor(Color.WHITE)
+                } else {
+                    add_item_to_cart_new.visibility = View.VISIBLE
+                    add_item_to_cart_new.background = ContextCompat.getDrawable(
+                        applicationContext,
+                        R.drawable.cta_button_click_effect
+                    )
+                    add_item_to_cart_new.setTextColor(Color.WHITE)
+                }
+
                 val discount = 100 - addonDetails!!.discount_percent
-                val paymentPrice = priceCalculatorForYear((discount * addonDetails!!.price) / 100.0, addonDetails!!.widget_type?:"", this)
+                val paymentPrice = priceCalculatorForYear(
+                    (discount * addonDetails!!.price) / 100.0,
+                    addonDetails!!.widget_type ?: "",
+                    this
+                )
 //                cost_per_month.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
 //                    .format(paymentPrice) + "/unit/month"
 //                cost_per_year.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
@@ -672,23 +840,34 @@ class FeatureDetailsActivity :
 //                }
 
                 //hide or show MRP price
-                val originalCost = priceCalculatorForYear(addonDetails!!.price, addonDetails!!.widget_type?:"", this)
+                val originalCost = priceCalculatorForYear(
+                    addonDetails!!.price,
+                    addonDetails!!.widget_type ?: "",
+                    this
+                )
                 if (paymentPrice != originalCost) {
                     mrp_price.visibility = View.VISIBLE
                     spannableString(originalCost)
                 } else {
-                    mrp_price.text = yearlyOrMonthlyOrEmptyValidity(addonDetails!!.widget_type?:"", this)
+                    mrp_price.text =
+                        yearlyOrMonthlyOrEmptyValidity(addonDetails!!.widget_type ?: "", this)
                     mrpPrice.visibility = View.INVISIBLE
                 }
 
-                price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + yearlyOrMonthlyOrEmptyValidity(addonDetails!!.widget_type?:"", this)
-                final_price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice)
+                price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                    .format(paymentPrice) + yearlyOrMonthlyOrEmptyValidity(
+                    addonDetails!!.widget_type ?: "", this
+                )
+                final_price.text =
+                    "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice)
 //                add_item_to_cart.text = "Add for ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/Month"
 //                havent_bought_the_feature.visibility = View.VISIBLE
             } else {
                 add_item_to_cart.visibility = View.GONE
                 price.visibility = View.GONE
                 bottom_box.visibility = View.GONE
+                bottom_box_only_btn.visibility = GONE
+                add_item_to_cart_new.visibility = GONE
                 mrpPrice.text = "Free Forever"
             }
         } catch (e: Exception) {
@@ -699,7 +878,13 @@ class FeatureDetailsActivity :
     }
 
     fun spannableString(value: Double) {
-        val origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + yearlyOrMonthlyOrEmptyValidity(addonDetails!!.widget_type?:"", this))
+        val origCost = SpannableString(
+            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                .format(value) + yearlyOrMonthlyOrEmptyValidity(
+                addonDetails!!.widget_type ?: "",
+                this
+            )
+        )
 
         origCost.setSpan(
             StrikethroughSpan(),
@@ -741,6 +926,7 @@ class FeatureDetailsActivity :
         imagePreviewPopUpFragement.arguments = args
         imagePreviewPopUpFragement.show(supportFragmentManager, IMAGE_PREVIEW_POPUP_FRAGMENT)
     }
+
 
     fun featureEdgeCase() {
         val edgeState = "AutoRenewalOn"
@@ -881,6 +1067,14 @@ class FeatureDetailsActivity :
 //        intent.putExtra("bundleData", Gson().toJson(item))
 //        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
 //        startActivity(intent)
+    }
+
+    override fun onPackageClicked(item: Bundles?, image: ImageView) {
+        makeFlyAnimation(image)
+    }
+
+    override fun onLearnMoreClicked(item: Bundles?) {
+        TODO("Not yet implemented")
     }
 
 
