@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
@@ -16,6 +17,7 @@ import com.framework.BaseApplication
 import com.framework.extensions.gone
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.utils.ExoPlayerUtils
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.spanBold
 import com.google.android.exoplayer2.ExoPlayer
@@ -44,7 +46,6 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
     IGGraphManager.GraphRequestIGAccountCallback,IGGraphManager.GraphRequestIGUserCallback {
 
 
-    private var player: ExoPlayer?=null
     private var igName: String?=null
     private var igId: String?=null
     private var accessToken: AccessToken?=null
@@ -56,14 +57,21 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
         ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.instagram.name.toLowerCase())
     private var instViewModel:InstagramSetupViewModel?=null
 
-    enum class Step{
-        STEP1,
-        STEP2,
-        STEP3,
-        STEP4,
-        NEXT_SCREEN
+    enum class Step(val value:Int){
+        STEP1(1),
+        STEP2(2),
+        STEP3(3),
+        STEP4(4),
+        NEXT_SCREEN(5);
+
+        companion object{
+            fun getByName(name: String?): Step? {
+                return Step.values().find { it.name==name }
+            }
+        }
+
     }
-    var currentStep:String?=null
+    var currentStep:Step?=null
     var nextStep:Step=Step.STEP1
     companion object{
         val BK_STEP="BK_STEP"
@@ -88,19 +96,22 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
 
     override fun onCreateView() {
         super.onCreateView()
+        currentStep = Step.getByName(arguments?.getString(BK_STEP))
         instViewModel = ViewModelProvider(requireActivity()).get(InstagramSetupViewModel::class.java)
         session = UserSessionManager(requireActivity())
-        player = ExoPlayer.Builder(requireActivity()).build()
-        binding.player.player = player
+        initExoPlayer()
 
         registerFacebookLoginCallback(this, callbackManager)
 
-        currentStep = arguments?.getString(BK_STEP)
         setupUi()
         setOnClickListener(binding!!.btnBack,binding!!.btnNext,binding.ivPlayBtn)
 
     }
 
+    private fun initExoPlayer() {
+        ExoPlayerUtils.getInstance()
+        binding.player.player = ExoPlayerUtils.player
+    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -116,9 +127,7 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
             .into(binding?.thumbnail)
 
         video?.videourl?.url?.let {
-            val mediaItem = MediaItem.fromUri(it)
-            player!!.setMediaItem(mediaItem)
-            player!!.prepare()
+            ExoPlayerUtils.prepare(it)
         }?:showLongToast(getString(R.string.unable_to_play_video))
 
 
@@ -129,15 +138,14 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
         binding!!.btnNext.setBackgroundColor(ContextCompat.getColor(requireActivity(),R.color.white))
         binding!!.btnNext.setTextColor(ContextCompat.getColor(requireActivity(),R.color.colorPrimary))
         when(currentStep){
-            Step.STEP1.name->{
+            Step.STEP1->{
                 binding!!.tvTitle.text = getString(R.string.create_your_instagram_page)
                 binding!!.tvDesc.text=getString(R.string.create_your_instagram_account_or_log_in_if_you_already_have_one)
                 binding!!.tvBtnDesc.text = getString(R.string.logged_in_to_your_instagram_account)
                 binding!!.btnNext.text = getString(R.string.goto_step2)
                 nextStep = Step.STEP2
-                loadVideo(Step.STEP1)
             }
-            Step.STEP2.name->{
+            Step.STEP2->{
                 binding!!.tvTitle.text = getString(R.string.switch_to_professional_account)
                 val boldText = "Settings ➜ Switch to Professional Account."
                 binding!!.tvDesc.text=spanBold(getString(R.string.your_instagram_page_is_initially_a_personal_account_to_start_posting_your_business_updates_via_boost_360_you_need_to_convert_it_to_a_professional_account_from_instagram_go_to_settings_switch_to_professional_account),
@@ -145,10 +153,9 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
                 binding!!.tvBtnDesc.text = getString(R.string.switched_your_account)
                 binding!!.btnNext.text = getString(R.string.goto_step3)
                 nextStep = Step.STEP3
-                loadVideo(Step.STEP2)
 
             }
-            Step.STEP3.name->{
+            Step.STEP3->{
                 binding!!.tvTitle.text = getString(R.string.set_up_two_factor_authentication)
                 val boldText1 = "Settings ➜ Security ➜ Two-factor Authentication"
                 val boldText2 = "Get Started"
@@ -159,10 +166,9 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
                 binding!!.tvBtnDesc.text = getString(R.string.completed_two_factor_authentication)
                 binding!!.btnNext.text = getString(R.string.goto_step4)
                 nextStep = Step.STEP4
-                loadVideo(Step.STEP3)
 
             }
-            Step.STEP4.name->{
+            Step.STEP4->{
                 val boldText1 = "Settings ➜ Instagram ➜ Connect to Instagram."
                 binding!!.tvTitle.text = getString(R.string.connect_your_facebook_page_with_instagram)
                 binding!!.tvDesc.text= spanBold(
@@ -178,12 +184,13 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
                 binding!!.btnNext.setBackgroundColor(ContextCompat.getColor(requireActivity(),R.color.colorPrimary))
                 binding!!.btnNext.setTextColor(ContextCompat.getColor(requireActivity(),R.color.white))
                 nextStep = Step.NEXT_SCREEN
-                loadVideo(Step.STEP4)
 
 
             }
 
         }
+
+        currentStep?.let { loadVideo(it) }
     }
 
     override fun onClick(v: View) {
@@ -200,6 +207,7 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
                   /*  addFragmentReplace(R.id.container,IGIntStatusFragment.newInstance(
                         IGIntStatusFragment.Status.FAILURE
                     ),true)*/
+                    showProgress()
                     loginWithFacebook(
                         this, listOf(
                             FacebookPermissions.email,
@@ -231,17 +239,15 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
     }
 
     private fun playVideo() {
-        try {
             binding.thumbnail.gone()
             binding.ivPlayBtn.gone()
-            player?.play()
-        }catch (e:Exception){
+            ExoPlayerUtils.play()
 
-        }
     }
 
     override fun onFacebookLoginSuccess(result: LoginResult?) {
         Log.i(TAG, "onFacebookLoginSuccess: ")
+        showProgress()
         accessToken = result?.accessToken ?: return
         accessToken?.let {
             PreferencesUtils.instance.saveFacebookUserToken(it.token)
@@ -253,11 +259,13 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
 
     override fun onFacebookLoginCancel() {
         Log.i(TAG, "onFacebookLoginCancel: ")
+        hideProgress()
         openFailedState()
     }
 
     override fun onFacebookLoginError(error: FacebookException?) {
         Log.e(TAG, "onFacebookLoginError: ${error?.localizedMessage}")
+        hideProgress()
         openFailedState()
     }
 
@@ -342,11 +350,11 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
 
     override fun onPause() {
         super.onPause()
-        player?.pause()
+        ExoPlayerUtils.pause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        player?.release()
+        ExoPlayerUtils.release()
     }
 }

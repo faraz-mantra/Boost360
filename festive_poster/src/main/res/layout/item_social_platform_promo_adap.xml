@@ -6,7 +6,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/layout_suggest_domain_select"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_66"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/size_10"
         app:cardElevation="0.25dp"
         android:layout_marginVertical="@dimen/size_4"
@@ -21,7 +21,10 @@
                 android:id="@+id/iv_social_icon"
                 android:layout_width="@dimen/size_42"
                 android:layout_height="@dimen/size_42"
+                android:layout_marginTop="@dimen/size_12"
+                app:layout_constraintVertical_bias="0"
                 android:layout_marginStart="@dimen/size_12"
+                android:layout_marginBottom="@dimen/size_12"
                 android:src="@drawable/ic_promo_flag_orange"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -57,22 +60,36 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_social_title"
                 app:layout_constraintVertical_bias="0.0" />
 
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_warning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_8"
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/size_12"
+                android:textColor="@color/color627178"
+                android:textSize="@dimen/size_11"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_social_subtitle_status"
+                app:layout_constraintTop_toBottomOf="@+id/tv_social_subtitle_status" />
+
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/checkbox_social_selected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/size_20"
-                android:checked="true"
                 android:button="@drawable/chkbox_selector"
+                android:checked="true"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
-                
+
                 android:padding="@dimen/size_0"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_social_subtitle_status"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1"
                 app:layout_constraintStart_toStartOf="@+id/iv_social_icon"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/tv_social_title" />
 
             <com.framework.views.customViews.CustomImageView
                 android:id="@+id/iv_lock"

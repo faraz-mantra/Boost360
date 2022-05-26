@@ -24,6 +24,12 @@ class SocialPlatformOptionListViewHolder(binding: ItemSocialPlatformPromoAdapBin
         binding.tvSocialTitle.text = model.socialTitle ?: ""
         binding.checkboxSocialSelected.isChecked = model.isChecked ?: false
         binding.checkboxSocialSelected.isEnabled =  model.isEnabled == true
+        if (model.warning.isNullOrEmpty().not()){
+            binding.tvWarning.visible()
+            binding.tvWarning.text = model.warning
+        }else{
+            binding.tvWarning.gone()
+        }
         if(model.isEnabled == true){
             binding.checkboxSocialSelected.alpha = 1f
         }else{

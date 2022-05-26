@@ -114,5 +114,6 @@
     <string name="you_have_not_saved_any_template_as_favorites">You have not saved any\ntemplate as favorites</string>
     <string name="favourited_on">"Favourited on: "</string>
     <string name="favourites">Favourites</string>
+    <string name="text_only_posts_are_not_allowed_on_instagram">Text only posts are not allowed on Instagram.</string>
 
 </resources>

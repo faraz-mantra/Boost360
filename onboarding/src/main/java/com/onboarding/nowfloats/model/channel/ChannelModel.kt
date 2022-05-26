@@ -222,7 +222,7 @@ fun ChannelModel.getDrawable(context: Context?): Drawable? {
     )
     ChannelType.INSTAGRAM -> ResourcesCompat.getDrawable(
       context.resources,
-      R.drawable.ic_instagram_white_circle,
+      R.drawable.ic_instagram_white_circle_onboarding,
       context.theme
     )
     else -> null

@@ -373,7 +373,9 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             var subTitle:String?=null
             var isConnected=false
             var isEnabled=false
+            var isChecked=false
             var channelType:SocialPreviewChannel?=null
+            var warning:String=""
             requestFloatsNew.categoryDataModel?.channels?.forEach { it1 ->
                 /*if (it1.isWhatsAppChannel()){
                     return
@@ -381,6 +383,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                 if (it1.type==ChannelType.G_SEARCH.name){
                     isConnected=true
                     isEnabled = false
+                    isChecked=true
                     channelType = SocialPreviewChannel.WEBSITE
                     subTitle=session?.getDomainName(false)
                 }else{
@@ -388,6 +391,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                     isEnabled=true
                     channelType = null
                     isConnected=false
+                    isChecked=false
                 }
                 title = it1.getName()
                 var data: ChannelAccessToken? = null
@@ -405,6 +409,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                                 title =fbPage.account?.accountName
                                 subTitle = fbPage.account?.accountId
                                 isConnected = true
+                                isChecked = true
                                 requestFloatsNew.channelAccessTokens?.add(data)
                                 it1.isSelected = true
                                 it1.channelAccessToken = data
@@ -434,6 +439,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                                 )
                                 subTitle = fpShop?.account?.userAccountId
                                 isConnected = true
+                                isChecked = true
+
                                 requestFloatsNew.channelAccessTokens?.add(data)
                                 it1.isSelected = true
                                 it1.channelAccessToken = data
@@ -452,6 +459,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                                 title =twitter?.account?.accountName
                                 subTitle = twitter?.account?.accountId
                                 isConnected = true
+                                isChecked = true
+
                                 requestFloatsNew.channelAccessTokens?.add(data)
                                 it1.isSelected = true
                                 it1.channelAccessToken = data
@@ -485,6 +494,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                                 title =gmb?.account?.accountName
                                 subTitle = gmb?.account?.accountId
                                 isConnected = true
+                                isChecked = true
+
                                 requestFloatsNew.channelAccessTokens?.add(data)
                                 it1.isSelected = true
                                 it1.channelAccessToken = data
@@ -511,6 +522,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                                 title = getString(R.string.instagram)
                                 subTitle = ig?.account?.accountName
                                 isConnected = true
+                                isChecked=true
                                 requestFloatsNew.channelAccessTokens?.add(data)
                                 it1.isSelected = true
                                 it1.channelAccessToken = data
@@ -520,6 +532,13 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
                             }
                             channelType = SocialPreviewChannel.INSTAGRAM
+                            if (posterImgPath==null){
+                                isEnabled=false
+                                isChecked=false
+                               warning =getString(R.string.text_only_posts_are_not_allowed_on_instagram)
+                            }else{
+                                isEnabled=true
+                            }
                         }
 
                     }
@@ -527,7 +546,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                 }
 
                 if (shouldAddToChannelList(it1)&&channelType!=null){
-                    uiChBoxChannelList?.add(SocialPlatformModel(title,subTitle,isEnabled,isConnected,isConnected,channelType!!).apply {
+                    uiChBoxChannelList?.add(SocialPlatformModel(title,subTitle,isEnabled,isConnected,isChecked,warning,channelType!!).apply {
                         generateImageResource(this@PostPreviewSocialActivity)
                     })
 
@@ -740,7 +759,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             }
             uiChBoxChannelList?.add(SocialPlatformModel(
                 getString(R.string.email_sub), subTitle, true,
-                true, true, SocialPreviewChannel.EMAIL
+                true, true,"", SocialPreviewChannel.EMAIL
             ).apply {
                 icon = ContextCompat.getDrawable(this@PostPreviewSocialActivity,R.drawable.ic_promo_emailers)
             })

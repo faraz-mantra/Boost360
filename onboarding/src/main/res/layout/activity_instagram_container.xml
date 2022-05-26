@@ -96,11 +96,26 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <com.framework.views.customViews.CustomImageView
-                        android:id="@+id/iv_s1"
+                    <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_ig_step_selected" />
+                        android:layout_height="wrap_content">
+
+                        <com.framework.views.customViews.CustomImageView
+                            android:id="@+id/iv_s1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_ig_step_selected" />
+
+                        <com.framework.views.customViews.CustomImageView
+                            android:id="@+id/iv_s1_dot"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_ellipse_grey_ig_steps"
+                            app:tint="@color/colorPrimary" />
+
+                    </RelativeLayout>
+
 
                     <com.framework.views.customViews.CustomTextView
                         android:id="@+id/tv_s1"
@@ -126,11 +141,26 @@
                     app:layout_constraintStart_toEndOf="@+id/linearLayout2"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <com.framework.views.customViews.CustomImageView
-                        android:id="@+id/iv_s2"
+
+                    <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_ig_step_not_selected" />
+                        android:layout_height="wrap_content">
+
+                        <com.framework.views.customViews.CustomImageView
+                            android:id="@+id/iv_s2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_ig_step_selected" />
+
+                        <com.framework.views.customViews.CustomImageView
+                            android:id="@+id/iv_s2_dot"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_ellipse_grey_ig_steps"
+                             />
+
+                    </RelativeLayout>
 
                     <com.framework.views.customViews.CustomTextView
                         android:id="@+id/tv_s2"
@@ -157,12 +187,25 @@
                     app:layout_constraintStart_toEndOf="@+id/linearLayout"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <com.framework.views.customViews.CustomImageView
-                        android:id="@+id/iv_s3"
 
+                    <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_ig_step_not_selected" />
+                        android:layout_height="wrap_content">
+
+                        <com.framework.views.customViews.CustomImageView
+                            android:id="@+id/iv_s3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_ig_step_selected" />
+
+                        <com.framework.views.customViews.CustomImageView
+                            android:layout_width="wrap_content"
+                            android:id="@+id/iv_s3_dot"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_ellipse_grey_ig_steps"
+                            android:layout_height="wrap_content"/>
+
+                    </RelativeLayout>
 
                     <com.framework.views.customViews.CustomTextView
                         android:id="@+id/tv_s3"
@@ -187,11 +230,26 @@
                     app:layout_constraintStart_toEndOf="@+id/linearLayout3"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <com.framework.views.customViews.CustomImageView
-                        android:id="@+id/iv_s4"
+
+                    <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_ig_step_not_selected" />
+                        android:layout_height="wrap_content">
+
+                        <com.framework.views.customViews.CustomImageView
+                            android:id="@+id/iv_s4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_ig_step_selected" />
+
+                        <com.framework.views.customViews.CustomImageView
+                            android:id="@+id/iv_s4_dot"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_ellipse_grey_ig_steps"
+                            />
+
+                    </RelativeLayout>
 
                     <com.framework.views.customViews.CustomTextView
                         android:id="@+id/tv_s4"

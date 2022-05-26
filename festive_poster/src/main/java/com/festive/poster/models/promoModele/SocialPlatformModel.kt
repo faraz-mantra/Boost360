@@ -17,6 +17,7 @@ class SocialPlatformModel(
     var isEnabled: Boolean? = false,
     var isConnected: Boolean? = false,
     var isChecked:Boolean?=false,
+    var warning:String?=null,
     var channelType:SocialPreviewChannel
 ) : Serializable, AppBaseRecyclerViewItem {
 

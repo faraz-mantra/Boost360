@@ -51,6 +51,7 @@
     <activity
         android:name=".ui.registration.instagram.RegistrationBusinessInstagramActivity"
         android:screenOrientation="portrait"
+        android:configChanges="keyboardHidden|orientation|screenSize"
         android:theme="@style/AppThemeChannel"
         android:windowSoftInputMode="adjustPan" />
 

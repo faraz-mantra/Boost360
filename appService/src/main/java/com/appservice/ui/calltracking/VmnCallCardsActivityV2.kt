@@ -74,7 +74,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
 
   override fun onCreateView() {
     super.onCreateView()
-    ExoPlayerUtils.newInstance() //required for call playback on list
+    ExoPlayerUtils.getInstance() //required for call playback on list
     mangePlayerOnList()
     appFragmentZeroCase = AppRequestZeroCaseBuilder(AppZeroCases.BUSINESS_CALLS, this, this, isPremium).getRequest().build()
     addFragment(binding?.childContainer?.id, appFragmentZeroCase, false)
