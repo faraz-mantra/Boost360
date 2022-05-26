@@ -147,8 +147,7 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
                                 template.tags?.find { posterTag -> posterTag == pack_tag.tag }
                             if (posterTag != null && template.active == true) {
                                 template.greeting_message = pack_tag.description
-                                template.layout_id =
-                                    RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP.getLayout()
+
                                 templateList.add(template.clone()!!)
                             }
                         }

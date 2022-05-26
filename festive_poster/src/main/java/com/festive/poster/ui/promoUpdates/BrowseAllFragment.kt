@@ -101,8 +101,8 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
 
 
         categoryAdapter =AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,categoryList!!,this)
-        binding?.rvCat?.adapter = categoryAdapter
-        binding?.rvCat?.layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false)
+        binding.rvCat.adapter = categoryAdapter
+        binding.rvCat.layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false)
 
 
     }
@@ -157,7 +157,7 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
     }
 
     fun setupDummyPosterList(){
-        val dataList = arrayListOf(
+       /* val dataList = arrayListOf(
             PosterModel(
                 true,
                 "",
@@ -192,7 +192,7 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
 
         posterRvAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList,this)
         binding?.rvPosters?.adapter = posterRvAdapter
-        binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
+        binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())*/
 
 
     }
@@ -216,24 +216,17 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
             RecyclerViewActionType.POST_CLICKED.ordinal-> {
                 posterPostClicked(item as PosterModel, requireActivity() as BaseActivity<*, *>)
                 }
-            }
 
-        }
-
-
-    override fun onChildClick(
-        childPosition: Int,
-        parentPosition: Int,
-        childItem: BaseRecyclerViewItem?,
-        parentItem: BaseRecyclerViewItem?,
-        actionType: Int
-    ) {
-        when(actionType){
             RecyclerViewActionType.POSTER_LOVE_CLICKED.ordinal->{
-                callFavApi(childItem as PosterModel)
+                callFavApi(item as PosterModel)
             }
         }
-    }
+
+
+        }
+
+
+
 
     private fun callFavApi(posterModel: PosterModel) {
         viewModel?.favPoster(session?.fPID,session?.fpTag,posterModel.id,)?.observe(viewLifecycleOwner){

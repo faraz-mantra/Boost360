@@ -27,6 +27,7 @@
 
                 <com.framework.views.customViews.CustomImageView
                     android:scaleType="fitXY"
+                    android:src="@drawable/ic_dummy_browse_cat_icon"
                     android:id="@+id/iv_icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>

@@ -28,6 +28,8 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW-> TodaysPickTemplateListViewHolder(binding as ListItemTodaysPickTemplateBinding)
       RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP-> TemplateForVPViewHolder(binding as ListItemTemplateForVpBinding)
       RecyclerViewItemType.TEMPLATE_VIEW_FOR_RV-> TemplateForRVViewHolder(binding as ListItemTemplateForRvBinding)
+      RecyclerViewItemType.TEMPLATE_VIEW_FOR_FAV-> TemplateForFavViewHolder(binding as ListItemTemplateForFavBinding)
+
       RecyclerViewItemType.VIEW_MORE_POSTER-> ViewMoreViewHolder(binding as LayoutViewMoreTemplateBinding)
 
       RecyclerViewItemType.SOCIAL_CONN-> SoicalConnViewHolder(binding as ListItemSocialConnBinding)

@@ -111,7 +111,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
 
 
     private fun setDummyData() {
-        val dataList = arrayListOf(
+       /* val dataList = arrayListOf(
             PosterPackModel(PosterPackTagModel("","","","",false,-1),
                 arrayListOf(PosterModel(false,"", PosterDetailsModel("",false,0.0,"",false),"",ArrayList(),ArrayList(),"",ArrayList(),null,RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP.getLayout())),0.0,false,RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()),
             PosterPackModel(PosterPackTagModel("","","","",false,-1),
@@ -124,7 +124,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
 
         val adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList)
         binding?.rvTemplates?.adapter = adapter
-        binding?.rvTemplates?.layoutManager = LinearLayoutManager(requireActivity())
+        binding?.rvTemplates?.layoutManager = LinearLayoutManager(requireActivity())*/
     }
 
     private fun getTemplateViewConfig() {

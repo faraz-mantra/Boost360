@@ -83,11 +83,10 @@
 
                 <com.framework.views.customViews.CustomCardView
                     android:id="@+id/card_love"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
                     android:layout_marginEnd="32dp"
-                    android:visibility="gone"
-                    app:cardCornerRadius="25dp"
+                    app:cardCornerRadius="19dp"
                     app:cardElevation="4dp"
                     app:layout_constraintBottom_toBottomOf="@+id/customCardView6"
                     app:layout_constraintEnd_toEndOf="@+id/customCardView6"
@@ -105,20 +104,18 @@
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tv_template_desc"
                     style="@style/BlackRegularSS"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:maxLines="2"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="19dp"
                     android:ellipsize="end"
                     android:lineHeight="@dimen/size_22"
-                    android:layout_marginTop="@dimen/size_18"
-                    android:layout_marginBottom="@dimen/size_16"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:maxLines="2"
+                    app:layout_constraintEnd_toStartOf="@+id/card_love"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/customCardView6"
                     tools:text="Black friday sale upto 50% discount on our post selected merchandise, only " />
-
 
                 <com.framework.views.customViews.CustomTextView
                     android:layout_width="0dp"

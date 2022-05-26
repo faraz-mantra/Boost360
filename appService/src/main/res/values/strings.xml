@@ -1182,6 +1182,26 @@
   <string name="image_format_is_not_supported_please_use_jpeg_jpg_or_png">Image format is not supported. Please use JPEG, JPG, or PNG</string>
   <string name="image_resolution_is_smaller_than_800_x_800_px">Image resolution is smaller than 800 X 800 px</string>
   <string name="image_file_size_is_bigger_than_2mb">Image file size is bigger than 2MB</string>
+    <string name="describe_what_you_want_to_say_in_the_picture_added_above">Describe what you want to say in the picture added above...</string>
+    <string name="your_post_was_saved_as_draft">Your post was saved as Draft</string>
+  <string name="testimonial_update_success">Testimonial update successfully!</string>
+  <string name="testimonial_add_success">Testimonial add successfully!</string>
+  <string name="testimonial_delete_success">Testimonial delete successfully!</string>
+  <string name="name_field_can_not_empty">Name field can\'t be empty</string>
+  <string name="company_field_can_not_empty">Company/Occupation field can\'t be empty</string>
+  <string name="testimonial_title_field_can_not_empty">Testimonial title field can\'t be empty</string>
+  <string name="testimonial_description_field_can_not_empty">Testimonial description field can\'t be empty</string>
+  <string name="enter_description">Enter description</string>
+  <string name="save_testimonial">Save testimonial</string>
+  <string name="testimonial_description">Testimonial Description</string>
+  <string name="enter_testimonial_title">Enter testimonial title</string>
+  <string name="testimonial_title_n">Testimonial title</string>
+  <string name="enter_company_occupation">Enter company/ occupation...</string>
+  <string name="company_occupation">Company/ Occupation</string>
+  <string name="customer_name">Customer Name</string>
+  <string name="jpg_png_n_800x800px">Jpg/png\n(800x800px)</string>
+  <string name="add_customer_image">Add customer image</string>
+  <string name="space_start"> *</string>
   <string name="describe_what_you_want_to_say_in_the_picture_added_above">Describe what you want to say in the picture added above...</string>
   <string name="your_post_was_saved_as_draft">Your post was saved as Draft</string>
 </resources>

@@ -18,8 +18,8 @@ class FavouriteTemplatesDetail(
     val count: Int,
     val tag: String,
     val tagIcon: String?,
-    val tagName: String?,
-    val templateDetails: ArrayList<PosterModel>?,
+    var tagName: String?,
+    var templateDetails: ArrayList<PosterModel>?,
     var isSelected:Boolean
 ):AppBaseRecyclerViewItem {
     override fun getViewType(): Int {
