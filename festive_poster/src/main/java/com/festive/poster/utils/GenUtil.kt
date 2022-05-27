@@ -3,6 +3,7 @@ package com.festive.poster.utils
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.constant.Constants
 import com.festive.poster.models.PosterModel
 import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
@@ -14,6 +15,7 @@ import com.framework.constants.IntentConstants
 import com.framework.constants.PackageNames
 import com.framework.constants.UPDATE_PIC_FILE_NAME
 import com.framework.pref.UserSessionManager
+import com.framework.utils.runOnUi
 import com.framework.utils.saveAsImageToAppFolder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,14 +46,18 @@ fun posterWhatsappShareClicked(childItem:PosterModel,activity: BaseActivity<*,*>
     }
 }
 
-fun posterPostClicked(childItem:PosterModel,activity: BaseActivity<*,*>){
+fun posterPostClicked(childItem:PosterModel,activity: AppBaseActivity<*, *>){
+    activity.showProgress()
     activity.lifecycleScope.launch {
         withContext(Dispatchers.Default) {
             val file = SvgUtils.svgToBitmap(childItem as PosterModel)
                 ?.saveAsImageToAppFolder(
-                    activity?.getExternalFilesDir(null)?.path +
+                    activity.getExternalFilesDir(null)?.path +
                             File.separator + UPDATE_PIC_FILE_NAME
                 )
+            runOnUi {
+                activity.hideProgress()
+            }
             if (file?.exists() == true) {
                 PostPreviewSocialActivity.launchActivity(
                     activity,

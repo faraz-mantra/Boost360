@@ -10,40 +10,49 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
+import com.festive.poster.constant.Constants
 import com.festive.poster.databinding.ActivityPromoUpdatesBinding
 import com.festive.poster.models.promoModele.SocialConnModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
+import com.festive.poster.viewmodels.PromoUpdatesViewModel
 import com.framework.models.BaseViewModel
+import com.framework.pref.UserSessionManager
 import com.framework.utils.setStatusBarColor
 import com.framework.webengageconstant.Post_Promotional_Update_Click
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, BaseViewModel>() {
+class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoUpdatesViewModel>() {
 
-    private var sharedViewModel: FestivePosterSharedViewModel? = null
+    private var session: UserSessionManager?=null
 
     override fun getLayout(): Int {
         return R.layout.activity_promo_updates
     }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
+    override fun getViewModelClass(): Class<PromoUpdatesViewModel> {
+        return PromoUpdatesViewModel::class.java
     }
 
     override fun onCreateView() {
         super.onCreateView()
 
         WebEngageController.trackEvent(Post_Promotional_Update_Click)
-
-        sharedViewModel = ViewModelProvider(this).get(FestivePosterSharedViewModel::class.java)
+        session = UserSessionManager(this)
         // sharedViewModel?.shouldRefresh=true
+        fetchDataFromServer()
+
         observeFragmentStack()
         setOnClickListener(binding?.ivToolbarBack)
         setOnClickListener(binding?.ivLove)
         addFragmentReplace(binding?.container?.id, PromoLandingPageFragment.newInstance(), true)
+    }
+
+    private fun fetchDataFromServer() {
+        viewModel.getTodaysPickData(Constants.PROMO_FEATURE_CODE,session?.fPID, session?.fpTag)
+        viewModel.getBrowseAllData(Constants.PROMO_FEATURE_CODE,session?.fPID, session?.fpTag)
     }
 
 

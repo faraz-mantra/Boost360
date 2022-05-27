@@ -1,8 +1,10 @@
 package com.festive.poster.ui.promoUpdates
 
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
+import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.constant.RecyclerViewItemType
@@ -13,6 +15,7 @@ import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.festive.poster.utils.*
 import com.festive.poster.viewmodels.PostUpdatesViewModel
+import com.festive.poster.viewmodels.PromoUpdatesViewModel
 import com.framework.base.BaseActivity
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
@@ -26,8 +29,10 @@ import com.google.gson.Gson
 
 class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesViewModel>(),RecyclerItemClickListener {
 
+    private var promoUpdatesViewModel: PromoUpdatesViewModel?=null
     private var session: UserSessionManager?=null
     private var selectedPos: Int=0
+    private var argTag:String?=null
     private var posterRvAdapter: AppBaseRecyclerViewAdapter<PosterModel>?=null
     private var categoryAdapter: AppBaseRecyclerViewAdapter<PosterPackModel>?=null
     var categoryList:ArrayList<PosterPackModel>?=null
@@ -41,13 +46,11 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
     }
     companion object {
 
-        val BK_POSTER_PACK_LIST="POSTER_PACK_LIST"
-        val BK_SELECTED_POS="BK_SELECTED_POS"
+        val BK_SELECTED_POS_TAG="BK_SELECTED_POS"
 
-        fun newInstance(dataList:ArrayList<PosterPackModel>,selectedPos:Int): BrowseAllFragment {
+        fun newInstance(selectedPosTag:String?=null): BrowseAllFragment {
             val bundle: Bundle = Bundle()
-            bundle.putString(BK_POSTER_PACK_LIST,Gson().toJson(dataList))
-            bundle.putInt(BK_SELECTED_POS,selectedPos)
+            bundle.putString(BK_SELECTED_POS_TAG,selectedPosTag)
             val fragment = BrowseAllFragment()
             fragment.arguments = bundle
             return fragment
@@ -59,10 +62,21 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
     override fun onCreateView() {
         super.onCreateView()
         WebEngageController.trackEvent(Promotional_Update_Browse_All_Loaded)
-        selectedPos = arguments?.getInt(BK_SELECTED_POS)?:0
-        categoryList = convertStringToList<PosterPackModel>(arguments?.getString(
-            BK_POSTER_PACK_LIST)!!)?.toArrayList()
-       setDataOnUi()
+        argTag = arguments?.getString(BK_SELECTED_POS_TAG)
+        promoUpdatesViewModel = ViewModelProvider(requireActivity()).get(PromoUpdatesViewModel::class.java)
+        getTemplatesData()
+    }
+
+    private fun getTemplatesData() {
+        showProgress()
+        promoUpdatesViewModel?.browseAllLData?.observe(viewLifecycleOwner){
+            hideProgress()
+            categoryList=it
+            categoryList?.forEach { it.isSelected=false }
+            selectedPos = categoryList?.indexOfFirst { it.tagsModel?.tag==argTag}?:0
+            if (selectedPos==-1) selectedPos=0
+            setDataOnUi()
+        }
     }
 
     override fun onResume() {
@@ -112,90 +126,15 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
         selectedItem?.isSelected =true
         binding?.tvCatTitle?.text = selectedItem?.tagsModel?.name
         binding?.tvCatSize?.text = selectedItem?.posterList?.size.toString()
-        posterRvAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,
-            categoryList?.get(selectedPos)?.posterList!!,this)
-        binding?.rvPosters?.adapter = posterRvAdapter
-        binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
-    }
-
-    fun setDummyCats(){
-        categoryList = ArrayList<PosterPackModel>()
-
-        //dummy data
-        categoryList?.add(PosterPackModel(
-            PosterPackTagModel("","","","",false,-1),
-            null,0.0,false,RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT.getLayout()))
-        categoryList?.add(PosterPackModel(
-            PosterPackTagModel("","","","",false,-1),
-            null,0.0,false,RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT.getLayout()))
-        categoryList?.add(PosterPackModel(
-            PosterPackTagModel("","","","",false,-1),
-            null,0.0,false,RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT.getLayout()))
-        categoryList?.add(PosterPackModel(
-            PosterPackTagModel("","","","",false,-1),
-            null,0.0,false,RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT.getLayout()))
-        categoryList?.add(PosterPackModel(
-            PosterPackTagModel("","","","",false,-1),
-            null,0.0,false,RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT.getLayout()))
-        categoryList?.add(PosterPackModel(
-            PosterPackTagModel("","","","",false,-1),
-            null,0.0,false,RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT.getLayout()))
-        categoryList?.add(PosterPackModel(
-            PosterPackTagModel("","","","",false,-1),
-            null,0.0,false,RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT.getLayout()))
-        categoryList?.add(PosterPackModel(
-            PosterPackTagModel("","","","",false,-1),
-            null,0.0,false,RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT.getLayout()))
-
-
-        categoryAdapter =AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,categoryList!!,this)
-        binding?.rvCat?.adapter = categoryAdapter
-        binding?.rvCat?.layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false)
-
-        setupDummyPosterList()
+        categoryList?.get(selectedPos)?.posterList?.let {
+            posterRvAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,
+                it,this)
+            binding?.rvPosters?.adapter = posterRvAdapter
+            binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
+        }
 
     }
 
-    fun setupDummyPosterList(){
-       /* val dataList = arrayListOf(
-            PosterModel(
-                true,
-                "",
-                PosterDetailsModel(
-                    "", false, 0.0, "",
-                    false
-                ),
-                "",
-                ArrayList(),
-                ArrayList(),
-                "",
-                ArrayList(),
-                "",
-                RecyclerViewItemType.TEMPLATE_VIEW_FOR_RV.getLayout(),
-            ),
-            PosterModel(
-                true,
-                "",
-                PosterDetailsModel(
-                    "", false, 0.0, "",
-                    false
-                ),
-                "",
-                ArrayList(),
-                ArrayList(),
-                "",
-                ArrayList(),
-                "",
-                RecyclerViewItemType.TEMPLATE_VIEW_FOR_RV.getLayout(),
-            )
-        )
-
-        posterRvAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList,this)
-        binding?.rvPosters?.adapter = posterRvAdapter
-        binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())*/
-
-
-    }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
         when(actionType){
@@ -214,7 +153,7 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
                 )
             }
             RecyclerViewActionType.POST_CLICKED.ordinal-> {
-                posterPostClicked(item as PosterModel, requireActivity() as BaseActivity<*, *>)
+                posterPostClicked(item as PosterModel, requireActivity() as AppBaseActivity<*, *>)
                 }
 
             RecyclerViewActionType.POSTER_LOVE_CLICKED.ordinal->{
