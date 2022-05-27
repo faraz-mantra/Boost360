@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
+import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.Constants
 import com.festive.poster.constant.RecyclerViewActionType
@@ -20,10 +22,12 @@ import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.festive.poster.utils.*
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
+import com.festive.poster.viewmodels.PromoUpdatesViewModel
 import com.framework.base.BaseActivity
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.models.BaseViewModel
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
@@ -35,10 +39,8 @@ import com.google.gson.Gson
 class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePosterViewModel>(),RecyclerItemClickListener {
 
     private var adapter: AppBaseRecyclerViewAdapter<PosterPackModel>?=null
-    private var sharedViewModel: FestivePosterSharedViewModel? = null
     private var session: UserSessionManager? = null
-    var uiList: ArrayList<PosterPackModel>? = null
-    var originalList: ArrayList<PosterPackModel>? = null
+    var promoUpdatesViewModel:PromoUpdatesViewModel?=null
     private  val TAG = "TodaysPickFragment"
     override fun getLayout(): Int {
         return R.layout.fragment_todays_pick
@@ -63,13 +65,30 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
 
     override fun onCreateView() {
         session = UserSessionManager(requireActivity())
-        sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
+        promoUpdatesViewModel = ViewModelProvider(requireActivity()).get(PromoUpdatesViewModel::class.java)
+        fetchDataFromServer()
+        setOnClickListener(binding.cardBrowseAllTemplate)
 
 
-        getTemplateViewConfig()
-        setOnClickListener(binding?.cardBrowseAllTemplate)
+    }
 
+    private fun fetchDataFromServer() {
+        startShimmer()
+        promoUpdatesViewModel?.todaysPickLData?.observe(viewLifecycleOwner){
+            stopShimmer()
+            it?.let {list->
 
+                list.forEach {item->
+                    if ((item.posterList?.size ?: 0) >= 4){
+                        item.posterList?.add(PosterModel(layout_id = RecyclerViewItemType.VIEW_MORE_POSTER.getLayout()))
+                    }
+                }
+                adapter = AppBaseRecyclerViewAdapter(baseActivity, list, this)
+                binding.rvTemplates.adapter = adapter
+                binding.rvTemplates.layoutManager = LinearLayoutManager(requireActivity())
+            }
+
+        }
     }
 
     override fun onResume() {
@@ -100,45 +119,14 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
             binding?.cardBrowseAllTemplate->{
                 WebEngageController.trackEvent(Promotional_Update_View_More_Click)
 
-                if (originalList!=null){
-                    addFragment(R.id.container,BrowseAllFragment.newInstance(originalList!!,0),
+                    addFragment(R.id.container,BrowseAllFragment.newInstance(),
                         true,true)
-                }
+
 
             }
         }
     }
 
-
-    private fun setDummyData() {
-       /* val dataList = arrayListOf(
-            PosterPackModel(PosterPackTagModel("","","","",false,-1),
-                arrayListOf(PosterModel(false,"", PosterDetailsModel("",false,0.0,"",false),"",ArrayList(),ArrayList(),"",ArrayList(),null,RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP.getLayout())),0.0,false,RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()),
-            PosterPackModel(PosterPackTagModel("","","","",false,-1),
-                arrayListOf(PosterModel(false,"", PosterDetailsModel("",false,0.0,"",false),"",ArrayList(),ArrayList(),"",ArrayList(),null,RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP.getLayout())),0.0,false,RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()),PosterPackModel(PosterPackTagModel("","","","",false,-1),ArrayList(),0.0,false,RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()),
-            PosterPackModel(PosterPackTagModel("","","","",false,-1),
-                arrayListOf(PosterModel(false,"", PosterDetailsModel("",false,0.0,"",false),"",ArrayList(),ArrayList(),"",ArrayList(),null,RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP.getLayout())),0.0,false,RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()),PosterPackModel(PosterPackTagModel("","","","",false,-1),ArrayList(),0.0,false,RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()),
-
-            )
-
-
-        val adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,dataList)
-        binding?.rvTemplates?.adapter = adapter
-        binding?.rvTemplates?.layoutManager = LinearLayoutManager(requireActivity())*/
-    }
-
-    private fun getTemplateViewConfig() {
-        startShimmer()
-        viewModel?.getTemplateConfig(Constants.PROMO_FEATURE_CODE,session?.fPID, session?.fpTag)
-            ?.observeOnce(viewLifecycleOwner) {
-                val response = it as? GetTemplateViewConfigResponse
-                response?.let {
-                    val tagArray = prepareTagForApi(response.Result.todayPick?.tags)
-                    fetchTemplates(tagArray, response)
-                }
-
-            }
-    }
 
     private fun startShimmer() {
         binding!!.shimmerLayout.visible()
@@ -154,71 +142,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
         binding!!.cardBrowseAllTemplate.visible()
     }
 
-    private fun prepareTagForApi(tags: List<PosterPackTagModel>?): ArrayList<String> {
-        val list = ArrayList<String>()
-        tags?.forEach {
-            it.tag?.let { tag -> list.add(tag) }
-        }
-        return list
-    }
 
-    private fun fetchTemplates(tagArray: ArrayList<String>, response: GetTemplateViewConfigResponse) {
-        viewModel?.getTemplates(session?.fPID, session?.fpTag, tagArray)
-            ?.observeOnce(viewLifecycleOwner) {
-                uiList = ArrayList()
-                originalList = ArrayList()
-
-                val templates_response = it as? GetTemplatesResponse
-                templates_response?.let {
-                    response.Result.todayPick?.tags?.forEach { pack_tag ->
-                        val templateList = ArrayList<PosterModel>()
-                        templates_response.Result.templates?.forEach { template ->
-                            var posterTag =
-                                template.tags?.find { posterTag -> posterTag == pack_tag.tag }
-                            if (posterTag != null && template.active == true) {
-                                template.greeting_message = pack_tag.description
-                                template.layout_id =
-                                    RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP.getLayout()
-                                templateList.add(template.clone()!!)
-                            }
-                        }
-                        val filterdList= ArrayList<PosterModel>()
-                        if (templateList.size>=4){
-                            filterdList.addAll(
-                                templateList.take(4))
-                            filterdList.add(PosterModel(layout_id = RecyclerViewItemType.VIEW_MORE_POSTER.getLayout()))
-                        }else{
-                            filterdList.addAll(templateList)
-                        }
-
-                            uiList?.add(
-                                PosterPackModel(
-                                    pack_tag,
-                                    filterdList,
-                                    isPurchased = pack_tag.isPurchased==true,
-                                    list_layout = RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()
-                                )
-                            )
-
-                            originalList?.add(
-                                PosterPackModel(
-                                    pack_tag,
-                                    templateList,
-                                    isPurchased = pack_tag.isPurchased==true,
-                                    list_layout = RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()
-                                )
-                            )
-
-                    }
-
-
-                    adapter = AppBaseRecyclerViewAdapter(baseActivity, uiList!!, this)
-                    binding?.rvTemplates?.adapter = adapter
-                    binding?.rvTemplates?.layoutManager = LinearLayoutManager(requireActivity())
-                    stopShimmer()
-                }
-            }
-    }
 
    /* private fun getPriceOfPosterPacks() {
         viewModel?.getUpgradeData()?.observeOnce(viewLifecycleOwner, {
@@ -265,17 +189,14 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
             RecyclerViewActionType.POSTER_VIEW_MORE_CLICKED.ordinal->{
                 parentItem as PosterPackModel
 
-                originalList?.let {
                     addFragment(R.id.container,
-                        BrowseAllFragment.newInstance(it,parentPosition),
+                        BrowseAllFragment.newInstance(parentItem.tagsModel?.tag),
                         true,true)
-                }
-
 
             }
             RecyclerViewActionType.POST_CLICKED.ordinal-> {
                 Log.i(TAG, "onItemClick: ")
-                posterPostClicked(childItem as PosterModel, requireActivity() as BaseActivity<*, *>)
+                posterPostClicked(childItem as PosterModel, requireActivity() as AppBaseActivity<*, *>)
             }
         }
     }
