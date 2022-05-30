@@ -273,11 +273,11 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
         initializeVideosRecycler()
         if (BuildConfig.FLAVOR.equals("jioonline")) {
-            initializePartnerViewPager()
-            partner_layout.visibility = View.VISIBLE
-        } else {
             partner_layout.visibility = View.GONE
+        } else {
+            partner_layout.visibility = View.VISIBLE
         }
+        initializePartnerViewPager()
         initializeBannerViewPager()
         initializePackageViewPager()
         initializeFeatureDeals()

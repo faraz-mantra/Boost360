@@ -762,8 +762,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                         Log.v("getCouponRedeem>>", it.toString())
 
                                         if (it.success) {
-                                            val couponServiceModel =
-                                                    CouponServiceModel(coupon_key, it.discountAmount, it.success, it.message)
+                                            val couponServiceModel = CouponServiceModel(coupon_key, it.discountAmount, it.success, it.message)
                                             redeemCouponResult.postValue(couponServiceModel)
                                         } else {
                                             Toasty.error(

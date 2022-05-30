@@ -1,5 +1,6 @@
 package com.boost.cart.adapter
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.text.SpannableString
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
 import com.boost.cart.interfaces.CartFragmentListener
+import com.boost.cart.utils.Utils
+import com.boost.cart.utils.Utils.priceCalculatorForYear
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
@@ -35,7 +38,7 @@ class CartPackageAdaptor(
         list: List<CartModel>?,
         val listener: CartFragmentListener,
         cryptoCurrencies: List<FeaturesModel>?,
-        val application: Application
+        val activity: Activity
 ) : RecyclerView.Adapter<CartPackageAdaptor.upgradeViewHolder>() {
 
   private var bundlesList = ArrayList<CartModel>()
@@ -66,15 +69,9 @@ class CartPackageAdaptor(
     val selectedBundle = bundlesList.get(position)
 
     holder.name.text = selectedBundle.item_name
-    val price = selectedBundle.price
-    val MRPPrice = selectedBundle.MRPPrice
-    if (selectedBundle.min_purchase_months > 1) {
-      holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-        .format(price) + "/" + selectedBundle.min_purchase_months + "mths"
-    } else {
-      holder.price.text =
-        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/mth"
-    }
+    val price = priceCalculatorForYear(selectedBundle.price, "", activity)
+    val MRPPrice = priceCalculatorForYear(selectedBundle.MRPPrice, "", activity)
+    holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + Utils.yearlyOrMonthlyOrEmptyValidity("", activity)
 
     if (selectedBundle.link != null) {
       Glide.with(context).load(selectedBundle.link!!).placeholder(R.drawable.boost_360_insignia)
@@ -84,7 +81,7 @@ class CartPackageAdaptor(
     }
 
     if (price != MRPPrice) {
-      spannableString(holder, MRPPrice, selectedBundle.min_purchase_months)
+      spannableString(holder, MRPPrice)
       holder.orig_cost.visibility = View.VISIBLE
     } else {
       holder.orig_cost.visibility = View.GONE
@@ -217,16 +214,11 @@ class CartPackageAdaptor(
     //   var view = itemView.findViewById<View>(R.id.cart_single_package_bottom_view)!!
   }
 
-  fun spannableString(holder: upgradeViewHolder, value: Double, minMonth: Int) {
+  fun spannableString(holder: upgradeViewHolder, value: Double) {
     val origCost: SpannableString
-    if (minMonth > 1) {
       origCost = SpannableString(
-        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths"
+        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + Utils.yearlyOrMonthlyOrEmptyValidity("", activity)
       )
-    } else {
-      origCost =
-        SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
-    }
 
     origCost.setSpan(
       StrikethroughSpan(),
@@ -239,7 +231,7 @@ class CartPackageAdaptor(
 
   fun updateFeatures(bundleId: String, holder: upgradeViewHolder) {
     CompositeDisposable().add(
-      AppDatabase.getInstance(application)!!
+      AppDatabase.getInstance(activity.application)!!
         .bundlesDao()
         .getBundleItemById(bundleId)
         .subscribeOn(Schedulers.io())

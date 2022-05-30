@@ -77,15 +77,41 @@
                             app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toEndOf="parent" />
 
-                        <ImageView
+                        <RelativeLayout
                             android:id="@+id/browse_cart"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:padding="@dimen/_14sdp"
-                            android:src="@drawable/ic_marketplace_cart_white"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toStartOf="@+id/browse_search"
-                            app:layout_constraintVertical_bias="0.514" />
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <LinearLayout
+                                android:id="@+id/featureDetailsCartIcon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:background="@drawable/mp_nav_icon_background"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_margin="4dp"
+                                    android:src="@drawable/ic_cart" />
+                            </LinearLayout>
+
+
+                            <com.nex3z.notificationbadge.NotificationBadge
+                                android:id="@+id/badge121"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                app:nbMaxTextLength="2" />
+                        </RelativeLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -108,8 +134,9 @@
             app:layout_constraintTop_toBottomOf="@id/browse_toolbar">
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:padding="2dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -125,6 +152,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Features that manufacturers are liking most."
+                    android:singleLine="true"
                     android:textSize="@dimen/_12ssp"
                     android:textStyle="normal" />
             </LinearLayout>
@@ -137,7 +165,7 @@
                 android:layout_alignTop="@id/feature_name_ll"
                 android:layout_alignBottom="@id/feature_name_ll"
                 android:padding="@dimen/_10sdp"
-                android:foregroundGravity="center"
+                android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_browse_features_show_hide" />
         </LinearLayout>
 

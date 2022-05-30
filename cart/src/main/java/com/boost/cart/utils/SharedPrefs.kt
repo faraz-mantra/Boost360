@@ -267,7 +267,6 @@ class SharedPrefs(activity: Activity) {
     return pref!!.getString(expertContact, null)
   }
 
-
   fun storeYearPricing(value: Boolean){
     editor!!.putBoolean(yearPricing, value).apply()
   }

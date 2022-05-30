@@ -37,7 +37,7 @@ class CartRechargeAdaptor(cardItems: List<CartModel>?, val listener: CartFragmen
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
     val itemView = LayoutInflater.from(parent.context).inflate(
-      R.layout.cart_single_addons, parent, false
+      R.layout.item_feature_one, parent, false
     )
     context = itemView.context
 
@@ -71,11 +71,11 @@ class CartRechargeAdaptor(cardItems: List<CartModel>?, val listener: CartFragmen
     } else {
       holder.MRPPrice.visibility = View.GONE
     }
-    if (list.get(position).discount > 0) {
-      holder.discount.text = list.get(position).discount.toString() + "%"
-    } else {
-      holder.discount.visibility = View.GONE
-    }
+//    if (list.get(position).discount > 0) {
+//      holder.discount.text = list.get(position).discount.toString() + "%"
+//    } else {
+//      holder.discount.visibility = View.GONE
+//    }
     holder.remove_addons.setOnClickListener {
       list.get(position).item_name?.let { it1 ->
         WebEngageController.trackEvent(
@@ -86,8 +86,8 @@ class CartRechargeAdaptor(cardItems: List<CartModel>?, val listener: CartFragmen
       }
       listener.deleteCartAddonsItem(list.get(position).item_id)
     }
-    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
-    holder.view.visibility = if (list.size - 1 == position) View.GONE else View.VISIBLE
+//    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+//    holder.view.visibility = if (list.size - 1 == position) View.GONE else View.VISIBLE
   }
 
   fun addupdates(cardItems: List<CartModel>) {
@@ -104,8 +104,8 @@ class CartRechargeAdaptor(cardItems: List<CartModel>?, val listener: CartFragmen
     var title = itemView.findViewById<TextView>(R.id.addons_title)!!
     var price = itemView.findViewById<TextView>(R.id.cart_item_price)!!
     var MRPPrice = itemView.findViewById<TextView>(R.id.cart_item_orig_cost)!!
-    var discount = itemView.findViewById<TextView>(R.id.cart_item_discount)!!
-    var view = itemView.findViewById<View>(R.id.cart_single_addons_bottom_view)!!
+//    var discount = itemView.findViewById<TextView>(R.id.cart_item_discount)!!
+//    var view = itemView.findViewById<View>(R.id.cart_single_addons_bottom_view)!!
 
 
     fun upgradeListItem(updateModel: WidgetModel) {

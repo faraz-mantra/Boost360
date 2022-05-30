@@ -44,15 +44,12 @@ import com.boost.payment.ui.popup.StateListPopFragment
 import com.boost.payment.ui.popup.UPIPopUpFragement
 import com.boost.payment.ui.razorpay.RazorPayWebView
 import com.boost.payment.ui.webview.WebViewFragment
-import com.boost.payment.utils.Constants
+import com.boost.payment.utils.*
 import com.boost.payment.utils.Constants.Companion.ADD_CARD_POPUP_FRAGMENT
 import com.boost.payment.utils.Constants.Companion.BUSINESS_DETAILS_FRAGMENT
 import com.boost.payment.utils.Constants.Companion.NETBANKING_POPUP_FRAGMENT
 import com.boost.payment.utils.Constants.Companion.RAZORPAY_WEBVIEW_POPUP_FRAGMENT
 import com.boost.payment.utils.Constants.Companion.UPI_POPUP_FRAGMENT
-import com.boost.payment.utils.SharedPrefs
-import com.boost.payment.utils.WebEngageController
-import com.boost.payment.utils.observeOnce
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
 import com.framework.pref.Key_Preferences
@@ -412,35 +409,35 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             }
         }
 
-        generate_payment_link.setOnClickListener {
-                WebEngageController.trackEvent(
-                        ADDONS_MARKETPLACE_PAYMENT_LINK_CLICK,
-                        ADDONS_MARKETPLACE_PAYMENT_LINK,
-                        NO_EVENT_VALUE
-                )
-                final_payment_links.visibility=View.VISIBLE
-                generate_payment_link.visibility=View.GONE
-                payment_main_layout.post {
-                    payment_main_layout.fullScroll(View.FOCUS_DOWN)
-                }
-                copy_link.setOnClickListener {
-                    val clipboard: ClipboardManager =(activity as PaymentActivity).getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                    val clip = ClipData.newPlainText(pay_link?.text, pay_link?.text)
-                    clipboard.setPrimaryClip(clip)
-                    Toast.makeText(
-                        context,
-                        "Link copied!!",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                }
-                share.setOnClickListener {
-                    val txtIntent = Intent(Intent.ACTION_SEND)
-                    txtIntent.type = "text/link"
-                    txtIntent.putExtra(Intent.EXTRA_TEXT, pay_link?.text.toString())
-                    startActivity(Intent.createChooser(txtIntent, "Share via"))
-                }
-        }
+//        generate_payment_link.setOnClickListener {
+//                WebEngageController.trackEvent(
+//                        ADDONS_MARKETPLACE_PAYMENT_LINK_CLICK,
+//                        ADDONS_MARKETPLACE_PAYMENT_LINK,
+//                        NO_EVENT_VALUE
+//                )
+//                final_payment_links.visibility=View.VISIBLE
+//                generate_payment_link.visibility=View.GONE
+//                payment_main_layout.post {
+//                    payment_main_layout.fullScroll(View.FOCUS_DOWN)
+//                }
+//                copy_link.setOnClickListener {
+//                    val clipboard: ClipboardManager =(activity as PaymentActivity).getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+//                    val clip = ClipData.newPlainText(pay_link?.text, pay_link?.text)
+//                    clipboard.setPrimaryClip(clip)
+//                    Toast.makeText(
+//                        context,
+//                        "Link copied!!",
+//                        Toast.LENGTH_SHORT
+//                    )
+//                        .show()
+//                }
+//                share.setOnClickListener {
+//                    val txtIntent = Intent(Intent.ACTION_SEND)
+//                    txtIntent.type = "text/link"
+//                    txtIntent.putExtra(Intent.EXTRA_TEXT, pay_link?.text.toString())
+//                    startActivity(Intent.createChooser(txtIntent, "Share via"))
+//                }
+//        }
 
         payment_view_details.setOnClickListener {
             payment_main_layout.post {
@@ -476,15 +473,11 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         }
 
         val oneMonthFromNow = Calendar.getInstance()
-        oneMonthFromNow.add(Calendar.MONTH, 1) // Added one month
+        oneMonthFromNow.add(Calendar.MONTH, if(prefs.getYearPricing()) prefs.getValidityMonths()!!.toInt() * 12 else prefs.getValidityMonths()!!.toInt()) // Added one month
         val nowFormat = SimpleDateFormat("dd MMM yy")
         nowFormat.setTimeZone(Calendar.getInstance().getTimeZone())
 
-        val monthsValidity: String = if (prefs.getValidityMonths()!!.toInt() > 1) {
-            prefs.getValidityMonths() + " Months"
-        } else {
-            prefs.getValidityMonths() + " Month"
-        }
+        val monthsValidity: String = prefs.getValidityMonths() + Utils.yearOrMonthText(prefs.getValidityMonths()!!.toInt(), requireActivity(), prefs.getValidityMonths()!!.toInt() > 1)
 
         val spannableText = SpannableString("You are paying ₹" + totalAmount + " only for " + monthsValidity + ". Your subscription will end on " +
                         nowFormat.format(oneMonthFromNow.time))
@@ -525,17 +518,13 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                         0
                 )
                 val oneMonthFromNow = Calendar.getInstance()
-                oneMonthFromNow.add(Calendar.MONTH, 1) // Added one month
+                oneMonthFromNow.add(Calendar.MONTH, if(prefs.getYearPricing()) prefs.getValidityMonths()!!.toInt() * 12 else prefs.getValidityMonths()!!.toInt()) // Added one month
                 val nowFormat = SimpleDateFormat("dd MMM yy")
                 nowFormat.setTimeZone(Calendar.getInstance().getTimeZone())
                 val oneMonthFormat = SimpleDateFormat("dd MMM yy")
                 oneMonthFormat.setTimeZone(oneMonthFromNow.getTimeZone())
 
-                val monthsValidity: String = if (prefs.getValidityMonths()!!.toInt() > 1) {
-                    prefs.getValidityMonths() + " Months"
-                } else {
-                    prefs.getValidityMonths() + " Month"
-                }
+                val monthsValidity: String = prefs.getValidityMonths() + Utils.yearOrMonthText(prefs.getValidityMonths()!!.toInt(), requireActivity(), true)
                 val spannableText = SpannableString("You are paying ₹" + totalAmount + " only for " + monthsValidity + ". Your subscription will end on " +
                         nowFormat.format(oneMonthFromNow.time))
                 spannableText.setSpan(
@@ -582,7 +571,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 auto_renew_extra_offers.text =
                         "Congratulations! You get extra 2% auto renewal discount"
                 val oneMonthFromNow = Calendar.getInstance()
-                oneMonthFromNow.add(Calendar.MONTH, 1) // Added one month
+                oneMonthFromNow.add(Calendar.MONTH, if(prefs.getYearPricing()) prefs.getValidityMonths()!!.toInt() * 12 else prefs.getValidityMonths()!!.toInt()) // Added one month
                 val nowFormat = SimpleDateFormat("dd MMM yy")
                 nowFormat.setTimeZone(Calendar.getInstance().getTimeZone())
                 val oneMonthFormat = SimpleDateFormat("dd MMM yy")
@@ -602,11 +591,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                     updateAutoRenewState()
                 }
 
-                val monthsValidity: String = if (prefs.getValidityMonths()!!.toInt() > 1) {
-                    prefs.getValidityMonths() + " Months"
-                } else {
-                    prefs.getValidityMonths() + " Month"
-                }
+                val monthsValidity: String = prefs.getValidityMonths() + Utils.yearOrMonthText(prefs.getValidityMonths()!!.toInt(), requireActivity(), true)
                 val spannableText = SpannableString("Your account will be automatically charged ₹"
                         + totalAmount + " every " + monthsValidity + ". Your next billing date is " +
                                 nowFormat.format(oneMonthFromNow.time))
@@ -838,14 +823,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
     @SuppressLint("FragmentLiveDataObserve")
     fun initMvvm() {
-
-        if(months > 1){
-            auto_renew_title.text = "Automatically renew every " +months.toString()+ "months?"
-
-        }else{
-            auto_renew_title.text = "Automatically renew every " +months.toString()+"month?"
-
-        }
+        auto_renew_title.text = "Automatically renew every " +months.toString()+ Utils.yearOrMonthText(months, requireActivity(), months > 1)+"?"
 
         viewModel.orderForAutoRenewalResult().observe(viewLifecycleOwner, Observer {
             //auto renew switch API call for payment
@@ -870,6 +848,23 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 args.putString("link", link)
                 payFragment.arguments = args
                 (activity as PaymentActivity).addFragment(payFragment, Constants.WEB_VIEW_FRAGMENT)
+            }
+            copy_link.setOnClickListener {
+                val clipboard: ClipboardManager =(activity as PaymentActivity).getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText(pay_link?.text, pay_link?.text)
+                clipboard.setPrimaryClip(clip)
+                Toast.makeText(
+                    context,
+                    "Link copied!!",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
+            share.setOnClickListener {
+                val txtIntent = Intent(Intent.ACTION_SEND)
+                txtIntent.type = "text/link"
+                txtIntent.putExtra(Intent.EXTRA_TEXT, pay_link?.text.toString())
+                startActivity(Intent.createChooser(txtIntent, "Share via"))
             }
 
         })
@@ -1678,29 +1673,23 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         }
 
         payment_amount_value.setText(
-                "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
                         .format(totalAmount + requireArguments().getDouble("couponAmount"))
         )
 
 
         validity_months.setText(
-                if (prefs.getValidityMonths()!!.toInt() > 1)
-                    prefs.getValidityMonths() + " Months"
-                else
-                    prefs.getValidityMonths() + " Month"
+            prefs.getValidityMonths() + Utils.yearOrMonthText(prefs.getValidityMonths()!!.toInt(), requireActivity(), true)
         )
 
         auto_renew_title.setText(
                 "Automatically renew every " +
-                        if (prefs.getValidityMonths()!!.toInt() > 1)
-                            prefs.getValidityMonths() + " Months"
-                        else
-                            prefs.getValidityMonths() + " Month"
+                        prefs.getValidityMonths() + Utils.yearOrMonthText(prefs.getValidityMonths()!!.toInt(), requireActivity(), true)
                                     + "?"
         )
 
         val oneMonthFromNow = Calendar.getInstance()
-        oneMonthFromNow.add(Calendar.MONTH, prefs.getValidityMonths()!!.toInt()) // Added one month
+        oneMonthFromNow.add(Calendar.MONTH, if(prefs.getYearPricing()) prefs.getValidityMonths()!!.toInt() * 12 else prefs.getValidityMonths()!!.toInt()) // Added one month
         val nowFormat = SimpleDateFormat("dd MMM yy")
         nowFormat.setTimeZone(Calendar.getInstance().getTimeZone())
         val oneMonthFormat = SimpleDateFormat("dd MMM yy")

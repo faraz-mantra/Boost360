@@ -37,11 +37,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textFontWeight="700"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:fontFamily="@font/semi_bold"
                     android:text="My Order History"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_11sdp"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/addons_back"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -83,6 +84,8 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:padding="16dp"
+                            android:visibility="gone"
+                            tools:visibility="visible"
                             android:src="@drawable/ic_info_offers"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintDimensionRatio="1:1"

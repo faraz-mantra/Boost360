@@ -330,7 +330,7 @@ class ParentCompareItemAdapter(
                                     originalBundlePrice += Utils.priceCalculatorForYear(RootUtil.round(
                                         (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
                                         2
-                                    ) * minMonth, singleItem.widget_type, activity)
+                                    ) * minMonth, singleItem.widget_type?:"", activity)
                                 }
                             }
                         }

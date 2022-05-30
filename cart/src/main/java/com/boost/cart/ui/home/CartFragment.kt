@@ -22,10 +22,8 @@ import android.widget.ArrayAdapter
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -52,6 +50,7 @@ import com.boost.cart.utils.Constants.Companion.SCHEMA_ID
 import com.boost.cart.utils.Constants.Companion.WEBSITE_ID
 import com.boost.cart.utils.DateUtils.parseDate
 import com.boost.cart.utils.Utils.monthCalculatorForAddons
+import com.boost.cart.utils.Utils.priceCalculatorForYear
 import com.boost.cart.utils.Utils.yearOrMonthText
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.ExtendedProperty
@@ -59,7 +58,6 @@ import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeat
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PrimaryImage
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.*
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
-import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsRequest
 import com.boost.dbcenterapi.data.api_model.couponRequest.BulkPropertySegment
 import com.boost.dbcenterapi.data.api_model.couponRequest.CouponRequest
 import com.boost.dbcenterapi.data.api_model.couponRequest.ObjectKeys
@@ -84,6 +82,7 @@ import com.framework.extensions.underlineText
 import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -96,6 +95,7 @@ import kotlinx.android.synthetic.main.cart_v2_fragment.coupon_discount_title
 import kotlinx.android.synthetic.main.cart_v2_fragment.coupon_discount_value
 import kotlinx.android.synthetic.main.cart_v2_fragment.feature_validity
 import kotlinx.android.synthetic.main.cart_v2_fragment.validity_period_value
+import kotlinx.android.synthetic.main.popup_window_text.*
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -151,6 +151,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
     lateinit var cartPackageAdaptor: CartPackageAdaptor
     lateinit var cartAddonsAdaptor: CartAddonsAdaptor
     lateinit var cartRenewalAdaptor: CartRenewalAdaptor
+    lateinit var cartRechargeAdaptor: CartRechargeAdaptor
+    lateinit var cartOnetimeAdaptor: CartOnetimeAdaptor
+    lateinit var cartCouponAdapter: CartCouponAdapter
+
+
     lateinit var packageViewPagerAdapter: PackageViewPagerAdapter
 
     lateinit var upgradeAdapter: UpgradeAdapter
@@ -227,11 +232,14 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             window.setStatusBarColor(getResources().getColor(R.color.common_text_color))
         }
 
-        cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, ArrayList(), requireActivity().application)
+        cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, ArrayList(), requireActivity())
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this, requireActivity())
         cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
+        cartRechargeAdaptor = CartRechargeAdaptor(ArrayList(), this, requireActivity())
+        cartOnetimeAdaptor = CartOnetimeAdaptor(ArrayList(), this, requireActivity())
         packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList(), requireActivity())
         upgradeAdapter = UpgradeAdapter(ArrayList())
+        cartCouponAdapter = CartCouponAdapter(this)
         prefs = SharedPrefs(activity as CartActivity)
         WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART, PAGE_VIEW, NO_EVENT_VALUE)
 
@@ -265,6 +273,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         initializePackageRecycler()
         initializeAddonsRecycler()
         initializeRenewalRecycler()
+        initializeRechargeRecycler()
+        initializeOnetimeRecycler()
+        initializeCouponRecycler()
         initializeErrorObserver()
         initializePackageViewPager()
 
@@ -919,7 +930,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 }else {
                     if (default_validity_months == 1) {
                         default_validity_months = default_validity_months + 2
-                    } else if (default_validity_months >= 12 && default_validity_months < 36) {
+                    } else if (default_validity_months >= 12 && default_validity_months < 60) {
                         if (default_validity_months % 12 == 0) {
                             default_validity_months = default_validity_months + 12
                         } else {
@@ -928,7 +939,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         }
 //        default_validity_months = default_validity_months+ 12
                     } else {
-                        if (default_validity_months < 36) {
+                        if (default_validity_months < 60) {
                             if (default_validity_months % 3 == 0) {
                                 default_validity_months = default_validity_months + 3
                             } else if (default_validity_months % 3 == 1) {
@@ -949,12 +960,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 prefs.storeCartOrderInfo(null)
                 prefs.storeAutoRenewSubscriptionID(null)
 //                totalCalculation()
-                totalCalculationAfterCoupon()
                 Log.v("cart_amount_value1", " " + total)
+                totalCalculationAfterCoupon()
                 if (couponCode.isNotEmpty())
                     viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as CartActivity).fpid!!), couponCode)
-                else
-                    totalCalculationAfterCoupon()
+                else {
+                    loadOfferCoupons()
+                }
 //                Toasty.success(requireContext(), "Validity increased by 1 month.", Toast.LENGTH_SHORT, true).show()
 //            }
             } else if (bundles_in_cart) {
@@ -966,7 +978,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     if (default_validity_months == 1) {
                         default_validity_months = default_validity_months + 2
 //    }else if(default_validity_months % 12 == 0 && default_validity_months < 60){
-                    } else if (default_validity_months >= 12 && default_validity_months < 36) {
+                    } else if (default_validity_months >= 12 && default_validity_months < 60) {
                         if (default_validity_months % 12 == 0) {
                             default_validity_months = default_validity_months + 12
                         } else {
@@ -977,7 +989,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //        default_validity_months = default_validity_months+ 12
                     } else {
 //        if(default_validity_months < 60)
-                        if (default_validity_months < 36 && default_validity_months < 12) {
+                        if (default_validity_months < 60 && default_validity_months < 12) {
                             if (default_validity_months % 3 == 0) {
                                 default_validity_months = default_validity_months + 3
                             } else if (default_validity_months % 3 == 1) {
@@ -999,12 +1011,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 prefs.storeCartOrderInfo(null)
                 prefs.storeAutoRenewSubscriptionID(null)
 //                totalCalculation()
-                totalCalculationAfterCoupon()
                 Log.v("cart_amount_value1", " " + total)
+                totalCalculationAfterCoupon()
                 if (couponCode.isNotEmpty())
                     viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as CartActivity).fpid!!), couponCode)
-                else
-                    totalCalculationAfterCoupon()
+                else {
+                    loadOfferCoupons()
+                }
 //            Toasty.success(requireContext(), "Validity increased by 3 month(s).", Toast.LENGTH_SHORT, true).show()
 //            }
             }
@@ -1058,8 +1071,17 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     feature_validity.text = default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), true)
 //                    totalCalculation()
                     totalCalculationAfterCoupon()
-                    if (couponCode.isNotEmpty())
-                        viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as CartActivity).fpid!!), couponCode)
+                    if (couponCode.isNotEmpty()) {
+                        viewModel.getCouponRedeem(
+                            RedeemCouponRequest(
+                                coupontotal,
+                                couponCode,
+                                (activity as CartActivity).fpid!!
+                            ), couponCode
+                        )
+                    }else{
+                        loadOfferCoupons()
+                    }
 //                    Toasty.warning(requireContext(), "Validity reduced by 1 month.", Toast.LENGTH_SHORT, true).show()
                 }
                 if (default_validity_months > 1) {
@@ -1102,10 +1124,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     prefs.storeCartOrderInfo(null)
                     prefs.storeAutoRenewSubscriptionID(null)
                     feature_validity.text = default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), true)
-//                    totalCalculation()
                     totalCalculationAfterCoupon()
                     if (couponCode.isNotEmpty())
                         viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as CartActivity).fpid!!), couponCode)
+                    else{
+                        loadOfferCoupons()
+                    }
 //                Toasty.warning(requireContext(), "Validity reduced by 3 month(s).", Toast.LENGTH_SHORT, true).show()
                 }
                 if (default_validity_months > 1) {
@@ -1137,10 +1161,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 var n = 0
                 try {
                     n = validity.toInt()
-                    if (n <= 36) {
+                    if (n <= 60) {
                         default_validity_months = n
-                    } else if (n > 36) {
-                        default_validity_months = 36
+                    } else if (n > 60) {
+                        default_validity_months = 60
 //                        months_validity.setText(default_validity_months)
                     } else if (n < package_validity_months) {
                         n = package_validity_months
@@ -1158,8 +1182,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         totalCalculationAfterCoupon()
                         if (couponCode.isNotEmpty())
                             viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as CartActivity).fpid!!), couponCode)
-                        else
-                            totalCalculationAfterCoupon()
+                        else{
+                            loadOfferCoupons()
+                        }
                     } else if (bundles_in_cart) {
 //                            months_validity.setText(default_validity_months.toString())
                         totalValidityDays = if(prefs.getYearPricing()) (30 * default_validity_months) * 12 else 30 * default_validity_months
@@ -1169,8 +1194,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         totalCalculationAfterCoupon()
                         if (couponCode.isNotEmpty())
                             viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as CartActivity).fpid!!), couponCode)
-                        else
-                            totalCalculationAfterCoupon()
+                        else {
+                            loadOfferCoupons()
+                        }
                     }
 
                 } catch (nfe: NumberFormatException) {
@@ -1763,9 +1789,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     renewalList.forEach { renewal -> list.add(saveRenewalData(renewal)) }
                     cartList = list
                     total_months_layout.visibility = View.GONE
-                    renewal_layout.visibility = View.VISIBLE
-                    addons_layout.visibility = View.GONE
-                    package_layout.visibility = View.GONE
+                    cart_renewal_recycler.visibility = View.VISIBLE
+                    cart_package_recycler.visibility = View.GONE
+                    cart_addons_recycler.visibility = View.GONE
                     updateRenewal(cartList)
 //                    totalCalculation()
                     totalCalculationAfterCoupon()
@@ -1845,7 +1871,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 val widget = Widget(
                         data?.category
                                 ?: "", ConsumptionConstraint("DAYS", 30), "", item.description_title,
-                        item.discount, Expiry("MONTHS", default_validity_months), listOf(), true, true, item.item_name
+                        item.discount, Expiry("MONTHS", Utils.expiryCalculator(default_validity_months, item.widget_type, requireActivity())), listOf(), true, true, item.item_name
                         ?: "",
                         item.price, item.MRPPrice, if (outputExtendedPropsRenew.size > 0) outputExtendedPropsRenew else null, 1, "MONTHLY", item.boost_widget_key
                         ?: "", item.item_id
@@ -1894,7 +1920,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 if (item.item_type.equals("features")) {
                     var mrp_price = item.MRPPrice
                     val discount = 100 - item.discount
-                    var netPrice = (discount * mrp_price) / 100
+                    var netPrice = (discount * mrp_price) / 100.0
 
                     var validity_days = 30
                     var net_quantity = 1
@@ -1914,15 +1940,15 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
                     if (!bundles_in_cart && default_validity_months > 1) {
                         validity_days = 30 * default_validity_months
-                        totalValidityDays = validity_days
+                        totalValidityDays = monthCalculatorForAddons(validity_days, item.widget_type)
                         Log.v("totalValidityDays", " " + totalValidityDays)
                         netPrice = netPrice * default_validity_months
-                        net_quantity = default_validity_months
+                        net_quantity = monthCalculatorForAddons(default_validity_months, item.widget_type)
                         mrp_price = mrp_price * default_validity_months
                     }
 
                     //adding widget netprice to featureNetprice to get GrandTotal In netPrice.
-                    featureNetPrice += netPrice
+                    featureNetPrice += priceCalculatorForYear(netPrice, item.widget_type, requireActivity())
 
                     featureWidgetList.add(
                             Widget(
@@ -1936,7 +1962,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                     item.discount,
                                     Expiry(
                                             "MONTHS",
-                                            default_validity_months
+                                        Utils.expiryCalculator(default_validity_months, item.widget_type, requireActivity())
                                     ),
                                     listOf(),
                                     true,
@@ -1974,7 +2000,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                     for (singleFeature in featuresList) {
                                         if (singleIndludedFeature.feature_code.equals(singleFeature.feature_code)) {
 
-                                            val netPrice = (singleFeature.price - ((singleFeature.price * singleIndludedFeature.feature_price_discount_percent) / 100))
+                                            val netPrice = RootUtil.round(((singleFeature.price - ((singleFeature.price * singleIndludedFeature.feature_price_discount_percent) / 100.0))),2)
 
                                             //adding bundle netPrice
 //                      bundleNetPrice += netPrice * singleBundle.min_purchase_months
@@ -1984,9 +2010,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
                                             //-----------------------//discount implementation
                                             if (bundleDiscount > 0) {
-                                                singleWidgetNetPrice = Math.round(singleWidgetNetPrice - ((singleWidgetNetPrice * bundleDiscount) / 100)).toDouble()
+                                                singleWidgetNetPrice = RootUtil.round(singleWidgetNetPrice - ((singleWidgetNetPrice * bundleDiscount) / 100) ,2)
                                             }
-                                            featureNetPrice += singleWidgetNetPrice
+                                            featureNetPrice += priceCalculatorForYear(singleWidgetNetPrice, singleFeature.widget_type, requireActivity())
 
 //                      bundleWidgetList.add(Widget(
                                             featureWidgetList.add(
@@ -2000,7 +2026,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                                             singleFeature.description_title,
                                                             singleIndludedFeature.feature_price_discount_percent,
                                                             Expiry(
-                                                                    "MONTHS", default_validity_months
+                                                                    "MONTHS", Utils.expiryCalculator(default_validity_months, item.widget_type, requireActivity())
                                                             ),
                                                             listOf(),
                                                             true,
@@ -2056,9 +2082,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             purchaseOrders.add(
                     PurchaseOrder(
                             couponCode,
-                            couponDiscountPercentage, //showing couponcode percentage
+                            RootUtil.round(couponDiscountPercentage,2), //showing couponcode percentage
                             null,
-                            featureNetPrice,
+                            RootUtil.round(featureNetPrice,2),
                             featureWidgetList
                     )
             )
@@ -2084,7 +2110,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         (activity as CartActivity).fpid!!,
                         PaymentDetails(
                                 "INR",
-                                couponDiscountPercentage, //[Double] Discount Percentage of the the payment(Coupon code discount)
+                                RootUtil.round(couponDiscountPercentage, 2), //[Double] Discount Percentage of the the payment(Coupon code discount)
                                 "RAZORPAY",
                                 TaxDetails(
                                         GSTINNumber,
@@ -2152,7 +2178,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 val widget = Widget(
                         data?.category
                                 ?: "", ConsumptionConstraint("DAYS", 30), "", item.description_title,
-                        item.discount, Expiry("MONTHS", default_validity_months), listOf(), true, true, item.item_name
+                        item.discount, Expiry("MONTHS", Utils.expiryCalculator(default_validity_months, item.widget_type, requireActivity())), listOf(), true, true, item.item_name
                         ?: "",
                         item.price, item.MRPPrice, if (outputExtendedProps1.size > 0) outputExtendedProps1 else null, 1, "MONTHLY", item.boost_widget_key
                         ?: "", item.item_id
@@ -2229,7 +2255,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     }
 
                     //adding widget netprice to featureNetprice to get GrandTotal In netPrice.
-                    featureNetPrice += netPrice
+                    featureNetPrice += priceCalculatorForYear(netPrice, item.widget_type, requireActivity())
 
                     featureWidgetList.add(
                             Widget(
@@ -2243,7 +2269,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                     item.discount,
                                     Expiry(
                                             "MONTHS",
-                                            default_validity_months
+                                        Utils.expiryCalculator(default_validity_months, item.widget_type, requireActivity())
                                     ),
                                     listOf(),
                                     true,
@@ -2293,7 +2319,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                             if (bundleDiscount > 0) {
                                                 singleWidgetNetPrice = Math.round(singleWidgetNetPrice - ((singleWidgetNetPrice * bundleDiscount) / 100)).toDouble()
                                             }
-                                            featureNetPrice += singleWidgetNetPrice
+                                            featureNetPrice += priceCalculatorForYear(singleWidgetNetPrice, singleFeature.widget_type, requireActivity())
 
 //                      bundleWidgetList.add(Widget(
                                             featureWidgetList.add(
@@ -2307,7 +2333,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                                             singleFeature.description_title,
                                                             singleIndludedFeature.feature_price_discount_percent,
                                                             Expiry(
-                                                                    "MONTHS", default_validity_months
+                                                                    "MONTHS",
+                                                                Utils.expiryCalculator(default_validity_months, item.widget_type, requireActivity())
                                                             ),
                                                             listOf(),
                                                             true,
@@ -2471,13 +2498,16 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 cart_main_layout.visibility = View.VISIBLE
                 item_count.visibility = View.VISIBLE
                 title.setGravity(Gravity.BOTTOM)
-                item_count.text = cartList.size.toString()+" items"
+                item_count.text = cartList.size.toString() + " items"
                 val features = arrayListOf<CartModel>()
                 val bundles = arrayListOf<CartModel>()
                 for (items in it) {
                     if (items.item_type.equals("features")) {
                         couponDiwaliRedundant.clear()
-                        if (items.feature_code.equals("WILDFIRE_FB_LEAD_ADS") || items.feature_code.equals("WILDFIRE") || items.feature_code.equals("DICTATE")) {
+                        if (items.feature_code.equals("WILDFIRE_FB_LEAD_ADS") || items.feature_code.equals(
+                                "WILDFIRE"
+                            ) || items.feature_code.equals("DICTATE")
+                        ) {
                             Log.v("couponDiwaliRedundant", " " + items.item_id)
 //                            couponDiwaliRedundant.add(items.feature_code)
                             couponDiwaliRedundant.put(items.feature_code, items.item_name)
@@ -2491,15 +2521,54 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     }
                 }
                 if (features.size > 0) {
-                    updateAddons(features)
-                    addons_layout.visibility = View.VISIBLE
+                    val addons = arrayListOf<CartModel>()
+                    val recharge = arrayListOf<CartModel>()
+                    val onetime = arrayListOf<CartModel>()
+                    for (singleItem in features) {
+                        if (singleItem.widget_type.equals("RECHARGE")) {
+                            //recharge list
+                            recharge.add(singleItem)
+                        } else if (singleItem.widget_type.equals("ONE_TIME")) {
+                            //onetime list
+                            onetime.add(singleItem)
+                        } else {
+                            // rest of the features
+                            addons.add(singleItem)
+                        }
+                    }
+                    if (addons.size > 0) {
+                        updateAddons(addons)
+                        cart_addons_recycler.visibility = View.VISIBLE
+                    } else {
+                        cart_addons_recycler.visibility = View.GONE
+                    }
+                    if (recharge.size > 0) {
+                        updateRecharge(recharge)
+                        recharge_layout.visibility = View.VISIBLE
+                    } else {
+                        recharge_layout.visibility = View.GONE
+                    }
+                    if (onetime.size > 0) {
+                        updateOnetime(onetime)
+                        onetime_layout.visibility = View.VISIBLE
+                    } else {
+                        onetime_layout.visibility = View.GONE
+                    }
+                    if (bundles.size == 0 && addons.size == 0) {
+                        total_months_layout.visibility = View.GONE
+                        validity_layout.visibility = View.GONE
+                    } else {
+                        total_months_layout.visibility = View.VISIBLE
+                        validity_layout.visibility = View.VISIBLE
+                    }
                 } else {
-                    addons_layout.visibility = View.GONE
+                    cart_addons_recycler.visibility = View.GONE
+                    recharge_layout.visibility = View.GONE
+                    onetime_layout.visibility = View.GONE
                 }
                 Constants.COMPARE_CART_COUNT = bundles.size
                 if (bundles.size > 0) {
                     bundles_in_cart = true
-                    updatePackage(bundles)
                     for (bundle in bundles) {
                         package_validity_months = bundle.min_purchase_months
                         if (bundle.min_purchase_months > default_validity_months) {
@@ -2537,7 +2606,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
                         }
                     }
-                    package_layout.visibility = View.VISIBLE
                 } else {
                     bundles_in_cart = false
                     default_validity_months = if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toInt() else 1
@@ -2552,8 +2620,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     }
                     months_validity_edit_inc.visibility = View.VISIBLE
                     months_validity_edit_dsc.visibility = View.VISIBLE
-                    package_layout.visibility = View.GONE
                 }
+                //update package recyclerview
+                updatePackage(bundles)
                 totalCalculationAfterCoupon()
                 loadOfferCoupons()
 
@@ -2838,6 +2907,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     if (it.success!!) {
                         //        discount_coupon_message.visibility = View.VISIBLE
                         //       discount_coupon_message.text = it.message
+                            val couponDiscountAmt = it.couponDiscountAmt?:0.0
                         cart_applied_coupon_full_layout.visibility = View.VISIBLE
                         cart_coupon_code_rv.visibility = View.GONE
                         tv_Show_more.visibility = View.GONE
@@ -2850,7 +2920,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         val tv_coupon_saved = dialog.findViewById(R.id.tv_badge_text) as AppCompatTextView
                         val tv_coupon_name = dialog.findViewById(R.id.tv_error_message) as AppCompatTextView
 
-                        tv_coupon_saved.text = "₹" + it.couponDiscountAmt.toString() + " Saved!"
+                        tv_coupon_saved.text = "₹" + RootUtil.round(couponDiscountAmt,2).toString() + " Saved!"
                         tv_coupon_name.text = it.coupon_key.toString() + " coupon code applied."
                         val closeBtn = dialog.findViewById(R.id.close_dialog) as AppCompatImageView
                         val iv_coupon_saved = dialog.findViewById(R.id.iv_badge_bg) as AppCompatImageView
@@ -2861,9 +2931,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         dialog.window!!.setBackgroundDrawableResource(R.color.transparent)
                         dialog.show()
                         cart_coupon_discount_title.text = it.coupon_key.toString()
-                        save.text = " You save ₹ " + (it.couponDiscountAmt.toString())
+                        save.text = " You save ₹ " + (RootUtil.round(couponDiscountAmt,2).toString())
                         discount_banner.visibility = View.VISIBLE
-                        discount_banner_text.text = "Hooray! You save ₹ " + (it.couponDiscountAmt.toString()) + " with coupon & long validity discount"
+                        discount_banner_text.text = "Hooray! You save ₹ " + (RootUtil.round(couponDiscountAmt,2).toString()) + " with coupon & long validity discount"
                     } else {
                         //        discount_coupon_message.visibility = View.VISIBLE
                         //        discount_coupon_message.text = it.message
@@ -2921,21 +2991,16 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     it[i].data?.let { it1 -> couponData.addAll(it1) }
                 }
                 System.out.println("CouponData" + couponData)
-                cart_coupon_code_rv.layoutManager = LinearLayoutManager(requireContext())
+                couponDataNo.clear()
                 couponDataNo.add(couponData[0])
                 System.out.println("Total" + total)
-
-                val adapter = CartCouponAdapter(couponDataNo, total, this)
-                cart_coupon_code_rv.adapter = adapter
+                updateCouponList(couponDataNo, total)
                 tv_Show_more.setOnClickListener {
                     tv_Show_less.visibility = VISIBLE
                     tv_Show_more.visibility = GONE
                     System.out.println("TotalMore" + total)
-
                     WebEngageController.trackEvent(ADDONS_MARKETPLACE_Discount_Coupon_Loaded, NO_EVENT_LABLE, NO_EVENT_VALUE)
-
-                    val adapter = CartCouponAdapter(couponData, total, this)
-                    cart_coupon_code_rv.adapter = adapter
+                    updateCouponList(couponDataNo, total)
                 }
                 tv_Show_less.setOnClickListener {
                     tv_Show_more.visibility = VISIBLE
@@ -2943,9 +3008,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     couponDataNo.clear()
                     couponDataNo.add(couponData[0])
                     System.out.println("TotalLess" + total)
-
-                    val adapter = CartCouponAdapter(couponDataNo, total, this)
-                    cart_coupon_code_rv.adapter = adapter
+                    updateCouponList(couponDataNo, total)
                 }
 
             }
@@ -2980,6 +3043,21 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         cartAddonsAdaptor.notifyDataSetChanged()
     }
 
+    fun updateRecharge(features: List<CartModel>) {
+        cartRechargeAdaptor.addupdates(features)
+        cartRechargeAdaptor.notifyDataSetChanged()
+    }
+
+    fun updateOnetime(features: List<CartModel>) {
+        cartOnetimeAdaptor.addupdates(features)
+        cartOnetimeAdaptor.notifyDataSetChanged()
+    }
+
+    fun updateCouponList(couponDataNo: ArrayList<Data>, total: Double) {
+        cartCouponAdapter.updateCouponList(couponDataNo,total)
+        cartCouponAdapter.notifyDataSetChanged()
+    }
+
 
     private fun initializePackageRecycler() {
         val gridLayoutManager = GridLayoutManager(requireContext(), 1)
@@ -3010,6 +3088,33 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         }
     }
 
+    private fun initializeRechargeRecycler() {
+        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
+        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        recharge_addons_recycler.apply {
+            layoutManager = gridLayoutManager
+            recharge_addons_recycler.adapter = cartRechargeAdaptor
+        }
+    }
+
+    private fun initializeOnetimeRecycler() {
+        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
+        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        onetime_addons_recycler.apply {
+            layoutManager = gridLayoutManager
+            onetime_addons_recycler.adapter = cartOnetimeAdaptor
+        }
+    }
+
+    private fun initializeCouponRecycler() {
+        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
+        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        cart_coupon_code_rv.apply {
+            layoutManager = gridLayoutManager
+            cart_coupon_code_rv.adapter = cartCouponAdapter
+        }
+    }
+
     private fun initializeErrorObserver() {
         viewModel.updatesError().observeOnce(Observer { Toasty.error(requireContext(), it, Toast.LENGTH_SHORT).show() })
     }
@@ -3032,9 +3137,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     else
                         total += item.price
                 }
+                if(prefs.getYearPricing())
+                    total *= 12
                 cart_amount_title.text = "Cart total (" + cartList.size + " items)"
-                cart_amount.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total)
-                couponDiscountAmount = total * couponDisount / 100
+                cart_amount.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total + couponDiscountAmount)
+                couponDiscountAmount = RootUtil.round(total * couponDisount / 100,2)
                 coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
                 total -= couponDiscountAmount
                 val temp = (total * 18) / 100
@@ -3063,16 +3170,16 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             if (cartList != null && cartList.size > 0) {
                 for (item in cartList) {
                     if (!bundles_in_cart && item.item_type.equals("features"))
-                        total += (item.price * monthCalculatorForAddons(default_validity_months, item.widget_type))
+                        total += (item.price * monthCalculatorForAddons(if(prefs.getYearPricing()) default_validity_months * 12 else default_validity_months, item.widget_type))
                     else
-                        total += ((item.price / package_validity_months) * monthCalculatorForAddons(default_validity_months, item.widget_type))
+                        total += ((item.price / package_validity_months) * monthCalculatorForAddons(if(prefs.getYearPricing()) default_validity_months * 12 else default_validity_months, item.widget_type))
                 }
 
 //                couponDiscountAmount = total * couponDisount / 100
 //                couponDiscountAmount = couponServiceModel!!.couponDiscountAmt!!
 
                 if (couponServiceModel != null) {
-                    couponDiscountAmount = couponServiceModel?.couponDiscountAmt!!
+                    couponDiscountAmount = RootUtil.round(couponServiceModel?.couponDiscountAmt!!,2)
                     coupon_discount_layout.visibility = View.VISIBLE
                     coupon_discount_title.text = "'" + couponServiceModel?.coupon_key + "'" + " coupon discount"
                     coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
@@ -3081,13 +3188,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     coupon_discount_layout.visibility = View.GONE
                 }
 
+                total -= couponDiscountAmount
                 Log.v("cart_amount_value", " " + total)
                 val temp = (total * 18) / 100
                 taxValue = Math.round(temp * 100) / 100.0
                 grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
-                grandTotal -= couponDiscountAmount
                 cart_amount_title.text = "Cart total (" + cartList.size + " items)"
-                cart_amount.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total + taxValue)
+                cart_amount.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount + total + taxValue)
                 coupontotal = total
                 //       igst_value.text = "+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue)
 //                order_total_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
@@ -3307,9 +3414,19 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 true
         )
         val txtSub: TextView = popupWindow.contentView.findViewById(R.id.price1)
+        val discountTitle: TextView = popupWindow.contentView.findViewById(R.id.popup_discount_value1)
         val txtSub1: TextView = popupWindow.contentView.findViewById(R.id.price2)
-        txtSub.setText(" ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total))
-        txtSub1.setText(" ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
+        val txtSub2: TextView = popupWindow.contentView.findViewById(R.id.price3)
+        txtSub.setText(" ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total + couponDiscountAmount))
+        if(couponDiscountAmount>0){
+            discountTitle.visibility = View.VISIBLE
+            txtSub1.visibility = View.VISIBLE
+            txtSub1.setText(" -₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount))
+        }else{
+            discountTitle.visibility = View.GONE
+            txtSub1.visibility = View.GONE
+        }
+        txtSub2.setText(" ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) popupWindow.elevation =
                 5.0f
         popupWindow.showAsDropDown(anchor, (anchor.width - 40), -166)

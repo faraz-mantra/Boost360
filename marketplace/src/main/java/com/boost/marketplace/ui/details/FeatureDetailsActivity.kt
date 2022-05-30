@@ -217,7 +217,6 @@ class FeatureDetailsActivity :
 
 
         add_item_to_cart.setOnClickListener {
-
             if (!itemInCartStatus) {
                 if (addonDetails != null) {
                     when {
@@ -228,8 +227,8 @@ class FeatureDetailsActivity :
                         }
                         addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
                             startActivity(Intent(this, CustomDomainActivity::class.java))
-                        }
-                        else -> {
+                        } else -> {
+                            makeFlyAnimation(addon_icon)
                             prefs.storeCartOrderInfo(null)
                             viewModel.addItemToCart1(addonDetails!!, this)
                             val event_attributes: HashMap<String, Any> = HashMap()
@@ -286,6 +285,10 @@ class FeatureDetailsActivity :
                             add_item_to_cart.text = getString(R.string.added_to_cart)
                             itemInCartStatus = true
                             this.onPackageClicked(null, image1222)
+                            makeFlyAnimation(addon_icon)
+                            Glide.with(this).load(addonDetails!!.primary_image)
+                                .into(image1222)
+
                         }
                     }
 
@@ -363,6 +366,10 @@ class FeatureDetailsActivity :
                             add_item_to_cart_new.text = getString(R.string.added_to_cart)
                             itemInCartStatus = true
                             this.onPackageClicked(null, image1222)
+                            makeFlyAnimation(addon_icon)
+                            Glide.with(this).load(addonDetails!!.primary_image)
+                                .into(image1222)
+
                         }
                     }
 
@@ -516,6 +523,8 @@ class FeatureDetailsActivity :
                     )
                 Glide.with(this).load(addonDetails!!.primary_image)
                     .into(image1222)
+                Glide.with(this).load(addonDetails!!.primary_image)
+                    .into(addon_icon)
 
                 Glide.with(this).load(addonDetails!!.primary_image)
                     .into(image1222_new)

@@ -24,10 +24,7 @@ import com.boost.cart.base_class.BaseFragment
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.cart.ui.home.CartFragment
-import com.boost.cart.utils.CircleAnimationUtil
-import com.boost.cart.utils.Constants
-import com.boost.cart.utils.SharedPrefs
-import com.boost.cart.utils.WebEngageController
+import com.boost.cart.utils.*
 import com.bumptech.glide.Glide
 import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
@@ -220,10 +217,7 @@ class PackageFragment : BaseFragment() {
                 }
 
                 if (minMonth > 1) {
-                    if(prefs.getYearPricing())
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/year")
-                    else
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/" + bundleData!!.min_purchase_months + "mths")
+                    offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + Utils.yearlyOrMonthlyOrEmptyValidity("", requireActivity()))
                     if (offeredBundlePrice != originalBundlePrice) {
                         spannableString(if(prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice, minMonth)
                         orig_cost.visibility = View.VISIBLE
@@ -233,9 +227,9 @@ class PackageFragment : BaseFragment() {
                     updateRecycler(it,bundleData!!.min_purchase_months!!)
                 } else {
                     if(prefs.getYearPricing())
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/year")
+                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + Utils.yearlyOrMonthlyOrEmptyValidity("", requireActivity()))
                     else
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/mth")
+                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + Utils.yearlyOrMonthlyOrEmptyValidity("", requireActivity()))
                     if (offeredBundlePrice != originalBundlePrice) {
                         spannableString(if(prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice, 1)
                         orig_cost.visibility = View.VISIBLE

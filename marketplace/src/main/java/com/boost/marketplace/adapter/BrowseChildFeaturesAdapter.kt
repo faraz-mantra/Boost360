@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide
 import java.text.NumberFormat
 import java.util.*
 
-class BrowseChildFeaturesAdapter(list:List<FeaturesModel>,val addonsListener: AddonsListener, val activity: Activity): RecyclerView.Adapter<BrowseChildFeaturesAdapter.ViewHolder>() {
+class BrowseChildFeaturesAdapter(list:List<FeaturesModel>, val accountType: String, val addonsListener: AddonsListener, val activity: Activity): RecyclerView.Adapter<BrowseChildFeaturesAdapter.ViewHolder>() {
 
   private var featuresList = ArrayList<FeaturesModel>()
   lateinit var context: Context

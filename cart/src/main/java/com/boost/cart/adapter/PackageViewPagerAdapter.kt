@@ -110,14 +110,9 @@ class PackageViewPagerAdapter(
                                         holder.bundlePriceLabel.visibility = View.VISIBLE
                                     }
                                     if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1){
-                                        if(prefs.getYearPricing())
                                             holder.offerPrice.setText("₹" +
                                                     NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
-                                                    "/year")
-                                        else
-                                            holder.offerPrice.setText("₹" +
-                                                    NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
-                                                    "/" + bundles.min_purchase_months + "mths")
+                                                    Utils.yearlyOrMonthlyOrEmptyValidity("", activity))
                                         if (offeredBundlePrice != originalBundlePrice) {
                                             spannableString(holder, originalBundlePrice, bundles.min_purchase_months!!)
                                             holder.origCost.visibility = View.VISIBLE
@@ -125,14 +120,9 @@ class PackageViewPagerAdapter(
                                             holder.origCost.visibility = View.GONE
                                         }
                                     }else{
-                                        if(prefs.getYearPricing())
                                             holder.offerPrice.setText("₹" +
                                                     NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)
-                                                    + "/year")
-                                        else
-                                            holder.offerPrice.setText("₹" +
-                                                    NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)
-                                                    + "/mth")
+                                                    + Utils.yearlyOrMonthlyOrEmptyValidity("", activity))
                                         if (offeredBundlePrice != originalBundlePrice) {
                                             spannableString(holder, originalBundlePrice, 1)
                                             holder.origCost.visibility = View.VISIBLE
