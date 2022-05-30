@@ -41,7 +41,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"
                         android:fontFamily="@font/semi_bold"
-                        android:text="My current plan"
+                        android:text="My Current Plan"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_11sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
