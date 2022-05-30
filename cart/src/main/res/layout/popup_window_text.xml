@@ -13,7 +13,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cv1"
             android:layout_width="155dp"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:cardCornerRadius="4dp"
@@ -59,7 +59,7 @@
           app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/popup_gst_value1"
+        android:id="@+id/popup_discount_value1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
@@ -69,10 +69,9 @@
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:textFontWeight="400"
-        android:text="18% IGST"
+        android:text="Discount"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/price2"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/popup_gst_value"/>
 
             <TextView
@@ -85,12 +84,47 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_12sdp"
                 android:layout_marginTop="12dp"
-                android:text="3,500"
+                android:text="-500"
+                android:textFontWeight="400"
+                android:fontFamily="@font/regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/popup_discount_value1"
+                app:layout_constraintTop_toBottomOf="@+id/price1"/>
+
+
+            <TextView
+                android:id="@+id/popup_gst_value1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/copy_coupon_text_color"
+                android:fontFamily="@font/regular"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:textFontWeight="400"
+                android:text="18% IGST"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/price3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/popup_discount_value1"/>
+
+            <TextView
+                android:id="@+id/price3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/main_color_gray_dk"
+                android:textStyle="normal"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:layout_marginTop="12dp"
+                android:text="3,000"
                 android:textFontWeight="400"
                 android:fontFamily="@font/regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/popup_gst_value1"
-                app:layout_constraintTop_toBottomOf="@+id/price1"/>
+                app:layout_constraintTop_toBottomOf="@+id/price2"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Build
+import android.text.Html
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -22,11 +23,11 @@ import com.boost.marketplace.interfaces.CategorySelectorListener
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.framework.analytics.SentryController
 import kotlinx.android.synthetic.main.activity_browse_features.*
+import kotlinx.android.synthetic.main.activity_marketplace.*
 
 class BrowseFeaturesActivity :
     AppBaseActivity<ActivityBrowseFeaturesBinding, BrowseFeaturesViewModel>(),
     AddonsListener, CategorySelectorListener {
-
 
     var singleWidgetKey: String? = null
     var badgeNumber = 0
@@ -86,6 +87,7 @@ class BrowseFeaturesActivity :
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
         try {
             viewModel.loadAllFeaturesfromDB()
+            viewModel.getCategoriesFromAssetJson(this, experienceCode)
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
@@ -209,6 +211,15 @@ class BrowseFeaturesActivity :
                 itemInCartStatus = false
             }
         })
+
+        viewModel.categoryResult().observe(this, androidx.lifecycle.Observer {
+            if (it != null) {
+                adapter.updateAccountType(it.lowercase())
+                adapter.notifyDataSetChanged()
+                desc.text = "Features that "+it.lowercase()+" are liking most."
+            }
+
+        })
     }
 
 
@@ -245,7 +256,6 @@ class BrowseFeaturesActivity :
 //            shimmer_view_addon_category.visibility = View.GONE
 //        }
         adapter.addupdates(addonsCategoryTypes)
-        browse_features_rv.adapter = adapter
         adapter.notifyDataSetChanged()
         browse_features_rv.isFocusable = false
 //        back_image.isFocusable = true
@@ -285,13 +295,6 @@ class BrowseFeaturesActivity :
         }
         intent.putExtra("profileUrl", profileUrl)
         intent.putExtra("itemId", item.feature_code)
-
-//                                                            startActivity(intent)
-
-
-//                intent.putExtra("itemId", it.feature_code)
-//                startActivity(intent)
-        // intent.putExtra("itemId", item!!.cta_feature_key)
         startActivity(intent)
     }
 
@@ -301,7 +304,6 @@ class BrowseFeaturesActivity :
         val addonsCategoryTypes = arrayListOf<String>()
         addonsCategoryTypes.add(item)
         adapter.addupdates(addonsCategoryTypes)
-        browse_features_rv.adapter = adapter
         adapter.notifyDataSetChanged()
         browse_features_rv.isFocusable = false
     }

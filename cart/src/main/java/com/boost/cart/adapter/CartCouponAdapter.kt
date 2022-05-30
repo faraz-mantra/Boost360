@@ -11,14 +11,16 @@ import com.boost.cart.interfaces.ApplyCouponListener
 import com.boost.dbcenterapi.data.api_model.getCouponResponse.Data
 import java.text.DecimalFormat
 
-class CartCouponAdapter(private val mList: List<Data>, private val total: Double, private val applyCouponListener: ApplyCouponListener)
+class CartCouponAdapter(val applyCouponListener: ApplyCouponListener)
     : RecyclerView.Adapter<CartCouponAdapter.ViewHolder>() {
+
+    private var mList: List<Data> = arrayListOf()
+    var total: Double = 0.0
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartCouponAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_coupon_code, parent, false)
-
         return ViewHolder(view)
     }
 
@@ -43,6 +45,12 @@ class CartCouponAdapter(private val mList: List<Data>, private val total: Double
 
     override fun getItemCount(): Int {
         return mList.size
+    }
+
+    fun updateCouponList(mList: List<Data>,total: Double){
+        this.mList = mList
+        this.total = total
+        notifyDataSetChanged()
     }
 
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {

@@ -1,5 +1,6 @@
 package com.boost.marketplace.adapter
 
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -7,12 +8,17 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.utils.Utils
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.ui.browse.BrowseFeaturesActivity
+import com.framework.analytics.SentryController
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 
 class BrowseParentFeaturesAdapter(
     var upgradeList: ArrayList<String>,
@@ -20,14 +26,24 @@ class BrowseParentFeaturesAdapter(
     val addonsListener: AddonsListener
 ) : RecyclerView.Adapter<BrowseParentFeaturesAdapter.ViewHolder>() {
 
+    lateinit var context: Context
+    var accountType = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val item = View.inflate(parent.context, R.layout.item_browse_features, null)
+        context = item.context
         return ViewHolder(item)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.title.setText(upgradeList.get(position))
+        if(accountType.isNotEmpty()) {
+            holder.desc.setText("Features that $accountType are liking most.")
+            if(position != 0)
+                holder.desc.visibility = View.VISIBLE
+        }else{
+            holder.desc.visibility = View.GONE
+        }
         getFeaturesByType(holder, position)
         if(position == 0){
             holder.titleLayout.visibility = View.GONE
@@ -48,6 +64,11 @@ class BrowseParentFeaturesAdapter(
         notifyItemRangeInserted(initPosition, upgradeList.size)
     }
 
+    fun updateAccountType(accountType: String){
+        this.accountType = accountType
+        notifyDataSetChanged()
+    }
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title = itemView.findViewById<TextView>(R.id.title)
         val desc = itemView.findViewById<TextView>(R.id.desc)
@@ -65,7 +86,7 @@ class BrowseParentFeaturesAdapter(
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        val adapter = BrowseChildFeaturesAdapter(ArrayList(it.subList(0,4)) , addonsListener, activity)
+                        val adapter = BrowseChildFeaturesAdapter(ArrayList(it.subList(0,4)), accountType , addonsListener, activity)
                         holder.recyclerview.adapter = adapter
                         adapter.notifyDataSetChanged()
                     }, {
@@ -80,7 +101,7 @@ class BrowseParentFeaturesAdapter(
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        val adapter = BrowseChildFeaturesAdapter(it, addonsListener, activity)
+                        val adapter = BrowseChildFeaturesAdapter(it, accountType, addonsListener, activity)
                         holder.recyclerview.adapter = adapter
                         adapter.notifyDataSetChanged()
                     }, {

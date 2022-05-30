@@ -134,8 +134,9 @@
             app:layout_constraintTop_toBottomOf="@id/browse_toolbar">
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:padding="2dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -151,6 +152,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Features that manufacturers are liking most."
+                    android:singleLine="true"
                     android:textSize="@dimen/_12ssp"
                     android:textStyle="normal" />
             </LinearLayout>
@@ -163,7 +165,7 @@
                 android:layout_alignTop="@id/feature_name_ll"
                 android:layout_alignBottom="@id/feature_name_ll"
                 android:padding="@dimen/_10sdp"
-                android:foregroundGravity="center"
+                android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_browse_features_show_hide" />
         </LinearLayout>
 

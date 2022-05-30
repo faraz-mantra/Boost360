@@ -1,5 +1,7 @@
 package com.boost.marketplace.adapter
 
+import android.content.Context
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -11,6 +13,7 @@ import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.home.MarketPlaceActivity
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
+import com.framework.views.customViews.CustomImageView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -20,12 +23,15 @@ class PartnerViewPagerAdapter(
   val list: ArrayList<PartnerZone>, val activity: MarketPlaceActivity, val homeListener: HomeListener
 ) : RecyclerView.Adapter<PartnerViewPagerAdapter.PagerViewHolder>() {
 
+  lateinit var context: Context
+
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {
     val item = View.inflate(parent.context, R.layout.item_partner, null)
     val lp = ViewGroup.LayoutParams(
       ViewGroup.LayoutParams.MATCH_PARENT,
       ViewGroup.LayoutParams.MATCH_PARENT
     )
+    context = item.context
     item.layoutParams = lp
     return PagerViewHolder(item)
   }
@@ -35,7 +41,8 @@ class PartnerViewPagerAdapter(
   }
 
   override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
-    Glide.with(holder.itemView.context).load(list.get(position).image.url?:"").into(holder.primaryImage)
+    Log.e("PartnerViewPagerAdapter", ">>>>>> loading image " + list.get(position).image.url)
+    Glide.with(context).load(list.get(position).image.url?:"").into(holder.primaryImage)
     holder.primaryImage.setOnClickListener {
       homeListener.onPartnerZoneClicked(list.get(position))
     }
