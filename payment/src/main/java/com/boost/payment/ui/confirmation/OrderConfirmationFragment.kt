@@ -82,12 +82,6 @@ class OrderConfirmationFragment : BaseFragment() {
     viewModel = ViewModelProviders.of(this).get(OrderConfirmationViewModel::class.java)
     viewModel.emptyCurrentCart((activity as PaymentActivity).application);
 
-    //clear CartRelatedInfo
-    prefs.storeOrderSuccessFlag(true)
-    prefs.storeCartOrderInfo(null)
-    prefs.storeApplyedCouponDetails(null)
-    UserSessionManager(requireActivity()).storeIntDetails(Key_Preferences.KEY_FP_CART_COUNT,0)
-
     //firsttimepurchase logic for app review
     if(prefs.getFirstTimePurchase()){
       InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.in_app_review_first_purchase)
@@ -105,13 +99,21 @@ class OrderConfirmationFragment : BaseFragment() {
           external_link_payment_status.visibility = View.GONE
         }
       }
+      val months = if(prefs.getValidityMonths().isNullOrEmpty()) 0 else prefs.getValidityMonths()!!.toInt()
       order_details_feature_count.text =
-        "Your have ordered " + prefs.getFeaturesCountInLastOrder() + " features for ₹" + prefs.getLatestPurchaseOrderTotalPrice() + "/month."
+        "You have ordered " + prefs.getFeaturesCountInLastOrder() + " features for ₹" + prefs.getLatestPurchaseOrderTotalPrice() +"/"+ if(months>1) months else "" + Utils.yearOrMonthText(months,requireActivity(), false)//"/month."
       paymentBanner.text = "Order #" + prefs.getLatestPurchaseOrderId()
       val date = Calendar.getInstance().time
       val formatter = SimpleDateFormat("EEE, MMM d, yyyy 'at' hh:mm aaa")
       order_id_details.text = "Order placed on " + formatter.format(date) +
           "\nOrder ID #" + prefs.getLatestPurchaseOrderId() + "\nTransaction ID #" + prefs.getTransactionIdFromCart()
+
+      //clear CartRelatedInfo
+      prefs.storeOrderSuccessFlag(true)
+      prefs.storeCartOrderInfo(null)
+      prefs.storeApplyedCouponDetails(null)
+      prefs.storeValidityMonths(null)
+      UserSessionManager(requireActivity()).storeIntDetails(Key_Preferences.KEY_FP_CART_COUNT,0)
     } catch (e: Exception) {
       SentryController.captureException(e)
       Log.e("Error", e.message ?: "")
@@ -164,7 +166,7 @@ class OrderConfirmationFragment : BaseFragment() {
 
   private fun goToHomeFragment() {
     try {
-      val intent = Intent(context, Class.forName("com.boost.upgrades.UpgradeActivity"))
+      val intent = Intent(context, Class.forName("com.boost.marketplace.ui.home.MarketPlaceActivity"))
       intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       intent.putExtra("isComingFromOrderConfirm",true)
       intent.putExtra("expCode", session?.fP_AppExperienceCode)
@@ -201,7 +203,7 @@ class OrderConfirmationFragment : BaseFragment() {
 
   private fun goToAddOnsFragment() {
     try {
-      val intent = Intent(context, Class.forName("com.boost.upgrades.UpgradeActivity"))
+      val intent = Intent(context, Class.forName("com.boost.marketplace.ui.home.MarketPlaceActivity"))
       intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       intent.putExtra("isComingFromOrderConfirmActivation",true)
       intent.putExtra("expCode", session?.fP_AppExperienceCode)

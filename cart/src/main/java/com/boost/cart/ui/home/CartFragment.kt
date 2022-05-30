@@ -2915,7 +2915,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
                         val dialog = Dialog(requireActivity())
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                        dialog.setCancelable(false)
+                        dialog.setCancelable(true)
                         dialog.setContentView(R.layout.layout_saved_coupon)
                         val tv_coupon_saved = dialog.findViewById(R.id.tv_badge_text) as AppCompatTextView
                         val tv_coupon_name = dialog.findViewById(R.id.tv_error_message) as AppCompatTextView
