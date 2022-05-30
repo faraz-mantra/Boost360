@@ -90,7 +90,7 @@
   <string name="account_holder_s_name">Account holder\'s name*</string>
   <string name="name_of_the_bank">Name of the bank*</string>
   <string name="enter_bank_name">Enter bank name</string>
-  <string name="ifsc_code">IFSC code*</string>
+  <string name="ifsc_code_with_aestrick">IFSC code*</string>
   <string name="enter_ifsc_code">Enter IFSC code</string>
   <string name="latest_bank_statement_last_1_month">Latest bank statement (Last 1 month)*</string>
   <string name="upload">upload</string>
