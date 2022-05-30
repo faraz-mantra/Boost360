@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.SimplePageTransformerSmall
@@ -221,9 +222,7 @@ class FeatureDetailsActivity :
                 if (addonDetails != null) {
                     when {
                         addonDetails?.boost_widget_key?.equals("IVR")!! -> {
-                            val intent = Intent(this, CallTrackingActivity::class.java)
-                            intent.putExtra("fpid", fpid)
-                            startActivity(intent)
+                            loadNumberList()
                         }
                         addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
                             startActivity(Intent(this, CustomDomainActivity::class.java))
@@ -302,9 +301,7 @@ class FeatureDetailsActivity :
                 if (addonDetails != null) {
                     when {
                         addonDetails?.boost_widget_key?.equals("IVR")!! -> {
-                            val intent = Intent(this, CallTrackingActivity::class.java)
-                            intent.putExtra("fpid", fpid)
-                            startActivity(intent)
+                            loadNumberList()
                         }
                         addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
                             startActivity(Intent(this, CustomDomainActivity::class.java))
@@ -451,8 +448,33 @@ class FeatureDetailsActivity :
     }
 
 
+    private fun loadNumberList() {
+        try {
+            viewModel.loadNumberList(
+                intent.getStringExtra("fpid") ?: "",
+                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+
+            )
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
+
+    }
+
+
     @SuppressLint("FragmentLiveDataObserve")
     fun initMvvm() {
+        viewModel.getCallTrackingDetails().observe(this) {
+            if (it != null) {
+
+                System.out.println("numberList" + it)
+
+                val intent = Intent(this, CallTrackingActivity::class.java)
+                intent.putExtra("numberList", it)
+                startActivity(intent)
+
+            }
+        }
         viewModel.addonsResult().observe(this, Observer {
 
             //if the View is from PackageView then No need to call getCartItems method

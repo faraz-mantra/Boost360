@@ -2,7 +2,11 @@ package com.boost.marketplace.ui.details.call_track
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,13 +24,16 @@ import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityCallTrackingBinding
 import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.coupons.OfferCouponViewModel
+import com.boost.marketplace.ui.details.FeatureDetailsViewModel
 import com.boost.marketplace.ui.details.domain.*
 import com.framework.analytics.SentryController
+import kotlinx.android.synthetic.main.activity_my_current_plan.*
 
 
-class CallTrackingActivity : AppBaseActivity<ActivityCallTrackingBinding, CallTrackViewModel>(),
+class CallTrackingActivity :
+    AppBaseActivity<ActivityCallTrackingBinding, FeatureDetailsViewModel>(),
     HomeListener {
-    lateinit var numberList: CallTrackListResponse
+    lateinit var numberList: ArrayList<String>
 
     override fun getLayout(): Int {
         return R.layout.activity_call_tracking
@@ -37,24 +44,24 @@ class CallTrackingActivity : AppBaseActivity<ActivityCallTrackingBinding, CallTr
     }
 
 
-    override fun getViewModelClass(): Class<CallTrackViewModel> {
-        return CallTrackViewModel::class.java
+    override fun getViewModelClass(): Class<FeatureDetailsViewModel> {
+        return FeatureDetailsViewModel::class.java
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[CallTrackViewModel::class.java]
+        viewModel = ViewModelProvider(this)[FeatureDetailsViewModel::class.java]
         viewModel.setApplicationLifecycle(application, this)
-
-        loadData()
+        numberList = intent.getStringArrayListExtra("numberList")!!
         initMvvm()
     }
-
     override fun onCreateView() {
         super.onCreateView()
 
 
+        binding?.addonsBack?.setOnClickListener {
+            super.onBackPressed()
+        }
         binding?.help?.setOnClickListener {
             val dialogCard = CallTrackingHelpBottomSheet()
             dialogCard.show(
@@ -67,34 +74,44 @@ class CallTrackingActivity : AppBaseActivity<ActivityCallTrackingBinding, CallTr
             dialogCard.show(this.supportFragmentManager, SelectedNumberBottomSheet::class.java.name)
         }
 
-    }
-
-    private fun loadData() {
-        try {
-            viewModel.loadNumberList(
-                intent.getStringExtra("fpid") ?: "",
-                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
-
-            )
-        } catch (e: Exception) {
-            SentryController.captureException(e)
+        binding?.etLayout?.setOnClickListener {
+            binding?.etLayout?.setBackgroundResource(R.drawable.selected_orange_border_bg)
+            binding?.btnSearch?.visibility = VISIBLE
+            binding?.ivCross?.visibility = GONE
+        }
+        binding?.ivCross?.setOnClickListener {
+            binding?.etDomain?.setText("")
+            binding?.etDomain?.hint = "Search for a sequence of digits ..."
+        }
+        binding?.btnSearch?.setOnClickListener {
+            updateAllItemBySearchValue(binding?.etDomain?.text.toString())
+            binding?.btnSearch?.visibility= GONE
+            binding?.ivCross?.visibility = VISIBLE
+            binding?.etDomain?.setBackgroundResource(R.drawable.custom_domain_edit_text_bg)
         }
 
     }
 
     private fun initMvvm() {
-        viewModel.getCallTrackingDetails().observe(this) {
-            if (it != null) {
+        val recyclerview = findViewById<RecyclerView>(R.id.rv_number_list)
+        recyclerview.layoutManager = LinearLayoutManager(this)
+        val adapter = NumberListAdapter(this, numberList, this)
+        recyclerview.adapter = adapter
+    }
 
-                System.out.println("numberList" + it)
+    fun updateAllItemBySearchValue(searchValue: String){
+        var freeitemList: ArrayList<String> = arrayListOf()
 
-                val recyclerview = findViewById<RecyclerView>(R.id.rv_number_list)
-                recyclerview.layoutManager = LinearLayoutManager(this)
-
-                val adapter = NumberListAdapter(this, it, this)
-                recyclerview.adapter = adapter
+        for(number in numberList!!){
+            if(number.lowercase()?.indexOf(searchValue.lowercase()) != -1 ){
+                freeitemList.add(number)
             }
         }
+        val recyclerview = findViewById<RecyclerView>(R.id.rv_number_list)
+        recyclerview.layoutManager = LinearLayoutManager(this)
+        val adapter = NumberListAdapter(this, numberList, this)
+        recyclerview.adapter = adapter
+        adapter.notifyDataSetChanged()
     }
 
     override fun onPackageClicked(item: Bundles?) {

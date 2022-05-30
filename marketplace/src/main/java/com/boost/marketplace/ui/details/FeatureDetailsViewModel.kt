@@ -3,10 +3,14 @@ package com.boost.marketplace.ui.details
 import android.app.Activity
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.boost.cart.utils.Utils
+import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
+import com.boost.dbcenterapi.data.api_model.gst.Error
+import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
@@ -15,10 +19,12 @@ import com.boost.dbcenterapi.utils.DataLoader
 import com.framework.models.BaseViewModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import es.dmoral.toasty.Toasty
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 
 class FeatureDetailsViewModel: BaseViewModel() {
 
@@ -27,6 +33,8 @@ class FeatureDetailsViewModel: BaseViewModel() {
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
     var allBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
+    private var callTrackListResponse: MutableLiveData<CallTrackListResponse> = MutableLiveData()
+
 
     val compositeDisposable = CompositeDisposable()
 
@@ -51,12 +59,50 @@ class FeatureDetailsViewModel: BaseViewModel() {
     }
     lateinit var application: Application
     lateinit var lifecycleOwner: LifecycleOwner
+    var ApiService = com.boost.dbcenterapi.utils.Utils.getRetrofit().create(NewApiInterface::class.java)
 
     fun setApplicationLifecycle(application: Application,
                                 lifecycleOwner: LifecycleOwner
     ){
         this.application = application
         this.lifecycleOwner = lifecycleOwner
+    }
+    fun getCallTrackingDetails(): LiveData<CallTrackListResponse> {
+        return callTrackListResponse
+    }
+    fun loadNumberList(fpid: String, clientId: String) {
+        updatesLoader.postValue(true)
+        if (Utils.isConnectedToInternet(application)) {
+            System.out.println("fpid--->" + fpid)
+            System.out.println("clientId--->" + clientId)
+            CompositeDisposable().add(
+                ApiService.getCallTrackDetails(fpid, clientId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            Log.i("getNumbersforVMN", it.toString())
+                            updatesLoader.postValue(false)
+
+                            var NumberList = it
+                            callTrackListResponse.postValue(NumberList)
+                        }
+                        ,
+                        {
+                            val temp = (it as HttpException).response()!!.errorBody()!!.string()
+                            val errorBody: Error =
+                                Gson().fromJson(temp, object : TypeToken<Error>() {}.type)
+                            Toasty.error(
+                                application,
+                                "Error in Loading Numbers!!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    )
+
+            )
+
+        }
     }
 
     fun loadAddonsFromDB(boostKey: String) {
