@@ -49,7 +49,6 @@ class OfferCouponViewModel() : BaseViewModel() {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
                                     {
-                                        Log.i("getOfferCouponDetails", it.toString())
                                         var couponResponse = it
                                         couponApiInfo.postValue(couponResponse)
                                     },

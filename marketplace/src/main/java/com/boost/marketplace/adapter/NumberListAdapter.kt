@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.HomeListener
+import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
 import com.boost.marketplace.ui.home.MarketPlaceActivity
 import com.framework.analytics.SentryController
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -18,8 +19,8 @@ import io.reactivex.schedulers.Schedulers
 
 
 class NumberListAdapter(
-        val activity: MarketPlaceActivity,
-        cryptoCurrencies: List<String>?,
+        val activity: CallTrackingActivity,
+        cryptoCurrencies: ArrayList<String>?,
         val listener: HomeListener
 ) : RecyclerView.Adapter<NumberListAdapter.upgradeViewHolder>() {
 

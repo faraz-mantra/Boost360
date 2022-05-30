@@ -259,6 +259,16 @@
                                 android:textSize="@dimen/txt_14sp"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
+                            <ImageView
+                                android:id="@+id/image1222_new"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_gravity="center"
+                                android:scaleType="fitXY"
+                                tools:src="@drawable/addons"
+                                android:textSize="@dimen/txt_14sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
                                 android:id="@+id/title_top_1"
@@ -334,6 +344,7 @@
                                 android:layout_marginTop="19dp"
                                 android:fontFamily="@font/regular"
                                 android:maxLines="2"
+                                android:ellipsize="end"
                                 android:text="Create email accounts for your employees."
                                 android:textColor="@color/common_text_color"
                                 android:textSize="@dimen/_12sdp"
@@ -347,7 +358,7 @@
                                 android:background="@color/white"
                                 android:fontFamily="@font/bold"
                                 android:paddingStart="10dp"
-                                android:text="Learn more"
+                                android:text="@string/learn_more_feature_details"
                                 android:textColor="@color/colorAccent1"
                                 android:textSize="12dp"
                                 app:layout_constraintBottom_toBottomOf="@id/title_bottom3"
@@ -362,7 +373,7 @@
                                 android:fontFamily="@font/bold"
                                 android:padding="5dp"
                                 android:paddingStart="10dp"
-                                android:text="Show less"
+                                android:text="@string/show_less"
                                 android:textColor="@color/colorAccent1"
                                 android:textSize="12dp"
                                 android:visibility="gone"

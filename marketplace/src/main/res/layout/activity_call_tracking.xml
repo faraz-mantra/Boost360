@@ -136,6 +136,8 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/btn_select_number"
             android:layout_below="@id/toolbar"
+            android:paddingBottom="@dimen/pad_20dp"
+            android:clipToPadding="false"
             android:visibility="visible"
 
             >

@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.text.style.StrikethroughSpan
 import android.text.style.UnderlineSpan
@@ -51,6 +52,7 @@ import com.boost.marketplace.ui.webview.WebViewActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.framework.analytics.SentryController
+import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 import com.google.android.material.appbar.AppBarLayout
 import com.google.gson.Gson
@@ -220,7 +222,9 @@ class FeatureDetailsActivity :
                 if (addonDetails != null) {
                     when {
                         addonDetails?.boost_widget_key?.equals("IVR")!! -> {
-                            startActivity(Intent(this, CallTrackingActivity::class.java))
+                            val intent = Intent(this, CallTrackingActivity::class.java)
+                            intent.putExtra("fpid", fpid)
+                            startActivity(intent)
                         }
                         addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
                             startActivity(Intent(this, CustomDomainActivity::class.java))
@@ -282,9 +286,6 @@ class FeatureDetailsActivity :
                             add_item_to_cart.text = getString(R.string.added_to_cart)
                             itemInCartStatus = true
                             this.onPackageClicked(null, image1222)
-                            Glide.with(this).load(addonDetails!!.primary_image)
-                                .into(image1222)
-
                         }
                     }
 
@@ -298,7 +299,9 @@ class FeatureDetailsActivity :
                 if (addonDetails != null) {
                     when {
                         addonDetails?.boost_widget_key?.equals("IVR")!! -> {
-                            startActivity(Intent(this, CallTrackingActivity::class.java))
+                            val intent = Intent(this, CallTrackingActivity::class.java)
+                            intent.putExtra("fpid", fpid)
+                            startActivity(intent)
                         }
                         addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
                             startActivity(Intent(this, CustomDomainActivity::class.java))
@@ -360,9 +363,6 @@ class FeatureDetailsActivity :
                             add_item_to_cart_new.text = getString(R.string.added_to_cart)
                             itemInCartStatus = true
                             this.onPackageClicked(null, image1222)
-                            Glide.with(this).load(addonDetails!!.primary_image)
-                                .into(image1222)
-
                         }
                     }
 
@@ -384,6 +384,7 @@ class FeatureDetailsActivity :
             learn_more_btn.visibility = View.VISIBLE
             learn_less_btn.visibility = View.GONE
             title_bottom3.maxLines = 2
+            title_bottom3.ellipsize = TextUtils.TruncateAt.END
             bottom_box.visibility = GONE
             bottom_box_only_btn.visibility = VISIBLE
         }
@@ -516,6 +517,8 @@ class FeatureDetailsActivity :
                 Glide.with(this).load(addonDetails!!.primary_image)
                     .into(image1222)
 
+                Glide.with(this).load(addonDetails!!.primary_image)
+                    .into(image1222_new)
                 Glide.with(this).load(addonDetails!!.feature_banner)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .fitCenter()
