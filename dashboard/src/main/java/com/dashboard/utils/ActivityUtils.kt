@@ -238,7 +238,6 @@ fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOp
     if (isLoadingShow) delayProgressShow()
     WebEngageController.trackEvent(ADDON_MARKETPLACE_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val intent = Intent(this, Class.forName("com.boost.marketplace.ui.home.MarketPlaceActivity"))
-//    val intent = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
     intent.putExtra("expCode", session.fP_AppExperienceCode)
     intent.putExtra("fpName", session.fPName)
     intent.putExtra("fpid", session.fPID)
