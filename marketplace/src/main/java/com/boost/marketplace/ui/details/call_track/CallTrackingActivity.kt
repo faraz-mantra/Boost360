@@ -27,6 +27,7 @@ import com.boost.marketplace.ui.coupons.OfferCouponViewModel
 import com.boost.marketplace.ui.details.FeatureDetailsViewModel
 import com.boost.marketplace.ui.details.domain.*
 import com.framework.analytics.SentryController
+import kotlinx.android.synthetic.main.activity_call_tracking.*
 import kotlinx.android.synthetic.main.activity_my_current_plan.*
 
 
@@ -52,9 +53,10 @@ class CallTrackingActivity :
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this)[FeatureDetailsViewModel::class.java]
         viewModel.setApplicationLifecycle(application, this)
-        numberList = intent.getStringArrayListExtra("numberList")!!
+        numberList = intent.getStringArrayListExtra("list")!!
         initMvvm()
     }
+
     override fun onCreateView() {
         super.onCreateView()
 
@@ -73,21 +75,40 @@ class CallTrackingActivity :
             val dialogCard = SelectedNumberBottomSheet()
             dialogCard.show(this.supportFragmentManager, SelectedNumberBottomSheet::class.java.name)
         }
+        binding?.etCallTrack?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
 
-        binding?.etLayout?.setOnClickListener {
-            binding?.etLayout?.setBackgroundResource(R.drawable.selected_orange_border_bg)
-            binding?.btnSearch?.visibility = VISIBLE
-            binding?.ivCross?.visibility = GONE
-        }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (p0 != null && p0?.length!! > 2) {
+                    binding?.ivCross?.visibility = View.GONE
+                    binding?.btnSearch?.visibility = View.VISIBLE
+                    binding?.btnSearch?.setOnClickListener {
+                        updateAllItemBySearchValue(p0.toString())
+                        binding?.btnSearch?.visibility = View.GONE
+
+                    }
+                    binding?.ivCross?.visibility = View.VISIBLE
+
+                } else {
+//                    totalFreeItemList?.let { updateFreeAddonsRecycler(it) }
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
+        })
         binding?.ivCross?.setOnClickListener {
-            binding?.etDomain?.setText("")
-            binding?.etDomain?.hint = "Search for a sequence of digits ..."
+            binding?.etCallTrack?.setText("")
+            binding?.etCallTrack?.hint = "Search for a sequence of digits ..."
         }
         binding?.btnSearch?.setOnClickListener {
-            updateAllItemBySearchValue(binding?.etDomain?.text.toString())
-            binding?.btnSearch?.visibility= GONE
+            updateAllItemBySearchValue(binding?.etCallTrack?.text.toString())
+            binding?.btnSearch?.visibility = GONE
             binding?.ivCross?.visibility = VISIBLE
-            binding?.etDomain?.setBackgroundResource(R.drawable.custom_domain_edit_text_bg)
+            binding?.etCallTrack?.setBackgroundResource(R.drawable.custom_domain_edit_text_bg)
         }
 
     }
@@ -95,58 +116,49 @@ class CallTrackingActivity :
     private fun initMvvm() {
         val recyclerview = findViewById<RecyclerView>(R.id.rv_number_list)
         recyclerview.layoutManager = LinearLayoutManager(this)
-        val adapter = NumberListAdapter(this, numberList, this)
+        val adapter = NumberListAdapter(this, numberList, null,this)
         recyclerview.adapter = adapter
     }
 
-    fun updateAllItemBySearchValue(searchValue: String){
+    fun updateAllItemBySearchValue(searchValue: String) {
         var freeitemList: ArrayList<String> = arrayListOf()
 
-        for(number in numberList!!){
-            if(number.lowercase()?.indexOf(searchValue.lowercase()) != -1 ){
+        for (number in numberList!!) {
+            if (number.lowercase()?.indexOf(searchValue.lowercase()) != -1) {
                 freeitemList.add(number)
             }
         }
         val recyclerview = findViewById<RecyclerView>(R.id.rv_number_list)
         recyclerview.layoutManager = LinearLayoutManager(this)
-        val adapter = NumberListAdapter(this, numberList, this)
+        val adapter = NumberListAdapter(this, numberList, searchValue,this)
         recyclerview.adapter = adapter
         adapter.notifyDataSetChanged()
     }
 
     override fun onPackageClicked(item: Bundles?) {
-        TODO("Not yet implemented")
     }
 
     override fun onPromoBannerClicked(item: PromoBanners?) {
-        TODO("Not yet implemented")
     }
 
     override fun onShowHidePromoBannerIndicator(status: Boolean) {
-        TODO("Not yet implemented")
     }
 
     override fun onPartnerZoneClicked(item: PartnerZone?) {
-        TODO("Not yet implemented")
     }
 
     override fun onShowHidePartnerZoneIndicator(status: Boolean) {
-        TODO("Not yet implemented")
     }
 
     override fun onAddFeatureDealItemToCart(item: FeaturesModel?, minMonth: Int) {
-        TODO("Not yet implemented")
     }
 
     override fun onAddonsCategoryClicked(categoryType: String) {
-        TODO("Not yet implemented")
     }
 
     override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
-        TODO("Not yet implemented")
     }
 
     override fun onPackageAddToCart(item: Bundles?, image: ImageView) {
-        TODO("Not yet implemented")
     }
 }

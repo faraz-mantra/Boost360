@@ -47,6 +47,7 @@ import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
 import com.boost.marketplace.ui.details.call_track.CallTrackingHelpBottomSheet
 import com.boost.marketplace.ui.details.call_track.RequestCallbackBottomSheet
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
+import com.boost.marketplace.ui.details.domain.SelectedNumberBottomSheet
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.webview.WebViewActivity
@@ -469,10 +470,15 @@ class FeatureDetailsActivity :
 
                 System.out.println("numberList" + it)
 
-                val intent = Intent(this, CallTrackingActivity::class.java)
-                intent.putExtra("numberList", it)
-                startActivity(intent)
-
+                val dialogCard = SelectedNumberBottomSheet()
+                val args = Bundle()
+                args.putString("phone_number", it[0])
+                args.putStringArrayList("numberList", it)
+                dialogCard.arguments = args
+                dialogCard.show(
+                    this.supportFragmentManager,
+                    SelectedNumberBottomSheet::class.java.name
+                )
             }
         }
         viewModel.addonsResult().observe(this, Observer {

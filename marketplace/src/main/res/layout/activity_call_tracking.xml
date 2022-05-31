@@ -98,15 +98,17 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/btn_select_number"
             android:layout_below="@id/toolbar"
-            android:paddingBottom="@dimen/pad_20dp"
             android:clipToPadding="false"
+            android:paddingBottom="@dimen/pad_20dp"
             android:visibility="visible"
 
             >
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="24dp">
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/et_layout"
                     android:layout_width="match_parent"
@@ -114,19 +116,20 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
-                    android:background="@drawable/custom_domain_edit_text_bg"
                     android:orientation="horizontal"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_domain"
-                        android:layout_width="0dp"
+                    <EditText
+                        android:id="@+id/et_call_track"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/call_track_edit_text_bg"
                         android:drawableStart="@drawable/ic_search_gray"
                         android:drawablePadding="@dimen/_14dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/regular"
                         android:hint="Search for a sequence of digits ..."
+                        android:inputType="number"
                         android:lineHeight="19.07dp"
                         android:maxLines="1"
                         android:padding="12dp"
@@ -134,7 +137,6 @@
                         android:textColorHint="@color/tv_color_BB"
                         android:textFontWeight="400"
                         android:textSize="@dimen/txt_14sp"
-                        android:background="@null"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/ivCross"
                         app:layout_constraintStart_toStartOf="parent"
@@ -147,8 +149,9 @@
                         android:layout_gravity="end"
                         android:layout_marginEnd="12dp"
                         android:src="@drawable/ic_cross"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/et_call_track"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <Button
@@ -159,7 +162,7 @@
                         android:background="@drawable/btn_orange_custom_domain"
                         android:fontFamily="@font/bold"
                         android:lineHeight="24dp"
-                        android:paddingStart="32dp"
+                        android:paddingStart="30dp"
                         android:paddingTop="8dp"
                         android:paddingEnd="32dp"
                         android:paddingBottom="8dp"
