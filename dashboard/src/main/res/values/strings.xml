@@ -305,4 +305,6 @@
 
   <string name="deep_base_url">boost.nowfloats.com</string>
   <string name="deep_base_onelink_url">nowfloat.onelink.me</string>
+  <string name="weekly_business_timings">Weekly business timings</string>
+  <string name="open">Open</string>
 </resources>

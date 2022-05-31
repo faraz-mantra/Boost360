@@ -93,18 +93,12 @@ class ServiceTimingFragment : AppBaseFragment<FragmentServiceTimingBinding, Staf
         it.isToggle = false
       } else {
         var startDate = it.businessTiming?.startTime?.parseDate(DateUtils.FORMAT_HH_MMA)
-        if (startDate == null) startDate =
-          it.businessTiming?.startTime?.parseDate(DateUtils.FORMAT_HH_MM_A)
+        if (startDate == null) startDate = it.businessTiming?.startTime?.parseDate(DateUtils.FORMAT_HH_MM_A)
         var endDate = it.businessTiming?.endTime?.parseDate(DateUtils.FORMAT_HH_MMA)
-        if (endDate == null) endDate =
-          it.businessTiming?.endTime?.parseDate(DateUtils.FORMAT_HH_MM_A)
+        if (endDate == null) endDate = it.businessTiming?.endTime?.parseDate(DateUtils.FORMAT_HH_MM_A)
         val startDateNew = serviceTiming?.time?.from?.parseDate(DateUtils.FORMAT_HH_MM_A)
         val endDateNew = serviceTiming?.time?.to?.parseDate(DateUtils.FORMAT_HH_MM_A)
-        if (startDate != null && endDate != null && startDateNew != null && endDateNew != null && DateUtils.isBetweenValidTime(
-            startDate,
-            endDate,
-            startDateNew
-          )
+        if (startDate != null && endDate != null && startDateNew != null && endDateNew != null && DateUtils.isBetweenValidTime(startDate, endDate, startDateNew)
           && DateUtils.isBetweenValidTime(startDate, endDate, endDateNew)
         ) {
           it.time = serviceTiming.time
