@@ -155,7 +155,7 @@ class FavouriteListFragment: AppBaseFragment<FragmentFavouriteListBinding, PostU
         categoryList.get(selectedPos).templateDetails?.let {
             val selectedItem = categoryList.get(selectedPos)
             selectedItem.isSelected =true
-            binding.tvCatTitle.text = selectedItem.tag
+            binding.tvCatTitle.text = selectedItem.tagName
             binding.tvCatSize.text = selectedItem.count.toString()
             posterRvAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,
                 it,this)
