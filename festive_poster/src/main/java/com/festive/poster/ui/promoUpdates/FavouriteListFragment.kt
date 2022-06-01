@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
+import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.Constants
 import com.festive.poster.constant.RecyclerViewActionType
@@ -141,7 +142,7 @@ class FavouriteListFragment: AppBaseFragment<FragmentFavouriteListBinding, PostU
                 )
             }
             RecyclerViewActionType.POST_CLICKED.ordinal-> {
-                posterPostClicked(item as PosterModel, requireActivity() as BaseActivity<*, *>)
+                posterPostClicked(item as PosterModel, requireActivity() as AppBaseActivity<*, *>)
             }
         }
 
