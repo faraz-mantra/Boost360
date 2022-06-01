@@ -221,7 +221,6 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
                             FacebookPermissions.pages_manage_metadata,
                             FacebookPermissions.instagram_basic,
                             FacebookPermissions.instagram_content_publish,
-                            FacebookPermissions.instagram_manage_insights,
                             )
 
 

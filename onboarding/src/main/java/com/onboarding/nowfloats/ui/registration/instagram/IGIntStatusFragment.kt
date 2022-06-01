@@ -81,7 +81,7 @@ class IGIntStatusFragment: BaseRegistrationFragment<FragmentIgIntStatusBinding>(
                     getString(
                         R.string.congratulations_boost_360_is_successfully_connected_to_your_instagram_account_placeholder
                     ,"@"+igName),"@"+igName)
-                binding!!.btnNext.text = getString(R.string.view_instagram_dashboard)
+                binding!!.btnNext.text = getString(R.string.done)
             }
             Status.FAILURE.name->{
                 binding!!.tvTitle.text = getString(R.string.instagram_integration_failed)
