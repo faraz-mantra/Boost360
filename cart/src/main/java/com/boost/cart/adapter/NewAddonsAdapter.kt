@@ -18,16 +18,11 @@ import com.bumptech.glide.Glide
 import kotlin.collections.ArrayList
 
 class NewAddonsAdapter(
-        cryptoCurrencies: List<FeaturesModel>?
+    val upgradeList: List<FeaturesModel>
 ) : RecyclerView.Adapter<NewAddonsAdapter.upgradeViewHolder>() {
 
-    private var upgradeList = ArrayList<FeaturesModel>()
     var minMonth = 1
     private lateinit var context: Context
-
-    init {
-        this.upgradeList = cryptoCurrencies as ArrayList<FeaturesModel>
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
         val itemView = LayoutInflater.from(parent?.context).inflate(

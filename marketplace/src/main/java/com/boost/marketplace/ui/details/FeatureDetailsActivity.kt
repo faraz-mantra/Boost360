@@ -213,161 +213,12 @@ class FeatureDetailsActivity :
         }
         )
 
-
         add_item_to_cart.setOnClickListener {
-            if (!itemInCartStatus) {
-                if (addonDetails != null) {
-                    when {
-                        addonDetails?.boost_widget_key?.equals("IVR")!! -> {
-                            startActivity(Intent(this, CallTrackingActivity::class.java))
-                        }
-                        addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
-                            startActivity(Intent(this, CustomDomainActivity::class.java))
-                        } else -> {
-                            makeFlyAnimation(addon_icon)
-                            prefs.storeCartOrderInfo(null)
-                            viewModel.addItemToCart1(addonDetails!!, this)
-                            val event_attributes: HashMap<String, Any> = HashMap()
-                            addonDetails!!.name?.let { it1 ->
-                                event_attributes.put(
-                                    "Addon Name",
-                                    it1
-                                )
-                            }
-                            event_attributes.put("Addon Price", addonDetails!!.price)
-                            event_attributes.put(
-                                "Addon Discounted Price",
-                                getDiscountedPrice(
-                                    addonDetails!!.price,
-                                    addonDetails!!.discount_percent
-                                )
-                            )
-                            event_attributes.put(
-                                "Addon Discount %",
-                                addonDetails!!.discount_percent
-                            )
-                            event_attributes.put("Addon Validity", 1)
-                            event_attributes.put(
-                                "Addon Feature Key",
-                                addonDetails!!.boost_widget_key
-                            )
-                            addonDetails!!.target_business_usecase?.let { it1 ->
-                                event_attributes.put(
-                                    "Addon Tag",
-                                    it1
-                                )
-                            }
-                            WebEngageController.trackEvent(
-                                ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
-                                ADDONS_MARKETPLACE,
-                                event_attributes
-                            )
-                            if (addonDetails!!.feature_code == "CUSTOM_PAYMENTGATEWAY")
-                                WebEngageController.trackEvent(
-                                    SELF_BRANDED_PAYMENT_GATEWAY_REQUESTED,
-                                    SELF_BRANDED_PAYMENT_GATEWAY,
-                                    NO_EVENT_VALUE
-                                )
-                            badgeNumber = badgeNumber + 1
-
-                            Constants.CART_VALUE = badgeNumber
-
-
-                            add_item_to_cart.background = ContextCompat.getDrawable(
-                                applicationContext,
-                                R.drawable.grey_button_click_effect
-                            )
-                            add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
-                            add_item_to_cart.text = getString(R.string.added_to_cart)
-                            itemInCartStatus = true
-                            makeFlyAnimation(addon_icon)
-                            Glide.with(this).load(addonDetails!!.primary_image)
-                                .into(image1222)
-
-                        }
-                    }
-
-
-                }
-            }
+            addItemToCart()
         }
 
         add_item_to_cart_new.setOnClickListener {
-            if (!itemInCartStatus) {
-                if (addonDetails != null) {
-                    when {
-                        addonDetails?.boost_widget_key?.equals("IVR")!! -> {
-                            startActivity(Intent(this, CallTrackingActivity::class.java))
-                        }
-                        addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
-                            startActivity(Intent(this, CustomDomainActivity::class.java))
-                        }
-                        else -> {
-                            prefs.storeCartOrderInfo(null)
-                            viewModel.addItemToCart1(addonDetails!!, this)
-                            val event_attributes: HashMap<String, Any> = HashMap()
-                            addonDetails!!.name?.let { it1 ->
-                                event_attributes.put(
-                                    "Addon Name",
-                                    it1
-                                )
-                            }
-                            event_attributes.put("Addon Price", addonDetails!!.price)
-                            event_attributes.put(
-                                "Addon Discounted Price",
-                                getDiscountedPrice(
-                                    addonDetails!!.price,
-                                    addonDetails!!.discount_percent
-                                )
-                            )
-                            event_attributes.put(
-                                "Addon Discount %",
-                                addonDetails!!.discount_percent
-                            )
-                            event_attributes.put("Addon Validity", 1)
-                            event_attributes.put(
-                                "Addon Feature Key",
-                                addonDetails!!.boost_widget_key
-                            )
-                            addonDetails!!.target_business_usecase?.let { it1 ->
-                                event_attributes.put(
-                                    "Addon Tag",
-                                    it1
-                                )
-                            }
-                            WebEngageController.trackEvent(
-                                ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
-                                ADDONS_MARKETPLACE,
-                                event_attributes
-                            )
-                            if (addonDetails!!.feature_code == "CUSTOM_PAYMENTGATEWAY")
-                                WebEngageController.trackEvent(
-                                    SELF_BRANDED_PAYMENT_GATEWAY_REQUESTED,
-                                    SELF_BRANDED_PAYMENT_GATEWAY,
-                                    NO_EVENT_VALUE
-                                )
-                            badgeNumber = badgeNumber + 1
-
-                            Constants.CART_VALUE = badgeNumber
-
-
-                            add_item_to_cart_new.background = ContextCompat.getDrawable(
-                                applicationContext,
-                                R.drawable.grey_button_click_effect
-                            )
-                            add_item_to_cart_new.setTextColor(getResources().getColor(R.color.tv_color_BB))
-                            add_item_to_cart_new.text = getString(R.string.added_to_cart)
-                            itemInCartStatus = true
-                            makeFlyAnimation(addon_icon)
-                            Glide.with(this).load(addonDetails!!.primary_image)
-                                .into(image1222)
-
-                        }
-                    }
-
-
-                }
-            }
+            addItemToCart()
         }
 
 
@@ -689,6 +540,82 @@ class FeatureDetailsActivity :
                 progressDialog.dismiss()
             }
         })
+    }
+
+    fun addItemToCart() {
+        if (!itemInCartStatus) {
+            if (addonDetails != null) {
+                when {
+                    addonDetails?.boost_widget_key?.equals("IVR")!! -> {
+                        startActivity(Intent(this, CallTrackingActivity::class.java))
+                    }
+                    addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
+                        startActivity(Intent(this, CustomDomainActivity::class.java))
+                    }
+                    else -> {
+                        makeFlyAnimation(addon_icon)
+                        prefs.storeCartOrderInfo(null)
+                        viewModel.addItemToCart1(addonDetails!!, this)
+                        val event_attributes: HashMap<String, Any> = HashMap()
+                        addonDetails!!.name?.let { it1 ->
+                            event_attributes.put(
+                                "Addon Name",
+                                it1
+                            )
+                        }
+                        event_attributes.put("Addon Price", addonDetails!!.price)
+                        event_attributes.put(
+                            "Addon Discounted Price",
+                            getDiscountedPrice(
+                                addonDetails!!.price,
+                                addonDetails!!.discount_percent
+                            )
+                        )
+                        event_attributes.put(
+                            "Addon Discount %",
+                            addonDetails!!.discount_percent
+                        )
+                        event_attributes.put("Addon Validity", 1)
+                        event_attributes.put(
+                            "Addon Feature Key",
+                            addonDetails!!.boost_widget_key
+                        )
+                        addonDetails!!.target_business_usecase?.let { it1 ->
+                            event_attributes.put(
+                                "Addon Tag",
+                                it1
+                            )
+                        }
+                        WebEngageController.trackEvent(
+                            ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
+                            ADDONS_MARKETPLACE,
+                            event_attributes
+                        )
+                        if (addonDetails!!.feature_code == "CUSTOM_PAYMENTGATEWAY")
+                            WebEngageController.trackEvent(
+                                SELF_BRANDED_PAYMENT_GATEWAY_REQUESTED,
+                                SELF_BRANDED_PAYMENT_GATEWAY,
+                                NO_EVENT_VALUE
+                            )
+                        badgeNumber = badgeNumber + 1
+
+                        Constants.CART_VALUE = badgeNumber
+
+
+                        add_item_to_cart.background = ContextCompat.getDrawable(
+                            applicationContext,
+                            R.drawable.grey_button_click_effect
+                        )
+                        add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
+                        add_item_to_cart.text = getString(R.string.added_to_cart)
+                        itemInCartStatus = true
+                        makeFlyAnimation(addon_icon)
+                        Glide.with(this).load(addonDetails!!.primary_image)
+                            .into(image1222)
+                    }
+                }
+            }
+        }
     }
 
 

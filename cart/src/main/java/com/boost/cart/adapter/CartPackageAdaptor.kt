@@ -241,7 +241,7 @@ class CartPackageAdaptor(
           var tempFeatures = ArrayList<FeaturesModel>()
           for(singleFeaturesCode in temp){
             for(singleFeature in upgradeList) {
-              if (singleFeature.boost_widget_key.contains(singleFeaturesCode.feature_code)) {
+              if (singleFeaturesCode.feature_code.equals(singleFeature.feature_code!!)) {
                 tempFeatures.add(singleFeature)
               }
             }

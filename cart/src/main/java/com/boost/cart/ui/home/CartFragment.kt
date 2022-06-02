@@ -961,6 +961,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 prefs.storeAutoRenewSubscriptionID(null)
 //                totalCalculation()
                 Log.v("cart_amount_value1", " " + total)
+                //clear previous coupon
+                couponServiceModel = null
                 totalCalculationAfterCoupon()
                 if (couponCode.isNotEmpty())
                     viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as CartActivity).fpid!!), couponCode)
@@ -1012,6 +1014,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 prefs.storeAutoRenewSubscriptionID(null)
 //                totalCalculation()
                 Log.v("cart_amount_value1", " " + total)
+                //clear previous coupon
+                couponServiceModel = null
                 totalCalculationAfterCoupon()
                 if (couponCode.isNotEmpty())
                     viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as CartActivity).fpid!!), couponCode)
@@ -1069,7 +1073,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     prefs.storeCartOrderInfo(null)
                     prefs.storeAutoRenewSubscriptionID(null)
                     feature_validity.text = default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), true)
-//                    totalCalculation()
+
+                    //clear previous coupon
+                    couponServiceModel = null
                     totalCalculationAfterCoupon()
                     if (couponCode.isNotEmpty()) {
                         viewModel.getCouponRedeem(
@@ -1124,6 +1130,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     prefs.storeCartOrderInfo(null)
                     prefs.storeAutoRenewSubscriptionID(null)
                     feature_validity.text = default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), true)
+                    //clear previous coupon
+                    couponServiceModel = null
                     totalCalculationAfterCoupon()
                     if (couponCode.isNotEmpty())
                         viewModel.getCouponRedeem(RedeemCouponRequest(coupontotal, couponCode, (activity as CartActivity).fpid!!), couponCode)

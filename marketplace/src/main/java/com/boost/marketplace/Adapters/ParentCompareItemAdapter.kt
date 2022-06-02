@@ -35,7 +35,7 @@ import java.text.NumberFormat
 import java.util.*
 
 class ParentCompareItemAdapter(
-    var list: java.util.ArrayList<Bundles>,
+    var list: ArrayList<Bundles>,
     val homeListener: CompareListener,
     val addonsListener: AddonsListener,
     val activity: ComparePacksActivity
@@ -113,24 +113,12 @@ class ParentCompareItemAdapter(
 //        }
 
         val listSamp = ArrayList<String>()
-
         for (item in parentItem.included_features) {
-//            Log.v("onBindViewHolder", " "+ item.feature_code)
             listSamp.add(item.feature_code)
         }
 
-//        getPackageInfoFromDB(parentViewHolder,parentItem)
-//        isItemAddedInCart(parentViewHolder,parentItem)
-        try {
-            getPackageInfoFromDB(parentViewHolder, list.get(position))
-        } catch (e: Exception) {
-            SentryController.captureException(e)
-        }
-        try {
-            isItemAddedInCart(parentViewHolder, list.get(position))
-        } catch (e: Exception) {
-            SentryController.captureException(e)
-        }
+        getPackageInfoFromDB(parentViewHolder,parentItem)
+        isItemAddedInCart(parentViewHolder,parentItem)
 
         val distinct: List<String> = LinkedHashSet(listSamp).toMutableList()
 
@@ -139,7 +127,8 @@ class ParentCompareItemAdapter(
         CompositeDisposable().add(
             AppDatabase.getInstance(Application())!!
                 .featuresDao()
-                .getallFeaturesInList(distinct)
+//                .getallFeaturesInList(distinct)
+                .getSpecificFeature(distinct)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -177,7 +166,6 @@ class ParentCompareItemAdapter(
                                                 .setAdapter(sectionLayout)
                                             parentViewHolder.ChildRecyclerView
                                                 .setLayoutManager(layoutManager1)
-
 
                                         } else {
 //                                                                Toasty.error(requireContext(), "Bundle Not Available To This Account", Toast.LENGTH_LONG).show()
