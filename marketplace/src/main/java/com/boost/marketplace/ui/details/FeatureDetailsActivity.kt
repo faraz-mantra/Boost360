@@ -17,7 +17,6 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -53,14 +52,9 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_feature_details.*
-import kotlinx.android.synthetic.main.activity_feature_details.app_bar_layout
-import kotlinx.android.synthetic.main.activity_feature_details.bottom_box
-import kotlinx.android.synthetic.main.activity_marketplace.*
 import retrofit2.Retrofit
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class FeatureDetailsActivity :
     AppBaseActivity<ActivityFeatureDetailsBinding, FeatureDetailsViewModel>(),
@@ -203,7 +197,14 @@ class FeatureDetailsActivity :
                             startActivity(Intent(this,CallTrackingActivity::class.java))
                         }
                         addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
-                            startActivity(Intent(this,CustomDomainActivity::class.java))
+
+                            val intent = Intent(
+                                applicationContext,
+                                CustomDomainActivity::class.java
+                            )
+                            intent.putExtra("expCode", experienceCode)
+                            intent.putExtra("fpid", fpid)
+                            startActivity(intent)
                         }
                         else -> {
                             prefs.storeCartOrderInfo(null)

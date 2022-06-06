@@ -11,15 +11,15 @@ import com.boost.marketplace.R
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 
 
-class CustomDomainListAdapter(
+class CustomDomainListAdapter1(
     val activity: CustomDomainActivity,
     itemList: List<Domain>?,
-   // val listener: HomeListener
-) : RecyclerView.Adapter<CustomDomainListAdapter.upgradeViewHolder>() {
+    // val listener: HomeListener
+) : RecyclerView.Adapter<CustomDomainListAdapter1.upgradeViewHolder>() {
 
     private var upgradeList = ArrayList<Domain>()
     private lateinit var context: Context
-    var selectedPosition :Int = -1
+    var selectedPosition: Int = -1
 
     init {
         this.upgradeList = itemList as ArrayList<Domain>
@@ -27,7 +27,7 @@ class CustomDomainListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
         val itemView = LayoutInflater.from(parent?.context).inflate(
-                R.layout.layout_suggested_domain_item, parent, false
+            R.layout.layout_suggested_domain_item1, parent, false
         )
         context = itemView.context
 
@@ -39,24 +39,24 @@ class CustomDomainListAdapter(
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
-        holder.title.text=upgradeList.get(position).name
+        holder.title.text = upgradeList.get(position).name
 //        holder.dummy1.visibility=if (position == upgradeList.lastIndex) {
 //            View.GONE
 //        } else {
 //            View.VISIBLE
 //        }
-        holder.tv_recommend.visibility=if (position == 0) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+//        holder.tv_recommend.visibility=if (position == 0) {
+//            View.VISIBLE
+//        } else {
+//            View.GONE
+//        }
 
-        if(selectedPosition==position)
+        if (selectedPosition == position)
             holder.itemView.setBackgroundResource(R.color.colorAccent2);
         else
             holder.itemView.setBackgroundResource(R.color.white);
         holder.itemView.setOnClickListener {
-            selectedPosition=position;
+            selectedPosition = position;
             notifyDataSetChanged();
         }
 
@@ -70,9 +70,9 @@ class CustomDomainListAdapter(
     }
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var title = itemView.findViewById<TextView>(R.id.tv_title)
+        var title = itemView.findViewById<TextView>(R.id.tv_11)
         var tv_recommend = itemView.findViewById<TextView>(R.id.tv_recommend)
-        var dummy1= itemView.findViewById<View>(R.id.dummy1)
+        var dummy1 = itemView.findViewById<View>(R.id.dummy1)
     }
 
 }

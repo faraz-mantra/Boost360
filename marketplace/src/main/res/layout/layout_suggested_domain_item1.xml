@@ -1,6 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_available"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="16dp"
+        android:visibility="visible"
+        tools:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_checkcircle_green_custom_domain"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/pad_10dp"
+            android:fontFamily="@font/bold"
+            android:lineHeight="21.79dp"
+            android:text="deltastore.com"
+            android:textColor="@color/offer_border"
+            android:textFontWeight="700"
+            android:textSize="@dimen/txt_16sp"
+            app:layout_constraintStart_toEndOf="@id/iv_checked"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/pad_10dp"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/regular"
+            android:lineHeight="16.34dp"
+            android:text="Available"
+            android:textColor="@color/offer_border"
+            android:textFontWeight="400"
+            android:textSize="@dimen/txt_12sp"
+            app:layout_constraintStart_toEndOf="@id/iv_checked"
+            app:layout_constraintTop_toBottomOf="@id/tv_11" />
+
+        <Button
+            android:id="@+id/btn_Select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_orange_custom_domain"
+            android:fontFamily="@font/semi_bold"
+            android:lineHeight="19.86dp"
+            android:paddingStart="23dp"
+            android:paddingTop="@dimen/pad_10dp"
+            android:paddingEnd="23dp"
+            android:paddingBottom="@dimen/pad_10dp"
+            android:text="Select"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textFontWeight="600"
+            android:textSize="14.58sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_not_available"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="16dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_info_not_available"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/pad_10dp"
+            android:fontFamily="@font/bold"
+            android:lineHeight="21.79dp"
+            android:text="deltastore.com"
+            android:textColor="@color/not_available_text_color"
+            android:textFontWeight="700"
+            android:textSize="@dimen/txt_16sp"
+            app:layout_constraintStart_toEndOf="@id/iv_info"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/pad_10dp"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/regular"
+            android:lineHeight="16.34dp"
+            android:text="Available"
+            android:textColor="@color/not_available_text_color"
+            android:textFontWeight="400"
+            android:textSize="@dimen/txt_12sp"
+            app:layout_constraintStart_toEndOf="@id/iv_info"
+            app:layout_constraintTop_toBottomOf="@id/tv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

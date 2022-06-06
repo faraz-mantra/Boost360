@@ -21,7 +21,8 @@ import com.framework.utils.DateUtils
 
 class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
                          itemList: List<FeaturesModel>?, var myAddonsListener: MyAddonsListener
-) : RecyclerView.Adapter<PaidAddonsAdapter.upgradeViewHolder>(), View.OnClickListener {
+) : RecyclerView.Adapter<PaidAddonsAdapter.upgradeViewHolder>() //, View.OnClickListener
+ {
 
   private var list = ArrayList<FeaturesModel>()
   private lateinit var context: Context
@@ -36,7 +37,7 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
     )
     context = itemView.context
 
-    itemView.setOnClickListener(this)
+    //itemView.setOnClickListener(this)
 
     return upgradeViewHolder(itemView)
   }
@@ -126,8 +127,8 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
     }
   }
 
-  override fun onClick(v: View?) {
-    TODO("Not yet implemented")
-  }
+//  override fun onClick(v: View?) {
+//    TODO("Not yet implemented")
+//  }
 
 }
