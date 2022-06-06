@@ -20,6 +20,7 @@ import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.upgradeDB.model.YoutubeVideoModel
 import com.boost.marketplace.Adapters.FreeAddonsAdapter
 import com.boost.marketplace.R
+import com.boost.marketplace.adapter.MatchNumberListAdapter
 import com.boost.marketplace.adapter.NumberListAdapter
 import com.boost.marketplace.adapter.OfferCouponsAdapter
 import com.boost.marketplace.base.AppBaseActivity
@@ -37,6 +38,8 @@ class CallTrackingActivity :
     HomeListener {
     lateinit var numberList: ArrayList<String>
     lateinit var numberListAdapter: NumberListAdapter
+    lateinit var matchNumberListAdapter: MatchNumberListAdapter
+
 
 
     override fun getLayout(): Int {
@@ -57,6 +60,7 @@ class CallTrackingActivity :
         viewModel = ViewModelProvider(this)[FeatureDetailsViewModel::class.java]
         viewModel.setApplicationLifecycle(application, this)
         numberList = intent.getStringArrayListExtra("list")!!
+        matchNumberListAdapter = MatchNumberListAdapter(this, ArrayList(),null,this)
         initMvvm()
     }
 
@@ -128,11 +132,11 @@ class CallTrackingActivity :
         numberListAdapter.notifyDataSetChanged()
     }
 
-    private fun updateEveryNumberList(list: ArrayList<String>,searchValue: String?) {
-        numberListAdapter.addupdates(list)
-        numberListAdapter = NumberListAdapter(this,list,searchValue,this)
+    private fun updateEveryNumberList(list: ArrayList<String>,searchValue: Char?) {
+        matchNumberListAdapter.addupdates(list)
+        matchNumberListAdapter = MatchNumberListAdapter(this,list,searchValue,this)
         binding?.rvNumberListRelated?.visibility = VISIBLE
-        binding?.rvNumberListRelated?.adapter = numberListAdapter
+        binding?.rvNumberListRelated?.adapter = matchNumberListAdapter
         numberListAdapter.notifyDataSetChanged()
     }
 
@@ -140,16 +144,18 @@ class CallTrackingActivity :
         var exactMatchList: ArrayList<String> = arrayListOf()
         var everyMatchList: ArrayList<String> = arrayListOf()
         var isMatching : Boolean = false
+        var searchChar:Char? = null
 
         for (number in numberList) {
             for (i in searchValue.indices){
                 if(number.contains(searchValue[i])){
-                   isMatching = true
+                    searchChar = searchValue[i]
+                    everyMatchList.add(number)
                 }
             }
-            if (isMatching) {
-                exactMatchList.add(number)
-            }
+//            if (number.contains(searchValue,true)) {
+//                exactMatchList.add(number)
+//            }
         }
 
 //        for(number in numberList){
@@ -163,7 +169,8 @@ class CallTrackingActivity :
 //                }
 //            }
 //        }
-        updateNumberList(exactMatchList,searchValue)
+//        updateNumberList(exactMatchList,searchValue)
+        updateEveryNumberList(everyMatchList,searchChar)
 
         binding?.tvSearchResult?.visibility = VISIBLE
         binding?.tvSearchResult?.text = exactMatchList.size.toString()+" numbers found with "+"‘"+searchValue+"’"
