@@ -3,6 +3,7 @@ package com.boost.marketplace.ui.details.call_track
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
+import android.text.Html
 import android.text.TextWatcher
 import android.view.View
 import android.view.View.GONE
@@ -17,6 +18,7 @@ import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PromoBanners
 import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.upgradeDB.model.YoutubeVideoModel
+import com.boost.marketplace.Adapters.FreeAddonsAdapter
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.NumberListAdapter
 import com.boost.marketplace.adapter.OfferCouponsAdapter
@@ -28,13 +30,14 @@ import com.boost.marketplace.ui.details.FeatureDetailsViewModel
 import com.boost.marketplace.ui.details.domain.*
 import com.framework.analytics.SentryController
 import kotlinx.android.synthetic.main.activity_call_tracking.*
-import kotlinx.android.synthetic.main.activity_my_current_plan.*
 
 
 class CallTrackingActivity :
     AppBaseActivity<ActivityCallTrackingBinding, FeatureDetailsViewModel>(),
     HomeListener {
     lateinit var numberList: ArrayList<String>
+    lateinit var numberListAdapter: NumberListAdapter
+
 
     override fun getLayout(): Int {
         return R.layout.activity_call_tracking
@@ -60,7 +63,7 @@ class CallTrackingActivity :
     override fun onCreateView() {
         super.onCreateView()
 
-
+        numberListAdapter = NumberListAdapter(this, ArrayList(), null, this)
         binding?.addonsBack?.setOnClickListener {
             super.onBackPressed()
         }
@@ -85,14 +88,14 @@ class CallTrackingActivity :
                     binding?.btnSearch?.visibility = View.VISIBLE
                     binding?.btnSearch?.setOnClickListener {
                         updateAllItemBySearchValue(p0.toString())
+                        tv_available_no.text = "Search results"
                         binding?.btnSearch?.visibility = View.GONE
 
                     }
                     binding?.ivCross?.visibility = View.VISIBLE
 
-                } else {
-//                    totalFreeItemList?.let { updateFreeAddonsRecycler(it) }
                 }
+
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -103,36 +106,68 @@ class CallTrackingActivity :
         binding?.ivCross?.setOnClickListener {
             binding?.etCallTrack?.setText("")
             binding?.etCallTrack?.hint = "Search for a sequence of digits ..."
+            initMvvm()
+            binding?.tvSearchResult?.visibility = GONE
+            binding?.rvNumberListRelated?.visibility = GONE
         }
-        binding?.btnSearch?.setOnClickListener {
-            updateAllItemBySearchValue(binding?.etCallTrack?.text.toString())
-            binding?.btnSearch?.visibility = GONE
-            binding?.ivCross?.visibility = VISIBLE
-            binding?.etCallTrack?.setBackgroundResource(R.drawable.custom_domain_edit_text_bg)
-        }
+
 
     }
 
     private fun initMvvm() {
         val recyclerview = findViewById<RecyclerView>(R.id.rv_number_list)
         recyclerview.layoutManager = LinearLayoutManager(this)
-        val adapter = NumberListAdapter(this, numberList, null,this)
+        val adapter = NumberListAdapter(this, numberList, null, this)
         recyclerview.adapter = adapter
     }
 
-    fun updateAllItemBySearchValue(searchValue: String) {
-        var freeitemList: ArrayList<String> = arrayListOf()
+    private fun updateNumberList(list: ArrayList<String>,searchValue: String?) {
+        numberListAdapter.addupdates(list)
+        numberListAdapter = NumberListAdapter(this,list,searchValue,this)
+        binding?.rvNumberList?.adapter = numberListAdapter
+        numberListAdapter.notifyDataSetChanged()
+    }
 
-        for (number in numberList!!) {
-            if (number.lowercase()?.indexOf(searchValue.lowercase()) != -1) {
-                freeitemList.add(number)
+    private fun updateEveryNumberList(list: ArrayList<String>,searchValue: String?) {
+        numberListAdapter.addupdates(list)
+        numberListAdapter = NumberListAdapter(this,list,searchValue,this)
+        binding?.rvNumberListRelated?.visibility = VISIBLE
+        binding?.rvNumberListRelated?.adapter = numberListAdapter
+        numberListAdapter.notifyDataSetChanged()
+    }
+
+    fun updateAllItemBySearchValue(searchValue: String) {
+        var exactMatchList: ArrayList<String> = arrayListOf()
+        var everyMatchList: ArrayList<String> = arrayListOf()
+        var isMatching : Boolean = false
+
+        for (number in numberList) {
+            for (i in searchValue.indices){
+                if(number.contains(searchValue[i])){
+                   isMatching = true
+                }
+            }
+            if (isMatching) {
+                exactMatchList.add(number)
             }
         }
-        val recyclerview = findViewById<RecyclerView>(R.id.rv_number_list)
-        recyclerview.layoutManager = LinearLayoutManager(this)
-        val adapter = NumberListAdapter(this, numberList, searchValue,this)
-        recyclerview.adapter = adapter
-        adapter.notifyDataSetChanged()
+
+//        for(number in numberList){
+//            if(number.lowercase()?.indexOf(searchValue.lowercase()) != -1 ){
+//                val index= number.lowercase()?.indexOf(searchValue.lowercase())
+//                System.out.println("index" +index)
+//                if (number.contains(searchValue)) {
+//                    exactMatchList.add(number)
+//                }else{
+//                    everyMatchList.add(number)
+//                }
+//            }
+//        }
+        updateNumberList(exactMatchList,searchValue)
+
+        binding?.tvSearchResult?.visibility = VISIBLE
+        binding?.tvSearchResult?.text = exactMatchList.size.toString()+" numbers found with "+"‘"+searchValue+"’"
+
     }
 
     override fun onPackageClicked(item: Bundles?) {

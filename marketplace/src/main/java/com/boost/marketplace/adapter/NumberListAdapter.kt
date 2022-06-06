@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
@@ -42,7 +43,6 @@ class NumberListAdapter(
             R.layout.layout_number_list, parent, false
         )
         context = itemView.context
-
         return upgradeViewHolder(itemView)
     }
 
@@ -78,6 +78,12 @@ class NumberListAdapter(
             holder.title.text = upgradeList[position]
 
         }
+    }
+    fun addupdates(upgradeModel: ArrayList<String>) {
+        val initPosition = upgradeList.size
+        upgradeList.clear()
+        upgradeList.addAll(upgradeModel)
+        notifyItemRangeInserted(initPosition, upgradeList.size)
     }
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
