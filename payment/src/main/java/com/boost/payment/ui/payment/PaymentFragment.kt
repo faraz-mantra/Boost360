@@ -7,12 +7,9 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.text.Html
 import android.text.SpannableString
-import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.StyleSpan
-import android.text.style.UnderlineSpan
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.util.Log
@@ -771,7 +768,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                     payment_main_layout.fullScroll(View.FOCUS_DOWN)
                 }
             }
-
+            payment_main_layout.post {
+                payment_main_layout.fullScroll(View.FOCUS_DOWN)
+            }
         }
 
         gst_discount.setOnClickListener {
