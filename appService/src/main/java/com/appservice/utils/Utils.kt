@@ -6,9 +6,16 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.media.ThumbnailUtils
 import android.net.Uri
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.webkit.MimeTypeMap
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import com.framework.views.customViews.CustomTextView
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
@@ -104,7 +111,7 @@ fun File.getMimeType(): String? {
 
 fun String.getExtension(): String? {
   val strLength = lastIndexOf(".")
-  return if (strLength > 0) substring(strLength + 1).toLowerCase() else null
+  return if (strLength > 0) substring(strLength + 1).lowercase(Locale.getDefault()) else null
 }
 
 fun String.getFileName(): String? {
@@ -136,6 +143,13 @@ fun removeWWWFromDomain(domainValue: String): String {
     domainValue.replace("www.", "")
   else
     domainValue
+}
+
+fun changeColorOfSubstring(paramStringInt:Int, color: Int, substring:String, textView:CustomTextView){
+  val paramString = textView.context.getString(paramStringInt)
+  val spannable = SpannableString(paramString)
+  spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(textView.context, color)), paramString.indexOf(substring), paramString.indexOf(substring) + substring.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+  textView.text = spannable
 }
 
 

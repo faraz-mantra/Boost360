@@ -28,6 +28,7 @@ import com.appservice.ui.catalog.widgets.*
 import com.appservice.model.serviceProduct.service.ItemsItem
 import com.appservice.model.serviceProduct.service.ServiceSearchListingResponse
 import com.appservice.utils.WebEngageController
+import com.appservice.utils.changeColorOfSubstring
 import com.appservice.utils.getBitmap
 import com.appservice.viewmodel.ServiceViewModelV1
 import com.framework.base.BaseResponse
@@ -83,18 +84,22 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     super.onCreateView()
     WebEngageController.trackEvent(SERVICE_CATALOGUE_ADD, ADDED, NO_EVENT_VALUE)
     getBundleData()
+    setupUIColor()
     setOnClickListener(
-      binding?.selectDeliveryConfig,
-      binding?.vwSavePublish,
-      binding?.imageAddBtn,
-      binding?.clearImage,
-      binding?.btnOtherInfo
+      binding?.selectDeliveryConfig, binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo
     )
     binding?.payServiceView?.visibility = View.GONE
     binding?.toggleService?.setOnToggledListener { _, _ -> initServiceToggle() }
     initServiceToggle()
     listenerEditText()
     capLimitCheck()
+  }
+
+  private fun setupUIColor() {
+    changeColorOfSubstring(R.string.service_name_, R.color.colorAccent, "*", binding?.tvServiceNameVw!!)
+    changeColorOfSubstring(R.string.service_category_, R.color.colorAccent, "*", binding?.tvServiceCategoryVw!!)
+    changeColorOfSubstring(R.string.service_description_, R.color.colorAccent, "*", binding?.tvServiceDescVw!!)
+    changeColorOfSubstring(R.string.service_duration_minutes, R.color.colorAccent, "*", binding?.tvServiceDurationVw!!)
   }
 
   private fun capLimitCheck() {
@@ -201,6 +206,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun getServiceDetailObject(serviceId: String?) {
+    showProgress()
     hitApi(viewModel?.getServiceDetails(serviceId), R.string.error_getting_service_details)
     hitApi(viewModel?.getServiceTiming(serviceId), R.string.error_getting_service_timing)
   }
@@ -228,7 +234,10 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       TaskCode.POST_CREATE_SERVICE.ordinal -> onServiceCreated(it)
       TaskCode.POST_UPDATE_SERVICE.ordinal -> onServiceUpdated(it)
       TaskCode.ADD_SERVICE_PRIMARY_IMAGE_V1.ordinal -> onPrimaryImageUploaded(it)
-      TaskCode.GET_SERVICE_DETAILS.ordinal -> onServiceDetailResponseReceived(it)
+      TaskCode.GET_SERVICE_DETAILS.ordinal ->{
+        onServiceDetailResponseReceived(it)
+        hideProgress()
+      }
       TaskCode.DELETE_SERVICE.ordinal -> onServiceDelete(it)
       TaskCode.GET_SERVICE_TIMING.ordinal -> onServiceTiming(it)
     }
@@ -303,13 +312,13 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       var checkPosition = 0
       images.forEach { fileData ->
         val request = UploadImageRequest.getInstance(1, product?.productId!!, fileData.getFile()!!)
-        viewModel?.addSecondaryImage(request)?.observeOnce(viewLifecycleOwner, Observer {
+        viewModel?.addSecondaryImage(request)?.observeOnce(viewLifecycleOwner) {
           checkPosition += 1
           if ((it.error is NoNetworkException).not()) {
             if (it.isSuccess().not()) showError(resources.getString(R.string.secondary_service_image_upload_error))
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == images.size) addUpdateServiceTiming()
-        })
+        }
       }
     } else addUpdateServiceTiming()
   }

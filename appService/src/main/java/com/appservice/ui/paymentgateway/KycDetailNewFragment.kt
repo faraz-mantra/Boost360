@@ -8,6 +8,7 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentKycDetailNewBinding
 import com.appservice.model.kycData.DataKyc
+import com.appservice.utils.changeColorOfSubstring
 import com.framework.models.BaseViewModel
 import com.framework.utils.makeCall
 
@@ -24,10 +25,15 @@ class KycDetailNewFragment : AppBaseFragment<FragmentKycDetailNewBinding, BaseVi
   override fun onCreateView() {
     super.onCreateView()
     dataKyc = arguments?.getSerializable(IntentConstant.KYC_DETAIL.name) as? DataKyc
+    setupUIColor()
     dataKyc?.let { setUi(it) }
     binding?.btnContact?.setOnClickListener {
       makeCall(getString(R.string.contact_us_number))
     }
+  }
+
+  private fun setupUIColor() {
+    changeColorOfSubstring(R.string.pan_number_individual_or_company, R.color.colorAccent, "*", binding?.tvNameOnPan!!)
   }
 
   private fun setUi(dataKyc: DataKyc) {

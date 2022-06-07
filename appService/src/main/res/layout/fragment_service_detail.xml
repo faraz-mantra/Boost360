@@ -119,6 +119,7 @@
         android:paddingEnd="@dimen/size_20">
 
         <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_service_name_vw"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_3"
@@ -149,6 +150,7 @@
           android:orientation="vertical">
 
           <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_service_category_vw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/size_4"
@@ -187,6 +189,7 @@
           tools:ignore="UnusedAttribute" />
 
         <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_service_desc_vw"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_3"
@@ -217,6 +220,7 @@
           android:orientation="vertical">
 
           <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_service_duration_vw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/size_4"
@@ -249,6 +253,7 @@
           android:hint="@string/enter_duration_in_minutes"
           android:inputType="number"
           android:padding="@dimen/size_12"
+            android:maxLength="3"
           android:singleLine="true"
           android:textColor="@color/warm_grey_10"
           android:textColorHint="@color/primary_grey"
