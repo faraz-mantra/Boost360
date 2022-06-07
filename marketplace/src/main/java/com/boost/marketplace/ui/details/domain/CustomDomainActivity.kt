@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.dbcenterapi.data.api_model.CustomDomain.Domain
 import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
+import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.CustomDomainListAdapter
 import com.boost.marketplace.base.AppBaseActivity
@@ -25,8 +27,11 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
     var experienceCode: String? = null
     var fpid: String? = null
     var totalFreeItemList: List<Domain>? = null
+    var addonDetails: FeaturesModel? = null
+    var itemInCartStatus = false
 
     lateinit var progressDialog: ProgressDialog
+    lateinit var prefs: SharedPrefs
 
     override fun getLayout(): Int {
         return R.layout.activity_custom_domain
@@ -45,10 +50,24 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
 
         experienceCode = intent.getStringExtra("expCode")
         fpid = intent.getStringExtra("fpid")
+        addonDetails?.name = intent.getStringExtra("Addon Name")
+        addonDetails?.price = intent.getStringExtra("Addon Price")?.toDouble()!!
+        addonDetails?.discount_percent = intent.getStringExtra("Addon Discounted Price")!!.toInt()
+       // intent.getStringExtra("Addon Discount %")
+       // addonDetails?.va =  intent.getStringExtra("Addon Validity")
+       addonDetails?.boost_widget_key = intent.getStringExtra("Addon Feature Key")!!
+
+
+
+
+
+
+
         viewModel.setApplicationLifecycle(application, this)
         viewModel = ViewModelProviders.of(this).get(CustomDomainViewModel::class.java)
         customDomainListAdapter= CustomDomainListAdapter(this,ArrayList())
         progressDialog = ProgressDialog(this)
+        prefs = SharedPrefs(this)
 
         binding?.help?.setOnClickListener {
             val dialogCard = CustomDomainHelpBottomSheet()
@@ -116,6 +135,58 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             binding?.etDomain?.text= null
             binding?.layoutAvailable?.visibility=View.GONE
             binding?.layoutNotAvailable?.visibility=View.GONE
+        }
+
+        binding?.tvSkip?.setOnClickListener {
+            if (!itemInCartStatus) {
+                if (addonDetails == null) {
+                            prefs.storeCartOrderInfo(null)
+                            viewModel.addItemToCart1(addonDetails!!, this)
+                            val event_attributes: HashMap<String, Any> = HashMap()
+                            addonDetails!!.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
+                            event_attributes.put("Addon Price", addonDetails!!.price)
+//                            event_attributes.put(
+//                                "Addon Discounted Price",
+//                                getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent)
+//                            )
+                           // event_attributes.put("Addon Discount %", addonDetails!!.discount_percent)
+                          //  event_attributes.put("Addon Validity", 1)
+                            event_attributes.put("Addon Feature Key", addonDetails!!.boost_widget_key)
+//                            addonDetails!!.target_business_usecase?.let { it1 ->
+//                                event_attributes.put(
+//                                    "Addon Tag",
+//                                    it1
+//                                )
+//                            }
+//                            WebEngageController.trackEvent(
+//                                ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
+//                                ADDONS_MARKETPLACE,
+//                                event_attributes
+//                            )
+//                            if (addonDetails!!.feature_code == "CUSTOM_PAYMENTGATEWAY")
+//                                WebEngageController.trackEvent(
+//                                    SELF_BRANDED_PAYMENT_GATEWAY_REQUESTED,
+//                                    SELF_BRANDED_PAYMENT_GATEWAY,
+//                                    NO_EVENT_VALUE
+//                                )
+//                            badgeNumber = badgeNumber + 1
+//
+//                            Constants.CART_VALUE = badgeNumber
+//
+//
+//                            add_item_to_cart.background = ContextCompat.getDrawable(
+//                                applicationContext,
+//                                R.drawable.grey_button_click_effect
+//                            )
+//                            add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
+//                            add_item_to_cart.text = getString(R.string.added_to_cart)
+                            itemInCartStatus = true
+
+
+
+
+                }
+            }
         }
     }
 
@@ -185,5 +256,9 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             }
         }
         updateFreeAddonsRecycler(freeitemList)
+    }
+
+    private fun getDiscountedPrice(price: Double, discountPercent: Int): Double {
+        return price - ((discountPercent / 100) * price)
     }
 }

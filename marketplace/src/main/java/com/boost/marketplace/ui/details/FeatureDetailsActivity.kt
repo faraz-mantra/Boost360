@@ -204,6 +204,13 @@ class FeatureDetailsActivity :
                             )
                             intent.putExtra("expCode", experienceCode)
                             intent.putExtra("fpid", fpid)
+                            intent.putExtra("AddonDetails", addonDetails)
+                            intent.putExtra("AddonPrice", addonDetails!!.price)
+                            intent.putExtra("AddonDiscountedPrice", getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent))
+                            intent.putExtra("AddonDiscount", addonDetails!!.discount_percent)
+                            intent.putExtra("AddonValidity", 1)
+                            intent.putExtra("AddonFeatureKey", addonDetails!!.boost_widget_key)
+//                            intent.putExtra("fpid", addonDetails!!.boost_widget_key)
                             startActivity(intent)
                         }
                         else -> {

@@ -1,5 +1,6 @@
 package com.boost.marketplace.ui.details.domain
 
+import android.app.Activity
 import android.app.Application
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -7,8 +8,13 @@ import androidx.lifecycle.MutableLiveData
 import com.boost.dbcenterapi.data.api_model.CustomDomain.CustomDomains
 import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
 import com.boost.dbcenterapi.data.remote.NewApiInterface
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.model.CartModel
+import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.dbcenterapi.utils.DataLoader
 import com.boost.dbcenterapi.utils.Utils
 import com.framework.models.BaseViewModel
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -18,6 +24,7 @@ class CustomDomainViewModel() : BaseViewModel() {
     var updatesResult: MutableLiveData<CustomDomains> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
+
 
     val compositeDisposable = CompositeDisposable()
 
@@ -60,5 +67,46 @@ class CustomDomainViewModel() : BaseViewModel() {
                         updatesError.postValue(it.message)
                     })
         )
+    }
+
+    fun addItemToCart1(updatesModel: FeaturesModel, activity: Activity) {
+        updatesLoader.postValue(false)
+        val discount = 100 - updatesModel.discount_percent
+        val paymentPrice = ((discount * updatesModel.price) / 100)
+        val mrpPrice =  updatesModel.price
+        val cartItem = CartModel(
+            updatesModel.feature_id,
+            updatesModel.boost_widget_key,
+            updatesModel.feature_code,
+            updatesModel.name,
+            updatesModel.description,
+            updatesModel.primary_image,
+            paymentPrice,
+            mrpPrice,
+            updatesModel.discount_percent,
+            1,
+            1,
+            "features",
+            updatesModel.extended_properties,
+            updatesModel.widget_type?:""
+        )
+
+
+        Completable.fromAction {
+            AppDatabase.getInstance(application)!!.cartDao()
+                .insertToCart(cartItem)
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnComplete {
+                updatesLoader.postValue(false)
+                //add cartitem to firebase
+                DataLoader.updateCartItemsToFirestore(application)
+            }
+            .doOnError {
+                updatesError.postValue(it.message)
+                updatesLoader.postValue(false)
+            }
+            .subscribe()
     }
 }
