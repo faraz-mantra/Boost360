@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.data.api_model.CustomDomain.Domain
@@ -50,10 +51,13 @@ class CustomDomainListAdapter(
             View.GONE
         }
 
-        if (selectedPosition == position)
+        if (selectedPosition == position) {
+            holder.radio1.visibility =View.VISIBLE
             holder.itemView.setBackgroundResource(R.color.colorAccent2);
-        else
+        }else {
+            holder.radio1.visibility =View.GONE
             holder.itemView.setBackgroundResource(R.color.white);
+        }
         holder.itemView.setOnClickListener {
             selectedPosition = position;
             notifyDataSetChanged();
@@ -72,6 +76,8 @@ class CustomDomainListAdapter(
         var title = itemView.findViewById<TextView>(R.id.tv_title)
         var tv_recommend = itemView.findViewById<TextView>(R.id.tv_recommend)
         var dummy1 = itemView.findViewById<View>(R.id.dummy1)
+        var radio1 = itemView.findViewById<ImageView>(R.id.iv_radio1)
+        var radio = itemView.findViewById<ImageView>(R.id.iv_radio)
     }
 
 }
