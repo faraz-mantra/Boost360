@@ -377,7 +377,7 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                                 coupons.add(
                                     CouponsModel(
                                         singleCoupon.code,
-                                        singleCoupon.discount_percent
+                                        singleCoupon.discount_percent.toDouble()
                                     )
                                 )
                             }

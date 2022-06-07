@@ -502,7 +502,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="6dp"
-                                    android:text="(Valid till 16 May 22)"
+                                    tools:text="(Valid till 16 May 22)"
                                     android:textColor="@color/copy_coupon_text_color"
                                     android:textSize="@dimen/txt_12sp" />
 
@@ -538,7 +538,7 @@
                                     android:paddingBottom="6dp"
                                     android:textColor="@color/colorAccent1"
                                     android:textSize="@dimen/_13sdp"
-                                    tools:text="0 months" />
+                                    android:text="0 months" />
 
                                 <ImageView
                                     android:id="@+id/months_validity_edit_inc"
@@ -1762,7 +1762,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/bold"
-                    android:text="₹0"
                     android:textColor="@color/main_color_gray_dk"
                     android:textSize="20sp"
                     android:textStyle="normal"

@@ -618,6 +618,14 @@ class FeatureDetailsActivity :
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        try {
+            viewModel.getCartItems()
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
+    }
 
     fun initializeSecondaryImage() {
         val gridLayoutManager = GridLayoutManager(applicationContext, 1)

@@ -13,5 +13,8 @@ data class CouponsModel(
   var coupon_key: String,
 
   @ColumnInfo(name = "discount_percent")
-  var discount_percent: Int = 0
+  var discount_percent: Double = 0.0,
+
+  @ColumnInfo(name = "discount_amount")
+  var discount_amount: Double = 0.0
 )
