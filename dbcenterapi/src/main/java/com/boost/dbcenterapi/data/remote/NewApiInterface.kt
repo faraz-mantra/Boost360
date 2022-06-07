@@ -5,6 +5,7 @@ import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
 import com.boost.dbcenterapi.data.api_model.GetFeatureDetails.FeatureDetailsV2Item
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrderV2.GetPurchaseOrderResponseV2
+import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
 import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsRequest
 import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsResponse
 import com.boost.dbcenterapi.data.api_model.couponRequest.CouponRequest
@@ -69,4 +70,10 @@ interface NewApiInterface {
     @POST("https://plugin.withfloats.com/DomainService/v1/DomainSuggestion")
     fun getDomains(@Body domainRequest: DomainRequest):Observable<CustomDomains>
 
+    @Headers("Content-Type: application/json")
+    @GET("https://api2.withfloats.com/discover/v2/GetVMN")
+    fun getCallTrackDetails(
+        @Query("fpId") floatingPointId: String,
+        @Query("clientId") clientId: String
+    ): Observable<CallTrackListResponse>
 }

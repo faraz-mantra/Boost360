@@ -39,4 +39,6 @@
     <string name="learn_more"><u>Learn More</u></string>
     <string name="switch_to_monthly_pricing">Switch to monthly pricing</string>
     <string name="switch_to_yearly_pricing">Switch to annual pricing</string>
+    <string name="learn_more_feature_details"><u>Learn more</u></string>
+    <string name="show_less"><u>Show less</u></string>
 </resources>

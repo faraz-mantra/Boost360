@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.text.style.StrikethroughSpan
 import android.text.style.UnderlineSpan
@@ -21,6 +22,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.SimplePageTransformerSmall
@@ -45,12 +47,14 @@ import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
 import com.boost.marketplace.ui.details.call_track.CallTrackingHelpBottomSheet
 import com.boost.marketplace.ui.details.call_track.RequestCallbackBottomSheet
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
+import com.boost.marketplace.ui.details.domain.SelectedNumberBottomSheet
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.framework.analytics.SentryController
+import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 import com.google.android.material.appbar.AppBarLayout
 import com.google.gson.Gson
@@ -234,6 +238,7 @@ class FeatureDetailsActivity :
             learn_more_btn.visibility = View.VISIBLE
             learn_less_btn.visibility = View.GONE
             title_bottom3.maxLines = 2
+            title_bottom3.ellipsize = TextUtils.TruncateAt.END
             bottom_box.visibility = GONE
             bottom_box_only_btn.visibility = VISIBLE
         }
@@ -293,8 +298,38 @@ class FeatureDetailsActivity :
     }
 
 
+    private fun loadNumberList() {
+        try {
+            viewModel.loadNumberList(
+                intent.getStringExtra("fpid") ?: "",
+                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+
+            )
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
+
+    }
+
+
     @SuppressLint("FragmentLiveDataObserve")
     fun initMvvm() {
+        viewModel.getCallTrackingDetails().observe(this) {
+            if (it != null) {
+
+                System.out.println("numberList" + it)
+
+                val dialogCard = SelectedNumberBottomSheet()
+                val args = Bundle()
+                args.putString("phone_number", it[0])
+                args.putStringArrayList("numberList", it)
+                dialogCard.arguments = args
+                dialogCard.show(
+                    this.supportFragmentManager,
+                    SelectedNumberBottomSheet::class.java.name
+                )
+            }
+        }
         viewModel.addonsResult().observe(this, Observer {
 
             //if the View is from PackageView then No need to call getCartItems method
@@ -367,7 +402,7 @@ class FeatureDetailsActivity :
                     .into(image1222)
                 Glide.with(this).load(addonDetails!!.primary_image)
                     .into(addon_icon)
-
+                
                 Glide.with(this).load(addonDetails!!.feature_banner)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .fitCenter()
@@ -547,7 +582,8 @@ class FeatureDetailsActivity :
             if (addonDetails != null) {
                 when {
                     addonDetails?.boost_widget_key?.equals("IVR")!! -> {
-                        startActivity(Intent(this, CallTrackingActivity::class.java))
+                        loadNumberList()
+                    //startActivity(Intent(this, CallTrackingActivity::class.java))
                     }
                     addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
 
