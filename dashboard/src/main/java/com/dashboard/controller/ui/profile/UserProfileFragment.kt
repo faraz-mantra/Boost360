@@ -3,6 +3,7 @@ package com.dashboard.controller.ui.profile
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import com.appservice.utils.changeColorOfSubstring
 
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
@@ -45,6 +46,7 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
     super.onCreateView()
     session = UserSessionManager(baseActivity)
     WebEngageController.trackEvent(USER_MERCHANT_PROFILE_VIEW, PAGE_VIEW, NO_EVENT_VALUE)
+    setupUIColor()
     val merchantProfileDetails = UserProfileDataResult.getMerchantProfileDetails()
     setDataFromPref(merchantProfileDetails)
     setOnClickListener(
@@ -57,6 +59,11 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
   override fun onResume() {
     super.onResume()
     runOnUiThread { fetchUserData() }
+  }
+
+  private fun setupUIColor() {
+    changeColorOfSubstring(R.string.full_name, R.color.colorAccent, "*", binding?.tvFullNameVw!!)
+    changeColorOfSubstring(R.string.registered_mobile_number, R.color.colorAccent, "*", binding?.tvMobileNumberVw!!)
   }
 
   private fun setDataFromPref(merchantProfileDetails: UserProfileDataResult?) {

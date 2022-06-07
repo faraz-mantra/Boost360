@@ -33,6 +33,7 @@ import com.appservice.ui.staffs.ui.Constants
 import com.appservice.viewmodel.StaffViewModel
 import com.appservice.ui.staffs.widgets.ExperienceBottomSheet
 import com.appservice.utils.WebEngageController
+import com.appservice.utils.changeColorOfSubstring
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
@@ -78,6 +79,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
   }
 
   override fun onCreateView() {
+    setupUIColor()
     setOnClickListener(binding?.flAddStaffImg, binding?.rlStaffTiming, binding?.rlServiceProvided, binding?.rlScheduledBreaks, binding?.btnSave, binding?.edtExperience)
     sessionLocal = UserSessionManager(requireActivity())
     initViews()
@@ -98,6 +100,13 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     if (staffDetails == null) staffDetails = StaffDetailsResult()
   }
 
+  private fun setupUIColor() {
+    changeColorOfSubstring(R.string.age, R.color.colorAccent, "*", binding?.tvAge!!)
+    changeColorOfSubstring(R.string.staff_member_name, R.color.colorAccent, "*", binding?.tvStaffMemName!!)
+    changeColorOfSubstring(R.string.select_gender, R.color.colorAccent, "*", binding?.tvSelectGender!!)
+    changeColorOfSubstring(R.string.specialization, R.color.colorAccent, "*", binding?.tvSpecialization!!)
+    changeColorOfSubstring(R.string.years_of_experience, R.color.colorAccent, "*", binding?.tvYearsOfExp!!)
+  }
 
   private fun updatePreviousData() {
     val specialisations = staffDetails?.specialisations
