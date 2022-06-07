@@ -115,7 +115,7 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
       upgradeTitle.text = updateModel.name
 
       val date: String? =DateUtils.parseDate(updateModel.expiryDate, DateUtils.FORMAT_SERVER_DATE1, DateUtils.FORMAT1_DD_MM_YYYY)
-      validity2.text="Valid till"+date
+      validity2.text= "Valid till " + date
 
       Glide.with(context).load(updateModel.primary_image).into(image)
       if (updateModel.status == 1) {

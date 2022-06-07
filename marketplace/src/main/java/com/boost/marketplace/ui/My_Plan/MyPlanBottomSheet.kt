@@ -43,7 +43,7 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseVi
         binding?.addonsDesc?.text = singleAddon.description_title
 
         val date1: String? =
-            DateUtils.parseDate(singleAddon.createdon, DateUtils.FORMAT_SERVER_DATE1, DateUtils.FORMAT1_DD_MM_YYYY)
+            DateUtils.parseDate(singleAddon.activatedDate, DateUtils.FORMAT_SERVER_DATE1, DateUtils.FORMAT1_DD_MM_YYYY)
         binding?.title3?.text= date1
 
         val date: String? =

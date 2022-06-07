@@ -18,6 +18,9 @@ class CustomDomainHelpBottomSheet : BaseBottomSheetDialog<PopupCallExpertCustomD
 
     override fun onCreateView() {
 
+        binding?.backBtn?.setOnClickListener {
+            dismiss()
+        }
     }
 
 }
