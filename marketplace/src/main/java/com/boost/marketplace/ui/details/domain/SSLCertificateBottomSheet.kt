@@ -19,6 +19,10 @@ class SSLCertificateBottomSheet : BaseBottomSheetDialog<PopupSpecificatonExtensi
 
     override fun onCreateView() {
 
+        binding?.backBtn?.setOnClickListener {
+            dismiss()
+        }
+
     }
 
 }

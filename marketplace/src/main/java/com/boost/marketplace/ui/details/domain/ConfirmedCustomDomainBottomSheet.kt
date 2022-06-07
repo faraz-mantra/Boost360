@@ -18,6 +18,9 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
 
     override fun onCreateView() {
 
+        binding?.backBtn?.setOnClickListener {
+            dismiss()
+        }
     }
 
 }

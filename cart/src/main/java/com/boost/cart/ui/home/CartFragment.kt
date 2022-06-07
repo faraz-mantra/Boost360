@@ -3981,7 +3981,3 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
     }
 
 }
-
-
-
-

@@ -8,6 +8,7 @@
     </data>
 
     <RelativeLayout
+        android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/grey_f8f8f8">
@@ -37,8 +38,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/pad_20dp"
-                        android:fontFamily="@font/bold"
+                        android:layout_marginStart="@dimen/pad_15dp"
+                        android:fontFamily="@font/regular"
                         android:lineHeight="24dp"
                         android:text="Choose Custom Domain"
                         android:textColor="@color/white"
@@ -136,6 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/btn_select_Domain"
             android:layout_below="@id/toolbar"
+            android:background="#F5F8FD"
             android:visibility="visible"
 
             >
@@ -153,15 +155,17 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
-                    android:background="@drawable/custom_domain_edit_text_bg"
                     android:orientation="horizontal"
                     android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.appcompat.widget.AppCompatEditText
+                    <EditText
                         android:id="@+id/et_domain"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/custom_domain_edit_text_bg"
                         android:drawableStart="@drawable/ic_search_gray"
                         android:drawablePadding="@dimen/_14dp"
                         android:ellipsize="end"
@@ -175,7 +179,7 @@
                         android:textFontWeight="400"
                         android:textSize="@dimen/txt_14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/ivCross"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -186,30 +190,31 @@
                         android:layout_gravity="end"
                         android:layout_marginEnd="12dp"
                         android:src="@drawable/ic_cross"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <Button
+                        android:id="@+id/search_btn"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:background="@drawable/btn_orange_custom_domain"
-                        android:fontFamily="@font/bold"
-                        android:lineHeight="24dp"
+                        android:layout_height="40.5dp"
+                        android:background="@drawable/cta_button_click_effect"
+                        android:clickable="true"
+                        android:enabled="true"
+                        android:fontFamily="@font/regular"
                         android:paddingStart="32dp"
-                        android:paddingTop="8dp"
                         android:paddingEnd="32dp"
-                        android:paddingBottom="8dp"
                         android:text="Search"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textFontWeight="700"
                         android:textSize="@dimen/txt_14sp"
                         android:visibility="gone"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="visible"
 
                         />
 
@@ -266,7 +271,8 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:padding="16dp"
-                        android:visibility="visible"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
@@ -385,13 +391,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/semi_bold"
                     android:lineHeight="21.79dp"
                     android:text="Suggested domains for you"
                     android:textColor="@color/main_color_gray_dk"
                     android:textFontWeight="600"
                     android:textSize="@dimen/txt_16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout" />
+
+                <TextView
+                    android:id="@+id/search_results"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/semi_bold"
+                    android:lineHeight="21.79dp"
+                    android:text="Oops!No search results  found."
+                    android:textColor="@color/main_color_gray_dk"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/txt_16sp"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout" />
 
@@ -404,7 +426,8 @@
                     android:elevation="8dp"
                     android:theme="@style/Theme.MaterialComponents"
                     app:cardCornerRadius="@dimen/pad_10dp"
-                    app:layout_constraintTop_toBottomOf="@id/tv_title">
+                    app:layout_constraintTop_toBottomOf="@id/tv_title"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_title_free">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_custom_domain"
@@ -555,44 +578,44 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
-        <!--        <com.facebook.shimmer.ShimmerFrameLayout-->
-        <!--            android:id="@+id/shimmer_view_history"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_below="@id/toolbar"-->
-        <!--            android:layout_centerInParent="true"-->
-        <!--            android:layout_above="@id/btn_select_Domain"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:layout_marginStart="@dimen/_10sdp"-->
-        <!--            android:layout_marginEnd="@dimen/_10sdp"-->
-        <!--            android:background="@color/white"-->
-        <!--            android:orientation="vertical"-->
-        <!--            android:visibility="gone"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            tools:visibility="gone">-->
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_view_domain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/toolbar"
+                    android:layout_centerInParent="true"
+                    android:layout_above="@id/btn_select_Domain"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:visibility="gone">
 
-        <!--            &lt;!&ndash; Adding 7 rows of placeholders &ndash;&gt;-->
-        <!--            <LinearLayout-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:background="@color/white"-->
-        <!--                android:orientation="vertical">-->
+                    <!-- Adding 7 rows of placeholders -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="vertical">
 
-        <!--                <include layout="@layout/custom_domain_data_layout_1" />-->
+                        <include layout="@layout/custom_domain_data_layout_1" />
 
-        <!--                <include layout="@layout/custom_domain_data_layout_2" />-->
-        <!--                <include layout="@layout/custom_domain_data_layout_2" />-->
-        <!--                <include layout="@layout/custom_domain_data_layout_2" />-->
-        <!--                <include layout="@layout/custom_domain_data_layout_2" />-->
-        <!--                <include layout="@layout/custom_domain_data_layout_2" />-->
-        <!--                <include layout="@layout/custom_domain_data_layout_2" />-->
-        <!--                <include layout="@layout/custom_domain_data_layout_3" />-->
+                        <include layout="@layout/custom_domain_data_layout_2" />
+                        <include layout="@layout/custom_domain_data_layout_2" />
+                        <include layout="@layout/custom_domain_data_layout_2" />
+                        <include layout="@layout/custom_domain_data_layout_2" />
+                        <include layout="@layout/custom_domain_data_layout_2" />
+                        <include layout="@layout/custom_domain_data_layout_2" />
+                        <include layout="@layout/custom_domain_data_layout_3" />
 
 
-        <!--            </LinearLayout>-->
+                    </LinearLayout>
 
-        <!--        </com.facebook.shimmer.ShimmerFrameLayout>-->
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
 
         <Button

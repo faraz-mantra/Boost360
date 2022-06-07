@@ -550,7 +550,16 @@ class FeatureDetailsActivity :
                         startActivity(Intent(this, CallTrackingActivity::class.java))
                     }
                     addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
-                        startActivity(Intent(this, CustomDomainActivity::class.java))
+
+                        val intent = Intent(
+                            applicationContext,
+                            CustomDomainActivity::class.java
+                        )
+                        intent.putExtra("expCode", experienceCode)
+                        intent.putExtra("fpid", fpid)
+                        intent.putExtra("AddonDetails", addonDetails)
+                        intent.putExtra("AddonDiscountedPrice", getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent))
+                        startActivity(intent)
                     }
                     else -> {
                         makeFlyAnimation(addon_icon)
