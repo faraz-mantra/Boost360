@@ -2603,7 +2603,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         } else {
                             months_validity.setText(default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), false))
                             feature_validity.text = default_validity_months.toString() + yearOrMonthText(default_validity_months, requireActivity(), true)
-
                         }
                     }
                 } else {

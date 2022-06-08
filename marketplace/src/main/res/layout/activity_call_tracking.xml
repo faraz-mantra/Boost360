@@ -268,7 +268,7 @@
                     android:layout_margin="16dp"
                     android:background="@color/white"
                     android:elevation="8dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:theme="@style/Theme.MaterialComponents"
                     app:cardCornerRadius="@dimen/pad_10dp"
                     app:layout_constraintTop_toBottomOf="@id/tv_search_result_for_related_combination">

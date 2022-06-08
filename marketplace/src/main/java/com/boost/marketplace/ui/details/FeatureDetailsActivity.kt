@@ -1118,7 +1118,6 @@ class FeatureDetailsActivity :
 
 
     private fun makeFlyAnimation(targetView: ImageView) {
-
         CircleAnimationUtil().attachActivity(this).setTargetView(targetView).setMoveDuration(600)
             .setDestView(featureDetailsCartIcon)
             .setAnimationListener(object : Animator.AnimatorListener {
@@ -1131,7 +1130,6 @@ class FeatureDetailsActivity :
                 override fun onAnimationCancel(animation: Animator) {}
                 override fun onAnimationRepeat(animation: Animator) {}
             }).startAnimation()
-
     }
 
     private fun getDiscountedPrice(price: Double, discountPercent: Int): Double {

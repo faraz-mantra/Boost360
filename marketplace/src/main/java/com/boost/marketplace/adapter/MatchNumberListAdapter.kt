@@ -13,23 +13,23 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.marketplace.R
-import com.boost.marketplace.interfaces.HomeListener
+import com.boost.marketplace.interfaces.CallTrackListener
 import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
 import java.util.*
 
 class MatchNumberListAdapter(
     val activity: CallTrackingActivity,
-    cryptoCurrencies: ArrayList<String>?,
-    searchValue: Char?,
-    val listener: HomeListener
+    cryptoCurrencies: MutableList<String>?,
+    searchValue: String?,
+    val listener: CallTrackListener
 ) : RecyclerView.Adapter<MatchNumberListAdapter.upgradeViewHolder>() {
 
-    private var upgradeList = ArrayList<String>()
+    private var upgradeList: MutableList<String> = ArrayList()
     private lateinit var context: Context
-    private var searchItem: Char? = null
+    private var searchItem: String? = null
 
     init {
-        this.upgradeList = cryptoCurrencies as ArrayList<String>
+        this.upgradeList = cryptoCurrencies!!
         this.searchItem = searchValue
     }
 
@@ -46,35 +46,42 @@ class MatchNumberListAdapter(
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
-        if (searchItem != null) {
+        if (searchItem != null && searchItem!!.isNotEmpty()) {
 
-            val startPos = upgradeList[position]
-                .indexOf(searchItem!!)
+            var startPos: Int? = null
+            var endPos: Int? = null
+            val spannable = SpannableString(upgradeList[position])
 
-
-            if (startPos != -1) {
-                val spannable = SpannableString(upgradeList[position])
-                spannable.setSpan(
-                    ForegroundColorSpan(ContextCompat.getColor(context, R.color.black)),
-                    startPos,
-                    startPos,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-                spannable.setSpan(
-                    StyleSpan(Typeface.BOLD),
-                    startPos,
-                    startPos,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-
-                holder.title.text = spannable
+            for (i in searchItem!!.indices) {
+                if (upgradeList[position].contains(searchItem!![i])) {
+                    startPos = upgradeList[position].toLowerCase(Locale.US)
+                        .indexOf(searchItem!!.toString().toLowerCase(Locale.US))
+                    endPos = startPos + searchItem!!.toString().length
+                    if (startPos != -1) {
+                        spannable.setSpan(
+                            ForegroundColorSpan(ContextCompat.getColor(context, R.color.black)),
+                            startPos,
+                            endPos,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        spannable.setSpan(
+                            StyleSpan(Typeface.BOLD),
+                            startPos,
+                            endPos,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    }
+                }
             }
+            holder.title.text = spannable
+
         } else {
             holder.title.text = upgradeList[position]
 
         }
     }
-    fun addupdates(upgradeModel: ArrayList<String>) {
+
+    fun addupdates(upgradeModel: MutableList<String>) {
         val initPosition = upgradeList.size
         upgradeList.clear()
         upgradeList.addAll(upgradeModel)
