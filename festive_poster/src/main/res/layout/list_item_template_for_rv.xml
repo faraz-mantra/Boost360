@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="312dp"
+        android:layout_width="match_parent"
         android:layout_marginHorizontal="@dimen/size_8"
         android:layout_height="wrap_content"
         >
@@ -13,7 +13,7 @@
             app:cardElevation="4dp"
             app:strokeWidth="@dimen/size_0"
             android:layout_width="match_parent"
-            android:layout_height="383dp"
+            android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
             app:cardCornerRadius="10dp"
             app:cardPreventCornerOverlap="false"
@@ -27,8 +27,8 @@
 
                 <com.framework.views.customViews.CustomCardView
                     android:id="@+id/customCardView6"
-                    android:layout_width="291dp"
-                    android:layout_height="230dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="10dp"
@@ -40,11 +40,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <com.framework.views.customViews.CustomImageView
+                    <com.festive.poster.customviews.SquareImageView
                         android:id="@+id/iv_svg"
-                        android:scaleType="fitXY"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
                         android:src="@color/colorPrimary" />
 
 
@@ -117,32 +117,26 @@
                     app:layout_constraintTop_toBottomOf="@+id/customCardView6"
                     tools:text="Black friday sale upto 50% discount on our post selected merchandise, only " />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:layout_width="0dp"
-                    android:id="@+id/tv_fav"
-                    android:visibility="gone"
-                    android:layout_marginTop="@dimen/size_16"
-                    android:layout_height="wrap_content"
-                    tools:text="Favourited on: 13 Jan 2022"
-                    app:layout_constraintEnd_toEndOf="@+id/tv_template_desc"
-                    app:layout_constraintStart_toStartOf="@+id/tv_template_desc"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_template_desc" />
 
                 <View
+                    app:layout_constraintVertical_bias="1"
                     android:id="@+id/view2"
                     android:layout_width="match_parent"
                     android:layout_height="0.15dp"
+                    android:layout_marginTop="@dimen/size_17"
                     android:background="@color/colorDBDBDB"
-                    app:layout_constraintBottom_toTopOf="@+id/btn_share" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_template_desc" />
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/btn_share"
-                    android:layout_width="@dimen/size_156"
+                    android:layout_width="0dp"
                     android:layout_height="@dimen/size_56"
                     android:paddingVertical="16dp"
+                    app:layout_constraintVertical_bias="1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view2"
                     app:layout_constraintWidth_percent="0.5">
 
                     <LinearLayout
@@ -172,13 +166,15 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/btn_post"
-                    android:layout_width="@dimen/size_156"
+                    android:layout_width="0dp"
                     android:layout_height="@dimen/size_56"
                     android:background="@drawable/post_btn_bg"
                     android:paddingVertical="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/btn_share"
-                    app:layout_constraintTop_toTopOf="@+id/btn_share"
+                    app:layout_constraintTop_toBottomOf="@+id/view2"
+                    app:layout_constraintVertical_bias="1"
                     app:layout_constraintWidth_percent="0.5">
 
                     <LinearLayout
