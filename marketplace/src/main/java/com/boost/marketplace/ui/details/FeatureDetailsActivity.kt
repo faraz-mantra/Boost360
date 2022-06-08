@@ -22,12 +22,9 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.SimplePageTransformerSmall
 import com.boost.cart.adapter.ZoomOutPageTransformer
-import com.boost.cart.ui.popup.CouponPopUpFragment
 import com.boost.cart.utils.Utils.priceCalculatorForYear
 import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
@@ -43,7 +40,6 @@ import com.boost.marketplace.databinding.ActivityFeatureDetailsBinding
 import com.boost.marketplace.infra.utils.Constants.Companion.IMAGE_PREVIEW_POPUP_FRAGMENT
 import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.interfaces.DetailsFragmentListener
-import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
 import com.boost.marketplace.ui.details.call_track.CallTrackingHelpBottomSheet
 import com.boost.marketplace.ui.details.call_track.RequestCallbackBottomSheet
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
@@ -54,7 +50,6 @@ import com.boost.marketplace.ui.webview.WebViewActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.framework.analytics.SentryController
-import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 import com.google.android.material.appbar.AppBarLayout
 import com.google.gson.Gson
@@ -578,24 +573,26 @@ class FeatureDetailsActivity :
     }
 
     fun addItemToCart() {
+        when{
+            addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
+                val intent = Intent(
+                    applicationContext,
+                    CustomDomainActivity::class.java
+                )
+                intent.putExtra("expCode", experienceCode)
+                intent.putExtra("fpid", fpid)
+                intent.putExtra("bundleData", Gson().toJson(addonDetails))
+                intent.putExtra("AddonDiscountedPrice", getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent))
+                startActivity(intent)
+            }
+        }
+
         if (!itemInCartStatus) {
             if (addonDetails != null) {
                 when {
                     addonDetails?.boost_widget_key?.equals("IVR")!! -> {
                         loadNumberList()
                     //startActivity(Intent(this, CallTrackingActivity::class.java))
-                    }
-                    addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
-
-                        val intent = Intent(
-                            applicationContext,
-                            CustomDomainActivity::class.java
-                        )
-                        intent.putExtra("expCode", experienceCode)
-                        intent.putExtra("fpid", fpid)
-                        intent.putExtra("AddonDetails", addonDetails)
-                        intent.putExtra("AddonDiscountedPrice", getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent))
-                        startActivity(intent)
                     }
                     else -> {
                         makeFlyAnimation(addon_icon)
