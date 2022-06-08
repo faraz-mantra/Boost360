@@ -237,23 +237,23 @@ class ComparePacksViewModel: BaseViewModel() {
                                     )
                                 )
                             }
-                            Completable.fromAction {
-                                /*AppDatabase.getInstance(getApplication())!!
-                                        .bundlesDao()
-                                        .insertAllBundles(bundles)*/
-                            }
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .doOnComplete {
+//                            Completable.fromAction {
+//                                AppDatabase.getInstance(Application())!!
+//                                        .bundlesDao()
+//                                        .insertAllBundles(bundles)
+//                            }
+//                                .subscribeOn(Schedulers.io())
+//                                .observeOn(AndroidSchedulers.mainThread())
+//                                .doOnComplete {
                                     Log.i("insertAllBundles", "Successfully")
                                     allBundleResult.postValue(bundles)
                                     updatesLoader.postValue(false)
-                                }
-                                .doOnError {
-                                    updatesError.postValue(it.message)
-                                    updatesLoader.postValue(false)
-                                }
-                                .subscribe()
+//                                }
+//                                .doOnError {
+//                                    updatesError.postValue(it.message)
+//                                    updatesLoader.postValue(false)
+//                                }
+//                                .subscribe()
 
                         },
                         {

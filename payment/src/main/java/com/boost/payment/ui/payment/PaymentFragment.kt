@@ -7,12 +7,9 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.text.Html
 import android.text.SpannableString
-import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.StyleSpan
-import android.text.style.UnderlineSpan
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.util.Log
@@ -55,6 +52,7 @@ import com.framework.analytics.SentryController
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
+import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -756,7 +754,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                     payment_main_layout.fullScroll(View.FOCUS_DOWN)
                 }
             }
-
+            payment_main_layout.post {
+                payment_main_layout.fullScroll(View.FOCUS_DOWN)
+            }
         }
 
         gst_discount.setOnClickListener {
@@ -775,15 +775,25 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             WindowManager.LayoutParams.WRAP_CONTENT,
             true
         )
+        val txtSub: TextView = popupWindow.contentView.findViewById(R.id.price1)
+        val discountTitle: TextView = popupWindow.contentView.findViewById(R.id.popup_discount_value1)
+        val txtSub1: TextView = popupWindow.contentView.findViewById(R.id.price2)
+        val txtSub2: TextView = popupWindow.contentView.findViewById(R.id.price3)
         val netPrice = requireArguments().getDouble("netPrice")
         val temp = (netPrice * 18) / 100
-        val taxValue = Math.round(temp * 100) / 100.0
-        val txtSub: TextView = popupWindow.contentView.findViewById(R.id.price1)
-        val txtSub1: TextView = popupWindow.contentView.findViewById(R.id.price2)
-        txtSub.setText(" ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(netPrice))
-        txtSub1.setText(" ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) popupWindow.elevation =
-            5.0f
+        val taxValue = RootUtil.round(Math.round(temp * 100) / 100.0, 2)
+        txtSub.setText(" ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(netPrice + prefs.getApplyedCouponDetails()!!.discount_amount, 2)))
+        if(prefs.getApplyedCouponDetails() !=null){
+            discountTitle.visibility = View.VISIBLE
+            txtSub1.visibility = View.VISIBLE
+            txtSub1.setText(" -₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(prefs.getApplyedCouponDetails()!!.discount_amount, 2)))
+        }else{
+            discountTitle.visibility = View.GONE
+            txtSub1.visibility = View.GONE
+        }
+        txtSub2.setText(" ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            popupWindow.elevation = 5.0f
         popupWindow.showAsDropDown(anchor, (anchor.width - 40), -166)
     }
 
@@ -1645,19 +1655,19 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         //cartOriginalPrice
         val cartOriginalPrice = prefs.getCartOriginalAmount()
 
-        //coupon discount percentage
-        val couponDiscountPercentage = prefs.getCouponDiscountPercentage()
-        if(couponDiscountPercentage>0) {
-            long_validity_discount_title.visibility = View.VISIBLE
-            long_validity_discount_value.visibility = View.VISIBLE
-            long_validity_discount_title.setText("Long validity discount (" + couponDiscountPercentage.toString() + "%)")
-            long_validity_discount_value.setText(
-                "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(0)
-            )
-        }else{
-            long_validity_discount_title.visibility = View.GONE
-            long_validity_discount_value.visibility = View.GONE
-        }
+//        //coupon discount percentage
+//        val couponDiscountPercentage = prefs.getCouponDiscountPercentage()
+//        if(couponDiscountPercentage>0) {
+//            long_validity_discount_title.visibility = View.VISIBLE
+//            long_validity_discount_value.visibility = View.VISIBLE
+//            long_validity_discount_title.setText("Long validity discount (" + couponDiscountPercentage.toString() + "%)")
+//            long_validity_discount_value.setText(
+//                "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(0)
+//            )
+//        }else{
+//            long_validity_discount_title.visibility = View.GONE
+//            long_validity_discount_value.visibility = View.GONE
+//        }
 
         //coupon discount amount
         if (!requireArguments().getString("couponTitle").isNullOrEmpty()) {

@@ -19,7 +19,8 @@ import com.bumptech.glide.Glide
 
 class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
                          itemList: List<FeaturesModel>?, var myAddonsListener: MyAddonsListener
-) : RecyclerView.Adapter<FreeAddonsAdapter.upgradeViewHolder>(), View.OnClickListener {
+) : RecyclerView.Adapter<FreeAddonsAdapter.upgradeViewHolder>() //,View.OnClickListener
+{
 
   private var list = ArrayList<FeaturesModel>()
   private lateinit var context: Context
@@ -35,7 +36,7 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
     context = itemView.context
 
 
-    itemView.setOnClickListener(this)
+    //itemView.setOnClickListener(this)
     return upgradeViewHolder(itemView)
   }
 
@@ -129,7 +130,7 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
     }
   }
 
-  override fun onClick(v: View?) {
-    TODO("Not yet implemented")
-  }
+//  override fun onClick(v: View?) {
+//    TODO("Not yet implemented")
+//  }
 }

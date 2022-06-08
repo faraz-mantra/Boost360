@@ -3,7 +3,7 @@ package com.boost.marketplace.ui.History_Orders
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrderV2.GetPurchaseOrderResponseV2
-import com.boost.dbcenterapi.data.remote.ApiInterface
+import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.utils.Utils
 import com.framework.models.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,7 +22,7 @@ class HistoryOrdersViewModel: BaseViewModel() {
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
 
     val compositeDisposable = CompositeDisposable()
-    var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
+    var ApiService = Utils.getRetrofit().create(NewApiInterface::class.java)
 
 
     fun updatesLoader(): LiveData<Boolean> {

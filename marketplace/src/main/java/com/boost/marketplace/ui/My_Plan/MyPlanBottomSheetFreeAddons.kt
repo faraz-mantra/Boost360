@@ -103,7 +103,7 @@ class MyPlanBottomSheetFreeAddons : BaseBottomSheetDialog<BottomSheetMyplanFreeF
         )
         intent.putExtra("email", "ria@nowfloats.com")
         intent.putExtra("mobileNo", "9160004303")
-        intent.putExtra("itemId", singleAddon.boost_widget_key)
+        intent.putExtra("itemId", singleAddon.feature_code)
         startActivity(intent)
     }
 }

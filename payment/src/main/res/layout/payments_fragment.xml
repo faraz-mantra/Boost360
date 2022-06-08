@@ -748,6 +748,8 @@
                             android:text="Long validity discount (2%)"
                             android:textColor="@color/green"
                             android:textFontWeight="400"
+                            android:visibility="gone"
+                            tools:visibility="visible"
                             android:textSize="@dimen/txt_12sp" />
 
                         <TextView
@@ -761,6 +763,8 @@
                             android:text="0"
                             android:textColor="@color/green"
                             android:textFontWeight="600"
+                            android:visibility="gone"
+                            tools:visibility="visible"
                             android:textSize="@dimen/txt_12sp" />
 
                         <TextView

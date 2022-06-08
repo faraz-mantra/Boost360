@@ -123,12 +123,12 @@ class SharedPrefs(activity: Activity) {
     return pref!!.getFloat(temp_cartAmount, 0f)
   }
 
-  fun storeCouponDiscountPercentage(value: Int) {
-    editor!!.putInt(temp_couponDiscount, value).apply()
+  fun storeCouponDiscountPercentage(value: Double) {
+    editor!!.putFloat(temp_couponDiscount, value.toFloat()).apply()
   }
 
-  fun getCouponDiscountPercentage(): Int {
-    return pref!!.getInt(temp_couponDiscount, 0)
+  fun getCouponDiscountPercentage(): Double {
+    return pref!!.getFloat(temp_couponDiscount, 0.0f).toDouble()
   }
 
   //storing orderInfo

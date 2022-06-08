@@ -21,7 +21,8 @@ import com.framework.utils.DateUtils
 
 class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
                          itemList: List<FeaturesModel>?, var myAddonsListener: MyAddonsListener
-) : RecyclerView.Adapter<PaidAddonsAdapter.upgradeViewHolder>(), View.OnClickListener {
+) : RecyclerView.Adapter<PaidAddonsAdapter.upgradeViewHolder>() //, View.OnClickListener
+ {
 
   private var list = ArrayList<FeaturesModel>()
   private lateinit var context: Context
@@ -36,7 +37,7 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
     )
     context = itemView.context
 
-    itemView.setOnClickListener(this)
+    //itemView.setOnClickListener(this)
 
     return upgradeViewHolder(itemView)
   }
@@ -114,7 +115,7 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
       upgradeTitle.text = updateModel.name
 
       val date: String? =DateUtils.parseDate(updateModel.expiryDate, DateUtils.FORMAT_SERVER_DATE1, DateUtils.FORMAT1_DD_MM_YYYY)
-      validity2.text="Valid till"+date
+      validity2.text= "Valid till " + date
 
       Glide.with(context).load(updateModel.primary_image).into(image)
       if (updateModel.status == 1) {
@@ -126,8 +127,8 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
     }
   }
 
-  override fun onClick(v: View?) {
-    TODO("Not yet implemented")
-  }
+//  override fun onClick(v: View?) {
+//    TODO("Not yet implemented")
+//  }
 
 }
