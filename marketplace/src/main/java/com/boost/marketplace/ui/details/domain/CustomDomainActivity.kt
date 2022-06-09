@@ -18,6 +18,7 @@ import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.dbcenterapi.utils.WebEngageController
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.CustomDomainListAdapter
+import com.boost.marketplace.adapter.CustomDomainListAdapter1
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityCustomDomainBinding
 import com.framework.utils.hideKeyBoard
@@ -43,6 +44,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
     var userPurchsedWidgets = java.util.ArrayList<String>()
     var allDomainsList: List<Domain>? = null
     var itemInCartStatus = false
+    lateinit var customDomainListAdapter1: CustomDomainListAdapter1
     lateinit var customDomainListAdapter: CustomDomainListAdapter
     lateinit var singleAddon: FeaturesModel
     lateinit var progressDialog: ProgressDialog
@@ -78,6 +80,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         singleAddon = Gson().fromJson<FeaturesModel>(jsonString, object : TypeToken<FeaturesModel>() {}.type)
         viewModel.setApplicationLifecycle(application, this)
         viewModel = ViewModelProviders.of(this).get(CustomDomainViewModel::class.java)
+        customDomainListAdapter1= CustomDomainListAdapter1(this,ArrayList())
         customDomainListAdapter = CustomDomainListAdapter(this, ArrayList())
         progressDialog = ProgressDialog(this)
         prefs = SharedPrefs(this)
@@ -89,13 +92,13 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
                 CustomDomainHelpBottomSheet::class.java.name
             )
         }
-        binding?.btnSelect?.setOnClickListener {
-            val dialogCard = ConfirmedCustomDomainBottomSheet()
-            dialogCard.show(
-                this.supportFragmentManager,
-                ConfirmedCustomDomainBottomSheet::class.java.name
-            )
-        }
+//        binding?.btnSelect?.setOnClickListener {
+//            val dialogCard = ConfirmedCustomDomainBottomSheet()
+//            dialogCard.show(
+//                this.supportFragmentManager,
+//                ConfirmedCustomDomainBottomSheet::class.java.name
+//            )
+//        }
         binding?.btnSelectDomain?.setOnClickListener {
             val dialogCard = ConfirmedCustomDomainBottomSheet()
             dialogCard.show(
@@ -120,6 +123,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         loadData()
         initMVVM()
         initRecyclerView()
+        initRecyclerView1()
 
         binding?.etDomain?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -155,8 +159,8 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             binding?.tvSuggestedDomains?.text = "Suggested domains for you"
             allDomainsList?.let { updateDomainsRecycler(it) }
             binding?.etDomain?.text = null
-            binding?.layoutAvailable?.visibility = View.GONE
-            binding?.layoutNotAvailable?.visibility = View.GONE
+//            binding?.layoutAvailable?.visibility = View.GONE
+//            binding?.layoutNotAvailable?.visibility = View.GONE
         }
 
         binding?.tvSkipTocart?.setOnClickListener {
@@ -221,6 +225,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         viewModel.updateResult().observe(this, androidx.lifecycle.Observer {
             allDomainsList = it.domains
             updateDomainsRecycler(it.domains)
+            updateFreeAddonsRecycler1(it.domains)
         })
 
         viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
@@ -242,6 +247,14 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             binding?.rvCustomDomain?.adapter = customDomainListAdapter
         }
     }
+    fun initRecyclerView1() {
+        val gridLayoutManager = LinearLayoutManager(this )
+        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        binding?.rvCustomDomain1?.apply {
+            layoutManager = gridLayoutManager
+            binding?.rvCustomDomain1?.adapter = customDomainListAdapter1
+        }
+    }
 
     private fun updateDomainsRecycler(list: List<Domain>) {
         customDomainListAdapter.addupdates(list)
@@ -249,36 +262,102 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         binding?.rvCustomDomain?.setFocusable(false)
     }
 
+    private fun updateFreeAddonsRecycler1(list: List<Domain>) {
+        customDomainListAdapter1.addupdates(list)
+        customDomainListAdapter1.notifyDataSetChanged()
+        binding?.rvCustomDomain1?.setFocusable(false)
+    }
+
+
     fun updateItemBySearchValue(searchValue: String) {
         val freeitemList: java.util.ArrayList<Domain> = arrayListOf()
-        for (singleFreeFeature in allDomainsList!!) {
-            if (singleFreeFeature.name.lowercase().indexOf(searchValue.lowercase()) != -1) {
+        val paiditemList: java.util.ArrayList<Domain> = arrayListOf()
+        for (singleDomain in allDomainsList!!) {
+            if (singleDomain.name.lowercase().indexOf(searchValue.lowercase()) != -1) {
                 binding?.tvSuggestedDomains?.text = "Search results"
-                freeitemList.add(singleFreeFeature)
-
-                if (singleFreeFeature.name.lowercase()
-                        .equals(searchValue.lowercase()) && searchValue.length > 7
-                ) {
-                    if (singleFreeFeature.isAvailable) {
-                        binding?.layoutAvailable?.visibility = View.VISIBLE
-                        binding?.tv1?.text = singleFreeFeature.name
-                    } else {
-                        binding?.layoutAvailable?.visibility = View.GONE
-                        binding?.layoutNotAvailable?.visibility = View.VISIBLE
-                        binding?.tv?.text = singleFreeFeature.name
-                    }
-                } else {
-                    binding?.layoutAvailable?.visibility = View.GONE
-                    binding?.layoutNotAvailable?.visibility = View.GONE
-                }
+                freeitemList.add(singleDomain)
                 updateDomainsRecycler(freeitemList)
-            } else {
-                binding?.tvSuggestedDomains?.visibility = View.VISIBLE
-                updateDomainsRecycler(allDomainsList!!)
+
             }
+               if (singleDomain.name.lowercase().equals(searchValue.lowercase()) && searchValue.length > 7) {
+//                    if (singleDomain.isAvailable) {
+//                        binding?.layoutAvailable?.visibility = View.VISIBLE
+//                        binding?.tv1?.text = singleDomain.name
+//                    } else {
+//                        binding?.layoutAvailable?.visibility = View.GONE
+//                        binding?.layoutNotAvailable?.visibility = View.VISIBLE
+//                        binding?.tv?.text = singleDomain.name
+//                    }
+                    binding?.rvCustomDomain1?.visibility=View.VISIBLE
+                    paiditemList.add(singleDomain)
+                    updateFreeAddonsRecycler1(paiditemList)
+                    updateDomainsRecycler(freeitemList!!)
+//                } else {
+//                    binding?.layoutAvailable?.visibility = View.GONE
+//                    binding?.layoutNotAvailable?.visibility = View.GONE
+//                }
+//                updateDomainsRecycler(freeitemList)
+//                    updateFreeAddonsRecycler1(paiditemList)
+            }
+                //            else {
+//                binding?.tvSuggestedDomains?.visibility = View.VISIBLE
+//                updateDomainsRecycler(allDomainsList!!)
+//            }
         }
-        updateDomainsRecycler(freeitemList)
+//        updateDomainsRecycler(freeitemList)
+//            updateFreeAddonsRecycler1(paiditemList)
+
+//        var exactMatchList: ArrayList<String> = arrayListOf()
+//        var everyMatchList: ArrayList<String> = arrayListOf()
+//        var isMatching: Boolean = false
+//        var searchChar: Char? = null
+//        for (item in allDomainsList!!) {
+//            for (i in searchValue) {
+//                if (item.name.lowercase().indexOf(searchValue.lowercase())!=-1) {
+//                    isMatching = true
+//                    if (item.name.lowercase() != (searchValue.lowercase())) {
+//                        isMatching = false
+//                    }
+//                    if (isMatching) {
+//                        freeitemList.add(item)
+//                    }
+//                    break
+//                }
+//            }
+//            if (item.equals(searchValue)) {
+//                freeitemList.add(item)
+//            }
+//        }
+//
+//        var exactMatchList: ArrayList<String> = arrayListOf()
+//        var everyMatchList: ArrayList<String> = arrayListOf()
+//        var isMatching: Boolean = false
+//        var searchChar: Char? = null
+//        for (number in list) {
+//            for (i in searchValue.indices) {
+//                if (number.contains(searchValue[i])) {
+//                    isMatching = true
+//                    if (number.contains(searchValue)) {
+//                        isMatching = false
+//                    }
+//                    if (isMatching) {
+//                        everyMatchList.add(number)
+//                    }
+//                    break
+//                }
+//            }
+//            if (number.contains(searchValue)) {
+//                exactMatchList.add(number)
+//            }
+//
+//        updateDomainsRecycler(freeitemList)
+//        if (isMatching) {
+//            binding?.rvCustomDomain1?.visibility = View.VISIBLE
+//            updateFreeAddonsRecycler1(freeitemList)
+//        }
+
     }
+
 
     private fun getDiscountedPrice(price: Double, discountPercent: Int): Double {
         return price - ((discountPercent / 100) * price)
