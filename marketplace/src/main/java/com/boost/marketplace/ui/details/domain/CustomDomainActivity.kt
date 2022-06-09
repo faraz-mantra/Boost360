@@ -21,6 +21,9 @@ import com.boost.marketplace.adapter.CustomDomainListAdapter
 import com.boost.marketplace.adapter.CustomDomainListAdapter1
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityCustomDomainBinding
+import com.boost.marketplace.ui.popup.customdomains.ConfirmedCustomDomainBottomSheet
+import com.boost.marketplace.ui.popup.customdomains.CustomDomainHelpBottomSheet
+import com.boost.marketplace.ui.popup.customdomains.SSLCertificateBottomSheet
 import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART
@@ -92,13 +95,6 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
                 CustomDomainHelpBottomSheet::class.java.name
             )
         }
-//        binding?.btnSelect?.setOnClickListener {
-//            val dialogCard = ConfirmedCustomDomainBottomSheet()
-//            dialogCard.show(
-//                this.supportFragmentManager,
-//                ConfirmedCustomDomainBottomSheet::class.java.name
-//            )
-//        }
         binding?.btnSelectDomain?.setOnClickListener {
             val dialogCard = ConfirmedCustomDomainBottomSheet()
             dialogCard.show(
@@ -159,8 +155,6 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             binding?.tvSuggestedDomains?.text = "Suggested domains for you"
             allDomainsList?.let { updateDomainsRecycler(it) }
             binding?.etDomain?.text = null
-//            binding?.layoutAvailable?.visibility = View.GONE
-//            binding?.layoutNotAvailable?.visibility = View.GONE
         }
 
         binding?.tvSkipTocart?.setOnClickListener {
@@ -268,7 +262,6 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         binding?.rvCustomDomain1?.setFocusable(false)
     }
 
-
     fun updateItemBySearchValue(searchValue: String) {
         val freeitemList: java.util.ArrayList<Domain> = arrayListOf()
         val paiditemList: java.util.ArrayList<Domain> = arrayListOf()
@@ -355,9 +348,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
 //            binding?.rvCustomDomain1?.visibility = View.VISIBLE
 //            updateFreeAddonsRecycler1(freeitemList)
 //        }
-
     }
-
 
     private fun getDiscountedPrice(price: Double, discountPercent: Int): Double {
         return price - ((discountPercent / 100) * price)

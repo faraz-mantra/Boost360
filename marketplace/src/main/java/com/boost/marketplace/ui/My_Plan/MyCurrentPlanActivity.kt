@@ -23,6 +23,8 @@ import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityMyCurrentPlanBinding
 import com.boost.marketplace.interfaces.CompareBackListener
 import com.boost.marketplace.ui.History_Orders.HistoryOrdersActivity
+import com.boost.marketplace.ui.popup.myplan.MyPlanBottomSheet
+import com.boost.marketplace.ui.popup.myplan.MyPlanBottomSheetFreeAddons
 import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager

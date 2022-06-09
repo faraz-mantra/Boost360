@@ -1,4 +1,4 @@
-package com.boost.marketplace.ui.My_Plan
+package com.boost.marketplace.ui.popup.myplan
 
 import android.content.Intent
 import android.view.View

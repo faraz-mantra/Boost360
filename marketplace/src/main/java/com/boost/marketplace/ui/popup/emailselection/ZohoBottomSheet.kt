@@ -1,15 +1,15 @@
-package com.boost.marketplace.ui.details.emails
+package com.boost.marketplace.ui.popup.emailselection
 
 import com.boost.marketplace.R
-import com.boost.marketplace.databinding.BottomSheetEmailConfirmationBinding
+import com.boost.marketplace.databinding.BottomSheetZohoBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
-class EmailConfirmatinBottomSheet: BaseBottomSheetDialog<BottomSheetEmailConfirmationBinding, BaseViewModel>() {
+class ZohoBottomSheet: BaseBottomSheetDialog<BottomSheetZohoBinding, BaseViewModel>() {
 
 
     override fun getLayout(): Int {
-        return R.layout.bottom_sheet_email_confirmation
+        return R.layout.bottom_sheet_zoho
     }
 
     override fun getViewModelClass(): Class<BaseViewModel> {

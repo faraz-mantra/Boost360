@@ -1,16 +1,15 @@
-package com.boost.marketplace.ui.details.domain
+package com.boost.marketplace.ui.popup.customdomains
 
 import com.boost.marketplace.R
-
-import com.boost.marketplace.databinding.PopupSpecificatonExtensionCustomDomainBinding
+import com.boost.marketplace.databinding.PopupCallExpertCustomDomainBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
-class SSLCertificateBottomSheet : BaseBottomSheetDialog<PopupSpecificatonExtensionCustomDomainBinding, BaseViewModel>() {
+class CustomDomainHelpBottomSheet : BaseBottomSheetDialog<PopupCallExpertCustomDomainBinding, BaseViewModel>() {
 
 
     override fun getLayout(): Int {
-        return R.layout.popup_specificaton_extension_custom_domain
+        return R.layout.popup_call_expert_custom_domain
     }
 
     override fun getViewModelClass(): Class<BaseViewModel> {
@@ -22,7 +21,6 @@ class SSLCertificateBottomSheet : BaseBottomSheetDialog<PopupSpecificatonExtensi
         binding?.backBtn?.setOnClickListener {
             dismiss()
         }
-
     }
 
 }
