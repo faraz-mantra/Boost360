@@ -29,7 +29,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:padding="16dp"
             android:orientation="horizontal">
 
           <androidx.appcompat.widget.AppCompatImageView
@@ -38,7 +38,7 @@
               android:layout_height="@dimen/_38sdp"
               tools:src="@drawable/ic_cart_feature_one_image" />
 
-          <RelativeLayout
+          <androidx.constraintlayout.widget.ConstraintLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginStart="10dp"
@@ -46,68 +46,64 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/addons_title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:fontFamily="@font/regular"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:text="www.businessname.com"
                 android:textColor="@color/common_text_color"
                 android:textFontWeight="600"
                 android:textSize="16sp"
-                android:textStyle="normal" />
+                android:textStyle="normal"
+                app:layout_constraintEnd_toStartOf="@id/addons_remove"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/desc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text="Custom Domain with HTTPS Security"
+                android:textColor="@color/copy_coupon_text_color"
+                android:textFontWeight="400"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@id/addons_remove"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addons_title" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/package_amount_layout1"
+                android:id="@+id/feature_one_amount_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="24dp"
                 android:gravity="center_vertical"
-                android:orientation="vertical">
+                app:layout_constraintTop_toBottomOf="@id/desc">
 
               <androidx.appcompat.widget.AppCompatTextView
-                  android:id="@+id/desc"
+                  android:id="@+id/cart_item_price"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginEnd="5dp"
-                  android:maxLines="1"
-                  android:text="Custom Domain with HTTPS Security"
-                  android:textColor="@color/copy_coupon_text_color"
-                  android:textFontWeight="400"
-                  android:textSize="12sp" />
+                  android:fontFamily="@font/regular"
+                  android:text="₹497/month"
+                  android:textColor="@color/main_color_gray_dk"
+                  android:textSize="@dimen/txt_14sp"
+                  android:textStyle="bold" />
 
-              <androidx.appcompat.widget.LinearLayoutCompat
-                  android:id="@+id/feature_one_amount_layout"
-                  android:layout_width="match_parent"
+              <androidx.appcompat.widget.AppCompatTextView
+                  android:id="@+id/cart_item_orig_cost"
+                  android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:layout_marginTop="24dp"
-                  android:gravity="center_vertical">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/cart_item_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:fontFamily="@font/regular"
-                    android:text="₹497/month"
-                    android:textColor="@color/main_color_gray_dk"
-                    android:textSize="@dimen/txt_14sp"
-                    android:textStyle="bold" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/cart_item_orig_cost"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/regular"
-                    android:text="@string/pack_price"
-                    android:textColor="@color/copy_coupon_text_color"
-                    android:textSize="12sp"
-                    android:textStyle="normal" />
-
-              </androidx.appcompat.widget.LinearLayoutCompat>
-
+                  android:fontFamily="@font/regular"
+                  android:text="@string/pack_price"
+                  android:textColor="@color/copy_coupon_text_color"
+                  android:textSize="12sp"
+                  android:textStyle="normal" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
+
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -118,26 +114,29 @@
                 android:gravity="center"
                 android:text="Used by 10,000+ businesses"
                 android:textColor="@color/offer_border"
-                android:textSize="@dimen/txt_12sp" />
+                android:textSize="@dimen/txt_12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/feature_one_amount_layout" />
 
 
-          </RelativeLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/addons_remove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:padding="15dp"
+                android:src="@drawable/ic_cart_pack_cross"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+          </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
       </androidx.appcompat.widget.LinearLayoutCompat>
-
-      <androidx.appcompat.widget.AppCompatImageView
-          android:id="@+id/addons_remove"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignParentEnd="true"
-          android:layout_marginTop="15dp"
-          android:layout_marginEnd="15dp"
-          android:padding="15dp"
-          android:src="@drawable/ic_cart_pack_cross" />
 
       <ImageView
           android:layout_width="wrap_content"
