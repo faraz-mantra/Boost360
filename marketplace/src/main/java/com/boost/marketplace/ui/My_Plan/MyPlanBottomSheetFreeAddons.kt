@@ -6,7 +6,7 @@ import android.widget.Toast
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
 import com.boost.marketplace.databinding.BottomSheetMyplanFreeFeaturesBinding
-import com.boost.marketplace.ui.DeepLink
+import com.boost.marketplace.infra.utils.DeepLink
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.bumptech.glide.Glide
 import com.framework.base.BaseBottomSheetDialog

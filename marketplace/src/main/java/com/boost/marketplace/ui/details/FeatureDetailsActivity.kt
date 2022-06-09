@@ -1050,11 +1050,6 @@ class FeatureDetailsActivity :
         makeFlyAnimation(image)
     }
 
-    override fun onLearnMoreClicked(item: Bundles?) {
-        TODO("Not yet implemented")
-    }
-
-
     private fun makeFlyAnimation(targetView: ImageView) {
 
         CircleAnimationUtil().attachActivity(this).setTargetView(targetView).setMoveDuration(600)

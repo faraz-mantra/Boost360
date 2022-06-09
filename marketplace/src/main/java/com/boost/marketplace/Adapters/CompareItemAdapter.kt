@@ -7,16 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.utils.Utils.priceCalculatorForYear
 import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
-import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.AddonsListener
-import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
-import com.boost.marketplace.ui.browse.SearchActivity
 import com.bumptech.glide.Glide
 import java.text.NumberFormat
 import java.util.*
@@ -27,7 +23,6 @@ class CompareItemAdapter(
     val addonsListener: AddonsListener,
     val activity: Activity
 ) : RecyclerView.Adapter<CompareItemAdapter.upgradeViewHolder>() {
-
 
     private var upgradeList = ArrayList<FeaturesModel>()
     var minMonth = 1
@@ -42,7 +37,6 @@ class CompareItemAdapter(
             R.layout.item_pack_list, parent, false
         )
         context = itemView.context
-
         return upgradeViewHolder(itemView)
     }
 
@@ -53,8 +47,6 @@ class CompareItemAdapter(
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
 
         holder.name.setText(upgradeList.get(position).name)
-        // holder.title.setText(upgradeList.get(position).target_business_usecase)
-
         val cryptocurrencyItem = upgradeList[position]
         holder.upgradeListItem(holder, cryptocurrencyItem, activity)
         Glide.with(context).load(upgradeList.get(position).primary_image).into(holder.image)
@@ -72,7 +64,6 @@ class CompareItemAdapter(
     }
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         val image = itemView.findViewById<ImageView>(R.id.imageView2)!!
         val name = itemView.findViewById<TextView>(R.id.title)!!
         val price = itemView.findViewById<TextView>(R.id.price)!!
@@ -86,10 +77,6 @@ class CompareItemAdapter(
             var price = (discount * updateModel.price) / 100
             price = priceCalculatorForYear(price, updateModel.widget_type?:"", activity)
             holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + yearlyOrMonthlyOrEmptyValidity(updateModel.widget_type?:"", activity)
-
         }
-
-
     }
-
 }

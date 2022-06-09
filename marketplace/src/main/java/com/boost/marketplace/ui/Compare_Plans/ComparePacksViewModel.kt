@@ -4,8 +4,6 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.anachat.chatsdk.internal.utils.NFChatSDK.getApplication
-import com.boost.dbcenterapi.data.remote.ApiInterface
 import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
@@ -16,22 +14,17 @@ import com.boost.dbcenterapi.utils.Utils
 import com.facebook.FacebookSdk.getApplicationContext
 import com.framework.models.BaseViewModel
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class ComparePacksViewModel: BaseViewModel() {
-    var updatesResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
+
     var featureResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
-//    var cartResultBack: MutableLiveData<List<CartModel>> = MutableLiveData()
-    var bundleKeysResult: MutableLiveData<List<String>> = MutableLiveData()
-
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
-    var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
     var NewApiService = Utils.getRetrofit(true).create(NewApiInterface::class.java)
     var experienceCode: String = "SVC"
     var _fpTag: String = "ABC"
@@ -41,45 +34,12 @@ class ComparePacksViewModel: BaseViewModel() {
         return featureResult
     }
 
-    fun getUpgradeResult(): LiveData<List<FeaturesModel>> {
-        return updatesResult
-    }
-
     fun cartResult(): LiveData<List<CartModel>> {
         return cartResult
     }
 
-//    fun cartResultBack(): LiveData<List<CartModel>> {
-//        return cartResultBack
-//    }
-
-    fun getBundleWidgetKeys(): LiveData<List<String>> {
-        return bundleKeysResult
-    }
-
     fun updatesLoader(): LiveData<Boolean> {
         return updatesLoader
-    }
-
-    fun loadUpdates(list: List<String>) {
-        CompositeDisposable().add(
-            AppDatabase.getInstance(Application())!!
-                .featuresDao()
-                .getallFeaturesInList(list)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        updatesResult.postValue(it)
-                        updatesLoader.postValue(false)
-                    },
-                    {
-                        it.printStackTrace()
-                        updatesError.postValue(it.message)
-                        updatesLoader.postValue(false)
-                    }
-                )
-        )
     }
 
     fun getFeatureValues(list: List<String>) {
@@ -103,24 +63,6 @@ class ComparePacksViewModel: BaseViewModel() {
         )
     }
 
-    fun addItemToCart(cartItem: CartModel) {
-        updatesLoader.postValue(true)
-        Completable.fromAction {
-            AppDatabase.getInstance(Application())!!.cartDao()
-                .insertToCart(cartItem)
-        }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnComplete {
-                updatesLoader.postValue(false)
-            }
-            .doOnError {
-                updatesError.postValue(it.message)
-                updatesLoader.postValue(false)
-            }
-            .subscribe()
-    }
-
     fun getCartItems() {
         updatesLoader.postValue(true)
         CompositeDisposable().add(
@@ -141,46 +83,6 @@ class ComparePacksViewModel: BaseViewModel() {
         )
     }
 
-//    fun getCartItemsBack() {
-//        updatesLoader.postValue(true)
-//        CompositeDisposable().add(
-//            AppDatabase.getInstance(Application())!!
-//                .cartDao()
-//                .getCartItems()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .doOnSuccess {
-//                    cartResultBack.postValue(it)
-//                    updatesLoader.postValue(false)
-//                }
-//                .doOnError {
-//                    updatesError.postValue(it.message)
-//                    updatesLoader.postValue(false)
-//                }
-//                .subscribe()
-//        )
-//    }
-
-    fun getAssociatedWidgetKeys(bundleId: String) {
-        updatesLoader.postValue(true)
-        CompositeDisposable().add(
-            AppDatabase.getInstance(Application())!!
-                .bundlesDao()
-                .getIncludedKeysInBundle(bundleId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSuccess {
-                    var keys = Gson().fromJson<List<String>>(it, object : TypeToken<List<String>>() {}.type)
-                    bundleKeysResult.postValue(keys)
-                }
-                .doOnError {
-                    updatesError.postValue(it.message)
-                    updatesLoader.postValue(false)
-                }
-                .subscribe()
-        )
-    }
-
     fun setCurrentExperienceCode(code: String, fpTag: String) {
         experienceCode = code
     }
@@ -191,7 +93,6 @@ class ComparePacksViewModel: BaseViewModel() {
 
     fun loadPackageUpdates() {
         updatesLoader.postValue(true)
-
         if (Utils.isConnectedToInternet(getApplicationContext())) {
             CompositeDisposable().add(
                 NewApiService.GetAllFeatures()
@@ -237,24 +138,9 @@ class ComparePacksViewModel: BaseViewModel() {
                                     )
                                 )
                             }
-//                            Completable.fromAction {
-//                                AppDatabase.getInstance(Application())!!
-//                                        .bundlesDao()
-//                                        .insertAllBundles(bundles)
-//                            }
-//                                .subscribeOn(Schedulers.io())
-//                                .observeOn(AndroidSchedulers.mainThread())
-//                                .doOnComplete {
                                     Log.i("insertAllBundles", "Successfully")
                                     allBundleResult.postValue(bundles)
                                     updatesLoader.postValue(false)
-//                                }
-//                                .doOnError {
-//                                    updatesError.postValue(it.message)
-//                                    updatesLoader.postValue(false)
-//                                }
-//                                .subscribe()
-
                         },
                         {
                             Log.e("GetAllFeatures", "error" + it.message)
@@ -262,24 +148,7 @@ class ComparePacksViewModel: BaseViewModel() {
                         }
                     )
             )
-        } /*else {
-            CompositeDisposable().add(
-                    AppDatabase.getInstance(getApplication())!!
-                            .widgetDao()
-                            .queryUpdates()
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doOnSuccess {
-                                updatesResult.postValue(it)
-                                updatesLoader.postValue(false)
-                            }
-                            .doOnError {
-                                updatesError.postValue(it.message)
-                                updatesLoader.postValue(false)
-                            }
-                            .subscribe()
-            )
-        }*/
+        }
     }
 
     fun addItemToCartPackage1(cartItem: CartModel) {
@@ -300,37 +169,5 @@ class ComparePacksViewModel: BaseViewModel() {
                 updatesLoader.postValue(false)
             }
             .subscribe()
-    }
-
-    fun addItemToCartPackage(cartItem: CartModel) {
-        updatesLoader.postValue(true)
-
-        Completable.fromAction {
-            AppDatabase.getInstance(Application())!!.cartDao().emptyCart()
-        }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnError {
-                //in case of error
-            }
-            .doOnComplete {
-                Completable.fromAction {
-                    AppDatabase.getInstance(Application())!!.cartDao()
-                        .insertToCart(cartItem)
-                }
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnComplete {
-                        updatesLoader.postValue(false)
-                    }
-                    .doOnError {
-                        updatesError.postValue(it.message)
-                        updatesLoader.postValue(false)
-                    }
-                    .subscribe()
-            }
-            .subscribe()
-
-
     }
 }
