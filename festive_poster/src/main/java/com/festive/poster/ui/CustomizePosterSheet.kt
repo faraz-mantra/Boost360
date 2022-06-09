@@ -104,7 +104,7 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
     changeColorOfSubstring(R.string.your_name_star, R.color.colorAccent, "*", binding?.tvYourNameVw!!)
     changeColorOfSubstring(R.string.display_email_id, R.color.colorAccent, "*", binding?.tvDisplayEmailVw!!)
     changeColorOfSubstring(R.string.display_whatsapp_number, R.color.colorAccent, "*", binding?.tvDisplayWhatsappVw!!)
-    changeColorOfSubstring(R.string.website_address, R.color.colorAccent, "*", binding?.tvWebsiteAddressVw!!)
+    changeColorOfSubstring(R.string.website_address_aestrick, R.color.colorAccent, "*", binding?.tvWebsiteAddressVw!!)
   }
 
   private fun setUserDetails() {
