@@ -865,44 +865,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 this.experienceCode,
                 this.fpTag
             )
+            viewModel.loadPurchasedItems(this.fpid!!, this.clientid)
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
-
-        //check if there is a active addons
-        AzureWebsiteNewRepository.getFeatureDetails(this.fpid!!, clientId).toLiveData()
-            .observeForever {
-                var paidUser = false
-                if (it.isSuccess() || it != null) {
-                    val data = it.arrayResponse as? Array<CapLimitFeatureResponseItem>
-                    Log.e("checkExpiryAddonsPackages >>", Gson().toJson(data))
-                    for (singleitem in data!!) {
-                        val date1: Date =
-                            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(singleitem.expiryDate!!)
-
-                        val diff: Long = date1.getTime() - Date().getTime()
-                        val seconds = diff / 1000
-                        val minutes = seconds / 60
-                        val hours = minutes / 60
-                        val days = hours / 24
-
-                        if (days > 0) {
-                            paidUser = true
-                            break
-                        }
-                    }
-                }
-                runOnUiThread {
-                    if (paidUser) {
-                        bottom_box.visibility = View.VISIBLE
-                        footer.visibility = View.VISIBLE
-                    } else {
-                        bottom_box.visibility = View.GONE
-                        footer.visibility = View.GONE
-                    }
-                }
-
-            }
     }
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -1644,6 +1610,17 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //        viewModel.getBundleExxists().observe(this,androidx.lifecycle.Observer{
 //            Log.d("getBundleExxists", it.toString())
 //        })
+
+        viewModel.getActivePremiumWidgets().observe(this, androidx.lifecycle.Observer {
+            //display referal if there is any paid addons
+            if (it.size>0) {
+                bottom_box.visibility = View.VISIBLE
+                footer.visibility = View.VISIBLE
+            } else {
+                bottom_box.visibility = View.GONE
+                footer.visibility = View.GONE
+            }
+        })
     }
 
     fun updateFeatureDealsViewPager(list: List<FeatureDeals>, cartList: List<CartModel>) {

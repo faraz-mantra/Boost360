@@ -139,7 +139,7 @@ class PackageViewPagerAdapter(
             Glide.with(holder.itemView.context).load(if(it.size>=3)it[2].primary_image else "").into(holder.image3)
             val list = StringBuilder()
             for (singleItem in it) {
-              if(it.size>1){
+              if(it.size>1 && !list.toString().isNullOrEmpty()){
                 list.append(", ")
               }
               list.append(singleItem.name)
