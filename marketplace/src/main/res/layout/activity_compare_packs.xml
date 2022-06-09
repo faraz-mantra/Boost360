@@ -44,7 +44,6 @@
               android:layout_width="0dp"
               android:layout_height="50dp"
               android:layout_marginTop="10dp"
-
               android:layout_marginEnd="@dimen/_10sdp"
               android:foreground="?android:attr/selectableItemBackground"
               app:layout_constraintDimensionRatio="1:1"

@@ -38,7 +38,7 @@
               android:layout_height="@dimen/_38sdp"
               tools:src="@drawable/ic_cart_feature_one_image" />
 
-          <androidx.appcompat.widget.LinearLayoutCompat
+          <RelativeLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginStart="10dp"
@@ -121,7 +121,7 @@
                 android:textSize="@dimen/txt_12sp" />
 
 
-          </androidx.appcompat.widget.LinearLayoutCompat>
+          </RelativeLayout>
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -134,9 +134,9 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignParentEnd="true"
-          android:layout_marginLeft="@dimen/_10sdp"
           android:layout_marginTop="15dp"
           android:layout_marginEnd="15dp"
+          android:padding="15dp"
           android:src="@drawable/ic_cart_pack_cross" />
 
       <ImageView

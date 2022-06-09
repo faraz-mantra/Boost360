@@ -40,19 +40,10 @@ class ParentCompareItemAdapter(
     val addonsListener: AddonsListener,
     val activity: ComparePacksActivity
 ) : RecyclerView.Adapter<ParentCompareItemAdapter.ParentViewHolder>() {
-    // An object of RecyclerView.RecycledViewPool
-    // is created to share the Views
-    // between the child and
-    // the parent RecyclerViews
-    private val viewPool = RecyclerView.RecycledViewPool()
 
-    //    private var list = ArrayList<Bundles>()
-    private var featureList = ArrayList<FeaturesModel>()
     lateinit var context: Context
+    private var cartItemId = ArrayList<String>()
 
-    /*    init {
-            this.list = itemList as ArrayList<Bundles>
-        }*/
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         i: Int
@@ -117,8 +108,8 @@ class ParentCompareItemAdapter(
             listSamp.add(item.feature_code)
         }
 
-        getPackageInfoFromDB(parentViewHolder,parentItem)
-        isItemAddedInCart(parentViewHolder,parentItem)
+        getPackageInfoFromDB(parentViewHolder, parentItem)
+        isItemAddedInCart(parentViewHolder, parentItem)
 
         val distinct: List<String> = LinkedHashSet(listSamp).toMutableList()
 
@@ -193,6 +184,29 @@ class ParentCompareItemAdapter(
         layoutManager.initialPrefetchItemCount = list.size*/
 
 
+        var itemInCart = false
+        if (cartItemId.contains(list.get(position)._kid)) {
+            itemInCart = true
+        }
+        if (!itemInCart) {
+            parentViewHolder.package_submit.background = ContextCompat.getDrawable(
+                activity.applicationContext,
+                R.drawable.button_bckgrnd
+            )
+            parentViewHolder.package_submit.setTextColor(activity.resources.getColor(R.color.white))
+            parentViewHolder.package_submit.setText("Add To Cart")
+            parentViewHolder.package_submit.isClickable = true
+        } else {
+            parentViewHolder.package_submit.background = ContextCompat.getDrawable(
+                activity.applicationContext,
+                R.drawable.button_added_to_cart
+            )
+            parentViewHolder.package_submit.setTextColor(
+                context.getResources().getColor(R.color.tv_color_BB)
+            )
+            parentViewHolder.package_submit.setText(activity.getString(R.string.added_to_cart))
+            parentViewHolder.package_submit.isClickable = false
+        }
 
         parentViewHolder.package_submit.setOnClickListener {
             parentViewHolder.package_submit.background = ContextCompat.getDrawable(
@@ -234,8 +248,9 @@ class ParentCompareItemAdapter(
         notifyDataSetChanged()*/
     }
 
-    fun addupdatesNew(upgradeModel: List<Bundles>) {
-        list = upgradeModel as java.util.ArrayList<Bundles>
+    fun updateCartItem(cartItemId: List<String>) {
+        this.cartItemId.clear()
+        this.cartItemId.addAll(cartItemId)
         notifyDataSetChanged()
     }
 
@@ -315,10 +330,12 @@ class ParentCompareItemAdapter(
                         for (singleItem in it) {
                             for (item in bundles.included_features) {
                                 if (singleItem.feature_code == item.feature_code) {
-                                    originalBundlePrice += Utils.priceCalculatorForYear(RootUtil.round(
-                                        (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
-                                        2
-                                    ) * minMonth, singleItem.widget_type?:"", activity)
+                                    originalBundlePrice += Utils.priceCalculatorForYear(
+                                        RootUtil.round(
+                                            (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
+                                            2
+                                        ) * minMonth, singleItem.widget_type ?: "", activity
+                                    )
                                 }
                             }
                         }
@@ -359,15 +376,15 @@ class ParentCompareItemAdapter(
                             }
 
                         } else {
-                                holder.tv_price.setText(
-                                    "₹" +
-                                            NumberFormat.getNumberInstance(Locale.ENGLISH)
-                                                .format(offeredBundlePrice)
-                                            + yearlyOrMonthlyOrEmptyValidity(
-                                        "",
-                                        activity
-                                    )
+                            holder.tv_price.setText(
+                                "₹" +
+                                        NumberFormat.getNumberInstance(Locale.ENGLISH)
+                                            .format(offeredBundlePrice)
+                                        + yearlyOrMonthlyOrEmptyValidity(
+                                    "",
+                                    activity
                                 )
+                            )
 
                             holder.tv_inlcuded_add_on.setText("Includes these " + it.size + " add-ons")
                             if (offeredBundlePrice != originalBundlePrice) {
@@ -400,8 +417,9 @@ class ParentCompareItemAdapter(
 
     fun spannableString(holder: ParentViewHolder, value: Double) {
         val origCost = SpannableString(
-                    "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + yearlyOrMonthlyOrEmptyValidity("", activity)
-                )
+            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                .format(value) + yearlyOrMonthlyOrEmptyValidity("", activity)
+        )
 
         origCost.setSpan(
             StrikethroughSpan(),

@@ -46,8 +46,8 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_compare_packs.*
 import org.json.JSONObject
 
-class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, ComparePacksViewModel>(),
-    CompareListener,AddonsListener,
+class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, ComparePacksViewModel>(),
+    CompareListener, AddonsListener,
     RecyclerItemClickListener {
 
     var experienceCode: String? = null
@@ -69,7 +69,6 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
     var isOpenAddOnsFragment: Boolean = false
 
 
-
     lateinit var packageAdaptor: ParentCompareItemAdapter
 
     var bundleData: Bundles? = null
@@ -84,8 +83,8 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
 
     var packageInCartStatus = false
     lateinit var prefs: SharedPrefs
-    var featuresHashMap:MutableMap<String?, FeaturesModel> = HashMap<String?, FeaturesModel>()
-    lateinit var upgradeList: ArrayList<Bundles>
+    var featuresHashMap: MutableMap<String?, FeaturesModel> = HashMap<String?, FeaturesModel>()
+    var upgradeList = arrayListOf<Bundles>()
     lateinit var progressDialog: ProgressDialog
 
     companion object {
@@ -99,6 +98,7 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
     override fun getViewModelClass(): Class<ComparePacksViewModel> {
         return ComparePacksViewModel::class.java
     }
+
     override fun onCreateView() {
         super.onCreateView()
 
@@ -116,19 +116,22 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
         profileUrl = intent.getStringExtra("profileUrl")
         accountType = intent.getStringExtra("accountType")
         isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
-        isOpenHomeFragment = intent.getBooleanExtra("isComingFromOrderConfirm",false)
-        isOpenAddOnsFragment = intent.getBooleanExtra("isComingFromOrderConfirmActivation",false)
+        isOpenHomeFragment = intent.getBooleanExtra("isComingFromOrderConfirm", false)
+        isOpenAddOnsFragment = intent.getBooleanExtra("isComingFromOrderConfirmActivation", false)
         //user buying item directly
         widgetFeatureCode = intent.getStringExtra("buyItemKey")
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
 
 
-
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        packageAdaptor = ParentCompareItemAdapter(ArrayList(),this,this,this)
+        packageAdaptor = ParentCompareItemAdapter(ArrayList(), this, this, this)
         binding?.shimmerViewCompare?.startShimmer()
-        WebEngageController.trackEvent(ADDONS_MARKETPLACE_COMPARE_PACKAGE_LOADED, PAGE_VIEW, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(
+            ADDONS_MARKETPLACE_COMPARE_PACKAGE_LOADED,
+            PAGE_VIEW,
+            NO_EVENT_VALUE
+        )
         prefs = SharedPrefs(this)
 
         viewModel = ViewModelProviders.of(this).get(ComparePacksViewModel::class.java)
@@ -203,7 +206,8 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
     private fun loadData() {
         val pref = this.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
         val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
-        val code: String = if(experienceCode.isNullOrEmpty()) experienceCode!! else UserSessionManager(this).fP_AppExperienceCode!!
+        val code: String =
+            if (experienceCode.isNullOrEmpty()) experienceCode!! else UserSessionManager(this).fP_AppExperienceCode!!
         if (!code.equals("null", true)) {
             viewModel.setCurrentExperienceCode(code, fpTag!!)
         }
@@ -241,11 +245,19 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
                       }
                   }*/
 //                Constants.COMPARE_CART_COUNT = cartList!!.size
+                val cartBundleIds = arrayListOf<String>()
+                for(item in it){
+                    if(item.item_type.equals("bundles")){
+                        cartBundleIds.add(item.item_id)
+                    }
+                }
+                packageAdaptor.updateCartItem(cartBundleIds)
+
                 cartCount = cartList!!.size
                 badgeNumber = cartList!!.size
                 binding?.badge121?.setText(badgeNumber.toString())
                 binding?.badge121?.visibility = View.VISIBLE
-                Log.v("badgeNumber", " "+ badgeNumber)
+                Log.v("badgeNumber", " " + badgeNumber)
 //                }
             } else {
 //                Constants.COMPARE_CART_COUNT = 0
@@ -253,52 +265,19 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
                 badgeNumber = 0
                 binding?.badge121?.visibility = View.GONE
                 packageInCartStatus = false
-
-
-
+                packageAdaptor.updateCartItem(arrayListOf())
             }
-//            viewModel.getCartItems()
-            /*if (viewModel.allBundleResult.value != null) {
-
-
-                var list = viewModel.allBundleResult.value!!
-                if (list.size > 0) {
-                    val listItem = arrayListOf<Bundles>()
-                    for (item in list) {
-                        Log.v("allBundleResultValue"," "+ item.name)
-                        val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
-                        listItem.add(Bundles(
-                                item.bundle_id,
-                                temp,
-                                item.min_purchase_months,
-                                item.name,
-                                item.overall_discount_percent,
-                                PrimaryImage(item.primary_image),
-                                item.target_business_usecase,
-                                Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                                null,item.desc?:""
-                        ))
-                    }
-                    if (list.size > 0) {
-//                        updatePackageViewPager(listItem)
-//                        packageAdaptor.addupdatesNew(listItem)
-                        packageAdaptor.addupdates(listItem)
-                        packageAdaptor.notifyDataSetChanged()
-                    }
-                }
-            }*/
-//            viewModel.getCartItems()
         })
 
         viewModel.getSpecificFeature().observe(this, Observer {
-            if(it != null){
-                for(items in it){
+            if (it != null) {
+                for (items in it) {
 //                    Log.v("featuresHashMap", " "+ items)
                     featuresHashMap.put(items.target_business_usecase, items)
                 }
 
                 featureCount++
-                if(shimmer_view_compare.isShimmerStarted) {
+                if (shimmer_view_compare.isShimmerStarted) {
                     shimmer_view_compare.stopShimmer()
                     shimmer_view_compare.visibility = View.GONE
                 }
@@ -307,15 +286,15 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
             }
             val obj = JSONObject(featuresHashMap as Map<*, *>)
 //            val array = JSONArray(obj.toString())
-            Log.v("featuresHashMap", " "+ obj)
+            Log.v("featuresHashMap", " " + obj)
 //            Log.v("featuresHashMap", " "+ featureCount)
-            if(featuresHashMap.size == 0){
+            if (featuresHashMap.size == 0) {
 
             }
         })
 
         viewModel.getBundleWidgetKeys().observe(this, Observer {
-            if(it != null){
+            if (it != null) {
                 val itemIds = arrayListOf<String>()
                 for (item in it) {
                     itemIds.add(item)
@@ -327,42 +306,46 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
         })
 
         viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
-            val list = arrayListOf<Bundles>()
-            for (item in it) {
-                val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
-                list.add(Bundles(
-                    item.bundle_id,
-                    temp,
-                    item.min_purchase_months,
-                    item.name,
-                    item.overall_discount_percent,
-                    PrimaryImage(item.primary_image),
-                    item.target_business_usecase,
-                    Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                    null,
-                    item.desc?:""))
-            }
-            if (list.size > 0) {
-
-                for(items in list){
-                    Log.v("getkeyWidget"," "+ items.name +" "+items.included_features.size)
-                    val itemIds = arrayListOf<String>()
-                    for (item in  items!!.included_features) {
-
-                        itemIds.add(item.feature_code)
-//                        viewModel.getFeatureValues(item.feature_code)
-                    }
-                    Log.v("getkeyWidget123"," "+ itemIds.size)
-                    viewModel.getFeatureValues(itemIds)
-//                    viewModel.loadUpdates(itemIds)
-//                    viewModel.getAssociatedWidgetKeys(items._kid)
-//                    viewModel.getAssociatedWidgetKeys("5f6a2d66663bb00001e2b1d7")
+            if (it!= null && it.size > 0) {
+                val listItem = arrayListOf<Bundles>()
+                for (item in it) {
+                    Log.v("allBundleResultValue", " " + item.name)
+                    val temp = Gson().fromJson<List<IncludedFeature>>(
+                        item.included_features,
+                        object : TypeToken<List<IncludedFeature>>() {}.type
+                    )
+                    listItem.add(
+                        Bundles(
+                            item.bundle_id,
+                            temp,
+                            item.min_purchase_months,
+                            item.name,
+                            item.overall_discount_percent,
+                            PrimaryImage(item.primary_image),
+                            item.target_business_usecase,
+                            Gson().fromJson<List<String>>(
+                                item.exclusive_to_categories,
+                                object : TypeToken<List<String>>() {}.type
+                            ),
+                            null, item.desc ?: ""
+                        )
+                    )
                 }
-//                package_layout.visibility = View.VISIBLE
-                upgradeList = list
-//                updatePackageViewPager(list)
-            } else {
-//                package_layout.visibility = View.GONE
+                if (listItem.size > 0) {
+                    updatePackageViewPager(listItem)
+                    for(items in listItem) {
+                        Log.v("getkeyWidget", " " + items.name + " " + items.included_features.size)
+                        val itemIds = arrayListOf<String>()
+                        for (item in items.included_features!!) {
+
+                            itemIds.add(item.feature_code)
+//                        viewModel.getFeatureValues(item.feature_code)
+                        }
+                    Log.v("getkeyWidget123", " " + itemIds.size)
+                    viewModel.getFeatureValues(itemIds)
+                        upgradeList = listItem
+                    }
+                }
             }
         })
 
@@ -377,72 +360,68 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
             }*/
         })
 
-        viewModel.cartResultBack().observe(this, Observer {
-            cartList = it
-            packageInCartStatus = false
-            if (cartList != null && cartList!!.size > 0) {
-//                if (bundleData != null) {
-                /*  for (item in it) {
-                      if (item.item_id.equals(bundleData!!._kid)) {
-                          packageInCartStatus = true
-
-                          break
-                      }
-                  }*/
-
-                badgeNumber = cartList!!.size
-                binding?.badge121?.setText(badgeNumber.toString())
-                binding?.badge121?.visibility = View.VISIBLE
-                Log.v("badgeNumber", " "+ badgeNumber)
+//        viewModel.cartResultBack().observe(this, Observer {
+//            cartList = it
+//            packageInCartStatus = false
+//            if (cartList != null && cartList!!.size > 0) {
+////                if (bundleData != null) {
+//                /*  for (item in it) {
+//                      if (item.item_id.equals(bundleData!!._kid)) {
+//                          packageInCartStatus = true
+//
+//                          break
+//                      }
+//                  }*/
+//
+//                badgeNumber = cartList!!.size
+//                binding?.badge121?.setText(badgeNumber.toString())
+//                binding?.badge121?.visibility = View.VISIBLE
+//                Log.v("badgeNumber", " "+ badgeNumber)
+////                }
+//            } else {
+//                badgeNumber = 0
+//                binding?.badge121?.visibility = View.GONE
+//                packageInCartStatus = false
+//            }
+//            viewModel.getCartItems()
+//            Log.v("COMPARE_BACK_VALUE"," "+ Constants.COMPARE_BACK_VALUE + " cartCount: "+  cartCount +
+//                    " COMPARE_CART_COUNT: "+Constants.COMPARE_CART_COUNT + " CART_VALUE: "+ Constants.CART_VALUE)
+//            if(Constants.COMPARE_BACK_VALUE == 1 /*&& cartCount != Constants.COMPARE_CART_COUNT*/){
+////                Constants.COMPARE_BACK_VALUE = 0
+//                if (viewModel.allBundleResult.value != null) {
+//
+//                    var list = viewModel.allBundleResult.value!!
+//                    if (list.size > 0) {
+//                        val listItem = arrayListOf<Bundles>()
+//                        for (item in list) {
+//                            Log.v("allBundleResultValue"," "+ item.name)
+//                            val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+//                            listItem.add(Bundles(
+//                                item.bundle_id,
+//                                temp,
+//                                item.min_purchase_months,
+//                                item.name,
+//                                item.overall_discount_percent,
+//                                PrimaryImage(item.primary_image),
+//                                item.target_business_usecase,
+//                                Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+//                                null,item.desc?:""
+//                            ))
+//                        }
+//                        if (list.size > 0) {
+//                            updatePackageViewPager(listItem)
+//                            packageAdaptor.addupdates(listItem)
+//                            packageAdaptor.notifyDataSetChanged()
+//                        }
+//                    }
+//                }else{
+//                    viewModel.loadPackageUpdates()
 //                }
-            } else {
-                badgeNumber = 0
-                binding?.badge121?.visibility = View.GONE
-                packageInCartStatus = false
-
-
-
-            }
-            viewModel.getCartItems()
-            Log.v("COMPARE_BACK_VALUE"," "+ Constants.COMPARE_BACK_VALUE + " cartCount: "+  cartCount +
-                    " COMPARE_CART_COUNT: "+Constants.COMPARE_CART_COUNT + " CART_VALUE: "+ Constants.CART_VALUE)
-            if(Constants.COMPARE_BACK_VALUE == 1 /*&& cartCount != Constants.COMPARE_CART_COUNT*/){
-//                Constants.COMPARE_BACK_VALUE = 0
-                if (viewModel.allBundleResult.value != null) {
-
-
-                    var list = viewModel.allBundleResult.value!!
-                    if (list.size > 0) {
-                        val listItem = arrayListOf<Bundles>()
-                        for (item in list) {
-                            Log.v("allBundleResultValue"," "+ item.name)
-                            val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
-                            listItem.add(Bundles(
-                                item.bundle_id,
-                                temp,
-                                item.min_purchase_months,
-                                item.name,
-                                item.overall_discount_percent,
-                                PrimaryImage(item.primary_image),
-                                item.target_business_usecase,
-                                Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                                null,item.desc?:""
-                            ))
-                        }
-                        if (list.size > 0) {
-                            updatePackageViewPager(listItem)
-                            packageAdaptor.addupdates(listItem)
-                            packageAdaptor.notifyDataSetChanged()
-                        }
-                    }
-                }else{
-                    viewModel.loadPackageUpdates()
-                }
-                viewModel.getCartItemsBack()
-            }
-
-
-        })
+//                viewModel.getCartItemsBack()
+//            }
+//
+//
+//        })
     }
 
 //    override fun onBackPressed() {
@@ -454,13 +433,12 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
 //    }
 
 
-
     fun updatePackageViewPager(list: List<Bundles>) {
 
         // initializeFreeAddonsRecyclerView()
         //    initializePackageViewPager()
         //   package_viewpager.offscreenPageLimit = list.size
-        Log.v("updatePackageViewPager"," "+ list.size)
+        Log.v("updatePackageViewPager", " " + list.size)
         packageAdaptor.addupdates(list)
         packageAdaptor.notifyDataSetChanged()
         //show dot indicator only when the (list.size > 2)
@@ -471,7 +449,6 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
             binding?.packageIndicator2?.visibility = View.INVISIBLE
         }
     }
-
 
 
 //    fun initializeFreeAddonsRecyclerView() {
@@ -510,8 +487,7 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
 //
 //    }
 
-
-    private fun initializePackageViewPager() {
+    fun initializePackageViewPager() {
         binding?.packageViewpager?.adapter = packageAdaptor
         package_viewpager.offscreenPageLimit = 4
         binding?.packageIndicator2?.setViewPager2(package_viewpager)
@@ -526,18 +502,15 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
             R.dimen.viewpager_current_item_horizontal_margin
         )
         binding?.packageViewpager!!.addItemDecoration(itemDecoration)
-
-
-
     }
 
-    override fun onPackageClicked(item: Bundles?,imageView: ImageView) {
+    override fun onPackageClicked(item: Bundles?, imageView: ImageView) {
         if (!packageInCartStatus) {
             if (item != null) {
-                prefs.storeAddedPackageDesc(item.desc?:"")
+                prefs.storeAddedPackageDesc(item.desc ?: "")
 
                 val itemIds = arrayListOf<String>()
-                for(i in item.included_features){
+                for (i in item.included_features) {
                     itemIds.add(i.feature_code)
                 }
                 makeFlyAnimation(imageView)
@@ -552,12 +525,16 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
                             {
 //                                            featuresList = it
                                 var bundleMonthlyMRP = 0.0
-                                val minMonth:Int = if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
+                                val minMonth: Int =
+                                    if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
 
                                 for (singleItem in it) {
                                     for (item in item!!.included_features) {
                                         if (singleItem.feature_code == item.feature_code) {
-                                            bundleMonthlyMRP += RootUtil.round(singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0), 2)
+                                            bundleMonthlyMRP += RootUtil.round(
+                                                singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),
+                                                2
+                                            )
                                         }
                                     }
                                 }
@@ -565,39 +542,67 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
                                 offeredBundlePrice = (bundleMonthlyMRP * minMonth)
                                 originalBundlePrice = (bundleMonthlyMRP * minMonth)
 
-                                if(item!!.overall_discount_percent > 0)
-                                    offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent/100),2)
+                                if (item!!.overall_discount_percent > 0)
+                                    offeredBundlePrice = RootUtil.round(
+                                        originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100),
+                                        2
+                                    )
                                 else
                                     offeredBundlePrice = originalBundlePrice
 
                                 //clear cartOrderInfo from SharedPref to requestAPI again
                                 prefs.storeCartOrderInfo(null)
-                                viewModel.addItemToCartPackage1(CartModel(
-                                    item!!._kid,
-                                    null,
-                                    null,
-                                    item!!.name,
-                                    "",
-                                    item!!.primary_image!!.url,
-                                    offeredBundlePrice.toDouble(),
-                                    originalBundlePrice.toDouble(),
-                                    item!!.overall_discount_percent,
-                                    1,
-                                    if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
-                                    "bundles",
-                                    null,
-                                    ""
-                                ))
-                                val event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()
-                                item!!.name?.let { it1 -> event_attributes.put("Package Name", it1) }
-                                item!!.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
+                                viewModel.addItemToCartPackage1(
+                                    CartModel(
+                                        item!!._kid,
+                                        null,
+                                        null,
+                                        item!!.name,
+                                        "",
+                                        item!!.primary_image!!.url,
+                                        offeredBundlePrice.toDouble(),
+                                        originalBundlePrice.toDouble(),
+                                        item!!.overall_discount_percent,
+                                        1,
+                                        if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
+                                        "bundles",
+                                        null,
+                                        ""
+                                    )
+                                )
+                                val event_attributes: java.util.HashMap<String, Any> =
+                                    java.util.HashMap()
+                                item!!.name?.let { it1 ->
+                                    event_attributes.put(
+                                        "Package Name",
+                                        it1
+                                    )
+                                }
+                                item!!.target_business_usecase?.let { it1 ->
+                                    event_attributes.put(
+                                        "Package Tag",
+                                        it1
+                                    )
+                                }
                                 event_attributes.put("Package Price", originalBundlePrice)
                                 event_attributes.put("Discounted Price", offeredBundlePrice)
-                                event_attributes.put("Discount %", item!!.overall_discount_percent)
-                                item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
-                                WebEngageController.trackEvent(ADDONS_MARKETPLACE_COMPARE_PACKAGE_ADDED_TO_CART, ADDONS_MARKETPLACE, event_attributes)
+                                event_attributes.put(
+                                    "Discount %",
+                                    item!!.overall_discount_percent
+                                )
+                                item!!.min_purchase_months?.let { it1 ->
+                                    event_attributes.put(
+                                        "Validity",
+                                        it1
+                                    )
+                                }
+                                WebEngageController.trackEvent(
+                                    ADDONS_MARKETPLACE_COMPARE_PACKAGE_ADDED_TO_CART,
+                                    ADDONS_MARKETPLACE,
+                                    event_attributes
+                                )
                                 badgeNumber = badgeNumber + 1
-                                Log.v("badgeNumber321", " "+ badgeNumber)
+                                Log.v("badgeNumber321", " " + badgeNumber)
                                 Constants.CART_VALUE = badgeNumber
 //                                            viewModel.getCartItems()
                             },
@@ -630,8 +635,10 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
 
     private fun makeFlyAnimation(targetView: ImageView) {
 
-        CircleAnimationUtil().attachActivity(this).setTargetView(targetView).setMoveDuration(600)
-            .setDestView(package_cart_icon).setAnimationListener(object : Animator.AnimatorListener {
+        CircleAnimationUtil().attachActivity(this).setTargetView(targetView)
+            .setMoveDuration(600)
+            .setDestView(package_cart_icon)
+            .setAnimationListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animation: Animator) {}
                 override fun onAnimationEnd(animation: Animator) {
                     viewModel.getCartItems()
@@ -644,12 +651,6 @@ class ComparePacksActivity: AppBaseActivity<ActivityComparePacksBinding, Compare
             }).startAnimation()
 
     }
-
-
-
-
-
-
 
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
