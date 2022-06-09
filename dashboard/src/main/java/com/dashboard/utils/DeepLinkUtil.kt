@@ -112,6 +112,9 @@ const val deeplink_more_tab = "more_tab"
 const val deeplink_owner_info = "owner_info"
 const val deeplink_festive_poster = "festive_poster"
 const val deeplink_domain_booking = "domain_booking"
+const val deeplink_topper_list = "topper_list"
+const val deeplink_upcoming_batch = "upcoming_batch"
+const val deeplink_faculty_member = "faculty_member"
 const val deeplink_user_merchant_profile = "user_merchant_profile"
 const val visit_to_new_website = "Woohoo! We have a new website. Visit it at"
 const val tag_for_partners = ".nowfloats.com"
@@ -287,6 +290,12 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startFestivePosterActivity(true)
         } else if (url.contains(deeplink_user_merchant_profile)) {
           baseActivity.startUserProfileDetail(session)
+        }else if (url.contains(deeplink_topper_list)) {
+          baseActivity.startListToppers(session)
+        } else if (url.contains(deeplink_upcoming_batch)) {
+          baseActivity.startListBatches(session)
+        } else if (url.contains(deeplink_faculty_member)) {
+          baseActivity.startFacultyMember(session)
         }
       }
     } catch (e: Exception) {
