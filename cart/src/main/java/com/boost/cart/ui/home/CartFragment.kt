@@ -3382,32 +3382,38 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             if (it != null) {
 
                 for (i in 0 until it.size) {
-
                     it[i].data?.let { it1 -> couponData.addAll(it1) }
                 }
-                System.out.println("CouponData" + couponData)
-                couponDataNo.clear()
-                couponDataNo.add(couponData[0])
-                System.out.println("Total" + total)
-                updateCouponList(couponDataNo, total)
-                tv_Show_more.setOnClickListener {
-                    tv_Show_less.visibility = VISIBLE
-                    tv_Show_more.visibility = GONE
-                    System.out.println("TotalMore" + total)
-                    WebEngageController.trackEvent(
-                        ADDONS_MARKETPLACE_Discount_Coupon_Loaded,
-                        NO_EVENT_LABLE,
-                        NO_EVENT_VALUE
-                    )
-                    updateCouponList(couponDataNo, total)
-                }
-                tv_Show_less.setOnClickListener {
-                    tv_Show_more.visibility = VISIBLE
-                    tv_Show_less.visibility = GONE
+                if(couponData.size > 0) {
+                    divider5.visibility = VISIBLE
+                    System.out.println("CouponData" + couponData)
                     couponDataNo.clear()
                     couponDataNo.add(couponData[0])
-                    System.out.println("TotalLess" + total)
+                    System.out.println("Total" + total)
                     updateCouponList(couponDataNo, total)
+                    tv_Show_more.setOnClickListener {
+                        tv_Show_less.visibility = VISIBLE
+                        tv_Show_more.visibility = GONE
+                        System.out.println("TotalMore" + total)
+                        WebEngageController.trackEvent(
+                            ADDONS_MARKETPLACE_Discount_Coupon_Loaded,
+                            NO_EVENT_LABLE,
+                            NO_EVENT_VALUE
+                        )
+                        updateCouponList(couponDataNo, total)
+                    }
+                    tv_Show_less.setOnClickListener {
+                        tv_Show_more.visibility = VISIBLE
+                        tv_Show_less.visibility = GONE
+                        couponDataNo.clear()
+                        couponDataNo.add(couponData[0])
+                        System.out.println("TotalLess" + total)
+                        updateCouponList(couponDataNo, total)
+                    }
+                } else {
+                    divider5.visibility = GONE
+                    tv_Show_less.visibility = GONE
+                    tv_Show_more.visibility = GONE
                 }
 
             }

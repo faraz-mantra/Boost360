@@ -58,6 +58,7 @@ class FeaturePacksAdapter(
 
   override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
     holder.title.setText(bundleList.get(position).name)
+    Glide.with(context).load(bundleList.get(position).primary_image).into(holder.image)
     if (bundleList.get(position).overall_discount_percent > 0) {
       holder.discount.visibility = View.VISIBLE
       holder.discount.setText(bundleList.get(position).overall_discount_percent.toString() + "% saving")
@@ -109,7 +110,7 @@ class FeaturePacksAdapter(
     var price = itemView.findViewById<TextView>(R.id.price)
     var discount = itemView.findViewById<TextView>(R.id.discount)
     var viewPacks = itemView.findViewById<TextView>(R.id.view_packs)
-    var image = itemView.findViewById<ImageView>(R.id.imageView2)
+    var image = itemView.findViewById<ImageView>(R.id.package_img)
   }
 
   fun getPackageInfoFromDB(holder: upgradeViewHolder, bundles: BundlesModel) {

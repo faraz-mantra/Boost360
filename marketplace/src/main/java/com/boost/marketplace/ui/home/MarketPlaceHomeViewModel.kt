@@ -51,6 +51,7 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
     var updatesResult: MutableLiveData<List<WidgetModel>> = MutableLiveData()
     var allBackBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
     var bundleExistsBool: MutableLiveData<Boolean> = MutableLiveData()
+    var activePremiumWidgetList: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var NewApiService =
         com.boost.cart.utils.Utils.getRetrofit(true).create(NewApiInterface::class.java)
 
@@ -146,6 +147,10 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
 
     fun getBundleExxists(): LiveData<Boolean> {
         return bundleExistsBool
+    }
+
+    fun getActivePremiumWidgets(): LiveData<List<FeaturesModel>> {
+        return activePremiumWidgetList
     }
 
     fun getCategoriesFromAssetJson(context: Context, expCode: String?) {
@@ -1035,5 +1040,47 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                     .subscribe()
             )
         }
+    }
+
+    fun loadPurchasedItems(fpid: String, clientId: String) {
+        updatesLoader.postValue(true)
+        CompositeDisposable().add(
+            NewApiService.GetFeatureDetails(fpid, clientId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {it1 ->
+                        val list= ArrayList<String>()
+                        for (singleItem in it1 ) {
+                            list.add(singleItem.featureCode)
+                        }
+                        CompositeDisposable().add(
+                            AppDatabase.getInstance(application)!!
+                                .featuresDao()
+                                .getallActiveFeatures(list, true)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .doOnSuccess {it2->
+                                    val listFeaturesModel=it2.map {it3->
+                                        it1.firstOrNull { it.featureCode.equals(it3.feature_code)}.apply {
+                                            it3.expiryDate=this?.expiryDate
+                                            it3.activatedDate=this?.activatedDate
+                                            it3.status=this?.featureState
+                                        };it3
+                                    }
+                                    activePremiumWidgetList.postValue(listFeaturesModel)
+                                    updatesLoader.postValue(false)
+                                }
+                                .doOnError {
+                                    updatesError.postValue(it.message)
+                                    updatesLoader.postValue(false)
+                                }
+                                .subscribe()
+                        )
+                    }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
     }
 }

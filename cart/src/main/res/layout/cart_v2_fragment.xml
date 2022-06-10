@@ -433,7 +433,6 @@
                         android:id="@+id/cart_addons_recycler"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cart_package_recycler"
@@ -776,11 +775,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="@dimen/_5sdp"
                     android:background="@drawable/rect_top_bg"
                     android:elevation="@dimen/_1sdp"
                     android:paddingTop="@dimen/_4sdp"
-                    android:paddingBottom="@dimen/_8sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/viewpager_layout">
@@ -837,6 +834,7 @@
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
                         <View
+                            android:id="@+id/divider5"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:background="#4DA3A3A3" />
@@ -853,7 +851,6 @@
                             android:id="@+id/cart_coupon_code_rv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
                             android:visibility="visible"
                             tools:itemCount="1"
                             tools:listitem="@layout/item_coupon_code" />
@@ -889,17 +886,22 @@
                             android:visibility="gone" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
+                    <View
+                        android:id="@+id/divider6"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#4DA3A3A3"
+                        app:layout_constraintTop_toBottomOf="@id/linearLayoutCompat" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/gst_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:background="@drawable/rect_top_bg"
                     android:elevation="@dimen/_1sdp"
-                    android:paddingTop="@dimen/_4sdp"
                     android:paddingBottom="@dimen/_8sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -1013,7 +1015,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_5sdp"
-                            android:layout_marginTop="@dimen/_5sdp"
                             android:fontFamily="@font/regular"
                             android:lineSpacingExtra="1sp"
                             android:paddingStart="@dimen/_5sdp"
@@ -1048,9 +1049,9 @@
                                 android:drawableStart="@drawable/ic_cart_billing_details_edit"
                                 android:gravity="end"
                                 android:paddingStart="@dimen/_5sdp"
-                                android:paddingTop="@dimen/_5sdp"
+                                android:paddingTop="@dimen/_10sdp"
                                 android:paddingEnd="@dimen/_5sdp"
-                                android:paddingBottom="@dimen/_5sdp"
+                                android:paddingBottom="@dimen/_10sdp"
                                 android:text="Edit"
                                 android:textColor="@color/colorAccent1"
                                 android:textSize="@dimen/txt_12sp" />
