@@ -61,7 +61,7 @@ fun posterPostClicked(childItem:PosterModel,activity: AppBaseActivity<*, *>){
             if (file?.exists() == true) {
                 PostPreviewSocialActivity.launchActivity(
                     activity,
-                    childItem.greeting_message,
+                    childItem.details?.Description,
                     file.path,
                     childItem.tags,
                     IntentConstants.UpdateType.UPDATE_PROMO_POST.name

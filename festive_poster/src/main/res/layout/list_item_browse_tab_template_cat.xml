@@ -1,58 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.framework.views.customViews.CustomCardView
-        app:cardCornerRadius="@dimen/size_15"
-        app:cardElevation="@dimen/size_4"
-        android:layout_marginHorizontal="@dimen/size_12"
-        android:layout_marginVertical="@dimen/size_8"
-        android:layout_width="@dimen/size_150"
-        android:layout_height="@dimen/size_140">
 
+    <com.festive.poster.customviews.PercentageConstraintLayout
+        android:layout_width="match_parent"
+        app:widthDisplayPercent="0.4"
+        app:heightDisplayPercent="0.19"
+        android:layout_marginHorizontal="@dimen/size_10"
+        android:layout_marginVertical="@dimen/size_6"
+        android:layout_height="wrap_content">
 
-
-        <RelativeLayout
+        <com.framework.views.customViews.CustomCardView
+            app:cardCornerRadius="@dimen/size_15"
+            app:cardElevation="@dimen/size_4"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <com.framework.views.customViews.CustomImageView
-                android:id="@+id/iv_icon"
+
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_dummy_browse_cat_icon" />
+                android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:orientation="vertical">
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_dummy_browse_cat_icon" />
 
-                <View
-                    android:layout_width="@dimen/size_50"
-                    android:layout_height="1dp"
-                    android:background="@color/white" />
-
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tv_title"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/size_10"
-
-                    android:layout_marginVertical="@dimen/size_12"
-                    android:fontFamily="@font/bold"
+                    android:layout_centerInParent="true"
                     android:gravity="center"
-                    android:textColor="@color/white" />
+                    android:orientation="vertical">
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tv_size"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/regular"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-        </RelativeLayout>
-    </com.framework.views.customViews.CustomCardView>
+                    <View
+                        android:layout_width="@dimen/size_50"
+                        android:layout_height="1dp"
+                        android:background="@color/white" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/size_10"
+
+                        android:layout_marginVertical="@dimen/size_12"
+                        android:fontFamily="@font/bold"
+                        android:gravity="center"
+                        android:textColor="@color/white" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/tv_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </RelativeLayout>
+        </com.framework.views.customViews.CustomCardView>
+
+    </com.festive.poster.customviews.PercentageConstraintLayout>
+
 </layout>

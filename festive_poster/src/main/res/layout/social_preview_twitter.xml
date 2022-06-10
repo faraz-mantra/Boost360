@@ -121,6 +121,7 @@
                     <com.framework.views.customViews.CustomTextView
                         android:id="@+id/tv_caption"
                         android:layout_width="0dp"
+
                         android:lineHeight="@dimen/size_10"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -136,14 +137,14 @@
 #bigbilliondays #smile #2020 " />
 
                     <com.framework.views.customViews.CustomCardView
-                        android:layout_width="0dp"
-                        android:layout_marginTop="8dp"
-                        app:cardElevation="@dimen/size_0"
                         android:id="@+id/card_svg"
-                        app:cardCornerRadius="7dp"
+                        android:layout_width="0dp"
                         android:layout_height="123dp"
+                        android:layout_marginTop="8dp"
+                        app:cardCornerRadius="7dp"
+                        app:cardElevation="@dimen/size_0"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/tv_caption"
+                        app:layout_constraintStart_toStartOf="@+id/tv_title"
                         app:layout_constraintTop_toBottomOf="@+id/tv_caption">
 
                         <com.framework.views.customViews.CustomImageView
@@ -162,7 +163,7 @@
                         android:gravity="end"
                         android:orientation="horizontal"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/tv_caption"
+                        app:layout_constraintStart_toStartOf="@+id/card_svg"
                         app:layout_constraintTop_toBottomOf="@+id/card_svg">
 
                         <com.framework.views.customViews.CustomImageView
