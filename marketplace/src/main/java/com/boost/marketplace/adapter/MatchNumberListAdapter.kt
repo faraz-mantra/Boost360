@@ -16,6 +16,7 @@ import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.CallTrackListener
 import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
 import java.util.*
+import kotlin.properties.Delegates
 
 class MatchNumberListAdapter(
     val activity: CallTrackingActivity,
@@ -47,16 +48,12 @@ class MatchNumberListAdapter(
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
         if (searchItem != null && searchItem!!.isNotEmpty()) {
-
-            var startPos: Int? = null
-            var endPos: Int? = null
             val spannable = SpannableString(upgradeList[position])
-
             for (i in searchItem!!.indices) {
                 if (upgradeList[position].contains(searchItem!![i])) {
-                    startPos = upgradeList[position].toLowerCase(Locale.US)
-                        .indexOf(searchItem!!.toString().toLowerCase(Locale.US))
-                    endPos = startPos + searchItem!!.toString().length
+                    var startPos = upgradeList[position].toLowerCase(Locale.US)
+                        .indexOf(searchItem!![i].toString().toLowerCase(Locale.US))
+                    var endPos = startPos + searchItem!![i].toString().length
                     if (startPos != -1) {
                         spannable.setSpan(
                             ForegroundColorSpan(ContextCompat.getColor(context, R.color.black)),
@@ -71,13 +68,11 @@ class MatchNumberListAdapter(
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
                     }
+                    holder.title.text = spannable
                 }
             }
-            holder.title.text = spannable
-
         } else {
             holder.title.text = upgradeList[position]
-
         }
     }
 

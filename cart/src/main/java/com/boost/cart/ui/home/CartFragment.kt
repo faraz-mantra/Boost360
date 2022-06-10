@@ -2711,38 +2711,14 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                         }
                                     }
                                 }
-//                //bundle level discount
-//                if (bundleDiscount > 0) {
-//                  bundleNetPrice = Math.round(bundleNetPrice - ((bundleNetPrice * bundleDiscount) / 100)).toDouble()
-//                }
                                 break
                             }
-                        } //bundle forloop completion
+                        }
 
-//            purchaseOrders.add(
-//                PurchaseOrder(
-//                    couponCode,
-//                    bundleDiscount, //Discount of the bundle/package/order without tax.
-//                    null, //extraPurchaseOrderDetails,
-//                    bundleNetPrice,
-//                    bundleWidgetList
-//                )
-//            )
+                    }
+                }
 
-                    }// bundle end
-                }//bundle type if end
-
-
-//        purchaseOrders.add(
-//            PurchaseOrder(
-//                couponCode,
-//                bundleDiscount, //Discount of the bundle/package/order without tax.
-//                extraPurchaseOrderDetails,
-//                bundleNetPrice,
-//                widgetList
-//            )
-//        )
-            }// end of cart item for loop
+            }
 
             purchaseOrders.add(
                 PurchaseOrder(
@@ -2800,55 +2776,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         Handler().postDelayed({
             viewModel.getCartItems()
         }, 2000)
-        //load customerID
-//        viewModel.requestCustomerId(CreateCustomerInfoRequest(
-//                AddressDetails(
-//                        null,
-//                        "india",
-//                        null,
-//                        null,
-//                        null,
-//                        null
-//                ),
-//                BusinessDetails(
-//                        "+91",
-//                        null,
-//                        null
-//                ),
-//                (activity as CartActivity).clientid,
-//                "+91",
-//                "ANDROID",
-//                null,
-//                (activity as CartActivity).fpTag!!,
-//                null,
-//                null,
-//                com.boost.cart.data.api_model.customerId.customerInfo.TaxDetails(
-//                        null,
-//                        null,
-//                        null,
-//                        null
-//                )
-//        ))
     }
 
     @SuppressLint("FragmentLiveDataObserve")
     fun initMvvM() {
 
-//    viewModel.getSelectedStateResult().observe(viewLifecycleOwner,{
-//      if(it!= null){
-//        cart_business_city_name.text = it
-//        setStates = it
-//      }
-//    })
-//    viewModel.getSelectedStateTinResult().observe(viewLifecycleOwner,{
-//      if(it!=null){
-//        state_tin_value.text = "(" + it + ")"
-//        setStateTin = it
-//      }
-//    })
-
-
-//        viewModel.updateRenewValue("")
         viewModel.cartResult().observe(this, Observer {
             if (it.isNullOrEmpty().not()) {
                 cartList = it as ArrayList<CartModel>

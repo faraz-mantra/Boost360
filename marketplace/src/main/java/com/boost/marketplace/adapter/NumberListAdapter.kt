@@ -77,13 +77,6 @@ class NumberListAdapter(
         }
     }
 
-    fun addupdates(upgradeModel: ArrayList<String>) {
-        val initPosition = upgradeList.size
-        upgradeList.clear()
-        upgradeList.addAll(upgradeModel)
-        notifyItemRangeInserted(initPosition, upgradeList.size)
-    }
-
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title = itemView.findViewById<TextView>(R.id.tv_title)
 

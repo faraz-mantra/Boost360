@@ -1,12 +1,10 @@
 package com.boost.marketplace.ui.details.call_track
 
-import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.marketplace.R
@@ -25,7 +23,7 @@ class CallTrackingActivity :
     CallTrackListener {
     lateinit var numberList: ArrayList<String>
     lateinit var numberListAdapter: NumberListAdapter
-    val list: ArrayList<String> = ArrayList()
+    lateinit var matchNumberListAdapter: MatchNumberListAdapter
 
 
     override fun getLayout(): Int {
@@ -41,27 +39,13 @@ class CallTrackingActivity :
         return FeatureDetailsViewModel::class.java
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[FeatureDetailsViewModel::class.java]
-        viewModel.setApplicationLifecycle(application, this)
-        numberList = intent.getStringArrayListExtra("list")!!
-        list.add("+91 8071-280-316")
-        list.add("+91 8071-280-001")
-        list.add("+91 8071-200-002")
-        list.add("+91 8071-000-256")
-        list.add("+91 8071-380-000")
-        list.add("+91 8071-238-981")
-        list.add("+91 8071-568-001")
-        list.add("+91 8071-674-000")
-
-        initRV()
-    }
-
     override fun onCreateView() {
         super.onCreateView()
 
-        numberListAdapter = NumberListAdapter(this, ArrayList(), null, this)
+        viewModel.setApplicationLifecycle(application, this)
+        numberList = intent.getStringArrayListExtra("list")!!
+        matchNumberListAdapter = MatchNumberListAdapter(this, ArrayList(), null, this)
+        initRV()
         binding?.addonsBack?.setOnClickListener {
             onBackPressed()
         }
@@ -81,7 +65,7 @@ class CallTrackingActivity :
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (p0 != null && p0?.length!! > 2) {
+                if (p0 != null && p0?.length!! > 0) {
                     binding?.ivCross?.visibility = View.GONE
                     binding?.btnSearch?.visibility = View.VISIBLE
                     binding?.btnSearch?.setOnClickListener {
@@ -104,11 +88,12 @@ class CallTrackingActivity :
         binding?.ivCross?.setOnClickListener {
             binding?.etCallTrack?.setText("")
             binding?.etCallTrack?.hint = "Search for a sequence of digits ..."
+            binding?.tvAvailableNo?.text ="Available numbers"
             initRV()
-//            updateEveryNumberList(ArrayList(),null)
             binding?.tvSearchResultForRelatedCombination?.visibility = GONE
+            binding?.tvOtherAvailableNo?.visibility = GONE
             binding?.tvSearchResult?.visibility = GONE
-            binding?.rvNumberListRelated?.visibility = GONE
+            binding?.cardListRelated?.visibility = GONE
         }
 
 
@@ -117,42 +102,37 @@ class CallTrackingActivity :
     private fun initRV() {
         val recyclerview = findViewById<RecyclerView>(R.id.rv_number_list)
         recyclerview.layoutManager = LinearLayoutManager(this)
-        val adapter = NumberListAdapter(this, list, null, this)
+        val adapter = NumberListAdapter(this, numberList, null, this)
         recyclerview.adapter = adapter
     }
 
     private fun updateNumberList(list: ArrayList<String>, searchValue: String?) {
-        numberListAdapter.addupdates(list)
         numberListAdapter = NumberListAdapter(this, list, searchValue, this)
         binding?.rvNumberList?.adapter = numberListAdapter
         binding?.tvSearchResult?.visibility = VISIBLE
-        binding?.tvSearchResult?.text =
-            list.size.toString() + " numbers found with " + "‘" + searchValue + "’"
         numberListAdapter.notifyDataSetChanged()
     }
 
     private fun updateEveryNumberList(list: MutableList<String>, searchValue: String?) {
+        matchNumberListAdapter = MatchNumberListAdapter(this,list,searchValue,this)
         binding?.cardListRelated?.visibility = VISIBLE
         val recyclerview = findViewById<RecyclerView>(R.id.rv_number_list_related)
         recyclerview.layoutManager = LinearLayoutManager(this)
-        val adapter = MatchNumberListAdapter(this, list, searchValue, this)
-        recyclerview.adapter = adapter
-        binding?.tvSearchResultForRelatedCombination?.visibility = VISIBLE
-        binding?.tvSearchResultForRelatedCombination?.text =
-            list.size.toString() + " numbers found with related combinations"
-        adapter.notifyDataSetChanged()
+        recyclerview.adapter = matchNumberListAdapter
+        matchNumberListAdapter.notifyDataSetChanged()
     }
 
     fun updateAllItemBySearchValue(searchValue: String) {
         var exactMatchList: ArrayList<String> = arrayListOf()
         var everyMatchList: ArrayList<String> = arrayListOf()
         var isMatching: Boolean = false
-        var searchChar: Char? = null
-        for (number in list) {
+
+        for (number in  numberList) {
+            val num = number.replace("+91 ", "").replace("-", "")
             for (i in searchValue.indices) {
-                if (number.contains(searchValue[i])) {
+                if (num.contains(searchValue[i])) {
                     isMatching = true
-                    if (number.contains(searchValue)) {
+                    if (num.contains(searchValue)) {
                         isMatching = false
                     }
                     if (isMatching) {
@@ -161,15 +141,39 @@ class CallTrackingActivity :
                     break
                 }
             }
-            if (number.contains(searchValue)) {
+            if (num.contains(searchValue)) {
                 exactMatchList.add(number)
             }
         }
-        updateNumberList(exactMatchList, searchValue)
-        if (isMatching) {
-            binding?.rvNumberListRelated?.visibility = VISIBLE
+       if (exactMatchList.isNotEmpty() && everyMatchList.isNotEmpty()) {
+            updateNumberList(exactMatchList, searchValue)
+           updateEveryNumberList(everyMatchList, searchValue)
+           binding?.rvNumberListRelated?.visibility = VISIBLE
+           binding?.tvSearchResult?.text =
+               exactMatchList.size.toString() + " numbers found with " + "‘" + searchValue + "’"
+            binding?.tvSearchResultForRelatedCombination?.visibility = VISIBLE
+            binding?.tvSearchResultForRelatedCombination?.text =
+                everyMatchList.size.toString() + " numbers found with related combinations"
+        }else if (exactMatchList.isEmpty() && everyMatchList.isNotEmpty()) {
+            tv_available_no.text = "Oops! No exact matches found."
+            binding?.cardListRelated?.visibility = VISIBLE
+           binding?.tvSearchResult?.visibility = GONE
+            binding?.tvSearchResultForRelatedCombination?.visibility = GONE
+            binding?.tvOtherAvailableNo?.visibility = VISIBLE
+            binding?.tvOtherAvailableNo?.text =
+                everyMatchList.size.toString() + " numbers found with related combinations"
             updateEveryNumberList(everyMatchList, searchValue)
+        }else if(exactMatchList.isNotEmpty() && everyMatchList.isEmpty()){
+           binding?.cardListRelated?.visibility = GONE
+           binding?.tvSearchResultForRelatedCombination?.visibility = GONE
+           binding?.tvOtherAvailableNo?.visibility = GONE
+       }else{
+            tv_available_no.text = "Oops! No search results found."
+            tv_other_available_no.text = "Other available numbers"
+           updateNumberList(numberList,null)
         }
+
+
     }
 
     override fun onClicked(position: Int, view: View) {

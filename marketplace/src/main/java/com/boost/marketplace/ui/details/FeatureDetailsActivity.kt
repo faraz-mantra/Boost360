@@ -22,12 +22,9 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.SimplePageTransformerSmall
 import com.boost.cart.adapter.ZoomOutPageTransformer
-import com.boost.cart.ui.popup.CouponPopUpFragment
 import com.boost.cart.utils.Utils.priceCalculatorForYear
 import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
@@ -43,7 +40,6 @@ import com.boost.marketplace.databinding.ActivityFeatureDetailsBinding
 import com.boost.marketplace.infra.utils.Constants.Companion.IMAGE_PREVIEW_POPUP_FRAGMENT
 import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.interfaces.DetailsFragmentListener
-import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
 import com.boost.marketplace.ui.details.call_track.CallTrackingHelpBottomSheet
 import com.boost.marketplace.ui.details.call_track.RequestCallbackBottomSheet
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
@@ -54,7 +50,6 @@ import com.boost.marketplace.ui.webview.WebViewActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.framework.analytics.SentryController
-import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 import com.google.android.material.appbar.AppBarLayout
 import com.google.gson.Gson
@@ -71,12 +66,8 @@ class FeatureDetailsActivity :
 
     lateinit var retrofit: Retrofit
     lateinit var ApiService: ApiInterface
-
     val callTrackingHelpBottomSheet = CallTrackingHelpBottomSheet()
     val requestCallbackBottomSheet = RequestCallbackBottomSheet()
-
-
-    //  lateinit voar localStorage: LocalStorage
     var singleWidgetKey: String? = null
     var badgeNumber = 0
     var addonDetails: FeaturesModel? = null
@@ -157,6 +148,11 @@ class FeatureDetailsActivity :
 
         initializeSecondaryImage()
         initializePackageRecycler()
+        initializeViewPager()
+        initializeCustomerViewPager()
+        initializeHowToUseRecycler()
+        initializeFAQRecycler()
+
 
         featureEdgeCase()
 
@@ -200,23 +196,18 @@ class FeatureDetailsActivity :
         app_bar_layout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             if (Math.abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
                 title_appbar.visibility = View.VISIBLE
-//                title_image.visibility = View.VISIBLE
-                // Collapsed
+
                 toolbar_details.background =
                     ColorDrawable(resources.getColor(R.color.fullscreen_color))
             } else if (verticalOffset == 0) {
                 title_appbar.visibility = View.INVISIBLE
-//                title_image.visibility = View.INVISIBLE
                 toolbar_details.background = ColorDrawable(resources.getColor(R.color.transparent))
-                // Expanded
             } else {
                 title_appbar.visibility = View.INVISIBLE
-//                title_image.visibility = View.INVISIBLE
                 toolbar_details.background = ColorDrawable(resources.getColor(R.color.transparent))
             }
         }
         )
-
         add_item_to_cart.setOnClickListener {
             addItemToCart()
         }
@@ -224,8 +215,6 @@ class FeatureDetailsActivity :
         add_item_to_cart_new.setOnClickListener {
             addItemToCart()
         }
-
-
         learn_more_btn.setOnClickListener {
             learn_more_btn.visibility = View.GONE
             learn_less_btn.visibility = View.VISIBLE
@@ -246,7 +235,6 @@ class FeatureDetailsActivity :
         imageView121.setOnClickListener {
             finish()
         }
-
         imageViewCart121.setOnClickListener {
             val intent = Intent(
                 applicationContext,
@@ -297,7 +285,6 @@ class FeatureDetailsActivity :
 
     }
 
-
     private fun loadNumberList() {
         try {
             viewModel.loadNumberList(
@@ -339,7 +326,6 @@ class FeatureDetailsActivity :
             addonDetails = it
             if (addonDetails != null && addonDetails?.benefits != null) {
                 benefit_container.visibility = VISIBLE
-                initializeViewPager()
                 val benefits = Gson().fromJson<List<String>>(
                     addonDetails?.benefits!!,
                     object : TypeToken<List<String>>() {}.type
@@ -349,7 +335,6 @@ class FeatureDetailsActivity :
             }
             if (addonDetails != null && addonDetails?.all_testimonials != null) {
                 what_our_customer_container.visibility = VISIBLE
-                initializeCustomerViewPager()
                 val testimonials = Gson().fromJson<List<AllTestimonial>>(
                     addonDetails?.all_testimonials,
                     object : TypeToken<List<AllTestimonial>>() {}.type
@@ -368,7 +353,6 @@ class FeatureDetailsActivity :
                         how_to_use_recycler.visibility = VISIBLE
                     }
                 }
-                initializeHowToUseRecycler()
                 if (addonDetails!!.target_business_usecase != null) {
                     tv_how_to_use_title.text =
                         "How To Use " + addonDetails!!.target_business_usecase
@@ -383,7 +367,6 @@ class FeatureDetailsActivity :
 
             if (addonDetails != null && addonDetails?.all_frequently_asked_questions != null) {
                 faq_container.visibility = VISIBLE
-                initializeFAQRecycler()
                 val faq = Gson().fromJson<List<AllFrequentlyAskedQuestion>>(
                     addonDetails?.all_frequently_asked_questions,
                     object : TypeToken<List<AllFrequentlyAskedQuestion>>() {}.type
@@ -402,14 +385,13 @@ class FeatureDetailsActivity :
                     .into(image1222)
                 Glide.with(this).load(addonDetails!!.primary_image)
                     .into(addon_icon)
-                
+
                 Glide.with(this).load(addonDetails!!.feature_banner)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .fitCenter()
                     .into(details_image_bg)
 
                 if (addonDetails!!.secondary_images.isNullOrEmpty())
-//                    secondary_images_panel.visibility = View.GONE
                 else {
                     val objectType = object : TypeToken<ArrayList<String>>() {}.type
                     var secondaryImages = Gson().fromJson<ArrayList<String>>(
@@ -418,27 +400,8 @@ class FeatureDetailsActivity :
                     )
                     if (secondaryImages != null && secondaryImages.count() > 0) {
                         addUpdateSecondaryImage(secondaryImages)
-//                        val imgSize: Int = 70 * requireContext().getResources().getDisplayMetrics().density.toInt()
-//                        val imgPadding: Int = 5 * requireContext().getResources().getDisplayMetrics().density.toInt()
-//                        for(img in secondaryImages){
-//                            val imageView = ImageView(requireContext())
-//                            imageView.layoutParams = LinearLayout.LayoutParams(imgSize, imgSize, 1f)
-//                            imageView.setPadding(imgPadding, imgPadding, imgPadding, imgPadding)
-//                            imageView.setBackgroundResource(R.drawable.background_image_fade)
-//
-//                            secondary_images_panel?.addView(imageView)
-//                            Glide.with(this).load(img)
-//                                    .fitCenter()
-//                                    .into(imageView)
-//                        }
                     }
                 }
-
-//                if (addonDetails!!.is_premium)
-//                    havent_bought_the_feature.visibility = View.VISIBLE
-//                else
-//                    havent_bought_the_feature.visibility = View.GONE
-
                 if (addonDetails!!.target_business_usecase != null) {
                     title_top_1.visibility = View.VISIBLE
                     title_top_1.text = addonDetails!!.target_business_usecase
@@ -448,12 +411,6 @@ class FeatureDetailsActivity :
                 title_top.text = addonDetails!!.name
                 title_appbar.text = addonDetails!!.name
                 title_bottom3.text = addonDetails!!.description
-//                if (addonDetails!!.discount_percent > 0) {
-//                    details_discount.visibility = View.VISIBLE
-//                    details_discount.text = addonDetails!!.discount_percent.toString() + "% OFF"
-//                } else {
-//                    details_discount.visibility = View.GONE
-//                }
                 if (addonDetails!!.total_installs.isNullOrEmpty() || addonDetails!!.total_installs.equals(
                         "--"
                     )
@@ -471,9 +428,6 @@ class FeatureDetailsActivity :
                 } else {
                     widgetLearnMore.visibility = View.GONE
                 }
-//                xheader.text = addonDetails!!.description_title
-//                abcText.text = addonDetails!!.description
-////                review_layout.visibility = View.GONE
                 var event_attributes: HashMap<String, Any> = HashMap()
                 event_attributes.put("Feature details", addonDetails!!.description!!)
                 event_attributes.put("Feature Name", addonDetails!!.name!!)
@@ -484,8 +438,6 @@ class FeatureDetailsActivity :
                     event_attributes,
                     ""
                 )
-//                WebEngageController.trackEvent(ADDONS_MARKETPLACE_FEATURE_DETAILS + addonDetails!!.boost_widget_key + " Loaded", Feature_Details, event_attributes)
-
             }
         })
 
@@ -533,8 +485,6 @@ class FeatureDetailsActivity :
                             add_item_to_cart_new.setTextColor(getResources().getColor(R.color.tv_color_BB))
                             add_item_to_cart_new.text = getString(R.string.added_to_cart)
                         }
-
-//                        havent_bought_the_feature.visibility = View.INVISIBLE
                         itemInCartStatus = true
                         break
                     }
@@ -558,7 +508,6 @@ class FeatureDetailsActivity :
 
         viewModel.addonsError().observe(this, Observer
         {
-//            longToast(requireContext(), "onFailure: " + it)
             println("addonsError ${it}")
             if (it.contains("Query returned empty"))
                 finish()
@@ -583,7 +532,7 @@ class FeatureDetailsActivity :
                 when {
                     addonDetails?.boost_widget_key?.equals("IVR")!! -> {
                         loadNumberList()
-                    //startActivity(Intent(this, CallTrackingActivity::class.java))
+                        //startActivity(Intent(this, CallTrackingActivity::class.java))
                     }
                     addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
 
@@ -594,7 +543,13 @@ class FeatureDetailsActivity :
                         intent.putExtra("expCode", experienceCode)
                         intent.putExtra("fpid", fpid)
                         intent.putExtra("AddonDetails", addonDetails)
-                        intent.putExtra("AddonDiscountedPrice", getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent))
+                        intent.putExtra(
+                            "AddonDiscountedPrice",
+                            getDiscountedPrice(
+                                addonDetails!!.price,
+                                addonDetails!!.discount_percent
+                            )
+                        )
                         startActivity(intent)
                     }
                     else -> {
@@ -675,9 +630,7 @@ class FeatureDetailsActivity :
     fun initializeSecondaryImage() {
         val gridLayoutManager = GridLayoutManager(applicationContext, 1)
         gridLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-//        secondary_image_recycler.apply {
-//            layoutManager = gridLayoutManager
-//        }
+
     }
 
 
@@ -750,7 +703,6 @@ class FeatureDetailsActivity :
 
     fun addUpdateSecondaryImage(list: ArrayList<String>) {
         secondaryImagesAdapter.addUpdates(list)
-//        secondary_image_recycler.adapter = secondaryImagesAdapter
         secondaryImagesAdapter.notifyDataSetChanged()
     }
 
@@ -760,9 +712,6 @@ class FeatureDetailsActivity :
             //if the View is opened from package then hide button, price, discount and Cart icon
             if (intent.extras != null && intent.extras!!.containsKey("packageView")) {
                 imageViewCart121.visibility = View.INVISIBLE
-//                unit_container.visibility = View.GONE
-//                orig_cost.visibility = View.GONE
-//                details_discount.visibility = View.GONE
                 if (bottom_box.visibility == VISIBLE) {
                     add_item_to_cart.background = ContextCompat.getDrawable(
                         applicationContext,
@@ -780,8 +729,6 @@ class FeatureDetailsActivity :
                     add_item_to_cart_new.text = "ITEM BELONG TO PACKAGE"
                     add_item_to_cart_new.isEnabled = false
                 }
-
-//                havent_bought_the_feature.visibility = View.INVISIBLE
                 return
             }
 
@@ -808,17 +755,6 @@ class FeatureDetailsActivity :
                     addonDetails!!.widget_type ?: "",
                     this
                 )
-//                cost_per_month.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-//                    .format(paymentPrice) + "/unit/month"
-//                cost_per_year.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-//                    .format(paymentPrice * 12) + "/unit/year"
-//                if(addonDetails!!.discount_percent>0) {
-//                    cost_per_year_discount.setText(discount.toString() + "% SAVING")
-//                    cost_per_year_discount.visibility = View.VISIBLE
-//                }else{
-//                    cost_per_year_discount.visibility = View.GONE
-//                }
-
                 //hide or show MRP price
                 val originalCost = priceCalculatorForYear(
                     addonDetails!!.price,
@@ -840,8 +776,6 @@ class FeatureDetailsActivity :
                 )
                 final_price.text =
                     "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice)
-//                add_item_to_cart.text = "Add for ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/Month"
-//                havent_bought_the_feature.visibility = View.VISIBLE
             } else {
                 add_item_to_cart.visibility = View.GONE
                 price.visibility = View.GONE
@@ -1042,11 +976,6 @@ class FeatureDetailsActivity :
         args.putString("bundleData", Gson().toJson(item))
         packagePopup.arguments = args
         packagePopup.show(supportFragmentManager, "PACKAGE_POPUP")
-
-//        val intent = Intent(this, ComparePacksActivity::class.java)
-//        intent.putExtra("bundleData", Gson().toJson(item))
-//        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
-//        startActivity(intent)
     }
 
     override fun onPackageClicked(item: Bundles?, image: ImageView) {
@@ -1066,7 +995,6 @@ class FeatureDetailsActivity :
                 override fun onAnimationEnd(animation: Animator) {
                     viewModel.getCartItems()
                 }
-
 
                 override fun onAnimationCancel(animation: Animator) {}
                 override fun onAnimationRepeat(animation: Animator) {}
