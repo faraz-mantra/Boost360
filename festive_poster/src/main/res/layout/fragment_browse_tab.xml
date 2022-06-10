@@ -80,10 +80,10 @@
                 </GridLayout>
             </com.facebook.shimmer.ShimmerFrameLayout>
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginHorizontal="@dimen/size_12"
+                android:layout_marginHorizontal="@dimen/size_16"
                 android:layout_marginVertical="@dimen/size_24"
                 android:id="@+id/rv_cat"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
     </FrameLayout>

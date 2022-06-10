@@ -11,6 +11,7 @@ import com.framework.extensions.gone
 import com.framework.utils.highlightHashTag
 import java.io.File
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import com.framework.utils.loadUsingGlide
 
 
@@ -23,6 +24,7 @@ class WebsitePreviewViewHolder(binding: SocialPreviewWebsiteBinding) :
         binding.ivSvg.loadUsingGlide(model.posterImg,false)
 
 
+        binding.tvCaption.isVisible = model.desc.isNullOrEmpty().not()
         binding.tvCaption.text = highlightHashTag(model.desc, R.color.color395996,R.font.regular)
 
         binding.tvCaption.text =model.desc

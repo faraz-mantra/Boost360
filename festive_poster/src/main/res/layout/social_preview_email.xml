@@ -65,6 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="152dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="@dimen/size_8"
                     android:scaleType="fitXY"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -73,7 +74,6 @@
                     android:id="@+id/tv_caption"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:ellipsize="end"
                     android:gravity="center"
                     android:maxLines="3"
