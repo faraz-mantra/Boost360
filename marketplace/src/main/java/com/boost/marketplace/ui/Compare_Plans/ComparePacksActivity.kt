@@ -67,6 +67,7 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
     private var widgetFeatureCode: String? = null
     var isOpenHomeFragment: Boolean = false
     var isOpenAddOnsFragment: Boolean = false
+    var refreshViewPager: Boolean = false
 
 
     lateinit var packageAdaptor: ParentCompareItemAdapter
@@ -126,7 +127,7 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
         packageAdaptor = ParentCompareItemAdapter(ArrayList(), this, this, this)
-        binding?.shimmerViewCompare?.startShimmer()
+        shimmer_view_compare.startShimmer()
         WebEngageController.trackEvent(
             ADDONS_MARKETPLACE_COMPARE_PACKAGE_LOADED,
             PAGE_VIEW,
@@ -142,27 +143,8 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
             window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
         }
 
-//        initializeBannerViewPager()
         loadData()
         initMvvm()
-//        (activity as UpgradeActivity)setBackListener(this)
-//        package_viewpager.setPageTransformer(SimplePageTransformer())
-
-//        val itemDecoration = HorizontalMarginItemDecoration(
-//            requireContext(),
-//            R.dimen.viewpager_current_item_horizontal_margin
-//        )
-//        package_viewpager.addItemDecoration(itemDecoration)
-        // binding?.shimmerViewCompare?.startShimmer()
-//        if(requireArguments().containsKey("showCartIcon")){
-//            package_cart_icon.visibility = View.INVISIBLE
-//        }
-
-
-//        ss.setSpan(clickableSpan, 143, 157, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-//        upgradeTextBottom.setText(ss)
-//        upgradeTextBottom.setMovementMethod(LinkMovementMethod.getInstance())
-//        upgradeTextBottom.setHighlightColor(resources.getColor(R.color.common_text_color))
 
         package_back.setOnClickListener {
             super.onBackPressed()
@@ -211,18 +193,9 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
         if (!code.equals("null", true)) {
             viewModel.setCurrentExperienceCode(code, fpTag!!)
         }
-//        /*    if(bundleData!!.included_features != null) {
-//                val itemIds = arrayListOf<String>()
-//                for (item in bundleData!!.included_features) {
-//                    itemIds.add(item.feature_code)
-//                }
-//                viewModel.loadUpdates(itemIds)
-//            } else {
-//                //TODO: Load the widget_keys associated with Bundle from db
-//                viewModel.getAssociatedWidgetKeys(bundleData!!._kid)
-//            }*/
-//
         try {
+            refreshViewPager = true
+            viewModel.getCartItems()
             viewModel.loadPackageUpdates()
         } catch (e: Exception) {
             SentryController.captureException(e)
@@ -231,41 +204,35 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
 
 
     private fun initMvvm() {
-        //  initializeFreeAddonsRecyclerView()
         viewModel.cartResult().observe(this, Observer {
             cartList = it
             packageInCartStatus = false
             if (cartList != null && cartList!!.size > 0) {
-//                if (bundleData != null) {
-                /*  for (item in it) {
-                      if (item.item_id.equals(bundleData!!._kid)) {
-                          packageInCartStatus = true
-
-                          break
-                      }
-                  }*/
-//                Constants.COMPARE_CART_COUNT = cartList!!.size
                 val cartBundleIds = arrayListOf<String>()
-                for(item in it){
-                    if(item.item_type.equals("bundles")){
+                for (item in it) {
+                    if (item.item_type.equals("bundles")) {
                         cartBundleIds.add(item.item_id)
                     }
                 }
-                packageAdaptor.updateCartItem(cartBundleIds)
+                if(refreshViewPager){
+                    refreshViewPager = false
+                    packageAdaptor.updateCartItem(cartBundleIds)
+                }
 
                 cartCount = cartList!!.size
                 badgeNumber = cartList!!.size
-                binding?.badge121?.setText(badgeNumber.toString())
-                binding?.badge121?.visibility = View.VISIBLE
+                badge121.setText(badgeNumber.toString())
+                badge121.visibility = View.VISIBLE
                 Log.v("badgeNumber", " " + badgeNumber)
-//                }
             } else {
-//                Constants.COMPARE_CART_COUNT = 0
                 cartCount = 0
                 badgeNumber = 0
-                binding?.badge121?.visibility = View.GONE
+                badge121.visibility = View.GONE
                 packageInCartStatus = false
-                packageAdaptor.updateCartItem(arrayListOf())
+                if(refreshViewPager) {
+                    refreshViewPager = false
+                    packageAdaptor.updateCartItem(arrayListOf())
+                }
             }
         })
 
@@ -306,7 +273,7 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
         })
 
         viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
-            if (it!= null && it.size > 0) {
+            if (it != null && it.size > 0) {
                 val listItem = arrayListOf<Bundles>()
                 for (item in it) {
                     Log.v("allBundleResultValue", " " + item.name)
@@ -333,7 +300,7 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
                 }
                 if (listItem.size > 0) {
                     updatePackageViewPager(listItem)
-                    for(items in listItem) {
+                    for (items in listItem) {
                         Log.v("getkeyWidget", " " + items.name + " " + items.included_features.size)
                         val itemIds = arrayListOf<String>()
                         for (item in items.included_features!!) {
@@ -341,280 +308,163 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
                             itemIds.add(item.feature_code)
 //                        viewModel.getFeatureValues(item.feature_code)
                         }
-                    Log.v("getkeyWidget123", " " + itemIds.size)
-                    viewModel.getFeatureValues(itemIds)
+                        Log.v("getkeyWidget123", " " + itemIds.size)
+                        viewModel.getFeatureValues(itemIds)
                         upgradeList = listItem
                     }
                 }
             }
         })
 
-        viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
-            /*if (it) {
-                val status = "Loading. Please wait..."
-                progressDialog.setMessage(status)
-                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
-                progressDialog.show()
-            } else {
-                progressDialog.dismiss()
-            }*/
-        })
-
-//        viewModel.cartResultBack().observe(this, Observer {
-//            cartList = it
-//            packageInCartStatus = false
-//            if (cartList != null && cartList!!.size > 0) {
-////                if (bundleData != null) {
-//                /*  for (item in it) {
-//                      if (item.item_id.equals(bundleData!!._kid)) {
-//                          packageInCartStatus = true
-//
-//                          break
-//                      }
-//                  }*/
-//
-//                badgeNumber = cartList!!.size
-//                binding?.badge121?.setText(badgeNumber.toString())
-//                binding?.badge121?.visibility = View.VISIBLE
-//                Log.v("badgeNumber", " "+ badgeNumber)
-////                }
+//        viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
+//            if (it) {
+//                val status = "Loading. Please wait..."
+//                progressDialog.setMessage(status)
+//                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
+//                progressDialog.show()
 //            } else {
-//                badgeNumber = 0
-//                binding?.badge121?.visibility = View.GONE
-//                packageInCartStatus = false
+//                progressDialog.dismiss()
 //            }
-//            viewModel.getCartItems()
-//            Log.v("COMPARE_BACK_VALUE"," "+ Constants.COMPARE_BACK_VALUE + " cartCount: "+  cartCount +
-//                    " COMPARE_CART_COUNT: "+Constants.COMPARE_CART_COUNT + " CART_VALUE: "+ Constants.CART_VALUE)
-//            if(Constants.COMPARE_BACK_VALUE == 1 /*&& cartCount != Constants.COMPARE_CART_COUNT*/){
-////                Constants.COMPARE_BACK_VALUE = 0
-//                if (viewModel.allBundleResult.value != null) {
-//
-//                    var list = viewModel.allBundleResult.value!!
-//                    if (list.size > 0) {
-//                        val listItem = arrayListOf<Bundles>()
-//                        for (item in list) {
-//                            Log.v("allBundleResultValue"," "+ item.name)
-//                            val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
-//                            listItem.add(Bundles(
-//                                item.bundle_id,
-//                                temp,
-//                                item.min_purchase_months,
-//                                item.name,
-//                                item.overall_discount_percent,
-//                                PrimaryImage(item.primary_image),
-//                                item.target_business_usecase,
-//                                Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-//                                null,item.desc?:""
-//                            ))
-//                        }
-//                        if (list.size > 0) {
-//                            updatePackageViewPager(listItem)
-//                            packageAdaptor.addupdates(listItem)
-//                            packageAdaptor.notifyDataSetChanged()
-//                        }
-//                    }
-//                }else{
-//                    viewModel.loadPackageUpdates()
-//                }
-//                viewModel.getCartItemsBack()
-//            }
-//
-//
 //        })
-    }
 
-//    override fun onBackPressed() {
-//        Log.v("onBackPressed", " "+ Constants.COMPARE_BACK_VALUE)
-//        /*if (::viewModel.isInitialized) {
-////            viewModel.getCartItems()
-//            viewModel.getCartItemsBack()
-//        }*/
-//    }
+    }
 
 
     fun updatePackageViewPager(list: List<Bundles>) {
 
-        // initializeFreeAddonsRecyclerView()
-        //    initializePackageViewPager()
-        //   package_viewpager.offscreenPageLimit = list.size
+        package_viewpager.offscreenPageLimit = 1
         Log.v("updatePackageViewPager", " " + list.size)
         packageAdaptor.addupdates(list)
-        packageAdaptor.notifyDataSetChanged()
-        //show dot indicator only when the (list.size > 2)
-        //  upgradeTextBottom.visibility = View.VISIBLE
         if (list.size > 1) {
-            binding?.packageIndicator2?.visibility = View.VISIBLE
+            package_indicator2.visibility = View.VISIBLE
         } else {
-            binding?.packageIndicator2?.visibility = View.INVISIBLE
+            package_indicator2.visibility = View.INVISIBLE
         }
     }
 
-
-//    fun initializeFreeAddonsRecyclerView() {
-//
-//
-//
-//        val list = arrayListOf<Bundles>()
-//            upgradeList = list
-//
-//        val layoutManager = LinearLayoutManager(this)
-//        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
-////        layoutManager.isMeasurementCacheEnabled = false
-//        val parentItemAdapter = ParentCompareItemAdapter(list)
-////        package_viewpager.adapter = parentItemAdapter
-//        binding?.packageViewpager?.adapter = packageAdaptor
-//     //   binding?.packageViewpager?.offscreenPageLimit = 2
-////        package_viewpager.offscreenPageLimit = upgradeList.size
-//        package_indicator2.setViewPager2(package_viewpager)
-//
-//        if (upgradeList.size > 2) {
-////            package_viewpager.setPageTransformer(SimplePageTransformer())
-////
-////                val itemDecoration = HorizontalMarginItemDecoration(
-////                        this,
-////                        R.dimen.viewpager_current_item_horizontal_margin2
-////                )
-////            package_viewpager.addItemDecoration(itemDecoration)
-//        }
-//
-//        // removed for viewpager//
-//        /*feature_item
-//                .setAdapter(parentItemAdapter)
-//        feature_item
-//                .setLayoutManager(layoutManager)*/
-//        //  initializePackageViewPager()
-//
-//    }
-
     fun initializePackageViewPager() {
-        binding?.packageViewpager?.adapter = packageAdaptor
-        package_viewpager.offscreenPageLimit = 4
-        binding?.packageIndicator2?.setViewPager2(package_viewpager)
+        package_viewpager.adapter = packageAdaptor
+        package_indicator2.setViewPager2(package_viewpager)
 
-
-
-        binding?.packageViewpager?.setPageTransformer(SimplePageTransformer())
+        package_viewpager.setPageTransformer(SimplePageTransformer())
 
         val itemDecoration = com.boost.dbcenterapi.utils.HorizontalMarginItemDecoration(
             applicationContext,
-//                        R.dimen.viewpager_current_item_horizontal_margin
             R.dimen.viewpager_current_item_horizontal_margin
         )
-        binding?.packageViewpager!!.addItemDecoration(itemDecoration)
+        package_viewpager.addItemDecoration(itemDecoration)
+
     }
 
     override fun onPackageClicked(item: Bundles?, imageView: ImageView) {
-        if (!packageInCartStatus) {
-            if (item != null) {
-                prefs.storeAddedPackageDesc(item.desc ?: "")
+        if (item != null) {
+            prefs.storeAddedPackageDesc(item.desc ?: "")
 
-                val itemIds = arrayListOf<String>()
-                for (i in item.included_features) {
-                    itemIds.add(i.feature_code)
-                }
-                makeFlyAnimation(imageView)
+            val itemIds = arrayListOf<String>()
+            for (i in item.included_features) {
+                itemIds.add(i.feature_code)
+            }
+            makeFlyAnimation(imageView)
 
-                CompositeDisposable().add(
-                    AppDatabase.getInstance(application)!!
-                        .featuresDao()
-                        .getallFeaturesInList(itemIds)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            {
+            CompositeDisposable().add(
+                AppDatabase.getInstance(application)!!
+                    .featuresDao()
+                    .getallFeaturesInList(itemIds)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
 //                                            featuresList = it
-                                var bundleMonthlyMRP = 0.0
-                                val minMonth: Int =
-                                    if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
+                            var bundleMonthlyMRP = 0.0
+                            val minMonth: Int =
+                                if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
 
-                                for (singleItem in it) {
-                                    for (item in item!!.included_features) {
-                                        if (singleItem.feature_code == item.feature_code) {
-                                            bundleMonthlyMRP += RootUtil.round(
-                                                singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),
-                                                2
-                                            )
-                                        }
+                            for (singleItem in it) {
+                                for (item in item!!.included_features) {
+                                    if (singleItem.feature_code == item.feature_code) {
+                                        bundleMonthlyMRP += RootUtil.round(
+                                            singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),
+                                            2
+                                        )
                                     }
                                 }
-
-                                offeredBundlePrice = (bundleMonthlyMRP * minMonth)
-                                originalBundlePrice = (bundleMonthlyMRP * minMonth)
-
-                                if (item!!.overall_discount_percent > 0)
-                                    offeredBundlePrice = RootUtil.round(
-                                        originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100),
-                                        2
-                                    )
-                                else
-                                    offeredBundlePrice = originalBundlePrice
-
-                                //clear cartOrderInfo from SharedPref to requestAPI again
-                                prefs.storeCartOrderInfo(null)
-                                viewModel.addItemToCartPackage1(
-                                    CartModel(
-                                        item!!._kid,
-                                        null,
-                                        null,
-                                        item!!.name,
-                                        "",
-                                        item!!.primary_image!!.url,
-                                        offeredBundlePrice.toDouble(),
-                                        originalBundlePrice.toDouble(),
-                                        item!!.overall_discount_percent,
-                                        1,
-                                        if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
-                                        "bundles",
-                                        null,
-                                        ""
-                                    )
-                                )
-                                val event_attributes: java.util.HashMap<String, Any> =
-                                    java.util.HashMap()
-                                item!!.name?.let { it1 ->
-                                    event_attributes.put(
-                                        "Package Name",
-                                        it1
-                                    )
-                                }
-                                item!!.target_business_usecase?.let { it1 ->
-                                    event_attributes.put(
-                                        "Package Tag",
-                                        it1
-                                    )
-                                }
-                                event_attributes.put("Package Price", originalBundlePrice)
-                                event_attributes.put("Discounted Price", offeredBundlePrice)
-                                event_attributes.put(
-                                    "Discount %",
-                                    item!!.overall_discount_percent
-                                )
-                                item!!.min_purchase_months?.let { it1 ->
-                                    event_attributes.put(
-                                        "Validity",
-                                        it1
-                                    )
-                                }
-                                WebEngageController.trackEvent(
-                                    ADDONS_MARKETPLACE_COMPARE_PACKAGE_ADDED_TO_CART,
-                                    ADDONS_MARKETPLACE,
-                                    event_attributes
-                                )
-                                badgeNumber = badgeNumber + 1
-                                Log.v("badgeNumber321", " " + badgeNumber)
-                                Constants.CART_VALUE = badgeNumber
-//                                            viewModel.getCartItems()
-                            },
-                            {
-                                it.printStackTrace()
-
                             }
-                        )
-                )
+
+                            offeredBundlePrice = (bundleMonthlyMRP * minMonth)
+                            originalBundlePrice = (bundleMonthlyMRP * minMonth)
+
+                            if (item!!.overall_discount_percent > 0)
+                                offeredBundlePrice = RootUtil.round(
+                                    originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100),
+                                    2
+                                )
+                            else
+                                offeredBundlePrice = originalBundlePrice
+
+                            //clear cartOrderInfo from SharedPref to requestAPI again
+                            prefs.storeCartOrderInfo(null)
+                            viewModel.addItemToCartPackage1(
+                                CartModel(
+                                    item!!._kid,
+                                    null,
+                                    null,
+                                    item!!.name,
+                                    "",
+                                    item!!.primary_image!!.url,
+                                    offeredBundlePrice.toDouble(),
+                                    originalBundlePrice.toDouble(),
+                                    item!!.overall_discount_percent,
+                                    1,
+                                    if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
+                                    "bundles",
+                                    null,
+                                    ""
+                                )
+                            )
+                            val event_attributes: java.util.HashMap<String, Any> =
+                                java.util.HashMap()
+                            item!!.name?.let { it1 ->
+                                event_attributes.put(
+                                    "Package Name",
+                                    it1
+                                )
+                            }
+                            item!!.target_business_usecase?.let { it1 ->
+                                event_attributes.put(
+                                    "Package Tag",
+                                    it1
+                                )
+                            }
+                            event_attributes.put("Package Price", originalBundlePrice)
+                            event_attributes.put("Discounted Price", offeredBundlePrice)
+                            event_attributes.put(
+                                "Discount %",
+                                item!!.overall_discount_percent
+                            )
+                            item!!.min_purchase_months?.let { it1 ->
+                                event_attributes.put(
+                                    "Validity",
+                                    it1
+                                )
+                            }
+                            WebEngageController.trackEvent(
+                                ADDONS_MARKETPLACE_COMPARE_PACKAGE_ADDED_TO_CART,
+                                ADDONS_MARKETPLACE,
+                                event_attributes
+                            )
+                            badgeNumber = badgeNumber + 1
+                            Log.v("badgeNumber321", " " + badgeNumber)
+                            Constants.CART_VALUE = badgeNumber
+//                                            viewModel.getCartItems()
+                        },
+                        {
+                            it.printStackTrace()
+
+                        }
+                    )
+            )
 
 
-            }
         }
     }
 
@@ -624,14 +474,14 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
 //        args.putString("bundleData", Gson().toJson(item))
 //        packageFragment.arguments = args
 //        (activity as UpgradeActivity).addFragment(packageFragment, Constants.PACKAGE_FRAGMENT)
-//    }
+    }
 
 //    override fun backComparePress() {
 //        if(prefs.getCompareState() == 1){
 //            prefs.storeCompareState(0)
 //            viewModel.loadPackageUpdates()
 //        }
-    }
+//    }
 
     private fun makeFlyAnimation(targetView: ImageView) {
 
@@ -642,8 +492,6 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
                 override fun onAnimationStart(animation: Animator) {}
                 override fun onAnimationEnd(animation: Animator) {
                     viewModel.getCartItems()
-
-
                 }
 
                 override fun onAnimationCancel(animation: Animator) {}
@@ -695,7 +543,11 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
     override fun onResume() {
         super.onResume()
         try {
-            viewModel.getCartItems()
+            if (cartCount > 0) {
+                refreshViewPager = true
+                package_viewpager.currentItem = 2
+                viewModel.getCartItems()
+            }
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
