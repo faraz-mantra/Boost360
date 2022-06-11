@@ -20,7 +20,6 @@ import es.dmoral.toasty.Toasty
 
 class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseViewModel>() {
 
-
     lateinit var singleAddon: FeaturesModel
 
     override fun getLayout(): Int {

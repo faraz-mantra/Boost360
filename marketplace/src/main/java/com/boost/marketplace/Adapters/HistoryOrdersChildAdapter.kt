@@ -82,7 +82,6 @@ class HistoryOrdersChildAdapter(itemList: List<WidgetDetail>?) :
                 })
         )
      //   holder.single_paidaddon_image.setColorFilter(Color.rgb(123, 123, 123), android.graphics.PorterDuff.Mode.MULTIPLY);
-
     }
 
     fun addupdates(purchaseResult: List<WidgetDetail>) {
@@ -100,6 +99,5 @@ class HistoryOrdersChildAdapter(itemList: List<WidgetDetail>?) :
         var validity = itemView.findViewById<TextView>(R.id.validity)
         var single_paidaddon_image = itemView.findViewById<ImageView>(R.id.single_paidaddon_image)
         var context: Context = itemView.context
-
     }
 }

@@ -9,13 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrderV2.WidgetDetail
 import com.boost.marketplace.R
-import com.boost.marketplace.interfaces.HistoryFragmentListener
 import java.lang.Long
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.Int
 
-class HistoryOrdersParentAdapter (itemList: List<WidgetDetail>?, val listener: HistoryFragmentListener) :
+class HistoryOrdersParentAdapter (itemList: List<WidgetDetail>?) :
     RecyclerView.Adapter<HistoryOrdersParentAdapter.upgradeViewHolder>() {
 
     private var list = ArrayList<WidgetDetail>()
@@ -43,7 +42,6 @@ class HistoryOrdersParentAdapter (itemList: List<WidgetDetail>?, val listener: H
         val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
         val dateFormat = SimpleDateFormat("dd-MMM-yyyy ")
         holder.itemDate.setText(dateFormat.format(date))
-
         val layoutManager1 = LinearLayoutManager(holder.recycler.context)
         layoutManager1.orientation = LinearLayoutManager.VERTICAL
         val sectionLayout = HistoryOrdersChildAdapter(list)

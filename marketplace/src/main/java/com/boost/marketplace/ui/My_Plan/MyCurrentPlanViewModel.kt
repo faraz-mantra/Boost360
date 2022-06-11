@@ -18,15 +18,10 @@ class MyCurrentPlanViewModel(): BaseViewModel() {
     var updatesResult: MutableLiveData <ArrayList<FeatureDetailsV2Item>> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
-
     var activeFreeWidgetList:MutableLiveData<List<FeaturesModel>> = MutableLiveData()
-
     var activePremiumWidgetList: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
-
     val compositeDisposable = CompositeDisposable()
-
     var ApiService = Utils.getRetrofit().create(NewApiInterface::class.java)
-
     lateinit var application: Application
     lateinit var lifecycleOwner: LifecycleOwner
 
@@ -40,7 +35,6 @@ class MyCurrentPlanViewModel(): BaseViewModel() {
     fun getActiveFreeWidgets(): LiveData<List<FeaturesModel>> {
         return activeFreeWidgetList
     }
-
 
     fun updatesError(): LiveData<String> {
         return updatesError
@@ -56,62 +50,6 @@ class MyCurrentPlanViewModel(): BaseViewModel() {
 
     fun getActivePremiumWidgets(): LiveData<List<FeaturesModel>> {
         return activePremiumWidgetList
-    }
-
-//    fun loadUpdates(auth:String,fpid: String, clientId: String) {
-//        updatesLoader.postValue(true)
-//        compositeDisposable.add(
-//            ApiService.GetFloatingPointWebWidgets(auth,fpid, clientId)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(
-//                    {
-////                                                        activeWidgetList.postValue(it.Result)
-//                        Log.i("FloatingPointWebWidgets", ">> " + it.Result)
-//                        compositeDisposable.add(
-//                            AppDatabase.getInstance(application)!!
-//                                .featuresDao()
-//                                .getallActiveFeatures(it.Result, true)
-//                                .subscribeOn(Schedulers.io())
-//                                .observeOn(AndroidSchedulers.mainThread())
-//                                .doOnSuccess {
-//                                    activePremiumWidgetList.postValue(it)
-//                                    updatesLoader.postValue(false)
-//                                }
-//                                .doOnError {
-//                                    updatesError.postValue(it.message)
-//                                    updatesLoader.postValue(false)
-//                                }
-//                                .subscribe()
-//
-//                        )
-//                        compositeDisposable.add(
-//                            AppDatabase.getInstance(application)!!
-//                                .featuresDao()
-//                                .getallActiveFeatures(it.Result, false)
-//                                .subscribeOn(Schedulers.io())
-//                                .observeOn(AndroidSchedulers.mainThread())
-//                                .doOnSuccess {
-//                                    updatesResult.postValue(it)
-//                                }
-//                                .doOnError {
-//                                    updatesError.postValue(it.message)
-//                                    updatesLoader.postValue(false)
-//                                }
-//                                .subscribe()
-//
-//                        )
-//                    },
-//                    {
-//                        updatesError.postValue(it.message)
-//                        updatesLoader.postValue(false)
-//                    }
-//                )
-//        )
-//    }
-
-    fun disposeElements() {
-        if (!compositeDisposable.isDisposed) compositeDisposable.dispose()
     }
 
     fun loadPurchasedItems(fpid: String, clientId: String) {
