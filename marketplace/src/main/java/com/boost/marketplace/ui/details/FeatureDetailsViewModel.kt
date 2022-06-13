@@ -121,7 +121,6 @@ class FeatureDetailsViewModel: BaseViewModel() {
                     updatesError.postValue(it.message)
                     updatesLoader.postValue(false)
                 }
-//                        .subscribe(),
                 .subscribe({}, {e -> Log.e("TAG", "Empty DB")}
                 )
         )
@@ -190,86 +189,6 @@ class FeatureDetailsViewModel: BaseViewModel() {
             .subscribe()
     }
 
-    fun addItemToCart(updatesModel: FeaturesModel) {
-        updatesLoader.postValue(false)
-        val discount = 100 - updatesModel.discount_percent
-        val paymentPrice = (discount * updatesModel.price) / 100.0
-        val cartItem = CartModel(
-            updatesModel.feature_id,
-            updatesModel.boost_widget_key,
-            updatesModel.feature_code,
-            updatesModel.name,
-            updatesModel.description,
-            updatesModel.primary_image,
-            paymentPrice,
-            updatesModel.price.toDouble(),
-            updatesModel.discount_percent,
-            1,
-            1,
-            "features",
-            updatesModel.extended_properties,
-            updatesModel.widget_type?:""
-        )
-
-        CompositeDisposable().add(
-            AppDatabase.getInstance(application)!!
-                .cartDao()
-                .checkCartFeatureTableKeyExist()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    if (it == 1) {
-                        Completable.fromAction {
-                            AppDatabase.getInstance(application)!!.cartDao().emptyCart()
-                        }
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doOnError {
-                                //in case of error
-                            }
-                            .doOnComplete {
-                                Completable.fromAction {
-                                    AppDatabase.getInstance(application)!!.cartDao()
-                                        .insertToCart(cartItem)
-                                }
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .doOnComplete {
-//                                                        getCartItems()
-                                        updatesLoader.postValue(false)
-                                    }
-                                    .doOnError {
-                                        updatesError.postValue(it.message)
-                                        updatesLoader.postValue(false)
-                                    }
-                                    .subscribe()
-                            }
-                            .subscribe()
-                    }else{
-                        Completable.fromAction {
-                            AppDatabase.getInstance(application)!!.cartDao()
-                                .insertToCart(cartItem)
-                        }
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doOnComplete {
-//                                            getCartItems()
-                                updatesLoader.postValue(false)
-                            }
-                            .doOnError {
-                                updatesError.postValue(it.message)
-                                updatesLoader.postValue(false)
-                            }
-                            .subscribe()
-                    }
-                }, {
-//                            Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
-                })
-        )
-
-
-    }
-
     fun getCartItems() {
         updatesLoader.postValue(false)
         compositeDisposable.add(
@@ -288,9 +207,5 @@ class FeatureDetailsViewModel: BaseViewModel() {
                 }
                 .subscribe()
         )
-    }
-
-    fun disposeElements() {
-        if (!compositeDisposable.isDisposed) compositeDisposable.dispose()
     }
 }

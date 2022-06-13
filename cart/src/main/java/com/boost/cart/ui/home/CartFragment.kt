@@ -238,6 +238,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             window.setStatusBarColor(getResources().getColor(R.color.common_text_color))
         }
 
+        shimmer_view_banner.startShimmer()
         cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, ArrayList(), requireActivity())
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this, requireActivity())
         cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
@@ -2019,18 +2020,19 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     val list = arrayListOf<CartModel>()
                     renewalList.forEach { renewal -> list.add(saveRenewalData(renewal)) }
                     cartList = list
+                    if (shimmer_view_banner.isShimmerStarted) {
+                        shimmer_view_banner.stopShimmer()
+                        shimmer_view_banner.visibility = View.GONE
+                    }
                     total_months_layout.visibility = View.GONE
                     cart_renewal_recycler.visibility = View.VISIBLE
                     cart_package_recycler.visibility = View.GONE
                     cart_addons_recycler.visibility = View.GONE
                     updateRenewal(cartList)
-//                    totalCalculation()
                     totalCalculationAfterCoupon()
                 } else {
-//                    Toasty.warning(requireContext(), "Renewal order not found").show()
                     loadData()
-//                    ac.isBackCart = true
-//                    (activity as CartActivity).onBackPressed()
+
                 }
             })
         } else loadData()

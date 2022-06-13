@@ -114,76 +114,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="gone">
 
-        <!--    <androidx.constraintlayout.widget.Guideline-->
-        <!--      android:id="@+id/middle_guideline1"-->
-        <!--      android:layout_width="wrap_content"-->
-        <!--      android:layout_height="wrap_content"-->
-        <!--      android:orientation="horizontal"-->
-        <!--      app:layout_constraintGuide_percent="0.6" />-->
-
-        <!--    <androidx.constraintlayout.widget.Guideline-->
-        <!--      android:id="@+id/middle_guideline2"-->
-        <!--      android:layout_width="wrap_content"-->
-        <!--      android:layout_height="wrap_content"-->
-        <!--      android:orientation="horizontal"-->
-        <!--      app:layout_constraintGuide_percent="0.8" />-->
-
-        <!--    <ImageView-->
-        <!--      android:layout_width="@dimen/_170sdp"-->
-        <!--      android:layout_height="@dimen/_170sdp"-->
-        <!--      android:src="@drawable/empty_cart"-->
-        <!--      app:layout_constraintBottom_toBottomOf="@id/middle_guideline1"-->
-        <!--      app:layout_constraintEnd_toEndOf="parent"-->
-        <!--      app:layout_constraintStart_toStartOf="parent" />-->
-
-        <!--    <TextView-->
-        <!--      android:id="@+id/empty_cart_title1"-->
-        <!--      android:layout_width="wrap_content"-->
-        <!--      android:layout_height="wrap_content"-->
-        <!--      android:fontFamily="@font/semi_bold"-->
-        <!--      android:text="Ohh! it feels so light"-->
-        <!--      android:textColor="@color/common_text_color"-->
-        <!--      android:textSize="@dimen/_13sdp"-->
-        <!--      app:layout_constraintEnd_toEndOf="parent"-->
-        <!--      app:layout_constraintStart_toStartOf="parent"-->
-        <!--      app:layout_constraintTop_toBottomOf="@id/middle_guideline1" />-->
-
-        <!--    <TextView-->
-        <!--      android:layout_width="wrap_content"-->
-        <!--      android:layout_height="wrap_content"-->
-        <!--      android:fontFamily="@font/regular"-->
-        <!--      android:gravity="center"-->
-        <!--      android:text="There's nothing in your bag, why don't \n you add something."-->
-        <!--      android:textColor="@color/globalLight"-->
-        <!--      android:textSize="@dimen/_11sdp"-->
-        <!--      app:layout_constraintEnd_toEndOf="parent"-->
-        <!--      app:layout_constraintStart_toStartOf="parent"-->
-        <!--      app:layout_constraintTop_toBottomOf="@id/empty_cart_title1" />-->
-
-
-        <!--    <TextView-->
-        <!--      android:id="@+id/all_recommended_addons"-->
-        <!--      android:layout_width="wrap_content"-->
-        <!--      android:layout_height="wrap_content"-->
-        <!--      android:layout_marginTop="16dp"-->
-        <!--      android:layout_marginBottom="16dp"-->
-        <!--      android:background="@drawable/orange_button_click_effect"-->
-        <!--      android:clickable="true"-->
-        <!--      android:elevation="@dimen/_2sdp"-->
-        <!--      android:focusable="true"-->
-        <!--      android:fontFamily="@font/semi_bold"-->
-        <!--      android:gravity="center"-->
-        <!--      android:paddingStart="@dimen/_20sdp"-->
-        <!--      android:paddingTop="@dimen/_10sdp"-->
-        <!--      android:paddingEnd="@dimen/_20sdp"-->
-        <!--      android:paddingBottom="@dimen/_10sdp"-->
-        <!--      android:text="View all recommended add-ons"-->
-        <!--      android:textAllCaps="true"-->
-        <!--      android:textColor="@color/white"-->
-        <!--      app:layout_constraintEnd_toEndOf="parent"-->
-        <!--      app:layout_constraintStart_toStartOf="parent"-->
-        <!--      app:layout_constraintTop_toTopOf="@id/middle_guideline2" />-->
-
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
@@ -221,49 +151,6 @@
                 android:textSize="14sp"
                 app:layout_constraintTop_toBottomOf="@id/empty_cart_title1" />
 
-            <!--      <TextView-->
-            <!--        android:id="@+id/mp_cart_compare_packs"-->
-            <!--        android:layout_width="match_parent"-->
-            <!--        android:layout_height="wrap_content"-->
-            <!--        android:layout_marginTop="80dp"-->
-            <!--        android:layout_marginStart="36dp"-->
-            <!--        android:layout_marginEnd="36dp"-->
-            <!--        android:background="@drawable/orange_button_click_effect"-->
-            <!--        android:clickable="true"-->
-            <!--        android:elevation="@dimen/_2sdp"-->
-            <!--        android:focusable="true"-->
-            <!--        android:fontFamily="@font/bold"-->
-            <!--        android:gravity="center"-->
-            <!--        android:paddingStart="@dimen/_20sdp"-->
-            <!--        android:paddingTop="@dimen/_10sdp"-->
-            <!--        android:paddingEnd="@dimen/_20sdp"-->
-            <!--        android:paddingBottom="@dimen/_10sdp"-->
-            <!--        android:text="Compare Boost 360 packs"-->
-            <!--        android:drawableStart="@drawable/ic_cart_help_documents"-->
-            <!--        android:textColor="@color/white"-->
-            <!--        android:textSize="16sp"/>-->
-
-            <!--      <TextView-->
-            <!--        android:id="@+id/cart_spk_to_expert"-->
-            <!--        android:layout_width="match_parent"-->
-            <!--        android:layout_height="wrap_content"-->
-            <!--        android:layout_marginTop="10dp"-->
-            <!--        android:layout_marginBottom="100dp"-->
-            <!--        android:layout_marginStart="36dp"-->
-            <!--        android:layout_marginEnd="36dp"-->
-            <!--        android:background="@drawable/share_helper_click_effect"-->
-            <!--        android:clickable="true"-->
-            <!--        android:focusable="true"-->
-            <!--        android:fontFamily="@font/regular"-->
-            <!--        android:gravity="center"-->
-            <!--        android:paddingStart="@dimen/_50sdp"-->
-            <!--        android:paddingTop="@dimen/_10sdp"-->
-            <!--        android:paddingEnd="@dimen/_50sdp"-->
-            <!--        android:paddingBottom="@dimen/_10sdp"-->
-            <!--        android:drawableStart="@drawable/ic_cart_call"-->
-            <!--        android:text="Speak to an expert"-->
-            <!--        android:textColor="@color/yellow"-->
-            <!--        android:textSize="16sp" />-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -372,12 +259,12 @@
                     android:id="@+id/validity_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:elevation="@dimen/_1sdp"
-                    android:visibility="visible"
-                    android:background="@drawable/rounded_curve_bg_blue"
                     android:layout_margin="8dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/rounded_curve_bg_blue"
+                    android:elevation="@dimen/_1sdp"
                     android:padding="8dp"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -392,10 +279,10 @@
                         android:paddingTop="@dimen/_3sdp"
                         android:paddingEnd="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
-                        android:textSize="16sp"
-                        android:textFontWeight="600"
                         android:text="Validity based packs and features"
                         android:textColor="@color/common_text_color"
+                        android:textFontWeight="600"
+                        android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -410,13 +297,53 @@
                         android:paddingTop="@dimen/_3sdp"
                         android:paddingEnd="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
-                        android:textSize="12sp"
-                        android:textFontWeight="400"
                         android:text="Requires renewal once validity period ends"
                         android:textColor="@color/common_text_color"
+                        android:textFontWeight="400"
+                        android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cart_validity_title" />
 
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/shimmer_view_banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@id/cart_validity_renew_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include layout="@layout/data_placeholder_cart" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+
+                        </LinearLayout>
+
+                    </com.facebook.shimmer.ShimmerFrameLayout>
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/cart_package_recycler"
                         android:layout_width="0dp"
@@ -446,9 +373,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:clipToPadding="false"
-                        android:visibility="gone"
                         android:nestedScrollingEnabled="false"
                         android:overScrollMode="never"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cart_addons_recycler" />
@@ -457,17 +384,17 @@
                         android:id="@+id/total_months_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginBottom="@dimen/_4sdp"
                         android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginRight="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_4sdp"
                         android:background="@drawable/rounded_curve_bg"
                         android:elevation="@dimen/_1sdp"
                         android:paddingTop="@dimen/_4sdp"
                         android:paddingBottom="@dimen/_8sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cart_renewal_recycler">
 
                         <LinearLayout
@@ -501,9 +428,9 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="6dp"
-                                    tools:text="(Valid till 16 May 22)"
                                     android:textColor="@color/copy_coupon_text_color"
-                                    android:textSize="@dimen/txt_12sp" />
+                                    android:textSize="@dimen/txt_12sp"
+                                    tools:text="(Valid till 16 May 22)" />
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -535,9 +462,9 @@
                                     android:paddingTop="6dp"
                                     android:paddingEnd="14dp"
                                     android:paddingBottom="6dp"
+                                    android:text="0 months"
                                     android:textColor="@color/colorAccent1"
-                                    android:textSize="@dimen/_13sdp"
-                                    android:text="0 months" />
+                                    android:textSize="@dimen/_13sdp" />
 
                                 <ImageView
                                     android:id="@+id/months_validity_edit_inc"
@@ -561,10 +488,10 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="4dp"
-                        android:elevation="@dimen/_5sdp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="@dimen/_40sdp"
                         android:background="@drawable/ic_cart_extra_off_bg1"
+                        android:elevation="@dimen/_5sdp"
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:visibility="gone"
@@ -602,12 +529,12 @@
                     android:id="@+id/recharge_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:elevation="@dimen/_1sdp"
-                    android:visibility="visible"
-                    android:background="@drawable/rounded_curve_bg_blue"
                     android:layout_margin="8dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/rounded_curve_bg_blue"
+                    android:elevation="@dimen/_1sdp"
                     android:padding="8dp"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/validity_layout">
@@ -622,10 +549,10 @@
                         android:paddingTop="@dimen/_3sdp"
                         android:paddingEnd="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
-                        android:textSize="16sp"
-                        android:textFontWeight="600"
                         android:text="Rechargable Feature(s)"
                         android:textColor="@color/common_text_color"
+                        android:textFontWeight="600"
+                        android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -640,10 +567,10 @@
                         android:paddingTop="@dimen/_3sdp"
                         android:paddingEnd="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
-                        android:textSize="12sp"
-                        android:textFontWeight="400"
                         android:text="Requires renewal/top-up post utilisation of balance"
                         android:textColor="@color/common_text_color"
+                        android:textFontWeight="400"
+                        android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cart_recharge_title" />
 
@@ -665,12 +592,12 @@
                     android:id="@+id/onetime_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:elevation="@dimen/_1sdp"
-                    android:visibility="visible"
-                    android:background="@drawable/rounded_curve_bg_blue"
                     android:layout_margin="8dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/rounded_curve_bg_blue"
+                    android:elevation="@dimen/_1sdp"
                     android:padding="8dp"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/recharge_layout">
@@ -685,10 +612,10 @@
                         android:paddingTop="@dimen/_3sdp"
                         android:paddingEnd="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
-                        android:textSize="16sp"
-                        android:textFontWeight="600"
                         android:text="Single use feature(s)"
                         android:textColor="@color/common_text_color"
+                        android:textFontWeight="600"
+                        android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -703,10 +630,10 @@
                         android:paddingTop="@dimen/_3sdp"
                         android:paddingEnd="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
-                        android:textSize="12sp"
-                        android:textFontWeight="400"
                         android:text="Requires renewal/top-up post utilisation of balance"
                         android:textColor="@color/common_text_color"
+                        android:textFontWeight="400"
+                        android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cart_onetime_title" />
 
@@ -906,97 +833,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/coupon_layout">
-
-                    <!--                    <TextView-->
-                    <!--                        android:id="@+id/gst_title"-->
-                    <!--                        android:layout_width="wrap_content"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_marginStart="@dimen/_5sdp"-->
-                    <!--                        android:fontFamily="@font/semi_bold"-->
-                    <!--                        android:paddingStart="@dimen/_5sdp"-->
-                    <!--                        android:paddingTop="@dimen/_3sdp"-->
-                    <!--                        android:paddingEnd="@dimen/_5sdp"-->
-                    <!--                        android:paddingBottom="@dimen/_5sdp"-->
-                    <!--                        android:text="GSTIN(optional)"-->
-                    <!--                        android:textColor="@color/common_text_color"-->
-                    <!--                        app:layout_constraintStart_toStartOf="parent"-->
-                    <!--                        app:layout_constraintTop_toTopOf="parent" />-->
-
-                    <!--                    <View-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_height="@dimen/_1sdp"-->
-                    <!--                        android:background="@color/material_grey_400"-->
-                    <!--                        app:layout_constraintEnd_toEndOf="parent"-->
-                    <!--                        app:layout_constraintStart_toStartOf="parent"-->
-                    <!--                        app:layout_constraintTop_toBottomOf="@id/gst_title" />-->
-
-                    <!--                    <LinearLayout-->
-                    <!--                        android:id="@+id/gstin_layout1"-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_marginStart="@dimen/_5sdp"-->
-                    <!--                        android:layout_marginTop="@dimen/_5sdp"-->
-                    <!--                        android:layout_marginEnd="@dimen/_5sdp"-->
-                    <!--                        android:gravity="center_vertical"-->
-                    <!--                        app:layout_constraintEnd_toEndOf="parent"-->
-                    <!--                        app:layout_constraintStart_toStartOf="parent"-->
-                    <!--                        app:layout_constraintTop_toBottomOf="@id/gst_title">-->
-
-                    <!--                        <TextView-->
-                    <!--                            android:layout_width="0dp"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:layout_weight="1"-->
-                    <!--                            android:fontFamily="@font/semi_bold"-->
-                    <!--                            android:paddingStart="@dimen/_5sdp"-->
-                    <!--                            android:text="Fill in GSTIN"-->
-                    <!--                            android:textColor="@color/common_text_color" />-->
-
-                    <!--                        <TextView-->
-                    <!--                            android:id="@+id/enter_gst_number"-->
-                    <!--                            android:layout_width="wrap_content"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:padding="@dimen/_5sdp"-->
-                    <!--                            android:text="Enter number"-->
-                    <!--                            android:textColor="@color/light_blue" />-->
-
-                    <!--                    </LinearLayout>-->
-
-                    <!--                    <LinearLayout-->
-                    <!--                        android:id="@+id/gstin_layout2"-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_marginStart="@dimen/_5sdp"-->
-                    <!--                        android:layout_marginTop="@dimen/_5sdp"-->
-                    <!--                        android:layout_marginEnd="@dimen/_5sdp"-->
-                    <!--                        android:gravity="center_vertical"-->
-                    <!--                        android:visibility="gone"-->
-                    <!--                        app:layout_constraintEnd_toEndOf="parent"-->
-                    <!--                        app:layout_constraintStart_toStartOf="parent"-->
-                    <!--                        app:layout_constraintTop_toBottomOf="@id/gstin_layout1"-->
-                    <!--                        tools:visibility="visible">-->
-
-                    <!--                        <TextView-->
-                    <!--                            android:id="@+id/fill_in_gstin_value"-->
-                    <!--                            android:layout_width="0dp"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:layout_weight="1"-->
-                    <!--                            android:fontFamily="@font/semi_bold"-->
-                    <!--                            android:paddingStart="@dimen/_10sdp"-->
-                    <!--                            android:paddingTop="@dimen/_5sdp"-->
-                    <!--                            android:paddingBottom="@dimen/_5sdp"-->
-                    <!--                            android:textColor="@color/common_text_color" />-->
-
-                    <!--                        <ImageView-->
-                    <!--                            android:id="@+id/remove_gstin_number"-->
-                    <!--                            android:layout_width="wrap_content"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:padding="@dimen/_10sdp"-->
-                    <!--                            app:layout_constraintBottom_toBottomOf="@id/cart_single_addons_bottom_view"-->
-                    <!--                            app:layout_constraintEnd_toEndOf="parent"-->
-                    <!--                            app:layout_constraintTop_toTopOf="parent"-->
-                    <!--                            app:srcCompat="@drawable/ic_close" />-->
-
-                    <!--                    </LinearLayout>-->
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout

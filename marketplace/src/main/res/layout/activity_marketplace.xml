@@ -192,7 +192,7 @@
 
                                     <include layout="@layout/data_placeholder_layout_new" />
 
-                                    <include layout="@layout/data_place2" />
+                                    <include layout="@layout/data_place" />
 
                                     <include layout="@layout/data_place" />
 

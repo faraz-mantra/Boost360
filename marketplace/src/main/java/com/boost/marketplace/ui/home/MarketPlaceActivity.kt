@@ -81,8 +81,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     lateinit var addonsCategoryAdapter: AddonsCategoryAdapter
     lateinit var videosListAdapter: VideosListAdapter
 
-    //    private var deepLinkUtil: DeepLinkUtil? = null
-//    lateinit var badge: NotificationBadge
     var badgeNumber = 0
     var fpRefferalCode: String = ""
     var feedBackLink: String? = null
@@ -141,14 +139,12 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
         isOpenHomeFragment = intent.getBooleanExtra("isComingFromOrderConfirm", false)
         isOpenAddOnsFragment = intent.getBooleanExtra("isComingFromOrderConfirmActivation", false)
-        //user buying item directly
         widgetFeatureCode = intent.getStringExtra("buyItemKey")
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
 
         progressDialog = ProgressDialog(this)
 
         prefs = SharedPrefs(this)
-//        session?.let { deepLinkUtil = DeepLinkUtil(this as AppCompatActivity, it) }
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.elevation = 0F
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -170,17 +166,13 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         //emptyCouponTable everytime for new coupon code
         viewModel.emptyCouponTable()
         viewModel.GetHelp()
-//        setSpannableStrings()
         loadData()
         initMvvm()
-//        setBackListener (this)
         shimmer_view_package.startShimmer()
         shimmer_view_banner.startShimmer()
-//        shimmer_view_recommended.startShimmer()
         shimmer_view_recomm_addons.startShimmer()
         shimmer_view_addon_category.startShimmer()
         WebEngageController.trackEvent(ADDONS_MARKETPLACE_HOME, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
-//        Glide.with(this).load(R.drawable.back_beau).apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3))).into(back_image)
 
         imageViewOption1.setOnClickListener {
             val popup = PopupMenu(this, imageViewOption1)
@@ -225,7 +217,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                             HelpVideosBottomSheet::class.java.name
                         )
                     }
-//                    else -> super.onOptionsItemSelected(item)
                 }
 
                 true
@@ -284,132 +275,19 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         initializeRecycler()
         initializeAddonCategoryRecycler()
 
-//        if (accountType != null) {
-////            recommended_features_account_type.setText(accountType!!.toLowerCase())
-//            recommended_features_section.visibility = View.VISIBLE
-//            if (shimmer_view_recommended.isShimmerStarted) {
-//                shimmer_view_recommended.stopShimmer()
-//                shimmer_view_recommended.visibility = View.GONE
-//            }
-//        } else {
-//            recommended_features_section.visibility = View.GONE
-//            if (shimmer_view_recommended.isShimmerStarted) {
-//                shimmer_view_recommended.stopShimmer()
-//                shimmer_view_recommended.visibility = View.GONE
-//            }
-//        }
 
         viewModel.getCategoriesFromAssetJson(
             this,
             experienceCode
         )
 
-//        share_refferal_code_btn.setOnClickListener {
-//            WebEngageController.trackEvent(
-//                ADDONS_MARKETPLACE_REFFER_BOOST_CLICKED,
-//                GENERIC,
-//                NO_EVENT_VALUE
-//            )
-//            val sendIntent = Intent()
-//            sendIntent.action = Intent.ACTION_SEND
-//            sendIntent.putExtra(
-//                Intent.EXTRA_TEXT,
-//                getString(R.string.referral_text_1) + fpRefferalCode
-//            )
-//            sendIntent.type = "text/plain"
-//            try {
-//                startActivity(sendIntent)
-//            } catch (ex: ActivityNotFoundException) {
-//                SentryController.captureException(ex)
-//                Toasty.error(
-//                    applicationContext,
-//                    "Failed to share the referral code. Please try again.",
-//                    Toast.LENGTH_SHORT,
-//                    true
-//                ).show()
-//            }
-//        }
 
         refer_and_earn.setOnClickListener {
             startReferralView()
         }
-        /*share_fb_1.setOnClickListener {
-            WebEngageController.trackEvent(ADDONS_MARKETPLACE_REFFER_BOOST_CLICKED, FACEBOOK_MESSENGER, NO_EVENT_VALUE)
-            val sendIntent = Intent()
-            sendIntent.action = Intent.ACTION_SEND
-            sendIntent
-                    .putExtra(
-                            Intent.EXTRA_TEXT,
-                            getString(R.string.referral_text_2) + fpRefferalCode
-                    )
-            sendIntent.type = "text/plain"
-            sendIntent.setPackage("com.facebook.orca")
-            try {
-                startActivity(sendIntent)
-            } catch (ex: ActivityNotFoundException) {
-
-                Toasty.error(
-                        applicationContext,
-                        "Please Install Facebook Messenger",
-                        Toast.LENGTH_SHORT,
-                        true
-                ).show()
-
-            }
-        }
-        share_whatsapp_1.setOnClickListener {
-            WebEngageController.trackEvent(ADDONS_MARKETPLACE_REFFER_BOOST_CLICKED, WHATSAPP, NO_EVENT_VALUE)
-            val whatsappIntent = Intent(Intent.ACTION_SEND)
-            whatsappIntent.type = "text/plain"
-            whatsappIntent.setPackage(getString(R.string.whatsapp_package))
-            whatsappIntent.putExtra(
-                    Intent.EXTRA_TEXT,
-                    getString(R.string.referral_text_1) + fpRefferalCode
-            )
-            try {
-                Objects.requireNonNull(this).startActivity(whatsappIntent)
-            } catch (ex: ActivityNotFoundException) {
-                startActivity(
-                        Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse("http://play.google.com/store/apps/details?id=com.whatsapp")
-                        )
-                )
-            }
-
-        }*/
-        /*share_referal.setOnClickListener {
-            WebEngageController.trackEvent(ADDONS_MARKETPLACE_REFFER_BOOST_CLICKED, CARD, NO_EVENT_VALUE)
-            val sendIntent = Intent()
-            sendIntent.action = Intent.ACTION_SEND
-            sendIntent.putExtra(
-                    Intent.EXTRA_TEXT,
-                    R.string.referral_text_2
-            )
-            sendIntent.type = "text/plain"
-            startActivity(sendIntent)
-        }*/
-
-//        if(::localStorage.isInitialized) {
-//            cart_list = localStorage.getCartItems()
-//            if (cart_list != null) {
-//                badgeNumber = cart_list!!.size
-//                badge.setText(badgeNumber.toString())
-//                Constants.CART_VALUE = badgeNumber
-//            }
-//        }
 
 
         view_my_current_plan.setOnClickListener {
-//            val args = Bundle()
-//            args.putStringArrayList(
-//                "userPurchsedWidgets",
-//                arguments?.getStringArrayList("userPurchsedWidgets")
-//            )
-//            addFragmentHome(
-//                MyAddonsFragment.newInstance(),
-//                MYADDONS_FRAGMENT, args
-//            )
             val intent = Intent(this, MyCurrentPlanActivity::class.java)
             intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
             intent.putExtra("fpid", fpid)
@@ -423,15 +301,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 ADDONS_MARKETPLACE,
                 NULL
             )
-//            val args = Bundle()
-//            args.putStringArrayList(
-//                "userPurchsedWidgets",
-//                arguments?.getStringArrayList("userPurchsedWidgets")
-//            )
-//            addFragmentHome(
-//                ViewAllFeaturesFragment.newInstance(),
-//                VIEW_ALL_FEATURE, args
-//            )
             val intent = Intent(this, BrowseFeaturesActivity::class.java)
             intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
             intent.putExtra("fpid", fpid)
@@ -459,7 +328,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 intent.putExtra("mobileNo", "9160004303")
             }
             intent.putExtra("profileUrl", profileUrl)
-            // intent.putExtra("itemId", it.feature_code)
 
             startActivity(intent)
 
@@ -469,15 +337,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             if (progressDialog.isShowing) {
                 progressDialog.hide()
             }
-//            val args = Bundle()
-//            args.putStringArrayList(
-//                "userPurchsedWidgets",
-//                arguments?.getStringArrayList("userPurchsedWidgets")
-//            )
-//            addFragmentHome(
-//                MyAddonsFragment.newInstance(),
-//                MYADDONS_FRAGMENT, args
-//            )
             val intent = Intent(this, MyCurrentPlanActivity::class.java)
             intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
             startActivity(intent)
@@ -485,15 +344,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             if (progressDialog.isShowing) {
                 progressDialog.hide()
             }
-//            val args = Bundle()
-//            args.putStringArrayList(
-//                "userPurchsedWidgets",
-//                arguments?.getStringArrayList("userPurchsedWidgets")
-//            )
-//            addFragmentHome(
-//                ViewAllFeaturesFragment.newInstance(),
-//                VIEW_ALL_FEATURE, args
-//            )
 
             val intent = Intent(this, BrowseFeaturesActivity::class.java)
             intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
@@ -502,15 +352,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             if (progressDialog.isShowing) {
                 progressDialog.hide()
             }
-//            val args = Bundle()
-//            args.putStringArrayList(
-//                "userPurchsedWidgets",
-//                arguments?.getStringArrayList("userPurchsedWidgets")
-//            )
-//            addFragmentHome(
-//                ComparePackageFragment.newInstance(),
-//                COMPARE_FRAGMENT, args
-//            )
+
             val intent = Intent(this, ComparePacksActivity::class.java)
             intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
             startActivity(intent)
@@ -530,11 +372,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 SentryController.captureException(e)
             }
 
-//            args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
-            /*addFragmentHome(
-                    PackageFragment.newInstance(),
-                    PACKAGE_FRAGMENT, args
-            )*/
         } else if (screenType == "promoBanner") {
             if (progressDialog.isShowing) {
                 progressDialog.hide()
@@ -554,26 +391,9 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
         }
 
-        //chat bot view button clicked
-//        view_chat.setOnClickListener {
-//            val details = DetailsFragment.newInstance()
-//            val args = Bundle()
-//            args.putString("itemId", "CHATBOT")
-//            details.arguments = args
-//            addFragment(details, Constants.DETAILS_FRAGMENT)
-//        }
-
         //share feed back button
         share_feedback_button.setOnClickListener {
             if (feedBackLink != null) {
-//                val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
-//                val args = Bundle()
-//                args.putString("link", feedBackLink)
-//                webViewFragment.arguments = args
-//                addFragment(
-//                        webViewFragment,
-//                        Constants.WEB_VIEW_FRAGMENT
-//                )
                 val i = Intent(Intent.ACTION_VIEW)
                 i.data = Uri.parse(feedBackLink)
                 startActivity(i)
@@ -587,15 +407,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         }
 
         package_compare_layout.setOnClickListener {
-//            val args = Bundle()
-//            args.putStringArrayList(
-//                "userPurchsedWidgets",
-//                arguments?.getStringArrayList("userPurchsedWidgets")
-//            )
-//            addFragmentHome(
-//                ComparePackageFragment.newInstance(),
-//                COMPARE_FRAGMENT, args
-//            )
             val intent = Intent(this, ComparePacksActivity::class.java)
             intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
 
@@ -626,10 +437,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             intent.putExtra("profileUrl", profileUrl)
             startActivity(intent)
         }
-//        mp_review_cart_close_iv.setOnClickListener{
-//            WebEngageController.trackEvent(ADDONS_MARKETPLACE_WAITING_CART_CROSS_CLICKED,EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_CROSS_CLICKED,NO_EVENT_VALUE)
-//            mp_view_cart_rl.visibility = View.GONE
-//        }
         mp_review_cart_tv.setOnClickListener {
             WebEngageController.trackEvent(
                 ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED,
@@ -682,83 +489,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         return MarketPlaceHomeViewModel::class.java
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.home_menu, menu)
-//        val menuItem = menu!!.findItem(R.id.action_add)
-//
-//        val actionView = menuItem.actionView
-//        badge = actionView.findViewById<View>(R.id.badge) as NotificationBadge
-//
-//
-//        actionView.setOnClickListener { onOptionsItemSelected(menuItem) }
-//        return true
-//    }
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return when (item.itemId) {
-//            android.R.id.home -> {
-//                finish()
-//                true
-//            }
-//            R.id.action_add -> {
-//                WebEngageController.trackEvent(ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED,EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED,NO_EVENT_VALUE)
-//                val intent = Intent(
-//                    applicationContext,
-//                    CartActivity::class.java
-//                )
-//                intent.putExtra("fpid", fpid)
-//                intent.putExtra("expCode", experienceCode)
-//                intent.putExtra("isDeepLink", isDeepLink)
-//                intent.putExtra("deepLinkViewType", deepLinkViewType)
-//                intent.putExtra("deepLinkDay", deepLinkDay)
-//                intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-//                intent.putExtra(
-//                    "accountType",
-//                    accountType
-//                )
-//                intent.putStringArrayListExtra(
-//                    "userPurchsedWidgets",
-//                    userPurchsedWidgets
-//                )
-//                if (email != null) {
-//                    intent.putExtra("email", email)
-//                } else {
-//                    intent.putExtra("email", "ria@nowfloats.com")
-//                }
-//                if (mobileNo != null) {
-//                    intent.putExtra("mobileNo", mobileNo)
-//                } else {
-//                    intent.putExtra("mobileNo", "9160004303")
-//                }
-//                intent.putExtra("profileUrl", profileUrl)
-//                startActivity(intent)
-//                true
-//            }
-//            R.id.overflowMenu -> {
-//                true
-//            }
-//            R.id.order_history -> {
-//                val intent= Intent(this, HistoryOrdersActivity::class.java)
-//                intent.putExtra("fpid",fpid)
-//                startActivity(intent)
-//                return true
-//            }
-//            R.id.offer_coupons -> {
-//                startSpecificActivity(OfferCouponsActivity::class.java)
-//                return true
-//            }
-//            R.id.help_section -> {
-//                val videoshelp = HelpVideosBottomSheet()
-//                val args = Bundle()
-//                videoshelp.arguments= args
-//                videoshelp.show(this.supportFragmentManager, HelpVideosBottomSheet::class.java.name)
-//                return true
-//            }
-//            else -> super.onOptionsItemSelected(item)
-//        }
-//    }
-
-
     private fun initializeRecycler() {
         val gridLayoutManager = GridLayoutManager(applicationContext, 3)
         gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -795,58 +525,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             addons_category_recycler.adapter = addonsCategoryAdapter
         }
     }
-
-
-//    fun setSpannableStrings() {
-//        var fpId = fpid
-//        if (fpId != null) {
-//            val minLength = 5
-//
-//            fpRefferalCode = ""
-//            for (c in fpId) {
-//                fpRefferalCode += (c + 1).toString().trim().toUpperCase()
-//
-//                if (fpRefferalCode.length >= minLength)
-//                    break
-//            }
-//
-//            var lengthDiff = minLength - (fpRefferalCode.length % 5)
-//
-//            while (lengthDiff-- > 0) {
-//                fpRefferalCode += lengthDiff.toString()
-//            }
-//        }
-//        fpRefferalCode = experienceCode + fpRefferalCode
-//        referral_code.text = fpRefferalCode
-//
-//
-//        val referralText = SpannableString(getString(R.string.upgrade_boost_tnc_link))
-//        referralText.setSpan(UnderlineSpan(), 0, referralText.length, 0)
-//        boost360_tnc.text = referralText
-//        /*boost360_tnc.setOnClickListener {
-//            WebEngageController.trackEvent(ADDONS_MARKETPLACE_TN_C_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
-//            val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
-//            val args = Bundle()
-//            args.putString("link", "https://www.getboost360.com/tnc")
-//            webViewFragment.arguments = args
-//            addFragment(
-//                    webViewFragment,
-//                    Constants.WEB_VIEW_FRAGMENT
-//            )
-//        }*/
-//
-//        /* val refText = SpannableString(getString(R.string.referral_card_explainer_text))
-//         refText.setSpan(StyleSpan(Typeface.BOLD), 18, 26, 0)
-//         refText.setSpan(StyleSpan(Typeface.BOLD), refText.length - 4, refText.length, 0)
-//         refText.setSpan(
-//                 ForegroundColorSpan(ContextCompat.getColor(applicationContext, R.color.common_text_color)),
-//                 0,
-//                 refText.length,
-//                 0
-//         )
-//         ref_txt.text = refText
-//         ref_txt.text = "Get special discounts for you and your friends after successful signup."*/
-//    }
 
     @SuppressLint("LongLogTag")
     fun loadData() {
@@ -970,23 +648,9 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             }
         })
 
-//        viewModel.getTotalActiveWidgetCount().observe(this, androidx.lifecycle.Observer {
-//            total_active_widget_count.text = it.toString()
-//        })
 
         viewModel.categoryResult().observe(this, androidx.lifecycle.Observer {
             if (it != null) {
-//                if (recommended_features_account_type.paint.measureText(
-//                        Html.fromHtml(it!!.toLowerCase()).toString()
-//                    ) > recommended_features_account_type.measuredWidth
-//                ) {
-//                    recommended_features_account_type.visibility = View.GONE
-//                    recommended_features_additional_tv.text = Html.fromHtml(it!!.toLowerCase())
-//
-//                } else {
-//                    recommended_features_account_type.setText(Html.fromHtml(it!!.toLowerCase()))
-//                    recommended_features_additional_tv.visibility = View.GONE
-//                }
                 recommended_features_additional_tv.text =
                     Html.fromHtml("Top " + it!!.toLowerCase() + " features")
             }
@@ -1010,8 +674,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 it.size ?: 0
             )
             if (it != null && it.size > 0) {
-//                packageInCartStatus = false
-//                mp_view_cart_rl.visibility = View.VISIBLE
                 badge.visibility = View.VISIBLE
                 badgeNumber = it.size
                 badge.setText(badgeNumber.toString())
@@ -1052,105 +714,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                         itemsArrayList?.add(it.item_name.toString())
                     }
                 }
-
-//                var cartItems = " "
-//                if (itemsArrayList != null && itemsArrayList!!.size > 0) {
-//                    for (items in itemsArrayList!!) {
-//                        cartItems += items + ", "
-//                    }
-//                    cartItems = cartItems.substring(0, cartItems.length - 2)
-//                    var cartUpdatedItems = ""
-//                    if (mp_items_name_tv.paint.measureText(cartItems) > 2 * (mp_items_name_tv.measuredWidth)) {
-//                        val index = itemsArrayList!!.size - 1
-//                        itemsArrayList!!.removeAt(index)
-//                        for (updatedItems in itemsArrayList!!) {
-//                            cartUpdatedItems += updatedItems + ", "
-//                        }
-//                        cartUpdatedItems =
-//                            cartUpdatedItems.substring(0, cartUpdatedItems.length - 2)
-//                        val displayString =
-//                            cartUpdatedItems + " + " + (it.size - itemsArrayList!!.size) + " more"
-//                        var cartUpdatedItems1 = ""
-//                        if (mp_items_name_tv.paint.measureText(displayString) > 2 * (mp_items_name_tv.measuredWidth)) {
-//                            val index1 = itemsArrayList!!.size - 1
-//                            itemsArrayList!!.removeAt(index1)
-//                            for (updatedItems1 in itemsArrayList!!) {
-//                                cartUpdatedItems1 += updatedItems1 + ", "
-//                            }
-//                            cartUpdatedItems1 =
-//                                cartUpdatedItems1.substring(0, cartUpdatedItems1.length - 2)
-//                            val displayString1 =
-//                                cartUpdatedItems1 + " + " + (it.size - itemsArrayList!!.size) + " more"
-//                            var cartLatestItems = ""
-//                            if (mp_items_name_tv.paint.measureText(displayString1) > 2 * (mp_items_name_tv.measuredWidth)) {
-//                                val latestIndex = itemsArrayList!!.size - 1
-//                                itemsArrayList!!.removeAt(latestIndex)
-//                                for (latestItems in itemsArrayList!!) {
-//                                    cartLatestItems += latestItems + ", "
-//                                }
-//                                cartLatestItems =
-//                                    cartLatestItems.substring(0, cartLatestItems.length - 2)
-//                                val displayString2 =
-//                                    cartLatestItems + " + " + (it.size - itemsArrayList!!.size) + " more"
-//                                if (itemTypeArrayList!!.contains("features") && itemTypeArrayList!!.contains(
-//                                        "bundles"
-//                                    ).not()
-//                                ) {
-//                                    if (itemsArrayList!!.size == 1) {
-//                                        val singleFeature = displayString2.replace(",", "")
-//                                        mp_items_name_tv.text = singleFeature.replace(" ", "\u00A0")
-//                                    } else {
-//                                        mp_items_name_tv.text =
-//                                            displayString2.replace(" ", "\u00A0")
-//                                    }
-//
-//                                }
-//                            } else {
-//                                if (itemTypeArrayList!!.contains("features") && itemTypeArrayList!!.contains(
-//                                        "bundles"
-//                                    ).not()
-//                                ) {
-//                                    if (itemsArrayList!!.size == 1) {
-//                                        val singleFeature1 = displayString1.replace(",", "")
-//                                        mp_items_name_tv.text =
-//                                            singleFeature1.replace(" ", "\u00A0")
-//
-//                                    } else {
-//                                        mp_items_name_tv.text =
-//                                            displayString1.replace(" ", "\u00A0")
-//                                    }
-//                                }
-//                            }
-//                        } else {
-//                            if (itemTypeArrayList!!.contains("features") && itemTypeArrayList!!.contains(
-//                                    "bundles"
-//                                ).not()
-//                            ) {
-//                                if (itemsArrayList!!.size == 1) {
-//                                    val singleFeature2 = displayString.replace(",", "")
-//                                    mp_items_name_tv.text = singleFeature2.replace(" ", "\u00A0")
-//
-//                                } else {
-//                                    mp_items_name_tv.text = displayString.replace(" ", "\u00A0")
-//                                }
-//                            }
-//                        }
-//                    } else {
-//                        if (itemTypeArrayList!!.contains("features") && itemTypeArrayList!!.contains(
-//                                "bundles"
-//                            ).not()
-//                        ) {
-//                            if (itemsArrayList!!.size == 1) {
-//                                val singleFeature3 = cartItems.replace(",", "")
-//                                mp_items_name_tv.text = singleFeature3.replace(" ", "\u00A0")
-//
-//                            } else {
-//                                mp_items_name_tv.text = cartItems.replace(" ", "\u00A0")
-//                            }
-//                        }
-//                    }
-//
-//                }
                 val itemDesc = prefs.getStoreAddedPackageDesc()
                 packsArrayList?.clear()
                 it.forEach { it ->
@@ -1533,19 +1096,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             } else {
                 callnow_layout.visibility = View.GONE
                 callnow_image.visibility = View.GONE
-//                call_shedule_layout.visibility = View.VISIBLE
-//                call_shedule_title.setText(it.line1)
-//                call_shedule_desc.setText(it.line2)
-//                if (it.offline_message != null) {
-//                    val spannableString = SpannableString(it.offline_message)
-//                    spannableString.setSpan(
-//                        ForegroundColorSpan(resources.getColor(R.color.navy_blue)),
-//                        0,
-//                        18,
-//                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-//                    )
-//                    call_schedule_timinig.setText(spannableString)
-//                }
+
             }
         })
 
@@ -1555,7 +1106,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                     shimmer_view_banner.stopShimmer()
                     shimmer_view_banner.visibility = View.GONE
                 }
-//                updateBannerViewPager(it)
                 banner_layout.visibility = View.VISIBLE
             } else {
                 if (shimmer_view_banner.isShimmerStarted) {
@@ -1575,8 +1125,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                     shimmer_view_banner.stopShimmer()
                     shimmer_view_banner.visibility = View.GONE
                 }
-//                checkBannerDetails(it as ArrayList<PromoBanners>)
-//                checkBannerDetailsNew(it as ArrayList<PromoBanners>)
                 updateBannerViewPager(it)
                 banner_layout.visibility = View.VISIBLE
             } else {
@@ -1613,7 +1161,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
         viewModel.getActivePremiumWidgets().observe(this, androidx.lifecycle.Observer {
             //display referal if there is any paid addons
-            if (it.size>0) {
+            if (it.size > 0) {
                 bottom_box.visibility = View.VISIBLE
                 footer.visibility = View.VISIBLE
             } else {
@@ -1686,15 +1234,9 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     }
 
     fun updateVideosViewPager(list: List<YoutubeVideoModel>) {
-        val link: List<String> = list.get(0).youtube_link!!.split('/')
-//        videoPlayerWebView.getSettings().setJavaScriptEnabled(true)
-////    videoPlayerWebView.getSettings().setPluginState(WebSettings.PluginState.ON)
-//        videoPlayerWebView.setWebViewClient(WebViewClient())
-//        videoPlayerWebView.loadUrl("http://www.youtube.com/embed/" + link.get(link.size - 1) + "?autoplay=1&vq=small")
         videosListAdapter.addUpdates(list)
         videosListAdapter.notifyDataSetChanged()
-//        video_sub_title.text = list.get(0).title
-//        video_sub_desc.text = list.get(0).desc
+
     }
 
     fun updateRecycler(list: List<FeaturesModel>) {
@@ -1708,7 +1250,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         recycler.adapter = upgradeAdapter
         upgradeAdapter.notifyDataSetChanged()
         recycler.isFocusable = false
-//        back_image.isFocusable = true
     }
 
     override fun onResume() {
@@ -1727,19 +1268,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             }
         }
 
-//        if (shimmer_view_recomm_addons.isShimmerStarted) {
-//            shimmer_view_recomm_addons.stopShimmer()
-//            shimmer_view_recomm_addons.visibility = View.GONE
-//        }
-//        if (shimmer_view_addon_category.isShimmerStarted) {
-//            shimmer_view_addon_category.stopShimmer()
-//            shimmer_view_addon_category.visibility = View.GONE
-//        }
         addonsCategoryAdapter.addupdates(addonsCategoryTypes)
         addons_category_recycler.adapter = addonsCategoryAdapter
         addonsCategoryAdapter.notifyDataSetChanged()
         addons_category_recycler.isFocusable = false
-//        back_image.isFocusable = true
     }
 
 
@@ -1877,20 +1409,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         intent.putExtra("profileUrl", profileUrl)
         intent.putExtra("itemId", item.feature_code)
 
-//                                                            startActivity(intent)
-
-
-//                intent.putExtra("itemId", it.feature_code)
-//                startActivity(intent)
-        // intent.putExtra("itemId", item!!.cta_feature_key)
         startActivity(intent)
     }
 
     override fun onPackageClicked(item: Bundles?) {
-
-//        WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, CLICK, item?.name
-//                ?: NO_EVENT_VALUE)
-
 
         val event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()
         item!!.name?.let { it1 -> event_attributes.put("Package Name", it1) }
@@ -1900,19 +1422,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         event_attributes.put("Package Identifier", item!!._kid)
         item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
         WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, ADDONS_MARKETPLACE, event_attributes)
-
-        /*  val packageFragment = PackageFragment.newInstance()
-          val args = Bundle()
-          args.putString("bundleData", Gson().toJson(item))
-          packageFragment.arguments = args
-          addFragment(packageFragment, PACKAGE_FRAGMENT)*/
-
-
-//        val packageFragment = PackageFragmentNew.newInstance()
-//        val args = Bundle()
-//        args.putString("bundleData", Gson().toJson(item))
-//        packageFragment.arguments = args
-//        addFragment(packageFragment, NEW_PACKAGE_FRAGMENT)
         val intent = Intent(this, ComparePacksActivity::class.java)
         intent.putExtra("bundleData", Gson().toJson(item))
         intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
@@ -1945,12 +1454,11 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         startActivity(intent)
     }
 
+    @SuppressLint("LogNotTimber")
     override fun onPromoBannerClicked(item: PromoBanners?) {
-//        Log.v("PromoBannerClicked >>", item!!.cta_web_link.isNullOrBlank().toString()  + " "+item!!.cta_feature_key.isNullOrBlank().toString() )
         val event_attributes: HashMap<String, Any> = HashMap()
         item?.let { event_attributes.put("title", it.title) }
-//        experienceCode?.let { event_attributes.put("category", it) }
-//        fpTag?.let { event_attributes.put("customer", it) }
+
         if (event_attributes.isEmpty()) WebEngageController.trackEvent(
             ADDONS_MARKETPLACE_PROMO_BANNER,
             CLICK,
@@ -1962,149 +1470,50 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             event_attributes
         )
         if (!item!!.cta_feature_key.isNullOrBlank()) {
-            if (item!!.cta_feature_key != null) {
-//                val details = DetailsFragment.newInstance()
-//                val args = Bundle()
-//                args.putString("itemId", item!!.cta_feature_key)
-//                details.arguments = args
-//                addFragment(details, Constants.DETAILS_FRAGMENT)
-                val intent = Intent(this, FeatureDetailsActivity::class.java)
+            val intent = Intent(this, FeatureDetailsActivity::class.java)
 
-                intent.putExtra("fpid", fpid)
-                intent.putExtra("expCode", experienceCode)
-                intent.putExtra("isDeepLink", isDeepLink)
-                intent.putExtra("deepLinkViewType", deepLinkViewType)
-                intent.putExtra("deepLinkDay", deepLinkDay)
-                intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-                intent.putExtra(
-                    "accountType",
-                    accountType
-                )
-                intent.putStringArrayListExtra(
-                    "userPurchsedWidgets",
-                    userPurchsedWidgets
-                )
-                if (email != null) {
-                    intent.putExtra("email", email)
-                } else {
-                    intent.putExtra("email", "ria@nowfloats.com")
-                }
-                if (mobileNo != null) {
-                    intent.putExtra("mobileNo", mobileNo)
-                } else {
-                    intent.putExtra("mobileNo", "9160004303")
-                }
-                intent.putExtra("profileUrl", profileUrl)
-
-//                                                            startActivity(intent)
-
-
-//                intent.putExtra("itemId", it.feature_code)
-//                startActivity(intent)
-                intent.putExtra("itemId", item!!.cta_feature_key)
-                startActivity(intent)
-
+            intent.putExtra("fpid", fpid)
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("isDeepLink", isDeepLink)
+            intent.putExtra("deepLinkViewType", deepLinkViewType)
+            intent.putExtra("deepLinkDay", deepLinkDay)
+            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                userPurchsedWidgets
+            )
+            if (email != null) {
+                intent.putExtra("email", email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
             }
+            if (mobileNo != null) {
+                intent.putExtra("mobileNo", mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", profileUrl)
+
+            intent.putExtra("itemId", item!!.cta_feature_key)
+            startActivity(intent)
+
         } else {
             if (!item!!.cta_bundle_identifier.isNullOrBlank()) {
-                if (item!!.cta_bundle_identifier != null) {
-                    if (item.cta_bundle_identifier.contains("#")) {
+                if (item.cta_bundle_identifier.contains("#")) {
 
-                        var cataCategoryIdentifier =
-                            item.cta_bundle_identifier.trim().split("#").toTypedArray()
-                        var bundleCategory = cataCategoryIdentifier.get(0)
-                        var bundleID = cataCategoryIdentifier.get(1)
-                        if (experienceCode.equals(bundleCategory)) {
-                            CompositeDisposable().add(
-                                AppDatabase.getInstance(application)!!
-                                    .bundlesDao()
-                                    .checkBundleKeyExist(bundleID)
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe({
-                                        if (it == 1) {
-                                            CompositeDisposable().add(
-                                                AppDatabase.getInstance(application)!!
-                                                    .bundlesDao()
-                                                    .getBundleItemById(bundleID)
-                                                    .subscribeOn(Schedulers.io())
-                                                    .observeOn(AndroidSchedulers.mainThread())
-                                                    .subscribe({
-                                                        var selectedBundle: Bundles? = null
-                                                        var item = it
-                                                        val temp =
-                                                            Gson().fromJson<List<IncludedFeature>>(
-                                                                item.included_features,
-                                                                object :
-                                                                    TypeToken<List<IncludedFeature>>() {}.type
-                                                            )
-                                                        selectedBundle = Bundles(
-                                                            bundleID,
-                                                            temp,
-                                                            item.min_purchase_months,
-                                                            item.name,
-                                                            item.overall_discount_percent,
-                                                            PrimaryImage(item.primary_image),
-                                                            item.target_business_usecase,
-                                                            Gson().fromJson<List<String>>(
-                                                                item.exclusive_to_categories,
-                                                                object :
-                                                                    TypeToken<List<String>>() {}.type
-                                                            ),
-                                                            null,
-                                                            item.desc
-                                                        )
-//                                                        val packageFragment =
-//                                                            PackageFragment.newInstance()
-//                                                        val args = Bundle()
-//                                                        args.putString(
-//                                                            "bundleData",
-//                                                            Gson().toJson(selectedBundle)
-//                                                        )
-//                                                        packageFragment.arguments = args
-//                                                        addFragment(
-//                                                            packageFragment,
-//                                                            PACKAGE_FRAGMENT
-//                                                        )
-                                                        val intent = Intent(
-                                                            this,
-                                                            ComparePacksActivity::class.java
-                                                        )
-                                                        intent.putExtra(
-                                                            "bundleData",
-                                                            Gson().toJson(selectedBundle)
-                                                        )
-                                                        intent.putStringArrayListExtra(
-                                                            "userPurchsedWidgets",
-                                                            userPurchsedWidgets
-                                                        )
-                                                        startActivity(intent)
-
-                                                    }, {
-                                                        it.printStackTrace()
-                                                    })
-                                            )
-                                        } else {
-                                            Toasty.error(
-                                                applicationContext,
-                                                "Bundle Not Available To This Account",
-                                                Toast.LENGTH_LONG
-                                            ).show()
-                                        }
-                                    }, {
-                                        it.printStackTrace()
-                                    })
-                            )
-                        }
-                        Log.d(
-                            "bundleCategory",
-                            " bundleCategory: " + bundleCategory + " bundleID: " + bundleID + " " + experienceCode
-                        )
-                    } else {
+                    var cataCategoryIdentifier =
+                        item.cta_bundle_identifier.trim().split("#").toTypedArray()
+                    var bundleCategory = cataCategoryIdentifier.get(0)
+                    var bundleID = cataCategoryIdentifier.get(1)
+                    if (experienceCode.equals(bundleCategory)) {
                         CompositeDisposable().add(
                             AppDatabase.getInstance(application)!!
                                 .bundlesDao()
-                                .checkBundleKeyExist(item!!.cta_bundle_identifier)
+                                .checkBundleKeyExist(bundleID)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe({
@@ -2112,13 +1521,12 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                         CompositeDisposable().add(
                                             AppDatabase.getInstance(application)!!
                                                 .bundlesDao()
-                                                .getBundleItemById(item!!.cta_bundle_identifier)
+                                                .getBundleItemById(bundleID)
                                                 .subscribeOn(Schedulers.io())
                                                 .observeOn(AndroidSchedulers.mainThread())
                                                 .subscribe({
                                                     var selectedBundle: Bundles? = null
                                                     var item = it
-
                                                     val temp =
                                                         Gson().fromJson<List<IncludedFeature>>(
                                                             item.included_features,
@@ -2126,7 +1534,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                                 TypeToken<List<IncludedFeature>>() {}.type
                                                         )
                                                     selectedBundle = Bundles(
-                                                        item.bundle_id,
+                                                        bundleID,
                                                         temp,
                                                         item.min_purchase_months,
                                                         item.name,
@@ -2141,18 +1549,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                         null,
                                                         item.desc
                                                     )
-//                                                    val packageFragment =
-//                                                        PackageFragment.newInstance()
-//                                                    val args = Bundle()
-//                                                    args.putString(
-//                                                        "bundleData",
-//                                                        Gson().toJson(selectedBundle)
-//                                                    )
-//                                                    packageFragment.arguments = args
-//                                                    addFragment(
-//                                                        packageFragment,
-//                                                        PACKAGE_FRAGMENT
-//                                                    )
                                                     val intent = Intent(
                                                         this,
                                                         ComparePacksActivity::class.java
@@ -2183,6 +1579,80 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                 })
                         )
                     }
+                    Log.d(
+                        "bundleCategory",
+                        " bundleCategory: " + bundleCategory + " bundleID: " + bundleID + " " + experienceCode
+                    )
+                } else {
+                    CompositeDisposable().add(
+                        AppDatabase.getInstance(application)!!
+                            .bundlesDao()
+                            .checkBundleKeyExist(item!!.cta_bundle_identifier)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
+                                if (it == 1) {
+                                    CompositeDisposable().add(
+                                        AppDatabase.getInstance(application)!!
+                                            .bundlesDao()
+                                            .getBundleItemById(item!!.cta_bundle_identifier)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe({
+                                                var selectedBundle: Bundles? = null
+                                                var item = it
+
+                                                val temp =
+                                                    Gson().fromJson<List<IncludedFeature>>(
+                                                        item.included_features,
+                                                        object :
+                                                            TypeToken<List<IncludedFeature>>() {}.type
+                                                    )
+                                                selectedBundle = Bundles(
+                                                    item.bundle_id,
+                                                    temp,
+                                                    item.min_purchase_months,
+                                                    item.name,
+                                                    item.overall_discount_percent,
+                                                    PrimaryImage(item.primary_image),
+                                                    item.target_business_usecase,
+                                                    Gson().fromJson<List<String>>(
+                                                        item.exclusive_to_categories,
+                                                        object :
+                                                            TypeToken<List<String>>() {}.type
+                                                    ),
+                                                    null,
+                                                    item.desc
+                                                )
+                                                val intent = Intent(
+                                                    this,
+                                                    ComparePacksActivity::class.java
+                                                )
+                                                intent.putExtra(
+                                                    "bundleData",
+                                                    Gson().toJson(selectedBundle)
+                                                )
+                                                intent.putStringArrayListExtra(
+                                                    "userPurchsedWidgets",
+                                                    userPurchsedWidgets
+                                                )
+                                                startActivity(intent)
+
+                                            }, {
+                                                it.printStackTrace()
+                                            })
+                                    )
+                                } else {
+                                    Toasty.error(
+                                        applicationContext,
+                                        "Bundle Not Available To This Account",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                            }, {
+                                it.printStackTrace()
+                            })
+                    )
                 }
             } else {
                 if (!item!!.cta_web_link.isNullOrBlank()) {
@@ -2190,25 +1660,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
                         if (item!!.cta_web_link.contains("com.biz2.nowfloats.keyboard.home")) {
 
-                            val deepHashMap: HashMap<DynamicLinkParams, String> =
-                                DynamicLinksManager().getURILinkParams(Uri.parse(item.cta_web_link))
-//                            if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
-//                                val viewType = deepHashMap[DynamicLinkParams.viewType]
-//                                val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
-//                                deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
-//                            } else deepLinkUtil?.deepLinkPage(item.cta_web_link!!, "", false)
 
                         } else {
-
-//                            val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
-//                            val args = Bundle()
-//                            args.putString("title", "")
-//                            args.putString("link", item!!.cta_web_link)
-//                            webViewFragment.arguments = args
-//                            addFragment(
-//                                webViewFragment,
-//                                Constants.WEB_VIEW_FRAGMENT
-//                            )
 
                             val intent = Intent(this, WebViewActivity::class.java)
                             intent.putExtra("title", "")
@@ -2223,8 +1676,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                         CompositeDisposable().add(
                             AppDatabase.getInstance(application)!!
                                 .marketOffersDao()
-//                                        .getMarketOffersByCouponCode(item!!.coupon_code)
-//                                        .getMarketOffersByCouponCode(if(item!!.coupon_code != null ) item.coupon_code else item.cta_offer_identifier )
                                 .getMarketOffersById(item.cta_offer_identifier)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
@@ -2243,22 +1694,9 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                         isarchived = item.isarchived!!,
                                         expiry_date = item.expiry_date!!,
                                         title = item.title!!,
-//                                      exclusive_to_categories = Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
                                         exclusive_to_categories = arrayListOf(),
                                         image = PrimaryImage(item.image),
                                     )
-//                                    val marketPlaceOfferFragment =
-//                                        MarketPlaceOfferFragment.newInstance()
-//                                    val args = Bundle()
-//                                    args.putString(
-//                                        "marketOffersData",
-//                                        Gson().toJson(selectedMarketOfferModel)
-//                                    )
-//                                    marketPlaceOfferFragment.arguments = args
-//                                    addFragment(
-//                                        marketPlaceOfferFragment,
-//                                        MARKET_OFFER_FRAGMENT
-//                                    )
 
                                     val intent = Intent(this, MarketPlaceOffersActivity::class.java)
                                     intent.putExtra(
@@ -2275,58 +1713,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 }
             }
         }
-        /*if (item!!.cta_feature_key != null) {
-            val details = DetailsFragment.newInstance()
-            val args = Bundle()
-            args.putString("itemId", item!!.cta_feature_key)
-            details.arguments = args
-            addFragment(details, Constants.DETAILS_FRAGMENT)
-
-        } else if (item.cta_bundle_identifier.isNullOrEmpty().not()) {
-            CompositeDisposable().add(
-                    AppDatabase.getInstance(application)!!
-                            .bundlesDao()
-                            .checkBundleKeyExist(item!!.cta_bundle_identifier)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe({
-                                if (it == 1) {
-                                    CompositeDisposable().add(
-                                            AppDatabase.getInstance(application)!!
-                                                    .bundlesDao()
-                                                    .getBundleItemById(item!!.cta_bundle_identifier)
-                                                    .subscribeOn(Schedulers.io())
-                                                    .observeOn(AndroidSchedulers.mainThread())
-                                                    .subscribe({
-
-                                                        val packageFragment = PackageFragment.newInstance()
-                                                        val args = Bundle()
-                                                        args.putString("bundleData", Gson().toJson(it))
-                                                        packageFragment.arguments = args
-                                                        addFragment(packageFragment, PACKAGE_FRAGMENT)
-
-                                                    }, {
-                                                        it.printStackTrace()
-                                                    })
-                                    )
-                                } else {
-                                    Toasty.error(applicationContext, "Bundle Not Available To This Account", Toast.LENGTH_LONG).show()
-                                }
-                            }, {
-                                it.printStackTrace()
-                            })
-            )
-        } else if (item!!.cta_web_link != null) {
-            val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
-            val args = Bundle()
-            args.putString("title", "Browser")
-            args.putString("link", item!!.cta_web_link)
-            webViewFragment.arguments = args
-            addFragment(
-                    webViewFragment,
-                    Constants.WEB_VIEW_FRAGMENT
-            )
-        }*/
 
     }
 
@@ -2347,12 +1733,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         )
         Log.i("onPartnerZoneClicked >>", item.toString())
         if (item!!.cta_feature_key.isNullOrEmpty().not()) {
-
-//            val details = DetailsFragment.newInstance()
-//            val args = Bundle()
-//            args.putString("itemId", item!!.cta_feature_key)
-//            details.arguments = args
-//            addFragment(details, Constants.DETAILS_FRAGMENT)
 
             val intent = Intent(this, FeatureDetailsActivity::class.java)
             intent.putExtra("itemId", item!!.cta_feature_key)
@@ -2375,15 +1755,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe({
-
-//                                        val packageFragment = PackageFragment.newInstance()
-//                                        val args = Bundle()
-//                                        args.putString("bundleData", Gson().toJson(it))
-//                                        packageFragment.arguments = args
-//                                        addFragment(
-//                                            packageFragment,
-//                                            PACKAGE_FRAGMENT
-//                                        )
                                         val intent = Intent(this, ComparePacksActivity::class.java)
                                         intent.putExtra("bundleData", Gson().toJson(it))
                                         intent.putStringArrayListExtra(
@@ -2408,17 +1779,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                     })
             )
         } else if (item.cta_web_link.isNullOrEmpty().not()) {
-
-//            val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
-//            val args = Bundle()
-//            args.putString("title", "")
-//            args.putString("link", item!!.cta_web_link)
-//            webViewFragment.arguments = args
-//            addFragment(
-//                webViewFragment,
-//                Constants.WEB_VIEW_FRAGMENT
-//            )
-            val intent = Intent(this, com.boost.marketplace.ui.webview.WebViewActivity::class.java)
+            val intent = Intent(this, WebViewActivity::class.java)
             intent.putExtra("title", "")
             intent.putExtra("link", item!!.cta_web_link)
             startActivity(intent)
@@ -2444,18 +1805,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     }
 
     override fun onAddonsCategoryClicked(categoryType: String) {
-//        val viewallFeatures = ViewAllFeaturesFragment.newInstance()
-//        val args = Bundle()
-//        args.putString("categoryType", categoryType)
-//        args.putStringArrayList(
-//            "userPurchsedWidgets",
-//            arguments?.getStringArrayList("userPurchsedWidgets")
-//        )
-//        viewallFeatures.arguments = args
-//        addFragment(
-//            viewallFeatures,
-//            VIEW_ALL_FEATURE
-//        )
         val intent = Intent(this, BrowseFeaturesActivity::class.java)
         intent.putExtra("categoryType", categoryType)
         intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
@@ -2504,20 +1853,11 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         args.putString("link", videoItem.youtube_link)
         dialogCard.arguments = args
         dialogCard.show(this.supportFragmentManager, VideosPopUpBottomSheet::class.java.name)
-//        videoPlayerWebView.getSettings().setJavaScriptEnabled(true)
-////    videoPlayerWebView.getSettings().setPluginState(WebSettings.PluginState.ON)
-//        videoPlayerWebView.setWebViewClient(WebViewClient())
-//        videoPlayerWebView.loadUrl("http://www.youtube.com/embed/" + link.get(link.size - 1) + "?autoplay=1&vq=small")
-////    videoPlayerWebView.setWebChromeClient(WebChromeClient())
-//        video_sub_title.text = videoItem.title
-//        video_sub_desc.text = videoItem.desc
     }
 
     override fun onPackageAddToCart(item: Bundles?, imageView: ImageView) {
 
         Log.d("onPackageAddToCart", " " + item.toString())
-//        var bundleData = Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type)
-//        var bundleData =  Gson().fromJson<PackageBundles>(item.toString(), object : TypeToken<PackageBundles>() {}.type)
 
         if (!packageInCartStatus) {
             if (item != null) {
@@ -2540,111 +1880,9 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
                             }
                         }, {
-//                            Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
                         })
                 )
 
-//                makeFlyAnimation(imageView)
-
-                /*val itemIds = arrayListOf<String>()
-                for (i in item.included_features) {
-                    itemIds.add(i.feature_code)
-                }
-                CompositeDisposable().add(
-                    AppDatabase.getInstance(application)!!
-                        .featuresDao()
-                        .getallFeaturesInList(itemIds)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            {
-                                featuresList = it
-                                var bundleMonthlyMRP = 0
-                                val minMonth: Int =
-                                    if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
-
-                                for (singleItem in it) {
-                                    for (item in item!!.included_features) {
-                                        if (singleItem.feature_code == item.feature_code) {
-                                            bundleMonthlyMRP += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt()
-                                        }
-                                    }
-                                }
-
-                                offeredBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
-                                originalBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
-
-                                if (item!!.overall_discount_percent > 0)
-                                    offeredBundlePrice =
-                                        originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100)
-                                else
-                                    offeredBundlePrice = originalBundlePrice
-
-                                //clear cartOrderInfo from SharedPref to requestAPI again
-                                prefs.storeCartOrderInfo(null)
-                                viewModel.addItemToCartPackage1(
-                                    CartModel(
-                                        item!!._kid,
-                                        null,
-                                        null,
-                                        item!!.name,
-                                        "",
-                                        item!!.primary_image!!.url,
-                                        offeredBundlePrice.toDouble(),
-                                        originalBundlePrice.toDouble(),
-                                        item!!.overall_discount_percent,
-                                        1,
-                                        if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
-                                        "bundles",
-                                        null
-                                    )
-                                )
-                                val event_attributes: HashMap<String, Any> = HashMap()
-                                item!!.name?.let { it1 ->
-                                    event_attributes.put(
-                                        "Package Name",
-                                        it1
-                                    )
-                                }
-                                item!!.target_business_usecase?.let { it1 ->
-                                    event_attributes.put(
-                                        "Package Tag",
-                                        it1
-                                    )
-                                }
-                                event_attributes.put("Package Price", originalBundlePrice)
-                                event_attributes.put("Discounted Price", offeredBundlePrice)
-                                event_attributes.put("Discount %", item!!.overall_discount_percent)
-                                item!!.min_purchase_months?.let { it1 ->
-                                    event_attributes.put(
-                                        "Validity",
-                                        it1
-                                    )
-                                }
-                                WebEngageController.trackEvent(
-                                    ADDONS_MARKETPLACE_PACKAGE_ADDED_TO_CART,
-                                    ADDED,
-                                    event_attributes
-                                )
-//                packageInCartStatus = true
-//                package_submit.background = ContextCompat.getDrawable(
-//                        applicationContext,
-//                        R.drawable.added_to_cart_grey
-//                )
-//                package_submit.setTextColor(context.getResources().getColor(R.color.tv_color_BB))
-//                package_submit.setText(getString(R.string.added_to_cart))
-                                badgeNumber = badgeNumber + 1
-//                badge121.setText(badgeNumber.toString())
-//                badge121.visibility = View.VISIBLE
-                                Constants.CART_VALUE = badgeNumber
-//                                viewModel.getCartItems()
-                            },
-                            {
-                                it.printStackTrace()
-
-                            }
-                        )
-                )*/
 
             }
         }
@@ -2658,7 +1896,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         banner_indicator.setViewPager2(banner_viewpager)
         val itemDecoration = HorizontalMarginItemDecoration(
             applicationContext,
-//                        R.dimen.viewpager_current_item_horizontal_margin
             R.dimen.viewpager_current_item_horizontal_margin1
         )
         banner_viewpager.addItemDecoration(itemDecoration)
@@ -2670,14 +1907,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         partner_viewpager.adapter = partnerViewPagerAdapter
         partner_viewpager.offscreenPageLimit = 4
         partner_indicator.setViewPager2(partner_viewpager)
-
-//        partner_viewpager.setPageTransformer(SimplePageTransformer())
-//
-//        val itemDecoration = HorizontalMarginItemDecoration(
-//                applicationContext,
-//                R.dimen.viewpager_current_item_horizontal_margin
-//        )
-//        partner_viewpager.addItemDecoration(itemDecoration)
 
     }
 
@@ -2717,23 +1946,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         )
         feature_deals_viewpager.addItemDecoration(itemDecoration)
     }
-
-//    private fun makeFlyAnimation(targetView: ImageView) {
-//
-//        CircleAnimationUtil().attachActivity(this).setTargetView(targetView).setMoveDuration(600)
-//            .setDestView(imageViewCart1).setAnimationListener(object : Animator.AnimatorListener {
-//                override fun onAnimationStart(animation: Animator) {}
-//                override fun onAnimationEnd(animation: Animator) {
-//                    viewModel.getCartItems()
-//
-//                }
-//
-//
-//                override fun onAnimationCancel(animation: Animator) {}
-//                override fun onAnimationRepeat(animation: Animator) {}
-//            }).startAnimation()
-//
-//    }
 
     fun callBundleCart(item: Bundles, imageView: ImageView) {
         val itemIds = arrayListOf<String>()
@@ -2879,21 +2091,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                             null,
                                             item.desc
                                         )
-
-//                                        val packageFragment = PackageFragment.newInstance()
-//                                        val args = Bundle()
-//                                        args.putString("bundleData", Gson().toJson(selectedBundle))
-//                                        args.putStringArrayList(
-//                                            "userPurchsedWidgets",
-//                                            arguments?.getStringArrayList("userPurchsedWidgets")
-//                                        )
-//                                        packageFragment.arguments = args
-////                                                        (activity as UpgradeActivity).addFragment(packageFragment, Constants.PACKAGE_FRAGMENT)
-//
-//                                        (activity as UpgradeActivity).addFragmentHome(
-//                                            PackageFragment.newInstance(),
-//                                            PACKAGE_FRAGMENT, args
-//                                        )
                                         val intent = Intent(this, ComparePacksActivity::class.java)
                                         intent.putExtra("bundleData", Gson().toJson(selectedBundle))
                                         intent.putStringArrayListExtra(
@@ -2901,8 +2098,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                             userPurchsedWidgets
                                         )
                                         startActivity(intent)
-//                                                        bundleData = Gson().fromJson<Bundles>(Gson().toJson(it), object : TypeToken<Bundles>() {}.type)
-//                                                        packageAdaptor = PackageAdaptor((activity as UpgradeActivity), ArrayList(), Gson().fromJson<Bundles>(Gson().toJson(it), object : TypeToken<Bundles>() {}.type))
 
                                     }, {
                                         it.printStackTrace()
@@ -2981,21 +2176,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                             null,
                                             item.desc
                                         )
-
-//                                        val packageFragment = PackageFragment.newInstance()
-//                                        val args = Bundle()
-//                                        args.putString("bundleData", Gson().toJson(selectedBundle))
-//                                        args.putStringArrayList(
-//                                            "userPurchsedWidgets",
-//                                            arguments?.getStringArrayList("userPurchsedWidgets")
-//                                        )
-//                                        packageFragment.arguments = args
-////                                                        (activity as UpgradeActivity).addFragment(packageFragment, Constants.PACKAGE_FRAGMENT)
-//
-//                                        (activity as UpgradeActivity).addFragmentHome(
-//                                            PackageFragment.newInstance(),
-//                                            PACKAGE_FRAGMENT, args
-//                                        )
                                         val intent = Intent(this, ComparePacksActivity::class.java)
                                         intent.putExtra("bundleData", Gson().toJson(selectedBundle))
                                         intent.putStringArrayListExtra(
@@ -3004,9 +2184,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                         )
                                         startActivity(intent)
 
-
-//                                                        bundleData = Gson().fromJson<Bundles>(Gson().toJson(it), object : TypeToken<Bundles>() {}.type)
-//                                                        packageAdaptor = PackageAdaptor((activity as UpgradeActivity), ArrayList(), Gson().fromJson<Bundles>(Gson().toJson(it), object : TypeToken<Bundles>() {}.type))
 
                                     }, {
                                         it.printStackTrace()
@@ -3030,14 +2207,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                     .observeOn(AndroidSchedulers.mainThread())
                                                     .subscribe({
 
-//                                                        val details = DetailsFragment.newInstance()
-//                                                        val args = Bundle()
-//                                                        args.putString("itemId", it.feature_code)
-//                                                        details.arguments = args
-//                                                        (activity as UpgradeActivity).addFragment(
-//                                                            details,
-//                                                            Constants.DETAILS_FRAGMENT
-//                                                        )
                                                         val intent = Intent(
                                                             this,
                                                             FeatureDetailsActivity::class.java
@@ -3137,21 +2306,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                                                     item.image
                                                                                 ),
                                                                             )
-//                                                                        val marketPlaceOfferFragment =
-//                                                                            MarketPlaceOfferFragment.newInstance()
-//                                                                        val args = Bundle()
-//                                                                        args.putString(
-//                                                                            "marketOffersData",
-//                                                                            Gson().toJson(
-//                                                                                selectedMarketOfferModel
-//                                                                            )
-//                                                                        )
-//                                                                        marketPlaceOfferFragment.arguments =
-//                                                                            args
-//                                                                        (activity as UpgradeActivity).addFragment(
-//                                                                            marketPlaceOfferFragment,
-//                                                                            MARKET_OFFER_FRAGMENT
-//                                                                        )
 //
                                                                         val intent = Intent(
                                                                             this,
@@ -3173,16 +2327,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                         } else {
                                                             Log.v("getItemPromoBanner3", " " + item)
                                                             if (item.contains("http")) {
-//                                                                val webViewFragment: WebViewFragment =
-//                                                                    WebViewFragment.newInstance()
-//                                                                val args = Bundle()
-//                                                                args.putString("title", "")
-//                                                                args.putString("link", item)
-//                                                                webViewFragment.arguments = args
-//                                                                (activity as UpgradeActivity).addFragment(
-//                                                                    webViewFragment,
-//                                                                    Constants.WEB_VIEW_FRAGMENT
-//                                                                )
                                                                 val intent = Intent(
                                                                     this,
                                                                     com.boost.marketplace.ui.webview.WebViewActivity::class.java

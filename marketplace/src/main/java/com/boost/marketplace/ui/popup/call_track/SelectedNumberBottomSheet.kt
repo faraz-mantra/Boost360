@@ -1,4 +1,4 @@
-package com.boost.marketplace.ui.details.domain
+package com.boost.marketplace.ui.popup.call_track
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,14 +12,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.boost.marketplace.R
-import com.boost.marketplace.databinding.LayoutSelectedNumberBottomsheetBinding
-import com.boost.marketplace.databinding.PopupCallExpertCustomDomainBinding
 import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
-import com.framework.base.BaseBottomSheetDialog
-import com.framework.models.BaseViewModel
-import kotlinx.android.synthetic.main.activity_feature_details.*
 import kotlinx.android.synthetic.main.layout_selected_number_bottomsheet.*
-import kotlinx.android.synthetic.main.layout_speak_expert_bottomsheet.*
 import kotlinx.android.synthetic.main.layout_speak_expert_bottomsheet.back_btn
 
 
@@ -35,7 +29,7 @@ class SelectedNumberBottomSheet : DialogFragment() {
         val width = ViewGroup.LayoutParams.MATCH_PARENT
         val height = ViewGroup.LayoutParams.MATCH_PARENT
         dialog!!.window!!.setLayout(width, height)
-        dialog!!.window!!.setBackgroundDrawableResource(com.boost.cart.R.color.fullscreen_color)
+        dialog!!.window!!.setBackgroundDrawableResource(R.color.transparent)
     }
 
     override fun onCreateView(

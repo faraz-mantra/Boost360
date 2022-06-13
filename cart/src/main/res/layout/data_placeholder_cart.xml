@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cart_packs_FL"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginBottom="@dimen/_2sdp"
+        android:padding="0dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/package_profile_image"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_gravity="center"
+                        android:background="@color/background2" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical">
+
+                        <View
+                            android:id="@+id/package_title"
+                            android:layout_width="100dp"
+                            android:layout_height="15dp"
+                            android:background="@color/background2"
+                            android:fontFamily="@font/regular"
+                            android:textStyle="normal" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/package_amount_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:gravity="center_vertical">
+
+                            <View
+                                android:id="@+id/package_price"
+                                android:layout_width="100dp"
+                                android:layout_height="15dp"
+                                android:background="@color/background2"
+                                android:fontFamily="@font/regular"
+                                android:textStyle="normal" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <View
+                    android:id="@+id/tv_Addons"
+                    android:layout_width="100dp"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="55dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@color/background2"
+                    android:fontFamily="@font/regular"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="55dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="@color/background2">
+
+                </View>
+
+
+                <View
+                    android:id="@+id/used_by"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="55dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@color/background2"
+                    android:gravity="center" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>
+

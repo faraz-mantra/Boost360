@@ -149,8 +149,6 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:src="@drawable/ic_card_bg1" />
->>>>>>> 4c1b17dc435d4bccc5642f903808bd0836aeee98
-
 
         </RelativeLayout>
 

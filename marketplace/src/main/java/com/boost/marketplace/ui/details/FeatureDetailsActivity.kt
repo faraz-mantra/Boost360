@@ -28,7 +28,6 @@ import com.boost.cart.adapter.ZoomOutPageTransformer
 import com.boost.cart.utils.Utils.priceCalculatorForYear
 import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
-import com.boost.dbcenterapi.data.remote.ApiInterface
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
@@ -38,12 +37,11 @@ import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityFeatureDetailsBinding
 import com.boost.marketplace.infra.utils.Constants.Companion.IMAGE_PREVIEW_POPUP_FRAGMENT
-import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.interfaces.DetailsFragmentListener
-import com.boost.marketplace.ui.details.call_track.CallTrackingHelpBottomSheet
-import com.boost.marketplace.ui.details.call_track.RequestCallbackBottomSheet
+import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
+import com.boost.marketplace.ui.popup.call_track.RequestCallbackBottomSheet
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
-import com.boost.marketplace.ui.details.domain.SelectedNumberBottomSheet
+import com.boost.marketplace.ui.popup.call_track.SelectedNumberBottomSheet
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.webview.WebViewActivity
@@ -62,10 +60,9 @@ import java.util.*
 
 class FeatureDetailsActivity :
     AppBaseActivity<ActivityFeatureDetailsBinding, FeatureDetailsViewModel>(),
-    DetailsFragmentListener, CompareListener {
+    DetailsFragmentListener {
 
     lateinit var retrofit: Retrofit
-    lateinit var ApiService: ApiInterface
     val callTrackingHelpBottomSheet = CallTrackingHelpBottomSheet()
     val requestCallbackBottomSheet = RequestCallbackBottomSheet()
     var singleWidgetKey: String? = null
@@ -133,7 +130,6 @@ class FeatureDetailsActivity :
         howToUseAdapter = HowToUseAdapter(this, ArrayList())
         faqAdapter = FAQAdapter(this, ArrayList())
         benefitAdaptor = BenefitsViewPagerAdapter(ArrayList(), this)
-//    localStorage = LocalStorage.getInstance(applicationContext)!!
         singleWidgetKey = intent.extras?.getString("itemId")
         prefs = SharedPrefs(this)
         viewModel.setApplicationLifecycle(application, this)
@@ -977,16 +973,6 @@ class FeatureDetailsActivity :
         packagePopup.arguments = args
         packagePopup.show(supportFragmentManager, "PACKAGE_POPUP")
     }
-
-    override fun onPackageClicked(item: Bundles?, image: ImageView) {
-        makeFlyAnimation(image)
-    }
-
-    override fun onLearnMoreClicked(item: Bundles?) {
-        TODO("Not yet implemented")
-    }
-
-
     private fun makeFlyAnimation(targetView: ImageView) {
         CircleAnimationUtil().attachActivity(this).setTargetView(targetView).setMoveDuration(600)
             .setDestView(featureDetailsCartIcon)
