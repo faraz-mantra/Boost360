@@ -21,5 +21,6 @@ data class PanDetailsRequest(
     val DocumentName: String?,
     val FileType: String?,
     val Name: String?,
-    val Number: String?
+    val Number: String?,
+    val IsImageRemove: Boolean=false
 )
