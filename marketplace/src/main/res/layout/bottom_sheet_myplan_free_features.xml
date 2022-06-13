@@ -95,7 +95,7 @@
                     android:layout_gravity="start"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:fontFamily="@font/regular"
-                    android:text="satus"
+                    android:text="status"
                     android:textStyle="normal"
                     android:textSize="@dimen/_12sdp"
                     android:textAllCaps="false"

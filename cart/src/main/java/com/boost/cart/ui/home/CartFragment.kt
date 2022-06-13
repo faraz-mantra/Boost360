@@ -549,12 +549,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                    (activity as CartActivity).supportFragmentManager,
                    RENEW_POPUP_FRAGEMENT
            )*/
-            if (TextUtils.isEmpty(months_validity.text.toString())) {
-                months_validity.setBackgroundResource(R.drawable.et_validity_error)
-                Toasty.error(requireContext(), "Validity is empty", Toast.LENGTH_SHORT).show()
-            } else if (bundles_in_cart && months_validity.text.toString().split(" ").get(0)
-                    .toInt() < package_validity_months
-            ) {
+            if (bundles_in_cart && months_validity.text.toString().split(" ").get(0)
+                    .toInt() < package_validity_months) {
                 months_validity.setBackgroundResource(R.drawable.et_validity_error)
                 Toasty.error(requireContext(), "Validity is not valid", Toast.LENGTH_SHORT).show()
             } else if (et_email.text.toString().isEmpty()) {
@@ -1826,18 +1822,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         android.R.layout.simple_spinner_dropdown_item,
                         it
                     )
-//                business_city_name.setAdapter(adapter)
             }
 
         })
 
-//    viewModel.getSelectedStateResult().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-//      if (it != null) {
-//        business_city_name.text = it
-//        setStates = it
-//      }
-//
-//    })
+
 
         viewModel.getSelectedStateResult().observe(viewLifecycleOwner, {
             if (it != null) {

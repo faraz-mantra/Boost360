@@ -127,8 +127,4 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
     }
   }
 
-//  override fun onClick(v: View?) {
-//    TODO("Not yet implemented")
-//  }
-
 }
