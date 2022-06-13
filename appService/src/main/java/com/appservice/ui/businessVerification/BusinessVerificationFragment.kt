@@ -176,6 +176,7 @@ class BusinessVerificationFragment : AppBaseFragment<FragmentBusinessVerificatio
         return
       }
     }
+
     val panGstUpdateBody = PanGstUpdateBody(
       clientId, sessionLocal.fPID!!,
       GSTDetailsRequest(sessionLocal.fpTag, isRegGst, null, null, null, gstin, rcm),
