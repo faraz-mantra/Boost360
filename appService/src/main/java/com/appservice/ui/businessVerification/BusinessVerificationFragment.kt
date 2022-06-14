@@ -67,7 +67,7 @@ class BusinessVerificationFragment : AppBaseFragment<FragmentBusinessVerificatio
       isUpdate = true
       binding?.uploadImageView?.gone()
       binding?.imageView?.visible()
-      apply { baseActivity.glideLoad(binding?.imagePanCard!!, result.panDetails?.imageLink ?: "", R.drawable.placeholder_image_n) }
+      requireContext().glideLoad(binding?.imagePanCard!!, result.panDetails?.imageLink ?: "", R.drawable.placeholder_image_n)
     } else {
       binding?.uploadImageView?.visible()
       binding?.imageView?.gone()
