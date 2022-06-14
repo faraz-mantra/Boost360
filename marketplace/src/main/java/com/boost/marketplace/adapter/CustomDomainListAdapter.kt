@@ -14,7 +14,6 @@ import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 
 class CustomDomainListAdapter(
     val activity: CustomDomainActivity, itemList: List<Domain>?,
-    // val listener: HomeListener
 ) : RecyclerView.Adapter<CustomDomainListAdapter.upgradeViewHolder>() {
 
     private var upgradeList = ArrayList<Domain>()
@@ -40,11 +39,6 @@ class CustomDomainListAdapter(
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
         holder.title.text = upgradeList.get(position).name
-//        holder.dummy1.visibility=if (position == upgradeList.lastIndex) {
-//            View.GONE
-//        } else {
-//            View.VISIBLE
-//        }
         holder.tv_recommend.visibility = if (position == 0) {
             View.VISIBLE
         } else {
@@ -75,7 +69,6 @@ class CustomDomainListAdapter(
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title = itemView.findViewById<TextView>(R.id.tv_title)
         var tv_recommend = itemView.findViewById<TextView>(R.id.tv_recommend)
-        var dummy1 = itemView.findViewById<View>(R.id.dummy1)
         var radio1 = itemView.findViewById<ImageView>(R.id.iv_radio1)
         var radio = itemView.findViewById<ImageView>(R.id.iv_radio)
     }

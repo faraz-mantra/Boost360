@@ -1,4 +1,4 @@
-package com.boost.marketplace.ui.details.domain
+package com.boost.marketplace.ui.popup.customdomains
 
 import com.boost.marketplace.R
 import com.boost.marketplace.databinding.PopupCallExpertCustomDomainBinding

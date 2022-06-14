@@ -7,24 +7,18 @@ import android.view.WindowManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.Result
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrderV2.GetPurchaseOrderResponseV2
-import com.boost.dbcenterapi.recycleritem.BaseRecyclerViewItem
-import com.boost.dbcenterapi.recycleritem.RecyclerItemClickListener
 import com.boost.marketplace.Adapters.HistoryOrdersParentAdapter
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityHistoryOrdersBinding
-import com.boost.marketplace.interfaces.HistoryFragmentListener
 import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
 
-class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, HistoryOrdersViewModel>(),
-    HistoryFragmentListener,
-    RecyclerItemClickListener {
-
+class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, HistoryOrdersViewModel>()
+{
 
     lateinit var historyAdapter: HistoryOrdersParentAdapter
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
@@ -50,7 +44,7 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Histo
         super.onCreateView()
 
 
-        historyAdapter = HistoryOrdersParentAdapter(ArrayList(), this)
+        historyAdapter = HistoryOrdersParentAdapter(ArrayList())
         viewModel = ViewModelProviders.of(this).get(HistoryOrdersViewModel::class.java)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -140,13 +134,4 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Histo
 
         }
     }
-
-    override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-
-    }
-
-    override fun viewHistoryItem(item: Result) {
-
-    }
-
 }

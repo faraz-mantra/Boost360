@@ -51,7 +51,6 @@ import com.boost.marketplace.ui.webview.WebViewActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.framework.analytics.SentryController
-import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 import com.google.android.material.appbar.AppBarLayout
 import com.google.gson.Gson
@@ -590,16 +589,7 @@ class FeatureDetailsActivity :
                     //startActivity(Intent(this, CallTrackingActivity::class.java))
                     }
                     addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
-
-                        val intent = Intent(
-                            applicationContext,
-                            CustomDomainActivity::class.java
-                        )
-                        intent.putExtra("expCode", experienceCode)
-                        intent.putExtra("fpid", fpid)
-                        intent.putExtra("AddonDetails", addonDetails)
-                        intent.putExtra("AddonDiscountedPrice", getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent))
-                        startActivity(intent)
+                        goToDomainSelection()
                     }
                     addonDetails?.boost_widget_key?.equals("STAFFPROFILE")!! -> {
                         val args = Bundle()
@@ -671,7 +661,23 @@ class FeatureDetailsActivity :
                     }
                 }
             }
+        } else {
+            if(addonDetails != null && addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!!){
+                goToDomainSelection()
+            }
         }
+    }
+
+    fun goToDomainSelection(){
+        val intent = Intent(
+            applicationContext,
+            CustomDomainActivity::class.java
+        )
+        intent.putExtra("expCode", experienceCode)
+        intent.putExtra("fpid", fpid)
+        intent.putExtra("bundleData", Gson().toJson(addonDetails))
+        intent.putExtra("AddonDiscountedPrice", getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent))
+        startActivity(intent)
     }
 
     override fun onResume() {
@@ -1067,11 +1073,6 @@ class FeatureDetailsActivity :
     override fun onPackageClicked(item: Bundles?, image: ImageView) {
         makeFlyAnimation(image)
     }
-
-    override fun onLearnMoreClicked(item: Bundles?) {
-        TODO("Not yet implemented")
-    }
-
 
     private fun makeFlyAnimation(targetView: ImageView) {
 

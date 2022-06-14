@@ -4,6 +4,9 @@ import android.view.View
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityEmailBinding
+import com.boost.marketplace.ui.popup.emailselection.EmailConfirmatinBottomSheet
+import com.boost.marketplace.ui.popup.emailselection.EmailHelpBottomSheet
+import com.boost.marketplace.ui.popup.emailselection.ZohoBottomSheet
 
 class EmailActivity : AppBaseActivity<ActivityEmailBinding, EmailViewModel>() {
     override fun getLayout(): Int {

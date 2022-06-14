@@ -67,7 +67,7 @@
 
 
             <TextView
-                android:id="@+id/tv_call_expert"
+                android:id="@+id/tv_cart"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"

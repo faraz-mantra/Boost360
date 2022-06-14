@@ -16,14 +16,10 @@ class HistoryOrdersViewModel: BaseViewModel() {
     private var _upiPayment: MutableLiveData<JSONObject> = MutableLiveData()
     private var _cardData: MutableLiveData<JSONObject> = MutableLiveData()
     private var _netBankingData: MutableLiveData<JSONObject> = MutableLiveData()
-
-
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
-
     val compositeDisposable = CompositeDisposable()
     var ApiService = Utils.getRetrofit().create(NewApiInterface::class.java)
-
 
     fun updatesLoader(): LiveData<Boolean> {
         return updatesLoader

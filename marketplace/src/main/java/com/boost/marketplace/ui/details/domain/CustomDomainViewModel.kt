@@ -24,12 +24,8 @@ class CustomDomainViewModel() : BaseViewModel() {
     var updatesResult: MutableLiveData<CustomDomains> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
-
-
-    val compositeDisposable = CompositeDisposable()
-
     var ApiService = Utils.getRetrofit().create(NewApiInterface::class.java)
-
+    val compositeDisposable = CompositeDisposable()
     lateinit var application: Application
     lateinit var lifecycleOwner: LifecycleOwner
 
@@ -90,7 +86,6 @@ class CustomDomainViewModel() : BaseViewModel() {
             updatesModel.extended_properties,
             updatesModel.widget_type?:""
         )
-
 
         Completable.fromAction {
             AppDatabase.getInstance(application)!!.cartDao()

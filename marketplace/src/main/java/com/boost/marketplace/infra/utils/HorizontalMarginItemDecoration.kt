@@ -1,4 +1,4 @@
-package com.boost.marketplace.ui.Compare_Plans
+package com.boost.marketplace.infra.utils
 
 import android.content.Context
 import android.graphics.Rect

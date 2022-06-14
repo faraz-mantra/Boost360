@@ -1,4 +1,4 @@
-package com.boost.marketplace.ui.My_Plan
+package com.boost.marketplace.ui.popup.myplan
 
 import android.content.Intent
 import android.view.View
@@ -6,7 +6,7 @@ import android.widget.Toast
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
 import com.boost.marketplace.databinding.BottomSheetMyplanBinding
-import com.boost.marketplace.ui.DeepLink.Companion.getScreenType
+import com.boost.marketplace.infra.utils.DeepLink.Companion.getScreenType
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.bumptech.glide.Glide
 import com.framework.base.BaseBottomSheetDialog
@@ -19,7 +19,6 @@ import es.dmoral.toasty.Toasty
 
 
 class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseViewModel>() {
-
 
     lateinit var singleAddon: FeaturesModel
 

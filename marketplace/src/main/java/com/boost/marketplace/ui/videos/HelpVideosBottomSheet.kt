@@ -2,24 +2,16 @@ package com.boost.marketplace.ui.videos
 
 import HelpVideosViewPagerAdapter
 import android.view.View
-import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PartnerZone
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PromoBanners
-import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
-import com.boost.dbcenterapi.upgradeDB.model.YoutubeVideoModel
 import com.boost.marketplace.Adapters.HelpSectionAdapter
 import com.boost.marketplace.R
 import com.boost.marketplace.databinding.BottomSheetHelpVideosBinding
-import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.home.MarketPlaceHomeViewModel
 import com.framework.base.BaseBottomSheetDialog
 import kotlinx.android.synthetic.main.bottom_sheet_help_videos.*
 
-class HelpVideosBottomSheet : BaseBottomSheetDialog<BottomSheetHelpVideosBinding, MarketPlaceHomeViewModel>(),
-  HomeListener
+class HelpVideosBottomSheet : BaseBottomSheetDialog<BottomSheetHelpVideosBinding, MarketPlaceHomeViewModel>()
 {
 
   lateinit var helpSectionAdapter: HelpSectionAdapter
@@ -109,42 +101,5 @@ class HelpVideosBottomSheet : BaseBottomSheetDialog<BottomSheetHelpVideosBinding
     videoItem = if(getArguments() != null && requireArguments().containsKey("title")) requireArguments().getString("title")!! else ""
     link = if(getArguments() != null && requireArguments().containsKey("link")) requireArguments().getString("link")!! else ""
 //    binding?.ctvVideoTitle?.text = videoItem
-  }
-
-
-  override fun onPackageClicked(item: Bundles?) {
-    TODO("Not yet implemented")
-  }
-
-  override fun onPromoBannerClicked(item: PromoBanners?) {
-    TODO("Not yet implemented")
-  }
-
-  override fun onShowHidePromoBannerIndicator(status: Boolean) {
-    TODO("Not yet implemented")
-  }
-
-  override fun onPartnerZoneClicked(item: PartnerZone?) {
-    TODO("Not yet implemented")
-  }
-
-  override fun onShowHidePartnerZoneIndicator(status: Boolean) {
-    TODO("Not yet implemented")
-  }
-
-  override fun onAddFeatureDealItemToCart(item: FeaturesModel?, minMonth: Int) {
-    TODO("Not yet implemented")
-  }
-
-  override fun onAddonsCategoryClicked(categoryType: String) {
-    TODO("Not yet implemented")
-  }
-
-  override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
-    TODO("Not yet implemented")
-  }
-
-  override fun onPackageAddToCart(item: Bundles?, image: ImageView) {
-    TODO("Not yet implemented")
   }
 }

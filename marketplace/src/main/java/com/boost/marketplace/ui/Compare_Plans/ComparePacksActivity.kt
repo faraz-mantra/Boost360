@@ -119,11 +119,8 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
         isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
         isOpenHomeFragment = intent.getBooleanExtra("isComingFromOrderConfirm", false)
         isOpenAddOnsFragment = intent.getBooleanExtra("isComingFromOrderConfirmActivation", false)
-        //user buying item directly
         widgetFeatureCode = intent.getStringExtra("buyItemKey")
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
-
-
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
         packageAdaptor = ParentCompareItemAdapter(ArrayList(), this, this, this)
@@ -147,7 +144,7 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
         initMvvm()
 
         package_back.setOnClickListener {
-            super.onBackPressed()
+            onBackPressed()
         }
 
         package_cart_icon.setOnClickListener {
@@ -202,7 +199,6 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
         }
     }
 
-
     private fun initMvvm() {
         viewModel.cartResult().observe(this, Observer {
             cartList = it
@@ -239,7 +235,6 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
         viewModel.getSpecificFeature().observe(this, Observer {
             if (it != null) {
                 for (items in it) {
-//                    Log.v("featuresHashMap", " "+ items)
                     featuresHashMap.put(items.target_business_usecase, items)
                 }
 
@@ -249,26 +244,11 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
                     shimmer_view_compare.visibility = View.GONE
                 }
                 updatePackageViewPager(upgradeList)
-//                updateBannerViewPager(upgradeList, it as ArrayList<FeaturesModel>)
             }
             val obj = JSONObject(featuresHashMap as Map<*, *>)
-//            val array = JSONArray(obj.toString())
             Log.v("featuresHashMap", " " + obj)
-//            Log.v("featuresHashMap", " "+ featureCount)
             if (featuresHashMap.size == 0) {
 
-            }
-        })
-
-        viewModel.getBundleWidgetKeys().observe(this, Observer {
-            if (it != null) {
-                val itemIds = arrayListOf<String>()
-                for (item in it) {
-                    itemIds.add(item)
-                    Log.v("getBundleWidgetKeys", " " + item)
-                }
-
-//                viewModel.loadUpdates(itemIds)
             }
         })
 
@@ -304,9 +284,7 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
                         Log.v("getkeyWidget", " " + items.name + " " + items.included_features.size)
                         val itemIds = arrayListOf<String>()
                         for (item in items.included_features!!) {
-
                             itemIds.add(item.feature_code)
-//                        viewModel.getFeatureValues(item.feature_code)
                         }
                         Log.v("getkeyWidget123", " " + itemIds.size)
                         viewModel.getFeatureValues(itemIds)
@@ -315,18 +293,6 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
                 }
             }
         })
-
-//        viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
-//            if (it) {
-//                val status = "Loading. Please wait..."
-//                progressDialog.setMessage(status)
-//                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
-//                progressDialog.show()
-//            } else {
-//                progressDialog.dismiss()
-//            }
-//        })
-
     }
 
 
@@ -468,23 +434,7 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
         }
     }
 
-    override fun onLearnMoreClicked(item: Bundles?) {
-//        val packageFragment = PackageFragment.newInstance()
-//        val args = Bundle()
-//        args.putString("bundleData", Gson().toJson(item))
-//        packageFragment.arguments = args
-//        (activity as UpgradeActivity).addFragment(packageFragment, Constants.PACKAGE_FRAGMENT)
-    }
-
-//    override fun backComparePress() {
-//        if(prefs.getCompareState() == 1){
-//            prefs.storeCompareState(0)
-//            viewModel.loadPackageUpdates()
-//        }
-//    }
-
     private fun makeFlyAnimation(targetView: ImageView) {
-
         CircleAnimationUtil().attachActivity(this).setTargetView(targetView)
             .setMoveDuration(600)
             .setDestView(package_cart_icon)
@@ -493,7 +443,6 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
                 override fun onAnimationEnd(animation: Animator) {
                     viewModel.getCartItems()
                 }
-
                 override fun onAnimationCancel(animation: Animator) {}
                 override fun onAnimationRepeat(animation: Animator) {}
             }).startAnimation()
@@ -502,13 +451,10 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
 
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-
-
     }
 
     override fun onAddonsClicked(item: FeaturesModel) {
         val intent = Intent(this, FeatureDetailsActivity::class.java)
-
         intent.putExtra("fpid", fpid)
         intent.putExtra("expCode", experienceCode)
         intent.putExtra("isDeepLink", isDeepLink)
@@ -536,7 +482,6 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
         intent.putExtra("profileUrl", profileUrl)
         intent.putExtra("itemId", item.feature_code)
         intent.putExtra("itemId", item.boost_widget_key)
-
         startActivity(intent)
     }
 
@@ -552,7 +497,6 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
             SentryController.captureException(e)
         }
     }
-
 }
 
 

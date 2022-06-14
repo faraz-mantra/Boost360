@@ -21,8 +21,9 @@ import com.boost.marketplace.Adapters.PaidAddonsAdapter
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityMyCurrentPlanBinding
-import com.boost.marketplace.interfaces.CompareBackListener
 import com.boost.marketplace.ui.History_Orders.HistoryOrdersActivity
+import com.boost.marketplace.ui.popup.myplan.MyPlanBottomSheet
+import com.boost.marketplace.ui.popup.myplan.MyPlanBottomSheetFreeAddons
 import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
@@ -33,25 +34,17 @@ import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_my_current_plan.*
 
-//import kotlinx.android.synthetic.main.activity_my_current_plan.*
-//import kotlinx.android.synthetic.main.activity_my_current_plan.all_addons_view_layout
-
 
 class MyCurrentPlanActivity :
     AppBaseActivity<ActivityMyCurrentPlanBinding, MyCurrentPlanViewModel>(),
-    CompareBackListener, com.boost.marketplace.interfaces.MyAddonsListener {
-
+    com.boost.marketplace.interfaces.MyAddonsListener {
 
     lateinit var freeAddonsAdapter: FreeAddonsAdapter
     lateinit var paidAddonsAdapter: PaidAddonsAdapter
-
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
     var fpid: String? = null
-
-    //    var totalActiveWidgetCount = 0
     var totalActiveFreeWidgetCount = 0
     var totalActivePremiumWidgetCount = 0
-
     var totalFreeItemList: List<FeaturesModel>? = null
     var totalPaidItemList: List<FeaturesModel>? = null
 
@@ -62,7 +55,6 @@ class MyCurrentPlanActivity :
         fun newInstance() = MyCurrentPlanActivity()
     }
 
-
     override fun getLayout(): Int {
         return R.layout.activity_my_current_plan
     }
@@ -71,22 +63,17 @@ class MyCurrentPlanActivity :
         return MyCurrentPlanViewModel::class.java
     }
 
-
     override fun onCreateView() {
         super.onCreateView()
-
         fpid = intent.getStringExtra("fpid")
         viewModel.setApplicationLifecycle(application, this)
-
         viewModel = ViewModelProviders.of(this)
             .get(MyCurrentPlanViewModel::class.java)
-
         progressDialog = ProgressDialog(this)
         var purchasedPack = intent.extras?.getStringArrayList("userPurchsedWidgets")
         if (purchasedPack != null) {
             purchasedPackages = purchasedPack
         }
-
         freeAddonsAdapter = FreeAddonsAdapter(this, ArrayList(), this)
         paidAddonsAdapter = PaidAddonsAdapter(this, ArrayList(), this)
 
@@ -95,7 +82,6 @@ class MyCurrentPlanActivity :
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
         }
-
         loadData()
         initMVVM()
         initializeFreeAddonsRecyclerView()
@@ -118,7 +104,7 @@ class MyCurrentPlanActivity :
             startActivity(intent)
         }
 
-           WebEngageController.trackEvent(ADDONS_MARKETPLACE_MY_ADDONS_LOADED, MY_ADDONS, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_MY_ADDONS_LOADED, MY_ADDONS, NO_EVENT_VALUE)
 
         search_icon.setOnClickListener {
             search_icon.visibility = View.GONE
@@ -204,7 +190,6 @@ class MyCurrentPlanActivity :
         }
     }
 
-
     private fun cardViewVisibilty() {
         if (binding?.expandableView?.visibility == View.GONE) {
             TransitionManager.beginDelayedTransition(binding?.cardView, AutoTransition())
@@ -222,18 +207,15 @@ class MyCurrentPlanActivity :
             viewModel.loadPurchasedItems(
                 intent.getStringExtra("fpid") ?: "",
                 "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
-
             )
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
-
     }
 
     fun getAccessToken(): String {
         return UserSessionManager(this).getAccessTokenAuth()?.barrierToken() ?: ""
     }
-
 
     @SuppressLint("FragmentLiveDataObserve")
     private fun initMVVM() {
@@ -241,10 +223,7 @@ class MyCurrentPlanActivity :
         viewModel.getActivePremiumWidgets().observe(this,androidx.lifecycle.Observer{
             totalPaidItemList = it
             totalActivePremiumWidgetCount = totalPaidItemList!!.size
-//            totalActiveWidgetCount = totalActiveFreeWidgetCount + totalActivePremiumWidgetCount
-
             val paidItemsCount = totalPaidItemList!!.size
-
             if (paidItemsCount != null && paidItemsCount > 0) {
                 if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
                     binding?.shimmerViewHistory?.stopShimmer()
@@ -254,7 +233,6 @@ class MyCurrentPlanActivity :
                 binding?.paidTitle1?.text = totalPaidItemList!!.size.toString() + " Premium add-ons"
                 binding?.paidSubtitle1?.text =
                     totalPaidItemList!!.size.toString() + " Activated, 0 Syncing and 0 needs Attention"
-//                premium_account_flag.visibility = View.VISIBLE
             } else {
                 if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
                     binding?.shimmerViewHistory?.stopShimmer()
@@ -267,9 +245,7 @@ class MyCurrentPlanActivity :
             if (totalPaidItemList != null) {
                 if (totalPaidItemList!!.size > 1) {
                     updatePaidAddonsRecycler(totalPaidItemList!!)
-//                    myaddons_view2.visibility = View.VISIBLE
                 } else {
-//                    myaddons_view2.visibility = View.INVISIBLE
                     updatePaidAddonsRecycler(totalPaidItemList!!)
                 }
             }
@@ -352,7 +328,6 @@ class MyCurrentPlanActivity :
     }
 
     override fun onPaidAddonsClicked(item: FeaturesModel) {
-
         val dialogCard = MyPlanBottomSheet()
         val args = Bundle()
         args.putString("fpid",fpid)
@@ -360,9 +335,4 @@ class MyCurrentPlanActivity :
         dialogCard.arguments = args
         dialogCard.show(this@MyCurrentPlanActivity.supportFragmentManager, MyPlanBottomSheet::class.java.name)
     }
-
-    override fun backComparePress() {
-
-    }
-
 }

@@ -21,7 +21,7 @@ import com.framework.utils.DateUtils
 
 class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
                          itemList: List<FeaturesModel>?, var myAddonsListener: MyAddonsListener
-) : RecyclerView.Adapter<PaidAddonsAdapter.upgradeViewHolder>() //, View.OnClickListener
+) : RecyclerView.Adapter<PaidAddonsAdapter.upgradeViewHolder>()
  {
 
   private var list = ArrayList<FeaturesModel>()
@@ -36,20 +36,16 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
       R.layout.item_myplan_paid_features, parent, false
     )
     context = itemView.context
-
-    //itemView.setOnClickListener(this)
-
     return upgradeViewHolder(itemView)
   }
 
   override fun getItemCount(): Int {
-    return list.size //5
+    return list.size
   }
 
   override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
     val cryptocurrencyItem = list[position]
     holder.upgradeListItem(cryptocurrencyItem)
-
     holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
     if (list.size - 1 == position) {
       holder.view.visibility = View.GONE
@@ -85,11 +81,8 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
         item.expiryDate=list.get(position).expiryDate
         item.activatedDate= list.get(position).activatedDate
         item.status=  list.get(position).status
-
-      //   arrayListOf()
       myAddonsListener.onPaidAddonsClicked(item)
     }
-
   }
 
   fun addupdates(upgradeModel: List<FeaturesModel>) {
@@ -113,10 +106,8 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
 
     fun upgradeListItem(updateModel: FeaturesModel) {
       upgradeTitle.text = updateModel.name
-
       val date: String? =DateUtils.parseDate(updateModel.expiryDate, DateUtils.FORMAT_SERVER_DATE1, DateUtils.FORMAT1_DD_MM_YYYY)
       validity2.text= "Valid till " + date
-
       Glide.with(context).load(updateModel.primary_image).into(image)
       if (updateModel.status == 1) {
         img1.setImageResource(R.drawable.ic_active)
@@ -126,5 +117,4 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
       }
     }
   }
-
 }

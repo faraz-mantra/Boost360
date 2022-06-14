@@ -1,15 +1,15 @@
-package com.boost.marketplace.ui.details.emails
+package com.boost.marketplace.ui.popup.emailselection
 
 import com.boost.marketplace.R
-import com.boost.marketplace.databinding.BottomSheetZohoBinding
+import com.boost.marketplace.databinding.BottomSheetHelpEmailBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
-class ZohoBottomSheet: BaseBottomSheetDialog<BottomSheetZohoBinding, BaseViewModel>() {
+class EmailHelpBottomSheet : BaseBottomSheetDialog<BottomSheetHelpEmailBinding, BaseViewModel>() {
 
 
     override fun getLayout(): Int {
-        return R.layout.bottom_sheet_zoho
+        return R.layout.bottom_sheet_help_email
     }
 
     override fun getViewModelClass(): Class<BaseViewModel> {

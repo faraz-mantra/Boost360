@@ -1,6 +1,5 @@
 package com.boost.marketplace.Adapters
 
-//import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import android.app.Application
 import android.content.Context
 import android.graphics.Color
@@ -49,9 +48,6 @@ class ParentCompareItemAdapter(
         viewGroup: ViewGroup,
         i: Int
     ): ParentViewHolder {
-
-        // Here we inflate the corresponding
-        // layout of the parent item
         val view = LayoutInflater
             .from(viewGroup.context)
             .inflate(
@@ -66,14 +62,7 @@ class ParentCompareItemAdapter(
         parentViewHolder: ParentViewHolder,
         position: Int
     ) {
-
-        // Create an instance of the ParentItem
-        // class for the given position
         val parentItem = list[position]
-
-        // For the created instance,
-        // get the title and set it
-        // as the text for the TextView
         parentViewHolder.PackageItemTitle.text = parentItem.name
         val data = parentItem.name
         val items = data!!.split(" ".toRegex())
@@ -95,11 +84,9 @@ class ParentCompareItemAdapter(
         for (item in parentItem.included_features) {
             listSamp.add(item.feature_code)
         }
-
         getPackageInfoFromDB(parentViewHolder, parentItem)
 
         val distinct: List<String> = LinkedHashSet(listSamp).toMutableList()
-
         val layoutManager1 = GridLayoutManager(parentViewHolder.ChildRecyclerView.context, 3)
         CompositeDisposable().add(
             AppDatabase.getInstance(Application())!!
@@ -122,7 +109,6 @@ class ParentCompareItemAdapter(
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe({
                                         if (it != null) {
-
                                             Log.v("getFeatureListTarget", " " + itemIds)
                                             val sectionLayout =
                                                 CompareItemAdapter(
@@ -134,9 +120,7 @@ class ParentCompareItemAdapter(
                                                 .setAdapter(sectionLayout)
                                             parentViewHolder.ChildRecyclerView
                                                 .setLayoutManager(layoutManager1)
-
                                         } else {
-//                                                                Toasty.error(requireContext(), "Bundle Not Available To This Account", Toast.LENGTH_LONG).show()
                                         }
                                     }, {
                                         it.printStackTrace()
@@ -146,7 +130,6 @@ class ParentCompareItemAdapter(
                     },
                     {
                         it.printStackTrace()
-
                     }
                 )
         )
@@ -215,13 +198,10 @@ class ParentCompareItemAdapter(
         val package_submit: TextView
         val tv_price: TextView
         val package_profile_image: ImageView
-
-        //        val parent_item_title: TextView
         val tv_inlcuded_add_on: TextView
         val package_profile_image_compare_new: ImageView
         val bundleDiscount: TextView
         val origCost: TextView
-
 
         init {
             PackageItemTitle = itemView
@@ -244,9 +224,6 @@ class ParentCompareItemAdapter(
                 .findViewById(
                     R.id.package_profile_image
                 )
-//            parent_item_title = itemView
-//                    .findViewById(
-//                            R.id.parent_item_title)
             tv_inlcuded_add_on = itemView
                 .findViewById(
                     R.id.tv_inlcuded_add_on
@@ -255,10 +232,8 @@ class ParentCompareItemAdapter(
                 itemView.findViewById(R.id.package_profile_image_compare_new)
             bundleDiscount = itemView.findViewById(R.id.pack_discount_tv)
             origCost = itemView.findViewById(R.id.upgrade_list_orig_cost)
-
         }
     }
-
 
     fun getPackageInfoFromDB(holder: ParentViewHolder, bundles: Bundles) {
         val prefs = SharedPrefs(activity)
@@ -266,7 +241,6 @@ class ParentCompareItemAdapter(
         for (item in bundles.included_features) {
             itemsIds.add(item.feature_code)
         }
-
         var offeredBundlePrice = 0.0
         var originalBundlePrice = 0.0
         val minMonth: Int =
@@ -298,15 +272,11 @@ class ParentCompareItemAdapter(
                                 2
                             )
                             holder.bundleDiscount.visibility = View.VISIBLE
-//                                        holder.bundlePriceLabel.visibility = View.GONE
                             holder.bundleDiscount.setText(bundles.overall_discount_percent.toString() + "% OFF")
                         } else {
                             offeredBundlePrice = originalBundlePrice
                             holder.bundleDiscount.visibility = View.GONE
-//                                        holder.bundlePriceLabel.visibility = View.VISIBLE
                         }
-
-
                         if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) {
                             holder.tv_price.setText(
                                 "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
@@ -316,7 +286,6 @@ class ParentCompareItemAdapter(
                                 )
                             )
                             holder.tv_inlcuded_add_on.setText("Includes these " + it.size + " add-ons")
-
                             if (offeredBundlePrice != originalBundlePrice) {
                                 spannableString(
                                     holder,
@@ -326,7 +295,6 @@ class ParentCompareItemAdapter(
                             } else {
                                 holder.origCost.visibility = View.GONE
                             }
-
                         } else {
                             holder.tv_price.setText(
                                 "₹" +
@@ -337,7 +305,6 @@ class ParentCompareItemAdapter(
                                     activity
                                 )
                             )
-
                             holder.tv_inlcuded_add_on.setText("Includes these " + it.size + " add-ons")
                             if (offeredBundlePrice != originalBundlePrice) {
                                 spannableString(
@@ -349,7 +316,6 @@ class ParentCompareItemAdapter(
                                 holder.origCost.visibility = View.GONE
                             }
                         }
-
                         if (bundles.primary_image != null && !bundles.primary_image!!.url.isNullOrEmpty()) {
                             Glide.with(holder.itemView.context).load(bundles.primary_image!!.url)
                                 .into(holder.package_profile_image)
@@ -372,7 +338,6 @@ class ParentCompareItemAdapter(
             "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
                 .format(value) + yearlyOrMonthlyOrEmptyValidity("", activity)
         )
-
         origCost.setSpan(
             StrikethroughSpan(),
             0,

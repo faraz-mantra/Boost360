@@ -38,13 +38,10 @@ import java.util.*
 class MarketPlaceOffersActivity :
     AppBaseActivity<ActivityMarketplaceoffersBinding, MarketPlaceOffersViewModel>() {
 
-
     var marketOffersData: MarketPlaceOffers? = null
     lateinit var marketOfferDetailAdapter: MarketOfferDetailAdapter
     lateinit var marketOfferTermsAdapter: MarketOfferTermsAdapter
     lateinit var prefs: SharedPrefs
-   // lateinit var viewModel: MarketPlaceOffersViewModel
-
 
     override fun getLayout(): Int {
         return R.layout.activity_marketplaceoffers
@@ -54,26 +51,19 @@ class MarketPlaceOffersActivity :
         return MarketPlaceOffersViewModel::class.java
     }
 
-
     override fun onCreateView() {
         super.onCreateView()
 
         marketOfferDetailAdapter = MarketOfferDetailAdapter(ArrayList())
         marketOfferTermsAdapter = MarketOfferTermsAdapter(ArrayList())
         WebEngageController.trackEvent(ADDONS_MARKETPLACE_OFFERS_LOADED, PAGE_VIEW, NO_EVENT_VALUE)
-
-//        marketOffersData = intent.extras?.getSerializable("marketOffersData") as? MarketPlaceOffers
-//        //   marketOffersData = Gson().fromJson<MarketPlaceOffers>(jsonString, object : TypeToken<MarketPlaceOffers>() {}.type)
-
         val jsonString =intent.extras?.getString("marketOffersData")
         marketOffersData = Gson().fromJson<MarketPlaceOffers>(jsonString, object : TypeToken<MarketPlaceOffers>() {}.type)
         prefs = SharedPrefs(this)
-
         viewModel = ViewModelProviders.of(this).get(MarketPlaceOffersViewModel::class.java)
-
         initializeDetailsRecycler()
         initializeTermsRecycler()
-          loadData()
+        loadData()
         initMvvm()
 
         binding?.offerTitle?.text = marketOffersData?.title
@@ -83,7 +73,6 @@ class MarketPlaceOffersActivity :
         if (marketOffersData?.extra_information != null) {
             var list: ArrayList<String> = arrayListOf()
             var listTerms: ArrayList<String> = arrayListOf()
-
             var extra = marketOffersData?.extra_information?.trim()
             extra = extra?.replace("S2coupon_code", marketOffersData!!.coupon_code)
             extra = extra?.replace("S1coupon_code", marketOffersData!!.coupon_code)
@@ -108,12 +97,9 @@ class MarketPlaceOffersActivity :
                         "listTermsBoolean",
                         " " + terms.contains("S2coupon_code") + terms.contains("S2from_date") + marketOffersData!!.coupon_code
                     )
-
                     listTerms.add(terms)
                     Log.v("listTerms", " " + terms)
                 }
-
-
             }
             updateTermsRecycler(listTerms)
 
@@ -124,11 +110,8 @@ class MarketPlaceOffersActivity :
                     list.add(extraInfo)
                     Log.v("extraInfoList", " " + extraInfo)
                 }
-
-
             }
             updateRecycler(list)
-//            marketOfferDetailAdapter = MarketOfferDetailAdapter(list, this)
         }
 
         val ss = SpannableString(
@@ -185,7 +168,6 @@ class MarketPlaceOffersActivity :
                 Toast.LENGTH_SHORT
             )
                 .show()
-
         }
         binding!!.availCouponSubmit.setOnClickListener {
 
@@ -201,7 +183,6 @@ class MarketPlaceOffersActivity :
             )
                 .show()
         }
-
     }
 
     private fun loadData() {
@@ -212,7 +193,6 @@ class MarketPlaceOffersActivity :
             SentryController.captureException(e)
         }
     }
-
 
     private fun initMvvm() {
         viewModel.marketOffersCouponResult().observe(this, androidx.lifecycle.Observer {
@@ -236,11 +216,8 @@ class MarketPlaceOffersActivity :
 
     fun getConvertedExpiryDateFormat(textDate: String): String {
         Log.v("getConvertedExpir", " " + textDate)
-//        val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-//        val output = SimpleDateFormat("dd'th' MMM yyyy ")
         val output = SimpleDateFormat("dd-MMM-yy ")
-
         var d: Date? = null
         try {
             d = input.parse(textDate)
@@ -255,7 +232,6 @@ class MarketPlaceOffersActivity :
         Log.v("updateRecycler", " " + list)
            marketOfferDetailAdapter?.addupdates(list)
        binding?.recyclerOfferDetails?.adapter = marketOfferDetailAdapter
-      //  marketOfferDetailAdapter?.notifyDataSetChanged()
     }
 
     fun initializeDetailsRecycler() {
@@ -278,9 +254,7 @@ class MarketPlaceOffersActivity :
         Log.v("updateRecycler", " " + list)
           marketOfferTermsAdapter?.addupdates(list)
         binding?.recyclerTerms?.adapter = marketOfferTermsAdapter
-     //   marketOfferDetailAdapter?.notifyDataSetChanged()
     }
-
 }
 
 

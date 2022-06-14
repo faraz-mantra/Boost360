@@ -23,7 +23,6 @@ class InvoiceActivity : AppBaseActivity<ActivityInvoiceBinding, InvoiceViewModel
     var link: String? = null
     var manager: DownloadManager? = null
 
-
     override fun getLayout(): Int {
         return R.layout.activity_invoice
     }

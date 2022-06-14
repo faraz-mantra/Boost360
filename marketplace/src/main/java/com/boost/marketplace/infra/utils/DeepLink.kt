@@ -1,4 +1,4 @@
-package com.boost.marketplace.ui
+package com.boost.marketplace.infra.utils
 
 enum class DeepLink(var screenType:String){
 
