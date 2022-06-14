@@ -370,6 +370,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 if (!autoRenewState) {
                     cartCheckoutData.put("method", "upi");  //Method specific fields
                     cartCheckoutData.put("_[flow]", "intent");
+//                    cartCheckoutData.put("upi_provider", "google_pay");
                     cartCheckoutData.put(
                             "upi_app_package_name",
                             "com.google.android.apps.nbu.paisa.user"

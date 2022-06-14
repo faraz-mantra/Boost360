@@ -1,4 +1,4 @@
-include ':razorpay-android-3.8.8'
+//include ':razorpay-android-3.8.8'
 include ':presignin'
 include ':app', ':imagepicker', ':presignup', ':framework', ':facebook', ':twitter', ':resources', ':onboarding', ':inventoryorder', ':dashboard', ':appService', ':google', ':florisboard'
 include ':messagelibrary'

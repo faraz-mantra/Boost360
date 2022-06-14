@@ -22,12 +22,9 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.SimplePageTransformerSmall
 import com.boost.cart.adapter.ZoomOutPageTransformer
-import com.boost.cart.ui.popup.CouponPopUpFragment
 import com.boost.cart.utils.Utils.priceCalculatorForYear
 import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
@@ -43,11 +40,11 @@ import com.boost.marketplace.databinding.ActivityFeatureDetailsBinding
 import com.boost.marketplace.infra.utils.Constants.Companion.IMAGE_PREVIEW_POPUP_FRAGMENT
 import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.interfaces.DetailsFragmentListener
-import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
 import com.boost.marketplace.ui.details.call_track.CallTrackingHelpBottomSheet
 import com.boost.marketplace.ui.details.call_track.RequestCallbackBottomSheet
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 import com.boost.marketplace.ui.details.domain.SelectedNumberBottomSheet
+import com.boost.marketplace.ui.details.staff.StaffManagementBottomSheet
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.webview.WebViewActivity
@@ -74,7 +71,7 @@ class FeatureDetailsActivity :
 
     val callTrackingHelpBottomSheet = CallTrackingHelpBottomSheet()
     val requestCallbackBottomSheet = RequestCallbackBottomSheet()
-
+    lateinit var staffManagementBottomSheet: StaffManagementBottomSheet
 
     //  lateinit voar localStorage: LocalStorage
     var singleWidgetKey: String? = null
@@ -92,6 +89,7 @@ class FeatureDetailsActivity :
     var accountType: String? = null
     var isDeepLink: Boolean = false
     var isOpenCardFragment: Boolean = false
+    var addedToCart: Boolean = false
 
     var deepLinkViewType: String = ""
     var deepLinkDay: Int = 7
@@ -146,6 +144,7 @@ class FeatureDetailsActivity :
         singleWidgetKey = intent.extras?.getString("itemId")
         prefs = SharedPrefs(this)
         viewModel.setApplicationLifecycle(application, this)
+        staffManagementBottomSheet = StaffManagementBottomSheet(this)
 
         initView()
     }
@@ -518,6 +517,7 @@ class FeatureDetailsActivity :
                 badge121.visibility = View.VISIBLE
                 for (item in cart_list!!) {
                     if (item.feature_code == singleWidgetKey) {
+                        addedToCart = true
                         if (bottom_box.visibility == VISIBLE) {
                             add_item_to_cart.background = ContextCompat.getDrawable(
                                 this,
@@ -539,6 +539,9 @@ class FeatureDetailsActivity :
                         break
                     }
                 }
+                if(!addedToCart){
+                    addedToCart = false
+                }
                 badgeNumber = cart_list!!.size
                 badge121.setText(badgeNumber.toString())
                 Constants.CART_VALUE = badgeNumber
@@ -547,6 +550,7 @@ class FeatureDetailsActivity :
                 }
             } else {
                 badgeNumber = 0
+                addedToCart = false
                 badge121.visibility = View.GONE
                 itemInCartStatus = false
                 loadCostToButtons()
@@ -596,6 +600,13 @@ class FeatureDetailsActivity :
                         intent.putExtra("AddonDetails", addonDetails)
                         intent.putExtra("AddonDiscountedPrice", getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent))
                         startActivity(intent)
+                    }
+                    addonDetails?.boost_widget_key?.equals("STAFFPROFILE")!! -> {
+                        val args = Bundle()
+                        args.putString("addonDetails", Gson().toJson(addonDetails))
+                        args.putBoolean("addedToCart", addedToCart)
+                        staffManagementBottomSheet.arguments = args
+                        staffManagementBottomSheet.show(supportFragmentManager, StaffManagementBottomSheet::class.java.name)
                     }
                     else -> {
                         makeFlyAnimation(addon_icon)
@@ -1047,6 +1058,10 @@ class FeatureDetailsActivity :
 //        intent.putExtra("bundleData", Gson().toJson(item))
 //        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
 //        startActivity(intent)
+    }
+
+    override fun itemAddedToCart(status: Boolean) {
+        viewModel.getCartItems()
     }
 
     override fun onPackageClicked(item: Bundles?, image: ImageView) {

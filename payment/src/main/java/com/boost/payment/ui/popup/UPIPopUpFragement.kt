@@ -82,26 +82,15 @@ class UPIPopUpFragement : DialogFragment() {
 
   fun validateVPA() {
     razorpay.isValidVpa(upi_popup_value.text.toString(), object : ValidateVpaCallback {
-      override fun onFailure() {
-        validatingStatus = false
-        WebEngageController.trackEvent(
-          ADDONS_MARKETPLACE_UPI_VALIDATION_FAILED,
-          upi_popup_value.text.toString(),
-          NO_EVENT_VALUE
-        )
-        upi_popup_submit.setText("VERIFY AND PAY")
-        invalid_UPI.visibility = View.GONE
-        Toasty.error(
-          requireContext(),
-          "Failed to validate your UPI Id. Please try again.",
-          Toast.LENGTH_LONG
-        ).show()
-      }
-
-      override fun onResponse(status: Boolean) {
+      override fun onResponse(p0: JSONObject?) {
         validatingStatus = false
         upi_popup_submit.setText("VERIFY AND PAY")
-        if (status) {
+        if(p0 == null){
+          Toasty.warning(requireContext(), "Invalid Razorpay Response. Please try again.", Toast.LENGTH_LONG)
+            .show()
+          return
+        }
+        if (p0!!.get("success") == true) {
           WebEngageController.trackEvent(
             ADDONS_MARKETPLACE_UPI_VALIDATION_SUCCESS,
             upi_popup_value.text.toString(),
@@ -120,6 +109,45 @@ class UPIPopUpFragement : DialogFragment() {
           invalid_UPI.visibility = View.VISIBLE
         }
       }
+
+      override fun onFailure() {
+        validatingStatus = false
+        WebEngageController.trackEvent(
+          ADDONS_MARKETPLACE_UPI_VALIDATION_FAILED,
+          upi_popup_value.text.toString(),
+          NO_EVENT_VALUE
+        )
+        upi_popup_submit.setText("VERIFY AND PAY")
+        invalid_UPI.visibility = View.GONE
+        Toasty.error(
+          requireContext(),
+          "Failed to validate your UPI Id. Please try again.",
+          Toast.LENGTH_LONG
+        ).show()
+      }
+
+//      override fun onResponse(status: Boolean) {
+//        validatingStatus = false
+//        upi_popup_submit.setText("VERIFY AND PAY")
+//        if (status) {
+//          WebEngageController.trackEvent(
+//            ADDONS_MARKETPLACE_UPI_VALIDATION_SUCCESS,
+//            upi_popup_value.text.toString(),
+//            NO_EVENT_VALUE
+//          )
+//          upiPaymentRazorpay()
+//          invalid_UPI.visibility = View.GONE
+//        } else {
+//          WebEngageController.trackEvent(
+//            ADDONS_MARKETPLACE_UPI_VALIDATION_FAILED_2,
+//            upi_popup_value.text.toString(),
+//            NO_EVENT_VALUE
+//          )
+//          Toasty.warning(requireContext(), "Invalid UPI Id. Please try again.", Toast.LENGTH_LONG)
+//            .show()
+//          invalid_UPI.visibility = View.VISIBLE
+//        }
+//      }
     })
   }
 
