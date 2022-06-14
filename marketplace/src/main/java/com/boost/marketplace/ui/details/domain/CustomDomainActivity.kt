@@ -3,6 +3,7 @@ package com.boost.marketplace.ui.details.domain
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -97,6 +98,28 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         }
         binding?.btnSelectDomain?.setOnClickListener {
             val dialogCard = ConfirmedCustomDomainBottomSheet()
+            val bundle = Bundle()
+            bundle.putString("fpid", fpid)
+            bundle.putString("expCode", experienceCode)
+            bundle.putString("bundleData", Gson().toJson(singleAddon))
+            bundle.putString("isDeepLink", isDeepLink.toString())
+            bundle.putString("deepLinkViewType", deepLinkViewType)
+            bundle.putString("deepLinkDay", deepLinkDay.toString())
+            bundle.putString("isOpenCardFragment", isOpenCardFragment.toString())
+            bundle.putString("accountType", accountType)
+            bundle.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+            if (email != null) {
+                intent.putExtra("email", email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                intent.putExtra("mobileNo", mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", profileUrl)
+            dialogCard.arguments = bundle
             dialogCard.show(
                 this.supportFragmentManager,
                 ConfirmedCustomDomainBottomSheet::class.java.name
