@@ -219,10 +219,26 @@
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/regular"
                     android:lineHeight="20dp"
-                    android:visibility="gone"
                     android:textColor="@color/common_text_color"
                     android:textFontWeight="400"
                     android:textSize="@dimen/txt_14sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_available_no" />
+
+                <TextView
+                    android:id="@+id/tv_other_available_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/regular"
+                    android:lineHeight="20dp"
+                    android:textColor="@color/common_text_color"
+                    android:textFontWeight="400"
+                    android:textSize="@dimen/txt_14sp"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_available_no" />
 
@@ -256,8 +272,8 @@
                     android:lineHeight="20dp"
                     android:textColor="@color/common_text_color"
                     android:textFontWeight="400"
-                    android:visibility="gone"
                     android:textSize="@dimen/txt_14sp"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/card_list" />
 
@@ -268,8 +284,8 @@
                     android:layout_margin="16dp"
                     android:background="@color/white"
                     android:elevation="8dp"
-                    android:visibility="gone"
                     android:theme="@style/Theme.MaterialComponents"
+                    android:visibility="gone"
                     app:cardCornerRadius="@dimen/pad_10dp"
                     app:layout_constraintTop_toBottomOf="@id/tv_search_result_for_related_combination">
 

@@ -22,14 +22,10 @@ import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManage
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.getAccessTokenAuth
-import com.razorpay.Razorpay
-import es.dmoral.toasty.Toasty
 import java.lang.IllegalStateException
 
 class CartActivity : AppCompatActivity() {
     private var cartFragment: CartFragment? = null
-
-    lateinit var razorpay: Razorpay
     lateinit var prefs: SharedPrefs
 
     var fpName: String? = null
@@ -65,7 +61,6 @@ class CartActivity : AppCompatActivity() {
         prefs = SharedPrefs(this)
 
         initView()
-        initRazorPay()
     }
 
     fun initView() {
@@ -86,15 +81,6 @@ class CartActivity : AppCompatActivity() {
             CartFirestoreManager.initDataCart(it.fpTag ?: "", it.fPID ?: "", clientId)
         }
 
-    }
-
-    private fun initRazorPay() {
-        try {
-            razorpay = Razorpay(this, RAZORPAY_KEY)
-        } catch (e: Exception) {
-            SentryController.captureException(e)
-            e.printStackTrace()
-        }
     }
 
     infix fun setBackListener(compareBackListener: CompareBackListener?) {
@@ -139,10 +125,6 @@ class CartActivity : AppCompatActivity() {
         val args = Bundle()
         args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
         addFragmentHome(MyAddonsFragment.newInstance(), MYADDONS_FRAGMENT, args)
-    }
-
-    fun getRazorpayObject(): Razorpay {
-        return razorpay
     }
 
     private var currentFragment: Fragment? = null

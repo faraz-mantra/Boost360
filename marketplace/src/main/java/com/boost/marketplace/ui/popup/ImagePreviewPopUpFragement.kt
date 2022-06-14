@@ -46,16 +46,6 @@ class ImagePreviewPopUpFragement : DialogFragment() {
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
     initializeViewPager()
-//        preview_left.setOnClickListener {
-//            if (currentPos >= 1) {
-//                preview_pager.setCurrentItem(currentPos - 1)
-//            }
-//        }
-//        preview_right.setOnClickListener {
-//            if (currentPos < list.size) {
-//                preview_pager.setCurrentItem(currentPos + 1)
-//            }
-//        }
     image_preview_popup_outer_layout.setOnClickListener {
       dialog!!.dismiss()
     }

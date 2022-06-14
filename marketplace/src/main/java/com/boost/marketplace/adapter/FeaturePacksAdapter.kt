@@ -19,7 +19,6 @@ import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.DetailsFragmentListener
-import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
@@ -29,8 +28,6 @@ import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.text.NumberFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 

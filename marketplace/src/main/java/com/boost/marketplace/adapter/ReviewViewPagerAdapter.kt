@@ -2,7 +2,6 @@ package com.boost.marketplace.adapter
 
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.AllTestimonial

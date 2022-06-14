@@ -1,19 +1,25 @@
-package com.boost.marketplace.ui.details.call_track
+package com.boost.marketplace.ui.popup.call_track
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.boost.cart.utils.SharedPrefs
 import com.boost.marketplace.R
-import kotlinx.android.synthetic.main.layout_speak_expert_bottomsheet.*
+import com.boost.marketplace.ui.details.FeatureDetailsActivity
+import kotlinx.android.synthetic.main.popup_request_callback_custom_domain.*
 
 
-class CallTrackingHelpBottomSheet : DialogFragment() {
+class RequestCallbackBottomSheet : DialogFragment() {
     lateinit var root: View
+    lateinit var prefs: SharedPrefs
+
 
     companion object {
-        fun newInstance() = CallTrackingHelpBottomSheet()
+        fun newInstance() = RequestCallbackBottomSheet()
     }
 
     override fun onStart() {
@@ -21,7 +27,7 @@ class CallTrackingHelpBottomSheet : DialogFragment() {
         val width = ViewGroup.LayoutParams.MATCH_PARENT
         val height = ViewGroup.LayoutParams.MATCH_PARENT
         dialog!!.window!!.setLayout(width, height)
-        dialog!!.window!!.setBackgroundDrawableResource(com.boost.cart.R.color.fullscreen_color)
+        dialog!!.window!!.setBackgroundDrawableResource(R.color.fullscreen_color)
     }
 
     override fun onCreateView(
@@ -29,22 +35,22 @@ class CallTrackingHelpBottomSheet : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        root = inflater.inflate(R.layout.layout_speak_expert_bottomsheet, container, false)
-
-
+        root = inflater.inflate(R.layout.layout_request_callback_bottomsheet_call_track, container, false)
+        prefs = SharedPrefs(activity as FeatureDetailsActivity)
         return root
     }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         back_btn.setOnClickListener {
             dismiss()
         }
         tv_call_expert.setOnClickListener {
+            val callIntent = Intent(Intent.ACTION_DIAL)
+            callIntent.data = Uri.parse("tel:" + prefs.getExpertContact())
+            startActivity(Intent.createChooser(callIntent, "Call by:"))
             dismiss()
         }
 
     }
-
 
 }

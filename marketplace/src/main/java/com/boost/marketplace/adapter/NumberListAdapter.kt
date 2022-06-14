@@ -1,23 +1,20 @@
 package com.boost.marketplace.adapter
 
 import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.Color
+
 import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
-import android.text.style.TextAppearanceSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
-import com.boost.marketplace.interfaces.HomeListener
+import com.boost.marketplace.interfaces.CallTrackListener
 import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
 import java.util.*
 
@@ -26,7 +23,7 @@ class NumberListAdapter(
     val activity: CallTrackingActivity,
     cryptoCurrencies: ArrayList<String>?,
     searchValue: String?,
-    val listener: HomeListener
+    val listener: CallTrackListener
 ) : RecyclerView.Adapter<NumberListAdapter.upgradeViewHolder>() {
 
     private var upgradeList = ArrayList<String>()
@@ -78,12 +75,6 @@ class NumberListAdapter(
             holder.title.text = upgradeList[position]
 
         }
-    }
-    fun addupdates(upgradeModel: ArrayList<String>) {
-        val initPosition = upgradeList.size
-        upgradeList.clear()
-        upgradeList.addAll(upgradeModel)
-        notifyItemRangeInserted(initPosition, upgradeList.size)
     }
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

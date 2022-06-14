@@ -5,19 +5,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.HowToUseStep
-import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.marketplace.R
-import com.boost.marketplace.interfaces.HomeListener
-import com.boost.marketplace.ui.home.MarketPlaceActivity
-import com.framework.analytics.SentryController
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-
 
 class HowToUseAdapter(
     val activity: Activity,
