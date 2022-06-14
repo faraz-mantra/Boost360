@@ -2,6 +2,7 @@ package com.appservice.model.aptsetting
 
 import android.app.Activity
 import android.text.Spanned
+import androidx.annotation.ColorRes
 import com.appservice.AppServiceApplication
 import com.appservice.R
 import com.appservice.base.getProductType
@@ -124,12 +125,17 @@ data class PaymentCollectionSetup(
 ) : Serializable {
 
   fun getTitle(): Spanned? {
-    return fromHtml("Payment gateway: <i><b>${if (paymentGateway.isNullOrEmpty().not()) "$paymentGateway" else "<font color='#${getColorInactive()}'>Pending</font>"}</b></i>")
-
+    return fromHtml("Mode selection: <i><b>${if (paymentGateway.isNullOrEmpty().not()) "$paymentGateway" else "<font color='#${getColorString()}'>Pending</font>"}</b></i>")
   }
 
   fun getSubtitle(): Spanned? {
-    return fromHtml("Bank account: <i><b>${if ((this.bankAccountNumber == null || this.bankAccountNumber == "" || isBankAccountConnected == false).not()) "$bankAccountNumber" else "<font color='#${getColorInactive()}'>Not connected</font>"}</b></i>")
+    val isEmpty = this.bankAccountNumber.isNullOrEmpty() || isBankAccountConnected == false
+    val title = if (isEmpty) "Bank account" else "Account no"
+    return fromHtml("$title: <i><b>${if (isEmpty) "<font color='#${getColorString()}'>not added</font>" else if (isPending == true) "<font color='#${getColorString(R.color.colorAccent)}'>Verification pending</font>" else "$bankAccountNumber"}</b></i>")
+  }
+
+  fun isEmptyData(): Boolean {
+    return (bankAccountNumber.isNullOrEmpty() || paymentGateway.isNullOrEmpty())
   }
 }
 
@@ -173,7 +179,11 @@ data class CatalogSetup(
   }
 
   fun getSubtitle(): Spanned? {
-    return fromHtml("Tax slab: <i><b>${if ((this.isDefaultGSTSlabSelected == false && this.defaultGSTSlab == 0.0).not()) "${this.defaultGSTSlab}" else "<font color='#${getColorInactive()}'>Not selected</font>"}</b></i>")
+    return fromHtml("Tax slab: <i><b>${if ((this.isDefaultGSTSlabSelected == false && this.defaultGSTSlab == 0.0).not()) "${this.getGstSlabInt()}%" else "<font color='#${getColorString()}'>Not selected</font>"}</b></i>")
+  }
+
+  fun isEmptyData(): Boolean {
+    return (productCategoryVerb.isNullOrEmpty() || defaultGSTSlab == null)
   }
 }
 
@@ -202,7 +212,7 @@ data class CustomerInvoicesSetup(
   }
 
   fun getTitle(): Spanned? {
-    return fromHtml("GST declaration: <i><b>${if (addedStatus()) "${getGstinTextStatus()}" else "<font color='#${getColorInactive()}'>Setup incomplete</font>"}</b></i>")
+    return fromHtml("GST declaration: <i><b>${if (getGstin().isNotEmpty()) getGstinTextStatus() else "<font color='#${getColorString()}'>Setup incomplete</font>"}</b></i>")
   }
 
   fun getGstin(): String {
@@ -222,11 +232,11 @@ data class CustomerInvoicesSetup(
   }
 
   fun getSubtitle(): Spanned? {
-    return fromHtml("PAN No: <i><b>${if (addedStatus()) "${getPanNumberStatus()}" else "<font color='#${getColorInactive()}'>Setup incomplete</font>"}</b></i>")
+    return fromHtml("PAN No: <i><b>${if (getPanNumber().isNotEmpty()) getPanNumberStatus() else "<font color='#${getColorString()}'>Setup incomplete</font>"}</b></i>")
   }
 
-  fun addedStatus(): Boolean {
-    return (getGstin().isEmpty() || getPanNumber().isEmpty()).not()
+  fun isEmptyData(): Boolean {
+    return (gSTIN.isNullOrEmpty() || panNo.isNullOrEmpty())
   }
 }
 
@@ -239,11 +249,11 @@ data class ConsultationSetup(
 ) : Serializable {
 
   fun getIsEnableText(): String {
-    return "<i><b>${if (isGeneralAppointmentEnabled == true) "Enabled" else "<font color='#${getColorInactive()}'>Not selected</font>"}</b></i>"
+    return "<i><b>${if (isGeneralAppointmentEnabled == true) "Enabled" else "<font color='#${getColorString()}'>Not selected</font>"}</b></i>"
   }
 }
 
-fun getColorInactive(): String {
-  val labelColor: Int = AppServiceApplication.instance.resources.getColor(R.color.color_error_code)
+fun getColorString(@ColorRes color: Int = R.color.color_error_code): String {
+  val labelColor: Int = AppServiceApplication.instance.resources.getColor(color)
   return String.format("%X", labelColor).substring(2)
 }

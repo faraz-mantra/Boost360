@@ -254,13 +254,15 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.APPOINTMENT_ADD_ACCOUNT_DETAILS -> {
         FragmentAddAccountDetails.newInstance()
       }
+      FragmentType.EDIT_ACCOUNT_DETAILS -> {
+        FragmentEditBankDetails.newInstance()
+      }
       FragmentType.ECOMMERCE_BUSINESS_VERIFICATION -> {
         BusinessVerificationFragment.newInstance()
       }
       FragmentType.CAMERA_VIEW -> {
         ScanPanCardV2Fragment.newInstance()
       }
-
       else -> throw IllegalFragmentTypeException()
     }
   }

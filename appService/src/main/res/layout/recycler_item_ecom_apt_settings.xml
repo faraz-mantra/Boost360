@@ -3,13 +3,14 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools">
 
-  <androidx.cardview.widget.CardView
+  <com.framework.views.customViews.CustomCardView
     android:id="@+id/main_content"
     style="@style/match_wrap"
     android:layout_height="@dimen/size_100"
     android:layout_marginBottom="@dimen/size_12"
+    android:clickable="true"
+    android:focusable="true"
     app:cardElevation="0dp">
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/catalog_setup"
@@ -61,17 +62,36 @@
           android:text="@string/pending"
           android:textColor="@color/white"
           app:textType="OVERLINE" />
+
+        <com.framework.views.customViews.CustomCardView
+          android:id="@+id/ctv_verification_pending"
+          android:layout_width="@dimen/size_20"
+          android:layout_height="@dimen/size_20"
+          android:layout_gravity="bottom|right"
+          android:layout_marginStart="@dimen/size_2"
+          android:layout_marginBottom="@dimen/size_6"
+          android:visibility="gone"
+          app:cardCornerRadius="@dimen/size_10"
+          app:cardElevation="0dp"
+          tools:visibility="visible">
+
+          <com.framework.views.customViews.CustomImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_clock_filled" />
+        </com.framework.views.customViews.CustomCardView>
+
       </FrameLayout>
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/ctv_catalog_setup_title"
         style="@style/AppointmentSetting_Text_Heading"
         android:layout_width="0dp"
-        android:layout_marginStart="@dimen/size_10"
+        android:layout_marginStart="@dimen/size_8"
         android:layout_marginTop="@dimen/size_10"
         android:fontFamily="@font/bold"
         android:text="@string/catalog_setup"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/view_end"
         app:layout_constraintStart_toEndOf="@+id/civ_catalog_setup_icon"
         app:layout_constraintTop_toTopOf="@+id/civ_catalog_setup_icon" />
 
@@ -83,7 +103,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/view_end"
         app:layout_constraintStart_toStartOf="@+id/ctv_catalog_setup_title"
         app:layout_constraintTop_toBottomOf="@id/ctv_catalog_setup_title"
         tools:text="@string/service_categories_catalog_display_text_napplicable_tax_slabs" />
@@ -95,11 +115,45 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/view_end"
         app:layout_constraintStart_toStartOf="@+id/ctv_catalog_setup_title"
         app:layout_constraintTop_toBottomOf="@id/ctv_catalog_setup_subheading"
         tools:text="@string/service_categories_catalog_display_text_napplicable_tax_slabs" />
 
+      <FrameLayout
+        android:id="@+id/view_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.framework.views.customViews.CustomButton
+          android:id="@+id/btn_edit"
+          android:layout_width="@dimen/size_60"
+          android:layout_height="@dimen/size_26"
+          android:background="@drawable/rounded_button_yellow"
+          android:clickable="false"
+          android:focusable="false"
+          android:gravity="center"
+          android:stateListAnimator="@null"
+          android:text="@string/edit_"
+          android:textAlignment="center"
+          android:textColor="@color/colorAccentLight"
+          android:visibility="gone"
+          app:textType="CAPTION"
+          tools:visibility="visible" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/img_arrow_right"
+          android:layout_width="@dimen/size_30"
+          android:layout_height="@dimen/size_30"
+          android:layout_gravity="center"
+          android:visibility="gone"
+          app:srcCompat="@drawable/ic_arrow_right"
+          app:tint="@color/colorAccentLight"
+          tools:visibility="visible" />
+      </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-  </androidx.cardview.widget.CardView>
+  </com.framework.views.customViews.CustomCardView>
 </layout>
