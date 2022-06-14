@@ -326,6 +326,8 @@ class FeatureDetailsActivity :
                 viewModel.getCartItems()
             }
             addonDetails = it
+            prefs.storeAddonDetails(addonDetails)
+
             if (addonDetails != null && addonDetails?.benefits != null) {
                 benefit_container.visibility = VISIBLE
                 val benefits = Gson().fromJson<List<String>>(

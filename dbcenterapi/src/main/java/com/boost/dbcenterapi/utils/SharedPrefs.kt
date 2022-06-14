@@ -29,6 +29,8 @@ class SharedPrefs(activity: Activity) {
   private val CART_IDS = "CART_IDS"
   private val COUPON_IDS = "COUPON_IDS"
   private val CART_COUPON_DETAILS = "CART_COUPON_DETAILS"
+  private val ADDON_DETAILS = "ADDON_DETAILS"
+
   private val VALIDITY_MONTHS = "VALIDITY_MONTHS"
 
   private val temp_cartAmount = "Cart_Orig_Price"
@@ -202,6 +204,21 @@ class SharedPrefs(activity: Activity) {
     val jsonString = pref!!.getString(CART_COUPON_DETAILS, null)
     if (jsonString != null) {
       return Gson().fromJson<CouponsModel>(jsonString, object : TypeToken<CouponsModel>() {}.type)
+    } else {
+      return null
+    }
+  }
+
+  //storing addonDetails
+  fun storeAddonDetails(addonDetails: FeaturesModel?) {
+    val couponInfo = Gson().toJson(addonDetails)
+    editor!!.putString(ADDON_DETAILS, couponInfo).apply()
+  }
+
+  fun getAddonDetails(): FeaturesModel? {
+    val jsonString = pref!!.getString(ADDON_DETAILS, null)
+    if (jsonString != null) {
+      return Gson().fromJson<FeaturesModel>(jsonString, object : TypeToken<FeaturesModel>() {}.type)
     } else {
       return null
     }

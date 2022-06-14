@@ -240,12 +240,57 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:visibility="visible">
 
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_view_banner"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:paddingTop="@dimen/_10sdp"
+           app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/data_placeholder_cart" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+
         <androidx.core.widget.NestedScrollView
             android:id="@+id/cart_main_scroller"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:overScrollMode="never"
             android:scrollbars="none"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/footer_checkout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -303,47 +348,6 @@
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cart_validity_title" />
-
-                    <com.facebook.shimmer.ShimmerFrameLayout
-                        android:id="@+id/shimmer_view_banner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@color/white"
-                        android:orientation="vertical"
-                        app:layout_constraintTop_toBottomOf="@id/cart_validity_renew_title"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        tools:visibility="visible">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <include layout="@layout/data_placeholder_cart" />
-
-                            <include layout="@layout/data_place2" />
-
-                            <include layout="@layout/data_place2" />
-
-                            <include layout="@layout/data_place2" />
-
-                            <include layout="@layout/data_place2" />
-
-                            <include layout="@layout/data_place2" />
-
-                            <include layout="@layout/data_place2" />
-
-                            <include layout="@layout/data_place2" />
-
-                            <include layout="@layout/data_place2" />
-
-
-                        </LinearLayout>
-
-                    </com.facebook.shimmer.ShimmerFrameLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/cart_package_recycler"
@@ -530,12 +534,11 @@
                     android:id="@+id/recharge_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
                     android:layout_marginTop="4dp"
-                    android:background="@drawable/rounded_curve_bg_blue"
-                    android:elevation="@dimen/_1sdp"
-                    android:padding="8dp"
                     android:visibility="visible"
+                    android:background="@drawable/rounded_curve_bg_blue"
+                    android:layout_margin="8dp"
+                    android:padding="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/validity_layout">
@@ -550,10 +553,10 @@
                         android:paddingTop="@dimen/_3sdp"
                         android:paddingEnd="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
+                        android:textSize="16sp"
+                        android:textFontWeight="600"
                         android:text="Rechargable Feature(s)"
                         android:textColor="@color/common_text_color"
-                        android:textFontWeight="600"
-                        android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -568,10 +571,10 @@
                         android:paddingTop="@dimen/_3sdp"
                         android:paddingEnd="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
+                        android:textSize="12sp"
+                        android:textFontWeight="400"
                         android:text="Requires renewal/top-up post utilisation of balance"
                         android:textColor="@color/common_text_color"
-                        android:textFontWeight="400"
-                        android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cart_recharge_title" />
 
@@ -593,12 +596,11 @@
                     android:id="@+id/onetime_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
                     android:layout_marginTop="4dp"
-                    android:background="@drawable/rounded_curve_bg_blue"
-                    android:elevation="@dimen/_1sdp"
-                    android:padding="8dp"
                     android:visibility="visible"
+                    android:background="@drawable/rounded_curve_bg_blue"
+                    android:layout_margin="8dp"
+                    android:padding="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/recharge_layout">
@@ -631,10 +633,10 @@
                         android:paddingTop="@dimen/_3sdp"
                         android:paddingEnd="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
+                        android:textSize="12sp"
+                        android:textFontWeight="400"
                         android:text="Requires renewal/top-up post utilisation of balance"
                         android:textColor="@color/common_text_color"
-                        android:textFontWeight="400"
-                        android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cart_onetime_title" />
 
@@ -1553,6 +1555,7 @@
             android:layout_gravity="bottom"
             android:background="@drawable/rect_top_bg"
             android:elevation="@dimen/_10sdp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
