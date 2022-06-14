@@ -77,6 +77,7 @@ import com.boost.dbcenterapi.upgradeDB.model.CouponsModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.payment.PaymentActivity
 import com.boost.payment.utils.observeOnce
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.framework.analytics.SentryController
 import com.framework.extensions.isVisible
 import com.framework.extensions.underlineText
@@ -203,6 +204,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
     val stateFragment = com.boost.cart.ui.popup.StateListPopFragment()
 
     private var session: UserSessionManager? = null
+    private lateinit var shimmerViewBanner:ShimmerFrameLayout
 
     private var gstInfoResult: com.boost.dbcenterapi.data.api_model.gst.Result? = null
 
@@ -238,7 +240,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             window.setStatusBarColor(getResources().getColor(R.color.common_text_color))
         }
 
-        shimmer_view_banner.startShimmer()
+        shimmerViewBanner = root.findViewById<ShimmerFrameLayout>(R.id.shimmer_view_banner)
         cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, ArrayList(), requireActivity())
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this, requireActivity())
         cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
@@ -312,13 +314,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         initMvvm1()
         viewModel.getCitiesFromAssetJson(requireActivity())
         viewModel.getStatesFromAssetJson(requireActivity())
-
-////
-//      if(gstcheck1.visibility == View.VISIBLE){
-//        updateVisibility()
-//      }else if(gstcheck.visibility == View.VISIBLE){
-//        reverseVisibility()
-//      }
 
         refund_policy.underlineText(refund_policy.text.length - 12, refund_policy.text.length - 1)
         view_details.underlineText(0, view_details.text.length - 1)
@@ -550,7 +545,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                    RENEW_POPUP_FRAGEMENT
            )*/
             if (bundles_in_cart && months_validity.text.toString().split(" ").get(0)
-                    .toInt() < package_validity_months) {
+                    .toInt() < package_validity_months
+            ) {
                 months_validity.setBackgroundResource(R.drawable.et_validity_error)
                 Toasty.error(requireContext(), "Validity is not valid", Toast.LENGTH_SHORT).show()
             } else if (et_email.text.toString().isEmpty()) {
@@ -2009,9 +2005,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     val list = arrayListOf<CartModel>()
                     renewalList.forEach { renewal -> list.add(saveRenewalData(renewal)) }
                     cartList = list
-                    if (shimmer_view_banner.isShimmerStarted) {
-                        shimmer_view_banner.stopShimmer()
-                        shimmer_view_banner.visibility = View.GONE
+                    if (shimmerViewBanner.isShimmerStarted) {
+                        shimmerViewBanner.stopShimmer()
+                        shimmerViewBanner.visibility = View.GONE
                     }
                     total_months_layout.visibility = View.GONE
                     cart_renewal_recycler.visibility = View.VISIBLE
@@ -2775,6 +2771,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         viewModel.cartResult().observe(this, Observer {
             if (it.isNullOrEmpty().not()) {
                 cartList = it as ArrayList<CartModel>
+                shimmerViewBanner.visibility = GONE
+                cart_main_scroller.visibility = VISIBLE
+                footer_checkout.visibility = VISIBLE
                 empty_cart.visibility = View.GONE
                 cart_main_layout.visibility = View.VISIBLE
                 item_count.visibility = View.VISIBLE
@@ -3375,7 +3374,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 for (i in 0 until it.size) {
                     it[i].data?.let { it1 -> couponData.addAll(it1) }
                 }
-                if(couponData.size > 0) {
+                if (couponData.size > 0) {
                     divider5.visibility = VISIBLE
                     System.out.println("CouponData" + couponData)
                     couponDataNo.clear()
@@ -3642,14 +3641,14 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
                 //When coupon is available and not been applyed
                 if (prefs.getApplyedCouponDetails() != null && !cart_applied_coupon_full_layout.isVisible()) {
-                            viewModel.getCouponRedeem(
-                                RedeemCouponRequest(
-                                    total,
-                                    prefs.getApplyedCouponDetails()!!.coupon_key,
-                                    (activity as CartActivity).fpid!!
-                                ),
-                                prefs.getApplyedCouponDetails()!!.coupon_key
-                            )
+                    viewModel.getCouponRedeem(
+                        RedeemCouponRequest(
+                            total,
+                            prefs.getApplyedCouponDetails()!!.coupon_key,
+                            (activity as CartActivity).fpid!!
+                        ),
+                        prefs.getApplyedCouponDetails()!!.coupon_key
+                    )
                 }
             }
         }

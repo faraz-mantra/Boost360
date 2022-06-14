@@ -240,12 +240,56 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:visibility="visible">
 
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_view_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="visible"
+           app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/data_placeholder_cart" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+
         <androidx.core.widget.NestedScrollView
             android:id="@+id/cart_main_scroller"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:overScrollMode="never"
             android:scrollbars="none"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/footer_checkout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -304,46 +348,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cart_validity_title" />
 
-                    <com.facebook.shimmer.ShimmerFrameLayout
-                        android:id="@+id/shimmer_view_banner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@color/white"
-                        android:orientation="vertical"
-                        app:layout_constraintTop_toBottomOf="@id/cart_validity_renew_title"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        tools:visibility="visible">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <include layout="@layout/data_placeholder_cart" />
-
-                            <include layout="@layout/data_place2" />
-
-                            <include layout="@layout/data_place2" />
-
-                            <include layout="@layout/data_place2" />
-
-                            <include layout="@layout/data_place2" />
-
-                            <include layout="@layout/data_place2" />
-
-                            <include layout="@layout/data_place2" />
-
-                            <include layout="@layout/data_place2" />
-
-                            <include layout="@layout/data_place2" />
-
-
-                        </LinearLayout>
-
-                    </com.facebook.shimmer.ShimmerFrameLayout>
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/cart_package_recycler"
                         android:layout_width="0dp"
@@ -1550,6 +1554,7 @@
             android:layout_gravity="bottom"
             android:background="@drawable/rect_top_bg"
             android:elevation="@dimen/_10sdp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">

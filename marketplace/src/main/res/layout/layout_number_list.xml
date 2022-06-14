@@ -34,6 +34,18 @@
         android:layout_marginEnd="2dp"
         android:layout_marginTop="2dp"
         />
+    <ImageView
+        android:id="@+id/iv_radio1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginTop="2dp"
+        android:visibility="gone"
+        android:src="@drawable/ic_radio1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <View
         android:layout_width="match_parent"

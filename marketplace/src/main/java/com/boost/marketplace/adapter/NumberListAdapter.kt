@@ -10,6 +10,7 @@ import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +30,8 @@ class NumberListAdapter(
     private var upgradeList = ArrayList<String>()
     private lateinit var context: Context
     private var searchItem: String? = null
+    var selectedPosition: Int = -1
+
 
     init {
         this.upgradeList = cryptoCurrencies as ArrayList<String>
@@ -75,10 +78,23 @@ class NumberListAdapter(
             holder.title.text = upgradeList[position]
 
         }
+        if (selectedPosition == position) {
+            holder.radio1.visibility =View.VISIBLE
+            holder.itemView.setBackgroundResource(R.color.colorAccent2);
+        }else {
+            holder.radio1.visibility =View.GONE
+            holder.itemView.setBackgroundResource(R.color.white);
+        }
+        holder.itemView.setOnClickListener {
+            selectedPosition = position;
+            notifyDataSetChanged();
+        }
     }
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title = itemView.findViewById<TextView>(R.id.tv_title)
+        var radio1 = itemView.findViewById<ImageView>(R.id.iv_radio1)
+        var radio = itemView.findViewById<ImageView>(R.id.iv_radio)
 
     }
 

@@ -27,7 +27,7 @@ class RequestCallbackBottomSheet : DialogFragment() {
         val width = ViewGroup.LayoutParams.MATCH_PARENT
         val height = ViewGroup.LayoutParams.MATCH_PARENT
         dialog!!.window!!.setLayout(width, height)
-        dialog!!.window!!.setBackgroundDrawableResource(R.color.fullscreen_color)
+        dialog!!.window!!.setBackgroundDrawableResource(R.color.transparent)
     }
 
     override fun onCreateView(
