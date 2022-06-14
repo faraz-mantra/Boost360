@@ -9,12 +9,11 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         app:cardCornerRadius="@dimen/size_10"
-        app:cardElevation="0.25dp"
-        app:cardMaxElevation="0.5dp"
         app:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:background="@color/white"
             android:layout_height="match_parent">
 
             <com.framework.views.customViews.CustomImageView
@@ -108,7 +107,7 @@
 
             <com.framework.views.customViews.CustomMaterialButton
                 android:id="@+id/btn_share"
-                style="?android:attr/borderlessButtonStyle"
+                style="@style/white_custom_material_button"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/size_40"
                 android:background="@color/white"
@@ -130,6 +129,7 @@
                 android:id="@+id/vw_vertical_1"
                 android:layout_width="@dimen/size_1"
                 android:layout_height="0dp"
+                android:visibility="gone"
                 android:background="@color/gray_light_1"
                 app:layout_constraintBottom_toBottomOf="@+id/btn_stats"
                 app:layout_constraintEnd_toStartOf="@+id/btn_stats"
@@ -138,10 +138,11 @@
 
             <com.framework.views.customViews.CustomMaterialButton
                 android:id="@+id/btn_stats"
-                style="?android:attr/borderlessButtonStyle"
+                style="@style/white_custom_material_button"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/size_40"
                 android:layout_marginTop="@dimen/size_1"
+                android:visibility="gone"
                 android:background="@color/white"
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/bold"

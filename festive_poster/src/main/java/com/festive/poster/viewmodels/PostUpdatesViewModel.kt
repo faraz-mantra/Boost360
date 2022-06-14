@@ -96,4 +96,8 @@ class PostUpdatesViewModel : BaseViewModel() {
   fun getPastUpdatesList(fpId: String?, clientId: String, postType:Int?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getPastUpdatesList(fpId = fpId, clientId = clientId, postType = postType).toLiveData()
   }
+
+  fun getTemplateConfig(fKey:String,floatingPointId: String?,floatingPointTag: String?): LiveData<BaseResponse> {
+    return NowFloatsRepository.getTemplateConfig(fKey,floatingPointId,floatingPointTag).toLiveData()
+  }
 }

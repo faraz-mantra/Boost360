@@ -12,7 +12,7 @@ data class PastUpdatesNewListingResponse(
 	val imageCount: Int? = null,
 
 	@field:SerializedName("floats")
-	val floats: List<PastPostItem?>? = null,
+	val floats: List<PastPostItem>? = null,
 
 	@field:SerializedName("postCount")
 	val postCount: Int? = null,
@@ -70,7 +70,8 @@ data class PastPostItem(
 
 	@field:SerializedName("tags")
 	val tags: Any? = null
-) : Serializable, AppBaseRecyclerViewItem {
+
+) :AppBaseRecyclerViewItem {
 
 	override fun getViewType(): Int {
 		return RecyclerViewItemType.PAST_UPDATE_ITEM.getLayout()

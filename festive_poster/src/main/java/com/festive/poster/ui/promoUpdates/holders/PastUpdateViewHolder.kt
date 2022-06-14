@@ -11,6 +11,11 @@ class PastUpdateViewHolder(binding: ListItemPastUpdateBinding) :
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val postItem = item as? PastPostItem
+        binding.apply {
+            //ivSocialIcon.bit = postItem.isHtmlString
+            tvSocialTitle.text = postItem?.message
+            tvPostedDate.text = postItem?.createdOn
+        }
         super.bind(position, item)
     }
 }

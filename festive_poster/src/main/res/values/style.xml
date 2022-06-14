@@ -331,4 +331,13 @@
         <item name="android:letterSpacing">0</item>
     </style>
 
+    <style name="white_custom_material_button">
+        <item name="android:background">@color/white</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:letterSpacing">0.0</item>
+    </style>
+
 </resources>
