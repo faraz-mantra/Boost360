@@ -52,22 +52,23 @@ class MatchNumberListAdapter(
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
         if (searchItem != null && searchItem!!.isNotEmpty()) {
             val spannable = SpannableString(upgradeList[position])
-            for (i in 3 until upgradeList[position].length) {
-                for(j in 0 until searchItem!!.length){
-                    if (upgradeList[position][i].equals(searchItem!![j])) {
 
+            for (i in searchItem!!.indices) {
+                for (j in 4 until upgradeList[position].length){
+                    if (upgradeList[position][j] == searchItem!![i]) {
                             spannable.setSpan(
                                 ForegroundColorSpan(ContextCompat.getColor(context, R.color.black)),
-                                i,
-                                i,
+                                j,
+                                j+1,
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                             )
                             spannable.setSpan(
                                 StyleSpan(Typeface.BOLD),
-                                i,
-                                i,
+                                j,
+                                j+1,
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                             )
+                        break
                     }
 
                 }

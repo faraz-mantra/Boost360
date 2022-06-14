@@ -1660,6 +1660,13 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
                         if (item!!.cta_web_link.contains("com.biz2.nowfloats.keyboard.home")) {
 
+                            val deepHashMap: HashMap<DynamicLinkParams, String> =
+                                DynamicLinksManager().getURILinkParams(Uri.parse(item.cta_web_link))
+//                            if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
+//                                val viewType = deepHashMap[DynamicLinkParams.viewType]
+//                                val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
+//                                deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
+//                            } else deepLinkUtil?.deepLinkPage(item.cta_web_link!!, "", false)
 
                         } else {
 
