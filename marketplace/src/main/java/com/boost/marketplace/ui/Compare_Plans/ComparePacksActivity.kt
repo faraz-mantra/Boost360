@@ -490,9 +490,11 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
         try {
             if (cartCount > 0) {
                 refreshViewPager = true
-                package_viewpager.currentItem = 2
                 viewModel.getCartItems()
             }
+//            else{
+//                package_viewpager.currentItem = 0
+//            }
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
