@@ -126,21 +126,21 @@ class CallTrackingActivity :
     fun updateAllItemBySearchValue(searchValue: String) {
         var exactMatchList: ArrayList<String> = arrayListOf()
         var everyMatchList: ArrayList<String> = arrayListOf()
-        var isMatching: Boolean = false
 
         for (number in  numberList) {
             val num = number.replace("+91 ", "").replace("-", "")
+            var isMatching: Int = 0
             for (i in searchValue.indices) {
                 if (num.contains(searchValue[i])) {
-                    isMatching = true
+                    isMatching = isMatching + 1
                     if (num.contains(searchValue)) {
-                        isMatching = false
+                        isMatching = 0
+                        break
                     }
-                    if (isMatching) {
-                        everyMatchList.add(number)
-                    }
-                    break
                 }
+            }
+            if (isMatching > 2) {
+                everyMatchList.add(number)
             }
             if (num.contains(searchValue)) {
                 exactMatchList.add(number)
