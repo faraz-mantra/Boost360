@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -115,9 +116,7 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
         if (event.getAction() == MotionEvent.ACTION_UP) {
             switch (v.getId()) {
                 case R.id.keyboard_setting_switch:
-                    if (!isInputMethodActivated()) {
-                        startActivityForResult(new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS), INPUT_METHOD_SETTINGS);
-                    }
+                    startActivityForResult(new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS), INPUT_METHOD_SETTINGS);
                     break;
                 case R.id.keyboard_switch:
                     MixPanelController.track(EventKeysWL.KEYBOARD_SWITCH_CLICKED, null);
@@ -156,6 +155,13 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
         return true;
     }
 
+    private void openAppSettings(){
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+        intent.setData(uri);
+        startActivity(intent);
+    }
+
     private void getPermissions() {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
                 || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED) {
@@ -164,6 +170,8 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
                 requestPermissions(permission, STORAGE_CODE);
 
             }
+        }else {
+            openAppSettings();
         }
     }
 

@@ -188,4 +188,8 @@ dependencies {
 
     //ExoPlayer
     api 'com.google.android.exoplayer:exoplayer:2.16.0'
+
+    //advanced webview
+    api 'com.github.delight-im:Android-AdvancedWebView:v3.2.1'
+
 }
