@@ -8,6 +8,7 @@
     style="@style/match_wrap"
     android:layout_height="@dimen/size_100"
     android:layout_marginBottom="@dimen/size_12"
+    app:cardBackgroundColor="@color/white"
     android:clickable="true"
     android:focusable="true"
     app:cardElevation="0dp">
@@ -40,6 +41,7 @@
           android:layout_gravity="center"
           android:layout_marginVertical="@dimen/size_8"
           android:layout_marginStart="@dimen/size_0"
+          android:layout_marginEnd="@dimen/size_2"
           android:src="@drawable/ic_ecom_catalog_setup" />
 
         <com.framework.views.customViews.CustomImageView
@@ -59,17 +61,18 @@
           android:backgroundTint="@color/red_apt"
           android:gravity="center"
           android:paddingHorizontal="@dimen/size_8"
+          android:layout_marginEnd="@dimen/size_2"
           android:text="@string/pending"
           android:textColor="@color/white"
           app:textType="OVERLINE" />
 
         <com.framework.views.customViews.CustomCardView
           android:id="@+id/ctv_verification_pending"
-          android:layout_width="@dimen/size_20"
-          android:layout_height="@dimen/size_20"
+          android:layout_width="@dimen/size_18"
+          android:layout_height="@dimen/size_18"
           android:layout_gravity="bottom|right"
-          android:layout_marginStart="@dimen/size_2"
-          android:layout_marginBottom="@dimen/size_6"
+          android:layout_marginStart="@dimen/size_4"
+          android:layout_marginBottom="@dimen/size_4"
           android:visibility="gone"
           app:cardCornerRadius="@dimen/size_10"
           app:cardElevation="0dp"
@@ -78,6 +81,7 @@
           <com.framework.views.customViews.CustomImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/icon_pending_failed"
             android:src="@drawable/ic_clock_filled" />
         </com.framework.views.customViews.CustomCardView>
 
