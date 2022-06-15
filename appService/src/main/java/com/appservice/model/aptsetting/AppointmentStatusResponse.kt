@@ -121,7 +121,9 @@ data class PaymentCollectionSetup(
   @field:SerializedName("BankAccountNumber")
   var bankAccountNumber: String? = null,
   @field:SerializedName("IsPending")
-  var isPending: Boolean? = null
+  var isPending: Boolean? = null,
+  @field:SerializedName("BankAccountVerificationStatus")
+  var bankAccountVerificationStatus: String? = null
 ) : Serializable {
 
   fun getTitle(): Spanned? {
@@ -131,11 +133,32 @@ data class PaymentCollectionSetup(
   fun getSubtitle(): Spanned? {
     val isEmpty = this.bankAccountNumber.isNullOrEmpty() || isBankAccountConnected == false
     val title = if (isEmpty) "Bank account" else "Account no"
-    return fromHtml("$title: <i><b>${if (isEmpty) "<font color='#${getColorString()}'>not added</font>" else if (isPending == true) "<font color='#${getColorString(R.color.colorAccent)}'>Verification pending</font>" else "$bankAccountNumber"}</b></i>")
+    return fromHtml("$title: <i><b>${if (isEmpty) "<font color='#${getColorString()}'>not added</font>" else getTestBankAccountStatus()}</b></i>")
+  }
+
+  fun getAccountStatus(): StatusSetting {
+    return StatusSetting.fromName(bankAccountVerificationStatus) ?: StatusSetting.PENDING
+  }
+
+  fun getTestBankAccountStatus(): String {
+    return when (getAccountStatus()) {
+      StatusSetting.PENDING -> "<font color='#${getColorString(R.color.colorAccent)}'>Verification pending</font>"
+      StatusSetting.FAILED -> "<font color='#${getColorString()}'>Verification failed</font>"
+      StatusSetting.VERIFIED -> "$bankAccountNumber"
+    }
+
   }
 
   fun isEmptyData(): Boolean {
     return (bankAccountNumber.isNullOrEmpty() || paymentGateway.isNullOrEmpty())
+  }
+
+  fun getBgColorUsingStatus(): Int {
+    return if (!isEmptyData() && getAccountStatus() == StatusSetting.FAILED) R.color.red_E39595 else R.color.white
+  }
+
+  fun getPendingFailedIconUsingStatus(): Int {
+    return if (!isEmptyData() && getAccountStatus() == StatusSetting.FAILED) R.drawable.ic_failed_status else R.drawable.ic_clock_filled
   }
 }
 
@@ -203,12 +226,12 @@ data class CustomerInvoicesSetup(
   var isPending: Boolean? = null
 ) : Serializable {
 
-  fun isGSTDeclarationComplete(): Boolean {
-    return GSTINVerificationStatus.equals("PENDING").not()
+  fun getGSTDeclarationComplete(): StatusSetting {
+    return StatusSetting.fromName(GSTINVerificationStatus) ?: StatusSetting.PENDING
   }
 
-  fun isPANVerificationStatus(): Boolean {
-    return PANVerificationStatus.equals("PENDING").not()
+  fun getPANVerificationStatus(): StatusSetting {
+    return StatusSetting.fromName(PANVerificationStatus) ?: StatusSetting.PENDING
   }
 
   fun getTitle(): Spanned? {
@@ -220,11 +243,19 @@ data class CustomerInvoicesSetup(
   }
 
   fun getGstinTextStatus(): String {
-    return if (isGSTDeclarationComplete()) getGstin() else "Verification pending"
+    return when (getGSTDeclarationComplete()) {
+      StatusSetting.PENDING -> "Verification pending"
+      StatusSetting.FAILED -> getGstin()
+      StatusSetting.VERIFIED -> "<font color='#${getColorString()}'>Verification failed</font>"
+    }
   }
 
   fun getPanNumberStatus(): String {
-    return if (isPANVerificationStatus()) getGstin() else "Verification pending"
+    return when (getPANVerificationStatus()) {
+      StatusSetting.PENDING -> "Verification pending"
+      StatusSetting.FAILED -> getPanNumber()
+      StatusSetting.VERIFIED -> "<font color='#${getColorString()}'>Verification failed</font>"
+    }
   }
 
   fun getPanNumber(): String {
@@ -237,6 +268,16 @@ data class CustomerInvoicesSetup(
 
   fun isEmptyData(): Boolean {
     return (gSTIN.isNullOrEmpty() || panNo.isNullOrEmpty())
+  }
+
+  fun getBgColorUsingStatus():Int{
+   return if (!isEmptyData() && (getGSTDeclarationComplete() == StatusSetting.FAILED || getPANVerificationStatus() == StatusSetting.FAILED)) {
+      R.color.red_E39595
+    } else R.color.white
+  }
+
+  fun getPendingFailedIconUsingStatus(): Int {
+    return if (!isEmptyData() && (getGSTDeclarationComplete() == StatusSetting.FAILED || getPANVerificationStatus() == StatusSetting.FAILED)) R.drawable.ic_failed_status else R.drawable.ic_clock_filled
   }
 }
 
@@ -256,4 +297,12 @@ data class ConsultationSetup(
 fun getColorString(@ColorRes color: Int = R.color.color_error_code): String {
   val labelColor: Int = AppServiceApplication.instance.resources.getColor(color)
   return String.format("%X", labelColor).substring(2)
+}
+
+enum class StatusSetting {
+  PENDING, FAILED, VERIFIED;
+
+  companion object {
+    fun fromName(name: String?): StatusSetting? = values().firstOrNull { it.name.equals(name, ignoreCase = true) }
+  }
 }

@@ -435,7 +435,7 @@
             android:id="@+id/text_gst_amount"
             style="@style/EditTextLabelStyle"
             android:fontFamily="@font/semi_bold"
-            android:text="@string/inr_1200"
+            tools:text="@string/inr_1200"
             android:textColor="@color/black_4a4a4a"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/linear_service"
