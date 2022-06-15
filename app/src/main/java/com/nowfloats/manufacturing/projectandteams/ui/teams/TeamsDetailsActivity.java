@@ -274,6 +274,7 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
                     @Override
                     public void failure(RetrofitError error) {
                         hideLoader();
+                        error.printStackTrace();
                         Methods.showSnackBarNegative(TeamsDetailsActivity.this, getString(R.string.something_went_wrong));
                     }
                 });

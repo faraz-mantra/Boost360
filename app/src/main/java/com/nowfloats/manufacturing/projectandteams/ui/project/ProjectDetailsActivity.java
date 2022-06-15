@@ -405,6 +405,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                     @Override
                     public void failure(RetrofitError error) {
                         hideLoader();
+                        error.printStackTrace();
                         Methods.showSnackBarNegative(ProjectDetailsActivity.this, getString(R.string.something_went_wrong));
                     }
                 });
