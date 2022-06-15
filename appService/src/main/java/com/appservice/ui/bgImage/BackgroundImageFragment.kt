@@ -18,6 +18,7 @@ import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.utils.WebEngageController
+import com.appservice.utils.openImagePicker
 import com.appservice.viewmodel.BackgroundImageViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -117,25 +118,11 @@ class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnDone -> openImagePicker()
+      binding?.btnDone -> openImagePicker(requireActivity(),parentFragmentManager)
     }
   }
 
-  private fun openImagePicker() {
-    //ImagePickerUtil.openPicker(this, object : ImagePickerUtil.Listener { override fun onFilePicked(filePath: String) { } })
-    val filterSheet = ImagePickerBottomSheet()
-    filterSheet.isHidePdf(true)
-    filterSheet.onClicked = { openImagePicker(it) }
-    filterSheet.show(baseActivity.supportFragmentManager, ImagePickerBottomSheet::class.java.name)
-  }
 
-  private fun openImagePicker(it: ClickType) {
-    WebEngageController.trackEvent(UPLOAD_GALLERY_IMAGE, CLICK, NO_EVENT_VALUE)
-    val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
-    ImagePicker.Builder(baseActivity).mode(type).compressLevel(ImagePicker.ComperesLevel.SOFT)
-      .directory(ImagePicker.Directory.DEFAULT).extension(ImagePicker.Extension.PNG)
-      .allowMultipleImages(false).enableDebuggingMode(true).build()
-  }
 
   override fun showProgress(title: String?, cancelable: Boolean?) {
     binding?.pbLoading?.visible()
