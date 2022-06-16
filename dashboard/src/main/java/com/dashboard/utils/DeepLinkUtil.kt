@@ -279,8 +279,10 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startAptOrderSummary(session)
         } else if (session.isService() && url.contains(deeplink_appointment_summary)) {
           baseActivity.startAptOrderSummary(session)
-        } else if (session.isRestaurant() && (url.contains(deeplink_book_table) || url.contains(deeplink_add_table_booking))) {
+        } else if (session.isRestaurant() && url.contains(deeplink_book_table)) {
           baseActivity.startBookTable(session)
+        } else if (session.isRestaurant() && url.contains(deeplink_add_table_booking)) {
+          baseActivity.startBookTable(session, true)
         } else if (url.contains(deeplink_my_add_ons)) {
           baseActivity.delayProgressShow()
           baseActivity.initiateAddonMarketplace(session, false, "myAddOns", "")
