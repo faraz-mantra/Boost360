@@ -15,8 +15,6 @@ data class OrderInitiateRequest(
   var paymentDetails: PaymentDetails? = null,
   @SerializedName("Items")
   var items: ArrayList<ItemsItem>? = null,
-  @SerializedName("TransactionCharges")
-  var transactionCharges: Double = 0.0,
   @SerializedName("GstCharges")
   var gstCharges: Double = 0.0,
   @SerializedName("BuyerDetails")
