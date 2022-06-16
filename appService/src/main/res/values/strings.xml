@@ -536,11 +536,11 @@
   <string name="refund_cancllation_privacy_policies">Refund, cancellation, privacy policies for your \ncustomers</string>
   <string name="search_settings">search settings</string>
   <string name="rename">RENAME</string>
-  <string name="bank_ifsc_code">Bank IFSC code*</string>
-  <string name="bank_name">Bank name*</string>
-  <string name="account_number_">Account number*</string>
-  <string name="name_of_the_account_holder">Name of the account holder*</string>
-  <string name="bank_branch_">Bank Branch*</string>
+  <string name="bank_ifsc_code_astrick">Bank IFSC code*</string>
+  <string name="bank_name_astrick">Bank name*</string>
+  <string name="account_number_aestrick">Account number*</string>
+  <string name="name_of_the_account_holder_astrick">Name of the account holder*</string>
+  <string name="bank_branch_astrick">Bank Branch*</string>
   <string name="why_verify_bank_account">Why verify bank account?</string>
   <string name="why_do_we_need_to_add_and_verify_your_bank_account">Why do we need to add and verify your bank account?</string>
   <string name="this_account_is_being_used_to_send_you_money_collected_from_your_customers_who_are_making_payments_on_your_boost_business_website">This account is being used to send you money collected from your customers who are making payments on your Boost Business website.</string>
@@ -656,7 +656,7 @@
   <string name="you_have_unsaved_information_do_you_still_want_to_close">You have unsaved information. Do you still want to close?</string>
   <string name="service_image_uploading_error">Service image uploading error, please try again.</string>
   <string name="account_number_required">Account number*</string>
-  <string name="confirm_account_number">Confirm account number*</string>
+  <string name="confirm_account_number_astrick">Confirm account number*</string>
   <string name="bank_ifsc_code_required">Bank IFSC code*</string>
   <string name="bank_name_required">Bank name*</string>
   <string name="account_alias">Account alias</string>
