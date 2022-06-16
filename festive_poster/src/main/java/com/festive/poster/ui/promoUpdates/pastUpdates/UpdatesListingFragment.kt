@@ -7,8 +7,8 @@ import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.Constants
 import com.festive.poster.databinding.FragmentUpdatesListingBinding
-import com.festive.poster.models.FavouriteTemplatesDetail
 import com.festive.poster.models.PosterPackTagModel
+import com.festive.poster.models.promoModele.PastCategoriesModel
 import com.festive.poster.models.promoModele.PastPostItem
 import com.festive.poster.models.promoModele.PastUpdatesNewListingResponse
 import com.festive.poster.models.response.GetTemplateViewConfigResponse
@@ -45,9 +45,13 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
     }
 
     private fun initUI() {
+        getPostCategories()
         getTemplateViewConfig()
         apiCallPastUpdates()
-        //val pastPostData = PastUpdateModel().getData(baseActivity)
+    }
+
+    private fun getPostCategories() {
+        val categoryData = PastCategoriesModel().getData(baseActivity)
     }
 
     private fun getTemplateViewConfig() {

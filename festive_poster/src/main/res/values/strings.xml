@@ -119,4 +119,9 @@
     <string name="posted_updates">Posted updates</string>
     <string name="update_details">Update details</string>
 
+    <string name="cat_0_all_updates">All updates</string>
+    <string name="cat_1_promotional_posts">Promotional posts</string>
+    <string name="cat_2_image_text">Images + Text</string>
+    <string name="cat_3_text_only">Text only</string>
+
 </resources>

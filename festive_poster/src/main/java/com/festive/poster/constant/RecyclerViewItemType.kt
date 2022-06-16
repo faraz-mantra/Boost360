@@ -29,7 +29,8 @@ enum class RecyclerViewItemType {
   TWITTER_PREVIEW_NO_IMAGE,
   VIEW_MORE_POSTER,
   PAST_UPDATE_ITEM,
-  FAV_CAT;
+  FAV_CAT,
+  PAST_POST_CATEGORIES;
 
 
   @LayoutRes
@@ -62,6 +63,7 @@ enum class RecyclerViewItemType {
       VIEW_MORE_POSTER->R.layout.layout_view_more_template
       PAST_UPDATE_ITEM->R.layout.list_item_past_update
       FAV_CAT->R.layout.list_item_fav_cat
+      PAST_POST_CATEGORIES->R.layout.list_item_past_category
 
     }
   }

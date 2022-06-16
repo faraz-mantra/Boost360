@@ -50,6 +50,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.FAV_CAT->FavPosterCatViewHolder(binding as  ListItemFavCatBinding)
 
       RecyclerViewItemType.PAST_UPDATE_ITEM->PastUpdateViewHolder(binding as ListItemPastUpdateBinding)
+      RecyclerViewItemType.PAST_POST_CATEGORIES->PastCategoryViewHolder(binding as ListItemPastCategoryBinding)
     }
   }
 
