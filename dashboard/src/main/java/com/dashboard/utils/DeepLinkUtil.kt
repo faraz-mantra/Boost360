@@ -329,7 +329,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (session.isHotel() && url.contains(deeplink_post_seasonal_offer)) {
           baseActivity.startAddSeasonalOffer(session)
         } else if (session.isHotel() && url.contains(deeplink_add_nearby_attraction)) {
-          baseActivity.startNearByView(session)
+          baseActivity.startNearByView(session, true)
         } else if (url.contains(deeplink_add_featured_image)) {
           baseActivity.startFeatureLogo(session)
         }

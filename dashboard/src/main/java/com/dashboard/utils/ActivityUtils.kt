@@ -1007,10 +1007,11 @@ fun AppCompatActivity.startListBatches(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startNearByView(session: UserSessionManager?) {
+fun AppCompatActivity.startNearByView(session: UserSessionManager?, isAdd: Boolean = false) {
   try {
     WebEngageController.trackEvent(NEAR_BY_PAGE, CLICK, TO_BE_ADDED)
     val webIntent = Intent(this, Class.forName("com.nowfloats.hotel.placesnearby.PlacesNearByActivity"))
+    webIntent.putExtra("is_add", isAdd)
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
