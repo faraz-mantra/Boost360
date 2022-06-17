@@ -70,14 +70,14 @@ class FragmentAppointmentSettings : AppBaseFragment<FragmentAppointmentSettingsB
 
   private fun getStatusData() {
     if (isFirst) showProgress()
-    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner) {
       val dataItem = it as? AppointmentStatusResponse
       if (dataItem?.isSuccess() == true && dataItem.result != null) {
-        setUpRecyclerView(dataItem.result!!.getAppointmentTilesArray())
+        setUpRecyclerView(dataItem.result!!.getAppointmentTilesArray(isDoctorClinic))
       } else showShortToast("Appointment setting data getting error!")
       isFirst = false
       hideProgress()
-    })
+    }
   }
 
   private fun filterList(newText: String?) {
@@ -116,19 +116,13 @@ class FragmentAppointmentSettings : AppBaseFragment<FragmentAppointmentSettingsB
   private fun clickActionButton(data: AppointmentStatusResponse.TilesModel) {
     when (IconType.fromName(data.icon)) {
       IconType.catalog_setup -> startFragmentActivity(FragmentType.APPOINTMENT_CATALOG_SETTINGS, bundle = Bundle().apply { putSerializable(IntentConstant.OBJECT_DATA.name, data) })
+      IconType.consultation_settings -> startFragmentActivity(FragmentType.CONSULTATION_APT_SETTINGS)
       IconType.customer_invoice_setup -> startFragmentActivity(FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE)
       IconType.payment_collection -> startFragmentActivity(FragmentType.APPOINTMENT_PAYMENT_SETTINGS)
       IconType.policies -> startFragmentActivity(FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_POLICIES)
+      IconType.business_verification->startFragmentActivity(FragmentType.ECOMMERCE_BUSINESS_VERIFICATION)
       else -> {
       }
     }
-  }
-}
-
-
-fun getProductType(category_code: String?): String {
-  return when (category_code) {
-    "SVC", "DOC", "HOS", "SPA", "SAL" -> "Services"
-    else -> "Products"
   }
 }

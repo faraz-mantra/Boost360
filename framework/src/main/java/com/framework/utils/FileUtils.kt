@@ -6,7 +6,9 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.provider.DocumentsContract
+import android.provider.OpenableColumns
 import com.framework.BaseApplication
+import com.framework.R
 import java.io.*
 
 //supported below and above android 11
@@ -186,4 +188,34 @@ object FileUtils {
     }
     return f
   }
+
+  fun Uri.getFileName(withExtension:Boolean=false): String {
+    var result: String=""
+    try {
+      if (scheme == "content") {
+        BaseApplication.instance.contentResolver.query(this, null, null, null, null)
+          .use { cursor ->
+            if (cursor != null && cursor.moveToFirst()) {
+              result = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME))
+            }
+          }
+      }
+      if (result == "") {
+        result = path?:""
+        val cut = result!!.lastIndexOf(File.separator)
+        if (cut != -1) {
+          result = result?.substring(cut + 1)
+        }
+      }
+      return if (result.isNotEmpty()&&!withExtension&&result.lastIndexOf(".")>=0) result.substring(0,result.lastIndexOf(".")) else result
+    }catch (e:Exception){
+      return "Add Book Title"
+    }
+
+  }
+
+  fun getTempFile(extension:String):File{
+    return File(BaseApplication.instance.getExternalFilesDir(null)?.path+File.separator+"temp."+extension)
+  }
 }
+

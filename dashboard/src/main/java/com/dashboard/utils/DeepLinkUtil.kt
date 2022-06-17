@@ -109,6 +109,7 @@ const val deeplink_dashboard_tab = "dashboard_tab"
 const val deeplink_website_tab = "website_tab"
 const val deeplink_enquiries_tab = "enquiries_tab"
 const val deeplink_more_tab = "more_tab"
+const val deeplink_open_business_card = "open_business_card"
 const val deeplink_owner_info = "owner_info"
 const val deeplink_festive_poster = "festive_poster"
 const val deeplink_domain_booking = "domain_booking"
@@ -122,7 +123,7 @@ const val tag_for_partners = ".nowfloats.com"
 const val VISITS_TABLE = 0
 const val VISITORS_TABLE = 1
 
-class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSessionManager,var baseFragment: Fragment) {
+class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSessionManager, var baseFragment: Fragment) {
   private val TAG = "DeepLinkUtil"
   fun deepLinkPage(url: String, buyItemKey: String, isFromRia: Boolean) {
     Log.i(TAG, "deepLinkPage: " + url)
@@ -290,7 +291,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startFestivePosterActivity(true)
         } else if (url.contains(deeplink_user_merchant_profile)) {
           baseActivity.startUserProfileDetail(session)
-        }else if (url.contains(deeplink_topper_list)) {
+        } else if (url.contains(deeplink_topper_list)) {
           baseActivity.startListToppers(session)
         } else if (url.contains(deeplink_upcoming_batch)) {
           baseActivity.startListBatches(session)
@@ -374,7 +375,8 @@ fun AppCompatActivity.shareWebsite(session: UserSessionManager) {
 }
 
 enum class DashboardTabs(var title: String, var position: Int) {
-  dashboard_tab(deeplink_dashboard_tab, 0), website_tab(deeplink_website_tab, 1), enquiries_tab(deeplink_enquiries_tab, 2), more_tab(deeplink_more_tab, 4);
+  dashboard_tab(deeplink_dashboard_tab, 0), website_tab(deeplink_website_tab, 1), enquiries_tab(deeplink_enquiries_tab, 2),
+  more_tab(deeplink_more_tab, 4), open_business_card(deeplink_open_business_card, 0);
 
   companion object {
     fun fromUrl(url: String?): DashboardTabs? = values().firstOrNull { url?.contains(it.title) == true }
