@@ -1412,6 +1412,9 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         startActivity(intent)
     }
 
+    override fun onRefreshCart() {
+    }
+
     override fun onPackageClicked(item: Bundles?) {
 
         val event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()

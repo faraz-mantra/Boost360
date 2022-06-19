@@ -45,6 +45,7 @@ import com.boost.marketplace.ui.popup.call_track.RequestCallbackBottomSheet
 import com.boost.marketplace.ui.popup.call_track.SelectedNumberBottomSheet
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
+import com.boost.marketplace.ui.popup.removeItems.RemovePackageBottomSheet
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -67,6 +68,7 @@ class FeatureDetailsActivity :
     val callTrackingHelpBottomSheet = CallTrackingHelpBottomSheet()
     val requestCallbackBottomSheet = RequestCallbackBottomSheet()
     lateinit var staffManagementBottomSheet: StaffManagementBottomSheet
+    lateinit var removePackageBottomSheet: RemovePackageBottomSheet
 
     //  lateinit voar localStorage: LocalStorage
     var singleWidgetKey: String? = null
@@ -85,11 +87,13 @@ class FeatureDetailsActivity :
     var isDeepLink: Boolean = false
     var isOpenCardFragment: Boolean = false
     var addedToCart: Boolean = false
+    var packageItem: Boolean = false
 
     var deepLinkViewType: String = ""
     var deepLinkDay: Int = 7
 
     var userPurchsedWidgets = ArrayList<String>()
+    val bundlesList = arrayListOf<BundlesModel>()
 
     lateinit var progressDialog: ProgressDialog
 
@@ -139,6 +143,7 @@ class FeatureDetailsActivity :
         prefs = SharedPrefs(this)
         viewModel.setApplicationLifecycle(application, this)
         staffManagementBottomSheet = StaffManagementBottomSheet(this)
+        removePackageBottomSheet = RemovePackageBottomSheet(this)
 
         initView()
     }
@@ -211,11 +216,21 @@ class FeatureDetailsActivity :
         }
         )
         add_item_to_cart.setOnClickListener {
-            addItemToCart()
+            if(packageItem){
+                val args = Bundle()
+                args.putString("addonName", addonDetails!!.name)
+                removePackageBottomSheet.arguments = args
+                removePackageBottomSheet.show(supportFragmentManager, RemovePackageBottomSheet::class.java.name)
+            } else addItemToCart()
         }
 
         add_item_to_cart_new.setOnClickListener {
-            addItemToCart()
+            if(packageItem){
+                val args = Bundle()
+                args.putString("addonName", addonDetails!!.name)
+                removePackageBottomSheet.arguments = args
+                removePackageBottomSheet.show(supportFragmentManager, RemovePackageBottomSheet::class.java.name)
+            } else addItemToCart()
         }
         learn_more_btn.setOnClickListener {
             learn_more_btn.visibility = View.GONE
@@ -238,36 +253,7 @@ class FeatureDetailsActivity :
             finish()
         }
         imageViewCart121.setOnClickListener {
-            val intent = Intent(
-                applicationContext,
-                CartActivity::class.java
-            )
-            intent.putExtra("fpid", fpid)
-            intent.putExtra("expCode", experienceCode)
-            intent.putExtra("isDeepLink", isDeepLink)
-            intent.putExtra("deepLinkViewType", deepLinkViewType)
-            intent.putExtra("deepLinkDay", deepLinkDay)
-            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-            intent.putExtra(
-                "accountType",
-                accountType
-            )
-            intent.putStringArrayListExtra(
-                "userPurchsedWidgets",
-                userPurchsedWidgets
-            )
-            if (email != null) {
-                intent.putExtra("email", email)
-            } else {
-                intent.putExtra("email", "ria@nowfloats.com")
-            }
-            if (mobileNo != null) {
-                intent.putExtra("mobileNo", mobileNo)
-            } else {
-                intent.putExtra("mobileNo", "9160004303")
-            }
-            intent.putExtra("profileUrl", profileUrl)
-            startActivity(intent)
+            navigateToCart()
         }
 
         widgetLearnMore.setOnClickListener {
@@ -447,7 +433,6 @@ class FeatureDetailsActivity :
 
         viewModel.bundleResult().observe(this, Observer {
             if (it != null) {
-                val bundlesList = arrayListOf<BundlesModel>()
                 for (singleBundle in it) {
                     if (singleBundle.included_features != null) {
                         val temp = Gson().fromJson<List<IncludedFeature>>(
@@ -466,32 +451,54 @@ class FeatureDetailsActivity :
             }
         })
 
-        viewModel.cartResult().observe(this, Observer
-        {
+        viewModel.cartResult().observe(this, Observer {
             cart_list = it
             itemInCartStatus = false
             if (cart_list != null && cart_list!!.size > 0) {
                 badge121.visibility = View.VISIBLE
                 for (item in cart_list!!) {
-                    if (item.feature_code == singleWidgetKey) {
-                        addedToCart = true
-                        if (bottom_box.visibility == VISIBLE) {
-                            add_item_to_cart.background = ContextCompat.getDrawable(
-                                this,
-                                R.drawable.added_to_cart_grey
-                            )
-                            add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
-                            add_item_to_cart.text = getString(R.string.added_to_cart)
-                        } else {
-                            add_item_to_cart_new.background = ContextCompat.getDrawable(
-                                this,
-                                R.drawable.added_to_cart_grey
-                            )
-                            add_item_to_cart_new.setTextColor(getResources().getColor(R.color.tv_color_BB))
-                            add_item_to_cart_new.text = getString(R.string.added_to_cart)
+                    if (item.item_type.equals("bundles")){
+                        if (bundlesList.size > 0) {
+                            for(singleBundle in bundlesList){
+                                if(singleBundle.bundle_id.equals(item.item_id)){
+                                    val includedFeatures = Gson().fromJson<List<IncludedFeature>>(
+                                        singleBundle.included_features,
+                                        object : TypeToken<List<IncludedFeature>>() {}.type
+                                    )
+                                    for(singleFeature in includedFeatures){
+                                        if(singleFeature.feature_code.equals(addonDetails!!.feature_code)){
+                                            itemInCartStatus = true
+                                            packageItem = true
+//                                            loadCostToButtons()
+                                            break
+                                        }
+                                    }
+                                    break
+                                }
+                            }
                         }
-                        itemInCartStatus = true
-                        break
+
+                    } else {
+                        if (item.feature_code == singleWidgetKey) {
+                            addedToCart = true
+                            if (bottom_box.visibility == VISIBLE) {
+                                add_item_to_cart.background = ContextCompat.getDrawable(
+                                    this,
+                                    R.drawable.added_to_cart_grey
+                                )
+                                add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
+                                add_item_to_cart.text = getString(R.string.added_to_cart)
+                            } else {
+                                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                                    this,
+                                    R.drawable.added_to_cart_grey
+                                )
+                                add_item_to_cart_new.setTextColor(getResources().getColor(R.color.tv_color_BB))
+                                add_item_to_cart_new.text = getString(R.string.added_to_cart)
+                            }
+                            itemInCartStatus = true
+                            break
+                        }
                     }
                 }
                 if(!addedToCart){
@@ -727,7 +734,7 @@ class FeatureDetailsActivity :
         try {
 
             //if the View is opened from package then hide button, price, discount and Cart icon
-            if (intent.extras != null && intent.extras!!.containsKey("packageView")) {
+            if (intent.extras != null && intent.extras!!.containsKey("packageView") ) {
                 imageViewCart121.visibility = View.INVISIBLE
                 if (bottom_box.visibility == VISIBLE) {
                     add_item_to_cart.background = ContextCompat.getDrawable(
@@ -735,16 +742,24 @@ class FeatureDetailsActivity :
                         R.drawable.grey_button_click_effect
                     )
                     add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
-                    add_item_to_cart.text = "ITEM BELONG TO PACKAGE"
-                    add_item_to_cart.isEnabled = false
+//                    if(packageItem)
+//                        add_item_to_cart.text = "ITEM BELONGS TO THE PACK IN CART"
+//                    else {
+                        add_item_to_cart.text = "ITEM BELONG TO PACKAGE"
+                        add_item_to_cart.isEnabled = false
+//                    }
                 } else {
                     add_item_to_cart_new.background = ContextCompat.getDrawable(
                         applicationContext,
                         R.drawable.grey_button_click_effect
                     )
                     add_item_to_cart_new.setTextColor(getResources().getColor(R.color.tv_color_BB))
-                    add_item_to_cart_new.text = "ITEM BELONG TO PACKAGE"
-                    add_item_to_cart_new.isEnabled = false
+//                    if(packageItem)
+//                        add_item_to_cart.text = "ITEM BELONGS TO THE PACK IN CART"
+//                    else {
+                        add_item_to_cart.text = "ITEM BELONG TO PACKAGE"
+                        add_item_to_cart_new.isEnabled = false
+//                    }
                 }
                 return
             }
@@ -997,6 +1012,43 @@ class FeatureDetailsActivity :
 
     override fun itemAddedToCart(status: Boolean) {
         viewModel.getCartItems()
+    }
+
+    override fun goToCart() {
+        navigateToCart()
+    }
+
+    fun navigateToCart(){
+        val intent = Intent(
+            applicationContext,
+            CartActivity::class.java
+        )
+        intent.putExtra("fpid", fpid)
+        intent.putExtra("expCode", experienceCode)
+        intent.putExtra("isDeepLink", isDeepLink)
+        intent.putExtra("deepLinkViewType", deepLinkViewType)
+        intent.putExtra("deepLinkDay", deepLinkDay)
+        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+        intent.putExtra(
+            "accountType",
+            accountType
+        )
+        intent.putStringArrayListExtra(
+            "userPurchsedWidgets",
+            userPurchsedWidgets
+        )
+        if (email != null) {
+            intent.putExtra("email", email)
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com")
+        }
+        if (mobileNo != null) {
+            intent.putExtra("mobileNo", mobileNo)
+        } else {
+            intent.putExtra("mobileNo", "9160004303")
+        }
+        intent.putExtra("profileUrl", profileUrl)
+        startActivity(intent)
     }
 
     private fun makeFlyAnimation(targetView: ImageView) {

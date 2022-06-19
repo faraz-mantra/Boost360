@@ -68,7 +68,9 @@ class CategorySelectorBottomSheet(val activity: Activity, val listener: Category
   }
 
   override fun onAddonsClicked(item: FeaturesModel) {
-    TODO("Not yet implemented")
+  }
+
+  override fun onRefreshCart() {
   }
 
 }

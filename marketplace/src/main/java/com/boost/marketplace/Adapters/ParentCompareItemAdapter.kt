@@ -3,6 +3,7 @@ package com.boost.marketplace.Adapters
 import android.app.Application
 import android.content.Context
 import android.graphics.Color
+import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
 import android.util.Log
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,15 +20,19 @@ import com.boost.cart.utils.Utils
 import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
+import com.boost.marketplace.ui.popup.removeItems.RemoveFeatureBottomSheet
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
 import com.framework.utils.RootUtil
+import com.google.gson.Gson
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -42,7 +48,8 @@ class ParentCompareItemAdapter(
 ) : RecyclerView.Adapter<ParentCompareItemAdapter.ParentViewHolder>() {
 
     lateinit var context: Context
-    private var cartItemId = ArrayList<String>()
+    private var cartItems = listOf<CartModel>()
+    lateinit var removeFeatureBottomSheet:RemoveFeatureBottomSheet
 
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
@@ -62,6 +69,8 @@ class ParentCompareItemAdapter(
         parentViewHolder: ParentViewHolder,
         position: Int
     ) {
+        val sameAddonsInCart = ArrayList<String>()
+        val addonsListInCart = ArrayList<String>()
         val parentItem = list[position]
         parentViewHolder.PackageItemTitle.text = parentItem.name
         val data = parentItem.name
@@ -96,6 +105,19 @@ class ParentCompareItemAdapter(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
+                        //same features available in cart
+                        for(singleItem in cartItems){
+                            for(singleFeature in it) {
+                                if (singleFeature.boost_widget_key.equals(singleItem.boost_widget_key)) {
+                                    sameAddonsInCart.add(singleFeature.name!!)
+                                    addonsListInCart.add(singleItem.item_id)
+                                }
+                            }
+                            //if there is any other bundle available remove it
+                            if(singleItem.item_type.equals("bundles")){
+                                addonsListInCart.add(singleItem.item_id)
+                            }
+                        }
                         val itemIds = java.util.ArrayList<String?>()
                         for (item in it) {
                             itemIds.add(item.feature_code)
@@ -120,7 +142,6 @@ class ParentCompareItemAdapter(
                                                 .setAdapter(sectionLayout)
                                             parentViewHolder.ChildRecyclerView
                                                 .setLayoutManager(layoutManager1)
-                                        } else {
                                         }
                                     }, {
                                         it.printStackTrace()
@@ -135,8 +156,13 @@ class ParentCompareItemAdapter(
         )
 
         var itemInCart = false
-        if (cartItemId.contains(list.get(position)._kid)) {
-            itemInCart = true
+        if (cartItems.size > 0) {
+            for(singleCartItem in cartItems){
+                if(singleCartItem.item_id.equals(list.get(position)._kid)){
+                    itemInCart = true
+                    break
+                }
+            }
         }
         if (!itemInCart) {
             parentViewHolder.package_submit.background = ContextCompat.getDrawable(
@@ -159,19 +185,26 @@ class ParentCompareItemAdapter(
         }
 
         parentViewHolder.package_submit.setOnClickListener {
-            parentViewHolder.package_submit.background = ContextCompat.getDrawable(
-                context,
-                R.drawable.button_added_to_cart
-            )
-            parentViewHolder.package_submit.setTextColor(
-                context.getResources().getColor(R.color.tv_color_BB)
-            )
-            parentViewHolder.package_submit.setText(context.getString(R.string.added_to_cart))
-            parentViewHolder.package_submit.isClickable = false
-            homeListener.onPackageClicked(
-                parentItem,
-                parentViewHolder.package_profile_image_compare_new
-            )
+            if(sameAddonsInCart.size > 0){
+                removeFeatureBottomSheet = RemoveFeatureBottomSheet(homeListener, addonsListener, parentViewHolder.package_profile_image_compare_new)
+                val args = Bundle()
+                args.putStringArrayList("addonNames", sameAddonsInCart)
+                args.putStringArrayList("addonsListInCart", addonsListInCart)
+                args.putString("packageDetails", Gson().toJson(parentItem!!))
+                removeFeatureBottomSheet.arguments = args
+                removeFeatureBottomSheet.show(activity.supportFragmentManager, RemoveFeatureBottomSheet::class.java.name)
+            }else {
+                parentViewHolder.package_submit.background = ContextCompat.getDrawable(
+                    context,
+                    R.drawable.button_added_to_cart
+                )
+                parentViewHolder.package_submit.setTextColor(
+                    context.getResources().getColor(R.color.tv_color_BB)
+                )
+                parentViewHolder.package_submit.setText(context.getString(R.string.added_to_cart))
+                parentViewHolder.package_submit.isClickable = false
+                removeOtherBundlesFromCart(addonsListInCart, parentItem, parentViewHolder.package_profile_image_compare_new )
+            }
         }
 
     }
@@ -187,8 +220,8 @@ class ParentCompareItemAdapter(
         notifyItemRangeInserted(initPosition, list.size)
     }
 
-    fun updateCartItem(cartItemId: ArrayList<String>) {
-        this.cartItemId = cartItemId
+    fun updateCartItem(cartItems: List<CartModel>) {
+        this.cartItems = cartItems
         notifyDataSetChanged()
     }
 
@@ -331,6 +364,23 @@ class ParentCompareItemAdapter(
                     }
                 )
         )
+    }
+
+    fun removeOtherBundlesFromCart(addonsListInCart: List<String>, parentItem: Bundles, imageView: ImageView){
+        Completable.fromAction {
+            AppDatabase.getInstance(Application())!!.cartDao().deleteCartItemsInList(addonsListInCart)
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnComplete {
+                homeListener.onPackageClicked(parentItem, imageView)
+                addonsListener.onRefreshCart()
+            }
+            .doOnError {
+                Toast.makeText(context, "Not able to Delete the Add-ons!!", Toast.LENGTH_LONG).show()
+                addonsListener.onRefreshCart()
+            }
+            .subscribe()
     }
 
     fun spannableString(holder: ParentViewHolder, value: Double) {

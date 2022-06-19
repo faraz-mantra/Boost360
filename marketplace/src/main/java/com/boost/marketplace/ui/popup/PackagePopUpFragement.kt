@@ -298,7 +298,9 @@ class PackagePopUpFragement : DialogFragment(),AddonsListener {
 
 
   override fun onAddonsClicked(item: FeaturesModel) {
-    TODO("Not yet implemented")
+  }
+
+  override fun onRefreshCart() {
   }
 
 }

@@ -45,6 +45,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_compare_packs.*
 import org.json.JSONObject
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, ComparePacksViewModel>(),
     CompareListener, AddonsListener,
@@ -204,15 +207,15 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
             cartList = it
             packageInCartStatus = false
             if (cartList != null && cartList!!.size > 0) {
-                val cartBundleIds = arrayListOf<String>()
-                for (item in it) {
-                    if (item.item_type.equals("bundles")) {
-                        cartBundleIds.add(item.item_id)
-                    }
-                }
+//                val cartBundleIds = arrayListOf<String>()
+//                for (item in it) {
+//                    if (item.item_type.equals("bundles")) {
+//                        cartBundleIds.add(item.item_id)
+//                    }
+//                }
                 if(refreshViewPager){
                     refreshViewPager = false
-                    packageAdaptor.updateCartItem(cartBundleIds)
+                    packageAdaptor.updateCartItem(cartList!!)
                 }
 
                 cartCount = cartList!!.size
@@ -322,7 +325,7 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
 
     }
 
-    override fun onPackageClicked(item: Bundles?, imageView: ImageView) {
+    override fun onPackageClicked(item: Bundles?, imageView: ImageView?) {
         if (item != null) {
             prefs.storeAddedPackageDesc(item.desc ?: "")
 
@@ -330,7 +333,8 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
             for (i in item.included_features) {
                 itemIds.add(i.feature_code)
             }
-            makeFlyAnimation(imageView)
+            if(imageView!=null)
+                makeFlyAnimation(imageView)
 
             CompositeDisposable().add(
                 AppDatabase.getInstance(application)!!
@@ -441,6 +445,7 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
             .setAnimationListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animation: Animator) {}
                 override fun onAnimationEnd(animation: Animator) {
+                    package_viewpager.currentItem = 0
                     viewModel.getCartItems()
                 }
                 override fun onAnimationCancel(animation: Animator) {}
@@ -485,9 +490,20 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
         startActivity(intent)
     }
 
+    override fun onRefreshCart() {
+        Timer().schedule(object : TimerTask() {
+            override fun run() {
+                package_viewpager.currentItem = 0
+                refreshViewPager = true
+                viewModel.getCartItems()
+            }
+        }, 1000)
+    }
+
     override fun onResume() {
         super.onResume()
         try {
+            package_viewpager.currentItem = 0
             if (cartCount > 0) {
                 refreshViewPager = true
                 viewModel.getCartItems()

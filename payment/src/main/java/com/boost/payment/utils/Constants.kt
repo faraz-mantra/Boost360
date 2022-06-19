@@ -13,7 +13,8 @@ class Constants {
 
         //razorpay credentials
         val RAZORPAY_KEY: String = "rzp_live_NsMLSX2HTaiEC9"
-        val RAZORPAY_SECREAT: String = "Gfq8pQyFbu5BOoY5SeT6UuQk"
+//        val RAZORPAY_SECREAT: String = "UPgGtpXJIZ9pPEqSRrw4PqV5" //new key which is in use 17 june 2022
+//        val RAZORPAY_SECREAT: String = "Gfq8pQyFbu5BOoY5SeT6UuQk" // old one
 //        val RAZORPAY_KEY: String = "rzp_test_OlLpIGwhA7bATX"
 //        val RAZORPAY_SECREAT: String = "wMa4K0UW4dPXD4ZJrkVg64mX"
 

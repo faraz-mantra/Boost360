@@ -339,4 +339,7 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
         // intent.putExtra("itemId", item!!.cta_feature_key)
         startActivity(intent)
     }
+
+    override fun onRefreshCart() {
+    }
 }

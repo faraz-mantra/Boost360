@@ -298,6 +298,9 @@ class BrowseFeaturesActivity :
         startActivity(intent)
     }
 
+    override fun onRefreshCart() {
+    }
+
     override fun onCategoryClicked(item: String) {
         categorySelectorBottomSheet.dismiss()
         trend_title.setText(item)

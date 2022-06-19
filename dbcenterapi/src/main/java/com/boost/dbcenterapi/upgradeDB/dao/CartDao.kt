@@ -33,6 +33,9 @@ interface CartDao {
   @Query("DELETE FROM Cart WHERE item_id=:itemId")
   fun deleteCartItem(vararg itemId: String)
 
+  @Query("DELETE FROM Cart WHERE item_id IN (:list)")
+  fun deleteCartItemsInList(list: List<String>)
+
   @Query("SELECT * FROM Cart WHERE feature_code IN (:list)")
   fun getAllCartItemsInList(list: List<String>): Single<List<CartModel>>
 
