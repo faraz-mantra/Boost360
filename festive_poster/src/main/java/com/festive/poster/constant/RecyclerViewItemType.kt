@@ -30,7 +30,9 @@ enum class RecyclerViewItemType {
   VIEW_MORE_POSTER,
   PAST_UPDATE_ITEM,
   FAV_CAT,
-  PAST_POST_CATEGORIES;
+  PAST_POST_CATEGORIES,
+  PAST_TAGS,
+  PAST_SOCIAL_ICON_LIST_ITEM;
 
 
   @LayoutRes
@@ -64,7 +66,8 @@ enum class RecyclerViewItemType {
       PAST_UPDATE_ITEM->R.layout.list_item_past_update
       FAV_CAT->R.layout.list_item_fav_cat
       PAST_POST_CATEGORIES->R.layout.list_item_past_category
-
+      PAST_TAGS->R.layout.list_item_past_tags
+      PAST_SOCIAL_ICON_LIST_ITEM->R.layout.list_item_social_icon
     }
   }
 }

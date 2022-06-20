@@ -6,21 +6,30 @@ import com.boost.dbcenterapi.utils.observeOnce
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.Constants
+import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.FragmentUpdatesListingBinding
 import com.festive.poster.models.PosterPackTagModel
-import com.festive.poster.models.promoModele.PastCategoriesModel
-import com.festive.poster.models.promoModele.PastPostItem
-import com.festive.poster.models.promoModele.PastUpdatesNewListingResponse
+import com.festive.poster.models.promoModele.*
 import com.festive.poster.models.response.GetTemplateViewConfigResponse
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.festive.poster.viewmodels.PostUpdatesViewModel
+import com.framework.extensions.gone
+import com.framework.extensions.visible
 import com.framework.pref.clientId
+import com.framework.utils.ContentSharing
 
 class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, PostUpdatesViewModel>(), RecyclerItemClickListener {
 
-    var pastPostListing = ArrayList<PastPostItem>()
+    private var pastPostListing = ArrayList<PastPostItem>()
+    private lateinit var categoryDataList:ArrayList<PastCategoriesModel>
+    private lateinit var postCategoryAdapter:AppBaseRecyclerViewAdapter<PastCategoriesModel>
+    private lateinit var pastPostListingAdapter:AppBaseRecyclerViewAdapter<PastPostItem>
+    private lateinit var tagListAdapter:AppBaseRecyclerViewAdapter<PastTagModel>
+    var postType: Int = 0
+    var tagArray:MutableList<String> = mutableListOf()
+    lateinit var tagListRequest:TagListRequest
 
     companion object {
         @JvmStatic
@@ -45,13 +54,18 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
     }
 
     private fun initUI() {
-        getPostCategories()
         getTemplateViewConfig()
+        getPostCategories()
+
+        pastPostListingAdapter = AppBaseRecyclerViewAdapter(baseActivity, pastPostListing, this)
+        binding.rvPostListing.adapter = pastPostListingAdapter
         apiCallPastUpdates()
     }
 
     private fun getPostCategories() {
-        val categoryData = PastCategoriesModel().getData(baseActivity)
+        categoryDataList = PastCategoriesModel().getData(baseActivity)
+        postCategoryAdapter = AppBaseRecyclerViewAdapter(baseActivity, categoryDataList, this)
+        binding.rvFilterCategory.adapter = postCategoryAdapter
     }
 
     private fun getTemplateViewConfig() {
@@ -60,30 +74,47 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
                 val response = it as? GetTemplateViewConfigResponse
                 response?.let {
                     val tagArray = prepareTagForApi(response.Result.allTemplates.tags)
-
+                    tagListAdapter = AppBaseRecyclerViewAdapter(baseActivity, tagArray, this)
+                    binding.rvFilterSubCategory.adapter = tagListAdapter
                 }
 
             }
     }
 
-    private fun prepareTagForApi(tags: List<PosterPackTagModel>): ArrayList<String> {
-        val list = ArrayList<String>()
+    private fun prepareTagForApi(tags: List<PosterPackTagModel>): ArrayList<PastTagModel> {
+        val list = ArrayList<PastTagModel>()
         tags.forEach {
-            list.add(it.tag)
+            list.add(PastTagModel(it.description, it.icon, it.name, it.tag))
         }
         return list
     }
 
     private fun apiCallPastUpdates() {
-        viewModel?.getPastUpdatesList(clientId = clientId, fpId = sessionLocal.fPID, postType = 0)
+        viewModel?.getPastUpdatesListV6(clientId = clientId, fpId = sessionLocal.fPID, postType = postType, tagListRequest = TagListRequest(tagArray))
             ?.observeOnce( viewLifecycleOwner, {it ->
                 if (it.isSuccess()){
                     it as PastUpdatesNewListingResponse
 
                     it.floats?.let { it1 ->
-                        pastPostListing.addAll(it1)
-                        val adapter = AppBaseRecyclerViewAdapter(baseActivity, pastPostListing, this)
-                        binding.rvPostListing.adapter = adapter
+                        if (it1.isNullOrEmpty()){
+                            binding.tvNoPost.visible()
+                            binding.rvPostListing.gone()
+                        }else {
+                            binding.tvNoPost.gone()
+                            binding.rvPostListing.visible()
+                            pastPostListing.clear()
+                            pastPostListing.addAll(it1)
+                            pastPostListingAdapter.notifyDataSetChanged()
+                        }
+
+                        //Setting Category Counts
+                        if (categoryDataList.isNotEmpty()) {
+                            categoryDataList[0].categoryCount = it.totalCount ?: 0
+                            categoryDataList[1].categoryCount = it.postCount ?: 0
+                            categoryDataList[2].categoryCount = it.imageCount ?: 0
+                            categoryDataList[3].categoryCount = it.textCount ?: 0
+                            postCategoryAdapter.notifyItemRangeChanged(0, 4)
+                        }
                     }
 
                 }
@@ -93,5 +124,30 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+        when (actionType) {
+            RecyclerViewActionType.PAST_CATEGORY_CLICKED.ordinal -> {
+                val pastCategoriesModel = item as PastCategoriesModel
+                postType = pastCategoriesModel.postType
+                categoryDataList
+                postCategoryAdapter.notifyDataSetChanged()
+                apiCallPastUpdates()
+            }
+            RecyclerViewActionType.PAST_TAG_CLICKED.ordinal -> {
+                item as PastTagModel
+                if (tagArray.contains(item.tag))
+                    tagArray.remove(item.tag)
+                else
+                    tagArray.add(item.tag)
+                tagListAdapter.notifyDataSetChanged()
+                apiCallPastUpdates()
+            }
+            RecyclerViewActionType.PAST_SHARE_BUTTON_CLICKED.ordinal -> {
+                val pastPostItem = item as PastPostItem
+                ContentSharing.share(activity = baseActivity, shareText = pastPostItem.message?:"", imageUri = pastPostItem.imageUri?:"")
+            }
+            RecyclerViewActionType.PAST_REUSE_BUTTON_CLICKED.ordinal -> {
+
+            }
+        }
     }
 }

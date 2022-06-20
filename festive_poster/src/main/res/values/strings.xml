@@ -123,5 +123,9 @@
     <string name="cat_1_promotional_posts">Promotional posts</string>
     <string name="cat_2_image_text">Images + Text</string>
     <string name="cat_3_text_only">Text only</string>
+    <string name="posted_on">Posted on</string>
+    <string name="no_posts_available">No posts available!</string>
+    <string name="reuse">Reuse</string>
+    <string name="stats">Stats</string>
 
 </resources>

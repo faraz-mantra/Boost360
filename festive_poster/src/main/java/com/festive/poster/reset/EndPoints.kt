@@ -41,6 +41,7 @@ object EndPoints {
 
     const val GET_PAST_UPDATES_LIST = "discover/v1/floatingPoint/bizFloats"
     const val GET_PAST_UPDATES_LIST_V5 = "discover/v5/floatingPoint/bizFloats"
+    const val GET_PAST_UPDATES_LIST_V6 = "discover/v6/floatingPoint/bizFloats"
 
 
 }

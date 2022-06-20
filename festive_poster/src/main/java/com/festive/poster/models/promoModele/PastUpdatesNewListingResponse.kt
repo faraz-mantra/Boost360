@@ -25,6 +25,7 @@ data class PastUpdatesNewListingResponse(
 
 	@field:SerializedName("moreFloatsAvailable")
 	val moreFloatsAvailable: Boolean? = null
+
 ) : BaseResponse()
 
 data class Extradetails(
@@ -69,7 +70,7 @@ data class PastPostItem(
 	val htmlString: Any? = null,
 
 	@field:SerializedName("tags")
-	val tags: Any? = null
+	val tags: String? = null
 
 ) :AppBaseRecyclerViewItem {
 

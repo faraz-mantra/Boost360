@@ -16,25 +16,35 @@
             android:background="@color/white"
             android:layout_height="match_parent">
 
-            <com.framework.views.customViews.CustomImageView
-                android:id="@+id/iv_social_icon"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/icon_card"
                 android:layout_width="@dimen/size_71"
                 android:layout_height="@dimen/size_71"
+                app:cardElevation="@dimen/size_4"
+                android:visibility="visible"
+                app:cardCornerRadius="@dimen/size_4"
                 android:layout_marginTop="@dimen/size_15"
-                android:src="@drawable/demo_past_update"
                 app:layout_constraintStart_toEndOf="@+id/guide_start"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0">
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/iv_social_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/demo_past_update" />
+            </androidx.cardview.widget.CardView>
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tv_offer_tag"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/size_20"
                 android:layout_margin="@dimen/size_3"
                 android:background="@drawable/ic_green_offer_bg_curved"
                 android:fontFamily="@font/semi_bold"
                 android:gravity="center"
                 android:paddingHorizontal="@dimen/size_8"
+                android:visibility="gone"
                 android:paddingVertical="@dimen/size_4"
                 android:textColor="@color/green_219653"
                 android:textSize="@dimen/text_10"
@@ -47,28 +57,38 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_12"
+                android:layout_marginTop="@dimen/size_30"
                 android:fontFamily="@font/regular_medium"
                 android:includeFontPadding="false"
-                android:text="Black friday sale upto 50% discount on our post selected merchandise, only at Smiley Dental Clinic.
-#dentalcare  #book  #appointments"
+                android:maxLines="4"
                 android:textColor="@color/black_4a4a4a"
                 android:textSize="@dimen/text_11"
                 app:layout_constraintEnd_toStartOf="@+id/guide_end"
-                app:layout_constraintStart_toEndOf="@+id/iv_social_icon"
-                app:layout_constraintTop_toBottomOf="@+id/tv_offer_tag" />
+                app:layout_constraintStart_toEndOf="@+id/icon_card"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Black friday sale upto 50% discount on our post selected merchandise, only at Smiley Dental Clinic. #dentalcare  #book  #appointmentsBlack friday sale upto 50% discount on our post sBlack friday sale upto 50% discount on our post sBlack friday sale upto 50% discount on our post sBlack friday sale upto 50% discount on our post s" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier_cards_top_past"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/size_18"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="tv_social_title, icon_card"/>
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tv_posted_on"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_13"
+                android:layout_marginTop="@dimen/size_18"
                 android:fontFamily="@font/semi_bold"
                 android:includeFontPadding="false"
+                android:text="@string/posted_on"
                 android:textColor="@color/grey_777777"
                 android:textSize="@dimen/text_10"
                 app:layout_constraintStart_toEndOf="@id/guide_start"
-                app:layout_constraintTop_toBottomOf="@+id/iv_social_icon"
-                tools:text="Posted on" />
+                app:layout_constraintTop_toBottomOf="@+id/barrier_cards_top_past" />
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tv_posted_date"
@@ -84,6 +104,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_posted_on" />
 
             <com.framework.views.viewgroups.BaseRecyclerView
+                android:id="@+id/rv_social_logo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_8"
@@ -105,86 +126,114 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_posted_date" />
 
-            <com.framework.views.customViews.CustomMaterialButton
-                android:id="@+id/btn_share"
-                style="@style/white_custom_material_button"
-                android:layout_width="0dp"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/share_wrapper"
                 android:layout_height="@dimen/size_40"
-                android:background="@color/white"
+                android:layout_width="0dp"
                 android:backgroundTint="@color/white"
-                android:fontFamily="@font/bold"
+                android:orientation="horizontal"
                 android:gravity="center"
-                android:textAllCaps="false"
-                android:textColor="@color/colorAccentLight"
-                android:textSize="@dimen/text_12"
-                app:elevation="0dp"
-                app:icon="@drawable/ic_share_yellow"
-                app:layout_constraintBottom_toBottomOf="@+id/btn_stats"
+                app:layout_constraintBottom_toBottomOf="@+id/stats_wrapper"
                 app:layout_constraintEnd_toStartOf="@+id/vw_vertical_1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/btn_stats"
-                tools:text="Share" />
+                app:layout_constraintTop_toTopOf="@+id/stats_wrapper">
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="@dimen/size_16"
+                    android:layout_height="@dimen/size_16"
+                    android:src="@drawable/ic_share_yellow"/>
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_6"
+                    android:fontFamily="@font/bold"
+                    android:letterSpacing="0"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_12"
+                    android:text="@string/share"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <View
                 android:id="@+id/vw_vertical_1"
                 android:layout_width="@dimen/size_1"
                 android:layout_height="0dp"
-                android:visibility="gone"
                 android:background="@color/gray_light_1"
-                app:layout_constraintBottom_toBottomOf="@+id/btn_stats"
-                app:layout_constraintEnd_toStartOf="@+id/btn_stats"
-                app:layout_constraintStart_toEndOf="@+id/btn_share"
-                app:layout_constraintTop_toTopOf="@+id/btn_stats" />
+                app:layout_constraintBottom_toBottomOf="@+id/reuse_wrapper"
+                app:layout_constraintEnd_toStartOf="@+id/reuse_wrapper"
+                app:layout_constraintStart_toEndOf="@+id/share_wrapper"
+                app:layout_constraintTop_toTopOf="@+id/reuse_wrapper" />
 
-            <com.framework.views.customViews.CustomMaterialButton
-                android:id="@+id/btn_stats"
-                style="@style/white_custom_material_button"
-                android:layout_width="0dp"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/stats_wrapper"
                 android:layout_height="@dimen/size_40"
-                android:layout_marginTop="@dimen/size_1"
-                android:visibility="gone"
-                android:background="@color/white"
+                android:layout_width="0dp"
                 android:backgroundTint="@color/white"
-                android:fontFamily="@font/bold"
+                android:visibility="gone"
+                android:orientation="horizontal"
                 android:gravity="center"
-                android:textAllCaps="false"
-                android:textColor="@color/colorAccentLight"
-                android:textSize="@dimen/text_12"
-                app:icon="@drawable/ic_stats_yellow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/vw_vertical_2"
                 app:layout_constraintStart_toEndOf="@+id/vw_vertical_1"
-                app:layout_constraintTop_toBottomOf="@+id/vw_horizontal"
-                tools:text="Stats" />
+                app:layout_constraintTop_toBottomOf="@+id/vw_horizontal">
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="@dimen/size_18"
+                    android:layout_height="@dimen/size_18"
+                    android:src="@drawable/ic_stats_yellow"/>
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_6"
+                    android:fontFamily="@font/bold"
+                    android:letterSpacing="0"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_12"
+                    android:text="@string/stats"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <View
                 android:id="@+id/vw_vertical_2"
                 android:layout_width="@dimen/size_1"
                 android:layout_height="0dp"
+                android:visibility="gone"
                 android:background="@color/gray_light_1"
-                app:layout_constraintBottom_toBottomOf="@+id/btn_stats"
-                app:layout_constraintEnd_toStartOf="@+id/bt_reuse"
-                app:layout_constraintStart_toEndOf="@+id/btn_stats"
-                app:layout_constraintTop_toTopOf="@+id/btn_stats" />
+                app:layout_constraintBottom_toBottomOf="@+id/stats_wrapper"
+                app:layout_constraintEnd_toStartOf="@+id/reuse_wrapper"
+                app:layout_constraintStart_toEndOf="@+id/stats_wrapper"
+                app:layout_constraintTop_toTopOf="@+id/stats_wrapper" />
 
-            <com.framework.views.customViews.CustomMaterialButton
-                android:id="@+id/bt_reuse"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="0dp"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/reuse_wrapper"
                 android:layout_height="@dimen/size_40"
-                android:background="@color/white"
+                android:layout_width="0dp"
                 android:backgroundTint="@color/white"
-                android:fontFamily="@font/bold"
+                android:orientation="horizontal"
                 android:gravity="center"
-                android:textAllCaps="false"
-                android:textColor="@color/colorAccentLight"
-                android:textSize="@dimen/text_12"
-                app:icon="@drawable/ic_refresh_yellow"
-                app:layout_constraintBottom_toBottomOf="@+id/btn_stats"
+                app:layout_constraintBottom_toBottomOf="@+id/stats_wrapper"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/vw_vertical_2"
-                app:layout_constraintTop_toTopOf="@+id/btn_stats"
-                tools:text="Reuse" />
+                app:layout_constraintStart_toEndOf="@+id/vw_vertical_1"
+                app:layout_constraintTop_toTopOf="@+id/stats_wrapper">
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="@dimen/size_16"
+                    android:layout_height="@dimen/size_16"
+                    android:src="@drawable/ic_refresh_yellow"/>
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_6"
+                    android:fontFamily="@font/bold"
+                    android:letterSpacing="0"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_12"
+                    android:text="@string/reuse"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guide_start"

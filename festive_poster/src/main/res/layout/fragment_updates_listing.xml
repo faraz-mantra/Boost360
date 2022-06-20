@@ -11,14 +11,27 @@
     <com.framework.views.viewgroups.BaseRecyclerView
         android:id="@+id/rv_filter_category"
         android:layout_width="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_height="wrap_content"
         android:orientation="horizontal"/>
-
-    <com.framework.views.viewgroups.BaseRecyclerView
-        android:id="@+id/rv_filter_sub_category"
+    
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"/>
+        android:background="@color/white"
+        android:paddingHorizontal="@dimen/size_2"
+        android:layout_gravity="center_vertical"
+        android:elevation="@dimen/size_6"
+        android:layout_height="@dimen/size_38">
+
+        <com.framework.views.viewgroups.BaseRecyclerView
+            android:id="@+id/rv_filter_sub_category"
+            android:layout_width="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"/>
+    </FrameLayout>
+
+
 
     <com.framework.views.viewgroups.BaseRecyclerView
         android:id="@+id/rv_post_listing"
@@ -26,9 +39,21 @@
         android:layout_height="wrap_content"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="5"
-        android:layout_marginHorizontal="@dimen/size_22"
+        android:layout_marginTop="@dimen/size_16"
+        android:layout_marginHorizontal="@dimen/size_20"
         tools:listitem="@layout/list_item_past_update"
         android:orientation="vertical"/>
+
+    <com.framework.views.customViews.CustomTextView
+        android:id="@+id/tv_no_post"
+        android:layout_width="match_parent"
+        android:textColor="@color/black_4a4a4a"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textSize="@dimen/text_16"
+        android:text="@string/no_posts_available"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_height="match_parent"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

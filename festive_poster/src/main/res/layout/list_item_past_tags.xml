@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:paddingHorizontal="@dimen/size_10"
+        android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_26"
+        android:background="@drawable/rounded_rectangle_grey"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/size_12">
+
+        <com.framework.views.customViews.CustomCheckBox
+            android:id="@+id/chkbx_tags"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/grey_E2E2E2"
+            android:checked="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_tags_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/color_888888"
+            android:textSize="@dimen/text_12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/chkbx_tags"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Sale &amp; Offer" />
+
+        <View
+            android:id="@+id/vw_select_indicator"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/white"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tv_tags_name"
+            app:layout_constraintStart_toStartOf="@+id/tv_tags_name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="@dimen/size_34"
-        android:paddingHorizontal="@dimen/size_8"
+        android:paddingHorizontal="@dimen/size_12"
         android:background="@color/black_4a4a4a"
         android:orientation="vertical">
 
@@ -26,6 +26,7 @@
         <View
             android:id="@+id/vw_select_indicator"
             android:layout_width="0dp"
+            android:visibility="gone"
             android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_category_name"
