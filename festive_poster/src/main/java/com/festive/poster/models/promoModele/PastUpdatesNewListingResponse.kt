@@ -58,7 +58,7 @@ data class PastPostItem(
 	val message: String? = null,
 
 	@field:SerializedName("type")
-	val type: Any? = null,
+	val type: String? = null,
 
 	@field:SerializedName("createdOn")
 	val createdOn: String? = null,

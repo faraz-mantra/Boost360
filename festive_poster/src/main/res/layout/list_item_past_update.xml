@@ -211,6 +211,7 @@
                 android:id="@+id/reuse_wrapper"
                 android:layout_height="@dimen/size_40"
                 android:layout_width="0dp"
+                android:visibility="gone"
                 android:backgroundTint="@color/white"
                 android:orientation="horizontal"
                 android:gravity="center"

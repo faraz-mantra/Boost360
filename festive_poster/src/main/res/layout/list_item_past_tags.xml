@@ -5,7 +5,7 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
-        android:paddingHorizontal="@dimen/size_10"
+        android:paddingHorizontal="@dimen/size_6"
         android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,5 +1,6 @@
 package com.festive.poster.ui.promoUpdates.pastUpdates
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -10,6 +11,7 @@ import com.boost.dbcenterapi.utils.observeOnce
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.Constants
+import com.festive.poster.constant.IntentConstant
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.FragmentUpdatesListingBinding
 import com.festive.poster.models.PosterPackTagModel
@@ -19,6 +21,7 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.festive.poster.viewmodels.PostUpdatesViewModel
+import com.framework.base.setFragmentType
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.pref.clientId
@@ -59,12 +62,11 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
     }
 
     private fun initUI() {
-        showSimmer(true)
         getTemplateViewConfig()
-        getPostCategories()
 
         pastPostListingAdapter = AppBaseRecyclerViewAdapter(baseActivity, pastPostListing, this)
         binding.rvPostListing.adapter = pastPostListingAdapter
+        getPostCategories()
         apiCallPastUpdates()
     }
 
@@ -75,16 +77,17 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
     }
 
     private fun getTemplateViewConfig() {
+        showSimmer(true)
         viewModel?.getTemplateConfig(Constants.PROMO_FEATURE_CODE, sessionLocal.fPID, sessionLocal.fpTag)
             ?.observeOnce(this) {
                 val response = it as? GetTemplateViewConfigResponse
                 response?.let {
-                    tagArrayList = prepareTagForApi(response.Result.allTemplates.tags)
+                    tagArrayList.clear()
+                    tagArrayList.addAll(prepareTagForApi(response.Result.allTemplates.tags))
                     tagListAdapter = AppBaseRecyclerViewAdapter(baseActivity, tagArrayList, this)
                     binding.rvFilterSubCategory.adapter = tagListAdapter
-                    showSimmer(false)
                 }
-
+                showSimmer(false)
             }
     }
 
@@ -160,7 +163,12 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
                 )
             }
             RecyclerViewActionType.PAST_REUSE_BUTTON_CLICKED.ordinal -> {
-
+                item as PastPostItem
+                val intent = Intent(requireActivity(), Class.forName("com.appservice.ui.updatesBusiness.UpdateBusinessContainerActivity"))
+                    .putExtra(IntentConstant.REUSE_PAST_UPDATE_MESSAGE_TEXT.name, item.message.toString())
+                    .putExtra(IntentConstant.REUSE_PAST_UPDATE_IMAGE.name, item.imageUri.toString())
+                intent.setFragmentType("ADD_UPDATE_BUSINESS_FRAGMENT_V2")
+                startActivity(intent)
             }
         }
     }
@@ -217,7 +225,6 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
                 binding.tagWrapper.gone()
             } else {
                 binding.rvPostListing.visible()
-                binding.tagWrapper.visible()
                 binding.shimmerLayoutPast.parentShimmerLayout.gone()
                 binding.shimmerLayoutPast.parentShimmerLayout.stopShimmer()
             }
