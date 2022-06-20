@@ -71,41 +71,44 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
   }
 
   private fun getBoostAddOnsData() {
-    viewModel?.getBoostAddOns(baseActivity)?.observeOnce(viewLifecycleOwner, {
-      val response = it as? ManageAddOnsBusinessResponse
-      val dataAction = response?.data?.firstOrNull { it1 ->
-        it1.type.equals(
-          session?.fP_AppExperienceCode,
-          ignoreCase = true
-        )
-      }
-      if (dataAction != null && dataAction.actionItem.isNullOrEmpty().not()) {
-        dataAction.actionItem?.forEach { it2 ->
-          it2.manageBusinessList =
-            ArrayList(it2.manageBusinessList?.filter { it3 -> !it3.isHide } ?: ArrayList())
+    if (view!=null&&isDetached.not()){
+      viewModel?.getBoostAddOns(baseActivity)?.observeOnce(viewLifecycleOwner, {
+        val response = it as? ManageAddOnsBusinessResponse
+        val dataAction = response?.data?.firstOrNull { it1 ->
+          it1.type.equals(
+            session?.fP_AppExperienceCode,
+            ignoreCase = true
+          )
         }
-        dataAction.actionItem?.map { it2 ->
-          it2.manageBusinessList?.map { it3 ->
-            if (it3.premiumCode.isNullOrEmpty().not()) {
-              it3.isLock = session.checkIsPremiumUnlock(it3.premiumCode).not()
+        if (dataAction != null && dataAction.actionItem.isNullOrEmpty().not()) {
+          dataAction.actionItem?.forEach { it2 ->
+            it2.manageBusinessList =
+              ArrayList(it2.manageBusinessList?.filter { it3 -> !it3.isHide } ?: ArrayList())
+          }
+          dataAction.actionItem?.map { it2 ->
+            it2.manageBusinessList?.map { it3 ->
+              if (it3.premiumCode.isNullOrEmpty().not()) {
+                it3.isLock = session.checkIsPremiumUnlock(it3.premiumCode).not()
+              }
             }
           }
-        }
-        addOnsList.clear()
-        addOnsListFilter.clear()
-        val list = setLastSeenData(dataAction.actionItem!!)
-        addOnsList.addAll(list)
-        addOnsListFilter.addAll(list)
-        if (adapterAddOns == null) {
-          binding?.rvBoostAddOns?.apply {
-            adapterAddOns =
-              AppBaseRecyclerViewAdapter(baseActivity, list, this@AllBoostAddonsFragment)
-            adapter = adapterAddOns
-          }
-        } else adapterAddOns?.notify(list)
+          addOnsList.clear()
+          addOnsListFilter.clear()
+          val list = setLastSeenData(dataAction.actionItem!!)
+          addOnsList.addAll(list)
+          addOnsListFilter.addAll(list)
+          if (adapterAddOns == null) {
+            binding?.rvBoostAddOns?.apply {
+              adapterAddOns =
+                AppBaseRecyclerViewAdapter(baseActivity, list, this@AllBoostAddonsFragment)
+              adapter = adapterAddOns
+            }
+          } else adapterAddOns?.notify(list)
 
-      } else showShortToast(baseActivity.getString(R.string.manage_business_not_found))
-    })
+        } else showShortToast(baseActivity.getString(R.string.manage_business_not_found))
+      })
+
+    }
   }
 
   private fun setLastSeenData(data: ArrayList<AllBoostAddOnsData>): ArrayList<AllBoostAddOnsData> {
