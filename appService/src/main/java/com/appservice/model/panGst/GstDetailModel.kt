@@ -1,8 +1,7 @@
-package com.appservice.model
+package com.appservice.model.panGst
 
 import com.appservice.constant.RecyclerViewItemType
 import com.appservice.recyclerView.AppBaseRecyclerViewItem
-import com.framework.utils.toArrayList
 import java.io.Serializable
 
 data class GstDetailModel(

@@ -297,8 +297,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
             binding?.viewBottomBar?.navView?.setActiveItem(value.position)
             onItemSelect(value.position)
           }
+          if (value == DashboardTabs.open_business_card) MutableDataUtils.openBusinessCard(true)
         }
-      }
+      } else if (value == DashboardTabs.open_business_card) MutableDataUtils.openBusinessCard(true)
       true
     } else false
   }

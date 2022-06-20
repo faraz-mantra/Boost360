@@ -19,6 +19,8 @@ import com.onboarding.nowfloats.rest.repositories.CategoryRepository
 import com.onboarding.nowfloats.rest.repositories.ChannelRepository
 import com.onboarding.nowfloats.rest.repositories.UploadImageRepository
 import com.onboarding.nowfloats.rest.repositories.WhatsAppRepository
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -166,7 +168,6 @@ class DashboardViewModel : BaseViewModel() {
   fun getMerchantSummary(clientId: String?, fpTag: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getMerchantSummary(clientId, fpTag).toLiveData()
   }
-
 
 
   fun getUserProfileData(loginId: String?): LiveData<BaseResponse> {

@@ -59,5 +59,6 @@
   <color name="grey_BBBBBB">#BBBBBB</color>
   <color name="gray_828282">#828282</color>
   <color name="color_error_code">#eb5757</color>
+  <color name="inactive_D47661">#D47661</color>
 
 </resources>
