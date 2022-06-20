@@ -100,6 +100,11 @@ class PastUpdatesContainerActivity : AppBaseActivity<ActivityFragmentContainerBi
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (getTopFragment() == null) finish()
+    }
+
 }
 
 fun startFragmentPastUpdatesContainerActivity(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {

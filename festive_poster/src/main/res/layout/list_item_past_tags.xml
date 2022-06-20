@@ -18,10 +18,10 @@
 
         <com.framework.views.customViews.CustomCheckBox
             android:id="@+id/chkbx_tags"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/grey_E2E2E2"
-            android:checked="false"
+            android:layout_width="@dimen/size_16"
+            android:layout_height="@dimen/size_16"
+            android:button="@null"
+            android:background="@drawable/checkbox_selector_past"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,10 +31,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/regular"
+            android:layout_marginStart="@dimen/size_6"
             android:textColor="@color/color_888888"
             android:textSize="@dimen/text_12"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/chkbx_tags"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Sale &amp; Offer" />

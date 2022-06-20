@@ -19,10 +19,12 @@ class PastTagsViewHolder(binding: ListItemPastTagsBinding) :
         val pastTagItem = item as PastTagModel
         binding.apply {
             if (pastTagItem.isSelected){
+                //chkbxTags.buttonDrawable = ContextCompat.getDrawable(FestivePosterApplication.instance, R.drawable.ic_checkbox_chked_fposter_16)
                 chkbxTags.isChecked = true
                 layoutWrapper.setBackgroundResource(R.drawable.rounded_rectangle_white)
                 tvTagsName.setTextColor(ContextCompat.getColor(FestivePosterApplication.instance, R.color.black_4a4a4a))
             }else{
+                //chkbxTags.buttonDrawable = ContextCompat.getDrawable(FestivePosterApplication.instance, R.drawable.ic_checkbox_unchked_fposter_16)
                 chkbxTags.isChecked = false
                 layoutWrapper.setBackgroundResource(R.drawable.rounded_rectangle_grey)
                 tvTagsName.setTextColor(ContextCompat.getColor(FestivePosterApplication.instance, R.color.color_888888))

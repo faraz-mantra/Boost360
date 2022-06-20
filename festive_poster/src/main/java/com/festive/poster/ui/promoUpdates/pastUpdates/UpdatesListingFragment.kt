@@ -2,6 +2,10 @@ package com.festive.poster.ui.promoUpdates.pastUpdates
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import androidx.core.content.ContextCompat
 import com.boost.dbcenterapi.utils.observeOnce
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
@@ -28,8 +32,9 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
     private lateinit var pastPostListingAdapter:AppBaseRecyclerViewAdapter<PastPostItem>
     private lateinit var tagListAdapter:AppBaseRecyclerViewAdapter<PastTagModel>
     var postType: Int = 0
-    var tagArray:MutableList<String> = mutableListOf()
-    lateinit var tagListRequest:TagListRequest
+    var isFilterVisible = false
+    var tagArray: MutableList<String> = mutableListOf()
+    var tagArrayList:ArrayList<PastTagModel> = arrayListOf()
 
     companion object {
         @JvmStatic
@@ -54,6 +59,7 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
     }
 
     private fun initUI() {
+        showSimmer(true)
         getTemplateViewConfig()
         getPostCategories()
 
@@ -73,9 +79,10 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
             ?.observeOnce(this) {
                 val response = it as? GetTemplateViewConfigResponse
                 response?.let {
-                    val tagArray = prepareTagForApi(response.Result.allTemplates.tags)
-                    tagListAdapter = AppBaseRecyclerViewAdapter(baseActivity, tagArray, this)
+                    tagArrayList = prepareTagForApi(response.Result.allTemplates.tags)
+                    tagListAdapter = AppBaseRecyclerViewAdapter(baseActivity, tagArrayList, this)
                     binding.rvFilterSubCategory.adapter = tagListAdapter
+                    showSimmer(false)
                 }
 
             }
@@ -92,6 +99,7 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
     private fun apiCallPastUpdates() {
         viewModel?.getPastUpdatesListV6(clientId = clientId, fpId = sessionLocal.fPID, postType = postType, tagListRequest = TagListRequest(tagArray))
             ?.observeOnce( viewLifecycleOwner, {it ->
+                hideProgress()
                 if (it.isSuccess()){
                     it as PastUpdatesNewListingResponse
 
@@ -118,7 +126,6 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
                     }
 
                 }
-
                 Log.i("pastUpdates", "PastUpdates: $it")
             })
     }
@@ -126,13 +133,15 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
         when (actionType) {
             RecyclerViewActionType.PAST_CATEGORY_CLICKED.ordinal -> {
+                showProgress()
                 val pastCategoriesModel = item as PastCategoriesModel
                 postType = pastCategoriesModel.postType
-                categoryDataList
+                tagChanges()
                 postCategoryAdapter.notifyDataSetChanged()
                 apiCallPastUpdates()
             }
             RecyclerViewActionType.PAST_TAG_CLICKED.ordinal -> {
+                showProgress()
                 item as PastTagModel
                 if (tagArray.contains(item.tag))
                     tagArray.remove(item.tag)
@@ -142,12 +151,77 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
                 apiCallPastUpdates()
             }
             RecyclerViewActionType.PAST_SHARE_BUTTON_CLICKED.ordinal -> {
+                showProgress()
                 val pastPostItem = item as PastPostItem
-                ContentSharing.share(activity = baseActivity, shareText = pastPostItem.message?:"", imageUri = pastPostItem.imageUri?:"")
+                ContentSharing.share(
+                    activity = baseActivity,
+                    shareText = pastPostItem.message ?: "",
+                    imageUri = pastPostItem.imageUri ?: ""
+                )
             }
             RecyclerViewActionType.PAST_REUSE_BUTTON_CLICKED.ordinal -> {
 
             }
         }
     }
+
+    private fun tagChanges() {
+        tagArrayList.forEach{
+            it.isSelected = false
+        }
+        tagArray.clear()
+        tagListAdapter.notifyDataSetChanged()
+        binding.tagWrapper.apply {
+            if (postType == 0 || postType == 1) { visible() } else { gone() }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.filter_menu_past, menu)
+       /* val menuItem = menu.findItem(R.id.filter_past)
+        menuItem.actionView.setOnClickListener {
+            menu.performIdentifierAction(menuItem.itemId, 0)
+        }*/
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.help_past -> {
+                showShortToast(getString(R.string.coming_soon))
+                return true
+            }
+            R.id.filter_past -> {
+                if (isFilterVisible) {
+                    binding.rvFilterCategory.gone()
+                    binding.tagWrapper.gone()
+                    item.icon = ContextCompat.getDrawable(baseActivity, R.drawable.ic_filter_hollow_past)
+                } else {
+                    binding.rvFilterCategory.visible()
+                    binding.tagWrapper.visible()
+                    item.icon = ContextCompat.getDrawable(baseActivity, R.drawable.ic_filter_funnel_white)
+                }
+                isFilterVisible = isFilterVisible.not()
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun showSimmer(isSimmer: Boolean) {
+        binding.root.apply {
+            if (isSimmer) {
+                binding.shimmerLayoutPast.parentShimmerLayout.visible()
+                binding.shimmerLayoutPast.parentShimmerLayout.startShimmer()
+                binding.rvPostListing.gone()
+                binding.tagWrapper.gone()
+            } else {
+                binding.rvPostListing.visible()
+                binding.tagWrapper.visible()
+                binding.shimmerLayoutPast.parentShimmerLayout.gone()
+                binding.shimmerLayoutPast.parentShimmerLayout.stopShimmer()
+            }
+        }
+    }
+
 }

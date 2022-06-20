@@ -11,6 +11,7 @@ import androidx.core.content.FileProvider
 import com.framework.BaseApplication
 import com.framework.R
 import com.framework.analytics.SentryController
+import com.framework.base.BaseActivity
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import java.io.File

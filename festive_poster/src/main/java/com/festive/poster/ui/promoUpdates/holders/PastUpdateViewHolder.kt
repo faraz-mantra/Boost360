@@ -25,7 +25,7 @@ class PastUpdateViewHolder(binding: ListItemPastUpdateBinding) :
         val postItem = item as? PastPostItem
         binding.apply {
             Glide.with(FestivePosterApplication.instance).load(postItem?.imageUri).placeholder(R.drawable.placeholder_image).into(ivSocialIcon)
-            tvSocialTitle.text = highlightHashTag(postItem?.message, R.color.black_4a4a4a, R.font.semi_bold)
+            tvSocialTitle.text = highlightHashTag(postItem?.message, R.color.black_4a4a4a, R.font.bold)
 
             if (postItem?.type == 3) { //3: Text only type
                 iconCard.gone()
