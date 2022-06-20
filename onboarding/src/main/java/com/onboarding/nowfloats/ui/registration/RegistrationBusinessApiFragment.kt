@@ -286,7 +286,6 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
   }
 
   private fun apiBusinessComplete(dotProgressBar: DotProgressBar, floatingPointId: String) {
-    binding?.apiRecycler?.post {
       requestFloatsModel?.floatingPointId = floatingPointId
       updateInfo()
       list.clear()
@@ -315,7 +314,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
       )
       binding?.categoryImage?.setTintColor(getColor(R.color.dodger_blue_two))
       apiProcessAdapter?.notify(list)
-    }
+
   }
 
   private fun getRequestPurchasedOrder(

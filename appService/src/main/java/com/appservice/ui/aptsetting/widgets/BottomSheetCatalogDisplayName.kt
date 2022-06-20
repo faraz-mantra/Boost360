@@ -2,10 +2,10 @@ package com.appservice.ui.aptsetting.widgets
 
 import android.view.View
 import com.appservice.R
+import com.appservice.base.getProductType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.BottomSheetCatalogDisplayBinding
 import com.appservice.model.aptsetting.UserFpDetailsResponse
-import com.appservice.ui.aptsetting.ui.getProductType
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.visible
