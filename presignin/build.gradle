@@ -22,12 +22,10 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String", "APP_SIGNATURE_HASH", '"m1jzE0DG9Z5"'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
-            buildConfigField "String", "APP_SIGNATURE_HASH", '"W5izmPg6WcR"'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
