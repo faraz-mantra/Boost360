@@ -5,6 +5,7 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/rounded_curve_bg"
     android:clickable="true"
     android:focusable="true"
     android:paddingBottom="5dp">
@@ -16,7 +17,7 @@
         android:fontFamily="@font/regular"
         android:padding="@dimen/_10sdp"
         android:text="What Is a Product Onboarding &amp; Training?"
-        android:textColor="@color/black"
+        android:textColor="#333333"
         android:textFontWeight="400"
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@id/arrow_btn"

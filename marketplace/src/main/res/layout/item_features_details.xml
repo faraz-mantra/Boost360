@@ -12,6 +12,15 @@
         android:layout_height="wrap_content"
         android:padding="5dp">
 
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="8dp"
+            android:elevation="2dp"
+            android:src="@drawable/ic_fold"
+            android:layout_marginEnd="@dimen/_21sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/discount"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/discount"
@@ -22,11 +31,16 @@
             android:gravity="center"
             android:text="@string/discount_saving"
             android:padding="5dp"
+            android:fontFamily="@font/semi_bold"
             android:layout_marginEnd="@dimen/_25sdp"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
+
+        </TextView>
+
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -57,9 +71,9 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:text="Online Pack"
-            android:textColor="@color/common_text_color"
+            android:textColor="@color/main_color_gray_dk"
             android:textFontWeight="600"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@id/package_img"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -102,8 +116,9 @@
                 android:id="@+id/features_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
                 android:text="Call Tracking +3 features"
-                android:textSize="@dimen/_11ssp"
+                android:textSize="12sp"
                 android:textColor="#7ED321"
                 app:layout_constraintStart_toStartOf="parent" />
         </LinearLayout>
@@ -113,6 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/regular"
             android:text="₹481/month"
             android:textSize="12sp"
             android:layout_marginStart="@dimen/_10sdp"

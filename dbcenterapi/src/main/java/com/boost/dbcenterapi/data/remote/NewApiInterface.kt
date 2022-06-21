@@ -12,7 +12,7 @@ import com.boost.dbcenterapi.data.api_model.couponRequest.CouponRequest
 import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponRequest
 import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponResponse
 import com.boost.dbcenterapi.data.api_model.getCouponResponse.GetCouponResponse
-import com.boost.dbcenterapi.data.api_model.helpModule.HelpModule
+import com.boost.dbcenterapi.data.api_model.videos.GetVideos
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import io.reactivex.Observable
 import retrofit2.http.*
@@ -30,7 +30,7 @@ interface NewApiInterface {
     //Youtube-videos Marketplace V2
     @Headers("Authorization: 597ee93f5d64370820a6127c", "Content-Type: application/json")
     @GET("https://developer.api.boostkit.dev/language/v1/featurevideos/get-data?website=61278bf6f2e78f0001811865")
-    fun GetHelp(): Observable<HelpModule>
+    fun GetHelp(): Observable<GetVideos>
 
     //MyCurrentPlan  Marketplace V2
     @Headers("Content-Type: application/json")

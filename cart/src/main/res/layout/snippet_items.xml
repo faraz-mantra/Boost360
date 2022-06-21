@@ -42,10 +42,10 @@
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:layout_marginTop="@dimen/_10sdp"
         app:layout_constraintTop_toBottomOf="@id/review_description"
-        android:background="@color/grey"/>
+        android:background="#F8F8F8"/>
 
 
     <TextView
@@ -56,7 +56,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:lineSpacingExtra="2sp"
         android:text="Keshava Reddy"
-        android:textColor="@color/common_bold_text_color"
+        android:textColor="#191919"
         android:textSize="@dimen/_12sdp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:lineSpacingExtra="3sp"
         android:text="Sparkle Salon &amp; Spa, Indore"
-        android:textColor="@color/common_text_color"
+        android:textColor="@color/colorPrimary1"
         android:textSize="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="@+id/name"
         app:layout_constraintTop_toBottomOf="@id/name" />

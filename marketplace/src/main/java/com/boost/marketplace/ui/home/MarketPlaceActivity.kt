@@ -5,7 +5,6 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
@@ -16,7 +15,6 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.appservice.rest.repository.AzureWebsiteNewRepository
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.SimplePageTransformer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
@@ -25,8 +23,11 @@ import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.upgradeDB.model.YoutubeVideoModel
-import com.boost.dbcenterapi.utils.*
+import com.boost.dbcenterapi.utils.Constants
+import com.boost.dbcenterapi.utils.HorizontalMarginItemDecoration
+import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.dbcenterapi.utils.Utils.longToast
+import com.boost.dbcenterapi.utils.WebEngageController
 import com.boost.marketplace.BuildConfig
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.*
@@ -36,6 +37,7 @@ import com.boost.marketplace.databinding.ActivityMarketplaceBinding
 import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.interfaces.CompareBackListener
 import com.boost.marketplace.interfaces.HomeListener
+import com.boost.marketplace.interfaces.VideosListener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
 import com.boost.marketplace.ui.History_Orders.HistoryOrdersActivity
 import com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity
@@ -44,14 +46,11 @@ import com.boost.marketplace.ui.coupons.OfferCouponsActivity
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.boost.marketplace.ui.marketplace_Offers.MarketPlaceOffersActivity
 import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
-import com.boost.marketplace.ui.videos.VideosPopUpBottomSheet
+import com.boost.marketplace.ui.videos.HomeVideosBottomSheet
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.framework.analytics.SentryController
-import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
-import com.framework.models.toLiveData
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
-import com.framework.pref.clientId
 import com.framework.pref.getAccessTokenAuth
 import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
@@ -59,19 +58,14 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
-import com.nex3z.notificationbadge.NotificationBadge
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_marketplace.*
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPlaceHomeViewModel>(),
-    RecyclerStringItemClickListener, CompareBackListener, HomeListener, AddonsListener {
+    RecyclerStringItemClickListener, CompareBackListener, HomeListener, AddonsListener,VideosListener {
 
     lateinit var packageViewPagerAdapter: PackageViewPagerAdapter
     lateinit var featureDealsAdapter: FeatureDealsAdapter
@@ -1851,15 +1845,15 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
         val link = videoItem.youtube_link!!
 
-        val dialogCard = VideosPopUpBottomSheet()
+        val dialogCard = HomeVideosBottomSheet()
         val args = Bundle()
         args.putString("fpid", fpid)
         args.putString("expCode", experienceCode)
         args.putString("fptag", fpTag)
         args.putString("title", videoItem.title)
-        args.putString("link", videoItem.youtube_link)
+        args.putString("link", link)
         dialogCard.arguments = args
-        dialogCard.show(this.supportFragmentManager, VideosPopUpBottomSheet::class.java.name)
+        dialogCard.show(this.supportFragmentManager, HomeVideosBottomSheet::class.java.name)
     }
 
     override fun onPackageAddToCart(item: Bundles?, imageView: ImageView) {
