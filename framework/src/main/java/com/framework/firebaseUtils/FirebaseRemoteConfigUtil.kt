@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.framework.R
 import com.framework.utils.InAppReviewUtils
+import com.google.android.play.core.install.model.AppUpdateType
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfig
@@ -71,12 +72,12 @@ object FirebaseRemoteConfigUtil {
     return remoteConfig?.getBoolean(NEW_ONBOARDING_WITH_UPDATED_CATEGORIES_AND_GUI_ACTIVE) ?: false
   }
 
-  fun appUpdateType(): UpdateType {
+  fun appUpdateType(): Int {
     Log.d(TAG, "Config in app update type: ${remoteConfig?.getString(IN_APP_UPDATE_TYPE_IMMEDIATE) ?: false}")
     return if (remoteConfig?.getBoolean(IN_APP_UPDATE_TYPE_IMMEDIATE) == true) {
-      UpdateType.IMMEDIATE
+      AppUpdateType.IMMEDIATE
     } else {
-      UpdateType.FLEXIBLE
+      AppUpdateType.FLEXIBLE
     }
   }
 

@@ -367,31 +367,31 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
 
   private fun createOrder() {
     showProgress()
-    viewModel?.postAppointment(AppConstant.CLIENT_ID_ORDER, createOrderRequest)?.observeOnce(viewLifecycleOwner, {
-        if (it.isSuccess()) {
-          hideProgress()
-          val orderInitiateResponse = (it as? OrderInitiateResponse)
-          apiConfirmOrder(orderInitiateResponse = orderInitiateResponse!!)
-        } else {
-          hideProgress()
-          showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
-        }
-      })
+    viewModel?.postAppointment(AppConstant.CLIENT_ID_ORDER, createOrderRequest)?.observeOnce(viewLifecycleOwner) {
+      if (it.isSuccess()) {
+        hideProgress()
+        val orderInitiateResponse = (it as? OrderInitiateResponse)
+        apiConfirmOrder(orderInitiateResponse = orderInitiateResponse!!)
+      } else {
+        hideProgress()
+        showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
+      }
+    }
   }
 
   private fun apiConfirmOrder(orderInitiateResponse: OrderInitiateResponse) {
     showProgress()
-    viewModel?.confirmOrder(preferenceData?.clientId, orderInitiateResponse.data._id)?.observeOnce(viewLifecycleOwner, {
-        hideProgress()
-        if (it.isSuccess()) {
-          val bundle = Bundle()
-          bundle.putSerializable(IntentConstant.ORDER_ID.name, orderInitiateResponse.data._id)
-          bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
-          startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)
-        } else {
-          showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
-        }
-      })
+    viewModel?.confirmOrder(preferenceData?.clientId, orderInitiateResponse.data._id)?.observeOnce(viewLifecycleOwner) {
+      hideProgress()
+      if (it.isSuccess()) {
+        val bundle = Bundle()
+        bundle.putSerializable(IntentConstant.ORDER_ID.name, orderInitiateResponse.data._id)
+        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
+        startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)
+      } else {
+        showLongToast(it.message().ifEmpty { getString(R.string.unable_to_create_order) })
+      }
+    }
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

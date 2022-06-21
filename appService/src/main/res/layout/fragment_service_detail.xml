@@ -253,6 +253,7 @@
           android:hint="@string/enter_duration_in_minutes"
           android:inputType="number"
           android:padding="@dimen/size_12"
+            android:maxLength="3"
           android:singleLine="true"
           android:textColor="@color/warm_grey_10"
           android:textColorHint="@color/primary_grey"
