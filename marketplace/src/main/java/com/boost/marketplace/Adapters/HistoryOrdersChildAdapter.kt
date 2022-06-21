@@ -22,8 +22,9 @@ import java.lang.Long
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.Int
+import kotlin.collections.ArrayList
 
-class HistoryOrdersChildAdapter(itemList: List<WidgetDetail>?) :
+class HistoryOrdersChildAdapter(itemList: ArrayList<WidgetDetail>?) :
     RecyclerView.Adapter<HistoryOrdersChildAdapter.upgradeViewHolder>() {
 
     private var list = ArrayList<WidgetDetail>()
@@ -46,15 +47,15 @@ class HistoryOrdersChildAdapter(itemList: List<WidgetDetail>?) :
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
-
-        val default_validity_months= list.get(position).Expiry.Value
-        val oneMonthFromNow = Calendar.getInstance()
-        oneMonthFromNow.add(Calendar.MONTH, default_validity_months)
+        val tempCreatedOnDate = list.get(position).CreatedOn
+        val createdOnDate = Date(Long.parseLong(tempCreatedOnDate.substring(6, tempCreatedOnDate.length - 2)))
+        val default_validity_months = list.get(position).Expiry.Value
+        val calendarDates = Calendar.getInstance()
+        calendarDates.time = createdOnDate
+        calendarDates.add(Calendar.MONTH, default_validity_months)
         val nowFormat = SimpleDateFormat("dd MMM yy")
         nowFormat.setTimeZone(Calendar.getInstance().getTimeZone())
-        val oneMonthFormat = SimpleDateFormat("dd MMM yy")
-        oneMonthFormat.setTimeZone(oneMonthFromNow.getTimeZone())
-        holder.validity.setText("Valid till " + nowFormat.format(oneMonthFromNow.time))
+        holder.validity.setText("Valid till " + nowFormat.format(calendarDates.time))
 
         val dataString = list.get(position).CreatedOn
         val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))

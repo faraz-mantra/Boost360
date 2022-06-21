@@ -14,14 +14,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.Int
 
-class HistoryOrdersParentAdapter (itemList: List<WidgetDetail>?) :
+class HistoryOrdersParentAdapter (itemList: LinkedHashMap<String, ArrayList<WidgetDetail>>) :
     RecyclerView.Adapter<HistoryOrdersParentAdapter.upgradeViewHolder>() {
 
-    private var list = ArrayList<WidgetDetail>()
+    private var list = LinkedHashMap<String, ArrayList<WidgetDetail>>()
     private lateinit var context: Context
 
     init {
-        this.list = itemList as ArrayList<WidgetDetail>
+        this.list = itemList
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -37,23 +37,23 @@ class HistoryOrdersParentAdapter (itemList: List<WidgetDetail>?) :
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
-
-        val dataString = list.get(position).CreatedOn
-        val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
-        val dateFormat = SimpleDateFormat("dd-MMM-yyyy ")
-        holder.itemDate.setText(dateFormat.format(date))
+        //get the keys for the position
+        val itemKey = ArrayList<String>(list.keys).get(position)
+//        val dataString = list.get(position).CreatedOn
+//        val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
+//        val dateFormat = SimpleDateFormat("dd-MMM-yyyy")
+        holder.itemDate.setText(itemKey)
         val layoutManager1 = LinearLayoutManager(holder.recycler.context)
         layoutManager1.orientation = LinearLayoutManager.VERTICAL
-        val sectionLayout = HistoryOrdersChildAdapter(list)
+        val singleList = list.get(itemKey)
+        val sectionLayout = HistoryOrdersChildAdapter(singleList)
         holder.recycler.setAdapter(sectionLayout)
         holder.recycler.setLayoutManager(layoutManager1)
     }
 
-    fun addupdates(purchaseResult: List<WidgetDetail>) {
-        val initPosition = list.size
-        list.clear()
-        list.addAll(purchaseResult)
-        notifyItemRangeInserted(initPosition, list.size)
+    fun addupdates(list: LinkedHashMap<String, ArrayList<WidgetDetail>>) {
+        this.list = list
+        notifyDataSetChanged()
     }
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

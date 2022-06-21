@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrderV2.GetPurchaseOrderResponseV2
+import com.boost.dbcenterapi.data.api_model.GetPurchaseOrderV2.WidgetDetail
 import com.boost.marketplace.Adapters.HistoryOrdersParentAdapter
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
@@ -16,6 +17,10 @@ import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
+import java.lang.Long
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, HistoryOrdersViewModel>()
 {
@@ -44,7 +49,7 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Histo
         super.onCreateView()
 
 
-        historyAdapter = HistoryOrdersParentAdapter(ArrayList())
+        historyAdapter = HistoryOrdersParentAdapter(LinkedHashMap<String, java.util.ArrayList<WidgetDetail>>())
         viewModel = ViewModelProviders.of(this).get(HistoryOrdersViewModel::class.java)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -110,7 +115,20 @@ class HistoryOrdersActivity: AppBaseActivity<ActivityHistoryOrdersBinding, Histo
                 binding?.shimmerViewHistory!!.stopShimmer()
                 binding?.shimmerViewHistory!!.visibility = View.GONE
             }
-            historyAdapter?.addupdates(Result.Result.WidgetDetails)
+            val list = LinkedHashMap<String, ArrayList<WidgetDetail>>()
+            for(singleWidget in Result.Result.WidgetDetails){
+                val dataString = singleWidget.CreatedOn
+                val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
+                val dateFormat = SimpleDateFormat("dd-MMM-yyyy")
+                if(list.containsKey(dateFormat.format(date))){
+                    val tempList = list.get(dateFormat.format(date))?: arrayListOf<WidgetDetail>()
+                    tempList.add(singleWidget)
+                    list.put(dateFormat.format(date), tempList)
+                }else{
+                    list.put(dateFormat.format(date), arrayListOf(singleWidget))
+                }
+            }
+            historyAdapter?.addupdates(list)
             historyAdapter?.notifyDataSetChanged()
             binding?.orderHistoryRecycler?.setFocusable(false)
             binding?.orderHistoryRecycler?.visibility = View.VISIBLE
