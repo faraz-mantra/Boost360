@@ -982,9 +982,9 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                         {
-                            if (it.Data[0].featurevideo != null && it.Data[0].featurevideo.size > 0) {
+                            if (it.Data[0].marketplacecustomervideos != null && it.Data[0].marketplacecustomervideos.size > 0) {
                                 val videoGallery = arrayListOf<YoutubeVideoModel>()
-                                for (singleVideoDetails in it.Data[0].featurevideo) {
+                                for (singleVideoDetails in it.Data[0].marketplacecustomervideos) {
                                     videoGallery.add(
                                         YoutubeVideoModel(
                                             singleVideoDetails._kid,

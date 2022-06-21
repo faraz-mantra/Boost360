@@ -40,11 +40,11 @@ import com.boost.marketplace.infra.utils.Constants.Companion.IMAGE_PREVIEW_POPUP
 import com.boost.marketplace.interfaces.DetailsFragmentListener
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 import com.boost.marketplace.ui.details.staff.StaffManagementBottomSheet
+import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
+import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
 import com.boost.marketplace.ui.popup.call_track.RequestCallbackBottomSheet
 import com.boost.marketplace.ui.popup.call_track.SelectedNumberBottomSheet
-import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
-import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.popup.removeItems.RemovePackageBottomSheet
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.bumptech.glide.Glide
@@ -163,6 +163,22 @@ class FeatureDetailsActivity :
 
         featureEdgeCase()
 
+        val termsString = SpannableString("This feature is provided by “Reseller Club” and is subject to their terms and conditions. Read T&C")
+
+        termsString.setSpan(
+            UnderlineSpan(),
+            termsString.length - 8,
+            termsString.length,
+            0
+        )
+        termsString.setSpan(
+            ForegroundColorSpan(ContextCompat.getColor(this, R.color.started_button_start)),
+            termsString.length - 8,
+            termsString.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        );
+        terms.setText(termsString)
+
         val callExpertString = SpannableString("Have a query? Call an expert")
 
         callExpertString.setSpan(
@@ -172,7 +188,7 @@ class FeatureDetailsActivity :
             0
         )
         callExpertString.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent)),
+            ForegroundColorSpan(ContextCompat.getColor(this, R.color.started_button_start)),
             callExpertString.length - 14,
             callExpertString.length,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -313,6 +329,15 @@ class FeatureDetailsActivity :
             }
             addonDetails = it
             prefs.storeAddonDetails(addonDetails)
+
+            when{
+                it.boost_widget_key.equals("DOMAINPURCHASE") || it.feature_code.equals("DOMAINPURCHASE") -> {
+                    terms.visibility= VISIBLE
+                }
+                else -> {
+                    terms.visibility=View.GONE
+                }
+            }
 
             if (addonDetails != null && addonDetails?.benefits != null) {
                 benefit_container.visibility = VISIBLE

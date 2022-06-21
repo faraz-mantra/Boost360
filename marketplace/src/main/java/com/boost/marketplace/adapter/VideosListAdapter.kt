@@ -1,7 +1,6 @@
 package com.boost.marketplace.adapter
 
 import android.content.Context
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,20 +9,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.upgradeDB.model.YoutubeVideoModel
 import com.boost.marketplace.R
-import com.boost.marketplace.interfaces.HomeListener
+import com.boost.marketplace.interfaces.VideosListener
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.signature.ObjectKey
 import com.framework.utils.setNoDoubleClickListener
-import java.util.*
 
-class VideosListAdapter(videoList: List<YoutubeVideoModel>, listen: HomeListener) :
+class VideosListAdapter(videoList: List<YoutubeVideoModel>, listen: VideosListener) :
   RecyclerView.Adapter<VideosListAdapter.ViewHolder>() {
 
   private lateinit var context: Context
   private var list = ArrayList<YoutubeVideoModel>()
-  private lateinit var listener: HomeListener
+  private lateinit var listener: VideosListener
 
   init {
     list = videoList as ArrayList<YoutubeVideoModel>
@@ -53,7 +48,7 @@ class VideosListAdapter(videoList: List<YoutubeVideoModel>, listen: HomeListener
 
     if (list.get(position).youtube_link != null && list.get(position).youtube_link!!.isNotEmpty())
     {
-//      val link: List<String> = list.get(position).youtube_link!!
+      val link: String? = list.get(position).youtube_link
       Glide.with(context)
         .load(list.get(position).youtube_image!!)
         .into(holder.image)

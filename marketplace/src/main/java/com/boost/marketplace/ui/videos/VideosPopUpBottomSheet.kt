@@ -3,19 +3,14 @@ package com.boost.marketplace.ui.videos
 import android.content.DialogInterface
 import android.net.Uri
 import android.util.Log
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PartnerZone
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PromoBanners
-import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.upgradeDB.model.YoutubeVideoModel
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.VideosListAdapter
 import com.boost.marketplace.databinding.BottomSheetVideosBinding
-import com.boost.marketplace.interfaces.HomeListener
+import com.boost.marketplace.interfaces.VideosListener
 import com.boost.marketplace.ui.home.MarketPlaceHomeViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.exoFullScreen.MediaPlayer
@@ -23,9 +18,8 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import kotlinx.android.synthetic.main.bottom_sheet_videos.*
 
-
 class VideosPopUpBottomSheet :
-    BaseBottomSheetDialog<BottomSheetVideosBinding, MarketPlaceHomeViewModel>(), HomeListener {
+    BaseBottomSheetDialog<BottomSheetVideosBinding, MarketPlaceHomeViewModel>(), VideosListener {
 
     lateinit var link: String
     private var videoItem: String? = null
@@ -145,34 +139,6 @@ class VideosPopUpBottomSheet :
         player.release()
     }
 
-    override fun onPackageClicked(item: Bundles?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onPromoBannerClicked(item: PromoBanners?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onShowHidePromoBannerIndicator(status: Boolean) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onPartnerZoneClicked(item: PartnerZone?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onShowHidePartnerZoneIndicator(status: Boolean) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onAddFeatureDealItemToCart(item: FeaturesModel?, minMonth: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onAddonsCategoryClicked(categoryType: String) {
-        TODO("Not yet implemented")
-    }
-
     override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
         Toast.makeText(context, "Loading", Toast.LENGTH_LONG).show()
         link = videoItem.youtube_link.toString()
@@ -181,10 +147,6 @@ class VideosPopUpBottomSheet :
         binding?.ctvVideoTitle?.text = videoItem.title
         binding?.mainTxt?.text = videoItem.desc
 
-    }
-
-    override fun onPackageAddToCart(item: Bundles?, image: ImageView) {
-        TODO("Not yet implemented")
     }
 
     override fun dismiss() {
