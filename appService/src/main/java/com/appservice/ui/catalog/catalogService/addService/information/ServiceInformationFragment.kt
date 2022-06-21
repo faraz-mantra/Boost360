@@ -42,6 +42,7 @@ import kotlin.collections.ArrayList
 
 class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBinding, ServiceViewModelV1>(), RecyclerItemClickListener {
 
+  private val RC_SERVICE_TIMING=102;
   private var product: ServiceModelV1? = null
   private var isEdit: Boolean = false
   private var tagList = ArrayList<String>()
@@ -255,7 +256,8 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         startFragmentActivity(
           FragmentType.SERVICE_TIMING_FRAGMENT,
           bundle = bundle,
-          isResult = true
+          isResult = true,
+          requestCode = RC_SERVICE_TIMING
         )
       }
     }
@@ -346,7 +348,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
       secondaryImage(mPaths)
-    } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
+    } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == RC_SERVICE_TIMING) {
       this.serviceTimingList =
         data?.getSerializableExtra(IntentConstant.SERVICE_TIMING_DATA.name) as? ArrayList<ServiceTiming>
       val serviceTimingTxt = ServiceTiming().getStringActive(this.serviceTimingList)
