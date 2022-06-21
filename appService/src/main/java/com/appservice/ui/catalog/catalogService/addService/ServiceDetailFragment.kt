@@ -49,6 +49,7 @@ import java.io.File
 
 class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, ServiceViewModelV1>() {
 
+  private val RC_SERVICE_INFO=102;
   private var menuDelete: MenuItem? = null
   private var serviceImage: File? = null
   private var product: ServiceModelV1? = null
@@ -223,7 +224,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         bundle.putSerializable(IntentConstant.PRODUCT_DATA.name, this.product)
         bundle.putSerializable(IntentConstant.SERVICE_TIMING_DATA.name, this.serviceTimingList)
         bundle.putSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)
-        startFragmentActivity(FragmentType.SERVICE_INFORMATION, bundle, isResult = true)
+        startFragmentActivity(FragmentType.SERVICE_INFORMATION, bundle, isResult = true, requestCode = RC_SERVICE_INFO)
       }
       binding?.vwSavePublish -> if (isValid()) createUpdateApi()
     }
@@ -461,7 +462,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         binding?.serviceImageView?.visible()
         serviceImage?.getBitmap()?.let { binding?.serviceImageView?.setImageBitmap(it) }
       }
-    } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
+    } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == RC_SERVICE_INFO) {
       this.product = data?.getSerializableExtra(IntentConstant.PRODUCT_DATA.name) as? ServiceModelV1
       this.serviceTimingList = data?.getSerializableExtra(IntentConstant.SERVICE_TIMING_DATA.name) as? ArrayList<ServiceTiming>
       this.secondaryImage = (data?.getSerializableExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>) ?: ArrayList()
