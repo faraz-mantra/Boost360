@@ -203,7 +203,6 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     val p = data?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? ItemsItem
     isEdit = (p != null && p.id.isNullOrEmpty().not())
     if (isEdit) getServiceDetailObject(p?.id) else this.product = ServiceModelV1()
-    this.product?.GstSlab = 18
   }
 
   private fun getServiceDetailObject(serviceId: String?) {
@@ -254,7 +253,6 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun onServiceDetailResponseReceived(it: BaseResponse) {
     this.product = (it as? ServiceDetailResponse)?.Result ?: return
-    this.product?.GstSlab = 18
     this.serviceTimingList = this.product?.timings
     this.serviceTimingList?.map { it.isToggle = (it.isValidTime()) }
     updateUiPreviousData()
