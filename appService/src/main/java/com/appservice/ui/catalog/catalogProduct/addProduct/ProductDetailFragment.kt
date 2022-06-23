@@ -81,6 +81,7 @@ import java.util.*
 
 class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, ProductViewModel>() {
 
+  private val RC_PRODCUT_INFO: Int=101
   private var menuDelete: MenuItem? = null
   private var productImage: File? = null
   private var product: CatalogProduct? = null
@@ -287,7 +288,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     product = (arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct) ?: CatalogProduct()
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
     isNonPhysicalExperience = arguments?.getBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name)
-    currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "₹"
+    currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "INR"
     if (isEdit == true) menuDelete?.isVisible = true
   }
 
@@ -309,7 +310,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         bundle.putSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)
         bundle.putSerializable(IntentConstant.PRODUCT_IMAGE.name, secondaryDataImage)
         bundle.putSerializable(IntentConstant.PRODUCT_GST_DETAIL.name, gstProductData)
-        startFragmentActivity(FragmentType.PRODUCT_INFORMATION, bundle, isResult = true)
+        startFragmentActivity(FragmentType.PRODUCT_INFORMATION, bundle, isResult = true, requestCode = RC_PRODCUT_INFO)
       }
       binding?.vwSavePublish -> if (isValid()) createUpdateApi()
     }
@@ -582,7 +583,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         binding?.productImageView?.visible()
         productImage?.getBitmap()?.let { binding?.productImageView?.setImageBitmap(it) }
       }
-    } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
+    } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == RC_PRODCUT_INFO) {
       product = data?.getSerializableExtra(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct
       secondaryImage = (data?.getSerializableExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>) ?: ArrayList()
       gstProductData = data?.getSerializableExtra(IntentConstant.PRODUCT_GST_DETAIL.name) as? GstData

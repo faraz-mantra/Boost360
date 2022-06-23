@@ -120,13 +120,6 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     binding?.cetWebsite?.setText(product?.BuyOnlineLink?.description ?: "")
     binding?.cetWebsiteValue?.setText(product?.BuyOnlineLink?.url ?: "")
     binding?.ctvQuantityOrderStatus?.text = ordersQuantity.toString()
-    if (product?.isPriceToggleOn() == true) {
-      binding?.edtGst?.visible()
-      binding?.llGst?.visible()
-    } else {
-      binding?.edtGst?.gone()
-      binding?.llGst?.gone()
-    }
     if (product?.GstSlab != null) binding?.edtGst?.setText("${(product?.GstSlab ?: 0.0)} %")
     setAdapter()
     val listYesNo = mutableListOf(
@@ -220,7 +213,8 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     super.onClick(v)
     when (v) {
       binding?.edtGst -> {
-      } //openGStDetail()
+        openGStDetail()
+      }
       binding?.btnAddTag -> {
         val txtTag = binding?.edtServiceTag?.text.toString()
         if (txtTag.isNotEmpty()) {
@@ -315,7 +309,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         product?.maxCodOrders = ordersQuantity
         product?.otherSpecification = otherSpec
         product?.BuyOnlineLink = UniquePaymentUrlN(description = websiteName, url = websiteValue)
-        product?.GstSlab = 18//gst.toIntOrNull() ?: 0;
+        product?.GstSlab = gst.toInt()//gst.toIntOrNull() ?: 0;
         val output = Intent()
         output.putExtra(IntentConstant.PRODUCT_DATA.name, product)
         output.putExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)
