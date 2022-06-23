@@ -62,7 +62,7 @@
             android:layout_marginBottom="36dp"
             android:fontFamily="@font/regular"
             android:gravity="center"
-            android:text="‘FESTIVE’ coupon code applied."
+            android:text="FESTIVE coupon code applied."
             android:textColor="@color/copy_coupon_text_color"
             android:textFontWeight="400"
             android:textSize="@dimen/txt_13sp"
