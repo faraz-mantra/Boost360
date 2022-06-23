@@ -22,9 +22,12 @@ import com.boost.marketplace.adapter.CustomDomainListAdapter
 import com.boost.marketplace.adapter.CustomDomainListAdapter1
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityCustomDomainBinding
+import com.boost.marketplace.interfaces.DomainListener
 import com.boost.marketplace.ui.popup.customdomains.ConfirmedCustomDomainBottomSheet
 import com.boost.marketplace.ui.popup.customdomains.CustomDomainHelpBottomSheet
 import com.boost.marketplace.ui.popup.customdomains.SSLCertificateBottomSheet
+import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
 import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART
@@ -32,10 +35,11 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 
-class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, CustomDomainViewModel>() {
+class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, CustomDomainViewModel>(),DomainListener {
 
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
     var experienceCode: String? = null
+    var blockedItem: String?=null
     var fpid: String? = null
     var email: String? = null
     var mobileNo: String? = null
@@ -85,7 +89,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         viewModel.setApplicationLifecycle(application, this)
         viewModel = ViewModelProviders.of(this).get(CustomDomainViewModel::class.java)
         customDomainListAdapter1= CustomDomainListAdapter1(this,ArrayList())
-        customDomainListAdapter = CustomDomainListAdapter(this, ArrayList())
+        customDomainListAdapter = CustomDomainListAdapter(this, ArrayList(),this)
         progressDialog = ProgressDialog(this)
         prefs = SharedPrefs(this)
 
@@ -236,6 +240,12 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
     private fun loadData() {
         experienceCode?.let { DomainRequest(clientid, it) }
             ?.let { viewModel.GetSuggestedDomains(it) }
+
+        blockedItem?.let {
+            viewModel.domainStatus((this).getAccessToken() ?:"",intent.getStringExtra("fpid") ?: "",
+                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21", it
+            )
+        }
     }
 
     private fun initMVVM() {
@@ -293,87 +303,40 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
                 binding?.tvSuggestedDomains?.text = "Search results"
                 freeitemList.add(singleDomain)
                 updateDomainsRecycler(freeitemList)
-
             }
                if (singleDomain.name.lowercase().equals(searchValue.lowercase()) && searchValue.length > 7) {
-//                    if (singleDomain.isAvailable) {
-//                        binding?.layoutAvailable?.visibility = View.VISIBLE
-//                        binding?.tv1?.text = singleDomain.name
-//                    } else {
-//                        binding?.layoutAvailable?.visibility = View.GONE
-//                        binding?.layoutNotAvailable?.visibility = View.VISIBLE
-//                        binding?.tv?.text = singleDomain.name
-//                    }
                     binding?.rvCustomDomain1?.visibility=View.VISIBLE
                     paiditemList.add(singleDomain)
                     updateFreeAddonsRecycler1(paiditemList)
-                    updateDomainsRecycler(freeitemList!!)
-//                } else {
-//                    binding?.layoutAvailable?.visibility = View.GONE
-//                    binding?.layoutNotAvailable?.visibility = View.GONE
-//                }
-//                updateDomainsRecycler(freeitemList)
-//                    updateFreeAddonsRecycler1(paiditemList)
+                    updateDomainsRecycler(freeitemList)
             }
-                //            else {
-//                binding?.tvSuggestedDomains?.visibility = View.VISIBLE
-//                updateDomainsRecycler(allDomainsList!!)
-//            }
         }
-//        updateDomainsRecycler(freeitemList)
-//            updateFreeAddonsRecycler1(paiditemList)
-
-//        var exactMatchList: ArrayList<String> = arrayListOf()
-//        var everyMatchList: ArrayList<String> = arrayListOf()
-//        var isMatching: Boolean = false
-//        var searchChar: Char? = null
-//        for (item in allDomainsList!!) {
-//            for (i in searchValue) {
-//                if (item.name.lowercase().indexOf(searchValue.lowercase())!=-1) {
-//                    isMatching = true
-//                    if (item.name.lowercase() != (searchValue.lowercase())) {
-//                        isMatching = false
-//                    }
-//                    if (isMatching) {
-//                        freeitemList.add(item)
-//                    }
-//                    break
-//                }
-//            }
-//            if (item.equals(searchValue)) {
-//                freeitemList.add(item)
-//            }
-//        }
-//
-//        var exactMatchList: ArrayList<String> = arrayListOf()
-//        var everyMatchList: ArrayList<String> = arrayListOf()
-//        var isMatching: Boolean = false
-//        var searchChar: Char? = null
-//        for (number in list) {
-//            for (i in searchValue.indices) {
-//                if (number.contains(searchValue[i])) {
-//                    isMatching = true
-//                    if (number.contains(searchValue)) {
-//                        isMatching = false
-//                    }
-//                    if (isMatching) {
-//                        everyMatchList.add(number)
-//                    }
-//                    break
-//                }
-//            }
-//            if (number.contains(searchValue)) {
-//                exactMatchList.add(number)
-//            }
-//
-//        updateDomainsRecycler(freeitemList)
-//        if (isMatching) {
-//            binding?.rvCustomDomain1?.visibility = View.VISIBLE
-//            updateFreeAddonsRecycler1(freeitemList)
-//        }
     }
 
     private fun getDiscountedPrice(price: Double, discountPercent: Int): Double {
         return price - ((discountPercent / 100) * price)
     }
+
+    fun getAccessToken(): String {
+        return UserSessionManager(this).getAccessTokenAuth()?.barrierToken() ?: ""
+    }
+
+    override fun onSelectedDomain(itemList: Domain?) {
+        blockedItem=itemList?.name
+
+        blockedItem?.let {
+            viewModel.domainStatus((this).getAccessToken() ?:"",intent.getStringExtra("fpid") ?: "",
+                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21", it
+            )
+        }
+        viewModel.updateStatus().observe(this, androidx.lifecycle.Observer{
+            if (it.Result.equals(true)){
+                binding?.btnSelectDomain?.setBackgroundResource(R.color.colorAccent1);
+            }
+            else{
+                binding?.btnSelectDomain?.setBackgroundResource(R.color.btn_bg_color_disabled)
+            }
+        })
+    }
+
 }
