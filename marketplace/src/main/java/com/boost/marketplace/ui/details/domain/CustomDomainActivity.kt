@@ -103,6 +103,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         binding?.btnSelectDomain?.setOnClickListener {
             val dialogCard = ConfirmedCustomDomainBottomSheet()
             val bundle = Bundle()
+            bundle.putString("blockedItem",blockedItem)
             bundle.putString("fpid", fpid)
             bundle.putString("expCode", experienceCode)
             bundle.putString("bundleData", Gson().toJson(singleAddon))
@@ -240,12 +241,6 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
     private fun loadData() {
         experienceCode?.let { DomainRequest(clientid, it) }
             ?.let { viewModel.GetSuggestedDomains(it) }
-
-        blockedItem?.let {
-            viewModel.domainStatus((this).getAccessToken() ?:"",intent.getStringExtra("fpid") ?: "",
-                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21", it
-            )
-        }
     }
 
     private fun initMVVM() {
@@ -262,6 +257,15 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             } else {
                 binding?.scrollView?.visibility = View.VISIBLE
                 binding?.shimmerViewDomain?.visibility = View.GONE
+            }
+        })
+
+        viewModel.updateStatus().observe(this, androidx.lifecycle.Observer{
+            if (it.Result.equals(true)){
+                binding?.btnSelectDomain?.setBackgroundResource(R.color.colorAccent1);
+            }
+            else{
+                binding?.btnSelectDomain?.setBackgroundResource(R.color.btn_bg_color_disabled)
             }
         })
     }
@@ -329,14 +333,5 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
                 "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21", it
             )
         }
-        viewModel.updateStatus().observe(this, androidx.lifecycle.Observer{
-            if (it.Result.equals(true)){
-                binding?.btnSelectDomain?.setBackgroundResource(R.color.colorAccent1);
-            }
-            else{
-                binding?.btnSelectDomain?.setBackgroundResource(R.color.btn_bg_color_disabled)
-            }
-        })
     }
-
 }

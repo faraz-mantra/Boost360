@@ -20,6 +20,7 @@ import com.google.gson.reflect.TypeToken
 
 class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCustomDomainBinding, CustomDomainViewModel>() {
 
+    var blockedItem: String?=null
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
     var experienceCode: String? = null
     var fpid: String? = null
@@ -51,6 +52,7 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
     }
 
     override fun onCreateView() {
+        blockedItem = requireArguments().getString("blockedItem")
         experienceCode = requireArguments().getString("expCode")
         fpid = requireArguments().getString("fpid")
         isDeepLink = requireArguments().getBoolean("isDeepLink", false)
@@ -68,6 +70,8 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
         viewModel = ViewModelProviders.of(this).get(CustomDomainViewModel::class.java)
         progressDialog = ProgressDialog(context)
         prefs = SharedPrefs(baseActivity)
+
+        binding?.tvTitle?.text=blockedItem
 
         binding?.backBtn?.setOnClickListener {
             dismiss()
