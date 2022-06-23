@@ -1478,10 +1478,11 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
   fun initMvvM() {
 //        viewModel.updateRenewValue("")
     viewModel.cartResult().observe(viewLifecycleOwner, Observer {
-      if (it.isNullOrEmpty().not()) {
+      if (it != null && it.size > 0) {
         cartList = it as ArrayList<CartModel>
         empty_cart.visibility = View.GONE
         cart_main_layout.visibility = View.VISIBLE
+        total_months_layout.visibility = View.VISIBLE
         val features = arrayListOf<CartModel>()
         val bundles = arrayListOf<CartModel>()
         for (items in it) {
@@ -1568,9 +1569,6 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
               months_validity.setText(default_validity_months.toString())
             }
           }
-//                        months_validity.text = default_validity_months.toString() + " month"
-//                    months_validity_edit_inc.visibility = View.GONE
-//                    months_validity_edit_dsc.visibility = View.GONE
           cart_package_recycler.visibility = View.VISIBLE
         } else {
           bundles_in_cart = false
@@ -1582,8 +1580,6 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
             months_validity.setText(default_validity_months.toString())
           }
 //          months_validity.setText(default_validity_months.toString())
-          months_validity_edit_inc.visibility = View.VISIBLE
-          months_validity_edit_dsc.visibility = View.VISIBLE
           cart_package_recycler.visibility = View.GONE
         }
 //                totalCalculation()
@@ -1609,10 +1605,8 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
         WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE_EMPTY_CART_LOADED, EVENT_LABEL_ADDONS_MARKETPLACE_EMPTY_CART_LOADED, NO_EVENT_VALUE)
         empty_cart.visibility = View.VISIBLE
         cart_main_layout.visibility = View.GONE
+        total_months_layout.visibility = View.GONE
         Constants.COMPARE_CART_COUNT = 0
-        months_validity_edit_inc.visibility = View.GONE
-        months_validity_edit_dsc.visibility = View.GONE
-//                months_validity.text = "- -"
         months_validity.setText("- -")
 
         //clear coupon
