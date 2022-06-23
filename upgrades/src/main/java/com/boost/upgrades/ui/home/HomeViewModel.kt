@@ -584,6 +584,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                             if (it.Data[0].feedback_link != null && it.Data[0].feedback_link.isNotEmpty()) {
                                 feedbackLink.postValue(it.Data[0].feedback_link)
                             }
+                            updatesLoader.postValue(false)
 
                         },
                         {
