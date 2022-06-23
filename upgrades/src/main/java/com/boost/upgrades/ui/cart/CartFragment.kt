@@ -1962,9 +1962,9 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
       if (cartList != null && cartList.size > 0) {
         for (item in cartList) {
           if (!bundles_in_cart && item.item_type.equals("features")) {
-            total += item.price * monthCalculatorForAddons(default_validity_months, item.widget_type)
+            total += item.price * monthCalculatorForAddons(if (prefs.getYearPricing()) default_validity_months * 12 else default_validity_months, item.widget_type)
           }else {
-            total += (item.price / package_validity_months) * monthCalculatorForAddons(default_validity_months, item.widget_type)
+            total += (item.price / package_validity_months) * monthCalculatorForAddons(if (prefs.getYearPricing()) default_validity_months * 12 else default_validity_months, item.widget_type)
           }
         }
 
