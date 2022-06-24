@@ -20,6 +20,7 @@ import com.appservice.extension.afterTextChanged
 import com.appservice.model.FileModel
 import com.appservice.model.accountDetails.AccountDetailsResponse
 import com.appservice.model.accountDetails.BankAccountDetails
+import com.appservice.model.aptsetting.AppointmentStatusResponse
 import com.appservice.model.deviceId
 import com.appservice.model.pickUpAddress.PickUpAddressResponse
 import com.appservice.model.pickUpAddress.PickUpData
@@ -135,6 +136,21 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     capLimitCheck()
   }
 
+  fun getDefaultGst(){
+    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, {
+      val dataItem = it as? AppointmentStatusResponse
+      if (dataItem?.isSuccess() == true && dataItem.result != null) {
+       val catalogSetup = dataItem.result?.catalogSetup
+        gstProductData = GstData(gstSlab =catalogSetup?.getGstSlabInt()?.toDouble())
+
+      }else{
+        showLongToast(getString(R.string.unable_to_fetch_default_gst_slab))
+      }
+      hideProgress()
+    })
+  }
+
+
   private fun setupUIColor() {
     changeColorOfSubstring(R.string.product_category_, R.color.colorAccent, "*", binding?.tvProductCategoryVw!!)
     changeColorOfSubstring(R.string.product_description_, R.color.colorAccent, "*", binding?.tvProductDescVw!!)
@@ -183,7 +199,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun getPickUpAddress() {
-    if (isEdit == true) showProgress()
+    showProgress()
     viewModel?.getPickUpAddress(sessionLocal.fPID)?.observeOnce(viewLifecycleOwner) {
       val response = it as? PickUpAddressResponse
       pickUpDataAddress = if ((it.isSuccess()) && response?.data.isNullOrEmpty().not()) response?.data else ArrayList()
@@ -199,7 +215,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       }
       if (isEdit == false) {
         setBankAccountData()
-        hideProgress()
+        getDefaultGst()
       } else getAddPreviousData()
     })
   }

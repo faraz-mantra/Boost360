@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -113,6 +114,8 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
   private fun setUiText() {
     bindTimingWithBusinessHour()
+    binding?.edtGst?.isVisible = isDoctorClinic.not()
+    binding?.llGst?.isVisible = isDoctorClinic.not()
     ordersQuantity = product?.maxCodOrders ?: 0
     binding?.cetSpecKey?.setText(product?.keySpecification?.key ?: "")
     binding?.cetSpecValue?.setText(product?.keySpecification?.value ?: "")

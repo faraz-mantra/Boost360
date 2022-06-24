@@ -1224,4 +1224,5 @@
   <string name="jiolocal">JioLocal</string>
   <string name="facebook_page_shop">Facebook Page Shop</string>
   <string name="google_merchant_center">Google Merchant Center</string>
+    <string name="unable_to_fetch_default_gst_slab">Unable to fetch default gst slab</string>
 </resources>

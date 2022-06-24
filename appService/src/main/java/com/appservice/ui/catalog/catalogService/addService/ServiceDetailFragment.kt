@@ -16,6 +16,8 @@ import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentServiceDetailBinding
 import com.appservice.extension.afterTextChanged
 import com.appservice.model.FileModel
+import com.appservice.model.aptsetting.AppointmentStatusResponse
+import com.appservice.model.serviceProduct.gstProduct.response.GstData
 import com.appservice.model.serviceTiming.AddServiceTimingRequest
 import com.appservice.model.serviceTiming.ServiceTime
 import com.appservice.model.serviceTiming.ServiceTiming
@@ -187,7 +189,6 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun getBundleData() {
-    initProductFromBundle(arguments)
     isNonPhysicalExperience = arguments?.getBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name)
     currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "INR"
     fpId = arguments?.getString(IntentConstant.FP_ID.name)
@@ -196,19 +197,28 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     externalSourceId = arguments?.getString(IntentConstant.EXTERNAL_SOURCE_ID.name)
     applicationId = arguments?.getString(IntentConstant.APPLICATION_ID.name)
     userProfileId = arguments?.getString(IntentConstant.USER_PROFILE_ID.name)
+    initProductFromBundle(arguments)
+
     if (isEdit) menuDelete?.isVisible = true
   }
 
   private fun initProductFromBundle(data: Bundle?) {
     val p = data?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? ItemsItem
     isEdit = (p != null && p.id.isNullOrEmpty().not())
-    if (isEdit) getServiceDetailObject(p?.id) else this.product = ServiceModelV1()
+    if (isEdit) getServiceDetailObject(p?.id) else{
+      this.product = ServiceModelV1()
+      if (isDoctorClinic.not()){
+        showProgress()
+        hitApi(viewModel?.getAppointmentCatalogStatus(fpId,clientId),R.string.unable_to_fetch_default_gst_slab)
+      }
+    }
   }
 
   private fun getServiceDetailObject(serviceId: String?) {
     showProgress()
     hitApi(viewModel?.getServiceDetails(serviceId), R.string.error_getting_service_details)
     hitApi(viewModel?.getServiceTiming(serviceId), R.string.error_getting_service_timing)
+
   }
 
   override fun onClick(v: View) {
@@ -240,6 +250,21 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       }
       TaskCode.DELETE_SERVICE.ordinal -> onServiceDelete(it)
       TaskCode.GET_SERVICE_TIMING.ordinal -> onServiceTiming(it)
+      TaskCode.GET_APPOINTMENT_CATALOG_SETUP.ordinal->{
+        initDefaultGst(it)
+        hideProgress()
+      }
+    }
+  }
+
+  private fun initDefaultGst(it: BaseResponse) {
+    val dataItem = it as? AppointmentStatusResponse
+    if (dataItem?.isSuccess() == true && dataItem.result != null) {
+      val catalogSetup = dataItem.result?.catalogSetup
+      product?.GstSlab = catalogSetup?.getGstSlabInt()?:0
+
+    }else{
+      showLongToast(getString(R.string.unable_to_fetch_default_gst_slab))
     }
   }
 
