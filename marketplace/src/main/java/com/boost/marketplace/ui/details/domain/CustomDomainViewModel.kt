@@ -1,6 +1,5 @@
 package com.boost.marketplace.ui.details.domain
 
-import android.app.Activity
 import android.app.Application
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -71,7 +70,7 @@ class CustomDomainViewModel() : BaseViewModel() {
         )
     }
 
-    fun addItemToCart1(updatesModel: FeaturesModel, activity: Activity) {
+    fun addItemToCart1(updatesModel: FeaturesModel,title:String) {
         updatesLoader.postValue(false)
         val discount = 100 - updatesModel.discount_percent
         val paymentPrice = ((discount * updatesModel.price) / 100)
@@ -90,7 +89,9 @@ class CustomDomainViewModel() : BaseViewModel() {
             1,
             "features",
             updatesModel.extended_properties,
-            updatesModel.widget_type?:""
+            updatesModel.widget_type?:"",
+            title
+
         )
 
         Completable.fromAction {

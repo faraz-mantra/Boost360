@@ -1,6 +1,7 @@
 package com.boost.marketplace.ui.details.domain
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -41,6 +42,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
     var experienceCode: String? = null
     var blockedItem: String?=null
     var fpid: String? = null
+    var fpTag: String? = null
     var email: String? = null
     var mobileNo: String? = null
     var profileUrl: String? = null
@@ -105,6 +107,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             val bundle = Bundle()
             bundle.putString("blockedItem",blockedItem)
             bundle.putString("fpid", fpid)
+            bundle.putString("fpTag",fpTag)
             bundle.putString("expCode", experienceCode)
             bundle.putString("bundleData", Gson().toJson(singleAddon))
             bundle.putString("isDeepLink", isDeepLink.toString())
@@ -189,7 +192,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             if (!itemInCartStatus) {
                 if (singleAddon != null) {
                     prefs.storeCartOrderInfo(null)
-                    viewModel.addItemToCart1(singleAddon, this)
+                    viewModel.addItemToCart1(singleAddon, blockedItem?:"")
                     val event_attributes: HashMap<String, Any> = HashMap()
                     singleAddon.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
                     event_attributes.put("Addon Price", singleAddon.price)
@@ -216,6 +219,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             }
             val intent = Intent(applicationContext, CartActivity::class.java)
             intent.putExtra("fpid", fpid)
+            intent.putExtra("fpTag",fpTag)
             intent.putExtra("expCode", experienceCode)
             intent.putExtra("isDeepLink", isDeepLink)
             intent.putExtra("deepLinkViewType", deepLinkViewType)
@@ -239,7 +243,9 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
     }
 
     private fun loadData() {
-        experienceCode?.let { DomainRequest(clientid, it) }
+        val pref = getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+        val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
+        fpTag?.let { DomainRequest(clientid, it) }
             ?.let { viewModel.GetSuggestedDomains(it) }
     }
 

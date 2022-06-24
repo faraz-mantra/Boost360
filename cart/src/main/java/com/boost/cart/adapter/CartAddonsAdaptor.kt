@@ -12,7 +12,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
 import com.boost.cart.interfaces.CartFragmentListener
-import com.boost.cart.utils.SharedPrefs
 import com.boost.cart.utils.Utils.priceCalculatorForYear
 import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
@@ -23,7 +22,6 @@ import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_ADD_ON_CROSSED_DELETED_FROM_CART
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentListener, val activity: Activity) :
@@ -52,7 +50,7 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
   override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
     Glide.with(context).load(list.get(position).link).placeholder(R.drawable.boost_360_insignia)
       .into(holder.image)
-    holder.title.text = list.get(position).item_name
+
     val price = priceCalculatorForYear(list.get(position).price * list.get(position).min_purchase_months, list.get(position).widget_type, activity)
     val MRPPrice = priceCalculatorForYear(list.get(position).MRPPrice * list.get(position).min_purchase_months, list.get(position).widget_type, activity)
     holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + yearlyOrMonthlyOrEmptyValidity(list.get(position).widget_type, activity)
@@ -65,12 +63,15 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
     if(list.get(position).boost_widget_key!!.contains("DOMAINPURCHASE")
       || list.get(position).boost_widget_key!!.contains("EMAILACCOUNTS")
       || list.get(position).boost_widget_key!!.contains("CALLTRACKER")){
-      holder.desc.visibility = View.GONE
+//      holder.desc.visibility = View.GONE
+      holder.title.text = list.get(position).addon_title
+      holder.desc.text=list.get(position).item_name
     }else {
-      holder.desc.visibility = View.VISIBLE
+//      holder.desc.visibility = View.VISIBLE
       holder.desc.text = list.get(position).description_title
+      holder.title.text = list.get(position).item_name
     }
-    holder.title.text = list.get(position).item_name
+
 //    if (list.get(position).discount > 0) {
 //      holder.discount.text = list.get(position).discount.toString() + "%"
 //    } else {
