@@ -576,7 +576,9 @@ fun AppCompatActivity.startPreSignUp(session: UserSessionManager?, isClearTask: 
   try {
     WebEngageController.trackEvent(PRE_SIGN_UP_PAGE, START_VIEW, TO_BE_ADDED)
     val webIntent: Intent = if (featureNewOnBoardingFlowEnable()) {
-      Intent(this, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity")).putExtra("FRAGMENT_TYPE", "INTRO_SLIDE_SHOW_FRAGMENT")
+      val fragmentType = if (UserSessionManager(this).hasUserLoggedInOnce) "ENTER_PHONE_FRAGMENT" else "INTRO_SLIDE_SHOW_FRAGMENT"
+
+      Intent(this, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity")).putExtra("FRAGMENT_TYPE", fragmentType)
     } else {
       Intent(this, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
     }

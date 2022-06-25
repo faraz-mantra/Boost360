@@ -256,7 +256,7 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_1"
               android:layout_marginTop="@dimen/size_14"
-              android:text="@string/account_number_"
+              android:text="@string/account_number_aestrick"
               android:textColor="@color/greyish_brown"
               app:fontFamily="@font/regular"
               app:textType="BODY_1" />
@@ -305,7 +305,7 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_1"
               android:layout_marginTop="@dimen/size_14"
-              android:text="@string/ifsc_code"
+              android:text="@string/ifsc_code_with_aestrick"
               android:textColor="@color/greyish_brown"
               app:fontFamily="@font/regular"
               app:textType="BODY_1" />

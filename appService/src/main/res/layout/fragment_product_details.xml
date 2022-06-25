@@ -319,7 +319,7 @@
                     <com.framework.views.customViews.CustomTextView
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="@string/price_without_tax_inr"
+                      android:text="@string/price_includes_taxes"
                       android:textColor="@color/black_4a4a4a"
                       android:textSize="12sp"
                       app:fontFamily="@font/light" />
