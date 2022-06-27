@@ -60,13 +60,13 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
   }
 
   private fun catalogApiGetGstData() {
-    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner) {
       val dataItem = it as? AppointmentStatusResponse
       if (dataItem?.isSuccess() == true && dataItem.result != null) {
         catalogSetup = dataItem.result?.catalogSetup
         setData(catalogSetup)
       }
-    })
+    }
   }
 
   private fun setData(catalogSetup: CatalogSetup?) {
@@ -78,7 +78,7 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
     showProgress()
     val map = HashMap<String, String>()
     map["clientId"] = clientId
-    viewModel?.getFpDetails(sessionLocal.fPID ?: "", map)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getFpDetails(sessionLocal.fPID ?: "", map)?.observeOnce(viewLifecycleOwner) {
       hideProgress()
       this.response = it as? UserFpDetailsResponse
       if (it.isSuccess() && response != null) {
@@ -87,7 +87,7 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
         sessionLocal.storeFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB, response?.productCategoryVerb)
         onCatalogSetupAddedOrUpdated(response?.productCategoryVerb.isNullOrEmpty().not())
       }
-    })
+    }
   }
 
   override fun onClick(v: View) {
@@ -113,11 +113,11 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
 
   private fun updateGstData() {
     showProgress()
-    viewModel?.updateGstSlab(GstSlabRequest(clientId, sessionLocal.fPID, gstSlab))?.observeOnce(viewLifecycleOwner, {
+    viewModel?.updateGstSlab(GstSlabRequest(clientId, sessionLocal.fPID, gstSlab))?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) binding?.edtTextSlab?.setText("$gstSlab%")
       else showShortToast(it.messageN())
       hideProgress()
-    })
+    }
   }
 
   private fun showCatalogDisplayName() {
