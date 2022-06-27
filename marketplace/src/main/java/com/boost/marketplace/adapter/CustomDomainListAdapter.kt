@@ -9,19 +9,22 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.data.api_model.CustomDomain.Domain
 import com.boost.marketplace.R
+import com.boost.marketplace.interfaces.DomainListener
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 
 
 class CustomDomainListAdapter(
-    val activity: CustomDomainActivity, itemList: List<Domain>?,
+    val activity: CustomDomainActivity, itemList: List<Domain>?, listen: DomainListener
 ) : RecyclerView.Adapter<CustomDomainListAdapter.upgradeViewHolder>() {
 
     private var upgradeList = ArrayList<Domain>()
     private lateinit var context: Context
     var selectedPosition: Int = -1
+    private lateinit var listener: DomainListener
 
     init {
         this.upgradeList = itemList as ArrayList<Domain>
+        listener = listen
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -55,6 +58,7 @@ class CustomDomainListAdapter(
         holder.itemView.setOnClickListener {
             selectedPosition = position;
             notifyDataSetChanged();
+            listener.onSelectedDomain(upgradeList.get(position))
         }
 
     }

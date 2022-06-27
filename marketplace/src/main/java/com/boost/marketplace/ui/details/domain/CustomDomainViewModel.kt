@@ -1,12 +1,12 @@
 package com.boost.marketplace.ui.details.domain
 
-import android.app.Activity
 import android.app.Application
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.boost.dbcenterapi.data.api_model.CustomDomain.CustomDomains
 import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
+import com.boost.dbcenterapi.data.api_model.blockingAPI.BlockApi
 import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
@@ -22,6 +22,7 @@ import io.reactivex.schedulers.Schedulers
 class CustomDomainViewModel() : BaseViewModel() {
 
     var updatesResult: MutableLiveData<CustomDomains> = MutableLiveData()
+    var updateStatus : MutableLiveData<BlockApi> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
     var ApiService = Utils.getRetrofit().create(NewApiInterface::class.java)
@@ -48,6 +49,10 @@ class CustomDomainViewModel() : BaseViewModel() {
         return updatesResult
     }
 
+    fun updateStatus():LiveData<BlockApi> {
+        return updateStatus
+    }
+
     fun GetSuggestedDomains(domainRequest: DomainRequest) {
         updatesLoader.postValue(true)
         compositeDisposable.add(
@@ -65,7 +70,7 @@ class CustomDomainViewModel() : BaseViewModel() {
         )
     }
 
-    fun addItemToCart1(updatesModel: FeaturesModel, activity: Activity) {
+    fun addItemToCart1(updatesModel: FeaturesModel,title:String) {
         updatesLoader.postValue(false)
         val discount = 100 - updatesModel.discount_percent
         val paymentPrice = ((discount * updatesModel.price) / 100)
@@ -84,7 +89,9 @@ class CustomDomainViewModel() : BaseViewModel() {
             1,
             "features",
             updatesModel.extended_properties,
-            updatesModel.widget_type?:""
+            updatesModel.widget_type?:"",
+            title
+
         )
 
         Completable.fromAction {
@@ -103,5 +110,22 @@ class CustomDomainViewModel() : BaseViewModel() {
                 updatesLoader.postValue(false)
             }
             .subscribe()
+    }
+
+    fun domainStatus(auth :String,fpid: String,clientId: String,blockedItem:String){
+//        updatesLoader.postValue(true)
+        compositeDisposable.add(
+            ApiService.getItemAvailability(auth,fpid,clientId,blockedItem)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        updateStatus.postValue(it)
+//                        updatesLoader.postValue(false)
+                    }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
     }
 }

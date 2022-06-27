@@ -1,6 +1,7 @@
 package com.boost.marketplace.ui.details.domain
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
@@ -22,21 +24,27 @@ import com.boost.marketplace.adapter.CustomDomainListAdapter
 import com.boost.marketplace.adapter.CustomDomainListAdapter1
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityCustomDomainBinding
+import com.boost.marketplace.interfaces.DomainListener
 import com.boost.marketplace.ui.popup.customdomains.ConfirmedCustomDomainBottomSheet
 import com.boost.marketplace.ui.popup.customdomains.CustomDomainHelpBottomSheet
 import com.boost.marketplace.ui.popup.customdomains.SSLCertificateBottomSheet
+import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
 import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import es.dmoral.toasty.Toasty
 
 
-class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, CustomDomainViewModel>() {
+class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, CustomDomainViewModel>(),DomainListener {
 
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
     var experienceCode: String? = null
+    var blockedItem: String?=null
     var fpid: String? = null
+    var fpTag: String? = null
     var email: String? = null
     var mobileNo: String? = null
     var profileUrl: String? = null
@@ -48,6 +56,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
     var userPurchsedWidgets = java.util.ArrayList<String>()
     var allDomainsList: List<Domain>? = null
     var itemInCartStatus = false
+     var  result:Boolean? = null
     lateinit var customDomainListAdapter1: CustomDomainListAdapter1
     lateinit var customDomainListAdapter: CustomDomainListAdapter
     lateinit var singleAddon: FeaturesModel
@@ -84,8 +93,8 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         singleAddon = Gson().fromJson<FeaturesModel>(jsonString, object : TypeToken<FeaturesModel>() {}.type)
         viewModel.setApplicationLifecycle(application, this)
         viewModel = ViewModelProviders.of(this).get(CustomDomainViewModel::class.java)
-        customDomainListAdapter1= CustomDomainListAdapter1(this,ArrayList())
-        customDomainListAdapter = CustomDomainListAdapter(this, ArrayList())
+        customDomainListAdapter1= CustomDomainListAdapter1(this,ArrayList(),this)
+        customDomainListAdapter = CustomDomainListAdapter(this, ArrayList(),this)
         progressDialog = ProgressDialog(this)
         prefs = SharedPrefs(this)
 
@@ -97,33 +106,44 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             )
         }
         binding?.btnSelectDomain?.setOnClickListener {
-            val dialogCard = ConfirmedCustomDomainBottomSheet()
-            val bundle = Bundle()
-            bundle.putString("fpid", fpid)
-            bundle.putString("expCode", experienceCode)
-            bundle.putString("bundleData", Gson().toJson(singleAddon))
-            bundle.putString("isDeepLink", isDeepLink.toString())
-            bundle.putString("deepLinkViewType", deepLinkViewType)
-            bundle.putString("deepLinkDay", deepLinkDay.toString())
-            bundle.putString("isOpenCardFragment", isOpenCardFragment.toString())
-            bundle.putString("accountType", accountType)
-            bundle.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
-            if (email != null) {
-                intent.putExtra("email", email)
-            } else {
-                intent.putExtra("email", "ria@nowfloats.com")
+            if(blockedItem!=null //&& result ==false
+            ) {
+                val dialogCard = ConfirmedCustomDomainBottomSheet()
+                val bundle = Bundle()
+                bundle.putString("blockedItem", blockedItem)
+                bundle.putString("fpid", fpid)
+                bundle.putString("fpTag", fpTag)
+                bundle.putString("expCode", experienceCode)
+                bundle.putString("bundleData", Gson().toJson(singleAddon))
+                bundle.putString("isDeepLink", isDeepLink.toString())
+                bundle.putString("deepLinkViewType", deepLinkViewType)
+                bundle.putString("deepLinkDay", deepLinkDay.toString())
+                bundle.putString("isOpenCardFragment", isOpenCardFragment.toString())
+                bundle.putString("accountType", accountType)
+                bundle.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+                if (email != null) {
+                    intent.putExtra("email", email)
+                } else {
+                    intent.putExtra("email", "ria@nowfloats.com")
+                }
+                if (mobileNo != null) {
+                    intent.putExtra("mobileNo", mobileNo)
+                } else {
+                    intent.putExtra("mobileNo", "9160004303")
+                }
+                intent.putExtra("profileUrl", profileUrl)
+                dialogCard.arguments = bundle
+                dialogCard.show(
+                    this.supportFragmentManager,
+                    ConfirmedCustomDomainBottomSheet::class.java.name
+                )
             }
-            if (mobileNo != null) {
-                intent.putExtra("mobileNo", mobileNo)
-            } else {
-                intent.putExtra("mobileNo", "9160004303")
+//            else if (blockedItem!=null && result ==true){
+//                Toasty.error(this, "Domain unavailable select other", Toast.LENGTH_SHORT).show()
+//            }
+            else{
+                Toasty.error(this, "No domain selected ", Toast.LENGTH_SHORT).show()
             }
-            intent.putExtra("profileUrl", profileUrl)
-            dialogCard.arguments = bundle
-            dialogCard.show(
-                this.supportFragmentManager,
-                ConfirmedCustomDomainBottomSheet::class.java.name
-            )
         }
         binding?.tvLearmore?.setOnClickListener {
             val dialogCard = SSLCertificateBottomSheet()
@@ -138,11 +158,6 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
         }
-
-        loadData()
-        initMVVM()
-        initRecyclerView()
-        initRecyclerView1()
 
         binding?.etDomain?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -173,8 +188,11 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             }
         })
         binding?.ivCross?.setOnClickListener {
+            blockedItem=null
+            binding?.btnSelectDomain?.setBackgroundResource(R.color.btn_bg_color_disabled);
             binding?.ivCross?.visibility = View.GONE
             binding?.searchResults?.visibility = View.GONE
+            binding?.rvCustomDomain1?.visibility=View.GONE
             binding?.tvSuggestedDomains?.text = "Suggested domains for you"
             allDomainsList?.let { updateDomainsRecycler(it) }
             binding?.etDomain?.text = null
@@ -184,7 +202,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             if (!itemInCartStatus) {
                 if (singleAddon != null) {
                     prefs.storeCartOrderInfo(null)
-                    viewModel.addItemToCart1(singleAddon, this)
+                    viewModel.addItemToCart1(singleAddon, singleAddon.name?:"")
                     val event_attributes: HashMap<String, Any> = HashMap()
                     singleAddon.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
                     event_attributes.put("Addon Price", singleAddon.price)
@@ -211,6 +229,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             }
             val intent = Intent(applicationContext, CartActivity::class.java)
             intent.putExtra("fpid", fpid)
+            intent.putExtra("fpTag",fpTag)
             intent.putExtra("expCode", experienceCode)
             intent.putExtra("isDeepLink", isDeepLink)
             intent.putExtra("deepLinkViewType", deepLinkViewType)
@@ -231,10 +250,17 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             intent.putExtra("profileUrl", profileUrl)
             startActivity(intent)
         }
+
+        loadData()
+        initMVVM()
+        initRecyclerView()
+        initRecyclerView1()
     }
 
     private fun loadData() {
-        experienceCode?.let { DomainRequest(clientid, it) }
+        val pref = getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+        val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
+        fpTag?.let { DomainRequest(clientid, it) }
             ?.let { viewModel.GetSuggestedDomains(it) }
     }
 
@@ -253,6 +279,16 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
                 binding?.scrollView?.visibility = View.VISIBLE
                 binding?.shimmerViewDomain?.visibility = View.GONE
             }
+        })
+
+        viewModel.updateStatus().observe(this, androidx.lifecycle.Observer{
+            result=it.Result
+//            if (it.Result.equals(false)){
+//                binding?.btnSelectDomain?.setBackgroundResource(R.color.colorAccent1);
+//            }
+//            else{
+//                binding?.btnSelectDomain?.setBackgroundResource(R.color.btn_bg_color_disabled)
+//            }
         })
     }
 
@@ -293,87 +329,69 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
                 binding?.tvSuggestedDomains?.text = "Search results"
                 freeitemList.add(singleDomain)
                 updateDomainsRecycler(freeitemList)
-
             }
                if (singleDomain.name.lowercase().equals(searchValue.lowercase()) && searchValue.length > 7) {
-//                    if (singleDomain.isAvailable) {
-//                        binding?.layoutAvailable?.visibility = View.VISIBLE
-//                        binding?.tv1?.text = singleDomain.name
-//                    } else {
-//                        binding?.layoutAvailable?.visibility = View.GONE
-//                        binding?.layoutNotAvailable?.visibility = View.VISIBLE
-//                        binding?.tv?.text = singleDomain.name
-//                    }
                     binding?.rvCustomDomain1?.visibility=View.VISIBLE
                     paiditemList.add(singleDomain)
                     updateFreeAddonsRecycler1(paiditemList)
-                    updateDomainsRecycler(freeitemList!!)
-//                } else {
-//                    binding?.layoutAvailable?.visibility = View.GONE
-//                    binding?.layoutNotAvailable?.visibility = View.GONE
-//                }
-//                updateDomainsRecycler(freeitemList)
-//                    updateFreeAddonsRecycler1(paiditemList)
+                    updateDomainsRecycler(freeitemList)
             }
-                //            else {
-//                binding?.tvSuggestedDomains?.visibility = View.VISIBLE
-//                updateDomainsRecycler(allDomainsList!!)
-//            }
         }
-//        updateDomainsRecycler(freeitemList)
-//            updateFreeAddonsRecycler1(paiditemList)
-
-//        var exactMatchList: ArrayList<String> = arrayListOf()
-//        var everyMatchList: ArrayList<String> = arrayListOf()
-//        var isMatching: Boolean = false
-//        var searchChar: Char? = null
-//        for (item in allDomainsList!!) {
-//            for (i in searchValue) {
-//                if (item.name.lowercase().indexOf(searchValue.lowercase())!=-1) {
-//                    isMatching = true
-//                    if (item.name.lowercase() != (searchValue.lowercase())) {
-//                        isMatching = false
-//                    }
-//                    if (isMatching) {
-//                        freeitemList.add(item)
-//                    }
-//                    break
-//                }
-//            }
-//            if (item.equals(searchValue)) {
-//                freeitemList.add(item)
-//            }
-//        }
-//
-//        var exactMatchList: ArrayList<String> = arrayListOf()
-//        var everyMatchList: ArrayList<String> = arrayListOf()
-//        var isMatching: Boolean = false
-//        var searchChar: Char? = null
-//        for (number in list) {
-//            for (i in searchValue.indices) {
-//                if (number.contains(searchValue[i])) {
-//                    isMatching = true
-//                    if (number.contains(searchValue)) {
-//                        isMatching = false
-//                    }
-//                    if (isMatching) {
-//                        everyMatchList.add(number)
-//                    }
-//                    break
-//                }
-//            }
-//            if (number.contains(searchValue)) {
-//                exactMatchList.add(number)
-//            }
-//
-//        updateDomainsRecycler(freeitemList)
-//        if (isMatching) {
-//            binding?.rvCustomDomain1?.visibility = View.VISIBLE
-//            updateFreeAddonsRecycler1(freeitemList)
-//        }
     }
 
     private fun getDiscountedPrice(price: Double, discountPercent: Int): Double {
         return price - ((discountPercent / 100) * price)
+    }
+
+    fun getAccessToken(): String {
+        return UserSessionManager(this).getAccessTokenAuth()?.barrierToken() ?: ""
+    }
+
+    override fun onSelectedDomain(itemList: Domain?) {
+        blockedItem=itemList?.name
+        binding?.btnSelectDomain?.setBackgroundResource(R.color.colorAccent1);
+
+    }
+
+    override fun onSearchedDomain(itemList: Domain?) {
+        blockedItem=itemList?.name
+        if(blockedItem!=null //&& result ==false
+        ) {
+            val dialogCard = ConfirmedCustomDomainBottomSheet()
+            val bundle = Bundle()
+            bundle.putString("blockedItem", blockedItem)
+            bundle.putString("fpid", fpid)
+            bundle.putString("fpTag", fpTag)
+            bundle.putString("expCode", experienceCode)
+            bundle.putString("bundleData", Gson().toJson(singleAddon))
+            bundle.putString("isDeepLink", isDeepLink.toString())
+            bundle.putString("deepLinkViewType", deepLinkViewType)
+            bundle.putString("deepLinkDay", deepLinkDay.toString())
+            bundle.putString("isOpenCardFragment", isOpenCardFragment.toString())
+            bundle.putString("accountType", accountType)
+            bundle.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+            if (email != null) {
+                intent.putExtra("email", email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                intent.putExtra("mobileNo", mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", profileUrl)
+            dialogCard.arguments = bundle
+            dialogCard.show(
+                this.supportFragmentManager,
+                ConfirmedCustomDomainBottomSheet::class.java.name
+            )
+        }
+//            else if (blockedItem!=null && result ==true){
+//                Toasty.error(this, "Domain unavailable select other", Toast.LENGTH_SHORT).show()
+//            }
+        else{
+            Toasty.error(this, "No domain selected ", Toast.LENGTH_SHORT).show()
+        }
     }
 }

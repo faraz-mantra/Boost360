@@ -4,25 +4,29 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.data.api_model.CustomDomain.Domain
 import com.boost.marketplace.R
+import com.boost.marketplace.interfaces.DomainListener
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 
 
 class CustomDomainListAdapter1(
     val activity: CustomDomainActivity,
     itemList: List<Domain>?,
-    // val listener: HomeListener
+    listen: DomainListener
 ) : RecyclerView.Adapter<CustomDomainListAdapter1.upgradeViewHolder>() {
 
     private var upgradeList = ArrayList<Domain>()
     private lateinit var context: Context
     var selectedPosition: Int = -1
+    private lateinit var listener: DomainListener
 
     init {
         this.upgradeList = itemList as ArrayList<Domain>
+        listener = listen
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -40,16 +44,6 @@ class CustomDomainListAdapter1(
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
         holder.title.text = upgradeList.get(position).name
-//        holder.dummy1.visibility=if (position == upgradeList.lastIndex) {
-//            View.GONE
-//        } else {
-//            View.VISIBLE
-//        }
-//        holder.tv_recommend.visibility=if (position == 0) {
-//            View.VISIBLE
-//        } else {
-//            View.GONE
-//        }
 
         if (selectedPosition == position)
             holder.itemView.setBackgroundResource(R.color.colorAccent2);
@@ -58,6 +52,10 @@ class CustomDomainListAdapter1(
         holder.itemView.setOnClickListener {
             selectedPosition = position;
             notifyDataSetChanged();
+            listener.onSearchedDomain(upgradeList.get(position))
+        }
+        holder.btn_Select.setOnClickListener {
+            listener.onSearchedDomain(upgradeList.get(position))
         }
 
     }
@@ -73,6 +71,7 @@ class CustomDomainListAdapter1(
         var title = itemView.findViewById<TextView>(R.id.tv_11)
         var tv_recommend = itemView.findViewById<TextView>(R.id.tv_recommend)
         var dummy1 = itemView.findViewById<View>(R.id.dummy1)
+        var btn_Select = itemView.findViewById<Button>(R.id.btn_Select)
     }
 
 }

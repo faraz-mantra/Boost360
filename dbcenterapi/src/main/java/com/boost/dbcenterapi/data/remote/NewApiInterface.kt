@@ -5,6 +5,7 @@ import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
 import com.boost.dbcenterapi.data.api_model.GetFeatureDetails.FeatureDetailsV2Item
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrderV2.GetPurchaseOrderResponseV2
+import com.boost.dbcenterapi.data.api_model.blockingAPI.BlockApi
 import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
 import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsRequest
 import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsResponse
@@ -76,4 +77,15 @@ interface NewApiInterface {
         @Query("fpId") floatingPointId: String,
         @Query("clientId") clientId: String
     ): Observable<CallTrackListResponse>
+
+    //Blocking API
+    @Headers("Content-Type: application/json")
+    @GET("https://api2.withfloats.com/discover/v1/floatingPoint/VerifyDomainOrVMNRegisted")
+    fun getItemAvailability(
+         @Header("Authorization") auth: String,
+         @Query("fpId") floatingPointId: String,
+         @Query("clientId") clientId: String,
+         @Query("blockedItem") blockedItem :String
+    ):Observable<BlockApi>
+
 }
