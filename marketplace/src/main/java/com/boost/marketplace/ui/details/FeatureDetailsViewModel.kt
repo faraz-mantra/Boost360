@@ -8,6 +8,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.boost.cart.utils.Utils
+import com.boost.dbcenterapi.data.api_model.blockingAPI.BlockApi
 import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
 import com.boost.dbcenterapi.data.api_model.gst.Error
 import com.boost.dbcenterapi.data.remote.NewApiInterface
@@ -34,6 +35,8 @@ class FeatureDetailsViewModel: BaseViewModel() {
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
     var allBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
     private var callTrackListResponse: MutableLiveData<CallTrackListResponse> = MutableLiveData()
+    var updateStatus : MutableLiveData<BlockApi> = MutableLiveData()
+
 
 
     val compositeDisposable = CompositeDisposable()
@@ -57,6 +60,12 @@ class FeatureDetailsViewModel: BaseViewModel() {
     fun addonsLoader(): LiveData<Boolean> {
         return updatesLoader
     }
+    fun updateStatus():LiveData<BlockApi> {
+        return updateStatus
+    }
+    fun getCallTrackingDetails(): LiveData<CallTrackListResponse> {
+        return callTrackListResponse
+    }
     lateinit var application: Application
     lateinit var lifecycleOwner: LifecycleOwner
     var ApiService = com.boost.dbcenterapi.utils.Utils.getRetrofit().create(NewApiInterface::class.java)
@@ -67,9 +76,7 @@ class FeatureDetailsViewModel: BaseViewModel() {
         this.application = application
         this.lifecycleOwner = lifecycleOwner
     }
-    fun getCallTrackingDetails(): LiveData<CallTrackListResponse> {
-        return callTrackListResponse
-    }
+
     fun loadNumberList(fpid: String, clientId: String) {
         updatesLoader.postValue(true)
         if (Utils.isConnectedToInternet(application)) {
@@ -83,7 +90,6 @@ class FeatureDetailsViewModel: BaseViewModel() {
                         {
                             Log.i("getNumbersforVMN", it.toString())
                             updatesLoader.postValue(false)
-
                             var NumberList = it
                             callTrackListResponse.postValue(NumberList)
                         }
@@ -206,6 +212,20 @@ class FeatureDetailsViewModel: BaseViewModel() {
                     updatesLoader.postValue(false)
                 }
                 .subscribe()
+        )
+    }
+    fun blockNumberStatus(auth :String,fpid: String,clientId: String,blockedItem:String){
+        compositeDisposable.add(
+            ApiService.getItemAvailability(auth,fpid,clientId,blockedItem)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        updateStatus.postValue(it)
+                    }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
         )
     }
 }

@@ -51,7 +51,7 @@
 
 
             <TextView
-                android:id="@+id/tv_need_help_msg"
+                android:id="@+id/tv_select_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -85,7 +85,7 @@
                 android:textSize="@dimen/txt_16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_need_help_msg" />
+                app:layout_constraintTop_toBottomOf="@id/tv_select_number" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

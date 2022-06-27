@@ -42,9 +42,9 @@ import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 import com.boost.marketplace.ui.details.staff.StaffManagementBottomSheet
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
+import com.boost.marketplace.ui.popup.call_track.CallTrackAddToCartBottomSheet
 import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
 import com.boost.marketplace.ui.popup.call_track.RequestCallbackBottomSheet
-import com.boost.marketplace.ui.popup.call_track.SelectedNumberBottomSheet
 import com.boost.marketplace.ui.popup.removeItems.RemovePackageBottomSheet
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.bumptech.glide.Glide
@@ -310,15 +310,43 @@ class FeatureDetailsActivity :
 
                 System.out.println("numberList" + it)
 
-                val dialogCard = SelectedNumberBottomSheet()
-                val args = Bundle()
-                args.putString("phone_number", it[0])
-                args.putStringArrayList("numberList", it)
-                dialogCard.arguments = args
+                val dialogCard = CallTrackAddToCartBottomSheet()
+                val bundle = Bundle()
+//                bundle.putString("from_where","featureDetails")
+//                bundle.putString("bundleData", Gson().toJson(addonDetails))
+//                bundle.putDouble("AddonDiscountedPrice", getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent))
+                 bundle.putString("phone_number", it[0])
+                 bundle.putString("fpid", fpid)
+//                bundle.putString("expCode", experienceCode)
+//                bundle.putBoolean("isDeepLink", isDeepLink)
+//                bundle.putString("deepLinkViewType", deepLinkViewType)
+//                bundle.putInt("deepLinkDay", deepLinkDay)
+//                bundle.putBoolean("isOpenCardFragment", isOpenCardFragment)
+//                bundle.putString(
+//                    "accountType",
+//                    accountType
+//                )
+//                bundle.putStringArrayList(
+//                    "userPurchsedWidgets",
+//                    userPurchsedWidgets
+//                )
+//                if (email != null) {
+//                    bundle.putString("email", email)
+//                } else {
+//                    bundle.putString("email", "ria@nowfloats.com")
+//                }
+//                if (mobileNo != null) {
+//                    bundle.putString("mobileNo", mobileNo)
+//                } else {
+//                    bundle.putString("mobileNo", "9160004303")
+//                }
+//                bundle.putString("profileUrl", profileUrl)
+                dialogCard.arguments = bundle
                 dialogCard.show(
                     this.supportFragmentManager,
-                    SelectedNumberBottomSheet::class.java.name
+                    CallTrackAddToCartBottomSheet::class.java.name
                 )
+
             }
         }
         viewModel.addonsResult().observe(this, Observer {
@@ -573,7 +601,6 @@ class FeatureDetailsActivity :
                 when {
                     addonDetails?.boost_widget_key?.equals("IVR")!! -> {
                         loadNumberList()
-                        //startActivity(Intent(this, CallTrackingActivity::class.java))
                     }
                     addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
                         goToDomainSelection()

@@ -86,9 +86,16 @@ class NumberListAdapter(
             holder.itemView.setBackgroundResource(R.color.white);
         }
         holder.itemView.setOnClickListener {
-            selectedPosition = position;
-            notifyDataSetChanged();
+            listener.onClicked(upgradeList[position])
+            selectedPosition = position
+            notifyDataSetChanged()
         }
+    }
+    fun addupdates(upgradeModel: MutableList<String>) {
+        val initPosition = upgradeList.size
+        upgradeList.clear()
+        upgradeList.addAll(upgradeModel)
+        notifyItemRangeInserted(initPosition, upgradeList.size)
     }
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
