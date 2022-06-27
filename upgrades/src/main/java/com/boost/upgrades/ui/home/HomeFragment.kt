@@ -600,19 +600,21 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                 if (it.isSuccess() || it != null) {
                     val data = it.arrayResponse as? Array<CapLimitFeatureResponseItem>
                     Log.e("checkExpiryAddonsPackages >>", Gson().toJson(data))
-                    for (singleitem in data!!) {
-                        val date1: Date =
-                            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(singleitem.expiryDate!!)
+                    if(data!=null) {
+                        for (singleitem in data) {
+                            val date1: Date =
+                                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(singleitem.expiryDate!!)
 
-                        val diff: Long = date1.getTime() - Date().getTime()
-                        val seconds = diff / 1000
-                        val minutes = seconds / 60
-                        val hours = minutes / 60
-                        val days = hours / 24
+                            val diff: Long = date1.getTime() - Date().getTime()
+                            val seconds = diff / 1000
+                            val minutes = seconds / 60
+                            val hours = minutes / 60
+                            val days = hours / 24
 
-                        if(days>0){
-                            paidUser = true
-                            break
+                            if (days > 0) {
+                                paidUser = true
+                                break
+                            }
                         }
                     }
                 }
