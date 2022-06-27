@@ -177,6 +177,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:background="@color/white"
+                android:visibility="gone"
                 android:elevation="@dimen/_2sdp"
                 android:paddingTop="@dimen/_4sdp"
                 android:paddingBottom="@dimen/_4sdp"

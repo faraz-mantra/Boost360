@@ -3306,7 +3306,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
                             tv_coupon_saved.text =
                                 "₹" + RootUtil.round(couponDiscountAmt, 2).toString() + " Saved!"
-                            tv_coupon_name.text = it.coupon_key.toString() + " coupon code applied."
+                            tv_coupon_name.text = "`"+it.coupon_key.toString()+"`" + " coupon code applied."
                             val closeBtn =
                                 dialog.findViewById(R.id.close_dialog) as AppCompatImageView
                             val iv_coupon_saved =

@@ -20,6 +20,7 @@
       android:fontFamily="@font/regular"
       android:paddingStart="5dp"
       android:paddingBottom="5dp"
+      android:visibility="gone"
       android:layout_marginStart="@dimen/size_15"
       android:textColor="@color/common_text_color"
       android:textSize="16sp"
