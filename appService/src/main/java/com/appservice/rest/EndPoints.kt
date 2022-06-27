@@ -158,7 +158,8 @@ object EndPoints {
   const val ADD_EXISTING_DOMAIN_DETAILS = "api/Service/EmailRIASupportTeamV2"
 
   // TODO AZURE WEBSITE NET APIs
-  const val AZURE_WEBSITE_NET_URL = "https://withfloats-feature-processor-api.azurewebsites.net/"
+//  const val AZURE_WEBSITE_NET_URL = "https://withfloats-feature-processor-api.azurewebsites.net/"
+  const val AZURE_WEBSITE_NET_URL = "https://featureprocessor.withfloats.com/"
   const val GET_FEATURE_DETAILS = "Features/v1/GetFeatureDetils"
   const val GET_FEATURE_DETAILS_2 = "Features/v1/GetFeatureDetails"
 
