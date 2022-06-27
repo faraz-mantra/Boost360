@@ -42,7 +42,7 @@
     <com.framework.views.customViews.CustomButton
       android:id="@+id/btn_save"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/size_44"
       android:layout_gravity="center_horizontal"
       android:layout_marginHorizontal="@dimen/size_14"
       android:layout_marginBottom="@dimen/size_14"

@@ -202,7 +202,7 @@ data class CatalogSetup(
   }
 
   fun getSubtitle(): Spanned? {
-    return fromHtml("Tax slab: <i><b>${if ((this.isDefaultGSTSlabSelected == false && this.defaultGSTSlab == 0.0).not()) "${this.getGstSlabInt()}%" else "<font color='#${getColorString()}'>Not selected</font>"}</b></i>")
+    return fromHtml("Tax slab: <i><b>${if ((this.isDefaultGSTSlabSelected == false && this.defaultGSTSlab == null).not()) "${this.getGstSlabInt()}%" else "<font color='#${getColorString()}'>Not selected</font>"}</b></i>")
   }
 
   fun isEmptyData(): Boolean {

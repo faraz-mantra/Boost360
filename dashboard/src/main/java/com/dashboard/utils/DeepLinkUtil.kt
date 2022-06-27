@@ -37,7 +37,8 @@ const val consultation_fragment = "CONSULTATION_FRAGMENT"
 const val enquiries = "enquiries"
 const val store_url = "store"
 const val blog = "blog"
-const val subscribers = "subscribers"
+const val deeplink_subscribers = "subscribers"
+const val deeplink_unsubscribe = "unsubscribe"
 const val new_subscribers = "newsubscriber"
 const val share_lower_case = "share"
 const val visits = "visits"
@@ -201,7 +202,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
 //          baseActivity.startSearchQuery(session)
         } else if (url.contains(blog)) {
           baseActivity.startBlog(url, session)
-        } else if (url.contains(subscribers) || url.contains(new_subscribers)) {
+        } else if (url.contains(deeplink_subscribers) || url.contains(new_subscribers) || url.contains(deeplink_unsubscribe)) {
           baseActivity.startSubscriber(session)
         } else if (url.contains(share_lower_case)) {
           baseActivity.shareWebsite(session)
