@@ -89,6 +89,8 @@ import android.widget.PopupMenu
 import androidx.annotation.RequiresApi
 import com.boost.upgrades.ui.history.HistoryFragment
 import com.boost.upgrades.utils.Utils.priceCalculatorForYear
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 import kotlin.concurrent.schedule
 
 
@@ -1977,11 +1979,11 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             videoItem.title ?: NO_EVENT_VALUE
         )
         Log.i("onPlayYouTubeVideo", videoItem.youtube_link ?: "")
-        val link: List<String> = videoItem.youtube_link!!.split('/')
+//        val link: List<String> = videoItem.youtube_link!!.split('/')
         videoPlayerWebView.getSettings().setJavaScriptEnabled(true)
 //    videoPlayerWebView.getSettings().setPluginState(WebSettings.PluginState.ON)
         videoPlayerWebView.setWebViewClient(WebViewClient())
-        videoPlayerWebView.loadUrl("http://www.youtube.com/embed/" + link.get(link.size - 1) + "?autoplay=1&vq=small")
+        videoPlayerWebView.loadUrl("http://www.youtube.com/embed/" + getVideoId(videoItem.youtube_link!!))
 //    videoPlayerWebView.setWebChromeClient(WebChromeClient())
         video_sub_title.text = videoItem.title
         video_sub_desc.text = videoItem.desc
@@ -2879,6 +2881,17 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                     }
                 )
         )
+    }
+
+    fun getVideoId(videoUrl: String): String {
+        var videoId = ""
+        val regex = "http(?:s)?:\\/\\/(?:m.)?(?:www\\.)?youtu(?:\\.be\\/|be\\.com\\/(?:watch\\?(?:feature=youtu.be\\&)?v=|v\\/|embed\\/|user\\/(?:[\\w#]+\\/)+))([^&#?\\n]+)"
+        val pattern: Pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE)
+        val matcher: Matcher = pattern.matcher(videoUrl)
+        if (matcher.find()) {
+            videoId = matcher.group(1)
+        }
+        return videoId
     }
 
 }
