@@ -1177,15 +1177,15 @@
             android:textColor="@color/common_text_color" />
 
           <TextView
-            android:id="@+id/coupon_discount_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/payment_amount_value"
-            android:layout_alignParentEnd="true"
-            android:fontFamily="@font/open_sans"
-            android:padding="@dimen/_5sdp"
-            android:text="0"
-            android:textColor="@color/common_text_color" />
+              android:id="@+id/coupon_discount_value"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/payment_amount_value"
+              android:layout_alignParentEnd="true"
+              android:fontFamily="@font/open_sans"
+              android:padding="@dimen/_5sdp"
+              android:text="0"
+              android:textColor="@color/common_text_color" />
 
           <TextView
             android:id="@+id/igst_title"
