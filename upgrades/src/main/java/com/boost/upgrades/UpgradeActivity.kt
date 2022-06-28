@@ -88,7 +88,7 @@ class UpgradeActivity : AppCompatActivity() {
   var userPurchsedWidgets = ArrayList<String>()
   var timerCallbackConst: Long = 1000
 
-  @RequiresApi(Build.VERSION_CODES.O)
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_upgrade)
@@ -120,6 +120,27 @@ class UpgradeActivity : AppCompatActivity() {
       initView()
       initRazorPay()
     }
+  }
+
+  override fun onNewIntent(intent: Intent?) {
+    super.onNewIntent(intent)
+    Log.e("UpgradeActivity", "testing")
+    val bundle = Bundle()
+    bundle.putString("screenType", intent!!.getStringExtra("screenType"))
+    bundle.putStringArrayList(
+      "userPurchsedWidgets",
+      intent.getStringArrayListExtra("userPurchsedWidgets")
+    )
+    bundle.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+    bundle.putString("buyItemKey", intent.getStringExtra("buyItemKey"))
+    val homeFragment = HomeFragment.newInstance()
+    homeFragment.arguments = bundle
+
+        fragmentTransaction = fragmentManager!!.beginTransaction()
+        fragmentTransaction!!.replace(R.id.ao_fragment_container, homeFragment, HOME_FRAGMENT)
+//        fragmentTransaction!!.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+        fragmentTransaction!!.commit()
+//    replaceFragment(homeFragment, HOME_FRAGMENT)
   }
 
   infix fun setBackListener(compareBackListener: CompareBackListener?) {

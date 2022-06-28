@@ -722,7 +722,7 @@
   <string name="please_enter_valid_business_">please enter valid business license</string>
   <string name="please_choose_signature">please choose signature</string>
   <string name="please_choose_booking_window_duration">please choose booking window duration</string>
-  <string name="please_select_one_service_provided_by_doctor">please select atlease one service provided by this doctor</string>
+  <string name="please_select_one_service_provided_by_doctor">Please select at least one service provided by this doctor</string>
   <string name="additional_info">Additional Info</string>
   <string name="add_doctor_e_profile">Add Doctor E-Profile</string>
   <string name="consultation_type">Consultation type</string>
@@ -1224,5 +1224,6 @@
   <string name="jiolocal">JioLocal</string>
   <string name="facebook_page_shop">Facebook Page Shop</string>
   <string name="google_merchant_center">Google Merchant Center</string>
+    <string name="asterisk">*</string>
     <string name="unable_to_fetch_default_gst_slab">Unable to fetch default gst slab</string>
 </resources>

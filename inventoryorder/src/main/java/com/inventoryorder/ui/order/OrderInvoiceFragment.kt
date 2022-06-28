@@ -64,6 +64,7 @@ class OrderInvoiceFragment : BaseInventoryFragment<FragmentOrderInoiceBinding>()
     binding?.webview?.settings?.loadWithOverviewMode = true
     binding?.webview?.settings?.useWideViewPort = true
     binding?.webview?.settings?.allowFileAccess = true
+    binding?.webview?.settings?.pluginState = WebSettings.PluginState.ON;
     binding?.webview?.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
     binding?.webview?.webChromeClient = WebChromeClient()
     val webSettings = binding?.webview?.settings
@@ -88,7 +89,7 @@ class OrderInvoiceFragment : BaseInventoryFragment<FragmentOrderInoiceBinding>()
       override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
         binding?.progressBar?.visible()
         view.loadUrl(url)
-        return false
+        return true
       }
 
       override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
@@ -101,11 +102,7 @@ class OrderInvoiceFragment : BaseInventoryFragment<FragmentOrderInoiceBinding>()
         binding?.progressBar?.gone()
       }
 
-      override fun onReceivedError(
-        view: WebView?,
-        request: WebResourceRequest?,
-        error: WebResourceError?
-      ) {
+      override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
         super.onReceivedError(view, request, error)
         binding?.progressBar?.gone()
       }
@@ -114,29 +111,14 @@ class OrderInvoiceFragment : BaseInventoryFragment<FragmentOrderInoiceBinding>()
   }
 
   private fun downloadUrl() {
-    if (ActivityCompat.checkSelfPermission(
-        baseActivity,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
-      ) == PackageManager.PERMISSION_DENIED ||
-      ActivityCompat.checkSelfPermission(
-        baseActivity,
-        Manifest.permission.READ_EXTERNAL_STORAGE
-      ) == PackageManager.PERMISSION_DENIED
+    if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED ||
+      ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
     ) {
-      requestPermissions(
-        arrayOf(
-          Manifest.permission.READ_EXTERNAL_STORAGE,
-          Manifest.permission.WRITE_EXTERNAL_STORAGE
-        ), 100
-      )
+      requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
     } else baseActivity.startDownloadUri(domainUrl.trim())
   }
 
-  override fun onRequestPermissionsResult(
-    requestCode: Int,
-    permissions: Array<out String>,
-    grantResults: IntArray
-  ) {
+  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
     when (requestCode) {
       100 -> {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
