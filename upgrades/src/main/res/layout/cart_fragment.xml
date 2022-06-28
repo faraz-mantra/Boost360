@@ -479,7 +479,7 @@
                         <EditText
                             android:id="@+id/months_validity"
                             android:layout_width="50dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:background="@drawable/et_validity"
                             android:ems="2"
                             android:fontFamily="@font/open_sans"
