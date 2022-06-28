@@ -1157,14 +1157,14 @@
             android:textColor="@color/common_text_color" />
 
           <TextView
-            android:id="@+id/payment_amount_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:fontFamily="@font/open_sans"
-            android:padding="@dimen/_5sdp"
-            android:text="₹900"
-            android:textColor="@color/common_text_color" />
+              android:id="@+id/payment_amount_value"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentEnd="true"
+              android:fontFamily="@font/open_sans"
+              android:padding="@dimen/_5sdp"
+              android:text="₹900"
+              android:textColor="@color/common_text_color" />
 
           <TextView
             android:id="@+id/coupon_discount_title"
@@ -1219,15 +1219,15 @@
             android:textColor="@color/common_text_color" />
 
           <TextView
-            android:id="@+id/order_total_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/igst_value"
-            android:layout_alignParentEnd="true"
-            android:fontFamily="@font/open_sans"
-            android:padding="@dimen/_5sdp"
-            android:text="₹936"
-            android:textColor="@color/common_text_color" />
+              android:id="@+id/order_total_value"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/igst_value"
+              android:layout_alignParentEnd="true"
+              android:fontFamily="@font/open_sans"
+              android:padding="@dimen/_5sdp"
+              android:text="₹936"
+              android:textColor="@color/common_text_color" />
 
         </RelativeLayout>
 
