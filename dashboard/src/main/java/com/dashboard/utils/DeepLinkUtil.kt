@@ -308,7 +308,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startWebsiteTheme(session)
         } else if (url.contains(deeplink_expert_contact)) {
           Log.v("deeplink_expert_contact", " $url $buyItemKey")
-          baseActivity.initiateAddonMarketplace(session, false, "expertContact", "")
+          baseActivity.initiateAddonMarketplace(session, false, "expertContact", "",false)
         } else if (session.isSpa() && url.contains(deeplink_owner_info)) {
           baseActivity.startOwnersInfo(session)
         } else if (url.contains(deeplink_domain_booking)) {

@@ -43,6 +43,7 @@ import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -1142,7 +1143,7 @@ class PaymentFragment : BaseFragment("MarketPlacePaymentFragment"), PaymentListe
     var prefs = SharedPrefs(activity as UpgradeActivity)
 
     //cartOriginalPrice
-    val cartOriginalPrice = prefs.getCartOriginalAmount()
+    val cartOriginalPrice = RootUtil.round(prefs.getCartOriginalAmount().toDouble(),2)
     payment_amount_value.setText(
       "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(cartOriginalPrice)
     )
@@ -1152,25 +1153,25 @@ class PaymentFragment : BaseFragment("MarketPlacePaymentFragment"), PaymentListe
     coupon_discount_title.setText("Coupon discount(" + couponDiscountPercentage.toString() + "%)")
 
     //coupon discount amount
-    val couponDiscountAmount = cartOriginalPrice * couponDiscountPercentage / 100
+    val couponDiscountAmount = RootUtil.round(cartOriginalPrice * couponDiscountPercentage / 100, 2)
     coupon_discount_value.setText(
       "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
     )
 
     //igsttin value
     val temp = ((cartOriginalPrice - couponDiscountAmount) * 18) / 100
-    val taxValue = Math.round(temp * 100) / 100.0
+    val taxValue = RootUtil.round(Math.round(temp * 100) / 100.0,2)
     igst_value.setText("+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
 
     order_total_value.setText(
-      "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
+      "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(totalAmount,2))
     )
     payment_total_value.setText(
-      "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
+      "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(totalAmount,2))
     )
-    items_cost.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
+    items_cost.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(totalAmount,2)))
     paymentBannerAmount.setText(
-      "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
+      "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(totalAmount,2))
     )
   }
 
