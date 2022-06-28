@@ -17,6 +17,7 @@ import com.appservice.AppServiceApplication;
 import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignin.ui.intro.IntroActivity;
 import com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity;
+import com.boost.upgrades.UpgradeApplication;
 import com.dashboard.AppDashboardApplication;
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil;
 import com.framework.firebaseUtils.firestore.FirestoreManager;
@@ -1032,7 +1033,8 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
       //Analytics_Fragment.visitCount.setText("0");
       if (_context != null) {
         _context.deleteDatabase(SaveDataCounts.DATABASE_NAME);
-        _context.deleteDatabase("updates_db");  //DELETE MARKETPLACE DB
+//        _context.deleteDatabase("updates_db");  //DELETE MARKETPLACE DB
+        UpgradeApplication.clearDatabase();  //DELETE MARKETPLACE DB
       }
       clearAuth();
 
