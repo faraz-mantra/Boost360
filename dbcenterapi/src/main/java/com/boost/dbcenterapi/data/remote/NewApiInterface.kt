@@ -35,7 +35,7 @@ interface NewApiInterface {
 
     //MyCurrentPlan  Marketplace V2
     @Headers("Content-Type: application/json")
-    @GET("https://featureprocessor.withfloats.com/Features/v1/GetFeatureDetails")
+    @GET("https://jiw-wf-featureprocessor-api-as-prod.azurewebsites.net/Features/v1/GetFeatureDetails")
     fun GetFeatureDetails(
         @Query("fpId") floatingPointId: String,
         @Query("clientId") clientId: String
