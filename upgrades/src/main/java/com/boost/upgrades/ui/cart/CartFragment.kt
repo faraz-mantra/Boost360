@@ -1979,7 +1979,7 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
           couponServiceModel = null
 //                couponDiscountAmount = total * couponDisount / 100
 //                couponDiscountAmount = couponServiceModel!!.couponDiscountAmt!!
-        coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
+        coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(couponDiscountAmount,2))
         total -= couponDiscountAmount
         Log.v("cart_amount_value", " " + total)
         val temp = (total * 18) / 100
@@ -2082,6 +2082,8 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
     args.putString("email", (activity as UpgradeActivity).email)
     args.putString("currency", "INR")
     args.putString("contact", (activity as UpgradeActivity).mobileNo)
+    args.putDouble("gstAmount", taxValue)
+    args.putDouble("discountAmount", RootUtil.round(couponDiscountAmount,2))
     prefs.storeCardIds(cartItems)
     prefs.storeCouponIds(couponCode)
     prefs.storeValidityMonths(default_validity_months.toString())

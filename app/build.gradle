@@ -64,7 +64,6 @@ android {
             }
         }
         release {
-            debuggable true
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -75,7 +74,7 @@ android {
     flavorDimensions "default"
     productFlavors {
         partone {
-            versionName "6.0.21.1"
+            versionName "6.0.21.3"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
