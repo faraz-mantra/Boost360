@@ -113,7 +113,7 @@ interface ApiInterface {
 //    "Authorization: Basic YXBpbW9kaWZpZXI6dkVFQXRudF9yJ0RWZzcofg==",
 //    "Content-Type: application/json"
 //  )
-//  @POST("https://si-withfloats-coupons-api-appservice.azurewebsites.net/v1/coupons/redeem")
+//  @POST("https://jiw-wf-coupons-api-as-prod.azurewebsites.net/v1/coupons/redeem")
 //  fun redeemCoupon(@Body redeemCouponRequest: RedeemCouponRequest): Observable<RedeemCouponResponse>
 
   @Headers("Content-Type: application/json")

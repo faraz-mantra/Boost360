@@ -27,6 +27,9 @@ import android.provider.MediaStore
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.*
+import android.util.Base64
+import android.util.Base64.DEFAULT
+import android.util.Base64.encodeToString
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -59,6 +62,7 @@ import com.framework.R
 import com.framework.constants.PackageNames
 import com.framework.views.customViews.CustomTextView
 import com.google.android.material.snackbar.Snackbar
+import com.google.common.io.ByteStreams.readBytes
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
@@ -653,5 +657,16 @@ fun String.capitalized(): String {
     if (it.isLowerCase())
       it.titlecase(Locale.getDefault())
     else it.toString()
+  }
+}
+
+fun Uri.toBase64(): String? {
+  return try {
+    val bytes = BaseApplication.instance.contentResolver.openInputStream(this)?.readBytes()
+
+    Base64.encodeToString(bytes,Base64.DEFAULT)
+  } catch (error: IOException) {
+    error.printStackTrace() // This exception always occurs
+    null
   }
 }

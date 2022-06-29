@@ -1,5 +1,7 @@
 package com.appservice.rest.services
 
+import com.appservice.model.generalApt.GeneralAptResponse
+import com.appservice.model.generalApt.UpdateRequestGeneralApt
 import com.appservice.model.serviceTiming.AddServiceTimingRequest
 import com.appservice.model.serviceTiming.ServiceTimingResponse
 import com.appservice.rest.EndPoints
@@ -14,6 +16,7 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface StaffNowFloatsRemoteData {
+
   @POST(EndPoints.CREATE_STAFF_PROFILE)
   fun createStaffProfile(@Body request: StaffCreateProfileRequest?): Observable<Response<StaffCreateProfileResponse>>
 
@@ -43,6 +46,12 @@ interface StaffNowFloatsRemoteData {
 
   @GET(EndPoints.GET_STAFF_DETAILS)
   fun staffDetails(@Query(value = "staffId") staffId: String?): Observable<Response<StaffDetailsResponse>>
+
+  @POST(EndPoints.UPDATE_GENERAL_SERVICE)
+  fun updateGeneralService(@Body request: UpdateRequestGeneralApt?): Observable<Response<ResponseBody>>
+
+  @GET(EndPoints.GET_GENERAL_SERVICE)
+  fun getGeneralService(@Query(value = "fpId") fpId: String?, @Query(value = "fpTag") fpTag: String?): Observable<Response<GeneralAptResponse>>
 
   // Service timing
   @POST(EndPoints.POST_ADD_SERVICE_TIMING)

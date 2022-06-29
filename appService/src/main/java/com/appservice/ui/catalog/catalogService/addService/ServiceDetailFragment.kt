@@ -16,6 +16,8 @@ import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentServiceDetailBinding
 import com.appservice.extension.afterTextChanged
 import com.appservice.model.FileModel
+import com.appservice.model.aptsetting.AppointmentStatusResponse
+import com.appservice.model.serviceProduct.gstProduct.response.GstData
 import com.appservice.model.serviceTiming.AddServiceTimingRequest
 import com.appservice.model.serviceTiming.ServiceTime
 import com.appservice.model.serviceTiming.ServiceTiming
@@ -28,6 +30,7 @@ import com.appservice.ui.catalog.widgets.*
 import com.appservice.model.serviceProduct.service.ItemsItem
 import com.appservice.model.serviceProduct.service.ServiceSearchListingResponse
 import com.appservice.utils.WebEngageController
+import com.appservice.utils.changeColorOfSubstring
 import com.appservice.utils.getBitmap
 import com.appservice.viewmodel.ServiceViewModelV1
 import com.framework.base.BaseResponse
@@ -48,6 +51,7 @@ import java.io.File
 
 class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, ServiceViewModelV1>() {
 
+  private val RC_SERVICE_INFO=102;
   private var menuDelete: MenuItem? = null
   private var serviceImage: File? = null
   private var product: ServiceModelV1? = null
@@ -83,18 +87,22 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     super.onCreateView()
     WebEngageController.trackEvent(SERVICE_CATALOGUE_ADD, ADDED, NO_EVENT_VALUE)
     getBundleData()
+    setupUIColor()
     setOnClickListener(
-      binding?.selectDeliveryConfig,
-      binding?.vwSavePublish,
-      binding?.imageAddBtn,
-      binding?.clearImage,
-      binding?.btnOtherInfo
+      binding?.selectDeliveryConfig, binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo
     )
     binding?.payServiceView?.visibility = View.GONE
     binding?.toggleService?.setOnToggledListener { _, _ -> initServiceToggle() }
     initServiceToggle()
     listenerEditText()
     capLimitCheck()
+  }
+
+  private fun setupUIColor() {
+    changeColorOfSubstring(R.string.service_name_, R.color.colorAccent, "*", binding?.tvServiceNameVw!!)
+    changeColorOfSubstring(R.string.service_category_, R.color.colorAccent, "*", binding?.tvServiceCategoryVw!!)
+    changeColorOfSubstring(R.string.service_description_, R.color.colorAccent, "*", binding?.tvServiceDescVw!!)
+    changeColorOfSubstring(R.string.service_duration_minutes, R.color.colorAccent, "*", binding?.tvServiceDurationVw!!)
   }
 
   private fun capLimitCheck() {
@@ -181,7 +189,6 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun getBundleData() {
-    initProductFromBundle(arguments)
     isNonPhysicalExperience = arguments?.getBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name)
     currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "INR"
     fpId = arguments?.getString(IntentConstant.FP_ID.name)
@@ -190,19 +197,28 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     externalSourceId = arguments?.getString(IntentConstant.EXTERNAL_SOURCE_ID.name)
     applicationId = arguments?.getString(IntentConstant.APPLICATION_ID.name)
     userProfileId = arguments?.getString(IntentConstant.USER_PROFILE_ID.name)
+    initProductFromBundle(arguments)
+
     if (isEdit) menuDelete?.isVisible = true
   }
 
   private fun initProductFromBundle(data: Bundle?) {
     val p = data?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? ItemsItem
     isEdit = (p != null && p.id.isNullOrEmpty().not())
-    if (isEdit) getServiceDetailObject(p?.id) else this.product = ServiceModelV1()
-    this.product?.GstSlab = 18
+    if (isEdit) getServiceDetailObject(p?.id) else{
+      this.product = ServiceModelV1()
+      if (isDoctorClinic.not()){
+        showProgress()
+        hitApi(viewModel?.getAppointmentCatalogStatus(fpId,clientId),R.string.unable_to_fetch_default_gst_slab)
+      }
+    }
   }
 
   private fun getServiceDetailObject(serviceId: String?) {
+    showProgress()
     hitApi(viewModel?.getServiceDetails(serviceId), R.string.error_getting_service_details)
     hitApi(viewModel?.getServiceTiming(serviceId), R.string.error_getting_service_timing)
+
   }
 
   override fun onClick(v: View) {
@@ -217,7 +233,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         bundle.putSerializable(IntentConstant.PRODUCT_DATA.name, this.product)
         bundle.putSerializable(IntentConstant.SERVICE_TIMING_DATA.name, this.serviceTimingList)
         bundle.putSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)
-        startFragmentActivity(FragmentType.SERVICE_INFORMATION, bundle, isResult = true)
+        startFragmentActivity(FragmentType.SERVICE_INFORMATION, bundle, isResult = true, requestCode = RC_SERVICE_INFO)
       }
       binding?.vwSavePublish -> if (isValid()) createUpdateApi()
     }
@@ -228,9 +244,27 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       TaskCode.POST_CREATE_SERVICE.ordinal -> onServiceCreated(it)
       TaskCode.POST_UPDATE_SERVICE.ordinal -> onServiceUpdated(it)
       TaskCode.ADD_SERVICE_PRIMARY_IMAGE_V1.ordinal -> onPrimaryImageUploaded(it)
-      TaskCode.GET_SERVICE_DETAILS.ordinal -> onServiceDetailResponseReceived(it)
+      TaskCode.GET_SERVICE_DETAILS.ordinal ->{
+        onServiceDetailResponseReceived(it)
+        hideProgress()
+      }
       TaskCode.DELETE_SERVICE.ordinal -> onServiceDelete(it)
       TaskCode.GET_SERVICE_TIMING.ordinal -> onServiceTiming(it)
+      TaskCode.GET_APPOINTMENT_CATALOG_SETUP.ordinal->{
+        initDefaultGst(it)
+        hideProgress()
+      }
+    }
+  }
+
+  private fun initDefaultGst(it: BaseResponse) {
+    val dataItem = it as? AppointmentStatusResponse
+    if (dataItem?.isSuccess() == true && dataItem.result != null) {
+      val catalogSetup = dataItem.result?.catalogSetup
+      product?.GstSlab = catalogSetup?.getGstSlabInt()?:0
+
+    }else{
+      showLongToast(getString(R.string.unable_to_fetch_default_gst_slab))
     }
   }
 
@@ -244,7 +278,6 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun onServiceDetailResponseReceived(it: BaseResponse) {
     this.product = (it as? ServiceDetailResponse)?.Result ?: return
-    this.product?.GstSlab = 18
     this.serviceTimingList = this.product?.timings
     this.serviceTimingList?.map { it.isToggle = (it.isValidTime()) }
     updateUiPreviousData()
@@ -303,13 +336,13 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       var checkPosition = 0
       images.forEach { fileData ->
         val request = UploadImageRequest.getInstance(1, product?.productId!!, fileData.getFile()!!)
-        viewModel?.addSecondaryImage(request)?.observeOnce(viewLifecycleOwner, Observer {
+        viewModel?.addSecondaryImage(request)?.observeOnce(viewLifecycleOwner) {
           checkPosition += 1
           if ((it.error is NoNetworkException).not()) {
             if (it.isSuccess().not()) showError(resources.getString(R.string.secondary_service_image_upload_error))
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == images.size) addUpdateServiceTiming()
-        })
+        }
       }
     } else addUpdateServiceTiming()
   }
@@ -452,7 +485,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         binding?.serviceImageView?.visible()
         serviceImage?.getBitmap()?.let { binding?.serviceImageView?.setImageBitmap(it) }
       }
-    } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
+    } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == RC_SERVICE_INFO) {
       this.product = data?.getSerializableExtra(IntentConstant.PRODUCT_DATA.name) as? ServiceModelV1
       this.serviceTimingList = data?.getSerializableExtra(IntentConstant.SERVICE_TIMING_DATA.name) as? ArrayList<ServiceTiming>
       this.secondaryImage = (data?.getSerializableExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>) ?: ArrayList()

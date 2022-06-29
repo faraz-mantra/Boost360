@@ -19,6 +19,7 @@ import com.appservice.model.account.response.AccountCreateResponse
 import com.appservice.model.accountDetails.*
 import com.appservice.model.razor.RazorDataResponse
 import com.appservice.utils.WebEngageController
+import com.appservice.utils.changeColorOfSubstring
 import com.appservice.viewmodel.AccountViewModel
 import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
@@ -63,9 +64,19 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
   override fun onCreateView() {
     super.onCreateView()
     setOnClickListener(binding?.submitBtn, binding?.whyBtn, binding?.verificationBtn)
+    setupUIColor()
     isServiceCreation = arguments?.getBoolean(IntentConstant.IS_SERVICE_CREATION.name) ?: false
     binding?.edtIfsc?.afterTextChanged { isIfscValid(binding?.edtIfsc?.text.toString().trim()) }
     getUserDetails()
+  }
+
+  private fun setupUIColor() {
+    changeColorOfSubstring(R.string.name_of_the_account_holder_astrick, R.color.colorAccent, "*", binding?.tvHolderNameVw!!)
+    changeColorOfSubstring(R.string.account_number_required, R.color.colorAccent, "*", binding?.tvAccountNumberVw!!)
+    changeColorOfSubstring(R.string.confirm_account_number_astrick, R.color.colorAccent, "*", binding?.titleConfirmAccount!!)
+    changeColorOfSubstring(R.string.bank_ifsc_code_required, R.color.colorAccent, "*", binding?.tvIfscCodeVw!!)
+    changeColorOfSubstring(R.string.bank_name_required, R.color.colorAccent, "*", binding?.tvBankNameVw!!)
+    changeColorOfSubstring(R.string.bank_branch_required, R.color.colorAccent, "*", binding?.txtBranch!!)
   }
 
   private fun isIfscValid(ifsc: String) {

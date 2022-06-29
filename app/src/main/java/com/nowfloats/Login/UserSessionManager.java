@@ -1038,10 +1038,11 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
       }
       clearAuth();
 
+      new com.framework.pref.UserSessionManager(activity).setHasUserLoggedInOnce(true);
       Intent i = new Intent(activity, IntroActivity.class);
       if (FirebaseRemoteConfigUtil.INSTANCE.featureNewOnBoardingFlowEnable()) {
         i = new Intent(activity, NewOnBoardingContainerActivity.class);
-        i.putExtra("FRAGMENT_TYPE", Constants.NEW_ON_BOARDING_FRAGMENT.INTRO_SLIDES_SHOW.getValue());
+        i.putExtra("FRAGMENT_TYPE", Constants.NEW_ON_BOARDING_FRAGMENT.ENTER_PHONE_FRAGMENT.getValue());
       }
       i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
       activity.startActivity(i);

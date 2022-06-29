@@ -46,8 +46,9 @@ import retrofit.converter.GsonConverter;
 
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
-public class PlacesNearByActivity extends AppCompatActivity implements PlaceNearByListener {
 
+public class PlacesNearByActivity extends AppCompatActivity implements PlaceNearByListener {
+    private static final String PLACES_TO_LOOK_AROUND = "PLACES-TO-LOOK-AROUND";
     RecyclerView recyclerView;
     PlaceNearByAdapter adapter;
     LinearLayout secondaryLayout;
@@ -64,7 +65,6 @@ public class PlacesNearByActivity extends AppCompatActivity implements PlaceNear
     }
 
     public void initView() {
-
         recyclerView = findViewById(R.id.recycler_view);
         adapter = new PlaceNearByAdapter(new ArrayList(), this);
         secondaryLayout = findViewById(R.id.secondary_layout);
@@ -75,8 +75,7 @@ public class PlacesNearByActivity extends AppCompatActivity implements PlaceNear
 
         //setheader
         setHeader();
-
-        if (session.getStoreWidgets().contains("PLACES-TO-LOOK-AROUND")){
+        if (session.getStoreWidgets().contains(PLACES_TO_LOOK_AROUND)) {
             recyclerView.setVisibility(View.VISIBLE);
             secondaryLayout.setVisibility(View.GONE);
             initialiseRecycler();
@@ -88,18 +87,13 @@ public class PlacesNearByActivity extends AppCompatActivity implements PlaceNear
     }
 
     void showSecondaryLayout() {
-        buyItemButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initiateBuyFromMarketplace();
-            }
-        });
+        buyItemButton.setOnClickListener(v -> initiateBuyFromMarketplace());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (session.getStoreWidgets().contains("PLACES-TO-LOOK-AROUND")) {
+        if (session.getStoreWidgets().contains(PLACES_TO_LOOK_AROUND)) {
             loadData();
         }
     }
@@ -124,15 +118,18 @@ public class PlacesNearByActivity extends AppCompatActivity implements PlaceNear
         rightIcon.setVisibility(View.INVISIBLE);
         btnAdd = findViewById(R.id.btn_add);
         title.setText("Places to Look Around");
-        if (session.getStoreWidgets().contains("PLACES-TO-LOOK-AROUND")) {
-            btnAdd.setVisibility(View.VISIBLE);
-            btnAdd.setOnClickListener(v -> {
+        btnAdd.setVisibility(View.VISIBLE);
+        btnAdd.setOnClickListener(v -> {
+            if (session.getStoreWidgets().contains(PLACES_TO_LOOK_AROUND)) {
                 Intent intent = new Intent(getApplicationContext(), PlacesNearByDetailsActivity.class);
                 intent.putExtra("ScreenState", "new");
                 startActivity(intent);
-            });
-        }else btnAdd.setVisibility(View.GONE);
-
+            }
+        });
+        if (!session.getStoreWidgets().contains(PLACES_TO_LOOK_AROUND)) btnAdd.setVisibility(View.GONE);
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            if (getIntent().getExtras().getBoolean("is_add")) btnAdd.performClick();
+        }
         backButton.setOnClickListener(v -> onBackPressed());
     }
 
@@ -257,7 +254,7 @@ public class PlacesNearByActivity extends AppCompatActivity implements PlaceNear
             intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
         }
         intent.putExtra("profileUrl", session.getFPLogo());
-        intent.putExtra("buyItemKey", "PLACES-TO-LOOK-AROUND");
+        intent.putExtra("buyItemKey", PLACES_TO_LOOK_AROUND);
         startActivity(intent);
         new Handler().postDelayed(() -> {
             progressDialog.dismiss();
