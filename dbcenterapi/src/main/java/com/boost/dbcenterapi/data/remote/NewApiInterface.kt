@@ -35,7 +35,7 @@ interface NewApiInterface {
 
     //MyCurrentPlan  Marketplace V2
     @Headers("Content-Type: application/json")
-    @GET("https://withfloats-feature-processor-api.azurewebsites.net/Features/v1/GetFeatureDetails")
+    @GET("https://jiw-wf-featureprocessor-api-as-prod.azurewebsites.net/Features/v1/GetFeatureDetails")
     fun GetFeatureDetails(
         @Query("fpId") floatingPointId: String,
         @Query("clientId") clientId: String
@@ -46,7 +46,7 @@ interface NewApiInterface {
             "Authorization: Basic YXBpbW9kaWZpZXI6dkVFQXRudF9yJ0RWZzcofg==",
             "Content-Type: application/json"
     )
-    @POST("https://si-withfloats-coupons-api-appservice.azurewebsites.net/v1/coupons/redeem")
+    @POST("https://jiw-wf-coupons-api-as-prod.azurewebsites.net/v1/coupons/redeem")
     fun redeemCoupon(@Body redeemCouponRequest: RedeemCouponRequest): Observable<RedeemCouponResponse>
 
     @Headers("Authorization: 591c0972ee786cbf48bd86cf")

@@ -50,12 +50,11 @@
               app:layout_constraintTop_toTopOf="parent">
 
               <com.framework.views.customViews.CustomImageView
-                  android:tag="com.userexperior.ueSecureView"
-
-                  android:id="@+id/image_pan_card"
+                android:id="@+id/image_pan_card"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:tag="com.userexperior.ueSecureView" />
             </com.framework.views.customViews.CustomCardView>
 
             <androidx.cardview.widget.CardView
@@ -97,14 +96,15 @@
           app:layout_constraintTop_toBottomOf="@id/cardview_pan_card_image">
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_1"
-            android:layout_marginTop="@dimen/size_14"
-            android:text="@string/pan_number_individual_or_company"
-            android:textColor="@color/warm_grey"
-            app:fontFamily="@font/regular"
-            app:textType="BODY_1" />
+              android:id="@+id/tv_pan_num"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_1"
+              android:layout_marginTop="@dimen/size_14"
+              android:text="@string/pan_number_individual_or_company"
+              android:textColor="@color/warm_grey"
+              app:fontFamily="@font/regular"
+              app:textType="BODY_1" />
 
           <com.framework.views.customViews.CustomEditText
             android:id="@+id/edt_pan_number"
@@ -121,14 +121,15 @@
             app:fontFamily="@font/regular" />
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_1"
-            android:layout_marginTop="@dimen/size_16"
-            android:text="@string/name_as_mentioned_on_pan_card"
-            android:textColor="@color/warm_grey"
-            app:fontFamily="@font/regular"
-            app:textType="BODY_1" />
+              android:id="@+id/tv_name_on_pan_num"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_1"
+              android:layout_marginTop="@dimen/size_16"
+              android:text="@string/name_as_mentioned_on_pan_card"
+              android:textColor="@color/warm_grey"
+              app:fontFamily="@font/regular"
+              app:textType="BODY_1" />
 
           <com.framework.views.customViews.CustomEditText
             android:id="@+id/edt_name_on_pan_card"
@@ -189,23 +190,23 @@
                 android:orientation="vertical">
 
                 <com.framework.views.customViews.CustomTextView
-                    android:tag="com.userexperior.ueSecureView"
+                  android:id="@+id/account"
 
-                    android:id="@+id/account"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
+                  android:tag="com.userexperior.ueSecureView"
                   android:text="@string/a_c_no_34565xxxxx45465"
                   android:textColor="@color/greyish_brown"
                   app:textType="HEADING_5" />
 
                 <com.framework.views.customViews.CustomTextView
-                    android:tag="com.userexperior.ueSecureView"
+                  android:id="@+id/bank_detail"
 
-                    android:id="@+id/bank_detail"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:ellipsize="end"
                   android:maxLines="2"
+                  android:tag="com.userexperior.ueSecureView"
                   android:text="Kotak Mahindra Bank - Cannaught Place Branch"
                   android:textColor="@color/light_blue"
                   app:textType="BODY_1" />
@@ -255,7 +256,7 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_1"
               android:layout_marginTop="@dimen/size_14"
-              android:text="@string/account_number_"
+              android:text="@string/account_number_aestrick"
               android:textColor="@color/greyish_brown"
               app:fontFamily="@font/regular"
               app:textType="BODY_1" />
@@ -267,14 +268,15 @@
               android:layout_marginTop="@dimen/size_2"
               android:background="@drawable/rounded_edit_stroke"
               android:hint="@string/enter_account_no"
-              android:maxLength="18"
               android:inputType="number"
+              android:maxLength="18"
               android:maxLines="1"
               android:singleLine="true"
               android:textColorHint="@color/gray_text_hint"
               app:fontFamily="@font/regular" />
 
             <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_account_holder_name"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_1"
@@ -298,11 +300,12 @@
               app:fontFamily="@font/regular" />
 
             <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_ifsc_code"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_1"
               android:layout_marginTop="@dimen/size_14"
-              android:text="@string/ifsc_code"
+              android:text="@string/ifsc_code_with_aestrick"
               android:textColor="@color/greyish_brown"
               app:fontFamily="@font/regular"
               app:textType="BODY_1" />
@@ -378,14 +381,15 @@
           </LinearLayout>
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_1"
-            android:layout_marginTop="@dimen/size_16"
-            android:text="@string/latest_bank_statement_last_1_month"
-            android:textColor="@color/warm_grey"
-            app:fontFamily="@font/regular"
-            app:textType="BODY_1" />
+              android:id="@+id/tv_latest_bank_statement"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_1"
+              android:layout_marginTop="@dimen/size_16"
+              android:text="@string/latest_bank_statement_last_1_month"
+              android:textColor="@color/warm_grey"
+              app:fontFamily="@font/regular"
+              app:textType="BODY_1" />
 
 
           <androidx.constraintlayout.widget.ConstraintLayout
@@ -476,12 +480,12 @@
             android:paddingVertical="@dimen/size_10">
 
             <com.framework.views.customViews.CustomImageView
-                android:tag="com.userexperior.ueSecureView"
+              android:layout_width="wrap_content"
 
-                android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="center_vertical"
               android:layout_marginStart="@dimen/size_20"
+              android:tag="com.userexperior.ueSecureView"
               app:srcCompat="@drawable/ic_attachment" />
 
             <com.framework.views.customViews.CustomTextView
@@ -508,12 +512,12 @@
             app:textType="BODY_1" />
 
           <com.framework.views.viewgroups.BaseRecyclerView
-              android:tag="com.userexperior.ueSecureView"
+            android:id="@+id/rvAdditionalDocs"
 
-              android:id="@+id/rvAdditionalDocs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:tag="com.userexperior.ueSecureView"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="6"
             tools:listitem="@layout/item_preview_image" />
@@ -564,11 +568,11 @@
         style="@style/ButtonStyle.Rounded"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:paddingVertical="@dimen/size_14"
         android:text="@string/submit_verification"
         android:textAllCaps="false"
-         android:fontFamily="@font/semi_bold"
         app:layout_constraintBottom_toBottomOf="parent" />
     </FrameLayout>
 

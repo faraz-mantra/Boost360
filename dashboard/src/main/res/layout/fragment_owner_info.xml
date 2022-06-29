@@ -102,8 +102,9 @@
           android:paddingVertical="@dimen/size_30">
 
           <com.framework.views.customViews.CustomTextView
-            style="@style/DashBoard_Text_Title"
-            android:text="@string/owner_s_name" />
+              android:id="@+id/tv_owner_name_vw"
+              style="@style/DashBoard_Text_Title"
+              android:text="@string/owner_s_name" />
 
           <com.framework.views.customViews.CustomTextField
             android:id="@+id/ctf_owner_name"
@@ -113,9 +114,10 @@
 
 
           <com.framework.views.customViews.CustomTextView
-            style="@style/DashBoard_Text_Title"
-            android:layout_marginTop="@dimen/size_26"
-            android:text="@string/owner_s_designation" />
+              android:id="@+id/tv_owner_designation_vw"
+              style="@style/DashBoard_Text_Title"
+              android:layout_marginTop="@dimen/size_26"
+              android:text="@string/owner_s_designation" />
 
 
           <com.framework.views.customViews.CustomTextField

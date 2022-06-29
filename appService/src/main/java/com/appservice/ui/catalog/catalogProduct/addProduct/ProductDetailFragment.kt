@@ -20,6 +20,7 @@ import com.appservice.extension.afterTextChanged
 import com.appservice.model.FileModel
 import com.appservice.model.accountDetails.AccountDetailsResponse
 import com.appservice.model.accountDetails.BankAccountDetails
+import com.appservice.model.aptsetting.AppointmentStatusResponse
 import com.appservice.model.deviceId
 import com.appservice.model.pickUpAddress.PickUpAddressResponse
 import com.appservice.model.pickUpAddress.PickUpData
@@ -45,24 +46,27 @@ import com.appservice.ui.bankaccount.startFragmentAccountActivity
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.*
 import com.appservice.utils.WebEngageController
+import com.appservice.utils.changeColorOfSubstring
 import com.appservice.utils.getBitmap
+import com.appservice.utils.getExtension
 import com.appservice.viewmodel.ProductViewModel
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.glide.util.glideLoad
-import com.framework.imagepicker.ImagePicker
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.firebaseUtils.caplimit_feature.PropertiesItem
 import com.framework.firebaseUtils.caplimit_feature.filterFeature
 import com.framework.firebaseUtils.caplimit_feature.getCapData
+import com.framework.glide.util.glideLoad
+import com.framework.imagepicker.ImagePicker
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_TAG
 import com.framework.pref.clientId
 import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -75,10 +79,10 @@ import org.json.JSONObject
 import java.io.File
 import java.nio.charset.Charset
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, ProductViewModel>() {
 
+  private val RC_PRODCUT_INFO: Int=101
   private var menuDelete: MenuItem? = null
   private var productImage: File? = null
   private var product: CatalogProduct? = null
@@ -115,6 +119,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     super.onCreateView()
     WebEngageController.trackEvent(PRODUCT_CATALOGUE_ADD_PAGE, ADDED, NO_EVENT_VALUE)
     getBundleData()
+    setupUIColor()
     getPickUpAddress()
     binding?.vwChangeDeliverConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     binding?.vwPaymentConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
@@ -129,6 +134,27 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     initProductToggleView()
     listenerEditText()
     capLimitCheck()
+  }
+
+  fun getDefaultGst(){
+    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, {
+      val dataItem = it as? AppointmentStatusResponse
+      if (dataItem?.isSuccess() == true && dataItem.result != null) {
+       val catalogSetup = dataItem.result?.catalogSetup
+        gstProductData = GstData(gstSlab =catalogSetup?.getGstSlabInt()?.toDouble())
+
+      }else{
+        showLongToast(getString(R.string.unable_to_fetch_default_gst_slab))
+      }
+      hideProgress()
+    })
+  }
+
+
+  private fun setupUIColor() {
+    changeColorOfSubstring(R.string.product_category_, R.color.colorAccent, "*", binding?.tvProductCategoryVw!!)
+    changeColorOfSubstring(R.string.product_description_, R.color.colorAccent, "*", binding?.tvProductDescVw!!)
+    changeColorOfSubstring(R.string.product_name_, R.color.colorAccent, "*", binding?.tvProductNameVw!!)
   }
 
   private fun capLimitCheck() {
@@ -167,41 +193,30 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       binding?.discountEdt?.setText("")
       return
     }
-//    val finalAmount = String.format("%.1f", (amountD - ((amountD * distD) / 100))).toFloatOrNull() ?: 0F
+    //val finalAmount = String.format("%.1f", (amountD - ((amountD * distD) / 100))).toFloatOrNull() ?: 0F
     val finalAmount = String.format("%.1f", (amountD - distD)).toFloatOrNull() ?: 0F
     binding?.finalPriceTxt?.setText("$currencyType $finalAmount")
   }
 
   private fun getPickUpAddress() {
     showProgress()
-    viewModel?.getPickUpAddress(sessionLocal.fPID)?.observeOnce(viewLifecycleOwner, Observer {
-      if ((it.error is NoNetworkException).not()) {
-        val response = it as? PickUpAddressResponse
-        pickUpDataAddress = if ((it.isSuccess()) && response?.data.isNullOrEmpty().not()) {
-          response?.data
-        } else ArrayList()
-        getPaymentGatewayKyc()
-      } else {
-        showError(resources.getString(R.string.internet_connection_not_available))
-        baseActivity.finish()
-      }
-    })
+    viewModel?.getPickUpAddress(sessionLocal.fPID)?.observeOnce(viewLifecycleOwner) {
+      val response = it as? PickUpAddressResponse
+      pickUpDataAddress = if ((it.isSuccess()) && response?.data.isNullOrEmpty().not()) response?.data else ArrayList()
+      getPaymentGatewayKyc()
+    }
   }
 
   private fun getPaymentGatewayKyc() {
-    showProgress()
     viewModel?.userAccountDetails(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, Observer {
-      if ((it.error is NoNetworkException).not()) {
-        val response = it as? AccountDetailsResponse
-        if ((it.isSuccess()) && response?.result?.bankAccountDetails != null) {
-          bankAccountDetail = response.result?.bankAccountDetails
-        }
+      val response = it as? AccountDetailsResponse
+      if ((it.isSuccess()) && response?.result?.bankAccountDetails != null) {
+        bankAccountDetail = response.result?.bankAccountDetails
       }
-      if (isEdit == true) getAddPreviousData()
-      else {
+      if (isEdit == false) {
         setBankAccountData()
-        hideProgress()
-      }
+        getDefaultGst()
+      } else getAddPreviousData()
     })
   }
 
@@ -220,27 +235,20 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun getAddPreviousData() {
-    viewModel?.getProductImage(String.format("{'_pid':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, {
-      if ((it.error is NoNetworkException).not()) {
-        val response = it as? ProductImageResponse
-        if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-          secondaryDataImage = response.data
-        }
-        viewModel?.getProductGstDetail(String.format("{'product_id':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, Observer { it1 ->
-          if ((it1.error is NoNetworkException).not()) {
-            val response2 = it1 as? ProductGstResponse
-            if (response2?.isSuccess() == true && response2.data.isNullOrEmpty().not()) {
-              gstProductData = response2.data?.first()
-            }
-          } else showError(resources.getString(R.string.internet_connection_not_available))
-          hideProgress()
-          updateUiPreviousDat()
-        })
-      } else {
-        hideProgress()
-        showError(resources.getString(R.string.internet_connection_not_available))
+    viewModel?.getProductImage(String.format("{'_pid':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner) {
+      val response = it as? ProductImageResponse
+      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+        secondaryDataImage = response.data
       }
-    })
+      viewModel?.getProductGstDetail(String.format("{'product_id':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner) { it1 ->
+        val response2 = it1 as? ProductGstResponse
+        if (response2?.isSuccess() == true && response2.data.isNullOrEmpty().not()) {
+          gstProductData = response2.data?.first()
+        }
+        hideProgress()
+        updateUiPreviousDat()
+      }
+    }
   }
 
   private fun updateUiPreviousDat() {
@@ -296,7 +304,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     product = (arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct) ?: CatalogProduct()
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
     isNonPhysicalExperience = arguments?.getBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name)
-    currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "₹"
+    currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "INR"
     if (isEdit == true) menuDelete?.isVisible = true
   }
 
@@ -318,7 +326,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         bundle.putSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)
         bundle.putSerializable(IntentConstant.PRODUCT_IMAGE.name, secondaryDataImage)
         bundle.putSerializable(IntentConstant.PRODUCT_GST_DETAIL.name, gstProductData)
-        startFragmentActivity(FragmentType.PRODUCT_INFORMATION, bundle, isResult = true)
+        startFragmentActivity(FragmentType.PRODUCT_INFORMATION, bundle, isResult = true, requestCode = RC_PRODCUT_INFO)
       }
       binding?.vwSavePublish -> if (isValid()) createUpdateApi()
     }
@@ -428,10 +436,9 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       val secondaryImageList = ArrayList<String>()
       images.forEach { fileData ->
         val secondaryFile = fileData.getFile()
-        val fileNew = takeIf { secondaryFile?.name.isNullOrEmpty().not() }?.let { secondaryFile?.name } ?: "service_${Date()}.jpg"
-        val requestProfile = secondaryFile?.let { it.asRequestBody("image/*".toMediaTypeOrNull()) }
-        val body = requestProfile?.let { MultipartBody.Part.createFormData("file", fileNew, it) }
-        viewModel?.uploadImageProfile(fileNew, body)?.observeOnce(viewLifecycleOwner, Observer {
+        val fileNew = secondaryFile?.name ?: "product_${Date().time}.${secondaryFile?.absolutePath?.getExtension() ?: "png"}"
+        val filePart = MultipartBody.Part.createFormData("file", fileNew, RequestBody.create("image/*".toMediaTypeOrNull(), secondaryFile!!))
+        viewModel?.uploadImageProfile(fileNew, filePart)?.observeOnce(viewLifecycleOwner) {
           checkPosition += 1
           if (it.isSuccess()) {
             val response = getResponse(it.responseBody) ?: ""
@@ -440,7 +447,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
           if (checkPosition == images.size) {
             addImageToProduct(productId, secondaryImageList)
           }
-        })
+        }
       }
     } else addImageToProduct(productId, ArrayList())
   }
@@ -450,23 +457,23 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       var checkPosition = 0
       secondaryImageList.forEach { image ->
         val request = ProductImageRequest(ActionDataI(ImageI(url = image, description = ""), productId), sessionLocal.fPID)
-        viewModel?.addProductImage(request)?.observeOnce(viewLifecycleOwner, Observer {
+        viewModel?.addProductImage(request)?.observeOnce(viewLifecycleOwner) {
           checkPosition += 1
           if (it.isSuccess()) {
             Log.d(ProductDetailFragment::class.java.name, "$it")
           } else showLongToast(getString(R.string.add_secondary_image_data_error_please_try_again))
           if (checkPosition == secondaryImageList.size) {
-            showLongToast(if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
-                R.string.product_saved_successfully
-              ))
+            showLongToast(if (isEdit == true) getString(R.string.product_updated_successfully) else getString(R.string.product_saved_successfully))
             goBack()
           }
-        })
+        }
       }
     } else {
-      showLongToast(if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
+      showLongToast(
+        if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
           R.string.product_saved_successfully
-        ))
+        )
+      )
       goBack()
     }
   }
@@ -592,7 +599,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         binding?.productImageView?.visible()
         productImage?.getBitmap()?.let { binding?.productImageView?.setImageBitmap(it) }
       }
-    } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
+    } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == RC_PRODCUT_INFO) {
       product = data?.getSerializableExtra(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct
       secondaryImage = (data?.getSerializableExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>) ?: ArrayList()
       gstProductData = data?.getSerializableExtra(IntentConstant.PRODUCT_GST_DETAIL.name) as? GstData

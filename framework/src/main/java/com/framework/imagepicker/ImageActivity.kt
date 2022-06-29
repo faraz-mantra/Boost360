@@ -13,6 +13,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
@@ -46,7 +47,7 @@ open class ImageActivity : AppCompatActivity() {
 
   private fun pickImage() {
     Utility.createFolder(mImgConfig!!.directory)
-    destination = File(mImgConfig!!.directory, Utility.randomString + mImgConfig!!.extension.value)
+    destination = File(mImgConfig!!.directory, Utility.randomString + ImagePicker.Extension.JPG.value)
     when (mImgConfig!!.mode) {
       ImagePicker.Mode.CAMERA -> startActivityFromCamera()
       ImagePicker.Mode.GALLERY -> if (mImgConfig!!.allowMultiple) startActivityFromGalleryMultiImg() else startActivityFromGallery()
@@ -315,7 +316,11 @@ open class ImageActivity : AppCompatActivity() {
             destinationFile = if (mImgConfig!!.isImgFromCamera) {
               file
             } else {
-              File(mImgConfig.directory, Utility.randomString + mImgConfig.extension.value)
+              var ext = "."+MimeTypeMap.getFileExtensionFromUrl(file.toString())
+              if (ext.isNullOrEmpty()){
+                ext = ImagePicker.Extension.JPG.value
+              }
+              File(mImgConfig.directory, Utility.randomString + ext)
             }
             destinationPaths.add(destinationFile.absolutePath)
 

@@ -182,7 +182,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   private fun startUpdate(appUpdateInfo: AppUpdateInfo) {
     try {
-      appUpdateManager.startUpdateFlowForResult(appUpdateInfo, appUpdateType().ordinal, this, MY_REQUEST_CODE)
+      appUpdateManager.startUpdateFlowForResult(appUpdateInfo, appUpdateType(), this, MY_REQUEST_CODE)
     } catch (e: IntentSender.SendIntentException) {
       e.printStackTrace();
       SentryController.captureException(e)
@@ -310,8 +310,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
             binding?.viewBottomBar?.navView?.setActiveItem(value.position)
             onItemSelect(value.position)
           }
+          if (value == DashboardTabs.open_business_card) MutableDataUtils.openBusinessCard(true)
         }
-      }
+      } else if (value == DashboardTabs.open_business_card) MutableDataUtils.openBusinessCard(true)
       true
     } else false
   }

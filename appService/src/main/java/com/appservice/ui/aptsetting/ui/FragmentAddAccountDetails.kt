@@ -17,6 +17,7 @@ import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentAddBankDetailsBinding
 import com.appservice.rest.TaskCode
 import com.appservice.ui.catalog.startFragmentActivity
+import com.appservice.utils.changeColorOfSubstring
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
 import com.framework.firebaseUtils.firestore.FirestoreManager
@@ -45,7 +46,16 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
   override fun onCreateView() {
     super.onCreateView()
     setOnClickListener(binding?.submitBtn)
+    setupUIColor()
     getAccountDetails()
+  }
+
+  private fun setupUIColor() {
+    changeColorOfSubstring(R.string.name_of_the_account_holder_astrick, R.color.colorAccent, "*", binding?.tvName!!)
+    changeColorOfSubstring(R.string.account_number_aestrick, R.color.colorAccent, "*", binding?.tvNumber!!)
+    changeColorOfSubstring(R.string.confirm_account_number_astrick, R.color.colorAccent, "*", binding?.titleConfirmAccount!!)
+    changeColorOfSubstring(R.string.bank_name_astrick, R.color.colorAccent, "*", binding?.tvBankName!!)
+    changeColorOfSubstring(R.string.bank_ifsc_code_astrick, R.color.colorAccent, "*", binding?.tvBankIfsc!!)
   }
 
   private fun getAccountDetails() {

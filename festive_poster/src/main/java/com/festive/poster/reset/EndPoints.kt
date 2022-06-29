@@ -10,7 +10,7 @@ object EndPoints {
     const val TEMPLATE_VIEW_CONFIG="Templates/v1/GetTemplatesViewConfig"
     const val GET_TEMPLATES="Templates/v1/GetTemplates"
 
-    const val FEATURE_PROCESSOR_BASE = "https://featureprocessor.withfloats.com/"
+    const val FEATURE_PROCESSOR_BASE = "https://jiw-wf-featureprocessor-api-as-prod.azurewebsites.net/"
     const val GET_FEATURE_DETAILS="Features/v1/GetFeatureDetils"
 
     const val BOOST_KIT_DEV_BASE = "https://developer.api.boostkit.dev/"

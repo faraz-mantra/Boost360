@@ -50,7 +50,6 @@
 
             <com.framework.views.customViews.CustomImageView
               android:layout_width="wrap_content"
-
               android:layout_height="wrap_content"
               android:tag="com.userexperior.ueSecureView"
               app:srcCompat="@drawable/ic_add_image" />
@@ -114,13 +113,14 @@
         android:paddingEnd="@dimen/size_20">
 
         <com.framework.views.customViews.CustomTextView
-          style="@style/wrap_wrap"
-          android:layout_marginStart="@dimen/size_3"
-          android:layout_marginTop="@dimen/size_36"
-          android:text="@string/name_doctor"
-          android:textColor="@color/black_4a4a4a"
-          app:fontFamily="@font/semi_bold"
-          app:textType="BODY_3" />
+            android:id="@+id/tv_doctor_name"
+            style="@style/wrap_wrap"
+            android:layout_marginStart="@dimen/size_3"
+            android:layout_marginTop="@dimen/size_36"
+            android:text="@string/name_doctor"
+            android:textColor="@color/black_4a4a4a"
+            app:fontFamily="@font/semi_bold"
+            app:textType="BODY_3" />
 
         <com.framework.views.customViews.CustomTextField
           android:id="@+id/ctf_staff_name"
@@ -137,14 +137,15 @@
 
 
         <com.framework.views.customViews.CustomTextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/size_3"
-          android:layout_marginTop="@dimen/size_20"
-          android:text="@string/description"
-          android:textColor="@color/black_4a4a4a"
-          app:fontFamily="@font/semi_bold"
-          app:textType="BODY_3" />
+            android:id="@+id/tv_doctor_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_3"
+            android:layout_marginTop="@dimen/size_20"
+            android:text="@string/description"
+            android:textColor="@color/black_4a4a4a"
+            app:fontFamily="@font/semi_bold"
+            app:textType="BODY_3" />
 
         <com.framework.views.customViews.CustomTextField
           android:id="@+id/ctf_staff_desc"
@@ -165,14 +166,15 @@
           android:orientation="vertical">
 
           <com.framework.views.customViews.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/size_4"
-            android:includeFontPadding="false"
-            android:text="@string/speciality"
-            android:textColor="@color/black_4a4a4a"
-            app:fontFamily="@font/semi_bold"
-            app:textType="BODY_3" />
+              android:id="@+id/tv_doctor_speciality"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:drawablePadding="@dimen/size_4"
+              android:includeFontPadding="false"
+              android:text="@string/speciality"
+              android:textColor="@color/black_4a4a4a"
+              app:fontFamily="@font/semi_bold"
+              app:textType="BODY_3" />
 
           <com.framework.views.customViews.CustomTextView
             android:layout_width="wrap_content"
@@ -200,13 +202,14 @@
           tools:ignore="UnusedAttribute" />
 
         <com.framework.views.customViews.CustomTextView
-          style="@style/wrap_wrap"
-          android:layout_marginStart="@dimen/size_3"
-          android:layout_marginTop="@dimen/size_26"
-          android:text="@string/business_license"
-          android:textColor="@color/black_4a4a4a"
-          app:fontFamily="@font/semi_bold"
-          app:textType="BODY_3" />
+            android:id="@+id/tv_doctor_license"
+            style="@style/wrap_wrap"
+            android:layout_marginStart="@dimen/size_3"
+            android:layout_marginTop="@dimen/size_26"
+            android:text="@string/business_license"
+            android:textColor="@color/black_4a4a4a"
+            app:fontFamily="@font/semi_bold"
+            app:textType="BODY_3" />
 
         <com.framework.views.customViews.CustomTextField
           android:id="@+id/tv_business_license"
@@ -222,13 +225,14 @@
           tools:ignore="UnusedAttribute" />
 
         <com.framework.views.customViews.CustomTextView
-          style="@style/wrap_wrap"
-          android:layout_marginStart="@dimen/size_3"
-          android:layout_marginTop="@dimen/size_26"
-          android:text="@string/upload_signature_"
-          android:textColor="@color/black_4a4a4a"
-          app:fontFamily="@font/semi_bold"
-          app:textType="BODY_3" />
+            android:id="@+id/tv_doctor_upload_signature"
+            style="@style/wrap_wrap"
+            android:layout_marginStart="@dimen/size_3"
+            android:layout_marginTop="@dimen/size_26"
+            android:text="@string/upload_signature_"
+            android:textColor="@color/black_4a4a4a"
+            app:fontFamily="@font/semi_bold"
+            app:textType="BODY_3" />
 
         <include
           android:id="@+id/layout_item_preview"
@@ -272,13 +276,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.framework.views.customViews.CustomTextView
-          style="@style/wrap_wrap"
-          android:layout_marginStart="@dimen/size_3"
-          android:layout_marginTop="@dimen/size_26"
-          android:text="@string/appointment_booking_window_for_patients"
-          android:textColor="@color/black_4a4a4a"
-          app:fontFamily="@font/semi_bold"
-          app:textType="BODY_3" />
+            android:id="@+id/tv_doctor_booking_window"
+            style="@style/wrap_wrap"
+            android:layout_marginStart="@dimen/size_3"
+            android:layout_marginTop="@dimen/size_26"
+            android:text="@string/appointment_booking_window_for_patients"
+            android:textColor="@color/black_4a4a4a"
+            app:fontFamily="@font/semi_bold"
+            app:textType="BODY_3" />
 
         <com.framework.views.customViews.CustomTextField
           android:id="@+id/ctf_booking_window"

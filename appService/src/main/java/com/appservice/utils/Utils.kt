@@ -1,14 +1,30 @@
 package com.appservice.utils
 
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.media.ThumbnailUtils
 import android.net.Uri
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.webkit.MimeTypeMap
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
+import com.appservice.ui.catalog.widgets.ClickType
+import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.framework.imagepicker.ImagePicker
+import com.framework.views.customViews.CustomTextView
+import com.framework.webengageconstant.CLICK
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.UPLOAD_GALLERY_IMAGE
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
@@ -104,7 +120,7 @@ fun File.getMimeType(): String? {
 
 fun String.getExtension(): String? {
   val strLength = lastIndexOf(".")
-  return if (strLength > 0) substring(strLength + 1).toLowerCase() else null
+  return if (strLength > 0) substring(strLength + 1).lowercase(Locale.getDefault()) else null
 }
 
 fun String.getFileName(): String? {
@@ -138,4 +154,25 @@ fun removeWWWFromDomain(domainValue: String): String {
     domainValue
 }
 
+fun changeColorOfSubstring(paramStringInt:Int, color: Int, substring:String, textView:CustomTextView){
+  val paramString = textView.context.getString(paramStringInt)
+  val spannable = SpannableString(paramString)
+  spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(textView.context, color)), paramString.indexOf(substring), paramString.indexOf(substring) + substring.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+  textView.text = spannable
+}
 
+fun openImagePicker(activity: Activity,fragmentManager: FragmentManager) {
+  //ImagePickerUtil.openPicker(this, object : ImagePickerUtil.Listener { override fun onFilePicked(filePath: String) { } })
+  val filterSheet = ImagePickerBottomSheet()
+  filterSheet.isHidePdf(true)
+  filterSheet.onClicked = { openImagePicker(activity,it) }
+  filterSheet.show(fragmentManager, ImagePickerBottomSheet::class.java.name)
+}
+
+private fun openImagePicker(activity: Activity,it: ClickType) {
+  WebEngageController.trackEvent(UPLOAD_GALLERY_IMAGE, CLICK, NO_EVENT_VALUE)
+  val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
+  ImagePicker.Builder(activity).mode(type).compressLevel(ImagePicker.ComperesLevel.SOFT)
+    .directory(ImagePicker.Directory.DEFAULT).extension(ImagePicker.Extension.PNG)
+    .allowMultipleImages(false).enableDebuggingMode(true).build()
+}

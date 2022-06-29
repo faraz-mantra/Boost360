@@ -3,7 +3,6 @@ package com.boost.cart.ui.packages
 import android.animation.Animator
 import android.annotation.SuppressLint
 import android.graphics.Color
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
@@ -14,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -32,18 +32,8 @@ import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.package_fragment_layout.*
-import kotlinx.android.synthetic.main.package_fragment_layout.badge121
-import kotlinx.android.synthetic.main.package_fragment_layout.offer_price
-import kotlinx.android.synthetic.main.package_fragment_layout.package_addons_recycler
-import kotlinx.android.synthetic.main.package_fragment_layout.package_back
-import kotlinx.android.synthetic.main.package_fragment_layout.package_cart_icon
-import kotlinx.android.synthetic.main.package_fragment_layout.package_profile_image
-import kotlinx.android.synthetic.main.package_fragment_layout.package_submit
-import kotlinx.android.synthetic.main.package_fragment_layout.package_title
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class PackageFragmentNew : BaseFragment() {
 
@@ -194,7 +184,11 @@ class PackageFragmentNew : BaseFragment() {
                 for (singleItem in it) {
                     for (item in bundleData!!.included_features) {
                         if (singleItem.feature_code == item.feature_code) {
-                            bundleMonthlyMRP += Utils.priceCalculatorForYear(RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),2), singleItem.widget_type!!, requireActivity())
+                            bundleMonthlyMRP += (
+                                RootUtil.round(
+                                    (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
+                                    2
+                                ))
                         }
                     }
                 }
@@ -204,7 +198,7 @@ class PackageFragmentNew : BaseFragment() {
 
                 if(bundleData!!.overall_discount_percent > 0) {
                     offeredBundlePrice = RootUtil.round(
-                        originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent / 100),
+                        originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent / 100.0),
                         2
                     )
                 }else {
@@ -213,9 +207,9 @@ class PackageFragmentNew : BaseFragment() {
 
                 if (minMonth > 1) {
                     if (prefs.getYearPricing())
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice * 12) + Utils.yearlyOrMonthlyOrEmptyValidity("", requireActivity()))
+                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(Utils.priceCalculatorForYear(offeredBundlePrice,"",requireActivity())) + Utils.yearlyOrMonthlyOrEmptyValidity("", requireActivity()))
                     else
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + Utils.yearlyOrMonthlyOrEmptyValidity("", requireActivity()))
+                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(Utils.priceCalculatorForYear(offeredBundlePrice,"",requireActivity())) + Utils.yearlyOrMonthlyOrEmptyValidity("", requireActivity()))
                     if (offeredBundlePrice != originalBundlePrice) {
                         spannableString(if (prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice, minMonth)
 //                        orig_cost.visibility = View.VISIBLE
@@ -226,9 +220,9 @@ class PackageFragmentNew : BaseFragment() {
                     updatePackageRecycler(it,bundleData!!.min_purchase_months!!)
                 } else {
                     if (prefs.getYearPricing())
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice * 12) + Utils.yearlyOrMonthlyOrEmptyValidity("", requireActivity()))
+                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(Utils.priceCalculatorForYear(offeredBundlePrice,"",requireActivity())) + Utils.yearlyOrMonthlyOrEmptyValidity("", requireActivity()))
                     else
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + Utils.yearlyOrMonthlyOrEmptyValidity("", requireActivity()))
+                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(Utils.priceCalculatorForYear(offeredBundlePrice,"",requireActivity())) + Utils.yearlyOrMonthlyOrEmptyValidity("", requireActivity()))
                     if (offeredBundlePrice != originalBundlePrice) {
                         spannableString(if (prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice, 1)
 //                        orig_cost.visibility = View.VISIBLE

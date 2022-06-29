@@ -50,7 +50,6 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
   override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
     Glide.with(context).load(list.get(position).link).placeholder(R.drawable.boost_360_insignia)
       .into(holder.image)
-
     val price = priceCalculatorForYear(list.get(position).price * list.get(position).min_purchase_months, list.get(position).widget_type, activity)
     val MRPPrice = priceCalculatorForYear(list.get(position).MRPPrice * list.get(position).min_purchase_months, list.get(position).widget_type, activity)
     holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + yearlyOrMonthlyOrEmptyValidity(list.get(position).widget_type, activity)

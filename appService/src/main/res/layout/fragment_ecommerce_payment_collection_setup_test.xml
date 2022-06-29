@@ -1,0 +1,333 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <!--  Deprecated-->
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_smoke">
+
+    <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:fillViewport="true"
+      app:layout_constraintBottom_toTopOf="@+id/btn_confirm"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        style="@style/match_wrap"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomCardView
+          android:id="@+id/customCardView3"
+          style="@style/match_wrap"
+          app:cardBackgroundColor="@color/white">
+
+          <LinearLayout
+            style="@style/match_wrap"
+            android:layout_marginVertical="@dimen/size_10"
+            android:drawablePadding="@dimen/size_12"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/size_16">
+
+            <com.framework.views.customViews.CustomImageView
+              style="@style/wrap_wrap"
+              android:layout_marginTop="@dimen/size_1"
+              android:layout_marginEnd="@dimen/size_5"
+              android:src="@drawable/ic_info_circle" />
+
+            <com.framework.views.customViews.CustomTextView
+              style="@style/wrap_wrap"
+              android:fontFamily="@font/regular"
+              android:includeFontPadding="true"
+              android:text="@string/money_for_all_your_online_order"
+              android:textColor="@color/black_4a4a4a"
+              app:textType="CAPTION" />
+          </LinearLayout>
+        </com.framework.views.customViews.CustomCardView>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          style="@style/match_wrap"
+          android:layout_marginHorizontal="@dimen/size_16"
+          android:layout_marginTop="@dimen/size_16"
+          android:background="@drawable/bg_rect_white_rounded_4"
+          android:orientation="vertical">
+
+          <LinearLayout
+            style="@style/match_wrap"
+            android:orientation="horizontal">
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:padding="@dimen/size_14"
+              android:singleLine="true"
+              android:text="@string/accept_cash_payments"
+              android:textColor="@color/black_4a4a4a"
+              app:fontFamily="@font/semi_bold"
+              app:textType="BODY_1" />
+
+            <com.appservice.views.toggle.widget.LabeledSwitch
+              android:id="@+id/toggle_home"
+              style="@style/Appointment_Toggle"
+              android:layout_gravity="center_vertical"
+              android:layout_marginEnd="@dimen/size_10" />
+          </LinearLayout>
+
+          <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/placeholder_bg" />
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/size_10">
+
+            <com.framework.views.customViews.CustomCheckBox
+              style="@style/CheckBoxStyle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:checked="true" />
+
+            <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_4"
+              android:orientation="vertical">
+
+              <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/during_home_delivery"
+                android:textColor="@color/black_4a4a4a"
+                app:textType="BODY_1" />
+
+              <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select_if_you_want_to_allow_customer_to_make_cash_payment_during_home_delivery"
+                android:textColor="@color/gray_828282"
+                app:textType="CAPTION" />
+            </LinearLayout>
+          </LinearLayout>
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/size_10"
+            android:paddingBottom="@dimen/size_16">
+
+            <com.framework.views.customViews.CustomCheckBox
+              style="@style/CheckBoxStyle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:checked="false" />
+
+            <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_4"
+              android:orientation="vertical">
+
+              <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/during_pickup_from_store"
+                android:textColor="@color/black_4a4a4a"
+                app:textType="BODY_1" />
+
+              <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select_if_you_want_to_allow_customer_to_make_cash_payment_during_store_pickup"
+                android:textColor="@color/gray_828282"
+                app:textType="CAPTION" />
+            </LinearLayout>
+          </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          style="@style/match_wrap"
+          android:layout_marginHorizontal="@dimen/size_16"
+          android:layout_marginTop="@dimen/size_16"
+          android:background="@drawable/bg_rect_white_rounded_4"
+          android:orientation="vertical">
+
+          <LinearLayout
+            style="@style/match_wrap"
+            android:orientation="horizontal">
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:padding="@dimen/size_14"
+              android:singleLine="true"
+              android:text="@string/accept_payments_online"
+              android:textColor="@color/black_4a4a4a"
+              app:fontFamily="@font/semi_bold"
+              app:textType="BODY_1" />
+
+            <com.appservice.views.toggle.widget.LabeledSwitch
+              style="@style/Appointment_Toggle"
+              android:layout_gravity="center_vertical"
+              android:layout_marginEnd="@dimen/size_10"
+              app:on="true" />
+          </LinearLayout>
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/red_E39595"
+            android:drawableStart="@drawable/ic_alert_setting"
+            android:drawablePadding="@dimen/size_10"
+            android:paddingHorizontal="@dimen/size_12"
+            android:paddingVertical="@dimen/size_8"
+            android:text="@string/bank_account_is_mandatory_to_enable_online_payments"
+            android:textColor="@color/white"
+            app:textType="CAPTION" />
+
+          <FrameLayout
+            android:id="@+id/btn_add_account"
+            style="@style/match_wrap"
+            android:layout_height="@dimen/size_38"
+            android:layout_marginHorizontal="@dimen/size_15"
+            android:layout_marginTop="@dimen/size_20"
+            android:background="@drawable/appointment_button_stroke_orange"
+            android:foreground="?android:selectableItemBackground">
+
+            <com.framework.views.customViews.CustomTextView
+              style="@style/wrap_match"
+              android:layout_gravity="center"
+              android:drawableStart="@drawable/ic_bank_transparent"
+              android:drawablePadding="@dimen/size_8"
+              android:gravity="center"
+              android:text="@string/add_a_bank_account"
+              android:textColor="@color/colorAccentLight" />
+          </FrameLayout>
+
+          <LinearLayout
+            style="@style/match_wrap"
+            android:layout_marginVertical="@dimen/size_20"
+            android:drawablePadding="@dimen/size_12"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/size_16">
+
+            <com.framework.views.customViews.CustomImageView
+              style="@style/wrap_wrap"
+              android:layout_marginTop="@dimen/size_1"
+              android:layout_marginEnd="@dimen/size_5"
+              android:src="@drawable/ic_alert_setting"
+              app:tint="@color/colorAccent" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/bank_account_tnc"
+              style="@style/wrap_wrap"
+              android:fontFamily="@font/regular"
+              android:includeFontPadding="true"
+              android:text="@string/boost_payment_gateway_services_read_tnc"
+              android:textColor="@color/black_4a4a4a"
+              app:textType="CAPTION" />
+          </LinearLayout>
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rec_round_bottom_4"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/size_10">
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:paddingVertical="@dimen/size_14">
+
+              <com.framework.views.customViews.CustomCheckBox
+                style="@style/CheckBoxStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true" />
+
+              <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_4"
+                android:orientation="vertical">
+
+                <com.framework.views.customViews.CustomTextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/on_website_checkout_page"
+                  android:textColor="@color/black_4a4a4a"
+                  app:textType="BODY_1" />
+
+                <com.framework.views.customViews.CustomTextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/select_if_you_want_customer_to_make_payments_on_the_website_during_checkout"
+                  android:textColor="@color/gray_828282"
+                  app:textType="CAPTION" />
+              </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:paddingBottom="@dimen/size_16">
+
+              <com.framework.views.customViews.CustomCheckBox
+                style="@style/CheckBoxStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false" />
+
+              <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_4"
+                android:orientation="vertical">
+
+                <com.framework.views.customViews.CustomTextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/via_custom_payment_link"
+                  android:textColor="@color/black_4a4a4a"
+                  app:textType="BODY_1" />
+
+                <com.framework.views.customViews.CustomTextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/select_if_you_want_customer_to_pay_via_a_custom_payment_link_anytime_between_order_placement_and_delivery_learn_more"
+                  android:textColor="@color/gray_828282"
+                  app:textType="CAPTION" />
+              </LinearLayout>
+            </LinearLayout>
+          </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/btn_confirm"
+      style="@style/Appointment.ButtonStyle"
+      android:layout_width="match_parent"
+      android:layout_marginHorizontal="@dimen/size_16"
+      android:layout_marginBottom="@dimen/size_20"
+      android:text="@string/save_details"
+      android:visibility="visible"
+      app:layout_constraintBottom_toBottomOf="parent" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
