@@ -80,15 +80,13 @@ class FeatureDetailsViewModel: BaseViewModel() {
     fun loadNumberList(fpid: String, clientId: String) {
         updatesLoader.postValue(true)
         if (Utils.isConnectedToInternet(application)) {
-            System.out.println("fpid--->" + fpid)
-            System.out.println("clientId--->" + clientId)
+
             CompositeDisposable().add(
                 ApiService.getCallTrackDetails(fpid, clientId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                         {
-                            Log.i("getNumbersforVMN", it.toString())
                             updatesLoader.postValue(false)
                             var NumberList = it
                             callTrackListResponse.postValue(NumberList)

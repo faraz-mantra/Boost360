@@ -828,85 +828,6 @@
                     android:textSize="@dimen/_11sdp"
                     app:layout_constraintTop_toBottomOf="@id/pack_container" />
 
-                <!--                <androidx.constraintlayout.widget.ConstraintLayout-->
-                <!--                    android:id="@+id/about_container"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginTop="16dp"-->
-                <!--                    android:visibility="gone"-->
-                <!--                    app:layout_constraintTop_toBottomOf="@id/widgetLearnMore">-->
-
-                <!--                        <TextView-->
-                <!--                            android:id="@+id/xheader"-->
-                <!--                            android:layout_width="wrap_content"-->
-                <!--                            android:layout_height="wrap_content"-->
-                <!--                            android:gravity="start"-->
-                <!--                            android:lineSpacingExtra="1.3sp"-->
-                <!--                            android:paddingStart="20dp"-->
-                <!--                            android:paddingTop="20dp"-->
-                <!--                            android:paddingEnd="20dp"-->
-                <!--                            android:background="@color/white"-->
-                <!--                            android:paddingBottom="@dimen/_5sdp"-->
-                <!--                            android:text="@string/the_luxury_of_traveling_with_yacht_charter_companies"-->
-                <!--                            android:textColor="#4a4a4a"-->
-                <!--                            android:textSize="@dimen/_13ssp"-->
-                <!--                            app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                            app:layout_constraintStart_toStartOf="parent"-->
-                <!--                            app:layout_constraintTop_toTopOf="parent" />-->
-
-                <!--                        <LinearLayout-->
-                <!--                            android:id="@+id/secondary_images_panel"-->
-                <!--                            android:layout_width="match_parent"-->
-                <!--                            android:layout_height="wrap_content"-->
-                <!--                            app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                            app:layout_constraintStart_toStartOf="parent"-->
-                <!--                            android:background="@color/white"-->
-                <!--                            app:layout_constraintTop_toBottomOf="@+id/xheader">-->
-
-                <!--                            <androidx.recyclerview.widget.RecyclerView-->
-                <!--                                android:id="@+id/secondary_image_recycler"-->
-                <!--                                android:layout_width="match_parent"-->
-                <!--                                android:layout_height="wrap_content"-->
-                <!--                                android:layout_margin="20dp"-->
-                <!--                                android:clipToPadding="false"-->
-                <!--                                android:orientation="horizontal"-->
-                <!--                                android:nestedScrollingEnabled="false"-->
-                <!--                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-                <!--                                android:overScrollMode="never"-->
-                <!--                                tools:listitem="@layout/secondary_image_item"/>-->
-
-
-                <!--                        </LinearLayout>-->
-
-                <!--                        <androidx.constraintlayout.widget.ConstraintLayout-->
-                <!--                            android:id="@+id/description_layout"-->
-                <!--                            android:layout_width="0dp"-->
-                <!--                            android:layout_height="wrap_content"-->
-                <!--                            android:background="@drawable/description_fade_bg"-->
-                <!--                            android:orientation="vertical"-->
-                <!--                            app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                            app:layout_constraintStart_toStartOf="parent"-->
-                <!--                            app:layout_constraintTop_toBottomOf="@+id/secondary_images_panel">-->
-
-                <!--                            <TextView-->
-                <!--                                android:id="@+id/abcText"-->
-                <!--                                android:layout_width="match_parent"-->
-                <!--                                android:layout_height="wrap_content"-->
-                <!--                                android:lineSpacingExtra="1.3sp"-->
-                <!--                                android:paddingStart="22dp"-->
-                <!--                                android:paddingTop="@dimen/_5sdp"-->
-                <!--                                android:paddingEnd="22dp"-->
-                <!--                                android:paddingBottom="22dp"-->
-                <!--                                android:text="@string/information"-->
-                <!--                                android:textColor="@color/common_text_color"-->
-                <!--                                android:textSize="@dimen/_11ssp"-->
-                <!--                                app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                                app:layout_constraintStart_toStartOf="parent"-->
-                <!--                                app:layout_constraintTop_toTopOf="parent" />-->
-
-                <!--                        </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-                <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/how_to_use_container"
                     android:layout_width="match_parent"
@@ -1066,27 +987,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/faq_container" />
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:background="#d8d8d8"-->
-<!--                    android:gravity="center"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@id/faq_container">-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:drawableEnd="@drawable/ic_down_arrow_gray"-->
-<!--                        android:drawablePadding="@dimen/_10sdp"-->
-<!--                        android:gravity="center"-->
-<!--                        android:paddingStart="@dimen/_25sdp"-->
-<!--                        android:paddingTop="@dimen/_50sdp"-->
-<!--                        android:paddingEnd="@dimen/_25sdp"-->
-<!--                        android:paddingBottom="@dimen/_25sdp"-->
-<!--                        android:text="View add-on billing history" />-->
-<!--                </LinearLayout>-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

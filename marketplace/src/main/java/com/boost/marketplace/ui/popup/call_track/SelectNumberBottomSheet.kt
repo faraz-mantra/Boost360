@@ -23,7 +23,7 @@ import com.framework.webengageconstant.ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class CallTrackAddToCartBottomSheet :
+class SelectNumberBottomSheet :
     BaseBottomSheetDialog<CallTrackingAddToCartPopupBinding, FeatureDetailsViewModel>() {
 
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
@@ -48,7 +48,7 @@ class CallTrackAddToCartBottomSheet :
     }
 
     companion object {
-        fun newInstance() = CallTrackAddToCartBottomSheet()
+        fun newInstance() = SelectNumberBottomSheet()
     }
 
     override fun getViewModelClass(): Class<FeatureDetailsViewModel> {
@@ -60,21 +60,80 @@ class CallTrackAddToCartBottomSheet :
         fpid = requireArguments().getString("fpid")
         isDeepLink = requireArguments().getBoolean("isDeepLink", false)
         deepLinkViewType = requireArguments().getString("deepLinkViewType") ?: ""
-        deepLinkDay =requireArguments().getString("deepLinkDay")?.toIntOrNull() ?: 7
+        deepLinkDay = requireArguments().getString("deepLinkDay")?.toIntOrNull() ?: 7
         email = requireArguments().getString("email")
         mobileNo = requireArguments().getString("mobileNo")
         profileUrl = requireArguments().getString("profileUrl")
         accountType = requireArguments().getString("accountType")
-        isOpenCardFragment =requireArguments().getBoolean("isOpenCardFragment", false)
-        userPurchsedWidgets = requireArguments().getStringArrayList("userPurchsedWidgets") ?: java.util.ArrayList()
+        isOpenCardFragment = requireArguments().getBoolean("isOpenCardFragment", false)
+        userPurchsedWidgets =
+            requireArguments().getStringArrayList("userPurchsedWidgets") ?: java.util.ArrayList()
         val jsonString = requireArguments().getString("bundleData")
-        singleAddon = Gson().fromJson<FeaturesModel>(jsonString, object : TypeToken<FeaturesModel>() {}.type)
+        singleAddon =
+            Gson().fromJson<FeaturesModel>(jsonString, object : TypeToken<FeaturesModel>() {}.type)
         viewModel?.setApplicationLifecycle(Application(), this)
         viewModel = ViewModelProviders.of(this).get(FeatureDetailsViewModel::class.java)
         progressDialog = ProgressDialog(context)
         prefs = SharedPrefs(baseActivity)
-        binding?.tvTitle?.text = requireArguments().getString("number")
 
+
+        binding?.tvTitle?.text = requireArguments().getString("phone_number")
+        val select_another_no =
+            "We have selected the above virtual phone number for you. You can also select another number."
+        val ss =
+            SpannableString("We have selected the above virtual phone number for you. You can also select another number.")
+        val string = SpannableString("select another number.")
+
+        ss.setSpan(
+            UnderlineSpan(),
+            select_another_no.indexOf(string.toString()),
+            select_another_no.length,
+            0
+        )
+        ss.setSpan(
+            ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.colorAccent)),
+            select_another_no.indexOf(string.toString()),
+            select_another_no.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        binding?.tvSelectNumber?.text = ss
+        binding?.tvSelectNumber?.setOnClickListener {
+            fpid = requireArguments().getString("fpid")
+
+            val intent = Intent(requireContext(), CallTrackingActivity::class.java)
+            intent.putExtra("fpid", fpid)
+            intent.putExtra("bundleData", Gson().toJson(singleAddon))
+            intent.putExtra(
+                "AddonDiscountedPrice",
+                getDiscountedPrice(singleAddon!!.price, singleAddon!!.discount_percent)
+            )
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("isDeepLink", isDeepLink)
+            intent.putExtra("deepLinkViewType", deepLinkViewType)
+            intent.putExtra("deepLinkDay", deepLinkDay)
+            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                accountType
+            )
+            intent.putExtra(
+                "userPurchsedWidgets",
+                userPurchsedWidgets
+            )
+            if (email != null) {
+                intent.putExtra("email", email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                intent.putExtra("mobileNo", mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", profileUrl)
+            startActivity(intent)
+        }
         binding?.backBtn?.setOnClickListener {
             dismiss()
         }

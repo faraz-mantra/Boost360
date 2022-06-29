@@ -45,6 +45,7 @@ import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.popup.call_track.CallTrackAddToCartBottomSheet
 import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
 import com.boost.marketplace.ui.popup.call_track.RequestCallbackBottomSheet
+import com.boost.marketplace.ui.popup.call_track.SelectNumberBottomSheet
 import com.boost.marketplace.ui.popup.removeItems.RemovePackageBottomSheet
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.bumptech.glide.Glide
@@ -163,7 +164,8 @@ class FeatureDetailsActivity :
 
         featureEdgeCase()
 
-        val termsString = SpannableString("This feature is provided by “Reseller Club” and is subject to their terms and conditions. Read T&C")
+        val termsString =
+            SpannableString("This feature is provided by “Reseller Club” and is subject to their terms and conditions. Read T&C")
 
         termsString.setSpan(
             UnderlineSpan(),
@@ -231,24 +233,47 @@ class FeatureDetailsActivity :
             }
         }
         )
+
+
+
+
         add_item_to_cart.setOnClickListener {
-            if(packageItem){
+            if (packageItem) {
                 val args = Bundle()
                 args.putString("addonName", addonDetails!!.name)
                 removePackageBottomSheet.arguments = args
-                removePackageBottomSheet.show(supportFragmentManager, RemovePackageBottomSheet::class.java.name)
+                removePackageBottomSheet.show(
+                    supportFragmentManager,
+                    RemovePackageBottomSheet::class.java.name
+                )
             } else addItemToCart()
         }
 
         add_item_to_cart_new.setOnClickListener {
-            if(packageItem){
+            if (packageItem) {
                 val args = Bundle()
                 args.putString("addonName", addonDetails!!.name)
                 removePackageBottomSheet.arguments = args
-                removePackageBottomSheet.show(supportFragmentManager, RemovePackageBottomSheet::class.java.name)
+                removePackageBottomSheet.show(
+                    supportFragmentManager,
+                    RemovePackageBottomSheet::class.java.name
+                )
             } else addItemToCart()
         }
         learn_more_btn.setOnClickListener {
+            when {
+                addonDetails?.boost_widget_key?.equals("IVR")!! -> {
+                    add_item_to_cart.text = "Buy call tracking"
+                }
+                addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
+                    add_item_to_cart.text = "Choose custom domain"
+
+                }
+                else -> {
+                    add_item_to_cart.text = "Add to cart"
+                }
+            }
+
             learn_more_btn.visibility = View.GONE
             learn_less_btn.visibility = View.VISIBLE
             title_bottom3.maxLines = 20
@@ -257,6 +282,17 @@ class FeatureDetailsActivity :
         }
 
         learn_less_btn.setOnClickListener {
+            when {
+                addonDetails?.boost_widget_key?.equals("IVR")!! -> {
+                    add_item_to_cart_new.text = "Buy call tracking"
+                }
+                addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
+                    add_item_to_cart_new.text = "Choose custom domain"
+                }
+                else -> {
+                    add_item_to_cart_new.text = "Add to cart"
+                }
+            }
             learn_more_btn.visibility = View.VISIBLE
             learn_less_btn.visibility = View.GONE
             title_bottom3.maxLines = 2
@@ -310,41 +346,43 @@ class FeatureDetailsActivity :
 
                 System.out.println("numberList" + it)
 
-                val dialogCard = CallTrackAddToCartBottomSheet()
+                val dialogCard = SelectNumberBottomSheet()
                 val bundle = Bundle()
-//                bundle.putString("from_where","featureDetails")
-//                bundle.putString("bundleData", Gson().toJson(addonDetails))
-//                bundle.putDouble("AddonDiscountedPrice", getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent))
-                 bundle.putString("phone_number", it[0])
-                 bundle.putString("fpid", fpid)
-//                bundle.putString("expCode", experienceCode)
-//                bundle.putBoolean("isDeepLink", isDeepLink)
-//                bundle.putString("deepLinkViewType", deepLinkViewType)
-//                bundle.putInt("deepLinkDay", deepLinkDay)
-//                bundle.putBoolean("isOpenCardFragment", isOpenCardFragment)
-//                bundle.putString(
-//                    "accountType",
-//                    accountType
-//                )
-//                bundle.putStringArrayList(
-//                    "userPurchsedWidgets",
-//                    userPurchsedWidgets
-//                )
-//                if (email != null) {
-//                    bundle.putString("email", email)
-//                } else {
-//                    bundle.putString("email", "ria@nowfloats.com")
-//                }
-//                if (mobileNo != null) {
-//                    bundle.putString("mobileNo", mobileNo)
-//                } else {
-//                    bundle.putString("mobileNo", "9160004303")
-//                }
-//                bundle.putString("profileUrl", profileUrl)
+                bundle.putString("bundleData", Gson().toJson(addonDetails))
+                bundle.putDouble(
+                    "AddonDiscountedPrice",
+                    getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent)
+                )
+                bundle.putString("phone_number", it[0])
+                bundle.putString("fpid", fpid)
+                bundle.putString("expCode", experienceCode)
+                bundle.putBoolean("isDeepLink", isDeepLink)
+                bundle.putString("deepLinkViewType", deepLinkViewType)
+                bundle.putInt("deepLinkDay", deepLinkDay)
+                bundle.putBoolean("isOpenCardFragment", isOpenCardFragment)
+                bundle.putString(
+                    "accountType",
+                    accountType
+                )
+                bundle.putStringArrayList(
+                    "userPurchsedWidgets",
+                    userPurchsedWidgets
+                )
+                if (email != null) {
+                    bundle.putString("email", email)
+                } else {
+                    bundle.putString("email", "ria@nowfloats.com")
+                }
+                if (mobileNo != null) {
+                    bundle.putString("mobileNo", mobileNo)
+                } else {
+                    bundle.putString("mobileNo", "9160004303")
+                }
+                bundle.putString("profileUrl", profileUrl)
                 dialogCard.arguments = bundle
                 dialogCard.show(
                     this.supportFragmentManager,
-                    CallTrackAddToCartBottomSheet::class.java.name
+                    SelectNumberBottomSheet::class.java.name
                 )
 
             }
@@ -358,12 +396,29 @@ class FeatureDetailsActivity :
             addonDetails = it
             prefs.storeAddonDetails(addonDetails)
 
-            when{
+            when {
                 it.boost_widget_key.equals("DOMAINPURCHASE") || it.feature_code.equals("DOMAINPURCHASE") -> {
-                    terms.visibility= VISIBLE
+                    terms.visibility = VISIBLE
                 }
                 else -> {
-                    terms.visibility=View.GONE
+                    terms.visibility = View.GONE
+                }
+            }
+
+            when {
+                it.boost_widget_key.equals("IVR") -> {
+                    add_item_to_cart.text = "Buy call tracking"
+                    add_item_to_cart_new.text = "Buy call tracking"
+
+                }
+                it.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
+                    add_item_to_cart.text = "Choose custom domain"
+                    add_item_to_cart_new.text = "Choose custom domain"
+                }
+                else -> {
+                    add_item_to_cart.text = "Add to cart"
+                    add_item_to_cart_new.text = "Add to cart"
+
                 }
             }
 
@@ -510,16 +565,16 @@ class FeatureDetailsActivity :
             if (cart_list != null && cart_list!!.size > 0) {
                 badge121.visibility = View.VISIBLE
                 for (item in cart_list!!) {
-                    if (item.item_type.equals("bundles")){
+                    if (item.item_type.equals("bundles")) {
                         if (bundlesList.size > 0) {
-                            for(singleBundle in bundlesList){
-                                if(singleBundle.bundle_id.equals(item.item_id)){
+                            for (singleBundle in bundlesList) {
+                                if (singleBundle.bundle_id.equals(item.item_id)) {
                                     val includedFeatures = Gson().fromJson<List<IncludedFeature>>(
                                         singleBundle.included_features,
                                         object : TypeToken<List<IncludedFeature>>() {}.type
                                     )
-                                    for(singleFeature in includedFeatures){
-                                        if(singleFeature.feature_code.equals(addonDetails!!.feature_code)){
+                                    for (singleFeature in includedFeatures) {
+                                        if (singleFeature.feature_code.equals(addonDetails!!.feature_code)) {
                                             itemInCartStatus = true
                                             packageItem = true
 //                                            loadCostToButtons()
@@ -554,7 +609,7 @@ class FeatureDetailsActivity :
                         }
                     }
                 }
-                if(!addedToCart){
+                if (!addedToCart) {
                     addedToCart = false
                 }
                 badgeNumber = cart_list!!.size
@@ -610,7 +665,10 @@ class FeatureDetailsActivity :
                         args.putString("addonDetails", Gson().toJson(addonDetails))
                         args.putBoolean("addedToCart", addedToCart)
                         staffManagementBottomSheet.arguments = args
-                        staffManagementBottomSheet.show(supportFragmentManager, StaffManagementBottomSheet::class.java.name)
+                        staffManagementBottomSheet.show(
+                            supportFragmentManager,
+                            StaffManagementBottomSheet::class.java.name
+                        )
                     }
                     else -> {
                         makeFlyAnimation(addon_icon)
@@ -676,13 +734,13 @@ class FeatureDetailsActivity :
                 }
             }
         } else {
-            if(addonDetails != null && addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!!){
+            if (addonDetails != null && addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!!) {
                 goToDomainSelection()
             }
         }
     }
 
-    fun goToDomainSelection(){
+    fun goToDomainSelection() {
         val intent = Intent(
             applicationContext,
             CustomDomainActivity::class.java
@@ -690,7 +748,10 @@ class FeatureDetailsActivity :
         intent.putExtra("expCode", experienceCode)
         intent.putExtra("fpid", fpid)
         intent.putExtra("bundleData", Gson().toJson(addonDetails))
-        intent.putExtra("AddonDiscountedPrice", getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent))
+        intent.putExtra(
+            "AddonDiscountedPrice",
+            getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent)
+        )
         startActivity(intent)
     }
 
@@ -786,7 +847,7 @@ class FeatureDetailsActivity :
         try {
 
             //if the View is opened from package then hide button, price, discount and Cart icon
-            if (intent.extras != null && intent.extras!!.containsKey("packageView") ) {
+            if (intent.extras != null && intent.extras!!.containsKey("packageView")) {
                 imageViewCart121.visibility = View.INVISIBLE
                 if (bottom_box.visibility == VISIBLE) {
                     add_item_to_cart.background = ContextCompat.getDrawable(
@@ -797,8 +858,8 @@ class FeatureDetailsActivity :
 //                    if(packageItem)
 //                        add_item_to_cart.text = "ITEM BELONGS TO THE PACK IN CART"
 //                    else {
-                        add_item_to_cart.text = "ITEM BELONG TO PACKAGE"
-                        add_item_to_cart.isEnabled = false
+                    add_item_to_cart.text = "ITEM BELONG TO PACKAGE"
+                    add_item_to_cart.isEnabled = false
 //                    }
                 } else {
                     add_item_to_cart_new.background = ContextCompat.getDrawable(
@@ -809,8 +870,8 @@ class FeatureDetailsActivity :
 //                    if(packageItem)
 //                        add_item_to_cart.text = "ITEM BELONGS TO THE PACK IN CART"
 //                    else {
-                        add_item_to_cart.text = "ITEM BELONG TO PACKAGE"
-                        add_item_to_cart_new.isEnabled = false
+                    add_item_to_cart.text = "ITEM BELONG TO PACKAGE"
+                    add_item_to_cart_new.isEnabled = false
 //                    }
                 }
                 return
@@ -1070,7 +1131,7 @@ class FeatureDetailsActivity :
         navigateToCart()
     }
 
-    fun navigateToCart(){
+    fun navigateToCart() {
         val intent = Intent(
             applicationContext,
             CartActivity::class.java
