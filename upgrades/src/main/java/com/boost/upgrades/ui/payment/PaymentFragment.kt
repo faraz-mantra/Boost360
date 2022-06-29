@@ -1142,6 +1142,9 @@ class PaymentFragment : BaseFragment("MarketPlacePaymentFragment"), PaymentListe
   fun updateSubscriptionDetails() {
     var prefs = SharedPrefs(activity as UpgradeActivity)
 
+    val gstAmount = arguments!!.getDouble("gstAmount")
+    val discountAmount = arguments!!.getDouble("discountAmount")
+
     //cartOriginalPrice
     val cartOriginalPrice = RootUtil.round(prefs.getCartOriginalAmount().toDouble(),2)
     payment_amount_value.setText(
@@ -1149,19 +1152,23 @@ class PaymentFragment : BaseFragment("MarketPlacePaymentFragment"), PaymentListe
     )
 
     //coupon discount percentage
-    val couponDiscountPercentage = prefs.getCouponDiscountPercentage()
-    coupon_discount_title.setText("Coupon discount(" + couponDiscountPercentage.toString() + "%)")
+//    val couponDiscountPercentage = prefs.getCouponDiscountPercentage()
+//    coupon_discount_title.setText("Coupon discount(" + couponDiscountPercentage.toString() + "%)")
 
     //coupon discount amount
-    val couponDiscountAmount = RootUtil.round(cartOriginalPrice * couponDiscountPercentage / 100, 2)
+//    val couponDiscountAmount = RootUtil.round(cartOriginalPrice * couponDiscountPercentage / 100, 2)
+//    coupon_discount_value.setText(
+//      "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
+//    )
     coupon_discount_value.setText(
-      "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
+      "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(discountAmount)
     )
 
     //igsttin value
-    val temp = ((cartOriginalPrice - couponDiscountAmount) * 18) / 100
-    val taxValue = RootUtil.round(Math.round(temp * 100) / 100.0,2)
-    igst_value.setText("+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
+//    val temp = ((cartOriginalPrice - couponDiscountAmount) * 18) / 100
+//    val taxValue = RootUtil.round(Math.round(temp * 100) / 100.0,2)
+//    igst_value.setText("+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
+    igst_value.setText("+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(gstAmount))
 
     order_total_value.setText(
       "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(totalAmount,2))

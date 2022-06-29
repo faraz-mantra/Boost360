@@ -17,6 +17,7 @@ import com.android.volley.toolbox.Volley;
 import com.appservice.AppServiceApplication;
 import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignup.locale.LocaleManager;
+import com.boost.upgrades.UpgradeApplication;
 import com.dashboard.AppDashboardApplication;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
@@ -131,6 +132,9 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
         FestivePosterApplication.initModule(this);
         initWebEngage();
         UserExperiorController.INSTANCE.startRecording(this);
+        //upgrade module changes
+        UpgradeApplication.instance = this;
+        UpgradeApplication.initModule(this);
 
         //Invite Referral
         InviteReferralsApplication.register(this);
