@@ -1,6 +1,5 @@
 package com.boost.upgrades.ui.home
 
-import android.R.attr
 import android.animation.Animator
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
@@ -19,11 +18,16 @@ import android.util.Log
 import android.view.*
 import android.webkit.WebViewClient
 import android.widget.ImageView
+import android.widget.PopupMenu
+import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.appservice.rest.repository.AzureWebsiteNewRepository
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.R
@@ -42,6 +46,7 @@ import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.compare.ComparePackageFragment
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
+import com.boost.upgrades.ui.history.HistoryFragment
 import com.boost.upgrades.ui.marketplace_offers.MarketPlaceOfferFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
@@ -58,8 +63,13 @@ import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.Utils.getRetrofit
 import com.boost.upgrades.utils.Utils.longToast
 import com.dashboard.utils.DeepLinkUtil
+import com.framework.analytics.SentryController
+import com.framework.extensions.runOnUiThread
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.models.toLiveData
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -71,27 +81,10 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Retrofit
-import java.util.*
-import kotlin.collections.ArrayList
-
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import com.appservice.rest.repository.AzureWebsiteNewRepository
-import com.framework.analytics.SentryController
-import com.framework.extensions.runOnUiThread
-import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
-import com.framework.models.toLiveData
-import com.framework.utils.RootUtil
 import java.text.SimpleDateFormat
-import android.R.attr.button
-import android.os.Handler
-import android.widget.PopupMenu
-import androidx.annotation.RequiresApi
-import com.boost.upgrades.ui.history.HistoryFragment
-import com.boost.upgrades.utils.Utils.priceCalculatorForYear
+import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import kotlin.concurrent.schedule
 
 
 class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, CompareBackListener {
@@ -2813,7 +2806,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                         for (singleItem in it) {
                             for (item in item!!.included_features) {
                                 if (singleItem.feature_code == item.feature_code) {
-                                    bundleMonthlyMRP += priceCalculatorForYear(RootUtil.round(singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),2), singleItem.widget_type, requireActivity())
+                                    bundleMonthlyMRP += RootUtil.round(singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),2)
                                 }
                             }
                         }
@@ -2822,7 +2815,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                         originalBundlePrice = (bundleMonthlyMRP * minMonth)
 
                         if (item!!.overall_discount_percent > 0)
-                            offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100),2)
+                            offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100.0),2)
                         else
                             offeredBundlePrice = originalBundlePrice
 
