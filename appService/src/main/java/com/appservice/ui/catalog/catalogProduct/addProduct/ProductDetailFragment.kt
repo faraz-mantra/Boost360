@@ -137,17 +137,17 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   fun getDefaultGst(){
-    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner) {
       val dataItem = it as? AppointmentStatusResponse
       if (dataItem?.isSuccess() == true && dataItem.result != null) {
-       val catalogSetup = dataItem.result?.catalogSetup
-        gstProductData = GstData(gstSlab =catalogSetup?.getGstSlabInt()?.toDouble())
+        val catalogSetup = dataItem.result?.catalogSetup
+        gstProductData = GstData(gstSlab = catalogSetup?.getGstSlabInt()?.toDouble())
 
-      }else{
+      } else {
         showLongToast(getString(R.string.unable_to_fetch_default_gst_slab))
       }
       hideProgress()
-    })
+    }
   }
 
 
@@ -381,7 +381,6 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     request.updateValueSet(UpdateValueU(setGST))
     viewModel?.updateProductGstDetail(request)?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.isSuccess())) {
-        hideProgress()
         uploadImageSingle(productId)
       } else showError(getString(R.string.product_updating_error_try_again))
     })
@@ -396,7 +395,6 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     val request = ProductGstDetailRequest(actionData, sessionLocal.fPID)
     viewModel?.addProductGstDetail(request)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.isSuccess()) {
-        hideProgress()
         uploadImageSingle(productId)
       } else {
         if (isEdit == false) errorType = "addGstService"
@@ -406,7 +404,6 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun uploadImageSingle(productId: String?) {
-    showProgress(getString(R.string.uploading_product_image))
     if (isEdit == true && productImage == null) {
       uploadSecondaryImage(productId)
       return
@@ -469,11 +466,9 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         }
       }
     } else {
-      showLongToast(
-        if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
+      showLongToast(if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
           R.string.product_saved_successfully
-        )
-      )
+        ))
       goBack()
     }
   }
