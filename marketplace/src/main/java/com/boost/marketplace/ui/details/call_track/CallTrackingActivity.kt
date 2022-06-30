@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.R
+import com.boost.marketplace.adapter.ExactMatchListAdapter
 import com.boost.marketplace.adapter.MatchNumberListAdapter
 import com.boost.marketplace.adapter.NumberListAdapter
 import com.boost.marketplace.base.AppBaseActivity
@@ -37,9 +38,11 @@ class CallTrackingActivity :
      var numberList: ArrayList<String> = ArrayList()
     var loadMorenumberList: ArrayList<String> = ArrayList()
     var isLoading = false
+    var handler: Handler = Handler()
 
     lateinit var numberListAdapter: NumberListAdapter
     lateinit var matchNumberListAdapter: MatchNumberListAdapter
+    lateinit var exactMatchNumberListAdapter: ExactMatchListAdapter
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
     var experienceCode: String? = null
     var blockedNumber: String? = null
@@ -98,6 +101,7 @@ class CallTrackingActivity :
 
         matchNumberListAdapter = MatchNumberListAdapter(this, ArrayList(), null, this)
         numberListAdapter = NumberListAdapter(this, ArrayList(),null,this)
+        exactMatchNumberListAdapter = ExactMatchListAdapter(this, ArrayList(),null,this)
         progressDialog = ProgressDialog(this)
 
 
@@ -183,7 +187,12 @@ class CallTrackingActivity :
             binding?.etCallTrack?.setText("")
             binding?.etCallTrack?.hint = "Search for a sequence of digits ..."
             binding?.tvAvailableNo?.text = "Available numbers"
-            val adapter = NumberListAdapter(this,numberList,null,this)
+            binding?.cardListExactMatch?.visibility = VISIBLE
+            val adapter2 = ExactMatchListAdapter(this, ArrayList(),null,this)
+            binding?.rvNumberListExactMatch?.adapter = adapter2
+            binding?.rvNumberListExactMatch?.setHasFixedSize(true)
+            binding?.rvNumberListExactMatch?.isNestedScrollingEnabled = false
+            val adapter = NumberListAdapter(this,loadMorenumberList,null,this)
             binding?.rvNumberList?.adapter = adapter
             binding?.rvNumberList?.setHasFixedSize(true)
             binding?.rvNumberList?.isNestedScrollingEnabled = false
@@ -201,22 +210,10 @@ class CallTrackingActivity :
         initMVVM()
     }
 
-    private fun initMatchNumberListAdapter() {
-
-    }
-
     private fun initNumberListAdapter(list:ArrayList<String>) {
         numberListAdapter = NumberListAdapter(this,loadMorenumberList,null,this)
         binding?.rvNumberList?.adapter = numberListAdapter
     }
-
-//    fun populateData(start :Int,end :Int)
-//    {
-//        for (i in start until end) {
-//            loadMorenumberList.add(numberList[i])
-//        }
-//
-//    }
     private fun initScrollListener() {
         binding?.rvNumberList?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(@NonNull recyclerView: RecyclerView, newState: Int) {
@@ -227,44 +224,39 @@ class CallTrackingActivity :
                 super.onScrolled(recyclerView, dx, dy)
                 val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
                val pos = linearLayoutManager?.findLastCompletelyVisibleItemPosition()
-                if(!isLoading){
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == loadMorenumberList.size - 1) {
                         //bottom of list!
-                        loadMore()
-                        isLoading = true
+                        onScrolledToBottom()
                     }
-                }
 
 
             }
         })
     }
 
-    private fun loadMore() {
-//        loadMorenumberList.add(null)
-        numberListAdapter.notifyItemInserted(loadMorenumberList.size - 1)
-        val handler = Handler()
-        handler.postDelayed(Runnable {
-            loadMorenumberList.removeAt(loadMorenumberList.size - 1)
-            val scrollPosition: Int = loadMorenumberList.size
-            numberListAdapter.notifyItemRemoved(scrollPosition)
-            var currentSize = scrollPosition
-            val nextLimit = currentSize + 20
-            while (currentSize - 1 < nextLimit) {
-                loadMorenumberList.add(numberList[currentSize])
-                currentSize++
+    private fun onScrolledToBottom() {
+        if (loadMorenumberList.size < numberList.size) {
+            val x: Int
+            val y: Int
+            if (numberList.size - loadMorenumberList.size >= 20) {
+                x = loadMorenumberList.size
+                y = x + 20
+            } else {
+                x = loadMorenumberList.size
+                y = x + numberList.size - loadMorenumberList.size
+            }
+            for (i in x until y) {
+                loadMorenumberList.add(numberList[i])
             }
             numberListAdapter.notifyDataSetChanged()
-            isLoading = false
-        }, 2000)
+        }
     }
+
     fun initMVVM(){
         viewModel.getCallTrackingDetails().observe(this) {
             if (it != null) {
-                System.out.println("numberList" + it)
-
                 numberList.addAll(it)
-                for (i in 0 until 20) {
+                for (i in 0..19) {
                     loadMorenumberList.add(numberList[i])
                 }
                 initNumberListAdapter(loadMorenumberList)
@@ -287,17 +279,6 @@ class CallTrackingActivity :
     }
 
 
-    private fun initRV1() {
-        binding?.rvNumberList?.adapter = numberListAdapter
-        binding?.rvNumberList?.setHasFixedSize(true)
-        binding?.rvNumberList?.isNestedScrollingEnabled = false
-    }
-    private fun initRV2() {
-        binding?.rvNumberListRelated?.adapter = matchNumberListAdapter
-        binding?.rvNumberListRelated?.setHasFixedSize(true)
-        binding?.rvNumberListRelated?.isNestedScrollingEnabled = false
-    }
-
     private fun loadNumberList() {
         try {
             viewModel.loadNumberList(
@@ -311,20 +292,20 @@ class CallTrackingActivity :
 
     }
 
-    private fun updateNumberList(list: ArrayList<String>, searchValue: String?) {
-        numberListAdapter = NumberListAdapter(this, list, searchValue, this)
-        binding?.rvNumberList?.adapter = numberListAdapter
-        binding?.rvNumberList?.isNestedScrollingEnabled = false
-        binding?.rvNumberList?.setHasFixedSize(true)
+    private fun updateExactNumberList(list: ArrayList<String>, searchValue: String?) {
+        exactMatchNumberListAdapter = ExactMatchListAdapter(this, list, searchValue, this)
+        binding?.rvNumberListExactMatch?.adapter = numberListAdapter
         binding?.tvSearchResult?.visibility = VISIBLE
+        numberListAdapter.notifyDataSetChanged()
     }
 
     private fun updateEveryNumberList(list: MutableList<String>, searchValue: String?) {
-        matchNumberListAdapter = MatchNumberListAdapter(this, list, searchValue, this)
+        matchNumberListAdapter = MatchNumberListAdapter(this,list,searchValue,this)
         binding?.cardListRelated?.visibility = VISIBLE
-        binding?.rvNumberListRelated?.adapter = matchNumberListAdapter
-        binding?.rvNumberListRelated?.setHasFixedSize(true)
-        binding?.rvNumberListRelated?.isNestedScrollingEnabled = false
+        val recyclerview = findViewById<RecyclerView>(R.id.rv_number_list_related)
+        recyclerview.layoutManager = LinearLayoutManager(this)
+        recyclerview.adapter = matchNumberListAdapter
+        matchNumberListAdapter.notifyDataSetChanged()
     }
 
     fun updateAllItemBySearchValue(searchValue: String) {
@@ -346,13 +327,19 @@ class CallTrackingActivity :
             if (isMatching > 2) {
                 everyMatchList.add(number)
             }
-            if (num.contains(searchValue)) {
+        }
+        for (number in numberList) {
+            val num = number.replace("+91 ", "").replace("-", "")
+            if(num.contains(searchValue)){
                 exactMatchList.add(number)
+
             }
         }
         if (exactMatchList.isNotEmpty() && everyMatchList.isNotEmpty()) {
-            updateNumberList(exactMatchList, searchValue)
+            updateExactNumberList(exactMatchList, searchValue)
             updateEveryNumberList(everyMatchList, searchValue)
+            binding?.cardListExactMatch?.visibility = VISIBLE
+            binding?.cardList?.visibility = GONE
             binding?.rvNumberListRelated?.visibility = VISIBLE
             binding?.tvSearchResult?.text =
                 exactMatchList.size.toString() + " numbers found with " + "‘" + searchValue + "’"
@@ -363,6 +350,8 @@ class CallTrackingActivity :
             tv_available_no.text = "Oops! No exact matches found."
             binding?.cardListRelated?.visibility = VISIBLE
             binding?.tvSearchResult?.visibility = GONE
+            binding?.cardListExactMatch?.visibility = GONE
+            binding?.cardList?.visibility = GONE
             binding?.tvSearchResultForRelatedCombination?.visibility = GONE
             binding?.tvOtherAvailableNo?.visibility = VISIBLE
             binding?.tvOtherAvailableNo?.text =
@@ -370,12 +359,21 @@ class CallTrackingActivity :
             updateEveryNumberList(everyMatchList, searchValue)
         } else if (exactMatchList.isNotEmpty() && everyMatchList.isEmpty()) {
             binding?.cardListRelated?.visibility = GONE
+            binding?.cardListExactMatch?.visibility = VISIBLE
+            binding?.cardList?.visibility = GONE
             binding?.tvSearchResultForRelatedCombination?.visibility = GONE
             binding?.tvOtherAvailableNo?.visibility = GONE
         } else {
             tv_available_no.text = "Oops! No search results found."
             tv_other_available_no.text = "Other available numbers"
-            updateNumberList(numberList, null)
+            val adapter2 = ExactMatchListAdapter(this, ArrayList(),null,this)
+            binding?.rvNumberListExactMatch?.adapter = adapter2
+            binding?.rvNumberListExactMatch?.setHasFixedSize(true)
+            binding?.rvNumberListExactMatch?.isNestedScrollingEnabled = false
+            val adapter = NumberListAdapter(this,loadMorenumberList,null,this)
+            binding?.rvNumberList?.adapter = adapter
+            binding?.rvNumberList?.setHasFixedSize(true)
+            binding?.rvNumberList?.isNestedScrollingEnabled = false
         }
 
 

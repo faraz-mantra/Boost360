@@ -147,7 +147,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        android:layout_marginEnd="12dp"
+                        android:padding="@dimen/pad_10dp"
                         android:src="@drawable/ic_cross"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -243,6 +243,26 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_available_no" />
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_list_exact_match"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@color/white"
+                    android:elevation="8dp"
+                    android:visibility="gone"
+                    android:theme="@style/Theme.MaterialComponents"
+                    app:cardCornerRadius="@dimen/pad_10dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_search_result">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_number_list_exact_match"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:itemCount="4"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/layout_number_list" />
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/card_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -276,7 +296,7 @@
                     android:textSize="@dimen/txt_14sp"
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/card_list" />
+                    app:layout_constraintTop_toBottomOf="@id/card_list_exact_match" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/card_list_related"
