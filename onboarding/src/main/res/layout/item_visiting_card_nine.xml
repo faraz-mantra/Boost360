@@ -36,15 +36,14 @@
         android:layout_marginEnd="@dimen/size_16"
         android:orientation="horizontal">
 
-        <com.framework.views.customViews.CustomTextView
+        <com.framework.views.customViews.AutoFitTextView
           android:id="@+id/business_name"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginEnd="@dimen/size_14"
           android:layout_weight="1"
-          android:ellipsize="end"
           android:includeFontPadding="false"
-          android:maxLines="2"
+          android:maxLines="1"
           android:textColor="@color/darkslateblue"
           app:fontFamily="@font/patua_one_regular"
           app:textType="HEADING_6"

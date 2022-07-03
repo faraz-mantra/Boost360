@@ -51,11 +51,11 @@ class FragmentAddAccountDetails : AppBaseFragment<FragmentAddBankDetailsBinding,
   }
 
   private fun setupUIColor() {
-    changeColorOfSubstring(R.string.name_of_the_account_holder, R.color.colorAccent, "*", binding?.tvName!!)
-    changeColorOfSubstring(R.string.account_number_, R.color.colorAccent, "*", binding?.tvNumber!!)
-    changeColorOfSubstring(R.string.confirm_account_number, R.color.colorAccent, "*", binding?.titleConfirmAccount!!)
-    changeColorOfSubstring(R.string.bank_name, R.color.colorAccent, "*", binding?.tvBankName!!)
-    changeColorOfSubstring(R.string.bank_ifsc_code, R.color.colorAccent, "*", binding?.tvBankIfsc!!)
+    changeColorOfSubstring(R.string.name_of_the_account_holder_astrick, R.color.colorAccent, "*", binding?.tvName!!)
+    changeColorOfSubstring(R.string.account_number_aestrick, R.color.colorAccent, "*", binding?.tvNumber!!)
+    changeColorOfSubstring(R.string.confirm_account_number_astrick, R.color.colorAccent, "*", binding?.titleConfirmAccount!!)
+    changeColorOfSubstring(R.string.bank_name_astrick, R.color.colorAccent, "*", binding?.tvBankName!!)
+    changeColorOfSubstring(R.string.bank_ifsc_code_astrick, R.color.colorAccent, "*", binding?.tvBankIfsc!!)
   }
 
   private fun getAccountDetails() {

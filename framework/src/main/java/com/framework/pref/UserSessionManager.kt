@@ -80,6 +80,7 @@ class UserSessionManager(var activity: Context) {
   private val KEY_BUSINESS_HOURS = "BusinessHoursMainKey"
   private val KEY_FP_SHARE_ENABLE = "fbShareEnabled"
   private val KEY_FP_PAGE_SHARE_ENABLE = "fbPageShareEnabled"
+  private val KEY_HAS_USER_LOGGED_IN_ONCE="KEY_HAS_USER_LOGGED_IN_ONCE"
 
 
   fun Context.getPreferenceTwitter(): SharedPreferences {
@@ -96,6 +97,13 @@ class UserSessionManager(var activity: Context) {
     editor.putString(KEY_EMAIL, email)
     // commit changes
     editor.commit()
+  }
+
+  var hasUserLoggedInOnce:Boolean
+  get() = pref.getBoolean(KEY_HAS_USER_LOGGED_IN_ONCE,false)
+  set(value) {
+    editor.putBoolean(KEY_HAS_USER_LOGGED_IN_ONCE,value)
+    editor.apply()
   }
 
   var fbShareEnabled: Boolean

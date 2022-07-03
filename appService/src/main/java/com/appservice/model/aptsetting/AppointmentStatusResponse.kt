@@ -6,9 +6,11 @@ import androidx.annotation.ColorRes
 import com.appservice.AppServiceApplication
 import com.appservice.R
 import com.appservice.base.getProductType
+import com.appservice.base.isDoctorClinicProfile
 import com.appservice.constant.RecyclerViewItemType
 import com.appservice.recyclerView.AppBaseRecyclerViewItem
 import com.appservice.utils.capitalizeUtil
+import com.framework.BaseApplication
 import com.framework.base.BaseResponse
 import com.framework.pref.UserSessionManager
 import com.framework.utils.fromHtml
@@ -202,7 +204,9 @@ data class CatalogSetup(
   }
 
   fun getSubtitle(): Spanned? {
-    return fromHtml("Tax slab: <i><b>${if ((this.isDefaultGSTSlabSelected == false && this.defaultGSTSlab == 0.0).not()) "${this.getGstSlabInt()}%" else "<font color='#${getColorString()}'>Not selected</font>"}</b></i>")
+    val s = UserSessionManager(BaseApplication.instance)
+
+    return fromHtml("Tax slab: <i><b>${if ((this.isDefaultGSTSlabSelected == false && this.defaultGSTSlab == null).not()|| isDoctorClinicProfile(s.fP_AppExperienceCode)) "${this.getGstSlabInt()}%" else "<font color='#${getColorString()}'>Not selected</font>"}</b></i>")
   }
 
   fun isEmptyData(): Boolean {
