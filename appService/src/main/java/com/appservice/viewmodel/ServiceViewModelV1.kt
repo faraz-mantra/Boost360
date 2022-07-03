@@ -107,6 +107,9 @@ class ServiceViewModelV1 : BaseViewModel() {
     return StaffNowFloatsRepository.getServiceTiming(request).toLiveData()
   }
 
+  fun getAppointmentCatalogStatus(floatingPointId: String?, clientId: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getAppointmentCatalogStatus(floatingPointId, clientId).toLiveData()
+  }
 //  fun addProductDetails(request:ProductDimensionRequest): LiveData<BaseResponse> {
 //    return KitWebActionRepository.productAddData(request).toLiveData()
 //  }

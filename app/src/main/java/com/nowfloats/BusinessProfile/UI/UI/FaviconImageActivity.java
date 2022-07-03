@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -193,8 +194,9 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        finish();
-        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        Toast.makeText(this, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
+     /*   finish();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);*/
         return super.onOptionsItemSelected(item);
     }
 

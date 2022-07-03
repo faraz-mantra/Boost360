@@ -62,7 +62,7 @@ dependencies {
     // MY added libraries
     api 'com.otaliastudios:cameraview:2.6.4'
     //zendesk
-    api group: 'com.zendesk', name: 'support', version: '3.0.2'
+    api group: 'com.zendesk', name: 'support', version: '5.0.9'
     //zopim
     api group: 'com.zopim.android', name: 'sdk', version: '1.4.4'
     //anachat

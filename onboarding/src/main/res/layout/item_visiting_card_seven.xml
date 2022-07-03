@@ -88,14 +88,13 @@
 
             </com.framework.views.customViews.CustomCardView>
 
-            <com.framework.views.customViews.CustomTextView
+            <com.framework.views.customViews.AutoFitTextView
               android:id="@+id/business_name"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:ellipsize="end"
               android:gravity="center"
               android:includeFontPadding="false"
-              android:maxLines="2"
+              android:maxLines="1"
               android:paddingTop="@dimen/size_10"
               android:paddingBottom="@dimen/size_16"
               android:textAlignment="gravity"
