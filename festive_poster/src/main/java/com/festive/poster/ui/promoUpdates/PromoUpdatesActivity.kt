@@ -2,6 +2,7 @@ package com.festive.poster.ui.promoUpdates
 
 import android.graphics.BlendMode
 import android.graphics.PorterDuff
+import android.os.Bundle
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
@@ -11,9 +12,11 @@ import androidx.viewpager2.widget.ViewPager2
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.constant.Constants
+import com.festive.poster.constant.FragmentType
 import com.festive.poster.databinding.ActivityPromoUpdatesBinding
 import com.festive.poster.models.promoModele.SocialConnModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
+import com.festive.poster.ui.promoUpdates.pastUpdates.startFragmentPastUpdatesContainerActivity
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.PromoUpdatesViewModel
@@ -45,8 +48,7 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoU
         fetchDataFromServer()
 
         observeFragmentStack()
-        setOnClickListener(binding?.ivToolbarBack)
-        setOnClickListener(binding?.ivLove)
+        setOnClickListener(binding?.ivToolbarBack, binding?.ivStore, binding?.ivLove)
         addFragmentReplace(binding?.container?.id, PromoLandingPageFragment.newInstance(), true)
     }
 
@@ -69,6 +71,9 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoU
             }
             binding?.ivLove -> {
                 addFragmentReplace(binding?.container?.id, FavouriteListFragment.newInstance(), true)
+            }
+            binding?.ivStore -> {
+                startFragmentPastUpdatesContainerActivity(this, type = FragmentType.UPDATES_LISTING_FRAGMENT, bundle = Bundle())
             }
         }
     }

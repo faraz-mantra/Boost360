@@ -4,6 +4,7 @@ import com.festive.poster.base.rest.AppBaseLocalService
 import com.festive.poster.base.rest.AppBaseRepository
 import com.festive.poster.models.CustomerDetails
 import com.festive.poster.models.PostUpdateTaskRequest
+import com.festive.poster.models.promoModele.TagListRequest
 import com.festive.poster.reset.TaskCode
 import com.festive.poster.reset.apiClients.WithFloatsTwoApiClient
 import com.festive.poster.reset.services.WithFloatTwoRemoteData
@@ -98,5 +99,11 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     )
   }
 
+  fun getPastUpdatesList(clientId: String?, fpId:String?, postType:Int?):Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getPastUpdatesList(clientId = clientId, fpId = fpId, postType = postType), TaskCode.GET_PAST_UPDATES_LIST)
+  }
 
+  fun getPastUpdatesListV6(clientId: String?, fpId:String?, postType:Int?, tagRequest: TagListRequest):Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getPastUpdatesListV6(clientId = clientId, fpId = fpId, postType = postType, request = tagRequest), TaskCode.GET_PAST_UPDATES_LIST_V6)
+  }
 }
