@@ -50,37 +50,45 @@ class ExactMatchListAdapter(
 
     override fun onBindViewHolder(holder: UpgradeViewHolder, position: Int) {
         if (searchItem != null && searchItem!!.isNotEmpty()) {
-            val num = upgradeList[position].replace("+91 ", ""). replace("-", "")
-            val diff = upgradeList[position].length - num.length -1
-            System.out.println("Difference---->"+diff)
+            val num = upgradeList[position].replace("+91 ", "").replace("-", "")
+            val diff = upgradeList[position].length - num.length
+            System.out.println("Difference---->" + diff)
+            var startPosForDisplayString = -1
+            var endPos = -1
+            val startPos = num.toLowerCase(Locale.US)
+                .indexOf(searchItem!!.toLowerCase(Locale.US))
+
+            if (startPos >= 2 && startPos<4) {
+                startPosForDisplayString = startPos + (diff - 2)
+                endPos = startPosForDisplayString + searchItem!!.length + 1
+            } else if (startPos < 2 || startPos > 7) {
+                startPosForDisplayString = startPos + (diff - 2)
+                endPos = startPosForDisplayString + searchItem!!.length
+            } else if (startPos == 4) {
+                startPosForDisplayString = startPos + (diff - 2) + 1
+                endPos = startPosForDisplayString + searchItem!!.length
+            } else if (startPos == 7) {
+                startPosForDisplayString = startPos + (diff - 2) + 2
+                endPos = startPosForDisplayString + searchItem!!.length
+            }else if(startPos>4 && startPos<7){
+                startPosForDisplayString = startPos + (diff - 2) + 1
+                endPos = startPosForDisplayString + searchItem!!.length +1
+            }
 
 
             if (searchItem != null && searchItem!!.isNotEmpty()) {
-
-                val startPos =num.toLowerCase(Locale.US)
-                    .indexOf(searchItem!!.toLowerCase(Locale.US))
-                val endPos = startPos + searchItem!!.length
-                val startPosForDisplayString = startPos + diff
-                val endPosForDisplayString  = endPos + diff
-                System.out.println("start Pos without extra string---->"+startPos)
-                System.out.println("end Pos without extra string---->"+endPos)
-                System.out.println("start position with extra string---->"+startPosForDisplayString)
-                System.out.println("end Pos with extra string---->"+endPosForDisplayString)
-
-
-
                 if (startPosForDisplayString != -1) {
                     val spannable = SpannableString(upgradeList[position])
                     spannable.setSpan(
                         ForegroundColorSpan(ContextCompat.getColor(context, R.color.black)),
                         startPosForDisplayString,
-                        endPosForDisplayString+1,
+                        endPos,
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                     )
                     spannable.setSpan(
                         StyleSpan(Typeface.BOLD),
                         startPosForDisplayString,
-                        endPosForDisplayString+1,
+                        endPos,
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                     )
 
@@ -92,27 +100,27 @@ class ExactMatchListAdapter(
             }
         }
 
-            if (selectedPosition == position) {
-                holder.radio1.visibility = View.VISIBLE
-                holder.itemView.setBackgroundResource(R.color.colorAccent2);
-            } else {
-                holder.radio1.visibility = View.GONE
-                holder.itemView.setBackgroundResource(R.color.white);
-            }
-            holder.itemView.setOnClickListener {
-                selectedPosition = position
-                notifyDataSetChanged()
-                listener.onClicked(upgradeList[position])
-            }
+        if (selectedPosition == position) {
+            holder.radio1.visibility = View.VISIBLE
+            holder.itemView.setBackgroundResource(R.color.colorAccent2);
+        } else {
+            holder.radio1.visibility = View.GONE
+            holder.itemView.setBackgroundResource(R.color.white);
         }
-
-        class UpgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            var title = itemView.findViewById<TextView>(R.id.tv_title)
-            var radio1 = itemView.findViewById<ImageView>(R.id.iv_radio1)
-            var radio = itemView.findViewById<ImageView>(R.id.iv_radio)
-            var divider = itemView.findViewById<View>(R.id.divider)
-
+        holder.itemView.setOnClickListener {
+            selectedPosition = position
+            notifyDataSetChanged()
+            listener.onClicked(upgradeList[position])
         }
+    }
 
+    class UpgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var title = itemView.findViewById<TextView>(R.id.tv_title)
+        var radio1 = itemView.findViewById<ImageView>(R.id.iv_radio1)
+        var radio = itemView.findViewById<ImageView>(R.id.iv_radio)
+        var divider = itemView.findViewById<View>(R.id.divider)
 
     }
+
+
+}
