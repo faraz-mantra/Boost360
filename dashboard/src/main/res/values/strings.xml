@@ -307,4 +307,8 @@
   <string name="deep_base_onelink_url">nowfloat.onelink.me</string>
   <string name="weekly_business_timings">Weekly business timings</string>
   <string name="open">Open</string>
+    <string name="content">Content</string>
+  <string name="settings">Settings</string>
+  <string name="setting_click_here_text">To explore beyond your website content, select the ‘Settings’ tab or <u><b>click here</b></u></string>
+  <string name="content_click_here_text">To view &amp; post new content on the pages of your website, select the ‘Content’ tab or <u><b>click here</b></u></string>
 </resources>
