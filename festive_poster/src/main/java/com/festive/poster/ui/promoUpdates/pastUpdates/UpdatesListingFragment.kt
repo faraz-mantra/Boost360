@@ -173,6 +173,7 @@ class UpdatesListingFragment :
                     shareText = pastPostItem.message ?: "",
                     imageUri = pastPostItem.imageUri ?: ""
                 )
+                hideProgress()
             }
             RecyclerViewActionType.PAST_REUSE_BUTTON_CLICKED.ordinal -> {
                 item as PastPostItem
