@@ -33,6 +33,7 @@ class FeatureDetailsViewModel: BaseViewModel() {
     var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
+    var findingNumberLoader: MutableLiveData<Boolean> = MutableLiveData()
     var allBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
     private var callTrackListResponse: MutableLiveData<CallTrackListResponse> = MutableLiveData()
     var updateStatus : MutableLiveData<BlockApi> = MutableLiveData()
@@ -59,6 +60,9 @@ class FeatureDetailsViewModel: BaseViewModel() {
 
     fun addonsLoader(): LiveData<Boolean> {
         return updatesLoader
+    }
+    fun numberLoader(): LiveData<Boolean> {
+        return findingNumberLoader
     }
     fun updateStatus():LiveData<BlockApi> {
         return updateStatus

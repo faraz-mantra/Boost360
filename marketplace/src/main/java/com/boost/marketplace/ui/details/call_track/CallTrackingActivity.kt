@@ -168,7 +168,7 @@ class CallTrackingActivity :
                     binding?.btnSearch?.visibility = View.VISIBLE
                     binding?.btnSearch?.setOnClickListener {
                         updateAllItemBySearchValue(p0.toString())
-                        tv_available_no.text = "Search results"
+                        binding?.tvAvailableNo?.text = "Search results"
                         binding?.btnSearch?.visibility = View.GONE
 
                     }
@@ -187,15 +187,12 @@ class CallTrackingActivity :
             binding?.etCallTrack?.setText("")
             binding?.etCallTrack?.hint = "Search for a sequence of digits ..."
             binding?.tvAvailableNo?.text = "Available numbers"
-            binding?.cardListExactMatch?.visibility = VISIBLE
+            binding?.cardListExactMatch?.visibility = GONE
+            binding?.cardList?.visibility = VISIBLE
             val adapter2 = ExactMatchListAdapter(this, ArrayList(),null,this)
             binding?.rvNumberListExactMatch?.adapter = adapter2
             binding?.rvNumberListExactMatch?.setHasFixedSize(true)
             binding?.rvNumberListExactMatch?.isNestedScrollingEnabled = false
-            val adapter = NumberListAdapter(this,loadMorenumberList,null,this)
-            binding?.rvNumberList?.adapter = adapter
-            binding?.rvNumberList?.setHasFixedSize(true)
-            binding?.rvNumberList?.isNestedScrollingEnabled = false
             val adapter1 = MatchNumberListAdapter(this, ArrayList(), null, this)
             binding?.rvNumberListRelated?.adapter = adapter1
             binding?.rvNumberListRelated?.isNestedScrollingEnabled = false
@@ -212,6 +209,8 @@ class CallTrackingActivity :
 
     private fun initNumberListAdapter(list:ArrayList<String>) {
         numberListAdapter = NumberListAdapter(this,loadMorenumberList,null,this)
+        binding?.rvNumberList?.setHasFixedSize(true)
+        binding?.rvNumberList?.isNestedScrollingEnabled = false
         binding?.rvNumberList?.adapter = numberListAdapter
     }
     private fun initScrollListener() {
@@ -269,7 +268,7 @@ class CallTrackingActivity :
             if (it) {
                 val status = "Loading. Please wait..."
                 progressDialog.setMessage(status)
-                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
+                progressDialog.setCancelable(false)
                 progressDialog.show()
             } else {
                 progressDialog.dismiss()
@@ -294,9 +293,9 @@ class CallTrackingActivity :
 
     private fun updateExactNumberList(list: ArrayList<String>, searchValue: String?) {
         exactMatchNumberListAdapter = ExactMatchListAdapter(this, list, searchValue, this)
-        binding?.rvNumberListExactMatch?.adapter = numberListAdapter
+        binding?.rvNumberListExactMatch?.adapter = exactMatchNumberListAdapter
         binding?.tvSearchResult?.visibility = VISIBLE
-        numberListAdapter.notifyDataSetChanged()
+        exactMatchNumberListAdapter.notifyDataSetChanged()
     }
 
     private fun updateEveryNumberList(list: MutableList<String>, searchValue: String?) {
@@ -347,7 +346,7 @@ class CallTrackingActivity :
             binding?.tvSearchResultForRelatedCombination?.text =
                 everyMatchList.size.toString() + " numbers found with related combinations"
         } else if (exactMatchList.isEmpty() && everyMatchList.isNotEmpty()) {
-            tv_available_no.text = "Oops! No exact matches found."
+            binding?.tvAvailableNo?.text = "Oops! No exact matches found."
             binding?.cardListRelated?.visibility = VISIBLE
             binding?.tvSearchResult?.visibility = GONE
             binding?.cardListExactMatch?.visibility = GONE
@@ -364,16 +363,14 @@ class CallTrackingActivity :
             binding?.tvSearchResultForRelatedCombination?.visibility = GONE
             binding?.tvOtherAvailableNo?.visibility = GONE
         } else {
-            tv_available_no.text = "Oops! No search results found."
-            tv_other_available_no.text = "Other available numbers"
+
+            binding?.tvAvailableNo?.text = "Oops! No search results found."
+            binding?.tvOtherAvailableNo?.text = "Other available numbers"
             val adapter2 = ExactMatchListAdapter(this, ArrayList(),null,this)
             binding?.rvNumberListExactMatch?.adapter = adapter2
             binding?.rvNumberListExactMatch?.setHasFixedSize(true)
             binding?.rvNumberListExactMatch?.isNestedScrollingEnabled = false
-            val adapter = NumberListAdapter(this,loadMorenumberList,null,this)
-            binding?.rvNumberList?.adapter = adapter
-            binding?.rvNumberList?.setHasFixedSize(true)
-            binding?.rvNumberList?.isNestedScrollingEnabled = false
+            binding?.cardList?.visibility = VISIBLE
         }
 
 

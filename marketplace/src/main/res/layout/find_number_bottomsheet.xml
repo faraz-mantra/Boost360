@@ -31,14 +31,15 @@
         android:paddingBottom="52dp"
         >
 
-        <ImageView
-            android:id="@+id/iv_request_sent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_loader_for_find_number"
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lotty_progress"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_rawRes="@raw/find_number_loader" />
 
 
         <TextView

@@ -50,53 +50,69 @@ class ExactMatchListAdapter(
 
     override fun onBindViewHolder(holder: UpgradeViewHolder, position: Int) {
         if (searchItem != null && searchItem!!.isNotEmpty()) {
+            val num = upgradeList[position].replace("+91 ", ""). replace("-", "")
+            val diff = upgradeList[position].length - num.length -1
+            System.out.println("Difference---->"+diff)
 
-            val startPos = upgradeList[position].toLowerCase(Locale.US)
-                .indexOf(searchItem!!.toLowerCase(Locale.US))
-            val endPos = startPos + searchItem!!.length
 
-            if (startPos != -1) {
-                val spannable = SpannableString(upgradeList[position])
-                spannable.setSpan(
-                    ForegroundColorSpan(ContextCompat.getColor(context, R.color.black)),
-                    startPos,
-                    endPos,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-                spannable.setSpan(
-                    StyleSpan(Typeface.BOLD),
-                    startPos,
-                    endPos,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
+            if (searchItem != null && searchItem!!.isNotEmpty()) {
 
-                holder.title.text = spannable
+                val startPos =num.toLowerCase(Locale.US)
+                    .indexOf(searchItem!!.toLowerCase(Locale.US))
+                val endPos = startPos + searchItem!!.length
+                val startPosForDisplayString = startPos + diff
+                val endPosForDisplayString  = endPos + diff
+                System.out.println("start Pos without extra string---->"+startPos)
+                System.out.println("end Pos without extra string---->"+endPos)
+                System.out.println("start position with extra string---->"+startPosForDisplayString)
+                System.out.println("end Pos with extra string---->"+endPosForDisplayString)
+
+
+
+                if (startPosForDisplayString != -1) {
+                    val spannable = SpannableString(upgradeList[position])
+                    spannable.setSpan(
+                        ForegroundColorSpan(ContextCompat.getColor(context, R.color.black)),
+                        startPosForDisplayString,
+                        endPosForDisplayString+1,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    spannable.setSpan(
+                        StyleSpan(Typeface.BOLD),
+                        startPosForDisplayString,
+                        endPosForDisplayString+1,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+
+                    holder.title.text = spannable
+                }
+            } else {
+                holder.title.text = upgradeList[position]
+
             }
-        } else {
-            holder.title.text = upgradeList[position]
+        }
+
+            if (selectedPosition == position) {
+                holder.radio1.visibility = View.VISIBLE
+                holder.itemView.setBackgroundResource(R.color.colorAccent2);
+            } else {
+                holder.radio1.visibility = View.GONE
+                holder.itemView.setBackgroundResource(R.color.white);
+            }
+            holder.itemView.setOnClickListener {
+                selectedPosition = position
+                notifyDataSetChanged()
+                listener.onClicked(upgradeList[position])
+            }
+        }
+
+        class UpgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            var title = itemView.findViewById<TextView>(R.id.tv_title)
+            var radio1 = itemView.findViewById<ImageView>(R.id.iv_radio1)
+            var radio = itemView.findViewById<ImageView>(R.id.iv_radio)
+            var divider = itemView.findViewById<View>(R.id.divider)
 
         }
-        if (selectedPosition == position) {
-            holder.radio1.visibility = View.VISIBLE
-            holder.itemView.setBackgroundResource(R.color.colorAccent2);
-        }else {
-            holder.radio1.visibility = View.GONE
-            holder.itemView.setBackgroundResource(R.color.white);
-        }
-        holder.itemView.setOnClickListener {
-            selectedPosition = position
-            notifyDataSetChanged()
-            listener.onClicked(upgradeList[position])
-        }
+
+
     }
-
-    class UpgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var title = itemView.findViewById<TextView>(R.id.tv_title)
-        var radio1 = itemView.findViewById<ImageView>(R.id.iv_radio1)
-        var radio = itemView.findViewById<ImageView>(R.id.iv_radio)
-        var divider = itemView.findViewById<View>(R.id.divider)
-
-    }
-
-
-}
