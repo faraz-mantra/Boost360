@@ -3,6 +3,7 @@ package com.festive.poster.viewmodels
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.festive.poster.models.PostUpdateTaskRequest
+import com.festive.poster.models.promoModele.TagListRequest
 import com.festive.poster.reset.repo.NowFloatsRepository
 import com.festive.poster.reset.repo.UsCentralNowFloatsCloudRepo
 import com.festive.poster.reset.repo.WithFloatTwoRepository
@@ -91,5 +92,17 @@ class PostUpdatesViewModel : BaseViewModel() {
 
   fun getMerchantSummary(clientId: String?,fpTag: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getMerchantSummary(clientId,fpTag).toLiveData()
+  }
+
+  fun getPastUpdatesList(fpId: String?, clientId: String, postType:Int?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getPastUpdatesList(fpId = fpId, clientId = clientId, postType = postType).toLiveData()
+  }
+
+  fun getPastUpdatesListV6(fpId: String?, clientId: String, postType:Int?, tagListRequest: TagListRequest): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getPastUpdatesListV6(fpId = fpId, clientId = clientId, postType = postType, tagRequest = tagListRequest).toLiveData()
+  }
+
+  fun getTemplateConfig(fKey:String,floatingPointId: String?,floatingPointTag: String?): LiveData<BaseResponse> {
+    return NowFloatsRepository.getTemplateConfig(fKey,floatingPointId,floatingPointTag).toLiveData()
   }
 }

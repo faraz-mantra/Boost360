@@ -49,6 +49,10 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.EMAIL_PREVIEW_NO_IMAGE->EmailPreviewNoImageViewHolder(binding as SocialPreviewEmailNoImageBinding)
       RecyclerViewItemType.FAV_CAT->FavPosterCatViewHolder(binding as  ListItemFavCatBinding)
 
+      RecyclerViewItemType.PAST_UPDATE_ITEM->PastUpdateViewHolder(binding as ListItemPastUpdateBinding)
+      RecyclerViewItemType.PAST_POST_CATEGORIES->PastCategoryViewHolder(binding as ListItemPastCategoryBinding)
+      RecyclerViewItemType.PAST_TAGS->PastTagsViewHolder(binding as ListItemPastTagsBinding)
+      RecyclerViewItemType.PAST_SOCIAL_ICON_LIST_ITEM->PastSocialIconViewHolder(binding as ListItemSocialIconBinding)
     }
   }
 

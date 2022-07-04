@@ -8,5 +8,5 @@ data class GetTemplateViewConfigResult(
     @SerializedName("todayPick")
     val todayPick: FestivePosterSectionModel?,
     @SerializedName("allTemplates")
-    val allTemplates: FestivePosterSectionModel?,
+    val allTemplates: FestivePosterSectionModel,
 )
