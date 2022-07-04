@@ -6,8 +6,8 @@
 
     <com.framework.views.customViews.CustomImageView
         android:id="@+id/iv_social_past_item"
-        android:layout_width="@dimen/size_19"
-        android:layout_height="@dimen/size_19"
+        android:layout_width="@dimen/size_21"
+        android:layout_height="@dimen/size_21"
         android:src="@drawable/ic_facebook_past"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

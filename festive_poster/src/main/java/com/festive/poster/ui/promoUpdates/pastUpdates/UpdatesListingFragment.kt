@@ -62,22 +62,22 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
     }
 
     private fun initUI() {
+        showSimmer(true)
         getTemplateViewConfig()
 
         pastPostListingAdapter = AppBaseRecyclerViewAdapter(baseActivity, pastPostListing, this)
         binding.rvPostListing.adapter = pastPostListingAdapter
-        getPostCategories()
-        apiCallPastUpdates()
+        //apiCallPastUpdates()
     }
 
     private fun getPostCategories() {
         categoryDataList = PastCategoriesModel().getData(baseActivity)
         postCategoryAdapter = AppBaseRecyclerViewAdapter(baseActivity, categoryDataList, this)
         binding.rvFilterCategory.adapter = postCategoryAdapter
+        apiCallPastUpdates()
     }
 
     private fun getTemplateViewConfig() {
-        showSimmer(true)
         viewModel?.getTemplateConfig(Constants.PROMO_FEATURE_CODE, sessionLocal.fPID, sessionLocal.fpTag)
             ?.observeOnce(this) {
                 val response = it as? GetTemplateViewConfigResponse
@@ -86,8 +86,8 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
                     tagArrayList.addAll(prepareTagForApi(response.Result.allTemplates.tags))
                     tagListAdapter = AppBaseRecyclerViewAdapter(baseActivity, tagArrayList, this)
                     binding.rvFilterSubCategory.adapter = tagListAdapter
+                    getPostCategories()
                 }
-                showSimmer(false)
             }
     }
 
@@ -129,6 +129,7 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
                     }
 
                 }
+                showSimmer(false)
                 Log.i("pastUpdates", "PastUpdates: $it")
             })
     }
