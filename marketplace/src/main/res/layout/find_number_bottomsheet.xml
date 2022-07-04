@@ -35,7 +35,7 @@
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lotty_progress"
-                android:layout_width="180dp"
+                android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
