@@ -13,6 +13,7 @@ import com.appservice.model.MerchantSummaryResponse
 import com.appservice.model.getMerchantSummaryWebsite
 import com.appservice.model.saveMerchantSummary
 import com.dashboard.constant.PreferenceConstant
+import com.dashboard.databinding.FragmentWebsitePagerV2Binding
 import com.dashboard.model.live.websiteItem.WebsiteActionItem
 import com.dashboard.model.live.websiteItem.WebsiteData
 import com.dashboard.model.live.websiteItem.WebsiteDataResponse
@@ -34,7 +35,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.ArrayList
 
-class FragmentCategoryV2 : AppBaseFragment<FragmentWebsitePagerBinding, DashboardViewModel>(), RecyclerItemClickListener {
+class FragmentCategoryV2 : AppBaseFragment<FragmentWebsitePagerV2Binding, DashboardViewModel>(), RecyclerItemClickListener {
 
     private var session: UserSessionManager? = null
     private var adapterWebsite: AppBaseRecyclerViewAdapter<WebsiteActionItem>? = null

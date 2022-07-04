@@ -11,6 +11,7 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.appservice.constant.FragmentType
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
@@ -114,6 +115,17 @@ class WebsiteV2Fragment : AppBaseFragment<FragmentWebsiteV2Binding, DashboardVie
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
+        })
+
+        binding?.pager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+            override fun onPageSelected(position: Int) {
+                binding?.pager?.reMeasureCurrentPage(binding?.pager?.currentItem?:0)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {}
+
         })
     }
 

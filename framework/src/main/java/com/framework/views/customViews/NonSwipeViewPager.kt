@@ -28,7 +28,7 @@ class NonSwipeViewPager : ViewPager {
                         widthMeasureSpec,
                         MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
                     )
-                    val h: Int = child.getMeasuredHeight()
+                    val h: Int = child.measuredHeight
                     heightMeasureSpec = MeasureSpec.makeMeasureSpec(h, MeasureSpec.EXACTLY)
                 }
             }
