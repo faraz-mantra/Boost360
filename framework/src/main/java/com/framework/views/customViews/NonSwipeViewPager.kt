@@ -18,24 +18,21 @@ class NonSwipeViewPager : ViewPager {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        var heightMeasureSpec = heightMeasureSpec
+        var heightMeasureSpecLoc = heightMeasureSpec
         try {
-            val wrapHeight = MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.AT_MOST
+            val wrapHeight = MeasureSpec.getMode(heightMeasureSpecLoc) == MeasureSpec.AT_MOST
             if (wrapHeight) {
                 val child: View? = getChildAt(mCurrentPagePosition)
                 if (child != null) {
-                    child.measure(
-                        widthMeasureSpec,
-                        MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
-                    )
+                    child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED))
                     val h: Int = child.measuredHeight
-                    heightMeasureSpec = MeasureSpec.makeMeasureSpec(h, MeasureSpec.EXACTLY)
+                    heightMeasureSpecLoc = MeasureSpec.makeMeasureSpec(h, MeasureSpec.EXACTLY)
                 }
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        super.onMeasure(widthMeasureSpec, heightMeasureSpecLoc)
     }
 
     fun reMeasureCurrentPage(position: Int) {
