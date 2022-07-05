@@ -161,18 +161,18 @@ fun changeColorOfSubstring(paramStringInt:Int, color: Int, substring:String, tex
   textView.text = spannable
 }
 
-fun openImagePicker(activity: Activity,fragmentManager: FragmentManager) {
+fun openImagePicker(activity: Activity,fragmentManager: FragmentManager,compressLevel:ImagePicker.ComperesLevel=ImagePicker.ComperesLevel.SOFT) {
   //ImagePickerUtil.openPicker(this, object : ImagePickerUtil.Listener { override fun onFilePicked(filePath: String) { } })
   val filterSheet = ImagePickerBottomSheet()
   filterSheet.isHidePdf(true)
-  filterSheet.onClicked = { openImagePicker(activity,it) }
+  filterSheet.onClicked = { openImagePicker(activity,it,compressLevel) }
   filterSheet.show(fragmentManager, ImagePickerBottomSheet::class.java.name)
 }
 
-private fun openImagePicker(activity: Activity,it: ClickType) {
+private fun openImagePicker(activity: Activity,it: ClickType,compressLevel:ImagePicker.ComperesLevel) {
   WebEngageController.trackEvent(UPLOAD_GALLERY_IMAGE, CLICK, NO_EVENT_VALUE)
   val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
-  ImagePicker.Builder(activity).mode(type).compressLevel(ImagePicker.ComperesLevel.SOFT)
-    .directory(ImagePicker.Directory.DEFAULT).extension(ImagePicker.Extension.PNG)
+  ImagePicker.Builder(activity).mode(type).compressLevel(compressLevel)
+    .directory(ImagePicker.Directory.DEFAULT).extension(ImagePicker.Extension.JPG)
     .allowMultipleImages(false).enableDebuggingMode(true).build()
 }

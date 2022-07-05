@@ -132,7 +132,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_10"
-          android:text="@string/max_file_size_800kb_max_8_images"
+          android:text="@string/max_file_size_10mb_max_8_images"
           android:textColor="@color/color_888888"
           app:textType="CAPTION" />
       </androidx.appcompat.widget.LinearLayoutCompat>

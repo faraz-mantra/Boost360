@@ -16,8 +16,6 @@ import com.appservice.model.ImageData
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.ui.catalog.widgets.ClickType
-import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.openImagePicker
 import com.appservice.viewmodel.BackgroundImageViewModel
@@ -29,8 +27,9 @@ import com.framework.imagepicker.ImagePicker
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.convertListObjToString
-import com.framework.utils.fetchString
+import com.framework.utils.sizeInMb
 import com.framework.webengageconstant.*
+import java.io.File
 
 class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, BackgroundImageViewModel>(), RecyclerItemClickListener {
 
@@ -126,7 +125,7 @@ class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, 
           showSnackBarNegative(getString(R.string.max_limit_of_8_images_is_reached))
           return
         }
-        openImagePicker(requireActivity(), parentFragmentManager)
+        openImagePicker(requireActivity(), parentFragmentManager,ImagePicker.ComperesLevel.NONE)
       }
     }
   }
@@ -144,18 +143,39 @@ class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
-      val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as? List<String>
-      if (mPaths.isNullOrEmpty().not()) {
-        WebEngageController.trackEvent(GALLERY_IMAGE_ADDED, ADDED, sessionLocal.fpTag)
-        startBackgroundActivity(
-          FragmentType.BACKGROUND_IMAGE_CROP_FRAGMENT,
-          Bundle().apply { putString(BGImageCropFragment.BK_IMAGE_PATH, mPaths!![0]) }, isResult = true
-        )
-      }
+      processImage(data)
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
       if (data?.getBooleanExtra(IntentConstant.IS_UPDATED.name, false) == true) {
         getBackgroundImages()
       }
     }
   }
+
+  private fun processImage(data: Intent?) {
+    val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as? List<String>
+
+    if (mPaths.isNullOrEmpty()) {
+      return
+    }
+
+    val singleImage = mPaths[0]
+    if (validateImage(singleImage).not()){
+      showSnackBarNegative(getString(R.string.maximum_size_supported_10mb))
+      return
+    }
+
+    WebEngageController.trackEvent(GALLERY_IMAGE_ADDED, ADDED, sessionLocal.fpTag)
+    startBackgroundActivity(
+      FragmentType.BACKGROUND_IMAGE_CROP_FRAGMENT,
+      Bundle().apply { putString(BGImageCropFragment.BK_IMAGE_PATH, mPaths!![0]) }, isResult = true
+    )
+  }
+
+  fun validateImage(singleImage: String?):Boolean{
+    val file = File(singleImage)
+    val size =file.sizeInMb
+    return size<=10
+  }
+
+
 }

@@ -3,6 +3,7 @@ package com.framework.imagepicker
 import android.Manifest
 import android.annotation.TargetApi
 import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -19,19 +20,23 @@ import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.lifecycleScope
 import com.framework.R
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.IOException
 import java.io.Serializable
 import java.lang.ref.WeakReference
 import java.util.*
+import kotlin.collections.ArrayList
 
 open class ImageActivity : AppCompatActivity() {
 
   private var destination: File? = null
   private var mImageUri: Uri? = null
   private var mImgConfig: ImageConfig? = null
-  private var listOfImgs: List<String?>? = null
+  private var listOfImgs: ArrayList<String?>? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -76,25 +81,27 @@ open class ImageActivity : AppCompatActivity() {
 
   private fun startActivityFromGallery() {
     mImgConfig!!.isImgFromCamera = false
-    val photoPickerIntent = Intent(Intent.ACTION_PICK)
-    photoPickerIntent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
+    val photoPickerIntent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+    photoPickerIntent.addCategory(Intent.CATEGORY_OPENABLE)
+    photoPickerIntent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+    photoPickerIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    photoPickerIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
     photoPickerIntent.type = "image/*"
     startActivityForResult(photoPickerIntent, ImageTags.IntentCode.REQUEST_CODE_SELECT_PHOTO)
     if (mImgConfig!!.debug) Log.d(ImageTags.Tags.TAG, "Gallery Start with Single Image mode")
   }
 
-  @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
   private fun startActivityFromGalleryMultiImg() {
     mImgConfig!!.isImgFromCamera = false
-    val photoPickerIntent = Intent()
-    photoPickerIntent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
+    val photoPickerIntent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+    photoPickerIntent.addCategory(Intent.CATEGORY_OPENABLE)
+    photoPickerIntent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+    photoPickerIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    photoPickerIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
     photoPickerIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-    photoPickerIntent.action = Intent.ACTION_GET_CONTENT
     photoPickerIntent.type = "image/*"
-    startActivityForResult(
-      Intent.createChooser(photoPickerIntent, "Select Picture"),
-      ImageTags.IntentCode.REQUEST_CODE_SELECT_MULTI_PHOTO
-    )
+    startActivityForResult(photoPickerIntent, ImageTags.IntentCode.REQUEST_CODE_SELECT_MULTI_PHOTO)
+
     if (mImgConfig!!.debug) Log.d(ImageTags.Tags.TAG, "Gallery Start with Multiple Images mode")
   }
 
@@ -140,8 +147,7 @@ open class ImageActivity : AppCompatActivity() {
     if (resultCode == RESULT_OK) {
       when (requestCode) {
         ImageTags.IntentCode.CAMERA_REQUEST -> CompressImageTask(
-          destination!!.absolutePath, mImgConfig, this@ImageActivity
-        ).execute()
+          destination!!.absolutePath, mImgConfig = mImgConfig)
         ImageTags.IntentCode.REQUEST_CODE_SELECT_PHOTO -> processOneImage(data)
         ImageTags.IntentCode.REQUEST_CODE_SELECT_MULTI_PHOTO ->                     //Check if the intent contain only one image
           if (data?.clipData == null) {
@@ -149,7 +155,7 @@ open class ImageActivity : AppCompatActivity() {
           } else {
             //intent has multi images
             listOfImgs = ImageProcessing.processMultiImage(this, data)
-            CompressImageTask(listOfImgs!!, mImgConfig, this@ImageActivity).execute()
+            CompressImageTask(null,listOfImgs!!, mImgConfig)
           }
         else -> {
         }
@@ -166,8 +172,8 @@ open class ImageActivity : AppCompatActivity() {
   private fun processOneImage(data: Intent?) {
     try {
       val selectedImage = data?.data
-      val selectedImagePath = selectedImage?.let { FileProcessing.getPath(this, it) }
-      CompressImageTask(selectedImagePath, mImgConfig, this@ImageActivity).execute()
+      val selectedImagePath = selectedImage?.let { FileProcessing.getPath( it) }
+      CompressImageTask(selectedImagePath, mImgConfig = mImgConfig)
     } catch (ex: Exception) {
       ex.printStackTrace()
     }
@@ -285,70 +291,61 @@ open class ImageActivity : AppCompatActivity() {
     }
   }
 
-  private class CompressImageTask : AsyncTask<Void?, Void?, Void?> {
-    private val mImgConfig: ImageConfig?
-    private val listOfImgs: List<String?>
-    private var destinationPaths: MutableList<String>
-    private var mContext: WeakReference<ImageActivity>
+  private fun CompressImageTask(absolutePath: String?, listOfImgs: ArrayList<String?>?=ArrayList(), mImgConfig: ImageConfig?) {
+    lifecycleScope.launchWhenCreated {
 
-    constructor(listOfImgs: List<String?>, imageConfig: ImageConfig?, context: ImageActivity) {
-      this.listOfImgs = listOfImgs
-      mContext = WeakReference(context)
-      mImgConfig = imageConfig
-      destinationPaths = ArrayList()
-    }
+      val pd = ProgressDialog(this@ImageActivity,R.style.MyAlertDialogStyle)
+      pd.setMessage(getString(R.string.loading))
+      pd.show()
+      withContext(Dispatchers.IO){
+        val destinationPaths: MutableList<String> = ArrayList()
 
-    constructor(absolutePath: String?, imageConfig: ImageConfig?, context: ImageActivity) {
-      val list: MutableList<String?> = ArrayList()
-      list.add(absolutePath)
-      listOfImgs = list
-      mContext = WeakReference(context)
-      destinationPaths = ArrayList()
-      mImgConfig = imageConfig
-    }
-
-    override fun doInBackground(vararg params: Void?): Void? {
-      for (mPath in listOfImgs) {
-        if (mPath!=null){
-          try {
-            val file = File(mPath)
-            var destinationFile: File? = null
-            destinationFile = if (mImgConfig!!.isImgFromCamera) {
-              file
-            } else {
-              var ext = "."+MimeTypeMap.getFileExtensionFromUrl(file.toString())
-              if (ext.isNullOrEmpty()){
-                ext = ImagePicker.Extension.JPG.value
+        absolutePath?.let {
+          listOfImgs?.add(absolutePath)
+        }
+        for (mPath in listOfImgs!!) {
+          if (mPath!=null){
+            try {
+              val file = File(mPath)
+              var destinationFile: File? = null
+              destinationFile = if (mImgConfig!!.isImgFromCamera) {
+                file
+              } else {
+                var ext = "."+MimeTypeMap.getFileExtensionFromUrl(file.toString())
+                if (ext.isNullOrEmpty()){
+                  ext = ImagePicker.Extension.JPG.value
+                }
+                File(mImgConfig.directory, Utility.randomString + ext)
               }
-              File(mImgConfig.directory, Utility.randomString + ext)
-            }
-            destinationPaths.add(destinationFile.absolutePath)
+              destinationPaths.add(destinationFile.absolutePath)
 
-            Utility.compressAndRotateIfNeeded(
-              file, destinationFile, mImgConfig.compressLevel.value, mImgConfig.reqWidth, mImgConfig.reqHeight
-            )
-          } catch (e: IOException) {
-            e.printStackTrace()
+              Utility.compressAndRotateIfNeeded(
+                file, destinationFile, mImgConfig.compressLevel.value, mImgConfig.reqWidth, mImgConfig.reqHeight
+              )
+            } catch (e: IOException) {
+              e.printStackTrace()
+            }
           }
+
         }
 
+        withContext(Dispatchers.Main){
+          pd.dismiss()
+          finishActivity(destinationPaths)
+          val intent = Intent()
+          intent.action = "mediapicker.image.service"
+          intent.putExtra(ImageTags.Tags.IMAGE_PATH, destinationPaths as Serializable)
+          sendBroadcast(intent)
+        }
+
+
       }
-      return null
     }
 
-    override fun onPostExecute(result: Void?) {
-      super.onPostExecute(result)
-      val context = mContext.get()
-      if (context != null) {
-        context.finishActivity(destinationPaths)
-        val intent = Intent()
-        intent.action = "mediapicker.image.service"
-        intent.putExtra(ImageTags.Tags.IMAGE_PATH, destinationPaths as Serializable)
-        context.sendBroadcast(intent)
-      }
-    }
 
   }
+
+
 
   companion object {
     private const val TAG = "ImageActivity"

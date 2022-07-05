@@ -93,7 +93,7 @@ object Utility {
       matrix, true
     )
     val fos = FileOutputStream(destinationFile.absoluteFile)
-    rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, value, fos)
+    rotatedBitmap.compress(Bitmap.CompressFormat.PNG, value, fos)
     fos.flush()
     fos.close()
   }

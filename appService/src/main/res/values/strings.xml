@@ -1117,6 +1117,8 @@
   <string name="of">of</string>
   <string name="upload_image_n">Upload image</string>
   <string name="max_file_size_800kb_max_8_images">Max file size: 800kb (max 8 images)</string>
+  <string name="max_file_size_10mb_max_8_images">Max file size: 10 MB (max 8 images)</string>
+
   <string name="no_custom_background_nimage_added_yet">No custom background\nimage added yet</string>
   <string name="image_brand_website_desc">These images can bring a brand feel to your website. Since these stay in the backdrop of your website, please avoid high contrast picture with face and text written in it.</string>
 
@@ -1227,4 +1229,5 @@
     <string name="asterisk">*</string>
     <string name="unable_to_fetch_default_gst_slab">Unable to fetch default gst slab</string>
     <string name="max_limit_of_8_images_is_reached">Maximum limit of 8 images is reached</string>
+    <string name="maximum_size_supported_10mb">Maximum size supported 10 MB</string>
 </resources>
