@@ -2106,6 +2106,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="uh_oh_you_have_no_subscribers">Uh oh, you have no subscribers</string>
     <string name="add_image">Add image</string>
     <string name="designation" translatable="false">Designation</string>
+    <string name="designation_aster" translatable="false">Designation *</string>
     <string name="company_title" translatable="false">Company title</string>
     <string name="facebook_profile">Facebook profile</string>
     <string name="enter_facebook_url">Enter Facebook URL</string>
@@ -3082,6 +3083,8 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="allow_access">Allow access</string>
     <string name="files_size_less_2mb">Make sure your file size is lesser than 2 MB!</string>
     <string name="cannot_upload_more_than_8">You can not upload more than 8 background images for better website experience.</string>
+    <string name="enter_review_description">Enter Review Description</string>
+    <string name="person_info">Person Info</string>
 
     <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
     <!--    <string name="ir_statusBarColor">#ffb900</string>-->
