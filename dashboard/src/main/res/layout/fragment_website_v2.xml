@@ -461,6 +461,8 @@
                 android:layout_marginTop="@dimen/size_10"
                 android:animateLayoutChanges="false"
                 android:nestedScrollingEnabled="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/tv_click_here"
                 app:layout_constraintHeight_percent="0.60"
                 app:layout_constraintTop_toBottomOf="@+id/materialCardView">
@@ -485,12 +487,13 @@
                 android:textAlignment="gravity"
                 android:gravity="center"
                 android:fontFamily="@font/regular"
-                android:text="@string/content_click_here_text"
+                tools:text="@string/setting_click_here_text"
                 android:textColor="@color/color_747474"
                 android:textSize="@dimen/text_12"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

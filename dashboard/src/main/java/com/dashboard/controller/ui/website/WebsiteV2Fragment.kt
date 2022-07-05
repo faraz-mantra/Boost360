@@ -315,9 +315,9 @@ class WebsiteV2Fragment : AppBaseFragment<FragmentWebsiteV2Binding, DashboardVie
 
     private fun setSpannable(isContentSelected: Boolean = true) {
         val spannableString: SpannableString = if (isContentSelected) {
-            SpannableString(getString(R.string.content_click_here_text))
-        } else {
             SpannableString(getString(R.string.setting_click_here_text))
+        } else {
+            SpannableString(getString(R.string.content_click_here_text))
         }
 
         spannableString.setSpan(
