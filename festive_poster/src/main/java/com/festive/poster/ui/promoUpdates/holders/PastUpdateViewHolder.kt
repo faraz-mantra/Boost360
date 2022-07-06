@@ -43,10 +43,10 @@ class PastUpdateViewHolder(binding: ListItemPastUpdateBinding) :
                     iconCard.visible()
                 }
 
-                if (postItem?.tags.isNullOrBlank()) {
+                if (postItem?.tags == null || postItem.tags.isEmpty()) {
                     tvOfferTag.gone()
                 } else {
-                    tvOfferTag.text = postItem?.tags
+                    tvOfferTag.text = postItem.tags[0]
                     tvOfferTag.visible()
                 }
                 if (postItem?.createdOn?.contains("/Date(") == true) {
