@@ -389,13 +389,6 @@ class PackagePopUpFragement(val homeListener: CompareListener, var addonsListene
                                 )
                             )
                             tv_inlcuded_add_on.setText("Includes these " + it.size + " add-ons")
-                            if (offeredBundlePrice != originalBundlePrice) {
-                                spannableString(originalBundlePrice)
-                                upgrade_list_orig_cost.visibility = View.VISIBLE
-                            } else {
-                                upgrade_list_orig_cost.visibility = View.GONE
-                            }
-
                         } else {
                             tv_price.setText(
                                 "₹" +
@@ -407,6 +400,12 @@ class PackagePopUpFragement(val homeListener: CompareListener, var addonsListene
                                 )
                             )
                             tv_inlcuded_add_on.setText("Includes these " + it.size + " add-ons")
+                        }
+                        if (offeredBundlePrice != originalBundlePrice) {
+                            spannableString(originalBundlePrice)
+                            upgrade_list_orig_cost.visibility = View.VISIBLE
+                        } else {
+                            upgrade_list_orig_cost.visibility = View.GONE
                         }
 
                         if (bundles.primary_image != null && !bundles.primary_image!!.url.isNullOrEmpty()) {
