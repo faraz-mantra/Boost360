@@ -22,7 +22,7 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.remove_feature_bottomsheet.*
 
 
-class RemoveFeatureBottomSheet(val homeListener: CompareListener, val listener: AddonsListener, val image: ImageView) : DialogFragment() {
+class RemoveFeatureBottomSheet(val homeListener: CompareListener, val listener: AddonsListener, val image: ImageView?) : DialogFragment() {
     lateinit var root: View
     lateinit var prefs: SharedPrefs
     var addonsListInCart = arrayListOf<String>()

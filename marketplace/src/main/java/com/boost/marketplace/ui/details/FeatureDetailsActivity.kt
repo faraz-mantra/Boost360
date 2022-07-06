@@ -13,6 +13,7 @@ import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.text.style.StrikethroughSpan
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -28,6 +29,7 @@ import com.boost.cart.adapter.ZoomOutPageTransformer
 import com.boost.cart.utils.Utils.priceCalculatorForYear
 import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
@@ -37,12 +39,13 @@ import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityFeatureDetailsBinding
 import com.boost.marketplace.infra.utils.Constants.Companion.IMAGE_PREVIEW_POPUP_FRAGMENT
+import com.boost.marketplace.interfaces.AddonsListener
+import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.interfaces.DetailsFragmentListener
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 import com.boost.marketplace.ui.details.staff.StaffManagementBottomSheet
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
-import com.boost.marketplace.ui.popup.call_track.CallTrackAddToCartBottomSheet
 import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
 import com.boost.marketplace.ui.popup.call_track.RequestCallbackBottomSheet
 import com.boost.marketplace.ui.popup.call_track.SelectNumberBottomSheet
@@ -51,11 +54,15 @@ import com.boost.marketplace.ui.webview.WebViewActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.framework.analytics.SentryController
+import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
 import com.google.android.material.appbar.AppBarLayout
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_feature_details.*
 import retrofit2.Retrofit
 import java.text.NumberFormat
@@ -63,7 +70,7 @@ import java.util.*
 
 class FeatureDetailsActivity :
     AppBaseActivity<ActivityFeatureDetailsBinding, FeatureDetailsViewModel>(),
-    DetailsFragmentListener {
+    DetailsFragmentListener, CompareListener, AddonsListener {
 
     lateinit var retrofit: Retrofit
     val callTrackingHelpBottomSheet = CallTrackingHelpBottomSheet()
@@ -89,6 +96,8 @@ class FeatureDetailsActivity :
     var isOpenCardFragment: Boolean = false
     var addedToCart: Boolean = false
     var packageItem: Boolean = false
+    var offeredBundlePrice = 0.0
+    var originalBundlePrice = 0.0
 
     var deepLinkViewType: String = ""
     var deepLinkDay: Int = 7
@@ -562,6 +571,7 @@ class FeatureDetailsActivity :
         viewModel.cartResult().observe(this, Observer {
             cart_list = it
             itemInCartStatus = false
+            packageItem = false
             if (cart_list != null && cart_list!!.size > 0) {
                 badge121.visibility = View.VISIBLE
                 for (item in cart_list!!) {
@@ -1116,9 +1126,10 @@ class FeatureDetailsActivity :
         item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
         WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, ADDONS_MARKETPLACE, event_attributes)
 
-        val packagePopup = PackagePopUpFragement()
+        val packagePopup = PackagePopUpFragement( this, this)
         val args = Bundle()
         args.putString("bundleData", Gson().toJson(item))
+        args.putString("cartList", Gson().toJson(cart_list))
         packagePopup.arguments = args
         packagePopup.show(supportFragmentManager, "PACKAGE_POPUP")
     }
@@ -1185,6 +1196,126 @@ class FeatureDetailsActivity :
     override fun onDestroy() {
         super.onDestroy()
         viewModelStore.clear()
+    }
+
+    override fun onAddonsClicked(item: FeaturesModel) {
+    }
+
+    override fun onRefreshCart() {
+        viewModel.getCartItems()
+    }
+
+    override fun onPackageClicked(item: Bundles?, imageView: ImageView?) {
+        if (item != null) {
+            prefs.storeAddedPackageDesc(item.desc ?: "")
+
+            val itemIds = arrayListOf<String>()
+            for (i in item.included_features) {
+                itemIds.add(i.feature_code)
+            }
+            if(imageView!=null)
+                makeFlyAnimation(imageView)
+
+            CompositeDisposable().add(
+                AppDatabase.getInstance(application)!!
+                    .featuresDao()
+                    .getallFeaturesInList(itemIds)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+//                                            featuresList = it
+                            var bundleMonthlyMRP = 0.0
+                            val minMonth: Int =
+                                if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
+
+                            for (singleItem in it) {
+                                for (item in item!!.included_features) {
+                                    if (singleItem.feature_code == item.feature_code) {
+                                        bundleMonthlyMRP += RootUtil.round(
+                                            singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),
+                                            2
+                                        )
+                                    }
+                                }
+                            }
+
+                            offeredBundlePrice = (bundleMonthlyMRP * minMonth)
+                            originalBundlePrice = (bundleMonthlyMRP * minMonth)
+
+                            if (item!!.overall_discount_percent > 0)
+                                offeredBundlePrice = RootUtil.round(
+                                    originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100),
+                                    2
+                                )
+                            else
+                                offeredBundlePrice = originalBundlePrice
+
+                            //clear cartOrderInfo from SharedPref to requestAPI again
+                            prefs.storeCartOrderInfo(null)
+                            viewModel.addItemToCartPackage1(
+                                CartModel(
+                                    item!!._kid,
+                                    null,
+                                    null,
+                                    item!!.name,
+                                    "",
+                                    item!!.primary_image!!.url,
+                                    offeredBundlePrice.toDouble(),
+                                    originalBundlePrice.toDouble(),
+                                    item!!.overall_discount_percent,
+                                    1,
+                                    if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
+                                    "bundles",
+                                    null,
+                                    ""
+                                )
+                            )
+                            val event_attributes: java.util.HashMap<String, Any> =
+                                java.util.HashMap()
+                            item!!.name?.let { it1 ->
+                                event_attributes.put(
+                                    "Package Name",
+                                    it1
+                                )
+                            }
+                            item!!.target_business_usecase?.let { it1 ->
+                                event_attributes.put(
+                                    "Package Tag",
+                                    it1
+                                )
+                            }
+                            event_attributes.put("Package Price", originalBundlePrice)
+                            event_attributes.put("Discounted Price", offeredBundlePrice)
+                            event_attributes.put(
+                                "Discount %",
+                                item!!.overall_discount_percent
+                            )
+                            item!!.min_purchase_months?.let { it1 ->
+                                event_attributes.put(
+                                    "Validity",
+                                    it1
+                                )
+                            }
+                            WebEngageController.trackEvent(
+                                ADDONS_MARKETPLACE_COMPARE_PACKAGE_ADDED_TO_CART,
+                                ADDONS_MARKETPLACE,
+                                event_attributes
+                            )
+                            badgeNumber = badgeNumber + 1
+                            Log.v("badgeNumber321", " " + badgeNumber)
+                            Constants.CART_VALUE = badgeNumber
+                            viewModel.getCartItems()
+                        },
+                        {
+                            it.printStackTrace()
+
+                        }
+                    )
+            )
+
+
+        }
     }
 
 }
