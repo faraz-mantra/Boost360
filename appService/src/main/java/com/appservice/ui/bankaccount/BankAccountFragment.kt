@@ -71,12 +71,12 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
   }
 
   private fun setupUIColor() {
-    changeColorOfSubstring(R.string.name_of_the_account_holder_astrick, R.color.colorAccent, "*", binding?.tvHolderNameVw!!)
-    changeColorOfSubstring(R.string.account_number_required, R.color.colorAccent, "*", binding?.tvAccountNumberVw!!)
-    changeColorOfSubstring(R.string.confirm_account_number_astrick, R.color.colorAccent, "*", binding?.titleConfirmAccount!!)
-    changeColorOfSubstring(R.string.bank_ifsc_code_required, R.color.colorAccent, "*", binding?.tvIfscCodeVw!!)
-    changeColorOfSubstring(R.string.bank_name_required, R.color.colorAccent, "*", binding?.tvBankNameVw!!)
-    changeColorOfSubstring(R.string.bank_branch_required, R.color.colorAccent, "*", binding?.txtBranch!!)
+    changeColorOfSubstring(R.string.name_of_the_account_holder_astrick, R.color.greyish_brown, "*", binding?.tvHolderNameVw!!)
+    changeColorOfSubstring(R.string.account_number_required, R.color.greyish_brown, "*", binding?.tvAccountNumberVw!!)
+    changeColorOfSubstring(R.string.confirm_account_number_astrick, R.color.greyish_brown, "*", binding?.titleConfirmAccount!!)
+    changeColorOfSubstring(R.string.bank_ifsc_code_required, R.color.greyish_brown, "*", binding?.tvIfscCodeVw!!)
+    changeColorOfSubstring(R.string.bank_name_required, R.color.greyish_brown, "*", binding?.tvBankNameVw!!)
+    changeColorOfSubstring(R.string.bank_branch_required, R.color.greyish_brown, "*", binding?.txtBranch!!)
   }
 
   private fun isIfscValid(ifsc: String) {

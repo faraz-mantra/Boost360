@@ -102,11 +102,11 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
   }
 
   private fun setupUIColor() {
-    changeColorOfSubstring(R.string.age, R.color.colorAccent, "*", binding?.tvAge!!)
-    changeColorOfSubstring(R.string.staff_member_name, R.color.colorAccent, "*", binding?.tvStaffMemName!!)
-    changeColorOfSubstring(R.string.select_gender, R.color.colorAccent, "*", binding?.tvSelectGender!!)
-    changeColorOfSubstring(R.string.specialization, R.color.colorAccent, "*", binding?.tvSpecialization!!)
-    changeColorOfSubstring(R.string.years_of_experience, R.color.colorAccent, "*", binding?.tvYearsOfExp!!)
+    changeColorOfSubstring(R.string.age, R.color.black_4f4f4f, "*", binding?.tvAge!!)
+    changeColorOfSubstring(R.string.staff_member_name, R.color.black_4f4f4f, "*", binding?.tvStaffMemName!!)
+    changeColorOfSubstring(R.string.select_gender, R.color.black_4f4f4f, "*", binding?.tvSelectGender!!)
+    changeColorOfSubstring(R.string.specialization, R.color.black_4f4f4f, "*", binding?.tvSpecialization!!)
+    changeColorOfSubstring(R.string.years_of_experience, R.color.black_4f4f4f, "*", binding?.tvYearsOfExp!!)
   }
 
   private fun updatePreviousData() {

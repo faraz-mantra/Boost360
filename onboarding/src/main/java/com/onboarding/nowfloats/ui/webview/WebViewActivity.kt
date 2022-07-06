@@ -20,6 +20,14 @@ import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.databinding.ActivityWebViewNBinding
 import com.onboarding.nowfloats.utils.getWebViewUrl
 import im.delight.android.webview.AdvancedWebView
+import android.net.http.SslError
+
+import android.webkit.SslErrorHandler
+
+import android.webkit.WebView
+
+
+
 
 class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(),AdvancedWebView.Listener {
 
@@ -64,6 +72,10 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
       }
     }
     binding?.webview?.webViewClient = object : WebViewClient() {
+
+      override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler, error: SslError?) {
+        handler.proceed() // Ignore SSL certificate errors
+      }
       override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
         Log.i(TAG, "shouldOverrideUrlLoading: $url")
         handleOrderSuccess(url)
