@@ -152,9 +152,9 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
 
 
   private fun setupUIColor() {
-    changeColorOfSubstring(R.string.product_category_, R.color.colorAccent, "*", binding?.tvProductCategoryVw!!)
-    changeColorOfSubstring(R.string.product_description_, R.color.colorAccent, "*", binding?.tvProductDescVw!!)
-    changeColorOfSubstring(R.string.product_name_, R.color.colorAccent, "*", binding?.tvProductNameVw!!)
+    changeColorOfSubstring(R.string.product_category_, R.color.black_4a4a4a, "*", binding?.tvProductCategoryVw!!)
+    changeColorOfSubstring(R.string.product_description_, R.color.black_4a4a4a, "*", binding?.tvProductDescVw!!)
+    changeColorOfSubstring(R.string.product_name_, R.color.black_4a4a4a, "*", binding?.tvProductNameVw!!)
   }
 
   private fun capLimitCheck() {

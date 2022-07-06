@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
             android:text="@string/add_profile_image"
-            android:textColor="#747474"
+            android:textColor="@color/color_747474"
             android:textSize="@dimen/txt_12sp" />
 
         <androidx.cardview.widget.CardView
@@ -88,7 +88,7 @@
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:text="@string/name"
-            android:textColor="#747474"
+            android:textColor="@color/color_747474"
             android:textSize="@dimen/txt_12sp" />
 
         <EditText
@@ -112,7 +112,7 @@
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:text="@string/designation_aster"
-            android:textColor="#747474"
+            android:textColor="@color/color_747474"
             android:textSize="@dimen/txt_12sp" />
 
         <EditText

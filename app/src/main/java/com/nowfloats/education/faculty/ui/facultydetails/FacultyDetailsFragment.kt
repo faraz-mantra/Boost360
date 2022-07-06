@@ -103,9 +103,9 @@ class FacultyDetailsFragment(private val facultyData: Data?) : BaseFragment(),
   }
 
   private fun setupUIColor() {
-    changeColorOfSubstring(R.string.add_profile_image, com.appservice.R.color.colorAccent, "*", binding.tvAddProfileImage)
-    changeColorOfSubstring(R.string.name, com.appservice.R.color.colorAccent, "*", binding.tvFacultyName)
-    changeColorOfSubstring(R.string.designation_aster, com.appservice.R.color.colorAccent, "*", binding.tvFacultyDesignation)
+    changeColorOfSubstring(R.string.add_profile_image, com.appservice.R.color.color_747474, "*", binding.tvAddProfileImage)
+    changeColorOfSubstring(R.string.name, com.appservice.R.color.color_747474, "*", binding.tvFacultyName)
+    changeColorOfSubstring(R.string.designation_aster, com.appservice.R.color.color_747474, "*", binding.tvFacultyDesignation)
   }
 
   private fun addUpdateFacultyData() {

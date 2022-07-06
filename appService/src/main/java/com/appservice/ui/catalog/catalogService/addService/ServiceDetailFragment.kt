@@ -99,10 +99,10 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun setupUIColor() {
-    changeColorOfSubstring(R.string.service_name_, R.color.colorAccent, "*", binding?.tvServiceNameVw!!)
-    changeColorOfSubstring(R.string.service_category_, R.color.colorAccent, "*", binding?.tvServiceCategoryVw!!)
-    changeColorOfSubstring(R.string.service_description_, R.color.colorAccent, "*", binding?.tvServiceDescVw!!)
-    changeColorOfSubstring(R.string.service_duration_minutes, R.color.colorAccent, "*", binding?.tvServiceDurationVw!!)
+    changeColorOfSubstring(R.string.service_name_, R.color.black_4a4a4a, "*", binding?.tvServiceNameVw!!)
+    changeColorOfSubstring(R.string.service_category_, R.color.black_4a4a4a, "*", binding?.tvServiceCategoryVw!!)
+    changeColorOfSubstring(R.string.service_description_, R.color.black_4a4a4a, "*", binding?.tvServiceDescVw!!)
+    changeColorOfSubstring(R.string.service_duration_minutes, R.color.black_4a4a4a, "*", binding?.tvServiceDurationVw!!)
   }
 
   private fun capLimitCheck() {
