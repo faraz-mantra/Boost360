@@ -6,6 +6,9 @@
 
     <application>
         <activity
+            android:name=".ui.pack_details.PackDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.details.call_track.CallTrackingActivity"
             android:exported="false" />
         <activity
