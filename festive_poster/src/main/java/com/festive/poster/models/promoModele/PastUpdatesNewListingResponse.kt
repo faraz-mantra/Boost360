@@ -70,7 +70,7 @@ data class PastPostItem(
 	val htmlString: Any? = null,
 
 	@field:SerializedName("tags")
-	val tags: String? = null
+	val tags: ArrayList<String>? = null
 
 ) :AppBaseRecyclerViewItem {
 
