@@ -382,7 +382,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
                     CameraBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                     imageUrl = Methods.getRealPathFromURI(this, imageUri);
                     path = imageUrl;
-                    path = Util.saveBitmap(path, FeaturedImageActivity.this, "ImageFloat" + System.currentTimeMillis());
+                 //   path = Util.saveBitmap(path, FeaturedImageActivity.this, "ImageFloat" + System.currentTimeMillis());
                     WebEngageController.trackEvent(UPLOAD_FEATURED_IMAGE, UPDATED_FEATURED_IMAGE, session.getFpTag());
                 } catch (Exception e) {
                     SentryController.INSTANCE.captureException(e);
@@ -408,7 +408,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
                     Uri picUri = data.getData();
                     if (picUri != null) {
                         path = Methods.getPath(this, picUri);
-                        path = Util.saveBitmap(path, FeaturedImageActivity.this, "ImageFloat" + System.currentTimeMillis());
+                     //   path = Util.saveBitmap(path, FeaturedImageActivity.this, "ImageFloat" + System.currentTimeMillis());
                         WebEngageController.trackEvent(UPLOAD_FEATURED_IMAGE, UPDATED_FEATURED_IMAGE, session.getFpTag());
                         /*if (!Util.isNullOrEmpty(path)) {
                             editImage();
@@ -442,6 +442,11 @@ public class FeaturedImageActivity extends AppCompatActivity {
     }
 
     public void uploadPrimaryPicture(String path) {
+        if (!validateImage(path)){
+            Methods.showSnackBarNegative(this,getString(
+                    com.framework.R.string.maximum_size_supported_10mb));
+            return;
+        }
         uploadButton.setText(getResources().getString(R.string.change));
         new AlertArchive(Constants.alertInterface, "LOGO", session.getFPID());
         // Upload_Logo upload_logo = new Upload_Logo(FeaturedImageActivity.this,path,session.getFPID(), session);
@@ -450,6 +455,13 @@ public class FeaturedImageActivity extends AppCompatActivity {
 //        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(Business_Logo_Activity.this, path, false,true,session.getFPID());
 //        upa.execute();
         new uploadIMAGEURI(FeaturedImageActivity.this, path, session.getFPID(), this::imageUploaded).execute();
+    }
+
+    private boolean validateImage(String path) {
+            File file =new  File(path);
+            int size = (int) ((file.length()/1024)/1024);
+            return size<=10;
+
     }
 
     private void imageUploaded(boolean isSuccess) {

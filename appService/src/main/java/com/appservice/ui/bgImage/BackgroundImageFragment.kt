@@ -17,7 +17,7 @@ import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.utils.WebEngageController
-import com.appservice.utils.openImagePicker
+import com.appservice.utils.openImagePickerSheet
 import com.appservice.viewmodel.BackgroundImageViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -125,7 +125,7 @@ class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, 
           showSnackBarNegative(getString(R.string.max_limit_of_8_images_is_reached))
           return
         }
-        openImagePicker(requireActivity(), parentFragmentManager,ImagePicker.ComperesLevel.NONE)
+        openImagePickerSheet(requireActivity(), parentFragmentManager,ImagePicker.ComperesLevel.NONE)
       }
     }
   }

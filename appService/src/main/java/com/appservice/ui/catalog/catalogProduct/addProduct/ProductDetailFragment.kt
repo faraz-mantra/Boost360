@@ -45,10 +45,7 @@ import com.appservice.model.serviceProduct.update.UpdateValue
 import com.appservice.ui.bankaccount.startFragmentAccountActivity
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.*
-import com.appservice.utils.WebEngageController
-import com.appservice.utils.changeColorOfSubstring
-import com.appservice.utils.getBitmap
-import com.appservice.utils.getExtension
+import com.appservice.utils.*
 import com.appservice.viewmodel.ProductViewModel
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
@@ -63,6 +60,7 @@ import com.framework.imagepicker.ImagePicker
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_TAG
 import com.framework.pref.clientId
 import com.framework.utils.hideKeyBoard
+import com.framework.utils.sizeInMb
 import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
@@ -314,7 +312,8 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       binding?.bankAccountView -> {
         if (binding?.bankAccountView?.visibility == View.VISIBLE) goAddBankView()
       }
-      binding?.imageAddBtn -> openImagePicker()
+      binding?.imageAddBtn -> openImagePickerSheet(requireActivity()
+        ,parentFragmentManager,ImagePicker.ComperesLevel.NONE)
       binding?.clearImage -> clearImage()
       binding?.vwChangeDeliverConfig -> showServiceDeliveryConfigBottomSheet()
 //      binding?.vwChangeDeliverLocation -> showServiceDeliveryLocationBottomSheet()
@@ -559,40 +558,25 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     productImage = null
   }
 
-  private fun openImagePicker() {
-    val filterSheet = ImagePickerBottomSheet()
-    filterSheet.isHidePdf(true)
-    filterSheet.onClicked = { openImagePicker(it) }
-    filterSheet.show(
-      this@ProductDetailFragment.parentFragmentManager,
-      ImagePickerBottomSheet::class.java.name
-    )
-  }
 
-
-  private fun openImagePicker(it: ClickType) {
-    val type = when (it) {
-      ClickType.CAMERA -> ImagePicker.Mode.CAMERA
-      else -> ImagePicker.Mode.GALLERY
-    }
-    ImagePicker.Builder(baseActivity)
-      .mode(type)
-      .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
-      .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
-      .scale(800, 800)
-      .enableDebuggingMode(true).build()
-  }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as List<String>
-      if (mPaths.isNotEmpty()) {
-        productImage = File(mPaths[0])
-        binding?.imageAddBtn?.gone()
-        binding?.clearImage?.visible()
-        binding?.productImageView?.visible()
-        productImage?.getBitmap()?.let { binding?.productImageView?.setImageBitmap(it) }
+      if (mPaths.isEmpty()) {
+        return
+      }
+      if (validateImage(mPaths[0]).not()){
+        showSnackBarNegative(getString(R.string.maximum_size_supported_10mb))
+        return
+      }
+      productImage = File(mPaths[0])
+      binding?.imageAddBtn?.gone()
+      binding?.clearImage?.visible()
+      binding?.productImageView?.visible()
+      productImage?.getBitmap()?.let { binding?.productImageView?.setImageBitmap(it)
+
       }
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == RC_PRODCUT_INFO) {
       product = data?.getSerializableExtra(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct
@@ -612,6 +596,11 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     }
   }
 
+  fun validateImage(singleImage: String?):Boolean{
+    val file = File(singleImage)
+    val size =file.sizeInMb
+    return size<=10
+  }
   private fun showServiceDeliveryConfigBottomSheet() {
     val dialog = ServiceDeliveryConfigBottomSheet()
     dialog.onClicked = { product?.prepaidOnlineAvailable = true }

@@ -688,9 +688,18 @@ public class CreateCustomPageActivity extends AppCompatActivity {
 
         }
       }
-      if (CameraBitmap != null) {
-        uploadImageToS3(new File(path).getName(), Methods.convertBitmapToString(Methods.scaleBitmap(CameraBitmap, .5f)));
+
+      if (CameraBitmap == null) {
+        return;
       }
+      if (!validateImage(path)){
+        Methods.showSnackBarNegative(this,getString(
+                com.framework.R.string.maximum_size_supported_10mb));
+        return;
+      }
+
+      uploadImageToS3(new File(path).getName(), Methods.convertBitmapToString(Methods.scaleBitmap(CameraBitmap, .5f)));
+
 
     } else if (resultCode == RESULT_OK && (Constants.CAMERA_PHOTO == requestCode)) {
 
@@ -720,9 +729,16 @@ public class CreateCustomPageActivity extends AppCompatActivity {
 
         }
 
-        if (CameraBitmap != null) {
-          uploadImageToS3(new File(path).getName(), Methods.convertBitmapToString(Methods.scaleBitmap(CameraBitmap, .5f)));
+        if (CameraBitmap == null) {
+          return;
         }
+        if (!validateImage(path)){
+          Methods.showSnackBarNegative(this,getString(
+                  com.framework.R.string.maximum_size_supported_10mb));
+          return;
+        }
+        uploadImageToS3(new File(path).getName(), Methods.convertBitmapToString(Methods.scaleBitmap(CameraBitmap, .5f)));
+
 
       } catch (Exception e) {
         SentryController.INSTANCE.captureException(e);
@@ -886,6 +902,13 @@ public class CreateCustomPageActivity extends AppCompatActivity {
           RiaEventLogger.EventStatus.DROPPED.getValue());
       mRiaNodedata = null;
     }
+  }
+
+  private boolean validateImage(String path) {
+    File file =new  File(path);
+    int size = (int) ((file.length()/1024)/1024);
+    return size<=10;
+
   }
 
   private void initiateBuyFromMarketplace() {

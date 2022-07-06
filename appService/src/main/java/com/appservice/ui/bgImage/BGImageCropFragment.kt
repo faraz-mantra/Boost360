@@ -15,7 +15,7 @@ import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentCropZoomBinding
 import com.appservice.utils.WebEngageController
-import com.appservice.utils.openImagePicker
+import com.appservice.utils.openImagePickerSheet
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.imagepicker.ImagePicker
@@ -152,7 +152,7 @@ class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewMod
               isResult = true
             )
           }else{
-            openImagePicker(requireActivity(),parentFragmentManager)
+            openImagePickerSheet(requireActivity(),parentFragmentManager)
           }
 
         } else showLongToast("Unable to store image, please try again!")

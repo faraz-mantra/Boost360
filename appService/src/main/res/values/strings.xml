@@ -1229,5 +1229,4 @@
     <string name="asterisk">*</string>
     <string name="unable_to_fetch_default_gst_slab">Unable to fetch default gst slab</string>
     <string name="max_limit_of_8_images_is_reached">Maximum limit of 8 images is reached</string>
-    <string name="maximum_size_supported_10mb">Maximum size supported 10 MB</string>
 </resources>

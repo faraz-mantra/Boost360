@@ -215,5 +215,6 @@
   <string name="your_business_name">"Your business name "</string>
   <string name="your_name">Your name</string>
   <string name="your_mobile_number">Your mobile number</string>
+  <string name="maximum_size_supported_10mb">Maximum size supported 10 MB</string>
 
 </resources>
