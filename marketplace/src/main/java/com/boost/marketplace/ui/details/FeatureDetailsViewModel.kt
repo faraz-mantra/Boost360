@@ -212,6 +212,25 @@ class FeatureDetailsViewModel: BaseViewModel() {
                 .subscribe()
         )
     }
+
+    fun addItemToCartPackage1(cartItem: CartModel) {
+        updatesLoader.postValue(false)
+        Completable.fromAction {
+            AppDatabase.getInstance(application)!!.cartDao()
+                .insertToCart(cartItem)
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnComplete {
+                updatesLoader.postValue(false)
+            }
+            .doOnError {
+                updatesError.postValue(it.message)
+                updatesLoader.postValue(false)
+            }
+            .subscribe()
+    }
+
     fun blockNumberStatus(auth :String,fpid: String,clientId: String,blockedItem:String){
         compositeDisposable.add(
             ApiService.getItemAvailability(auth,fpid,clientId,blockedItem)
