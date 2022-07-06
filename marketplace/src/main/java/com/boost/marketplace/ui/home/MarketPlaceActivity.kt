@@ -42,6 +42,7 @@ import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
 import com.boost.marketplace.ui.History_Orders.HistoryOrdersActivity
 import com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity
 import com.boost.marketplace.ui.browse.BrowseFeaturesActivity
+import com.boost.marketplace.ui.comparePacksV3.ComparePacksV3Activity
 import com.boost.marketplace.ui.coupons.OfferCouponsActivity
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.boost.marketplace.ui.marketplace_Offers.MarketPlaceOffersActivity
@@ -167,6 +168,14 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         shimmer_view_recomm_addons.startShimmer()
         shimmer_view_addon_category.startShimmer()
         WebEngageController.trackEvent(ADDONS_MARKETPLACE_HOME, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
+
+        recommended_features_additional_tv.setOnClickListener {
+            val intent = Intent(
+                applicationContext,
+                ComparePacksV3Activity::class.java
+            )
+            startActivity(intent)
+        }
 
         imageViewOption1.setOnClickListener {
             val popup = PopupMenu(this, imageViewOption1)

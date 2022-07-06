@@ -9,6 +9,9 @@
             android:name=".ui.details.call_track.CallTrackingActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.comparePacksV3.ComparePacksV3Activity"
+            android:exported="false" />
+        <activity
             android:name=".ui.details.domain.CustomDomainActivity"
             android:exported="false" />
         <activity

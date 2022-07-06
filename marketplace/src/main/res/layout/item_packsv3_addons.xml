@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/cardViews"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:orientation="horizontal">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/main_layout1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/addon_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:textFontWeight="400"
+                    android:text="Customer \nTestimonials"
+                    android:maxLines="2"
+                    android:textColor="@color/colorPrimary1"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/ig1"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:src="@drawable/ic_pack_tick"
+                    android:layout_marginStart="62dp"
+                    app:layout_constraintStart_toEndOf="@+id/addon_title"
+                    app:layout_constraintBottom_toBottomOf="@+id/addon_title"
+                    app:layout_constraintTop_toTopOf="@+id/addon_title"/>
+
+                <ImageView
+                    android:id="@+id/ig2"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:src="@drawable/ic_pack_tick"
+                    android:layout_marginStart="62dp"
+                    app:layout_constraintStart_toEndOf="@+id/ig1"
+                    app:layout_constraintBottom_toBottomOf="@+id/addon_title"
+                    app:layout_constraintTop_toTopOf="@+id/addon_title"/>
+
+                <ImageView
+                    android:id="@+id/ig3"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:src="@drawable/ic_pack_tick"
+                    android:layout_marginStart="62dp"
+                    app:layout_constraintStart_toEndOf="@+id/ig2"
+                    app:layout_constraintBottom_toBottomOf="@+id/addon_title"
+                    app:layout_constraintTop_toTopOf="@+id/addon_title"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#BBBBBB"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/main_layout1"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </LinearLayout>
+</layout>
+
