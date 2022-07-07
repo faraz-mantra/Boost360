@@ -1111,7 +1111,7 @@
   <string name="please_make_sure_the_image_should_be_in_jpeg_or_png_format_with_minimum_size_of_1600x700_pixels">Please make sure the Image should be in Jpeg or png format with minimum size of 1600x700 pixels.</string>
   <string name="change_image">Change image</string>
   <string name="smaller_img_detected">Smaller image selected</string>
-  <string name="aspect_ration_not_matched">Aspect ration not matched</string>
+  <string name="aspect_ration_not_matched">Aspect ratio not matched</string>
   <string name="upload_successful">Upload successful!</string>
   <string name="the_image_has_been_saved_in_the_background_image_gallery">The image has been saved in the\nbackground image gallery.</string>
   <string name="of">of</string>
@@ -1229,4 +1229,6 @@
     <string name="asterisk">*</string>
     <string name="unable_to_fetch_default_gst_slab">Unable to fetch default gst slab</string>
     <string name="max_limit_of_8_images_is_reached">Maximum limit of 8 images is reached</string>
+  <string name="recomended_res_is_1600_700">Recomended image resolution is 1600 x 700</string>
+  <string name="recomended_aspect_ratio_16_7">Recomended aspect ratio 16:7</string>
 </resources>

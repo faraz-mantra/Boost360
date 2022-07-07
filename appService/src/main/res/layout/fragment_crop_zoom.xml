@@ -19,14 +19,28 @@
       app:layout_constraintVertical_bias="0.0">
 
 
-      <com.theartofdev.edmodo.cropper.CropImageView
-        android:id="@+id/crop_img"
-        android:layout_width="match_parent"
-        android:layout_height="320dp"
-        android:background="@color/black_66"
-        app:cropAspectRatioX="16"
-        app:cropAspectRatioY="7"
-        app:cropFixAspectRatio="true" />
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+        <com.theartofdev.edmodo.cropper.CropImageView
+            android:id="@+id/crop_img"
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            android:background="@color/black_66"
+            app:cropAspectRatioX="16"
+            app:cropAspectRatioY="7"
+            app:cropFixAspectRatio="true" />
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/default_img"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            android:background="@color/black_66"
+           />
+
+      </RelativeLayout>
 
       <LinearLayout
         android:id="@+id/layout_seek"
@@ -108,7 +122,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
       <com.framework.views.customViews.CustomTextView
-        android:id="@+id/customTextView10"
+        android:id="@+id/tv_img_suggestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
