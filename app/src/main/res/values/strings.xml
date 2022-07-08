@@ -2347,6 +2347,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="ad310817fg6t">AD310817FG6T</string>
     <string name="inr_7_000">INR 7,000</string>
     <string name="date_">Date:</string>
+    <string name="date_aster">Date *</string>
     <string name="exp_deliv_date">Exp. Deliv. Date:</string>
     <string name="_31_08_2017" translatable="false">31/08/2017</string>
     <string name="add_address">Add Address</string>
@@ -3024,12 +3025,13 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="select_end">Select end</string>
     <string name="select_start">Select start</string>
     <string name="enter_your_message">Enter your message</string>
-    <string name="message_option">Message (option)</string>
+    <string name="message_option">Message (optional)</string>
     <string name="_00_00_am_pm">00:00 AM/PM</string>
     <string name="_00_00_0000">00-00-0000</string>
-    <string name="table_for">Table for</string>
+    <string name="table_for">Table for *</string>
     <string name="contact_number">Contact number</string>
-    <string name="time_">Time</string>
+    <string name="contact_number_aster">Contact number *</string>
+    <string name="time_aster">Time *</string>
     <string name="primary_image">Primary image</string>
     <string name="secondary_images_8_max_jpeg_800x800px">Secondary Images (8 max, jpeg, 800x800px)</string>
     <string name="browse_secondary_images">Browse secondary images</string>
