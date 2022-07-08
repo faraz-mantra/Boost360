@@ -7,6 +7,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.boost.cart.CartActivity
@@ -18,10 +19,13 @@ import com.boost.marketplace.databinding.CallTrackingAddToCartPopupBinding
 import com.boost.marketplace.ui.details.FeatureDetailsViewModel
 import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
 import com.framework.base.BaseBottomSheetDialog
+import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import es.dmoral.toasty.Toasty
 
 class SelectNumberBottomSheet :
     BaseBottomSheetDialog<CallTrackingAddToCartPopupBinding, FeatureDetailsViewModel>() {
@@ -37,6 +41,9 @@ class SelectNumberBottomSheet :
     var isOpenCardFragment: Boolean = false
     var deepLinkViewType: String = ""
     var deepLinkDay: Int = 7
+    var result: Boolean? = null
+    var blockedItem: String? = null
+
     var userPurchsedWidgets = java.util.ArrayList<String>()
     var itemInCartStatus = false
     lateinit var singleAddon: FeaturesModel
@@ -76,6 +83,9 @@ class SelectNumberBottomSheet :
         progressDialog = ProgressDialog(context)
         prefs = SharedPrefs(baseActivity)
 
+        blockedItem = requireArguments().getString("phone_number")
+        loadData()
+        initMVVM()
 
         binding?.tvTitle?.text = requireArguments().getString("phone_number")
         val select_another_no =
@@ -139,33 +149,42 @@ class SelectNumberBottomSheet :
         }
         binding?.tvCart?.setOnClickListener {
             dismiss()
-            if (!itemInCartStatus) {
-                if (singleAddon != null) {
-                    prefs.storeCartOrderInfo(null)
-                    viewModel!!.addItemToCart1(singleAddon, baseActivity)
-                    val event_attributes: HashMap<String, Any> = HashMap()
-                    singleAddon.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
-                    event_attributes.put("Addon Price", singleAddon.price)
-                    event_attributes.put(
-                        "Addon Discounted Price",
-                        getDiscountedPrice(singleAddon.price, singleAddon.discount_percent)
-                    )
-                    event_attributes.put("Addon Discount %", singleAddon.discount_percent)
-                    event_attributes.put("Addon Validity", 1)
-                    event_attributes.put("Addon Feature Key", singleAddon.boost_widget_key)
-                    singleAddon.target_business_usecase?.let { it1 ->
+            if (blockedItem != null && !result!!) {
+                if (!itemInCartStatus) {
+                    if (singleAddon != null) {
+                        prefs.storeCartOrderInfo(null)
+                        viewModel!!.addItemToCart1(singleAddon, baseActivity)
+                        val event_attributes: HashMap<String, Any> = HashMap()
+                        singleAddon.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
+                        event_attributes.put("Addon Price", singleAddon.price)
                         event_attributes.put(
-                            "Addon Tag",
-                            it1
+                            "Addon Discounted Price",
+                            getDiscountedPrice(singleAddon.price, singleAddon.discount_percent)
                         )
+                        event_attributes.put("Addon Discount %", singleAddon.discount_percent)
+                        event_attributes.put("Addon Validity", 1)
+                        event_attributes.put("Addon Feature Key", singleAddon.boost_widget_key)
+                        singleAddon.target_business_usecase?.let { it1 ->
+                            event_attributes.put(
+                                "Addon Tag",
+                                it1
+                            )
+                        }
+                        WebEngageController.trackEvent(
+                            ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
+                            ADDONS_MARKETPLACE,
+                            event_attributes
+                        )
+                        itemInCartStatus = true
                     }
-                    WebEngageController.trackEvent(
-                        ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
-                        ADDONS_MARKETPLACE,
-                        event_attributes
-                    )
-                    itemInCartStatus = true
                 }
+
+            } else {
+                Toasty.error(
+                    requireContext(),
+                    "Number not available, please select other",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             val intent = Intent(context, CartActivity::class.java)
             intent.putExtra("fpid", fpid)
@@ -189,6 +208,27 @@ class SelectNumberBottomSheet :
             intent.putExtra("profileUrl", profileUrl)
             startActivity(intent)
         }
+    }
+
+    private fun loadData() {
+        blockedItem?.let {
+            fpid?.let { it1 ->
+                viewModel!!.blockNumberStatus(
+                    (this).getAccessToken() ?: "", it1,
+                    "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21", it
+                )
+            }
+        }
+    }
+
+    private fun initMVVM() {
+        viewModel?.updateStatus()?.observe(this, androidx.lifecycle.Observer {
+            result = it.Result
+        })
+    }
+
+    fun getAccessToken(): String {
+        return UserSessionManager(requireContext()).getAccessTokenAuth()?.barrierToken() ?: ""
     }
 
     private fun getDiscountedPrice(price: Double, discountPercent: Int): Double {

@@ -92,13 +92,6 @@ class MatchNumberListAdapter(
         }
     }
 
-//    fun updateNumberList(numberList: MutableList<String>?) {
-//        val diffCallback = VMNDiffUtilClass(this.upgradeList, numberList!!)
-//        val diffResult = DiffUtil.calculateDiff(diffCallback)
-//        this.upgradeList.clear()
-//        this.upgradeList.addAll(numberList)
-//        diffResult.dispatchUpdatesTo(this)
-//    }
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title = itemView.findViewById<TextView>(R.id.tv_title)

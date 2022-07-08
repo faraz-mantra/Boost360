@@ -1,61 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/upi_popup_outer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#1d000000"
-    android:clickable="true"
-    android:focusable="true"
-    android:orientation="vertical">
-
-    <ImageView
-        android:id="@+id/back_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/upi_popup_container_layout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:src="@drawable/ic_close_circle_gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/upi_popup_container_layout"
+    >
+    <RelativeLayout
+        android:id="@+id/upi_popup_outer_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/curve_top_bg"
-        android:paddingTop="52dp"
-        android:paddingBottom="52dp"
-        >
+        android:layout_height="match_parent"
+        android:background="#1d000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/iv_request_sent"
+            android:id="@+id/back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_loader_for_find_number"
+            android:layout_above="@id/upi_popup_container_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:src="@drawable/ic_close_circle_gray"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
 
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/upi_popup_container_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/semi_bold"
-            android:lineHeight="24dp"
-            android:text="Finding a number for you"
-            android:textColor="@color/main_color_gray_dk"
-            android:textFontWeight="600"
-            android:textSize="@dimen/txt_16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_request_sent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/curve_top_bg"
+            android:paddingTop="52dp"
+            android:paddingBottom="52dp"
+            >
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lotty_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_rawRes="@raw/find_number_loader" />
 
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/semi_bold"
+                android:lineHeight="24dp"
+                android:text="@string/finding_a_number_for_you"
+                android:textColor="@color/main_color_gray_dk"
+                android:textFontWeight="600"
+                android:textSize="@dimen/txt_16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lotty_progress" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </RelativeLayout>
+</layout>

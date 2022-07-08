@@ -50,36 +50,60 @@ class ExactMatchListAdapter(
 
     override fun onBindViewHolder(holder: UpgradeViewHolder, position: Int) {
         if (searchItem != null && searchItem!!.isNotEmpty()) {
-
-            val startPos = upgradeList[position].toLowerCase(Locale.US)
+            val num = upgradeList[position].replace("+91 ", "").replace("-", "")
+            val diff = upgradeList[position].length - num.length
+            System.out.println("Difference---->" + diff)
+            var startPosForDisplayString = -1
+            var endPos = -1
+            val startPos = num.toLowerCase(Locale.US)
                 .indexOf(searchItem!!.toLowerCase(Locale.US))
-            val endPos = startPos + searchItem!!.length
 
-            if (startPos != -1) {
-                val spannable = SpannableString(upgradeList[position])
-                spannable.setSpan(
-                    ForegroundColorSpan(ContextCompat.getColor(context, R.color.black)),
-                    startPos,
-                    endPos,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-                spannable.setSpan(
-                    StyleSpan(Typeface.BOLD),
-                    startPos,
-                    endPos,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-
-                holder.title.text = spannable
+            if (startPos >= 2 && startPos<4) {
+                startPosForDisplayString = startPos + (diff - 2)
+                endPos = startPosForDisplayString + searchItem!!.length + 1
+            } else if (startPos < 2 || startPos > 7) {
+                startPosForDisplayString = startPos + (diff - 2)
+                endPos = startPosForDisplayString + searchItem!!.length
+            } else if (startPos == 4) {
+                startPosForDisplayString = startPos + (diff - 2) + 1
+                endPos = startPosForDisplayString + searchItem!!.length
+            } else if (startPos == 7) {
+                startPosForDisplayString = startPos + (diff - 2) + 2
+                endPos = startPosForDisplayString + searchItem!!.length
+            }else if(startPos>4 && startPos<7){
+                startPosForDisplayString = startPos + (diff - 2) + 1
+                endPos = startPosForDisplayString + searchItem!!.length +1
             }
-        } else {
-            holder.title.text = upgradeList[position]
 
+
+            if (searchItem != null && searchItem!!.isNotEmpty()) {
+                if (startPosForDisplayString != -1) {
+                    val spannable = SpannableString(upgradeList[position])
+                    spannable.setSpan(
+                        ForegroundColorSpan(ContextCompat.getColor(context, R.color.black)),
+                        startPosForDisplayString,
+                        endPos,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    spannable.setSpan(
+                        StyleSpan(Typeface.BOLD),
+                        startPosForDisplayString,
+                        endPos,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+
+                    holder.title.text = spannable
+                }
+            } else {
+                holder.title.text = upgradeList[position]
+
+            }
         }
+
         if (selectedPosition == position) {
             holder.radio1.visibility = View.VISIBLE
             holder.itemView.setBackgroundResource(R.color.colorAccent2);
-        }else {
+        } else {
             holder.radio1.visibility = View.GONE
             holder.itemView.setBackgroundResource(R.color.white);
         }

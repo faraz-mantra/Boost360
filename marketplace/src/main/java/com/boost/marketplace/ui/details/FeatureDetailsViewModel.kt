@@ -27,16 +27,16 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 
-class FeatureDetailsViewModel: BaseViewModel() {
+class FeatureDetailsViewModel : BaseViewModel() {
 
     var updatesResult: MutableLiveData<FeaturesModel> = MutableLiveData()
     var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
+    var findingNumberLoader: MutableLiveData<Boolean> = MutableLiveData()
     var allBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
     private var callTrackListResponse: MutableLiveData<CallTrackListResponse> = MutableLiveData()
-    var updateStatus : MutableLiveData<BlockApi> = MutableLiveData()
-
+    var updateStatus: MutableLiveData<BlockApi> = MutableLiveData()
 
 
     val compositeDisposable = CompositeDisposable()
@@ -60,25 +60,34 @@ class FeatureDetailsViewModel: BaseViewModel() {
     fun addonsLoader(): LiveData<Boolean> {
         return updatesLoader
     }
-    fun updateStatus():LiveData<BlockApi> {
+
+    fun numberLoader(): LiveData<Boolean> {
+        return findingNumberLoader
+    }
+
+    fun updateStatus(): LiveData<BlockApi> {
         return updateStatus
     }
+
     fun getCallTrackingDetails(): LiveData<CallTrackListResponse> {
         return callTrackListResponse
     }
+
     lateinit var application: Application
     lateinit var lifecycleOwner: LifecycleOwner
-    var ApiService = com.boost.dbcenterapi.utils.Utils.getRetrofit().create(NewApiInterface::class.java)
+    var ApiService =
+        com.boost.dbcenterapi.utils.Utils.getRetrofit().create(NewApiInterface::class.java)
 
-    fun setApplicationLifecycle(application: Application,
-                                lifecycleOwner: LifecycleOwner
-    ){
+    fun setApplicationLifecycle(
+        application: Application,
+        lifecycleOwner: LifecycleOwner
+    ) {
         this.application = application
         this.lifecycleOwner = lifecycleOwner
     }
 
     fun loadNumberList(fpid: String, clientId: String) {
-        updatesLoader.postValue(true)
+        findingNumberLoader.postValue(true)
         if (Utils.isConnectedToInternet(application)) {
 
             CompositeDisposable().add(
@@ -87,11 +96,10 @@ class FeatureDetailsViewModel: BaseViewModel() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                         {
-                            updatesLoader.postValue(false)
+                            findingNumberLoader.postValue(false)
                             var NumberList = it
                             callTrackListResponse.postValue(NumberList)
-                        }
-                        ,
+                        },
                         {
                             val temp = (it as HttpException).response()!!.errorBody()!!.string()
                             val errorBody: Error =
@@ -125,7 +133,7 @@ class FeatureDetailsViewModel: BaseViewModel() {
                     updatesError.postValue(it.message)
                     updatesLoader.postValue(false)
                 }
-                .subscribe({}, {e -> Log.e("TAG", "Empty DB")}
+                .subscribe({}, { e -> Log.e("TAG", "Empty DB") }
                 )
         )
     }
@@ -151,12 +159,11 @@ class FeatureDetailsViewModel: BaseViewModel() {
     }
 
 
-
     fun addItemToCart1(updatesModel: FeaturesModel, activity: Activity) {
         updatesLoader.postValue(false)
         val discount = 100 - updatesModel.discount_percent
         val paymentPrice = ((discount * updatesModel.price) / 100)
-        val mrpPrice =  updatesModel.price
+        val mrpPrice = updatesModel.price
         val cartItem = CartModel(
             updatesModel.feature_id,
             updatesModel.boost_widget_key,
@@ -171,7 +178,7 @@ class FeatureDetailsViewModel: BaseViewModel() {
             1,
             "features",
             updatesModel.extended_properties,
-            updatesModel.widget_type?:""
+            updatesModel.widget_type ?: ""
         )
 
 
@@ -231,9 +238,9 @@ class FeatureDetailsViewModel: BaseViewModel() {
             .subscribe()
     }
 
-    fun blockNumberStatus(auth :String,fpid: String,clientId: String,blockedItem:String){
+    fun blockNumberStatus(auth: String, fpid: String, clientId: String, blockedItem: String) {
         compositeDisposable.add(
-            ApiService.getItemAvailability(auth,fpid,clientId,blockedItem)
+            ApiService.getItemAvailability(auth, fpid, clientId, blockedItem)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

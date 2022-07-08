@@ -385,5 +385,6 @@
     <color name="indicatorNotSelectorColor">@color/gray_light</color>
 
     <color name="givefeedbackColorBG">#FFFCF6</color>
+    <color name="pack_details_bg_color">#F5F8FD</color>
 
 </resources>

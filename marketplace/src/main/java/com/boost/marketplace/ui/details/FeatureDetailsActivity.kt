@@ -47,6 +47,7 @@ import com.boost.marketplace.ui.details.staff.StaffManagementBottomSheet
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
+import com.boost.marketplace.ui.popup.call_track.FindingNumberLoaderBottomSheet
 import com.boost.marketplace.ui.popup.call_track.RequestCallbackBottomSheet
 import com.boost.marketplace.ui.popup.call_track.SelectNumberBottomSheet
 import com.boost.marketplace.ui.popup.removeItems.RemovePackageBottomSheet
@@ -78,6 +79,7 @@ class FeatureDetailsActivity :
     lateinit var staffManagementBottomSheet: StaffManagementBottomSheet
     lateinit var removePackageBottomSheet: RemovePackageBottomSheet
 
+
     //  lateinit voar localStorage: LocalStorage
     var singleWidgetKey: String? = null
     var badgeNumber = 0
@@ -106,6 +108,7 @@ class FeatureDetailsActivity :
     val bundlesList = arrayListOf<BundlesModel>()
 
     lateinit var progressDialog: ProgressDialog
+    val dialogCard = FindingNumberLoaderBottomSheet()
 
     lateinit var reviewAdaptor: ReviewViewPagerAdapter
     lateinit var howToUseAdapter: HowToUseAdapter
@@ -656,6 +659,18 @@ class FeatureDetailsActivity :
                 progressDialog.show()
             } else {
                 progressDialog.dismiss()
+            }
+        })
+        viewModel.numberLoader().observe(this, Observer
+        {
+            if (it) {
+
+                dialogCard.show(
+                    this.supportFragmentManager,
+                    FindingNumberLoaderBottomSheet::class.java.name
+                )
+            } else {
+                dialogCard.dismiss()
             }
         })
     }
