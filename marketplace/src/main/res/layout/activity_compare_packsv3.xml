@@ -144,6 +144,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
+                                    android:layout_marginTop="16dp"
                                     android:padding="16dp"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent">
@@ -153,7 +154,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="16dp"
-                                        android:layout_marginTop="24dp"
+                                        android:layout_marginTop="44dp"
                                         android:fontFamily="@font/regular"
                                         android:text="Pack price"
                                         android:textColor="@color/main_color_gray_dk"
@@ -170,157 +171,17 @@
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                                <ImageView
-                                    android:id="@+id/packs_image1"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_marginTop="24dp"
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/packsv3recycler"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    tools:itemCount="3"
+                                    android:paddingStart="8dp"
+                                    tools:orientation="horizontal"
+                                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                    tools:listitem="@layout/item_packsv3"
                                     app:layout_constraintStart_toEndOf="@+id/ll1"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    android:src="@drawable/ic_package_image" />
-
-                                <ImageView
-                                    android:id="@+id/packs_image2"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_marginStart="28dp"
-                                    android:layout_marginTop="24dp"
-                                    app:layout_constraintStart_toEndOf="@+id/packs_image1"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    android:src="@drawable/classic_pack" />
-
-                                <ImageView
-                                    android:id="@+id/packs_image3"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_marginStart="28dp"
-                                    android:layout_marginTop="24dp"
-                                    app:layout_constraintStart_toEndOf="@+id/packs_image2"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    android:src="@drawable/advance_pack" />
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/pack_title1"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="9dp"
-                                    android:fontFamily="@font/regular"
-                                    android:text="Basic"
-                                    android:textColor="@color/main_color_gray_dk"
-                                    android:textFontWeight="600"
-                                    android:textSize="12sp"
-                                    app:layout_constraintEnd_toEndOf="@+id/packs_image1"
-                                    app:layout_constraintTop_toBottomOf="@+id/packs_image1"
-                                    app:layout_constraintStart_toStartOf="@+id/packs_image1"/>
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/pack_price1"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="9dp"
-                                    android:fontFamily="@font/regular"
-                                    android:text="₹481"
-                                    android:textColor="@color/main_color_gray_dk"
-                                    android:textFontWeight="600"
-                                    android:textSize="12sp"
-                                    app:layout_constraintEnd_toEndOf="@+id/packs_image1"
-                                    app:layout_constraintTop_toBottomOf="@+id/pack_title1"
-                                    app:layout_constraintStart_toStartOf="@+id/packs_image1"/>
-
-                                <TextView
-                                    android:id="@+id/mrpPrice"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textFontWeight="400"
-                                    android:text="/month"
-                                    android:textColor="@color/copy_coupon_text_color"
-                                    android:textSize="12sp"
-                                    app:layout_constraintEnd_toEndOf="@+id/pack_price1"
-                                    app:layout_constraintTop_toBottomOf="@+id/pack_price1"
-                                    app:layout_constraintStart_toStartOf="@+id/pack_price1"/>
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/pack_title2"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="9dp"
-                                    android:fontFamily="@font/regular"
-                                    android:text="Classic"
-                                    android:textColor="@color/main_color_gray_dk"
-                                    android:textFontWeight="600"
-                                    android:textSize="12sp"
-                                    app:layout_constraintEnd_toEndOf="@+id/packs_image2"
-                                    app:layout_constraintTop_toBottomOf="@+id/packs_image2"
-                                    app:layout_constraintStart_toStartOf="@+id/packs_image2"/>
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/pack_price2"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="9dp"
-                                    android:fontFamily="@font/regular"
-                                    android:text="₹1500"
-                                    android:textColor="@color/main_color_gray_dk"
-                                    android:textFontWeight="600"
-                                    android:textSize="12sp"
-                                    app:layout_constraintEnd_toEndOf="@+id/packs_image2"
-                                    app:layout_constraintTop_toBottomOf="@+id/pack_title2"
-                                    app:layout_constraintStart_toStartOf="@+id/packs_image2"/>
-
-                                <TextView
-                                    android:id="@+id/mrpPrice2"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textFontWeight="400"
-                                    android:text="/month"
-                                    android:textColor="@color/copy_coupon_text_color"
-                                    android:textSize="12sp"
-                                    app:layout_constraintEnd_toEndOf="@+id/pack_price2"
-                                    app:layout_constraintTop_toBottomOf="@+id/pack_price2"
-                                    app:layout_constraintStart_toStartOf="@+id/pack_price2"/>
-
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/pack_title3"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="9dp"
-                                    android:fontFamily="@font/regular"
-                                    android:text="Advanced"
-                                    android:textColor="@color/main_color_gray_dk"
-                                    android:textFontWeight="600"
-                                    android:textSize="12sp"
-                                    app:layout_constraintEnd_toEndOf="@+id/packs_image3"
-                                    app:layout_constraintTop_toBottomOf="@+id/packs_image3"
-                                    app:layout_constraintStart_toStartOf="@+id/packs_image3"/>
-
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/pack_price3"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="9dp"
-                                    android:fontFamily="@font/regular"
-                                    android:text="₹2300"
-                                    android:textColor="@color/main_color_gray_dk"
-                                    android:textFontWeight="600"
-                                    android:textSize="12sp"
-                                    app:layout_constraintEnd_toEndOf="@+id/packs_image3"
-                                    app:layout_constraintTop_toBottomOf="@+id/pack_title3"
-                                    app:layout_constraintStart_toStartOf="@+id/packs_image3"/>
-
-                                <TextView
-                                    android:id="@+id/mrpPrice3"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textFontWeight="400"
-                                    android:text="/month"
-                                    android:textColor="@color/copy_coupon_text_color"
-                                    android:textSize="12sp"
-                                    app:layout_constraintEnd_toEndOf="@+id/pack_price3"
-                                    app:layout_constraintTop_toBottomOf="@+id/pack_price3"
-                                    app:layout_constraintStart_toStartOf="@+id/pack_price3"/>
+                                    app:layout_constraintTop_toTopOf="parent"/>
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -517,7 +378,7 @@
                         android:textFontWeight="700"
                         android:fontFamily="@font/bold"
                         android:textColor="@color/main_color_gray_dk"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:text="₹481"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/footer_pack"/>
@@ -569,7 +430,7 @@
                         android:textFontWeight="700"
                         android:fontFamily="@font/bold"
                         android:textColor="@color/main_color_gray_dk"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:text="₹481"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/footer_pack2"/>
@@ -599,7 +460,8 @@
                     android:padding="16dp"
                     app:layout_constraintStart_toEndOf="@+id/pack_details2"
                     app:layout_constraintBottom_toBottomOf="@+id/pack_details2"
-                    app:layout_constraintTop_toTopOf="parent" >
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
 
                     <TextView
                         android:id="@+id/footer_pack3"
@@ -621,7 +483,7 @@
                         android:textFontWeight="700"
                         android:fontFamily="@font/bold"
                         android:textColor="@color/main_color_gray_dk"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:text="₹481"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/footer_pack3"/>

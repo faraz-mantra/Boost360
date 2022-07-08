@@ -169,14 +169,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         shimmer_view_addon_category.startShimmer()
         WebEngageController.trackEvent(ADDONS_MARKETPLACE_HOME, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
 
-        recommended_features_additional_tv.setOnClickListener {
-            val intent = Intent(
-                applicationContext,
-                ComparePacksV3Activity::class.java
-            )
-            startActivity(intent)
-        }
-
         imageViewOption1.setOnClickListener {
             val popup = PopupMenu(this, imageViewOption1)
             popup.getMenuInflater().inflate(R.menu.home_menu, popup.getMenu())
@@ -410,7 +402,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         }
 
         package_compare_layout.setOnClickListener {
-            val intent = Intent(this, ComparePacksActivity::class.java)
+            val intent = Intent(this, ComparePacksV3Activity::class.java)
             intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
 
             intent.putExtra("fpid", fpid)
