@@ -63,8 +63,8 @@ dependencies {
     api 'com.otaliastudios:cameraview:2.6.4'
     //zendesk
     api group: 'com.zendesk', name: 'support', version: '5.0.9'
-    //zopim
-    api group: 'com.zopim.android', name: 'sdk', version: '1.4.4'
+    api group: 'com.zendesk', name: 'chat', version: '3.3.5'
+    api group: 'com.zendesk', name: 'messaging', version: '5.2.4'
     //anachat
     api 'com.kitsune:anachatsdk:1.18.11@aar'
     //Firebase Library
