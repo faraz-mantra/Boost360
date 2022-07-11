@@ -224,21 +224,14 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     super.onPause()
     lisReg?.remove()
   }
+
   private fun initUI() {
     binding.etUpdate.requestFocus()
-    val imm =
-      activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.showSoftInput(binding.etUpdate, InputMethodManager.SHOW_IMPLICIT)
-    binding!!.tvHashtagTip.text = spanColor(
-      getString(R.string.type_in_the_caption_to_create_your_own_hashtags),
-      R.color.blue_4889f8,
-      "#"
-      )
+    binding!!.tvHashtagTip.text = spanColor(getString(R.string.type_in_the_caption_to_create_your_own_hashtags), R.color.blue_4889f8, "#")
 
-    binding!!.btnAddImage.text = spanBold(
-      getString(R.string.add_image_optional),
-      "Add image"
-    )
+    binding!!.btnAddImage.text = spanBold(getString(R.string.add_image_optional), "Add image")
     FirestoreManager.readDraft {
       if (activity != null && isAdded) {
 
@@ -251,15 +244,10 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
             if (it?.imageUri.isNullOrEmpty().not()) {
               Log.i(TAG, "initUI: ${it?.imageUri}")
               val bitmap = Picasso.get().load(it?.imageUri).get()
-              val imgFile = File(
-                requireActivity().getExternalFilesDir(null)?.path + File.separator
-                        + UPDATE_PIC_FILE_NAME
-              )
+              val imgFile = File(requireActivity().getExternalFilesDir(null)?.path + File.separator + UPDATE_PIC_FILE_NAME)
               bitmap.saveAsImageToAppFolder(imgFile.path)
 
-              runOnUi {
-                loadImage(imgFile.path)
-              }
+              runOnUi { loadImage(imgFile.path) }
             }else{
               loadImage(null)
             }
