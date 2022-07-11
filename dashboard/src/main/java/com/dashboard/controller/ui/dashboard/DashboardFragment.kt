@@ -15,8 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
-import com.appservice.ui.updatesBusiness.AddUpdateBusinessFragment
-import com.appservice.ui.updatesBusiness.AddUpdateBusinessFragmentV2
 import com.bumptech.glide.Glide
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment

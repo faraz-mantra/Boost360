@@ -177,14 +177,8 @@ class UpdatesListingFragment :
             }
             RecyclerViewActionType.PAST_REUSE_BUTTON_CLICKED.ordinal -> {
                 item as PastPostItem
-                val intent = Intent(
-                    requireActivity(),
-                    Class.forName("com.appservice.ui.updatesBusiness.UpdateBusinessContainerActivity")
-                )
-                    .putExtra(
-                        IntentConstant.REUSE_PAST_UPDATE_MESSAGE_TEXT.name,
-                        item.message.toString()
-                    )
+                val intent = Intent(requireActivity(), Class.forName("com.appservice.ui.updatesBusiness.UpdateBusinessContainerActivity"))
+                    .putExtra(IntentConstant.REUSE_PAST_UPDATE_MESSAGE_TEXT.name, item.message.toString())
                     .putExtra(IntentConstant.REUSE_PAST_UPDATE_IMAGE.name, item.imageUri.toString())
                 intent.setFragmentType("ADD_UPDATE_BUSINESS_FRAGMENT_V2")
                 startActivity(intent)
