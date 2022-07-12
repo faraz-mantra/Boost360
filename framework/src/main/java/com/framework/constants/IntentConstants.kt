@@ -8,6 +8,7 @@ object IntentConstants {
     val IK_POSTER="IK_POSTER"
     val IK_TAGS="IK_TAGS"
     val IK_UPDATE_TYPE="IK_UPDATE_TYPE"
+    val IK_IS_REUSE_MODE ="IK_IS_REUSE_MODE"
 
     enum class UpdateType(val value:Int){
         ALL(0),
