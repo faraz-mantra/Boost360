@@ -107,7 +107,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:overScrollMode="never"
-                android:layout_marginBottom="20dp"
                 android:scrollbars="none"
                 app:layout_constraintBottom_toTopOf="@+id/footer_checkout"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -119,14 +118,15 @@
                     android:layout_height="wrap_content">
 
 
-                    <androidx.cardview.widget.CardView
+                    <LinearLayout
                         android:id="@+id/trip_cv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:padding="16dp"
                         android:layout_margin="16dp"
-                        android:background="@drawable/background_packsv3"
+                        android:background="@drawable/packsv3_bg1"
                         app:cardCornerRadius="10dp"
-                        app:cardElevation="8dp"
+                        android:elevation="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -143,9 +143,11 @@
                                     android:id="@+id/ll1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:orientation="vertical"
                                     android:layout_marginTop="16dp"
-                                    android:padding="16dp"
+                                    android:orientation="vertical"
+                                    android:padding="12dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@+id/packsv3recycler"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent">
 
@@ -154,7 +156,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="16dp"
-                                        android:layout_marginTop="44dp"
+                                        android:layout_marginTop="54dp"
                                         android:fontFamily="@font/regular"
                                         android:text="Pack price"
                                         android:textColor="@color/main_color_gray_dk"
@@ -166,7 +168,8 @@
                                         android:layout_width="88dp"
                                         android:layout_height="58dp"
                                         android:layout_marginStart="16dp"
-                                        android:layout_marginTop="16dp"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginBottom="16dp"
                                         android:src="@drawable/ic_pack_icon_details" />
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -175,18 +178,18 @@
                                     android:id="@+id/packsv3recycler"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/ll1"
+                                    app:layout_constraintTop_toTopOf="parent"
                                     tools:itemCount="3"
-                                    android:paddingStart="8dp"
-                                    tools:orientation="horizontal"
                                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                     tools:listitem="@layout/item_packsv3"
-                                    app:layout_constraintStart_toEndOf="@+id/ll1"
-                                    app:layout_constraintTop_toTopOf="parent"/>
+                                    tools:orientation="horizontal" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
                         </RelativeLayout>
-                    </androidx.cardview.widget.CardView>
+                    </LinearLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cs1"
@@ -195,7 +198,6 @@
                         app:layout_constraintEnd_toEndOf="@+id/trip_cv"
                         app:layout_constraintStart_toStartOf="@+id/trip_cv"
                         android:background="#FFFFFF"
-                        android:layout_marginTop="5dp"
                         app:layout_constraintTop_toBottomOf="@+id/trip_cv">
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -204,7 +206,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:layout_marginBottom="30dp"
-                            tools:itemCount="10"
+                            tools:itemCount="4"
                             tools:listitem="@layout/item_packsv3_addons"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -215,14 +217,22 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                    <androidx.appcompat.widget.AppCompatImageView
+                    <ImageView
                         android:id="@+id/img"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30dp"
-                        android:src="@drawable/packs_offer_v3"
                         android:scaleType="centerCrop"
-                        app:layout_constraintTop_toBottomOf="@+id/cs1"/>
+                        android:src="@drawable/packs_offer_v3"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/cs1" />
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_alignParentEnd="true"-->
+<!--                        android:layout_alignParentBottom="true"-->
+<!--                        android:src="@drawable/ic_card_bg1" />-->
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/how_to_use_container"
@@ -249,7 +259,7 @@
                                 android:layout_weight="1"
                                 android:fontFamily="@font/semi_bold"
                                 android:padding="16dp"
-                                tools:text="How to activate this Pack"
+                                android:text="How to activate this Pack"
                                 android:textColor="@color/main_color_gray_dk"
                                 android:textFontWeight="600"
                                 android:textSize="16sp"
@@ -276,7 +286,7 @@
                             android:layout_height="wrap_content"
                             tools:listitem="@layout/item_packsv3_how_to_use"
                             tools:itemCount="2"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             app:layout_constraintTop_toBottomOf="@id/how_to_use_title_layout" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -289,7 +299,7 @@
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
                         android:background="@drawable/rounded_curve_bg"
-                        app:layout_constraintBottom_toBottomOf="parent"
+
                         app:layout_constraintTop_toBottomOf="@id/how_to_use_container">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -304,10 +314,9 @@
                                 android:id="@+id/faq_title"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
                                 android:fontFamily="@font/semi_bold"
                                 android:padding="16dp"
-                                tools:text="Frequently Asked Questions"
+                                android:text="Frequently Asked Questions"
                                 android:textColor="@color/main_color_gray_dk"
                                 android:textFontWeight="600"
                                 android:textSize="16sp"
@@ -323,7 +332,44 @@
                             android:layout_height="wrap_content"
                             tools:listitem="@layout/item_packs_faq"
                             tools:itemCount="2"
+                            android:visibility="gone"
                             app:layout_constraintTop_toBottomOf="@id/faq_title_layout" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="#F2FBE9"
+                        android:paddingStart="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/faq_container"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <TextView
+                            android:id="@+id/pricing_switch_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:padding="16dp"
+                            android:text="Choose annual plan? Save 35% more"
+                            android:textColor="@color/main_color_gray_dk"
+                            android:textFontWeight="600"
+                            android:textSize="12sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/price_switch1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="20dp"
+                            android:paddingTop="15dp"
+                            android:paddingBottom="@dimen/pad_5dp"
+                            android:src="@drawable/ic_switch_off"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -346,161 +392,173 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/pack_details"
+<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:id="@+id/pack_details"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/edittext_selector1"-->
+<!--                    android:foreground="?android:attr/selectableItemBackground"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:padding="16dp"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintBottom_toTopOf="@+id/buy_pack"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" >-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/footer_pack"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textFontWeight="400"-->
+<!--                        android:fontFamily="@font/regular"-->
+<!--                        android:textColor="@color/colorPrimary1"-->
+<!--                        android:textSize="12sp"-->
+<!--                        android:text="Basic"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"/>-->
+
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/footer_pack_total"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textFontWeight="700"-->
+<!--                        android:fontFamily="@font/bold"-->
+<!--                        android:textColor="@color/main_color_gray_dk"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:text="₹481"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@+id/footer_pack"/>-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/month"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textFontWeight="400"-->
+<!--                        android:text="/month"-->
+<!--                        android:textColor="@color/copy_coupon_text_color"-->
+<!--                        android:textSize="12sp"-->
+<!--                        app:layout_constraintTop_toTopOf="@+id/footer_pack_total"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@+id/footer_pack_total"-->
+<!--                        app:layout_constraintStart_toEndOf="@+id/footer_pack_total"/>-->
+
+<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:id="@+id/pack_details2"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="11dp"-->
+<!--                    android:background="@drawable/edittext_selector1"-->
+<!--                    android:foreground="?android:attr/selectableItemBackground"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:padding="16dp"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/pack_details"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@+id/pack_details"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" >-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/footer_pack2"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textFontWeight="400"-->
+<!--                        android:fontFamily="@font/regular"-->
+<!--                        android:textColor="@color/colorPrimary1"-->
+<!--                        android:textSize="12sp"-->
+<!--                        android:text="Basic"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"/>-->
+
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/footer_pack_total2"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textFontWeight="700"-->
+<!--                        android:fontFamily="@font/bold"-->
+<!--                        android:textColor="@color/main_color_gray_dk"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:text="₹481"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@+id/footer_pack2"/>-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/month2"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textFontWeight="400"-->
+<!--                        android:text="/month"-->
+<!--                        android:textColor="@color/copy_coupon_text_color"-->
+<!--                        android:textSize="12sp"-->
+<!--                        app:layout_constraintTop_toTopOf="@+id/footer_pack_total2"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@+id/footer_pack_total2"-->
+<!--                        app:layout_constraintStart_toEndOf="@+id/footer_pack_total2"/>-->
+
+<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:id="@+id/pack_details3"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="11dp"-->
+<!--                    android:background="@drawable/edittext_selector1"-->
+<!--                    android:foreground="?android:attr/selectableItemBackground"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:padding="16dp"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/pack_details2"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@+id/pack_details2"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/footer_pack3"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textFontWeight="400"-->
+<!--                        android:fontFamily="@font/regular"-->
+<!--                        android:textColor="@color/colorPrimary1"-->
+<!--                        android:textSize="12sp"-->
+<!--                        android:text="Basic"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"/>-->
+
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/footer_pack_total3"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textFontWeight="700"-->
+<!--                        android:fontFamily="@font/bold"-->
+<!--                        android:textColor="@color/main_color_gray_dk"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:text="₹481"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@+id/footer_pack3"/>-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/month3"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textFontWeight="400"-->
+<!--                        android:text="/month"-->
+<!--                        android:textColor="@color/copy_coupon_text_color"-->
+<!--                        android:textSize="12sp"-->
+<!--                        app:layout_constraintTop_toTopOf="@+id/footer_pack_total3"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@+id/footer_pack_total3"-->
+<!--                        app:layout_constraintStart_toEndOf="@+id/footer_pack_total3"/>-->
+
+<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/packsv3footerrecycler"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_selector1"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:orientation="vertical"
-                    android:padding="16dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/buy_pack"
-                    app:layout_constraintTop_toTopOf="parent" >
-
-                    <TextView
-                        android:id="@+id/footer_pack"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textFontWeight="400"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/colorPrimary1"
-                        android:textSize="12sp"
-                        android:text="Basic"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-
-
-                    <TextView
-                        android:id="@+id/footer_pack_total"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textFontWeight="700"
-                        android:fontFamily="@font/bold"
-                        android:textColor="@color/main_color_gray_dk"
-                        android:textSize="16sp"
-                        android:text="₹481"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/footer_pack"/>
-
-                    <TextView
-                        android:id="@+id/month"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textFontWeight="400"
-                        android:text="/month"
-                        android:textColor="@color/copy_coupon_text_color"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toTopOf="@+id/footer_pack_total"
-                        app:layout_constraintBottom_toBottomOf="@+id/footer_pack_total"
-                        app:layout_constraintStart_toEndOf="@+id/footer_pack_total"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/pack_details2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="11dp"
-                    android:background="@drawable/edittext_selector1"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    app:layout_constraintStart_toEndOf="@+id/pack_details"
-                    app:layout_constraintBottom_toBottomOf="@+id/pack_details"
-                    app:layout_constraintTop_toTopOf="parent" >
-
-                    <TextView
-                        android:id="@+id/footer_pack2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textFontWeight="400"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/colorPrimary1"
-                        android:textSize="12sp"
-                        android:text="Basic"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-
-
-                    <TextView
-                        android:id="@+id/footer_pack_total2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textFontWeight="700"
-                        android:fontFamily="@font/bold"
-                        android:textColor="@color/main_color_gray_dk"
-                        android:textSize="16sp"
-                        android:text="₹481"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/footer_pack2"/>
-
-                    <TextView
-                        android:id="@+id/month2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textFontWeight="400"
-                        android:text="/month"
-                        android:textColor="@color/copy_coupon_text_color"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toTopOf="@+id/footer_pack_total2"
-                        app:layout_constraintBottom_toBottomOf="@+id/footer_pack_total2"
-                        app:layout_constraintStart_toEndOf="@+id/footer_pack_total2"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/pack_details3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="11dp"
-                    android:background="@drawable/edittext_selector1"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    app:layout_constraintStart_toEndOf="@+id/pack_details2"
-                    app:layout_constraintBottom_toBottomOf="@+id/pack_details2"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
-
-                    <TextView
-                        android:id="@+id/footer_pack3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textFontWeight="400"
-                        android:fontFamily="@font/regular"
-                        android:textColor="@color/colorPrimary1"
-                        android:textSize="12sp"
-                        android:text="Basic"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-
-
-                    <TextView
-                        android:id="@+id/footer_pack_total3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textFontWeight="700"
-                        android:fontFamily="@font/bold"
-                        android:textColor="@color/main_color_gray_dk"
-                        android:textSize="16sp"
-                        android:text="₹481"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/footer_pack3"/>
-
-                    <TextView
-                        android:id="@+id/month3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textFontWeight="400"
-                        android:text="/month"
-                        android:textColor="@color/copy_coupon_text_color"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toTopOf="@+id/footer_pack_total3"
-                        app:layout_constraintBottom_toBottomOf="@+id/footer_pack_total3"
-                        app:layout_constraintStart_toEndOf="@+id/footer_pack_total3"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:layout_constraintBottom_toTopOf="@+id/buy_pack"
+                    tools:itemCount="3"
+                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_packsv3footer"
+                    tools:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/buy_pack"
@@ -518,7 +576,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/pack_details" />
+                    app:layout_constraintTop_toBottomOf="@+id/packsv3footerrecycler" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,16 +6,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.R
-import com.boost.marketplace.infra.utils.Utils1
 import com.boost.marketplace.ui.comparePacksV3.ComparePacksV3Activity
-import com.bumptech.glide.Glide
 import com.framework.utils.RootUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -23,10 +21,10 @@ import io.reactivex.schedulers.Schedulers
 import java.text.NumberFormat
 import java.util.*
 
-class PacksV3Adapter(
+class PacksV3FooterAdapter(
     var list: ArrayList<Bundles>,
     val activity: ComparePacksV3Activity
-) : RecyclerView.Adapter<PacksV3Adapter.ParentViewHolder>() {
+) : RecyclerView.Adapter<PacksV3FooterAdapter.ParentViewHolder>() {
 
     lateinit var context: Context
 
@@ -37,7 +35,7 @@ class PacksV3Adapter(
         val view = LayoutInflater
             .from(viewGroup.context)
             .inflate(
-                R.layout.item_packsv3,
+                R.layout.item_packsv3footer,
                 viewGroup, false
             )
         context = view.context
@@ -51,6 +49,9 @@ class PacksV3Adapter(
         val sameAddonsInCart = ArrayList<String>()
         val addonsListInCart = ArrayList<String>()
         val parentItem = list[position]
+        parentViewHolder.maincl.setOnClickListener {
+            parentViewHolder.maincl.setBackgroundResource(R.drawable.mp_home_share_click_effect)
+        }
         parentViewHolder.PackageItemTitle.text = parentItem.name?.substring(7) ?: ""
         val data = parentItem.name?.substring(7) ?: ""
         val items = data!!.split(" ".toRegex())
@@ -123,25 +124,21 @@ class PacksV3Adapter(
         notifyItemRangeInserted(initPosition, list.size)
     }
 
-
     inner class ParentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val PackageItemTitle: TextView
         val tv_price: TextView
-        val package_profile_image: ImageView
+        val maincl: View
 
         init {
             PackageItemTitle = itemView
                 .findViewById(
-                    R.id.pack_title1
+                    R.id.footer_pack
                 )
             tv_price = itemView
                 .findViewById(
-                    R.id.pack_price1
+                    R.id.footer_pack_total
                 )
-            package_profile_image = itemView
-                .findViewById(
-                    R.id.packs_image1
-                )
+            maincl =itemView.findViewById(R.id.maincl)
         }
     }
 
@@ -166,7 +163,7 @@ class PacksV3Adapter(
                         for (singleItem in it) {
                             for (item in bundles.included_features) {
                                 if (singleItem.feature_code == item.feature_code) {
-                                    originalBundlePrice += Utils1.priceCalculatorForYear(
+                                    originalBundlePrice += Utils.priceCalculatorForYear(
                                         RootUtil.round(
                                             (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
                                             2
@@ -189,7 +186,7 @@ class PacksV3Adapter(
                         if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) {
                             holder.tv_price.setText(
                                 "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                                    .format(offeredBundlePrice) + Utils1.yearlyOrMonthlyOrEmptyValidity(
+                                    .format(offeredBundlePrice) + Utils.yearlyOrMonthlyOrEmptyValidity(
                                     "",
                                     activity
                                 )
@@ -199,18 +196,11 @@ class PacksV3Adapter(
                                 "₹" +
                                         NumberFormat.getNumberInstance(Locale.ENGLISH)
                                             .format(offeredBundlePrice)
-                                        +  Utils1.yearlyOrMonthlyOrEmptyValidity(
+                                        +  Utils.yearlyOrMonthlyOrEmptyValidity(
                                     "",
                                     activity
                                 )
                             )
-                        }
-                        if (bundles.primary_image != null && !bundles.primary_image!!.url.isNullOrEmpty()) {
-                            Glide.with(holder.itemView.context).load(bundles.primary_image!!.url)
-                                .into(holder.package_profile_image)
-
-                        } else {
-                            holder.package_profile_image.setImageResource(R.drawable.rectangle_copy_18)
                         }
                     },
                     {
@@ -219,21 +209,4 @@ class PacksV3Adapter(
                 )
         )
     }
-
-
-
-//    fun spannableString(holder: ParentViewHolder, value: Double) {
-//        val origCost = SpannableString(
-//            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-//                .format(value) + Utils1.yearlyOrMonthlyOrEmptyValidity("", activity)
-//        )
-//        origCost.setSpan(
-//            StrikethroughSpan(),
-//            0,
-//            origCost.length,
-//            0
-//        )
-//        holder.origCost.setText(origCost)
-//    }
-
 }
