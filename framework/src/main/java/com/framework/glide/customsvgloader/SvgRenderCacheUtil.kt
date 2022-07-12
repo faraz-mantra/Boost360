@@ -3,6 +3,9 @@ package com.framework.glide.customsvgloader
 import android.content.Context
 import android.util.Log
 import androidx.collection.LruCache
+import com.framework.R
+import com.framework.constants.PosterKeys
+import com.framework.utils.fetchString
 import java.io.File
 
 class SvgRenderCacheUtil private constructor() {
@@ -50,7 +53,7 @@ class SvgRenderCacheUtil private constructor() {
         var result =svgString
 
         posterKeys?.forEach {
-            val replaceVal = if (it.custom!=null){
+            var replaceVal = if (it.custom!=null){
                 it.custom
             } else it.default
 //            Log.i(TAG, "replace: $replaceVal")
@@ -77,10 +80,34 @@ class SvgRenderCacheUtil private constructor() {
                 }
                 result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
             }else{
+                if (replaceVal==null){
+                   replaceVal =  getDefaultReplaceVal(it.name)
+                }
                 result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
             }
         }
 
         return result
     }
+
+    private fun getDefaultReplaceVal(name: String?): String? {
+        return when(name){
+            PosterKeys.business_email->{
+                fetchString(R.string.your_email_address)
+            }
+            PosterKeys.business_name->{
+                fetchString(R.string.your_business_name)
+            }
+            PosterKeys.user_name->{
+                fetchString(R.string.your_name)
+            }
+            PosterKeys.user_contact->{
+                fetchString(R.string.your_mobile_number)
+            }
+            else ->""
+
+        }
+    }
+
+
 }

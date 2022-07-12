@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
@@ -28,6 +29,7 @@ import com.framework.imagepicker.ImagePicker
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.convertListObjToString
+import com.framework.utils.fetchString
 import com.framework.webengageconstant.*
 
 class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, BackgroundImageViewModel>(), RecyclerItemClickListener {
@@ -68,6 +70,7 @@ class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, 
       if (res.isSuccess()) {
         val response = res.arrayResponse
         listImages = ArrayList()
+        binding?.btnDone?.isVisible=true
         response?.forEach { listImages?.add(ImageData(it as? String, RecyclerViewItemType.BACKGROUND_IMAGE_RV.getLayout())) }
         uiVisibility()
         if (adapterImage == null) {
@@ -118,7 +121,13 @@ class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnDone -> openImagePicker(requireActivity(),parentFragmentManager)
+      binding?.btnDone -> {
+        if ((listImages?.size ?: 0) >= 8){
+          showSnackBarNegative(getString(R.string.max_limit_of_8_images_is_reached))
+          return
+        }
+        openImagePicker(requireActivity(), parentFragmentManager)
+      }
     }
   }
 

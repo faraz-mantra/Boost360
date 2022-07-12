@@ -78,10 +78,10 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
   }
 
   private fun setupUIColor() {
-    changeColorOfSubstring(R.string.appointment_offer_title, R.color.colorAccent, "*", binding?.tvOfferTitleVw!!)
-    changeColorOfSubstring(R.string.offer_applicable_to, R.color.colorAccent, "*", binding?.tvOfferApplicableVw!!)
-    changeColorOfSubstring(R.string.discount_amount_inr, R.color.colorAccent, "*", binding?.tvOfferDiscountVw!!)
-    changeColorOfSubstring(R.string.availability_mandatory, R.color.colorAccent, "*", binding?.tvOfferAvailabilityVw!!)
+    changeColorOfSubstring(R.string.appointment_offer_title, R.color.black_4a4a4a, "*", binding?.tvOfferTitleVw!!)
+    changeColorOfSubstring(R.string.offer_applicable_to, R.color.black_4a4a4a, "*", binding?.tvOfferApplicableVw!!)
+    changeColorOfSubstring(R.string.discount_amount_inr, R.color.black_4a4a4a, "*", binding?.tvOfferDiscountVw!!)
+    changeColorOfSubstring(R.string.availability_mandatory, R.color.black_4a4a4a, "*", binding?.tvOfferAvailabilityVw!!)
   }
 
   private fun getBundleData() {

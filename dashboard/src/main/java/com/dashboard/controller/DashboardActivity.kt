@@ -85,9 +85,9 @@ import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.webengage.sdk.android.WebEngage
-import com.zopim.android.sdk.api.ZopimChat
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
+import zendesk.chat.Chat
 import zendesk.core.AnonymousIdentity
 import zendesk.core.Zendesk
 import zendesk.support.Support
@@ -672,7 +672,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       val identity = AnonymousIdentity.Builder().withNameIdentifier(session?.fpTag).withEmailIdentifier(session?.fPEmail).build()
       Zendesk.INSTANCE.setIdentity(identity)
       Support.INSTANCE.init(Zendesk.INSTANCE)
-      ZopimChat.init(com.dashboard.BuildConfig.ZOPIM_ACCOUNT_KEY)
+      Chat.INSTANCE.init(this, com.dashboard.BuildConfig.ZOPIM_ACCOUNT_KEY)
     } catch (e: Exception) {
       SentryController.captureException(e)
     }

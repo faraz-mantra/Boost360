@@ -44,6 +44,11 @@ import java.io.File;
 import java.lang.reflect.Method;
 
 import dev.patrickgold.florisboard.ime.core.FlorisApplication;
+import zendesk.chat.Chat;
+import zendesk.core.AnonymousIdentity;
+import zendesk.core.Identity;
+import zendesk.core.Zendesk;
+import zendesk.support.Support;
 
 public class AppController extends BaseApplication/* implements IAviaryClientCredentials*/ {
 
