@@ -826,11 +826,11 @@ fun AppCompatActivity.startSelfBrandedGateway(session: UserSessionManager?) {
 fun AppCompatActivity.startBusinessKycBoost(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(BUSINESS_KYC_BOOST_PAGE, CLICK, TO_BE_ADDED)
-    session?.getBundleDataKyc()?.let {
-      if (session.isSelfBrandedKycAdd == true) {
-        startFragmentPaymentActivityNew(this, com.appservice.constant.FragmentType.KYC_STATUS, it, false)
-      } else startFragmentPaymentActivityNew(this, com.appservice.constant.FragmentType.BUSINESS_KYC_VIEW, it, false)
-    }
+
+      if (session?.isSelfBrandedKycAdd == true) {
+        startFragmentActivity(com.appservice.constant.FragmentType.ECOMMERCE_SETTINGS)
+      } else startFragmentActivity(com.appservice.constant.FragmentType.ECOMMERCE_BUSINESS_VERIFICATION)
+
   } catch (e: Exception) {
     e.printStackTrace()
   }

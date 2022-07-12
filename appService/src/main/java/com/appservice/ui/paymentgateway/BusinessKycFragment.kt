@@ -10,6 +10,7 @@ import com.appservice.databinding.FragmentBusinessKycBinding
 import com.appservice.model.SessionData
 import com.framework.models.BaseViewModel
 
+@Deprecated(message = "new screen: com.appservice.ui.businessVerification.BusinessVerificationFragment")
 class BusinessKycFragment : AppBaseFragment<FragmentBusinessKycBinding, BaseViewModel>() {
 
   private var session: SessionData? = null
