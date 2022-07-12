@@ -65,7 +65,9 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   private var startForCropImageResult: ActivityResultLauncher<Intent>?=null
   private var updateFloat: UpdateFloat? = null
   private var posterImagePath: String? = null
-
+  var reusePastUpdateText = ""
+  var reusePastUpdateImage = ""
+  var IS_REUSE_MODE = false
 
   private val mSharedPreferences: SharedPreferences?
     get() {
@@ -75,11 +77,9 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   companion object {
     val msgPost = "msg_post"
     val imagePost = "image_post"
-    var IS_REUSE_MODE = false
     const val REUSE_PAST_UPDATE_MESSAGE_TEXT = "REUSE_PAST_UPDATE_MESSAGE_TEXT"
     const val REUSE_PAST_UPDATE_IMAGE = "REUSE_PAST_UPDATE_IMAGE"
-    var reusePastUpdateText = ""
-    var reusePastUpdateImage = ""
+
 
     @JvmStatic
     fun newInstance(bundle: Bundle? = null): AddUpdateBusinessFragmentV2 {
