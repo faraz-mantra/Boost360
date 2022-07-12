@@ -14,6 +14,7 @@ import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.R
 import com.boost.marketplace.infra.utils.Utils1
+import com.boost.marketplace.interfaces.PacksV3listener
 import com.boost.marketplace.ui.comparePacksV3.ComparePacksV3Activity
 import com.bumptech.glide.Glide
 import com.framework.utils.RootUtil
@@ -25,7 +26,8 @@ import java.util.*
 
 class PacksV3Adapter(
     var list: ArrayList<Bundles>,
-    val activity: ComparePacksV3Activity
+    val activity: ComparePacksV3Activity,
+    var packsListener: PacksV3listener
 ) : RecyclerView.Adapter<PacksV3Adapter.ParentViewHolder>() {
 
     lateinit var context: Context
@@ -67,6 +69,12 @@ class PacksV3Adapter(
             parentViewHolder.PackageItemTitle.text =
                 items[0] + " " + items[1] + " \n" + items[2] + " " + items[3] + " " + items[4]
         }
+
+        parentViewHolder.itemView.setOnClickListener {
+            packsListener.onPackageClicked(parentItem,null)
+        }
+
+
 
         val listSamp = ArrayList<String>()
         for (item in parentItem.included_features) {

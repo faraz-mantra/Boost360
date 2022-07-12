@@ -6,6 +6,7 @@ import android.os.Build
 import android.util.Log
 import android.view.Window
 import android.view.WindowManager
+import android.widget.ImageView
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +23,7 @@ import com.boost.marketplace.Adapters.PacksV3HowToUseAdapter
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityComparePacksv3Binding
+import com.boost.marketplace.interfaces.PacksV3listener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
@@ -30,7 +32,7 @@ import com.google.gson.reflect.TypeToken
 
 
 class ComparePacksV3Activity :
-    AppBaseActivity<ActivityComparePacksv3Binding, ComparePacksViewModel>() {
+    AppBaseActivity<ActivityComparePacksv3Binding, ComparePacksViewModel>(), PacksV3listener {
 
     var experienceCode: String? = null
     var screenType: String? = null
@@ -107,7 +109,7 @@ class ComparePacksV3Activity :
 
         howToUseAdapter = PacksV3HowToUseAdapter(this, ArrayList())
         faqAdapter = PacksFaqAdapter(this, ArrayList())
-        packsv3Adapter = PacksV3Adapter(ArrayList(), this)
+        packsv3Adapter = PacksV3Adapter(ArrayList(), this,this)
         packsv3footerAdapter = PacksV3FooterAdapter(ArrayList(), this)
         //  packsAddonsAdapter= PacksAddonsV3Adapter(featuresList,this)
 
@@ -131,37 +133,37 @@ class ComparePacksV3Activity :
             finish()
         }
 
-        binding?.priceSwitch1?.setOnClickListener {
-            if (annualPlan) {
-                annualPlan = true
-                if (prefs.getYearPricing()) {
-                    binding?.priceSwitch1?.setImageResource(R.drawable.ic_switch_off)
-                    prefs.storeYearPricing(true)
-                }
-                else {
-                    binding?.priceSwitch1?.setImageResource(R.drawable.ic_switch_on)
-                    prefs.storeYearPricing(false)
-                }
-                prefs.storeCartValidityMonths("1")
-                packsv3Adapter.notifyDataSetChanged()
-                packsv3footerAdapter.notifyDataSetChanged()
-
-            }
-            else{
-                annualPlan = false
-                if (prefs.getYearPricing()) {
-                    binding?.priceSwitch1?.setImageResource(R.drawable.ic_switch_off)
-                    prefs.storeYearPricing(false)
-                }
-                else {
-                    binding?.priceSwitch1?.setImageResource(R.drawable.ic_switch_on)
-                    prefs.storeYearPricing(true)
-                }
-                prefs.storeCartValidityMonths("1")
-                packsv3Adapter.notifyDataSetChanged()
-                packsv3footerAdapter.notifyDataSetChanged()
-            }
-        }
+//        binding?.priceSwitch1?.setOnClickListener {
+//            if (annualPlan) {
+//                annualPlan = true
+//                if (prefs.getYearPricing()) {
+//                    binding?.priceSwitch1?.setImageResource(R.drawable.ic_switch_off)
+//                    prefs.storeYearPricing(true)
+//                }
+//                else {
+//                    binding?.priceSwitch1?.setImageResource(R.drawable.ic_switch_on)
+//                    prefs.storeYearPricing(false)
+//                }
+//                prefs.storeCartValidityMonths("1")
+//                packsv3Adapter.notifyDataSetChanged()
+//                packsv3footerAdapter.notifyDataSetChanged()
+//
+//            }
+//            else{
+//                annualPlan = false
+//                if (prefs.getYearPricing()) {
+//                    binding?.priceSwitch1?.setImageResource(R.drawable.ic_switch_off)
+//                    prefs.storeYearPricing(false)
+//                }
+//                else {
+//                    binding?.priceSwitch1?.setImageResource(R.drawable.ic_switch_on)
+//                    prefs.storeYearPricing(true)
+//                }
+//                prefs.storeCartValidityMonths("1")
+//                packsv3Adapter.notifyDataSetChanged()
+//                packsv3footerAdapter.notifyDataSetChanged()
+//            }
+//        }
     }
 
 
@@ -277,8 +279,6 @@ class ComparePacksV3Activity :
     }
 
 
-
-
 //    private fun initializePacksAddonsRecycler() {
 //        val gridLayoutManager = GridLayoutManager(applicationContext, 1)
 //        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -296,5 +296,14 @@ class ComparePacksV3Activity :
 //        binding?.footerPack2?.text = wantedSubstr2
 //        binding?.footerPack3?.text = wantedSubstr3
 
+    }
+
+    override fun onPackageClicked(item: Bundles?, image: ImageView?) {
+        val dialogCard = ComparePacksV3BottomSheet()
+//        val args = Bundle()
+//        args.putString("fpid",fpid)
+//        args.putString("bundleData", Gson().toJson(item))
+//        dialogCard.arguments = args
+        dialogCard.show(this.supportFragmentManager, ComparePacksV3BottomSheet::class.java.name)
     }
 }

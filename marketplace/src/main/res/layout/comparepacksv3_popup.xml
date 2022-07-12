@@ -15,7 +15,7 @@
         android:focusable="true">
 
         <ImageView
-            android:id="@+id/back_btn"
+            android:id="@+id/close_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_close_circle_gray"
@@ -101,6 +101,7 @@
                                 android:layout_width="73dp"
                                 android:layout_height="20dp"
                                 android:layout_marginBottom="4dp"
+                                android:text="45% Saving"
                                 android:background="@drawable/packsv3_green_tag"
                                 android:elevation="2dp"
                                 android:gravity="center"
@@ -109,8 +110,7 @@
                                 app:layout_constraintBottom_toTopOf="@+id/package_title"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_chainStyle="packed"
-                                tools:text="45% Saving" />
+                                app:layout_constraintVertical_chainStyle="packed" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
