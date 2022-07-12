@@ -139,6 +139,7 @@
   <dimen name="size_300">300dp</dimen>
   <dimen name="size_310">310dp</dimen>
   <dimen name="size_320">320dp</dimen>
+  <dimen name="size_341">341dp</dimen>
   <dimen name="size_343">343dp</dimen>
   <dimen name="size_330">330dp</dimen>
   <dimen name="size_360">360dp</dimen>

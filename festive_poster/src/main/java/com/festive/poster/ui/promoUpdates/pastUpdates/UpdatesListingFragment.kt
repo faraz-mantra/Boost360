@@ -7,6 +7,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.Constants
@@ -26,6 +28,11 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.pref.clientId
 import com.framework.utils.ContentSharing
+import com.framework.utils.saveAsTempFile
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class UpdatesListingFragment :
     AppBaseFragment<FragmentUpdatesListingBinding, PostUpdatesViewModel>(),
@@ -177,11 +184,17 @@ class UpdatesListingFragment :
             }
             RecyclerViewActionType.PAST_REUSE_BUTTON_CLICKED.ordinal -> {
                 item as PastPostItem
-                val intent = Intent(requireActivity(), Class.forName("com.appservice.ui.updatesBusiness.UpdateBusinessContainerActivity"))
-                    .putExtra(IntentConstant.REUSE_PAST_UPDATE_MESSAGE_TEXT.name, item.message.toString())
-                    .putExtra(IntentConstant.REUSE_PAST_UPDATE_IMAGE.name, item.imageUri.toString())
-                intent.setFragmentType("ADD_UPDATE_BUSINESS_FRAGMENT_V2")
-                startActivity(intent)
+                lifecycleScope.launch {
+                    withContext(Dispatchers.IO) {
+                        val bitmapPastUpdateReuse = Picasso.get().load(item.imageUri.toString()).get()
+                        val saveAsTempFile = bitmapPastUpdateReuse.saveAsTempFile()
+                        val intent = Intent(requireActivity(), Class.forName("com.appservice.ui.updatesBusiness.UpdateBusinessContainerActivity"))
+                            .putExtra(IntentConstant.REUSE_PAST_UPDATE_MESSAGE_TEXT.name, item.message.toString())
+                            .putExtra(IntentConstant.REUSE_PAST_UPDATE_IMAGE.name, saveAsTempFile?.path)
+                        intent.setFragmentType("ADD_UPDATE_BUSINESS_FRAGMENT_V2")
+                        startActivity(intent)
+                    }
+                }
             }
         }
     }

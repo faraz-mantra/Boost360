@@ -51,10 +51,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent.setEventListener
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 import java.io.File
-import java.net.URL
 
 
 class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2Binding, UpdatesViewModel>() {
@@ -77,6 +75,12 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   companion object {
     val msgPost = "msg_post"
     val imagePost = "image_post"
+    var IS_REUSE_MODE = false
+    const val REUSE_PAST_UPDATE_MESSAGE_TEXT = "REUSE_PAST_UPDATE_MESSAGE_TEXT"
+    const val REUSE_PAST_UPDATE_IMAGE = "REUSE_PAST_UPDATE_IMAGE"
+    var reusePastUpdateText = ""
+    var reusePastUpdateImage = ""
+
     @JvmStatic
     fun newInstance(bundle: Bundle? = null): AddUpdateBusinessFragmentV2 {
       val fragment = AddUpdateBusinessFragmentV2()
@@ -93,23 +97,51 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     return UpdatesViewModel::class.java
   }
 
+  override fun onCreateView() {
+    super.onCreateView()
+    initUI()
+    initStt()
+    capLimitCheck()
+    baseActivity.onBackPressedDispatcher.addCallback(
+      viewLifecycleOwner,
+      object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+          openDraftSheet()
+        }
+      })
+
+    setOnClickListener(
+      binding!!.btnAddImage, binding!!.btnEdit, binding!!.ivMic, binding!!.ivHashtagCross,
+      binding!!.tvPreviewAndPost, binding.ivCross
+    )
+
+    getBundleExtra()
+  }
+
+  private fun getBundleExtra() {
+    arguments?.getString(REUSE_PAST_UPDATE_MESSAGE_TEXT)?.let {
+      reusePastUpdateText = it
+      if (it.isNullOrEmpty().not())
+        IS_REUSE_MODE = true
+    }
+    arguments?.getString(REUSE_PAST_UPDATE_IMAGE)?.let { reusePastUpdateImage = it }
+  }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     startForCropImageResult =
-      registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-          result: ActivityResult ->
-        if (result.resultCode==Activity.RESULT_OK){
-          val imgFile = File(
-          requireActivity().getExternalFilesDir(null)?.path+File.separator+UPDATE_PIC_FILE_NAME)
-        if (imgFile.exists()&&isImageValid(imgFile)){
+      registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+          val imgFile =
+            File(requireActivity().getExternalFilesDir(null)?.path + File.separator + UPDATE_PIC_FILE_NAME)
+          if (imgFile.exists() && isImageValid(imgFile)) {
             loadImage(imgFile.path)
-        }else{
-          loadImage(null)
+          } else {
+            loadImage(if (IS_REUSE_MODE) reusePastUpdateImage else null)
+          }
+          toggleContinue()
         }
-        toggleContinue()
       }
-        }
 
   }
 
@@ -192,23 +224,6 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
   }
 
-  override fun onCreateView() {
-    super.onCreateView()
-    initUI()
-    initStt()
-    capLimitCheck()
-    baseActivity.onBackPressedDispatcher.addCallback(
-      viewLifecycleOwner,
-      object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-            openDraftSheet()
-        }
-      })
-
-    setOnClickListener(binding!!.btnAddImage,binding!!.btnEdit,binding!!.ivMic,binding!!.ivHashtagCross,
-      binding!!.tvPreviewAndPost,binding.ivCross)
-  }
-
   fun openDraftSheet(){
     if (binding!!.etUpdate.text.toString().isNotEmpty()||posterImagePath!=null){
             UpdateDraftBSheet.newInstance(binding
@@ -235,20 +250,30 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     FirestoreManager.readDraft {
       if (activity != null && isAdded) {
 
-        binding!!.etUpdate.setText(highlightHashTag(it?.content, R.color.black_4a4a4a,R.font.semi_bold))
+        val textPost = if (IS_REUSE_MODE) reusePastUpdateText else it?.content
+        binding!!.etUpdate.setText(
+          highlightHashTag(
+            textPost,
+            R.color.black_4a4a4a,
+            R.font.semi_bold
+          )
+        )
         addHashTagFunction()
-        binding!!.tvCount.text = (it?.content?.length ?: 0).toString()
+        binding!!.tvCount.text = (textPost?.length ?: 0).toString()
 
         lifecycleScope.launch {
           withContext(Dispatchers.IO) {
-            if (it?.imageUri.isNullOrEmpty().not()) {
+            if (it?.imageUri.isNullOrEmpty().not() && !IS_REUSE_MODE) {
               Log.i(TAG, "initUI: ${it?.imageUri}")
               val bitmap = Picasso.get().load(it?.imageUri).get()
-              val imgFile = File(requireActivity().getExternalFilesDir(null)?.path + File.separator + UPDATE_PIC_FILE_NAME)
+              val imgFile =
+                File(requireActivity().getExternalFilesDir(null)?.path + File.separator + UPDATE_PIC_FILE_NAME)
               bitmap.saveAsImageToAppFolder(imgFile.path)
 
               runOnUi { loadImage(imgFile.path) }
-            }else{
+            } else if (IS_REUSE_MODE) {
+              runOnUi { loadImage(reusePastUpdateImage) }
+            } else {
               loadImage(null)
             }
             runOnUi {
@@ -308,8 +333,6 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   }
 
   private fun addHashTagFunction() {
-
-
     mSpannable = binding?.etUpdate?.text
 
     binding?.etUpdate?.addTextChangedListener(object : TextWatcher {
@@ -394,9 +417,12 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
           .putExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
             putString(IntentConstants.IK_CAPTION_KEY,binding!!.etUpdate.text.toString())
             putString(IntentConstants.IK_POSTER, posterImagePath)
-            putString(IntentConstants.IK_UPDATE_TYPE,
-              if (posterImagePath==null) IntentConstants.UpdateType.UPDATE_TEXT.name
-              else IntentConstants.UpdateType.UPDATE_IMAGE_TEXT.name)
+            putBoolean(IntentConstants.IK_IS_REUSE_MODE, IS_REUSE_MODE)
+            putString(
+              IntentConstants.IK_UPDATE_TYPE,
+              if (posterImagePath == null) IntentConstants.UpdateType.UPDATE_TEXT.name
+              else IntentConstants.UpdateType.UPDATE_IMAGE_TEXT.name
+            )
           }))
         Log.i(TAG, "onClick: ${binding!!.etUpdate.text.toString().extractHashTag()}")
       }
