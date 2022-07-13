@@ -26,6 +26,8 @@ import com.framework.utils.toArrayList
 import com.framework.webengageconstant.Promotional_Update_Browse_All_Loaded
 import com.framework.webengageconstant.Promotional_Update_Category_Click
 import com.google.gson.Gson
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesViewModel>(),RecyclerItemClickListener {
 
@@ -107,6 +109,7 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
 
             pack.list_layout =RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT.getLayout()
             pack.posterList?.forEach {poster->
+                poster.variants?.firstOrNull()?.svgUrl =getLottieUrl()
                 poster.layout_id = RecyclerViewItemType.TEMPLATE_VIEW_FOR_RV.getLayout()
             }
         }
@@ -121,6 +124,19 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
 
     }
 
+    fun getLottieUrl():String{
+        val list = arrayListOf(
+            "https://assets4.lottiefiles.com/packages/lf20_uyf6evkj.json",
+            "https://assets2.lottiefiles.com/packages/lf20_pghdouhq.json",
+            "https://assets2.lottiefiles.com/packages/lf20_w9bdffcb.json",
+            "https://assets2.lottiefiles.com/packages/lf20_yg3asqro.json",
+            "https://assets9.lottiefiles.com/private_files/lf30_dhkktwhk.json",
+            "https://assets9.lottiefiles.com/packages/lf20_fo0grcos.json",
+            "https://assets9.lottiefiles.com/packages/lf20_w5hernhv.json"
+        )
+
+        return list[Random.nextInt(0..6)]
+    }
     private fun switchToSelectedItem() {
         val selectedItem = categoryList?.get(selectedPos)
         selectedItem?.isSelected =true

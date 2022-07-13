@@ -33,7 +33,8 @@ class TemplateForRVViewHolder(binding: ListItemTemplateForRvBinding):
             binding.ivLove.setTintColor(getColor(R.color.colorDBDBDB)!!)
 
         }
-        SvgUtils.loadImage(variant?.svgUrl!!, binding.ivSvg, model.keys,model.isPurchased)
+        binding.lottie.setAnimationFromUrl(variant?.svgUrl)
+      //  SvgUtils.loadImage(variant?.svgUrl!!, binding.ivSvg, model.keys,model.isPurchased)
         binding.btnShare.setOnClickListener {
             WebEngageController.trackEvent(Promotional_Update_WhatsApp_Share_Click)
             listener?.onItemClick(position,item, RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal)

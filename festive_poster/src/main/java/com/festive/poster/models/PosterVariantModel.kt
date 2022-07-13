@@ -6,7 +6,7 @@ data class PosterVariantModel(
     @SerializedName("active")
     val active: Boolean?,
     @SerializedName("svgUrl")
-    val svgUrl: String?,
+    var svgUrl: String?,
     @SerializedName("name")
     val name: String?
 )
