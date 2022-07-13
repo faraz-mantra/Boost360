@@ -72,7 +72,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
     })
 
     sharedViewModel?.posterPurchased?.observe(viewLifecycleOwner){pack->
-      val packIndex = dataList?.indexOfFirst { it.tagsModel.tag== pack.tagsModel.tag}
+      val packIndex = dataList?.indexOfFirst { it.tagsModel?.tag== pack.tagsModel?.tag}
       if (packIndex != null && (dataList?.size ?: 0) > packIndex) {
         dataList?.get(packIndex)?.isPurchased=true
         adapter?.notifyItemChanged(packIndex)
