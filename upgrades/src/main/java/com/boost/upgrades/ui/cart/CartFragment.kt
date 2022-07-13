@@ -1478,10 +1478,11 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
   fun initMvvM() {
 //        viewModel.updateRenewValue("")
     viewModel.cartResult().observe(viewLifecycleOwner, Observer {
-      if (it.isNullOrEmpty().not()) {
+      if (it != null && it.size > 0) {
         cartList = it as ArrayList<CartModel>
         empty_cart.visibility = View.GONE
         cart_main_layout.visibility = View.VISIBLE
+        total_months_layout.visibility = View.VISIBLE
         val features = arrayListOf<CartModel>()
         val bundles = arrayListOf<CartModel>()
         for (items in it) {
@@ -1568,9 +1569,6 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
               months_validity.setText(default_validity_months.toString())
             }
           }
-//                        months_validity.text = default_validity_months.toString() + " month"
-//                    months_validity_edit_inc.visibility = View.GONE
-//                    months_validity_edit_dsc.visibility = View.GONE
           cart_package_recycler.visibility = View.VISIBLE
         } else {
           bundles_in_cart = false
@@ -1582,8 +1580,6 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
             months_validity.setText(default_validity_months.toString())
           }
 //          months_validity.setText(default_validity_months.toString())
-          months_validity_edit_inc.visibility = View.VISIBLE
-          months_validity_edit_dsc.visibility = View.VISIBLE
           cart_package_recycler.visibility = View.GONE
         }
 //                totalCalculation()
@@ -1609,10 +1605,8 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
         WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE_EMPTY_CART_LOADED, EVENT_LABEL_ADDONS_MARKETPLACE_EMPTY_CART_LOADED, NO_EVENT_VALUE)
         empty_cart.visibility = View.VISIBLE
         cart_main_layout.visibility = View.GONE
+        total_months_layout.visibility = View.GONE
         Constants.COMPARE_CART_COUNT = 0
-        months_validity_edit_inc.visibility = View.GONE
-        months_validity_edit_dsc.visibility = View.GONE
-//                months_validity.text = "- -"
         months_validity.setText("- -")
 
         //clear coupon
@@ -1968,9 +1962,9 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
       if (cartList != null && cartList.size > 0) {
         for (item in cartList) {
           if (!bundles_in_cart && item.item_type.equals("features")) {
-            total += item.price * monthCalculatorForAddons(default_validity_months, item.widget_type)
+            total += item.price * monthCalculatorForAddons(if (prefs.getYearPricing()) default_validity_months * 12 else default_validity_months, item.widget_type)
           }else {
-            total += (item.price / package_validity_months) * monthCalculatorForAddons(default_validity_months, item.widget_type)
+            total += (item.price / package_validity_months) * monthCalculatorForAddons(if (prefs.getYearPricing()) default_validity_months * 12 else default_validity_months, item.widget_type)
           }
         }
 
@@ -1985,7 +1979,7 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
           couponServiceModel = null
 //                couponDiscountAmount = total * couponDisount / 100
 //                couponDiscountAmount = couponServiceModel!!.couponDiscountAmt!!
-        coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount)
+        coupon_discount_value.text = "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(couponDiscountAmount,2))
         total -= couponDiscountAmount
         Log.v("cart_amount_value", " " + total)
         val temp = (total * 18) / 100
@@ -2088,6 +2082,8 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
     args.putString("email", (activity as UpgradeActivity).email)
     args.putString("currency", "INR")
     args.putString("contact", (activity as UpgradeActivity).mobileNo)
+    args.putDouble("gstAmount", taxValue)
+    args.putDouble("discountAmount", RootUtil.round(couponDiscountAmount,2))
     prefs.storeCardIds(cartItems)
     prefs.storeCouponIds(couponCode)
     prefs.storeValidityMonths(default_validity_months.toString())

@@ -17,6 +17,7 @@ import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.addProductImage.deleteRequest.ProductImageDeleteRequest
 import com.appservice.model.serviceProduct.addProductImage.response.DataImage
 import com.appservice.model.serviceProduct.gstProduct.response.GstData
+import com.appservice.model.servicev1.DeleteSecondaryImageRequest
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
@@ -486,23 +487,44 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
     when (actionType) {
       RecyclerViewActionType.IMAGE_CLEAR_CLICK.ordinal -> {
         val data = item as? FileModel
-        if (isEdit == true && data?.pathUrl.isNullOrEmpty().not()) {
+        if (isEdit && data?.pathUrl.isNullOrEmpty().not()) {
           val dataImage = secondaryDataImage?.firstOrNull { it.image?.url == data?.pathUrl } ?: return
           showProgress(resources.getString(R.string.removing_image))
           val request = ProductImageDeleteRequest()
           request.setQueryData(dataImage.id)
-          viewModel?.deleteProductImage(request)?.observeOnce(viewLifecycleOwner, Observer {
+          viewModel?.deleteProductImage(request)?.observeOnce(viewLifecycleOwner) {
             if (it.isSuccess()) {
               secondaryDataImage?.remove(dataImage)
               secondaryImage.remove(data)
               setAdapter()
             } else showLongToast(resources.getString(R.string.removing_image_failed))
             hideProgress()
-          })
+          }
         } else {
           secondaryImage.remove(data)
           setAdapter()
         }
+      }
+      RecyclerViewActionType.IMAGE_CHANGE.ordinal -> {
+        val data = item as? FileModel
+        if (isEdit && data?.pathUrl.isNullOrEmpty().not()) {
+          val dataImage = secondaryDataImage?.firstOrNull { it.image?.url == data?.pathUrl } ?: return
+          showProgress(resources.getString(R.string.removing_image))
+          val request = ProductImageDeleteRequest()
+          request.setQueryData(dataImage.id)
+          viewModel?.deleteProductImage(request)?.observeOnce(viewLifecycleOwner) {
+            if (it.isSuccess()) {
+              secondaryDataImage?.remove(dataImage)
+              secondaryImage.remove(data)
+              setAdapter()
+            } else showLongToast(resources.getString(R.string.removing_image_failed))
+            hideProgress()
+          }
+        } else {
+          secondaryImage.remove(data)
+          setAdapter()
+        }
+        openImagePicker()
       }
       RecyclerViewActionType.CLEAR_SPECIFICATION_CLICK.ordinal -> {
         if (specList.size > 1) {

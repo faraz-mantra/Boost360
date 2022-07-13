@@ -1,8 +1,7 @@
-package com.appservice.model
+package com.appservice.model.panGst
 
 import com.appservice.constant.RecyclerViewItemType
 import com.appservice.recyclerView.AppBaseRecyclerViewItem
-import com.framework.utils.toArrayList
 import java.io.Serializable
 
 data class GstDetailModel(
@@ -34,7 +33,7 @@ data class GstDetailModel(
     list.add(GstDetailModel(title = "5%", value = "5", recyclerViewItem = RecyclerViewItemType.GST_SLAB_SETTING.getLayout()))
     list.add(GstDetailModel(title = "12%", value = "12", recyclerViewItem = RecyclerViewItemType.GST_SLAB_SETTING.getLayout()))
     list.add(GstDetailModel(title = "18%", value = "18", recyclerViewItem = RecyclerViewItemType.GST_SLAB_SETTING.getLayout()))
-    list.add(GstDetailModel(title = "28%", value = "28", recyclerViewItem = RecyclerViewItemType.GST_SLAB_SETTING.getLayout()))
+    list.add(GstDetailModel(title = "24%", value = "24", recyclerViewItem = RecyclerViewItemType.GST_SLAB_SETTING.getLayout()))
     return ArrayList(list.map { it.isSelected = (it.value?.toIntOrNull() ?: 0 == gstSlab);it })
   }
 }

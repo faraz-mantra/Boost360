@@ -96,6 +96,7 @@ class PosterPaymentSheetV2 : AppBaseBottomSheetFragment<SheetPosterPaymentv2Bind
       session?.fpTag,sharedViewModel?.selectedPosterPack?.tagsModel?.tag,
       templateIds)?.observe(viewLifecycleOwner,{
         if (it.isSuccess()){
+          sharedViewModel?.posterPurchased?.postValue(sharedViewModel?.selectedPosterPack)
           PosterOrderConfirmSheet().show(parentFragmentManager, PosterOrderConfirmSheet::class.java.name)
           dismiss()
         }

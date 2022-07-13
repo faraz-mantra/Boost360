@@ -70,5 +70,6 @@
   <color name="black_09121F">#09121F</color>
   <color name="white_F5F7FA">#F5F7FA</color>
   <color name="black_4a4a4a_40">#664A4A4A</color>
+  <color name="inactive_D47661">#D47661</color>
 
 </resources>

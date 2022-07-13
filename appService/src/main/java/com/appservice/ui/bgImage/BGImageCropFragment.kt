@@ -15,15 +15,19 @@ import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentCropZoomBinding
 import com.appservice.utils.WebEngageController
+import com.appservice.utils.openImagePicker
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.imagepicker.ImagePicker
 import com.framework.imagepicker.Utility
 import com.framework.models.BaseViewModel
 import com.framework.utils.FileUtils.saveBitmap
 import com.framework.utils.gcd
 import com.framework.utils.spanBold
 import com.framework.utils.zoom
+import com.framework.webengageconstant.ADDED
 import com.framework.webengageconstant.BACKGROUND_IMAGE_CROP_LOAD
+import com.framework.webengageconstant.GALLERY_IMAGE_ADDED
 import com.framework.webengageconstant.START_VIEW
 
 class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewModel>() {
@@ -55,6 +59,12 @@ class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewMod
     super.onCreateView()
     WebEngageController.trackEvent(BACKGROUND_IMAGE_CROP_LOAD, START_VIEW, sessionLocal.fpTag)
     imagePath = arguments?.getString(BK_IMAGE_PATH)
+    setImageOnUi()
+    viewListeners()
+    setOnClickListener(binding?.btnDone)
+  }
+
+  private fun setImageOnUi() {
     bitmap = BitmapFactory.decodeFile(imagePath)
     if (bitmap == null || imagePath.isNullOrEmpty()) {
       showShortToast("File not created, please try again!")
@@ -66,8 +76,7 @@ class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewMod
     options.inScaled = false
     binding?.cropImg?.setImageBitmap(bitmap)
     checkImageDim()
-    viewListeners()
-    setOnClickListener(binding?.btnDone)
+    binding?.slider?.progress=0
   }
 
   private fun checkImageDim() {
@@ -136,11 +145,16 @@ class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewMod
       binding?.btnDone -> {
         val imgFile = binding?.cropImg?.croppedImage?.saveBitmap()
         if (imgFile?.exists() == true) {
-          startBackgroundActivity(
-            FragmentType.BACKGROUND_IMAGE_PREVIEW,
-            Bundle().apply { putString(BGImagePreviewFragment.BK_IMAGE_PATH, imgFile.absolutePath) },
-            isResult = true
-          )
+          if (validationStat){
+            startBackgroundActivity(
+              FragmentType.BACKGROUND_IMAGE_PREVIEW,
+              Bundle().apply { putString(BGImagePreviewFragment.BK_IMAGE_PATH, imgFile.absolutePath) },
+              isResult = true
+            )
+          }else{
+            openImagePicker(requireActivity(),parentFragmentManager)
+          }
+
         } else showLongToast("Unable to store image, please try again!")
       }
     }
@@ -155,6 +169,18 @@ class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewMod
         baseActivity.setResult(AppCompatActivity.RESULT_OK, output)
         baseActivity.finish()
       }
+
+
+    }
+    if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
+      val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as? List<String>
+      if (mPaths.isNullOrEmpty().not()) {
+        WebEngageController.trackEvent(GALLERY_IMAGE_ADDED, ADDED, sessionLocal.fpTag)
+        imagePath = mPaths?.get(0)
+        setImageOnUi()
+      }
     }
   }
+
+
 }
