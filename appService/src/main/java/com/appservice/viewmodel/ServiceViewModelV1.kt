@@ -48,17 +48,11 @@ class ServiceViewModelV1 : BaseViewModel() {
   }
 
   fun addUpdateImageProductService(
-    clientId: String?,
-    requestType: String?,
-    requestId: String?,
-    totalChunks: Int?,
-    currentChunkNumber: Int?,
-    productId: String?,
-    requestBody: RequestBody?,
+    clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?,
+    currentChunkNumber: Int?, productId: String?, requestBody: RequestBody?,
   ): LiveData<BaseResponse> {
     return NowfloatsApiRepository.addUpdateImageProductService(
-      clientId, requestType, requestId, totalChunks,
-      currentChunkNumber, productId, requestBody
+      clientId, requestType, requestId, totalChunks, currentChunkNumber, productId, requestBody
     ).toLiveData()
   }
 
@@ -113,6 +107,9 @@ class ServiceViewModelV1 : BaseViewModel() {
     return StaffNowFloatsRepository.getServiceTiming(request).toLiveData()
   }
 
+  fun getAppointmentCatalogStatus(floatingPointId: String?, clientId: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getAppointmentCatalogStatus(floatingPointId, clientId).toLiveData()
+  }
 //  fun addProductDetails(request:ProductDimensionRequest): LiveData<BaseResponse> {
 //    return KitWebActionRepository.productAddData(request).toLiveData()
 //  }

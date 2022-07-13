@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/iv_close"
+      android:layout_width="@dimen/size_40"
+      android:layout_height="@dimen/size_40"
+      android:src="@drawable/ic_close_dark_gray" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="@dimen/size_16"
+      android:background="@drawable/bg_rounded_top_strock"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      android:padding="@dimen/size_24">
+
+      <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="@dimen/size_200"
+        android:layout_height="@dimen/size_140"
+          app:lottie_autoPlay="true"
+          app:lottie_rawRes="@raw/verificatioan_status_loader"
+        android:layout_marginVertical="@dimen/size_10"
+         />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/tv_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:text="Business verification underway"
+        android:textColor="@color/black_4a4a4a"
+        app:textType="HEADING_7" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_4"
+        android:gravity="center"
+        android:text="This process usually takes 1 working day. Once verified we will notify you. If you want to make any change to above account details, please write to ria@nowfloats.com with this screenshot attached."
+        android:textColor="@color/gray_828282"
+        app:textType="CAPTION" />
+
+
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/btn_submit_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_26"
+        android:background="@drawable/bg_button_proceed"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:paddingVertical="@dimen/size_12"
+        android:stateListAnimator="@null"
+        android:text="Ok, I understood"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:textType="HEADING_6" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+  </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

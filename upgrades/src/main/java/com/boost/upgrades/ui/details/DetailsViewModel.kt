@@ -65,8 +65,8 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
     fun addItemToCart1(updatesModel: FeaturesModel, activity: Activity) {
         updatesLoader.postValue(false)
         val discount = 100 - updatesModel.discount_percent
-        val paymentPrice = Utils.priceCalculatorForYear((discount * updatesModel.price) / 100.0, updatesModel.widget_type, activity)
-        val mrpPrice = Utils.priceCalculatorForYear(updatesModel.price, updatesModel.widget_type, activity)
+        val paymentPrice = (discount * updatesModel.price) / 100.0
+        val mrpPrice = updatesModel.price
         val cartItem = CartModel(
             updatesModel.feature_id,
             updatesModel.boost_widget_key,

@@ -1,8 +1,10 @@
 package com.appservice.rest.services
 
 import com.appservice.model.MerchantSummaryResponse
+import com.appservice.model.panGst.PanGstUpdateBody
 import com.appservice.model.VmnCallModel
 import com.appservice.model.aptsetting.*
+import com.appservice.model.panGst.PanGstDetailResponse
 import com.appservice.model.product.ProductItemsResponseItem
 import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.CatalogProductCountResponse
@@ -13,15 +15,23 @@ import com.appservice.model.updateBusiness.DeleteBizMessageRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
 import com.appservice.rest.EndPoints
 import com.framework.pref.clientId
-import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
-import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.*
 
 interface WithFloatTwoRemoteData {
+
+  @POST(EndPoints.PAN_GST_UPDATE)
+  fun panGstUpdate(@Body panGstUpdateBody: PanGstUpdateBody):Observable<Response<ResponseBody>>
+
+  @GET(EndPoints.GET_PAN_GST_DETAILS)
+  fun getPanGstDetail(
+    @Path("fpId") fpId: String?,
+    @Query("clientId") clientId:String?
+  ):Observable<Response<PanGstDetailResponse>>
+
 
   @POST(EndPoints.CREATE_SERVICE)
   fun createService(@Body request: CatalogProduct?): Observable<Response<String>>
@@ -198,15 +208,11 @@ interface WithFloatTwoRemoteData {
   ): Observable<Response<ResponseBody>>
 
   @POST(EndPoints.DELETE_BG_IMAGE)
-  fun deleteBackgroundImages(
-    @Body map: HashMap<String, String?>,
-  ): Observable<Response<ResponseBody>>
+  fun deleteBackgroundImages(@Body map: HashMap<String, String?>): Observable<Response<ResponseBody>>
 
+  @PUT(EndPoints.POST_PAYMENT_ACCEPT_PROFILE)
+  fun addUpdatePaymentProfile(@Body request: AddPaymentAcceptProfileRequest?): Observable<Response<ResponseBody>>
 
   @GET("/Wildfire/v1/calls/tracker")
-  fun trackerCalls(
-    @QueryMap data: Map<String, String?>?):Observable<Response<ArrayList<VmnCallModel?>?>>
-
-
-
+  fun trackerCalls(@QueryMap data: Map<String, String?>?): Observable<Response<ArrayList<VmnCallModel?>?>>
 }

@@ -12,6 +12,7 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentEcommercePaymentCollectionSetupBinding
+import com.appservice.databinding.FragmentEcommercePaymentCollectionSetupV2Binding
 import com.appservice.rest.TaskCode
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.utils.WebEngageController
@@ -22,8 +23,10 @@ import com.framework.extensions.visible
 import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.utils.makeLinks
 import com.framework.webengageconstant.*
 
+@Deprecated("Migrated this class FragmentEcommercePaymentCollectionSetupV2")
 class FragmentEcommercePaymentCollectionSetup : AppBaseFragment<FragmentEcommercePaymentCollectionSetupBinding, AppointmentSettingsViewModel>() {
 
   var isEdit: Boolean = false
@@ -55,6 +58,14 @@ class FragmentEcommercePaymentCollectionSetup : AppBaseFragment<FragmentEcommerc
     binding?.toggleHome?.setOnToggledListener { toggleableView, isOn ->
       updateHomeStoreStatus(isHome = isOn)
     }
+    linkClick();
+  }
+
+  private fun linkClick() {
+//    binding?.bankAccountTnc?.makeLinks(
+//      Pair("Read TnC", View.OnClickListener {
+//      })
+//    )
   }
 
   private fun grayScaleImage() {

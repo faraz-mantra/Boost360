@@ -6,8 +6,6 @@ import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -31,7 +29,7 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.framework.views.customViews.CustomTextView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
@@ -50,6 +48,7 @@ import com.nowfloats.manufacturing.projectandteams.Interfaces.ProjectDetailsList
 import com.nowfloats.manufacturing.projectandteams.adapter.ProjectDetailsImageAdapter;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import java.io.File;
@@ -84,6 +83,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
     EditText companyTitle, aboutCompany, clientName, clientCategory, projectClientRequirement, ourApproach, budget, dateOfCompletion;
     List<String> imageURLs = new ArrayList();
     TextView saveButton, inProgressText, completedText, withdrawText;
+    CustomTextView tvCompanyTitle, tvAboutCompany, tvClientName, tvClientCategory, tvProjectRequirement, tvOurApproach, tvBudget, tvDateOfCompletion;
     RelativeLayout addImageButton;
     View dummyView1, dummyView2, dummyView3;
     Uri imageUri;
@@ -126,6 +126,15 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
         dummyView1 = findViewById(R.id.dummy_view1);
         dummyView2 = findViewById(R.id.dummy_view2);
         dummyView3 = findViewById(R.id.dummy_view3);
+
+        tvCompanyTitle = findViewById(R.id.tv_company_title);
+        tvAboutCompany = findViewById(R.id.tv_about_company_title);
+        tvClientName = findViewById(R.id.tv_client_name_title);
+        tvClientCategory = findViewById(R.id.tv_client_category_title);
+        tvProjectRequirement = findViewById(R.id.tv_project_requirement_title);
+        tvOurApproach = findViewById(R.id.tv_our_approach_title);
+        tvBudget = findViewById(R.id.tv_budget_title);
+        tvDateOfCompletion = findViewById(R.id.tv_date_of_completion_title);
 
         dummyView1.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         dummyView2.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
@@ -202,6 +211,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
         }
 
         projectButtonStateController();
+        setupUIColor();
     }
 
     private void projectButtonStateController() {
@@ -405,6 +415,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                     @Override
                     public void failure(RetrofitError error) {
                         hideLoader();
+                        error.printStackTrace();
                         Methods.showSnackBarNegative(ProjectDetailsActivity.this, getString(R.string.something_went_wrong));
                     }
                 });
@@ -432,6 +443,17 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
         }
 
         return true;
+    }
+
+    private void setupUIColor() {
+        Utils.changeColorOfSubstring(R.string.company_title_aster, R.color.black_4a4a4a, "*", tvCompanyTitle);
+        Utils.changeColorOfSubstring(R.string.about_company_aster, R.color.black_4a4a4a, "*", tvAboutCompany);
+        Utils.changeColorOfSubstring(R.string.client_name_aster, R.color.black_4a4a4a, "*", tvClientName);
+        Utils.changeColorOfSubstring(R.string.client_category_aster, R.color.black_4a4a4a, "*", tvClientCategory);
+        Utils.changeColorOfSubstring(R.string.project_client_requirement_aster, R.color.black_4a4a4a, "*", tvProjectRequirement);
+        Utils.changeColorOfSubstring(R.string.our_approach_aster, R.color.black_4a4a4a, "*", tvOurApproach);
+        Utils.changeColorOfSubstring(R.string.budget_aster, R.color.black_4a4a4a, "*", tvBudget);
+        Utils.changeColorOfSubstring(R.string.date_of_completion_aster, R.color.black_4a4a4a, "*", tvDateOfCompletion);
     }
 
 

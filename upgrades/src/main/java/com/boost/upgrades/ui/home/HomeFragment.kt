@@ -1,6 +1,5 @@
 package com.boost.upgrades.ui.home
 
-import android.R.attr
 import android.animation.Animator
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
@@ -19,11 +18,16 @@ import android.util.Log
 import android.view.*
 import android.webkit.WebViewClient
 import android.widget.ImageView
+import android.widget.PopupMenu
+import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.appservice.rest.repository.AzureWebsiteNewRepository
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.R
@@ -42,6 +46,7 @@ import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.compare.ComparePackageFragment
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
+import com.boost.upgrades.ui.history.HistoryFragment
 import com.boost.upgrades.ui.marketplace_offers.MarketPlaceOfferFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
@@ -58,8 +63,13 @@ import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.Utils.getRetrofit
 import com.boost.upgrades.utils.Utils.longToast
 import com.dashboard.utils.DeepLinkUtil
+import com.framework.analytics.SentryController
+import com.framework.extensions.runOnUiThread
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.models.toLiveData
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -71,23 +81,10 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Retrofit
-import java.util.*
-import kotlin.collections.ArrayList
-
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import com.appservice.rest.repository.AzureWebsiteNewRepository
-import com.framework.analytics.SentryController
-import com.framework.extensions.runOnUiThread
-import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
-import com.framework.models.toLiveData
-import com.framework.utils.RootUtil
 import java.text.SimpleDateFormat
-import android.R.attr.button
-import android.widget.PopupMenu
-import androidx.annotation.RequiresApi
-import com.boost.upgrades.ui.history.HistoryFragment
-import com.boost.upgrades.utils.Utils.priceCalculatorForYear
+import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, CompareBackListener {
@@ -389,10 +386,11 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             )
         }
 
+        if (progressDialog.isShowing) {
+            progressDialog.dismiss()
+        }
+
         if (arguments?.getString("screenType") == "myAddOns") {
-            if (progressDialog.isShowing) {
-                progressDialog.hide()
-            }
             val args = Bundle()
             args.putStringArrayList(
                 "userPurchsedWidgets",
@@ -403,9 +401,6 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                 MYADDONS_FRAGMENT, args
             )
         } else if (arguments?.getString("screenType") == "recommendedAddOns") {
-            if (progressDialog.isShowing) {
-                progressDialog.hide()
-            }
             val args = Bundle()
             args.putStringArrayList(
                 "userPurchsedWidgets",
@@ -416,9 +411,6 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                 VIEW_ALL_FEATURE, args
             )
         } else if (arguments?.getString("screenType") == "comparePackageSelection") {
-            if (progressDialog.isShowing) {
-                progressDialog.hide()
-            }
             val args = Bundle()
             args.putStringArrayList(
                 "userPurchsedWidgets",
@@ -429,9 +421,6 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                 COMPARE_FRAGMENT, args
             )
         } else if (arguments?.getString("screenType") == "packageBundle") {
-            if (progressDialog.isShowing) {
-                progressDialog.hide()
-            }
             val args = Bundle()
             Log.v(
                 "getPackageItem",
@@ -446,18 +435,9 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                     PACKAGE_FRAGMENT, args
             )*/
         } else if (arguments?.getString("screenType") == "promoBanner") {
-            if (progressDialog.isShowing) {
-                progressDialog.hide()
-            }
-
             getItemPromoBanner(arguments?.getString("buyItemKey"))
         } else if (arguments?.getString("screenType") == "expertContact") {
-            if (progressDialog.isShowing) {
-                progressDialog.hide()
-            }
-            callExpertContact(prefs.getExpertContact())
-
-
+                callExpertContact(prefs.getExpertContact())
         }
 
         //chat bot view button clicked
@@ -615,19 +595,21 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                 if (it.isSuccess() || it != null) {
                     val data = it.arrayResponse as? Array<CapLimitFeatureResponseItem>
                     Log.e("checkExpiryAddonsPackages >>", Gson().toJson(data))
-                    for (singleitem in data!!) {
-                        val date1: Date =
-                            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(singleitem.expiryDate!!)
+                    if(data!=null) {
+                        for (singleitem in data) {
+                            val date1: Date =
+                                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(singleitem.expiryDate!!)
 
-                        val diff: Long = date1.getTime() - Date().getTime()
-                        val seconds = diff / 1000
-                        val minutes = seconds / 60
-                        val hours = minutes / 60
-                        val days = hours / 24
+                            val diff: Long = date1.getTime() - Date().getTime()
+                            val seconds = diff / 1000
+                            val minutes = seconds / 60
+                            val hours = minutes / 60
+                            val days = hours / 24
 
-                        if(days>0){
-                            paidUser = true
-                            break
+                            if (days > 0) {
+                                paidUser = true
+                                break
+                            }
                         }
                     }
                 }
@@ -647,7 +629,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
     @SuppressLint("FragmentLiveDataObserve")
     fun initMvvm() {
 
-        viewModel.updatesError().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.updatesError().observe(this, androidx.lifecycle.Observer {
             //            Snackbar.make(root, viewModel.errorMessage, Snackbar.LENGTH_LONG).show()
 //            if (shimmer_view_container.isAnimationStarted) {
 //                shimmer_view_container.stopShimmerAnimation()
@@ -656,17 +638,17 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             longToast(requireContext(), "onFailure: " + it)
         })
 
-//        viewModel.upgradeResult().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+//        viewModel.upgradeResult().observe(this, androidx.lifecycle.Observer {
 //            updateRecycler(it)
 //        })
 
-        viewModel.getAllAvailableFeatures().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.getAllAvailableFeatures().observe(this, androidx.lifecycle.Observer {
             all_recommended_addons.visibility = View.VISIBLE
             updateRecycler(it)
             updateAddonCategoryRecycler(it)
         })
 
-        viewModel.getAllBundles().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
             val list = arrayListOf<Bundles>()
             for (item in it) {
                 val temp = Gson().fromJson<List<IncludedFeature>>(
@@ -708,7 +690,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.getBackAllBundles().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.getBackAllBundles().observe(this, androidx.lifecycle.Observer {
             val list = arrayListOf<Bundles>()
             for (item in it) {
                 val temp = Gson().fromJson<List<IncludedFeature>>(
@@ -743,7 +725,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.getAllFeatureDeals().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.getAllFeatureDeals().observe(this, androidx.lifecycle.Observer {
             if (it.size > 0) {
                 var cartItems: List<CartModel> = arrayListOf()
                 if (viewModel.cartResult.value != null) {
@@ -753,11 +735,11 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-//        viewModel.getTotalActiveWidgetCount().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+//        viewModel.getTotalActiveWidgetCount().observe(this, androidx.lifecycle.Observer {
 //            total_active_widget_count.text = it.toString()
 //        })
 
-        viewModel.categoryResult().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.categoryResult().observe(this, androidx.lifecycle.Observer {
             if (it != null) {
                 if(recommended_features_account_type.paint.measureText(Html.fromHtml(it!!.toLowerCase()).toString())> recommended_features_account_type.measuredWidth){
                     recommended_features_account_type.visibility = View.GONE
@@ -771,7 +753,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
 
         })
 
-        viewModel.updatesLoader().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
             if (it) {
                 val status = "Loading. Please wait..."
                 progressDialog.setMessage(status)
@@ -782,7 +764,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.cartResult().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.cartResult().observe(this, androidx.lifecycle.Observer {
             UserSessionManager(requireActivity()).storeIntDetails(Key_Preferences.KEY_FP_CART_COUNT,it.size?:0)
             if (it != null && it.size > 0) {
 //                packageInCartStatus = false
@@ -997,7 +979,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }*/
         })
 
-        viewModel.cartResultBack().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.cartResultBack().observe(this, androidx.lifecycle.Observer {
             UserSessionManager(requireActivity()).storeIntDetails(Key_Preferences.KEY_FP_CART_COUNT,it.size?:0)
             if (it != null && it.size > 0) {
 //                packageInCartStatus = false
@@ -1206,12 +1188,12 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.getYoutubeVideoDetails().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.getYoutubeVideoDetails().observe(this, androidx.lifecycle.Observer {
             Log.e("getYoutubeVideoDetails", it.toString())
             updateVideosViewPager(it)
         })
 
-        viewModel.getExpertConnectDetails().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.getExpertConnectDetails().observe(this, androidx.lifecycle.Observer {
             Log.e("getYoutubeVideoDetails", it.toString())
             val expertConnectDetails = it
             if (it.is_online) {
@@ -1258,7 +1240,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.promoBannerAndMarketOfferResult().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.promoBannerAndMarketOfferResult().observe(this, androidx.lifecycle.Observer {
             if (it.size > 0) {
                 if (shimmer_view_banner.isShimmerStarted) {
                     shimmer_view_banner.stopShimmer()
@@ -1277,7 +1259,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
         })
 
 
-        viewModel.getPromoBanners().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.getPromoBanners().observe(this, androidx.lifecycle.Observer {
             Log.e("getPromoBanners", it.toString())
             if (it.size > 0) {
                 if (shimmer_view_banner.isShimmerStarted) {
@@ -1297,7 +1279,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.getPartnerZone().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.getPartnerZone().observe(this, androidx.lifecycle.Observer {
             Log.e("getPartnerZone", it.toString())
             if (it.size > 0) {
                 updatePartnerViewPager(it)
@@ -1308,14 +1290,14 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             }
         })
 
-        viewModel.getFeedBackLink().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.getFeedBackLink().observe(this, androidx.lifecycle.Observer {
             Log.e("getFeedBackLink", it.toString())
             feedBackLink = it
         })
 
-        viewModel.getBundleExxists().observe(viewLifecycleOwner,androidx.lifecycle.Observer{
-            Log.d("getBundleExxists", it.toString())
-        })
+//        viewModel.getBundleExxists().observe(this, androidx.lifecycle.Observer{
+//            Log.d("getBundleExxists", it.toString())
+//        })
     }
 
     fun updateRecycler(list: List<FeaturesModel>) {
@@ -1990,11 +1972,11 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
             videoItem.title ?: NO_EVENT_VALUE
         )
         Log.i("onPlayYouTubeVideo", videoItem.youtube_link ?: "")
-        val link: List<String> = videoItem.youtube_link!!.split('/')
+//        val link: List<String> = videoItem.youtube_link!!.split('/')
         videoPlayerWebView.getSettings().setJavaScriptEnabled(true)
 //    videoPlayerWebView.getSettings().setPluginState(WebSettings.PluginState.ON)
         videoPlayerWebView.setWebViewClient(WebViewClient())
-        videoPlayerWebView.loadUrl("http://www.youtube.com/embed/" + link.get(link.size - 1) + "?autoplay=1&vq=small")
+        videoPlayerWebView.loadUrl("http://www.youtube.com/embed/" + getVideoId(videoItem.youtube_link!!))
 //    videoPlayerWebView.setWebChromeClient(WebChromeClient())
         video_sub_title.text = videoItem.title
         video_sub_desc.text = videoItem.desc
@@ -2824,7 +2806,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                         for (singleItem in it) {
                             for (item in item!!.included_features) {
                                 if (singleItem.feature_code == item.feature_code) {
-                                    bundleMonthlyMRP += priceCalculatorForYear(RootUtil.round(singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),2), singleItem.widget_type, requireActivity())
+                                    bundleMonthlyMRP += RootUtil.round(singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),2)
                                 }
                             }
                         }
@@ -2833,7 +2815,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                         originalBundlePrice = (bundleMonthlyMRP * minMonth)
 
                         if (item!!.overall_discount_percent > 0)
-                            offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100),2)
+                            offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100.0),2)
                         else
                             offeredBundlePrice = originalBundlePrice
 
@@ -2892,6 +2874,17 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                     }
                 )
         )
+    }
+
+    fun getVideoId(videoUrl: String): String {
+        var videoId = ""
+        val regex = "http(?:s)?:\\/\\/(?:m.)?(?:www\\.)?youtu(?:\\.be\\/|be\\.com\\/(?:watch\\?(?:feature=youtu.be\\&)?v=|v\\/|embed\\/|user\\/(?:[\\w#]+\\/)+))([^&#?\\n]+)"
+        val pattern: Pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE)
+        val matcher: Matcher = pattern.matcher(videoUrl)
+        if (matcher.find()) {
+            videoId = matcher.group(1)
+        }
+        return videoId
     }
 
 }

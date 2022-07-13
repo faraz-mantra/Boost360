@@ -12,6 +12,7 @@ import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
+import com.boost.upgrades.ui.popup.NeedHelpPopUpFragment
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
@@ -115,7 +116,9 @@ class OrderConfirmationFragment : BaseFragment("MarketPlaceOrderConfirmationFrag
     }
 
     order_needs_help.setOnClickListener {
-      Toasty.info(requireContext(), getString(R.string.in_case_of_any_concerns)).show()
+//      Toasty.info(requireContext(), getString(R.string.in_case_of_any_concerns)).show()
+      val needHelpPopUpFragment = NeedHelpPopUpFragment()
+      needHelpPopUpFragment.show(requireActivity().supportFragmentManager, "NEED_HELP_POPUP")
     }
 
 

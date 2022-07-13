@@ -131,11 +131,11 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
   }
 
   private fun setupUI() {
-    changeColorOfSubstring(R.string.pan_number_individual_or_company, R.color.colorAccent, "*", binding?.tvPanNum!!)
-    changeColorOfSubstring(R.string.name_as_mentioned_on_pan_card, R.color.colorAccent, "*", binding?.tvNameOnPanNum!!)
-    changeColorOfSubstring(R.string.latest_bank_statement_last_1_month, R.color.colorAccent, "*", binding?.tvLatestBankStatement!!)
-    changeColorOfSubstring(R.string.account_holder_s_name, R.color.colorAccent, "*", binding?.tvAccountHolderName!!)
-    changeColorOfSubstring(R.string.ifsc_code, R.color.colorAccent, "*", binding?.tvIfscCode!!)
+    changeColorOfSubstring(R.string.pan_number_individual_or_company, R.color.warm_grey, "*", binding?.tvPanNum!!)
+    changeColorOfSubstring(R.string.name_as_mentioned_on_pan_card, R.color.warm_grey, "*", binding?.tvNameOnPanNum!!)
+    changeColorOfSubstring(R.string.latest_bank_statement_last_1_month, R.color.warm_grey, "*", binding?.tvLatestBankStatement!!)
+    changeColorOfSubstring(R.string.account_holder_s_name, R.color.greyish_brown, "*", binding?.tvAccountHolderName!!)
+    changeColorOfSubstring(R.string.ifsc_code_with_aestrick, R.color.greyish_brown, "*", binding?.tvIfscCode!!)
   }
 
   override fun onClick(v: View) {

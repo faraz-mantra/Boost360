@@ -74,9 +74,9 @@
             android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView
-                android:id="@+id/tv_staff_mem_name"
-                style="@style/TextStaffHeading"
-                android:text="@string/staff_member_name" />
+              android:id="@+id/tv_staff_mem_name"
+              style="@style/TextStaffHeading"
+              android:text="@string/staff_member_name" />
 
             <com.framework.views.customViews.CustomTextField
               android:id="@+id/etv_name"
@@ -109,9 +109,9 @@
               app:layout_constraintWidth_percent="0.48">
 
               <com.framework.views.customViews.CustomTextView
-                  android:id="@+id/tv_select_gender"
-                  style="@style/TextStaffHeading"
-                  android:text="@string/select_gender" />
+                android:id="@+id/tv_select_gender"
+                style="@style/TextStaffHeading"
+                android:text="@string/select_gender" />
 
               <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/spinner_gender"
@@ -134,7 +134,7 @@
               app:layout_constraintWidth_percent="0.45">
 
               <com.framework.views.customViews.CustomTextView
-                  android:id="@+id/tv_age"
+                android:id="@+id/tv_age"
                 style="@style/TextStaffHeading"
                 android:text="@string/age" />
 
@@ -163,7 +163,7 @@
             android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView
-                android:id="@+id/tv_specialization"
+              android:id="@+id/tv_specialization"
               style="@style/TextStaffHeading"
               android:text="@string/specialization" />
 
@@ -214,7 +214,7 @@
             android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView
-                android:id="@+id/tv_years_of_exp"
+              android:id="@+id/tv_years_of_exp"
               style="@style/TextStaffHeading"
               android:text="@string/years_of_experience" />
 
@@ -247,10 +247,10 @@
             android:padding="@dimen/size_8">
 
             <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ctv_service_provided_heading"
-                style="@style/TextStaffHeading"
-                android:text="@string/services_provided"
-                tools:ignore="RelativeOverlap" />
+              android:id="@+id/ctv_service_provided_heading"
+              style="@style/TextStaffHeading"
+              android:text="@string/services_provided"
+              tools:ignore="RelativeOverlap" />
 
             <com.framework.views.customViews.CustomTextView
 
@@ -440,7 +440,7 @@
         <com.framework.views.customViews.CustomButton
           android:id="@+id/btn_save"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/size_44"
           android:layout_marginBottom="@dimen/size_30"
           android:background="@drawable/bg_button_proceed_radius_4dp"
           android:fontFamily="@font/semi_bold"

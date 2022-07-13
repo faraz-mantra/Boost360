@@ -1,17 +1,19 @@
 package com.appservice.ui.updatesBusiness
 
+import android.annotation.SuppressLint
 import android.content.*
 import android.os.Bundle
 import android.os.Handler
 import android.speech.RecognizerIntent
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
+import android.view.View.OnTouchListener
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.MutableLiveData
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -28,12 +30,12 @@ import com.appservice.utils.getBitmap
 import com.appservice.viewmodel.UpdatesViewModel
 import com.framework.analytics.SentryController
 import com.framework.extensions.*
-import com.framework.glide.util.glideLoad
-import com.framework.imagepicker.ImagePicker
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.firebaseUtils.caplimit_feature.PropertiesItem
 import com.framework.firebaseUtils.caplimit_feature.filterFeature
 import com.framework.firebaseUtils.caplimit_feature.getCapData
+import com.framework.glide.util.glideLoad
+import com.framework.imagepicker.ImagePicker
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.PREF_KEY_TWITTER_LOGIN
 import com.framework.pref.Key_Preferences.PREF_NAME_TWITTER
@@ -50,6 +52,7 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.*
+
 
 const val isFirstTimeSendToSubscriber = "isFirstTimeSendToSubscriber"
 const val msgPost = "msg_post"
@@ -104,6 +107,7 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
       binding?.btnCamera, binding?.btnEditPhoto, binding?.btnFpStatus, binding?.btnFpPageStatus,
       binding?.btnGoogleVoice, binding?.btnRemovePhoto, binding?.btnSubscription, binding?.btnTwitter
     )
+    viewConfig()
     binding?.edtDesc?.afterTextChanged { str ->
       if (isUpdate.not()) sessionLocal.storeFPDetails(msgPost, str)
     }
@@ -120,6 +124,25 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
     observeBtnStatus()
     binding?.edtDesc?.post { baseActivity.showKeyBoard(binding?.edtDesc) }
     capLimitCheck()
+  }
+
+  @SuppressLint("ClickableViewAccessibility")
+  private fun viewConfig() {
+    binding?.edtDesc?.setOnTouchListener(OnTouchListener { view, motionEvent ->
+      view.parent.requestDisallowInterceptTouchEvent(true)
+      when (motionEvent.action and MotionEvent.ACTION_MASK) {
+        MotionEvent.ACTION_SCROLL -> {
+          view.parent.requestDisallowInterceptTouchEvent(false)
+          return@OnTouchListener true
+        }
+        MotionEvent.ACTION_BUTTON_PRESS -> {
+          val imm: InputMethodManager =
+            activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+          imm.showSoftInput(binding?.edtDesc, InputMethodManager.SHOW_IMPLICIT)
+        }
+      }
+      false
+    })
   }
 
   private fun observeBtnStatus() {

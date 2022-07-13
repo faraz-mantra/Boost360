@@ -62,8 +62,8 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
   }
 
   private fun setupUIColor() {
-    changeColorOfSubstring(R.string.full_name, R.color.colorAccent, "*", binding?.tvFullNameVw!!)
-    changeColorOfSubstring(R.string.registered_mobile_number, R.color.colorAccent, "*", binding?.tvMobileNumberVw!!)
+    changeColorOfSubstring(R.string.full_name, R.color.black_4a4a4a, "*", binding?.tvFullNameVw!!)
+    changeColorOfSubstring(R.string.registered_mobile_number, R.color.black_4a4a4a, "*", binding?.tvMobileNumberVw!!)
   }
 
   private fun setDataFromPref(merchantProfileDetails: UserProfileDataResult?) {

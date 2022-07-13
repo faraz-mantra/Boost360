@@ -544,7 +544,6 @@ class CreateAppointmentConsultFragment : BaseInventoryFragment<FragmentAppointme
           orderInitiateRequest.buyerDetails = buyerDetail
           orderInitiateRequest.mode = OrderItem.OrderMode.APPOINTMENT.name
           orderInitiateRequest.shippingDetails = shippingDetails
-          orderInitiateRequest.transactionCharges = 0.0
           orderInitiateRequest.items = items
           orderInitiateRequest.isVideoConsult = isVideoConsult
         }
