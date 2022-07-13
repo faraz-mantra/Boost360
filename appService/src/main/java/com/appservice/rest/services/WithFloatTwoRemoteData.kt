@@ -15,6 +15,7 @@ import com.appservice.model.updateBusiness.DeleteBizMessageRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
 import com.appservice.rest.EndPoints
 import com.framework.pref.clientId
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -148,7 +149,7 @@ interface WithFloatTwoRemoteData {
 
   @POST(EndPoints.PUT_BIZ_IMAGE_V2)
   fun putBizImageUpdateV2(
-    @Body body:JsonObject
+    @Body body: JsonObject
     ): Observable<Response<String>>
 //  fun getDeliveryDetails(): Observable<Response<ResponseBody>>
 
