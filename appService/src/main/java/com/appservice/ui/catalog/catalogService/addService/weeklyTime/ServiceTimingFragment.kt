@@ -2,6 +2,7 @@ package com.appservice.ui.catalog.catalogService.addService.weeklyTime
 
 import android.content.Intent
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -15,7 +16,9 @@ import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.viewmodel.StaffViewModel
 import com.framework.utils.DateUtils
+import com.framework.utils.DateUtils.isStartEndDatesValid
 import com.framework.utils.DateUtils.parseDate
+import java.text.SimpleDateFormat
 import java.util.*
 
 class ServiceTimingFragment : AppBaseFragment<FragmentServiceTimingBinding, StaffViewModel>(),
@@ -77,10 +80,8 @@ class ServiceTimingFragment : AppBaseFragment<FragmentServiceTimingBinding, Staf
           adapterTiming?.notifyItemChanged(position)
         } else applyOnAllDays(position, (item as? ServiceTiming))
       }
-      RecyclerViewActionType.CHECK_BOX_APPLY_ALL.ordinal -> applyOnAllDays(
-        position,
-        (item as? ServiceTiming)
-      )
+      RecyclerViewActionType.CHECK_BOX_APPLY_ALL.ordinal ->
+        applyOnAllDays(position, (item as? ServiceTiming))
     }
   }
 
@@ -93,18 +94,17 @@ class ServiceTimingFragment : AppBaseFragment<FragmentServiceTimingBinding, Staf
         it.isToggle = false
       } else {
         var startDate = it.businessTiming?.startTime?.parseDate(DateUtils.FORMAT_HH_MMA)
-        if (startDate == null) startDate =
-          it.businessTiming?.startTime?.parseDate(DateUtils.FORMAT_HH_MM_A)
+        if (startDate == null)
+          startDate = it.businessTiming?.startTime?.parseDate(DateUtils.FORMAT_HH_MM_A)
         var endDate = it.businessTiming?.endTime?.parseDate(DateUtils.FORMAT_HH_MMA)
-        if (endDate == null) endDate =
-          it.businessTiming?.endTime?.parseDate(DateUtils.FORMAT_HH_MM_A)
+        if (endDate == null)
+          endDate = it.businessTiming?.endTime?.parseDate(DateUtils.FORMAT_HH_MM_A)
         val startDateNew = serviceTiming?.time?.from?.parseDate(DateUtils.FORMAT_HH_MM_A)
         val endDateNew = serviceTiming?.time?.to?.parseDate(DateUtils.FORMAT_HH_MM_A)
         if (startDate != null && endDate != null && startDateNew != null && endDateNew != null && DateUtils.isBetweenValidTime(
             startDate,
             endDate,
-            startDateNew
-          )
+            startDateNew)
           && DateUtils.isBetweenValidTime(startDate, endDate, endDateNew)
         ) {
           it.time = serviceTiming.time
@@ -119,14 +119,31 @@ class ServiceTimingFragment : AppBaseFragment<FragmentServiceTimingBinding, Staf
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnSave -> finishAndGoBack()
+      binding?.btnSave -> validateFinishAndGoBack()
     }
   }
 
-  private fun finishAndGoBack() {
-    val intent = Intent()
-    intent.putExtra(IntentConstant.SERVICE_TIMING_DATA.name, adapterTiming?.list())
-    baseActivity.setResult(AppCompatActivity.RESULT_OK, intent)
-    baseActivity.finish()
+  private fun validateFinishAndGoBack() {
+    if (validateAllTimings()) {
+      val intent = Intent()
+      intent.putExtra(IntentConstant.SERVICE_TIMING_DATA.name, adapterTiming?.list())
+      baseActivity.setResult(AppCompatActivity.RESULT_OK, intent)
+      baseActivity.finish()
+    } else {
+      showLongToast(getString(R.string.please_fill_valid_dates))
+    }
+  }
+
+  private fun validateAllTimings(): Boolean {
+    var isValid = true
+    adapterTiming?.list()?.forEach {
+      val from =  it.time?.from?.parseDate(DateUtils.FORMAT_HH_MM_A) ?: Date()
+      val to = it.time?.to?.parseDate(DateUtils.FORMAT_HH_MM_A) ?: Date()
+      if (isStartEndDatesValid(from, to).not() && it.isToggle) {
+        isValid = false
+        return isValid
+      }
+    }
+    return isValid
   }
 }
