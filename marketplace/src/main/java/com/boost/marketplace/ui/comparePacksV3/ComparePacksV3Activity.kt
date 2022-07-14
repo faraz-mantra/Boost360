@@ -3,6 +3,7 @@ package com.boost.marketplace.ui.comparePacksV3
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Build
+import android.os.Bundle
 import android.util.Log
 import android.view.Window
 import android.view.WindowManager
@@ -16,10 +17,7 @@ import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PrimaryImage
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.SharedPrefs
-import com.boost.marketplace.Adapters.PacksFaqAdapter
-import com.boost.marketplace.Adapters.PacksV3Adapter
-import com.boost.marketplace.Adapters.PacksV3FooterAdapter
-import com.boost.marketplace.Adapters.PacksV3HowToUseAdapter
+import com.boost.marketplace.Adapters.*
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityComparePacksv3Binding
@@ -70,6 +68,7 @@ class ComparePacksV3Activity :
     lateinit var faqAdapter: PacksFaqAdapter
     lateinit var packsv3Adapter : PacksV3Adapter
     lateinit var packsv3footerAdapter : PacksV3FooterAdapter
+    lateinit var packsv3pricingAdapter : PacksV3PricingAdapter
 //    lateinit var packsAddonsAdapter: PacksAddonsV3Adapter
 
     companion object {
@@ -111,6 +110,7 @@ class ComparePacksV3Activity :
         faqAdapter = PacksFaqAdapter(this, ArrayList())
         packsv3Adapter = PacksV3Adapter(ArrayList(), this,this)
         packsv3footerAdapter = PacksV3FooterAdapter(ArrayList(), this)
+        packsv3pricingAdapter = PacksV3PricingAdapter(ArrayList(), this)
         //  packsAddonsAdapter= PacksAddonsV3Adapter(featuresList,this)
 
 
@@ -127,9 +127,10 @@ class ComparePacksV3Activity :
         // initializePacksAddonsRecycler()
         initializePacksV3Recycler()
         initializePacksV3FooterRecycler()
+        initializePacksV3PricingRecycler()
 
 
-        binding?.backButton?.setOnClickListener {
+        binding?.packageBack?.setOnClickListener {
             finish()
         }
 
@@ -213,8 +214,9 @@ class ComparePacksV3Activity :
                     )
                 }
                 if (listItem.size > 0) {
-                    updatePackageViewPager(listItem)
-                    updatePackageFooterViewPager(listItem)
+                    updatePackageRecycler(listItem)
+                    updatePackageFooterRecycler(listItem)
+                    updatePackagePricingRecycler(listItem)
                     upgradeList = listItem
                     loadPacksData()
 
@@ -259,7 +261,7 @@ class ComparePacksV3Activity :
         }
     }
 
-    fun updatePackageViewPager(list: List<Bundles>) {
+    fun updatePackageRecycler(list: List<Bundles>) {
         Log.v("updatePackageViewPager", " " + list.size)
         packsv3Adapter.addupdates(list)
     }
@@ -273,9 +275,23 @@ class ComparePacksV3Activity :
         }
     }
 
-    fun updatePackageFooterViewPager(list: List<Bundles>) {
+    fun updatePackageFooterRecycler(list: List<Bundles>) {
         Log.v("updatePackageViewPager", " " + list.size)
         packsv3footerAdapter.addupdates(list)
+    }
+
+    private fun initializePacksV3PricingRecycler() {
+        val linearLayoutManager = LinearLayoutManager(applicationContext)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        binding?.packsPriceRecycler?.apply {
+            layoutManager = linearLayoutManager
+            binding?.packsPriceRecycler?.adapter = packsv3pricingAdapter
+        }
+    }
+
+    fun updatePackagePricingRecycler(list: List<Bundles>) {
+        Log.v("updatePackageViewPager", " " + list.size)
+        packsv3pricingAdapter.addupdates(list)
     }
 
 
@@ -300,10 +316,15 @@ class ComparePacksV3Activity :
 
     override fun onPackageClicked(item: Bundles?, image: ImageView?) {
         val dialogCard = ComparePacksV3BottomSheet()
-//        val args = Bundle()
-//        args.putString("fpid",fpid)
-//        args.putString("bundleData", Gson().toJson(item))
-//        dialogCard.arguments = args
+        val args = Bundle()
+        args.putString("fpid",fpid)
+        args.putString("bundleData", Gson().toJson(item))
+        args.putDouble("price", offeredBundlePrice)
+        args.putDouble("price1", originalBundlePrice)
+        if (item != null) {
+            args.putInt("addons", item.included_features.size)
+        }
+        dialogCard.arguments = args
         dialogCard.show(this.supportFragmentManager, ComparePacksV3BottomSheet::class.java.name)
     }
 }
