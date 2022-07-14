@@ -65,9 +65,6 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   private var startForCropImageResult: ActivityResultLauncher<Intent>?=null
   private var updateFloat: UpdateFloat? = null
   private var posterImagePath: String? = null
-  var reusePastUpdateText = ""
-  var reusePastUpdateImage = ""
-  var IS_REUSE_MODE = false
 
   private val mSharedPreferences: SharedPreferences?
     get() {
@@ -114,17 +111,6 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       binding!!.btnAddImage, binding!!.btnEdit, binding!!.ivMic, binding!!.ivHashtagCross,
       binding!!.tvPreviewAndPost, binding.ivCross
     )
-
-    getBundleExtra()
-  }
-
-  private fun getBundleExtra() {
-    arguments?.getString(REUSE_PAST_UPDATE_MESSAGE_TEXT)?.let {
-      reusePastUpdateText = it
-      if (it.isNullOrEmpty().not())
-        IS_REUSE_MODE = true
-    }
-    arguments?.getString(REUSE_PAST_UPDATE_IMAGE)?.let { reusePastUpdateImage = it }
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -137,7 +123,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
           if (imgFile.exists() && isImageValid(imgFile)) {
             loadImage(imgFile.path)
           } else {
-            loadImage(if (IS_REUSE_MODE) reusePastUpdateImage else null)
+            loadImage(null)
           }
           toggleContinue()
         }
@@ -250,7 +236,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     FirestoreManager.readDraft {
       if (activity != null && isAdded) {
 
-        val textPost = if (IS_REUSE_MODE) reusePastUpdateText else it?.content
+        val textPost = it?.content
         binding!!.etUpdate.setText(
           highlightHashTag(
             textPost,
@@ -263,7 +249,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
         lifecycleScope.launch {
           withContext(Dispatchers.IO) {
-            if (it?.imageUri.isNullOrEmpty().not() && !IS_REUSE_MODE) {
+            if (it?.imageUri.isNullOrEmpty().not()) {
               Log.i(TAG, "initUI: ${it?.imageUri}")
               val bitmap = Picasso.get().load(it?.imageUri).get()
               val imgFile =
@@ -271,8 +257,6 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
               bitmap.saveAsImageToAppFolder(imgFile.path)
 
               runOnUi { loadImage(imgFile.path) }
-            } else if (IS_REUSE_MODE) {
-              runOnUi { loadImage(reusePastUpdateImage) }
             } else {
               loadImage(null)
             }
@@ -417,9 +401,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
           .putExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
             putString(IntentConstants.IK_CAPTION_KEY,binding!!.etUpdate.text.toString())
             putString(IntentConstants.IK_POSTER, posterImagePath)
-            putBoolean(IntentConstants.IK_IS_REUSE_MODE, IS_REUSE_MODE)
-            putString(
-              IntentConstants.IK_UPDATE_TYPE,
+            putString(IntentConstants.IK_UPDATE_TYPE,
               if (posterImagePath == null) IntentConstants.UpdateType.UPDATE_TEXT.name
               else IntentConstants.UpdateType.UPDATE_IMAGE_TEXT.name
             )

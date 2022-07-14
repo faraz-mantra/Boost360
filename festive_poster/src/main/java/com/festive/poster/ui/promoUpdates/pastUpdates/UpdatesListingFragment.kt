@@ -23,6 +23,7 @@ import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.festive.poster.viewmodels.PostUpdatesViewModel
 import com.framework.base.setFragmentType
+import com.framework.constants.IntentConstants
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
@@ -34,9 +35,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class UpdatesListingFragment :
-    AppBaseFragment<FragmentUpdatesListingBinding, PostUpdatesViewModel>(),
-    RecyclerItemClickListener {
+class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, PostUpdatesViewModel>(), RecyclerItemClickListener {
 
     private var pastPostListing = ArrayList<PastPostItem>()
     private lateinit var categoryDataList: ArrayList<PastCategoriesModel>
@@ -188,21 +187,37 @@ class UpdatesListingFragment :
                     withContext(Dispatchers.IO) {
                         val bitmapPastUpdateReuse = Picasso.get().load(item.imageUri.toString()).get()
                         val saveAsTempFile = bitmapPastUpdateReuse.saveAsTempFile()
+                        startActivity(Intent(requireActivity(), Class.forName("com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity"))
+                                .putExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
+                                        putString(IntentConstants.IK_CAPTION_KEY, item.message.toString())
+                                        putString(IntentConstants.IK_POSTER, saveAsTempFile?.path)
+                                        putString(IntentConstants.IK_UPDATE_TYPE,
+                                            if (saveAsTempFile?.path == null)
+                                                IntentConstants.UpdateType.UPDATE_TEXT.name
+                                            else
+                                                IntentConstants.UpdateType.UPDATE_IMAGE_TEXT.name
+                                        )
+                                    })
+                        )
+                    }}
+
+                /*lifecycleScope.launch {
+                    withContext(Dispatchers.IO) {
+                        val bitmapPastUpdateReuse = Picasso.get().load(item.imageUri.toString()).get()
+                        val saveAsTempFile = bitmapPastUpdateReuse.saveAsTempFile()
                         val intent = Intent(requireActivity(), Class.forName("com.appservice.ui.updatesBusiness.UpdateBusinessContainerActivity"))
                             .putExtra(IntentConstant.REUSE_PAST_UPDATE_MESSAGE_TEXT.name, item.message.toString())
                             .putExtra(IntentConstant.REUSE_PAST_UPDATE_IMAGE.name, saveAsTempFile?.path)
                         intent.setFragmentType("ADD_UPDATE_BUSINESS_FRAGMENT_V2")
                         startActivity(intent)
                     }
-                }
+                }*/
             }
         }
     }
 
     private fun tagChanges() {
-        tagArrayList.forEach {
-            it.isSelected = false
-        }
+        tagArrayList.forEach { it.isSelected = false }
         tagArray.clear()
         tagListAdapter.notifyDataSetChanged()
         binding.tagWrapper.apply {
@@ -217,10 +232,6 @@ class UpdatesListingFragment :
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.filter_menu_past, menu)
-        /* val menuItem = menu.findItem(R.id.filter_past)
-         menuItem.actionView.setOnClickListener {
-             menu.performIdentifierAction(menuItem.itemId, 0)
-         }*/
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -233,13 +244,11 @@ class UpdatesListingFragment :
                 if (isFilterVisible) {
                     binding.rvFilterCategory.gone()
                     binding.tagWrapper.gone()
-                    item.icon =
-                        ContextCompat.getDrawable(baseActivity, R.drawable.ic_filter_hollow_past)
+                    item.icon = ContextCompat.getDrawable(baseActivity, R.drawable.ic_filter_hollow_past)
                 } else {
                     binding.rvFilterCategory.visible()
                     binding.tagWrapper.visible()
-                    item.icon =
-                        ContextCompat.getDrawable(baseActivity, R.drawable.ic_filter_funnel_white)
+                    item.icon = ContextCompat.getDrawable(baseActivity, R.drawable.ic_filter_funnel_white)
                 }
                 isFilterVisible = isFilterVisible.not()
                 return true

@@ -125,18 +125,13 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     override fun onCreateView() {
         session = UserSessionManager(this)
         captionIntent =intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IntentConstants.IK_CAPTION_KEY)
-
-
         initUI()
-
     }
 
     override fun onResume() {
         super.onResume()
         setStatusBarColor(R.color.white)
-
         refreshUserWidgets()
-
     }
 
     private fun refreshUserWidgets() {
@@ -144,12 +139,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             if (it.isSuccess()) {
                 val detail = it as? CustomerDetails
                 detail?.FPWebWidgets?.let { list ->
-                    session?.storeFPDetails(
-                        Key_Preferences.STORE_WIDGETS,
-                        convertListObjToString(list)
-                    )
+                    session?.storeFPDetails(Key_Preferences.STORE_WIDGETS, convertListObjToString(list))
                     isUserPremium(isPromoWidgetActive()||updateType!=IntentConstants.UpdateType.UPDATE_PROMO_POST.name)
-
                 }
             }
         }
@@ -210,12 +201,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             onBackPressed()
         }
 
-
         setChannels()
-
-
-
-
     }
 
     private fun isUserPremium(isUserPremium:Boolean = false){
@@ -239,14 +225,12 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-
         when(actionType){
             RecyclerViewActionType.SOCIAL_CHANNEL_CHECK_CLICKED.ordinal->{
                 val model = uiChBoxChannelList?.get(position)
                 uiPreviewChannelList?.find { it.channelType==model?.channelType }?.shouldShow = model?.isChecked == true
                 setupPreviewList()
                 setupCountsUI()
-
             }
         }
     }
@@ -257,11 +241,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     fun setChannelAdapter(){
         //   val socialPlatformModel = SocialPlatformModel().getData(this@PostPreviewSocialActivity)
-        chkChannelAdapter = AppBaseRecyclerViewAdapter(
-            this@PostPreviewSocialActivity,
-            uiChBoxChannelList!!,
-            this@PostPreviewSocialActivity
-        )
+        chkChannelAdapter = AppBaseRecyclerViewAdapter(this@PostPreviewSocialActivity, uiChBoxChannelList!!, this@PostPreviewSocialActivity)
         binding?.rvSocialPlatforms?.apply {
             adapter = chkChannelAdapter
         }
@@ -311,8 +291,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                     )
                     else {
                         val categoryList = (it as? ResponseDataCategory)?.data
-                        val categoryData =
-                            categoryList?.singleOrNull { c -> c.experienceCode() == experienceCode }
+                        val categoryData = categoryList?.singleOrNull { c -> c.experienceCode() == experienceCode }
                         if (categoryData != null) {
                             getChannelAccessToken(categoryData, floatingPoint, fpTag)
 
@@ -335,23 +314,14 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                     val response = it1 as? ChannelAccessStatusResponse
                     setDataRequestChannels(categoryData, response?.channels, floatingPoint, fpTag)
                 }
-                it1.status == 404 || it1.status == 400 -> setDataRequestChannels(
-                    categoryData,
-                    null,
-                    floatingPoint,
-                    fpTag
-                )
+                it1.status == 404 || it1.status == 400 ->
+                    setDataRequestChannels(categoryData, null, floatingPoint, fpTag)
                 else -> errorMessage(it1.message())
             }
         }
     }
 
-    private fun setDataRequestChannels(
-        categoryData: CategoryDataModel?,
-        channelsAccessToken: ChannelsType?,
-        floatingPoint: String?,
-        fpTag: String?
-    ) {
+    private fun setDataRequestChannels(categoryData: CategoryDataModel?, channelsAccessToken: ChannelsType?, floatingPoint: String?, fpTag: String?) {
         uiChBoxChannelList= ArrayList()
         uiPreviewChannelList = ArrayList()
         val requestFloatsNew = RequestFloatsModel()
@@ -529,8 +499,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     private fun shouldAddToChannelList(channel: ChannelModel): Boolean {
 
-        if (channel.isWhatsAppChannel()||channel.getAccessTokenType()==ChannelsType.AccountType.facebookshop.name
-            ){
+        if (channel.isWhatsAppChannel()||channel.getAccessTokenType()==ChannelsType.AccountType.facebookshop.name){
             return false
         }
         return true
