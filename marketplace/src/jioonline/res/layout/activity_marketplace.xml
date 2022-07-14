@@ -512,7 +512,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/jio_blue_90"
+                    android:background="@color/shimmer_bg_color"
                     android:orientation="vertical">
 
                     <LinearLayout
