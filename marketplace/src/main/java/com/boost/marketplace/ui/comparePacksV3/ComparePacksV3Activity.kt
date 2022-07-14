@@ -3,9 +3,11 @@ package com.boost.marketplace.ui.comparePacksV3
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Build
+import android.os.Bundle
 import android.util.Log
 import android.view.Window
 import android.view.WindowManager
+import android.widget.ImageView
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,12 +17,11 @@ import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PrimaryImage
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.SharedPrefs
-import com.boost.marketplace.Adapters.PacksFaqAdapter
-import com.boost.marketplace.Adapters.PacksV3Adapter
-import com.boost.marketplace.Adapters.PacksV3HowToUseAdapter
+import com.boost.marketplace.Adapters.*
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityComparePacksv3Binding
+import com.boost.marketplace.interfaces.PacksV3listener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
@@ -29,7 +30,7 @@ import com.google.gson.reflect.TypeToken
 
 
 class ComparePacksV3Activity :
-    AppBaseActivity<ActivityComparePacksv3Binding, ComparePacksViewModel>() {
+    AppBaseActivity<ActivityComparePacksv3Binding, ComparePacksViewModel>(), PacksV3listener {
 
     var experienceCode: String? = null
     var screenType: String? = null
@@ -59,12 +60,15 @@ class ComparePacksV3Activity :
     lateinit var prefs: SharedPrefs
     var featuresHashMap: MutableMap<String?, FeaturesModel> = HashMap<String?, FeaturesModel>()
     lateinit var progressDialog: ProgressDialog
+    private var annualPlan = false
 
     //  var listItem=ArrayList<Bundles>()
     var upgradeList: ArrayList<Bundles>? = null
     lateinit var howToUseAdapter: PacksV3HowToUseAdapter
     lateinit var faqAdapter: PacksFaqAdapter
     lateinit var packsv3Adapter : PacksV3Adapter
+    lateinit var packsv3footerAdapter : PacksV3FooterAdapter
+    lateinit var packsv3pricingAdapter : PacksV3PricingAdapter
 //    lateinit var packsAddonsAdapter: PacksAddonsV3Adapter
 
     companion object {
@@ -104,7 +108,9 @@ class ComparePacksV3Activity :
 
         howToUseAdapter = PacksV3HowToUseAdapter(this, ArrayList())
         faqAdapter = PacksFaqAdapter(this, ArrayList())
-        packsv3Adapter = PacksV3Adapter(ArrayList(), this)
+        packsv3Adapter = PacksV3Adapter(ArrayList(), this,this)
+        packsv3footerAdapter = PacksV3FooterAdapter(ArrayList(), this)
+        packsv3pricingAdapter = PacksV3PricingAdapter(ArrayList(), this)
         //  packsAddonsAdapter= PacksAddonsV3Adapter(featuresList,this)
 
 
@@ -120,7 +126,45 @@ class ComparePacksV3Activity :
         initializeFAQRecycler()
         // initializePacksAddonsRecycler()
         initializePacksV3Recycler()
+        initializePacksV3FooterRecycler()
+        initializePacksV3PricingRecycler()
 
+
+        binding?.packageBack?.setOnClickListener {
+            finish()
+        }
+
+//        binding?.priceSwitch1?.setOnClickListener {
+//            if (annualPlan) {
+//                annualPlan = true
+//                if (prefs.getYearPricing()) {
+//                    binding?.priceSwitch1?.setImageResource(R.drawable.ic_switch_off)
+//                    prefs.storeYearPricing(true)
+//                }
+//                else {
+//                    binding?.priceSwitch1?.setImageResource(R.drawable.ic_switch_on)
+//                    prefs.storeYearPricing(false)
+//                }
+//                prefs.storeCartValidityMonths("1")
+//                packsv3Adapter.notifyDataSetChanged()
+//                packsv3footerAdapter.notifyDataSetChanged()
+//
+//            }
+//            else{
+//                annualPlan = false
+//                if (prefs.getYearPricing()) {
+//                    binding?.priceSwitch1?.setImageResource(R.drawable.ic_switch_off)
+//                    prefs.storeYearPricing(false)
+//                }
+//                else {
+//                    binding?.priceSwitch1?.setImageResource(R.drawable.ic_switch_on)
+//                    prefs.storeYearPricing(true)
+//                }
+//                prefs.storeCartValidityMonths("1")
+//                packsv3Adapter.notifyDataSetChanged()
+//                packsv3footerAdapter.notifyDataSetChanged()
+//            }
+//        }
     }
 
 
@@ -170,9 +214,11 @@ class ComparePacksV3Activity :
                     )
                 }
                 if (listItem.size > 0) {
-                    updatePackageViewPager(listItem)
-                  //  upgradeList = listItemut
-                  //  loadPacksData()
+                    updatePackageRecycler(listItem)
+                    updatePackageFooterRecycler(listItem)
+                    updatePackagePricingRecycler(listItem)
+                    upgradeList = listItem
+                    loadPacksData()
 
 //                    for (items in listItem) {
 //                        Log.v("getkeyWidget", " " + items.name + " " + items.included_features.size)
@@ -215,9 +261,37 @@ class ComparePacksV3Activity :
         }
     }
 
-    fun updatePackageViewPager(list: List<Bundles>) {
+    fun updatePackageRecycler(list: List<Bundles>) {
         Log.v("updatePackageViewPager", " " + list.size)
         packsv3Adapter.addupdates(list)
+    }
+
+    private fun initializePacksV3FooterRecycler() {
+        val linearLayoutManager = LinearLayoutManager(applicationContext)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        binding?.packsv3footerrecycler?.apply {
+            layoutManager = linearLayoutManager
+            binding?.packsv3footerrecycler?.adapter = packsv3footerAdapter
+        }
+    }
+
+    fun updatePackageFooterRecycler(list: List<Bundles>) {
+        Log.v("updatePackageViewPager", " " + list.size)
+        packsv3footerAdapter.addupdates(list)
+    }
+
+    private fun initializePacksV3PricingRecycler() {
+        val linearLayoutManager = LinearLayoutManager(applicationContext)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        binding?.packsPriceRecycler?.apply {
+            layoutManager = linearLayoutManager
+            binding?.packsPriceRecycler?.adapter = packsv3pricingAdapter
+        }
+    }
+
+    fun updatePackagePricingRecycler(list: List<Bundles>) {
+        Log.v("updatePackageViewPager", " " + list.size)
+        packsv3pricingAdapter.addupdates(list)
     }
 
 
@@ -230,21 +304,27 @@ class ComparePacksV3Activity :
 //        }
 //    }
 
-   // private fun loadPacksData() {
-//        Glide.with(this).load(upgradeList?.get(0)?.primary_image!!.url)
-//            .into(binding?.packsImage1!!)
-//        Glide.with(this).load(upgradeList!![1].primary_image!!.url)
-//            .into(binding?.packsImage2!!)
-//        Glide.with(this).load(upgradeList!![2].primary_image!!.url)
-//            .into(binding?.packsImage3!!)
-//
-//        binding?.packTitle1?.text = upgradeList?.get(0)?.name
-//        binding?.packTitle2?.text = upgradeList?.get(1)?.name
-//        binding?.packTitle3?.text = upgradeList?.get(2)?.name
-//
-//        binding?.footerPack?.text = upgradeList?.get(0)?.name
-//        binding?.footerPack2?.text = upgradeList?.get(1)?.name
-//        binding?.footerPack3?.text = upgradeList?.get(2)?.name
-//
-//    }
+    private fun loadPacksData() {
+//        val wantedSubstr1: String = upgradeList?.get(0)?.name?.substring(7) ?: ""
+//        val wantedSubstr2: String = upgradeList?.get(1)?.name?.substring(7) ?: ""
+//        val wantedSubstr3: String = upgradeList?.get(2)?.name?.substring(7) ?: ""
+//        binding?.footerPack?.text = wantedSubstr1
+//        binding?.footerPack2?.text = wantedSubstr2
+//        binding?.footerPack3?.text = wantedSubstr3
+
+    }
+
+    override fun onPackageClicked(item: Bundles?, image: ImageView?) {
+        val dialogCard = ComparePacksV3BottomSheet()
+        val args = Bundle()
+        args.putString("fpid",fpid)
+        args.putString("bundleData", Gson().toJson(item))
+        args.putDouble("price", offeredBundlePrice)
+        args.putDouble("price1", originalBundlePrice)
+        if (item != null) {
+            args.putInt("addons", item.included_features.size)
+        }
+        dialogCard.arguments = args
+        dialogCard.show(this.supportFragmentManager, ComparePacksV3BottomSheet::class.java.name)
+    }
 }

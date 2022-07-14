@@ -267,9 +267,9 @@ object Utils1 {
         if(widgetType.equals("RECHARGE") || widgetType.equals("ONE_TIME")){
             return ""
         } else if (prefs.getYearPricing()){
-            return "  \n/year"
+            return "  \n /year"
         } else {
-            return "  \n/month"
+            return "  \n /month"
         }
     }
 
