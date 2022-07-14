@@ -109,7 +109,7 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
 
             pack.list_layout =RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT.getLayout()
             pack.posterList?.forEach {poster->
-                poster.variants?.firstOrNull()?.svgUrl =getLottieUrl()
+              //  poster.variants?.firstOrNull()?.svgUrl =getLottieUrl()
                 poster.layout_id = RecyclerViewItemType.TEMPLATE_VIEW_FOR_RV.getLayout()
             }
         }

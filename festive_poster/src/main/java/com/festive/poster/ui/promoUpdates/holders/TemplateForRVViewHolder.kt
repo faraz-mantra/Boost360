@@ -1,8 +1,8 @@
 package com.festive.poster.ui.promoUpdates.holders
 
-import android.widget.FrameLayout
-import androidx.cardview.widget.CardView
-import androidx.core.view.isVisible
+import android.graphics.drawable.Drawable
+import com.airbnb.lottie.LottieDrawable
+import com.bumptech.glide.RequestBuilder
 import com.festive.poster.R
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.ListItemTemplateForRvBinding
@@ -12,7 +12,7 @@ import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.ui.promoUpdates.edit_post.EditPostActivity
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
-import com.framework.utils.DateUtils
+import com.framework.glide.GlideApp
 import com.framework.webengageconstant.Promotional_Update_Edit_Click
 import com.framework.webengageconstant.Promotional_Update_Post_Click
 import com.framework.webengageconstant.Promotional_Update_WhatsApp_Share_Click
@@ -33,8 +33,18 @@ class TemplateForRVViewHolder(binding: ListItemTemplateForRvBinding):
             binding.ivLove.setTintColor(getColor(R.color.colorDBDBDB)!!)
 
         }
-        binding.lottie.setAnimationFromUrl(variant?.svgUrl)
-      //  SvgUtils.loadImage(variant?.svgUrl!!, binding.ivSvg, model.keys,model.isPurchased)
+      /*  val thumbnailRequest = GlideApp
+            .with(binding.ivSvg)
+            .`as`(LottieDrawable::class.java)
+            .load("https://assets7.lottiefiles.com/packages/lf20_ehegqmwn.json")
+
+        GlideApp.with(binding.ivSvg)
+            .`as`(LottieDrawable::class.java)
+            .thumbnail(thumbnailRequest)
+            .load(variant?.svgUrl)
+            .into(binding.ivSvg)*/
+
+        SvgUtils.loadImage(variant?.svgUrl!!, binding.ivSvg, model.keys,model.isPurchased)
         binding.btnShare.setOnClickListener {
             WebEngageController.trackEvent(Promotional_Update_WhatsApp_Share_Click)
             listener?.onItemClick(position,item, RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal)

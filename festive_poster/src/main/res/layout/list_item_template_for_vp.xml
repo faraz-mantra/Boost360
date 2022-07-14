@@ -48,12 +48,6 @@
                         android:scaleType="fitXY"
                         android:src="@color/colorPrimary" />
 
-                    <com.airbnb.lottie.LottieAnimationView
-                        app:lottie_autoPlay="true"
-                        app:lottie_rawRes="@raw/raksha_bandhan"
-                        android:id="@+id/lottie"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
 
                 </com.framework.views.customViews.CustomCardView>
 

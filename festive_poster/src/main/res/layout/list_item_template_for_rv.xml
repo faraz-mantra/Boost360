@@ -42,18 +42,10 @@
 
                     <com.festive.poster.customviews.SquareImageView
                         android:id="@+id/iv_svg"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
                         android:src="@color/colorPrimary" />
 
-                    <com.festive.poster.customviews.SquareLottieView
-                        app:lottie_autoPlay="true"
-                        android:id="@+id/lottie"
-                        app:lottie_loop="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
 
 
                 </com.framework.views.customViews.CustomCardView>

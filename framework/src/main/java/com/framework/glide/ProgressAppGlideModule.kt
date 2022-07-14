@@ -3,6 +3,8 @@ package com.framework.glide
 import android.content.Context
 import android.graphics.drawable.PictureDrawable
 import android.util.Log
+import com.airbnb.lottie.LottieComposition
+import com.airbnb.lottie.LottieDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Registry
 import com.bumptech.glide.annotation.GlideModule
@@ -14,6 +16,8 @@ import com.framework.glide.customsvgloader.CustomPictureDrawable
 import com.framework.glide.customsvgloader.CustomSvgDecoder
 import com.framework.glide.customsvgloader.CustomSvgDrawableTranscoder
 import com.framework.glide.customsvgloader.SvgCustomDataModel
+import com.framework.glide.lottie_decoder.LottieDecoder
+import com.framework.glide.lottie_decoder.LottieDrawableTranscoder
 import okhttp3.OkHttpClient
 import java.io.InputStream
 
@@ -55,5 +59,14 @@ class ProgressAppGlideModule : AppGlideModule() {
     registry
       .register(SvgCustomDataModel::class.java, CustomPictureDrawable::class.java, CustomSvgDrawableTranscoder())
       .append(InputStream::class.java, SvgCustomDataModel::class.java, CustomSvgDecoder())
+
+      registry
+          .register(
+              LottieComposition::class.java, LottieDrawable::class.java,
+             LottieDrawableTranscoder()
+          )
+          .append(InputStream::class.java, LottieComposition::class.java,
+              LottieDecoder()
+          )
   }
 }
