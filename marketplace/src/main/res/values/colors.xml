@@ -387,4 +387,7 @@
     <color name="givefeedbackColorBG">#FFFCF6</color>
     <color name="pack_details_bg_color">#F5F8FD</color>
 
+    <color name="colorAccent1Positive">@color/colorAccent1</color>
+    <color name="colorAccent1Negative">@color/colorPrimaryDark1</color>
+
 </resources>
