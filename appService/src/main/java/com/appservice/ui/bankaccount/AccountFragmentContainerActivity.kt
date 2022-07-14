@@ -87,19 +87,6 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
   }
 
 
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    val toolbarMenu = menu ?: return super.onCreateOptionsMenu(menu)
-    val menuRes = getMenuRes() ?: return super.onCreateOptionsMenu(menu)
-    menuInflater.inflate(menuRes, toolbarMenu)
-    return true
-  }
-
-  open fun getMenuRes(): Int? {
-    return when (type) {
-      else -> null
-    }
-  }
-
   override fun getToolbarTitle(): String? {
     return when (type) {
       FragmentType.ADD_BANK_ACCOUNT_START -> getString(R.string.my_bank_account_)
