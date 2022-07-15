@@ -33,18 +33,18 @@ class TemplateForRVViewHolder(binding: ListItemTemplateForRvBinding):
             binding.ivLove.setTintColor(getColor(R.color.colorDBDBDB)!!)
 
         }
-      /*  val thumbnailRequest = GlideApp
+        val thumbnailRequest = GlideApp
             .with(binding.ivSvg)
             .`as`(LottieDrawable::class.java)
             .load("https://assets7.lottiefiles.com/packages/lf20_ehegqmwn.json")
 
         GlideApp.with(binding.ivSvg)
             .`as`(LottieDrawable::class.java)
-            .thumbnail(thumbnailRequest)
+         //   .thumbnail(thumbnailRequest)
             .load(variant?.svgUrl)
-            .into(binding.ivSvg)*/
+            .into(binding.ivSvg)
 
-        SvgUtils.loadImage(variant?.svgUrl!!, binding.ivSvg, model.keys,model.isPurchased)
+      //  SvgUtils.loadImage(variant?.svgUrl!!, binding.ivSvg, model.keys,model.isPurchased)
         binding.btnShare.setOnClickListener {
             WebEngageController.trackEvent(Promotional_Update_WhatsApp_Share_Click)
             listener?.onItemClick(position,item, RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal)

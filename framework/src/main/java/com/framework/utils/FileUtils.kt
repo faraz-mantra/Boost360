@@ -1,12 +1,14 @@
 package com.framework.utils
 
 import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.provider.DocumentsContract
 import android.provider.OpenableColumns
+import androidx.core.content.FileProvider
 import com.framework.BaseApplication
 import com.framework.R
 import java.io.*
@@ -216,6 +218,17 @@ object FileUtils {
 
   fun getTempFile(extension:String):File{
     return File(BaseApplication.instance.getExternalFilesDir(null)?.path+File.separator+"temp."+extension)
+  }
+
+  fun File.view(type:String,context: Context){
+    val pdfUri= FileProvider.getUriForFile(
+      context,
+      context.packageName + ".provider",this)
+    val intent = Intent(Intent.ACTION_VIEW)
+    intent.setDataAndType(pdfUri, type)
+    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+    context.startActivity(intent)
   }
 }
 

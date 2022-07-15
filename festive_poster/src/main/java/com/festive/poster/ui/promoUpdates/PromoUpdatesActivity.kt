@@ -1,28 +1,19 @@
 package com.festive.poster.ui.promoUpdates
 
-import android.graphics.BlendMode
-import android.graphics.PorterDuff
 import android.view.View
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager2.widget.ViewPager2
+import androidx.lifecycle.lifecycleScope
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.constant.Constants
 import com.festive.poster.databinding.ActivityPromoUpdatesBinding
-import com.festive.poster.models.promoModele.SocialConnModel
-import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
+import com.festive.poster.utils.LottieToGif2
 import com.festive.poster.utils.WebEngageController
-import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.PromoUpdatesViewModel
-import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.utils.setStatusBarColor
 import com.framework.webengageconstant.Post_Promotional_Update_Click
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.launch
 
 class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoUpdatesViewModel>() {
 
@@ -38,7 +29,13 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoU
 
     override fun onCreateView() {
         super.onCreateView()
-
+        lifecycleScope.launchWhenCreated {
+            LottieToGif2.convert(
+                this@PromoUpdatesActivity,
+                "https://assets9.lottiefiles.com/private_files/lf30_dhkktwhk.json",
+                getExternalFilesDir(null)?.path!!
+            )
+        }
         WebEngageController.trackEvent(Post_Promotional_Update_Click)
         session = UserSessionManager(this)
         // sharedViewModel?.shouldRefresh=true
