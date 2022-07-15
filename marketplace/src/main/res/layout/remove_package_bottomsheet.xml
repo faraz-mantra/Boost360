@@ -87,7 +87,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@drawable/selected_orange_border_bg"
+            android:background="@drawable/remove_pack_bg"
             android:fontFamily="@font/bold"
             android:gravity="center"
             android:paddingStart="@dimen/_30sdp"

@@ -37,23 +37,25 @@
         android:textColor="@color/common_text_color"
         android:textSize="@dimen/_11sdp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/primary_layout"
         app:layout_constraintTop_toTopOf="@id/primary_layout" />
 
 
-    <TextView
-        android:id="@+id/video_type"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_5sdp"
-        android:fontFamily="@font/regular"
-        android:layout_marginStart="@dimen/_7sdp"
-        android:layout_marginEnd="@dimen/_7sdp"
-        android:text="Website Chatbot"
-        android:textColor="@color/dot_grey"
-        android:textSize="@dimen/_11sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/primary_layout"
-        app:layout_constraintTop_toBottomOf="@id/video_title" />
+<!--    <TextView-->
+<!--        android:id="@+id/video_type"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="@dimen/_5sdp"-->
+<!--        android:visibility="gone"-->
+<!--        android:fontFamily="@font/regular"-->
+<!--        android:layout_marginStart="@dimen/_7sdp"-->
+<!--        android:layout_marginEnd="@dimen/_7sdp"-->
+<!--        android:text="Website Chatbot"-->
+<!--        android:textColor="@color/dot_grey"-->
+<!--        android:textSize="@dimen/_11sdp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@id/primary_layout"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/video_title" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

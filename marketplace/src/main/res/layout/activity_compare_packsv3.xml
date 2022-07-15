@@ -159,7 +159,7 @@
                                 android:layout_height="wrap_content"
                                 app:layout_constraintStart_toEndOf="@+id/mainll"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
+
                                 tools:itemCount="3"
                                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 tools:listitem="@layout/item_packsv3"

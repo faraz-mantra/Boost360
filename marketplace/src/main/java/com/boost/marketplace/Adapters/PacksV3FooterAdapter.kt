@@ -186,7 +186,7 @@ class PacksV3FooterAdapter(
                         if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) {
                             holder.tv_price.setText(
                                 "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                                    .format(offeredBundlePrice) + Utils.yearlyOrMonthlyOrEmptyValidity(
+                                    .format(RootUtil.round(offeredBundlePrice,0)) + Utils.yearlyOrMonthlyOrEmptyValidity(
                                     "",
                                     activity
                                 )
@@ -195,7 +195,7 @@ class PacksV3FooterAdapter(
                             holder.tv_price.setText(
                                 "₹" +
                                         NumberFormat.getNumberInstance(Locale.ENGLISH)
-                                            .format(offeredBundlePrice)
+                                            .format(RootUtil.round(offeredBundlePrice,0))
                                         +  Utils.yearlyOrMonthlyOrEmptyValidity(
                                     "",
                                     activity
