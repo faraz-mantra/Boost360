@@ -195,13 +195,15 @@
         style="@style/ButtonStyle.Rounded"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:paddingVertical="@dimen/size_12"
         android:text="@string/refresh_status_camel_case"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="15dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

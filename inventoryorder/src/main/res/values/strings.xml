@@ -210,8 +210,8 @@
   <string name="paste_consignment_id">Paste Consignment ID</string>
   <string name="consignment_tracking_url_provided_by_vendor">Consignment tracking URL (provided by vendor)</string>
   <string name="paste_consignment_tracking_url">Paste consignment tracking URL</string>
-  <string name="appointment_cancel">Appointment cancel successfully!</string>
-  <string name="order_cancel">Order cancel successfully!</string>
+  <string name="appointment_cancel">Appointment cancelled successfully!</string>
+  <string name="order_cancel">Order cancelled successfully!</string>
   <string name="order_shipped">Order shipped successfully!</string>
   <string name="apt_start_success">Appointment start successfully!</string>
   <string name="apt_served_success">Appointment served successfully!</string>
@@ -445,7 +445,7 @@
   <string name="error_sharing_invoice">Error sharing invoice, please try again.</string>
   <string name="order_invoice">Order invoice</string>
   <string name="share_invoice">Share invoice...</string>
-  <string name="invalid_invoice_url">Invalid invoice url.</string>
+  <string name="invalid_invoice_url">Invoice not generated.</string>
   <string name="no_order_available">No order available.</string>
   <string name="delivery_person_name_cant_be_empty">Delivery person name can\'t be empty.</string>
   <string name="delivery_person_number_cant_be_empty">Delivery person number can\'t be empty.</string>

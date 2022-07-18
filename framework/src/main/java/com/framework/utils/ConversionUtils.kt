@@ -5,12 +5,14 @@ import android.content.res.Resources
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.util.Log
+import android.util.DisplayMetrics
 import android.view.View
 import com.framework.BaseApplication
 import com.framework.helper.MemoryConstants
 import com.framework.helper.TimeConstants
 import java.io.*
+import kotlin.math.roundToInt
+
 
 object ConversionUtils {
 
@@ -504,4 +506,11 @@ object ConversionUtils {
     }
     return null
   }
+}
+
+
+fun dpToPx(dp:Float): Int {
+  val displayMetrics: DisplayMetrics = BaseApplication.instance.resources.displayMetrics
+  return (dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
+
 }

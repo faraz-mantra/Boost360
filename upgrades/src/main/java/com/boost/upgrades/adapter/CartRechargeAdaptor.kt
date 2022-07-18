@@ -54,8 +54,8 @@ class CartRechargeAdaptor(cardItems: List<CartModel>?, val listener: CartFragmen
     Glide.with(context).load(list.get(position).link).placeholder(R.drawable.boost_360_insignia)
       .into(holder.image)
     holder.title.text = list.get(position).item_name
-    val price = list.get(position).price * list.get(position).min_purchase_months
-    val MRPPrice = list.get(position).MRPPrice * list.get(position).min_purchase_months
+    val price = Utils.priceCalculatorForYear(list.get(position).price * list.get(position).min_purchase_months, list.get(position).widget_type, activity)
+    val MRPPrice = Utils.priceCalculatorForYear(list.get(position).MRPPrice * list.get(position).min_purchase_months, list.get(position).widget_type, activity)
     holder.price.text =
       "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price)
     if (price != MRPPrice) {

@@ -476,10 +476,10 @@
                             android:textColor="#F44336"
                             android:textSize="@dimen/_20sdp" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/months_validity"
                             android:layout_width="50dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:background="@drawable/et_validity"
                             android:ems="2"
                             android:fontFamily="@font/open_sans"
@@ -487,6 +487,7 @@
                             android:inputType="number"
                             android:maxLength="2"
                             android:text="0"
+                            android:editable="false"
                             android:textColor="@color/globalLight"
                             android:textCursorDrawable="@null"
                             android:textSize="@dimen/_13sdp" />

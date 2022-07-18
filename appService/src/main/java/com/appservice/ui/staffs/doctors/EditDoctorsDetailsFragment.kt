@@ -96,12 +96,12 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
   }
 
   private fun setupUIColor() {
-    changeColorOfSubstring(R.string.name_doctor, R.color.colorAccent, "*", binding?.tvDoctorName!!)
-    changeColorOfSubstring(R.string.description, R.color.colorAccent, "*", binding?.tvDoctorDesc!!)
-    changeColorOfSubstring(R.string.speciality, R.color.colorAccent, "*", binding?.tvDoctorSpeciality!!)
-    changeColorOfSubstring(R.string.business_license, R.color.colorAccent, "*", binding?.tvDoctorLicense!!)
-    changeColorOfSubstring(R.string.upload_signature_, R.color.colorAccent, "*", binding?.tvDoctorUploadSignature!!)
-    changeColorOfSubstring(R.string.appointment_booking_window_for_patients, R.color.colorAccent, "*", binding?.tvDoctorBookingWindow!!)
+    changeColorOfSubstring(R.string.name_doctor, R.color.black_4a4a4a, "*", binding?.tvDoctorName!!)
+    changeColorOfSubstring(R.string.description, R.color.black_4a4a4a, "*", binding?.tvDoctorDesc!!)
+    changeColorOfSubstring(R.string.speciality, R.color.black_4a4a4a, "*", binding?.tvDoctorSpeciality!!)
+    changeColorOfSubstring(R.string.business_license, R.color.black_4a4a4a, "*", binding?.tvDoctorLicense!!)
+    changeColorOfSubstring(R.string.upload_signature_, R.color.black_4a4a4a, "*", binding?.tvDoctorUploadSignature!!)
+    changeColorOfSubstring(R.string.appointment_booking_window_for_patients, R.color.black_4a4a4a, "*", binding?.tvDoctorBookingWindow!!)
   }
 
   private fun checkDoctorAdded() {

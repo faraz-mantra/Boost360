@@ -597,3 +597,6 @@ const val Promotional_Update_Browse_All_Loaded="Promotional_Update_Browse_All_Lo
 const val Promotional_Update_Category_Click="Promotional_Update_Category_Click"
 const val Promotional_Update_Category_Loaded="Promotional_Update_Category_Loaded"
 const val Promotional_Update_Category_Album_View_Click="Promotional_Update_Category_Album_View_Click"
+
+const val ECOM_BUSINESS_VERIFICATION_LOAD="Ecom_Business_Verification_Load"
+const val ECOM_BUSINESS_VERIFICATION_UPDATE="Ecom_Business_Verification_Update"
