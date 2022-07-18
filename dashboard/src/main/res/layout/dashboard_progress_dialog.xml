@@ -2,36 +2,34 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <com.framework.views.customViews.CustomCardView
+
+  <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/size_2"
-    app:cardElevation="@dimen/size_1"
-    app:cardUseCompatPadding="true">
+    android:layout_height="@dimen/size_120"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="horizontal">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/size_100"
-      android:background="@color/white"
-      android:gravity="center"
-      android:orientation="horizontal">
+    <ProgressBar
+      android:id="@+id/progress"
+      android:layout_width="@dimen/size_42"
+      android:layout_height="@dimen/size_42"
+      android:layout_marginEnd="@dimen/size_20"
+      android:indeterminateTint="@color/colorPrimary"/>
 
-      <ProgressBar
-        android:layout_width="@dimen/size_42"
-        android:layout_height="@dimen/size_42"
-        android:layout_marginEnd="@dimen/size_20"
-        android:indeterminateTint="@color/colorPrimary" />
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/title"
+      style="@style/wrap_wrap"
+      android:ellipsize="end"
+      android:maxLines="1"
+      android:text="@string/please_wait"
+      android:layout_toEndOf="@+id/progress"
+      android:gravity="start|center_vertical"
+      android:layout_alignTop="@+id/progress"
+      android:layout_alignBottom="@+id/progress"
+      android:textColor="@color/greyish_brown"
+      app:textType="HEADING_6" />
 
-      <com.framework.views.customViews.CustomTextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/please_wait"
-        android:textColor="@color/greyish_brown"
-        app:textType="HEADING_6" />
+  </RelativeLayout>
 
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-  </com.framework.views.customViews.CustomCardView>
 </layout>

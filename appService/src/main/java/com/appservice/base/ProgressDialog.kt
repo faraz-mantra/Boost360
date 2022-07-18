@@ -32,16 +32,16 @@ class ProgressDialog : BaseDialogFragment<ProgressDialogBinding, BaseViewModel>(
     return BaseViewModel::class.java
   }
 
-  override fun getTheme(): Int {
-    return R.style.MaterialDialogTheme
-  }
-
   override fun onCreateView() {
     title?.let { binding?.title?.text = it }
   }
 
-  override fun getWidth(): Int? {
-    return ScreenUtils.instance.getWidth(activity) - ConversionUtils.dp2px(32f)
+  override fun getWidth(): Int {
+    return ScreenUtils.instance.getWidth(activity) - ConversionUtils.dp2px(10f)
+  }
+
+  override fun getHeight(): Int {
+    return ConversionUtils.dp2px(130f)
   }
 
   fun showProgress(manager: FragmentManager) {
