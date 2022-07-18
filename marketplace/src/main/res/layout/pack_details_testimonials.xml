@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/pad_8dp"
+    android:paddingEnd="@dimen/pad_8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/pad_8dp"
+        android:layout_marginEnd="@dimen/pad_8dp"
+        app:cardCornerRadius="@dimen/pad_10dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="#FFEFDA">
+
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          >
+          <TextView
+              android:id="@+id/tv_benefit_title"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:fontFamily="@font/semi_bold"
+              android:textFontWeight="600"
+              android:paddingStart="8dp"
+              android:paddingTop="8dp"
+              android:textSize="14sp"
+              android:text="Customer Testimonials"/>
+
+          <ImageView
+              android:layout_width="24dp"
+              android:layout_height="24dp"
+              android:src="@drawable/ic_benefits_design"
+              android:layout_gravity="bottom|start"
+              android:layout_marginBottom="@dimen/pad_10dp"
+              android:layout_marginStart="7dp"
+              android:layout_marginTop="@dimen/pad_20dp"
+              />
+      </LinearLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

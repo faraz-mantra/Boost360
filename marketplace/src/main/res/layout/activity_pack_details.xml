@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/pack_details_bg_color"
     tools:context=".ui.pack_details.PackDetailsActivity">
 
@@ -17,15 +17,14 @@
         android:elevation="@dimen/cardview_default_elevation"
         app:contentInsetEnd="0dp"
         app:contentInsetStart="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+       >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/details_header"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/transparent">
+
             <RelativeLayout
                 android:id="@+id/imageViewCart121"
                 android:layout_width="0dp"
@@ -85,7 +84,331 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
     </androidx.appcompat.widget.Toolbar>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:paddingBottom="50dp"
+        android:clipToPadding="false"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@color/colorWhite"
+                android:paddingTop="@dimen/dimen_16dp"
+                android:paddingBottom="@dimen/dimen_16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <ImageView
+                    android:id="@+id/package_img"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="@dimen/dimen_16dp"
+                    android:layout_marginEnd="@dimen/dimen_16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/addons" />
+
+                <TextView
+                    android:id="@+id/tv_saving"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_16dp"
+                    android:background="@drawable/new_savings_tv_bg"
+                    android:fontFamily="@font/regular"
+                    android:paddingStart="@dimen/_6dp"
+                    android:paddingTop="@dimen/pad_3dp"
+                    android:paddingEnd="@dimen/_6dp"
+                    android:paddingBottom="@dimen/pad_3dp"
+                    android:text="35% SAVING"
+                    android:textColor="@color/white"
+                    android:textFontWeight="700"
+                    android:textSize="@dimen/txt_10sp"
+                    app:layout_constraintStart_toEndOf="@id/package_img"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_16dp"
+                    android:layout_marginTop="7dp"
+                    android:fontFamily="@font/semi_bold"
+                    android:text="Online Basic Pack"
+                    android:textColor="@color/main_color_gray_dk"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/txt_18sp"
+                    app:layout_constraintStart_toEndOf="@id/package_img"
+                    app:layout_constraintTop_toBottomOf="@id/tv_saving" />
+
+                <LinearLayout
+                    android:id="@+id/pricing_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_16dp"
+                    android:layout_marginTop="@dimen/_6dp"
+                    app:layout_constraintStart_toEndOf="@id/package_img"
+                    app:layout_constraintTop_toBottomOf="@id/title">
+
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/bold"
+                        android:text="₹2,999"
+                        android:textColor="#333333"
+                        android:textFontWeight="700"
+                        android:textSize="@dimen/txt_16sp" />
+
+                    <TextView
+                        android:id="@+id/mrpPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/regular"
+                        android:text="₹2,999"
+                        android:textColor="@color/copy_coupon_text_color"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/txt_14sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/title_bottom2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_18dp"
+                    android:drawableStart="@drawable/ic_used_by_new"
+                    android:fontFamily="@font/regular"
+                    android:text="Used by 10,000+ businesses"
+                    android:textColor="@color/offer_border"
+                    android:textFontWeight="400"
+                    android:textSize="12sp"
+                    android:layout_marginStart="@dimen/dimen_16dp"
+                    android:textAlignment="center"
+                    android:drawablePadding="4dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pricing_layout" />
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="@color/bg_color_f4"
+                    android:layout_marginTop="@dimen/dimen_16dp"
+                    android:layout_marginStart="@dimen/dimen_16dp"
+                    android:layout_marginEnd="@dimen/dimen_16dp"
+                    app:layout_constraintTop_toBottomOf="@id/title_bottom2"
+                    />
+                <TextView
+                    android:id="@+id/tv_premium_features_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="4 PREMIUM FEATURES ideal for small businesses that want to get started with online sales."
+                    app:layout_constraintTop_toBottomOf="@id/divider"
+                    android:layout_marginStart="@dimen/dimen_16dp"
+                    android:layout_marginEnd="@dimen/dimen_16dp"
+                    android:layout_marginTop="@dimen/dimen_16dp"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_testimonial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_16dp"
+                    tools:listitem="@layout/pack_details_testimonials"
+                    tools:itemCount="4"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tv_premium_features_no"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/query_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_16dp"
+                android:layout_marginTop="@dimen/dimen_32_dp"
+                android:layout_marginEnd="@dimen/dimen_16dp"
+                android:background="@drawable/rounded_curve_bg"
+                android:drawableStart="@drawable/ic_help_white"
+                android:fontFamily="@font/regular"
+                android:drawablePadding="@dimen/pad_10dp"
+                android:padding="17.5dp"
+                android:text="Have a query? Call an expert"
+                android:textColor="@color/colorPrimary1"
+                android:textSize="14sp"
+                android:textFontWeight="600"
+                app:layout_constraintTop_toBottomOf="@id/container_white" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_key_benefits"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_curve_bg"
+                app:layout_constraintTop_toBottomOf="@id/query_text"
+                android:layout_marginTop="32dp"
+                android:layout_marginStart="@dimen/dimen_16dp"
+                android:layout_marginEnd="@dimen/dimen_16dp"
+                android:paddingBottom="@dimen/dimen_16dp"
+                >
+                <TextView
+                    android:id="@+id/tv_heading_key_benefits"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Key benefits of this pack"
+                    android:layout_marginStart="@dimen/dimen_16dp"
+                    android:layout_marginTop="@dimen/dimen_16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textColor="#333333"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/txt_16sp"
+                    android:fontFamily="@font/regular"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/benefits_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_16dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_heading_key_benefits" />
+
+
+                <com.framework.views.dotsindicator.DotsIndicator
+                    android:id="@+id/benefits_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    app:dotsColor="@color/btn_bg_color_disabled"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="6dp"
+                    app:dotsSpacing="6dp"
+                    app:dotsWidthFactor="2.5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/benefits_viewpager"
+                    app:progressMode="false"
+                    app:selectedDotColor="@color/colorAccent1" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/container_key_benefits"
+                android:background="@drawable/rounded_curve_black_bg"
+                >
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+    <LinearLayout
+        android:id="@+id/bottom_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible"
+        tools:visibility="visible"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dimen_16dp"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/final_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₹2,999"
+                android:fontFamily="@font/semi_bold"
+                android:textFontWeight="600"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/mrp_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/staff/month"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/add_item_to_cart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:layout_marginBottom="@dimen/dimen_12dp"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            android:background="@drawable/cta_button_click_effect"
+            android:fontFamily="@font/regular"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:textSize="@dimen/txt_16sp"
+            android:textFontWeight="700"
+            android:paddingBottom="10dp"
+            android:text="Buy online basic"
+            android:layout_marginStart="56dp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_bottom3" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/bottom_box_only_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        tools:visibility="gone"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/add_item_to_cart_new"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_16dp"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            android:layout_marginTop="@dimen/dimen_12dp"
+            android:layout_marginBottom="@dimen/dimen_12dp"
+            android:background="@drawable/cta_button_click_effect"
+            android:fontFamily="@font/regular"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textFontWeight="700"
+            android:text="Buy online basic"
+            android:textSize="@dimen/txt_16sp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_bottom3" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>
