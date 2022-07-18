@@ -74,7 +74,7 @@ class CartPackageAdaptor(
     holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + Utils.yearlyOrMonthlyOrEmptyValidity("", activity)
 
     if (selectedBundle.link != null) {
-      Glide.with(context).load(selectedBundle.link!!).placeholder(R.drawable.boost_360_insignia)
+      Glide.with(context).load(selectedBundle.link!!)//.placeholder(R.drawable.boost_360_insignia)
         .into(holder.image)
     } else {
       holder.image.setImageResource(R.drawable.rectangle_copy_18)

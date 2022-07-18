@@ -55,7 +55,7 @@ class VideosListAdapter(videoList: List<YoutubeVideoModel>, listen: VideosListen
 
     }
     holder.title.setText(list.get(position).title)
-    holder.videoType.setText(list.get(position).desc)
+    //holder.videoType.setText(list.get(position).desc)
 
     holder.itemView.setNoDoubleClickListener ({
       listener.onPlayYouTubeVideo(list.get(position))
@@ -66,7 +66,7 @@ class VideosListAdapter(videoList: List<YoutubeVideoModel>, listen: VideosListen
   class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val image = itemView.findViewById<ImageView>(R.id.primary_image)
     val title = itemView.findViewById<TextView>(R.id.video_title)
-    val videoType = itemView.findViewById<TextView>(R.id.video_type)
+    //val videoType = itemView.findViewById<TextView>(R.id.video_type)
   }
 
 }

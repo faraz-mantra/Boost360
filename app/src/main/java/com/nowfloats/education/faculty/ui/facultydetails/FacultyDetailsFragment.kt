@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.boost.dbcenterapi.utils.Utils
+import com.appservice.utils.changeColorOfSubstring
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.nowfloats.Login.UserSessionManager
@@ -98,6 +99,13 @@ class FacultyDetailsFragment(private val facultyData: Data?) : BaseFragment(),
     }
 
     initLiveDataObservables()
+    setupUIColor()
+  }
+
+  private fun setupUIColor() {
+    changeColorOfSubstring(R.string.add_profile_image, com.appservice.R.color.color_747474, "*", binding.tvAddProfileImage)
+    changeColorOfSubstring(R.string.name, com.appservice.R.color.color_747474, "*", binding.tvFacultyName)
+    changeColorOfSubstring(R.string.designation_aster, com.appservice.R.color.color_747474, "*", binding.tvFacultyDesignation)
   }
 
   private fun addUpdateFacultyData() {

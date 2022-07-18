@@ -94,12 +94,19 @@ class BookATableDetailsFragment : Fragment() {
       datePickerDialog.show()
     }
 
-    val time = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-      myCalendar.set(Calendar.HOUR_OF_DAY, hour)
-      myCalendar.set(Calendar.MINUTE, minute)
+    val time = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+      val c = Calendar.getInstance()
+      myCalendar[Calendar.HOUR_OF_DAY] = hour
+      myCalendar[Calendar.MINUTE] = minute
 
+      if (myCalendar.timeInMillis >= c.timeInMillis) {
+        //it's after current
+        time_value.setText(SimpleDateFormat("hh:mm aa").format(myCalendar.time))
+      } else {
+        //it's before current'
+        Toast.makeText(context, "Please select valid timings.", Toast.LENGTH_LONG).show()
+      }
 
-      time_value.setText(SimpleDateFormat("hh:mm aa").format(myCalendar.time))
     }
 
     time_value.setOnClickListener {
@@ -227,6 +234,13 @@ class BookATableDetailsFragment : Fragment() {
         .show()
       return false
     }
+
+    if (totalPeople == "0"){
+      Toast.makeText(requireContext(), "Please select Table for.", Toast.LENGTH_SHORT)
+        .show()
+      return false
+    }
+
 
     return true
   }

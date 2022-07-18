@@ -1972,20 +1972,27 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="email_not_Empty" translatable="false">Email can\'t be empty.</string>
     <string name="enter_company_description_100_characters_max" translatable="false">Enter company description <br /> (100 characters max)</string>
     <string name="client_name" translatable="false">Client name</string>
+    <string name="client_name_aster" translatable="false">Client name *</string>
     <string name="enter_client_name" translatable="false">Enter client name</string>
     <string name="client_category" translatable="false">Client category</string>
+    <string name="client_category_aster" translatable="false">Client category *</string>
     <string name="enter_client_category" translatable="false">Enter client category</string>
     <string name="project_client_requirement" translatable="false">Project client requirement</string>
+    <string name="project_client_requirement_aster" translatable="false">Project client requirement *</string>
     <string name="enter_description_200_characters_max" translatable="false">Enter description <br /> (200 characters max)</string>
     <string name="our_approach" translatable="false">Our approach</string>
+    <string name="our_approach_aster" translatable="false">Our approach *</string>
     <string name="budget" translatable="false">Budget</string>
+    <string name="budget_aster" translatable="false">Budget *</string>
     <string name="date_of_completion" translatable="false">Date of completion</string>
+    <string name="date_of_completion_aster" translatable="false">Date of completion *</string>
     <string name="maximum_3" translatable="false">Maximum 3</string>
     <string name="jpg_png_800x800px" translatable="false">Jpg/png (800x800px)</string>
     <string name="completed" translatable="false">Completed</string>
     <string name="in_progress" translatable="false">In progress</string>
     <string name="withdraw" translatable="false">Withdraw</string>
     <string name="about_company" translatable="false">About company</string>
+    <string name="about_company_aster" translatable="false">About company *</string>
     <string name="thinkwalls_net" translatable="false">thinkwalls.net</string>
     <string name="booked_on" translatable="false">Booked on</string>
     <string name="expires_on" translatable="false">Expires on</string>
@@ -2106,7 +2113,9 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="uh_oh_you_have_no_subscribers">Uh oh, you have no subscribers</string>
     <string name="add_image">Add image</string>
     <string name="designation" translatable="false">Designation</string>
+    <string name="designation_aster" translatable="false">Designation *</string>
     <string name="company_title" translatable="false">Company title</string>
+    <string name="company_title_aster" translatable="false">Company title *</string>
     <string name="facebook_profile">Facebook profile</string>
     <string name="enter_facebook_url">Enter Facebook URL</string>
     <string name="twitter_profile">Twitter profile</string>
@@ -2338,6 +2347,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="ad310817fg6t">AD310817FG6T</string>
     <string name="inr_7_000">INR 7,000</string>
     <string name="date_">Date:</string>
+    <string name="date_aster">Date *</string>
     <string name="exp_deliv_date">Exp. Deliv. Date:</string>
     <string name="_31_08_2017" translatable="false">31/08/2017</string>
     <string name="add_address">Add Address</string>
@@ -3015,12 +3025,13 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="select_end">Select end</string>
     <string name="select_start">Select start</string>
     <string name="enter_your_message">Enter your message</string>
-    <string name="message_option">Message (option)</string>
+    <string name="message_option">Message (optional)</string>
     <string name="_00_00_am_pm">00:00 AM/PM</string>
     <string name="_00_00_0000">00-00-0000</string>
-    <string name="table_for">Table for</string>
+    <string name="table_for">Table for *</string>
     <string name="contact_number">Contact number</string>
-    <string name="time_">Time</string>
+    <string name="contact_number_aster">Contact number *</string>
+    <string name="time_aster">Time *</string>
     <string name="primary_image">Primary image</string>
     <string name="secondary_images_8_max_jpeg_800x800px">Secondary Images (8 max, jpeg, 800x800px)</string>
     <string name="browse_secondary_images">Browse secondary images</string>
@@ -3082,6 +3093,8 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="allow_access">Allow access</string>
     <string name="files_size_less_2mb">Make sure your file size is lesser than 2 MB!</string>
     <string name="cannot_upload_more_than_8">You can not upload more than 8 background images for better website experience.</string>
+    <string name="enter_review_description">Enter Review Description</string>
+    <string name="person_info">Person Info</string>
 
     <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
     <!--    <string name="ir_statusBarColor">#ffb900</string>-->

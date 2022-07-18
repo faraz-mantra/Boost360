@@ -128,40 +128,48 @@
 
         </LinearLayout>
 
-        <com.framework.views.customViews.CustomTextView
-          style="@style/AppointmentSetting_Text_Heading"
-          android:layout_marginTop="@dimen/size_30"
-          android:text="@string/default_tax_rate_for_services" />
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/view_gst"
+          android:orientation="vertical">
 
-        <com.framework.views.customViews.CustomTextField
-          style="@style/Appointment_Text_Field"
-          android:background="@drawable/bg_rect_white_rounded_4"
-          android:drawableEnd="@drawable/ic_down_arrow_gray"
-          android:focusable="false"
-          android:hint="0%"
-          android:clickable="true"
-          android:id="@+id/edt_text_slab"
-          android:padding="@dimen/_14dp"
-          android:singleLine="true" />
+          <com.framework.views.customViews.CustomTextView
+            style="@style/AppointmentSetting_Text_Heading"
+            android:layout_marginTop="@dimen/size_30"
+            android:text="@string/default_tax_rate_for_services" />
 
-        <com.framework.views.customViews.CustomTextView
-          style="@style/Appointment_Text_Catalog_Heading"
-          android:layout_marginTop="@dimen/size_10"
-          android:text="@string/what_are_text_rates"
-          android:textColor="@color/warm_grey" />
+          <com.framework.views.customViews.CustomTextField
+            android:id="@+id/edt_text_slab"
+            style="@style/Appointment_Text_Field"
+            android:background="@drawable/bg_rect_white_rounded_4"
+            android:clickable="true"
+            android:drawableEnd="@drawable/ic_down_arrow_gray"
+            android:focusable="false"
+            android:hint="0%"
+            android:padding="@dimen/_14dp"
+            android:singleLine="true" />
 
-        <com.framework.views.customViews.CustomTextView
-          style="@style/AppointmentCatalogSettingText2"
-          android:text="@string/tax_slabs_are_a_rate_at_which_any_service_is_taxable_determined_by_gst_council_of_india_this_is_used_to_" />
+          <com.framework.views.customViews.CustomTextView
+            style="@style/Appointment_Text_Catalog_Heading"
+            android:layout_marginTop="@dimen/size_10"
+            android:text="@string/what_are_text_rates"
+            android:textColor="@color/warm_grey" />
 
-        <com.framework.views.customViews.CustomTextView
-          style="@style/Appointment_Text_Catalog_Heading"
-          android:text="@string/how_does_default_rate_work"
-          android:textColor="@color/warm_grey" />
+          <com.framework.views.customViews.CustomTextView
+            style="@style/AppointmentCatalogSettingText2"
+            android:text="@string/tax_slabs_are_a_rate_at_which_any_service_is_taxable_determined_by_gst_council_of_india_this_is_used_to_" />
 
-        <com.framework.views.customViews.CustomTextView
-          style="@style/AppointmentCatalogSettingText2"
-          android:text="@string/this_will_be_used_as_defau" />
+          <com.framework.views.customViews.CustomTextView
+            style="@style/Appointment_Text_Catalog_Heading"
+            android:text="@string/how_does_default_rate_work"
+            android:textColor="@color/warm_grey" />
+
+          <com.framework.views.customViews.CustomTextView
+            style="@style/AppointmentCatalogSettingText2"
+            android:text="@string/this_will_be_used_as_defau" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
       </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.core.widget.NestedScrollView>

@@ -14,18 +14,18 @@ import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.R
 import com.boost.marketplace.infra.utils.Utils1
+import com.boost.marketplace.interfaces.PacksV3listener
 import com.boost.marketplace.ui.comparePacksV3.ComparePacksV3Activity
 import com.bumptech.glide.Glide
 import com.framework.utils.RootUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.text.NumberFormat
-import java.util.*
 
 class PacksV3Adapter(
     var list: ArrayList<Bundles>,
-    val activity: ComparePacksV3Activity
+    val activity: ComparePacksV3Activity,
+    var packsListener: PacksV3listener
 ) : RecyclerView.Adapter<PacksV3Adapter.ParentViewHolder>() {
 
     lateinit var context: Context
@@ -51,8 +51,8 @@ class PacksV3Adapter(
         val sameAddonsInCart = ArrayList<String>()
         val addonsListInCart = ArrayList<String>()
         val parentItem = list[position]
-        parentViewHolder.PackageItemTitle.text = parentItem.name
-        val data = parentItem.name
+        parentViewHolder.PackageItemTitle.text = parentItem.name?.substring(7) ?: ""
+        val data = parentItem.name?.substring(7) ?: ""
         val items = data!!.split(" ".toRegex())
         if (items.size == 1) {
             parentViewHolder.PackageItemTitle.text = items[0]
@@ -67,6 +67,12 @@ class PacksV3Adapter(
             parentViewHolder.PackageItemTitle.text =
                 items[0] + " " + items[1] + " \n" + items[2] + " " + items[3] + " " + items[4]
         }
+
+        parentViewHolder.itemView.setOnClickListener {
+            packsListener.onPackageClicked(parentItem,null)
+        }
+
+
 
         val listSamp = ArrayList<String>()
         for (item in parentItem.included_features) {
@@ -126,7 +132,7 @@ class PacksV3Adapter(
 
     inner class ParentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val PackageItemTitle: TextView
-        val tv_price: TextView
+//        val tv_price: TextView
         val package_profile_image: ImageView
 
         init {
@@ -134,10 +140,10 @@ class PacksV3Adapter(
                 .findViewById(
                     R.id.pack_title1
                 )
-            tv_price = itemView
-                .findViewById(
-                    R.id.pack_price1
-                )
+//            tv_price = itemView
+//                .findViewById(
+//                    R.id.pack_price1
+//                )
             package_profile_image = itemView
                 .findViewById(
                     R.id.packs_image1
@@ -186,25 +192,25 @@ class PacksV3Adapter(
                             offeredBundlePrice = originalBundlePrice
 
                         }
-                        if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) {
-                            holder.tv_price.setText(
-                                "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                                    .format(offeredBundlePrice) + Utils1.yearlyOrMonthlyOrEmptyValidity(
-                                    "",
-                                    activity
-                                )
-                            )
-                        } else {
-                            holder.tv_price.setText(
-                                "₹" +
-                                        NumberFormat.getNumberInstance(Locale.ENGLISH)
-                                            .format(offeredBundlePrice)
-                                        +  Utils1.yearlyOrMonthlyOrEmptyValidity(
-                                    "",
-                                    activity
-                                )
-                            )
-                        }
+//                        if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) {
+//                            holder.tv_price.setText(
+//                                "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+//                                    .format(offeredBundlePrice) + Utils1.yearlyOrMonthlyOrEmptyValidity(
+//                                    "",
+//                                    activity
+//                                )
+//                            )
+//                        } else {
+//                            holder.tv_price.setText(
+//                                "₹" +
+//                                        NumberFormat.getNumberInstance(Locale.ENGLISH)
+//                                            .format(offeredBundlePrice)
+//                                        +  Utils1.yearlyOrMonthlyOrEmptyValidity(
+//                                    "",
+//                                    activity
+//                                )
+//                            )
+//                        }
                         if (bundles.primary_image != null && !bundles.primary_image!!.url.isNullOrEmpty()) {
                             Glide.with(holder.itemView.context).load(bundles.primary_image!!.url)
                                 .into(holder.package_profile_image)

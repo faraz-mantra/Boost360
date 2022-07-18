@@ -196,6 +196,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                             menuOpts1.getItem(1).setTitle(R.string.switch_to_yearly_pricing)
                             prefs.storeYearPricing(true)
                         }
+                        banner_viewpager.currentItem = 0
+                        package_viewpager.currentItem = 0
                         prefs.storeCartValidityMonths("1")
                         upgradeAdapter.notifyDataSetChanged()
                         packageViewPagerAdapter.notifyDataSetChanged()

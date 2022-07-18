@@ -2,6 +2,7 @@ package com.appservice.ui.aptsetting.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import com.appservice.R
 import com.appservice.model.aptsetting.UserFpDetailsResponse
 import com.appservice.ui.aptsetting.widgets.BottomSheetCatalogDisplayName
@@ -56,6 +57,7 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
     val data = arguments?.getSerializable(IntentConstant.OBJECT_DATA.name) as? AppointmentStatusResponse.TilesModel
     catalogSetup = data?.tile as? CatalogSetup
     if (catalogSetup != null) setData(catalogSetup) else catalogApiGetGstData()
+    binding?.viewGst?.isVisible = isDoctorClinic.not()
     getFpDetails()
   }
 

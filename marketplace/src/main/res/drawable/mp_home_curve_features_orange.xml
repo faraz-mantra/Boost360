@@ -3,19 +3,19 @@
   <item>
     <shape>
       <stroke
-        android:width="0dp"
-        android:color="@color/colorAccentLight" />
+          android:width="0dp"
+          android:color="@color/colorAccentLight" />
 
       <gradient
-        android:angle="90"
-        android:endColor="@color/colorAccentLight"
-        android:startColor="@color/colorAccentLight" />
+          android:angle="90"
+          android:endColor="@color/colorAccentLight"
+          android:startColor="@color/colorAccentLight" />
 
       <corners
-        android:bottomLeftRadius="45dp"
-        android:bottomRightRadius="45dp"
-        android:topLeftRadius="00dp"
-        android:topRightRadius="00dp" />
+          android:bottomLeftRadius="45dp"
+          android:bottomRightRadius="45dp"
+          android:topLeftRadius="00dp"
+          android:topRightRadius="00dp" />
     </shape>
   </item>
 

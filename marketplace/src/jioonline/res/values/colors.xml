@@ -382,6 +382,9 @@
 
     <color name="givefeedbackColorBG">@color/white</color>
 
+    <color name="colorAccent1Positive">@color/colorAccent1</color>
+    <color name="colorAccent1Negative">@color/colorPrimaryDark1</color>
+
 
 
 </resources>
