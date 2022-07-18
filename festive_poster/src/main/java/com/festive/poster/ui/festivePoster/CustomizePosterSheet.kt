@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseBottomSheetFragment
+import com.framework.constants.PosterKeys
 import com.festive.poster.databinding.BsheetCustomizePosterBinding
 import com.festive.poster.utils.MarketPlaceUtils
 import com.festive.poster.utils.WebEngageController
@@ -46,13 +47,7 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
   private var session: UserSessionManager? = null
   private var imageUrl:String?=null
 
-  //keys
-  val user_name="user_name"
-  val business_website="business_website"
-  val business_email="business_email"
-  val business_name="business_name"
-  val user_contact="user_contact"
-  val user_image="user_image"
+
 
 
 
@@ -103,30 +98,30 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
   private fun setUserDetails() {
     val keys = sharedViewModel?.selectedPoster?.keys
 
-    val name = if (keys?.find { it.name==user_name }?.custom!=null){
-      keys.find { it.name==user_name }?.custom
+    val name = if (keys?.find { it.name== PosterKeys.user_name }?.custom!=null){
+      keys.find { it.name== PosterKeys.user_name }?.custom
     }else{
       session?.userProfileName ?: session?.fpTag
     }
 
-    val website = if (keys?.find { it.name==business_website }?.custom!=null){
-      keys.find { it.name==business_website }?.custom
+    val website = if (keys?.find { it.name== PosterKeys.business_website }?.custom!=null){
+      keys.find { it.name== PosterKeys.business_website }?.custom
     }else{
       getDomainName()
     }
 
-    val whatsapp = if (keys?.find { it.name==user_contact }?.custom!=null){
-      keys.find { it.name==user_contact }?.custom
+    val whatsapp = if (keys?.find { it.name== PosterKeys.user_contact }?.custom!=null){
+      keys.find { it.name== PosterKeys.user_contact }?.custom
     }else{
       session?.userPrimaryMobile ?: session?.fPPrimaryContactNumber
     }
 
-    val email = if (keys?.find { it.name==business_email }?.custom!=null){
-      keys.find { it.name==business_email }?.custom
+    val email = if (keys?.find { it.name== PosterKeys.business_email }?.custom!=null){
+      keys.find { it.name== PosterKeys.business_email }?.custom
     }else{
       session?.userProfileEmail ?: session?.fPEmail
     }
-    keys?.find { it.name==user_image }?.custom?.let {url->
+    keys?.find { it.name== PosterKeys.user_image }?.custom?.let { url->
         imageUrl=url
         Glide.with(requireActivity()).load(url).into(binding?.ivUserImg!!)
         showUserImage()
@@ -195,12 +190,13 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
 
   private fun saveKeyValue() {
 
-    val map = hashMapOf(user_name to binding?.etName?.text.toString(),
-    business_website to binding?.etWebsite?.text.toString(),
-    business_email to binding?.etEmail?.text.toString(),
-    business_name to session?.fPName,
-    user_contact to binding?.etWhatsapp?.text.toString(),
-    user_image to imageUrl)
+    val map = hashMapOf(
+      PosterKeys.user_name to binding?.etName?.text.toString(),
+      PosterKeys.business_website to binding?.etWebsite?.text.toString(),
+      PosterKeys.business_email to binding?.etEmail?.text.toString(),
+      PosterKeys.business_name to session?.fPName,
+      PosterKeys.user_contact to binding?.etWhatsapp?.text.toString(),
+      PosterKeys.user_image to imageUrl)
 
     val templateIds = ArrayList<String>()
     if (isAlreadyPurchased){

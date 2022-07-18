@@ -2,6 +2,7 @@ package com.appservice.rest.repository
 
 import com.appservice.base.rest.AppBaseLocalService
 import com.appservice.base.rest.AppBaseRepository
+import com.appservice.model.panGst.PanGstUpdateBody
 import com.appservice.model.aptsetting.*
 import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
@@ -20,6 +21,14 @@ import retrofit2.Retrofit
 import retrofit2.http.QueryMap
 
 object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBaseLocalService>() {
+
+  fun getPanGstDetail(fpId: String?,clientId:String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getPanGstDetail(fpId,clientId), TaskCode.GET_PAN_GST_DETAILS)
+  }
+
+  fun panGstUpdate(body: PanGstUpdateBody): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.panGstUpdate(body), TaskCode.PAN_GST_UPDATE)
+  }
 
   fun createService(request: CatalogProduct?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.createService(request), TaskCode.POST_CREATE_SERVICE)
@@ -45,9 +54,7 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.deleteBackgroundImages(map), TaskCode.CREATE_BG_IMAGE)
   }
 
-  fun trackerCalls(
-    @QueryMap data: Map<String, String?>?
-  ): Observable<BaseResponse> {
+  fun trackerCalls(@QueryMap data: Map<String, String?>?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.trackerCalls(data), TaskCode.GET_MERCHANT_SUMMARY)
   }
 
@@ -228,5 +235,9 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
 
   fun getImages(fpId: String?, clientId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getBackgroundImages(fpId, clientId), TaskCode.GET_BACKGROUND_IMAGES)
+  }
+
+  fun addUpdatePaymentProfile(request: AddPaymentAcceptProfileRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.addUpdatePaymentProfile(request), TaskCode.ADD_PAYMENT_ACCEPT_PROFILE)
   }
 }

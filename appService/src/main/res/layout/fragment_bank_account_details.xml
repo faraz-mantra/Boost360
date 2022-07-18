@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_1"
-            android:text="@string/name_of_the_account_holder"
+            android:text="@string/name_of_the_account_holder_astrick"
             android:textColor="@color/greyish_brown"
             app:fontFamily="@font/regular"
             app:textType="BODY_1" />
@@ -72,7 +72,7 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_1"
           android:layout_marginTop="@dimen/size_10"
-          android:text="@string/confirm_account_number"
+          android:text="@string/confirm_account_number_astrick"
           android:textColor="@color/greyish_brown"
           app:fontFamily="@font/regular"
           app:textType="BODY_1" />

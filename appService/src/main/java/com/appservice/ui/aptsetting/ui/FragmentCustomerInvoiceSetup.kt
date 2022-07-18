@@ -80,8 +80,8 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
         val gSTIN = data?.result?.taxDetails?.gSTDetails?.gSTIN
         val businessName = data?.result?.taxDetails?.gSTDetails?.businessName
         if (gSTIN.isNullOrEmpty().not() || businessName.isNullOrEmpty().not()) {
-          setGstData(gSTIN!!)
-          setBusinessName(businessName!!)
+          setGstData(gSTIN?:"")
+          setBusinessName(businessName?:"")
         }
         updatePreviousData()
       }

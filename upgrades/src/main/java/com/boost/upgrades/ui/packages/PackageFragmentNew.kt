@@ -3,7 +3,6 @@ package com.boost.upgrades.ui.packages
 import android.animation.Animator
 import android.annotation.SuppressLint
 import android.graphics.Color
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
@@ -12,14 +11,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
-
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.CompareItemAdapter
@@ -31,25 +28,15 @@ import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.utils.*
 import com.bumptech.glide.Glide
 import com.framework.utils.RootUtil
-import com.framework.webengageconstant.*
-import com.framework.webengageconstant.ADDONS_MARKETPLACE_FEATURE_DETAILS_LOADED
+import com.framework.webengageconstant.ADDONS_MARKETPLACE
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_PACKAGE_ADDED_TO_CART
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_PACKAGE_BUNDLE_LOADED
+import com.framework.webengageconstant.PAGE_VIEW
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.package_fragment.*
 import kotlinx.android.synthetic.main.package_fragment_layout.*
-import kotlinx.android.synthetic.main.package_fragment_layout.badge121
-import kotlinx.android.synthetic.main.package_fragment_layout.offer_price
-import kotlinx.android.synthetic.main.package_fragment_layout.package_addons_recycler
-import kotlinx.android.synthetic.main.package_fragment_layout.package_back
-import kotlinx.android.synthetic.main.package_fragment_layout.package_cart_icon
-import kotlinx.android.synthetic.main.package_fragment_layout.package_profile_image
-import kotlinx.android.synthetic.main.package_fragment_layout.package_submit
-import kotlinx.android.synthetic.main.package_fragment_layout.package_title
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class PackageFragmentNew : BaseFragment("MarketPlacePackageFragmentNew") {
 
@@ -200,11 +187,11 @@ class PackageFragmentNew : BaseFragment("MarketPlacePackageFragmentNew") {
                 for (singleItem in it) {
                     for (item in bundleData!!.included_features) {
                         if (singleItem.feature_code == item.feature_code) {
-                            bundleMonthlyMRP += Utils.priceCalculatorForYear(
+                            bundleMonthlyMRP += (
                                 RootUtil.round(
                                     (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
                                     2
-                                ), singleItem.widget_type, requireActivity())
+                                ))
                         }
                     }
                 }
@@ -214,7 +201,7 @@ class PackageFragmentNew : BaseFragment("MarketPlacePackageFragmentNew") {
 
                 if(bundleData!!.overall_discount_percent > 0) {
                     offeredBundlePrice = RootUtil.round(
-                        originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent / 100),
+                        originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent / 100.0),
                         2
                     )
                 }else {
@@ -223,9 +210,9 @@ class PackageFragmentNew : BaseFragment("MarketPlacePackageFragmentNew") {
 
                 if (minMonth > 1) {
                     if (prefs.getYearPricing())
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/year")
+                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(Utils.priceCalculatorForYear(offeredBundlePrice,"",requireActivity())) + "/year")
                     else
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/" + bundleData!!.min_purchase_months + "mths")
+                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(Utils.priceCalculatorForYear(offeredBundlePrice,"",requireActivity())) + "/" + bundleData!!.min_purchase_months + "mths")
                     if (offeredBundlePrice != originalBundlePrice) {
                         spannableString(originalBundlePrice, minMonth)
 //                        orig_cost.visibility = View.VISIBLE
@@ -236,9 +223,9 @@ class PackageFragmentNew : BaseFragment("MarketPlacePackageFragmentNew") {
                     updatePackageRecycler(it,bundleData!!.min_purchase_months!!)
                 } else {
                     if (prefs.getYearPricing())
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/year")
+                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(Utils.priceCalculatorForYear(offeredBundlePrice,"",requireActivity())) + "/year")
                     else
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/mth")
+                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(Utils.priceCalculatorForYear(offeredBundlePrice,"",requireActivity())) + "/mth")
                     if (offeredBundlePrice != originalBundlePrice) {
                         spannableString(originalBundlePrice, 1)
 //                        orig_cost.visibility = View.VISIBLE

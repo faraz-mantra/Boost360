@@ -133,7 +133,7 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
 
   private fun getBundleData() {
     isNonPhysicalExperience = arguments?.getBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name)
-    currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "₹"
+    currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "INR"
     fpId = arguments?.getString(IntentConstant.FP_ID.name)
     fpTag = arguments?.getString(IntentConstant.FP_TAG.name)
     externalSourceId = arguments?.getString(IntentConstant.EXTERNAL_SOURCE_ID.name)

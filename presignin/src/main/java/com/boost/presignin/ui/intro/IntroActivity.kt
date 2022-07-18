@@ -25,6 +25,7 @@ import com.framework.utils.RootUtil
 import com.framework.utils.makeLinks
 import com.framework.webengageconstant.*
 
+@Deprecated(message = "Use com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity")
 class IntroActivity : AppBaseActivity<ActivityIntroBinding, BaseViewModel>() {
 
   private lateinit var items: List<IntroItem>

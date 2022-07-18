@@ -14,6 +14,7 @@ import com.boost.upgrades.R
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.interfaces.CartFragmentListener
 import com.boost.upgrades.utils.SharedPrefs
+import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
@@ -55,8 +56,8 @@ class CartPackageAdaptor(
     val selectedBundle = bundlesList.get(position)
 
     holder.name.text = selectedBundle.item_name
-    val price = selectedBundle.price
-    val MRPPrice = selectedBundle.MRPPrice
+    val price = Utils.priceCalculatorForYear(selectedBundle.price, "", activity)
+    val MRPPrice = Utils.priceCalculatorForYear(selectedBundle.MRPPrice,"", activity)
     if (selectedBundle.min_purchase_months > 1) {
       if(prefs.getYearPricing())
         holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
