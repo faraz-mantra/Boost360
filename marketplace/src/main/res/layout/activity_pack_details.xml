@@ -92,7 +92,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
-        android:paddingBottom="50dp"
+        android:paddingBottom="80dp"
         android:clipToPadding="false"
         >
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -315,6 +315,220 @@
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/pack_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@id/container_black">
+
+                <TextView
+                    android:id="@+id/pack_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F8F8F8"
+                    android:fontFamily="@font/bold"
+                    android:padding="16dp"
+                    android:text="Packs with “Staff Management”"
+                    android:textColor="@color/main_color_gray_dk"
+                    android:textFontWeight="600"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/pack_recycler"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/pack_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="vertical"
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/pack_title"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/item_features_details" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/widgetLearnMore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/rounded_curve_bg"
+                android:drawableStart="@drawable/ic_filetext"
+                android:drawableEnd="@drawable/ic_arrow_right_grey"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/regular"
+                android:padding="16dp"
+                android:text="Learn how custom domain names can increase your credibility.   "
+                android:textColor="@color/common_text_color"
+                android:textFontWeight="600"
+                android:textSize="@dimen/_11sdp"
+                app:layout_constraintTop_toBottomOf="@id/pack_container" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/how_to_use_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:background="@drawable/rounded_curve_bg"
+                app:layout_constraintTop_toBottomOf="@id/widgetLearnMore">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/how_to_use_title_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:visibility="visible"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_how_to_use_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/semi_bold"
+                        android:padding="16dp"
+                        tools:text="How To Use Staff Management?"
+                        android:textColor="@color/main_color_gray_dk"
+                        android:textFontWeight="600"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toStartOf="@id/how_to_use_arrow"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/how_to_use_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:padding="@dimen/_10sdp"
+                        android:src="@drawable/ic_arrow_down_gray"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/how_to_use_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/how_to_use_item"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    app:layout_constraintTop_toBottomOf="@id/how_to_use_title_layout" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/what_our_customer_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:visibility="visible"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/how_to_use_container">
+
+                <TextView
+                    android:id="@+id/what_our_customer_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/semi_bold"
+                    android:padding="16dp"
+                    android:text="What our customers say"
+                    android:textColor="#191919"
+                    android:textFontWeight="600"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/what_our_customer_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/what_our_customer_title" />
+
+
+                <com.framework.views.dotsindicator.DotsIndicator
+                    android:id="@+id/what_our_customer_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    app:dotsColor="@color/gray_light"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="6dp"
+                    app:dotsSpacing="4dp"
+                    app:dotsWidthFactor="2.5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/what_our_customer_viewpager"
+                    app:progressMode="false"
+                    app:selectedDotColor="@color/colorAccent1" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/faq_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:visibility="visible"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/terms"
+                app:layout_constraintTop_toBottomOf="@id/what_our_customer_container">
+
+                <TextView
+                    android:id="@+id/faq_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bold"
+                    android:padding="16dp"
+                    android:text="Frequently asked questions"
+                    android:textColor="@color/main_color_gray_dk"
+                    android:textFontWeight="600"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/faq_recycler"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/faq_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_curve_bg"
+                    android:layout_margin="16dp"
+                    tools:listitem="@layout/faq_item"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/faq_title" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/terms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_curve_bg"
+                android:fontFamily="@font/regular"
+                android:padding="16dp"
+                android:text="This feature is provided by “Reseller Club” and is subject to their terms and conditions.Read T&amp;C"
+                android:textColor="@color/common_text_color"
+                android:textFontWeight="600"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/faq_container" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
