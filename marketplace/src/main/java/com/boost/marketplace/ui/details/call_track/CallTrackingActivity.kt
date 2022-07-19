@@ -58,7 +58,8 @@ class CallTrackingActivity :
     lateinit var singleAddon: FeaturesModel
     lateinit var progressDialog: ProgressDialog
     lateinit var prefs: SharedPrefs
-
+    var numberprice: String? = null
+    var pricing: String? = null
 
     override fun getLayout(): Int {
         return R.layout.activity_call_tracking
@@ -103,6 +104,8 @@ class CallTrackingActivity :
         exactMatchNumberListAdapter = ExactMatchListAdapter(this, ArrayList(), null, this)
         progressDialog = ProgressDialog(this)
 
+        numberprice = intent.getStringExtra("price")
+
 
         binding?.addonsBack?.setOnClickListener {
             onBackPressed()
@@ -115,10 +118,13 @@ class CallTrackingActivity :
             )
         }
         binding?.btnSelectNumber?.setOnClickListener {
+
             val dialogCard = CallTrackAddToCartBottomSheet()
             val bundle = Bundle()
-            bundle.putString("number", blockedNumber)
 
+            bundle.putString("price",numberprice)
+
+            bundle.putString("number", blockedNumber)
             bundle.putString("bundleData", Gson().toJson(singleAddon))
             bundle.putDouble(
                 "AddonDiscountedPrice",

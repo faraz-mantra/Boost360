@@ -28,6 +28,7 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
     var experienceCode: String? = null
     var fpid: String? = null
+    var domainPricing:String?=null
     var email: String? = null
     var mobileNo: String? = null
     var profileUrl: String? = null
@@ -58,6 +59,7 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
 
     override fun onCreateView() {
         blockedItem = requireArguments().getString("blockedItem")
+        domainPricing= requireArguments().getString("price")
         experienceCode = requireArguments().getString("expCode")
         fpid = requireArguments().getString("fpid")
         isDeepLink = requireArguments().getBoolean("isDeepLink", false)
@@ -77,6 +79,7 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
         prefs = SharedPrefs(baseActivity)
 
         binding?.tvTitle?.text=blockedItem
+        binding?.tvCart?.text = "Add to cart at $domainPricing"
 
         loadData()
         initMVVM()
@@ -86,6 +89,7 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
         }
 
         binding?.tvCart?.setOnClickListener {
+            dismiss()
 
             if (blockedItem != null && result == false) {
                 if (!itemInCartStatus) {
@@ -141,9 +145,6 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
             else if (blockedItem!=null && result ==true){
                 Toasty.error(requireContext(), "Domain unavailable select other", Toast.LENGTH_SHORT).show()
             }
-//            else{
-//                Toasty.error(requireContext(), "No domain selected ", Toast.LENGTH_SHORT).show()
-//            }
         }
     }
 

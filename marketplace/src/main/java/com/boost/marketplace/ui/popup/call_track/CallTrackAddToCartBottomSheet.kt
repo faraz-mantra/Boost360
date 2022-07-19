@@ -42,6 +42,7 @@ class CallTrackAddToCartBottomSheet :
     lateinit var singleAddon: FeaturesModel
     lateinit var progressDialog: ProgressDialog
     lateinit var prefs: SharedPrefs
+    var numberPrice: String? = null
 
     override fun getLayout(): Int {
         return R.layout.call_tracking_add_to_cart_popup
@@ -77,6 +78,9 @@ class CallTrackAddToCartBottomSheet :
         prefs = SharedPrefs(baseActivity)
         blockedItem = requireArguments().getString("number")
         binding?.tvTitle?.text = requireArguments().getString("number")
+        numberPrice = requireArguments().getString("price")
+        binding?.tvCart?.text= "Add to cart at $numberPrice"
+
 
         loadData()
         initMVVM()
