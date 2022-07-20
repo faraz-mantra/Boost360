@@ -299,15 +299,15 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             }
         })
 
-        viewModel.updateStatus().observe(this, androidx.lifecycle.Observer{
-            result=it.Result
-//            if (it.Result.equals(false)){
-//                binding?.btnSelectDomain?.setBackgroundResource(R.color.colorAccent1);
-//            }
-//            else{
-//                binding?.btnSelectDomain?.setBackgroundResource(R.color.btn_bg_color_disabled)
-//            }
-        })
+//        viewModel.updateStatus().observe(this, androidx.lifecycle.Observer{
+//            result=it.Result
+////            if (it.Result.equals(false)){
+////                binding?.btnSelectDomain?.setBackgroundResource(R.color.colorAccent1);
+////            }
+////            else{
+////                binding?.btnSelectDomain?.setBackgroundResource(R.color.btn_bg_color_disabled)
+////            }
+//        })
     }
 
     fun initRecyclerView() {

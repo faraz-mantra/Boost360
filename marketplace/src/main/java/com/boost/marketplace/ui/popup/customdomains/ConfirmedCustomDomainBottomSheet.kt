@@ -3,7 +3,6 @@ package com.boost.marketplace.ui.popup.customdomains
 import android.app.Application
 import android.app.ProgressDialog
 import android.content.Intent
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.boost.cart.CartActivity
 import com.boost.dbcenterapi.data.api_model.CustomDomain.Domain
@@ -20,7 +19,6 @@ import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import es.dmoral.toasty.Toasty
 
 class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCustomDomainBinding, CustomDomainViewModel>() {
 
@@ -81,17 +79,16 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
         binding?.tvTitle?.text=blockedItem
         binding?.tvCart?.text = "Add to cart at $domainPricing"
 
-        loadData()
-        initMVVM()
+        //loadData()
+        //initMVVM()
 
         binding?.backBtn?.setOnClickListener {
             dismiss()
         }
 
         binding?.tvCart?.setOnClickListener {
-            dismiss()
 
-            if (blockedItem != null && result == false) {
+          //  if (blockedItem != null && result == false) {
                 if (!itemInCartStatus) {
                     if (singleAddon != null) {
                         prefs.storeCartOrderInfo(null)
@@ -141,10 +138,11 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
                 }
                 intent.putExtra("profileUrl", profileUrl)
                 startActivity(intent)
-            }
-            else if (blockedItem!=null && result ==true){
-                Toasty.error(requireContext(), "Domain unavailable select other", Toast.LENGTH_SHORT).show()
-            }
+                dismiss()
+         //   }
+//            else if (blockedItem!=null && result ==true){
+//                Toasty.error(requireContext(), "Domain unavailable select other", Toast.LENGTH_SHORT).show()
+//            }
         }
     }
 

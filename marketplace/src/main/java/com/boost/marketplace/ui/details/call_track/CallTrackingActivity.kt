@@ -27,6 +27,7 @@ import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
+import com.framework.utils.hideKeyBoard
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -170,6 +171,7 @@ class CallTrackingActivity :
                     binding?.ivCross?.visibility = View.GONE
                     binding?.btnSearch?.visibility = View.VISIBLE
                     binding?.btnSearch?.setOnClickListener {
+                        hideKeyBoard()
 
                         updateAllItemBySearchValue(p0.toString())
                         binding?.tvAvailableNo?.text = "Search results"

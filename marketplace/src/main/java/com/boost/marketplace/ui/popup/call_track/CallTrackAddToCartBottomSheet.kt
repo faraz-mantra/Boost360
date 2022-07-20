@@ -88,7 +88,7 @@ class CallTrackAddToCartBottomSheet :
             dismiss()
         }
         binding?.tvCart?.setOnClickListener {
-            dismiss()
+
             if (blockedItem != null && !result!!) {
                 if (!itemInCartStatus) {
                     if (singleAddon != null) {
@@ -147,7 +147,9 @@ class CallTrackAddToCartBottomSheet :
             }
             intent.putExtra("profileUrl", profileUrl)
             startActivity(intent)
+            dismiss()
         }
+
     }
 
     private fun loadData() {

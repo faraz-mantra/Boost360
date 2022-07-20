@@ -611,10 +611,11 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/packsv3footerrecycler"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toTopOf="@+id/buy_pack"
                     tools:itemCount="3"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
