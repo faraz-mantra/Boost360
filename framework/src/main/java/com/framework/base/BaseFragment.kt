@@ -1,36 +1,32 @@
 package com.framework.base
 
-import android.app.Activity
 import android.app.ProgressDialog
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.FontRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.framework.R
 import com.framework.analytics.UserExperiorController
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
 import com.framework.utils.hideKeyBoard
-import com.framework.views.zero.FragmentZeroCase
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel?> : Fragment(), View.OnClickListener {
+abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> : Fragment(), View.OnClickListener, MenuProvider {
 
   protected lateinit var baseActivity: BaseActivity<*, *>
   protected lateinit var root: View
@@ -47,12 +43,12 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    setHasOptionsMenu(true)
     baseActivity = activity as BaseActivity<*, *>
-    viewModel = ViewModelProvider(this).get(getViewModelClass())
+    viewModel = ViewModelProvider(requireActivity())[getViewModelClass()]
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    setHasOptionsMenu(true)
     binding = DataBindingUtil.inflate(inflater, getLayout(), container, false)
     binding?.lifecycleOwner = this
     navigator = Navigator(baseActivity)
@@ -70,13 +66,14 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    val menuHost: MenuHost = requireActivity()
+    menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
     onCreateView()
     val observables = getObservables()
     for (observable in observables) {
       observable?.let { compositeDisposable.add(it) }
     }
   }
-
 
   override fun onResume() {
     super.onResume()
@@ -150,7 +147,7 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
 
     val fragmentTransaction = baseActivity.supportFragmentManager.beginTransaction()
     if (showAnim) {
-      fragmentTransaction?.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+      fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
     }
     if (addToBackStack) {
       fragmentTransaction.addToBackStack(fragment.javaClass.name)
@@ -205,7 +202,7 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
   }
 
   fun hideLoader() {
-    if (progressDialog != null && progressDialog?.isShowing()!!) {
+    if (progressDialog != null && progressDialog?.isShowing!!) {
       progressDialog?.dismiss()
     }
   }
@@ -213,5 +210,18 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
   override fun onStop() {
     super.onStop()
     baseActivity.hideKeyBoard()
+  }
+
+  override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+
+  }
+
+  override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+    return false
+  }
+
+  override fun onPrepareMenu(menu: Menu) {
+    super.onPrepareMenu(menu)
+    baseActivity.adjustToolbarTitleMarginEnd(menu)
   }
 }

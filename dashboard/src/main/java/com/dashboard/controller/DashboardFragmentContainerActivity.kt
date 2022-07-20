@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -108,20 +107,6 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
     }
   }
 
-
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    val toolbarMenu = menu ?: return super.onCreateOptionsMenu(menu)
-    val menuRes = getMenuRes() ?: return super.onCreateOptionsMenu(menu)
-    menuInflater.inflate(menuRes, toolbarMenu)
-    return true
-  }
-
-  open fun getMenuRes(): Int? {
-    return when (type) {
-      else -> null
-    }
-  }
-
   private fun shouldAddToBackStack(): Boolean {
     return when (type) {
       else -> false
@@ -173,9 +158,6 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
 
 }
 
-fun fetchUserProfileData() {
-
-}
 
 fun Fragment.startFragmentDashboardActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false, requestCode: Int = 101) {
   val intent = Intent(activity, DashboardFragmentContainerActivity::class.java)

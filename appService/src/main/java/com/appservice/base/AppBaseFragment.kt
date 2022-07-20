@@ -40,7 +40,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
 
   protected val isDoctor: Boolean
     get() {
-      return  sessionLocal.fP_AppExperienceCode.equals("DOC", true)
+      return sessionLocal.fP_AppExperienceCode.equals("DOC", true)
     }
 
   protected val pref: SharedPreferences?
@@ -72,8 +72,6 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
       if ((it.isSuccess())) {
         return true
       } else {
-        Log.d("API_ERROR", it.message())
-        Log.d("BaseResponseData", it.message())
         showErrorMessage(errorMessage)
       }
     } else {
@@ -83,13 +81,13 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
   }
 
   protected fun hitApi(liveData: LiveData<BaseResponse>?, errorStringId: Int) {
-    liveData?.observeOnce(viewLifecycleOwner, Observer {
+    liveData?.observeOnce(viewLifecycleOwner) {
       if (isResponseSuccessful(it, resources.getString(errorStringId))) {
         onSuccess(it)
       } else {
         onFailure(it)
       }
-    })
+    }
   }
 
   open fun onSuccess(it: BaseResponse) {

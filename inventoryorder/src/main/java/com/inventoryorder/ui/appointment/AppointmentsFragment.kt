@@ -76,7 +76,8 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   lateinit var mPopupWindow: PopupWindow
   private var orderItem: OrderItem? = null
   private var position: Int? = null
-  private  val TAG = "AppointmentsFragment"
+  private val TAG = "AppointmentsFragment"
+
   /* Paging */
   private var isLoadingD = false
   private var isSearchItem = false
@@ -105,7 +106,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     binding?.swipeRefresh?.setColorSchemeColors(getColor(R.color.colorAccent))
     binding?.swipeRefresh?.setOnRefreshListener { loadNewData() }
     this.zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.APPOINTMENT, this, baseActivity).getRequest().build()
-    addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
+    addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment, false)
     getSellerOrdersFilterApi(requestFilter, isFirst = true)
   }
 
@@ -183,10 +184,10 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
             setAdapterNotify(orderList)
             setToolbarTitle(resources.getString(R.string.appointments) + " ($TOTAL_ELEMENTS)")
           } else {
-            if (filterItem==null||filterItem?.type?.let { FilterModel.FilterType.fromType(it) }==FilterModel.FilterType.ALL_APPOINTMENTS){
+            if (filterItem == null || filterItem?.type?.let { FilterModel.FilterType.fromType(it) } == FilterModel.FilterType.ALL_APPOINTMENTS) {
               emptyView()
               Log.i(TAG, "getSellerOrdersFilterApi: no filter")
-            }else{
+            } else {
               binding?.tvNoData?.visible()
               orderList.clear()
               removeLoader()
@@ -257,8 +258,6 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
       orderAdapter?.notify(getDateWiseFilter(items))
     } else setAdapterAppointmentList(getDateWiseFilter(items))
   }
-
-
 
 
   private fun getDateWiseFilter(orderList: ArrayList<OrderItem>): ArrayList<OrderItem> {
@@ -402,18 +401,9 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     }
   }
 
-  override fun onItemClickView(
-    position: Int,
-    view: View,
-    item: BaseRecyclerViewItem?,
-    actionType: Int
-  ) {
+  override fun onItemClickView(position: Int, view: View, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
-      RecyclerViewActionType.BUTTON_ACTION_ITEM.ordinal -> popUpMenuButton(
-        position,
-        view,
-        (item as? OrderItem)
-      )
+      RecyclerViewActionType.BUTTON_ACTION_ITEM.ordinal -> popUpMenuButton(position, view, (item as? OrderItem))
     }
   }
 
@@ -423,30 +413,19 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     this.position = position
     val list = OrderMenuModel().getAppointmentMenu(orderItem)
     if (list.isNotEmpty()) list.removeAt(0)
-    val orderMenuView: View =
-      LayoutInflater.from(baseActivity).inflate(R.layout.menu_order_button, null)
+    val orderMenuView: View = LayoutInflater.from(baseActivity).inflate(R.layout.menu_order_button, null)
     val rvOrderMenu: RecyclerView? = orderMenuView.findViewById(R.id.rv_menu_order)
     rvOrderMenu?.apply {
       val adapterMenu = AppBaseRecyclerViewAdapter(baseActivity, list, this@AppointmentsFragment)
       adapter = adapterMenu
     }
-    mPopupWindow = PopupWindow(
-      orderMenuView,
-      WindowManager.LayoutParams.MATCH_PARENT,
-      WindowManager.LayoutParams.WRAP_CONTENT,
-      true
-    )
+    mPopupWindow = PopupWindow(orderMenuView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
     if (orderAdapter != null && orderList.size > 2 && orderAdapter!!.list().size - 1 == position) {
       orderMenuView.measure(
         View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
         View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
       )
-      mPopupWindow.showAsDropDown(
-        view,
-        view.x.roundToInt(),
-        view.y.roundToInt() - orderMenuView.measuredHeight,
-        Gravity.NO_GRAVITY
-      )
+      mPopupWindow.showAsDropDown(view, view.x.roundToInt(), view.y.roundToInt() - orderMenuView.measuredHeight, Gravity.NO_GRAVITY)
     } else mPopupWindow.showAsDropDown(view, 0, 0)
   }
 
@@ -537,14 +516,14 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   private fun sendReBookingRequestApt() {
     showProgress()
     viewModel?.sendReBookingReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner) {
-        if (it.isSuccess()) {
-          apiGetAptDetails()
-          showLongToast(resources.getString(R.string.re_booking_reminder))
-        } else {
-          showLongToast(it.message())
-          hideProgress()
-        }
+      if (it.isSuccess()) {
+        apiGetAptDetails()
+        showLongToast(resources.getString(R.string.re_booking_reminder))
+      } else {
+        showLongToast(it.message())
+        hideProgress()
       }
+    }
   }
 
   private fun sendFeedbackRequestApt(request: FeedbackRequest) {
@@ -584,23 +563,23 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   private fun apiCancelApt(cancellingEntity: String, reasonText: String) {
     showProgress()
     viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)?.observeOnce(viewLifecycleOwner) {
-        if (it.isSuccess()) {
-          val data = it as? OrderConfirmStatus
-          if (reasonText.isNotEmpty()) {
-            updateReason(
-              resources.getString(R.string.appointment_cancel),
-              UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name,
-              ExtraPropertiesOrder(cancellationRemark = reasonText)
-            )
-          } else {
-            apiGetAptDetails()
-            showLongToast(resources.getString(R.string.appointment_cancel))
-          }
+      if (it.isSuccess()) {
+        val data = it as? OrderConfirmStatus
+        if (reasonText.isNotEmpty()) {
+          updateReason(
+            resources.getString(R.string.appointment_cancel),
+            UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name,
+            ExtraPropertiesOrder(cancellationRemark = reasonText)
+          )
         } else {
-          showLongToast(it.message())
-          hideProgress()
+          apiGetAptDetails()
+          showLongToast(resources.getString(R.string.appointment_cancel))
         }
+      } else {
+        showLongToast(it.message())
+        hideProgress()
       }
+    }
   }
 
   private fun updateReason(
@@ -614,16 +593,15 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
       orderId = this.orderItem?._id,
       extraPropertiesOrder = extraPropertiesOrder
     )
-    viewModel?.updateExtraPropertyOrder(clientId, requestCancel = propertyRequest)
-      ?.observeOnce(viewLifecycleOwner, {
-        if (it.isSuccess()) showLongToast(message)
-        apiGetAptDetails()
-      })
+    viewModel?.updateExtraPropertyOrder(clientId, requestCancel = propertyRequest)?.observeOnce(viewLifecycleOwner) {
+      if (it.isSuccess()) showLongToast(message)
+      apiGetAptDetails()
+    }
   }
 
   private fun apiConfirmApt(isSendPaymentLink: Boolean) {
     showProgress()
-    viewModel?.confirmOrder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.confirmOrder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         if (isSendPaymentLink) sendPaymentLinkApt(getString(R.string.appointment_confirmed))
         else {
@@ -634,20 +612,19 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         showLongToast(it.message())
         hideProgress()
       }
-    })
+    }
   }
 
   private fun sendPaymentLinkApt(message: String) {
-    viewModel?.sendPaymentReminder(clientId, this.orderItem?._id)
-      ?.observeOnce(viewLifecycleOwner, { it1 ->
-        if (it1.isSuccess()) showLongToast(message)
-        apiGetAptDetails()
-      })
+    viewModel?.sendPaymentReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner) { it1 ->
+      if (it1.isSuccess()) showLongToast(message)
+      apiGetAptDetails()
+    }
   }
 
   private fun markReceivedPaymentRequest(request: PaymentReceivedRequest) {
     showProgress()
-    viewModel?.markPaymentReceivedMerchant(clientId, request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.markPaymentReceivedMerchant(clientId, request)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         apiGetAptDetails()
         showLongToast(getString(R.string.payment_confirmed))
@@ -655,11 +632,11 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         showLongToast(it.message())
         hideProgress()
       }
-    })
+    }
   }
 
   private fun apiGetAptDetails() {
-    viewModel?.getOrderDetails(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getOrderDetails(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner) {
       hideProgress()
       val response = (it as? OrderDetailResponse)?.Data
       if (it.isSuccess() && response != null) {
@@ -670,7 +647,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
           orderAdapter?.setRefreshItem(position!!, response)
         } else loadNewData()
       } else loadNewData()
-    })
+    }
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -790,7 +767,6 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   override fun secondaryButtonClicked() {
     showShortToast(getString(R.string.coming_soon))
-    //TODO add tutorial video flow
   }
 
   override fun ternaryButtonClicked() {
@@ -801,12 +777,11 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   }
 
   override fun onStop() {
-    if (orderListFinalList.size>1){
+    if (orderListFinalList.size > 1) {
       InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.in_app_review_out_of_customer_orders)
     }
     super.onStop()
   }
-
 
 
 //  private fun apiOrderListCall() {

@@ -1,6 +1,5 @@
 package com.boost.upgrades.ui.details
 
-//import com.devs.readmoreoption.ReadMoreOption
 import android.animation.Animator
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
@@ -17,7 +16,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
@@ -62,7 +61,6 @@ class DetailsFragment : BaseFragment("MarketPlaceDetailsFragment"), DetailsFragm
 
   lateinit var root: View
   lateinit var viewModel: DetailsViewModel
-  lateinit var detailsViewModelFactory: DetailsViewModelFactory
 
   lateinit var retrofit: Retrofit
   lateinit var ApiService: ApiInterface
@@ -93,12 +91,7 @@ class DetailsFragment : BaseFragment("MarketPlaceDetailsFragment"), DetailsFragm
   ): View? {
     root = inflater.inflate(R.layout.details_fragment, container, false)
 
-
-    detailsViewModelFactory =
-      DetailsViewModelFactory(requireNotNull(requireActivity().application))
-
-    viewModel = ViewModelProviders.of(requireActivity(), detailsViewModelFactory)
-      .get(DetailsViewModel::class.java)
+    viewModel = ViewModelProvider(requireActivity())[DetailsViewModel::class.java]
 
     progressDialog = ProgressDialog(requireContext())
     secondaryImagesAdapter = SecondaryImagesAdapter(ArrayList(), this)

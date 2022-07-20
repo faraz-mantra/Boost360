@@ -11,11 +11,12 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.MenuProvider
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.framework.R
 import com.framework.analytics.SentryController
 import com.framework.helper.Navigator
@@ -43,7 +44,7 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
     super.onCreate(savedInstanceState)
     binding = DataBindingUtil.setContentView(this, getLayout())
     binding?.lifecycleOwner = this
-    viewModel = ViewModelProviders.of(this).get(getViewModelClass())
+    viewModel = ViewModelProvider(this)[getViewModelClass()]
     navigator = Navigator(this)
     setToolbar()
     val observables = getObservables()
@@ -204,6 +205,7 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    super.onOptionsItemSelected(item)
     when (item.itemId) {
       android.R.id.home -> {
         onNavPressed()
@@ -228,14 +230,13 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
     for (view in views) view.setOnClickListener(null)
   }
 
-  open fun addFragment(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean,showAnim:Boolean=false) {
+  open fun addFragment(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean, showAnim: Boolean = false) {
     if (supportFragmentManager.isDestroyed) return
     if (containerID == null || fragment == null) return
 
     val fragmentTransaction = supportFragmentManager.beginTransaction()
-    if (showAnim){
-      fragmentTransaction?.
-      setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+    if (showAnim) {
+      fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
     }
     if (addToBackStack) {
       fragmentTransaction.addToBackStack(fragment.javaClass.name)
@@ -244,20 +245,19 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
   }
 
   // Fragment
-  open fun addFragmentReplace(containerId: Int?, fragment: Fragment?, addToBackStack: Boolean,showAnim:Boolean=false) {
+  open fun addFragmentReplace(containerId: Int?, fragment: Fragment?, addToBackStack: Boolean, showAnim: Boolean = false) {
     if (supportFragmentManager.isDestroyed) return
     if (containerId == null || fragment == null) return
 
     val fragmentTransaction = supportFragmentManager.beginTransaction()
-    if (showAnim){
-      fragmentTransaction?.
-      setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+    if (showAnim) {
+      fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
     }
     if (addToBackStack) {
       fragmentTransaction.addToBackStack(fragment.javaClass.name)
     }
     try {
-      fragmentTransaction.replace(containerId, fragment,fragment.javaClass.name).commit()
+      fragmentTransaction.replace(containerId, fragment, fragment.javaClass.name).commit()
     } catch (e: IllegalStateException) {
       e.printStackTrace()
       SentryController.captureException(e)

@@ -13,7 +13,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.framework.R
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
@@ -22,7 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : BaseViewModel?> : BottomSheetDialogFragment(), View.OnClickListener {
+abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BottomSheetDialogFragment(), View.OnClickListener {
 
   companion object {
     val RESULT_OK = -1
@@ -54,7 +54,7 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     binding?.lifecycleOwner = this
     navigator = Navigator(baseActivity)
     sessionManager = UserSessionManager(baseActivity)
-    viewModel = ViewModelProviders.of(this).get(getViewModelClass())
+    viewModel = ViewModelProvider(requireActivity())[getViewModelClass()]
     return binding?.root
   }
 
@@ -132,12 +132,12 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     }
   }
 
-  open fun addFragment(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean,showAnim:Boolean=false) {
+  open fun addFragment(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean, showAnim: Boolean = false) {
     if (activity?.supportFragmentManager?.isDestroyed == true) return
     if (containerID == null || fragment == null) return
 
     val fragmentTransaction = baseActivity.supportFragmentManager.beginTransaction()
-    if (showAnim){
+    if (showAnim) {
       fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
     }
     if (addToBackStack) {
@@ -146,19 +146,19 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     fragmentTransaction.add(containerID, fragment, fragment.javaClass.name).commit()
   }
 
-  open fun addFragmentReplace(containerId: Int?, fragment: Fragment?, addToBackStack: Boolean,showAnim:Boolean=false) {
+  open fun addFragmentReplace(containerId: Int?, fragment: Fragment?, addToBackStack: Boolean, showAnim: Boolean = false) {
     if (requireActivity().supportFragmentManager.isDestroyed) return
     if (containerId == null || fragment == null) return
 
     val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-    if (showAnim){
+    if (showAnim) {
       fragmentTransaction?.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
     }
     if (addToBackStack) {
       fragmentTransaction.addToBackStack(fragment.javaClass.name)
     }
     try {
-      fragmentTransaction.replace(containerId, fragment,fragment.javaClass.name).commit()
+      fragmentTransaction.replace(containerId, fragment, fragment.javaClass.name).commit()
     } catch (e: IllegalStateException) {
       e.printStackTrace()
     }
