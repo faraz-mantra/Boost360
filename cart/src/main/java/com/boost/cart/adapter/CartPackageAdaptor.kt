@@ -71,7 +71,7 @@ class CartPackageAdaptor(
     holder.name.text = selectedBundle.item_name
     val price = priceCalculatorForYear(selectedBundle.price, "", activity)
     val MRPPrice = priceCalculatorForYear(selectedBundle.MRPPrice, "", activity)
-    holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + Utils.yearlyOrMonthlyOrEmptyValidity("", activity)
+    holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + Utils.yearlyOrMonthlyOrEmptyValidity("", activity, selectedBundle.min_purchase_months)
 
     if (selectedBundle.link != null) {
       Glide.with(context).load(selectedBundle.link!!)//.placeholder(R.drawable.boost_360_insignia)
@@ -81,7 +81,7 @@ class CartPackageAdaptor(
     }
 
     if (price != MRPPrice) {
-      spannableString(holder, MRPPrice)
+      spannableString(holder, MRPPrice, selectedBundle.min_purchase_months)
       holder.orig_cost.visibility = View.VISIBLE
     } else {
       holder.orig_cost.visibility = View.GONE
@@ -214,10 +214,10 @@ class CartPackageAdaptor(
     //   var view = itemView.findViewById<View>(R.id.cart_single_package_bottom_view)!!
   }
 
-  fun spannableString(holder: upgradeViewHolder, value: Double) {
+  fun spannableString(holder: upgradeViewHolder, value: Double, minMonth: Int) {
     val origCost: SpannableString
       origCost = SpannableString(
-        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + Utils.yearlyOrMonthlyOrEmptyValidity("", activity)
+        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + Utils.yearlyOrMonthlyOrEmptyValidity("", activity, minMonth)
       )
 
     origCost.setSpan(

@@ -268,7 +268,7 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
                         Bundles(
                             item.bundle_id,
                             temp,
-                            item.min_purchase_months,
+                            if(!prefs.getYearPricing()) item.min_purchase_months else 1,
                             item.name,
                             item.overall_discount_percent,
                             PrimaryImage(item.primary_image),
@@ -347,7 +347,7 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
 //                                            featuresList = it
                             var bundleMonthlyMRP = 0.0
                             val minMonth: Int =
-                                if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
+                                if (!prefs.getYearPricing() && item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
 
                             for (singleItem in it) {
                                 for (item in item!!.included_features) {
@@ -385,7 +385,7 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
                                     originalBundlePrice.toDouble(),
                                     item!!.overall_discount_percent,
                                     1,
-                                    if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
+                                    if (!prefs.getYearPricing() && item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
                                     "bundles",
                                     null,
                                     ""
@@ -414,7 +414,7 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
                             item!!.min_purchase_months?.let { it1 ->
                                 event_attributes.put(
                                     "Validity",
-                                    it1
+                                    if(!prefs.getYearPricing()) it1 else 1
                                 )
                             }
                             WebEngageController.trackEvent(

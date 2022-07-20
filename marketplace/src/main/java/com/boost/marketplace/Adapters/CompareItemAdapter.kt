@@ -21,11 +21,11 @@ import java.util.*
 class CompareItemAdapter(
     cryptoCurrencies: List<FeaturesModel>?,
     val addonsListener: AddonsListener,
-    val activity: Activity
+    val activity: Activity,
+    var minMonth: Int = 1
 ) : RecyclerView.Adapter<CompareItemAdapter.upgradeViewHolder>() {
 
     private var upgradeList = ArrayList<FeaturesModel>()
-    var minMonth = 1
     private lateinit var context: Context
 
     init {
@@ -48,7 +48,7 @@ class CompareItemAdapter(
 
         holder.name.setText(upgradeList.get(position).name)
         val cryptocurrencyItem = upgradeList[position]
-        holder.upgradeListItem(holder, cryptocurrencyItem, activity)
+        holder.upgradeListItem(holder, cryptocurrencyItem, activity, minMonth)
         Glide.with(context).load(upgradeList.get(position).primary_image).into(holder.image)
         holder.itemView.setOnClickListener {
             addonsListener.onAddonsClicked(upgradeList.get(position))
@@ -71,12 +71,13 @@ class CompareItemAdapter(
         fun upgradeListItem(
             holder: upgradeViewHolder,
             updateModel: FeaturesModel,
-            activity: Activity
+            activity: Activity,
+            minMonth: Int
         ) {
             val discount = 100 - updateModel.discount_percent
-            var price = (discount * updateModel.price) / 100
+            var price = (discount * (updateModel.price * minMonth)) / 100
             price = priceCalculatorForYear(price, updateModel.widget_type?:"", activity)
-            holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + yearlyOrMonthlyOrEmptyValidity(updateModel.widget_type?:"", activity)
+            holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + yearlyOrMonthlyOrEmptyValidity(updateModel.widget_type?:"", activity, minMonth)
         }
     }
 }

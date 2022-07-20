@@ -119,7 +119,7 @@ class PackageViewPagerAdapter(
 
     var offeredBundlePrice = 0.0
     var originalBundlePrice = 0.0
-    val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) bundles.min_purchase_months!! else 1
+    val minMonth: Int = if (!prefs.getYearPricing() && bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) bundles.min_purchase_months!! else 1
     CompositeDisposable().add(
       AppDatabase.getInstance(activity.application)!!
         .featuresDao()
@@ -167,13 +167,13 @@ class PackageViewPagerAdapter(
 //                                        holder.bundlePriceLabel.visibility = View.VISIBLE
             }
 
-            if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) {
+            if (!prefs.getYearPricing() && bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) {
                 holder.offerPrice.setText("₹" +
                         NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
-                        Utils.yearlyOrMonthlyOrEmptyValidity("", activity)
+                        Utils.yearlyOrMonthlyOrEmptyValidity("", activity, bundles.min_purchase_months!!)
                 )
               if (offeredBundlePrice != originalBundlePrice) {
-                spannableString(holder, originalBundlePrice)
+                spannableString(holder, originalBundlePrice, bundles.min_purchase_months!!)
                 holder.origCost.visibility = View.VISIBLE
               } else {
                 holder.origCost.visibility = View.GONE
@@ -245,9 +245,9 @@ class PackageViewPagerAdapter(
     )
   }
 
-  fun spannableString(holder: PagerViewHolder, value: Double) {
+  fun spannableString(holder: PagerViewHolder, value: Double, minMonth: Int = 1) {
     val origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value)
-            + Utils.yearlyOrMonthlyOrEmptyValidity("", activity))
+            + Utils.yearlyOrMonthlyOrEmptyValidity("", activity, minMonth))
 
     origCost.setSpan(
       StrikethroughSpan(),

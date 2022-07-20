@@ -596,6 +596,9 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                                 promoBannersList.postValue(promoList)
                             }
 
+                        }else{
+                            //empty list
+                            promoBanners.postValue(arrayListOf())
                         }
 
                         //partnerZone

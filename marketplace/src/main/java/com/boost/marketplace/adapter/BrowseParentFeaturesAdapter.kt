@@ -82,7 +82,7 @@ class BrowseParentFeaturesAdapter(
             CompositeDisposable().add(
                 AppDatabase.getInstance(activity.application)!!
                     .featuresDao()
-                    .getAllFeatures()
+                    .getFeaturesItems(true)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({

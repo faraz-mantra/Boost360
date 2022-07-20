@@ -136,7 +136,8 @@ class ParentCompareItemAdapter(
                                                 CompareItemAdapter(
                                                     it,
                                                     addonsListener,
-                                                    activity
+                                                    activity,
+                                                    if(!activity.prefs.getYearPricing() && parentItem.min_purchase_months != null) parentItem.min_purchase_months!! else 1
                                                 )
                                             parentViewHolder.ChildRecyclerView
                                                 .setAdapter(sectionLayout)
@@ -277,7 +278,7 @@ class ParentCompareItemAdapter(
         var offeredBundlePrice = 0.0
         var originalBundlePrice = 0.0
         val minMonth: Int =
-            if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) bundles.min_purchase_months!! else 1
+            if (!prefs.getYearPricing() && bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) bundles.min_purchase_months!! else 1
         CompositeDisposable().add(
             AppDatabase.getInstance(Application())!!
                 .featuresDao()
@@ -310,20 +311,21 @@ class ParentCompareItemAdapter(
                             offeredBundlePrice = originalBundlePrice
                             holder.bundleDiscount.visibility = View.GONE
                         }
-                        if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) {
+                        if (!prefs.getYearPricing() && bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) {
                             holder.tv_price.setText(
                                 "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
                                     .format(offeredBundlePrice) + yearlyOrMonthlyOrEmptyValidity(
                                     "",
-                                    activity
+                                    activity,
+                                    bundles.min_purchase_months!!
                                 )
                             )
                             holder.tv_inlcuded_add_on.setText("Includes these " + it.size + " add-ons")
                             if (offeredBundlePrice != originalBundlePrice) {
                                 spannableString(
                                     holder,
-                                    originalBundlePrice
-                                )
+                                    originalBundlePrice,
+                                    bundles.min_purchase_months!!)
                                 holder.origCost.visibility = View.VISIBLE
                             } else {
                                 holder.origCost.visibility = View.GONE
@@ -383,10 +385,10 @@ class ParentCompareItemAdapter(
             .subscribe()
     }
 
-    fun spannableString(holder: ParentViewHolder, value: Double) {
+    fun spannableString(holder: ParentViewHolder, value: Double, minMonth: Int = 1) {
         val origCost = SpannableString(
             "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                .format(value) + yearlyOrMonthlyOrEmptyValidity("", activity)
+                .format(value) + yearlyOrMonthlyOrEmptyValidity("", activity, minMonth)
         )
         origCost.setSpan(
             StrikethroughSpan(),

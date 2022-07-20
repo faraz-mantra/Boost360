@@ -2852,7 +2852,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                     bundles_in_cart = true
                     for (bundle in bundles) {
                         package_validity_months = bundle.min_purchase_months
-                        if (bundle.min_purchase_months > default_validity_months) {
+                        if (!prefs.getYearPricing() && bundle.min_purchase_months > default_validity_months) {
                             default_validity_months = bundle.min_purchase_months
                         }
 //                        if (bundle.min_purchase_months < default_validity_months)
