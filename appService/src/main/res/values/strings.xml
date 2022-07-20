@@ -952,7 +952,7 @@
   <string name="consultation_settings">Consultation Settings</string>
   <string name="default_delivery_charges_warehouse_addresses">Default delivery charges, Warehouse \naddresses</string>
   <string name="warehouse_address">Warehouse address*</string>
-  <string name="contact_number">Contact number*</string>
+  <string name="contact_number_aestrick">Contact number*</string>
   <string name="add_warehouse">Add warehouse</string>
   <string name="add_location_of_warehouse_for_users_to_self_pick_orders">Add location of warehouse for users to self pick orders.</string>
   <string name="warehouse_name">Warehouse name*</string>
