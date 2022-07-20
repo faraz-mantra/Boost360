@@ -2,8 +2,10 @@ package com.festive.poster.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.drawable.AnimationDrawable
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.media.MediaCodec
 import android.media.MediaCodecInfo
@@ -11,17 +13,21 @@ import android.media.MediaFormat
 import android.media.MediaMuxer
 import android.util.Log
 import android.view.Surface
+import androidx.annotation.Px
+import androidx.core.graphics.component1
+import androidx.core.graphics.component2
+import androidx.core.graphics.component3
+import androidx.core.graphics.component4
 import androidx.core.graphics.drawable.toBitmap
 import com.airbnb.lottie.LottieCompositionFactory
 import com.airbnb.lottie.LottieDrawable
-import com.bumptech.glide.Glide
-import com.framework.BaseApplication
 import com.framework.utils.FileUtils.view
-import com.waynejo.androidndkgif.GifEncoder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
 import java.io.Closeable
 import java.io.File
+import java.io.FileOutputStream
 import java.nio.ByteBuffer
 
 
@@ -54,7 +60,7 @@ object LottieToGif2 {
         private val framesPerSecond: Int = DEFAULT_FPS,
         width: Int = DEFAULT_WIDTH,
         height: Int = DEFAULT_HEIGHT,
-        videoOutput: File,
+        val videoOutput: File,
         drawable: LottieDrawable
     ) : Closeable {
 
@@ -66,8 +72,8 @@ object LottieToGif2 {
         private var muxerStarted: Boolean = false
         private var fakePts: Long = 0
         private var videoLengthInMs: Long = 0
-        val gifEncoder = GifEncoder();
-        var delay=0
+        var bos: ByteArrayOutputStream = ByteArrayOutputStream()
+        var encoder: AnimatedGifEncoder = AnimatedGifEncoder()
 
 
         companion object {
@@ -104,12 +110,15 @@ object LottieToGif2 {
             // We're not actually interested in multiplexing audio.  We just want to convert
             // the raw H.264 elementary stream we get from MediaCodec into a .mp4 file.
             createMediaMuxer(videoOutput)*/
-            gifEncoder.init(DEFAULT_WIDTH, DEFAULT_HEIGHT, videoOutput.path, GifEncoder.EncodingType.ENCODING_TYPE_NORMAL_LOW_MEMORY);
+            encoder.start(bos)
+            encoder.setTransparent(Color.WHITE)
+            encoder.width=drawable.intrinsicWidth
+            encoder.height=drawable.intrinsicHeight
+            encoder.setFrameRate(30F)
 
         }
 
         fun nextFrame(currentFrame: Drawable) {
-            delay=+1000
            /* drainEncoder(false)
             val canvas = inputSurface.lockCanvas(null)
             try {
@@ -118,14 +127,54 @@ object LottieToGif2 {
             } finally {
                 inputSurface.unlockCanvasAndPost(canvas)
             }*/
-            val bitmap =currentFrame.toBitmap(DEFAULT_WIDTH, DEFAULT_HEIGHT)
-            gifEncoder.encodeFrame(bitmap,delay)
+            val bitmap =currentFrame.toBitmapWhite()
+            encoder.addFrame(bitmap)
         }
 
         fun end() {
-            gifEncoder.close()
+            encoder.finish()
+            saveGif(videoOutput,bos)
            /* drainEncoder(true)
             close()*/
+        }
+
+        public fun Drawable.toBitmapWhite(
+            @Px width: Int = intrinsicWidth,
+            @Px height: Int = intrinsicHeight,
+            config: Bitmap.Config? = null
+        ): Bitmap {
+            if (this is BitmapDrawable) {
+                if (config == null || bitmap.config == config) {
+                    // Fast-path to return original. Bitmap.createScaledBitmap will do this check, but it
+                    // involves allocation and two jumps into native code so we perform the check ourselves.
+                    if (width == bitmap.width && height == bitmap.height) {
+                        return bitmap
+                    }
+                    return Bitmap.createScaledBitmap(bitmap, width, height, true)
+                }
+            }
+
+            val (oldLeft, oldTop, oldRight, oldBottom) = bounds
+
+            val bitmap = Bitmap.createBitmap(width, height, config ?: Bitmap.Config.ARGB_8888)
+            setBounds(0, 0, width, height)
+            val canvas = Canvas(bitmap).apply {
+                drawColor(Color.WHITE)
+            }
+            draw(canvas)
+
+            setBounds(oldLeft, oldTop, oldRight, oldBottom)
+            return bitmap
+        }
+
+        fun saveGif(videoOutput: File,bos:ByteArrayOutputStream) {
+            try {
+                val outStream = FileOutputStream(videoOutput)
+                outStream.write(bos.toByteArray())
+                outStream.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
 
         private fun createMediaMuxer(output: File) {
