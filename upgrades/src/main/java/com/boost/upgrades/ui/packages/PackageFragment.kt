@@ -27,10 +27,7 @@ import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.ui.cart.CartFragment
-import com.boost.upgrades.utils.CircleAnimationUtil
-import com.boost.upgrades.utils.Constants
-import com.boost.upgrades.utils.SharedPrefs
-import com.boost.upgrades.utils.WebEngageController
+import com.boost.upgrades.utils.*
 import com.bumptech.glide.Glide
 import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
@@ -75,20 +72,25 @@ class PackageFragment : BaseFragment("MarketPlacePackageFragment") {
     lateinit var prefs: SharedPrefs
 
     private lateinit var viewModel: PackageViewModel
+
     companion object {
         fun newInstance() = PackageFragment()
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.package_fragment, container, false)
 
         val jsonString = requireArguments().getString("bundleData")
-        Log.v("jsonString"," "+ jsonString)
+        Log.v("jsonString", " " + jsonString)
         bundleData = Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type)
-        packageAdaptor = PackageAdaptor((activity as UpgradeActivity), ArrayList(), Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type))
+        packageAdaptor = PackageAdaptor(
+            (activity as UpgradeActivity),
+            ArrayList(),
+            Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type)
+        )
         prefs = SharedPrefs(activity as UpgradeActivity)
         return root
     }
@@ -106,12 +108,12 @@ class PackageFragment : BaseFragment("MarketPlacePackageFragment") {
 
 
 
-        if(requireArguments().containsKey("showCartIcon")){
+        if (requireArguments().containsKey("showCartIcon")) {
             package_cart_icon.visibility = View.INVISIBLE
             package_submit.visibility = View.GONE
         }
 
-        if(bundleData!!.primary_image != null && !bundleData!!.primary_image!!.url.isNullOrEmpty()){
+        if (bundleData!!.primary_image != null && !bundleData!!.primary_image!!.url.isNullOrEmpty()) {
             Glide.with(this).load(bundleData!!.primary_image!!.url).into(package_profile_image)
             Glide.with(this).load(bundleData!!.primary_image!!.url).into(package_profile_image_copy)
         } else {
@@ -124,8 +126,8 @@ class PackageFragment : BaseFragment("MarketPlacePackageFragment") {
 
         package_cart_icon.setOnClickListener {
             (activity as UpgradeActivity).addFragment(
-                    CartFragment.newInstance(),
-                    Constants.CART_FRAGMENT
+                CartFragment.newInstance(),
+                Constants.CART_FRAGMENT
             )
         }
 
@@ -138,7 +140,8 @@ class PackageFragment : BaseFragment("MarketPlacePackageFragment") {
 
                     makeFlyAnimation(package_profile_image_copy)
 
-                    viewModel.addItemToCart(CartModel(
+                    viewModel.addItemToCart(
+                        CartModel(
                             bundleData!!._kid,
                             null,
                             null,
@@ -152,19 +155,34 @@ class PackageFragment : BaseFragment("MarketPlacePackageFragment") {
                             if (bundleData!!.min_purchase_months != null) bundleData!!.min_purchase_months!! else 1,
                             "bundles",
                             null
-                    ))
+                        )
+                    )
                     val event_attributes: HashMap<String, Any> = HashMap()
                     bundleData!!.name?.let { it1 -> event_attributes.put("Package Name", it1) }
-                    bundleData!!.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
+                    bundleData!!.target_business_usecase?.let { it1 ->
+                        event_attributes.put(
+                            "Package Tag",
+                            it1
+                        )
+                    }
                     event_attributes.put("Package Price", originalBundlePrice)
                     event_attributes.put("Discounted Price", offeredBundlePrice)
                     event_attributes.put("Discount %", bundleData!!.overall_discount_percent)
-                    bundleData!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
-                    WebEngageController.trackEvent(ADDONS_MARKETPLACE_PACKAGE_ADDED_TO_CART, ADDONS_MARKETPLACE, event_attributes)
+                    bundleData!!.min_purchase_months?.let { it1 ->
+                        event_attributes.put(
+                            "Validity",
+                            it1
+                        )
+                    }
+                    WebEngageController.trackEvent(
+                        ADDONS_MARKETPLACE_PACKAGE_ADDED_TO_CART,
+                        ADDONS_MARKETPLACE,
+                        event_attributes
+                    )
                     packageInCartStatus = true
                     package_submit.background = ContextCompat.getDrawable(
-                            requireContext(),
-                            R.drawable.added_to_cart_grey
+                        requireContext(),
+                        R.drawable.added_to_cart_grey
                     )
                     package_submit.setTextColor(Color.parseColor("#bbbbbb"))
                     package_submit.setText(getString(R.string.added_to_cart))
@@ -178,14 +196,14 @@ class PackageFragment : BaseFragment("MarketPlacePackageFragment") {
     }
 
     private fun loadData() {
-        if(bundleData!!.included_features != null) {
+        if (bundleData!!.included_features != null) {
             val itemIds = arrayListOf<String>()
             for (item in bundleData!!.included_features) {
                 itemIds.add(item.feature_code)
             }
             viewModel.loadUpdates(itemIds)
         } else {
-            Log.v("getkeyWidget1"," "+ bundleData!!._kid)
+            Log.v("getkeyWidget1", " " + bundleData!!._kid)
             //TODO: Load the widget_keys associated with Bundle from db
             viewModel.getAssociatedWidgetKeys(bundleData!!._kid)
         }
@@ -215,56 +233,74 @@ class PackageFragment : BaseFragment("MarketPlacePackageFragment") {
                 offeredBundlePrice = (bundleMonthlyMRP * minMonth).toDouble()
                 originalBundlePrice = (bundleMonthlyMRP * minMonth).toDouble()
 
-                if (bundleData!!.overall_discount_percent > 0){
-                    offeredBundlePrice = (RootUtil.round(
+                if (bundleData!!.overall_discount_percent > 0) {
+                    offeredBundlePrice = RootUtil.round(
                         originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent / 100),
                         2
-                    ))
-                    if(prefs.getYearPricing())
-                        offeredBundlePrice = offeredBundlePrice * 12
-            }else {
-                    if(prefs.getYearPricing())
-                        offeredBundlePrice = originalBundlePrice * 12
-                    else
-                        offeredBundlePrice = originalBundlePrice
+                    )
+                } else {
+                    offeredBundlePrice = originalBundlePrice
                 }
 
                 if (minMonth > 1) {
-                    if(prefs.getYearPricing())
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/year")
+                    if (prefs.getYearPricing())
+                        offer_price.setText(
+                            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                                .format(Utils.priceCalculatorForYear(offeredBundlePrice,"",requireActivity())) + "/year"
+                        )
                     else
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/" + bundleData!!.min_purchase_months + "mths")
+                        offer_price.setText(
+                            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                                .format(Utils.priceCalculatorForYear(offeredBundlePrice,"",requireActivity())) + "/" + bundleData!!.min_purchase_months + "mths"
+                        )
                     if (offeredBundlePrice != originalBundlePrice) {
-                        spannableString(if(prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice, minMonth)
+                        spannableString(
+                            if (prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice,
+                            minMonth
+                        )
                         orig_cost.visibility = View.VISIBLE
                     } else {
                         orig_cost.visibility = View.GONE
                     }
-                    updateRecycler(it,bundleData!!.min_purchase_months!!)
+                    updateRecycler(it, bundleData!!.min_purchase_months!!)
                 } else {
-                    if(prefs.getYearPricing())
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/year")
+                    if (prefs.getYearPricing())
+                        offer_price.setText(
+                            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                                .format(Utils.priceCalculatorForYear(offeredBundlePrice,"",requireActivity())) + "/year"
+                        )
                     else
-                        offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/mth")
+                        offer_price.setText(
+                            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                                .format(Utils.priceCalculatorForYear(offeredBundlePrice,"",requireActivity())) + "/mth"
+                        )
                     if (offeredBundlePrice != originalBundlePrice) {
-                        spannableString(if(prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice, 1)
+                        spannableString(
+                            if (prefs.getYearPricing()) originalBundlePrice * 12 else originalBundlePrice,
+                            1
+                        )
                         orig_cost.visibility = View.VISIBLE
                     } else {
                         orig_cost.visibility = View.GONE
                     }
-                    updateRecycler(it,1)
+                    updateRecycler(it, 1)
                 }
                 package_count.setText(featuresList!!.size.toString())
-                if(bundleData!!.target_business_usecase.isNullOrEmpty()){
+                if (bundleData!!.target_business_usecase.isNullOrEmpty()) {
                     package_use_case_layout.visibility = View.GONE
-                } else{
+                } else {
                     package_use_case_layout.visibility = View.VISIBLE
                     package_use_case.setText(bundleData!!.target_business_usecase)
 
                 }
                 var event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()
                 event_attributes.put("Package Name", bundleData!!.name!!)
-                WebEngageController.trackEvent(ADDONS_MARKETPLACE_PACKAGE_BUNDLE_LOADED, PAGE_VIEW, event_attributes,"")
+                WebEngageController.trackEvent(
+                    ADDONS_MARKETPLACE_PACKAGE_BUNDLE_LOADED,
+                    PAGE_VIEW,
+                    event_attributes,
+                    ""
+                )
             }
         })
 
@@ -277,8 +313,8 @@ class PackageFragment : BaseFragment("MarketPlacePackageFragment") {
                         if (item.item_id.equals(bundleData!!._kid)) {
                             packageInCartStatus = true
                             package_submit.background = ContextCompat.getDrawable(
-                                    requireContext(),
-                                    R.drawable.added_to_cart_grey
+                                requireContext(),
+                                R.drawable.added_to_cart_grey
                             )
                             package_submit.setTextColor(Color.parseColor("#bbbbbb"))
                             package_submit.setText(getString(R.string.added_to_cart))
@@ -289,11 +325,11 @@ class PackageFragment : BaseFragment("MarketPlacePackageFragment") {
                     badge121.setText(badgeNumber.toString())
                     badge121.visibility = View.VISIBLE
 
-                    if(!packageInCartStatus){
+                    if (!packageInCartStatus) {
                         package_submit.visibility = View.VISIBLE
                         package_submit.background = ContextCompat.getDrawable(
-                                requireContext(),
-                                R.drawable.orange_button_click_effect
+                            requireContext(),
+                            R.drawable.orange_button_click_effect
                         )
                         package_submit.setTextColor(Color.WHITE)
                         package_submit.setText("Add Package to cart")
@@ -306,8 +342,8 @@ class PackageFragment : BaseFragment("MarketPlacePackageFragment") {
 
                 package_submit.visibility = View.VISIBLE
                 package_submit.background = ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.orange_button_click_effect
+                    requireContext(),
+                    R.drawable.orange_button_click_effect
                 )
                 package_submit.setTextColor(Color.WHITE)
                 package_submit.setText("Add Package to cart")
@@ -315,7 +351,7 @@ class PackageFragment : BaseFragment("MarketPlacePackageFragment") {
         })
 
         viewModel.getBundleWidgetKeys().observe(this, Observer {
-            if(it != null){
+            if (it != null) {
                 val itemIds = arrayListOf<String>()
                 for (item in it) {
                     itemIds.add(item)
@@ -334,21 +370,30 @@ class PackageFragment : BaseFragment("MarketPlacePackageFragment") {
     fun spannableString(value: Double, minMonth: Int) {
         val origCost: SpannableString
         if (minMonth > 1) {
-            if(prefs.getYearPricing())
-                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year")
+            if (prefs.getYearPricing())
+                origCost = SpannableString(
+                    "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year"
+                )
             else
-                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")
+                origCost = SpannableString(
+                    "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                        .format(value) + "/" + minMonth + "mths"
+                )
         } else {
-            if(prefs.getYearPricing())
-                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year")
+            if (prefs.getYearPricing())
+                origCost = SpannableString(
+                    "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/year"
+                )
             else
-                origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
+                origCost = SpannableString(
+                    "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth"
+                )
         }
         origCost.setSpan(
-                StrikethroughSpan(),
-                0,
-                origCost.length,
-                0
+            StrikethroughSpan(),
+            0,
+            origCost.length,
+            0
         )
         orig_cost.setText(origCost)
     }
@@ -369,12 +414,14 @@ class PackageFragment : BaseFragment("MarketPlacePackageFragment") {
 
     private fun makeFlyAnimation(targetView: ImageView) {
 
-        CircleAnimationUtil().attachActivity(activity).setTargetView(targetView).setMoveDuration(600)
-            .setDestView(package_cart_icon).setAnimationListener(object : Animator.AnimatorListener {
+        CircleAnimationUtil().attachActivity(activity).setTargetView(targetView)
+            .setMoveDuration(600)
+            .setDestView(package_cart_icon)
+            .setAnimationListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animation: Animator) {}
                 override fun onAnimationEnd(animation: Animator) {
 
-                  viewModel.getCartItems()
+                    viewModel.getCartItems()
                 }
 
 

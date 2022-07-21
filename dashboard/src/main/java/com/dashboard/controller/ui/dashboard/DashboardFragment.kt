@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.bumptech.glide.Glide
@@ -96,6 +97,8 @@ import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.LocalSessionModel
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.VisitingCardSheet
 import com.onboarding.nowfloats.ui.webview.WebViewBottomDialog
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import java.io.File
@@ -159,6 +162,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     getPremiumBanner()
     getChannelAccessToken()
     displayFestiveButtonView()
+    lifecycleScope.launch {
+      MutableDataUtils.openBusinessCard.collect { if (it) binding?.btnVisitingCard?.performClick() }
+    }
   }
 
   private fun displayFestiveButtonView() {
@@ -906,8 +912,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       QuickActionItem.QuickActionType.ADD_NEARBY_ATTRACTION -> baseActivity.startNearByView(session)
       QuickActionItem.QuickActionType.ADD_FACULTY_MEMBER -> baseActivity.startFacultyMember(session)
       QuickActionItem.QuickActionType.PLACE_ORDER_BOOKING -> baseActivity.startOrderCreate(session)
-      QuickActionItem.QuickActionType.ADD_TABLE_BOOKING -> baseActivity.startBookTable(session,true)
-      QuickActionItem.QuickActionType.ADD_STAFF_MEMBER->baseActivity.startAddStaff(session)
+      QuickActionItem.QuickActionType.ADD_TABLE_BOOKING -> baseActivity.startBookTable(session, true)
+      QuickActionItem.QuickActionType.ADD_STAFF_MEMBER -> baseActivity.startAddStaff(session)
 
       QuickActionItem.QuickActionType.POST_STATUS_STORY,
       QuickActionItem.QuickActionType.ADD_SLIDER_BANNER,

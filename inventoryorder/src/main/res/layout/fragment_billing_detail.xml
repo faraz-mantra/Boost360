@@ -220,14 +220,18 @@
         android:id="@+id/layout_order_shipping_address"
         style="@style/match_wrap"
         layout="@layout/layout_order_address"
-        android:layout_margin="@dimen/size_12" />
+        android:layout_margin="@dimen/size_12"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
 
       <include
         android:id="@+id/layout_order_billing_address"
         style="@style/match_wrap"
         layout="@layout/layout_order_address"
         android:layout_margin="@dimen/size_12"
-        android:visibility="gone" />
+        android:visibility="gone"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
 
       <View
         android:layout_width="match_parent"
@@ -283,14 +287,6 @@
         android:orientation="vertical"
         android:padding="@dimen/size_16">
 
-        <com.framework.views.customViews.CustomTextView
-          style="@style/wrap_wrap"
-          android:layout_gravity="center_vertical"
-          android:layout_marginTop="@dimen/size_6"
-          android:fontFamily="@font/regular"
-          android:text="@string/all_items_in_cart_have_prices_including_18_gst"
-          android:textColor="@color/black_4a4a4a"
-          android:textSize="12sp" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
           style="@style/match_wrap"
@@ -435,7 +431,7 @@
             android:id="@+id/text_gst_amount"
             style="@style/EditTextLabelStyle"
             android:fontFamily="@font/semi_bold"
-            android:text="@string/inr_1200"
+            tools:text="@string/inr_1200"
             android:textColor="@color/black_4a4a4a"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/linear_service"

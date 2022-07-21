@@ -122,17 +122,18 @@
           app:textType="BODY_1" />
 
         <com.framework.views.customViews.CustomTextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:drawableEnd="@drawable/ic_arrow_right_accent_8_d"
-          android:drawablePadding="@dimen/size_4"
-          android:paddingTop="@dimen/size_2"
-          android:paddingBottom="@dimen/size_2"
-          android:text="@string/improve"
-          android:textAllCaps="false"
-          android:textColor="@color/colorAccentLight"
-          app:fontFamily="@font/semi_bold"
-          app:textType="CAPTION" />
+            android:id="@+id/tv_improve_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_arrow_right_accent_8_d"
+            android:drawablePadding="@dimen/size_4"
+            android:paddingTop="@dimen/size_2"
+            android:paddingBottom="@dimen/size_2"
+            android:text="@string/improve"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccentLight"
+            app:fontFamily="@font/semi_bold"
+            app:textType="CAPTION" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
       <!--      <ProgressBar-->

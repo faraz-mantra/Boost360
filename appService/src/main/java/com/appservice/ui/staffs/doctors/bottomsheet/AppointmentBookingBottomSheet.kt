@@ -1,5 +1,6 @@
 package com.appservice.ui.staffs.doctors.bottomsheet
 
+import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.view.children
@@ -15,6 +16,7 @@ class AppointmentBookingBottomSheet : BaseBottomSheetDialog<BottomSheetAppointme
 
   private var data: StaffDetailsResult? = null
   var onClicked: (windowDuration: String?) -> Unit = { }
+  private  val TAG = "AppointmentBookingBotto"
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_appointment_booking
 
@@ -27,7 +29,10 @@ class AppointmentBookingBottomSheet : BaseBottomSheetDialog<BottomSheetAppointme
   override fun onCreateView() {
     setOnClickListener(binding?.btnCancel, binding?.btnSaveChanges)
     this.data = arguments?.getSerializable(IntentConstant.STAFF_DATA.name) as? StaffDetailsResult
-    val radioButton = binding?.rgBookingWindow?.children?.filter { (it as? AppCompatRadioButton)?.text == data?.bookingWindow?.toString() ?: "" }?.firstOrNull() as? AppCompatRadioButton
+    Log.i(TAG, "onCreateView: ${data?.bookingWindow.toString()}")
+    val radioButton = binding?.rgBookingWindow?.children?.filter {
+      (it as? AppCompatRadioButton)?.text?.toString()?.replace(" days","") == (data?.bookingWindow?.toString() ?: "")
+    }?.firstOrNull() as? AppCompatRadioButton
     radioButton?.isChecked = true
   }
 

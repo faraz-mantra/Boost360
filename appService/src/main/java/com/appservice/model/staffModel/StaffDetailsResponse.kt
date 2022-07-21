@@ -84,7 +84,11 @@ data class StaffDetailsResult(
   }
 
   fun getExperienceN(): String {
-    return if (experience == null || experience == 0) "0 year" else if (experience!! > 5) "5+ years" else "$experience years"
+    return if (experience == null) "" else if (experience!! > 5) "5+ years" else "$experience ${if (experience!! > 1) "years" else "year"}"
+  }
+
+  fun getExperienceValue(): Int? {
+    return if (experience!! > 5) 6 else experience
   }
 
   fun getBookingWindowN(): String {

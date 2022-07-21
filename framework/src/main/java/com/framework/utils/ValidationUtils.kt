@@ -50,4 +50,13 @@ object ValidationUtils {
 
     return false
   }
+
+  fun isPanNumberValid(panNumber: String?): Boolean {
+    return Pattern.compile("[A-Z]{5}[0-9]{4}[A-Z]{1}").matcher(panNumber).matches()
+  }
+
+  fun isGstValid(panNumber: String?): Boolean {
+    return Pattern.compile("\\d{2}[A-Z]{5}\\d{4}[A-Z]{1}[A-Z\\d]{1}[Z]{1}[A-Z\\d]{1}").matcher(panNumber).matches()
+  }
+
 }
