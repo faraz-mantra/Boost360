@@ -177,7 +177,6 @@ class ComparePacksV3Activity :
             viewModel.setCurrentExperienceCode(code, fpTag!!)
         }
         try {
-            refreshViewPager = true
             viewModel.getCartItems()
             viewModel.loadPackageUpdates()
         } catch (e: Exception) {

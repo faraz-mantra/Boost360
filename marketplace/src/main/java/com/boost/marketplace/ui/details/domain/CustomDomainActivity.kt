@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
+import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.CustomDomain.Domain
 import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
@@ -36,6 +37,8 @@ import com.framework.webengageconstant.ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
+import java.text.NumberFormat
+import java.util.*
 
 
 class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, CustomDomainViewModel>(),DomainListener {
@@ -62,6 +65,8 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
     lateinit var singleAddon: FeaturesModel
     lateinit var progressDialog: ProgressDialog
     lateinit var prefs: SharedPrefs
+    var domainPrice: String? = null
+    var pricing: String? = null
 
     override fun getLayout(): Int {
         return R.layout.activity_custom_domain
@@ -113,6 +118,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
                 bundle.putString("blockedItem", blockedItem)
                 bundle.putString("fpid", fpid)
                 bundle.putString("fpTag", fpTag)
+                bundle.putString("price",pricing)
                 bundle.putString("expCode", experienceCode)
                 bundle.putString("bundleData", Gson().toJson(singleAddon))
                 bundle.putString("isDeepLink", isDeepLink.toString())
@@ -269,6 +275,18 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             allDomainsList = it.domains
             updateDomainsRecycler(it.domains)
             updateFreeAddonsRecycler1(it.domains)
+            val discount = 100 - singleAddon.discount_percent
+            val paymentPrice = Utils.priceCalculatorForYear(
+                (discount*singleAddon.price) / 100.0,
+                singleAddon.widget_type ?: "",
+                this
+            )
+            pricing =  "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                .format(paymentPrice) + Utils.yearlyOrMonthlyOrEmptyValidity(
+                singleAddon.widget_type ?: "",  this
+            )
+            domainPrice=pricing
+
         })
 
         viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
@@ -281,15 +299,15 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             }
         })
 
-        viewModel.updateStatus().observe(this, androidx.lifecycle.Observer{
-            result=it.Result
-//            if (it.Result.equals(false)){
-//                binding?.btnSelectDomain?.setBackgroundResource(R.color.colorAccent1);
-//            }
-//            else{
-//                binding?.btnSelectDomain?.setBackgroundResource(R.color.btn_bg_color_disabled)
-//            }
-        })
+//        viewModel.updateStatus().observe(this, androidx.lifecycle.Observer{
+//            result=it.Result
+////            if (it.Result.equals(false)){
+////                binding?.btnSelectDomain?.setBackgroundResource(R.color.colorAccent1);
+////            }
+////            else{
+////                binding?.btnSelectDomain?.setBackgroundResource(R.color.btn_bg_color_disabled)
+////            }
+//        })
     }
 
     fun initRecyclerView() {

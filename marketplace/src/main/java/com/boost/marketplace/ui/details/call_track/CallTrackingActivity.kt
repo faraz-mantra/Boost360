@@ -27,6 +27,7 @@ import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
+import com.framework.utils.hideKeyBoard
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -58,7 +59,8 @@ class CallTrackingActivity :
     lateinit var singleAddon: FeaturesModel
     lateinit var progressDialog: ProgressDialog
     lateinit var prefs: SharedPrefs
-
+    var numberprice: String? = null
+    var pricing: String? = null
 
     override fun getLayout(): Int {
         return R.layout.activity_call_tracking
@@ -103,6 +105,8 @@ class CallTrackingActivity :
         exactMatchNumberListAdapter = ExactMatchListAdapter(this, ArrayList(), null, this)
         progressDialog = ProgressDialog(this)
 
+        numberprice = intent.getStringExtra("price")
+
 
         binding?.addonsBack?.setOnClickListener {
             onBackPressed()
@@ -115,10 +119,13 @@ class CallTrackingActivity :
             )
         }
         binding?.btnSelectNumber?.setOnClickListener {
+
             val dialogCard = CallTrackAddToCartBottomSheet()
             val bundle = Bundle()
-            bundle.putString("number", blockedNumber)
 
+            bundle.putString("price",numberprice)
+
+            bundle.putString("number", blockedNumber)
             bundle.putString("bundleData", Gson().toJson(singleAddon))
             bundle.putDouble(
                 "AddonDiscountedPrice",
@@ -164,6 +171,7 @@ class CallTrackingActivity :
                     binding?.ivCross?.visibility = View.GONE
                     binding?.btnSearch?.visibility = View.VISIBLE
                     binding?.btnSearch?.setOnClickListener {
+                        hideKeyBoard()
 
                         updateAllItemBySearchValue(p0.toString())
                         binding?.tvAvailableNo?.text = "Search results"
