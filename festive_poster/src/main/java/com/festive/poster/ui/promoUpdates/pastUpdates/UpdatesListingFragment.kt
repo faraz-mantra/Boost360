@@ -7,12 +7,10 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.Constants
-import com.festive.poster.constant.IntentConstant
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.FragmentUpdatesListingBinding
 import com.festive.poster.models.PosterPackTagModel
@@ -21,8 +19,8 @@ import com.festive.poster.models.response.GetTemplateViewConfigResponse
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
 import com.festive.poster.viewmodels.PostUpdatesViewModel
-import com.framework.base.setFragmentType
 import com.framework.constants.IntentConstants
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -30,6 +28,7 @@ import com.framework.extensions.visible
 import com.framework.pref.clientId
 import com.framework.utils.ContentSharing
 import com.framework.utils.saveAsTempFile
+import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -185,33 +184,12 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
                 item as PastPostItem
                 lifecycleScope.launch {
                     withContext(Dispatchers.IO) {
-                        val bitmapPastUpdateReuse = Picasso.get().load(item.imageUri.toString()).get()
-                        val saveAsTempFile = bitmapPastUpdateReuse.saveAsTempFile()
-                        startActivity(Intent(requireActivity(), Class.forName("com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity"))
-                                .putExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
-                                        putString(IntentConstants.IK_CAPTION_KEY, item.message.toString())
-                                        putString(IntentConstants.IK_POSTER, saveAsTempFile?.path)
-                                        putString(IntentConstants.IK_UPDATE_TYPE,
-                                            if (saveAsTempFile?.path == null)
-                                                IntentConstants.UpdateType.UPDATE_TEXT.name
-                                            else
-                                                IntentConstants.UpdateType.UPDATE_IMAGE_TEXT.name
-                                        )
-                                    })
-                        )
+                        if (item.imageUri.toString().isNullOrBlank().not()){
+                         val bitmapPastUpdateReuse = Picasso.get().load(item.imageUri.toString()).get()
+                         val saveAsTempFile = bitmapPastUpdateReuse.saveAsTempFile()
+                         PostPreviewSocialActivity.launchActivity(activity = baseActivity, caption = item.message.toString(), posterImgPath = saveAsTempFile?.path.toString(), tags = item.tags, updateType = IntentConstants.UpdateType.UPDATE_PROMO_POST.name)
+                         }
                     }}
-
-                /*lifecycleScope.launch {
-                    withContext(Dispatchers.IO) {
-                        val bitmapPastUpdateReuse = Picasso.get().load(item.imageUri.toString()).get()
-                        val saveAsTempFile = bitmapPastUpdateReuse.saveAsTempFile()
-                        val intent = Intent(requireActivity(), Class.forName("com.appservice.ui.updatesBusiness.UpdateBusinessContainerActivity"))
-                            .putExtra(IntentConstant.REUSE_PAST_UPDATE_MESSAGE_TEXT.name, item.message.toString())
-                            .putExtra(IntentConstant.REUSE_PAST_UPDATE_IMAGE.name, saveAsTempFile?.path)
-                        intent.setFragmentType("ADD_UPDATE_BUSINESS_FRAGMENT_V2")
-                        startActivity(intent)
-                    }
-                }*/
             }
         }
     }
