@@ -309,6 +309,7 @@
                 android:id="@+id/container_black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_32_dp"
                 app:layout_constraintTop_toBottomOf="@id/container_key_benefits"
                 android:background="@drawable/rounded_curve_black_bg"
                 >
@@ -393,9 +394,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/semi_bold"
+                        android:fontFamily="@font/regular"
                         android:padding="16dp"
-                        tools:text="How To Use Staff Management?"
+                        tools:text="How to activate this Pack"
                         android:textColor="@color/main_color_gray_dk"
                         android:textFontWeight="600"
                         android:textSize="16sp"
@@ -408,7 +409,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:padding="@dimen/_10sdp"
-                        android:src="@drawable/ic_arrow_down_gray"
+                        android:src="@drawable/ic_up_arrow_with_bg"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -420,9 +421,10 @@
                     android:id="@+id/how_to_use_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/how_to_use_item"
+                    tools:listitem="@layout/how_to_use_item_pack_details"
                     android:visibility="gone"
                     tools:visibility="visible"
+                    tools:itemCount="4"
                     app:layout_constraintTop_toBottomOf="@id/how_to_use_title_layout" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

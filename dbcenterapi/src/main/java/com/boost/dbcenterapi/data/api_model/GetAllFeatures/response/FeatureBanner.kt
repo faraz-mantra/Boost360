@@ -1,6 +1,5 @@
 package com.boost.dbcenterapi.data.api_model.GetAllFeatures.response
 
-import androidx.annotation.Nullable
 
 data class FeatureBanner(
   val _kid: String? = null,

@@ -272,7 +272,6 @@
     <dimen name="dimen_16dp">16dp</dimen>
     <dimen name="dimen_18dp">18dp</dimen>
     <dimen name="dimen_32_dp">32dp</dimen>
-    <dimen name="dimen_12dp">12dp</dimen>
   <dimen name="dimen_12dp">12dp</dimen>
 </resources>
 
