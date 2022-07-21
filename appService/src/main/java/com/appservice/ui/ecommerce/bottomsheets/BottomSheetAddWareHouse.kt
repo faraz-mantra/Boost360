@@ -30,7 +30,7 @@ class BottomSheetAddWareHouse : BaseBottomSheetDialog<BottomSheetAddWarehouseBin
   private fun setupUIColor() {
     changeColorOfSubstring(R.string.warehouse_name, R.color.black_4a4a4a, "*", binding?.ctvWarehouseName!!)
     changeColorOfSubstring(R.string.warehouse_address, R.color.black_4a4a4a, "*", binding?.ctvWarehouseAddress!!)
-    changeColorOfSubstring(R.string.contact_number, R.color.black_4a4a4a, "*", binding?.ctvContactNumber!!)
+    changeColorOfSubstring(R.string.contact_number_aestrick, R.color.black_4a4a4a, "*", binding?.ctvContactNumber!!)
   }
 
   override fun onClick(v: View) {
