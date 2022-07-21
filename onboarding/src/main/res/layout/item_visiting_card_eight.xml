@@ -27,32 +27,43 @@
       android:background="@drawable/bac_round_card"
       android:backgroundTint="@color/blue_light">
 
-      <com.framework.views.customViews.CustomImageView
-        android:id="@+id/img_logo"
-        android:layout_width="@dimen/size_120"
-        android:layout_height="@dimen/size_90"
-        android:layout_gravity="end"
-        android:layout_margin="@dimen/size_6"
-        app:srcCompat="@drawable/ic_business_card_spa_n" />
+
 
       <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/business_name"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/size_16"
-          android:layout_marginTop="@dimen/size_20"
-          android:ellipsize="end"
-          android:includeFontPadding="false"
-          android:maxLines="2"
-          android:textColor="@color/white"
-          app:fontFamily="@font/patua_one_regular"
-          app:textType="HEADING_6"
-          tools:text="PLASTO INDIA AND POLYMERS" />
+        <LinearLayout
+            android:weightSum="1"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+          <com.framework.views.customViews.AutoFitTextView
+              android:id="@+id/business_name"
+              android:layout_weight="0.7"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_16"
+              android:layout_marginTop="@dimen/size_20"
+              android:includeFontPadding="false"
+              android:maxLines="1"
+              android:textColor="@color/white"
+              app:fontFamily="@font/patua_one_regular"
+              app:textType="HEADING_6"
+              tools:text="PLASTO INDIA AND POLYMERS" />
+
+          <com.framework.views.customViews.CustomImageView
+              android:id="@+id/img_logo"
+              android:layout_weight="0.3"
+              android:layout_width="0dp"
+              android:layout_height="@dimen/size_90"
+              android:layout_gravity="end"
+              android:layout_margin="@dimen/size_6"
+              app:srcCompat="@drawable/ic_business_card_spa_n" />
+        </LinearLayout>
+
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"

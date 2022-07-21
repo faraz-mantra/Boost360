@@ -21,6 +21,6 @@ data class BillingDetailsN(
 ) : Serializable {
 
   fun getCurrencyCodeValue(): String {
-    return if (CurrencyCode.isNullOrEmpty().not()) CurrencyCode!! else "₹"
+    return if (CurrencyCode.isNullOrEmpty().not()) CurrencyCode!! else "INR"
   }
 }

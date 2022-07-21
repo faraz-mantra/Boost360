@@ -140,8 +140,9 @@ class SplashActivity : AppCompatActivity() {
   private fun startNewSignIn() {
     try {
       val intent : Intent = if (featureNewOnBoardingFlowEnable()) {
+        val fragmentType = if (UserSessionManager(this).hasUserLoggedInOnce) "ENTER_PHONE_FRAGMENT" else "INTRO_SLIDE_SHOW_FRAGMENT"
         Intent(applicationContext, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity")).
-        putExtra(FRAGMENT_TYPE, "INTRO_SLIDE_SHOW_FRAGMENT") // 0 stands for New screen Enter Phone Number ordinal from FragmentType in Presignin constants
+        putExtra(FRAGMENT_TYPE, fragmentType) // 0 stands for New screen Enter Phone Number ordinal from FragmentType in Presignin constants
       }else Intent(applicationContext, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
       startActivity(intent)
       finish()

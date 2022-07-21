@@ -12,16 +12,12 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
-import com.appservice.utils.changeColorOfSubstring
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.interfaces.AddCardListener
-import com.boost.upgrades.interfaces.EmailPopupListener
 import com.boost.upgrades.ui.payment.PaymentViewModel
-import com.boost.upgrades.utils.KeyboardUtils
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.Utils.hideSoftKeyboard
-import com.framework.views.customViews.CustomTextView
 import kotlinx.android.synthetic.main.add_card_popup.*
 import org.json.JSONObject
 import java.util.*

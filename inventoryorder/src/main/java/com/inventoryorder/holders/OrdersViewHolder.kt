@@ -63,11 +63,8 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
 
     binding.orderId.text = "# ${order.ReferenceNumber}"
     order.BillingDetails?.let { bill ->
-      val currency =
-        takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() }
-          ?: "INR"
-      val formatAmount =
-        "${DecimalFormat("##,##,##0.00").format(BigDecimal(bill.GrossAmount!!))}"
+      val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
+      val formatAmount = "${DecimalFormat("##,##,##0.00").format(BigDecimal(bill.NetAmount ?: 0.0))}"
       val ss = SpannableString("$formatAmount")
       ss.setSpan(RelativeSizeSpan(0.5f), "$formatAmount".indexOf("."), "$formatAmount".length, 0)
       binding.txtRupeesSymble.text = currency
