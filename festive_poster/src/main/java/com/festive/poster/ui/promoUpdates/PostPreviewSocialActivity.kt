@@ -87,8 +87,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     companion object{
 
 
-        fun launchActivity(activity:Activity,caption:String?,
-                           posterImgPath:String,tags:List<String>?,updateType:String){
+        fun launchActivity(activity:Activity,caption:String?, posterImgPath:String,tags:List<String>?,updateType:String){
             activity.startActivity(Intent(activity,PostPreviewSocialActivity::class.java)
                 .putExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
                     putString(IntentConstants.IK_CAPTION_KEY,caption)

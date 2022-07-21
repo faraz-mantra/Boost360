@@ -74,8 +74,6 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   companion object {
     val msgPost = "msg_post"
     val imagePost = "image_post"
-    const val REUSE_PAST_UPDATE_MESSAGE_TEXT = "REUSE_PAST_UPDATE_MESSAGE_TEXT"
-    const val REUSE_PAST_UPDATE_IMAGE = "REUSE_PAST_UPDATE_IMAGE"
 
 
     @JvmStatic
