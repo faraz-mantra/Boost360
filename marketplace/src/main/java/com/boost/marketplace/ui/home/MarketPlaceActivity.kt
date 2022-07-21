@@ -404,7 +404,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         }
 
         package_compare_layout.setOnClickListener {
-            val intent = Intent(this, ComparePacksV3Activity::class.java)
+            val intent = Intent(this, ComparePacksActivity::class.java)
             intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
 
             intent.putExtra("fpid", fpid)
