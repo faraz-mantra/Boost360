@@ -1015,7 +1015,7 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
 
                       //-----------------------//discount implementation
                       if (bundleDiscount > 0) {
-                        singleWidgetNetPrice = RootUtil.round(singleWidgetNetPrice - ((singleWidgetNetPrice * bundleDiscount) / 100) ,2)
+                        singleWidgetNetPrice = RootUtil.round(singleWidgetNetPrice - ((singleWidgetNetPrice * bundleDiscount) / 100.0) ,2)
                       }
                       featureNetPrice += singleWidgetNetPrice
 
@@ -1313,7 +1313,7 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
                   for (singleFeature in featuresList) {
                     if (singleIndludedFeature.feature_code.equals(singleFeature.feature_code)) {
 
-                      val netPrice = (singleFeature.price - ((singleFeature.price * singleIndludedFeature.feature_price_discount_percent) / 100))
+                      val netPrice = (singleFeature.price - ((singleFeature.price * singleIndludedFeature.feature_price_discount_percent) / 100.0))
 
                       //adding bundle netPrice
 //                      bundleNetPrice += netPrice * singleBundle.min_purchase_months
@@ -1323,7 +1323,7 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
 
                       //-----------------------//discount implementation
                       if (bundleDiscount > 0) {
-                        singleWidgetNetPrice = singleWidgetNetPrice - ((singleWidgetNetPrice * bundleDiscount) / 100)
+                        singleWidgetNetPrice = singleWidgetNetPrice - ((singleWidgetNetPrice * bundleDiscount) / 100.0)
                       }
                       featureNetPrice += singleWidgetNetPrice
 
@@ -1970,7 +1970,7 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
 
 
         cart_amount_title.text = "Cart total (" + cartList.size + " items)"
-        cart_amount_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total)
+        cart_amount_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(total,2))
         coupontotal = total
 
         if (couponServiceModel != null)
@@ -1985,10 +1985,10 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
         val temp = (total * 18) / 100
         taxValue = Math.round(temp * 100) / 100.0
         grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
-        igst_value.text = "+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue)
+        igst_value.text = "+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(taxValue,2))
 //                order_total_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
-        cart_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
-        footer_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
+        cart_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(grandTotal,2))
+        footer_grand_total.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(grandTotal,2))
 
         val revenue = Math.round(grandTotal * 100).toInt() / 100
         event_attributes.put("total amount", revenue)
