@@ -453,7 +453,10 @@
                 android:id="@+id/widgetLearnMore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_below="@id/layout_need_more"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="@dimen/dimen_32_dp"
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/rounded_curve_bg"
                 android:drawableStart="@drawable/ic_filetext"
                 android:drawableEnd="@drawable/ic_arrow_right_grey"
@@ -463,8 +466,7 @@
                 android:text="Learn how custom domain names can increase your credibility.   "
                 android:textColor="@color/common_text_color"
                 android:textFontWeight="600"
-                android:textSize="@dimen/_11sdp"
-                android:layout_below="@id/layout_need_more" />
+                android:textSize="@dimen/_11sdp" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -472,6 +474,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
+                android:layout_marginStart="@dimen/dimen_16dp"
+                android:layout_marginTop="@dimen/dimen_32_dp"
+                android:layout_marginEnd="@dimen/dimen_16dp"
+                android:background="@drawable/rounded_curve_bg"
                 android:layout_below="@id/widgetLearnMore"
                 tools:visibility="visible">
 
@@ -479,11 +485,10 @@
                     android:id="@+id/what_our_customer_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:fontFamily="@font/semi_bold"
+                    android:fontFamily="@font/regular"
                     android:padding="16dp"
                     android:text="What our customers say"
-                    android:textColor="#191919"
+                    android:textColor="@color/main_color_gray_dk"
                     android:textFontWeight="600"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"

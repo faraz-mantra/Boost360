@@ -389,5 +389,6 @@
 
     <color name="colorAccent1Positive">@color/colorAccent1</color>
     <color name="colorAccent1Negative">@color/colorPrimaryDark1</color>
+    <color name="color_1919">#191919</color>
 
 </resources>
