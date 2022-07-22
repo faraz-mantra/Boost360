@@ -90,8 +90,8 @@ class OrderConfirmationFragment : BaseFragment("MarketPlaceOrderConfirmationFrag
           external_link_payment_status.visibility = View.GONE
         }
       }
-      order_details_feature_count.text =
-        "Your have ordered " + prefs.getFeaturesCountInLastOrder() + " features for ₹" + prefs.getLatestPurchaseOrderTotalPrice() + "/month."
+      val pluralFeaturesText = if (prefs.getFeaturesCountInLastOrder() == 1) "feature" else "features"
+        order_details_feature_count.text = "You have ordered " + prefs.getFeaturesCountInLastOrder() + " $pluralFeaturesText for ₹" + prefs.getLatestPurchaseOrderTotalPrice() + "/month."
       paymentBanner.text = "Order #" + prefs.getLatestPurchaseOrderId()
       val date = Calendar.getInstance().time
       val formatter = SimpleDateFormat("EEE, MMM d, yyyy 'at' hh:mm aaa")
