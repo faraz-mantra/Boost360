@@ -447,6 +447,7 @@
                 android:background="#E0EEFF"
                 >
 
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -459,8 +460,8 @@
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/rounded_curve_bg"
                 android:drawableStart="@drawable/ic_filetext"
-                android:drawableEnd="@drawable/ic_arrow_right_grey"
-                android:drawablePadding="@dimen/_10sdp"
+                android:drawableEnd="@drawable/ic_right_arrow_black"
+                android:drawablePadding="@dimen/pad_10dp"
                 android:fontFamily="@font/regular"
                 android:padding="16dp"
                 android:text="Learn how custom domain names can increase your credibility.   "
@@ -477,6 +478,7 @@
                 android:layout_marginStart="@dimen/dimen_16dp"
                 android:layout_marginTop="@dimen/dimen_32_dp"
                 android:layout_marginEnd="@dimen/dimen_16dp"
+                android:paddingBottom="@dimen/dimen_16dp"
                 android:background="@drawable/rounded_curve_bg"
                 android:layout_below="@id/widgetLearnMore"
                 tools:visibility="visible">
@@ -507,7 +509,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="8dp"
                     app:dotsColor="@color/gray_light"
                     app:dotsCornerRadius="8dp"
                     app:dotsSize="6dp"
