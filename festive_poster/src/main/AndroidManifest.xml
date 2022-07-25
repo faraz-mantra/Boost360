@@ -4,11 +4,15 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
-        android:name=".FestivePosterApplication"
-        >
+        android:name=".FestivePosterApplication">
         <activity
             android:screenOrientation="portrait"
             android:theme="@style/PosterTheme"
             android:name=".ui.FestivePosterContainerActivity"/>
+
+        <activity
+            android:screenOrientation="portrait"
+            android:theme="@style/SocialAnalyticsTheme"
+            android:name=".ui.socialInsights.SocialAnalyticsActivity" />
     </application>
 </manifest>

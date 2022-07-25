@@ -25,7 +25,7 @@ import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
-import com.festive.poster.ui.FestivePosterContainerActivity
+import com.festive.poster.ui.socialInsights.SocialAnalyticsActivity
 import com.framework.analytics.SentryController
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureNewOnBoardingFlowEnable
 import com.framework.pref.*
@@ -1064,7 +1064,8 @@ fun AppCompatActivity.startDownloadUri(url: String, isToast: Boolean = false) {
 fun AppCompatActivity.startFestivePosterActivity(isBanner: Boolean = false) {
   try {
     WebEngageController.trackEvent(if (isBanner) SHARE_FESTIVE_POSTER_BANNER else SHARE_FESTIVE_POSTER_CLICK)
-    val intent = Intent(this, FestivePosterContainerActivity::class.java)
+    //val intent = Intent(this, FestivePosterContainerActivity::class.java)
+    val intent = Intent(this, SocialAnalyticsActivity::class.java)
     startActivity(intent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 

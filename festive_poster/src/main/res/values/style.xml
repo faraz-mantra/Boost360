@@ -4,4 +4,11 @@
         <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
 
+    <style name="BoldTextAppearance">
+        <item name="android:fontFamily">@font/semi_bold</item>
+    </style>
+
+    <style name="SocialAnalyticsTheme" parent="BaseTheme">
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+    </style>
 </resources>
