@@ -578,7 +578,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                             item.exclusive_to_categories,
                             object : TypeToken<List<String>>() {}.type
                         ),
-                        null, item.desc
+                        null, null,null,null,null,item.desc
                     )
                 )
             }
@@ -620,7 +620,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                             item.exclusive_to_categories,
                             object : TypeToken<List<String>>() {}.type
                         ),
-                        null, item.desc
+                        null, null,null,null,null,item.desc
                     )
                 )
             }
@@ -1041,7 +1041,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                         item.exclusive_to_categories,
                                         object : TypeToken<List<String>>() {}.type
                                     ),
-                                    null, item.desc
+                                    null, null,null,null,null,item.desc
                                 )
                             )
                         }
@@ -1547,7 +1547,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                                 TypeToken<List<String>>() {}.type
                                                         ),
                                                         null,
-                                                        item.desc
+                                                        null, null,null,null,item.desc
                                                     )
                                                     val intent = Intent(
                                                         this,
@@ -1622,7 +1622,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                             TypeToken<List<String>>() {}.type
                                                     ),
                                                     null,
-                                                    item.desc
+                                                    null, null,null,null,item.desc
                                                 )
                                                 val intent = Intent(
                                                     this,
@@ -2096,7 +2096,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                 object : TypeToken<List<String>>() {}.type
                                             ),
                                             null,
-                                            item.desc
+                                            null, null,null,null,item.desc
                                         )
                                         val intent = Intent(this, ComparePacksActivity::class.java)
                                         intent.putExtra("bundleData", Gson().toJson(selectedBundle))
@@ -2181,7 +2181,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                 object : TypeToken<List<String>>() {}.type
                                             ),
                                             null,
-                                            item.desc
+                                            null, null,null,null,item.desc
                                         )
                                         val intent = Intent(this, ComparePacksActivity::class.java)
                                         intent.putExtra("bundleData", Gson().toJson(selectedBundle))

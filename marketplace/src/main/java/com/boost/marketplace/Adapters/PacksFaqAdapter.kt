@@ -9,19 +9,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.AllFrequentlyAskedQuestion
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.FrequentlyAskedQuestion
 import com.boost.marketplace.R
 
 class PacksFaqAdapter(
     val activity: Activity,
-    cryptoCurrencies: List<AllFrequentlyAskedQuestion>?
+    cryptoCurrencies: List<FrequentlyAskedQuestion>?
 ) : RecyclerView.Adapter<PacksFaqAdapter.upgradeViewHolder>() {
 
-    private var upgradeList = ArrayList<AllFrequentlyAskedQuestion>()
+    private var upgradeList = ArrayList<FrequentlyAskedQuestion>()
     private lateinit var context: Context
 
     init {
-        this.upgradeList = cryptoCurrencies as ArrayList<AllFrequentlyAskedQuestion>
+        this.upgradeList = cryptoCurrencies as ArrayList<FrequentlyAskedQuestion>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -58,7 +58,7 @@ class PacksFaqAdapter(
         }
     }
 
-    fun addupdates(upgradeModel: List<AllFrequentlyAskedQuestion>) {
+    fun addupdates(upgradeModel: List<FrequentlyAskedQuestion>) {
         val initPosition = upgradeList.size
         upgradeList.clear()
         upgradeList.addAll(upgradeModel)

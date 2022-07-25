@@ -46,8 +46,6 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_compare_packs.*
 import org.json.JSONObject
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, ComparePacksViewModel>(),
     CompareListener, AddonsListener,
@@ -264,6 +262,10 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
                         item.included_features,
                         object : TypeToken<List<IncludedFeature>>() {}.type
                     )
+                    val benefits = Gson().fromJson<List<String>>(
+                        item.benefits!!,
+                        object : TypeToken<List<String>>() {}.type
+                    )
                     listItem.add(
                         Bundles(
                             item.bundle_id,
@@ -277,7 +279,7 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
                                 item.exclusive_to_categories,
                                 object : TypeToken<List<String>>() {}.type
                             ),
-                            null, item.desc ?: ""
+                            null, null,null,null,null,item.desc ?: ""
                         )
                     )
                 }
