@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
+import com.appservice.ui.address.startAddressFragmentActivity
 import com.appservice.ui.bgImage.BackgroundImageContainerActivity
 import com.appservice.ui.bgImage.setFragmentTypeNew
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
@@ -694,10 +695,11 @@ fun AppCompatActivity.startFeatureLogo(session: UserSessionManager?) {
 
 fun AppCompatActivity.startBusinessAddress(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent(BUSINESS_ADDRESS_PAGE, CLICK, TO_BE_ADDED)
-    val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity"))
-    startActivity(webIntent)
-    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    startAddressFragmentActivity(com.appservice.constant.FragmentType.ADDRESS_UPDATE_VIEW)
+//    WebEngageController.trackEvent(BUSINESS_ADDRESS_PAGE, CLICK, TO_BE_ADDED)
+//    val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity"))
+//    startActivity(webIntent)
+//    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }

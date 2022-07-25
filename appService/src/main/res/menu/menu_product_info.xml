@@ -3,6 +3,11 @@
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <item
+    android:id="@+id/menu_edit"
+    android:icon="@drawable/ic_edit_appointment"
+    android:title="Edit"
+    app:showAsAction="always" />
+  <item
     android:id="@+id/menu_help"
     android:icon="@drawable/ic_help_white"
     android:title="Help"

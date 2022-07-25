@@ -5,19 +5,23 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Color
+import android.graphics.*
+import android.graphics.drawable.Drawable
 import android.media.ThumbnailUtils
 import android.net.Uri
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.view.LayoutInflater
+import android.view.View
 import android.webkit.MimeTypeMap
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
+import com.appservice.R
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.framework.imagepicker.ImagePicker
@@ -175,4 +179,21 @@ private fun openImagePicker(activity: Activity,it: ClickType) {
   ImagePicker.Builder(activity).mode(type).compressLevel(ImagePicker.ComperesLevel.SOFT)
     .directory(ImagePicker.Directory.DEFAULT).extension(ImagePicker.Extension.PNG)
     .allowMultipleImages(false).enableDebuggingMode(true).build()
+}
+
+
+fun Activity.getMarkerBitmapFromView(@DrawableRes resId: Int): Bitmap {
+  val customMarkerView: View = (this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.view_custom_marker, null)
+  val markerImageView: ImageView = customMarkerView.findViewById(R.id.profile_image) as ImageView
+  markerImageView.setImageResource(resId)
+  customMarkerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+  customMarkerView.layout(0, 0, customMarkerView.measuredWidth, customMarkerView.measuredHeight)
+  customMarkerView.buildDrawingCache()
+  val returnedBitmap = Bitmap.createBitmap(customMarkerView.measuredWidth, customMarkerView.measuredHeight, Bitmap.Config.ARGB_8888)
+  val canvas = Canvas(returnedBitmap)
+  canvas.drawColor(Color.WHITE, PorterDuff.Mode.SRC_IN)
+  val drawable: Drawable? = customMarkerView.background
+  drawable?.draw(canvas)
+  customMarkerView.draw(canvas)
+  return returnedBitmap
 }

@@ -76,6 +76,11 @@
       android:launchMode="singleTask"
       android:screenOrientation="portrait" />
 
+    <activity
+      android:name=".ui.address.AddressContainerActivity"
+      android:launchMode="singleTask"
+      android:screenOrientation="portrait" />
+
     <meta-data
       android:name="preloaded_fonts"
       android:resource="@array/preloaded_fonts" />

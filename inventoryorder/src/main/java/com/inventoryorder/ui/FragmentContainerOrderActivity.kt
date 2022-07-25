@@ -162,19 +162,6 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     return ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_left)
   }
 
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    val toolbarMenu = menu ?: return super.onCreateOptionsMenu(menu)
-    val menuRes = getMenuRes() ?: return super.onCreateOptionsMenu(menu)
-    menuInflater.inflate(menuRes, toolbarMenu)
-    return true
-  }
-
-  open fun getMenuRes(): Int? {
-    return when (type) {
-      else -> null
-    }
-  }
-
   private fun shouldAddToBackStack(): Boolean {
     return when (type) {
       else -> false

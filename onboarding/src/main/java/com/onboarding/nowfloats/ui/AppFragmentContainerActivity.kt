@@ -2,7 +2,6 @@ package com.onboarding.nowfloats.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import android.widget.Toast
 import android.widget.Toast.makeText
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +12,6 @@ import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
-import com.framework.utils.ConversionUtils
 import com.framework.views.customViews.CustomToolbar
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
@@ -100,19 +98,6 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
   override fun getToolbarTitle(): String? {
     return when (type) {
       else -> super.getToolbarTitle()
-    }
-  }
-
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    val toolbarMenu = menu ?: return super.onCreateOptionsMenu(menu)
-    val menuRes = getMenuRes() ?: return super.onCreateOptionsMenu(menu)
-    menuInflater.inflate(menuRes, toolbarMenu)
-    return true
-  }
-
-  open fun getMenuRes(): Int? {
-    return when (type) {
-      else -> null
     }
   }
 
