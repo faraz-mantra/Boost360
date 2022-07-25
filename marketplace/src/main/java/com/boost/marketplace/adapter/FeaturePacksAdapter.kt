@@ -28,7 +28,6 @@ import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlin.collections.ArrayList
 
 
 class FeaturePacksAdapter(
@@ -71,6 +70,7 @@ class FeaturePacksAdapter(
     temp.setSpan(UnderlineSpan(), 0, temp.length, 0)
     holder.viewPacks.setText(temp)
     holder.viewPacks.setOnClickListener {
+
       val item: Bundles = Bundles(
         bundleList.get(position).bundle_id,
         Gson().fromJson<List<IncludedFeature>>(
@@ -87,6 +87,7 @@ class FeaturePacksAdapter(
           object : TypeToken<List<String>>() {}.type
         ),
         arrayListOf(),
+        null,null,null, null,
         bundleList.get(position).desc
       )
       listener.onPackageClicked(item)

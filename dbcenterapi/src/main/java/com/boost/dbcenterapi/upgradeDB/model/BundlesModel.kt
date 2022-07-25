@@ -33,6 +33,18 @@ data class BundlesModel(
   @ColumnInfo(name = "exclusive_to_categories")
   var exclusive_to_categories: String? = null,
 
+  @ColumnInfo(name = "frequently_asked_questions")
+  var frequently_asked_questions: String? = null,
+
+  @ColumnInfo(name = "how_to_activate")
+  var how_to_activate: String? = null,
+
+  @ColumnInfo(name = "testimonials")
+  var testimonials: String? = null,
+
+  @ColumnInfo(name = "benefits")
+  var benefits: String? = null,
+
   @ColumnInfo(name = "desc")
-  var desc: String? = null
+  var desc: String? = null,
 )

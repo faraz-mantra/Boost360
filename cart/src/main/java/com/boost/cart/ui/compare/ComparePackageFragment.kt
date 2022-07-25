@@ -19,21 +19,22 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
-import com.boost.cart.ui.home.CartFragment
 import com.boost.cart.R
-import com.boost.cart.base_class.BaseFragment
-import com.boost.cart.interfaces.CompareListener
-import com.boost.cart.utils.Constants.Companion.CART_FRAGMENT
-import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.cart.adapter.SimplePageTransformer
+import com.boost.cart.base_class.BaseFragment
+import com.boost.cart.interfaces.CompareBackListener
+import com.boost.cart.interfaces.CompareListener
+import com.boost.cart.ui.freeaddons.FreeAddonsFragment
+import com.boost.cart.ui.home.CartFragment
+import com.boost.cart.ui.packages.PackageFragment
+import com.boost.cart.utils.*
+import com.boost.cart.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PrimaryImage
-import com.boost.cart.interfaces.CompareBackListener
-import com.boost.dbcenterapi.upgradeDB.model.*
-import com.boost.cart.ui.freeaddons.FreeAddonsFragment
-import com.boost.cart.ui.packages.PackageFragment
-import com.boost.cart.utils.*
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.model.CartModel
+import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
@@ -288,6 +289,10 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
             val list = arrayListOf<Bundles>()
             for (item in it) {
                 val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                val benefits = Gson().fromJson<List<String>>(
+                    item.benefits!!,
+                    object : TypeToken<List<String>>() {}.type
+                )
                 list.add(Bundles(
                         item.bundle_id,
                         temp,
@@ -298,7 +303,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
                         item.target_business_usecase,
                         Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
                         null,
-                        item.desc))
+                    null, null ,null,null,item.desc))
             }
             if (list.size > 0) {
 
@@ -375,6 +380,10 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
                         for (item in list) {
                             Log.v("allBundleResultValue"," "+ item.name)
                             val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                            val benefits = Gson().fromJson<List<String>>(
+                                item.benefits!!,
+                                object : TypeToken<List<String>>() {}.type
+                            )
                             listItem.add(Bundles(
                                     item.bundle_id,
                                     temp,
@@ -384,7 +393,8 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
                                     PrimaryImage(item.primary_image),
                                     item.target_business_usecase,
                                     Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                                    null,item.desc
+                                null,
+                                null, null ,null,benefits,item.desc
                             ))
                         }
                         if (list.size > 0) {

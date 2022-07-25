@@ -349,7 +349,20 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                                     if (item.primary_image != null) item.primary_image!!.url else null,
                                     Gson().toJson(item.included_features),
                                     item.target_business_usecase,
-                                    Gson().toJson(item.exclusive_to_categories), item.desc
+                                    Gson().toJson(item.exclusive_to_categories),
+                                    if (item.frequently_asked_questions != null && item.frequently_asked_questions!!.isNotEmpty()) Gson().toJson(
+                                        item.frequently_asked_questions
+                                    ) else null,
+                                    if (item.how_to_activate != null && item.how_to_activate!!.isNotEmpty()) Gson().toJson(
+                                        item.how_to_activate
+                                    ) else null,
+                                    if (item.testimonials != null && item.testimonials!!.isNotEmpty()) Gson().toJson(
+                                        item.testimonials
+                                    ) else null,
+                                    if (item.benefits != null && item.benefits!!.isNotEmpty()) Gson().toJson(
+                                        item.benefits
+                                    ) else null,
+                                    item.desc,
                                 )
                             )
                         }
@@ -676,7 +689,20 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                                 if (item.primary_image != null) item.primary_image!!.url else null,
                                 Gson().toJson(item.included_features),
                                 item.target_business_usecase,
-                                Gson().toJson(item.exclusive_to_categories), item.desc
+                                Gson().toJson(item.exclusive_to_categories),
+                                if (item.frequently_asked_questions != null && item.frequently_asked_questions!!.isNotEmpty()) Gson().toJson(
+                                    item.frequently_asked_questions
+                                ) else null,
+                                if (item.how_to_activate != null && item.how_to_activate!!.isNotEmpty()) Gson().toJson(
+                                    item.how_to_activate
+                                ) else null,
+                                if (item.testimonials != null && item.testimonials!!.isNotEmpty()) Gson().toJson(
+                                    item.testimonials
+                                ) else null,
+                                if (item.benefits != null && item.benefits!!.isNotEmpty()) Gson().toJson(
+                                    item.benefits
+                                ) else null,
+                                item.desc,
                             )
                         )
                     }

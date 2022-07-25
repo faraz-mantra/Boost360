@@ -3676,8 +3676,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         item.exclusive_to_categories,
                         object : TypeToken<List<String>>() {}.type
                     ),
-                    null,
-                    item.desc
+                    null, null,null,null,null,item.desc
                 )
                 break
             }
