@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:padding="@dimen/_10sdp"
-        android:src="@drawable/ic_arrow_down_gray"
+        android:src="@drawable/packs_arrow"
         app:layout_constraintBottom_toBottomOf="@id/title"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,6 +44,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/rounded_curve_bg_grey_new"
         android:fontFamily="@font/regular"
+        android:textColor="#4A4A4A"
         android:padding="@dimen/_10sdp"
         android:paddingStart="@dimen/_10sdp"
         android:text="A domain name is a string of text that maps to a numeric IP address, used to access a website from client software. In plain English, a domain name is the text that a user types into a browser window to reach a particular website. For instance, the domain name for Google is ‘google. com’."
@@ -54,6 +55,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/title"
         app:layout_constraintTop_toBottomOf="@id/title" />
+
+    <View
+        android:id="@+id/dummy1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/desc"
+        android:background="@color/bg_color_f4"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

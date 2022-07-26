@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
@@ -25,6 +26,7 @@ import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_feature_details.*
 
 
 class ComparePacksV3Activity :
@@ -103,7 +105,6 @@ class ComparePacksV3Activity :
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
         prefs = SharedPrefs(this)
         viewModel = ViewModelProviders.of(this).get(ComparePacksViewModel::class.java)
-
         howToUseAdapter = PacksV3HowToUseAdapter(this, ArrayList())
         faqAdapter = PacksFaqAdapter(this, ArrayList())
         packsv3Adapter = PacksV3Adapter(ArrayList(), this,this)
@@ -220,7 +221,7 @@ class ComparePacksV3Activity :
                             null,steps,null,faq,benefits,item.desc ?: ""
                         )
                     )
-                    updateHowToUseRecycler(steps)
+//                    updateHowToUseRecycler(steps)
 //                    listItem.get(2).how_to_activate?.let { it1 -> updateHowToUseRecycler(it1) }
                 }
                 if (listItem.size > 0) {
@@ -228,8 +229,17 @@ class ComparePacksV3Activity :
                     updatePackageFooterRecycler(listItem)
                     updatePackagePricingRecycler(listItem)
                    // updateHowToUseRecycler(listItem.steps)
-                    listItem.get(2).frequently_asked_questions?.let { it1 -> updateFAQRecycler(it1) }
-                    listItem.get(2).how_to_activate?.let { it1 -> updateHowToUseRecycler(it1) }
+                    listItem.get(1).frequently_asked_questions?.let { it1 -> updateFAQRecycler(it1) }
+                    listItem.get(1).how_to_activate?.let { it1 -> updateHowToUseRecycler(it1) }
+                    binding?.howToUseTitleLayout?.setOnClickListener {
+                        if (binding?.packsHowToUseRecycler?.visibility == View.VISIBLE) {
+                            how_to_use_arrow.setImageResource(R.drawable.ic_arrow_down_gray)
+                            binding?.packsHowToUseRecycler?.visibility = View.GONE
+                        } else {
+                            how_to_use_arrow.setImageResource(R.drawable.packs_arrow_up)
+                            binding?.packsHowToUseRecycler?.visibility = View.VISIBLE
+                        }
+                    }
                     upgradeList = listItem
                     loadPacksData()
 

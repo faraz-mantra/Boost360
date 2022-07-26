@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:background="@color/white"
+        android:background="#F5F8FD"
         android:orientation="vertical">
 
 
@@ -33,6 +33,7 @@
                     android:id="@+id/package_cart_icon"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
+                    android:layout_weight="1"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:foreground="?android:attr/selectableItemBackground"
@@ -41,19 +42,11 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_centerInParent="true"
-                        android:background="@drawable/ic_cart" />
+                        android:src="@drawable/ic_packs_menu" />
 
-
-                    <com.nex3z.notificationbadge.NotificationBadge
-                        android:id="@+id/badge121"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        app:nbMaxTextLength="2" />
                 </RelativeLayout>
 
 
@@ -75,6 +68,7 @@
                     android:id="@+id/package_back"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="@drawable/arrow_white"
                     android:padding="15dp"
                     app:layout_constraintDimensionRatio="1:1"
@@ -87,20 +81,7 @@
         </androidx.appcompat.widget.Toolbar>
 
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/main_scroller"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:overScrollMode="never"
-                android:scrollbars="none"
-                app:layout_constraintBottom_toTopOf="@+id/footer_checkout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:id="@+id/trip_cv"
@@ -113,7 +94,7 @@
                         android:elevation="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -150,7 +131,6 @@
                                 android:layout_height="wrap_content"
                                 app:layout_constraintStart_toEndOf="@+id/mainll"
                                 app:layout_constraintTop_toTopOf="parent"
-
                                 tools:itemCount="3"
                                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 tools:listitem="@layout/item_packsv3"
@@ -160,17 +140,35 @@
 
                     </LinearLayout>
 
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/main_scroller"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:background="#F5F8FD"
+            app:layout_constraintBottom_toTopOf="@+id/footer_checkout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trip_cv">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cs1"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="10dp"
-                        android:elevation="6dp"
-                        app:layout_constraintEnd_toEndOf="@+id/trip_cv"
-                        app:layout_constraintStart_toStartOf="@+id/trip_cv"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:elevation="7dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintBottom_toTopOf="@+id/img"
                         android:background="@drawable/packsv3_lower_bg"
-                        app:layout_constraintTop_toBottomOf="@+id/trip_cv">
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/maincs2"
@@ -211,6 +209,7 @@
                                 android:id="@+id/packs_price_recycler"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
+                                android:layout_weight="1"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/mainll1"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -322,7 +321,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="0dp"
                                 android:padding="@dimen/_10sdp"
-                                android:src="@drawable/ic_arrow_down_gray"
+                                android:src="@drawable/packs_arrow"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintDimensionRatio="1:1"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -336,7 +335,7 @@
                             android:layout_height="wrap_content"
                             tools:listitem="@layout/item_packsv3_how_to_use"
                             tools:itemCount="2"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             app:layout_constraintTop_toBottomOf="@id/how_to_use_title_layout" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -348,8 +347,9 @@
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
+                        android:layout_marginBottom="40dp"
                         android:background="@drawable/rounded_curve_bg"
-
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/how_to_use_container">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -364,6 +364,7 @@
                                 android:id="@+id/faq_title"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/semi_bold"
                                 android:padding="16dp"
                                 android:text="Frequently Asked Questions"
@@ -383,6 +384,7 @@
                             tools:listitem="@layout/item_packs_faq"
                             tools:itemCount="2"
                             android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/faq_title_layout" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -619,6 +621,7 @@
                     android:layout_height="wrap_content"
                     android:textFontWeight="700"
                     android:layout_marginTop="16dp"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:fontFamily="@font/regular"
                     android:background="@drawable/ic_cart_continue_bg"
                     android:gravity="center"
