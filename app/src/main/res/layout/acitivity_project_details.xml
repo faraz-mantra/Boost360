@@ -23,57 +23,59 @@
     android:scrollbars="none">
 
     <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical">
-
-      <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:text="@string/company_title" />
+        android:orientation="vertical">
+
+      <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_company_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/_15sdp"
+          android:layout_marginTop="@dimen/_15sdp"
+          android:layout_marginEnd="@dimen/_15sdp"
+          android:text="@string/company_title_aster" />
 
       <EditText
-        android:id="@+id/company_title"
-        style="@style/EditTextCustomeStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="@dimen/_2sdp"
-        android:hint="@string/enter_company_title" />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:text="@string/about_company" />
-
-      <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_15sdp"
-        android:layout_marginVertical="@dimen/size_5"
-        app:counterEnabled="true"
-        app:counterMaxLength="100"
-        app:hintEnabled="false">
-
-        <androidx.appcompat.widget.AppCompatEditText
-          android:id="@+id/company_description"
+          android:id="@+id/company_title"
           style="@style/EditTextCustomeStyle"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/_56sdp"
-          android:layout_marginStart="0dp"
-          android:layout_marginTop="0dp"
-          android:layout_marginEnd="0dp"
-          android:layout_marginBottom="0dp"
+          android:layout_height="wrap_content"
           android:elevation="@dimen/_2sdp"
-          android:gravity="top"
-          android:hint="@string/enter_company_description_100_characters_max"
-          android:inputType="textMultiLine"
-          android:maxLength="100" />
+          android:hint="@string/enter_company_title" />
+
+      <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_about_company_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/_15sdp"
+          android:layout_marginTop="@dimen/_15sdp"
+          android:layout_marginEnd="@dimen/_15sdp"
+          android:text="@string/about_company_aster" />
+
+      <com.google.android.material.textfield.TextInputLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/_15sdp"
+          android:layout_marginVertical="@dimen/size_5"
+          app:counterEnabled="true"
+          app:counterMaxLength="100"
+          app:hintEnabled="false">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/company_description"
+            style="@style/EditTextCustomeStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_56sdp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:elevation="@dimen/_2sdp"
+            android:gravity="top"
+            android:hint="@string/enter_company_description_100_characters_max"
+            android:inputType="textMultiLine"
+            android:maxLength="100" />
       </com.google.android.material.textfield.TextInputLayout>
 
       <View
@@ -83,13 +85,14 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:background="@drawable/dotted_line" />
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:text="@string/client_name" />
+      <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_client_name_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/_15sdp"
+          android:layout_marginTop="@dimen/_15sdp"
+          android:layout_marginEnd="@dimen/_15sdp"
+          android:text="@string/client_name_aster" />
 
       <EditText
         android:id="@+id/client_name"
@@ -99,13 +102,14 @@
         android:elevation="@dimen/_2sdp"
         android:hint="@string/enter_client_name" />
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:text="@string/client_category" />
+      <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_client_category_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/_15sdp"
+          android:layout_marginTop="@dimen/_15sdp"
+          android:layout_marginEnd="@dimen/_15sdp"
+          android:text="@string/client_category_aster" />
 
       <EditText
         android:id="@+id/client_category"
@@ -115,13 +119,14 @@
         android:elevation="@dimen/_2sdp"
         android:hint="@string/enter_client_category" />
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:text="@string/project_client_requirement" />
+      <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_project_requirement_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/_15sdp"
+          android:layout_marginTop="@dimen/_15sdp"
+          android:layout_marginEnd="@dimen/_15sdp"
+          android:text="@string/project_client_requirement_aster" />
 
       <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -147,13 +152,14 @@
           android:maxLength="200" />
       </com.google.android.material.textfield.TextInputLayout>
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:text="@string/our_approach" />
+      <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_our_approach_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/_15sdp"
+          android:layout_marginTop="@dimen/_15sdp"
+          android:layout_marginEnd="@dimen/_15sdp"
+          android:text="@string/our_approach_aster" />
 
       <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -190,13 +196,14 @@
           android:layout_weight="1.5"
           android:orientation="vertical">
 
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:text="@string/budget" />
+          <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_budget_title"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/_15sdp"
+              android:layout_marginTop="@dimen/_15sdp"
+              android:layout_marginEnd="@dimen/_15sdp"
+              android:text="@string/budget_aster" />
 
           <EditText
             android:id="@+id/budget_value"
@@ -214,12 +221,13 @@
           android:layout_weight="1"
           android:orientation="vertical">
 
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:text="@string/date_of_completion" />
+          <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_date_of_completion_title"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/_15sdp"
+              android:layout_marginEnd="@dimen/_15sdp"
+              android:text="@string/date_of_completion_aster" />
 
           <EditText
             android:id="@+id/date_of_completion"

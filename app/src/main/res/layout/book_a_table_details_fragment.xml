@@ -28,7 +28,7 @@
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginEnd="@dimen/_15sdp"
-        android:text="Name" />
+        android:text="@string/name" />
 
       <EditText
         android:id="@+id/user_name"
@@ -55,7 +55,7 @@
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
-            android:text="@string/contact_number" />
+            android:text="@string/contact_number_aster" />
 
           <EditText
             android:id="@+id/contact_number"
@@ -124,7 +124,7 @@
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
-            android:text="@string/date_" />
+            android:text="@string/date_aster" />
 
           <EditText
             android:id="@+id/date_value"
@@ -153,7 +153,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
-            android:text="@string/time_" />
+            android:text="@string/time_aster" />
 
           <EditText
             android:id="@+id/time_value"

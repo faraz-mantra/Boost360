@@ -87,8 +87,12 @@ object DateUtils {
     var validTimeFlag = false
     if (endTime <= startTime) {
       if (validateTime <= endTime || validateTime >= startTime) validTimeFlag = true
-    } else if (validateTime <= endTime && validateTime >= startTime) validTimeFlag = true
+    } else if (validateTime in startTime..endTime) validTimeFlag = true
     return validTimeFlag
+  }
+
+  fun isStartEndDatesValid(startTime: Date, endTime: Date): Boolean{
+    return startTime < endTime
   }
 
   fun getCurrentDate(): Date {
