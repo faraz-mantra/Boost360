@@ -15,6 +15,7 @@ import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.ui.popup.NeedHelpPopUpFragment
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils
+import com.boost.upgrades.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.upgrades.utils.WebEngageController
 import com.framework.analytics.SentryController
 import com.framework.extensions.observeOnce
@@ -90,8 +91,11 @@ class OrderConfirmationFragment : BaseFragment("MarketPlaceOrderConfirmationFrag
           external_link_payment_status.visibility = View.GONE
         }
       }
+      val yearOrMonthTemp = yearlyOrMonthlyOrEmptyValidity("", requireActivity(),
+        if(prefs.getCartValidityMonths()!=null && prefs.getCartValidityMonths()!!.toInt() > 1)
+          prefs.getCartValidityMonths()!!.toInt() else 1 )
       order_details_feature_count.text =
-        "Your have ordered " + prefs.getFeaturesCountInLastOrder() + " features for ₹" + prefs.getLatestPurchaseOrderTotalPrice() + "/month."
+        "Your have ordered " + prefs.getFeaturesCountInLastOrder() + " features for ₹" + prefs.getLatestPurchaseOrderTotalPrice() + yearOrMonthTemp
       paymentBanner.text = "Order #" + prefs.getLatestPurchaseOrderId()
       val date = Calendar.getInstance().time
       val formatter = SimpleDateFormat("EEE, MMM d, yyyy 'at' hh:mm aaa")
