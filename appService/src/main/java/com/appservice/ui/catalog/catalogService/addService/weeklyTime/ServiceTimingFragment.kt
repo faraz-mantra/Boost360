@@ -103,7 +103,7 @@ class ServiceTimingFragment : AppBaseFragment<FragmentServiceTimingBinding, Staf
           endDate = it.businessTiming?.endTime?.parseDate(DateUtils.FORMAT_HH_MM_A)
         val startDateNew = serviceTiming?.time?.from?.parseDate(DateUtils.FORMAT_HH_MM_A)
         val endDateNew = serviceTiming?.time?.to?.parseDate(DateUtils.FORMAT_HH_MM_A)
-        if (startDate != null && endDate != null && startDateNew != null && endDateNew != null && DateUtils.isBetweenValidTime(startDate, endDate, startDateNew)
+        if (startDate != null && endDate != null && startDateNew != null && endDateNew != null && DateUtils.isBetweenValidTime(startDate, endDate, startDateNew))
         if (startDate != null && endDate != null && startDateNew != null && endDateNew != null && DateUtils.isBetweenValidTime(
             startDate,
             endDate,
