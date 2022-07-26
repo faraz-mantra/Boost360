@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:paddingVertical="@dimen/size_6"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_74"
+            android:background="@drawable/rounded_rect_20_e2e2e2">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/iv_main_cat"
+                android:layout_width="@dimen/size_54"
+                android:layout_height="@dimen/size_54"
+                android:layout_marginStart="@dimen/size_16"
+                android:padding="@dimen/size_8"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/ic_custom_page_add" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_count"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_16"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/text_22"
+                app:fontFamily="@font/semi_bold"
+                app:layout_constraintBottom_toTopOf="@+id/textViewName"
+                app:layout_constraintEnd_toStartOf="@+id/customImageView4"
+                app:layout_constraintStart_toEndOf="@+id/iv_main_cat"
+                app:layout_constraintTop_toTopOf="@+id/iv_main_cat"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="324" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/textViewName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_16"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/text_14"
+                app:fontFamily="@font/regular"
+                app:layout_constraintBottom_toTopOf="@+id/txt_desc"
+                app:layout_constraintEnd_toStartOf="@+id/customImageView4"
+                app:layout_constraintStart_toEndOf="@+id/iv_main_cat"
+                app:layout_constraintTop_toBottomOf="@+id/tv_count"
+                tools:targetApi="p"
+                tools:text="Updates" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/txt_desc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_16"
+                android:includeFontPadding="false"
+                android:textColor="@color/gray_828282"
+                android:textSize="@dimen/text_11"
+                android:visibility="gone"
+                app:fontFamily="@font/semi_bold"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_main_cat"
+                app:layout_constraintEnd_toStartOf="@+id/customImageView4"
+                app:layout_constraintStart_toEndOf="@+id/iv_main_cat"
+                app:layout_constraintTop_toBottomOf="@+id/textViewName"
+                app:layout_constraintVertical_bias="1"
+                tools:text="Description of this asset Description of this assetDescription of this asset" />
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/customImageView4"
+                android:layout_width="@dimen/size_14"
+                android:layout_height="@dimen/size_14"
+                android:layout_marginEnd="@dimen/size_28"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_arrow_shape_filled_grey" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>
