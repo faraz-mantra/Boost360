@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
 import android.text.InputFilter
-import android.text.TextUtils
 import android.text.TextWatcher
 import android.transition.AutoTransition
 import android.transition.TransitionManager
@@ -77,7 +76,6 @@ import com.boost.dbcenterapi.upgradeDB.model.CouponsModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.payment.PaymentActivity
 import com.boost.payment.utils.observeOnce
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.framework.analytics.SentryController
 import com.framework.extensions.isVisible
 import com.framework.extensions.underlineText
@@ -92,11 +90,6 @@ import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.billing_details_layout.*
 import kotlinx.android.synthetic.main.cart_applied_coupon_layout.*
 import kotlinx.android.synthetic.main.cart_v2_fragment.*
-import kotlinx.android.synthetic.main.cart_v2_fragment.business_supply_place_value
-import kotlinx.android.synthetic.main.cart_v2_fragment.coupon_discount_title
-import kotlinx.android.synthetic.main.cart_v2_fragment.coupon_discount_value
-import kotlinx.android.synthetic.main.cart_v2_fragment.feature_validity
-import kotlinx.android.synthetic.main.cart_v2_fragment.validity_period_value
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -3306,7 +3299,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 
                             tv_coupon_saved.text =
                                 "₹" + RootUtil.round(couponDiscountAmt, 2).toString() + " Saved!"
-                            tv_coupon_name.text = "`"+it.coupon_key.toString()+"`" + " coupon code applied."
+                            tv_coupon_name.text = "'"+it.coupon_key.toString()+"'" + " coupon code applied."
                             val closeBtn =
                                 dialog.findViewById(R.id.close_dialog) as AppCompatImageView
                             val iv_coupon_saved =
@@ -3683,8 +3676,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                         item.exclusive_to_categories,
                         object : TypeToken<List<String>>() {}.type
                     ),
-                    null,
-                    item.desc
+                    null, null,null,null,null,item.desc
                 )
                 break
             }

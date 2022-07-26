@@ -49,6 +49,8 @@ class SelectNumberBottomSheet :
     lateinit var singleAddon: FeaturesModel
     lateinit var progressDialog: ProgressDialog
     lateinit var prefs: SharedPrefs
+    var numberPrice: String? = null
+
 
     override fun getLayout(): Int {
         return R.layout.call_tracking_add_to_cart_popup
@@ -84,8 +86,13 @@ class SelectNumberBottomSheet :
         prefs = SharedPrefs(baseActivity)
 
         blockedItem = requireArguments().getString("phone_number")
+        numberPrice = requireArguments().getString("price")
         loadData()
         initMVVM()
+
+
+        binding?.tvCart?.text= "Add to cart at $numberPrice"
+
 
         binding?.tvTitle?.text = requireArguments().getString("phone_number")
         val select_another_no =
@@ -114,6 +121,7 @@ class SelectNumberBottomSheet :
             val intent = Intent(requireContext(), CallTrackingActivity::class.java)
             intent.putExtra("fpid", fpid)
             intent.putExtra("bundleData", Gson().toJson(singleAddon))
+            intent.putExtra("price",numberPrice)
             intent.putExtra(
                 "AddonDiscountedPrice",
                 getDiscountedPrice(singleAddon!!.price, singleAddon!!.discount_percent)

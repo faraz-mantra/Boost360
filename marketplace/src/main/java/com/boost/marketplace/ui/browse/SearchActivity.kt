@@ -181,7 +181,7 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
                     PrimaryImage(item.primary_image),
                     item.target_business_usecase,
                     Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                    null,item.desc
+                    null,null,null,null,null,item.desc
                 ))
                 Log.e("loop",Gson().toJson(allBundles))
             }

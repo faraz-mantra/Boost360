@@ -27,6 +27,7 @@ class PacksV3FooterAdapter(
 ) : RecyclerView.Adapter<PacksV3FooterAdapter.ParentViewHolder>() {
 
     lateinit var context: Context
+    var selectedPosition: Int = -1
 
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
@@ -49,9 +50,18 @@ class PacksV3FooterAdapter(
         val sameAddonsInCart = ArrayList<String>()
         val addonsListInCart = ArrayList<String>()
         val parentItem = list[position]
-        parentViewHolder.maincl.setOnClickListener {
-            parentViewHolder.maincl.setBackgroundResource(R.drawable.mp_home_share_click_effect)
+
+        if (selectedPosition == position) {
+            parentViewHolder.itemView.setBackgroundResource(R.drawable.mp_home_share_click_effect)
+        }else {
+            parentViewHolder.itemView.setBackgroundResource(R.drawable.edit_txt_packsv3)
         }
+        parentViewHolder.maincl.setOnClickListener {
+            selectedPosition = position;
+            notifyDataSetChanged();
+//            listener.onSelectedDomain(upgradeList.get(position))
+        }
+
         parentViewHolder.PackageItemTitle.text = parentItem.name?.substring(7) ?: ""
         val data = parentItem.name?.substring(7) ?: ""
         val items = data!!.split(" ".toRegex())

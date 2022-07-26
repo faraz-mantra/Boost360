@@ -7,19 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.HowToUseStep
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.HowToActivate
 import com.boost.marketplace.R
 
 class PacksV3HowToUseAdapter(
     val activity: Activity,
-    cryptoCurrencies: List<HowToUseStep>?
+    cryptoCurrencies: List<HowToActivate>?
 ) : RecyclerView.Adapter<PacksV3HowToUseAdapter.upgradeViewHolder>() {
 
-    private var upgradeList = ArrayList<HowToUseStep>()
+    private var upgradeList = ArrayList<HowToActivate>()
     private lateinit var context: Context
 
     init {
-        this.upgradeList = cryptoCurrencies as ArrayList<HowToUseStep>
+        this.upgradeList = cryptoCurrencies as ArrayList<HowToActivate>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -55,7 +55,7 @@ class PacksV3HowToUseAdapter(
 
     }
 
-    fun addupdates(upgradeModel: List<HowToUseStep>) {
+    fun addupdates(upgradeModel: List<HowToActivate>) {
         val initPosition = upgradeList.size
         upgradeList.clear()
         upgradeList.addAll(upgradeModel)

@@ -1,7 +1,10 @@
 package com.boost.marketplace.ui.comparePacksV3
 
 import android.view.View
+import com.boost.cart.adapter.SimplePageTransformerSmall
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.utils.HorizontalMarginItemDecoration
+import com.boost.marketplace.Adapters.PacksV3BenefitsViewPagerAdapter
 import com.boost.marketplace.R
 import com.boost.marketplace.databinding.Comparepacksv3PopupBinding
 import com.bumptech.glide.Glide
@@ -17,6 +20,7 @@ class ComparePacksV3BottomSheet: BaseBottomSheetDialog<Comparepacksv3PopupBindin
     var offeredBundlePrice :Double = 0.0
     var originalBundlePrice :Double = 0.0
     var addonsSize :Int = 0
+    lateinit var benefitAdaptor: PacksV3BenefitsViewPagerAdapter
 
     override fun getLayout(): Int {
         return R.layout.comparepacksv3_popup
@@ -38,6 +42,7 @@ class ComparePacksV3BottomSheet: BaseBottomSheetDialog<Comparepacksv3PopupBindin
         addonsSize = requireArguments().getInt("addons")
         offeredBundlePrice = requireArguments().getDouble("price")
         originalBundlePrice = requireArguments().getDouble("price")
+        benefitAdaptor = PacksV3BenefitsViewPagerAdapter(ArrayList())
 
         binding?.packageTitle?.text=bundleData.name
 
@@ -62,7 +67,28 @@ class ComparePacksV3BottomSheet: BaseBottomSheetDialog<Comparepacksv3PopupBindin
         binding?.closeBtn?.setOnClickListener {
             dismiss()
         }
+
+        initializeViewPager()
+
+        if (bundleData.benefits != null){
+            benefitAdaptor.addupdates(bundleData.benefits!!)
+            benefitAdaptor.notifyDataSetChanged()
+            initializeViewPager()
+        }
     }
 
+    private fun initializeViewPager() {
+        binding?.benefitsViewpager?.adapter = benefitAdaptor
+        binding?.benefitsViewpager?.let { binding?.benefitsIndicator?.setViewPager2(it) }
+        binding?.benefitsViewpager?.offscreenPageLimit = 1
+        binding?.benefitsViewpager?.setPageTransformer(SimplePageTransformerSmall())
+
+        val itemDecoration = HorizontalMarginItemDecoration(
+            requireContext(),
+            R.dimen.viewpager_current_item_horizontal_margin3
+        )
+        binding?.benefitsViewpager?.addItemDecoration(itemDecoration)
+
+    }
 
 }

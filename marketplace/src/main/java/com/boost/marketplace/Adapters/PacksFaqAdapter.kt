@@ -9,19 +9,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.AllFrequentlyAskedQuestion
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.FrequentlyAskedQuestion
 import com.boost.marketplace.R
 
 class PacksFaqAdapter(
     val activity: Activity,
-    cryptoCurrencies: List<AllFrequentlyAskedQuestion>?
+    cryptoCurrencies: List<FrequentlyAskedQuestion>?
 ) : RecyclerView.Adapter<PacksFaqAdapter.upgradeViewHolder>() {
 
-    private var upgradeList = ArrayList<AllFrequentlyAskedQuestion>()
+    private var upgradeList = ArrayList<FrequentlyAskedQuestion>()
     private lateinit var context: Context
 
     init {
-        this.upgradeList = cryptoCurrencies as ArrayList<AllFrequentlyAskedQuestion>
+        this.upgradeList = cryptoCurrencies as ArrayList<FrequentlyAskedQuestion>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -40,25 +40,31 @@ class PacksFaqAdapter(
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
         holder.title.text = upgradeList[position].question
         holder.desc.text = upgradeList[position].answer
+        holder.dummy1.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+        if (upgradeList.size - 1 == position) {
+            holder.dummy1.visibility = View.GONE
+        }
         holder.title.setOnClickListener {
             if(holder.desc.isVisible) {
                 holder.desc.visibility = View.GONE
+                holder.downArrow.setImageResource(R.drawable.packs_arrow)
             }else{
                 holder.desc.visibility = View.VISIBLE
+                holder.downArrow.setImageResource(R.drawable.packs_arrow_up)
             }
         }
         holder.downArrow.setOnClickListener {
             if(holder.desc.isVisible) {
-                holder.downArrow.setImageResource(R.drawable.ic_arrow_down_gray)
+                holder.downArrow.setImageResource(R.drawable.packs_arrow)
                 holder.desc.visibility = View.GONE
             }else{
-                holder.downArrow.setImageResource(R.drawable.ic_arrow_up_gray)
+                holder.downArrow.setImageResource(R.drawable.packs_arrow_up)
                 holder.desc.visibility = View.VISIBLE
             }
         }
     }
 
-    fun addupdates(upgradeModel: List<AllFrequentlyAskedQuestion>) {
+    fun addupdates(upgradeModel: List<FrequentlyAskedQuestion>) {
         val initPosition = upgradeList.size
         upgradeList.clear()
         upgradeList.addAll(upgradeModel)
@@ -70,6 +76,7 @@ class PacksFaqAdapter(
         var title = itemView.findViewById<TextView>(R.id.title)
         var downArrow = itemView.findViewById<ImageView>(R.id.arrow_btn)
         var desc = itemView.findViewById<TextView>(R.id.desc)
+        var dummy1 = itemView.findViewById<View>(R.id.dummy1)
     }
 
 

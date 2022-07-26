@@ -5,15 +5,14 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PrimaryImage
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.SharedPrefs
@@ -27,6 +26,7 @@ import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_feature_details.*
 
 
 class ComparePacksV3Activity :
@@ -105,7 +105,6 @@ class ComparePacksV3Activity :
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
         prefs = SharedPrefs(this)
         viewModel = ViewModelProviders.of(this).get(ComparePacksViewModel::class.java)
-
         howToUseAdapter = PacksV3HowToUseAdapter(this, ArrayList())
         faqAdapter = PacksFaqAdapter(this, ArrayList())
         packsv3Adapter = PacksV3Adapter(ArrayList(), this,this)
@@ -177,7 +176,6 @@ class ComparePacksV3Activity :
             viewModel.setCurrentExperienceCode(code, fpTag!!)
         }
         try {
-            refreshViewPager = true
             viewModel.getCartItems()
             viewModel.loadPackageUpdates()
         } catch (e: Exception) {
@@ -196,6 +194,18 @@ class ComparePacksV3Activity :
                         item.included_features,
                         object : TypeToken<List<IncludedFeature>>() {}.type
                     )
+                    val faq = Gson().fromJson<List<FrequentlyAskedQuestion>>(
+                        item.frequently_asked_questions,
+                        object : TypeToken<List<FrequentlyAskedQuestion>>() {}.type
+                    )
+                    val steps = Gson().fromJson<List<HowToActivate>>(
+                        item.how_to_activate,
+                        object : TypeToken<List<HowToActivate>>() {}.type
+                    )
+                    val benefits = Gson().fromJson<List<String>>(
+                        item.benefits!!,
+                        object : TypeToken<List<String>>() {}.type
+                    )
                     listItem.add(
                         Bundles(
                             item.bundle_id,
@@ -206,17 +216,30 @@ class ComparePacksV3Activity :
                             PrimaryImage(item.primary_image),
                             item.target_business_usecase,
                             Gson().fromJson<List<String>>(
-                                item.exclusive_to_categories,
-                                object : TypeToken<List<String>>() {}.type
-                            ),
-                            null, item.desc ?: ""
+                            item.exclusive_to_categories,
+                            object : TypeToken<List<String>>() {}.type),
+                            null,steps,null,faq,benefits,item.desc ?: ""
                         )
                     )
+//                    updateHowToUseRecycler(steps)
+//                    listItem.get(2).how_to_activate?.let { it1 -> updateHowToUseRecycler(it1) }
                 }
                 if (listItem.size > 0) {
                     updatePackageRecycler(listItem)
                     updatePackageFooterRecycler(listItem)
                     updatePackagePricingRecycler(listItem)
+                   // updateHowToUseRecycler(listItem.steps)
+                    listItem.get(1).frequently_asked_questions?.let { it1 -> updateFAQRecycler(it1) }
+                    listItem.get(1).how_to_activate?.let { it1 -> updateHowToUseRecycler(it1) }
+                    binding?.howToUseTitleLayout?.setOnClickListener {
+                        if (binding?.packsHowToUseRecycler?.visibility == View.VISIBLE) {
+                            how_to_use_arrow.setImageResource(R.drawable.ic_arrow_down_gray)
+                            binding?.packsHowToUseRecycler?.visibility = View.GONE
+                        } else {
+                            how_to_use_arrow.setImageResource(R.drawable.packs_arrow_up)
+                            binding?.packsHowToUseRecycler?.visibility = View.VISIBLE
+                        }
+                    }
                     upgradeList = listItem
                     loadPacksData()
 
@@ -243,6 +266,11 @@ class ComparePacksV3Activity :
         }
     }
 
+    fun updateHowToUseRecycler(list: List<HowToActivate>) {
+        Log.v("updatePackageViewPager", " " + list.size)
+        howToUseAdapter.addupdates(list)
+    }
+
     private fun initializeFAQRecycler() {
         val gridLayoutManager = GridLayoutManager(applicationContext, 1)
         gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -251,6 +279,12 @@ class ComparePacksV3Activity :
             binding?.packsFaqRecycler?.adapter = faqAdapter
         }
     }
+
+    fun updateFAQRecycler(list: List<FrequentlyAskedQuestion>) {
+        Log.v("updatePackageViewPager", " " + list.size)
+        faqAdapter.addupdates(list)
+    }
+
 
     private fun initializePacksV3Recycler() {
         val linearLayoutManager = LinearLayoutManager(applicationContext)
@@ -307,7 +341,11 @@ class ComparePacksV3Activity :
     private fun loadPacksData() {
 //        val wantedSubstr1: String = upgradeList?.get(0)?.name?.substring(7) ?: ""
 //        val wantedSubstr2: String = upgradeList?.get(1)?.name?.substring(7) ?: ""
-//        val wantedSubstr3: String = upgradeList?.get(2)?.name?.substring(7) ?: ""
+//        val wantedSubstr3 = upgradeList?.get(2)?.frequently_asked_questions
+//        if (wantedSubstr3 != null) {
+//            updateFAQRecycler(wantedSubstr3)
+//            faqAdapter.notifyDataSetChanged()
+//        }
 //        binding?.footerPack?.text = wantedSubstr1
 //        binding?.footerPack2?.text = wantedSubstr2
 //        binding?.footerPack3?.text = wantedSubstr3

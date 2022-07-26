@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.SimplePageTransformerSmall
 import com.boost.cart.adapter.ZoomOutPageTransformer
+import com.boost.cart.utils.Utils
 import com.boost.cart.utils.Utils.priceCalculatorForYear
 import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
@@ -120,6 +121,9 @@ class FeatureDetailsActivity :
     val imagePreviewPopUpFragement = ImagePreviewPopUpFragement()
 
     lateinit var prefs: SharedPrefs
+
+    var numberprice: String? = null
+    var pricing: String? = null
 
     override fun getLayout(): Int {
         return R.layout.activity_feature_details
@@ -360,6 +364,21 @@ class FeatureDetailsActivity :
 
                 val dialogCard = SelectNumberBottomSheet()
                 val bundle = Bundle()
+
+                val discount = 100 - addonDetails!!.discount_percent
+                val paymentPrice = Utils.priceCalculatorForYear(
+                    (discount* addonDetails!!.price) / 100.0,
+                    addonDetails!!.widget_type ?: "",
+                    this
+                )
+                pricing =  "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                    .format(paymentPrice) + Utils.yearlyOrMonthlyOrEmptyValidity(
+                    addonDetails!!.widget_type ?: "",  this
+                )
+                numberprice=pricing
+                bundle.putString("price",numberprice)
+
+
                 bundle.putString("bundleData", Gson().toJson(addonDetails))
                 bundle.putDouble(
                     "AddonDiscountedPrice",

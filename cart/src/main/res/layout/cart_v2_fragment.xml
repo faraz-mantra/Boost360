@@ -1619,7 +1619,7 @@
                     android:drawablePadding="5dp"
                     android:fontFamily="@font/regular"
                     android:text="@string/view_details"
-                    android:textColor="@color/main_color_gray_dk"
+                    android:textColor="@color/colorAccent1"
                     android:textSize="10sp"
                     android:textStyle="normal"
                     app:layout_constraintStart_toStartOf="parent"

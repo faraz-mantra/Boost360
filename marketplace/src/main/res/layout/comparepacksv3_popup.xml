@@ -71,6 +71,7 @@
                             android:id="@+id/const_title"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:layout_marginStart="16dp"
                             android:orientation="vertical"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -81,6 +82,7 @@
                                 android:id="@+id/package_title"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:layout_marginEnd="9dp"
                                 android:layout_marginBottom="13dp"
                                 android:fontFamily="@font/bold"
@@ -141,9 +143,7 @@
                 android:paddingEnd="16dp"
                 tools:visibility="visible"
                 app:layout_constraintTop_toBottomOf="@id/rl_cardView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/package_addCartNew">
+                app:layout_constraintBottom_toTopOf="@+id/footer_checkout">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -176,8 +176,10 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/benefits_viewpager"
                     android:layout_width="match_parent"
-                    android:layout_height="85dp"
-                    tools:listitem="@layout/image_preview_item"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/item_packs_v3_benefits"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/benefit_title" />
 
 
@@ -187,12 +189,14 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     app:dotsColor="@color/btn_bg_color_disabled"
                     app:dotsCornerRadius="8dp"
                     app:dotsSize="6dp"
                     app:dotsSpacing="6dp"
                     app:dotsWidthFactor="2.5"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/benefits_viewpager"
                     app:progressMode="false"
