@@ -645,7 +645,7 @@
   <string name="enable_boost_keyboard">Enable JioOnline keyboard</string>
   <string name="select_boost_keyboard">Select JioOnline keyboard</string>
 
-  <string name="google_map_key" translatable="false">AIzaSyD6mt4XepThpyfQg7AtV9WX25SnLlfBwnc</string> <!--place api-->
+<!--  <string name="google_map_key" translatable="false">AIzaSyD6mt4XepThpyfQg7AtV9WX25SnLlfBwnc</string> &lt;!&ndash;place api&ndash;&gt;-->
 
   <string name="sentry_url">https://59f88b513d054d9a9e09fd0afef2b9f3@o282435.ingest.sentry.io/6085786</string>
 

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <com.framework.views.customViews.CustomCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/size_12"
+    android:layout_marginHorizontal="@dimen/size_8"
+    app:cardElevation="@dimen/size_4"
+    app:cardUseCompatPadding="true">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="@dimen/size_16">
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/semi_bold"
+        android:textColor="@color/black_4a4a4a"
+        app:textType="HEADING_7"
+        android:text="Hangman’s Design studio" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_8"
+        android:fontFamily="@font/regular"
+        android:textColor="@color/color_747474"
+        app:textType="BODY_1"
+        android:text="45/8, Mahatma Gandhi Park, Part Street Kolkata, West Bengal - 100876" />
+
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/btn_sync_gmb"
+        style="@style/ButtonStyle.Rounded.Solid"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/size_20"
+        android:background="@drawable/stroke_blue_round"
+        android:drawableStart="@drawable/ic_gmb_address"
+        android:gravity="center"
+        android:text="@string/sync_with_google_maps_gmb"
+        android:textColor="@color/light_blue_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:textType="HEADING_6" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </com.framework.views.customViews.CustomCardView>
+</layout>

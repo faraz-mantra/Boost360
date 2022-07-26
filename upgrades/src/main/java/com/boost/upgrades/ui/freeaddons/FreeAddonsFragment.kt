@@ -2,12 +2,12 @@ package com.boost.upgrades.ui.freeaddons
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
@@ -35,7 +35,6 @@ class FreeAddonsFragment : BaseFragment("MarketPlaceFreeAddonsFragment"), MyAddo
   lateinit var compareFreeAddonsAdapter: CompareFreeAddonsAdapter
 
   //    lateinit var localStorage: LocalStorage
-  lateinit var myAddonsViewModelFactory: FreeAddonsViewModelFactory
 
   var freeaddonsSeeMoreStatus = false
   var paidaddonsSeeMoreStatus = false
@@ -62,11 +61,7 @@ class FreeAddonsFragment : BaseFragment("MarketPlaceFreeAddonsFragment"), MyAddo
   ): View? {
     root = inflater.inflate(R.layout.free_addons_fragment, container, false)
 
-    myAddonsViewModelFactory =
-      FreeAddonsViewModelFactory(requireNotNull(requireActivity().application))
-
-    viewModel = ViewModelProviders.of(requireActivity(), myAddonsViewModelFactory)
-      .get(FreeAddonsViewModel::class.java)
+    viewModel = ViewModelProvider(requireActivity())[FreeAddonsViewModel::class.java]
 
     progressDialog = ProgressDialog(requireContext())
     var purchasedPack = requireArguments().getStringArrayList("userPurchsedWidgets")

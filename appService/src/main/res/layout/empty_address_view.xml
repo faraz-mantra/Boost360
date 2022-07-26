@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/size_30">
+
+    <com.framework.views.customViews.CustomImageView
+      android:layout_width="@dimen/size_130"
+      android:layout_height="@dimen/size_130"
+      app:srcCompat="@drawable/ic_location_address" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/size_20"
+      android:fontFamily="@font/semi_bold"
+      android:text="@string/business_address_not_added"
+      android:textColor="@color/black_4a4a4a"
+      app:textType="BODY_2" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/size_10"
+      android:fontFamily="@font/regular"
+      android:gravity="center"
+      android:text="@string/please_add_business_address_to_let_your_customers_find_your_location"
+      android:textAlignment="gravity"
+      android:textColor="@color/color_747474"
+      app:textType="CAPTION" />
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/btn_add_address"
+      style="@style/ButtonStyle.Rounded.Solid"
+      android:layout_width="match_parent"
+      android:layout_marginTop="@dimen/size_26"
+      android:gravity="center"
+      android:text="Add business address manually"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:textType="HEADING_6" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/size_20"
+      android:fontFamily="@font/regular"
+      android:gravity="center"
+      android:text="@string/or_if_you_have_your_business_listed_on_google_maps_gmb"
+      android:textAlignment="gravity"
+      android:textColor="@color/color_747474"
+      app:textType="CAPTION" />
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/btn_sync_gmb"
+      style="@style/ButtonStyle.Rounded.Solid"
+      android:layout_width="match_parent"
+      android:layout_marginTop="@dimen/size_20"
+      android:background="@drawable/stroke_blue_round"
+      android:drawableStart="@drawable/ic_gmb_address"
+      android:gravity="center"
+      android:text="@string/sync_with_google_maps_gmb"
+      android:textColor="@color/light_blue_1"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:textType="HEADING_6" />
+  </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
