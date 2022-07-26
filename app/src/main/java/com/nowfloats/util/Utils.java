@@ -13,6 +13,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.inputmethod.InputMethodManager;
@@ -20,6 +23,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.framework.BaseApplication;
 import com.framework.pref.TokenResult;
 import com.framework.pref.TokenResultKt;
+import com.framework.views.customViews.CustomTextView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,6 +50,7 @@ import static com.framework.webengageconstant.EventNameKt.ADDON_MARKETPLACE_PAGE
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_PROFILE_CREATION_SUCCESSFUL;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 
 public class Utils {
@@ -501,5 +506,14 @@ public class Utils {
     };
 
     return requestInterceptor;
+  }
+
+  public static void changeColorOfSubstring(int paramStringInt, int color, String substring, CustomTextView textView){
+    String paramString = textView.getContext().getString(paramStringInt);
+    SpannableString spannable = new SpannableString(paramString);
+    spannable.setSpan(new ForegroundColorSpan(ContextCompat.getColor(textView.getContext(), color)),
+            paramString.indexOf(substring), paramString.indexOf(substring) + substring.length(),
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    textView.setText(spannable);
   }
 }
