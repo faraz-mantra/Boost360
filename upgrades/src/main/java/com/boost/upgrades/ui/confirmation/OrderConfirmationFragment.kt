@@ -91,6 +91,8 @@ class OrderConfirmationFragment : BaseFragment("MarketPlaceOrderConfirmationFrag
           external_link_payment_status.visibility = View.GONE
         }
       }
+      val pluralFeaturesText = if (prefs.getFeaturesCountInLastOrder() == 1) "feature" else "features"
+        order_details_feature_count.text = "You have ordered " + prefs.getFeaturesCountInLastOrder() + " $pluralFeaturesText for ₹" + prefs.getLatestPurchaseOrderTotalPrice() + "/month."
       val yearOrMonthTemp = yearlyOrMonthlyOrEmptyValidity("", requireActivity(),
         if(prefs.getCartValidityMonths()!=null && prefs.getCartValidityMonths()!!.toInt() > 1)
           prefs.getCartValidityMonths()!!.toInt() else 1 )

@@ -1,5 +1,7 @@
 package com.appservice.ui.aptsetting.ui
 
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -90,10 +92,15 @@ class FragmentConsultationAptSettings : AppBaseFragment<FragmentConsultationAptS
   private fun saveUpdateGeneralAppointment() {
     showProgress()
     viewModel?.updateGeneralService(request)?.observeOnce(viewLifecycleOwner) {
+      hideProgress()
       if (it.isSuccess().not()) {
         showShortToast(it.errorFlowMessage() ?: getString(R.string.something_went_wrong))
-        hideProgress()
-      } else getAPIGeneralService(false)
+      } else{
+        showSnackBarPositive(getString(R.string.data_updated_successfully))
+        Handler(Looper.myLooper()!!).postDelayed(Runnable {
+          requireActivity().finish()
+        },1500)
+      }
     }
   }
 }
