@@ -1,7 +1,7 @@
 package com.boost.marketplace.ui.comparePacksV3
 
 import android.view.View
-import com.boost.cart.adapter.ZoomInTransformer
+import com.boost.cart.adapter.SimplePageTransformerSmall
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.utils.HorizontalMarginItemDecoration
 import com.boost.marketplace.Adapters.PacksV3BenefitsViewPagerAdapter
@@ -81,7 +81,7 @@ class ComparePacksV3BottomSheet: BaseBottomSheetDialog<Comparepacksv3PopupBindin
         binding?.benefitsViewpager?.adapter = benefitAdaptor
         binding?.benefitsViewpager?.let { binding?.benefitsIndicator?.setViewPager2(it) }
         binding?.benefitsViewpager?.offscreenPageLimit = 1
-        binding?.benefitsViewpager?.setPageTransformer(ZoomInTransformer())
+        binding?.benefitsViewpager?.setPageTransformer(SimplePageTransformerSmall())
 
         val itemDecoration = HorizontalMarginItemDecoration(
             requireContext(),
