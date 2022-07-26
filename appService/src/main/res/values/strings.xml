@@ -1227,4 +1227,7 @@
     <string name="asterisk">*</string>
     <string name="unable_to_fetch_default_gst_slab">Unable to fetch default gst slab</string>
     <string name="max_limit_of_8_images_is_reached">Maximum limit of 8 images is reached</string>
+    <string name="data_updated_successfully">Data updated successfully</string>
+    <string name="please_fill_data_in_the_fields_highlighted_in_red">Please fill data in the fields highlighted in red</string>
+  <string name="please_fill_valid_dates">Please fill valid dates. End time cannot be equal or before start Time !</string>
 </resources>
