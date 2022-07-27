@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
+import com.boost.dbcenterapi.data.api_model.packageAddonsCompares.AddonsPacksIn
+import com.boost.dbcenterapi.data.api_model.packageAddonsCompares.PackageAddonsCompares
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.SharedPrefs
@@ -66,10 +68,10 @@ class ComparePacksV3Activity :
     var upgradeList: ArrayList<Bundles>? = null
     lateinit var howToUseAdapter: PacksV3HowToUseAdapter
     lateinit var faqAdapter: PacksFaqAdapter
-    lateinit var packsv3Adapter : PacksV3Adapter
-    lateinit var packsv3footerAdapter : PacksV3FooterAdapter
-    lateinit var packsv3pricingAdapter : PacksV3PricingAdapter
-//    lateinit var packsAddonsAdapter: PacksAddonsV3Adapter
+    lateinit var packsv3Adapter: PacksV3Adapter
+    lateinit var packsv3footerAdapter: PacksV3FooterAdapter
+    lateinit var packsv3pricingAdapter: PacksV3PricingAdapter
+    lateinit var packsAddonsAdapter: PacksAddonsV3Adapter
 
     companion object {
         fun newInstance() = ComparePacksV3Activity()
@@ -88,7 +90,7 @@ class ComparePacksV3Activity :
 
         isDeepLink = intent.getBooleanExtra("isDeepLink", false)
         deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
-        deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
+        deepLinkDay = intent.getIntExtra("deepLinkDay",7)
         experienceCode = intent.getStringExtra("expCode")
         screenType = intent.getStringExtra("screenType")
         fpName = intent.getStringExtra("fpName")
@@ -107,10 +109,10 @@ class ComparePacksV3Activity :
         viewModel = ViewModelProviders.of(this).get(ComparePacksViewModel::class.java)
         howToUseAdapter = PacksV3HowToUseAdapter(this, ArrayList())
         faqAdapter = PacksFaqAdapter(this, ArrayList())
-        packsv3Adapter = PacksV3Adapter(ArrayList(), this,this)
+        packsv3Adapter = PacksV3Adapter(ArrayList(), this, this)
         packsv3footerAdapter = PacksV3FooterAdapter(ArrayList(), this)
         packsv3pricingAdapter = PacksV3PricingAdapter(ArrayList(), this)
-        //  packsAddonsAdapter= PacksAddonsV3Adapter(featuresList,this)
+        packsAddonsAdapter = PacksAddonsV3Adapter(ArrayList(), this)
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -123,7 +125,7 @@ class ComparePacksV3Activity :
         initMvvm()
         initializeHowToUseRecycler()
         initializeFAQRecycler()
-        // initializePacksAddonsRecycler()
+        initializePacksAddonsRecycler()
         initializePacksV3Recycler()
         initializePacksV3FooterRecycler()
         initializePacksV3PricingRecycler()
@@ -176,6 +178,7 @@ class ComparePacksV3Activity :
             viewModel.setCurrentExperienceCode(code, fpTag!!)
         }
         try {
+            viewModel.getAllFeaturesFromDB()
             viewModel.getCartItems()
             viewModel.loadPackageUpdates()
         } catch (e: Exception) {
@@ -185,6 +188,10 @@ class ComparePacksV3Activity :
 
     private fun initMvvm() {
 
+        viewModel.getAllFeatures().observe(this, {
+            Log.v("AllFeaturesResultValue", Gson().toJson(it))
+            featuresList = it
+        })
         viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
             if (it != null && it.size > 0) {
                 val listItem = arrayListOf<Bundles>()
@@ -216,9 +223,10 @@ class ComparePacksV3Activity :
                             PrimaryImage(item.primary_image),
                             item.target_business_usecase,
                             Gson().fromJson<List<String>>(
-                            item.exclusive_to_categories,
-                            object : TypeToken<List<String>>() {}.type),
-                            null,steps,null,faq,benefits,item.desc ?: ""
+                                item.exclusive_to_categories,
+                                object : TypeToken<List<String>>() {}.type
+                            ),
+                            null, steps, null, faq, benefits, item.desc ?: ""
                         )
                     )
 //                    updateHowToUseRecycler(steps)
@@ -226,9 +234,10 @@ class ComparePacksV3Activity :
                 }
                 if (listItem.size > 0) {
                     updatePackageRecycler(listItem)
+                    updatePackageAddons(listItem)
                     updatePackageFooterRecycler(listItem)
                     updatePackagePricingRecycler(listItem)
-                   // updateHowToUseRecycler(listItem.steps)
+                    // updateHowToUseRecycler(listItem.steps)
                     listItem.get(1).frequently_asked_questions?.let { it1 -> updateFAQRecycler(it1) }
                     listItem.get(1).how_to_activate?.let { it1 -> updateHowToUseRecycler(it1) }
                     binding?.howToUseTitleLayout?.setOnClickListener {
@@ -329,14 +338,53 @@ class ComparePacksV3Activity :
     }
 
 
-//    private fun initializePacksAddonsRecycler() {
-//        val gridLayoutManager = GridLayoutManager(applicationContext, 1)
-//        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
-//        binding?.addonsRecycler?.apply {
-//            layoutManager = gridLayoutManager
-//            binding?.addonsRecycler?.adapter = packsAddonsAdapter
-//        }
-//    }
+    private fun initializePacksAddonsRecycler() {
+        val gridLayoutManager = GridLayoutManager(applicationContext, 1)
+        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        binding?.addonsRecycler?.apply {
+            layoutManager = gridLayoutManager
+            binding?.addonsRecycler?.adapter = packsAddonsAdapter
+        }
+    }
+
+    fun updatePackageAddons(bundleList: ArrayList<Bundles>) {
+        val addonsList = ArrayList<PackageAddonsCompares>()
+        bundleList.forEachIndexed { index, element ->
+                for (singleFeatureCode in element.included_features) {
+                    for (singleFeature in featuresList!!) {
+                        if(singleFeatureCode.feature_code.equals(singleFeature.boost_widget_key)) {
+                            var addonsAvilableInPosition = -1 //position if available
+                            for ((index, singleCompareFeature) in addonsList.withIndex()) {
+                                if (singleFeature.name.equals(singleCompareFeature.title)) {
+                                    addonsAvilableInPosition = index
+                                    break
+                                }
+                            }
+                            if(addonsAvilableInPosition != -1){
+                                val packAvaiList = addonsList.get(addonsAvilableInPosition).packsAvailableIn
+                                packAvaiList.add(AddonsPacksIn(
+                                    element.name?:"", index
+                                ))
+                                addonsList.get(addonsAvilableInPosition).packsAvailableIn = packAvaiList
+                            }else{
+                                addonsList.add(
+                                    PackageAddonsCompares(
+                                        title = singleFeature.name ?: "",
+                                        packsAvailableIn = arrayListOf(
+                                            AddonsPacksIn(
+                                                element.name ?: "", index
+                                            )
+                                        )
+                                    )
+                                )
+                            }
+                            break
+                        }
+                    }
+                }
+        }
+        packsAddonsAdapter.addupdates(addonsList)
+    }
 
     private fun loadPacksData() {
 //        val wantedSubstr1: String = upgradeList?.get(0)?.name?.substring(7) ?: ""
@@ -355,7 +403,7 @@ class ComparePacksV3Activity :
     override fun onPackageClicked(item: Bundles?, image: ImageView?) {
         val dialogCard = ComparePacksV3BottomSheet()
         val args = Bundle()
-        args.putString("fpid",fpid)
+        args.putString("fpid", fpid)
         args.putString("bundleData", Gson().toJson(item))
         args.putDouble("price", offeredBundlePrice)
         args.putDouble("price1", originalBundlePrice)

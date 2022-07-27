@@ -25,7 +25,6 @@
                 android:id="@+id/main_layout1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -35,10 +34,11 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/addon_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/regular"
                     android:textFontWeight="400"
+                    android:padding="16dp"
                     android:text="Customer \nTestimonials"
                     android:maxLines="2"
                     android:textColor="@color/colorPrimary1"
@@ -47,36 +47,17 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
-                <ImageView
-                    android:id="@+id/ig1"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:src="@drawable/ic_pack_tick"
-                    android:layout_marginStart="62dp"
-                    app:layout_constraintStart_toEndOf="@+id/addon_title"
-                    app:layout_constraintBottom_toBottomOf="@+id/addon_title"
-                    app:layout_constraintTop_toTopOf="@+id/addon_title"/>
-
-                <ImageView
-                    android:id="@+id/ig2"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:src="@drawable/ic_pack_tick"
-                    android:layout_marginStart="62dp"
-                    app:layout_constraintStart_toEndOf="@+id/ig1"
-                    app:layout_constraintBottom_toBottomOf="@+id/addon_title"
-                    app:layout_constraintTop_toTopOf="@+id/addon_title"/>
-
-                <ImageView
-                    android:id="@+id/ig3"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:src="@drawable/ic_pack_tick"
-                    android:layout_marginStart="62dp"
-                    app:layout_constraintStart_toEndOf="@+id/ig2"
-                    app:layout_constraintBottom_toBottomOf="@+id/addon_title"
-                    app:layout_constraintTop_toTopOf="@+id/addon_title"/>
-
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/addons_available_recycler"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toEndOf="@id/addon_title"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:listitem="@layout/item_packsv3_image_addons"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

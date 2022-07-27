@@ -5,52 +5,52 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.boost.dbcenterapi.data.api_model.packageAddonsCompares.AddonsPacksIn
 import com.boost.dbcenterapi.data.api_model.packageAddonsCompares.PackageAddonsCompares
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
 
-class PacksAddonsV3Adapter(
-    cryptoCurrencies: List<PackageAddonsCompares>?,
+class PacksAddonsV3ImageAdapter(
+    cryptoCurrencies: List<AddonsPacksIn>?,
     val activity: Activity
-) : RecyclerView.Adapter<PacksAddonsV3Adapter.upgradeViewHolder>() {
+) : RecyclerView.Adapter<PacksAddonsV3ImageAdapter.upgradeViewHolder>() {
 
-    private var upgradeList = ArrayList<PackageAddonsCompares>()
+    private var compareList = ArrayList<AddonsPacksIn>()
     private lateinit var context: Context
 
     init {
-        this.upgradeList = cryptoCurrencies as ArrayList<PackageAddonsCompares>
+        this.compareList = cryptoCurrencies as ArrayList<AddonsPacksIn>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
         val itemView = LayoutInflater.from(parent?.context).inflate(
-            R.layout.item_packsv3_addons, parent, false
+            R.layout.item_packsv3_image_addons, parent, false
         )
         context = itemView.context
         return upgradeViewHolder(itemView)
     }
 
     override fun getItemCount(): Int {
-        return upgradeList.size
+        return compareList.size
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
-        holder.name.setText(upgradeList.get(position).title)
-        val adapter = PacksAddonsV3ImageAdapter(upgradeList.get(position).packsAvailableIn, activity)
-        holder.recyclerView.adapter = adapter
-
+        if(compareList.get(position).position == position)
+            holder.image.visibility = View.VISIBLE
+        else
+            holder.image.visibility = View.INVISIBLE
     }
 
-    fun addupdates(upgradeModel: List<PackageAddonsCompares>) {
-        val initPosition = upgradeList.size
-        upgradeList.clear()
-        upgradeList.addAll(upgradeModel)
-        notifyItemRangeInserted(initPosition, upgradeList.size)
+    fun addupdates(upgradeModel: List<AddonsPacksIn>) {
+        compareList.clear()
+        compareList.addAll(upgradeModel)
+        notifyDataSetChanged()
     }
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name = itemView.findViewById<TextView>(R.id.addon_title)!!
-        val recyclerView = itemView.findViewById<RecyclerView>(R.id.addons_available_recycler)!!
+        val image = itemView.findViewById<ImageView>(R.id.imageStatus)!!
     }
 }
