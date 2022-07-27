@@ -54,7 +54,8 @@ class ComparePacksV3BottomSheet: BaseBottomSheetDialog<Comparepacksv3PopupBindin
         if (bundleData.overall_discount_percent > 0) {
             offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * bundleData.overall_discount_percent / 100.0), 2)
             binding?.packDiscountTv?.visibility = View.VISIBLE
-            binding?.packDiscountTv?.setText(bundleData.overall_discount_percent.toString() + "% SAVING")
+            binding?.packDiscountTv?.setText(bundleData.overall_discount_percent.toString() + "% SAVING") //= "${bundleData.overall_discount_percent}" +" % SAVING"
+
         } else {
             offeredBundlePrice = originalBundlePrice
             binding?.packDiscountTv?.visibility = View.VISIBLE
@@ -85,7 +86,7 @@ class ComparePacksV3BottomSheet: BaseBottomSheetDialog<Comparepacksv3PopupBindin
 
         val itemDecoration = HorizontalMarginItemDecoration(
             requireContext(),
-            R.dimen.viewpager_current_item_horizontal_margin3
+            R.dimen.viewpager_next_item_visible
         )
         binding?.benefitsViewpager?.addItemDecoration(itemDecoration)
 

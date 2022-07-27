@@ -2,6 +2,7 @@ package com.boost.marketplace.ui.comparePacksV3
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -9,30 +10,42 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.boost.cart.CartActivity
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
 import com.boost.dbcenterapi.data.api_model.packageAddonsCompares.AddonsPacksIn
 import com.boost.dbcenterapi.data.api_model.packageAddonsCompares.PackageAddonsCompares
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.SharedPrefs
+import com.boost.dbcenterapi.utils.WebEngageController
 import com.boost.marketplace.Adapters.*
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityComparePacksv3Binding
+import com.boost.marketplace.interfaces.PacksV3FooterListener
 import com.boost.marketplace.interfaces.PacksV3listener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
+import com.framework.utils.RootUtil
+import com.framework.webengageconstant.ADDONS_MARKETPLACE
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_COMPARE_PACKAGE_ADDED_TO_CART
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_feature_details.*
 
 
 class ComparePacksV3Activity :
-    AppBaseActivity<ActivityComparePacksv3Binding, ComparePacksViewModel>(), PacksV3listener {
+    AppBaseActivity<ActivityComparePacksv3Binding, ComparePacksViewModel>(), PacksV3listener,PacksV3FooterListener {
 
     var experienceCode: String? = null
     var screenType: String? = null
@@ -52,6 +65,7 @@ class ComparePacksV3Activity :
     var isOpenHomeFragment: Boolean = false
     var isOpenAddOnsFragment: Boolean = false
     var refreshViewPager: Boolean = false
+    var packageInCartStatus = false
     var bundleData: Bundles? = null
     var featuresList: List<FeaturesModel>? = null
     var cartList: List<CartModel>? = null
@@ -66,6 +80,7 @@ class ComparePacksV3Activity :
 
     //  var listItem=ArrayList<Bundles>()
     var upgradeList: ArrayList<Bundles>? = null
+    private var cartItems = listOf<CartModel>()
     lateinit var howToUseAdapter: PacksV3HowToUseAdapter
     lateinit var faqAdapter: PacksFaqAdapter
     lateinit var packsv3Adapter: PacksV3Adapter
@@ -110,7 +125,7 @@ class ComparePacksV3Activity :
         howToUseAdapter = PacksV3HowToUseAdapter(this, ArrayList())
         faqAdapter = PacksFaqAdapter(this, ArrayList())
         packsv3Adapter = PacksV3Adapter(ArrayList(), this, this)
-        packsv3footerAdapter = PacksV3FooterAdapter(ArrayList(), this)
+        packsv3footerAdapter = PacksV3FooterAdapter(ArrayList(), this, this)
         packsv3pricingAdapter = PacksV3PricingAdapter(ArrayList(), this)
         packsAddonsAdapter = PacksAddonsV3Adapter(ArrayList(), this)
 
@@ -134,6 +149,7 @@ class ComparePacksV3Activity :
         binding?.packageBack?.setOnClickListener {
             finish()
         }
+
 
 //        binding?.priceSwitch1?.setOnClickListener {
 //            if (annualPlan) {
@@ -179,6 +195,7 @@ class ComparePacksV3Activity :
         }
         try {
             viewModel.getAllFeaturesFromDB()
+            refreshViewPager = true
             viewModel.getCartItems()
             viewModel.loadPackageUpdates()
         } catch (e: Exception) {
@@ -187,11 +204,44 @@ class ComparePacksV3Activity :
     }
 
     private fun initMvvm() {
-
         viewModel.getAllFeatures().observe(this, {
             Log.v("AllFeaturesResultValue", Gson().toJson(it))
             featuresList = it
         })
+
+        viewModel.cartResult().observe(this, Observer {
+            cartList = it
+            packageInCartStatus = false
+            if (cartList != null && cartList!!.size > 0) {
+               // packsv3footerAdapter.updateCartItem(cartList!!)
+//                val cartBundleIds = arrayListOf<String>()
+//                for (item in it) {
+//                    if (item.item_type.equals("bundles")) {
+//                        cartBundleIds.add(item.item_id)
+//                    }
+//                }
+                if(refreshViewPager){
+                    refreshViewPager = false
+                    packsv3footerAdapter.updateCartItem(cartList!!)
+                }
+
+                cartCount = cartList!!.size
+//                badgeNumber = cartList!!.size
+//                badge121.setText(badgeNumber.toString())
+//                badge121.visibility = View.VISIBLE
+//                Log.v("badgeNumber", " " + badgeNumber)
+            } else {
+                cartCount = 0
+                //badgeNumber = 0
+             //   badge121.visibility = View.GONE
+                packageInCartStatus = false
+                if(refreshViewPager) {
+                    refreshViewPager = false
+                    packsv3footerAdapter.updateCartItem(arrayListOf())
+                }
+            }
+        })
+
         viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
             if (it != null && it.size > 0) {
                 val listItem = arrayListOf<Bundles>()
@@ -229,8 +279,6 @@ class ComparePacksV3Activity :
                             null, steps, null, faq, benefits, item.desc ?: ""
                         )
                     )
-//                    updateHowToUseRecycler(steps)
-//                    listItem.get(2).how_to_activate?.let { it1 -> updateHowToUseRecycler(it1) }
                 }
                 if (listItem.size > 0) {
                     updatePackageRecycler(listItem)
@@ -426,6 +474,7 @@ class ComparePacksV3Activity :
 //        binding?.footerPack2?.text = wantedSubstr2
 //        binding?.footerPack3?.text = wantedSubstr3
 
+
     }
 
     override fun onPackageClicked(item: Bundles?, image: ImageView?) {
@@ -441,4 +490,184 @@ class ComparePacksV3Activity :
         dialogCard.arguments = args
         dialogCard.show(this.supportFragmentManager, ComparePacksV3BottomSheet::class.java.name)
     }
+
+
+
+    override fun onSelectedPack(itemList: Bundles, itemList1: List<CartModel>?) {
+//        packsv3footerAdapter.updateCartItem(cartList!!)
+       binding?.buyPack?.text= "Buy ${itemList.name}"
+        itemList?.how_to_activate?.let { updateHowToUseRecycler(it) }
+        howToUseAdapter.notifyDataSetChanged()
+        itemList?.frequently_asked_questions?.let { updateFAQRecycler(it) }
+        faqAdapter.notifyDataSetChanged()
+
+        var itemInCart = false
+        if (itemList1?.size!! > 0) {
+            if (itemList1 != null) {
+                for(singleCartItem in itemList1){
+                    if(singleCartItem.item_id.equals(itemList._kid)){
+                        itemInCart = true
+                        break
+                    }
+                }
+            }
+        }
+        if (!itemInCart) {
+            binding?.buyPack?.setTextColor(this.resources.getColor(R.color.white))
+            binding?.buyPack?.background = ContextCompat.getDrawable(
+                this.applicationContext,
+                R.drawable.ic_cart_continue_bg
+            )
+            binding?.buyPack?.setText("Buy ${itemList.name}")
+            binding?.buyPack?.isClickable = true
+        } else {
+            binding?.buyPack?.background = ContextCompat.getDrawable(
+                this.applicationContext,
+                R.drawable.ic_packsv3_added_to_cart_bg
+            )
+            binding?.buyPack?.setTextColor(
+                this.getResources().getColor(R.color.tv_color_BB)
+            )
+            binding?.buyPack?.setText(this.getString(R.string.added_to_cart))
+            binding?.buyPack?.isClickable = false
+        }
+
+        //Add to cart..
+        binding?.buyPack?.setOnClickListener {
+
+            if (itemList != null) {
+                prefs.storeAddedPackageDesc(itemList.desc ?: "")
+
+                val itemIds = arrayListOf<String>()
+                for (i in itemList.included_features) {
+                    itemIds.add(i.feature_code)
+                }
+
+                CompositeDisposable().add(
+                    AppDatabase.getInstance(application)!!
+                        .featuresDao()
+                        .getallFeaturesInList(itemIds)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                            {
+//                                            featuresList = it
+                                var bundleMonthlyMRP = 0.0
+                                val minMonth: Int =
+                                    if (!prefs.getYearPricing() && itemList!!.min_purchase_months != null && itemList!!.min_purchase_months!! > 1) itemList!!.min_purchase_months!! else 1
+
+                                for (singleItem in it) {
+                                    for (item in itemList!!.included_features) {
+                                        if (singleItem.feature_code == item.feature_code) {
+                                            bundleMonthlyMRP += RootUtil.round(
+                                                singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),
+                                                2
+                                            )
+                                        }
+                                    }
+                                }
+                                offeredBundlePrice = (bundleMonthlyMRP * minMonth)
+                                originalBundlePrice = (bundleMonthlyMRP * minMonth)
+
+                                if (itemList!!.overall_discount_percent > 0)
+                                    offeredBundlePrice = RootUtil.round(
+                                        originalBundlePrice - (originalBundlePrice * itemList!!.overall_discount_percent / 100),
+                                        2
+                                    )
+                                else
+                                    offeredBundlePrice = originalBundlePrice
+
+                                //clear cartOrderInfo from SharedPref to requestAPI again
+                                prefs.storeCartOrderInfo(null)
+                                viewModel.addItemToCartPackage1(
+                                    CartModel(
+                                        itemList!!._kid,
+                                        null,
+                                        null,
+                                        itemList!!.name,
+                                        "",
+                                        itemList!!.primary_image!!.url,
+                                        offeredBundlePrice.toDouble(),
+                                        originalBundlePrice.toDouble(),
+                                        itemList!!.overall_discount_percent,
+                                        1,
+                                        if (!prefs.getYearPricing() && itemList!!.min_purchase_months != null) itemList!!.min_purchase_months!! else 1,
+                                        "bundles",
+                                        null,
+                                        ""
+                                    )
+                                )
+                                val event_attributes: java.util.HashMap<String, Any> =
+                                    java.util.HashMap()
+                                itemList!!.name?.let { it1 ->
+                                    event_attributes.put(
+                                        "Package Name",
+                                        it1
+                                    )
+                                }
+                                itemList!!.target_business_usecase?.let { it1 ->
+                                    event_attributes.put(
+                                        "Package Tag",
+                                        it1
+                                    )
+                                }
+                                event_attributes.put("Package Price", originalBundlePrice)
+                                event_attributes.put("Discounted Price", offeredBundlePrice)
+                                event_attributes.put(
+                                    "Discount %",
+                                    itemList!!.overall_discount_percent
+                                )
+                                itemList!!.min_purchase_months?.let { it1 ->
+                                    event_attributes.put(
+                                        "Validity",
+                                        if(!prefs.getYearPricing()) it1 else 1
+                                    )
+                                }
+                                WebEngageController.trackEvent(
+                                    ADDONS_MARKETPLACE_COMPARE_PACKAGE_ADDED_TO_CART,
+                                    ADDONS_MARKETPLACE,
+                                    event_attributes
+                                )
+                            },
+                            {
+                                it.printStackTrace()
+
+                            }
+                        )
+                )
+            }
+
+            val intent = Intent(
+                applicationContext,
+                CartActivity::class.java
+            )
+            intent.putExtra("fpid", fpid)
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("isDeepLink", isDeepLink)
+            intent.putExtra("deepLinkViewType", deepLinkViewType)
+            intent.putExtra("deepLinkDay", deepLinkDay)
+            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                userPurchsedWidgets
+            )
+            if (email != null) {
+                intent.putExtra("email", email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                intent.putExtra("mobileNo", mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", profileUrl)
+            startActivity(intent)
+        }
+    }
+
 }
