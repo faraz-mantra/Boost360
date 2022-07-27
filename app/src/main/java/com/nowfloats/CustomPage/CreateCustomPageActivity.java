@@ -107,7 +107,6 @@ public class CreateCustomPageActivity extends AppCompatActivity {
   String curName, curHtml, curPageid;
   String imageTagName = "CustomePage";
   boolean isNewDataAdded = false;
-  private String mHtmlFormat = "";
   private Uri picUri;
   private HorizontalScrollView editor;
   private boolean editCheck = false;
@@ -202,7 +201,6 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                   titleTxt.setText(curName);
                   title.setText(curName);
                   richText.setHtml(curHtml);
-                  mHtmlFormat = curHtml;
                   editCheck = true;
                   deletePage.setVisibility(View.VISIBLE);
                 } else {
@@ -239,7 +237,6 @@ public class CreateCustomPageActivity extends AppCompatActivity {
       return false;
     });
 
-    richText.setOnTextChangeListener(text -> mHtmlFormat = text);
 
     deletePage.setOnClickListener(v -> {
       String url = Constants.NOW_FLOATS_API_URL + "/Discover/v1/floatingpoint/custompage/delete";
@@ -259,7 +256,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
           mRiaNodedata = null;
         }
         boolean flag = true;
-        final String name = titleTxt.getText().toString(), html = mHtmlFormat;
+        final String name = titleTxt.getText().toString(), html = richText.getHtml();
         if (!(titleTxt.getText().toString().trim().length() > 0)) {
           flag = false;
           Methods.showSnackBarNegative(activity, getString(R.string.enter_the_title));
