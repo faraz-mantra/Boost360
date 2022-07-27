@@ -348,31 +348,31 @@ class ComparePacksV3Activity :
     }
 
     fun updatePackageAddons(bundleList: ArrayList<Bundles>) {
-        val addonsList = ArrayList<PackageAddonsCompares>()
+        val addonsListTemp = ArrayList<PackageAddonsCompares>()
         bundleList.forEachIndexed { index, element ->
                 for (singleFeatureCode in element.included_features) {
                     for (singleFeature in featuresList!!) {
-                        if(singleFeatureCode.feature_code.equals(singleFeature.boost_widget_key)) {
+                        if(singleFeatureCode.feature_code.equals(singleFeature.feature_code)) {
                             var addonsAvilableInPosition = -1 //position if available
-                            for ((index, singleCompareFeature) in addonsList.withIndex()) {
+                            for ((index1, singleCompareFeature) in addonsListTemp.withIndex()) {
                                 if (singleFeature.name.equals(singleCompareFeature.title)) {
-                                    addonsAvilableInPosition = index
+                                    addonsAvilableInPosition = index1
                                     break
                                 }
                             }
                             if(addonsAvilableInPosition != -1){
-                                val packAvaiList = addonsList.get(addonsAvilableInPosition).packsAvailableIn
+                                val packAvaiList = addonsListTemp.get(addonsAvilableInPosition).packsAvailableIn
                                 packAvaiList.add(AddonsPacksIn(
-                                    element.name?:"", index
+                                    element.name?:"", true
                                 ))
-                                addonsList.get(addonsAvilableInPosition).packsAvailableIn = packAvaiList
+                                addonsListTemp.get(addonsAvilableInPosition).packsAvailableIn = packAvaiList
                             }else{
-                                addonsList.add(
+                                addonsListTemp.add(
                                     PackageAddonsCompares(
                                         title = singleFeature.name ?: "",
                                         packsAvailableIn = arrayListOf(
                                             AddonsPacksIn(
-                                                element.name ?: "", index
+                                                element.name ?: "", true
                                             )
                                         )
                                     )
@@ -381,8 +381,36 @@ class ComparePacksV3Activity :
                             break
                         }
                     }
+                    //adding false value if not available
+                    for ((index2, singleCompareFeature) in addonsListTemp.withIndex()) {
+                        if(singleCompareFeature.packsAvailableIn.size < index){
+                            val packAvaiList = addonsListTemp.get(index2).packsAvailableIn
+                            packAvaiList.add(AddonsPacksIn(
+                                element.name?:"", false
+                            ))
+                            addonsListTemp.get(index2).packsAvailableIn = packAvaiList
+                        }
+                    }
                 }
         }
+        val addonsList = ArrayList<PackageAddonsCompares>()
+        //arrange the list in decending order
+        var totalSize = bundleList.size
+        bundleList.forEachIndexed { index, element ->
+            for(singleItem in addonsListTemp){
+                var tempSize = 0
+                for(singleStatus in singleItem.packsAvailableIn){
+                    if(singleStatus.packageStatus){
+                        tempSize += 1
+                    }
+                }
+                if(totalSize == tempSize){
+                    addonsList.add(singleItem)
+                }
+            }
+            totalSize -= 1
+        }
+
         packsAddonsAdapter.addupdates(addonsList)
     }
 

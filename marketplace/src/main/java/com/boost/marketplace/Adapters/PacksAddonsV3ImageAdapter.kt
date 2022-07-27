@@ -38,7 +38,7 @@ class PacksAddonsV3ImageAdapter(
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
-        if(compareList.get(position).position == position)
+        if(compareList.get(position).packageStatus)
             holder.image.visibility = View.VISIBLE
         else
             holder.image.visibility = View.INVISIBLE
