@@ -51,8 +51,8 @@ class PacksV3Adapter(
         val sameAddonsInCart = ArrayList<String>()
         val addonsListInCart = ArrayList<String>()
         val parentItem = list[position]
-        parentViewHolder.PackageItemTitle.text = parentItem.name?.substring(7) ?: ""
-        val data = parentItem.name?.substring(7) ?: ""
+        parentViewHolder.PackageItemTitle.text = parentItem.name?: ""
+        val data = parentItem.name ?: ""
         val items = data!!.split(" ".toRegex())
         if (items.size == 1) {
             parentViewHolder.PackageItemTitle.text = items[0]
