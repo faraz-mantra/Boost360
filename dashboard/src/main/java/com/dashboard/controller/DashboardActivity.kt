@@ -160,8 +160,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun bottomNavInitializer() {
-    if (this.packageName.equals(APPLICATION_JIO_ID, true))
-      binding?.viewBottomBar?.navView?.setClickPosition(ArrayList())
     binding?.viewBottomBar?.navView?.setOnItemSelectedListener(this)
   }
 
@@ -514,7 +512,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onItemClick(pos: Int) {
     super.onItemClick(pos)
     when (pos) {
-      3 -> if (this.packageName.equals(APPLICATION_JIO_ID, true).not()) checkWelcomeShowScreen(pos)
+      3 -> checkWelcomeShowScreen(pos)
       4 -> {
 //        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
 //        binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
