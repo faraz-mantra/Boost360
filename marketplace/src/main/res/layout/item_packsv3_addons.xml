@@ -37,11 +37,12 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/regular"
+                    android:maxLines="2"
                     android:textFontWeight="400"
                     android:padding="16dp"
                     android:text="Customer \nTestimonials"
                     android:textColor="@color/colorPrimary1"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>

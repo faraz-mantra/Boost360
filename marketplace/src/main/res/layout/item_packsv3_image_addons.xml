@@ -17,6 +17,13 @@
             android:layout_height="15dp"
             android:layout_margin="30dp"
             android:src="@drawable/ic_pack_tick" />
+
+        <ImageView
+            android:id="@+id/imageStatus1"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_margin="30dp"
+            android:src="@drawable/ic_nopack" />
     </LinearLayout>
 </layout>
 

@@ -222,41 +222,12 @@
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/price_title"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="Pack price"-->
-<!--                            android:padding="16dp"-->
-<!--                            android:layout_marginTop="16dp"-->
-<!--                            android:fontFamily="@font/semi_bold"-->
-<!--                            android:textFontWeight="600"-->
-<!--                            android:textSize="12sp"-->
-<!--                            android:textColor="#333333"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent"/>-->
-
-<!--                        <androidx.recyclerview.widget.RecyclerView-->
-<!--                            android:id="@+id/packs_price_recycler"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginBottom="30dp"-->
-<!--                            tools:itemCount="3"-->
-<!--                            android:visibility="visible"-->
-<!--                            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--                            tools:orientation="horizontal"-->
-<!--                            tools:listitem="@layout/item_packs_pricev3"-->
-<!--                            app:layout_constraintStart_toEndOf="@+id/price_title"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent"-->
-<!--                            tools:visibility="visible" />-->
-
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/addons_recycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="30dp"
-                            tools:itemCount="4"
+                            tools:itemCount="3"
                             android:overScrollMode="never"
                             android:nestedScrollingEnabled="true"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -290,11 +261,25 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cs1">
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_discount"/>
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/rounded_curve_bg"
+                        android:background="@drawable/ic_packsv3_new"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         android:padding="16dp">
+
+
 
                         <TextView
                             android:id="@+id/savings_title"
@@ -345,6 +330,8 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/view"
                             app:layout_constraintTop_toTopOf="parent"/>
+
+
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
