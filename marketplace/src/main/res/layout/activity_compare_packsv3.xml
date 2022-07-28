@@ -167,7 +167,7 @@
                         android:elevation="7dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toTopOf="@+id/img"
+                        app:layout_constraintBottom_toTopOf="@+id/savings"
                         android:background="@drawable/packsv3_lower_bg"
                         app:layout_constraintTop_toTopOf="parent">
 
@@ -267,22 +267,88 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                    <ImageView
-                        android:id="@+id/img"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/packs_offer_v3"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/cs1" />
-
 <!--                    <ImageView-->
-<!--                        android:layout_width="wrap_content"-->
+<!--                        android:id="@+id/img"-->
+<!--                        android:layout_width="match_parent"-->
 <!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_alignParentEnd="true"-->
-<!--                        android:layout_alignParentBottom="true"-->
-<!--                        android:src="@drawable/ic_card_bg1" />-->
+<!--                        android:layout_marginTop="30dp"-->
+<!--                        android:scaleType="centerCrop"-->
+<!--                        android:src="@drawable/packs_offer_v3"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@+id/cs1" />-->
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/savings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:layout_marginTop="30dp"
+                    android:background="#E0EEFF"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cs1">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/rounded_curve_bg"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/savings_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="save upto"
+                            android:textSize="12sp"
+                            android:textFontWeight="600"
+                            android:fontFamily="@font/regular"
+                            android:textColor="#FFB900"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/savings_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="45%"
+                            android:textSize="24sp"
+                            android:textFontWeight="700"
+                            android:fontFamily="@font/regular"
+                            android:textColor="#FFB900"
+                            app:layout_constraintStart_toStartOf="@+id/savings_title"
+                            app:layout_constraintTop_toBottomOf="@+id/savings_title"/>
+
+                        <View
+                            android:id="@+id/view"
+                            android:layout_width="1dp"
+                            android:layout_height="32dp"
+                            android:background="#BBBBBB"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            app:layout_constraintStart_toEndOf="@+id/savings_title"
+                            app:layout_constraintBottom_toBottomOf="@+id/savings_txt"
+                            app:layout_constraintTop_toTopOf="@+id/savings_title"/>
+
+                        <TextView
+                            android:id="@+id/savings_desc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Compared to \nbuy features individually"
+                            android:textSize="12sp"
+                            android:textFontWeight="600"
+                            android:lineHeight="16dp"
+                            android:fontFamily="@font/bold"
+                            android:textColor="@color/colorPrimary1"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/view"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/how_to_use_container"
@@ -292,7 +358,7 @@
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
                         android:background="@drawable/rounded_curve_bg"
-                        app:layout_constraintTop_toBottomOf="@id/img">
+                        app:layout_constraintTop_toBottomOf="@id/savings">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/how_to_use_title_layout"
