@@ -37,9 +37,9 @@ class PacksV3BenefitsViewPagerAdapter (
         when ((position + 1) % 5) {
             0 -> holder.cardView.setCardBackgroundColor(Color.parseColor("#E1EFFF"))
             1 -> holder.cardView.setCardBackgroundColor(Color.parseColor("#FCEDF0"))
-            2 -> holder.cardView.setCardBackgroundColor(Color.parseColor("#C7F3DD"))
-            3 -> holder.cardView.setCardBackgroundColor(Color.parseColor("#D8E3FF"))
-            4 -> holder.cardView.setCardBackgroundColor(Color.parseColor("#FFEAB3"))
+            2 -> holder.cardView.setCardBackgroundColor(Color.parseColor("##EAFFF4"))
+            3 -> holder.cardView.setCardBackgroundColor(Color.parseColor("#F3F5FF"))
+            4 -> holder.cardView.setCardBackgroundColor(Color.parseColor("#FFF8F5"))
             else -> holder.cardView.setCardBackgroundColor(Color.parseColor("#B3D6FF"))
 
         }
