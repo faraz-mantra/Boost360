@@ -8,6 +8,7 @@ import com.dashboard.databinding.ItemWebsiteItemV2Binding
 import com.dashboard.model.live.websiteItem.WebsiteActionItem
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
 import com.dashboard.recyclerView.BaseRecyclerViewItem
+import com.framework.extensions.gone
 import com.framework.extensions.invisible
 import com.framework.extensions.visible
 import com.framework.utils.capitalized
@@ -25,8 +26,19 @@ class WebsiteItemViewHolder(binding: ItemWebsiteItemV2Binding) : AppBaseRecycler
     val iconType = data.type?.let { WebsiteActionItem.IconType.fromName(it) }
     iconType?.let { binding.ivMainCat.setImageResource(iconType.icon) }
     binding.ivMainCat.makeGreyscale()
+   /* if (data.getCountN() == 0){
+      binding.ivAdd.visible()
+      binding.ivForwardArrow.gone()
+    }else{
+      binding.ivAdd.gone()
+      binding.ivForwardArrow.visible()
+    }*/
+
     binding.mainContent.setOnClickListener {
       listener?.onItemClick(position, item, RecyclerViewActionType.WEBSITE_ITEM_CLICK.ordinal)
+    }
+    binding.ivAdd.setOnClickListener {
+      listener?.onItemClick(position, item, RecyclerViewActionType.WEBSITE_CONTENT_ADD_CLICK.ordinal)
     }
   }
 }

@@ -79,7 +79,7 @@
                 tools:text="Description of this asset Description of this assetDescription of this asset" />
 
             <com.framework.views.customViews.CustomImageView
-                android:id="@+id/customImageView4"
+                android:id="@+id/iv_forward_arrow"
                 android:layout_width="@dimen/size_14"
                 android:layout_height="@dimen/size_14"
                 android:layout_marginEnd="@dimen/size_28"
@@ -87,6 +87,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_arrow_shape_filled_grey" />
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/iv_add"
+                android:layout_width="@dimen/size_30"
+                android:layout_height="@dimen/size_30"
+                android:visibility="visible"
+                android:layout_marginEnd="@dimen/size_20"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/ic_add_round_yellow_border" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
