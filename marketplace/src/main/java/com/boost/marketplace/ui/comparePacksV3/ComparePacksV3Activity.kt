@@ -475,17 +475,7 @@ class ComparePacksV3Activity :
                         }
                     }
                     upgradeList = listItem
-                    loadPacksData()
 
-//                    for (items in listItem) {
-//                        Log.v("getkeyWidget", " " + items.name + " " + items.included_features.size)
-//                        val itemIds = arrayListOf<String?>()
-//                        for (item in items.included_features!!) {
-//                            itemIds.add(item.feature_code)
-//                        }
-//                        Log.v("getkeyWidget123", " " + itemIds.size)
-//                        viewModel.getFeatureValues(itemIds)
-//                    }
                 }
             }
         })
@@ -644,21 +634,6 @@ class ComparePacksV3Activity :
             totalSize -= 1
         }
         packsAddonsAdapter.addupdates(addonsList)
-    }
-
-    private fun loadPacksData() {
-//        val wantedSubstr1: String = upgradeList?.get(0)?.name?.substring(7) ?: ""
-//        val wantedSubstr2: String = upgradeList?.get(1)?.name?.substring(7) ?: ""
-//        val wantedSubstr3 = upgradeList?.get(2)?.frequently_asked_questions
-//        if (wantedSubstr3 != null) {
-//            updateFAQRecycler(wantedSubstr3)
-//            faqAdapter.notifyDataSetChanged()
-//        }
-//        binding?.footerPack?.text = wantedSubstr1
-//        binding?.footerPack2?.text = wantedSubstr2
-//        binding?.footerPack3?.text = wantedSubstr3
-
-
     }
 
     override fun onPackageClicked(item: Bundles?, image: ImageView?) {

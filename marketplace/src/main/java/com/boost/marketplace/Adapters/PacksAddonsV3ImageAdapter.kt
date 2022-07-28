@@ -6,11 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.data.api_model.packageAddonsCompares.AddonsPacksIn
-import com.boost.dbcenterapi.data.api_model.packageAddonsCompares.PackageAddonsCompares
-import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
 
 class PacksAddonsV3ImageAdapter(
@@ -38,10 +35,14 @@ class PacksAddonsV3ImageAdapter(
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
-        if(compareList.get(position).packageStatus)
+        if(compareList.get(position).packageStatus) {
             holder.image.visibility = View.VISIBLE
-        else
-            holder.image.visibility = View.INVISIBLE
+            holder.image1.visibility = View.GONE
+        }
+        else{
+            holder.image.visibility = View.GONE
+            holder.image1.visibility = View.VISIBLE
+        }
     }
 
     fun addupdates(upgradeModel: List<AddonsPacksIn>) {
@@ -52,5 +53,6 @@ class PacksAddonsV3ImageAdapter(
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image = itemView.findViewById<ImageView>(R.id.imageStatus)!!
+        val image1 = itemView.findViewById<ImageView>(R.id.imageStatus1)!!
     }
 }
