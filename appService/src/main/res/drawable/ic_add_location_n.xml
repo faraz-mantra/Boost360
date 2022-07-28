@@ -1,0 +1,55 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+    android:width="22dp"
+    android:height="21dp">
+    <vector
+      android:width="33dp"
+      android:height="32dp"
+      android:viewportWidth="33"
+      android:viewportHeight="32">
+      <path
+        android:fillColor="#00000000"
+        android:pathData="M16.043,27C22.1181,27 27.043,22.0751 27.043,16C27.043,9.9249 22.1181,5 16.043,5C9.9678,5 5.043,9.9249 5.043,16C5.043,22.0751 9.9678,27 16.043,27Z"
+        android:strokeWidth="1.5"
+        android:strokeColor="#000000"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+      <path
+        android:fillColor="#00000000"
+        android:pathData="M16.043,2.5V7.5"
+        android:strokeWidth="1.5"
+        android:strokeColor="#000000"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+      <path
+        android:fillColor="#00000000"
+        android:pathData="M2.543,16H7.543"
+        android:strokeWidth="1.5"
+        android:strokeColor="#000000"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+      <path
+        android:fillColor="#00000000"
+        android:pathData="M16.043,29.5V24.5"
+        android:strokeWidth="1.5"
+        android:strokeColor="#000000"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+      <path
+        android:fillColor="#00000000"
+        android:pathData="M29.543,16H24.543"
+        android:strokeWidth="1.5"
+        android:strokeColor="#000000"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+      <path
+        android:fillColor="#00000000"
+        android:pathData="M16.043,20C18.2521,20 20.043,18.2091 20.043,16C20.043,13.7909 18.2521,12 16.043,12C13.8338,12 12.043,13.7909 12.043,16C12.043,18.2091 13.8338,20 16.043,20Z"
+        android:strokeWidth="1.5"
+        android:strokeColor="#000000"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    </vector>
+
+  </item>
+</layer-list>

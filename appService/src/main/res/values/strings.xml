@@ -1224,7 +1224,12 @@
   <string name="jiolocal">JioLocal</string>
   <string name="facebook_page_shop">Facebook Page Shop</string>
   <string name="google_merchant_center">Google Merchant Center</string>
-    <string name="asterisk">*</string>
-    <string name="unable_to_fetch_default_gst_slab">Unable to fetch default gst slab</string>
-    <string name="max_limit_of_8_images_is_reached">Maximum limit of 8 images is reached</string>
+  <string name="asterisk">*</string>
+  <string name="unable_to_fetch_default_gst_slab">Unable to fetch default gst slab</string>
+  <string name="max_limit_of_8_images_is_reached">Maximum limit of 8 images is reached</string>
+  <string name="business_address">Business Address</string>
+  <string name="business_address_not_added">Business address not added</string>
+  <string name="please_add_business_address_to_let_your_customers_find_your_location">Please add business address to let your customers find your location.</string>
+  <string name="or_if_you_have_your_business_listed_on_google_maps_gmb">or if you have your business listed on Google Maps (GMB)</string>
+  <string name="sync_with_google_maps_gmb">Sync with Google Maps (GMB)</string>
 </resources>
