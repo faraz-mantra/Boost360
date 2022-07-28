@@ -200,7 +200,7 @@
                 android:gravity="center"
                 android:padding="@dimen/_10sdp"
                 android:text="Cancel"
-                android:textColor="@color/yellow"
+                android:textColor="@color/colorAccent1"
                 android:textFontWeight="700"
                 android:textSize="@dimen/txt_14sp"
                 app:layout_constraintTop_toBottomOf="@id/upi_popup_submit" />

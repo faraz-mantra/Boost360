@@ -435,10 +435,10 @@ class ComparePacksV3Activity :
                         item.how_to_activate,
                         object : TypeToken<List<HowToActivate>>() {}.type
                     )
-                    val benefits = Gson().fromJson<List<String>>(
+                    val benefits = if(item.benefits != null) Gson().fromJson<List<String>>(
                         item.benefits!!,
                         object : TypeToken<List<String>>() {}.type
-                    )
+                    ) else arrayListOf()
                     listItem.add(
                         Bundles(
                             item.bundle_id,

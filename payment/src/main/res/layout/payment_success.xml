@@ -240,7 +240,7 @@
                             android:fontFamily="@font/bold"
                             android:lineSpacingExtra="1sp"
                             android:text="Download Invoice"
-                            android:textColor="@color/yellow"
+                            android:textColor="@color/colorAccent1"
                             android:textSize="@dimen/txt_14sp" />
 
                         <androidx.appcompat.widget.LinearLayoutCompat
@@ -282,7 +282,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="View active features"
-                android:textColor="@color/yellow"
+                android:textColor="@color/colorAccent1"
                 android:textSize="@dimen/txt_14sp" />
 
 

@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"
         android:text="00h : 00m : 00s"
-        android:textColor="@color/yellow"
+        android:textColor="@color/colorAccent1"
         android:textSize="@dimen/_9sdp"
         app:layout_constraintStart_toEndOf="@id/deal_ending"
         app:layout_constraintTop_toBottomOf="@id/deal_title" />

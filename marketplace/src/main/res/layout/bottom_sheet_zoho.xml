@@ -83,7 +83,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="Go to Zoho Dashboard"
-                android:textColor="@color/yellow"
+                android:textColor="@color/colorAccent1"
                 android:textFontWeight="700"
                 android:textSize="14sp"
                 android:textStyle="normal"

@@ -214,7 +214,7 @@
                 android:gravity="center"
                 android:paddingTop="5dp"
                 android:text="Choose 6 months or more to get extra 2% off"
-                android:textColor="@color/yellow" />
+                android:textColor="@color/colorAccent1" />
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -340,7 +340,7 @@
           android:drawableEnd="@drawable/ic_cart_more_coupons"
           android:gravity="center"
           android:text="Show more"
-          android:textColor="@color/yellow"
+          android:textColor="@color/colorAccent1"
           android:textSize="@dimen/txt_12sp" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -382,7 +382,7 @@
               android:drawableStart="@drawable/ic_cart_billing_details_edit"
               android:gravity="end"
               android:text="Edit"
-              android:textColor="@color/yellow"
+              android:textColor="@color/colorAccent1"
               android:textSize="@dimen/txt_12sp" />
 
           </androidx.appcompat.widget.LinearLayoutCompat>

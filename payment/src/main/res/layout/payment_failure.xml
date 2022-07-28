@@ -52,7 +52,7 @@
         android:gravity="center"
         android:lineSpacingExtra="0sp"
         android:text="@string/contact_support_for_help"
-        android:textColor="@color/yellow"
+        android:textColor="@color/colorAccent1"
         android:textSize="@dimen/txt_12sp" />
 
 
@@ -243,7 +243,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:text="Go to marketplace"
-        android:textColor="@color/yellow"
+        android:textColor="@color/colorAccent1"
         android:textSize="@dimen/txt_14sp" />
 
 
