@@ -17,6 +17,7 @@ import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
+import com.framework.utils.RootUtil
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_PACKAGE_CROSSED_DELETED_FROM_CART
 import java.text.NumberFormat
@@ -56,8 +57,8 @@ class CartPackageAdaptor(
     val selectedBundle = bundlesList.get(position)
 
     holder.name.text = selectedBundle.item_name
-    val price = Utils.priceCalculatorForYear(selectedBundle.price, "", activity)
-    val MRPPrice = Utils.priceCalculatorForYear(selectedBundle.MRPPrice,"", activity)
+    val price = RootUtil.round(Utils.priceCalculatorForYear(selectedBundle.price, "", activity),2)
+    val MRPPrice = RootUtil.round(Utils.priceCalculatorForYear(selectedBundle.MRPPrice,"", activity), 2)
     if (selectedBundle.min_purchase_months > 1) {
       if(prefs.getYearPricing())
         holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
