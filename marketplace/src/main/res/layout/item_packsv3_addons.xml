@@ -40,7 +40,6 @@
                     android:textFontWeight="400"
                     android:padding="16dp"
                     android:text="Customer \nTestimonials"
-                    android:maxLines="2"
                     android:textColor="@color/colorPrimary1"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -62,6 +61,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View
+                android:id="@+id/dummy_view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#BBBBBB"

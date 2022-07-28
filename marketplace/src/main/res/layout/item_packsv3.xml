@@ -28,8 +28,6 @@
         android:layout_marginBottom="16dp"
         android:textSize="12sp"
         android:gravity="center"
-        android:maxLines="2"
-        android:ellipsize="end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
