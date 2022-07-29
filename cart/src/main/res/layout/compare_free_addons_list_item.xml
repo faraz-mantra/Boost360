@@ -68,7 +68,7 @@
           android:layout_height="wrap_content"
           android:fontFamily="@font/semi_bold"
           android:text="SECURITY"
-          android:textColor="@color/yellow"
+          android:textColor="@color/colorAccent1"
           android:textSize="@dimen/_8sdp" />
       </LinearLayout>
 

@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/bold"
         android:textAllCaps="true"
-        android:textColor="@color/yellow"
+        android:textColor="@color/colorAccent1"
         android:textFontWeight="600"
         android:textSize="@dimen/txt_9sp"
         tools:text="Marketing" />

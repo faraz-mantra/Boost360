@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.R
+import com.boost.marketplace.interfaces.PacksV3FooterListener
 import com.boost.marketplace.ui.comparePacksV3.ComparePacksV3Activity
 import com.framework.utils.RootUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,11 +25,17 @@ import java.util.*
 
 class PacksV3FooterAdapter(
     var list: ArrayList<Bundles>,
-    val activity: ComparePacksV3Activity
+    val activity: ComparePacksV3Activity,listen: PacksV3FooterListener
 ) : RecyclerView.Adapter<PacksV3FooterAdapter.ParentViewHolder>() {
 
     lateinit var context: Context
-    var selectedPosition: Int = -1
+    var selectedPosition: Int = 0
+    private lateinit var listener: PacksV3FooterListener
+    private var cartItems = listOf<CartModel>()
+
+    init {
+        listener = listen
+    }
 
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
@@ -58,11 +66,12 @@ class PacksV3FooterAdapter(
         }
         parentViewHolder.maincl.setOnClickListener {
             selectedPosition = position;
+            listener.onSelectedPack(list.get(position),cartItems)
             notifyDataSetChanged();
-//            listener.onSelectedDomain(upgradeList.get(position))
+
         }
 
-        parentViewHolder.PackageItemTitle.text = parentItem.name?.substring(7) ?: ""
+        parentViewHolder.PackageItemTitle.text = parentItem.name?: ""
         val data = parentItem.name?.substring(7) ?: ""
         val items = data!!.split(" ".toRegex())
         if (items.size == 1) {
@@ -94,6 +103,19 @@ class PacksV3FooterAdapter(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
+                        for(singleItem in cartItems){
+                            for(singleFeature in it) {
+                                if (singleFeature.boost_widget_key.equals(singleItem.boost_widget_key)) {
+                                    sameAddonsInCart.add(singleFeature.name!!)
+                                    addonsListInCart.add(singleItem.item_id)
+                                }
+                            }
+                            //if there is any other bundle available remove it
+                            if(singleItem.item_type.equals("bundles")){
+                                addonsListInCart.add(singleItem.item_id)
+                            }
+                        }
+
                         val itemIds = java.util.ArrayList<String?>()
                         for (item in it) {
                             itemIds.add(item.feature_code)
@@ -132,6 +154,11 @@ class PacksV3FooterAdapter(
         list.clear()
         list.addAll(upgradeModel)
         notifyItemRangeInserted(initPosition, list.size)
+    }
+
+    fun updateCartItem(cartItems: List<CartModel>) {
+        this.cartItems = cartItems
+        notifyDataSetChanged()
     }
 
     inner class ParentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

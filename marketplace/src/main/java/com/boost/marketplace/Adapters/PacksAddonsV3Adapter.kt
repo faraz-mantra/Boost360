@@ -7,20 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.boost.dbcenterapi.data.api_model.packageAddonsCompares.PackageAddonsCompares
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
 
 class PacksAddonsV3Adapter(
-    cryptoCurrencies: List<FeaturesModel>?,
+    cryptoCurrencies: List<PackageAddonsCompares>?,
     val activity: Activity
 ) : RecyclerView.Adapter<PacksAddonsV3Adapter.upgradeViewHolder>() {
 
-    private var upgradeList = ArrayList<FeaturesModel>()
-    var minMonth = 1
+    private var upgradeList = ArrayList<PackageAddonsCompares>()
     private lateinit var context: Context
 
     init {
-        this.upgradeList = cryptoCurrencies as ArrayList<FeaturesModel>
+        this.upgradeList = cryptoCurrencies as ArrayList<PackageAddonsCompares>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -36,18 +36,15 @@ class PacksAddonsV3Adapter(
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
-
-        holder.name.setText(upgradeList.get(2).name)
-        val cryptocurrencyItem = upgradeList[position]
-     //   holder.upgradeListItem(holder, cryptocurrencyItem, activity)
-//        Glide.with(context).load(upgradeList.get(position).primary_image).into(holder.image)
-//        holder.itemView.setOnClickListener {
-//            addonsListener.onAddonsClicked(upgradeList.get(position))
-//        }
+        holder.name.setText(upgradeList.get(position).title)
+        val adapter = PacksAddonsV3ImageAdapter(upgradeList.get(position).packsAvailableIn, activity)
+        holder.recyclerView.adapter = adapter
+        if(position == upgradeList.size-1){
+            holder.dummyLine.visibility = View.GONE
+        }
     }
 
-    fun addupdates(upgradeModel: List<FeaturesModel>, noOfMonth: Int) {
-        minMonth = noOfMonth
+    fun addupdates(upgradeModel: List<PackageAddonsCompares>) {
         val initPosition = upgradeList.size
         upgradeList.clear()
         upgradeList.addAll(upgradeModel)
@@ -56,8 +53,7 @@ class PacksAddonsV3Adapter(
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name = itemView.findViewById<TextView>(R.id.addon_title)!!
-//        val name = itemView.findViewById<TextView>(R.id.title)!!
-//        val price = itemView.findViewById<TextView>(R.id.price)!!
-
+        val recyclerView = itemView.findViewById<RecyclerView>(R.id.addons_available_recycler)!!
+        val dummyLine = itemView.findViewById<View>(R.id.dummy_view)!!
     }
 }

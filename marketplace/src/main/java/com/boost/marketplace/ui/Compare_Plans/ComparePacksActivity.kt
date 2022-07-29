@@ -261,7 +261,7 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
                         object : TypeToken<List<IncludedFeature>>() {}.type
                     )
                     val benefits = Gson().fromJson<List<String>>(
-                        item.benefits!!,
+                        item.benefits?:"",
                         object : TypeToken<List<String>>() {}.type
                     )
                     listItem.add(

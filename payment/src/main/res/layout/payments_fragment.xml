@@ -1329,7 +1329,7 @@
                                 android:paddingEnd="@dimen/_30sdp"
                                 android:paddingBottom="16dp"
                                 android:text="Add new UPI id"
-                                android:textColor="@color/yellow"
+                                android:textColor="@color/colorAccent1"
                                 android:textFontWeight="400"
                                 android:textSize="@dimen/txt_14sp" />
                         </LinearLayout>
@@ -1448,7 +1448,7 @@
                                 android:paddingEnd="@dimen/_30sdp"
                                 android:paddingBottom="16dp"
                                 android:text="Add a debit or credit card"
-                                android:textColor="@color/colorPrimary1"
+                                android:textColor="@color/colorAccent1"
                                 android:textFontWeight="400"
                                 android:textSize="14sp"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -2045,7 +2045,7 @@
                                 android:paddingEnd="@dimen/_10sdp"
                                 android:singleLine="true"
                                 android:text="rzp.io/1234567890asdfasdfasdfasdfasdf"
-                                android:textColor="@color/colorPrimary1"
+                                android:textColor="@color/colorAccent1"
                                 android:textFontWeight="400"
                                 android:textSize="@dimen/txt_14sp" />
 

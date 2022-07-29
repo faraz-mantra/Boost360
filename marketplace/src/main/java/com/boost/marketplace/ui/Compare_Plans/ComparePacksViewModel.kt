@@ -29,6 +29,7 @@ class ComparePacksViewModel: BaseViewModel() {
     var experienceCode: String = "SVC"
     var _fpTag: String = "ABC"
     var allBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
+    var allFeatureResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
 
     fun getSpecificFeature(): LiveData<List<FeaturesModel>> {
         return featureResult
@@ -162,6 +163,30 @@ class ComparePacksViewModel: BaseViewModel() {
                     )
             )
         }
+    }
+
+
+    fun getAllFeatures(): LiveData<List<FeaturesModel>> {
+        return allFeatureResult
+    }
+
+    fun getAllFeaturesFromDB(){
+        CompositeDisposable().add(
+            AppDatabase.getInstance(Application())!!
+                .featuresDao()
+                .getAllFeatures()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        allFeatureResult.postValue(it)
+                        updatesLoader.postValue(false)
+                    },{
+                        Log.e("GetAllFeatures", "error" + it.message)
+                        updatesLoader.postValue(false)
+                    }
+                )
+        )
     }
 
     fun addItemToCartPackage1(cartItem: CartModel) {

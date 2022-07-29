@@ -75,7 +75,7 @@ android {
     flavorDimensions "default"
     productFlavors {
         partone {
-            versionName "6.0.22.1"
+            versionName "6.0.22.6"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
@@ -86,7 +86,7 @@ android {
             buildConfigField "int", "REFERRAL_CAMPAIGN_CODE", '26277'
         }
         jioonline {
-            versionName "1.0.0.1"
+            versionName "1.0.0.2"
             applicationId "com.jio.online"
             dimension "default"
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'

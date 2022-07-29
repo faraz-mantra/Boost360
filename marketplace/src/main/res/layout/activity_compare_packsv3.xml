@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:background="@color/white"
+        android:background="#F5F8FD"
         android:orientation="vertical">
 
 
@@ -33,6 +33,7 @@
                     android:id="@+id/package_cart_icon"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
+                    android:layout_weight="1"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:foreground="?android:attr/selectableItemBackground"
@@ -41,19 +42,11 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_centerInParent="true"
-                        android:background="@drawable/ic_cart" />
+                        android:src="@drawable/ic_packs_menu" />
 
-
-                    <com.nex3z.notificationbadge.NotificationBadge
-                        android:id="@+id/badge121"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        app:nbMaxTextLength="2" />
                 </RelativeLayout>
 
 
@@ -75,6 +68,7 @@
                     android:id="@+id/package_back"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="@drawable/arrow_white"
                     android:padding="15dp"
                     app:layout_constraintDimensionRatio="1:1"
@@ -87,20 +81,7 @@
         </androidx.appcompat.widget.Toolbar>
 
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/main_scroller"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:overScrollMode="never"
-                android:scrollbars="none"
-                app:layout_constraintBottom_toTopOf="@+id/footer_checkout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:id="@+id/trip_cv"
@@ -113,16 +94,15 @@
                         android:elevation="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            >
+                            android:layout_height="match_parent">
 
                             <LinearLayout
                                 android:id="@+id/mainll"
-                                android:layout_width="95dp"
+                                android:layout_width="100dp"
                                 android:layout_height="match_parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -146,12 +126,14 @@
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/packsv3recycler"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:nestedScrollingEnabled="true"
                                 app:layout_constraintStart_toEndOf="@+id/mainll"
                                 app:layout_constraintTop_toTopOf="parent"
-
+                                app:layout_constraintEnd_toEndOf="parent"
                                 tools:itemCount="3"
+                                android:overScrollMode="never"
                                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 tools:listitem="@layout/item_packsv3"
                                 tools:orientation="horizontal" />
@@ -160,17 +142,35 @@
 
                     </LinearLayout>
 
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/main_scroller"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:background="#F5F8FD"
+            app:layout_constraintBottom_toTopOf="@+id/footer_checkout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trip_cv">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cs1"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="10dp"
-                        android:elevation="6dp"
-                        app:layout_constraintEnd_toEndOf="@+id/trip_cv"
-                        app:layout_constraintStart_toStartOf="@+id/trip_cv"
-                        app:layout_constraintBottom_toTopOf="@+id/img"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:elevation="7dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/savings"
                         android:background="@drawable/packsv3_lower_bg"
-                        app:layout_constraintTop_toBottomOf="@+id/trip_cv">
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/maincs2"
@@ -183,11 +183,9 @@
 
                             <LinearLayout
                                 android:id="@+id/mainll1"
-                                android:layout_width="95dp"
+                                android:layout_width="100dp"
                                 android:layout_height="match_parent"
-                                android:layout_marginStart="15dp"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintEnd_toStartOf="@+id/packs_price_recycler"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintBottom_toBottomOf="parent">
 
@@ -195,7 +193,8 @@
                             <TextView
                                 android:id="@+id/price_title"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
+                                android:padding="15dp"
                                 android:fontFamily="@font/bold"
                                 android:text="Pack price"
                                 android:textColor="#333333"
@@ -211,78 +210,134 @@
                                 android:id="@+id/packs_price_recycler"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:overScrollMode="never"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/mainll1"
-                                app:layout_constraintTop_toTopOf="parent"
-                                tools:itemCount="3"
+                                tools:itemCount="4"
+                                android:nestedScrollingEnabled="true"
                                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 tools:listitem="@layout/item_packs_pricev3"
-                                app:layout_constraintBottom_toBottomOf="parent"
                                 tools:orientation="horizontal" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/price_title"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="Pack price"-->
-<!--                            android:padding="16dp"-->
-<!--                            android:layout_marginTop="16dp"-->
-<!--                            android:fontFamily="@font/semi_bold"-->
-<!--                            android:textFontWeight="600"-->
-<!--                            android:textSize="12sp"-->
-<!--                            android:textColor="#333333"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent"/>-->
-
-<!--                        <androidx.recyclerview.widget.RecyclerView-->
-<!--                            android:id="@+id/packs_price_recycler"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginBottom="30dp"-->
-<!--                            tools:itemCount="3"-->
-<!--                            android:visibility="visible"-->
-<!--                            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--                            tools:orientation="horizontal"-->
-<!--                            tools:listitem="@layout/item_packs_pricev3"-->
-<!--                            app:layout_constraintStart_toEndOf="@+id/price_title"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent"-->
-<!--                            tools:visibility="visible" />-->
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/addons_recycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="30dp"
-                            tools:itemCount="4"
+                            tools:itemCount="3"
+                            android:overScrollMode="never"
+                            android:nestedScrollingEnabled="true"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             tools:listitem="@layout/item_packsv3_addons"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/maincs2"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            tools:visibility="visible" />
+                            app:layout_constraintBottom_toBottomOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                    <ImageView
-                        android:id="@+id/img"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/packs_offer_v3"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/cs1" />
-
 <!--                    <ImageView-->
-<!--                        android:layout_width="wrap_content"-->
+<!--                        android:id="@+id/img"-->
+<!--                        android:layout_width="match_parent"-->
 <!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_alignParentEnd="true"-->
-<!--                        android:layout_alignParentBottom="true"-->
-<!--                        android:src="@drawable/ic_card_bg1" />-->
+<!--                        android:layout_marginTop="30dp"-->
+<!--                        android:scaleType="centerCrop"-->
+<!--                        android:src="@drawable/packs_offer_v3"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@+id/cs1" />-->
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/savings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:layout_marginTop="30dp"
+                    android:background="#E0EEFF"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cs1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_discount"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_packsv3_new"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:padding="16dp">
+
+
+
+                        <TextView
+                            android:id="@+id/savings_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="save upto"
+                            android:textSize="12sp"
+                            android:textFontWeight="600"
+                            android:fontFamily="@font/regular"
+                            android:textColor="@color/colorAccent1"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/savings_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="45%"
+                            android:textSize="24sp"
+                            android:textFontWeight="700"
+                            android:fontFamily="@font/regular"
+                            android:textColor="@color/colorAccent1"
+                            app:layout_constraintStart_toStartOf="@+id/savings_title"
+                            app:layout_constraintTop_toBottomOf="@+id/savings_title"/>
+
+                        <View
+                            android:id="@+id/view"
+                            android:layout_width="1dp"
+                            android:layout_height="32dp"
+                            android:background="#BBBBBB"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            app:layout_constraintStart_toEndOf="@+id/savings_title"
+                            app:layout_constraintBottom_toBottomOf="@+id/savings_txt"
+                            app:layout_constraintTop_toTopOf="@+id/savings_title"/>
+
+                        <TextView
+                            android:id="@+id/savings_desc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Compared to \nbuy features individually"
+                            android:textSize="12sp"
+                            android:textFontWeight="600"
+                            android:lineHeight="16dp"
+                            android:fontFamily="@font/bold"
+                            android:textColor="@color/common_text_color"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/view"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/how_to_use_container"
@@ -292,7 +347,7 @@
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
                         android:background="@drawable/rounded_curve_bg"
-                        app:layout_constraintTop_toBottomOf="@id/img">
+                        app:layout_constraintTop_toBottomOf="@id/savings">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/how_to_use_title_layout"
@@ -322,7 +377,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="0dp"
                                 android:padding="@dimen/_10sdp"
-                                android:src="@drawable/ic_arrow_down_gray"
+                                android:src="@drawable/packs_arrow"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintDimensionRatio="1:1"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -336,7 +391,7 @@
                             android:layout_height="wrap_content"
                             tools:listitem="@layout/item_packsv3_how_to_use"
                             tools:itemCount="2"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             app:layout_constraintTop_toBottomOf="@id/how_to_use_title_layout" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -348,8 +403,9 @@
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
+                        android:layout_marginBottom="40dp"
                         android:background="@drawable/rounded_curve_bg"
-
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/how_to_use_container">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -364,6 +420,7 @@
                                 android:id="@+id/faq_title"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:fontFamily="@font/semi_bold"
                                 android:padding="16dp"
                                 android:text="Frequently Asked Questions"
@@ -383,45 +440,11 @@
                             tools:listitem="@layout/item_packs_faq"
                             tools:itemCount="2"
                             android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/faq_title_layout" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="20dp"-->
-<!--                        android:background="#F2FBE9"-->
-<!--                        android:paddingStart="16dp"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/faq_container"-->
-<!--                        app:layout_constraintStart_toStartOf="parent">-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/pricing_switch_txt"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:fontFamily="@font/regular"-->
-<!--                            android:padding="16dp"-->
-<!--                            android:text="Choose annual plan? Save 35% more"-->
-<!--                            android:textColor="@color/main_color_gray_dk"-->
-<!--                            android:textFontWeight="600"-->
-<!--                            android:textSize="12sp"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                        <ImageView-->
-<!--                            android:id="@+id/price_switch1"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginEnd="20dp"-->
-<!--                            android:paddingTop="15dp"-->
-<!--                            android:paddingBottom="@dimen/pad_5dp"-->
-<!--                            android:src="@drawable/ic_switch_off"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent" />-->
-
-
-<!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -444,161 +467,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
-<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                    android:id="@+id/pack_details"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:background="@drawable/edittext_selector1"-->
-<!--                    android:foreground="?android:attr/selectableItemBackground"-->
-<!--                    android:orientation="vertical"-->
-<!--                    android:padding="16dp"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintBottom_toTopOf="@+id/buy_pack"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" >-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/footer_pack"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:textFontWeight="400"-->
-<!--                        android:fontFamily="@font/regular"-->
-<!--                        android:textColor="@color/colorPrimary1"-->
-<!--                        android:textSize="12sp"-->
-<!--                        android:text="Basic"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="parent"/>-->
-
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/footer_pack_total"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:textFontWeight="700"-->
-<!--                        android:fontFamily="@font/bold"-->
-<!--                        android:textColor="@color/main_color_gray_dk"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:text="₹481"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/footer_pack"/>-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/month"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:textFontWeight="400"-->
-<!--                        android:text="/month"-->
-<!--                        android:textColor="@color/copy_coupon_text_color"-->
-<!--                        android:textSize="12sp"-->
-<!--                        app:layout_constraintTop_toTopOf="@+id/footer_pack_total"-->
-<!--                        app:layout_constraintBottom_toBottomOf="@+id/footer_pack_total"-->
-<!--                        app:layout_constraintStart_toEndOf="@+id/footer_pack_total"/>-->
-
-<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                    android:id="@+id/pack_details2"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="11dp"-->
-<!--                    android:background="@drawable/edittext_selector1"-->
-<!--                    android:foreground="?android:attr/selectableItemBackground"-->
-<!--                    android:orientation="vertical"-->
-<!--                    android:padding="16dp"-->
-<!--                    app:layout_constraintStart_toEndOf="@+id/pack_details"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@+id/pack_details"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" >-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/footer_pack2"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:textFontWeight="400"-->
-<!--                        android:fontFamily="@font/regular"-->
-<!--                        android:textColor="@color/colorPrimary1"-->
-<!--                        android:textSize="12sp"-->
-<!--                        android:text="Basic"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="parent"/>-->
-
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/footer_pack_total2"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:textFontWeight="700"-->
-<!--                        android:fontFamily="@font/bold"-->
-<!--                        android:textColor="@color/main_color_gray_dk"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:text="₹481"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/footer_pack2"/>-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/month2"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:textFontWeight="400"-->
-<!--                        android:text="/month"-->
-<!--                        android:textColor="@color/copy_coupon_text_color"-->
-<!--                        android:textSize="12sp"-->
-<!--                        app:layout_constraintTop_toTopOf="@+id/footer_pack_total2"-->
-<!--                        app:layout_constraintBottom_toBottomOf="@+id/footer_pack_total2"-->
-<!--                        app:layout_constraintStart_toEndOf="@+id/footer_pack_total2"/>-->
-
-<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                    android:id="@+id/pack_details3"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="11dp"-->
-<!--                    android:background="@drawable/edittext_selector1"-->
-<!--                    android:foreground="?android:attr/selectableItemBackground"-->
-<!--                    android:orientation="vertical"-->
-<!--                    android:padding="16dp"-->
-<!--                    app:layout_constraintStart_toEndOf="@+id/pack_details2"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@+id/pack_details2"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent">-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/footer_pack3"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:textFontWeight="400"-->
-<!--                        android:fontFamily="@font/regular"-->
-<!--                        android:textColor="@color/colorPrimary1"-->
-<!--                        android:textSize="12sp"-->
-<!--                        android:text="Basic"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="parent"/>-->
-
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/footer_pack_total3"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:textFontWeight="700"-->
-<!--                        android:fontFamily="@font/bold"-->
-<!--                        android:textColor="@color/main_color_gray_dk"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:text="₹481"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/footer_pack3"/>-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/month3"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:textFontWeight="400"-->
-<!--                        android:text="/month"-->
-<!--                        android:textColor="@color/copy_coupon_text_color"-->
-<!--                        android:textSize="12sp"-->
-<!--                        app:layout_constraintTop_toTopOf="@+id/footer_pack_total3"-->
-<!--                        app:layout_constraintBottom_toBottomOf="@+id/footer_pack_total3"-->
-<!--                        app:layout_constraintStart_toEndOf="@+id/footer_pack_total3"/>-->
-
-<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/packsv3footerrecycler"
@@ -609,6 +477,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toTopOf="@+id/buy_pack"
                     tools:itemCount="3"
+                    android:overScrollMode="never"
+                    android:nestedScrollingEnabled="true"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_packsv3footer"
                     tools:orientation="horizontal" />
@@ -619,6 +489,7 @@
                     android:layout_height="wrap_content"
                     android:textFontWeight="700"
                     android:layout_marginTop="16dp"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:fontFamily="@font/regular"
                     android:background="@drawable/ic_cart_continue_bg"
                     android:gravity="center"

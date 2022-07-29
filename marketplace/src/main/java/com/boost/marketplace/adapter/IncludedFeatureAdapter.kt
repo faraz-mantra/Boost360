@@ -39,8 +39,8 @@ class IncludedFeatureAdapter(
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
-        holder.title.text = upgradeList[position].question
-        holder.desc.text = upgradeList[position].answer
+//        holder.title.text = upgradeList[position].question
+//        holder.desc.text = upgradeList[position].answer
         holder.title.setOnClickListener {
             if(holder.desc.isVisible) {
                 holder.desc.visibility = View.GONE
