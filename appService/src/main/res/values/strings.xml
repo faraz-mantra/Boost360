@@ -3,6 +3,7 @@
   <string name="jpeg_png">JPEG/PNG</string>
   <string name="_800x800px">(800x800px)</string>
   <string name="add_service_image">Add service image</string>
+  <string name="add_service_image_aster">Add service image*</string>
   <string name="error_add_product_image">Please add image of the product</string>
   <string name="save_amp_publish">Save &amp; Publish</string>
   <string name="change">Change</string>
@@ -197,6 +198,7 @@
   <string name="add_a_staff">Add a staff</string>
   <string name="staff_member_name">Staff member Name*</string>
   <string name="select_gender">Select gender*</string>
+  <string name="add_staff_image_aster">Add staff image*</string>
   <string name="add_staff_image">Add staff image</string>
   <string name="write_the_this_staff_specialises_in">Write the this staff specialises in</string>
   <string name="specialization">Specialization*</string>
