@@ -1,4 +1,4 @@
-package com.appservice.ui.address
+package com.appservice.ui.address.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -10,8 +10,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
+import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentBusinessAddressBinding
+import com.appservice.ui.address.startAddressFragmentActivity
 import com.appservice.utils.getMarkerBitmapFromView
 import com.framework.models.BaseViewModel
 import com.google.android.gms.maps.*
@@ -86,36 +88,27 @@ class BusinessAddressFragment : AppBaseFragment<FragmentBusinessAddressBinding, 
   override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
     when (menuItem.itemId) {
       R.id.menu_edit -> {
-        if (!Places.isInitialized()) Places.initialize(requireActivity(), resources.getString(R.string.google_map_key))
-        val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.ADDRESS_COMPONENTS, Place.Field.LAT_LNG)
-        val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
-          .setTypeFilter(TypeFilter.REGIONS)
-          .setCountry("IN")
-          .build(requireActivity())
-        resultLauncher.launch(intent)
+        baseActivity.startAddressFragmentActivity(FragmentType.SEARCH_LOCATION_VIEW)
+//        placePicker()
         return true
       }
       R.id.menu_help -> {
-        showLongToast("Coming soon...")
+//        showLongToast("Coming soon...")
+        placePicker()
         return true
       }
     }
     return false
   }
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
-      R.id.menu_edit -> {
-        if (!Places.isInitialized()) Places.initialize(requireActivity(), resources.getString(R.string.google_map_key))
-        val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.ADDRESS_COMPONENTS, Place.Field.LAT_LNG)
-        val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
-          .setTypeFilter(TypeFilter.REGIONS)
-          .setCountry("IN")
-          .build(requireActivity())
-        resultLauncher.launch(intent)
-      }
-      R.id.menu_help -> showLongToast("Coming soon...")
-    }
-    return super.onOptionsItemSelected(item)
+
+  private fun placePicker() {
+    if (!Places.isInitialized()) Places.initialize(requireActivity(), resources.getString(R.string.google_map_key))
+    val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.ADDRESS_COMPONENTS, Place.Field.LAT_LNG)
+    val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
+      .setTypeFilter(TypeFilter.REGIONS)
+      .setCountry("IN")
+      .build(requireActivity())
+    resultLauncher.launch(intent)
   }
 
   private fun onBackResult() {

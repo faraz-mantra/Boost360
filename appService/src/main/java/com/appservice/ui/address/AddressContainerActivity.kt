@@ -6,11 +6,11 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import com.appservice.R
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
-import com.appservice.ui.bgImage.BGImageCropFragment
+import com.appservice.ui.address.ui.BusinessAddressFragment
+import com.appservice.ui.address.ui.SearchLocationFragment
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
@@ -42,6 +42,7 @@ open class AddressContainerActivity : AppBaseActivity<ActivityFragmentContainerB
 
   override fun customTheme(): Int? {
     return when (type) {
+      FragmentType.SEARCH_LOCATION_VIEW -> R.style.AppTheme_domain
       else -> R.style.AddressTheme
     }
   }
@@ -53,20 +54,21 @@ open class AddressContainerActivity : AppBaseActivity<ActivityFragmentContainerB
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.ADDRESS_UPDATE_VIEW -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.SEARCH_LOCATION_VIEW -> ContextCompat.getColor(this, R.color.black_4a4a4a)
       else -> super.getToolbarBackgroundColor()
     }
   }
 
   override fun getToolbarTitleColor(): Int? {
     return when (type) {
-      FragmentType.ADDRESS_UPDATE_VIEW -> ContextCompat.getColor(this, R.color.white)
+      FragmentType.ADDRESS_UPDATE_VIEW, FragmentType.SEARCH_LOCATION_VIEW -> ContextCompat.getColor(this, R.color.white)
       else -> super.getToolbarTitleColor()
     }
   }
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.ADDRESS_UPDATE_VIEW-> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
+      FragmentType.ADDRESS_UPDATE_VIEW, FragmentType.SEARCH_LOCATION_VIEW -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
       else -> super.getNavigationIcon()
     }
   }
@@ -74,6 +76,7 @@ open class AddressContainerActivity : AppBaseActivity<ActivityFragmentContainerB
   override fun getToolbarTitle(): String? {
     return when (type) {
       FragmentType.ADDRESS_UPDATE_VIEW -> getString(R.string.business_address)
+      FragmentType.SEARCH_LOCATION_VIEW -> getString(R.string.search_location)
       else -> super.getToolbarTitle()
     }
   }
@@ -93,6 +96,7 @@ open class AddressContainerActivity : AppBaseActivity<ActivityFragmentContainerB
   private fun getFragmentInstance(type: FragmentType?): BaseFragment<*, *>? {
     return when (type) {
       FragmentType.ADDRESS_UPDATE_VIEW -> BusinessAddressFragment.newInstance()
+      FragmentType.SEARCH_LOCATION_VIEW -> SearchLocationFragment.newInstance()
       else -> BusinessAddressFragment.newInstance()
     }
   }
@@ -105,28 +109,20 @@ open class AddressContainerActivity : AppBaseActivity<ActivityFragmentContainerB
   }
 }
 
-fun Fragment.startAddressFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
-  val intent = Intent(activity, AddressContainerActivity::class.java)
+fun Activity.startAddressFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean, isResult: Boolean = false) {
+  val intent = Intent(this, AddressContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
-fun startAddressFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean, isResult: Boolean = false) {
-  val intent = Intent(activity, AddressContainerActivity::class.java)
-  intent.putExtras(bundle)
-  intent.setFragmentType(type)
-  if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-  if (isResult.not()) activity.startActivity(intent) else activity.startActivityForResult(intent, 101)
-}
-
-fun AppCompatActivity.startAddressFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
+fun AppCompatActivity.startAddressFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
   val intent = Intent(this, AddressContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-  startActivity(intent)
+  if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
 fun Intent.setFragmentType(type: FragmentType): Intent {

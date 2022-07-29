@@ -17,7 +17,7 @@ fun <T> convertListObjToString(listObj: List<T>): String? {
   return Gson().toJson(listObj, object : TypeToken<List<T>?>() {}.type)
 }
 
-inline fun <reified T> convertStringToList(json: String): List<T>? {
+inline fun <reified T> convertStringToList(json: String): ArrayList<T>? {
   val type = TypeToken.getParameterized(ArrayList::class.java, T::class.java).type
   return Gson().fromJson<ArrayList<T>>(json, type)
 }

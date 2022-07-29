@@ -20,7 +20,7 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      tools:context="com.appservice.ui.address.BusinessAddressFragment" />
+      tools:context="com.appservice.ui.address.ui.BusinessAddressFragment" />
 
     <include
       layout="@layout/empty_address_view"

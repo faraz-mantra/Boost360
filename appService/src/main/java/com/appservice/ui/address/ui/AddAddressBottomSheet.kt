@@ -1,9 +1,8 @@
-package com.appservice.ui.address
+package com.appservice.ui.address.ui
 
 import android.view.View
 import com.appservice.R
 import com.appservice.databinding.BottomSheetAddAddressBinding
-import com.appservice.databinding.BottomSheetWhyAccountBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
