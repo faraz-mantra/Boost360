@@ -24,7 +24,7 @@ class LoginActivity : FragmentContainerActivity() {
 
   override fun getFragmentInstance(type: Int?): BaseFragment<*, *> {
     return when (type) {
-      FORGOT_FRAGMENT -> ForgetPassFragment.newInstance(intent.extras)
+      FORGOT_FRAGMENT -> ForgotPasswordFragment.newInstance(intent.extras)
       LOGIN_SUCCESS_FRAGMENT -> SuccessLoginNumberFragment.newInstance(intent.extras)
       else -> LoginFragment.newInstance()
     }
