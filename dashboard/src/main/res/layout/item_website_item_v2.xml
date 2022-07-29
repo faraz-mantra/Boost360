@@ -38,7 +38,7 @@
                 android:textSize="@dimen/text_22"
                 app:fontFamily="@font/semi_bold"
                 app:layout_constraintBottom_toTopOf="@+id/textViewName"
-                app:layout_constraintEnd_toStartOf="@+id/customImageView4"
+                app:layout_constraintEnd_toStartOf="@+id/barrier_cards_start"
                 app:layout_constraintStart_toEndOf="@+id/iv_main_cat"
                 app:layout_constraintTop_toTopOf="@+id/iv_main_cat"
                 app:layout_constraintVertical_chainStyle="packed"
@@ -55,7 +55,7 @@
                 android:textSize="@dimen/text_14"
                 app:fontFamily="@font/regular"
                 app:layout_constraintBottom_toTopOf="@+id/txt_desc"
-                app:layout_constraintEnd_toStartOf="@+id/customImageView4"
+                app:layout_constraintEnd_toStartOf="@+id/barrier_cards_start"
                 app:layout_constraintStart_toEndOf="@+id/iv_main_cat"
                 app:layout_constraintTop_toBottomOf="@+id/tv_count"
                 tools:targetApi="p"
@@ -72,16 +72,25 @@
                 android:visibility="gone"
                 app:fontFamily="@font/semi_bold"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_main_cat"
-                app:layout_constraintEnd_toStartOf="@+id/customImageView4"
+                app:layout_constraintEnd_toStartOf="@+id/barrier_cards_start"
                 app:layout_constraintStart_toEndOf="@+id/iv_main_cat"
                 app:layout_constraintTop_toBottomOf="@+id/textViewName"
                 app:layout_constraintVertical_bias="1"
                 tools:text="Description of this asset Description of this assetDescription of this asset" />
 
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier_cards_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:barrierDirection="start"
+                app:constraint_referenced_ids="iv_forward_arrow, iv_add" />
+
             <com.framework.views.customViews.CustomImageView
                 android:id="@+id/iv_forward_arrow"
                 android:layout_width="@dimen/size_14"
                 android:layout_height="@dimen/size_14"
+                android:visibility="gone"
                 android:layout_marginEnd="@dimen/size_28"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -92,12 +101,12 @@
                 android:id="@+id/iv_add"
                 android:layout_width="@dimen/size_30"
                 android:layout_height="@dimen/size_30"
-                android:visibility="visible"
                 android:layout_marginEnd="@dimen/size_20"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/ic_add_round_yellow_border" />
+                app:srcCompat="@drawable/ic_add_round_yellow_border" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
