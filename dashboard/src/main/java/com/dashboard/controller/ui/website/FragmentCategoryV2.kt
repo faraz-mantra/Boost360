@@ -39,13 +39,13 @@ class FragmentCategoryV2 : AppBaseFragment<FragmentWebsitePagerV2Binding, Dashbo
 
     private var session: UserSessionManager? = null
     private var adapterWebsite: AppBaseRecyclerViewAdapter<WebsiteActionItem>? = null
-    private val TAG = "FragmentCategory"
+    private val TAG = "FragmentCategoryV2"
 
     companion object {
-        fun newInstance(position: Int): FragmentCategory {
+        fun newInstance(position: Int): FragmentCategoryV2 {
             val bundle = Bundle()
             bundle.putInt(IntentConstant.POSITION.name, position)
-            val fragment = FragmentCategory()
+            val fragment = FragmentCategoryV2()
             fragment.arguments = bundle
             return fragment
         }
@@ -126,6 +126,29 @@ class FragmentCategoryV2 : AppBaseFragment<FragmentWebsitePagerV2Binding, Dashbo
                 val data = item as? WebsiteActionItem ?: return
                 data.type?.let { WebsiteActionItem.IconType.fromName(it) }?.let { clickActionButton(it) }
             }
+            RecyclerViewActionType.WEBSITE_CONTENT_ADD_CLICK.ordinal -> {
+                val data = item as? WebsiteActionItem ?: return
+                data.type?.let { WebsiteActionItem.IconType.fromName(it) }?.let { clickAddActionButton(it) }
+            }
+        }
+    }
+
+    private fun clickAddActionButton(it: WebsiteActionItem.IconType) {
+        when (it) {
+            WebsiteActionItem.IconType.latest_update_tips -> session?.let { baseActivity.startPostUpdate(session) }
+            WebsiteActionItem.IconType.all_images -> baseActivity.startAddImageGallery(session)
+            WebsiteActionItem.IconType.testimonials -> baseActivity.startTestimonial(session, true)
+            WebsiteActionItem.IconType.custom_page -> baseActivity.startCustomPage(session, true)
+            WebsiteActionItem.IconType.service_product_catalogue -> baseActivity.startAddServiceProduct(session)
+            WebsiteActionItem.IconType.doctor_e_profile_listing -> baseActivity.startListDoctors(session)
+            WebsiteActionItem.IconType.unlimited_digital_brochures -> baseActivity.startAddDigitalBrochure(session)
+            WebsiteActionItem.IconType.toppers_institute -> baseActivity.startListToppers(session)
+            WebsiteActionItem.IconType.upcoming_batches -> baseActivity.startListBatches(session)
+            WebsiteActionItem.IconType.faculty_management -> baseActivity.startFacultyMember(session)
+            WebsiteActionItem.IconType.places_look_around -> baseActivity.startNearByView(session)
+            WebsiteActionItem.IconType.trip_adviser_ratings -> baseActivity.startListTripAdvisor(session)
+            WebsiteActionItem.IconType.seasonal_offers -> baseActivity.startListSeasonalOffer(session)
+            WebsiteActionItem.IconType.project_teams -> baseActivity.startListProjectAndTeams(session)
         }
     }
 
@@ -148,6 +171,7 @@ class FragmentCategoryV2 : AppBaseFragment<FragmentWebsitePagerV2Binding, Dashbo
             WebsiteActionItem.IconType.seasonal_offers -> baseActivity.startListSeasonalOffer(session)
             WebsiteActionItem.IconType.website_theme -> baseActivity.startWebsiteNav(session)
             WebsiteActionItem.IconType.owners_information -> baseActivity.startOwnersInfo(session)
+            WebsiteActionItem.IconType.e_commerce_appointment_set_up -> baseActivity.startEcommerceAppointmentSetting(session)
         }
     }
 }
