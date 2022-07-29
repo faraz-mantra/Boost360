@@ -30,7 +30,7 @@
                 android:layout_height="match_parent">
 
                 <RelativeLayout
-                    android:id="@+id/package_cart_icon"
+                    android:id="@+id/package_menu_icon"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
