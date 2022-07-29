@@ -422,7 +422,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:padding="@dimen/pad_10dp"
-                            android:src="@drawable/ic_up_arrow_with_bg"
+                            android:src="@drawable/ic_down_arrow_pack_details"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -620,12 +620,13 @@
                                 android:weightSum="2"
                                 app:layout_constraintTop_toBottomOf="@id/layout_icons">
 
-                                <androidx.appcompat.widget.AppCompatButton
+                                <TextView
                                     android:id="@+id/btn_add_to_cart"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:background="@drawable/yellow_btn_bg"
+                                    android:backgroundTint="@color/colorPrimary"
                                     android:fontFamily="@font/regular"
                                     android:gravity="center"
                                     android:paddingStart="@dimen/pad_30dp"
@@ -642,7 +643,7 @@
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/layout_icons" />
 
-                                <androidx.appcompat.widget.AppCompatButton
+                                <TextView
                                     android:id="@+id/btn_compare_packs"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"

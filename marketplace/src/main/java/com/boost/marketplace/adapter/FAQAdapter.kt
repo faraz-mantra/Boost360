@@ -26,7 +26,7 @@ class FAQAdapter(
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
     val itemView = LayoutInflater.from(parent?.context).inflate(
-      R.layout.faq_item_pack_details, parent, false
+      R.layout.faq_item, parent, false
     )
     context = itemView.context
 

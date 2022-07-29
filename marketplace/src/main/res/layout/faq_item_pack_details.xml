@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:padding="@dimen/dimen_16dp"
-        android:src="@drawable/ic_up_arrow_with_bg"
+        android:src="@drawable/ic_down_arrow_pack_details"
         app:layout_constraintBottom_toBottomOf="@id/title"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"

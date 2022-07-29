@@ -35,15 +35,11 @@ class TestimonialItemsAdapter(val list: ArrayList<Testimonial>) :
 
     override fun onBindViewHolder(holder: PagerVH, position: Int) {
         holder.name.text = list[position].name
-        holder.businessType.text = list[position].title
-        holder.desc.text = list[position].text
 
     }
 
     class PagerVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var name = itemView.findViewById<TextView>(R.id.name)
-        var businessType = itemView.findViewById<TextView>(R.id.textView16)
-        var desc = itemView.findViewById<TextView>(R.id.review_description)
+        var name = itemView.findViewById<TextView>(R.id.tv_benefit_title)
     }
 
 }

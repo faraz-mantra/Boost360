@@ -24,13 +24,13 @@ import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityPackDetailsBinding
 import com.boost.marketplace.interfaces.DetailsFragmentListener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
+import com.bumptech.glide.Glide
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_COMPARE_PACKAGE_LOADED
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PAGE_VIEW
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_pack_details.*
-import java.util.HashMap
 
 class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, ComparePacksViewModel>(),
     DetailsFragmentListener {
@@ -55,7 +55,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     var refreshViewPager: Boolean = false
 
 
-
     var bundleData: Bundles? = null
     var featuresList: List<FeaturesModel>? = null
     var cartList: List<CartModel>? = null
@@ -72,10 +71,9 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     var upgradeList = arrayListOf<Bundles>()
     lateinit var progressDialog: ProgressDialog
     lateinit var howToUseAdapter: HowToActivateAdapter
-    lateinit var faqAdapter: FAQAdapter
+    lateinit var faqAdapter: PackDetailsFaqAdapter
     lateinit var benefitAdaptor: PackDetailsBenefitViewPagerAdapter
     lateinit var reviewAdaptor: TestimonialItemsAdapter
-
 
 
     companion object {
@@ -89,6 +87,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     override fun getViewModelClass(): Class<ComparePacksViewModel> {
         return ComparePacksViewModel::class.java
     }
+
     override fun onCreateView() {
         super.onCreateView()
 
@@ -110,14 +109,14 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         isOpenAddOnsFragment = intent.getBooleanExtra("isComingFromOrderConfirmActivation", false)
         widgetFeatureCode = intent.getStringExtra("buyItemKey")
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
-        bundleData= Gson().fromJson<Bundles>(
+        bundleData = Gson().fromJson<Bundles>(
             intent.getStringExtra("bundleData"),
             object : TypeToken<Bundles>() {}.type
         )
 
         reviewAdaptor = TestimonialItemsAdapter(ArrayList())
         howToUseAdapter = HowToActivateAdapter(this, ArrayList())
-        faqAdapter = FAQAdapter(this, ArrayList())
+        faqAdapter = PackDetailsFaqAdapter(this, ArrayList())
         benefitAdaptor = PackDetailsBenefitViewPagerAdapter(ArrayList(), this)
 
         val layoutManager = LinearLayoutManager(this)
@@ -232,43 +231,65 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
 
     private fun initMvvm() {
-        if (bundleData?.benefits != null) {
-            binding?.containerKeyBenefits?.visibility = View.VISIBLE
+        if (bundleData?.name?.contains("Online")!!) {
+            Glide.with(binding?.packageImg!!).load(bundleData?.primary_image!!.url)
+                .into(binding?.packageImg!!)
+            binding?.title?.text = bundleData?.name
+            if(bundleData !=null){
+                if(bundleData?.included_features != null){
 
-            benefitAdaptor.addupdates(bundleData?.benefits!!)
-            benefitAdaptor.notifyDataSetChanged()
-        }
-
-        if (bundleData != null && bundleData?.how_to_activate != null) {
-            binding?.howToUseContainer?.visibility = View.VISIBLE
-            binding?.howToUseContainer?.setOnClickListener {
-                if (binding?.howToUseRecycler?.visibility == View.VISIBLE) {
-                    how_to_use_arrow.setImageResource(R.drawable.ic_arrow_down_gray)
-                    how_to_use_recycler.visibility = View.GONE
-                } else {
-                    how_to_use_arrow.setImageResource(R.drawable.ic_arrow_up_gray)
-                    how_to_use_recycler.visibility = View.VISIBLE
                 }
             }
-            if (bundleData!!.target_business_usecase != null) {
-                tv_how_to_use_title.text =
-                    "How To Use " + bundleData!!.target_business_usecase
+            if (bundleData?.benefits != null && bundleData?.benefits?.isNotEmpty()!!) {
+                binding?.containerKeyBenefits?.visibility = View.VISIBLE
+                benefitAdaptor.addupdates(bundleData?.benefits!!)
+                benefitAdaptor.notifyDataSetChanged()
+            }else{
+                binding?.containerKeyBenefits?.visibility = View.GONE
             }
-            val steps =
-                bundleData?.how_to_activate
-            howToUseAdapter.addupdates(steps!!)
-            howToUseAdapter.notifyDataSetChanged()
+
+            if (bundleData != null && bundleData?.how_to_activate != null && bundleData?.how_to_activate?.isNotEmpty()!!) {
+                binding?.howToUseContainer?.visibility = View.VISIBLE
+                binding?.howToUseContainer?.setOnClickListener {
+                    if (binding?.howToUseRecycler?.visibility == View.VISIBLE) {
+                        how_to_use_arrow.setImageResource(R.drawable.ic_arrow_down_gray)
+                        how_to_use_recycler.visibility = View.GONE
+                    } else {
+                        how_to_use_arrow.setImageResource(R.drawable.ic_arrow_up_gray)
+                        how_to_use_recycler.visibility = View.VISIBLE
+                    }
+                }
+                if (bundleData!!.target_business_usecase != null) {
+                    tv_how_to_use_title.text =
+                        "How To Use " + bundleData!!.target_business_usecase
+                }
+                val steps =
+                    bundleData?.how_to_activate
+                howToUseAdapter.addupdates(steps!!)
+                howToUseAdapter.notifyDataSetChanged()
+            } else {
+                binding?.howToUseContainer?.visibility = View.GONE
+
+            }
+            if (bundleData != null && bundleData?.testimonials != null && bundleData?.testimonials?.isNotEmpty()!!) {
+                binding?.whatOurCustomerContainer?.visibility = View.VISIBLE
+                reviewAdaptor.addupdates(bundleData?.testimonials!!)
+                benefitAdaptor.notifyDataSetChanged()
+            } else {
+                binding?.whatOurCustomerContainer?.visibility = View.GONE
+
+            }
+            if (bundleData != null && bundleData?.frequently_asked_questions != null && bundleData?.frequently_asked_questions?.isNotEmpty()!! ) {
+                faq_container.visibility = View.VISIBLE
+                val faq =bundleData?.frequently_asked_questions!!
+                faqAdapter.addupdates(faq)
+                faqAdapter.notifyDataSetChanged()
+            }else{
+                faq_container.visibility = View.GONE
+
+            }
         }
 
-//        if (addonDetails != null && addonDetails?.all_frequently_asked_questions != null) {
-//            faq_container.visibility = View.VISIBLE
-//            val faq = Gson().fromJson<List<AllFrequentlyAskedQuestion>>(
-//                addonDetails?.all_frequently_asked_questions,
-//                object : TypeToken<List<AllFrequentlyAskedQuestion>>() {}.type
-//            )
-//            faqAdapter.addupdates(faq)
-//            faqAdapter.notifyDataSetChanged()
-//        }
 
     }
 
