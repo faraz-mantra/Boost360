@@ -186,6 +186,7 @@ class WebsiteV2Fragment : AppBaseFragment<FragmentWebsiteV2Binding, DashboardVie
             WebsiteActionItem.IconType.seasonal_offers -> baseActivity.startListSeasonalOffer(session)
             WebsiteActionItem.IconType.website_theme -> baseActivity.startWebsiteTheme(session)
             WebsiteActionItem.IconType.doctor_e_profile_listing -> baseActivity.startListDoctors(session)
+            WebsiteActionItem.IconType.e_commerce_appointment_set_up -> baseActivity.startEcommerceAppointmentSetting(session)
         }
     }
 
