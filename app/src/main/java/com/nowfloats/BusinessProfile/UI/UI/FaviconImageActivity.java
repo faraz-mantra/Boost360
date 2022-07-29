@@ -83,6 +83,10 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
         }
 
         binding.appBar.toolbarTitle.setText(getResources().getString(R.string.favicon_image));
+        binding.appBar.toolbar.setNavigationOnClickListener(view -> {
+            onBackPressed();
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        });
 
         session = new UserSessionManager(getApplicationContext(), FaviconImageActivity.this);
 
@@ -195,7 +199,7 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Toast.makeText(this, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
-     /*   finish();
+        /*finish();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);*/
         return super.onOptionsItemSelected(item);
     }
