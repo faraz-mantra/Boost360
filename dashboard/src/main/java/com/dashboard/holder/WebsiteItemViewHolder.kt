@@ -26,13 +26,14 @@ class WebsiteItemViewHolder(binding: ItemWebsiteItemV2Binding) : AppBaseRecycler
     val iconType = data.type?.let { WebsiteActionItem.IconType.fromName(it) }
     iconType?.let { binding.ivMainCat.setImageResource(iconType.icon) }
     binding.ivMainCat.makeGreyscale()
-   /* if (data.getCountN() == 0){
+
+    if (data.getCountN() == 0){
       binding.ivAdd.visible()
       binding.ivForwardArrow.gone()
     }else{
       binding.ivAdd.gone()
       binding.ivForwardArrow.visible()
-    }*/
+    }
 
     binding.mainContent.setOnClickListener {
       listener?.onItemClick(position, item, RecyclerViewActionType.WEBSITE_ITEM_CLICK.ordinal)
