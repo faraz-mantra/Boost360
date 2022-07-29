@@ -50,6 +50,9 @@ class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) :
     binding.ctvTitleDay.text = "${data.day}"
 
     binding.toggleOnOff.isOn = data.isTurnedOn!!
+    if (data.isTurnedOn == false)
+      data.changeDayTurned(data.isTurnedOn!!)
+
     binding.toggleOnOff.setOnToggledListener { _, isOn ->
       data.changeDayTurned(isOn)
       listener?.onItemClick(position, data, RecyclerViewActionType.TOGGLE_STATE_CHANGED.ordinal)
