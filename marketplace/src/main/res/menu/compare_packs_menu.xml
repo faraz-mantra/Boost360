@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/pricing_switch"
-        android:icon="@drawable/ic_currencyinr"
+        android:icon="@drawable/ic_price_switch"
         android:title="@string/switch_to_monthly_pricing" />
 
     <item
