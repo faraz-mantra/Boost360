@@ -336,7 +336,7 @@
   <string name="please_select_staff_and_time_slot">Please select a staff and a time slot</string>
   <string name="appointment_booked_and_confirmed_successfully">Appointment booked and confirmed successfully</string>
   <string name="an_email_and_sms_with_the_appointment_details_and_gst_incoice_have_been_sent_to_the_customer_notifying_about_the_confirmation_along_with_a_secure_payment_link">An Email and SMS with the appointment details and GST incoice have been sent to the customer notifying about the confirmation along with a secure payment link.</string>
-  <string name="view_appointment_details">View appointments details</string>
+  <string name="view_appointment_details">View appointment details</string>
   <string name="view_appointment_dashboard">View appointment dashboard</string>
   <string name="appointment_created_successfully">Appointment created successfully</string>
   <string name="awaiting_confirmation_since">Awaiting confirmation since</string>
