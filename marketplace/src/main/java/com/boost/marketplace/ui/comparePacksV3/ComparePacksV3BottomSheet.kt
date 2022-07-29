@@ -341,11 +341,6 @@ class ComparePacksV3BottomSheet :
             }
         })
 
-        viewModel?.getAllBundles()?.observe(this, androidx.lifecycle.Observer {
-
-           // viewModel?.getCartItems()
-
-        })
     }
 
     private fun initializeViewPager() {
