@@ -97,7 +97,7 @@ class PackageViewPagerAdapter(
                                         }
                                     }
                                     if(bundles.overall_discount_percent > 0){
-                                        offeredBundlePrice = (RootUtil.round(originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100.0),2))
+                                        offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100.0),2)
 //                                        if(prefs.getYearPricing())
 //                                            offeredBundlePrice = Utils.priceCalculatorForYear(offeredBundlePrice, "", activity)
                                         holder.bundleDiscount.visibility = View.VISIBLE
