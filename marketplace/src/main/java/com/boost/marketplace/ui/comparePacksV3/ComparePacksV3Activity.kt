@@ -470,8 +470,23 @@ class ComparePacksV3Activity :
                     updatePackagePricingRecycler(listItem)
                     // updateHowToUseRecycler(listItem.steps)
                     this.selectedBundle = listItem.get(0)
-                    listItem.get(1).frequently_asked_questions?.let { it1 -> updateFAQRecycler(it1) }
-                    listItem.get(1).how_to_activate?.let { it1 -> updateHowToUseRecycler(it1) }
+
+                    if ( listItem.get(1).frequently_asked_questions != null) {
+                       binding?.faqContainer?.visibility = View.VISIBLE
+                        updateFAQRecycler(listItem.get(1).frequently_asked_questions!!)
+//                        faqAdapter.addupdates(faq)
+//                        faqAdapter.notifyDataSetChanged()
+                    }
+            //        listItem.get(1).frequently_asked_questions?.let { it1 -> updateFAQRecycler(it1) }
+            //        listItem.get(1).how_to_activate?.let { it1 -> updateHowToUseRecycler(it1) }
+
+                    if ( listItem.get(1).how_to_activate != null) {
+                        binding?.howToUseContainer?.visibility = View.VISIBLE
+                        updateHowToUseRecycler(listItem.get(1).how_to_activate!!)
+//                        faqAdapter.addupdates(faq)
+//                        faqAdapter.notifyDataSetChanged()
+                    }
+
                     binding?.howToUseTitleLayout?.setOnClickListener {
                         if (binding?.packsHowToUseRecycler?.visibility == View.VISIBLE) {
                             how_to_use_arrow.setImageResource(R.drawable.ic_arrow_down_gray)
@@ -689,10 +704,24 @@ class ComparePacksV3Activity :
         itemInCart = false
         this.selectedBundle = selectedBundle
         binding?.buyPack?.text = "Buy ${selectedBundle.name}"
-        selectedBundle?.how_to_activate?.let { updateHowToUseRecycler(it) }
-        howToUseAdapter.notifyDataSetChanged()
-        selectedBundle?.frequently_asked_questions?.let { updateFAQRecycler(it) }
-        faqAdapter.notifyDataSetChanged()
+//        selectedBundle.how_to_activate?.let { updateHowToUseRecycler(it) }
+//        howToUseAdapter.notifyDataSetChanged()
+
+        if ( selectedBundle.how_to_activate != null) {
+            binding?.howToUseContainer?.visibility = View.VISIBLE
+            updateHowToUseRecycler(selectedBundle.how_to_activate!!)
+            howToUseAdapter.addupdates(selectedBundle.how_to_activate!!)
+            howToUseAdapter.notifyDataSetChanged()
+        }
+
+        if ( selectedBundle.frequently_asked_questions != null) {
+            binding?.faqContainer?.visibility = View.VISIBLE
+            updateFAQRecycler(selectedBundle.frequently_asked_questions!!)
+                        faqAdapter.addupdates(selectedBundle.frequently_asked_questions!!)
+                        faqAdapter.notifyDataSetChanged()
+        }
+     //   selectedBundle?.frequently_asked_questions?.let { updateFAQRecycler(it) }
+    //    faqAdapter.notifyDataSetChanged()
 
         if (cartList?.size!! > 0) {
             if (cartList != null) {

@@ -126,6 +126,7 @@ class ComparePacksV3BottomSheet :
         initializeViewPager()
 
         if (bundleData.benefits != null) {
+            binding?.benefitsContainer12?.visibility=View.VISIBLE
             benefitAdaptor.addupdates(bundleData.benefits!!)
             benefitAdaptor.notifyDataSetChanged()
             initializeViewPager()
