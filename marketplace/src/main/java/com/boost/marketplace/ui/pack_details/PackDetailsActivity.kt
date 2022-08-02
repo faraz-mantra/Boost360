@@ -74,6 +74,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     lateinit var faqAdapter: PackDetailsFaqAdapter
     lateinit var benefitAdaptor: PackDetailsBenefitViewPagerAdapter
     lateinit var reviewAdaptor: TestimonialItemsAdapter
+    lateinit var includedFeatureAdapter: IncludedFeatureAdapter
 
 
     companion object {
@@ -118,6 +119,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         howToUseAdapter = HowToActivateAdapter(this, ArrayList())
         faqAdapter = PackDetailsFaqAdapter(this, ArrayList())
         benefitAdaptor = PackDetailsBenefitViewPagerAdapter(ArrayList(), this)
+        includedFeatureAdapter = IncludedFeatureAdapter(this,ArrayList())
 
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -141,6 +143,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         initializeCustomerViewPager()
         initializeHowToUseRecycler()
         initializeFAQRecycler()
+        initializeIncludedFeature()
         initMvvm()
 
         binding?.back?.setOnClickListener {
@@ -178,6 +181,15 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             }
             intent.putExtra("profileUrl", profileUrl)
             startActivity(intent)
+        }
+    }
+
+    private fun initializeIncludedFeature() {
+        val gridLayoutManager = GridLayoutManager(applicationContext, 1)
+        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        binding?.rvIncludedFeatures?.apply {
+            layoutManager = gridLayoutManager
+            binding?.rvIncludedFeatures?.adapter = includedFeatureAdapter
         }
     }
 
