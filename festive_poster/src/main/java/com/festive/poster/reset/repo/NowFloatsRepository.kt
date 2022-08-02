@@ -4,6 +4,7 @@ package com.festive.poster.reset.repo
 
 import com.festive.poster.base.rest.AppBaseLocalService
 import com.festive.poster.base.rest.AppBaseRepository
+import com.festive.poster.models.response.GetTemplatesV2Body
 import com.festive.poster.reset.TaskCode
 import com.festive.poster.reset.apiClients.NowFloatsApiClient
 import com.festive.poster.reset.services.NowFloatsRemoteData
@@ -28,7 +29,7 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
       add("tags", Gson().toJsonTree(tags).asJsonArray)
       addProperty("showFavourites",false)
     }
-    return NowFloatsRepository.makeRemoteRequest(
+    return makeRemoteRequest(
       remoteDataSource.getTemplates(body),
       TaskCode.GET_TEMPLATES
     )
@@ -41,7 +42,7 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
       addProperty("floatingPointTag",floatingPointTag)
       addProperty("featureKey",featureKey)
     }
-    return NowFloatsRepository.makeRemoteRequest(
+    return makeRemoteRequest(
       remoteDataSource.getFavTemp(body),
       TaskCode.GET_FAV_TEMPLATES
     )
@@ -54,7 +55,7 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
       addProperty("floatingPointTag",floatingPointTag)
       addProperty("templateId",templateId)
     }
-    return NowFloatsRepository.makeRemoteRequest(
+    return makeRemoteRequest(
       remoteDataSource.favPoster(body),
       TaskCode.GET_TEMPLATES
     )
@@ -66,7 +67,7 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
       addProperty("floatingPointTag",floatingPointTag)
       addProperty("featureKey",fKey)
     }
-    return NowFloatsRepository.makeRemoteRequest(
+    return makeRemoteRequest(
       remoteDataSource.getTemplateViewConfig(body),
       TaskCode.GET_TEMPLATE_CONFIG
     )
@@ -74,7 +75,7 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
 
   fun uploadProfileImage(floatingPointId: String?,floatingPointTag: String?,fileName:String,file: RequestBody?): Observable<BaseResponse> {
 
-    return NowFloatsRepository.makeRemoteRequest(
+    return makeRemoteRequest(
       remoteDataSource.uploadImage(floatingPointId,floatingPointTag,fileName,file),
       TaskCode.UPLOAD_IMAGE
     )
@@ -87,7 +88,7 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
       addProperty("templateId",templateId)
       add("keyDetails",Gson().toJsonTree(map).asJsonObject)
     }
-    return NowFloatsRepository.makeRemoteRequest(
+    return makeRemoteRequest(
       remoteDataSource.saveKeyValue(body),
       TaskCode.SAVE_KEY_VALUES
     )
@@ -101,11 +102,26 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
       addProperty("tag",posterTag)
       addProperty("isPurchased",true)
     }
-    return NowFloatsRepository.makeRemoteRequest(
+    return makeRemoteRequest(
       remoteDataSource.updatePurchaseStatus(body),
       TaskCode.SAVE_KEY_VALUES
     )
   }
+
+  fun getCategories(): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getCategories(),
+      TaskCode.GET_CATEGORIES
+    )
+  }
+
+  fun getTemplatesV2(): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getTemplatesV2(GetTemplatesV2Body(session.fPID!!,session.fpTag!!)),
+      TaskCode.GET_TEMPLATES_V2
+    )
+  }
+
 
   override fun getRemoteDataSourceClass(): Class<NowFloatsRemoteData> {
     return NowFloatsRemoteData::class.java

@@ -10,6 +10,8 @@ import com.festive.poster.R
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.ListItemBrowseTabTemplateCatBinding
 import com.festive.poster.databinding.ListItemPosterPackBinding
+import com.festive.poster.models.BrowseTabCategory
+import com.festive.poster.models.CategoryUi
 import com.festive.poster.models.PosterPackModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
@@ -24,11 +26,11 @@ class BrowseTabPosterCatViewHolder(binding: ListItemBrowseTabTemplateCatBinding)
   AppBaseRecyclerViewHolder<ListItemBrowseTabTemplateCatBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
-    val model = item as PosterPackModel
+    val model = item as BrowseTabCategory
 
 //    Picasso.get().load(model.tagsModel.icon).into(binding.ivIcon)
-    binding.tvTitle.text=model.tagsModel?.name
-    binding.tvSize.text = "(${model.posterList?.size})"
+    binding.tvTitle.text=model.name
+    binding.tvSize.text = "(${model.templates?.size})"
     binding.root.setOnClickListener {
       listener?.onItemClick(position,model,RecyclerViewActionType.BROWSE_TAB_POSTER_CAT_CLICKED.ordinal)
     }

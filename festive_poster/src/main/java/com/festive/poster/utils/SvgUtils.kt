@@ -44,8 +44,9 @@ object SvgUtils {
         return requestBuilder
     }
 
-    fun loadImage(url: String?, view: ImageView, model: List<PosterKeyModel>?, isPurchased: Boolean?){
-        if (url==null||model==null){
+    fun loadImage(url: String?, view: ImageView, model: List<PosterKeyModel>?=null,
+                  isPurchased: Boolean?=null){
+        if (url==null){
             return
         }
         val uri = Uri.parse(url)
@@ -209,22 +210,8 @@ object SvgUtils {
 
 
 
-    suspend fun svgToBitmap(model: PosterModel): Bitmap? {
-        val url = model.url()!!
+    suspend fun svgToBitmap(svg:SVG): Bitmap? {
 
-            var svgString = SvgRenderCacheUtil.instance.retrieveFromCache(url)
-            if (svgString == null || svgString.isEmpty()) {
-                svgString = getSvgAsAString(url)
-                svgString?.let { SvgRenderCacheUtil.instance.saveToCache(url, it) }
-            }
-            if (svgString != null && !svgString.isEmpty()) {
-                svgString = SvgRenderCacheUtil.instance.replace(
-                    svgString,
-                    model.keys!!,
-                    BaseApplication.instance,
-                    model.isPurchased
-                )
-                val svg = SVG.getFromString(svgString)
                /* svg.renderDPI =
                     BaseApplication.instance.resources?.displayMetrics?.densityDpi?.toFloat()
                         ?: 480.0f
@@ -238,7 +225,41 @@ object SvgUtils {
                 svg.renderToCanvas(canvas)
 
                 return b
-            }
+
+    }
+
+    suspend fun svgToBitmap(model:PosterModel): Bitmap? {
+        val svgUrl = model.url()!!
+        var svgString = SvgRenderCacheUtil.instance.retrieveFromCache(svgUrl)
+        if (svgString == null || svgString.isEmpty()) {
+            svgString = getSvgAsAString(svgUrl)
+            svgString?.let { SvgRenderCacheUtil.instance.saveToCache(svgUrl, it) }
+        }
+        if (svgString != null && !svgString.isEmpty()) {
+            svgString = SvgRenderCacheUtil.instance.replace(
+                svgString,
+                model.keys!!,
+                BaseApplication.instance,
+            )
+            val svg = SVG.getFromString(svgString)
+
+            return svgToBitmap(svg)
+        }
+
         return null
+    }
+
+    suspend fun svgToBitmap(svgUrl:String?): Bitmap? {
+        if (svgUrl==null){
+            return null
+        }
+        var svgString = SvgRenderCacheUtil.instance.retrieveFromCache(svgUrl)
+        if (svgString == null || svgString.isEmpty()) {
+            svgString = getSvgAsAString(svgUrl)
+            svgString?.let { SvgRenderCacheUtil.instance.saveToCache(svgUrl, it) }
+        }
+        val svg = SVG.getFromString(svgString)
+        return svgToBitmap(svg)
+
     }
 }

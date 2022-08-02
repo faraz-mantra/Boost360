@@ -6,8 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.models.*
-import com.festive.poster.models.response.GetTemplateViewConfigResponse
-import com.festive.poster.models.response.GetTemplatesResponse
+import com.festive.poster.models.response.*
 import com.festive.poster.reset.repo.*
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
@@ -25,6 +24,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class PromoUpdatesViewModel: BaseViewModel() {
@@ -35,8 +35,8 @@ class PromoUpdatesViewModel: BaseViewModel() {
     val todaysPickLData:LiveData<ArrayList<PosterPackModel>?> get() =
         todaysPickMData
 
-    private val browseAllMData=MutableLiveData<ArrayList<PosterPackModel>?>()
-    val browseAllLData:LiveData<ArrayList<PosterPackModel>?> get() =
+    private val browseAllMData=MutableLiveData<ArrayList<CategoryUi>>()
+    val browseAllLData:LiveData<ArrayList<CategoryUi>> get() =
         browseAllMData
 
 
@@ -113,7 +113,7 @@ class PromoUpdatesViewModel: BaseViewModel() {
             val tags = prepareTagForApi(configResponse?.todayPick?.tags)
             val todaysPickList = getTemplates(floatingPointId,floatingPointTag,tags,
                 configResponse?.todayPick,
-                RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP.getLayout(),
+                RecyclerViewItemType.TEMPLATE_VIEW_FOR_TODAY_PICK.getLayout(),
                 RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()
                 )
             todaysPickMData.postValue(todaysPickList)
@@ -132,7 +132,7 @@ class PromoUpdatesViewModel: BaseViewModel() {
             }
             val tags = prepareTagForApi(configResponse?.allTemplates?.tags)
             val browseAllList = getTemplates(floatingPointId,floatingPointTag,tags,configResponse?.allTemplates,-1,RecyclerViewItemType.BROWSE_TAB_TEMPLATE_CAT.getLayout())
-            browseAllMData.postValue(browseAllList)
+           // browseAllMData.postValue(browseAllList)
 
         }
 
@@ -160,5 +160,51 @@ class PromoUpdatesViewModel: BaseViewModel() {
         }
     }
 
+
+    private suspend fun getCategories()=
+        suspendCoroutine<List<CategoryUi>>{cont->
+            NowFloatsRepository.getCategories().getResponse {
+                if (it.isSuccess()){
+                    val response = it as? GetCategoryResponse
+                    cont.resume(response!!.Result.asDomainModels())
+
+                }else{
+                    cont.resumeWithException(Exception())
+                }
+            }
+        }
+
+    private suspend fun getTemplates()=
+        suspendCoroutine<List<GetTemplatesResponseV2Template>>{cont->
+            NowFloatsRepository.getTemplatesV2().getResponse {
+                if (it.isSuccess()){
+                    val response = it as? GetTemplatesResponseV2
+                    cont.resume(response!!.Result.templates)
+
+                }else{
+                    cont.resumeWithException(Exception())
+                }
+            }
+        }
+
+    fun getTemplatesUi(){
+        viewModelScope.launch {
+            try {
+                val categories = getCategories()
+                val allTemplates = getTemplates()
+                categories.forEach {uicat->
+                    val dbTemplates = allTemplates.filter { template->
+                        template.categories.find {dbcat->
+                            dbcat.id==uicat.id
+                        }!=null
+                    }
+                    uicat.setTemplates(dbTemplates.asDomainModels())
+                }
+                browseAllMData.postValue(categories.toArrayList())
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
+    }
 
 }

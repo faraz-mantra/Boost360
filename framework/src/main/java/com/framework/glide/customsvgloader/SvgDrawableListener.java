@@ -48,7 +48,7 @@ public class SvgDrawableListener implements RequestListener<CustomPictureDrawabl
         Log.d("SvgDrawableListener", "onResourceReady() called with: resource "+Thread.currentThread());
         ImageView view = ((ImageViewTarget<?>) target).getView();
 
-        BoostSvgStringLoader v = new BoostSvgStringLoader(url, this.model, resource, view.getContext(), view,isPurchased);
+        BoostSvgStringLoader v = new BoostSvgStringLoader(url, this.model, resource, view.getContext(), view);
         SingletonExecutor.INSTANCE.submit(v);
 //
 //
