@@ -40,9 +40,14 @@ class PacksFaqAdapter(
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
         holder.title.text = upgradeList[position].question
         holder.desc.text = upgradeList[position].answer
+
         holder.dummy1.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         if (upgradeList.size - 1 == position) {
             holder.dummy1.visibility = View.GONE
+        }
+        if (position==0){
+            holder.desc.visibility=View.VISIBLE
+            holder.downArrow.setImageResource(R.drawable.packs_arrow_up)
         }
         holder.title.setOnClickListener {
             if(holder.desc.isVisible) {

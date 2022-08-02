@@ -402,7 +402,7 @@
                     android:paddingBottom="@dimen/_10sdp"
                     android:text="Cancel"
                     android:textAllCaps="false"
-                    android:textColor="@color/yellow"
+                    android:textColor="@color/colorAccent1"
                     android:textFontWeight="700"
                     android:textSize="@dimen/txt_14sp"
                     app:layout_constraintBottom_toBottomOf="parent"

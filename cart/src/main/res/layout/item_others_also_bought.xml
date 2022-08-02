@@ -76,7 +76,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/regular"
                                 android:text="10% off"
-                                android:textColor="@color/yellow"
+                                android:textColor="@color/colorAccent1"
                                 android:textFontWeight="400"
                                 android:textSize="12sp" />
 

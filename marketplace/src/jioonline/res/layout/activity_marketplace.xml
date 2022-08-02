@@ -1082,7 +1082,7 @@
                             android:paddingEnd="30dp"
                             android:paddingBottom="10dp"
                             android:text="@string/view_referral_items"
-                            android:textColor="@color/yellow"
+                            android:textColor="@color/colorAccent1"
                             android:textFontWeight="700"
                             android:textSize="13sp"
                             android:textStyle="bold"

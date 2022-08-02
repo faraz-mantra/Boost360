@@ -82,7 +82,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
                 android:fontFamily="@font/bold"
                 android:gravity="center"
                 android:text="Go to Zoho Dashboard"
-                android:textColor="@color/yellow"
+                android:textColor="@color/colorAccent1"
                 android:textFontWeight="700"
                 android:textSize="@dimen/txt_14sp"
                 android:lineHeight="20dp"

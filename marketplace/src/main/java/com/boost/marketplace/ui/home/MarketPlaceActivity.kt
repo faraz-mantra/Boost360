@@ -161,6 +161,11 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         //emptyCouponTable everytime for new coupon code
         viewModel.emptyCouponTable()
         viewModel.GetHelp()
+        if (BuildConfig.FLAVOR.equals("jioonline")) {
+            partner_layout.visibility = View.GONE
+        } else {
+            partner_layout.visibility = View.VISIBLE
+        }
         loadData()
         initMvvm()
         shimmer_view_package.startShimmer()
@@ -260,11 +265,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         }
 
         initializeVideosRecycler()
-        if (BuildConfig.FLAVOR.equals("jioonline")) {
-            partner_layout.visibility = View.GONE
-        } else {
-            partner_layout.visibility = View.VISIBLE
-        }
         initializePartnerViewPager()
         initializeBannerViewPager()
         initializePackageViewPager()
@@ -1181,12 +1181,12 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     }
 
     fun updatePartnerViewPager(list: List<PartnerZone>) {
-        partner_layout.visibility = View.VISIBLE
         partner_viewpager.offscreenPageLimit = list.size
         partnerViewPagerAdapter.addupdates(list)
         partnerViewPagerAdapter.notifyDataSetChanged()
         //show dot indicator only when the (list.size > 2)
         if (list.size > 1) {
+            partner_layout.visibility = View.VISIBLE
             partner_indicator.visibility = View.VISIBLE
         } else {
             partner_indicator.visibility = View.INVISIBLE
@@ -1910,7 +1910,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     }
 
     private fun initializePartnerViewPager() {
-        partner_layout.visibility = View.VISIBLE
         partner_viewpager.adapter = partnerViewPagerAdapter
         partner_viewpager.offscreenPageLimit = 4
         partner_indicator.setViewPager2(partner_viewpager)
