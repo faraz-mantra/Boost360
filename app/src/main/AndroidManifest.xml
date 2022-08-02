@@ -306,11 +306,7 @@
             android:name="com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.nowfloats.BusinessProfile.UI.UI.LinkedinWebView"
-            android:label="Linkedin Login"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity"
             android:label="@string/title_activity_business__logo_"
