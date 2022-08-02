@@ -30,7 +30,7 @@
                 android:layout_height="match_parent">
 
                 <RelativeLayout
-                    android:id="@+id/package_cart_icon"
+                    android:id="@+id/package_menu_icon"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -123,6 +123,28 @@
 
                             </LinearLayout>
 
+<!--                            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                                android:id="@+id/cs"-->
+<!--                                android:layout_width="80dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginTop="8dp"-->
+<!--                                app:layout_constraintStart_toEndOf="@+id/mainll"-->
+<!--                                app:layout_constraintTop_toTopOf="parent"-->
+<!--                                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                app:layout_constraintBottom_toTopOf="@+id/packsv3recycler">-->
+
+<!--                                <ImageView-->
+<!--                                    android:id="@+id/best_pack"-->
+<!--                                    android:layout_width="62dp"-->
+<!--                                    android:layout_height="14dp"-->
+<!--                                    android:visibility="visible"-->
+<!--                                    android:src="@drawable/ic_bestvalue"-->
+<!--                                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                    app:layout_constraintBottom_toBottomOf="parent"/>-->
+<!--                            </androidx.constraintlayout.widget.ConstraintLayout>-->
+
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/packsv3recycler"
@@ -211,6 +233,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:layout_marginStart="5dp"
                                 android:overScrollMode="never"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/mainll1"
@@ -346,6 +369,8 @@
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
+                        tools:visibility="gone"
+                        android:visibility="gone"
                         android:background="@drawable/rounded_curve_bg"
                         app:layout_constraintTop_toBottomOf="@id/savings">
 
@@ -353,8 +378,6 @@
                             android:id="@+id/how_to_use_title_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            tools:visibility="visible"
-                            android:visibility="visible"
                             app:layout_constraintTop_toTopOf="parent">
 
                             <TextView
@@ -404,6 +427,8 @@
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
                         android:layout_marginBottom="40dp"
+                        tools:visibility="visible"
+                        android:visibility="gone"
                         android:background="@drawable/rounded_curve_bg"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/how_to_use_container">
@@ -412,8 +437,6 @@
                             android:id="@+id/faq_title_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            tools:visibility="visible"
-                            android:visibility="visible"
                             app:layout_constraintTop_toTopOf="parent">
 
                             <TextView
@@ -457,7 +480,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_marginTop="16dp"
                 android:background="@drawable/rect_top_bg"
                 android:elevation="@dimen/_10sdp"
                 android:padding="16dp"

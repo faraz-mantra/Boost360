@@ -64,8 +64,8 @@
             <View
                 android:id="@+id/dummy_view"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#BBBBBB"
+                android:layout_height="0.5dp"
+                android:background="#73BBBBBB"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"

@@ -103,7 +103,9 @@ class ComparePacksViewModel: BaseViewModel() {
                         {
                             Log.e("GetAllFeatures", it.toString())
                             val bundles = arrayListOf<BundlesModel>()
-                            for (item in it.Data[0].bundles) {
+                            val tempBundles = Utils.getBundlesFromJsonFile(getApplicationContext())
+                             for (item in it.Data[0].bundles) {
+                           // for (item in tempBundles) {
                                 if (item.exclusive_for_customers != null && item.exclusive_for_customers!!.size > 0) {
                                     var applicableToCurrentFPTag = false
                                     for (code in item.exclusive_for_customers!!) {

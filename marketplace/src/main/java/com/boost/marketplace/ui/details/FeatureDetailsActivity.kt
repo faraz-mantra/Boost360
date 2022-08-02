@@ -723,7 +723,7 @@ class FeatureDetailsActivity :
                     else -> {
                         makeFlyAnimation(addon_icon)
                         prefs.storeCartOrderInfo(null)
-                        viewModel.addItemToCart1(addonDetails!!, this)
+                        viewModel.addItemToCart1(addonDetails!!, this,null)
                         val event_attributes: HashMap<String, Any> = HashMap()
                         addonDetails!!.name?.let { it1 ->
                             event_attributes.put(

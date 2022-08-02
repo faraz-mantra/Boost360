@@ -6,10 +6,12 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -31,6 +33,7 @@ import com.boost.marketplace.databinding.ActivityComparePacksv3Binding
 import com.boost.marketplace.interfaces.PacksV3FooterListener
 import com.boost.marketplace.interfaces.PacksV3listener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
+import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.framework.utils.RootUtil
@@ -290,45 +293,55 @@ class ComparePacksV3Activity :
             finish()
         }
 
+        binding?.packageMenuIcon?.setOnClickListener {
 
-//        binding?.priceSwitch1?.setOnClickListener {
-//            if (annualPlan) {
-//                annualPlan = true
-//                if (prefs.getYearPricing()) {
-//                    binding?.priceSwitch1?.setImageResource(R.drawable.ic_switch_off)
-//                    prefs.storeYearPricing(true)
-//                }
-//                else {
-//                    binding?.priceSwitch1?.setImageResource(R.drawable.ic_switch_on)
-//                    prefs.storeYearPricing(false)
-//                }
-//                prefs.storeCartValidityMonths("1")
-//                packsv3Adapter.notifyDataSetChanged()
-//                packsv3footerAdapter.notifyDataSetChanged()
-//
-//            }
-//            else{
-//                annualPlan = false
-//                if (prefs.getYearPricing()) {
-//                    binding?.priceSwitch1?.setImageResource(R.drawable.ic_switch_off)
-//                    prefs.storeYearPricing(false)
-//                }
-//                else {
-//                    binding?.priceSwitch1?.setImageResource(R.drawable.ic_switch_on)
-//                    prefs.storeYearPricing(true)
-//                }
-//                prefs.storeCartValidityMonths("1")
-//                packsv3Adapter.notifyDataSetChanged()
-//                packsv3footerAdapter.notifyDataSetChanged()
-//            }
-//        }
+            val popup = PopupMenu(this, binding?.packageMenuIcon)
+            popup.getMenuInflater().inflate(R.menu.compare_packs_menu, popup.getMenu())
+            val menuOpts = popup.menu
+            if (prefs.getYearPricing()) {
+                menuOpts.getItem(0).setTitle(R.string.switch_to_monthly_pricing)
+            } else {
+                menuOpts.getItem(0).setTitle(R.string.switch_to_yearly_pricing)
+            }
+            popup.setForceShowIcon(true)
+            popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
+
+                when (item!!.itemId) {
+                    R.id.pricing_switch -> {
+                        val menuOpts1 = popup.menu
+                        if (prefs.getYearPricing()) {
+                            menuOpts1.getItem(1).setTitle(R.string.switch_to_monthly_pricing)
+                            prefs.storeYearPricing(false)
+                        } else {
+                            menuOpts1.getItem(1).setTitle(R.string.switch_to_yearly_pricing)
+                            prefs.storeYearPricing(true)
+                        }
+                        prefs.storeCartValidityMonths("1")
+                        packsv3pricingAdapter.notifyDataSetChanged()
+                        packsv3footerAdapter.notifyDataSetChanged()
+                    }
+                    R.id.help_section -> {
+                        val videoshelp = HelpVideosBottomSheet()
+                        val args = Bundle()
+                        videoshelp.arguments = args
+                        videoshelp.show(
+                            this.supportFragmentManager,
+                            HelpVideosBottomSheet::class.java.name
+                        )
+                    }
+                }
+
+                true
+            })
+            popup.show() //showing popup menu
+        }
+        
     }
 
     override fun onResume() {
         super.onResume()
         loadData()
     }
-
 
     private fun loadData() {
         val pref = this.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
@@ -359,12 +372,6 @@ class ComparePacksV3Activity :
             packageInCartStatus = false
             if (cartList != null && cartList!!.size > 0) {
                 // packsv3footerAdapter.updateCartItem(cartList!!)
-//                val cartBundleIds = arrayListOf<String>()
-//                for (item in it) {
-//                    if (item.item_type.equals("bundles")) {
-//                        cartBundleIds.add(item.item_id)
-//                    }
-//                }
                 if (refreshViewPager) {
                     refreshViewPager = false
                     packsv3footerAdapter.updateCartItem(cartList!!)
@@ -463,8 +470,23 @@ class ComparePacksV3Activity :
                     updatePackagePricingRecycler(listItem)
                     // updateHowToUseRecycler(listItem.steps)
                     this.selectedBundle = listItem.get(0)
-                    listItem.get(1).frequently_asked_questions?.let { it1 -> updateFAQRecycler(it1) }
-                    listItem.get(1).how_to_activate?.let { it1 -> updateHowToUseRecycler(it1) }
+
+                    if ( listItem.get(1).frequently_asked_questions != null) {
+                       binding?.faqContainer?.visibility = View.VISIBLE
+                        updateFAQRecycler(listItem.get(1).frequently_asked_questions!!)
+//                        faqAdapter.addupdates(faq)
+//                        faqAdapter.notifyDataSetChanged()
+                    }
+            //        listItem.get(1).frequently_asked_questions?.let { it1 -> updateFAQRecycler(it1) }
+            //        listItem.get(1).how_to_activate?.let { it1 -> updateHowToUseRecycler(it1) }
+
+                    if ( listItem.get(1).how_to_activate != null) {
+                        binding?.howToUseContainer?.visibility = View.VISIBLE
+                        updateHowToUseRecycler(listItem.get(1).how_to_activate!!)
+//                        faqAdapter.addupdates(faq)
+//                        faqAdapter.notifyDataSetChanged()
+                    }
+
                     binding?.howToUseTitleLayout?.setOnClickListener {
                         if (binding?.packsHowToUseRecycler?.visibility == View.VISIBLE) {
                             how_to_use_arrow.setImageResource(R.drawable.ic_arrow_down_gray)
@@ -617,7 +639,7 @@ class ComparePacksV3Activity :
             }
         }
         val addonsList = ArrayList<PackageAddonsCompares>()
-        //arrange the list in decending order
+        //arrange the list in descending order
         var totalSize = bundleList.size
         bundleList.forEachIndexed { index, element ->
             for (singleItem in addonsListTemp) {
@@ -640,6 +662,32 @@ class ComparePacksV3Activity :
         val dialogCard = ComparePacksV3BottomSheet()
         val args = Bundle()
         args.putString("fpid", fpid)
+        args.putString("expCode", experienceCode)
+        args.putString("isDeepLink", isDeepLink.toString())
+        args.putString("deepLinkViewType", deepLinkViewType)
+        args.putInt("deepLinkDay", deepLinkDay)
+        args.putString("isOpenCardFragment", isOpenCardFragment.toString())
+        args.putString(
+            "accountType",
+            accountType
+        )
+        args.putStringArrayList(
+            "userPurchsedWidgets",
+            userPurchsedWidgets
+        )
+        if (email != null) {
+            args.putString("email", email)
+        } else {
+            args.putString("email", "ria@nowfloats.com")
+        }
+        if (mobileNo != null) {
+            args.putString("mobileNo", mobileNo)
+        } else {
+            args.putString("mobileNo", "9160004303")
+        }
+        args.putString("profileUrl", profileUrl)
+        args.putString("fpid", fpid)
+        args.putString("expCode",experienceCode)
         args.putString("bundleData", Gson().toJson(item))
         args.putDouble("price", offeredBundlePrice)
         args.putDouble("price1", originalBundlePrice)
@@ -652,14 +700,28 @@ class ComparePacksV3Activity :
 
 
     override fun onSelectedPack(selectedBundle: Bundles, itemList1: List<CartModel>?) {
-//        packsv3footerAdapter.updateCartItem(cartList!!)
+
         itemInCart = false
         this.selectedBundle = selectedBundle
         binding?.buyPack?.text = "Buy ${selectedBundle.name}"
-        selectedBundle?.how_to_activate?.let { updateHowToUseRecycler(it) }
-        howToUseAdapter.notifyDataSetChanged()
-        selectedBundle?.frequently_asked_questions?.let { updateFAQRecycler(it) }
-        faqAdapter.notifyDataSetChanged()
+//        selectedBundle.how_to_activate?.let { updateHowToUseRecycler(it) }
+//        howToUseAdapter.notifyDataSetChanged()
+
+        if ( selectedBundle.how_to_activate != null) {
+            binding?.howToUseContainer?.visibility = View.VISIBLE
+            updateHowToUseRecycler(selectedBundle.how_to_activate!!)
+            howToUseAdapter.addupdates(selectedBundle.how_to_activate!!)
+            howToUseAdapter.notifyDataSetChanged()
+        }
+
+        if ( selectedBundle.frequently_asked_questions != null) {
+            binding?.faqContainer?.visibility = View.VISIBLE
+            updateFAQRecycler(selectedBundle.frequently_asked_questions!!)
+                        faqAdapter.addupdates(selectedBundle.frequently_asked_questions!!)
+                        faqAdapter.notifyDataSetChanged()
+        }
+     //   selectedBundle?.frequently_asked_questions?.let { updateFAQRecycler(it) }
+    //    faqAdapter.notifyDataSetChanged()
 
         if (cartList?.size!! > 0) {
             if (cartList != null) {

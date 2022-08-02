@@ -161,7 +161,7 @@ class SelectNumberBottomSheet :
                 if (!itemInCartStatus) {
                     if (singleAddon != null) {
                         prefs.storeCartOrderInfo(null)
-                        viewModel!!.addItemToCart1(singleAddon, baseActivity)
+                        viewModel!!.addItemToCart1(singleAddon, baseActivity,blockedItem)
                         val event_attributes: HashMap<String, Any> = HashMap()
                         singleAddon.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
                         event_attributes.put("Addon Price", singleAddon.price)
