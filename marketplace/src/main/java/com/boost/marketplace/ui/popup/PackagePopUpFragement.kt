@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.boost.cart.utils.SharedPrefs
@@ -25,8 +24,6 @@ import com.boost.marketplace.Adapters.CompareItemAdapter
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.interfaces.CompareListener
-import com.boost.marketplace.interfaces.DetailsFragmentListener
-import com.boost.marketplace.ui.details.FeatureDetailsViewModel
 import com.boost.marketplace.ui.popup.removeItems.RemoveFeatureBottomSheet
 import com.bumptech.glide.Glide
 import com.framework.utils.RootUtil
@@ -38,12 +35,9 @@ import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_feature_details.*
 import kotlinx.android.synthetic.main.package_popup.*
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.LinkedHashSet
 
 class PackagePopUpFragement(val homeListener: CompareListener, var addonsListener: AddonsListener) : DialogFragment(), AddonsListener {
 
@@ -372,6 +366,7 @@ class PackagePopUpFragement(val homeListener: CompareListener, var addonsListene
                         }
 
                         if (bundles.overall_discount_percent > 0) {
+                            pack_discount_tv.text=  bundles.overall_discount_percent.toString() + "% SAVING"
                             offeredBundlePrice = RootUtil.round(
                                 originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent / 100.0),
                                 2

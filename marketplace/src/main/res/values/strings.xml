@@ -41,5 +41,7 @@
     <string name="switch_to_yearly_pricing">Switch to annual pricing</string>
     <string name="learn_more_feature_details"><u>Learn more</u></string>
     <string name="show_less"><u>Show less</u></string>
+    <string name="learn_domain">Choosing a custom domain can be tricky sometimes and there are some guidelines you can follow to choose a great domain name for your business.\n \n \n.com, .in and .net domains are the most popular\n An ideal domain is short (less than 20 characters)\n The domain should be unique to your business\n It should be easy to pronounce, remember and spell\n Avoid generic terms and words\n Consider using keywords that may help with SEO\n \n (the tone of the copy should be addressing to the user directly) Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
+
     <string name="finding_a_number_for_you">Finding a number for you</string>
 </resources>

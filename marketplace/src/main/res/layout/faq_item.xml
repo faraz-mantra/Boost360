@@ -35,13 +35,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/title" />
 
+    <View
+        android:id="@+id/dummy1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="13dp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintBottom_toTopOf="@+id/desc"
+        android:background="@color/bg_color_f4"
+        />
+
 
     <TextView
         android:id="@+id/desc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="#4A4A4A"
         android:background="@drawable/rounded_curve_bg_grey_new"
         android:fontFamily="@font/regular"
         android:padding="@dimen/_10sdp"
@@ -53,7 +68,7 @@
         tools:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/title"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        app:layout_constraintTop_toBottomOf="@id/dummy1" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

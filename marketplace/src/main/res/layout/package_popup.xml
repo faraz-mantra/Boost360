@@ -62,7 +62,6 @@
                   android:layout_width="@dimen/pad_70dp"
                   android:layout_height="@dimen/pad_70dp"
                   android:layout_margin="20dp"
-                  android:src="@drawable/ic_package_image"
                   app:layout_constraintStart_toStartOf="parent"
                   app:layout_constraintTop_toTopOf="parent" />
 

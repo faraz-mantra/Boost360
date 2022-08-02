@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/upi_popup_container_layout"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
         android:src="@drawable/ic_close_circle_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -38,8 +38,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/pad_15dp"
-                        android:fontFamily="@font/regular"
+                        android:layout_marginStart="16sp"
+                        android:fontFamily="@font/bold"
                         android:lineHeight="24dp"
                         android:text="Choose Custom Domain"
                         android:textColor="@color/white"
@@ -51,9 +51,10 @@
 
                     <ImageView
                         android:id="@+id/addons_back"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:padding="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/mp_nav_icon_background"
                         android:src="@drawable/arrow_white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -259,144 +260,24 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_red_note" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layout"
+                    android:id="@+id/rv_custom_domain1_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@id/tv_note">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_custom_domain1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:itemCount="1"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:itemCount="1"
                         tools:listitem="@layout/layout_suggested_domain_item1" />
-
-
-                    <!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                        android:id="@+id/layout_available"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:background="@color/white"-->
-<!--                        android:padding="16dp"-->
-<!--                        android:visibility="gone"-->
-<!--                        tools:visibility="visible"-->
-<!--                        app:layout_constraintTop_toTopOf="parent">-->
-
-<!--                        <ImageView-->
-<!--                            android:id="@+id/iv_checked"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginStart="2dp"-->
-<!--                            android:layout_marginTop="5dp"-->
-<!--                            android:src="@drawable/ic_checkcircle_green_custom_domain"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/tv_1"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginStart="@dimen/pad_10dp"-->
-<!--                            android:fontFamily="@font/bold"-->
-<!--                            android:lineHeight="21.79dp"-->
-<!--                            android:text="deltastore.com"-->
-<!--                            android:textColor="@color/offer_border"-->
-<!--                            android:textFontWeight="700"-->
-<!--                            android:textSize="@dimen/txt_16sp"-->
-<!--                            app:layout_constraintStart_toEndOf="@id/iv_checked"-->
-<!--                            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginStart="@dimen/pad_10dp"-->
-<!--                            android:layout_marginTop="3dp"-->
-<!--                            android:fontFamily="@font/regular"-->
-<!--                            android:lineHeight="16.34dp"-->
-<!--                            android:text="Available"-->
-<!--                            android:textColor="@color/offer_border"-->
-<!--                            android:textFontWeight="400"-->
-<!--                            android:textSize="@dimen/txt_12sp"-->
-<!--                            app:layout_constraintStart_toEndOf="@id/iv_checked"-->
-<!--                            app:layout_constraintTop_toBottomOf="@id/tv_1" />-->
-
-<!--                        <Button-->
-<!--                            android:id="@+id/btn_Select"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:background="@drawable/btn_orange_custom_domain"-->
-<!--                            android:fontFamily="@font/semi_bold"-->
-<!--                            android:lineHeight="19.86dp"-->
-<!--                            android:paddingStart="23dp"-->
-<!--                            android:paddingTop="@dimen/pad_10dp"-->
-<!--                            android:paddingEnd="23dp"-->
-<!--                            android:paddingBottom="@dimen/pad_10dp"-->
-<!--                            android:text="Select"-->
-<!--                            android:textAllCaps="false"-->
-<!--                            android:textColor="@color/white"-->
-<!--                            android:textFontWeight="600"-->
-<!--                            android:textSize="14.58sp"-->
-<!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                        android:id="@+id/layout_not_available"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:background="@color/white"-->
-<!--                        android:padding="16dp"-->
-<!--                        android:visibility="gone"-->
-<!--                        app:layout_constraintTop_toTopOf="parent"-->
-<!--                        tools:visibility="gone">-->
-
-<!--                        <ImageView-->
-<!--                            android:id="@+id/iv_info"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginStart="2dp"-->
-<!--                            android:layout_marginTop="5dp"-->
-<!--                            android:src="@drawable/ic_info_not_available"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/tv"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginStart="@dimen/pad_10dp"-->
-<!--                            android:fontFamily="@font/bold"-->
-<!--                            android:lineHeight="21.79dp"-->
-<!--                            android:text="deltastore.com"-->
-<!--                            android:textColor="@color/not_available_text_color"-->
-<!--                            android:textFontWeight="700"-->
-<!--                            android:textSize="@dimen/txt_16sp"-->
-<!--                            app:layout_constraintStart_toEndOf="@id/iv_info"-->
-<!--                            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginStart="@dimen/pad_10dp"-->
-<!--                            android:layout_marginTop="3dp"-->
-<!--                            android:fontFamily="@font/regular"-->
-<!--                            android:lineHeight="16.34dp"-->
-<!--                            android:text="Available"-->
-<!--                            android:textColor="@color/not_available_text_color"-->
-<!--                            android:textFontWeight="400"-->
-<!--                            android:textSize="@dimen/txt_12sp"-->
-<!--                            app:layout_constraintStart_toEndOf="@id/iv_info"-->
-<!--                            app:layout_constraintTop_toBottomOf="@id/tv" />-->
-
-<!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
@@ -404,7 +285,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="24dp"
                     android:fontFamily="@font/semi_bold"
                     android:lineHeight="21.79dp"
                     android:text="Suggested domains for you"
@@ -412,7 +293,7 @@
                     android:textFontWeight="600"
                     android:textSize="@dimen/txt_16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/layout" />
+                    app:layout_constraintTop_toBottomOf="@id/rv_custom_domain1_layout" />
 
                 <TextView
                     android:id="@+id/search_results"
@@ -428,16 +309,14 @@
                     android:textSize="@dimen/txt_16sp"
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/layout" />
+                    app:layout_constraintTop_toBottomOf="@id/rv_custom_domain1_layout" />
 
-                <com.google.android.material.card.MaterialCardView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/card_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:background="@color/white"
-                    android:elevation="8dp"
-                    android:theme="@style/Theme.MaterialComponents"
                     app:cardCornerRadius="@dimen/pad_10dp"
                     app:layout_constraintBottom_toTopOf="@+id/tv_title_free"
                     app:layout_constraintTop_toBottomOf="@id/tv_suggested_domains">
@@ -448,25 +327,25 @@
                         android:layout_height="wrap_content"
                         tools:itemCount="4"
                         tools:listitem="@layout/layout_suggested_domain_item" />
-                </com.google.android.material.card.MaterialCardView>
+                </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:id="@+id/tv_title_free"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="20dp"
                     android:fontFamily="@font/semi_bold"
                     android:lineHeight="21.79dp"
                     android:text="With every domain you also get"
                     android:textColor="@color/main_color_gray_dk"
                     android:textFontWeight="600"
                     android:textSize="@dimen/txt_16sp"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toTopOf="@+id/card_free"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/card_list" />
 
-                <com.google.android.material.card.MaterialCardView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/card_free"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -475,6 +354,7 @@
                     android:layout_marginEnd="16dp"
                     android:background="@color/white"
                     android:theme="@style/Theme.MaterialComponents"
+                    app:cardCornerRadius="10dp"
                     app:layout_constraintTop_toBottomOf="@id/tv_title_free">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -487,7 +367,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
-                            android:src="@drawable/ic_free_custom_domain"
+                            android:src="@drawable/ic_secure"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -505,7 +385,7 @@
                             android:id="@+id/tv1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
+                            android:layout_marginStart="18dp"
                             android:layout_marginTop="16dp"
                             android:fontFamily="@font/regular"
                             android:lineHeight="16.34dp"
@@ -519,7 +399,7 @@
                             android:id="@+id/tv2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
+                            android:layout_marginStart="18dp"
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/semi_bold"
                             android:lineHeight="19.07dp"
@@ -534,7 +414,7 @@
                             android:id="@+id/tv_learmore"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
+                            android:layout_marginStart="18dp"
                             android:layout_marginTop="3dp"
                             android:layout_marginBottom="16dp"
                             android:fontFamily="@font/bold"
@@ -551,7 +431,7 @@
                             android:id="@+id/iv_free_text_bg"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/ic_green_bg_for_free_text"
+                            android:src="@drawable/ic_green_bg_for_free_text"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -569,7 +449,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                </com.google.android.material.card.MaterialCardView>
+                </androidx.cardview.widget.CardView>
 
 
                 <TextView
@@ -580,7 +460,6 @@
                     android:drawableEnd="@drawable/ic_arrow_yellow"
                     android:drawablePadding="@dimen/pad_10dp"
                     android:fontFamily="@font/semi_bold"
-                    android:lineHeight="19.07dp"
                     android:text="Skip &amp; add to cart"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent1"
@@ -592,53 +471,59 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/shimmer_view_domain"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/toolbar"
-                    android:layout_centerInParent="true"
-                    android:layout_above="@id/btn_select_Domain"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:visibility="visible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:visibility="gone">
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_view_domain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/btn_select_Domain"
+            android:layout_below="@id/toolbar"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="gone">
 
-                    <!-- Adding 7 rows of placeholders -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:orientation="vertical">
+            <!-- Adding 7 rows of placeholders -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
 
-                        <include layout="@layout/custom_domain_data_layout_1" />
+                <include layout="@layout/custom_domain_data_layout_1" />
 
-                        <include layout="@layout/custom_domain_data_layout_2" />
-                        <include layout="@layout/custom_domain_data_layout_2" />
-                        <include layout="@layout/custom_domain_data_layout_2" />
-                        <include layout="@layout/custom_domain_data_layout_2" />
-                        <include layout="@layout/custom_domain_data_layout_2" />
-                        <include layout="@layout/custom_domain_data_layout_2" />
-                        <include layout="@layout/custom_domain_data_layout_3" />
+                <include layout="@layout/custom_domain_data_layout_2" />
+
+                <include layout="@layout/custom_domain_data_layout_2" />
+
+                <include layout="@layout/custom_domain_data_layout_2" />
+
+                <include layout="@layout/custom_domain_data_layout_2" />
+
+                <include layout="@layout/custom_domain_data_layout_2" />
+
+                <include layout="@layout/custom_domain_data_layout_2" />
+
+                <include layout="@layout/custom_domain_data_layout_3" />
 
 
-                    </LinearLayout>
+            </LinearLayout>
 
-                </com.facebook.shimmer.ShimmerFrameLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
 
         <Button
             android:id="@+id/btn_select_Domain"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:background="@color/btn_bg_color_disabled"
-            android:fontFamily="@font/semi_bold"
+            android:fontFamily="@font/bold"
             android:lineHeight="24dp"
             android:paddingTop="13dp"
             android:paddingBottom="13dp"
@@ -647,6 +532,17 @@
             android:textColor="@color/white"
             android:textFontWeight="600"
             android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/learn_Domain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="13dp"
+            android:visibility="gone"
+            android:scaleType="centerCrop"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_learn_domain"
+         />
 
 
     </RelativeLayout>
