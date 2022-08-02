@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.framework.views.customViews.CustomTextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/tv_address_title"
+      android:drawableStart="@drawable/ic_recent_search_n"
+      android:drawablePadding="@dimen/size_6"
+      android:paddingVertical="@dimen/size_12"
+      android:textColor="@color/black_747474"
+      app:textType="BODY_1"
+      tools:text="Modern Road, Kolkata, West Bengal - 100678" />
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_1"
+      android:background="@color/grey_E2E2E2" />
+  </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

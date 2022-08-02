@@ -1232,4 +1232,7 @@
   <string name="please_add_business_address_to_let_your_customers_find_your_location">Please add business address to let your customers find your location.</string>
   <string name="or_if_you_have_your_business_listed_on_google_maps_gmb">or if you have your business listed on Google Maps (GMB)</string>
   <string name="sync_with_google_maps_gmb">Sync with Google Maps (GMB)</string>
+  <string name="search_location">Search location</string>
+  <string name="recent_searches">Recent searches</string>
+  <string name="search_for_a_location">Search for a location</string>
 </resources>

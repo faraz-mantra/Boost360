@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <View
+      android:id="@+id/view1"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_70"
+      android:background="@color/black_4a4a4a"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <com.framework.views.customViews.CustomEditText
+      android:id="@+id/et_search_bar"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_40"
+      android:layout_marginHorizontal="@dimen/size_20"
+      android:layout_marginTop="@dimen/size_4"
+      android:textColorHint="@color/grey_BBBBBB"
+      android:background="@drawable/rounded_edit_stroke_accent"
+      android:drawableStart="@drawable/ic_search_location_n"
+      android:drawablePadding="@dimen/size_8"
+      android:ellipsize="end"
+      android:hint="@string/search_for_a_location"
+      android:maxLines="1"
+      android:focusable="true"
+      android:focusableInTouchMode="true"
+      android:paddingEnd="@dimen/size_40"
+      android:singleLine="true"
+      android:textColor="@color/black_4a4a4a"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:ignore="RtlSymmetry" />
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/img_clear_txt"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/size_8"
+      android:padding="@dimen/size_4"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="@+id/et_search_bar"
+      app:layout_constraintEnd_toEndOf="@+id/et_search_bar"
+      app:layout_constraintTop_toTopOf="@+id/et_search_bar"
+      app:srcCompat="@drawable/ic_close_grey_n"
+      tools:visibility="visible" />
+
+    <com.framework.views.customViews.CustomCardView
+      android:id="@+id/card_location_view"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_marginHorizontal="@dimen/size_20"
+      android:layout_marginTop="@dimen/size_12"
+      android:visibility="gone"
+      tools:visibility="visible"
+      app:cardBackgroundColor="@color/white"
+      app:cardCornerRadius="@dimen/size_10"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHeight_percent="0.6"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/et_search_bar">
+
+      <com.framework.views.viewgroups.BaseRecyclerView
+        android:id="@+id/rv_location_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_14"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingVertical="@dimen/size_12"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="9"
+        tools:listitem="@layout/item_location_searches" />
+    </com.framework.views.customViews.CustomCardView>
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/txt_recent_search"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/size_21"
+      android:layout_marginTop="@dimen/size_16"
+      android:text="@string/recent_searches"
+      android:visibility="gone"
+      android:textColor="@color/grey_BBBBBB"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+    <com.framework.views.viewgroups.BaseRecyclerView
+      android:id="@+id/rv_recent_search"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/size_21"
+      android:layout_marginTop="@dimen/size_12"
+      android:orientation="vertical"
+      android:visibility="gone"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/txt_recent_search"
+      tools:itemCount="5"
+      tools:listitem="@layout/item_recent_searches" />
+
+    <ProgressBar
+      android:layout_width="@dimen/size_42"
+      android:layout_height="@dimen/size_42"
+      android:layout_marginBottom="@dimen/size_100"
+      android:elevation="@dimen/size_4"
+      android:indeterminateTint="@color/colorPrimary"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
