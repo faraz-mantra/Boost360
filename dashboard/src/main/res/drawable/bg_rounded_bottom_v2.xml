@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <stroke
+        android:width=".5dp"
+        android:color="@color/website_toolbar_color" />
+
+    <corners
+        android:bottomLeftRadius="@dimen/size_20"
+        android:bottomRightRadius="@dimen/size_20" />
+</shape>

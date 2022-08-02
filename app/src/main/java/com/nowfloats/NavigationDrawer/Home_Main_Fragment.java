@@ -36,6 +36,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.appservice.constant.FragmentType;
 import com.appservice.constant.IntentConstant;
+import com.appservice.model.KeySpecification;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.dashboard.utils.CodeUtilsKt;
@@ -795,7 +796,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
         ArrayList<com.appservice.model.KeySpecification> otherSpec = new ArrayList<>();
         if (p.otherSpecification != null) {
             for (Product.Specification spec : p.otherSpecification) {
-                otherSpec.add(new com.appservice.model.KeySpecification(spec.key, spec.value));
+                otherSpec.add(new KeySpecification(spec.key, spec.value));
             }
         }
         com.appservice.model.serviceProduct.CatalogProduct newProduct = new com.appservice.model.serviceProduct.CatalogProduct();

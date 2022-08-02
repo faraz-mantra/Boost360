@@ -12,9 +12,9 @@
 
   <fragment
     android:id="@+id/navigation_website"
-    android:name="com.dashboard.controller.ui.website.WebsiteFragment"
+    android:name="com.dashboard.controller.ui.website.WebsiteV2Fragment"
     android:label="@string/my_website"
-    tools:layout="@layout/fragment_website" />
+    tools:layout="@layout/fragment_website_v2" />
 
   <fragment
     android:id="@+id/navigation_enquiries"
