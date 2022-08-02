@@ -33,9 +33,9 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
     private var session: UserSessionManager?=null
     private var selectedPos: Int=0
     private var argTag:String?=null
-    private var posterRvAdapter: AppBaseRecyclerViewAdapter<PosterModel>?=null
-    private var categoryAdapter: AppBaseRecyclerViewAdapter<PosterPackModel>?=null
-    var categoryList:ArrayList<PosterPackModel>?=null
+    private var posterRvAdapter: AppBaseRecyclerViewAdapter<BrowseAllTemplate>?=null
+    private var categoryAdapter: AppBaseRecyclerViewAdapter<BrowseAllCategory>?=null
+    var categoryList:ArrayList<BrowseAllCategory>?=null
 
     override fun getLayout(): Int {
         return R.layout.fragment_browse_all
@@ -71,9 +71,9 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
         showProgress()
         promoUpdatesViewModel?.browseAllLData?.observe(viewLifecycleOwner){
             hideProgress()
-            categoryList=it
-            categoryList?.forEach { it.isSelected=false }
-            selectedPos = categoryList?.indexOfFirst { it.tagsModel?.tag==argTag}?:0
+            categoryList=it.asBrowseAllModels().toArrayList()
+            categoryList?.forEach {cat-> cat.isSelected=false }
+            selectedPos = categoryList?.indexOfFirst { it.id==argTag}?:0
             if (selectedPos==-1) selectedPos=0
             setDataOnUi()
         }
@@ -103,13 +103,7 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
     }
 
     private fun setDataOnUi() {
-        categoryList?.forEach {pack->
 
-            pack.list_layout =RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT.getLayout()
-            pack.posterList?.forEach {poster->
-                poster.layout_id = RecyclerViewItemType.TEMPLATE_VIEW_FOR_RV.getLayout()
-            }
-        }
 
         switchToSelectedItem()
 
@@ -124,11 +118,11 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
     private fun switchToSelectedItem() {
         val selectedItem = categoryList?.get(selectedPos)
         selectedItem?.isSelected =true
-        binding?.tvCatTitle?.text = selectedItem?.tagsModel?.name
-        binding?.tvCatSize?.text = selectedItem?.posterList?.size.toString()
-        categoryList?.get(selectedPos)?.posterList?.let {
+        binding?.tvCatTitle?.text = selectedItem?.id
+        binding?.tvCatSize?.text = selectedItem?.templates?.size.toString()
+        categoryList?.get(selectedPos)?.templates?.let {
             posterRvAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,
-                it,this)
+                it.toArrayList(),this)
             binding?.rvPosters?.adapter = posterRvAdapter
             binding?.rvPosters?.layoutManager = LinearLayoutManager(requireActivity())
         }

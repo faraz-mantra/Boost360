@@ -26,8 +26,8 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.POSTER_PACK_PURCHASED->PosterPackPurchasedViewHolder(binding as ListItemPurchasedPosterPackBinding) // Not currently used
       RecyclerViewItemType.POSTER_SHARE-> PosterShareViewHolder(binding as ListItemPosterShareBinding)
       RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW-> TodaysPickTemplateListViewHolder(binding as ListItemTodaysPickTemplateBinding)
-      RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP-> TemplateForVPViewHolder(binding as ListItemTemplateForVpBinding)
-      RecyclerViewItemType.TEMPLATE_VIEW_FOR_RV-> TemplateForRVViewHolder(binding as ListItemTemplateForRvBinding)
+      RecyclerViewItemType.TEMPLATE_VIEW_FOR_TODAY_PICK-> TemplateForTodayPickViewHolder(binding as ListItemTemplateForVpBinding)
+      RecyclerViewItemType.TEMPLATE_VIEW_FOR_BROWSE_ALL-> TemplateForBrowseAllViewHolder(binding as ListItemTemplateForRvBinding)
       RecyclerViewItemType.TEMPLATE_VIEW_FOR_FAV-> TemplateForFavViewHolder(binding as ListItemTemplateForFavBinding)
 
       RecyclerViewItemType.VIEW_MORE_POSTER-> ViewMoreViewHolder(binding as LayoutViewMoreTemplateBinding)

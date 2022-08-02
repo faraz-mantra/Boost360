@@ -5,6 +5,7 @@ import com.festive.poster.R
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.ListItemTemplateForVpBinding
 import com.festive.poster.models.PosterModel
+import com.festive.poster.models.TodayPickTemplate
 import com.festive.poster.models.promoModele.TemplateModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
@@ -18,13 +19,12 @@ import com.framework.webengageconstant.Promotional_Update_Edit_Click
 import com.framework.webengageconstant.Promotional_Update_Post_Click
 import com.framework.webengageconstant.Promotional_Update_WhatsApp_Share_Click
 
-class TemplateForVPViewHolder(binding: ListItemTemplateForVpBinding):
+class TemplateForTodayPickViewHolder(binding: ListItemTemplateForVpBinding):
     AppBaseRecyclerViewHolder<ListItemTemplateForVpBinding>(binding) {
 
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
-        val model = item as PosterModel
-        val variant = model.variants?.firstOrNull()
+        val model = item as TodayPickTemplate
         binding.btnShare.setOnClickListener {
             WebEngageController.trackEvent(Promotional_Update_WhatsApp_Share_Click)
 
@@ -33,7 +33,7 @@ class TemplateForVPViewHolder(binding: ListItemTemplateForVpBinding):
 
         }
 
-        if (model.details?.Favourite == true){
+        if (model.isFavourite){
             binding.ivLove.setTintColor(getColor(R.color.colorEB5757)!!)
         }else{
             binding.ivLove.setTintColor(getColor(R.color.colorDBDBDB)!!)
@@ -47,7 +47,7 @@ class TemplateForVPViewHolder(binding: ListItemTemplateForVpBinding):
             WebEngageController.trackEvent(Promotional_Update_Post_Click)
 
         }
-        binding.tvTemplateDesc.text =model.greeting_message
+        binding.tvTemplateDesc.text =model.primaryText
 
         binding.btnPost.setOnClickListener {
             WebEngageController.trackEvent(Promotional_Update_Post_Click)
@@ -56,7 +56,7 @@ class TemplateForVPViewHolder(binding: ListItemTemplateForVpBinding):
             listener?.onItemClick(position,item, RecyclerViewActionType.POST_CLICKED.ordinal)
 
         }
-        SvgUtils.loadImage(variant?.svgUrl!!, binding.ivSvg, model.keys,model.isPurchased)
+        SvgUtils.loadImage(model.primarySvgUrl, binding.ivSvg)
         binding.btnEdit.setOnClickListener {
             WebEngageController.trackEvent(Promotional_Update_Edit_Click)
 
