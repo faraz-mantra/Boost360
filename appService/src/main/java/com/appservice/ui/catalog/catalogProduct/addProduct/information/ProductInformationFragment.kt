@@ -28,7 +28,9 @@ import com.appservice.ui.catalog.widgets.GstDetailsBottomSheet
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.ServiceViewModel
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.imagepicker.ImagePicker
 import com.framework.webengageconstant.*
 import com.google.android.material.chip.Chip
@@ -78,7 +80,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
     secondaryImage = (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>) ?: ArrayList()
     tagList = product?.tags ?: ArrayList()
     specList = if (product?.otherSpecification.isNullOrEmpty()) arrayListOf(KeySpecification()) else product?.otherSpecification!!
-    if (isEdit == true) {
+    if (isEdit) {
       secondaryDataImage = arguments?.getSerializable(IntentConstant.PRODUCT_IMAGE.name) as? ArrayList<DataImage>
       if (secondaryImage.isNullOrEmpty()) secondaryDataImage?.forEach {
         secondaryImage.add(FileModel(pathUrl = it.image?.url))
@@ -315,9 +317,11 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
       }
       binding?.btnAddSpecification -> {
         specList.add(KeySpecification())
-        binding?.rvSpecification?.removeAllViewsInLayout()
-        binding?.rvSpecification?.adapter = null
-        specificationAdapter()
+        //binding?.rvSpecification?.removeAllViewsInLayout()
+        //binding?.rvSpecification?.adapter = null
+        adapterSpec?.notifyDataSetChanged()
+        //adapterSpec?.notifyItemInserted(specList.size.minus(1))
+        //specificationAdapter()
       }
       binding?.btnConfirm -> validateAnnGoBack()
       binding?.btnClickPhoto -> openImagePicker()
@@ -375,6 +379,19 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
   }
 
   private fun validateAnnGoBack() {
+    if (specList.any { it.key.isNullOrEmpty() && it.value.isNullOrEmpty().not() || it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty()}) {
+      specList.forEachIndexed { index, _ ->
+        adapterSpec?.notifyItemChanged(index)
+      }
+      binding?.linearErrorMsg?.visible()
+      return
+    }
+    binding?.linearErrorMsg?.gone()
+
+    val otherSpec = specList/*(specList.filter {
+      it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not()
+    } as? ArrayList<KeySpecification>) ?: ArrayList()*/
+
 //    val serviceCategory = binding?.edtProductCategory?.text?.toString() ?: ""
 //    val spinnerCod = binding?.spinnerCod?.selectedItem as SpinnerImageModel
 //    val spinnerOnlinePayment = binding?.spinnerOnlinePayment?.selectedItem as SpinnerImageModel
@@ -387,9 +404,9 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
     val valueSpecification = binding?.specValue?.text?.toString() ?: ""
 
     val gst = (binding?.edtGst?.text?.toString() ?: "").replace("%", "").trim()
-    val otherSpec = (specList.filter {
+    /*val otherSpec = (specList.filter {
       it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not()
-    } as? ArrayList<KeySpecification>) ?: ArrayList()
+    } as? ArrayList<KeySpecification>) ?: ArrayList()*/
     when {
 //      secondaryImage.isNullOrEmpty() -> {
 //        showLongToast("Please select at least one secondary image.")
