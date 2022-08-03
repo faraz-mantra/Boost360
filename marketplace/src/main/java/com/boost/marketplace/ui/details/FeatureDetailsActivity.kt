@@ -194,8 +194,8 @@ class FeatureDetailsActivity :
             termsString.length - 8,
             termsString.length,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        );
-        terms.setText(termsString)
+        )
+        terms.text = termsString
 
         val callExpertString = SpannableString("Have a query? Call an expert")
 

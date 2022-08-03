@@ -14,6 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="@dimen/pad_8dp"
         android:layout_marginEnd="@dimen/pad_8dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:cardCornerRadius="@dimen/pad_10dp"
         app:cardElevation="0dp"
         app:cardBackgroundColor="#FFEFDA">
@@ -25,7 +26,7 @@
           android:orientation="vertical"
           >
           <TextView
-              android:id="@+id/tv_benefit_title"
+              android:id="@+id/title"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:fontFamily="@font/semi_bold"
@@ -33,6 +34,7 @@
               android:paddingStart="8dp"
               android:paddingTop="8dp"
               android:textSize="14sp"
+              android:minLines="2"
               android:text="Customer Testimonials"/>
 
           <ImageView

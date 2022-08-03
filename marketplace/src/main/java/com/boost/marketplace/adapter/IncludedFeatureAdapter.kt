@@ -27,7 +27,7 @@ class IncludedFeatureAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
         val itemView = LayoutInflater.from(parent?.context).inflate(
-            R.layout.item_pack_details, parent, false
+            R.layout.pack_details_testimonials, parent, false
         )
         context = itemView.context
 
@@ -39,24 +39,8 @@ class IncludedFeatureAdapter(
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
-//        holder.title.text = upgradeList[position].question
-//        holder.desc.text = upgradeList[position].answer
-        holder.title.setOnClickListener {
-            if(holder.desc.isVisible) {
-                holder.desc.visibility = View.GONE
-            }else{
-                holder.desc.visibility = View.VISIBLE
-            }
-        }
-        holder.downArrow.setOnClickListener {
-            if(holder.desc.isVisible) {
-                holder.downArrow.setImageResource(R.drawable.ic_down_arrow_pack_details)
-                holder.desc.visibility = View.GONE
-            }else{
-                holder.downArrow.setImageResource(R.drawable.ic_up_arrow_with_bg)
-                holder.desc.visibility = View.VISIBLE
-            }
-        }
+        holder.title.text = upgradeList[position].feature_code
+
     }
 
     fun addupdates(upgradeModel: List<IncludedFeature>) {
@@ -67,9 +51,6 @@ class IncludedFeatureAdapter(
     }
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var position = itemView.findViewById<TextView>(R.id.position)
         var title = itemView.findViewById<TextView>(R.id.title)
-        var downArrow = itemView.findViewById<ImageView>(R.id.arrow_btn)
-        var desc = itemView.findViewById<TextView>(R.id.desc)
     }
 }
