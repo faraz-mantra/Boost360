@@ -876,7 +876,7 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
         val widget = Widget(
           data?.category
             ?: "", ConsumptionConstraint("DAYS", 30), "", item.description_title,
-          item.discount, Expiry("MONTHS", default_validity_months), listOf(), true, true, item.item_name
+          item.discount, Expiry("MONTHS", expiryCalculator(default_validity_months, item.widget_type, requireActivity())), listOf(), true, true, item.item_name
             ?: "",
           item.price, item.MRPPrice,if (outputExtendedPropsRenew.size > 0) outputExtendedPropsRenew else null , 1, "MONTHLY", item.boost_widget_key
             ?: "", item.item_id
@@ -1183,7 +1183,7 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
         val widget = Widget(
           data?.category
             ?: "", ConsumptionConstraint("DAYS", 30), "", item.description_title,
-          item.discount, Expiry("MONTHS", default_validity_months), listOf(), true, true, item.item_name
+          item.discount, Expiry("MONTHS", expiryCalculator(default_validity_months, item.widget_type, requireActivity())), listOf(), true, true, item.item_name
             ?: "",
           item.price, item.MRPPrice,  if (outputExtendedProps1.size > 0) outputExtendedProps1 else null, 1, "MONTHLY", item.boost_widget_key
             ?: "", item.item_id
@@ -1275,7 +1275,7 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
               item.discount,
               Expiry(
                 "MONTHS",
-                if(prefs.getYearPricing()) default_validity_months * 12 else default_validity_months
+                expiryCalculator(default_validity_months, item.widget_type, requireActivity())
               ),
               listOf(),
               true,
@@ -1339,7 +1339,7 @@ class CartFragment : BaseFragment("MarketPlaceCartFragment"), CartFragmentListen
                           singleFeature.description_title,
                           singleIndludedFeature.feature_price_discount_percent,
                           Expiry(
-                            "MONTHS", if(prefs.getYearPricing()) default_validity_months * 12 else default_validity_months
+                            "MONTHS", expiryCalculator(default_validity_months, item.widget_type, requireActivity())
                           ),
                           listOf(),
                           true,
