@@ -27,13 +27,14 @@
     <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
   </style>
 
-  <style name="MaterialDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen">
+  <style name="MaterialDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
     <item name="android:windowBackground">@android:color/transparent</item>
     <item name="android:backgroundDimEnabled">true</item>
   </style>
 
   <style name="MaterialDialogThemeFull" parent="MaterialDialogTheme">
     <item name="android:windowNoTitle">true</item>
+    <item name="android:windowFullscreen">true</item>
     <item name="android:windowIsFloating">false</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:windowCloseOnTouchOutside">false</item>
