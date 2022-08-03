@@ -8,11 +8,10 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.marketplace.R
-import com.boost.marketplace.interfaces.DetailsFragmentListener
 import java.util.ArrayList
 
 class PackDetailsBenefitViewPagerAdapter(
-    val list: ArrayList<String>, val listener: DetailsFragmentListener
+    val list: ArrayList<String>
 ) : RecyclerView.Adapter<PackDetailsBenefitViewPagerAdapter.PagerViewHolder>() {
 
     lateinit var context: Context

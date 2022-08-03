@@ -6,15 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.boost.cart.R
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.marketplace.R
+import com.boost.marketplace.interfaces.PackDetailsListener
 import com.bumptech.glide.Glide
 
 class PackDetailsFeatureAdapter(
     val activity: Activity,
-    cryptoCurrencies: List<FeaturesModel>?
+    cryptoCurrencies: List<FeaturesModel>?,val listener:PackDetailsListener
 ) : RecyclerView.Adapter<PackDetailsFeatureAdapter.upgradeViewHolder>() {
 
     private var upgradeList = ArrayList<FeaturesModel>()
@@ -27,7 +29,7 @@ class PackDetailsFeatureAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
         val itemView = LayoutInflater.from(parent?.context).inflate(
-            R.layout.compare_details_items, parent, false
+            R.layout.item_pack_details, parent, false
         )
         context = itemView.context
 
@@ -49,28 +51,13 @@ class PackDetailsFeatureAdapter(
             holder.view.visibility = View.INVISIBLE
         }
 
-//        holder.arrow_icon.setOnClickListener {
-//            val details = DetailsFragment.newInstance()
-//            val args = Bundle()
-//            args.putString("itemId", upgradeList.get(position).feature_code)
-//            args.putBoolean("packageView", true)
-//            details.arguments = args
-//
-//            activity.addFragment(details, Constants.DETAILS_FRAGMENT)
-//        }
-//        holder.itemView.setOnClickListener {
-//            val details = DetailsFragment.newInstance()
-//            val args = Bundle()
-//            args.putString("itemId", upgradeList.get(position).feature_code)
-//            args.putBoolean("packageView", true)
-//            details.arguments = args
-//
-//            activity.addFragment(details, Constants.DETAILS_FRAGMENT)
-//        }
+        holder.arrow_icon.setOnClickListener {
+            listener.onclick(upgradeList[position])
+        }
+
     }
 
     fun addupdates(upgradeModel: List<FeaturesModel>) {
-//        minMonth = noOfMonth
         val initPosition = upgradeList.size
         upgradeList.clear()
         upgradeList.addAll(upgradeModel)
@@ -78,11 +65,11 @@ class PackDetailsFeatureAdapter(
     }
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val view = itemView.findViewById<View>(R.id.view)!!
+        val view = itemView.findViewById<View>(R.id.dummy_view)!!
         val image = itemView.findViewById<ImageView>(R.id.imageView2)!!
-        val name = itemView.findViewById<TextView>(R.id.details)!!
+        val name = itemView.findViewById<TextView>(R.id.desc)!!
         val title = itemView.findViewById<TextView>(R.id.title)!!
-        val arrow_icon = itemView.findViewById<ImageView>(R.id.arrow_icon)!!
+        val arrow_icon = itemView.findViewById<RelativeLayout>(R.id.arrow_icon)!!
 
     }
 
