@@ -1,5 +1,6 @@
 package com.boost.presignin.timer;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -24,6 +25,7 @@ public abstract class CountDownTimer {
     // handles counting down
     private Handler mHandler = new Handler() {
 
+        @SuppressLint("HandlerLeak")
         @Override
         public void handleMessage(Message msg) {
 

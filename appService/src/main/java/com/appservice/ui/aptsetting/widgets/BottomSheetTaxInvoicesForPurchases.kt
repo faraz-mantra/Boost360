@@ -5,7 +5,7 @@ import com.appservice.R
 import com.appservice.model.aptsetting.PaymentResult
 import com.appservice.ui.aptsetting.ui.FragmentCustomerInvoiceSetup
 import com.appservice.constant.IntentConstant
-import com.appservice.databinding.BottomSheetSetupTaxInvoicesForCustomerPurchaseBinding
+import com.appservice.databinding.BottomSheetTaxInvoiceSetupBinding
 import com.appservice.model.FileModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
@@ -17,7 +17,7 @@ import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-class BottomSheetTaxInvoicesForPurchases : BaseBottomSheetDialog<BottomSheetSetupTaxInvoicesForCustomerPurchaseBinding, BaseViewModel>() {
+class BottomSheetTaxInvoicesForPurchases : BaseBottomSheetDialog<BottomSheetTaxInvoiceSetupBinding, BaseViewModel>() {
 
   var clickType: (name: ClickType?) -> Unit = { }
   var isEdit = false
@@ -29,7 +29,7 @@ class BottomSheetTaxInvoicesForPurchases : BaseBottomSheetDialog<BottomSheetSetu
   }
 
   override fun getLayout(): Int {
-    return R.layout.bottom_sheet_setup_tax_invoices_for_customer_purchase
+    return R.layout.bottom_sheet_tax_invoice_setup
   }
 
   override fun getViewModelClass(): Class<BaseViewModel> {

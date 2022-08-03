@@ -42,7 +42,6 @@
         android:orientation="vertical">
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@id/tvTitle"
           style="@style/AppointmentSetting_Text_Heading"
           android:layout_marginStart="@dimen/size_20"
           android:text="@string/upload_signature_to_print_on_invoice" />
