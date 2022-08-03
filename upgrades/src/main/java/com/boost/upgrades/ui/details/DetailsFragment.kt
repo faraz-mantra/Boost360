@@ -61,7 +61,6 @@ class DetailsFragment : BaseFragment("MarketPlaceDetailsFragment"), DetailsFragm
 
   lateinit var root: View
   lateinit var viewModel: DetailsViewModel
-  lateinit var detailsViewModelFactory: DetailsViewModelFactory
 
   lateinit var retrofit: Retrofit
   lateinit var ApiService: ApiInterface

@@ -4,7 +4,7 @@ import android.view.View
 import com.appservice.R
 import com.appservice.model.aptsetting.PaymentResult
 import com.appservice.constant.IntentConstant
-import com.appservice.databinding.BottomSheetSetupTaxInvoicesForCustomerPurchaseBinding
+import com.appservice.databinding.BottomSheetTaxInvoiceSetupBinding
 import com.appservice.ui.ecommerce.FragmentEcommerceCustomerInvoiceSetup
 import com.appservice.model.FileModel
 import com.framework.base.BaseBottomSheetDialog
@@ -17,7 +17,7 @@ import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-class BottomEcommerceTaxInvoices : BaseBottomSheetDialog<BottomSheetSetupTaxInvoicesForCustomerPurchaseBinding, BaseViewModel>() {
+class BottomEcommerceTaxInvoices : BaseBottomSheetDialog<BottomSheetTaxInvoiceSetupBinding, BaseViewModel>() {
 
   var clickType: (name: ClickType?) -> Unit = { }
   private var isEdit = false
@@ -29,7 +29,7 @@ class BottomEcommerceTaxInvoices : BaseBottomSheetDialog<BottomSheetSetupTaxInvo
   }
 
   override fun getLayout(): Int {
-    return R.layout.bottom_sheet_setup_tax_invoices_for_customer_purchase
+    return R.layout.bottom_sheet_tax_invoice_setup
   }
 
   override fun getViewModelClass(): Class<BaseViewModel> {
@@ -46,7 +46,7 @@ class BottomEcommerceTaxInvoices : BaseBottomSheetDialog<BottomSheetSetupTaxInvo
     if (images.isNullOrEmpty().not()) setImage(images, parent = parent) else setImage(parent!!)
     if (paymentProfileDetails?.uPIId.isNullOrEmpty().not()) binding?.checkboxUpiId?.isChecked = true
     if (binding?.checkboxUpiId?.isChecked == true) binding?.cetUpiId?.visible() else binding?.cetUpiId?.gone()
-    binding?.checkboxUpiId?.setOnCheckedChangeListener { buttonView, isChecked ->
+    binding?.checkboxUpiId?.setOnCheckedChangeListener { _, isChecked ->
       when (isChecked) {
         true -> binding?.cetUpiId?.visible()
         else -> binding?.cetUpiId?.gone()

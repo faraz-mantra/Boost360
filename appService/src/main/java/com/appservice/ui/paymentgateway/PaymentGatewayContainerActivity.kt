@@ -4,8 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.Gravity
-import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -112,20 +110,6 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
         R.string.business_kyc
       )
       else -> super.getToolbarTitle()
-    }
-  }
-
-
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    val toolbarMenu = menu ?: return super.onCreateOptionsMenu(menu)
-    val menuRes = getMenuRes() ?: return super.onCreateOptionsMenu(menu)
-    menuInflater.inflate(menuRes, toolbarMenu)
-    return true
-  }
-
-  open fun getMenuRes(): Int? {
-    return when (type) {
-      else -> null
     }
   }
 
