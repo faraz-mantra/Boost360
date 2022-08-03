@@ -24,7 +24,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.rest.repository.AzureWebsiteNewRepository
@@ -91,6 +91,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
 
     lateinit var root: View
     private lateinit var viewModel: HomeViewModel
+    private lateinit var homeViewModelFactory: HomeViewModelFactory
 
     lateinit var retrofit: Retrofit
     lateinit var ApiService: ApiInterface
@@ -134,7 +135,10 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
         savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.home_fragment, container, false)
-        viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+        homeViewModelFactory = HomeViewModelFactory(requireNotNull(requireActivity().application))
+
+        viewModel = ViewModelProviders.of(requireActivity(), homeViewModelFactory)
+            .get(HomeViewModel::class.java)
         upgradeAdapter = UpgradeAdapter((activity as UpgradeActivity), ArrayList())
         addonsCategoryAdapter =
             AddonsCategoryAdapter((activity as UpgradeActivity), ArrayList(), this)
@@ -2811,7 +2815,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                         originalBundlePrice = (bundleMonthlyMRP * minMonth)
 
                         if (item!!.overall_discount_percent > 0)
-                            offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100.0),2)
+                            offeredBundlePrice = originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100.0)
                         else
                             offeredBundlePrice = originalBundlePrice
 

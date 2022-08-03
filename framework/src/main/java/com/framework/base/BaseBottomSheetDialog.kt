@@ -132,12 +132,12 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     }
   }
 
-  open fun addFragment(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean, showAnim: Boolean = false) {
+  open fun addFragment(containerID: Int?, fragment: Fragment?, addToBackStack: Boolean,showAnim:Boolean=false) {
     if (activity?.supportFragmentManager?.isDestroyed == true) return
     if (containerID == null || fragment == null) return
 
     val fragmentTransaction = baseActivity.supportFragmentManager.beginTransaction()
-    if (showAnim) {
+    if (showAnim){
       fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
     }
     if (addToBackStack) {
@@ -146,19 +146,19 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     fragmentTransaction.add(containerID, fragment, fragment.javaClass.name).commit()
   }
 
-  open fun addFragmentReplace(containerId: Int?, fragment: Fragment?, addToBackStack: Boolean, showAnim: Boolean = false) {
+  open fun addFragmentReplace(containerId: Int?, fragment: Fragment?, addToBackStack: Boolean,showAnim:Boolean=false) {
     if (requireActivity().supportFragmentManager.isDestroyed) return
     if (containerId == null || fragment == null) return
 
     val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-    if (showAnim) {
+    if (showAnim){
       fragmentTransaction?.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
     }
     if (addToBackStack) {
       fragmentTransaction.addToBackStack(fragment.javaClass.name)
     }
     try {
-      fragmentTransaction.replace(containerId, fragment, fragment.javaClass.name).commit()
+      fragmentTransaction.replace(containerId, fragment,fragment.javaClass.name).commit()
     } catch (e: IllegalStateException) {
       e.printStackTrace()
     }

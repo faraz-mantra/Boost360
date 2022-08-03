@@ -20,8 +20,8 @@
   <domain-config cleartextTrafficPermitted="false">
     <domain includeSubdomains="true">webaction.api.boostkit.dev</domain>
     <pin-set>
-      <pin digest="SHA-256">Edltovh6iyrg1Oa7Xt5THdLzt9b9EWm+8T8PNkIikTo=</pin>
-      <pin digest="SHA-256">5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=</pin>
+      <pin digest="SHA-256">8mom5kXVQl+p2G7caWhjrPd6bwcMBLWeiTo+5mJKjsM=</pin>
+      <pin digest="SHA-256">zv60Ex2lV1j/DxD/XKmx03Pt651+V6UH8oXqkXO2IKE=</pin>
     </pin-set>
   </domain-config>
   <domain-config cleartextTrafficPermitted="false">

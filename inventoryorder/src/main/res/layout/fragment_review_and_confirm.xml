@@ -393,28 +393,28 @@
         app:cardElevation="@dimen/size_10">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          style="@style/match_wrap"
-          android:orientation="vertical"
-          android:padding="@dimen/size_20">
+            style="@style/match_wrap"
+            android:orientation="vertical"
+            android:padding="@dimen/size_20">
 
           <com.framework.views.customViews.CustomTextView
-            style="@style/wrap_wrap"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/size_10"
-            android:fontFamily="@font/regular"
-            android:text="@string/appointment_confirmation_description"
-            android:textColor="@color/grey_dim_2"
-            android:textSize="12sp" />
+              style="@style/wrap_wrap"
+              android:layout_gravity="center_vertical"
+              android:layout_marginStart="@dimen/size_10"
+              android:fontFamily="@font/regular"
+              android:text="@string/appointment_confirmation_description"
+              android:textColor="@color/grey_dim_2"
+              android:textSize="12sp" />
 
           <com.framework.views.customViews.CustomButton
-            android:id="@+id/button_review_details"
-            style="@style/ButtonStyle.Rounded.Solid"
-            android:layout_width="match_parent"
-            android:layout_marginStart="@dimen/size_8"
-            android:layout_marginTop="@dimen/size_15"
-            android:layout_marginEnd="@dimen/size_5"
-            android:layout_marginBottom="@dimen/size_20"
-            android:text="@string/confirm_appointment" />
+              android:id="@+id/button_review_details"
+              style="@style/ButtonStyle.Rounded.Solid"
+              android:layout_width="match_parent"
+              android:layout_marginStart="@dimen/size_8"
+              android:layout_marginTop="@dimen/size_15"
+              android:layout_marginEnd="@dimen/size_5"
+              android:layout_marginBottom="@dimen/size_20"
+              android:text="@string/confirm_appointment" />
         </androidx.appcompat.widget.LinearLayoutCompat>
       </androidx.cardview.widget.CardView>
     </androidx.appcompat.widget.LinearLayoutCompat>

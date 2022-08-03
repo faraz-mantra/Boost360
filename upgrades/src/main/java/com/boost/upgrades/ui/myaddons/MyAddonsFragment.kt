@@ -2,14 +2,15 @@ package com.boost.upgrades.ui.myaddons
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
@@ -41,6 +42,7 @@ class MyAddonsFragment : BaseFragment("MarketPlaceMyAddonsFragment"), MyAddonsLi
   lateinit var paidAddonsAdapter: PaidAddonsAdapter
 
   //    lateinit var localStorage: LocalStorage
+  lateinit var myAddonsViewModelFactory: MyAddonsViewModelFactory
 
   var freeaddonsSeeMoreStatus = false
   var paidaddonsSeeMoreStatus = false
@@ -68,7 +70,11 @@ class MyAddonsFragment : BaseFragment("MarketPlaceMyAddonsFragment"), MyAddonsLi
   ): View? {
     root = inflater.inflate(R.layout.my_addons_fragment, container, false)
 
-    viewModel = ViewModelProvider(requireActivity())[MyAddonsViewModel::class.java]
+    myAddonsViewModelFactory =
+      MyAddonsViewModelFactory(requireNotNull(requireActivity().application))
+
+    viewModel = ViewModelProviders.of(requireActivity(), myAddonsViewModelFactory)
+      .get(MyAddonsViewModel::class.java)
 
     progressDialog = ProgressDialog(requireContext(),R.style.AppCompatAlertDialogStyle)
     var purchasedPack = requireArguments().getStringArrayList("userPurchsedWidgets")

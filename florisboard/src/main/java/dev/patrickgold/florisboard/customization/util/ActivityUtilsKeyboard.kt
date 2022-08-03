@@ -232,7 +232,7 @@ fun startBusinessAddressN(mContext: Context) {
 fun startBusinessContactInfoN(mContext: Context) {
   try {
     if (isInstall(mContext)) return
-    com.dashboard.utils.WebEngageController.trackEvent(CONTACT_INFORMATION_HOURS_PAGE, CLICK, TO_BE_ADDED)
+    com.dashboard.utils.WebEngageController.trackEvent(CONTACT_INFORMATION_PAGE, CLICK, TO_BE_ADDED)
     val webIntent = Intent(mContext, Class.forName("com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"))
     webIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     mContext.startActivity(webIntent)

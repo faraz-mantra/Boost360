@@ -5,6 +5,9 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.media.ThumbnailUtils
@@ -15,9 +18,7 @@ import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.webkit.MimeTypeMap
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
@@ -180,6 +181,7 @@ private fun openImagePicker(activity: Activity,it: ClickType) {
     .directory(ImagePicker.Directory.DEFAULT).extension(ImagePicker.Extension.PNG)
     .allowMultipleImages(false).enableDebuggingMode(true).build()
 }
+
 
 
 fun Activity.getMarkerBitmapFromView(@DrawableRes resId: Int): Bitmap {
