@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
@@ -35,7 +35,6 @@ class ViewAllFeaturesFragment : BaseFragment("MarketPlaceViewAllFeaturesFragment
   lateinit var ApiService: ApiInterface
   lateinit var localStorage: LocalStorage
   lateinit var allFeatureAdaptor: AllFeatureAdaptor
-  lateinit var viewAllFeaturesViewModelFactory: ViewAllFeaturesViewModelFactory
   var purchasedPackages = ArrayList<String>()
 
   lateinit var progressDialog: ProgressDialog
@@ -52,14 +51,11 @@ class ViewAllFeaturesFragment : BaseFragment("MarketPlaceViewAllFeaturesFragment
   ): View? {
     root = inflater.inflate(R.layout.view_all_features_fragment, container, false)
 
-    viewAllFeaturesViewModelFactory =
-      ViewAllFeaturesViewModelFactory(requireNotNull(requireActivity().application))
+    viewModel = ViewModelProvider(requireActivity())[ViewAllFeaturesViewModel::class.java]
 
-    viewModel = ViewModelProviders.of(requireActivity(), viewAllFeaturesViewModelFactory)
-      .get(ViewAllFeaturesViewModel::class.java)
 
     progressDialog = ProgressDialog(requireContext())
-    var purchasedPack = arguments!!.getStringArrayList("userPurchsedWidgets")
+    var purchasedPack = requireArguments().getStringArrayList("userPurchsedWidgets")
     if (purchasedPack != null) {
       purchasedPackages = purchasedPack
     }
@@ -67,7 +63,7 @@ class ViewAllFeaturesFragment : BaseFragment("MarketPlaceViewAllFeaturesFragment
     allFeatureAdaptor =
       AllFeatureAdaptor(activity as UpgradeActivity, ArrayList(), purchasedPackages)
 
-    localStorage = LocalStorage.getInstance(context!!)!!
+    localStorage = LocalStorage.getInstance(requireContext())!!
 
 
 
@@ -77,9 +73,9 @@ class ViewAllFeaturesFragment : BaseFragment("MarketPlaceViewAllFeaturesFragment
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
 
-    if (arguments != null && arguments!!.containsKey("categoryType")) {
-      toolbar_text.setText(arguments!!.getString("categoryType") + " ADD-ONS")
-      loadDataByType(arguments!!.getString("categoryType"))
+    if (arguments != null && requireArguments().containsKey("categoryType")) {
+      toolbar_text.setText(requireArguments().getString("categoryType") + " ADD-ONS")
+      loadDataByType(requireArguments().getString("categoryType"))
     } else {
       loadData()
     }

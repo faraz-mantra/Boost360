@@ -1,17 +1,8 @@
 package com.nowfloats.AccrossVerticals.domain.ui.ActiveDomain;
 
-import androidx.lifecycle.ViewModelProviders;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,25 +11,28 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.nowfloats.AccrossVerticals.API.APIInterfaces;
 import com.nowfloats.AccrossVerticals.API.model.GetDomain.GetDomainData;
-import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsFeedbackActivity;
-import com.nowfloats.AccrossVerticals.domain.DomainEmailActivity;
 import com.nowfloats.AccrossVerticals.domain.adapter.EmailAdapter;
-import com.nowfloats.AccrossVerticals.domain.ui.DomainPurchased.DomainPurchasedFragment;
-import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.AccrossVerticals.domain.interfaces.ActiveDomainListener;
 import com.nowfloats.AccrossVerticals.domain.ui.Popup.AddEmailPopUpFragment;
 import com.nowfloats.AccrossVerticals.domain.ui.Popup.EditEmailPopUpFragment;
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import retrofit.Callback;
