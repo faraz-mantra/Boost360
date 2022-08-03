@@ -69,7 +69,7 @@
     <item name="colorAccent">@color/black_4a4a4a</item>
   </style>
 
-    <style name="RadioService" parent="Widget.AppCompat.CompoundButton.RadioButton">
+  <style name="RadioService" parent="Widget.AppCompat.CompoundButton.RadioButton">
     <item name="android:textColor">@color/black_4a4a4a</item>
     <item name="android:layout_height">match_parent</item>
     <item name="android:layout_width">match_parent</item>
@@ -105,7 +105,7 @@
     <item name="android:editTextColor">@color/black</item>
   </style>
 
-    <style name="AppTheme_staff_home" parent="AppTheme.Base">
+  <style name="AppTheme_staff_home" parent="AppTheme.Base">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
@@ -130,14 +130,14 @@
     <item name="colorControlActivated">@color/colorAccent</item>
   </style>
 
-    <style name="MaterialAlertTitleTextStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+  <style name="MaterialAlertTitleTextStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
     <item name="android:textColor">@color/black_2A2A2A</item>
     <!--    <item name="android:textStyle">bold</item>-->
     <item name="android:textSize">20sp</item>
   </style>
 
 
-    <!--staff module styles-->
+  <!--staff module styles-->
   <!-- customize the color palette -->
   <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="colorPrimary">@color/colorPrimary</item>
@@ -150,7 +150,7 @@
   </style>
 
 
-    <style name="ButtonStyle.Rounded" parent="ButtonStyle">
+  <style name="ButtonStyle.Rounded" parent="ButtonStyle">
     <item name="android:background">@drawable/bg_button_rounded_orange</item>
   </style>
 
@@ -164,7 +164,7 @@
     <item name="android:layout_marginStart">@dimen/size_8</item>
   </style>
 
-    <style name="AppointmentSetting_Text_Heading">
+  <style name="AppointmentSetting_Text_Heading">
     <item name="android:textColor">@color/black_4a4a4a</item>
     <item name="android:textSize">14sp</item>
     <item name="android:layout_width">wrap_content</item>
@@ -201,7 +201,7 @@
     <item name="android:textColor">@color/colorAccentLight</item>
   </style>
 
-    <style name="Appointment_Toggle">
+  <style name="Appointment_Toggle">
     <item name="android:layout_width">@dimen/size_54</item>
     <item name="android:layout_height">@dimen/size_24</item>
     <item name="colorBorder">@color/transparent</item>
@@ -213,7 +213,7 @@
     <item name="txtColorOn">@color/white</item>
   </style>
 
-    <style name="AppointmentHorizontalDivider">
+  <style name="AppointmentHorizontalDivider">
     <item name="android:layout_height">0.5dp</item>
     <item name="android:layout_width">match_parent</item>
     <item name="android:background">@color/gray_bbb</item>
@@ -227,13 +227,13 @@
     <item name="android:fontFamily">@font/regular</item>
   </style>
 
-    <style name="Appointment_Text_Subheading" parent="Appointment_Text_Heading">
+  <style name="Appointment_Text_Subheading" parent="Appointment_Text_Heading">
     <item name="textType">SUBHEADING_2</item>
     <item name="android:textColor">@color/warm_grey</item>
     <item name="android:gravity">center</item>
   </style>
 
-    <style name="Appointment_Text_Field">
+  <style name="Appointment_Text_Field">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_marginTop">@dimen/size_5</item>
@@ -288,7 +288,7 @@
     <item name="txtColorOn">@color/white</item>
   </style>
 
-    <style name="MaterialAlertDialogTheme" parent="MaterialCustomDialogTheme">
+  <style name="MaterialAlertDialogTheme" parent="MaterialCustomDialogTheme">
     <item name="android:colorPrimary">@color/white</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="colorControlNormal">@color/colorAccent</item>
@@ -323,7 +323,7 @@
     <item name="android:layout_width">match_parent</item>
   </style>
 
-    <style name="Offers.ButtonStyle.Rounded.Solid.Stroke" parent="Offers.ButtonStyle">
+  <style name="Offers.ButtonStyle.Rounded.Solid.Stroke" parent="Offers.ButtonStyle">
     <item name="android:background">@drawable/offer_button_stroke_orange</item>
     <item name="android:paddingStart">@dimen/size_60</item>
     <item name="android:paddingEnd">@dimen/size_60</item>
@@ -350,7 +350,7 @@
   </style>
 
 
-    <style name="Offers_Text_Subheading" parent="Offers_Text_Heading">
+  <style name="Offers_Text_Subheading" parent="Offers_Text_Heading">
     <item name="textType">SUBHEADING_2</item>
     <item name="android:gravity">center</item>
   </style>
@@ -452,7 +452,7 @@
   </style>
 
 
-    <style name="ButtonStyle">
+  <style name="ButtonStyle">
     <item name="android:fontFamily">@font/semi_bold</item>
     <item name="fontFamily">@font/semi_bold</item>
     <item name="android:textColor">@color/white</item>
@@ -496,7 +496,7 @@
   </style>
 
 
-    <style name="AddCatalogTheme" parent="CatalogTheme">
+  <style name="AddCatalogTheme" parent="CatalogTheme">
     <item name="colorAccent">@color/black_4a4a4a</item>
   </style>
 
@@ -599,7 +599,7 @@
     <item name="android:paddingEnd">@dimen/size_30</item>
   </style>
 
-    <style name="ButtonStyle.Rounded.Solid" parent="ButtonStyle.Rounded">
+  <style name="ButtonStyle.Rounded.Solid" parent="ButtonStyle.Rounded">
     <item name="android:background">@drawable/bg_button_proceed</item>
     <item name="android:paddingStart">@dimen/size_30</item>
     <item name="android:textSize">16sp</item>
@@ -663,14 +663,14 @@
     <item name="android:textColor">@color/blue_4889f8</item>
   </style>
 
-    <!-- media picker -->
+  <!-- media picker -->
 
-    <style name="RadioWindow" parent="RadioService">
+  <style name="RadioWindow" parent="RadioService">
     <item name="android:layout_marginTop">@dimen/size_4</item>
     <item name="android:layout_marginBottom">@dimen/size_4</item>
   </style>
 
-    <style name="BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
+  <style name="BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
     <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
     <item name="android:windowIsFloating">false</item>
     <item name="android:windowSoftInputMode">adjustResize</item>

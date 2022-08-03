@@ -35,6 +35,7 @@ class FreeAddonsFragment : BaseFragment("MarketPlaceFreeAddonsFragment"), MyAddo
   lateinit var compareFreeAddonsAdapter: CompareFreeAddonsAdapter
 
   //    lateinit var localStorage: LocalStorage
+  lateinit var myAddonsViewModelFactory: FreeAddonsViewModelFactory
 
   var freeaddonsSeeMoreStatus = false
   var paidaddonsSeeMoreStatus = false

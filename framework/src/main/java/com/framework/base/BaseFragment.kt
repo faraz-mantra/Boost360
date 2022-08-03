@@ -1,9 +1,11 @@
 package com.framework.base
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.*
 import android.widget.Toast
 import androidx.annotation.ColorRes
@@ -16,13 +18,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import com.framework.analytics.UserExperiorController
 import androidx.lifecycle.ViewModelProvider
 import com.framework.R
 import com.framework.analytics.UserExperiorController
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
 import com.framework.utils.hideKeyBoard
+import com.framework.views.zero.FragmentZeroCase
 import com.google.android.material.snackbar.Snackbar
+import com.framework.utils.hideKeyBoard
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
@@ -49,6 +54,7 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    setHasOptionsMenu(true)
     binding = DataBindingUtil.inflate(inflater, getLayout(), container, false)
     binding?.lifecycleOwner = this
     navigator = Navigator(baseActivity)
@@ -74,6 +80,7 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
       observable?.let { compositeDisposable.add(it) }
     }
   }
+
 
   override fun onResume() {
     super.onResume()
@@ -147,7 +154,7 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
 
     val fragmentTransaction = baseActivity.supportFragmentManager.beginTransaction()
     if (showAnim) {
-      fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+      fragmentTransaction?.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
     }
     if (addToBackStack) {
       fragmentTransaction.addToBackStack(fragment.javaClass.name)
@@ -202,7 +209,7 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
   }
 
   fun hideLoader() {
-    if (progressDialog != null && progressDialog?.isShowing!!) {
+    if (progressDialog != null && progressDialog?.isShowing()!!) {
       progressDialog?.dismiss()
     }
   }

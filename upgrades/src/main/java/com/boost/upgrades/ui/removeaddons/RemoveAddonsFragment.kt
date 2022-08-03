@@ -1,11 +1,11 @@
 package com.boost.upgrades.ui.removeaddons
 
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
@@ -24,6 +24,7 @@ class RemoveAddonsFragment : BaseFragment("MarketPlaceRemoveAddonsFragment"), Re
 
   lateinit var root: View
   private lateinit var viewModel: RemoveAddonsViewModel
+  private lateinit var removeAddonsViewModelFactory: RemoveAddonsViewModelFactory
   lateinit var removeAddonsAdapter: RemoveAddonsAdapter
 
   lateinit var localStorage: LocalStorage
@@ -43,11 +44,15 @@ class RemoveAddonsFragment : BaseFragment("MarketPlaceRemoveAddonsFragment"), Re
     root = inflater.inflate(R.layout.remove_addons_fragment, container, false)
 
 
-    viewModel = ViewModelProvider(requireActivity())[RemoveAddonsViewModel::class.java]
+    removeAddonsViewModelFactory =
+      RemoveAddonsViewModelFactory(requireNotNull(requireActivity().application))
+
+    viewModel = ViewModelProviders.of(requireActivity(), removeAddonsViewModelFactory)
+      .get(RemoveAddonsViewModel::class.java)
 
     removeAddonsAdapter = RemoveAddonsAdapter((activity as UpgradeActivity), ArrayList(), this)
 
-    localStorage = LocalStorage.getInstance(requireContext())!!
+    localStorage = LocalStorage.getInstance(context!!)!!
 
 //        cart_list = localStorage.getCartItems() as MutableList<UpdatesModel>?
 

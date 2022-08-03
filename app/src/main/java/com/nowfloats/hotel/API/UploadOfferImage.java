@@ -73,6 +73,7 @@ public class UploadOfferImage extends AsyncTask<Void, String, String> {
         try {
             OkHttpClient client = new OkHttpClient();
             InputStream in = new FileInputStream(file);
+
             byte[] buf;
             buf = new byte[in.available()];
             while (in.read(buf) != -1) ;

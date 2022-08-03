@@ -91,8 +91,14 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.PAYMENT_GATEWAY, FragmentType.DETAIL_KYC_VIEW, FragmentType.BUSINESS_KYC_VIEW, FragmentType.KYC_DETAILS, FragmentType.KYC_STATUS, FragmentType.CROP_IMAGE -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
-      FragmentType.KYC_DETAIL_NEW, FragmentType.SCAN_PAN_CARD -> ContextCompat.getDrawable(this, R.drawable.ic_round_close_white)
+      FragmentType.PAYMENT_GATEWAY, FragmentType.DETAIL_KYC_VIEW, FragmentType.BUSINESS_KYC_VIEW, FragmentType.KYC_DETAILS, FragmentType.KYC_STATUS, FragmentType.CROP_IMAGE -> ContextCompat.getDrawable(
+        this,
+        R.drawable.ic_back_arrow_new
+      )
+      FragmentType.KYC_DETAIL_NEW, FragmentType.SCAN_PAN_CARD -> ContextCompat.getDrawable(
+        this,
+        R.drawable.ic_round_close_white
+      )
       else -> super.getNavigationIcon()
     }
   }
@@ -106,6 +112,20 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
         R.string.business_kyc
       )
       else -> super.getToolbarTitle()
+    }
+  }
+
+
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    val toolbarMenu = menu ?: return super.onCreateOptionsMenu(menu)
+    val menuRes = getMenuRes() ?: return super.onCreateOptionsMenu(menu)
+    menuInflater.inflate(menuRes, toolbarMenu)
+    return true
+  }
+
+  open fun getMenuRes(): Int? {
+    return when (type) {
+      else -> null
     }
   }
 
@@ -175,7 +195,12 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
   }
 }
 
-fun Fragment.startFragmentPaymentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+fun Fragment.startFragmentPaymentActivity(
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean = false,
+  isResult: Boolean = false
+) {
   val intent = Intent(activity, PaymentGatewayContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -183,7 +208,12 @@ fun Fragment.startFragmentPaymentActivity(type: FragmentType, bundle: Bundle = B
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
-fun startFragmentPaymentActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean) {
+fun startFragmentPaymentActivityNew(
+  activity: Activity,
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean
+) {
   val intent = Intent(activity, PaymentGatewayContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -191,7 +221,11 @@ fun startFragmentPaymentActivityNew(activity: Activity, type: FragmentType, bund
   activity.startActivity(intent)
 }
 
-fun AppCompatActivity.startFragmentPaymentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
+fun AppCompatActivity.startFragmentPaymentActivity(
+  type: FragmentType,
+  bundle: Bundle = Bundle(),
+  clearTop: Boolean = false
+) {
   val intent = Intent(this, PaymentGatewayContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
