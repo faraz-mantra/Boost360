@@ -1,5 +1,6 @@
 package com.boost.marketplace.ui.popup.call_track
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -37,7 +38,7 @@ class CallTrackingHelpBottomSheet : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.layout_speak_expert_bottomsheet, container, false)
-        prefs = SharedPrefs(activity as FeatureDetailsActivity)
+        prefs = SharedPrefs(activity as Activity)
 
         return root
     }

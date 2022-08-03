@@ -3,16 +3,26 @@ package com.boost.marketplace.ui.pack_details
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Build
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.text.style.StrikethroughSpan
+import android.text.style.UnderlineSpan
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.Window
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.SimplePageTransformerSmall
 import com.boost.cart.adapter.ZoomOutPageTransformer
+import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.HorizontalMarginItemDecoration
@@ -24,13 +34,22 @@ import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityPackDetailsBinding
 import com.boost.marketplace.interfaces.DetailsFragmentListener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
+import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
+import com.boost.marketplace.ui.popup.call_track.RequestCallbackBottomSheet
 import com.bumptech.glide.Glide
+import com.framework.utils.RootUtil
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_COMPARE_PACKAGE_LOADED
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PAGE_VIEW
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_pack_details.*
+import kotlinx.android.synthetic.main.layout_black_for_savings.*
+import java.text.NumberFormat
+import java.util.*
 
 class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, ComparePacksViewModel>(),
     DetailsFragmentListener {
@@ -54,6 +73,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     var isOpenAddOnsFragment: Boolean = false
     var refreshViewPager: Boolean = false
 
+    val callTrackingHelpBottomSheet = CallTrackingHelpBottomSheet()
+    val requestCallbackBottomSheet = RequestCallbackBottomSheet()
 
     var bundleData: Bundles? = null
     var featuresList: List<FeaturesModel>? = null
@@ -75,6 +96,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     lateinit var benefitAdaptor: PackDetailsBenefitViewPagerAdapter
     lateinit var reviewAdaptor: TestimonialItemsAdapter
     lateinit var includedFeatureAdapter: IncludedFeatureAdapter
+    lateinit var packDetailsAdapter: PackDetailsFeatureAdapter
 
 
     companion object {
@@ -119,7 +141,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         howToUseAdapter = HowToActivateAdapter(this, ArrayList())
         faqAdapter = PackDetailsFaqAdapter(this, ArrayList())
         benefitAdaptor = PackDetailsBenefitViewPagerAdapter(ArrayList(), this)
-        includedFeatureAdapter = IncludedFeatureAdapter(this,ArrayList())
+        includedFeatureAdapter = IncludedFeatureAdapter(this, ArrayList())
+        packDetailsAdapter = PackDetailsFeatureAdapter(this, ArrayList())
 
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -144,8 +167,46 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         initializeHowToUseRecycler()
         initializeFAQRecycler()
         initializeIncludedFeature()
+        initializeFeatureAdapter()
         initMvvm()
 
+
+        val callExpertString = SpannableString("Have a query? Call an expert")
+
+        callExpertString.setSpan(
+            UnderlineSpan(),
+            callExpertString.length - 14,
+            callExpertString.length,
+            0
+        )
+        callExpertString.setSpan(
+            ForegroundColorSpan(ContextCompat.getColor(this, R.color.started_button_start)),
+            callExpertString.length - 14,
+            callExpertString.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        binding?.queryText?.text = callExpertString
+        query_text.setOnClickListener {
+            val from = 900
+            val to = 1800
+            val date = Date()
+            val c = Calendar.getInstance()
+            c.time = date
+            val t = c[Calendar.HOUR_OF_DAY] * 100 + c[Calendar.MINUTE]
+            val isBetween = to > from && t >= from && t <= to || to < from && (t >= from || t <= to)
+            if (isBetween) {
+                callTrackingHelpBottomSheet.show(
+                    supportFragmentManager,
+                    CallTrackingHelpBottomSheet::class.java.getName()
+                )
+            } else {
+                requestCallbackBottomSheet.show(
+                    supportFragmentManager,
+                    RequestCallbackBottomSheet::class.java.getName()
+                )
+            }
+        }
         binding?.back?.setOnClickListener {
             onBackPressed()
         }
@@ -204,11 +265,20 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     }
 
     private fun initializeFAQRecycler() {
-        val gridLayoutManager = GridLayoutManager(applicationContext, 1)
-        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        var layoutManager1 = LinearLayoutManager(applicationContext)
+        layoutManager1.orientation = LinearLayoutManager.VERTICAL
         binding?.faqRecycler?.apply {
-            layoutManager = gridLayoutManager
+            layoutManager = layoutManager1
             binding!!.faqRecycler.adapter = faqAdapter
+        }
+    }
+
+    private fun initializeFeatureAdapter() {
+        var layoutManager1 = LinearLayoutManager(this)
+        layoutManager1.orientation = LinearLayoutManager.VERTICAL
+        binding?.packRecycler?.apply {
+            layoutManager = layoutManager1
+            binding!!.packRecycler.adapter = packDetailsAdapter
         }
     }
 
@@ -247,8 +317,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             Glide.with(binding?.packageImg!!).load(bundleData?.primary_image!!.url)
                 .into(binding?.packageImg!!)
             binding?.title?.text = bundleData?.name
-            if(bundleData !=null){
-                if(bundleData?.included_features != null){
+            if (bundleData != null) {
+                if (bundleData?.included_features != null) {
 
                 }
             }
@@ -256,8 +326,19 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 binding?.containerKeyBenefits?.visibility = View.VISIBLE
                 benefitAdaptor.addupdates(bundleData?.benefits!!)
                 benefitAdaptor.notifyDataSetChanged()
-            }else{
+            } else {
                 binding?.containerKeyBenefits?.visibility = View.GONE
+            }
+            if (bundleData?.included_features != null && bundleData?.included_features?.isNotEmpty()!!) {
+                binding?.rvIncludedFeatures?.visibility = VISIBLE
+                binding?.tvPremiumFeaturesNo?.visibility = VISIBLE
+                binding?.tvPremiumFeaturesNo?.text =
+                    bundleData?.included_features?.size!!.toString() + "PREMIUM FEATURES ideal for small businesses that want to get started with online sales."
+                includedFeatureAdapter.addupdates(bundleData?.included_features!!)
+                includedFeatureAdapter.notifyDataSetChanged()
+            } else {
+                binding?.rvIncludedFeatures?.visibility = View.GONE
+                binding?.tvPremiumFeaturesNo?.visibility = GONE
             }
 
             if (bundleData != null && bundleData?.how_to_activate != null && bundleData?.how_to_activate?.isNotEmpty()!!) {
@@ -291,20 +372,145 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 binding?.whatOurCustomerContainer?.visibility = View.GONE
 
             }
-            if (bundleData != null && bundleData?.frequently_asked_questions != null && bundleData?.frequently_asked_questions?.isNotEmpty()!! ) {
+            if (bundleData != null && bundleData?.frequently_asked_questions != null && bundleData?.frequently_asked_questions?.isNotEmpty()!!) {
                 faq_container.visibility = View.VISIBLE
-                val faq =bundleData?.frequently_asked_questions!!
+                val faq = bundleData?.frequently_asked_questions!!
                 faqAdapter.addupdates(faq)
                 faqAdapter.notifyDataSetChanged()
-            }else{
+            } else {
                 faq_container.visibility = View.GONE
 
             }
+
+
+            val itemsIds = arrayListOf<String>()
+            for (item in bundleData?.included_features!!) {
+                itemsIds.add(item.feature_code)
+            }
+            val minMonth: Int =
+                if (!prefs.getYearPricing() && bundleData?.min_purchase_months != null && bundleData?.min_purchase_months!! > 1) bundleData?.min_purchase_months!! else 1
+            CompositeDisposable().add(
+                AppDatabase.getInstance(this.application)!!
+                    .featuresDao()
+                    .getallFeaturesInList(itemsIds)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+//                            if(it.size>3) {
+//                                holder.tv_inlcuded_add_on.setText("+" + (it.size - 3) + "more")
+//                            }else{
+//                                holder.tv_inlcuded_add_on.visibility = View.GONE
+//                            }
+
+                            if (it.isNotEmpty()) {
+                                binding?.packTitleLayout?.visibility = GONE
+                            } else {
+                                packDetailsAdapter.addupdates(it)
+                                binding?.packRecycler?.adapter = packDetailsAdapter
+                            }
+//                            Glide.with(holder.itemView.context).load(if(it.size>=1)it[0].primary_image else "").into(holder.image1)
+//                            Glide.with(holder.itemView.context).load(if(it.size>=2)it[1].primary_image else "").into(holder.image2)
+//                            Glide.with(holder.itemView.context).load(if(it.size>=3)it[2].primary_image else "").into(holder.image3)
+//                            val list = StringBuilder()
+//                            for (singleItem in it) {
+//                                if(it.size>1 && !list.toString().isNullOrEmpty()){
+//                                    list.append(", ")
+//                                }
+//                                list.append(singleItem.name)
+//                            }
+//                            holder.package_feature_name_tv.setText(list.toString())
+                            for (singleItem in it) {
+                                for (item in bundleData?.included_features!!) {
+                                    if (singleItem.feature_code == item.feature_code) {
+                                        originalBundlePrice += Utils.priceCalculatorForYear(
+                                            RootUtil.round(
+                                                (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
+                                                2
+                                            ) * minMonth, singleItem.widget_type, this
+                                        )
+                                    }
+                                }
+                            }
+                            if (bundleData?.overall_discount_percent!! > 0) {
+                                offeredBundlePrice = RootUtil.round(
+                                    originalBundlePrice - (originalBundlePrice * bundleData?.overall_discount_percent!! / 100.0),
+                                    2
+                                )
+                                binding?.containerBlack?.visibility = View.VISIBLE
+
+
+                                tv2.setText("SAVING" + bundleData?.overall_discount_percent!!.toString() + "%")
+                            } else {
+                                offeredBundlePrice = originalBundlePrice
+                                binding?.containerBlack?.visibility = View.GONE
+
+                            }
+
+                            if (!prefs.getYearPricing() && bundleData?.min_purchase_months != null && bundleData?.min_purchase_months!! > 1) {
+                                binding?.price?.setText(
+                                    "₹" +
+                                            NumberFormat.getNumberInstance(Locale.ENGLISH)
+                                                .format(offeredBundlePrice) +
+                                            Utils.yearlyOrMonthlyOrEmptyValidity(
+                                                "",
+                                                this,
+                                                bundleData?.min_purchase_months!!
+                                            )
+                                )
+                                if (offeredBundlePrice != originalBundlePrice) {
+                                    spannableString(
+                                        originalBundlePrice,
+                                        bundleData?.min_purchase_months!!
+                                    )
+                                    binding?.mrpPrice?.visibility = View.VISIBLE
+                                } else {
+                                    binding?.mrpPrice?.visibility = View.GONE
+                                }
+                            } else {
+                                binding
+                                    ?.price?.setText(
+                                    "₹" +
+                                            NumberFormat.getNumberInstance(Locale.ENGLISH)
+                                                .format(offeredBundlePrice)
+                                            + Utils.yearlyOrMonthlyOrEmptyValidity("", this)
+                                )
+                                if (offeredBundlePrice != originalBundlePrice) {
+                                    spannableString(originalBundlePrice)
+                                    binding?.mrpPrice?.visibility = View.VISIBLE
+                                } else {
+                                    binding?.price?.visibility = View.GONE
+                                }
+                            }
+
+                        },
+                        {
+                            it.printStackTrace()
+                        }
+                    )
+            )
+
+
         }
 
-
     }
+    fun spannableString(
+        value: Double,
+        minMonth: Int = 1
+    ) {
+        val origCost = SpannableString(
+            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value)
+                    + Utils.yearlyOrMonthlyOrEmptyValidity("", this, minMonth)
+        )
 
+        origCost.setSpan(
+            StrikethroughSpan(),
+            0,
+            origCost.length,
+            0
+        )
+        binding?.mrpPrice?.setText(origCost)
+    }
     override fun imagePreviewPosition(list: ArrayList<String>, pos: Int) {
         TODO("Not yet implemented")
     }

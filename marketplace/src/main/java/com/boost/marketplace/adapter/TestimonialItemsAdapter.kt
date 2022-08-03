@@ -39,7 +39,7 @@ class TestimonialItemsAdapter(val list: ArrayList<Testimonial>) :
     }
 
     class PagerVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var name = itemView.findViewById<TextView>(R.id.tv_benefit_title)
+        var name = itemView.findViewById<TextView>(R.id.title)
     }
 
 }
