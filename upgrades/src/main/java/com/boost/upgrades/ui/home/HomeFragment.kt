@@ -24,7 +24,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.rest.repository.AzureWebsiteNewRepository
@@ -91,7 +91,6 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
 
     lateinit var root: View
     private lateinit var viewModel: HomeViewModel
-    private lateinit var homeViewModelFactory: HomeViewModelFactory
 
     lateinit var retrofit: Retrofit
     lateinit var ApiService: ApiInterface
@@ -135,10 +134,8 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
         savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.home_fragment, container, false)
-        homeViewModelFactory = HomeViewModelFactory(requireNotNull(requireActivity().application))
+        viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
 
-        viewModel = ViewModelProviders.of(requireActivity(), homeViewModelFactory)
-            .get(HomeViewModel::class.java)
         upgradeAdapter = UpgradeAdapter((activity as UpgradeActivity), ArrayList())
         addonsCategoryAdapter =
             AddonsCategoryAdapter((activity as UpgradeActivity), ArrayList(), this)

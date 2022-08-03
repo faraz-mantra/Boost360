@@ -10,7 +10,7 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
@@ -43,7 +43,8 @@ class AutoRenewSubsFragment : BaseFragment("MarketPlaceAutoRenewSubsFragment") {
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
-    viewModel = ViewModelProviders.of(this).get(AutoRenewViewModel::class.java)
+    viewModel = ViewModelProvider(requireActivity())[AutoRenewViewModel::class.java]
+
 
     if (arguments != null && requireArguments().containsKey("title")) {
       autoRenewPageTitle.text = requireArguments().getString("title")

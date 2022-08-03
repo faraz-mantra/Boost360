@@ -1,28 +1,27 @@
 package com.boost.upgrades.ui.confirmation
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.presignin.helper.ProcessFPDetails
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
-
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.ui.popup.NeedHelpPopUpFragment
 import com.boost.upgrades.utils.SharedPrefs
-import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.upgrades.utils.WebEngageController
 import com.framework.analytics.SentryController
 import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
-import com.framework.webengageconstant.*
-import es.dmoral.toasty.Toasty
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_CHECK_ACTIVATION_STATUS_CLICKED
+import com.framework.webengageconstant.Check_Activation_Status
+import com.framework.webengageconstant.NO_EVENT_VALUE
 import kotlinx.android.synthetic.main.order_confirmation_fragment.*
 import org.json.JSONObject
 import java.text.SimpleDateFormat
@@ -71,7 +70,8 @@ class OrderConfirmationFragment : BaseFragment("MarketPlaceOrderConfirmationFrag
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
 
-    viewModel = ViewModelProviders.of(this).get(OrderConfirmationViewModel::class.java)
+    viewModel = ViewModelProvider(requireActivity())[OrderConfirmationViewModel::class.java]
+
     viewModel.emptyCurrentCart((activity as UpgradeActivity).application);
 
     //clear CartRelatedInfo

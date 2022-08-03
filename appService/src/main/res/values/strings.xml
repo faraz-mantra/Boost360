@@ -1230,9 +1230,6 @@
   <string name="data_updated_successfully">Data updated successfully</string>
   <string name="please_fill_data_in_the_fields_highlighted_in_red">Please fill data in the fields highlighted in red</string>
   <string name="please_fill_valid_dates">Please fill valid dates. End time cannot be equal or before start Time !</string>
-  <string name="asterisk">*</string>
-  <string name="unable_to_fetch_default_gst_slab">Unable to fetch default gst slab</string>
-  <string name="max_limit_of_8_images_is_reached">Maximum limit of 8 images is reached</string>
   <string name="business_address">Business Address</string>
   <string name="business_address_not_added">Business address not added</string>
   <string name="please_add_business_address_to_let_your_customers_find_your_location">Please add business address to let your customers find your location.</string>
