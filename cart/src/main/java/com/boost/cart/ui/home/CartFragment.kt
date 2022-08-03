@@ -35,7 +35,6 @@ import com.boost.cart.interfaces.ApplyCouponListener
 import com.boost.cart.interfaces.CartFragmentListener
 import com.boost.cart.ui.autorenew.AutoRenewSubsFragment
 import com.boost.cart.ui.checkoutkyc.CheckoutKycFragment
-import com.boost.cart.ui.compare.ComparePackageFragment
 import com.boost.cart.ui.packages.PackageFragment
 import com.boost.cart.ui.popup.CouponPopUpFragment
 import com.boost.cart.ui.popup.GSTINPopUpFragment
@@ -859,15 +858,18 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         }
 
         mp_cart_compare_packs.setOnClickListener {
-            val args = Bundle()
-            args.putStringArrayList(
-                "userPurchsedWidgets",
-                arguments?.getStringArrayList("userPurchsedWidgets")
-            )
-            (activity as CartActivity).addFragmentHome(
-                ComparePackageFragment.newInstance(),
-                Constants.COMPARE_FRAGMENT, args
-            )
+//            val args = Bundle()
+//            args.putStringArrayList(
+//                "userPurchsedWidgets",
+//                arguments?.getStringArrayList("userPurchsedWidgets")
+//            )
+//            (activity as CartActivity).addFragmentHome(
+//                ComparePackageFragment.newInstance(),
+//                Constants.COMPARE_FRAGMENT, args
+//            )
+            val intent = Intent(context, Class.forName("com.boost.marketplace.ui.comparePacksV3.ComparePacksV3Activity"))
+            intent.putExtra("expCode", (activity as CartActivity).experienceCode)
+            startActivity(intent)
         }
         cart_spk_to_expert.setOnClickListener {
             speakToExpert(prefs.getExpertContact())
