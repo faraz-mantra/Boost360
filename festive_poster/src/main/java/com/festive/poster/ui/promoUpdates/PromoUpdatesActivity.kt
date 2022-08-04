@@ -68,7 +68,7 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoU
                 onBackPressed()
             }
             binding?.ivLove -> {
-                addFragmentReplace(binding?.container?.id, FavouriteListFragment.newInstance(), true)
+                addFragmentReplace(binding?.container?.id, FavouriteListFragment.newInstance(), true, showAnim = true)
             }
         }
     }
