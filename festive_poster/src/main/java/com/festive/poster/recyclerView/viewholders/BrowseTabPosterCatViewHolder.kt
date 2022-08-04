@@ -18,6 +18,7 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.framework.base.BaseActivity
+import com.framework.utils.loadFromUrl
 import com.framework.views.itemdecoration.LineItemDecoration
 import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
@@ -27,8 +28,8 @@ class BrowseTabPosterCatViewHolder(binding: ListItemBrowseTabTemplateCatBinding)
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     val model = item as BrowseTabCategory
+    binding.ivIcon.loadFromUrl(model.thumbnailUrl)
 
-//    Picasso.get().load(model.tagsModel.icon).into(binding.ivIcon)
     binding.tvTitle.text=model.name
     binding.tvSize.text = "(${model.templates?.size})"
     binding.root.setOnClickListener {

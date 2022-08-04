@@ -7,9 +7,9 @@ import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.RecyclerViewActionType
-import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.FragmentBrowseAllBinding
 import com.festive.poster.models.*
+import com.festive.poster.models.response.TemplateSaveActionBody
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
@@ -21,11 +21,9 @@ import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.convertListObjToString
-import com.framework.utils.convertStringToList
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.Promotional_Update_Browse_All_Loaded
 import com.framework.webengageconstant.Promotional_Update_Category_Click
-import com.google.gson.Gson
 
 class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesViewModel>(),RecyclerItemClickListener {
 
@@ -118,7 +116,7 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
     private fun switchToSelectedItem() {
         val selectedItem = categoryList?.get(selectedPos)
         selectedItem?.isSelected =true
-        binding?.tvCatTitle?.text = selectedItem?.id
+        binding?.tvCatTitle?.text = selectedItem?.name
         binding?.tvCatSize?.text = selectedItem?.templates?.size.toString()
         categoryList?.get(selectedPos)?.templates?.let {
             posterRvAdapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,
@@ -142,16 +140,16 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
                 switchToSelectedItem()
             }
             RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal->{
-                posterWhatsappShareClicked(item as PosterModel,
+                posterWhatsappShareClicked(item as TemplateUi,
                     requireActivity() as BaseActivity<*, *>
                 )
             }
             RecyclerViewActionType.POST_CLICKED.ordinal-> {
-                posterPostClicked(item as PosterModel, requireActivity() as AppBaseActivity<*, *>)
+                posterPostClicked(item as TemplateUi, requireActivity() as AppBaseActivity<*, *>)
                 }
 
             RecyclerViewActionType.POSTER_LOVE_CLICKED.ordinal->{
-                callFavApi(item as PosterModel)
+                callFavApi(item as TemplateUi,position)
             }
         }
 
@@ -161,11 +159,17 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
 
 
 
-    private fun callFavApi(posterModel: PosterModel) {
-        viewModel?.favPoster(session?.fPID,session?.fpTag,posterModel.id,)?.observe(viewLifecycleOwner){
+
+
+    private fun callFavApi(posterModel: TemplateUi, position: Int) {
+        showProgress()
+        viewModel?.templateSaveAction(TemplateSaveActionBody.ActionType.FAVOURITE,
+        posterModel.isFavourite.not(),posterModel.id)?.observe(viewLifecycleOwner){
             if (it.isSuccess()){
-                posterModel.details?.Favourite= posterModel.details?.Favourite?.not() == true
+                posterModel.isFavourite= posterModel.isFavourite.not() == true
+                posterRvAdapter?.notifyItemChanged(position)
             }
+            hideProgress()
         }
 
     }

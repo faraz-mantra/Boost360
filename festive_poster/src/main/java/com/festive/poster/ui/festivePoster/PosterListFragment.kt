@@ -201,8 +201,9 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
   }
 
   private fun downloadSelectedPoster() {
-    SvgUtils.shareUncompressedSvg(selectedPosterModelForDownload?.variants?.firstOrNull()?.svgUrl,
-      selectedPosterModelForDownload,requireContext())
+    SvgUtils.shareUncompressedSvg(
+      selectedPosterModelForDownload?.variants?.firstOrNull()?.svgUrl,
+      selectedPosterModelForDownload)
   }
 
   override fun onRequestPermissionsResult(

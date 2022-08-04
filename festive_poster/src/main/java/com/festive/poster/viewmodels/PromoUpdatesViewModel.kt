@@ -39,6 +39,8 @@ class PromoUpdatesViewModel: BaseViewModel() {
     val browseAllLData:LiveData<ArrayList<CategoryUi>> get() =
         browseAllMData
 
+    private val _favData=MutableLiveData<ArrayList<CategoryUi>>()
+    val favData:LiveData<ArrayList<CategoryUi>> get() = _favData
 
 
     suspend fun getTemplates(floatingPointId: String?, floatingPointTag: String?,
@@ -174,9 +176,9 @@ class PromoUpdatesViewModel: BaseViewModel() {
             }
         }
 
-    private suspend fun getTemplates()=
+    private suspend fun getTemplates(isFav:Boolean?=null)=
         suspendCoroutine<List<GetTemplatesResponseV2Template>>{cont->
-            NowFloatsRepository.getTemplatesV2().getResponse {
+            NowFloatsRepository.getTemplatesV2(isFav).getResponse {
                 if (it.isSuccess()){
                     val response = it as? GetTemplatesResponseV2
                     cont.resume(response!!.Result.templates)
@@ -201,10 +203,51 @@ class PromoUpdatesViewModel: BaseViewModel() {
                     uicat.setTemplates(dbTemplates.asDomainModels())
                 }
                 browseAllMData.postValue(categories.toArrayList())
+
             }catch (e:Exception){
                 e.printStackTrace()
             }
         }
     }
+
+
+    fun getFavTemplates(){
+        viewModelScope.launch {
+            try {
+                val categories = getCategories().toArrayList()
+                val allTemplates = getTemplates(isFav=true)
+
+                val allUiTemplates = ArrayList<TemplateUi>()
+
+                categories.forEach {uicat->
+                    val dbTemplates = allTemplates.filter { template->
+                        template.categories.find {dbcat->
+                            dbcat.id==uicat.id
+                        }!=null
+                    }
+                    val domainModels =dbTemplates.asDomainModels()
+                    uicat.setTemplates(domainModels)
+                    allUiTemplates.addAll(domainModels)
+                }
+
+                val allDummyCat = CategoryUi(
+                    iconUrl = "",
+                    id="",
+                    name = "All",
+                    thumbnailUrl = "",
+                    templates = allUiTemplates
+                )
+
+                categories.add(0,allDummyCat)
+
+                _favData.postValue(categories.toArrayList())
+
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
+    }
+
+
 
 }

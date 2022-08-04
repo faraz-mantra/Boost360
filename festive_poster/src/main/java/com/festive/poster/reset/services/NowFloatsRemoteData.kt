@@ -60,4 +60,7 @@ interface NowFloatsRemoteData {
 
   @POST(EndPoints.GET_TEMPLATES_V2)
   fun getTemplatesV2(@Body body:GetTemplatesV2Body):Observable<Response<GetTemplatesResponseV2>>
+
+  @POST(EndPoints.TEMPLATE_SAVE_ACTION)
+  fun templateSaveAction(@Body body: TemplateSaveActionBody):Observable<Response<BaseResponse>>
 }

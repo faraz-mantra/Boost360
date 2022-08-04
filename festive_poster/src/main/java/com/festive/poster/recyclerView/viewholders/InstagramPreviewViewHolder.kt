@@ -3,15 +3,12 @@ package com.festive.poster.recyclerView.viewholders
 import androidx.core.view.isVisible
 import com.festive.poster.R
 import com.festive.poster.databinding.SocialPreviewInstagramBinding
-import com.festive.poster.databinding.SocialPreviewTwitterBinding
 import com.festive.poster.models.promoModele.SocialPreviewModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
-import com.festive.poster.utils.SvgUtils
 import com.framework.extensions.gone
 import com.framework.utils.highlightHashTag
-import com.framework.utils.loadUsingGlide
-import java.io.File
+import com.framework.utils.loadFromFile
 
 class InstagramPreviewViewHolder(binding: SocialPreviewInstagramBinding) :
     AppBaseRecyclerViewHolder<SocialPreviewInstagramBinding>(binding) {
@@ -25,7 +22,7 @@ class InstagramPreviewViewHolder(binding: SocialPreviewInstagramBinding) :
             binding.ivPoster.gone()
         }else{
             binding.materialCardView.minimumHeight=800
-            binding.ivPoster.loadUsingGlide(model.posterImg,false)
+            binding.ivPoster.loadFromFile(model.posterImg,false)
         }
         binding.materialCardView.requestLayout()
         binding.tvCaption.isVisible = model.desc.isNullOrEmpty().not()

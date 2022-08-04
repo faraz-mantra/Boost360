@@ -175,7 +175,6 @@ object SvgUtils {
     fun shareUncompressedSvg(
             url: String?,
             model: PosterModel?,
-            context: Context,
             packageName:String?=null
         ) {
         if (url==null||model==null){
@@ -184,28 +183,50 @@ object SvgUtils {
         url.let {
             CoroutineScope(Dispatchers.IO).launch {
                 val b = svgToBitmap(model)
-                withContext(Dispatchers.Default) {
-                    when (packageName) {
-                        PackageNames.INSTAGRAM ->{
-                            b?.shareAsImage(
-                                PackageNames.INSTAGRAM,
-                                text = model.greeting_message
-                            )
-                        }
-                        PackageNames.WHATSAPP ->{
-                            b?.shareAsImage(
-                                PackageNames.WHATSAPP,
-                                text = RegexUtils.addStarToNumbers(model.greeting_message)
-                            )
-                        }
-                        "" -> b?.shareAsImage(text = model.greeting_message)
-                        else -> b?.saveImageToStorage(showNoti = true)
-                    }
-                }
+                shareBitmap(b,model.greeting_message,packageName)
             }
         }
 
+    }
+
+    fun shareUncompressedSvg(
+        svgUrl: String?,
+        msg:String?=null,
+        packageName:String?=null
+    ) {
+        if (svgUrl==null){
+            return
+        }
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val b = svgToBitmap(svgUrl)
+                shareBitmap(b,msg,packageName)
             }
+
+
+    }
+
+    suspend fun shareBitmap(b:Bitmap?,msg:String?,packageName: String?,){
+        withContext(Dispatchers.Default) {
+            when (packageName) {
+                PackageNames.INSTAGRAM ->{
+                    b?.shareAsImage(
+                        PackageNames.INSTAGRAM,
+                        text = msg
+                    )
+                }
+                PackageNames.WHATSAPP ->{
+                    b?.shareAsImage(
+                        PackageNames.WHATSAPP,
+                        text = RegexUtils.addStarToNumbers(msg)
+                    )
+                }
+                "" -> b?.shareAsImage(text = msg)
+                else -> b?.saveImageToStorage(showNoti = true)
+            }
+        }
+
+    }
 
 
 

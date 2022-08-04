@@ -1,20 +1,14 @@
 package com.festive.poster.ui.promoUpdates.holders
 
-import android.widget.FrameLayout
-import androidx.cardview.widget.CardView
-import androidx.core.view.isVisible
 import com.festive.poster.R
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.ListItemTemplateForFavBinding
-import com.festive.poster.databinding.ListItemTemplateForRvBinding
 import com.festive.poster.models.BrowseAllTemplate
-import com.festive.poster.models.PosterModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.ui.promoUpdates.edit_post.EditPostActivity
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
-import com.framework.utils.DateUtils
 import com.framework.webengageconstant.Promotional_Update_Edit_Click
 import com.framework.webengageconstant.Promotional_Update_Post_Click
 import com.framework.webengageconstant.Promotional_Update_WhatsApp_Share_Click

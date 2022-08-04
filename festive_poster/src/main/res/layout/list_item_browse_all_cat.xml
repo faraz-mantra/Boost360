@@ -18,7 +18,6 @@
             >
 
             <com.google.android.material.card.MaterialCardView
-                app:cardBackgroundColor="@color/colorPrimary"
                 app:cardCornerRadius="@dimen/size_10"
                 android:layout_gravity="center"
                 app:cardElevation="@dimen/size_4"
@@ -27,7 +26,6 @@
 
                 <com.framework.views.customViews.CustomImageView
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_dummy_browse_cat_icon"
                     android:id="@+id/iv_icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
