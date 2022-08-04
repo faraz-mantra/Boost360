@@ -1097,7 +1097,7 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                                         it1.firstOrNull { it.featureCode.equals(it3.feature_code)}.apply {
                                             it3.expiryDate=this?.expiryDate
                                             it3.activatedDate=this?.activatedDate
-                                            it3.status=this?.featureState
+                                            it3.featureState=this?.featureState
                                         };it3
                                     }
                                     activePremiumWidgetList.postValue(listFeaturesModel)

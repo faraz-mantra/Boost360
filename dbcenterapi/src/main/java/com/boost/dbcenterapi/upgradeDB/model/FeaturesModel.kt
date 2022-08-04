@@ -96,7 +96,16 @@ data class FeaturesModel(
     var how_to_use_steps: String? = null,
 
     @ColumnInfo(name = "how_to_use_title")
-    var how_to_use_title: String? = null
+    var how_to_use_title: String? = null,
+
+    @ColumnInfo(name = "expiryDate")
+    var expiryDate: String? = null,
+
+    @ColumnInfo(name = "activatedDate")
+    var activatedDate: String? = null,
+
+    @ColumnInfo(name = "featureState")
+    var featureState: Int? = null
 
 ) : Serializable, AppBaseRecyclerViewItem {
 
@@ -104,10 +113,6 @@ data class FeaturesModel(
         return RecyclerViewItemType.FEATURES_MODEL.ordinal
 
     }
-
-    var expiryDate: String? = null
-    var activatedDate: String? = null
-    var status: Int? = null
 
 
 }

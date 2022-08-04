@@ -429,7 +429,7 @@
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
-                        tools:visibility="gone"
+                        tools:visibility="visible"
                         android:visibility="gone"
                         android:background="@drawable/rounded_curve_bg"
                         app:layout_constraintTop_toBottomOf="@id/savings">

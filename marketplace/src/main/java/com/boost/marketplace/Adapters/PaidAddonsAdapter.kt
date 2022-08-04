@@ -50,6 +50,15 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
     if (list.size - 1 == position) {
       holder.view.visibility = View.GONE
     }
+    if (cryptocurrencyItem.featureState !=null && cryptocurrencyItem.featureState == 1){
+      holder.itemView.visibility=View.VISIBLE
+      holder.itemView.layoutParams =
+        RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+    }
+    else{
+      holder.itemView.visibility=View.GONE
+      holder.itemView.layoutParams = RecyclerView.LayoutParams(0, 0)
+    }
     holder.mainlayout.setOnClickListener {
       if (holder.detailsView.visibility==View.GONE) {
         TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
@@ -80,7 +89,7 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
         list.get(position).primary_image)
         item.expiryDate=list.get(position).expiryDate
         item.activatedDate= list.get(position).activatedDate
-        item.status=  list.get(position).status
+        item.featureState=  list.get(position).featureState
       myAddonsListener.onPaidAddonsClicked(item)
     }
   }
@@ -109,7 +118,7 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
       val date: String? =DateUtils.parseDate(updateModel.expiryDate, DateUtils.FORMAT_SERVER_DATE1, DateUtils.FORMAT1_DD_MM_YYYY)
       validity2.text= "Valid till " + date
       Glide.with(context).load(updateModel.primary_image).into(image)
-      if (updateModel.status == 1) {
+      if (updateModel.featureState == 1) {
         img1.setImageResource(R.drawable.ic_active)
       }
       else {

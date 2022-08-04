@@ -1,6 +1,7 @@
 package com.boost.marketplace.ui.My_Plan
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +11,7 @@ import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.Utils
 import com.framework.models.BaseViewModel
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -67,19 +69,36 @@ class MyCurrentPlanViewModel(): BaseViewModel() {
                         compositeDisposable.add(
                             AppDatabase.getInstance(application)!!
                                 .featuresDao()
-                                .getallActiveFeatures(list, true)
+                                .getallActiveFeatures1(list)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .doOnSuccess {it2->
-                                    val listFeaturesModel=it2.map {it3->
-                                         it1.firstOrNull { it.featureCode.equals(it3.feature_code)}.apply {
-                                            it3.expiryDate=this?.expiryDate
-                                             it3.activatedDate=this?.activatedDate
-                                             it3.status=this?.featureState
-                                        };it3
+                                .doOnSuccess { it2 ->
+                                    val listFeaturesModel = it2.map { it3 ->
+                                        it1.firstOrNull { it.featureCode.equals(it3.feature_code) }
+                                            .apply {
+                                                it3.expiryDate = this?.expiryDate
+                                                it3.activatedDate = this?.activatedDate
+                                                it3.featureState = this?.featureState
+                                            };it3
+                                    }
+                                    Completable.fromAction {
+                                        AppDatabase.getInstance(application)!!
+                                            .featuresDao()
+                                            .insertAllFeatures(listFeaturesModel)
+                                    }
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .doOnComplete {
+                                            Log.i("insertAllFeatures", "Successfully")
+                                            activePremiumWidgetList.postValue(listFeaturesModel)
+                                            updatesLoader.postValue(false)
+
+                                        }.doOnError {
+                                            updatesError.postValue(it.message)
+                                            updatesLoader.postValue(false)
                                         }
-                                    activePremiumWidgetList.postValue(listFeaturesModel)
-                                    updatesLoader.postValue(false)
+                                        .subscribe()
+
                                 }
                                 .doOnError {
                                     updatesError.postValue(it.message)
@@ -91,7 +110,7 @@ class MyCurrentPlanViewModel(): BaseViewModel() {
                         compositeDisposable.add(
                             AppDatabase.getInstance(application)!!
                                 .featuresDao()
-                                .getallActiveFeatures(list, false)
+                                .getallActiveFeatures1(list)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .doOnSuccess {it2->
@@ -99,11 +118,27 @@ class MyCurrentPlanViewModel(): BaseViewModel() {
                                         it1.firstOrNull { it.featureCode.equals(it3.feature_code)}.apply {
                                             it3.expiryDate=this?.expiryDate
                                             it3.activatedDate=this?.activatedDate
-                                            it3.status=this?.featureState
+                                            it3.featureState=this?.featureState
                                         };it3
                                     }
-                                    activeFreeWidgetList.postValue(listFeaturesModel)
-                                    updatesLoader.postValue(false)
+                                    Completable.fromAction {
+                                        AppDatabase.getInstance(application)!!
+                                            .featuresDao()
+                                            .insertAllFeatures(listFeaturesModel)
+                                    }
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .doOnComplete {
+                                            Log.i("insertAllFeatures", "Successfully")
+                                            activeFreeWidgetList.postValue(listFeaturesModel)
+                                            updatesLoader.postValue(false)
+
+                                        }.doOnError {
+                                            updatesError.postValue(it.message)
+                                            updatesLoader.postValue(false)
+                                        }
+                                        .subscribe()
+
                                 }
                                 .doOnError {
                                     updatesError.postValue(it.message)

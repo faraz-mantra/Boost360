@@ -230,16 +230,16 @@ class MyCurrentPlanActivity :
                     binding?.shimmerViewHistory?.visibility = View.GONE
                     binding?.nestedscroll?.visibility=View.VISIBLE
                 }
-                binding?.paidTitle1?.text = totalPaidItemList!!.size.toString() + " Premium add-ons"
-                binding?.paidSubtitle1?.text =
-                    totalPaidItemList!!.size.toString() + " Activated, 0 Syncing and 0 needs Attention"
+                binding?.paidTitle1?.text = totalPaidItemList!!.size.toString() + " Active features"
+//                binding?.paidSubtitle1?.text =
+//                    totalPaidItemList!!.size.toString() + " Activated, 0 Syncing and 0 needs Attention"
             } else {
                 if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
                     binding?.shimmerViewHistory?.stopShimmer()
                     binding?.shimmerViewHistory?.visibility = View.GONE
                 }
                 binding?.paidTitle1?.text = "No Premium add-ons active."
-                binding?.paidSubtitle1?.text = "check out the recommended add-ons for your business"
+//                binding?.paidSubtitle1?.text = "check out the recommended add-ons for your business"
             }
 
             if (totalPaidItemList != null) {
@@ -255,9 +255,9 @@ class MyCurrentPlanActivity :
         viewModel.getActiveFreeWidgets().observe(this,androidx.lifecycle.Observer{
             totalFreeItemList = it
             totalActiveFreeWidgetCount = totalFreeItemList!!.size
-            binding?.paidTitle?.text = totalActiveFreeWidgetCount.toString() + " Free Add-ons"
-            binding?.paidSubtitle?.text =
-                totalActiveFreeWidgetCount!!.toString() + " Activated, 0 Syncing and 0 needs Attention"
+            binding?.paidTitle?.text = totalActiveFreeWidgetCount.toString() + " Inactive features"
+//            binding?.paidSubtitle?.text =
+//                totalActiveFreeWidgetCount!!.toString() + " Activated, 0 Syncing and 0 needs Attention"
             if (totalFreeItemList != null) {
                 if (totalFreeItemList!!.size > 0) {
                     if (binding?.shimmerViewHistory?.isShimmerStarted == true) {

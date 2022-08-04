@@ -29,8 +29,8 @@
 
             <RelativeLayout
                 android:id="@+id/imageLayout"
-                android:layout_width="70dp"
-                android:layout_height="67dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_marginStart="13dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +65,7 @@
                         android:id="@+id/img1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_tick_green" />
+                        android:src="@drawable/ic_checked" />
 
                     <TextView
                         android:id="@+id/title"
@@ -81,9 +81,10 @@
 
                 <TextView
                     android:id="@+id/paid_addons_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:textFontWeight="600"
+                    android:maxLines="2"
                     android:fontFamily="@font/regular"
                     android:lineSpacingExtra="1.3sp"
                     android:textColor="@color/common_text_color"
@@ -118,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginRight="@dimen/_15ssp"
-                android:background="@drawable/ic_shape"
+                android:src="@drawable/ic_arrow_myplanv3"
                 android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -164,8 +165,11 @@
         <View
             android:id="@+id/paid_single_dummy_view"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_3sdp"
-            android:background="@drawable/view_dot_lines_bg"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/bg_color_f4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
