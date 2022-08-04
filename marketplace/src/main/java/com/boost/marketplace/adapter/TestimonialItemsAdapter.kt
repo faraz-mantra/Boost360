@@ -13,7 +13,7 @@ class TestimonialItemsAdapter(val list: ArrayList<Testimonial>) :
     RecyclerView.Adapter<TestimonialItemsAdapter.PagerVH>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerVH {
-        val item = View.inflate(parent.context, R.layout.pack_details_testimonials, null)
+        val item = View.inflate(parent.context, R.layout.pager_item, null)
         val lp = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
@@ -40,6 +40,7 @@ class TestimonialItemsAdapter(val list: ArrayList<Testimonial>) :
 
     class PagerVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var name = itemView.findViewById<TextView>(R.id.title)
+
     }
 
 }

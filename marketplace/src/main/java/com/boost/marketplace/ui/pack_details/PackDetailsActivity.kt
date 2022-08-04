@@ -598,16 +598,15 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 howToUseAdapter.addupdates(steps!!)
                 howToUseAdapter.notifyDataSetChanged()
             } else {
-                binding?.howToUseContainer?.visibility = View.GONE
+                binding?.howToUseContainer?.visibility = GONE
 
             }
             if (bundleData != null && bundleData?.testimonials != null && bundleData?.testimonials?.isNotEmpty()!!) {
-                binding?.whatOurCustomerContainer?.visibility = View.VISIBLE
-                benefitAdaptor.addupdates(bundleData?.benefits!!)
-                benefitAdaptor.notifyDataSetChanged()
+                binding?.whatOurCustomerContainer?.visibility = VISIBLE
+                reviewAdaptor.addupdates(bundleData?.testimonials!!)
+                reviewAdaptor.notifyDataSetChanged()
             } else {
-                binding?.whatOurCustomerContainer?.visibility = View.GONE
-
+                binding?.whatOurCustomerContainer?.visibility = GONE
             }
             if (bundleData != null && bundleData?.frequently_asked_questions != null && bundleData?.frequently_asked_questions?.isNotEmpty()!!) {
                 faq_container.visibility = View.VISIBLE
@@ -616,7 +615,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 faqAdapter.notifyDataSetChanged()
             } else {
                 faq_container.visibility = View.GONE
-
             }
 
 
