@@ -15,9 +15,9 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_top"
-                app:cardElevation="@dimen/size_4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:cardElevation="@dimen/size_4"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,13 +26,11 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_cat"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/size_16"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="@dimen/size_8"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+                        app:layout_constraintStart_toStartOf="@+id/guideline4"
                         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -42,20 +40,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="24dp"
-                        android:layout_marginBottom="16dp"
-                        tools:text="Festival"
+                        android:layout_marginTop="31dp"
+                        android:layout_marginBottom="19dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/rv_cat" />
+                        app:layout_constraintTop_toBottomOf="@+id/rv_cat"
+                        tools:text="Festival" />
 
 
                     <com.framework.views.customViews.CustomCardView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginStart="8dp"
-                        app:cardBackgroundColor="@color/colorFEEFD1"
+                        app:cardBackgroundColor="#FEEFD1"
                         app:cardCornerRadius="10dp"
+                        app:cardElevation="@dimen/size_0"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_cat_title"
                         app:layout_constraintStart_toEndOf="@+id/tv_cat_title"
                         app:layout_constraintTop_toTopOf="@+id/tv_cat_title">
@@ -71,22 +70,52 @@
 
                     </com.framework.views.customViews.CustomCardView>
 
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.05" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.95" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_posters"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
+                android:clipToPadding="false"
+                android:layout_marginTop="@dimen/size_10"
+                android:paddingBottom="@dimen/size_38"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/card_top"
                 app:layout_constraintVertical_bias="0.0" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.08" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.92" />
+
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

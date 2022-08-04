@@ -5,6 +5,7 @@ package com.festive.poster.reset.repo
 import com.festive.poster.base.rest.AppBaseLocalService
 import com.festive.poster.base.rest.AppBaseRepository
 import com.festive.poster.models.response.GetTemplatesV2Body
+import com.festive.poster.models.response.TemplateSaveActionBody
 import com.festive.poster.reset.TaskCode
 import com.festive.poster.reset.apiClients.NowFloatsApiClient
 import com.festive.poster.reset.services.NowFloatsRemoteData
@@ -115,9 +116,22 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
     )
   }
 
-  fun getTemplatesV2(): Observable<BaseResponse> {
+  fun getTemplatesV2(isFav: Boolean?): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.getTemplatesV2(GetTemplatesV2Body(session.fPID!!,session.fpTag!!)),
+      remoteDataSource.getTemplatesV2(GetTemplatesV2Body(session.fPID!!,session.fpTag!!, showFavourites = isFav)),
+      TaskCode.GET_TEMPLATES_V2
+    )
+  }
+
+  fun saveTemplateAction(action:TemplateSaveActionBody.ActionType,
+  isFav:Boolean,templateId:String): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.templateSaveAction(
+        TemplateSaveActionBody(
+        action = action.name, favourite = isFav, floatingPointId = session.fPID!!,
+          floatingPointTag = session.fpTag!!,templateId=templateId
+      )
+      ),
       TaskCode.GET_TEMPLATES_V2
     )
   }

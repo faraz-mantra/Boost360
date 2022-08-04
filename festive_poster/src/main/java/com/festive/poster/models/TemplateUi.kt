@@ -2,7 +2,7 @@ package com.festive.poster.models
 
 open class TemplateUi(
     val id: String,
-    val isFavourite: Boolean,
+    var isFavourite: Boolean,
     val name: String,
     val primarySvgUrl: String,
     val primaryText: String,

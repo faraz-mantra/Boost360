@@ -11,7 +11,6 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.util.Log
 import android.view.View
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
@@ -19,9 +18,7 @@ import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.databinding.ActivityEditPostBinding
 import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
-import com.festive.poster.models.PosterModel
 import com.festive.poster.models.TemplateUi
-import com.festive.poster.ui.promoUpdates.bottomSheet.CaptionBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.DeleteDraftBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.EditTemplateBottomSheet
 import com.festive.poster.utils.SvgUtils
