@@ -50,7 +50,7 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseVi
         binding?.title4?.text= date
 
         Glide.with(baseActivity).load(singleAddon.primary_image).into(binding!!.addonsIcon)
-        if (singleAddon.status == 1) {
+        if (singleAddon.featureState == 1) {
             binding!!.imageView3.setImageResource(R.drawable.ic_active)
             binding!!.actionRequired.visibility=View.GONE
             binding!!.actionText.visibility=View.GONE

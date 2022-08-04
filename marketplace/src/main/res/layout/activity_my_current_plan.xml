@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg_color">
+        android:background="#F5F8FD">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -169,7 +169,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <!-- Adding 7 rows of placeholders -->
             <LinearLayout
@@ -219,16 +219,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="@dimen/_2sdp"
-                android:paddingStart="@dimen/_1sdp"
-                android:paddingEnd="@dimen/_1sdp">
+                android:padding="16dp">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
-                    style="@style/CardView.Light"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    app:cardCornerRadius="10dp"
                     android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -255,36 +253,38 @@
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/layout1"
                                 android:layout_width="match_parent"
-                                android:layout_height="60dp">
+                                android:layout_height="55dp">
 
                                 <TextView
                                     android:id="@+id/paid_title"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="18dp"
-                                    android:layout_marginTop="10dp"
+                                    android:fontFamily="@font/bold"
                                     android:gravity="center_vertical"
-                                    android:text="-- Free features"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/_15ssp"
-                                    app:layout_constraintBottom_toTopOf="@id/paid_subtitle"
+                                    android:text="3 Inactive features"
+                                    android:textColor="#333333"
+                                    android:textFontWeight="700"
+                                    android:textSize="16sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
-                                <TextView
-                                    android:id="@+id/paid_subtitle"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="18dp"
-                                    android:gravity="center_vertical"
-                                    android:text="- Activated, - Syncing and - Needs attention"
-                                    android:textColor="@color/transparent_black_dark"
-                                    android:textSize="@dimen/_10ssp"
-                                    app:layout_constraintBottom_toTopOf="@+id/recycler"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@id/paid_title" />
+                                <!--                                <TextView-->
+                                <!--                                    android:id="@+id/paid_subtitle"-->
+                                <!--                                    android:layout_width="match_parent"-->
+                                <!--                                    android:layout_height="wrap_content"-->
+                                <!--                                    android:layout_marginStart="18dp"-->
+                                <!--                                    android:gravity="center_vertical"-->
+                                <!--                                    android:visibility="gone"-->
+                                <!--                                    android:text="- Activated, - Syncing and - Needs attention"-->
+                                <!--                                    android:textColor="@color/transparent_black_dark"-->
+                                <!--                                    android:textSize="@dimen/_10ssp"-->
+                                <!--                                    app:layout_constraintBottom_toTopOf="@+id/recycler"-->
+                                <!--                                    app:layout_constraintEnd_toEndOf="parent"-->
+                                <!--                                    app:layout_constraintStart_toStartOf="parent"-->
+                                <!--                                    app:layout_constraintTop_toBottomOf="@id/paid_title" />-->
 
                                 <Button
                                     android:id="@+id/arrowBtn"
@@ -293,8 +293,8 @@
                                     android:layout_marginTop="7dp"
                                     android:layout_marginEnd="16dp"
                                     android:layout_marginBottom="3dp"
-                                    android:background="@drawable/ic_keyboard_arrow_down_black_24dp"
-                                    app:layout_constraintBottom_toTopOf="@+id/recycler"
+                                    android:background="@drawable/packs_arrow_up"
+                                    app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -312,6 +312,8 @@
                                 android:id="@+id/paid_single_dummy_view"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_3sdp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="16dp"
                                 android:background="@drawable/view_line"
                                 app:layout_constraintTop_toTopOf="@+id/expandableView"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -338,11 +340,10 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView1"
-                    style="@style/CardView.Light"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:elevation="@dimen/_10sdp"
+                    android:layout_marginTop="16dp"
+                    app:cardCornerRadius="10dp"
                     android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -367,33 +368,35 @@
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="60dp">
+                                android:layout_height="55dp">
 
                                 <TextView
                                     android:id="@+id/paid_title1"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="18dp"
-                                    android:layout_marginTop="10dp"
-                                    android:text="--Premium features"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/_15ssp"
-                                    app:layout_constraintBottom_toTopOf="@+id/paid_subtitle1"
+                                    android:fontFamily="@font/bold"
+                                    android:lineHeight="21.79dp"
+                                    android:text="4 Active features"
+                                    android:textColor="#333333"
+                                    android:textFontWeight="700"
+                                    android:textSize="16sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
-                                <TextView
-                                    android:id="@+id/paid_subtitle1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="18dp"
-                                    android:text="- Activated, - Syncing and - Needs attention"
-                                    android:textColor="@color/transparent_black_dark"
-                                    android:textSize="@dimen/_10ssp"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/paid_title1" />
+                                <!--                                <TextView-->
+                                <!--                                    android:id="@+id/paid_subtitle1"-->
+                                <!--                                    android:layout_width="match_parent"-->
+                                <!--                                    android:layout_height="wrap_content"-->
+                                <!--                                    android:layout_marginStart="18dp"-->
+                                <!--                                    android:text="- Activated, - Syncing and - Needs attention"-->
+                                <!--                                    android:textColor="@color/transparent_black_dark"-->
+                                <!--                                    android:textSize="@dimen/_10ssp"-->
+                                <!--                                    app:layout_constraintEnd_toEndOf="parent"-->
+                                <!--                                    app:layout_constraintStart_toStartOf="parent"-->
+                                <!--                                    app:layout_constraintTop_toBottomOf="@+id/paid_title1" />-->
 
                                 <Button
                                     android:id="@+id/arrowBtn1"
@@ -402,7 +405,8 @@
                                     android:layout_marginTop="7dp"
                                     android:layout_marginEnd="16dp"
                                     android:layout_marginBottom="3dp"
-                                    android:background="@drawable/ic_keyboard_arrow_down_black_24dp"
+                                    android:background="@drawable/packs_arrow_up"
+                                    app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -420,6 +424,8 @@
                                 android:id="@+id/paid_single_dummy_view1"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_3sdp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="16dp"
                                 android:background="@drawable/view_line"
                                 app:layout_constraintTop_toTopOf="@+id/expandableView1"
                                 app:layout_constraintEnd_toEndOf="parent"

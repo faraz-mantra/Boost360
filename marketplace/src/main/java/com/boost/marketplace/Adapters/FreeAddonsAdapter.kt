@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -45,6 +46,21 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
     val cryptocurrencyItem = list[position]
     holder.upgradeListItem(cryptocurrencyItem)
     holder.singleTitle.text = cryptocurrencyItem.name
+
+    if (cryptocurrencyItem.featureState !=null && cryptocurrencyItem.featureState != 1){
+      holder.itemView.visibility=View.VISIBLE
+      holder.itemView.layoutParams =
+        RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+    }
+    else{
+      holder.itemView.visibility=View.GONE
+      holder.itemView.layoutParams = RecyclerView.LayoutParams(0, 0)
+    }
+
+    if(position == list.size-1){
+      holder.paid_single_dummy_view.visibility = View.GONE
+    }
+
     holder.mainLayout.setOnClickListener {
 
       if (holder.detailsView.visibility == View.GONE) {
@@ -76,7 +92,7 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
           list.get(position).primary_image)
           item.expiryDate=list.get(position).expiryDate
           item.activatedDate= list.get(position).activatedDate
-          item.status=  list.get(position).status
+          item.featureState=  list.get(position).featureState
 
         myAddonsListener.onFreeAddonsClicked(item)
       }
@@ -96,15 +112,17 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
     var singleTitle = itemView.findViewById<TextView>(R.id.free_addons_name)!!
     var image = itemView.findViewById<ImageView>(R.id.single_freeaddon_image)!!
     var mainLayout=itemView.findViewById<ConstraintLayout>(R.id.main_layout)
+    var cardViews=itemView.findViewById<LinearLayout>(R.id.cardViews)
     var detailsView=itemView.findViewById<ConstraintLayout>(R.id.detailsView)
     var img1=itemView.findViewById<ImageView>(R.id.img1)!!
+    var paid_single_dummy_view=itemView.findViewById<View>(R.id.paid_single_dummy_view)!!
     private var context: Context = itemView.context
 
     fun upgradeListItem(updateModel: FeaturesModel) {
       singleTitle.text = updateModel.name
       val date= updateModel.expiryDate?.substring(0,10)
       Glide.with(context).load(updateModel.primary_image).into(image)
-      if (updateModel.status == 1) {
+      if (updateModel.featureState == 1) {
        img1.setImageResource(R.drawable.ic_active)
       }
       else {

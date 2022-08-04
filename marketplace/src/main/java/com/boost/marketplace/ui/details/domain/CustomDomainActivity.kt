@@ -28,6 +28,7 @@ import com.boost.marketplace.databinding.ActivityCustomDomainBinding
 import com.boost.marketplace.interfaces.DomainListener
 import com.boost.marketplace.ui.popup.customdomains.ConfirmedCustomDomainBottomSheet
 import com.boost.marketplace.ui.popup.customdomains.CustomDomainHelpBottomSheet
+import com.boost.marketplace.ui.popup.customdomains.CustomDomainLearnDomainBottomSheet
 import com.boost.marketplace.ui.popup.customdomains.SSLCertificateBottomSheet
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
@@ -165,8 +166,16 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
         }
 
+        binding?.learnDomain?.setOnClickListener {
+            val dialogCard = CustomDomainLearnDomainBottomSheet()
+            dialogCard.show(this.supportFragmentManager, CustomDomainLearnDomainBottomSheet::class.java.name)
+        }
+
         binding?.etDomain?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                binding?.btnSelectDomain?.visibility=View.GONE
+                binding?.learnDomain?.visibility=View.VISIBLE
 
             }
 
@@ -175,12 +184,16 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
                     binding?.searchBtn?.visibility = View.VISIBLE
                     binding?.searchBtn?.setOnClickListener {
                         hideKeyBoard()
+                        binding?.learnDomain?.visibility=View.GONE
+                        binding?.btnSelectDomain?.visibility=View.VISIBLE
                         binding?.searchBtn?.visibility = View.GONE
                         binding?.tvSuggestedDomains?.text = "Search results"
                         updateItemBySearchValue(p0.toString())
                     }
                     binding?.ivCross?.visibility = View.VISIBLE
                 } else {
+                    binding?.learnDomain?.visibility=View.GONE
+                    binding?.btnSelectDomain?.visibility=View.VISIBLE
                     binding?.tvSuggestedDomains?.text = "Suggested domains for you"
                     binding?.searchBtn?.visibility = View.GONE
                     binding?.searchResults?.visibility = View.GONE
@@ -200,6 +213,8 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             binding?.searchResults?.visibility = View.GONE
             binding?.rvCustomDomain1?.visibility=View.GONE
             binding?.tvSuggestedDomains?.text = "Suggested domains for you"
+            binding?.learnDomain?.visibility=View.GONE
+            binding?.btnSelectDomain?.visibility=View.VISIBLE
             allDomainsList?.let { updateDomainsRecycler(it) }
             binding?.etDomain?.text = null
         }
@@ -349,6 +364,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
                 updateDomainsRecycler(freeitemList)
             }
                if (singleDomain.name.lowercase().equals(searchValue.lowercase()) && searchValue.length > 7) {
+                    binding?.rvCustomDomain1Layout?.visibility=View.VISIBLE
                     binding?.rvCustomDomain1?.visibility=View.VISIBLE
                     paiditemList.add(singleDomain)
                     updateFreeAddonsRecycler1(paiditemList)

@@ -9,9 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.FrequentlyAskedQuestion
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.marketplace.R
 
@@ -43,6 +41,14 @@ class IncludedFeatureAdapter(
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
         holder.title.text = upgradeList[position].feature_code
 
+        when ((position + 1) % 5) {
+            0 -> holder.cardView.setCardBackgroundColor(Color.parseColor("#FFEFDA"))
+            1 -> holder.cardView.setCardBackgroundColor(Color.parseColor("#D8E3FF"))
+            2 -> holder.cardView.setCardBackgroundColor(Color.parseColor("#CDFAE3"))
+            3 -> holder.cardView.setCardBackgroundColor(Color.parseColor("#C9E2FF"))
+            4 -> holder.cardView.setCardBackgroundColor(Color.parseColor("#D8E3FF"))
+            else -> holder.cardView.setCardBackgroundColor(Color.parseColor("#FFDCE4"))
+        }
 
     }
 

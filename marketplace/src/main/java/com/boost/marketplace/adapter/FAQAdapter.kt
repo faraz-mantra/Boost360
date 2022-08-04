@@ -40,13 +40,27 @@ class FAQAdapter(
   override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
     holder.title.text = upgradeList[position].question
     holder.desc.text = upgradeList[position].answer
+
+    holder.dummy1.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+    if (upgradeList.size - 1 == position) {
+      holder.dummy1.visibility = View.GONE
+    }
+
     holder.title.setOnClickListener {
       if(holder.desc.isVisible) {
         holder.desc.visibility = View.GONE
+        holder.downArrow.setImageResource(R.drawable.ic_arrow_down_gray)
       }else{
         holder.desc.visibility = View.VISIBLE
+        holder.downArrow.setImageResource(R.drawable.ic_arrow_up_gray)
       }
     }
+
+    if (position==0){
+      holder.desc.visibility=View.VISIBLE
+      holder.downArrow.setImageResource(R.drawable.ic_arrow_up_gray)
+    }
+
     holder.downArrow.setOnClickListener {
       if(holder.desc.isVisible) {
         holder.downArrow.setImageResource(R.drawable.ic_arrow_down_gray)
@@ -70,5 +84,6 @@ class FAQAdapter(
     var title = itemView.findViewById<TextView>(R.id.title)
     var downArrow = itemView.findViewById<ImageView>(R.id.arrow_btn)
     var desc = itemView.findViewById<TextView>(R.id.desc)
+    var dummy1 = itemView.findViewById<View>(R.id.dummy1)
   }
 }

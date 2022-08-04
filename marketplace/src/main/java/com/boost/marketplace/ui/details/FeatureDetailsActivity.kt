@@ -488,10 +488,10 @@ class FeatureDetailsActivity :
                         how_to_use_recycler.visibility = VISIBLE
                     }
                 }
-                if (addonDetails!!.target_business_usecase != null) {
-                    tv_how_to_use_title.text =
-                        "How To Use " + addonDetails!!.target_business_usecase
-                }
+//                if (addonDetails!!.target_business_usecase != null) {
+//                    tv_how_to_use_title.text =
+//                        "How To Use " + addonDetails!!.how_to_use_title
+//                }
                 val steps = Gson().fromJson<List<HowToUseStep>>(
                     addonDetails?.how_to_use_steps,
                     object : TypeToken<List<HowToUseStep>>() {}.type
@@ -546,6 +546,8 @@ class FeatureDetailsActivity :
                 title_top.text = addonDetails!!.name
                 title_appbar.text = addonDetails!!.name
                 title_bottom3.text = addonDetails!!.description
+                pack_title.text = "Packs with ${addonDetails!!.name}"
+                tv_how_to_use_title.text ="How To Use " + addonDetails!!.name
                 if (addonDetails!!.total_installs.isNullOrEmpty() || addonDetails!!.total_installs.equals(
                         "--"
                     )
