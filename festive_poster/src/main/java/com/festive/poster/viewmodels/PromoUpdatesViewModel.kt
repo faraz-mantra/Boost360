@@ -1,28 +1,21 @@
 package com.festive.poster.viewmodels
 
+import android.net.Uri
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.festive.poster.R
 import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.models.*
 import com.festive.poster.models.response.*
 import com.festive.poster.reset.repo.*
-import com.framework.base.BaseResponse
+import com.framework.BaseApplication
 import com.framework.models.BaseViewModel
-import com.framework.models.toLiveData
 import com.framework.utils.getResponse
 import com.framework.utils.toArrayList
-import io.reactivex.Observable
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
-import okhttp3.RequestBody
-import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -203,7 +196,7 @@ class PromoUpdatesViewModel: BaseViewModel() {
                     uicat.setTemplates(dbTemplates.asDomainModels())
                 }
                 browseAllMData.postValue(categories.toArrayList())
-
+                getFavTemplates()
             }catch (e:Exception){
                 e.printStackTrace()
             }
@@ -211,7 +204,7 @@ class PromoUpdatesViewModel: BaseViewModel() {
     }
 
 
-    fun getFavTemplates(){
+    fun getFavTemplates() {
         viewModelScope.launch {
             try {
                 val categories = getCategories().toArrayList()
@@ -230,11 +223,12 @@ class PromoUpdatesViewModel: BaseViewModel() {
                     allUiTemplates.addAll(domainModels)
                 }
 
+
                 val allDummyCat = CategoryUi(
                     iconUrl = "",
                     id="",
                     name = "All",
-                    thumbnailUrl = "",
+                    thumbnailUrl = "https://i.ibb.co/7Xg48cN/Coming-soon-card.png",
                     templates = allUiTemplates
                 )
 

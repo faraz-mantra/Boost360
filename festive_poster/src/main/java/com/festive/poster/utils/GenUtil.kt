@@ -3,12 +3,16 @@ package com.festive.poster.utils
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DiffUtil
 import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.constant.Constants
+import com.festive.poster.models.BrowseAllTemplate
 import com.festive.poster.models.PosterModel
 import com.festive.poster.models.TemplateUi
 import com.festive.poster.models.response.TemplateSaveActionBody
+import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.reset.repo.NowFloatsRepository
+import com.festive.poster.ui.TemplateDiffUtil
 import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
 import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
 import com.festive.poster.ui.promoUpdates.bottomSheet.SubscribePlanBottomSheet
@@ -81,3 +85,16 @@ private fun saveTemplateAction(action: TemplateSaveActionBody.ActionType, poster
     NowFloatsRepository.saveTemplateAction(action,posterModel.isFavourite,posterModel.id)
 }
 
+
+fun AppBaseRecyclerViewAdapter<BrowseAllTemplate>.setUpUsingDiffUtil(newList: List<BrowseAllTemplate>){
+    val templateDiffUtil = TemplateDiffUtil(
+        this.list,
+        newList
+    )
+
+    val diffResult = DiffUtil.calculateDiff(templateDiffUtil)
+
+    this.list.clear()
+    this.list.addAll(newList)
+    diffResult.dispatchUpdatesTo(this)
+}
