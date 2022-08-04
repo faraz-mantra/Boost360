@@ -35,11 +35,10 @@ class TestimonialItemsAdapter(val list: ArrayList<Testimonial>) :
 
     override fun onBindViewHolder(holder: PagerVH, position: Int) {
         holder.name.text = list[position].name
-
     }
 
     class PagerVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var name = itemView.findViewById<TextView>(R.id.title)
+        var name = itemView.findViewById<TextView>(R.id.name)
 
     }
 
