@@ -299,6 +299,12 @@ class WebsiteV2Fragment : AppBaseFragment<FragmentWebsiteV2Binding, DashboardVie
             binding?.titleSettings?.setTextColor(getColor(R.color.black_4a4a4a))
             binding?.ivContent?.setImageResource(R.drawable.ic_note_white)
             binding?.ivSettings?.setImageResource(R.drawable.ic_slider_grey)
+            binding?.editProfile?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_palette_white, 0, R.drawable.ic_arrow_trans_website_d, 0)
+            binding?.tvBusinessTimingsTitle?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_clock_white, 0, 0, 0)
+            binding?.tvWebsiteCustomizationTitle?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_palette_white, 0, 0, 0)
+            binding?.linearBusinessDetails?.gravity = Gravity.BOTTOM
+            binding?.txtDomainName?.setTextColor(ContextCompat.getColor(baseActivity, R.color.colorAccentLight))
+            binding?.txtDomainName?.let { it.setDrawableColor(it, R.color.colorAccentLight) }
             binding?.pager?.currentItem = 0
             setSpannable(true)
 
@@ -309,6 +315,12 @@ class WebsiteV2Fragment : AppBaseFragment<FragmentWebsiteV2Binding, DashboardVie
             binding?.titleSettings?.setTextColor(getColor(R.color.white))
             binding?.ivContent?.setImageResource(R.drawable.ic_note_grey)
             binding?.ivSettings?.setImageResource(R.drawable.ic_slider_white)
+            binding?.editProfile?.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_trans_website_d, 0)
+            binding?.tvBusinessTimingsTitle?.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+            binding?.tvWebsiteCustomizationTitle?.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+            binding?.linearBusinessDetails?.gravity = Gravity.CENTER_VERTICAL
+            binding?.txtDomainName?.setTextColor(ContextCompat.getColor(baseActivity, R.color.white))
+            binding?.txtDomainName?.let { it.setDrawableColor(it, R.color.white) }
             binding?.pager?.currentItem = 1
             setSpannable(false)
         }

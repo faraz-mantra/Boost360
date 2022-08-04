@@ -7,6 +7,12 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.framework.R
 import com.framework.enums.TextType.values
 import com.framework.enums.setTextStyle
+import android.graphics.PorterDuff
+
+import android.graphics.PorterDuffColorFilter
+
+import androidx.core.content.ContextCompat
+
 
 open class CustomTextView : AppCompatTextView {
 
@@ -43,5 +49,13 @@ open class CustomTextView : AppCompatTextView {
     }
 
     this.setTextStyle(textType)
+  }
+
+   fun setDrawableColor(customTextView:CustomTextView, color: Int) {
+    for (drawable in customTextView.compoundDrawables) {
+      if (drawable != null) {
+        drawable.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(customTextView.context, color), PorterDuff.Mode.SRC_IN)
+      }
+    }
   }
 }
