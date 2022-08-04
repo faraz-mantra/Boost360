@@ -24,6 +24,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
+import com.boost.cart.adapter.BenifitsPageTransformer
+import com.boost.cart.adapter.BenifitsPageTransformerFullWidth
 import com.boost.cart.adapter.SimplePageTransformerSmall
 import com.boost.cart.adapter.ZoomOutPageTransformer
 import com.boost.cart.utils.Utils
@@ -846,13 +848,15 @@ class FeatureDetailsActivity :
         benefits_indicator.setViewPager2(benefits_viewpager)
         benefits_viewpager.offscreenPageLimit = 1
 
-        benefits_viewpager.setPageTransformer(SimplePageTransformerSmall())
+//        benefits_viewpager.setPageTransformer(SimplePageTransformerSmall())
+        benefits_viewpager.setPageTransformer(BenifitsPageTransformerFullWidth(this))
 
-        val itemDecoration = HorizontalMarginItemDecoration(
-            applicationContext,
-            R.dimen.viewpager_current_item_horizontal_margin
-        )
-        benefits_viewpager.addItemDecoration(itemDecoration)
+//        val itemDecoration = HorizontalMarginItemDecoration(
+//            applicationContext,
+//            R.dimen.viewpager_current_item_horizontal_margin,
+//            R.dimen.viewpager_current_item_horizontal_margin
+//        )
+//        benefits_viewpager.addItemDecoration(itemDecoration)
     }
 
 
@@ -865,6 +869,7 @@ class FeatureDetailsActivity :
 
         val itemDecoration = HorizontalMarginItemDecoration(
             applicationContext,
+            R.dimen.viewpager_current_item_horizontal_margin,
             R.dimen.viewpager_current_item_horizontal_margin
         )
         what_our_customer_viewpager.addItemDecoration(itemDecoration)

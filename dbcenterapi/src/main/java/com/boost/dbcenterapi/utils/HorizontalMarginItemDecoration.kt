@@ -12,17 +12,19 @@ import androidx.recyclerview.widget.RecyclerView
  * @param horizontalMarginInDp the margin resource, in dp.
  */
 
-class HorizontalMarginItemDecoration(context: Context, @DimenRes horizontalMarginInDp: Int) :
+class HorizontalMarginItemDecoration(context: Context, @DimenRes horizontalMarginLeftInDp: Int, @DimenRes horizontalMarginRightInDp: Int) :
   RecyclerView.ItemDecoration() {
 
-  private val horizontalMarginInPx: Int =
-    context.resources.getDimension(horizontalMarginInDp).toInt()
+  private val horizontalMarginLeftInDp: Int =
+    context.resources.getDimension(horizontalMarginLeftInDp).toInt()
+  private val horizontalMarginRightInDp: Int =
+    context.resources.getDimension(horizontalMarginRightInDp).toInt()
 
   override fun getItemOffsets(
     outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State
   ) {
-    outRect.right = horizontalMarginInPx
-    outRect.left = horizontalMarginInPx
+    outRect.right = horizontalMarginRightInDp
+    outRect.left = horizontalMarginLeftInDp
   }
 
 }

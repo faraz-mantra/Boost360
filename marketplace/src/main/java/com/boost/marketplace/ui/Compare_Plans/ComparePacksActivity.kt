@@ -321,6 +321,7 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
 
         val itemDecoration = com.boost.dbcenterapi.utils.HorizontalMarginItemDecoration(
             applicationContext,
+            R.dimen.viewpager_current_item_horizontal_margin,
             R.dimen.viewpager_current_item_horizontal_margin
         )
         package_viewpager.addItemDecoration(itemDecoration)

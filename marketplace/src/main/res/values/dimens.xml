@@ -264,6 +264,10 @@
   <dimen name="placeholderTextHeight">8dp</dimen>
   <dimen name="padding_10">10dp</dimen>
 
+
+  <dimen name="viewpager_previous_benifits">2dp</dimen>
+  <dimen name="viewpager_next_benifits">55dp</dimen>
+
   <dimen name="viewpager_next_item_visible">26dp</dimen>
   <dimen name="viewpager_current_item_horizontal_margin">35dp</dimen>
   <dimen name="viewpager_current_item_horizontal_margin1">10dp</dimen>

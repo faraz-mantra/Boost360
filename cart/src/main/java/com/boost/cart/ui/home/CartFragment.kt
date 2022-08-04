@@ -1875,7 +1875,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         recomended_viewpager?.setPageTransformer(SimplePageTransformer())
 
         val itemDecoration = com.boost.dbcenterapi.utils.HorizontalMarginItemDecoration(
-            requireContext(), R.dimen.viewpager_current_item_horizontal_margin4
+            requireContext(),
+            R.dimen.viewpager_current_item_horizontal_margin4,
+            R.dimen.viewpager_current_item_horizontal_margin4
         )
         recomended_viewpager!!.addItemDecoration(itemDecoration)
 

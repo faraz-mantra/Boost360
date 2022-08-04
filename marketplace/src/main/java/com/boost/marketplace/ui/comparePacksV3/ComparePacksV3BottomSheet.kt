@@ -4,6 +4,7 @@ import android.app.Application
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
+import com.boost.cart.adapter.BenifitsPageTransformer
 import com.boost.cart.adapter.SimplePageTransformerSmall
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
@@ -25,6 +26,7 @@ import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_feature_details.*
 
 class ComparePacksV3BottomSheet: BaseBottomSheetDialog<Comparepacksv3PopupBinding, ComparePacksViewModel>() {
 
@@ -89,10 +91,12 @@ class ComparePacksV3BottomSheet: BaseBottomSheetDialog<Comparepacksv3PopupBindin
 
         initializeViewPager()
 
-        if (bundleData.benefits != null){
+        if (bundleData.benefits != null && bundleData.benefits!!.size > 0){
             benefitAdaptor.addupdates(bundleData.benefits!!)
             benefitAdaptor.notifyDataSetChanged()
-            initializeViewPager()
+            binding?.benefitContainer?.visibility = View.VISIBLE
+        }else{
+            binding?.benefitContainer?.visibility = View.GONE
         }
 
         binding?.buyPack?.setOnClickListener {
@@ -216,13 +220,23 @@ class ComparePacksV3BottomSheet: BaseBottomSheetDialog<Comparepacksv3PopupBindin
         binding?.benefitsViewpager?.adapter = benefitAdaptor
         binding?.benefitsViewpager?.let { binding?.benefitsIndicator?.setViewPager2(it) }
         binding?.benefitsViewpager?.offscreenPageLimit = 1
-        binding?.benefitsViewpager?.setPageTransformer(SimplePageTransformerSmall())
+        binding?.benefitsViewpager?.setPageTransformer(BenifitsPageTransformer(requireActivity()))
 
-        val itemDecoration = HorizontalMarginItemDecoration(
-            requireContext(),
-            R.dimen.viewpager_next_item_visible
-        )
-        binding?.benefitsViewpager?.addItemDecoration(itemDecoration)
+//        val itemDecoration = HorizontalMarginItemDecoration(
+//            requireContext(),
+//            R.dimen.viewpager_previous_benifits,
+//            R.dimen.viewpager_next_benifits
+//        )
+//        binding?.benefitsViewpager?.addItemDecoration(itemDecoration)
+
+//        binding?.benefitsViewpager?.setPageTransformer(SimplePageTransformerSmall())
+//
+//        val itemDecoration = HorizontalMarginItemDecoration(
+//            requireContext(),
+//            R.dimen.viewpager_current_item_horizontal_margin,
+//            R.dimen.viewpager_current_item_horizontal_margin
+//        )
+//        binding?.benefitsViewpager?.addItemDecoration(itemDecoration)
 
     }
 

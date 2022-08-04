@@ -179,9 +179,6 @@
                     android:id="@+id/benefits_viewpager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/item_packs_v3_benefits"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/benefit_title" />
 
 

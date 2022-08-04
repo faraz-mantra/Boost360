@@ -1205,7 +1205,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
                 val itemDecoration = HorizontalMarginItemDecoration(
                     applicationContext,
-//                        R.dimen.viewpager_current_item_horizontal_margin
+                    R.dimen.viewpager_current_item_horizontal_margin1,
                     R.dimen.viewpager_current_item_horizontal_margin1
                 )
                 banner_viewpager.addItemDecoration(itemDecoration)
@@ -1903,6 +1903,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         banner_indicator.setViewPager2(banner_viewpager)
         val itemDecoration = HorizontalMarginItemDecoration(
             applicationContext,
+            R.dimen.viewpager_current_item_horizontal_margin1,
             R.dimen.viewpager_current_item_horizontal_margin1
         )
         banner_viewpager.addItemDecoration(itemDecoration)
@@ -1934,6 +1935,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
         val itemDecoration = HorizontalMarginItemDecoration(
             applicationContext,
+            R.dimen.viewpager_current_item_horizontal_margin,
             R.dimen.viewpager_current_item_horizontal_margin
         )
         package_viewpager.addItemDecoration(itemDecoration)
@@ -1948,6 +1950,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
         val itemDecoration = HorizontalMarginItemDecoration(
             applicationContext,
+            R.dimen.viewpager_current_item_horizontal_margin,
             R.dimen.viewpager_current_item_horizontal_margin
         )
         feature_deals_viewpager.addItemDecoration(itemDecoration)
