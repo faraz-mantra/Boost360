@@ -395,6 +395,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/pack_container"
                     android:layout_marginStart="@dimen/dimen_16dp"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     android:layout_marginTop="@dimen/dimen_32_dp"
                     android:layout_marginEnd="@dimen/dimen_16dp"
                     android:background="@drawable/rounded_curve_bg">
@@ -403,9 +405,8 @@
                         android:id="@+id/how_to_use_title_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:visibility="visible">
+                     >
 
                         <TextView
                             android:id="@+id/tv_how_to_use_title"
@@ -420,7 +421,7 @@
                             app:layout_constraintEnd_toStartOf="@id/how_to_use_arrow"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            tools:text="How to activate this Pack" />
+                            android:text="How to activate this Pack" />
 
                         <ImageView
                             android:id="@+id/how_to_use_arrow"
@@ -439,7 +440,6 @@
                         android:id="@+id/how_to_use_recycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
                         app:layout_constraintTop_toBottomOf="@id/how_to_use_title_layout"
                         tools:itemCount="4"
                         tools:listitem="@layout/how_to_use_item_pack_details"

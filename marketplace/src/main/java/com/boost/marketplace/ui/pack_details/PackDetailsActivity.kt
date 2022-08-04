@@ -480,7 +480,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
                 for (singleBundle in it) {
 
-                    if (bundleData?._kid != singleBundle.bundle_id) {
+                    if (bundleData?.name != singleBundle.name) {
                         bundlesList.add(singleBundle)
 
                     }
@@ -592,10 +592,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                         how_to_use_recycler.visibility = View.VISIBLE
                     }
                 }
-                if (bundleData!!.target_business_usecase != null) {
-                    tv_how_to_use_title.text =
-                        "How To Use " + bundleData!!.target_business_usecase
-                }
+
                 val steps =
                     bundleData?.how_to_activate
                 howToUseAdapter.addupdates(steps!!)
@@ -606,7 +603,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             }
             if (bundleData != null && bundleData?.testimonials != null && bundleData?.testimonials?.isNotEmpty()!!) {
                 binding?.whatOurCustomerContainer?.visibility = View.VISIBLE
-                reviewAdaptor.addupdates(bundleData?.testimonials!!)
+                benefitAdaptor.addupdates(bundleData?.benefits!!)
                 benefitAdaptor.notifyDataSetChanged()
             } else {
                 binding?.whatOurCustomerContainer?.visibility = View.GONE
