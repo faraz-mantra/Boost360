@@ -41,7 +41,7 @@ class SelectNumberBottomSheet :
     var isOpenCardFragment: Boolean = false
     var deepLinkViewType: String = ""
     var deepLinkDay: Int = 7
-    var result: Boolean? = null
+//    var result: Boolean? = null
     var blockedItem: String? = null
 
     var userPurchsedWidgets = java.util.ArrayList<String>()
@@ -87,8 +87,8 @@ class SelectNumberBottomSheet :
 
         blockedItem = requireArguments().getString("phone_number")
         numberPrice = requireArguments().getString("price")
-        loadData()
-        initMVVM()
+//        loadData()
+//        initMVVM()
 
 
         binding?.tvCart?.text= "Add to cart at $numberPrice"
@@ -157,11 +157,11 @@ class SelectNumberBottomSheet :
         }
         binding?.tvCart?.setOnClickListener {
             dismiss()
-            if (blockedItem != null && !result!!) {
+            if (blockedItem != null) {
                 if (!itemInCartStatus) {
                     if (singleAddon != null) {
                         prefs.storeCartOrderInfo(null)
-                        viewModel!!.addItemToCart1(singleAddon, baseActivity)
+                        viewModel!!.addItemToCart1(singleAddon, baseActivity,blockedItem)
                         val event_attributes: HashMap<String, Any> = HashMap()
                         singleAddon.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
                         event_attributes.put("Addon Price", singleAddon.price)
@@ -218,22 +218,22 @@ class SelectNumberBottomSheet :
         }
     }
 
-    private fun loadData() {
-        blockedItem?.let {
-            fpid?.let { it1 ->
-                viewModel!!.blockNumberStatus(
-                    (this).getAccessToken() ?: "", it1,
-                    "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21", it
-                )
-            }
-        }
-    }
+//    private fun loadData() {
+//        blockedItem?.let {
+//            fpid?.let { it1 ->
+//                viewModel!!.blockNumberStatus(
+//                    (this).getAccessToken() ?: "", it1,
+//                    "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21", it
+//                )
+//            }
+//        }
+//    }
 
-    private fun initMVVM() {
-        viewModel?.updateStatus()?.observe(this, androidx.lifecycle.Observer {
-            result = it.Result
-        })
-    }
+//    private fun initMVVM() {
+//        viewModel?.updateStatus()?.observe(this, androidx.lifecycle.Observer {
+//            result = it.Result
+//        })
+//    }
 
     fun getAccessToken(): String {
         return UserSessionManager(requireContext()).getAccessTokenAuth()?.barrierToken() ?: ""

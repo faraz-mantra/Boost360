@@ -159,7 +159,7 @@ class FeatureDetailsViewModel : BaseViewModel() {
     }
 
 
-    fun addItemToCart1(updatesModel: FeaturesModel, activity: Activity) {
+    fun addItemToCart1(updatesModel: FeaturesModel, activity: Activity, title: String?) {
         updatesLoader.postValue(false)
         val discount = 100 - updatesModel.discount_percent
         val paymentPrice = ((discount * updatesModel.price) / 100)
@@ -178,7 +178,7 @@ class FeatureDetailsViewModel : BaseViewModel() {
             1,
             "features",
             updatesModel.extended_properties,
-            updatesModel.widget_type ?: ""
+            updatesModel.widget_type ?: "",title
         )
 
 

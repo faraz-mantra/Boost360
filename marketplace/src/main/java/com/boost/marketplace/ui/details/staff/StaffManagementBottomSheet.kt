@@ -12,10 +12,8 @@ import com.boost.marketplace.ui.details.FeatureDetailsViewModel
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
 import com.framework.base.BaseBottomSheetDialog
-import com.framework.models.BaseViewModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_feature_details.*
 import kotlinx.android.synthetic.main.bottom_sheet_staff_management.*
 
 class StaffManagementBottomSheet(var listener: DetailsFragmentListener): BaseBottomSheetDialog<BottomSheetEmailConfirmationBinding, FeatureDetailsViewModel>() {
@@ -118,7 +116,7 @@ class StaffManagementBottomSheet(var listener: DetailsFragmentListener): BaseBot
         })
 
         btn_Use_this_feature.setOnClickListener {
-            viewModel!!.addItemToCart1(addonDetails!!, requireActivity())
+            viewModel!!.addItemToCart1(addonDetails!!, requireActivity(),null)
             btn_Use_this_feature.background = ContextCompat.getDrawable(
                 requireContext(),
                 R.drawable.added_to_cart_grey

@@ -39,8 +39,15 @@ class ComparePacksViewModel: BaseViewModel() {
         return cartResult
     }
 
-    fun updatesLoader(): LiveData<Boolean> {
+    fun addonsError(): LiveData<String> {
+        return updatesError
+    }
+
+    fun addonsLoader(): LiveData<Boolean> {
         return updatesLoader
+    }
+    fun bundleResult(): LiveData<List<BundlesModel>> {
+        return allBundleResult
     }
 
     fun getFeatureValues(list: List<String>) {
@@ -84,6 +91,25 @@ class ComparePacksViewModel: BaseViewModel() {
         )
     }
 
+    fun getAllPackages() {
+        updatesLoader.postValue(true)
+        CompositeDisposable().add(
+            AppDatabase.getInstance(Application())!!
+                .bundlesDao()
+                .getBundleItems()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess {
+                    Log.e("getAssociatedPackages", it.toString())
+                    allBundleResult.postValue(it)
+                }
+                .doOnError {
+                    updatesError.postValue(it.message)
+                    updatesLoader.postValue(false)
+                }
+                .subscribe()
+        )
+    }
     fun setCurrentExperienceCode(code: String, fpTag: String) {
         experienceCode = code
     }
@@ -103,7 +129,9 @@ class ComparePacksViewModel: BaseViewModel() {
                         {
                             Log.e("GetAllFeatures", it.toString())
                             val bundles = arrayListOf<BundlesModel>()
-                            for (item in it.Data[0].bundles) {
+                            val tempBundles = Utils.getBundlesFromJsonFile(getApplicationContext())
+                             for (item in it.Data[0].bundles) {
+                           // for (item in tempBundles) {
                                 if (item.exclusive_for_customers != null && item.exclusive_for_customers!!.size > 0) {
                                     var applicableToCurrentFPTag = false
                                     for (code in item.exclusive_for_customers!!) {

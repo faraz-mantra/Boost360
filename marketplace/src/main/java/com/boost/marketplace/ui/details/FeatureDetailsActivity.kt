@@ -196,8 +196,8 @@ class FeatureDetailsActivity :
             termsString.length - 8,
             termsString.length,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        );
-        terms.setText(termsString)
+        )
+        terms.text = termsString
 
         val callExpertString = SpannableString("Have a query? Call an expert")
 
@@ -280,7 +280,9 @@ class FeatureDetailsActivity :
         }
         learn_more_btn.setOnClickListener {
             when {
-                addonDetails?.boost_widget_key?.equals("IVR")!! -> {
+                addonDetails?.boost_widget_key?.equals("IVR")!! || addonDetails?.boost_widget_key?.equals(
+                    "CALL TRACKER"
+                )!! -> {
                     add_item_to_cart.text = "Buy call tracking"
                 }
                 addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
@@ -301,7 +303,9 @@ class FeatureDetailsActivity :
 
         learn_less_btn.setOnClickListener {
             when {
-                addonDetails?.boost_widget_key?.equals("IVR")!! -> {
+                addonDetails?.boost_widget_key?.equals("IVR")!! || addonDetails?.boost_widget_key?.equals(
+                    "CALL TRACKER"
+                )!! -> {
                     add_item_to_cart_new.text = "Buy call tracking"
                 }
                 addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
@@ -369,16 +373,16 @@ class FeatureDetailsActivity :
 
                 val discount = 100 - addonDetails!!.discount_percent
                 val paymentPrice = Utils.priceCalculatorForYear(
-                    (discount* addonDetails!!.price) / 100.0,
+                    (discount * addonDetails!!.price) / 100.0,
                     addonDetails!!.widget_type ?: "",
                     this
                 )
-                pricing =  "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                pricing = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
                     .format(paymentPrice) + Utils.yearlyOrMonthlyOrEmptyValidity(
-                    addonDetails!!.widget_type ?: "",  this
+                    addonDetails!!.widget_type ?: "", this
                 )
-                numberprice=pricing
-                bundle.putString("price",numberprice)
+                numberprice = pricing
+                bundle.putString("price", numberprice)
 
 
                 bundle.putString("bundleData", Gson().toJson(addonDetails))
@@ -439,7 +443,7 @@ class FeatureDetailsActivity :
             }
 
             when {
-                it.boost_widget_key.equals("IVR") -> {
+                it.boost_widget_key.equals("IVR") || it.boost_widget_key.equals("CALL TRACKER") -> {
                     add_item_to_cart.text = "Buy call tracking"
                     add_item_to_cart_new.text = "Buy call tracking"
 
@@ -700,7 +704,9 @@ class FeatureDetailsActivity :
         if (!itemInCartStatus) {
             if (addonDetails != null) {
                 when {
-                    addonDetails?.boost_widget_key?.equals("IVR")!! -> {
+                    addonDetails?.boost_widget_key?.equals("IVR")!! || addonDetails?.boost_widget_key?.equals(
+                        "CALL TRACKER"
+                    )!! -> {
                         loadNumberList()
                     }
                     addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
@@ -719,7 +725,7 @@ class FeatureDetailsActivity :
                     else -> {
                         makeFlyAnimation(addon_icon)
                         prefs.storeCartOrderInfo(null)
-                        viewModel.addItemToCart1(addonDetails!!, this)
+                        viewModel.addItemToCart1(addonDetails!!, this,null)
                         val event_attributes: HashMap<String, Any> = HashMap()
                         addonDetails!!.name?.let { it1 ->
                             event_attributes.put(
@@ -1165,7 +1171,7 @@ class FeatureDetailsActivity :
         item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
         WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, ADDONS_MARKETPLACE, event_attributes)
 
-        val packagePopup = PackagePopUpFragement( this, this)
+        val packagePopup = PackagePopUpFragement(this, this)
         val args = Bundle()
         args.putString("bundleData", Gson().toJson(item))
         args.putString("cartList", Gson().toJson(cart_list))
@@ -1252,7 +1258,7 @@ class FeatureDetailsActivity :
             for (i in item.included_features) {
                 itemIds.add(i.feature_code)
             }
-            if(imageView!=null)
+            if (imageView != null)
                 makeFlyAnimation(imageView)
 
             CompositeDisposable().add(

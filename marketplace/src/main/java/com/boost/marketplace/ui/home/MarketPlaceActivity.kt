@@ -46,6 +46,7 @@ import com.boost.marketplace.ui.comparePacksV3.ComparePacksV3Activity
 import com.boost.marketplace.ui.coupons.OfferCouponsActivity
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.boost.marketplace.ui.marketplace_Offers.MarketPlaceOffersActivity
+import com.boost.marketplace.ui.pack_details.PackDetailsActivity
 import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
 import com.boost.marketplace.ui.videos.HomeVideosBottomSheet
 import com.boost.marketplace.ui.webview.WebViewActivity
@@ -578,7 +579,19 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                             item.exclusive_to_categories,
                             object : TypeToken<List<String>>() {}.type
                         ),
-                        null, null,null,null,null,item.desc
+                        null, Gson().fromJson<List<HowToActivate>>(
+                            item.how_to_activate,
+                            object : TypeToken<List<HowToActivate>>() {}.type
+                        ), Gson().fromJson<List<Testimonial>>(
+                            item.testimonials,
+                            object : TypeToken<List<Testimonial>>() {}.type
+                        ), Gson().fromJson<List<FrequentlyAskedQuestion>>(
+                            item.frequently_asked_questions,
+                            object : TypeToken<List<FrequentlyAskedQuestion>>() {}.type
+                        ),Gson().fromJson<List<String>>(
+                            item.benefits,
+                            object : TypeToken<List<String>>() {}.type
+                        ),item.desc
                     )
                 )
             }
@@ -1422,7 +1435,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         event_attributes.put("Package Identifier", item!!._kid)
         item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
         WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, ADDONS_MARKETPLACE, event_attributes)
-        val intent = Intent(this, ComparePacksActivity::class.java)
+        val intent = Intent(this, PackDetailsActivity::class.java)
         intent.putExtra("bundleData", Gson().toJson(item))
         intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
 

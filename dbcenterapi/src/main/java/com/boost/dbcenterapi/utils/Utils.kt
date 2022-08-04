@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.boost.dbcenterapi.BuildConfig
+import com.boost.dbcenterapi.R
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.data.api_model.GetAllWidgets.GetAllWidgets
 import com.boost.dbcenterapi.utils.Constants.Companion.BASE_URL
 import com.framework.analytics.SentryController
@@ -20,8 +22,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.io.IOException
-import java.io.InputStream
+import java.io.*
 import java.util.concurrent.TimeUnit
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -256,4 +257,22 @@ object Utils {
     var couponid = coupon.replace("\"", "")
     return couponid
   }
+
+  fun getBundlesFromJsonFile(context: Context):List<Bundles> {
+    val `is`: InputStream = context.getResources().openRawResource(R.raw.localbundel)
+    val writer: Writer = StringWriter()
+    val buffer = CharArray(1024)
+    try {
+      val reader: Reader = BufferedReader(InputStreamReader(`is`, "UTF-8"))
+      var n: Int
+      while (reader.read(buffer).also { n = it } != -1) {
+        writer.write(buffer, 0, n)
+      }
+    } finally {
+      `is`.close()
+    }
+
+    return Gson().fromJson(writer.toString(),object : TypeToken<List<Bundles>>() {}.type)
+  }
+
 }

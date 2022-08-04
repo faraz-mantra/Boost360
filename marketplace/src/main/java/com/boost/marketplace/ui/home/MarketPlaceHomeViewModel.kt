@@ -15,6 +15,7 @@ import com.boost.dbcenterapi.data.rest.repository.MarketplaceRepository
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.dbcenterapi.utils.Utils
+import com.boost.dbcenterapi.utils.Utils.getBundlesFromJsonFile
 import com.framework.analytics.SentryController
 import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
@@ -317,7 +318,9 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
 
                         //saving bundle info in bundle table
                         val bundles = arrayListOf<BundlesModel>()
+                        val tempBundles =getBundlesFromJsonFile(application.applicationContext)
                         for (item in response.Data[0].bundles) {
+                      //  for (item in tempBundles) {
                             if (item.exclusive_for_customers != null && item.exclusive_for_customers!!.size > 0) {
                                 var applicableToCurrentFPTag = false
                                 for (code in item.exclusive_for_customers!!) {

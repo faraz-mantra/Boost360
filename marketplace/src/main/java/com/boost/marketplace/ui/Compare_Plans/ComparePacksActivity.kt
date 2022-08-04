@@ -15,9 +15,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.SimplePageTransformer
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PrimaryImage
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
 import com.boost.dbcenterapi.recycleritem.BaseRecyclerViewItem
 import com.boost.dbcenterapi.recycleritem.RecyclerItemClickListener
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
@@ -279,7 +277,19 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
                                 item.exclusive_to_categories,
                                 object : TypeToken<List<String>>() {}.type
                             ),
-                            null, null,null,null,null,item.desc ?: ""
+                            null, Gson().fromJson<List<HowToActivate>>(
+                                item.how_to_activate,
+                                object : TypeToken<List<HowToActivate>>() {}.type
+                            ), Gson().fromJson<List<Testimonial>>(
+                                item.testimonials,
+                                object : TypeToken<List<Testimonial>>() {}.type
+                            ), Gson().fromJson<List<FrequentlyAskedQuestion>>(
+                                item.frequently_asked_questions,
+                                object : TypeToken<List<FrequentlyAskedQuestion>>() {}.type
+                            ),Gson().fromJson<List<String>>(
+                                item.benefits,
+                                object : TypeToken<List<String>>() {}.type
+                            ),item.desc ?: ""
                         )
                     )
                 }
