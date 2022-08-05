@@ -9,6 +9,7 @@ import com.festive.poster.constant.Constants
 import com.festive.poster.models.BrowseAllTemplate
 import com.festive.poster.models.PosterModel
 import com.festive.poster.models.TemplateUi
+import com.festive.poster.models.TodaysPickCategory
 import com.festive.poster.models.response.TemplateSaveActionBody
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.reset.repo.NowFloatsRepository
@@ -22,6 +23,7 @@ import com.framework.constants.IntentConstants
 import com.framework.constants.PackageNames
 import com.framework.constants.UPDATE_PIC_FILE_NAME
 import com.framework.pref.UserSessionManager
+import com.framework.utils.getResponse
 import com.framework.utils.runOnUi
 import com.framework.utils.saveAsImageToAppFolder
 import kotlinx.coroutines.Dispatchers
@@ -45,7 +47,7 @@ fun posterWhatsappShareClicked(childItem:TemplateUi,activity: BaseActivity<*,*>)
             override fun onBuyClick() {
                 MarketPlaceUtils.launchCartActivity(activity,
                     PromoUpdatesActivity::class.java.name,null,null,childItem.tags,
-                    null)
+                    null,childItem)
 
             }
         }).show(activity.supportFragmentManager, SubscribePlanBottomSheet::class.java.name)
@@ -71,7 +73,8 @@ fun posterPostClicked(childItem:TemplateUi,activity: AppBaseActivity<*, *>){
                     childItem.primarySvgUrl,
                     file.path,
                     childItem.tags,
-                    IntentConstants.UpdateType.UPDATE_PROMO_POST.name
+                    IntentConstants.UpdateType.UPDATE_PROMO_POST.name,
+                    childItem
 
                 )
             }
@@ -81,8 +84,9 @@ fun posterPostClicked(childItem:TemplateUi,activity: AppBaseActivity<*, *>){
 
 }
 
-private fun saveTemplateAction(action: TemplateSaveActionBody.ActionType, posterModel: TemplateUi){
-    NowFloatsRepository.saveTemplateAction(action,posterModel.isFavourite,posterModel.id)
+fun saveTemplateAction(action: TemplateSaveActionBody.ActionType, posterModel: TemplateUi?){
+    if (posterModel==null) return
+    NowFloatsRepository.saveTemplateAction(action,posterModel.isFavourite,posterModel.id).getResponse {  }
 }
 
 
@@ -98,3 +102,4 @@ fun AppBaseRecyclerViewAdapter<BrowseAllTemplate>.setUpUsingDiffUtil(newList: Li
     this.list.addAll(newList)
     diffResult.dispatchUpdatesTo(this)
 }
+

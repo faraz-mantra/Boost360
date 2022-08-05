@@ -19,9 +19,11 @@ import com.festive.poster.databinding.ActivityPostPreviewSocialBinding
 import com.festive.poster.models.CustomerDetails
 import com.festive.poster.models.MerchantSummaryResponse
 import com.festive.poster.models.PostUpdateTaskRequest
+import com.festive.poster.models.TemplateUi
 import com.festive.poster.models.promoModele.SocialPlatformModel
 import com.festive.poster.models.promoModele.SocialPreviewChannel
 import com.festive.poster.models.promoModele.SocialPreviewModel
+import com.festive.poster.models.response.TemplateSaveActionBody
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
@@ -31,6 +33,7 @@ import com.festive.poster.ui.promoUpdates.bottomSheet.SubscribePlanBottomSheet
 import com.festive.poster.utils.MarketPlaceUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.utils.isPromoWidgetActive
+import com.festive.poster.utils.saveTemplateAction
 import com.festive.poster.viewmodels.PostUpdatesViewModel
 import com.framework.constants.IntentConstants
 import com.framework.exceptions.NoNetworkException
@@ -72,6 +75,10 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     private var session:UserSessionManager?=null
     private var captionIntent :String?=null
     private var dataloaded=false
+
+    private val template:TemplateUi? by lazy {
+        intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getParcelable(IntentConstants.IK_TEMPLATE)
+    }
     private val updateType by lazy {
         intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IntentConstants.IK_UPDATE_TYPE)
     }
@@ -87,13 +94,17 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     companion object{
 
 
-        fun launchActivity(activity:Activity,caption:String?, posterImgPath:String,tags:List<String>?,updateType:String){
+        fun launchActivity(activity:Activity,caption:String?,
+                           posterImgPath:String,tags:List<String>?,
+                           updateType:String,
+                            template:TemplateUi?){
             activity.startActivity(Intent(activity,PostPreviewSocialActivity::class.java)
                 .putExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
                     putString(IntentConstants.IK_CAPTION_KEY,caption)
                     putString(IntentConstants.IK_POSTER, posterImgPath)
                     putString(IntentConstants.IK_TAGS, Gson().toJson(tags))
                     putString(IntentConstants.IK_UPDATE_TYPE, updateType)
+                    putParcelable(IntentConstants.IK_TEMPLATE,template)
 
                 })
 
@@ -149,8 +160,10 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         binding?.tvChooseAPromoPack?.setOnClickListener {
             SubscribePlanBottomSheet.newInstance(object :SubscribePlanBottomSheet.Callbacks{
                 override fun onBuyClick() {
-                    MarketPlaceUtils.launchCartActivity(this@PostPreviewSocialActivity,
-                        PostPreviewSocialActivity::class.java.name,posterImgPath,captionIntent,tags,updateType)
+                    MarketPlaceUtils.launchCartActivity(
+                        this@PostPreviewSocialActivity,
+                        PostPreviewSocialActivity::class.java.name,
+                        posterImgPath,captionIntent,tags,updateType,template)
 
                 }
             }).show(supportFragmentManager, SubscribePlanBottomSheet::class.java.name)
@@ -643,6 +656,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         viewModel.updateDraft(UpdateDraftBody(clientId,"",session?.fpTag,"")).observe(this){
 
         }
+        saveTemplateAction(TemplateSaveActionBody.ActionType.UPDATE_CREATED,
+            template)
         posterProgressSheet?.dismiss()
         if (PreferencesUtils.instance.getData(
                 com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE,

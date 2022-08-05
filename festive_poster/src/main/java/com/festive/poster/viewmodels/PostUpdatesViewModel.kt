@@ -107,9 +107,5 @@ class PostUpdatesViewModel : BaseViewModel() {
     return NowFloatsRepository.getTemplateConfig(fKey,floatingPointId,floatingPointTag).toLiveData()
   }
 
-  fun templateSaveAction(action: TemplateSaveActionBody.ActionType,
-                         isFav:Boolean, templateId:String): LiveData<BaseResponse> {
-    return NowFloatsRepository.saveTemplateAction(action,isFav,templateId).toLiveData()
-  }
 
 }

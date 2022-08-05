@@ -231,7 +231,10 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
                         withContext(Dispatchers.Default){
                            val file =  SvgUtils.svgToBitmap(it.primarySvgUrl)?.saveAsImageToAppFolder(getExternalFilesDir(null)?.path+File.separator+UPDATE_PIC_FILE_NAME)
                             if (file?.exists() == true){
-                                PostPreviewSocialActivity.launchActivity(this@EditPostActivity,binding?.captionLayout?.etInput?.text.toString(), file.path, posterModel?.tags, IntentConstants.UpdateType.UPDATE_PROMO_POST.name)
+                                PostPreviewSocialActivity.launchActivity(this@EditPostActivity,binding?.captionLayout?.etInput?.text.toString(),
+                                    file.path, posterModel?.tags,
+                                    IntentConstants.UpdateType.UPDATE_PROMO_POST.name,
+                                it)
                             }
 
                         }

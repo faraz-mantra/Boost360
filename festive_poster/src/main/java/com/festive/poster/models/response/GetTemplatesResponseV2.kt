@@ -25,7 +25,7 @@ data class GetTemplatesResponseV2Template(
     val primaryText: String,
     val secondarySvgUrls: List<Any>,
     val tags: List<String>,
-    val utilizationDate: Any?
+    val utilizationDate: String?
 )
 
 fun List<GetTemplatesResponseV2Template>.asDomainModels(): List<TemplateUi> {

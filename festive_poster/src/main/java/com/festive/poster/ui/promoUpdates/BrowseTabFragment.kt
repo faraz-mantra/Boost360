@@ -62,7 +62,6 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
     }
 
     private fun fetchDataFromServer() {
-        promoUpdatesViewModel?.getTemplatesUi()
         startShimmer()
        promoUpdatesViewModel?.browseAllLData?.observe(viewLifecycleOwner){
             stopShimmer()

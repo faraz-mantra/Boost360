@@ -1,5 +1,10 @@
 package com.festive.poster.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+
+@Parcelize
 open class TemplateUi(
     val id: String,
     var isFavourite: Boolean,
@@ -7,19 +12,19 @@ open class TemplateUi(
     val primarySvgUrl: String,
     val primaryText: String,
     val tags: List<String>,
-    val utilizationDate: Any?
-)
+    val utilizationDate: String?
+):Parcelable
 
 fun List<TemplateUi>.asBrowseAllModels(): List<BrowseAllTemplate> {
     return map {
         BrowseAllTemplate(
-            id = it.id,
-            isFavourite = it.isFavourite,
-            name = it.name,
-            primaryText = it.primaryText,
-            primarySvgUrl = it.primarySvgUrl,
-            tags = it.tags,
-            utilizationDate = it.utilizationDate
+            _id = it.id,
+            _isFavourite = it.isFavourite,
+            _name = it.name,
+            _primaryText = it.primaryText,
+            _primarySvgUrl = it.primarySvgUrl,
+            _tags = it.tags,
+            _utilizationDate = it.utilizationDate
         )
     }
 }
@@ -27,13 +32,13 @@ fun List<TemplateUi>.asBrowseAllModels(): List<BrowseAllTemplate> {
 fun List<TemplateUi>.asTodaysPickModels(): List<TodayPickTemplate> {
     return map {
         TodayPickTemplate(
-            id = it.id,
-            isFavourite = it.isFavourite,
-            name = it.name,
-            primaryText = it.primaryText,
-            primarySvgUrl = it.primarySvgUrl,
-            tags = it.tags,
-            utilizationDate = it.utilizationDate
+            _id = it.id,
+            _isFavourite = it.isFavourite,
+            _name = it.name,
+            _primaryText = it.primaryText,
+            _primarySvgUrl = it.primarySvgUrl,
+            _tags = it.tags,
+            _utilizationDate = it.utilizationDate
         )
     }
 }

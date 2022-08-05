@@ -187,7 +187,11 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
                         if (item.imageUri.toString().isNullOrBlank().not()){
                          val bitmapPastUpdateReuse = Picasso.get().load(item.imageUri.toString()).get()
                          val saveAsTempFile = bitmapPastUpdateReuse.saveAsTempFile()
-                         PostPreviewSocialActivity.launchActivity(activity = baseActivity, caption = item.message.toString(), posterImgPath = saveAsTempFile?.path.toString(), tags = item.tags, updateType = IntentConstants.UpdateType.UPDATE_PROMO_POST.name)
+                         PostPreviewSocialActivity.launchActivity(activity =
+                         baseActivity, caption = item.message.toString(),
+                             posterImgPath = saveAsTempFile?.path.toString(),
+                             tags = item.tags,
+                             updateType = IntentConstants.UpdateType.UPDATE_PROMO_POST.name,null)
                          }
                     }}
             }

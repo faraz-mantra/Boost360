@@ -185,7 +185,7 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
 
     private fun callFavApi(posterModel: TemplateUi) {
         showProgress()
-        viewModel?.templateSaveAction(TemplateSaveActionBody.ActionType.FAVOURITE,
+        promoUpdatesViewModel?.templateSaveAction(TemplateSaveActionBody.ActionType.FAVOURITE,
         posterModel.isFavourite.not(),posterModel.id)?.observe(viewLifecycleOwner){
             if (it.isSuccess()){
                promoUpdatesViewModel?.getTemplatesUi()
