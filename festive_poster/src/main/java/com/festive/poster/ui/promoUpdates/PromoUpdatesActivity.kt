@@ -70,7 +70,7 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoU
                 onBackPressed()
             }
             binding?.ivLove -> {
-                addFragmentReplace(binding?.container?.id, FavouriteListFragment.newInstance(), true)
+                addFragmentReplace(binding?.container?.id, FavouriteListFragment.newInstance(), true, showAnim = true)
             }
             binding?.ivStore -> {
                 startFragmentPastUpdatesContainerActivity(this, type = FragmentType.UPDATES_LISTING_FRAGMENT, bundle = Bundle())

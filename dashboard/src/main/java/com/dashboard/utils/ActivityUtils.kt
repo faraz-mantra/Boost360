@@ -749,7 +749,7 @@ fun AppCompatActivity.startUserProfileDetail(session: UserSessionManager?) {
 
 fun AppCompatActivity.startBusinessContactInfo(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent(CONTACT_INFORMATION_HOURS_PAGE, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(CONTACT_INFORMATION_PAGE, CLICK, TO_BE_ADDED)
     val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

@@ -37,15 +37,13 @@
             <com.framework.views.customViews.CustomImageView
               android:id="@+id/business_image"
               android:layout_width="match_parent"
-                android:tag="com.userexperior.ueSecureView"
-
-                android:layout_height="@dimen/size_180"
+              android:layout_height="@dimen/size_180"
+              android:tag="com.userexperior.ueSecureView"
               android:visibility="gone"
               app:srcCompat="@color/placeholder_bg" />
 
             <LinearLayout
-                android:tag="com.userexperior.ueSecureView"
-                android:id="@+id/image_add_btn"
+              android:id="@+id/image_add_btn"
               android:layout_width="match_parent"
               android:layout_height="@dimen/size_180"
               android:background="@color/white_smoke_1"
@@ -54,6 +52,8 @@
               android:foreground="?attr/selectableItemBackground"
               android:gravity="center"
               android:orientation="vertical"
+              android:tag="com.userexperior.ueSecureView"
+              tools:ignore="UnusedAttribute"
               tools:targetApi="m">
 
               <com.framework.views.customViews.CustomImageView
@@ -103,8 +103,8 @@
           android:background="@null"
           android:enabled="true"
           android:gravity="center"
-          android:textAllCaps="false"
           android:text="@string/update_business_image"
+          android:textAllCaps="false"
           android:textColor="@color/black_4a4a4a"
           android:visibility="gone" />
 
@@ -149,11 +149,11 @@
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/ctv_business_name"
-            android:tag="com.userexperior.ueSecureView"
+          style="@style/BusinessProfileTextField"
 
-            style="@style/BusinessProfileTextField"
           android:background="@drawable/bg_rect_edit_txt_gray_business"
           android:singleLine="true"
+          android:tag="com.userexperior.ueSecureView"
           android:textColor="@color/black_4a4a4a"
           tools:text="@string/services_business" />
 
@@ -214,9 +214,9 @@
             android:id="@+id/ctv_website"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-              android:tag="com.userexperior.ueSecureView"
+            android:padding="@dimen/size_10"
 
-              android:padding="@dimen/size_10"
+            android:tag="com.userexperior.ueSecureView"
             android:textColor="@color/black_4a4a4a"
             tools:text="https://samplebusiness.nowfloats.com" />
 
@@ -296,18 +296,19 @@
 
           </androidx.constraintlayout.widget.ConstraintLayout>
 
-          <FrameLayout
+          <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_business_contacts"
-                android:tag="com.userexperior.ueSecureView"
-
-                android:layout_width="match_parent"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:padding="@dimen/size_10"
+              android:tag="com.userexperior.ueSecureView"
               android:textColor="@color/black_4a4a4a"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
               tools:text="+91 8242558406\n (VMN)+91 7042490968\nbrajmadhav@gmail.com\nhttp://brajmadhav.com" />
 
             <com.framework.views.customViews.CustomTextView
@@ -315,12 +316,117 @@
               style="@style/TextSemiBoldStyle"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_gravity="end"
-              android:padding="@dimen/size_10"
+              android:includeFontPadding="false"
+              android:paddingVertical="@dimen/size_10"
+              android:paddingEnd="@dimen/size_2"
               android:text="@string/active"
               android:textAllCaps="false"
-              android:textColor="@color/green_27AE60" />
-          </FrameLayout>
+              android:textColor="@color/green_27AE60"
+              app:layout_constraintEnd_toStartOf="@+id/ellipse_contact_status"
+              app:layout_constraintTop_toTopOf="parent" />
+
+            <com.airbnb.lottie.LottieAnimationView
+              android:id="@+id/ellipse_contact_status"
+              android:layout_width="@dimen/size_25"
+              android:layout_height="@dimen/size_25"
+              android:layout_marginTop="@dimen/size_1"
+              app:layout_constraintBottom_toBottomOf="@+id/ctv_active"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toTopOf="@+id/ctv_active"
+              app:lottie_autoPlay="true"
+              app:lottie_loop="true"
+              app:lottie_rawRes="@raw/green_dot_json" />
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_16"
+          android:background="@drawable/bg_rect_edit_txt_gray"
+          android:orientation="vertical">
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/view_business_timing"
+            android:background="@drawable/bg_rect_edit_txt_white"
+            android:padding="@dimen/size_10">
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:drawableStart="@drawable/ic_clock_outline"
+              android:drawableEnd="@drawable/ic_arrow_right_grey"
+              android:drawablePadding="@dimen/size_8"
+              android:fontFamily="@font/semi_bold"
+              android:paddingVertical="@dimen/size_4"
+              android:text="@string/weekly_business_timings"
+              android:textColor="@color/black_4f4f4f"
+              android:textSize="14sp"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintLeft_toLeftOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_heading_timing"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_10"
+              android:paddingHorizontal="@dimen/size_10"
+              android:tag="com.userexperior.ueSecureView"
+              android:textColor="@color/black_4a4a4a"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              tools:text="Thursday: 2pm - 4pm, 6pm - 9pm" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_timing_days"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_2"
+              android:paddingHorizontal="@dimen/size_10"
+              android:paddingBottom="@dimen/size_10"
+              android:tag="com.userexperior.ueSecureView"
+              android:textColor="@color/black_4a4a4a"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/ctv_heading_timing"
+              tools:text="(All 7 days open)" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/ctv_open_timing"
+              style="@style/TextSemiBoldStyle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:includeFontPadding="false"
+              android:paddingVertical="@dimen/size_10"
+              android:paddingEnd="@dimen/size_2"
+              android:text="@string/open"
+              android:textAllCaps="false"
+              android:textColor="@color/green_27AE60"
+              app:layout_constraintEnd_toStartOf="@+id/ellipse_timing_status"
+              app:layout_constraintTop_toTopOf="parent" />
+
+            <com.airbnb.lottie.LottieAnimationView
+              android:id="@+id/ellipse_timing_status"
+              android:layout_width="@dimen/size_25"
+              android:layout_height="@dimen/size_25"
+              android:layout_marginTop="@dimen/size_1"
+              app:layout_constraintBottom_toBottomOf="@+id/ctv_open_timing"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toTopOf="@+id/ctv_open_timing"
+              app:lottie_autoPlay="true"
+              app:lottie_loop="true"
+              app:lottie_rawRes="@raw/green_dot_json" />
+          </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -367,9 +473,9 @@
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_weight="0.8"
-                android:tag="com.userexperior.ueSecureView"
+              android:padding="@dimen/size_10"
 
-                android:padding="@dimen/size_10"
+              android:tag="com.userexperior.ueSecureView"
               android:textColor="@color/black_4a4a4a"
               tools:text="http://brajmadhav.com" />
 

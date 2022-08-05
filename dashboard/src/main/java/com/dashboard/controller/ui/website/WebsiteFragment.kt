@@ -34,7 +34,6 @@ import com.framework.views.customViews.CustomImageView
 import com.framework.webengageconstant.DASHBOARD_WEBSITE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
 import com.google.android.material.tabs.TabLayout
-import java.util.*
 
 private val TAB_TITLES = arrayOf("Content", "Features")
 
@@ -163,43 +162,11 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
 
 
   private fun updateTimings() {
-    var isOpen = false
-    when (Calendar.getInstance()[Calendar.DAY_OF_WEEK]) {
-      Calendar.SUNDAY -> {
-        isOpen = (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME)!!.toLowerCase(Locale.ROOT).endsWith("am")
-            || session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME)!!.toLowerCase(Locale.ROOT).endsWith("pm"))
-      }
-      Calendar.MONDAY -> {
-        isOpen = (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME)!!.toLowerCase(Locale.ROOT).endsWith("am")
-            || session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME)!!.toLowerCase(Locale.ROOT).endsWith("pm"))
-      }
-      Calendar.TUESDAY -> {
-        isOpen = (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME)!!.toLowerCase(Locale.ROOT).endsWith("am")
-            || session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME)!!.toLowerCase(Locale.ROOT).endsWith("pm"))
-      }
-      Calendar.WEDNESDAY -> {
-        isOpen = (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME)!!.toLowerCase(Locale.ROOT).endsWith("am")
-            || session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME)!!.toLowerCase(Locale.ROOT).endsWith("pm"))
-      }
-      Calendar.THURSDAY -> {
-        isOpen = (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME)!!.toLowerCase(Locale.ROOT).endsWith("am")
-            || session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME)!!.toLowerCase(Locale.ROOT).endsWith("pm"))
-      }
-      Calendar.FRIDAY -> {
-        isOpen = (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME)!!
-          .toLowerCase(Locale.ROOT).endsWith("am")
-            || session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME)!!
-          .toLowerCase(Locale.ROOT).endsWith("pm"))
-      }
-      Calendar.SATURDAY -> {
-        isOpen = (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME)!!.toLowerCase(Locale.ROOT).endsWith("am")
-            || session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME)!!.toLowerCase(Locale.ROOT).endsWith("pm"))
-      }
+    session?.getCurrentTimingsData { isOpen, day, timing ->
+      binding?.txtOpenClose?.text = resources.getString(if (isOpen) R.string.open_now else R.string.close_now)
+      binding?.txtOpenClose?.setTextColor(if (isOpen) getColor(R.color.green_light) else getColor(R.color.red_E39595))
+      binding?.ellipseOpenClose?.changeLayersColor(if (isOpen) R.color.green_light else R.color.red_E39595)
     }
-    binding?.txtOpenClose?.text = resources.getString(if (isOpen) R.string.open_now else R.string.close_now)
-    binding?.txtOpenClose?.setTextColor(if (isOpen) getColor(R.color.green_light) else getColor(R.color.red_E39595))
-    binding?.ellipseOpenClose?.changeLayersColor(if (isOpen) R.color.green_light else R.color.red_E39595)
-
   }
 
 

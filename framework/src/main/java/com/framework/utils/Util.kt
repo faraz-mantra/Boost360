@@ -143,10 +143,7 @@ fun hasHTMLTags(text: String): Boolean {
 }
 
 fun fromHtml(html: String?): Spanned? {
-  return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) Html.fromHtml(
-    html,
-    Html.FROM_HTML_MODE_LEGACY
-  )
+  return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY)
   else Html.fromHtml(html)
 }
 
@@ -634,8 +631,19 @@ fun File.shareAsImage(context:Context,packageName: String?,text: String?){
   context.startActivity(intent)
 }
 
-fun ImageView.loadUsingGlide(imgFile:String?,cache:Boolean=true){
+fun ImageView.loadFromFile(imgFile:String?,cache:Boolean=true){
   val builder = Glide.with(this).load(imgFile)
+  if (cache.not()){
+    builder.apply(RequestOptions.skipMemoryCacheOf(true))
+      .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(this)
+  }else{
+    builder.into(this)
+
+  }
+}
+
+fun ImageView.loadFromUrl(imgUrl:String?,cache:Boolean=true){
+  val builder = Glide.with(this).load(imgUrl)
   if (cache.not()){
     builder.apply(RequestOptions.skipMemoryCacheOf(true))
       .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(this)

@@ -1,15 +1,12 @@
 package com.festive.poster.reset.services
 
 import com.festive.poster.models.GetFavTemplateResponse
-import com.festive.poster.models.PosterModel
-import com.festive.poster.models.response.GetTemplateViewConfigResponse
-import com.festive.poster.models.response.GetTemplatesResponse
+import com.festive.poster.models.response.*
 import com.festive.poster.reset.EndPoints
 import com.framework.base.BaseResponse
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
-import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -56,4 +53,14 @@ interface NowFloatsRemoteData {
   fun updatePurchaseStatus(
     @Body body:JsonObject?,
   ): Observable<Response<BaseResponse>>
+
+  @GET(EndPoints.GET_CATEGORIES)
+  fun getCategories():Observable<Response<GetCategoryResponse>>
+
+
+  @POST(EndPoints.GET_TEMPLATES_V2)
+  fun getTemplatesV2(@Body body:GetTemplatesV2Body):Observable<Response<GetTemplatesResponseV2>>
+
+  @POST(EndPoints.TEMPLATE_SAVE_ACTION)
+  fun templateSaveAction(@Body body: TemplateSaveActionBody):Observable<Response<BaseResponse>>
 }

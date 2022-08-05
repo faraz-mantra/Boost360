@@ -881,14 +881,12 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       QuickActionItem.QuickActionType.ADD_STAFF_PROFILE -> baseActivity.startAddStaff(session)
       QuickActionItem.QuickActionType.LIST_SERVICES,
       QuickActionItem.QuickActionType.LIST_PRODUCT,
-      QuickActionItem.QuickActionType.LIST_DRUG_MEDICINE,
-      -> baseActivity.startListServiceProduct(session)
+      QuickActionItem.QuickActionType.LIST_DRUG_MEDICINE, -> baseActivity.startListServiceProduct(session)
       QuickActionItem.QuickActionType.ADD_SERVICE,
       QuickActionItem.QuickActionType.ADD_PRODUCT,
       QuickActionItem.QuickActionType.ADD_COURSE,
       QuickActionItem.QuickActionType.ADD_MENU,
-      QuickActionItem.QuickActionType.ADD_ROOM_TYPE,
-      -> baseActivity.startAddServiceProduct(session)
+      QuickActionItem.QuickActionType.ADD_ROOM_TYPE, -> baseActivity.startAddServiceProduct(session)
       QuickActionItem.QuickActionType.PLACE_APPOINTMENT -> baseActivity.startBookAppointmentConsult(session, false)
       QuickActionItem.QuickActionType.PLACE_CONSULT -> baseActivity.startBookAppointmentConsult(session, true)
       QuickActionItem.QuickActionType.ADD_PROJECT -> {
