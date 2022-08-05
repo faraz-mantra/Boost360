@@ -2,6 +2,7 @@ package com.boost.marketplace.ui.pack_details
 
 import android.text.TextUtils
 import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.adapter.SimplePageTransformerSmall
@@ -64,6 +65,9 @@ class PackDetailsBottomSheet :
         howToUseAdapter = HowToUseAdapter(requireActivity(), java.util.ArrayList())
         faqAdapter = FAQAdapter(requireActivity(), java.util.ArrayList())
         dialog.behavior.isDraggable = true
+        val width = ViewGroup.LayoutParams.MATCH_PARENT
+        val height = ViewGroup.LayoutParams.MATCH_PARENT
+        dialog!!.window!!.setLayout(width, height)
 
         features = Gson().fromJson<FeaturesModel>(
             requireArguments().getString("features"),

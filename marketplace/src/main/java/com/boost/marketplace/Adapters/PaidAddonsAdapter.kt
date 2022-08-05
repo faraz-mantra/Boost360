@@ -1,8 +1,6 @@
 package com.boost.marketplace.Adapters
 
 import android.content.Context
-import android.transition.AutoTransition
-import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,16 +57,16 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
       holder.itemView.visibility=View.GONE
       holder.itemView.layoutParams = RecyclerView.LayoutParams(0, 0)
     }
-    holder.mainlayout.setOnClickListener {
-      if (holder.detailsView.visibility==View.GONE) {
-        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
-        holder.detailsView.visibility= View.VISIBLE
-      } else {
-        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
-        holder.detailsView.visibility= View.GONE
-      }
-    }
-    holder.detailsView.setOnClickListener {
+//    holder.mainlayout.setOnClickListener {
+//      if (holder.detailsView.visibility==View.GONE) {
+//        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
+//        holder.detailsView.visibility= View.VISIBLE
+//      } else {
+//        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
+//        holder.detailsView.visibility= View.GONE
+//      }
+//    }
+    holder.itemView.setOnClickListener {
       val item: FeaturesModel = FeaturesModel(
         list.get(position).feature_id,
         list.get(position).boost_widget_key,
