@@ -41,6 +41,10 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseVi
         }
         binding?.addonsDesc?.text = singleAddon.description_title
 
+        if (singleAddon.is_premium.equals(false)){
+            binding?.cslayout?.visibility=View.GONE
+        }
+
         val date1: String? =
             DateUtils.parseDate(singleAddon.activatedDate, DateUtils.FORMAT_SERVER_DATE1, DateUtils.FORMAT1_DD_MM_YYYY)
         binding?.title3?.text= date1
@@ -60,8 +64,8 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseVi
             binding!!.actionRequired.visibility=View.VISIBLE
             binding!!.actionText.visibility=View.VISIBLE
             binding!!.actionText.text="Please activate this feature by going to ${singleAddon.name} and provide the missing details."
-            binding!!.txtMessage.visibility=View.GONE
-            binding!!.paidSingleDummyView.visibility=View.GONE
+//            binding!!.txtMessage.visibility=View.GONE
+//            binding!!.paidSingleDummyView.visibility=View.GONE
             binding!!.imageView3.visibility=View.GONE
         }
 

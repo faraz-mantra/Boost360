@@ -7,29 +7,40 @@
 
     </data>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-
-        <RelativeLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:focusable="true">
+            android:orientation="vertical"
+            android:layout_marginTop="300dp"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <ImageView
                 android:id="@+id/close_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:layout_gravity="center"
+                android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/_10sdp"
-                android:src="@drawable/ic_close_circle_gray"
-                android:layout_centerHorizontal="true" />
+                android:src="@drawable/ic_close_circle_gray" />
 
-            <ScrollView
+            <androidx.core.widget.NestedScrollView
                 android:id="@+id/scrollView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/packsv3_bg"
                 android:clipToPadding="false"
-                android:layout_below="@id/close_btn"
-                android:paddingBottom="@dimen/pad_30dp">
+                android:layout_below="@id/close_btn">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/container"
                 android:layout_width="match_parent"
@@ -290,7 +301,8 @@
                         app:layout_constraintTop_toBottomOf="@id/how_to_use_title_layout"
                         tools:itemCount="2"
                         tools:listitem="@layout/how_to_use_item_pack_details"
-                        tools:visibility="visible" />
+                        tools:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -327,7 +339,7 @@
                         android:layout_height="wrap_content"
                         android:visibility="visible"
                         app:layout_constraintTop_toBottomOf="@id/faq_title"
-                        tools:itemCount="4"
+                        tools:itemCount="2"
                         tools:listitem="@layout/faq_item_pack_details" />
 
 
@@ -335,8 +347,9 @@
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-            </ScrollView>
-        </RelativeLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>
