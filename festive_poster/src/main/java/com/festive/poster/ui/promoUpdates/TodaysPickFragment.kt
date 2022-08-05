@@ -4,21 +4,20 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.base.AppBaseFragment
-import com.festive.poster.constant.Constants
 import com.festive.poster.constant.RecyclerViewActionType
-import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.FragmentTodaysPickBinding
 import com.festive.poster.models.*
-import com.festive.poster.models.response.GetTemplateViewConfigResponse
-import com.festive.poster.models.response.GetTemplatesResponse
+import com.festive.poster.models.response.TemplateSaveActionBody
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.festive.poster.ui.CategoryDiffUtil
+import com.festive.poster.ui.TemplateDiffUtil
 import com.festive.poster.utils.*
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
@@ -33,12 +32,13 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.convertJsonToObj
 import com.framework.utils.convertListObjToString
+import com.framework.utils.toArrayList
 import com.framework.webengageconstant.Promotional_Update_View_More_Click
 import com.google.gson.Gson
 
 class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePosterViewModel>(),RecyclerItemClickListener {
 
-    private var adapter: AppBaseRecyclerViewAdapter<PosterPackModel>?=null
+    private var adapter: AppBaseRecyclerViewAdapter<TodaysPickCategory>?=null
     private var session: UserSessionManager? = null
     var promoUpdatesViewModel:PromoUpdatesViewModel?=null
     private  val TAG = "TodaysPickFragment"
@@ -69,24 +69,31 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
         fetchDataFromServer()
         setOnClickListener(binding.cardBrowseAllTemplate)
 
+        adapter = AppBaseRecyclerViewAdapter(baseActivity, ArrayList(), this)
+        binding.rvTemplates.adapter = adapter
+        binding.rvTemplates.layoutManager = LinearLayoutManager(requireActivity())
 
     }
 
     private fun fetchDataFromServer() {
         startShimmer()
-        promoUpdatesViewModel?.todaysPickLData?.observe(viewLifecycleOwner){
-            stopShimmer()
-            it?.let {list->
+        promoUpdatesViewModel?.todayPickData?.observe(viewLifecycleOwner){
 
-                list.forEach {item->
+            stopShimmer()
+
+
+           /*     list.forEach {item->
                     if ((item.posterList?.size ?: 0) >= 4){
                         item.posterList?.add(PosterModel(layout_id = RecyclerViewItemType.VIEW_MORE_POSTER.getLayout()))
                     }
-                }
-                adapter = AppBaseRecyclerViewAdapter(baseActivity, list, this)
-                binding.rvTemplates.adapter = adapter
-                binding.rvTemplates.layoutManager = LinearLayoutManager(requireActivity())
-            }
+                }*/
+
+
+
+                adapter?.setUpUsingDiffUtil(
+                    it.asTodaysPickModels().toArrayList()
+                )
+
 
         }
     }
@@ -184,13 +191,13 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                 )
             }
             RecyclerViewActionType.POSTER_LOVE_CLICKED.ordinal->{
-                callFavApi(childItem as PosterModel,childPosition)
+                callFavApi(childItem as TemplateUi)
             }
             RecyclerViewActionType.POSTER_VIEW_MORE_CLICKED.ordinal->{
-                parentItem as PosterPackModel
+                parentItem as CategoryUi
 
                     addFragment(R.id.container,
-                        BrowseAllFragment.newInstance(parentItem.tagsModel?.tag),
+                        BrowseAllFragment.newInstance(parentItem.id),
                         true,true)
 
             }
@@ -201,13 +208,31 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
         }
     }
 
-    private fun callFavApi(posterModel: PosterModel,position: Int) {
-        viewModel?.makeTemplateFav(session?.fPID,session?.fpTag,posterModel.id)?.observe(viewLifecycleOwner){
+    private fun callFavApi(posterModel: TemplateUi) {
+        showProgress()
+        promoUpdatesViewModel?.templateSaveAction(
+            TemplateSaveActionBody.ActionType.FAVOURITE,
+            posterModel.isFavourite.not(),posterModel.id)?.observe(viewLifecycleOwner){
             if (it.isSuccess()){
-                posterModel.details?.Favourite= posterModel.details?.Favourite?.not() == true
-                adapter?.notifyItemChanged(position)
+                promoUpdatesViewModel?.getTemplatesUi()
             }
+            hideProgress()
         }
 
+    }
+
+    fun AppBaseRecyclerViewAdapter<TodaysPickCategory>.setUpUsingDiffUtil(
+        newList: ArrayList<TodaysPickCategory>
+    ){
+        val catDiffUtil = CategoryDiffUtil(
+            this.list,
+            newList
+        )
+
+        val diffResult = DiffUtil.calculateDiff(catDiffUtil)
+
+        this.list.clear()
+        this.list.addAll(newList)
+        diffResult.dispatchUpdatesTo(this)
     }
 }

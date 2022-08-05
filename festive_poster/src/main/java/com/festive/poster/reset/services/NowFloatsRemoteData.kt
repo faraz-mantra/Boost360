@@ -57,6 +57,11 @@ interface NowFloatsRemoteData {
   @GET(EndPoints.GET_CATEGORIES)
   fun getCategories():Observable<Response<GetCategoryResponse>>
 
+  @POST(EndPoints.GET_TODAY_TEMPLATES)
+  fun getTodayTemplates(
+    @Query("floatingPointId") floatingPointId:String?,
+    @Query("floatingPointTag") floatingPointTag:String?,
+  ): Observable<Response<String>>
 
   @POST(EndPoints.GET_TEMPLATES_V2)
   fun getTemplatesV2(@Body body:GetTemplatesV2Body):Observable<Response<GetTemplatesResponseV2>>

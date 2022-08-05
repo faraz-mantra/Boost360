@@ -116,6 +116,13 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
     )
   }
 
+  fun getTodaysTemplates(): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getTodayTemplates(session.fPID,session.fpTag),
+      TaskCode.GET_TODAY_TEMPLATES
+    )
+  }
+
   fun getTemplatesV2(isFav: Boolean?): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.getTemplatesV2(GetTemplatesV2Body(session.fPID!!,session.fpTag!!, showFavourites = isFav)),

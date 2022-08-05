@@ -53,8 +53,7 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoU
     }
 
     private fun fetchDataFromServer() {
-        viewModel.getTodaysPickData(Constants.PROMO_FEATURE_CODE,session?.fPID, session?.fpTag)
-        viewModel.getBrowseAllData(Constants.PROMO_FEATURE_CODE,session?.fPID, session?.fpTag)
+
     }
 
 

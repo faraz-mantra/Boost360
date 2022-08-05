@@ -46,3 +46,15 @@ fun List<CategoryUi>.asBrowseAllModels(): List<BrowseAllCategory> {
         )
     }
 }
+
+fun List<CategoryUi>.asTodaysPickModels(): List<TodaysPickCategory> {
+    return map {
+        TodaysPickCategory(
+            id = it.id,
+            iconUrl = it.iconUrl,
+            name = it.name,
+            thumbnailUrl = it.thumbnailUrl,
+            templates = it.getParentTemplates()?.asTodaysPickModels()
+        )
+    }
+}

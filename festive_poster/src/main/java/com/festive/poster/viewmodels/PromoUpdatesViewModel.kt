@@ -11,7 +11,9 @@ import com.festive.poster.models.*
 import com.festive.poster.models.response.*
 import com.festive.poster.reset.repo.*
 import com.framework.BaseApplication
+import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
+import com.framework.models.toLiveData
 import com.framework.utils.getResponse
 import com.framework.utils.toArrayList
 import kotlinx.coroutines.launch
@@ -32,10 +34,19 @@ class PromoUpdatesViewModel: BaseViewModel() {
     val browseAllLData:LiveData<ArrayList<CategoryUi>> get() =
         browseAllMData
 
+
     private val _favData=MutableLiveData<ArrayList<CategoryUi>>()
     val favData:LiveData<ArrayList<CategoryUi>> get() = _favData
 
+    private val _todayPickData=MutableLiveData<ArrayList<CategoryUi>>()
+    val todayPickData:LiveData<ArrayList<CategoryUi>> get() = _todayPickData
 
+
+    init {
+        getTodaysPickTemplate()
+        getTemplatesUi()
+    }
+/*
     suspend fun getTemplates(floatingPointId: String?, floatingPointTag: String?,
                              tags:List<String>?,
                              configSection:FestivePosterSectionModel?,
@@ -58,23 +69,23 @@ class PromoUpdatesViewModel: BaseViewModel() {
                                 templateList.add(template.clone()!!)
                             }
                         }
-                        /* val filterdList= ArrayList<PosterModel>()
+                        *//* val filterdList= ArrayList<PosterModel>()
                         if (templateList.size>=4){
                             filterdList.addAll(
                                 templateList.take(4))
                             filterdList.add(PosterModel(layout_id = RecyclerViewItemType.VIEW_MORE_POSTER.getLayout()))
                         }else{
                             filterdList.addAll(templateList)
-                        }*/
+                        }*//*
 
-                        /*todaysPickList?.add(
+                        *//*todaysPickList?.add(
                             PosterPackModel(
                                 pack_tag,
                                 filterdList,
                                 isPurchased = pack_tag.isPurchased==true,
                                 list_layout = RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()
                             )
-                        )*/
+                        )*//*
 
                         todaysPickList?.add(
                             PosterPackModel(
@@ -153,8 +164,25 @@ class PromoUpdatesViewModel: BaseViewModel() {
                 cont.resume(null)
             }
         }
+    }*/
+
+    fun getTodaysPickTemplate(){
+        NowFloatsRepository.getTodaysTemplates().getResponse {
+            if (it.isSuccess()){
+                val response = it as? GetTodayTemplateResponse
+                _todayPickData.postValue(response?.Result?.asDomainModel()?.toArrayList())
+
+            }
+        }
     }
 
+
+
+
+    fun templateSaveAction(action: TemplateSaveActionBody.ActionType,
+                           isFav:Boolean, templateId:String): LiveData<BaseResponse> {
+        return NowFloatsRepository.saveTemplateAction(action,isFav,templateId).toLiveData()
+    }
 
     private suspend fun getCategories()=
         suspendCoroutine<List<CategoryUi>>{cont->

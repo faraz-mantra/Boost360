@@ -162,7 +162,7 @@ class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, Post
 
     private fun callFavApi(templateUi: TemplateUi) {
         showProgress()
-        viewModel?.templateSaveAction(
+        promoUpdatesViewModel?.templateSaveAction(
             TemplateSaveActionBody.ActionType.FAVOURITE,
             templateUi.isFavourite.not(),templateUi.id)?.observe(viewLifecycleOwner){
             if (it.isSuccess()){
