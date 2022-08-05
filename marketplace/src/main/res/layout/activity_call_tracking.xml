@@ -98,10 +98,10 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/btn_select_number"
             android:layout_below="@id/toolbar"
+            android:background="@color/pack_details_bg_color"
             android:clipToPadding="false"
             android:paddingBottom="@dimen/pad_20dp"
             android:visibility="visible"
-
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -128,7 +128,7 @@
                         android:drawablePadding="@dimen/_14dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/regular"
-                        android:hint="Search for a sequence.."
+                        android:hint="Search for a sequence of digits ..."
                         android:inputType="number"
                         android:lineHeight="19.07dp"
                         android:maxLines="1"
@@ -171,7 +171,7 @@
                         android:textColor="@color/white"
                         android:textFontWeight="700"
                         android:textSize="@dimen/txt_14sp"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -248,7 +248,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:background="@color/white"
-                    android:elevation="8dp"
+                    android:elevation="5dp"
                     android:visibility="gone"
                     android:theme="@style/Theme.MaterialComponents"
                     app:cardCornerRadius="@dimen/pad_10dp"
@@ -268,7 +268,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:background="@color/white"
-                    android:elevation="8dp"
+                    android:elevation="5dp"
                     android:theme="@style/Theme.MaterialComponents"
                     app:cardCornerRadius="@dimen/pad_10dp"
                     app:layout_constraintTop_toBottomOf="@id/tv_search_result">
