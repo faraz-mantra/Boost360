@@ -1,30 +1,23 @@
 package com.festive.poster.viewmodels
 
+import android.net.Uri
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.festive.poster.R
 import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.models.*
-import com.festive.poster.models.response.GetTemplateViewConfigResponse
-import com.festive.poster.models.response.GetTemplatesResponse
+import com.festive.poster.models.response.*
 import com.festive.poster.reset.repo.*
-import com.framework.base.BaseResponse
+import com.framework.BaseApplication
 import com.framework.models.BaseViewModel
-import com.framework.models.toLiveData
 import com.framework.utils.getResponse
 import com.framework.utils.toArrayList
-import io.reactivex.Observable
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
-import okhttp3.RequestBody
-import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class PromoUpdatesViewModel: BaseViewModel() {
@@ -35,10 +28,12 @@ class PromoUpdatesViewModel: BaseViewModel() {
     val todaysPickLData:LiveData<ArrayList<PosterPackModel>?> get() =
         todaysPickMData
 
-    private val browseAllMData=MutableLiveData<ArrayList<PosterPackModel>?>()
-    val browseAllLData:LiveData<ArrayList<PosterPackModel>?> get() =
+    private val browseAllMData=MutableLiveData<ArrayList<CategoryUi>>()
+    val browseAllLData:LiveData<ArrayList<CategoryUi>> get() =
         browseAllMData
 
+    private val _favData=MutableLiveData<ArrayList<CategoryUi>>()
+    val favData:LiveData<ArrayList<CategoryUi>> get() = _favData
 
 
     suspend fun getTemplates(floatingPointId: String?, floatingPointTag: String?,
@@ -113,7 +108,7 @@ class PromoUpdatesViewModel: BaseViewModel() {
             val tags = prepareTagForApi(configResponse?.todayPick?.tags)
             val todaysPickList = getTemplates(floatingPointId,floatingPointTag,tags,
                 configResponse?.todayPick,
-                RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP.getLayout(),
+                RecyclerViewItemType.TEMPLATE_VIEW_FOR_TODAY_PICK.getLayout(),
                 RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()
                 )
             todaysPickMData.postValue(todaysPickList)
@@ -132,7 +127,7 @@ class PromoUpdatesViewModel: BaseViewModel() {
             }
             val tags = prepareTagForApi(configResponse?.allTemplates?.tags)
             val browseAllList = getTemplates(floatingPointId,floatingPointTag,tags,configResponse?.allTemplates,-1,RecyclerViewItemType.BROWSE_TAB_TEMPLATE_CAT.getLayout())
-            browseAllMData.postValue(browseAllList)
+           // browseAllMData.postValue(browseAllList)
 
         }
 
@@ -159,6 +154,94 @@ class PromoUpdatesViewModel: BaseViewModel() {
             }
         }
     }
+
+
+    private suspend fun getCategories()=
+        suspendCoroutine<List<CategoryUi>>{cont->
+            NowFloatsRepository.getCategories().getResponse {
+                if (it.isSuccess()){
+                    val response = it as? GetCategoryResponse
+                    cont.resume(response!!.Result.asDomainModels())
+
+                }else{
+                    cont.resumeWithException(Exception())
+                }
+            }
+        }
+
+    private suspend fun getTemplates(isFav:Boolean?=null)=
+        suspendCoroutine<List<GetTemplatesResponseV2Template>>{cont->
+            NowFloatsRepository.getTemplatesV2(isFav).getResponse {
+                if (it.isSuccess()){
+                    val response = it as? GetTemplatesResponseV2
+                    cont.resume(response!!.Result.templates)
+
+                }else{
+                    cont.resumeWithException(Exception())
+                }
+            }
+        }
+
+    fun getTemplatesUi(){
+        viewModelScope.launch {
+            try {
+                val categories = getCategories()
+                val allTemplates = getTemplates()
+                categories.forEach {uicat->
+                    val dbTemplates = allTemplates.filter { template->
+                        template.categories.find {dbcat->
+                            dbcat.id==uicat.id
+                        }!=null
+                    }
+                    uicat.setTemplates(dbTemplates.asDomainModels())
+                }
+                browseAllMData.postValue(categories.toArrayList())
+                getFavTemplates()
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
+    }
+
+
+    fun getFavTemplates() {
+        viewModelScope.launch {
+            try {
+                val categories = getCategories().toArrayList()
+                val allTemplates = getTemplates(isFav=true)
+
+                val allUiTemplates = ArrayList<TemplateUi>()
+
+                categories.forEach {uicat->
+                    val dbTemplates = allTemplates.filter { template->
+                        template.categories.find {dbcat->
+                            dbcat.id==uicat.id
+                        }!=null
+                    }
+                    val domainModels =dbTemplates.asDomainModels()
+                    uicat.setTemplates(domainModels)
+                    allUiTemplates.addAll(domainModels)
+                }
+
+
+                val allDummyCat = CategoryUi(
+                    iconUrl = "",
+                    id="",
+                    name = "All",
+                    thumbnailUrl = "https://i.ibb.co/7Xg48cN/Coming-soon-card.png",
+                    templates = allUiTemplates
+                )
+
+                categories.add(0,allDummyCat)
+
+                _favData.postValue(categories.toArrayList())
+
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
+    }
+
 
 
 }

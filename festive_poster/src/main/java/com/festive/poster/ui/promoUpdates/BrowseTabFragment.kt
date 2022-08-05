@@ -10,9 +10,7 @@ import com.festive.poster.constant.Constants
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.FragmentBrowseTabBinding
-import com.festive.poster.models.PosterModel
-import com.festive.poster.models.PosterPackModel
-import com.festive.poster.models.PosterPackTagModel
+import com.festive.poster.models.*
 import com.festive.poster.models.response.GetTemplateViewConfigResponse
 import com.festive.poster.models.response.GetTemplatesResponse
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
@@ -64,13 +62,15 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
     }
 
     private fun fetchDataFromServer() {
+        promoUpdatesViewModel?.getTemplatesUi()
         startShimmer()
        promoUpdatesViewModel?.browseAllLData?.observe(viewLifecycleOwner){
             stopShimmer()
             it?.let {list->
+                val uiList = list.asBrowseTabModels().toArrayList()
                 val adapter = AppBaseRecyclerViewAdapter(
                     requireActivity() as BaseActivity<*, *>,
-                    list,
+                    uiList,
                     this
                 )
                 binding.rvCat.adapter = adapter
@@ -98,8 +98,9 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
         when(actionType){
             RecyclerViewActionType.BROWSE_TAB_POSTER_CAT_CLICKED.ordinal->{
-                item as PosterPackModel
-                addFragment(R.id.container,BrowseAllFragment.newInstance(item.tagsModel?.tag),true,true)
+                item as BrowseTabCategory
+                addFragment(R.id.container,
+                    BrowseAllFragment.newInstance(item.id),true,true)
             }
         }
     }

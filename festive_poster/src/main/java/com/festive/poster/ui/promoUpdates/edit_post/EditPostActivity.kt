@@ -11,7 +11,6 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.util.Log
 import android.view.View
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
@@ -19,8 +18,7 @@ import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.databinding.ActivityEditPostBinding
 import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
-import com.festive.poster.models.PosterModel
-import com.festive.poster.ui.promoUpdates.bottomSheet.CaptionBottomSheet
+import com.festive.poster.models.TemplateUi
 import com.festive.poster.ui.promoUpdates.bottomSheet.DeleteDraftBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.EditTemplateBottomSheet
 import com.festive.poster.utils.SvgUtils
@@ -52,7 +50,7 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
     private var sttUtils:STTUtils?=null
 
     private var sessionLocal: UserSessionManager?=null
-    var posterModel:PosterModel?=null
+    var posterModel:TemplateUi?=null
     private var mSpannable: Spannable? = null
     private var hashTagIsComing = 0
     override fun getLayout(): Int {
@@ -66,7 +64,7 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
     companion object {
 
         val IK_POSTER="IK_POSTER"
-        fun launchActivity(context: Context,posterModel: PosterModel){
+        fun launchActivity(context: Context,posterModel: TemplateUi){
             val intent = Intent(context,EditPostActivity::class.java)
             intent.putExtra(IK_POSTER,Gson().toJson(posterModel))
             context.startActivity(intent)
@@ -90,9 +88,9 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
 
     private fun initUI() {
         lifecycleScope.launch {
-            binding!!.ivTemplate.setImageBitmap(SvgUtils.svgToBitmap(posterModel!!))
+            binding!!.ivTemplate.setImageBitmap(SvgUtils.svgToBitmap(posterModel?.primarySvgUrl))
         }
-        binding?.captionLayout?.etInput?.setText(highlightHashTag(posterModel?.details?.Description,R.color.black_4a4a4a,R.font.bold))
+        binding?.captionLayout?.etInput?.setText(highlightHashTag(posterModel?.primaryText,R.color.black_4a4a4a,R.font.bold))
         binding?.captionLayout?.etInput?.requestFocus()
         val imm =
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -231,6 +229,8 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
                 posterModel?.let {
                     lifecycleScope.launch {
                         withContext(Dispatchers.Default){
+                           val file =  SvgUtils.svgToBitmap(it.primarySvgUrl)
+                                ?.saveAsImageToAppFolder(getExternalFilesDir(null)?.path+File.separator+UPDATE_PIC_FILE_NAME)
                            val file =  SvgUtils.svgToBitmap(it)?.saveAsImageToAppFolder(getExternalFilesDir(null)?.path+File.separator+UPDATE_PIC_FILE_NAME)
                             if (file?.exists() == true){
                                 PostPreviewSocialActivity.launchActivity(this@EditPostActivity,binding?.captionLayout?.etInput?.text.toString(), file.path, posterModel?.tags, IntentConstants.UpdateType.UPDATE_PROMO_POST.name)

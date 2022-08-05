@@ -11,6 +11,9 @@ object EndPoints {
     const val GET_TEMPLATES="Templates/v1/GetTemplates"
     const val GET_FAV_TEMPLATES="/Templates/v1/GetFavouriteTemplates"
     const val FAV_TEMPLATE="/Templates/v1/MarkTemplateAsFavourite"
+    const val GET_CATEGORIES="/UpdateStudio/v1/GetCategory"
+    const val GET_TEMPLATES_V2="/UpdateStudio/v1/GetTemplates"
+    const val TEMPLATE_SAVE_ACTION="/UpdateStudio/v1/SaveAction"
 
     const val FEATURE_PROCESSOR_BASE = "https://featureprocessor.withfloats.com/"
     const val GET_FEATURE_DETAILS="Features/v1/GetFeatureDetils"

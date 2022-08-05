@@ -179,7 +179,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
     ) {
         when(actionType){
             RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal->{
-                posterWhatsappShareClicked(childItem as PosterModel,
+                posterWhatsappShareClicked(childItem as TemplateUi,
                     requireActivity() as BaseActivity<*, *>
                 )
             }
@@ -196,7 +196,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
             }
             RecyclerViewActionType.POST_CLICKED.ordinal-> {
                 Log.i(TAG, "onItemClick: ")
-                posterPostClicked(childItem as PosterModel, requireActivity() as AppBaseActivity<*, *>)
+                posterPostClicked(childItem as TemplateUi, requireActivity() as AppBaseActivity<*, *>)
             }
         }
     }

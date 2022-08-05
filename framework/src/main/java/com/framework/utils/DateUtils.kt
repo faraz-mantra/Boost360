@@ -5,14 +5,8 @@ import android.text.format.DateUtils
 import android.util.Log
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.temporal.ChronoUnit
 import java.util.*
 import java.util.concurrent.TimeUnit
-
-
 
 
 object DateUtils {
@@ -53,6 +47,7 @@ object DateUtils {
     }
     return ""
   }
+
   fun getDate(milliSeconds: Long, dateFormat: String): String {
     val formatter = SimpleDateFormat(dateFormat)
     val calendar = Calendar.getInstance()
@@ -67,7 +62,7 @@ object DateUtils {
       val date = timeFormat.parse(time)
       return SimpleDateFormat(required, locale).format(date)
     } catch (e: Exception) {
-      Log.d("parseDate",e.localizedMessage?:"")
+      Log.d("parseDate", e.localizedMessage ?: "")
     }
     return ""
   }
@@ -84,7 +79,7 @@ object DateUtils {
       timeZone?.let { timeFormat.timeZone = it }
       timeFormat.parse(this)
     } catch (e: Exception) {
-      Log.d("parseDate",e.localizedMessage?:"")
+      Log.d("parseDate", e.localizedMessage ?: "")
       null
     }
   }
@@ -93,8 +88,12 @@ object DateUtils {
     var validTimeFlag = false
     if (endTime <= startTime) {
       if (validateTime <= endTime || validateTime >= startTime) validTimeFlag = true
-    } else if (validateTime <= endTime && validateTime >= startTime) validTimeFlag = true
+    } else if (validateTime in startTime..endTime) validTimeFlag = true
     return validTimeFlag
+  }
+
+  fun isStartEndDatesValid(startTime: Date, endTime: Date): Boolean{
+    return startTime < endTime
   }
 
   fun getCurrentDate(): Date {
@@ -124,6 +123,11 @@ object DateUtils {
     val cal = Calendar.getInstance()
     cal.time = this
     return cal
+  }
+
+  fun getCurrentTimeIn24Hour(): String {
+    val now = Calendar.getInstance()
+    return "${now[Calendar.HOUR_OF_DAY]}:${now[Calendar.MINUTE]}"
   }
 
   fun formatDate(tstSeconds: Long): String {
@@ -170,12 +174,16 @@ object DateUtils {
   }
 
   fun millisecondsToMinutesSeconds(milliSeconds: Long): String? {
-    return String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(milliSeconds).mod(TimeUnit.HOURS.toMinutes(1)),
-      TimeUnit.MILLISECONDS.toSeconds(milliSeconds).mod(TimeUnit.MINUTES.toSeconds(1)))
+    return String.format(
+      "%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(milliSeconds).mod(TimeUnit.HOURS.toMinutes(1)),
+      TimeUnit.MILLISECONDS.toSeconds(milliSeconds).mod(TimeUnit.MINUTES.toSeconds(1))
+    )
   }
 
   fun milliToMinSecFormat(milliSeconds: Long): String? {
-    return String.format("%d min %d sec", TimeUnit.MILLISECONDS.toMinutes(milliSeconds).mod(TimeUnit.HOURS.toMinutes(1)),
-      TimeUnit.MILLISECONDS.toSeconds(milliSeconds).mod(TimeUnit.MINUTES.toSeconds(1)))
+    return String.format(
+      "%d min %d sec", TimeUnit.MILLISECONDS.toMinutes(milliSeconds).mod(TimeUnit.HOURS.toMinutes(1)),
+      TimeUnit.MILLISECONDS.toSeconds(milliSeconds).mod(TimeUnit.MINUTES.toSeconds(1))
+    )
   }
 }
