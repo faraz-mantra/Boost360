@@ -1008,7 +1008,7 @@
                                     android:id="@+id/cart_business_gstin_value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Not Provided"
+                                    android:text="Not Registered"
                                     android:textColor="@color/main_color_gray_dk"
                                     android:textSize="@dimen/txt_12sp"
                                     android:visibility="visible"
@@ -1020,7 +1020,7 @@
                                     android:id="@+id/cart_business_gstin_missing"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Not Provided"
+                                    android:text="Not Registered"
                                     android:textColor="@color/tv_color_BB"
                                     android:textSize="@dimen/txt_12sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -1162,14 +1162,16 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/semi_bold"
                             android:lineSpacingExtra="1sp"
-                            android:text="PAYABLE AMOUNT: "
+                            android:text="PAYABLE AMOUNT "
                             android:textColor="@color/common_text_color"
                             android:textSize="@dimen/txt_14sp" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/header_grand_total"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
                             android:fontFamily="@font/semi_bold"
                             android:lineSpacingExtra="1sp"
                             android:text="₹4,399"
@@ -1180,6 +1182,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
+                            android:visibility="gone"
                             android:gravity="end">
 
                             <androidx.appcompat.widget.AppCompatImageView
@@ -1407,13 +1410,13 @@
                             <androidx.appcompat.widget.LinearLayoutCompat
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
                                 android:orientation="horizontal">
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Validity period"
+                                    android:visibility="gone"
                                     android:textColor="@color/copy_coupon_text_color"
                                     android:textFontWeight="400"
                                     android:textSize="@dimen/txt_12sp" />
@@ -1430,8 +1433,8 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="17 Nov ‘21 - 16 Feb ‘22"
-                                        android:textColor="@color/main_color_gray_dk"
-                                        android:textFontWeight="600"
+                                        android:textColor="@color/copy_coupon_text_color"
+                                        android:textFontWeight="400"
                                         android:textSize="@dimen/txt_12sp" />
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -1448,6 +1451,7 @@
                             android:layout_height="1dp"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:background="#4DA3A3A3"
+                            android:visibility="gone"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/amnt_details" />
@@ -1461,6 +1465,7 @@
                             android:layout_marginRight="@dimen/_10sdp"
                             android:layout_marginBottom="16dp"
                             android:gravity="center"
+                            android:visibility="gone"
                             android:orientation="horizontal"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
