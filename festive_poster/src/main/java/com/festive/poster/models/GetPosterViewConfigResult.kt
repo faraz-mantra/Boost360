@@ -2,7 +2,7 @@ package com.festive.poster.models
 
 import com.google.gson.annotations.SerializedName
 
-data class GetTemplateViewConfigResult(
+data class GetPosterViewConfigResult(
     @SerializedName("templatePacks")
     val templatePacks: FestivePosterSectionModel?,
     @SerializedName("todayPick")

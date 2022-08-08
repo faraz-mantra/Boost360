@@ -4,7 +4,7 @@ import com.festive.poster.models.PosterModel
 import com.festive.poster.models.PosterTagModel
 import com.google.gson.annotations.SerializedName
 
-data class GetTemplatesResult(
+data class GetFestivePosterResult(
     @SerializedName("tags")
     val tags: List<PosterTagModel>?,
     @SerializedName("templates")

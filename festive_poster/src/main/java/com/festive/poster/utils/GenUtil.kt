@@ -41,6 +41,7 @@ fun posterWhatsappShareClicked(childItem:TemplateUi,activity: BaseActivity<*,*>)
     if (isPromoWidgetActive()){
         saveTemplateAction(TemplateSaveActionBody.ActionType.SHARE,childItem)
         SvgUtils.shareUncompressedSvg(childItem.primarySvgUrl,
+            childItem.primaryText,
             PackageNames.WHATSAPP)
     }else{
         SubscribePlanBottomSheet.newInstance(object : SubscribePlanBottomSheet.Callbacks{
@@ -70,7 +71,7 @@ fun posterPostClicked(childItem:TemplateUi,activity: AppBaseActivity<*, *>){
                 saveTemplateAction(TemplateSaveActionBody.ActionType.VIEW_DETAILS,childItem)
                 PostPreviewSocialActivity.launchActivity(
                     activity,
-                    childItem.primarySvgUrl,
+                    childItem.primaryText,
                     file.path,
                     childItem.tags,
                     IntentConstants.UpdateType.UPDATE_PROMO_POST.name,

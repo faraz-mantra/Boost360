@@ -29,7 +29,7 @@ class CategoryDiffUtil(
             new.getParentTemplates().isNullOrEmpty().not()
         ) {
 
-            for (i in 0..(min(
+            for (i in 0 until (min(
                 old.getParentTemplates()?.size ?: 0,
                 new.getParentTemplates()?.size ?: 0
             ))) {

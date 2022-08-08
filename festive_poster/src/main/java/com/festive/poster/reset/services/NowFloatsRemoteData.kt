@@ -23,7 +23,7 @@ interface NowFloatsRemoteData {
   @POST(EndPoints.GET_TEMPLATES)
   fun getTemplates(
     @Body body:JsonObject?,
-    ): Observable<Response<GetTemplatesResponse>>
+    ): Observable<Response<GetFestivePosterResponse>>
 
 
   @POST(EndPoints.GET_FAV_TEMPLATES)
@@ -59,12 +59,11 @@ interface NowFloatsRemoteData {
 
   @POST(EndPoints.GET_TODAY_TEMPLATES)
   fun getTodayTemplates(
-    @Query("floatingPointId") floatingPointId:String?,
-    @Query("floatingPointTag") floatingPointTag:String?,
-  ): Observable<Response<String>>
+    @Body body:GetTodaysTemplateBody
+  ): Observable<Response<GetTodayTemplateResponse>>
 
   @POST(EndPoints.GET_TEMPLATES_V2)
-  fun getTemplatesV2(@Body body:GetTemplatesV2Body):Observable<Response<GetTemplatesResponseV2>>
+  fun getTemplates(@Body body:GetTemplatesBody):Observable<Response<GetTemplatesResponse>>
 
   @POST(EndPoints.TEMPLATE_SAVE_ACTION)
   fun templateSaveAction(@Body body: TemplateSaveActionBody):Observable<Response<BaseResponse>>

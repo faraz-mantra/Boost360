@@ -20,7 +20,9 @@ import com.framework.base.BaseActivity
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.rest.NetworkResult
 import com.framework.utils.convertListObjToString
+import com.framework.utils.showToast
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.Promotional_Update_Browse_All_Loaded
 import com.framework.webengageconstant.Promotional_Update_Category_Click
@@ -88,16 +90,30 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
 
 
     private fun getTemplatesData() {
-        showProgress()
+
         promoUpdatesViewModel?.browseAllLData?.observe(viewLifecycleOwner){
-            hideProgress()
-            if (categoryList.isEmpty()){
-                setCatgories(it)
-                switchToSelectedItem(DEFAULT_SELECTED_POS,it[DEFAULT_SELECTED_POS].getParentTemplates()?.asBrowseAllModels())
-            }else{
-                switchToSelectedItem(selectedPos,it[selectedPos].getParentTemplates()?.asBrowseAllModels())
-                setCatgories(it)
+            when(it){
+                is NetworkResult.Loading->{
+                    if (posterRvAdapter?.isEmpty() == true)
+                        showProgress()
+                }
+                is NetworkResult.Success->{
+                    hideProgress()
+                    val data = it.data?:return@observe
+                    if (categoryList.isEmpty()){
+                        setCatgories(data)
+                        switchToSelectedItem(DEFAULT_SELECTED_POS,data[DEFAULT_SELECTED_POS].getParentTemplates()?.asBrowseAllModels())
+                    }else{
+                        switchToSelectedItem(selectedPos,data[selectedPos].getParentTemplates()?.asBrowseAllModels())
+                        setCatgories(data)
+                    }
+                }
+                is NetworkResult.Error->{
+                    hideProgress()
+                    showToast(it.msg)
+                }
             }
+
         }
     }
 
@@ -184,13 +200,17 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
 
 
     private fun callFavApi(posterModel: TemplateUi) {
-        showProgress()
-        promoUpdatesViewModel?.templateSaveAction(TemplateSaveActionBody.ActionType.FAVOURITE,
-        posterModel.isFavourite.not(),posterModel.id)?.observe(viewLifecycleOwner){
-            if (it.isSuccess()){
-               promoUpdatesViewModel?.getTemplatesUi()
+        promoUpdatesViewModel?.markAsFav(posterModel.isFavourite.not(),posterModel.id)
+        promoUpdatesViewModel?.favStatus?.observe(viewLifecycleOwner){
+
+            when(it){
+                is NetworkResult.Loading->{
+                    showProgress()
+                }
+                else->{
+                    hideProgress()
+                }
             }
-            hideProgress()
         }
 
     }

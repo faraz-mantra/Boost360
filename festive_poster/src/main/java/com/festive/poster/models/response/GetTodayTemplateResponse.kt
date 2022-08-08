@@ -11,7 +11,7 @@ data class GetTodayTemplateResponse(
 
 data class GetTodayTemplateResponseResult(
     val category: Category,
-    val templates: List<GetTemplatesResponseV2Template>
+    val templates: List<GetTemplatesResponseTemplate>
 )
 
 fun List<GetTodayTemplateResponseResult>.asDomainModel(): List<CategoryUi> {

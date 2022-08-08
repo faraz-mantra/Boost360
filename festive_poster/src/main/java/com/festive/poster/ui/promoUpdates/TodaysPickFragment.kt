@@ -30,8 +30,10 @@ import com.framework.models.BaseViewModel
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.rest.NetworkResult
 import com.framework.utils.convertJsonToObj
 import com.framework.utils.convertListObjToString
+import com.framework.utils.showToast
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.Promotional_Update_View_More_Click
 import com.google.gson.Gson
@@ -76,10 +78,27 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
     }
 
     private fun fetchDataFromServer() {
-        startShimmer()
+
         promoUpdatesViewModel?.todayPickData?.observe(viewLifecycleOwner){
 
-            stopShimmer()
+
+            when(it){
+                is NetworkResult.Loading->{
+                    if (adapter?.isEmpty() == true)
+                        startShimmer()
+                }
+                is NetworkResult.Success->{
+                    stopShimmer()
+                    val data = it.data?:return@observe
+                    adapter?.setUpUsingDiffUtil(
+                        data.asTodaysPickModels().toArrayList()
+                    )
+                }
+                is NetworkResult.Error->{
+                    stopShimmer()
+                    showToast(it.msg)
+                }
+            }
 
 
            /*     list.forEach {item->
@@ -90,9 +109,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
 
 
 
-                adapter?.setUpUsingDiffUtil(
-                    it.asTodaysPickModels().toArrayList()
-                )
+
 
 
         }
@@ -209,14 +226,17 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
     }
 
     private fun callFavApi(posterModel: TemplateUi) {
-        showProgress()
-        promoUpdatesViewModel?.templateSaveAction(
-            TemplateSaveActionBody.ActionType.FAVOURITE,
-            posterModel.isFavourite.not(),posterModel.id)?.observe(viewLifecycleOwner){
-            if (it.isSuccess()){
-                promoUpdatesViewModel?.getTemplatesUi()
+        promoUpdatesViewModel?.markAsFav(posterModel.isFavourite.not(),posterModel.id)
+        promoUpdatesViewModel?.favStatus?.observe(viewLifecycleOwner){
+
+            when(it){
+                is NetworkResult.Loading->{
+                    showProgress()
+                }
+                else->{
+                    hideProgress()
+                }
             }
-            hideProgress()
         }
 
     }
