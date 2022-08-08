@@ -451,7 +451,7 @@
                     android:id="@+id/layout_need_more"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     tools:visibility="visible"
                     android:paddingBottom="@dimen/dimen_16dp"
                     android:layout_below="@id/how_to_use_container"
@@ -477,12 +477,12 @@
                         android:layout_height="wrap_content"
                         android:clipToPadding="false"
                         android:nestedScrollingEnabled="false"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         android:overScrollMode="never"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintTop_toBottomOf="@id/tv_need_more_feature"
-                        tools:itemCount="2"
-                        tools:listitem="@layout/item_pack" />
+                        tools:itemCount="1"
+                        tools:listitem="@layout/item_features_details" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -593,6 +593,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="visible"
+                        tools:itemCount="2"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/faq_title"
                         tools:listitem="@layout/faq_item_pack_details" />
@@ -640,7 +641,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="visible"
+                android:visibility="gone"
 
                 >
 
@@ -705,7 +706,7 @@
                 android:textColor="@color/white"
                 android:textFontWeight="700"
                 android:textSize="@dimen/txt_16sp"
-                android:visibility="gone"
+                android:visibility="visible"
                 tools:visibility="visible" />
 
         </RelativeLayout>

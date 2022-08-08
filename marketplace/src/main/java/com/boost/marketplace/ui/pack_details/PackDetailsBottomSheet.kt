@@ -5,12 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.boost.cart.adapter.SimplePageTransformerSmall
+import com.boost.cart.adapter.BenifitsPageTransformer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.AllFrequentlyAskedQuestion
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.HowToUseStep
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
-import com.boost.dbcenterapi.utils.HorizontalMarginItemDecoration
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.Adapters.PacksV3BenefitsViewPagerAdapter
 import com.boost.marketplace.R
@@ -181,14 +180,15 @@ class PackDetailsBottomSheet :
         binding?.benefitsViewpager?.adapter = benefitAdaptor
         binding?.benefitsViewpager?.let { binding?.benefitsIndicator?.setViewPager2(it) }
         binding?.benefitsViewpager?.offscreenPageLimit = 1
-        binding?.benefitsViewpager?.setPageTransformer(SimplePageTransformerSmall())
+//        binding?.benefitsViewpager?.setPageTransformer(SimplePageTransformerSmall())
+        binding?.benefitsViewpager?.setPageTransformer(BenifitsPageTransformer(requireActivity()))
 
-        val itemDecoration = HorizontalMarginItemDecoration(
-            requireContext(),
-            R.dimen.viewpager_next_item_visible,
-            R.dimen.viewpager_next_item_visible
-        )
-        binding?.benefitsViewpager?.addItemDecoration(itemDecoration)
+//        val itemDecoration = HorizontalMarginItemDecoration(
+//            requireContext(),
+//            R.dimen.viewpager_next_item_visible,
+//            R.dimen.viewpager_next_item_visible
+//        )
+//        binding?.benefitsViewpager?.addItemDecoration(itemDecoration)
 
     }
 

@@ -36,7 +36,15 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseVi
             object : TypeToken<FeaturesModel>() {}.type
         )
         binding?.addonsTitle?.text = singleAddon.name
-        if (singleAddon.feature_code=="LIMITED_CONTENT" || singleAddon.feature_code=="UNLIMITED_CONTENT") {
+        if (singleAddon.feature_code=="STAFFPROFILE" || singleAddon.feature_code=="STAFFPROFILE15"
+            || singleAddon.feature_code=="FACULTY" || singleAddon.feature_code=="OUR-TOPPERS"
+            || singleAddon.feature_code=="MEMBERSHIP" || singleAddon.feature_code=="DOCTORBIO"
+            || singleAddon.feature_code=="BOOSTKEYBOARD" || singleAddon.feature_code=="BOOKING-ENGINE"
+            || singleAddon.feature_code=="APPOINTMENTENGINE")
+        {
+            binding!!.btnUseThisFeature.visibility=View.VISIBLE
+        }
+        else{
             binding!!.btnUseThisFeature.visibility=View.GONE
         }
         binding?.addonsDesc?.text = singleAddon.description_title

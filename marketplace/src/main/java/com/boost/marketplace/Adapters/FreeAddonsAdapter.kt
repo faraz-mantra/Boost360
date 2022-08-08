@@ -55,6 +55,13 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
       holder.itemView.layoutParams = RecyclerView.LayoutParams(0, 0)
     }
 
+    if (cryptocurrencyItem.is_premium.equals(true)){
+      holder.paid_addons_activate.visibility=View.VISIBLE
+    }
+    else{
+      holder.paid_addons_activate.visibility=View.GONE
+    }
+
     if(position == list.size-1){
       holder.paid_single_dummy_view.visibility = View.GONE
     }
@@ -113,6 +120,7 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
     var mainLayout=itemView.findViewById<ConstraintLayout>(R.id.main_layout)
     var cardViews=itemView.findViewById<LinearLayout>(R.id.cardViews)
     var detailsView=itemView.findViewById<ConstraintLayout>(R.id.detailsView)
+    var paid_addons_activate=itemView.findViewById<LinearLayout>(R.id.paid_addons_activate)
     var img1=itemView.findViewById<ImageView>(R.id.img1)!!
     var paid_single_dummy_view=itemView.findViewById<View>(R.id.paid_single_dummy_view)!!
     private var context: Context = itemView.context

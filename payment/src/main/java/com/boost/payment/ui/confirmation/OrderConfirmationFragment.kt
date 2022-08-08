@@ -1,16 +1,14 @@
 package com.boost.payment.ui.confirmation
 
 import android.content.Intent
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-
-import com.boost.payment.R
+import androidx.lifecycle.ViewModelProviders
 import com.boost.payment.PaymentActivity
+import com.boost.payment.R
 import com.boost.payment.base_class.BaseFragment
 import com.boost.payment.utils.SharedPrefs
 import com.boost.payment.utils.Utils
@@ -20,8 +18,7 @@ import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.utils.InAppReviewUtils
 import com.framework.webengageconstant.*
-import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.order_confirmation_fragment.*
+import kotlinx.android.synthetic.main.payment_success_v3.*
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
@@ -73,7 +70,7 @@ class OrderConfirmationFragment : BaseFragment() {
     )
     session = UserSessionManager(activity as PaymentActivity)
     prefs = SharedPrefs(activity as PaymentActivity)
-    return inflater.inflate(R.layout.order_confirmation_fragment, container, false)
+    return inflater.inflate(R.layout.payment_success_v3, container, false)
   }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -101,12 +98,14 @@ class OrderConfirmationFragment : BaseFragment() {
       }
       val months = if(prefs.getValidityMonths().isNullOrEmpty()) 0 else prefs.getValidityMonths()!!.toInt()
       order_details_feature_count.text =
-        "You have ordered " + prefs.getFeaturesCountInLastOrder() + " features for ₹" + prefs.getLatestPurchaseOrderTotalPrice() +"/"+ if(months>1) months else "" + Utils.yearOrMonthText(months,requireActivity(), false)//"/month."
-      paymentBanner.text = "Order #" + prefs.getLatestPurchaseOrderId()
+        "You have ordered " + prefs.getFeaturesCountInLastOrder() //+ " features for ₹" + prefs.getLatestPurchaseOrderTotalPrice() +"/"+ if(months>1) months else "" + Utils.yearOrMonthText(months,requireActivity(), false)//"/month."
+      order_details_feature_count1.text = "₹" + prefs.getLatestPurchaseOrderTotalPrice() +"/"+ if(months>1) months else "" + Utils.yearOrMonthText(months,requireActivity(), false)//"/month."
+      //  paymentBanner.text = "Order #" + prefs.getLatestPurchaseOrderId()
       val date = Calendar.getInstance().time
       val formatter = SimpleDateFormat("EEE, MMM d, yyyy 'at' hh:mm aaa")
-      order_id_details.text = "Order placed on " + formatter.format(date) +
-          "\nOrder ID #" + prefs.getLatestPurchaseOrderId() + "\nTransaction ID #" + prefs.getTransactionIdFromCart()
+      order_id_details.text = //"Order placed on " + formatter.format(date) +
+           prefs.getLatestPurchaseOrderId() // + "\nTransaction ID #" + prefs.getTransactionIdFromCart()
+      order_id_details1.text = prefs.getTransactionIdFromCart()
 
       //clear CartRelatedInfo
       prefs.storeOrderSuccessFlag(true)
@@ -119,11 +118,11 @@ class OrderConfirmationFragment : BaseFragment() {
       Log.e("Error", e.message ?: "")
     }
 
-    back_button.setOnClickListener {
-      goToHomeFragment()
-      (activity as PaymentActivity).finish()
-      Toast.makeText(requireContext(), "Redirect based on needs...", Toast.LENGTH_SHORT).show()
-    }
+//    back_button.setOnClickListener {
+//      goToHomeFragment()
+//      (activity as PaymentActivity).finish()
+//      Toast.makeText(requireContext(), "Redirect based on needs...", Toast.LENGTH_SHORT).show()
+//    }
 
     check_activation_status.setOnClickListener {
       WebEngageController.trackEvent(
@@ -135,12 +134,12 @@ class OrderConfirmationFragment : BaseFragment() {
       (activity as PaymentActivity).finish()
     }
 
-    order_needs_help.setOnClickListener {
-      Toasty.info(
-        requireContext(),
-        "In case of any concerns, you can write to ria@nowfloats.com. Boost care Team is available during business hours."
-      ).show()
-    }
+//    order_needs_help.setOnClickListener {
+//      Toasty.info(
+//        requireContext(),
+//        "In case of any concerns, you can write to ria@nowfloats.com. Boost care Team is available during business hours."
+//      ).show()
+//    }
 
   }
 
@@ -203,7 +202,7 @@ class OrderConfirmationFragment : BaseFragment() {
 
   private fun goToAddOnsFragment() {
     try {
-      val intent = Intent(context, Class.forName("com.boost.marketplace.ui.home.MarketPlaceActivity"))
+      val intent = Intent(context, Class.forName("com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity"))
       intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       intent.putExtra("isComingFromOrderConfirmActivation",true)
       intent.putExtra("expCode", session?.fP_AppExperienceCode)
