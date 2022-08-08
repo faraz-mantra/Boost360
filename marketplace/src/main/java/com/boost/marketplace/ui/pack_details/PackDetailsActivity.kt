@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -20,7 +21,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.BenifitsPageTransformer
-import com.boost.cart.adapter.SimplePageTransformerSmall
 import com.boost.cart.adapter.ZoomOutPageTransformer
 import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
@@ -576,8 +576,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             if (bundleData?.included_features != null && bundleData?.included_features?.isNotEmpty()!!) {
                 binding?.rvIncludedFeatures?.visibility = VISIBLE
                 binding?.tvPremiumFeaturesNo?.visibility = VISIBLE
-                binding?.tvPremiumFeaturesNo?.text =
-                    bundleData?.included_features?.size!!.toString() + "PREMIUM FEATURES ideal for small businesses that want to get started with online sales."
+                val sourceString = "<b>" + bundleData?.included_features?.size!!.toString() + "PREMIUM FEATURES"  + "</b> " + " ideal for small businesses that want to get started with online sales."
+                binding?.tvPremiumFeaturesNo?.text = Html.fromHtml(sourceString)
                 includedFeatureAdapter.addupdates(bundleData?.included_features!!)
                 includedFeatureAdapter.notifyDataSetChanged()
             } else {
