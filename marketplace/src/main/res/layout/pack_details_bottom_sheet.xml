@@ -9,345 +9,355 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="200dp"
             android:clickable="true"
-            android:orientation="vertical"
-            android:layout_marginTop="300dp"
             android:focusable="true"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/close_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
-                android:layout_gravity="center"
                 android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="13dp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:src="@drawable/ic_close_circle_gray" />
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/scrollView"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_below="@id/close_btn"
                 android:background="@drawable/packsv3_bg"
-                android:clipToPadding="false"
-                android:layout_below="@id/close_btn">
+                android:paddingTop="25dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/packsv3_bg"
-                app:layout_constraintBottom_toBottomOf="parent">
-
-                <RelativeLayout
-                    android:id="@+id/rl_cardView"
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/scrollView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:descendantFocusability="blocksDescendants"
-                    android:padding="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false">
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardView"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        app:cardCornerRadius="10dp"
-                        app:cardElevation="0dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:background="@drawable/packsv3_bg"
+                        app:layout_constraintBottom_toBottomOf="parent">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/package_main_layout"
+                        <RelativeLayout
+                            android:id="@+id/rl_cardView"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:padding="16dp"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_height="wrap_content"
+                            android:descendantFocusability="blocksDescendants"
+                            android:paddingHorizontal="@dimen/dimen_16dp"
+                            android:paddingBottom="@dimen/dimen_16dp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
 
-                            <ImageView
-                                android:id="@+id/package_profile_image"
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:src="@drawable/classic_pack"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:id="@+id/const_title"
-                                android:layout_width="0dp"
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/cardView"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/dimen_16dp"
-                                android:layout_weight="1"
-                                android:orientation="vertical"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@id/package_profile_image"
+                                android:background="@color/white"
+                                app:cardCornerRadius="10dp"
+                                app:cardElevation="0dp"
+                                app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent">
 
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/package_main_layout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:padding="16dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <ImageView
+                                        android:id="@+id/package_profile_image"
+                                        android:layout_width="48dp"
+                                        android:layout_height="48dp"
+                                        android:src="@drawable/classic_pack"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                                    <androidx.constraintlayout.widget.ConstraintLayout
+                                        android:id="@+id/const_title"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/dimen_16dp"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toEndOf="@id/package_profile_image"
+                                        app:layout_constraintTop_toTopOf="parent">
+
+                                        <TextView
+                                            android:id="@+id/package_title"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:fontFamily="@font/regular"
+                                            android:maxLines="2"
+                                            android:text="Online Classic Pack"
+                                            android:textAllCaps="false"
+                                            android:textColor="@color/main_color_gray_dk"
+                                            android:textFontWeight="600"
+                                            android:textSize="18sp"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintTop_toBottomOf="@+id/pack_cs" />
+
+                                        <androidx.constraintlayout.widget.ConstraintLayout
+                                            android:id="@+id/pack_cs"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            app:layout_constraintBottom_toTopOf="@+id/package_title"
+                                            app:layout_constraintStart_toStartOf="parent">
+
+                                            <TextView
+                                                android:id="@+id/tv_communication"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:drawableStart="@drawable/ic_communication"
+                                                android:drawablePadding="8dp"
+                                                android:elevation="2dp"
+                                                android:paddingStart="6dp"
+                                                android:paddingTop="1dp"
+                                                android:text="Communication"
+                                                android:textColor="@color/copy_coupon_text_color"
+                                                android:textFontWeight="400"
+                                                android:textSize="@dimen/txt_12sp"
+                                                app:layout_constraintBottom_toBottomOf="parent"
+                                                app:layout_constraintStart_toStartOf="parent"
+                                                app:layout_constraintTop_toTopOf="parent"
+                                                app:layout_constraintVertical_chainStyle="packed" />
+
+
+                                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                                    <TextView
+                                        android:id="@+id/title_bottom3"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="19dp"
+                                        android:ellipsize="end"
+                                        android:fontFamily="@font/regular"
+                                        android:maxLines="2"
+                                        android:text="A domain name gives a unique and secure online identity for your brand, help"
+                                        android:textColor="@color/common_text_color"
+                                        android:textSize="@dimen/_12sdp"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@id/package_profile_image" />
+
+                                    <TextView
+                                        android:id="@+id/learn_more_btn"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@color/white"
+                                        android:fontFamily="@font/bold"
+                                        android:paddingLeft="@dimen/pad_8dp"
+                                        android:text="@string/learn_more_feature_details"
+                                        android:textColor="@color/colorAccent1"
+                                        android:textSize="12dp"
+                                        app:layout_constraintBottom_toBottomOf="@id/title_bottom3"
+                                        app:layout_constraintEnd_toEndOf="@id/title_bottom3" />
+
+                                    <TextView
+                                        android:id="@+id/learn_less_btn"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="@dimen/_10sdp"
+                                        android:background="@color/white"
+                                        android:fontFamily="@font/bold"
+                                        android:padding="5dp"
+                                        android:paddingStart="10dp"
+                                        android:text="@string/show_less"
+                                        android:textColor="@color/colorAccent1"
+                                        android:textSize="12dp"
+                                        android:visibility="gone"
+                                        app:layout_constraintEnd_toEndOf="@id/title_bottom3"
+                                        app:layout_constraintTop_toBottomOf="@id/title_bottom3" />
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            </androidx.cardview.widget.CardView>
+                        </RelativeLayout>
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/benefit_container_item"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="@dimen/dimen_16dp"
+                            android:background="@drawable/rounded_curve_bg"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/rl_cardView">
+
+
+                            <TextView
+                                android:id="@+id/benefit_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/bold"
+                                android:padding="16dp"
+                                android:text="Key benefits of this pack"
+                                android:textColor="@color/main_color_gray_dk"
+                                android:textFontWeight="600"
+                                android:textSize="16sp"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.viewpager2.widget.ViewPager2
+                                android:id="@+id/benefits_viewpager"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/benefit_title"
+                                tools:listitem="@layout/item_packs_v3_benefits" />
+
+
+                            <com.framework.views.dotsindicator.DotsIndicator
+                                android:id="@+id/benefits_indicator"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                app:dotsColor="@color/btn_bg_color_disabled"
+                                app:dotsCornerRadius="8dp"
+                                app:dotsSize="6dp"
+                                app:dotsSpacing="6dp"
+                                app:dotsWidthFactor="2.5"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/benefits_viewpager"
+                                app:progressMode="false"
+                                app:selectedDotColor="@color/colorAccent1" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/how_to_use_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_16dp"
+                            android:layout_marginTop="@dimen/dimen_24dp"
+                            android:layout_marginEnd="@dimen/dimen_16dp"
+                            android:visibility="gone"
+                            android:background="@drawable/rounded_curve_bg"
+                            app:layout_constraintTop_toBottomOf="@id/benefit_container_item">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/how_to_use_title_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:visibility="visible">
+
                                 <TextView
-                                    android:id="@+id/package_title"
+                                    android:id="@+id/tv_how_to_use_title"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:fontFamily="@font/regular"
-                                    android:maxLines="2"
-                                    android:text="Online Classic Pack"
-                                    android:textAllCaps="false"
+                                    android:padding="16dp"
                                     android:textColor="@color/main_color_gray_dk"
                                     android:textFontWeight="600"
-                                    android:textSize="18sp"
-                                    app:layout_constraintEnd_toEndOf="parent"
+                                    android:textSize="16sp"
+                                    app:layout_constraintEnd_toStartOf="@id/how_to_use_arrow"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/pack_cs" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:text="How to activate this Pack" />
 
-                                <androidx.constraintlayout.widget.ConstraintLayout
-                                    android:id="@+id/pack_cs"
+                                <ImageView
+                                    android:id="@+id/how_to_use_arrow"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    app:layout_constraintBottom_toTopOf="@+id/package_title"
-                                    app:layout_constraintStart_toStartOf="parent">
-
-                                    <TextView
-                                        android:id="@+id/tv_communication"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:drawableStart="@drawable/ic_communication"
-                                        android:drawablePadding="8dp"
-                                        android:elevation="2dp"
-                                        android:paddingStart="6dp"
-                                        android:paddingTop="1dp"
-                                        android:text="Communication"
-                                        android:textColor="@color/copy_coupon_text_color"
-                                        android:textFontWeight="400"
-                                        android:textSize="@dimen/txt_12sp"
-                                        app:layout_constraintBottom_toBottomOf="parent"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintTop_toTopOf="parent"
-                                        app:layout_constraintVertical_chainStyle="packed" />
-
-
-                                </androidx.constraintlayout.widget.ConstraintLayout>
+                                    android:layout_height="0dp"
+                                    android:padding="@dimen/pad_10dp"
+                                    android:src="@drawable/ic_down_arrow_pack_details"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintDimensionRatio="1:1"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-                            <TextView
-                                android:id="@+id/title_bottom3"
-                                android:layout_width="wrap_content"
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/how_to_use_recycler"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="19dp"
-                                android:ellipsize="end"
-                                android:fontFamily="@font/regular"
-                                android:maxLines="2"
-                                android:text="A domain name gives a unique and secure online identity for your brand, help"
-                                android:textColor="@color/common_text_color"
-                                android:textSize="@dimen/_12sdp"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/package_profile_image" />
-
-                            <TextView
-                                android:id="@+id/learn_more_btn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@color/white"
-                                android:fontFamily="@font/bold"
-                                android:text="@string/learn_more_feature_details"
-                                android:textColor="@color/colorAccent1"
-                                android:textSize="12dp"
-                                app:layout_constraintBottom_toBottomOf="@id/title_bottom3"
-                                app:layout_constraintEnd_toEndOf="@id/title_bottom3" />
-
-                            <TextView
-                                android:id="@+id/learn_less_btn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/_10sdp"
-                                android:background="@color/white"
-                                android:fontFamily="@font/bold"
-                                android:padding="5dp"
-                                android:paddingStart="10dp"
-                                android:text="@string/show_less"
-                                android:textColor="@color/colorAccent1"
-                                android:textSize="12dp"
                                 android:visibility="gone"
-                                app:layout_constraintEnd_toEndOf="@id/title_bottom3"
-                                app:layout_constraintTop_toBottomOf="@id/title_bottom3" />
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/how_to_use_title_layout"
+                                tools:itemCount="2"
+                                tools:listitem="@layout/how_to_use_item_pack_details"
+                                tools:visibility="visible" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    </androidx.cardview.widget.CardView>
-                </RelativeLayout>
-
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/benefit_container_item"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="@dimen/dimen_16dp"
-                    android:background="@drawable/rounded_curve_bg"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rl_cardView">
-
-
-                    <TextView
-                        android:id="@+id/benefit_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/bold"
-                        android:padding="16dp"
-                        android:text="Key benefits of this pack"
-                        android:textColor="@color/main_color_gray_dk"
-                        android:textFontWeight="600"
-                        android:textSize="16sp"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.viewpager2.widget.ViewPager2
-                        android:id="@+id/benefits_viewpager"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/benefit_title"
-                        tools:listitem="@layout/item_packs_v3_benefits" />
-
-
-                    <com.framework.views.dotsindicator.DotsIndicator
-                        android:id="@+id/benefits_indicator"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        app:dotsColor="@color/btn_bg_color_disabled"
-                        app:dotsCornerRadius="8dp"
-                        app:dotsSize="6dp"
-                        app:dotsSpacing="6dp"
-                        app:dotsWidthFactor="2.5"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/benefits_viewpager"
-                        app:progressMode="false"
-                        app:selectedDotColor="@color/colorAccent1" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/how_to_use_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_16dp"
-                    android:layout_marginTop="@dimen/dimen_24dp"
-                    android:layout_marginEnd="@dimen/dimen_16dp"
-                    android:background="@drawable/rounded_curve_bg"
-                    app:layout_constraintTop_toBottomOf="@id/benefit_container_item">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/how_to_use_title_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:visibility="visible">
-
-                        <TextView
-                            android:id="@+id/tv_how_to_use_title"
-                            android:layout_width="0dp"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/faq_container"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/regular"
-                            android:padding="16dp"
-                            android:textColor="@color/main_color_gray_dk"
-                            android:textFontWeight="600"
-                            android:textSize="16sp"
-                            app:layout_constraintEnd_toStartOf="@id/how_to_use_arrow"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="How to activate this Pack" />
-
-                        <ImageView
-                            android:id="@+id/how_to_use_arrow"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:padding="@dimen/pad_10dp"
-                            android:src="@drawable/ic_down_arrow_pack_details"
+                            android:layout_marginStart="@dimen/dimen_16dp"
+                            android:layout_marginTop="@dimen/dimen_24dp"
+                            android:layout_marginEnd="@dimen/dimen_16dp"
+                            android:layout_marginBottom="@dimen/pad_20dp"
+                            android:background="@drawable/rounded_curve_bg"
+                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintDimensionRatio="1:1"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toBottomOf="@id/how_to_use_container"
+                            tools:visibility="visible">
+
+                            <TextView
+                                android:id="@+id/faq_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dimen_16dp"
+                                android:layout_marginTop="@dimen/dimen_16dp"
+                                android:fontFamily="@font/regular"
+                                android:text="Frequently asked questions"
+                                android:textColor="@color/main_color_gray_dk"
+                                android:textFontWeight="600"
+                                android:textSize="16sp"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/faq_recycler"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="visible"
+                                app:layout_constraintTop_toBottomOf="@id/faq_title"
+                                tools:itemCount="2"
+                                tools:listitem="@layout/faq_item_pack_details" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/how_to_use_recycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        app:layout_constraintTop_toBottomOf="@id/how_to_use_title_layout"
-                        tools:itemCount="2"
-                        tools:listitem="@layout/how_to_use_item_pack_details"
-                        tools:visibility="visible"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/faq_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_16dp"
-                    android:layout_marginTop="@dimen/dimen_24dp"
-                    android:layout_marginEnd="@dimen/dimen_16dp"
-                    android:layout_marginBottom="@dimen/pad_20dp"
-                    android:background="@drawable/rounded_curve_bg"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/how_to_use_container"
-                    tools:visibility="visible">
-
-                    <TextView
-                        android:id="@+id/faq_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen_16dp"
-                        android:layout_marginTop="@dimen/dimen_16dp"
-                        android:fontFamily="@font/regular"
-                        android:text="Frequently asked questions"
-                        android:textColor="@color/main_color_gray_dk"
-                        android:textFontWeight="600"
-                        android:textSize="16sp"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/faq_recycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible"
-                        app:layout_constraintTop_toBottomOf="@id/faq_title"
-                        tools:itemCount="2"
-                        tools:listitem="@layout/faq_item_pack_details" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+                </androidx.core.widget.NestedScrollView>
             </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.core.widget.NestedScrollView>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -222,6 +222,7 @@
                         android:layout_marginTop="@dimen/dimen_16dp"
                         android:layout_marginEnd="@dimen/dimen_16dp"
                         android:visibility="gone"
+                        android:textColor="@color/colorPrimary1"
                         android:text="4 PREMIUM FEATURES ideal for small businesses that want to get started with online sales."
                         app:layout_constraintTop_toBottomOf="@id/divider" />
 

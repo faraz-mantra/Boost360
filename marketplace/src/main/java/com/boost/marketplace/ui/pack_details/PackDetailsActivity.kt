@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -598,8 +599,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             if (bundleData?.included_features != null && bundleData?.included_features?.isNotEmpty()!!) {
                 binding?.rvIncludedFeatures?.visibility = VISIBLE
                 binding?.tvPremiumFeaturesNo?.visibility = VISIBLE
-                binding?.tvPremiumFeaturesNo?.text =
-                    bundleData?.included_features?.size!!.toString() + "PREMIUM FEATURES ideal for small businesses that want to get started with online sales."
+                val sourceString = "<b>" + bundleData?.included_features?.size!!.toString() + " PREMIUM FEATURES"  + "</b> " + " ideal for small businesses that want to get started with online sales."
+                binding?.tvPremiumFeaturesNo?.text = Html.fromHtml(sourceString)
                 featuresList?.let { includedFeatureAdapter.addupdates(it) }
                 includedFeatureAdapter.notifyDataSetChanged()
             } else {
@@ -792,8 +793,14 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     }
 
     override fun onclick(item: FeaturesModel) {
-        val dialogCard = PackDetailsBottomSheet()
+        val packagePopup = PackDetailsPopUpFragment( )
         val args = Bundle()
+//        args.putString("bundleData", Gson().toJson(item))
+//        args.putString("cartList", Gson().toJson(cart_list))
+
+
+//        val dialogCard = PackDetailsBottomSheet()
+//        val args = Bundle()
         args.putString("fpid", fpid)
         args.putString("expCode", experienceCode)
         args.putString("isDeepLink", isDeepLink.toString())
@@ -827,8 +834,10 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         if (item != null) {
             args.putInt("addons", bundleData?.included_features?.size!!)
         }
-        dialogCard.arguments = args
-        dialogCard.show(this.supportFragmentManager, PackDetailsBottomSheet::class.java.name)
+        packagePopup.arguments = args
+        packagePopup.show(supportFragmentManager, "PACKAGE_POPUP")
+//        dialogCard.arguments = args
+//        dialogCard.show(this.supportFragmentManager, PackDetailsBottomSheet::class.java.name)
     }
 
     override fun imagePreviewPosition(list: ArrayList<String>, pos: Int) {
