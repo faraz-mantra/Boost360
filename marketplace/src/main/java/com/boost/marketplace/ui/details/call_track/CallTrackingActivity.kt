@@ -167,29 +167,26 @@ class CallTrackingActivity :
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (p0 != null && p0?.length!! > 0) {
-                    binding?.ivCross?.visibility = View.GONE
-                    binding?.btnSearch?.visibility = View.VISIBLE
+                if (p0 != null && p0.length!! > 0) {
+                    binding?.ivCross?.visibility = GONE
+                    binding?.btnSearch?.visibility = VISIBLE
                     binding?.btnSearch?.setOnClickListener {
                         hideKeyBoard()
 
                         updateAllItemBySearchValue(p0.toString())
                         binding?.tvAvailableNo?.text = "Search results"
-                        binding?.btnSearch?.visibility = View.GONE
-
+                        binding?.btnSearch?.visibility = GONE
                     }
 
-                    binding?.ivCross?.visibility = View.VISIBLE
-
-
+                    binding?.ivCross?.visibility = VISIBLE
+                } else {
+                    binding?.btnSearch?.visibility = GONE
                 }
-
             }
 
             override fun afterTextChanged(p0: Editable?) {
 
             }
-
         })
         binding?.ivCross?.setOnClickListener {
             binding?.etCallTrack?.setText("")

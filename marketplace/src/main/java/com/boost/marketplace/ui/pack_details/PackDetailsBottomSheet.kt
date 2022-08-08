@@ -10,6 +10,7 @@ import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.AllFrequentl
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.HowToUseStep
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.dbcenterapi.utils.HorizontalMarginItemDecoration
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.Adapters.PacksV3BenefitsViewPagerAdapter
 import com.boost.marketplace.R
@@ -21,7 +22,15 @@ import com.bumptech.glide.Glide
 import com.framework.base.BaseBottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_compare_packs.*
+import kotlinx.android.synthetic.main.activity_feature_details.*
 import kotlinx.android.synthetic.main.pack_details_bottom_sheet.*
+import kotlinx.android.synthetic.main.pack_details_bottom_sheet.faq_container
+import kotlinx.android.synthetic.main.pack_details_bottom_sheet.faq_recycler
+import kotlinx.android.synthetic.main.pack_details_bottom_sheet.how_to_use_arrow
+import kotlinx.android.synthetic.main.pack_details_bottom_sheet.how_to_use_recycler
+import kotlinx.android.synthetic.main.pack_details_bottom_sheet.how_to_use_title_layout
+import kotlinx.android.synthetic.main.pack_details_bottom_sheet.tv_how_to_use_title
 
 class PackDetailsBottomSheet :
     BaseBottomSheetDialog<PackDetailsBottomSheetBinding, ComparePacksViewModel>() {
@@ -182,6 +191,13 @@ class PackDetailsBottomSheet :
         binding?.benefitsViewpager?.offscreenPageLimit = 1
 //        binding?.benefitsViewpager?.setPageTransformer(SimplePageTransformerSmall())
         binding?.benefitsViewpager?.setPageTransformer(BenifitsPageTransformer(requireActivity()))
+
+        val itemDecoration = HorizontalMarginItemDecoration(
+            requireContext(),
+            R.dimen.viewpager_current_item_horizontal_margin,
+            R.dimen.viewpager_current_item_horizontal_margin
+        )
+        binding?.benefitsViewpager?.addItemDecoration(itemDecoration)
 
 //        val itemDecoration = HorizontalMarginItemDecoration(
 //            requireContext(),

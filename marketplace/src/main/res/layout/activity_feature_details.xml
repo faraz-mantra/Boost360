@@ -334,7 +334,7 @@
                                 android:maxLines="2"
                                 android:text="Create email accounts for your employees."
                                 android:textColor="@color/common_text_color"
-                                android:textSize="@dimen/_12sdp"
+                                android:textSize="@dimen/txt_12sp"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/title_bottom2" />
 
