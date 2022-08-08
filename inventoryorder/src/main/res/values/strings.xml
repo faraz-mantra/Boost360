@@ -354,6 +354,7 @@
   <string name="confirming_appointment">Confirming appointment?</string>
   <string name="request_pending_payment">Request pending payment</string>
   <string name="send_payment_link_via_select_atleast_one_option"><b>Send payment link via</b> (select atleast one option)</string>
+  <string name="please_select_at_least_one_option">Please select at least one option!</string>
   <string name="send_reminder">Send reminder</string>
   <string name="marking_as_customer_served">Marking as ‘customer served’</string>
   <string name="start_appointment">Start appointment</string>
