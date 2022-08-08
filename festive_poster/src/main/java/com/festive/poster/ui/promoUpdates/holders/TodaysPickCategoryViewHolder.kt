@@ -22,7 +22,7 @@ class TodaysPickCategoryViewHolder(binding: ListItemTodaysPickTemplateBinding):
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as TodaysPickCategory
         binding.tvCatTitle.text = model.name
-        binding.ivCategoryIcon.loadFromUrl(model.iconUrl)
+        binding.ivCategoryImg.loadFromUrl(model.iconUrl)
 //        Picasso.get().load(model.tagsModel.icon).into(binding.ivCategoryIcon)
        // binding.tvCatDesc.text = model.description
         //binding.ivCategoryIcon.setImageResource(R.drawable.ic_dummy_poster_cat_icon)

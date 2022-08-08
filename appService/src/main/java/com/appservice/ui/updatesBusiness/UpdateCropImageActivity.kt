@@ -20,6 +20,7 @@ import com.framework.utils.saveAsTempFile
 import com.framework.utils.setClickableRipple
 import com.framework.utils.setStatusBarColor
 import com.onboarding.nowfloats.bottomsheet.util.runOnUi
+import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -51,6 +52,7 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
         setOnClickListener(binding!!.layoutChangeImage,binding!!.layoutTick,binding!!.layoutRotate,binding!!.ivDelete)
 
         path = intent.getStringExtra(IK_IMAGE_PATH)
+
         showImageInUi()
 
     }

@@ -14,7 +14,7 @@ import com.festive.poster.models.PosterModel
 import com.festive.poster.models.PosterPackModel
 import com.festive.poster.models.PosterPackTagModel
 import com.festive.poster.models.response.GetTemplateViewConfigResponse
-import com.festive.poster.models.response.GetTemplatesResponse
+import com.festive.poster.models.response.GetFestivePosterResponse
 import com.festive.poster.models.response.UpgradeGetDataResponse
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
@@ -100,7 +100,7 @@ class PosterPackListingFragment : AppBaseFragment<FragmentPosterPackListingBindi
     viewModel?.getTemplates(session?.fPID, session?.fpTag, tagArray)
       ?.observeOnce(viewLifecycleOwner, {
         dataList = ArrayList()
-        val templates_response = it as? GetTemplatesResponse
+        val templates_response = it as? GetFestivePosterResponse
         templates_response?.let {
           response.Result.templatePacks?.tags?.forEach { pack_tag ->
             val templateList = ArrayList<PosterModel>()

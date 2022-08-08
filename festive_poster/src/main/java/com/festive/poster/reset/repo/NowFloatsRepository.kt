@@ -4,20 +4,18 @@ package com.festive.poster.reset.repo
 
 import com.festive.poster.base.rest.AppBaseLocalService
 import com.festive.poster.base.rest.AppBaseRepository
-import com.festive.poster.models.response.GetTemplatesV2Body
+import com.festive.poster.models.response.GetTemplatesBody
+import com.festive.poster.models.response.GetTodaysTemplateBody
 import com.festive.poster.models.response.TemplateSaveActionBody
 import com.festive.poster.reset.TaskCode
 import com.festive.poster.reset.apiClients.NowFloatsApiClient
 import com.festive.poster.reset.services.NowFloatsRemoteData
 import com.framework.base.BaseResponse
 import com.google.gson.Gson
-import com.google.gson.JsonArray
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.Retrofit
-import retrofit2.http.Query
 
 
 object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocalService>() {
@@ -117,15 +115,17 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
   }
 
   fun getTodaysTemplates(): Observable<BaseResponse> {
+    val body =GetTodaysTemplateBody(session.fPID,
+      session.fpTag)
     return makeRemoteRequest(
-      remoteDataSource.getTodayTemplates(session.fPID,session.fpTag),
+      remoteDataSource.getTodayTemplates(body),
       TaskCode.GET_TODAY_TEMPLATES
     )
   }
 
-  fun getTemplatesV2(isFav: Boolean?): Observable<BaseResponse> {
+  fun getTemplates(isFav: Boolean?): Observable<BaseResponse> {
     return makeRemoteRequest(
-      remoteDataSource.getTemplatesV2(GetTemplatesV2Body(session.fPID!!,session.fpTag!!, showFavourites = isFav)),
+      remoteDataSource.getTemplates(GetTemplatesBody(session.fPID!!,session.fpTag!!, showFavourites = isFav)),
       TaskCode.GET_TEMPLATES_V2
     )
   }

@@ -117,7 +117,7 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
             postType = postType,
             tagListRequest = TagListRequest(tagArray)
         )
-            ?.observeOnce(viewLifecycleOwner, { it ->
+            ?.observeOnce(viewLifecycleOwner) { it ->
                 hideProgress()
                 if (it.isSuccess()) {
                     it as PastUpdatesNewListingResponse
@@ -147,7 +147,7 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
                 }
                 showSimmer(false)
                 Log.i("pastUpdates", "PastUpdates: $it")
-            })
+            }
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {

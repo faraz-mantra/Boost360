@@ -24,6 +24,8 @@ import com.festive.poster.viewmodels.PostUpdatesViewModel
 import com.festive.poster.viewmodels.PromoUpdatesViewModel
 import com.framework.base.BaseActivity
 import com.framework.pref.UserSessionManager
+import com.framework.rest.NetworkResult
+import com.framework.utils.showToast
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.Promotional_Update_Category_Click
 
@@ -96,28 +98,43 @@ class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, Post
 
     private fun getFavTemp() {
 
-        showProgress()
         promoUpdatesViewModel?.favData?.observe(viewLifecycleOwner) {
-            hideProgress()
 
-            if (it.isEmpty()) {
-                zerothCase(true)
-                return@observe
-            } else {
-                zerothCase(false)
+
+            when(it){
+                is NetworkResult.Loading->{
+                    if (posterRvAdapter?.isEmpty() == true)
+                        showProgress()
+                }
+                is NetworkResult.Success->{
+                    hideProgress()
+                    val data = it.data?:return@observe
+                    if (data.isEmpty()) {
+                        zerothCase(true)
+                        return@observe
+                    } else {
+                        zerothCase(false)
+                    }
+
+                    if (categoryList.isEmpty()){
+                        setCatgories(data)
+                        switchToSelectedItem(DEFAULT_SELECTED_POS,
+                            data[DEFAULT_SELECTED_POS].getParentTemplates()
+                                ?.asBrowseAllModels())
+                    }else{
+                        switchToSelectedItem(selectedPos,
+                            data[selectedPos].getParentTemplates()
+                                ?.asBrowseAllModels())
+                        setCatgories(data)
+                    }
+                }
+                is NetworkResult.Error->{
+                    hideProgress()
+                    showToast(it.msg)
+                }
             }
 
-            if (categoryList.isEmpty()){
-                setCatgories(it)
-                switchToSelectedItem(DEFAULT_SELECTED_POS,
-                    it[DEFAULT_SELECTED_POS].getParentTemplates()
-                        ?.asBrowseAllModels())
-            }else{
-                switchToSelectedItem(selectedPos,
-                    it[selectedPos].getParentTemplates()
-                        ?.asBrowseAllModels())
-                setCatgories(it)
-            }
+
 
         }
 
@@ -161,15 +178,19 @@ class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, Post
     }
 
     private fun callFavApi(templateUi: TemplateUi) {
-        showProgress()
-        promoUpdatesViewModel?.templateSaveAction(
-            TemplateSaveActionBody.ActionType.FAVOURITE,
-            templateUi.isFavourite.not(),templateUi.id)?.observe(viewLifecycleOwner){
-            if (it.isSuccess()){
-              promoUpdatesViewModel?.getTemplatesUi()
+        promoUpdatesViewModel?.markAsFav(templateUi.isFavourite.not(),templateUi.id)
+        promoUpdatesViewModel?.favStatus?.observe(viewLifecycleOwner){
+
+            when(it){
+                is NetworkResult.Loading->{
+                    showProgress()
+                }
+                else->{
+                    hideProgress()
+                }
             }
-            hideProgress()
         }
+
     }
 
     private fun switchToSelectedItem(positon:Int,newList: List<BrowseAllTemplate>?) {

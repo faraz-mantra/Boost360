@@ -14,6 +14,8 @@ import com.framework.BaseApplication
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
+import com.framework.rest.NetworkResult
+import com.framework.utils.fetchString
 import com.framework.utils.getResponse
 import com.framework.utils.toArrayList
 import kotlinx.coroutines.launch
@@ -25,158 +27,74 @@ import kotlin.coroutines.suspendCoroutine
 class PromoUpdatesViewModel: BaseViewModel() {
 
 
-    private var configResponse: GetTemplateViewConfigResult?=null
-    private val todaysPickMData=MutableLiveData<ArrayList<PosterPackModel>?>()
-    val todaysPickLData:LiveData<ArrayList<PosterPackModel>?> get() =
-        todaysPickMData
 
-    private val browseAllMData=MutableLiveData<ArrayList<CategoryUi>>()
-    val browseAllLData:LiveData<ArrayList<CategoryUi>> get() =
+
+    private val browseAllMData=MutableLiveData<NetworkResult<
+            ArrayList<CategoryUi>>>()
+    val browseAllLData:LiveData<NetworkResult<
+            ArrayList<CategoryUi>>> get() =
         browseAllMData
 
 
-    private val _favData=MutableLiveData<ArrayList<CategoryUi>>()
-    val favData:LiveData<ArrayList<CategoryUi>> get() = _favData
+    private val _favData=MutableLiveData<NetworkResult<
+            ArrayList<CategoryUi>>>()
+    val favData:LiveData<NetworkResult<
+            ArrayList<CategoryUi>>> get() = _favData
 
-    private val _todayPickData=MutableLiveData<ArrayList<CategoryUi>>()
-    val todayPickData:LiveData<ArrayList<CategoryUi>> get() = _todayPickData
+    private val _todayPickData=MutableLiveData<NetworkResult<
+            ArrayList<CategoryUi>>>()
+    val todayPickData:LiveData<NetworkResult<
+            ArrayList<CategoryUi>>> get() = _todayPickData
+
+    private val _favStatus=MutableLiveData<NetworkResult<
+            BaseResponse>>()
+    val favStatus:LiveData<NetworkResult<
+            BaseResponse>> get() = _favStatus
 
 
     init {
+       refreshTemplates()
+    }
+
+    fun refreshTemplates(){
         getTodaysPickTemplate()
         getTemplatesUi()
     }
-/*
-    suspend fun getTemplates(floatingPointId: String?, floatingPointTag: String?,
-                             tags:List<String>?,
-                             configSection:FestivePosterSectionModel?,
-                             @LayoutRes templateViewId:Int,@LayoutRes packViewId:Int)=
-        suspendCoroutine<ArrayList<PosterPackModel>?> {cont->
-        NowFloatsRepository.getTemplates(floatingPointId,floatingPointTag,tags).getResponse {
-            if (it.isSuccess()){
-                val templates_response = it as? GetTemplatesResponse
-                var todaysPickList: ArrayList<PosterPackModel>? = ArrayList()
-                templates_response?.let {
-                    configSection?.tags?.forEach { pack_tag ->
-                        val templateList = ArrayList<PosterModel>()
-                        templates_response.Result.templates?.forEach { template ->
-                            var posterTag =
-                                template.tags?.find { posterTag -> posterTag == pack_tag.tag }
-                            if (posterTag != null && template.active == true) {
-                                template.greeting_message = pack_tag.description
-                                template.layout_id =templateViewId
 
-                                templateList.add(template.clone()!!)
-                            }
-                        }
-                        *//* val filterdList= ArrayList<PosterModel>()
-                        if (templateList.size>=4){
-                            filterdList.addAll(
-                                templateList.take(4))
-                            filterdList.add(PosterModel(layout_id = RecyclerViewItemType.VIEW_MORE_POSTER.getLayout()))
-                        }else{
-                            filterdList.addAll(templateList)
-                        }*//*
-
-                        *//*todaysPickList?.add(
-                            PosterPackModel(
-                                pack_tag,
-                                filterdList,
-                                isPurchased = pack_tag.isPurchased==true,
-                                list_layout = RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()
-                            )
-                        )*//*
-
-                        todaysPickList?.add(
-                            PosterPackModel(
-                                pack_tag,
-                                templateList,
-                                isPurchased = pack_tag.isPurchased == true,
-                                list_layout = packViewId
-                            )
-                        )
-
-                    }
-                }
-
-                cont.resume(todaysPickList)
-            }else{
-                cont.resume(null)
-            }
-
-        }
-    }
-
-
-    fun getTodaysPickData(fKey:String,floatingPointId: String?,floatingPointTag: String?){
-        viewModelScope.launch {
-            if (configResponse==null){
-                configResponse = getTemplateConfig(fKey,floatingPointId,floatingPointTag)
-            }
-            if (configResponse==null){
-                todaysPickMData.postValue(null)
-            }
-            val tags = prepareTagForApi(configResponse?.todayPick?.tags)
-            val todaysPickList = getTemplates(floatingPointId,floatingPointTag,tags,
-                configResponse?.todayPick,
-                RecyclerViewItemType.TEMPLATE_VIEW_FOR_TODAY_PICK.getLayout(),
-                RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()
-                )
-            todaysPickMData.postValue(todaysPickList)
-
-        }
-
-    }
-
-    fun getBrowseAllData(fKey:String,floatingPointId: String?,floatingPointTag: String?){
-        viewModelScope.launch {
-            if (configResponse==null){
-                configResponse = getTemplateConfig(fKey,floatingPointId,floatingPointTag)
-            }
-            if (configResponse==null){
-                browseAllMData.postValue(null)
-            }
-            val tags = prepareTagForApi(configResponse?.allTemplates?.tags)
-            val browseAllList = getTemplates(floatingPointId,floatingPointTag,tags,configResponse?.allTemplates,-1,RecyclerViewItemType.BROWSE_TAB_TEMPLATE_CAT.getLayout())
-           // browseAllMData.postValue(browseAllList)
-
-        }
-
-    }
-
-    private fun prepareTagForApi(tags: List<PosterPackTagModel>?): ArrayList<String> {
-        val list = ArrayList<String>()
-        tags?.forEach {
-            it.tag?.let { tag -> list.add(tag) }
-        }
-        return list
-    }
-
-    suspend fun getTemplateConfig(fKey:String,floatingPointId: String?,floatingPointTag: String?)=
-        suspendCoroutine<GetTemplateViewConfigResult?>{cont->
-        NowFloatsRepository.getTemplateConfig(fKey,floatingPointId,floatingPointTag).getResponse {
-            if (it.isSuccess()){
-                val response = it as? GetTemplateViewConfigResponse
-                response?.let {res->
-                    cont.resume(res.Result)
-                }
-            }else{
-                cont.resume(null)
-            }
-        }
-    }*/
 
     fun getTodaysPickTemplate(){
-        NowFloatsRepository.getTodaysTemplates().getResponse {
-            if (it.isSuccess()){
-                val response = it as? GetTodayTemplateResponse
-                _todayPickData.postValue(response?.Result?.asDomainModel()?.toArrayList())
-
+        _todayPickData.postValue(NetworkResult.Loading())
+        try {
+            NowFloatsRepository.getTodaysTemplates().getResponse {
+                if (it.isSuccess()){
+                    val response = it as? GetTodayTemplateResponse
+                    _todayPickData.postValue(
+                        NetworkResult.Success(data =
+                        response?.Result?.asDomainModel()?.toArrayList())
+                    )
+                }else{
+                    throw Exception(it.errorMessage())
+                }
             }
+        }catch (e:Exception){
+            _todayPickData.postValue(NetworkResult.Error(msg = fetchString(com.framework.R.string.something_went_wrong)))
         }
+
     }
 
 
+    fun markAsFav(isFav:Boolean, templateId:String) {
+        _favStatus.postValue(NetworkResult.Loading())
+        NowFloatsRepository.saveTemplateAction(
+            TemplateSaveActionBody.ActionType.FAVOURITE,isFav,templateId).getResponse {
+                if (it.isSuccess()){
+                    refreshTemplates()
+                    _favStatus.postValue(NetworkResult.Success(it))
+                }else{
+                    _favStatus.postValue(NetworkResult.Error(it.errorMessage()))
+                }
+        }
+    }
 
 
     fun templateSaveAction(action: TemplateSaveActionBody.ActionType,
@@ -198,10 +116,10 @@ class PromoUpdatesViewModel: BaseViewModel() {
         }
 
     private suspend fun getTemplates(isFav:Boolean?=null)=
-        suspendCoroutine<List<GetTemplatesResponseV2Template>>{cont->
-            NowFloatsRepository.getTemplatesV2(isFav).getResponse {
+        suspendCoroutine<List<GetTemplatesResponseTemplate>>{cont->
+            NowFloatsRepository.getTemplates(isFav).getResponse {
                 if (it.isSuccess()){
-                    val response = it as? GetTemplatesResponseV2
+                    val response = it as? GetTemplatesResponse
                     cont.resume(response!!.Result.templates)
 
                 }else{
@@ -211,6 +129,7 @@ class PromoUpdatesViewModel: BaseViewModel() {
         }
 
     fun getTemplatesUi(){
+        browseAllMData.postValue(NetworkResult.Loading())
         viewModelScope.launch {
             try {
                 val categories = getCategories()
@@ -223,16 +142,20 @@ class PromoUpdatesViewModel: BaseViewModel() {
                     }
                     uicat.setTemplates(dbTemplates.asDomainModels())
                 }
-                browseAllMData.postValue(categories.toArrayList())
+                browseAllMData.postValue(
+                    NetworkResult.Success(categories.toArrayList()))
                 getFavTemplates()
             }catch (e:Exception){
                 e.printStackTrace()
+                browseAllMData.postValue(NetworkResult.Error(msg = fetchString(com.framework.R.string.something_went_wrong)))
+
             }
         }
     }
 
 
     fun getFavTemplates() {
+        _favData.postValue(NetworkResult.Loading())
         viewModelScope.launch {
             try {
                 val categories = getCategories().toArrayList()
@@ -262,10 +185,14 @@ class PromoUpdatesViewModel: BaseViewModel() {
 
                 categories.add(0,allDummyCat)
 
-                _favData.postValue(categories.toArrayList())
+                _favData.postValue(
+                    NetworkResult.Success(
+                    categories.toArrayList()))
 
             }catch (e:Exception){
                 e.printStackTrace()
+                _favData.postValue(NetworkResult.Error(msg = fetchString(com.framework.R.string.something_went_wrong)))
+
             }
         }
     }

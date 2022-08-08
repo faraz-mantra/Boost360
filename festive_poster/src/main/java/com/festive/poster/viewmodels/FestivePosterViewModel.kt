@@ -2,23 +2,16 @@ package com.festive.poster.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import com.festive.poster.models.PosterPackModel
-import com.festive.poster.models.PosterPackTagModel
-import com.festive.poster.models.response.GetTemplatesResponse
 import com.festive.poster.reset.repo.*
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
-import com.framework.utils.toArrayList
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.launch
 import okhttp3.RequestBody
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
