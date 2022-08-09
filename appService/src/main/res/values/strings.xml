@@ -1238,4 +1238,7 @@
   <string name="search_location">Search location</string>
   <string name="recent_searches">Recent searches</string>
   <string name="search_for_a_location">Search for a location</string>
+  <string name="add_address">Add address</string>
+  <string name="use_your_device_location">Use your device location</string>
+  <string name="enter_address_manually">Enter address manually</string>
 </resources>

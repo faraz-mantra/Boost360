@@ -82,7 +82,7 @@ class BusinessAddressFragment : AppBaseFragment<FragmentBusinessAddressBinding, 
 
   override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
     super.onCreateMenu(menu, menuInflater)
-    menuInflater.inflate(R.menu.menu_product_info, menu)
+    menuInflater.inflate(R.menu.menu_address_info, menu)
   }
 
   override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -90,12 +90,12 @@ class BusinessAddressFragment : AppBaseFragment<FragmentBusinessAddressBinding, 
       R.id.menu_edit -> {
         baseActivity.startAddressFragmentActivity(FragmentType.SEARCH_LOCATION_VIEW)
 //        placePicker()
-        return true
+        return false
       }
       R.id.menu_help -> {
 //        showLongToast("Coming soon...")
         placePicker()
-        return true
+        return false
       }
     }
     return false
