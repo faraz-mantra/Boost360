@@ -8,12 +8,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.data.api_model.packageAddonsCompares.PackageAddonsCompares
-import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
+import com.boost.marketplace.interfaces.AddonsListenerV3
 
 class PacksAddonsV3Adapter(
     cryptoCurrencies: List<PackageAddonsCompares>?,
-    val activity: Activity
+    val activity: Activity,var myAddonsListener: AddonsListenerV3
 ) : RecyclerView.Adapter<PacksAddonsV3Adapter.upgradeViewHolder>() {
 
     private var upgradeList = ArrayList<PackageAddonsCompares>()
@@ -41,6 +41,10 @@ class PacksAddonsV3Adapter(
         holder.recyclerView.adapter = adapter
         if(position == upgradeList.size-1){
             holder.dummyLine.visibility = View.GONE
+        }
+        holder.name.setOnClickListener {
+
+            myAddonsListener.onPaidAddonsClicked(upgradeList.get(position).featureCode)
         }
     }
 

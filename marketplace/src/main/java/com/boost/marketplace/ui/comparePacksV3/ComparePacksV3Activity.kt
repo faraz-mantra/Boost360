@@ -30,6 +30,7 @@ import com.boost.marketplace.Adapters.*
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityComparePacksv3Binding
+import com.boost.marketplace.interfaces.AddonsListenerV3
 import com.boost.marketplace.interfaces.PacksV3FooterListener
 import com.boost.marketplace.interfaces.PacksV3listener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
@@ -49,7 +50,7 @@ import kotlinx.android.synthetic.main.activity_feature_details.*
 
 class ComparePacksV3Activity :
     AppBaseActivity<ActivityComparePacksv3Binding, ComparePacksViewModel>(), PacksV3listener,
-    PacksV3FooterListener {
+    PacksV3FooterListener,AddonsListenerV3 {
 
     var experienceCode: String? = null
     var screenType: String? = null
@@ -133,7 +134,7 @@ class ComparePacksV3Activity :
         packsv3Adapter = PacksV3Adapter(ArrayList(), this, this)
         packsv3footerAdapter = PacksV3FooterAdapter(ArrayList(), this, this)
         packsv3pricingAdapter = PacksV3PricingAdapter(ArrayList(), this)
-        packsAddonsAdapter = PacksAddonsV3Adapter(ArrayList(), this)
+        packsAddonsAdapter = PacksAddonsV3Adapter(ArrayList(), this,this)
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -142,7 +143,7 @@ class ComparePacksV3Activity :
             window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
         }
 
-//        loadData()
+//      loadData()
         initMvvm()
         initializeHowToUseRecycler()
         initializeFAQRecycler()
@@ -753,6 +754,38 @@ class ComparePacksV3Activity :
             binding?.buyPack?.setText(this.getString(R.string.added_to_cart))
             binding?.buyPack?.isClickable = false
         }
+    }
+
+    override fun onPaidAddonsClicked(item: String) {
+        val packagePopup = ComparePacksV3AddonsPopUpFragment( )
+        val args = Bundle()
+
+        args.putString("fpid", fpid)
+        args.putString("expCode", experienceCode)
+        args.putString("isDeepLink", isDeepLink.toString())
+        args.putInt("deepLinkDay", deepLinkDay)
+        args.putString("isOpenCardFragment", isOpenCardFragment.toString())
+        args.putString("accountType", accountType)
+        args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+        if (email != null) {
+            args.putString("email", email)
+        } else {
+            args.putString("email", "ria@nowfloats.com")
+        }
+        if (mobileNo != null) {
+            args.putString("mobileNo", mobileNo)
+        } else {
+            args.putString("mobileNo", "9160004303")
+        }
+        args.putString("profileUrl", profileUrl)
+        args.putString("fpid", fpid)
+        args.putString("expCode", experienceCode)
+//        args.putString("addons", Gson().toJson(featuresList))
+        args.putString("featureCode", item)
+        args.putDouble("price", offeredBundlePrice)
+        args.putDouble("price1", originalBundlePrice)
+        packagePopup.arguments = args
+        packagePopup.show(supportFragmentManager, "PACKAGE_POPUP")
     }
 
 }

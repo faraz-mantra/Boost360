@@ -49,24 +49,24 @@ class FAQAdapter(
     holder.title.setOnClickListener {
       if(holder.desc.isVisible) {
         holder.desc.visibility = View.GONE
-        holder.downArrow.setImageResource(R.drawable.ic_arrow_down_gray)
+        holder.downArrow.setImageResource(R.drawable.packs_arrow)
       }else{
         holder.desc.visibility = View.VISIBLE
-        holder.downArrow.setImageResource(R.drawable.ic_arrow_up_gray)
+        holder.downArrow.setImageResource(R.drawable.packs_arrow_up)
       }
     }
 
     if (position==0){
       holder.desc.visibility=View.VISIBLE
-      holder.downArrow.setImageResource(R.drawable.ic_arrow_up_gray)
+      holder.downArrow.setImageResource(R.drawable.packs_arrow_up)
     }
 
     holder.downArrow.setOnClickListener {
       if(holder.desc.isVisible) {
-        holder.downArrow.setImageResource(R.drawable.ic_arrow_down_gray)
+        holder.downArrow.setImageResource(R.drawable.packs_arrow)
         holder.desc.visibility = View.GONE
       }else{
-        holder.downArrow.setImageResource(R.drawable.ic_arrow_up_gray)
+        holder.downArrow.setImageResource(R.drawable.packs_arrow_up)
         holder.desc.visibility = View.VISIBLE
       }
     }
