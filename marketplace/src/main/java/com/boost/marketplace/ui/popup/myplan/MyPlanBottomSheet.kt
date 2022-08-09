@@ -36,10 +36,22 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseVi
             object : TypeToken<FeaturesModel>() {}.type
         )
         binding?.addonsTitle?.text = singleAddon.name
-        if (singleAddon.feature_code=="LIMITED_CONTENT" || singleAddon.feature_code=="UNLIMITED_CONTENT") {
+        if (singleAddon.feature_code=="STAFFPROFILE" || singleAddon.feature_code=="STAFFPROFILE15"
+            || singleAddon.feature_code=="FACULTY" || singleAddon.feature_code=="OUR-TOPPERS"
+            || singleAddon.feature_code=="MEMBERSHIP" || singleAddon.feature_code=="DOCTORBIO"
+            || singleAddon.feature_code=="BOOSTKEYBOARD" || singleAddon.feature_code=="BOOKING-ENGINE"
+            || singleAddon.feature_code=="APPOINTMENTENGINE")
+        {
+            binding!!.btnUseThisFeature.visibility=View.VISIBLE
+        }
+        else{
             binding!!.btnUseThisFeature.visibility=View.GONE
         }
         binding?.addonsDesc?.text = singleAddon.description_title
+
+        if (singleAddon.is_premium.equals(false)){
+            binding?.cslayout?.visibility=View.GONE
+        }
 
         val date1: String? =
             DateUtils.parseDate(singleAddon.activatedDate, DateUtils.FORMAT_SERVER_DATE1, DateUtils.FORMAT1_DD_MM_YYYY)
@@ -60,8 +72,8 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseVi
             binding!!.actionRequired.visibility=View.VISIBLE
             binding!!.actionText.visibility=View.VISIBLE
             binding!!.actionText.text="Please activate this feature by going to ${singleAddon.name} and provide the missing details."
-            binding!!.txtMessage.visibility=View.GONE
-            binding!!.paidSingleDummyView.visibility=View.GONE
+//            binding!!.txtMessage.visibility=View.GONE
+//            binding!!.paidSingleDummyView.visibility=View.GONE
             binding!!.imageView3.visibility=View.GONE
         }
 

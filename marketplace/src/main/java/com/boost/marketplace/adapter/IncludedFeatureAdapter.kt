@@ -10,19 +10,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
+import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
+import com.bumptech.glide.Glide
 
 class IncludedFeatureAdapter(
     val activity: Activity,
-    cryptoCurrencies: List<IncludedFeature>?
+    cryptoCurrencies: List<FeaturesModel>?
 ) : RecyclerView.Adapter<IncludedFeatureAdapter.upgradeViewHolder>() {
 
-    private var upgradeList = ArrayList<IncludedFeature>()
+    private var upgradeList = ArrayList<FeaturesModel>()
     private lateinit var context: Context
 
     init {
-        this.upgradeList = cryptoCurrencies as ArrayList<IncludedFeature>
+        this.upgradeList = cryptoCurrencies as ArrayList<FeaturesModel>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -39,7 +40,8 @@ class IncludedFeatureAdapter(
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
-        holder.title.text = upgradeList[position].feature_code
+        holder.title.text = upgradeList[position].name
+        Glide.with(context).load(upgradeList.get(position).primary_image).into(holder.icon)
 
         when ((position + 1) % 5) {
             0 -> holder.cardView.setCardBackgroundColor(Color.parseColor("#FFEFDA"))
@@ -52,7 +54,7 @@ class IncludedFeatureAdapter(
 
     }
 
-    fun addupdates(upgradeModel: List<IncludedFeature>) {
+    fun addupdates(upgradeModel: List<FeaturesModel>) {
         val initPosition = upgradeList.size
         upgradeList.clear()
         upgradeList.addAll(upgradeModel)
@@ -61,6 +63,7 @@ class IncludedFeatureAdapter(
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title = itemView.findViewById<TextView>(R.id.title)
+        var icon = itemView.findViewById<ImageView>(R.id.icon)
         var cardView = itemView.findViewById<CardView>(R.id.cardView)
     }
 }

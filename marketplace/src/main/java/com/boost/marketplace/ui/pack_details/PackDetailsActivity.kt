@@ -1,9 +1,11 @@
 package com.boost.marketplace.ui.pack_details
 
+import android.animation.Animator
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -14,13 +16,13 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.Window
 import android.view.WindowManager
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.BenifitsPageTransformer
-import com.boost.cart.adapter.SimplePageTransformerSmall
 import com.boost.cart.adapter.ZoomOutPageTransformer
 import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
@@ -28,6 +30,7 @@ import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.dbcenterapi.utils.CircleAnimationUtil
 import com.boost.dbcenterapi.utils.HorizontalMarginItemDecoration
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.dbcenterapi.utils.WebEngageController
@@ -49,6 +52,7 @@ import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_compare_packs.*
 import kotlinx.android.synthetic.main.activity_pack_details.*
 import kotlinx.android.synthetic.main.layout_black_for_savings.*
 import java.text.NumberFormat
@@ -178,6 +182,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         initializeFAQRecycler()
         initializeIncludedFeature()
         initializeFeatureAdapter()
+        initializePackItemRecycler()
         initMvvm()
 
 
@@ -219,7 +224,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         }
 
         //Add to cart..
-        binding?.addItemToCart?.setOnClickListener {
+        binding?.bottomBoxOnlyBtn?.setOnClickListener {
 
             if (bundleData != null) {
                 prefs.storeAddedPackageDesc(bundleData!!.desc ?: "")
@@ -397,12 +402,26 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         if (list.size > 0) {
             layout_need_more.visibility = VISIBLE
             packItemAdapter.addupdates(list)
-            rv_packs.adapter = packItemAdapter
+//            rv_packs.adapter = packItemAdapter
             packItemAdapter.notifyDataSetChanged()
         } else {
             layout_need_more.visibility = GONE
 
         }
+    }
+
+    private fun initializePackItemRecycler() {
+        val gridLayoutManager = LinearLayoutManager(applicationContext)
+        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        binding?.rvPacks?.apply {
+            layoutManager = gridLayoutManager
+            binding?.rvPacks?.adapter = packItemAdapter
+        }
+    }
+
+    fun updatePackItemRecycler(list: ArrayList<BundlesModel>) {
+
+        packItemAdapter.addupdates(list)
     }
 
     private fun initializeIncludedFeature() {
@@ -490,7 +509,9 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                     }
                 }
                 //update recyclerview
-                addUpdatePacks(bundlesList)
+//                addUpdatePacks(bundlesList)
+                updatePackItemRecycler(bundlesList)
+                packItemAdapter.notifyDataSetChanged()
             }
         })
         viewModel.addonsError().observe(this, androidx.lifecycle.Observer
@@ -561,10 +582,12 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             }
         })
 
-        if (bundleData?.name?.contains("Online")!!) {
+        if (bundleData?.name!= null) {
             Glide.with(binding?.packageImg!!).load(bundleData?.primary_image!!.url)
                 .into(binding?.packageImg!!)
             binding?.title?.text = bundleData?.name
+            binding?.bottomBoxOnlyBtn?.text = "Buy " + bundleData?.name
+            binding?.addItemToCart?.text = "Buy " + bundleData?.name
 
             if (bundleData?.benefits != null && bundleData?.benefits?.isNotEmpty()!!) {
                 binding?.containerKeyBenefits?.visibility = View.VISIBLE
@@ -576,9 +599,9 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             if (bundleData?.included_features != null && bundleData?.included_features?.isNotEmpty()!!) {
                 binding?.rvIncludedFeatures?.visibility = VISIBLE
                 binding?.tvPremiumFeaturesNo?.visibility = VISIBLE
-                binding?.tvPremiumFeaturesNo?.text =
-                    bundleData?.included_features?.size!!.toString() + "PREMIUM FEATURES ideal for small businesses that want to get started with online sales."
-                includedFeatureAdapter.addupdates(bundleData?.included_features!!)
+                val sourceString = "<b>" + bundleData?.included_features?.size!!.toString() + " PREMIUM FEATURES"  + "</b> " + " ideal for small businesses that want to get started with online sales."
+                binding?.tvPremiumFeaturesNo?.text = Html.fromHtml(sourceString)
+                featuresList?.let { includedFeatureAdapter.addupdates(it) }
                 includedFeatureAdapter.notifyDataSetChanged()
             } else {
                 binding?.rvIncludedFeatures?.visibility = View.GONE
@@ -648,6 +671,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                                     }
                                 }
                                 packDetailsAdapter.addupdates(it)
+                                includedFeatureAdapter.addupdates(it)
                                 binding?.packRecycler?.adapter = packDetailsAdapter
                             } else {
                                 binding?.packContainer?.visibility = GONE
@@ -769,8 +793,14 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     }
 
     override fun onclick(item: FeaturesModel) {
-        val dialogCard = PackDetailsBottomSheet()
+        val packagePopup = PackDetailsPopUpFragment( )
         val args = Bundle()
+//        args.putString("bundleData", Gson().toJson(item))
+//        args.putString("cartList", Gson().toJson(cart_list))
+
+
+//        val dialogCard = PackDetailsBottomSheet()
+//        val args = Bundle()
         args.putString("fpid", fpid)
         args.putString("expCode", experienceCode)
         args.putString("isDeepLink", isDeepLink.toString())
@@ -804,8 +834,10 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         if (item != null) {
             args.putInt("addons", bundleData?.included_features?.size!!)
         }
-        dialogCard.arguments = args
-        dialogCard.show(this.supportFragmentManager, PackDetailsBottomSheet::class.java.name)
+        packagePopup.arguments = args
+        packagePopup.show(supportFragmentManager, "PACKAGE_POPUP")
+//        dialogCard.arguments = args
+//        dialogCard.show(this.supportFragmentManager, PackDetailsBottomSheet::class.java.name)
     }
 
     override fun imagePreviewPosition(list: ArrayList<String>, pos: Int) {
@@ -855,6 +887,22 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         }
         intent.putExtra("profileUrl", profileUrl)
         startActivity(intent)
+    }
+
+    private fun makeFlyAnimation(targetView: ImageView) {
+        CircleAnimationUtil().attachActivity(this).setTargetView(targetView)
+            .setMoveDuration(600)
+            .setDestView(package_cart_icon)
+            .setAnimationListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator) {}
+                override fun onAnimationEnd(animation: Animator) {
+                    package_viewpager.currentItem = 0
+                    viewModel.getCartItems()
+                }
+                override fun onAnimationCancel(animation: Animator) {}
+                override fun onAnimationRepeat(animation: Animator) {}
+            }).startAnimation()
+
     }
 
 }

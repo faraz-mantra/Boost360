@@ -1,8 +1,6 @@
 package com.boost.marketplace.Adapters
 
 import android.content.Context
-import android.transition.AutoTransition
-import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,16 +57,23 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
       holder.itemView.visibility=View.GONE
       holder.itemView.layoutParams = RecyclerView.LayoutParams(0, 0)
     }
-    holder.mainlayout.setOnClickListener {
-      if (holder.detailsView.visibility==View.GONE) {
-        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
-        holder.detailsView.visibility= View.VISIBLE
-      } else {
-        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
-        holder.detailsView.visibility= View.GONE
-      }
+
+    if (cryptocurrencyItem.is_premium== true){
+      holder.paid_addons_activate.visibility=View.VISIBLE
     }
-    holder.detailsView.setOnClickListener {
+    else{
+      holder.paid_addons_activate.visibility=View.GONE
+    }
+//    holder.mainlayout.setOnClickListener {
+//      if (holder.detailsView.visibility==View.GONE) {
+//        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
+//        holder.detailsView.visibility= View.VISIBLE
+//      } else {
+//        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
+//        holder.detailsView.visibility= View.GONE
+//      }
+//    }
+    holder.itemView.setOnClickListener {
       val item: FeaturesModel = FeaturesModel(
         list.get(position).feature_id,
         list.get(position).boost_widget_key,
@@ -110,6 +115,7 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
     private var image = itemView.findViewById<ImageView>(R.id.single_paidaddon_image)!!
     var mainlayout=itemView.findViewById<ConstraintLayout>(R.id.main_layout)
     var detailsView=itemView.findViewById<ConstraintLayout>(R.id.detailsView)
+    var paid_addons_activate=itemView.findViewById<LinearLayout>(R.id.paid_addons_activate)
     var img1=itemView.findViewById<ImageView>(R.id.img1)!!
     private var context: Context = itemView.context
 

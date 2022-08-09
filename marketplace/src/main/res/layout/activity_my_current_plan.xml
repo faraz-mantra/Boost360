@@ -311,10 +311,10 @@
                             <View
                                 android:id="@+id/paid_single_dummy_view"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_3sdp"
+                                android:layout_height="1dp"
                                 android:layout_marginStart="16dp"
                                 android:layout_marginEnd="16dp"
-                                android:background="@drawable/view_line"
+                                android:background="#F4F4F4"
                                 app:layout_constraintTop_toTopOf="@+id/expandableView"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent" />
@@ -423,10 +423,10 @@
                             <View
                                 android:id="@+id/paid_single_dummy_view1"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_3sdp"
+                                android:layout_height="1dp"
                                 android:layout_marginStart="16dp"
                                 android:layout_marginEnd="16dp"
-                                android:background="@drawable/view_line"
+                                android:background="#F4F4F4"
                                 app:layout_constraintTop_toTopOf="@+id/expandableView1"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent" />

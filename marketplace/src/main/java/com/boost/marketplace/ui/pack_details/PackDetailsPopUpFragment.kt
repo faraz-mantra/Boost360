@@ -1,12 +1,20 @@
 package com.boost.marketplace.ui.pack_details
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.adapter.BenifitsPageTransformer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.AllFrequentlyAskedQuestion
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.HowToUseStep
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
@@ -17,24 +25,21 @@ import com.boost.marketplace.R
 import com.boost.marketplace.adapter.FAQAdapter
 import com.boost.marketplace.adapter.HowToUseAdapter
 import com.boost.marketplace.databinding.PackDetailsBottomSheetBinding
+import com.boost.marketplace.interfaces.AddonsListener
+import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
 import com.bumptech.glide.Glide
-import com.framework.base.BaseBottomSheetDialog
+import com.framework.base.BaseActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_compare_packs.*
-import kotlinx.android.synthetic.main.activity_feature_details.*
+import com.inventoryorder.databinding.BottomSheetPickInventoryNatureBinding
 import kotlinx.android.synthetic.main.pack_details_bottom_sheet.*
-import kotlinx.android.synthetic.main.pack_details_bottom_sheet.faq_container
-import kotlinx.android.synthetic.main.pack_details_bottom_sheet.faq_recycler
-import kotlinx.android.synthetic.main.pack_details_bottom_sheet.how_to_use_arrow
-import kotlinx.android.synthetic.main.pack_details_bottom_sheet.how_to_use_recycler
-import kotlinx.android.synthetic.main.pack_details_bottom_sheet.how_to_use_title_layout
-import kotlinx.android.synthetic.main.pack_details_bottom_sheet.tv_how_to_use_title
 
-class PackDetailsBottomSheet :
-    BaseBottomSheetDialog<PackDetailsBottomSheetBinding, ComparePacksViewModel>() {
+class PackDetailsPopUpFragment : DialogFragment() {
 
+    protected var viewModel: ViewModel? = null
+    lateinit var  binding: PackDetailsBottomSheetBinding;
+//    protected var binding: Binding? = null
     lateinit var features: FeaturesModel
     var experienceCode: String? = null
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
@@ -59,25 +64,50 @@ class PackDetailsBottomSheet :
     lateinit var benefitAdaptor: PacksV3BenefitsViewPagerAdapter
     lateinit var howToUseAdapter: HowToUseAdapter
     lateinit var faqAdapter: FAQAdapter
+    lateinit var root: View
+    lateinit var singleBundle: Bundles
+    lateinit var cartItems: List<CartModel>
 
-    override fun getLayout(): Int {
-        return R.layout.pack_details_bottom_sheet
+    override fun onStart() {
+        super.onStart()
+        val width = ViewGroup.LayoutParams.MATCH_PARENT
+        val height = ViewGroup.LayoutParams.MATCH_PARENT
+        dialog?.window?.setLayout(width, height)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 
-    override fun getViewModelClass(): Class<ComparePacksViewModel> {
-        return ComparePacksViewModel::class.java
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.pack_details_bottom_sheet,
+            container,
+            false
+        )
 
-    override fun onCreateView() {
+//        binding = DataBindingUtil.inflate(inflater, getLayout(), container, false)
+        binding?.lifecycleOwner = this
+//        root = inflater.inflate(R.layout.pack_details_bottom_sheet, container, false)
+//        singleBundle = Gson().fromJson(
+//            requireArguments().getString("bundleData"),
+//            object : TypeToken<Bundles>() {}.type
+//        )
+//        cartItems = Gson().fromJson<List<CartModel>>(
+//            requireArguments().getString("cartList"),
+//            object : TypeToken<List<CartModel>>() {}.type
+//        )
 
         howToUseAdapter = HowToUseAdapter(requireActivity(), java.util.ArrayList())
         faqAdapter = FAQAdapter(requireActivity(), java.util.ArrayList())
-        dialog.behavior.isDraggable = true
-        val width = ViewGroup.LayoutParams.MATCH_PARENT
-        val height = ViewGroup.LayoutParams.MATCH_PARENT
-        dialog!!.window!!.setLayout(width, height)
+//        dialog.behavior.isDraggable = true
+//        val width = ViewGroup.LayoutParams.MATCH_PARENT
+//        val height = ViewGroup.LayoutParams.MATCH_PARENT
+//        dialog!!.window!!.setLayout(width, height)
 
-        features = Gson().fromJson<FeaturesModel>(
+        features = Gson().fromJson(
             requireArguments().getString("features"),
             object : TypeToken<FeaturesModel>() {}.type
         )
@@ -101,88 +131,35 @@ class PackDetailsBottomSheet :
         initializeViewPager()
         initializeFAQRecycler()
         initializeHowToUseRecycler()
-        prefs = SharedPrefs(baseActivity)
+        prefs = activity?.let { SharedPrefs(it) }!!
         viewModel = ViewModelProviders.of(this).get(ComparePacksViewModel::class.java)
 
-        binding?.titleBottom3?.text = features.description
-        binding?.packageTitle?.text = features.name
+        binding.titleBottom3.text = features.description
+        binding.packageTitle.text = features.name
 
         binding?.packageProfileImage?.let {
             Glide.with(this).load(features.primary_image!!)
                 .into(it)
         }
         binding?.learnMoreBtn?.setOnClickListener {
-
             binding?.learnMoreBtn?.visibility = View.GONE
             binding?.learnLessBtn?.visibility = View.VISIBLE
             binding?.titleBottom3?.maxLines = 20
-
         }
 
-        binding?.learnLessBtn?.setOnClickListener {
-            binding?.learnMoreBtn?.visibility = View.VISIBLE
-            binding?.learnLessBtn?.visibility = View.GONE
-            binding?.titleBottom3?.maxLines = 2
-            binding?.titleBottom3?.ellipsize = TextUtils.TruncateAt.END
-
+        binding.learnLessBtn.setOnClickListener {
+            binding.learnMoreBtn.visibility = View.VISIBLE
+            binding.learnLessBtn.visibility = View.GONE
+            binding.titleBottom3.maxLines = 2
+            binding.titleBottom3.ellipsize = TextUtils.TruncateAt.END
         }
 
-
-        binding?.closeBtn?.setOnClickListener {
+        binding.closeBtn.setOnClickListener {
             dismiss()
         }
 
-
-
-
         initMvvm()
-
-    }
-
-    private fun initMvvm() {
-
-        if (features?.benefits != null) {
-            binding?.benefitContainerItem?.visibility = View.VISIBLE
-            val benefits = Gson().fromJson<List<String>>(
-                features?.benefits!!,
-                object : TypeToken<List<String>>() {}.type
-            )
-            benefitAdaptor.addupdates(benefits)
-            benefitAdaptor.notifyDataSetChanged()
-        }
-        if (features.how_to_use_steps != null) {
-            binding?.howToUseContainer?.visibility = View.VISIBLE
-            how_to_use_title_layout.setOnClickListener {
-                if (how_to_use_recycler.visibility == View.VISIBLE) {
-                    how_to_use_arrow.setImageResource(R.drawable.ic_arrow_down_gray)
-                    how_to_use_recycler.visibility = View.GONE
-                } else {
-                    how_to_use_arrow.setImageResource(R.drawable.ic_arrow_up_gray)
-                    how_to_use_recycler.visibility = View.VISIBLE
-                }
-            }
-            if (features.target_business_usecase != null) {
-                tv_how_to_use_title.text =
-                    "How To Use " + features!!.target_business_usecase
-            }
-            val steps = Gson().fromJson<List<HowToUseStep>>(
-                features.how_to_use_steps,
-                object : TypeToken<List<HowToUseStep>>() {}.type
-            )
-            howToUseAdapter.addupdates(steps)
-            howToUseAdapter.notifyDataSetChanged()
-        }
-
-        if (features.all_frequently_asked_questions != null) {
-            faq_container.visibility = View.VISIBLE
-            val faq = Gson().fromJson<List<AllFrequentlyAskedQuestion>>(
-                features?.all_frequently_asked_questions,
-                object : TypeToken<List<AllFrequentlyAskedQuestion>>() {}.type
-            )
-            faqAdapter.addupdates(faq)
-            faqAdapter.notifyDataSetChanged()
-        }
-
+        return binding.root
     }
 
     private fun initializeViewPager() {
@@ -211,19 +188,65 @@ class PackDetailsBottomSheet :
     private fun initializeHowToUseRecycler() {
         val gridLayoutManager = LinearLayoutManager(requireContext())
         gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        how_to_use_recycler.apply {
+        binding.howToUseRecycler.apply {
             layoutManager = gridLayoutManager
-            how_to_use_recycler.adapter = howToUseAdapter
+            binding.howToUseRecycler.adapter = howToUseAdapter
         }
     }
 
     private fun initializeFAQRecycler() {
         val gridLayoutManager = LinearLayoutManager(requireContext())
         gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        faq_recycler.apply {
+        binding.faqRecycler.apply {
             layoutManager = gridLayoutManager
-            faq_recycler.adapter = faqAdapter
+            binding.faqRecycler.adapter = faqAdapter
         }
     }
 
+    private fun initMvvm() {
+
+        if (features.benefits != null) {
+            binding.benefitContainerItem.visibility = View.VISIBLE
+            val benefits = Gson().fromJson<List<String>>(
+                features.benefits,
+                object : TypeToken<List<String>>() {}.type
+            )
+            benefitAdaptor.addupdates(benefits)
+            benefitAdaptor.notifyDataSetChanged()
+        }
+        if (features.how_to_use_steps != null) {
+            binding.howToUseContainer.visibility = View.VISIBLE
+            binding.howToUseTitleLayout.visibility = View.VISIBLE
+            binding.howToUseTitleLayout.setOnClickListener {
+                if (binding.howToUseRecycler.visibility == View.VISIBLE) {
+                    binding.howToUseArrow.setImageResource(R.drawable.ic_arrow_down_gray)
+                    binding.howToUseRecycler.visibility = View.GONE
+                } else {
+                    binding.howToUseArrow.setImageResource(R.drawable.ic_arrow_up_gray)
+                    binding.howToUseRecycler.visibility = View.VISIBLE
+                }
+            }
+            if (features.target_business_usecase != null) {
+                binding.tvHowToUseTitle.text =
+                    "How To Use " + features!!.target_business_usecase
+            }
+            val steps = Gson().fromJson<List<HowToUseStep>>(
+                features.how_to_use_steps,
+                object : TypeToken<List<HowToUseStep>>() {}.type
+            )
+            howToUseAdapter.addupdates(steps)
+            howToUseAdapter.notifyDataSetChanged()
+        }
+
+        if (features.all_frequently_asked_questions != null) {
+            binding.faqContainer.visibility = View.VISIBLE
+            val faq = Gson().fromJson<List<AllFrequentlyAskedQuestion>>(
+                features?.all_frequently_asked_questions,
+                object : TypeToken<List<AllFrequentlyAskedQuestion>>() {}.type
+            )
+            faqAdapter.addupdates(faq)
+            faqAdapter.notifyDataSetChanged()
+        }
+
+    }
 }

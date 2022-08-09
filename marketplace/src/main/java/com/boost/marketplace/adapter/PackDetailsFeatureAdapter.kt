@@ -51,10 +51,9 @@ class PackDetailsFeatureAdapter(
             holder.view.visibility = View.INVISIBLE
         }
 
-        holder.arrow_icon.setOnClickListener {
+        holder.itemView.setOnClickListener {
             listener.onclick(upgradeList[position])
         }
-
     }
 
     fun addupdates(upgradeModel: List<FeaturesModel>) {

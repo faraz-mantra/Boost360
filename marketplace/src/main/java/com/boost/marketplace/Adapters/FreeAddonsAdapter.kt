@@ -1,8 +1,6 @@
 package com.boost.marketplace.Adapters
 
 import android.content.Context
-import android.transition.AutoTransition
-import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,21 +55,29 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
       holder.itemView.layoutParams = RecyclerView.LayoutParams(0, 0)
     }
 
+    if (cryptocurrencyItem.is_premium.equals(true)){
+      holder.paid_addons_activate.visibility=View.VISIBLE
+    }
+    else{
+      holder.paid_addons_activate.visibility=View.GONE
+    }
+
     if(position == list.size-1){
       holder.paid_single_dummy_view.visibility = View.GONE
     }
 
-    holder.mainLayout.setOnClickListener {
+//    holder.mainLayout.setOnClickListener {
+//
+//      if (holder.detailsView.visibility == View.GONE) {
+//        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
+//        holder.detailsView.visibility = View.VISIBLE
+//      } else {
+//        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
+//        holder.detailsView.visibility = View.GONE
+//      }
+//    }
 
-      if (holder.detailsView.visibility == View.GONE) {
-        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
-        holder.detailsView.visibility = View.VISIBLE
-      }else {
-        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
-        holder.detailsView.visibility = View.GONE
-      }
-
-      holder.detailsView.setOnClickListener {
+      holder.itemView.setOnClickListener {
         val item: FeaturesModel = FeaturesModel(
           list.get(position).feature_id,
           list.get(position).boost_widget_key,
@@ -98,7 +104,7 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
       }
 
     }
-  }
+
 
   fun addupdates(upgradeModel: List<FeaturesModel>) {
     val initPosition = list.size
@@ -114,6 +120,7 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
     var mainLayout=itemView.findViewById<ConstraintLayout>(R.id.main_layout)
     var cardViews=itemView.findViewById<LinearLayout>(R.id.cardViews)
     var detailsView=itemView.findViewById<ConstraintLayout>(R.id.detailsView)
+    var paid_addons_activate=itemView.findViewById<LinearLayout>(R.id.paid_addons_activate)
     var img1=itemView.findViewById<ImageView>(R.id.img1)!!
     var paid_single_dummy_view=itemView.findViewById<View>(R.id.paid_single_dummy_view)!!
     private var context: Context = itemView.context

@@ -23,7 +23,6 @@ import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityMyCurrentPlanBinding
 import com.boost.marketplace.ui.History_Orders.HistoryOrdersActivity
 import com.boost.marketplace.ui.popup.myplan.MyPlanBottomSheet
-import com.boost.marketplace.ui.popup.myplan.MyPlanBottomSheetFreeAddons
 import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
@@ -320,11 +319,11 @@ class MyCurrentPlanActivity :
     }
 
     override fun onFreeAddonsClicked(item: FeaturesModel) {
-        val dialogCard = MyPlanBottomSheetFreeAddons()
+        val dialogCard = MyPlanBottomSheet()
         val args = Bundle()
         args.putString("bundleData", Gson().toJson(item))
         dialogCard.arguments = args
-        dialogCard.show(this@MyCurrentPlanActivity.supportFragmentManager, MyPlanBottomSheetFreeAddons::class.java.name)
+        dialogCard.show(this@MyCurrentPlanActivity.supportFragmentManager, MyPlanBottomSheet::class.java.name)
     }
 
     override fun onPaidAddonsClicked(item: FeaturesModel) {
