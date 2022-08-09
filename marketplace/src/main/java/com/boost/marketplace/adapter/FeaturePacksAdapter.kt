@@ -94,12 +94,10 @@ class FeaturePacksAdapter(
     }
   }
 
-  fun addupdates(upgradeModel: List<BundlesModel>, addonTitle: String) {
-    this.addonTitle = addonTitle
-    val initPosition = bundleList.size
-    bundleList.clear()
-    bundleList.addAll(upgradeModel)
-    notifyItemRangeInserted(initPosition, bundleList.size)
+  fun addupdates(upgradeModel: ArrayList<BundlesModel>, title: String) {
+    bundleList = upgradeModel
+    addonTitle = title
+    notifyDataSetChanged()
   }
 
   class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -589,6 +589,7 @@ class FeatureDetailsActivity :
                         for (item in temp) {
                             if (item.feature_code.equals(singleWidgetKey)) {
                                 bundlesList.add(singleBundle)
+                                break
                             }
                         }
                     }
@@ -827,7 +828,7 @@ class FeatureDetailsActivity :
 
     fun initializePackageRecycler() {
         val gridLayoutManager = GridLayoutManager(applicationContext, 1)
-        gridLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
         pack_recycler.apply {
             layoutManager = gridLayoutManager
         }
