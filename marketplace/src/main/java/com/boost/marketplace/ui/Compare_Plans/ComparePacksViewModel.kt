@@ -31,6 +31,8 @@ class ComparePacksViewModel: BaseViewModel() {
     var allBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
     var allFeatureResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
 
+    var updatesResult: MutableLiveData<FeaturesModel> = MutableLiveData()
+
     fun getSpecificFeature(): LiveData<List<FeaturesModel>> {
         return featureResult
     }
@@ -50,6 +52,11 @@ class ComparePacksViewModel: BaseViewModel() {
         return allBundleResult
     }
 
+    fun addonsResult(): LiveData<FeaturesModel> {
+        return updatesResult
+    }
+
+
     fun getFeatureValues(list: List<String>) {
         CompositeDisposable().add(
             AppDatabase.getInstance(Application())!!
@@ -67,6 +74,27 @@ class ComparePacksViewModel: BaseViewModel() {
                         updatesError.postValue(it.message)
                         updatesLoader.postValue(false)
                     }
+                )
+        )
+    }
+
+    fun loadAddonsFromDB(boostKey: String) {
+        updatesLoader.postValue(true)
+        CompositeDisposable().add(
+            AppDatabase.getInstance(Application())!!
+                .featuresDao()
+                .getFeaturesItemByFeatureCode(boostKey)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess {
+                    updatesResult.postValue(it)
+                    updatesLoader.postValue(false)
+                }
+                .doOnError {
+                    updatesError.postValue(it.message)
+                    updatesLoader.postValue(false)
+                }
+                .subscribe({}, { e -> Log.e("TAG", "Empty DB") }
                 )
         )
     }

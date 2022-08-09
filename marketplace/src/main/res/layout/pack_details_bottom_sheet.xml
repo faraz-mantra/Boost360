@@ -348,7 +348,7 @@
                                 android:visibility="visible"
                                 app:layout_constraintTop_toBottomOf="@id/faq_title"
                                 tools:itemCount="2"
-                                tools:listitem="@layout/faq_item_pack_details" />
+                                tools:listitem="@layout/faq_item" />
 
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
