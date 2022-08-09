@@ -25,7 +25,7 @@ const val RECENT_LEARNING_DATA = "RECENT_LEARNING_DATA"
 
 class PlacesResultAdapter(
   var mContext: Context,
-  val loadData: (isData: Boolean) -> Unit,
+  val loadData: (isError: Boolean,message:String?) -> Unit,
   val onClick: (prediction: AutocompletePrediction) -> Unit,
 ) : RecyclerView.Adapter<PlacesResultAdapter.ViewHolder>(), Filterable {
 
@@ -86,19 +86,16 @@ class PlacesResultAdapter(
       .setQuery(constraint.toString())
       .build()
 
-    placesClient.findAutocompletePredictions(request)
-      .addOnSuccessListener { response: FindAutocompletePredictionsResponse ->
+    placesClient.findAutocompletePredictions(request).addOnSuccessListener { response: FindAutocompletePredictionsResponse ->
         result.addAll(response.autocompletePredictions)
+        loadData(result.isNotEmpty().not(),null)
         notifyDataSetChanged()
       }.addOnFailureListener { exception: Exception? ->
         if (exception is ApiException) {
-          Log.e("TAG", "Place not found: " + exception.statusCode)
-          Toast.makeText(mContext, "Place not found", Toast.LENGTH_LONG).show()
-        } else {
-          Toast.makeText(mContext, "${exception?.localizedMessage ?: "Error!"}", Toast.LENGTH_LONG).show()
-        }
+          loadData(true,"Place not found!")
+        } else loadData(true,"${exception?.localizedMessage ?: "Error!"}")
       }
-    loadData(result.isNotEmpty())
+
     return result
   }
 }

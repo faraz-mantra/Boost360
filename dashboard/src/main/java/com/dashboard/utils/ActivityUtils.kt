@@ -695,7 +695,8 @@ fun AppCompatActivity.startFeatureLogo(session: UserSessionManager?) {
 
 fun AppCompatActivity.startBusinessAddress(session: UserSessionManager?) {
   try {
-    startAddressFragmentActivity(com.appservice.constant.FragmentType.ADDRESS_UPDATE_VIEW)
+      startAddressFragmentActivity(com.appservice.constant.FragmentType.ADD_ADDRESS_VIEW)
+//    startAddressFragmentActivity(com.appservice.constant.FragmentType.ADDRESS_UPDATE_VIEW)
 //    WebEngageController.trackEvent(BUSINESS_ADDRESS_PAGE, CLICK, TO_BE_ADDED)
 //    val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity"))
 //    startActivity(webIntent)

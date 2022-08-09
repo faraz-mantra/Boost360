@@ -4,11 +4,13 @@ import android.os.Bundle
 import androidx.core.view.isVisible
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
+import com.appservice.constant.FragmentType
 import com.appservice.databinding.FragmentSearchLoactionBinding
 import com.appservice.ui.address.adapter.PlacesRecentAdapter
 import com.appservice.ui.address.adapter.PlacesResultAdapter
 import com.appservice.ui.address.adapter.getRecentDataSearch
 import com.appservice.ui.address.adapter.saveRecentDataSearch
+import com.appservice.ui.address.startAddressFragmentActivity
 import com.framework.extensions.afterTextChanged
 import com.framework.models.BaseViewModel
 import com.google.android.libraries.places.api.Places
@@ -55,11 +57,12 @@ class SearchLocationFragment : AppBaseFragment<FragmentSearchLoactionBinding, Ba
     }
     binding?.rvRecentSearch?.adapter = placeRecentAdapter
 
-    placeAdapter = PlacesResultAdapter(baseActivity, { isData ->
-      binding?.cardLocationView?.isVisible = isData
+    placeAdapter = PlacesResultAdapter(baseActivity, { isError, message ->
+      binding?.cardLocationView?.isVisible = isError.not()
+      message?.let { showShortToast(it) }
     }) { prediction ->
       saveRecentDataSearch(prediction)
-      showShortToast(prediction.placeId)
+      startAddressFragmentActivity(FragmentType.ADD_ADDRESS_VIEW, bundle = Bundle().apply { putParcelable(ADDRESS_DATA, prediction) })
     }
     binding?.rvLocationSearch?.adapter = placeAdapter
   }
@@ -67,7 +70,7 @@ class SearchLocationFragment : AppBaseFragment<FragmentSearchLoactionBinding, Ba
   private fun initializer() {
     if (!Places.isInitialized()) Places.initialize(requireActivity(), resources.getString(R.string.google_map_key))
     binding?.etSearchBar?.afterTextChanged {
-      placeAdapter.filter.filter(it)
+      if (it.isNotEmpty()) placeAdapter.filter.filter(it)
       binding?.imgClearTxt?.isVisible = it.isNotEmpty()
     }
     binding?.imgClearTxt?.setOnClickListener { binding?.etSearchBar?.setText("") }

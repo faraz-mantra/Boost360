@@ -40,7 +40,7 @@
         android:drawablePadding="@dimen/size_8"
         android:paddingVertical="@dimen/size_8"
         android:id="@+id/btn_add_location"
-        android:text="Use your device location"
+        android:text="@string/use_your_device_location"
         android:textColor="@color/black_4a4a4a"
         app:fontFamily="@font/regular"
         app:textType="BODY_1" />
@@ -53,7 +53,7 @@
         android:drawablePadding="@dimen/size_8"
         android:id="@+id/btn_enter_manually"
         android:paddingVertical="@dimen/size_8"
-        android:text="Enter address manually"
+        android:text="@string/enter_address_manually"
         android:textColor="@color/black_4a4a4a"
         app:fontFamily="@font/regular"
         app:textType="BODY_1" />
