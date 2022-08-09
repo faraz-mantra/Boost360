@@ -102,18 +102,7 @@ class PromoUpdatesViewModel: BaseViewModel() {
         return NowFloatsRepository.saveTemplateAction(action,isFav,templateId).toLiveData()
     }
 
-    private suspend fun getCategories()=
-        suspendCoroutine<List<CategoryUi>>{cont->
-            NowFloatsRepository.getCategories().getResponse {
-                if (it.isSuccess()){
-                    val response = it as? GetCategoryResponse
-                    cont.resume(response!!.Result.asDomainModels())
 
-                }else{
-                    cont.resumeWithException(Exception())
-                }
-            }
-        }
 
     private suspend fun getTemplates(isFav:Boolean?=null)=
         suspendCoroutine<List<GetTemplatesResponseTemplate>>{cont->
@@ -132,7 +121,7 @@ class PromoUpdatesViewModel: BaseViewModel() {
         browseAllMData.postValue(NetworkResult.Loading())
         viewModelScope.launch {
             try {
-                val categories = getCategories()
+                val categories = NowFloatsRepository.getCategoriesUI()
                 val allTemplates = getTemplates()
                 categories.forEach {uicat->
                     val dbTemplates = allTemplates.filter { template->
@@ -140,6 +129,7 @@ class PromoUpdatesViewModel: BaseViewModel() {
                             dbcat.id==uicat.id
                         }!=null
                     }
+
                     uicat.setTemplates(dbTemplates.asDomainModels())
                 }
                 browseAllMData.postValue(
@@ -158,7 +148,7 @@ class PromoUpdatesViewModel: BaseViewModel() {
         _favData.postValue(NetworkResult.Loading())
         viewModelScope.launch {
             try {
-                val categories = getCategories().toArrayList()
+                val categories = NowFloatsRepository.getCategoriesUI().toArrayList()
                 val allTemplates = getTemplates(isFav=true)
 
                 val allUiTemplates = ArrayList<TemplateUi>()

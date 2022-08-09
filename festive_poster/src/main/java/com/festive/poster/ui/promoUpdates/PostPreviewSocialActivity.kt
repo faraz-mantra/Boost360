@@ -85,24 +85,20 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     private val posterImgPath by lazy {
         intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IntentConstants.IK_POSTER)
     }
-    private val tags:ArrayList<String>? by lazy {
-        convertJsonToObj(
-            intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IntentConstants.IK_TAGS)
-        )
-    }
+
 
     companion object{
 
 
-        fun launchActivity(activity:Activity,caption:String?,
-                           posterImgPath:String,tags:List<String>?,
+        fun launchActivity(activity:Activity,
+                           caption:String?,
+                           posterImgPath:String,
                            updateType:String,
                             template:TemplateUi?){
             activity.startActivity(Intent(activity,PostPreviewSocialActivity::class.java)
                 .putExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
                     putString(IntentConstants.IK_CAPTION_KEY,caption)
                     putString(IntentConstants.IK_POSTER, posterImgPath)
-                    putString(IntentConstants.IK_TAGS, Gson().toJson(tags))
                     putString(IntentConstants.IK_UPDATE_TYPE, updateType)
                     putParcelable(IntentConstants.IK_TEMPLATE,template)
 
@@ -163,7 +159,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                     MarketPlaceUtils.launchCartActivity(
                         this@PostPreviewSocialActivity,
                         PostPreviewSocialActivity::class.java.name,
-                        posterImgPath,captionIntent,tags,updateType,template)
+                        posterImgPath,captionIntent,
+                        updateType,template)
 
                 }
             }).show(supportFragmentManager, SubscribePlanBottomSheet::class.java.name)
@@ -614,7 +611,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             sendToSubscribe,
             socialShare,
             updateType,
-            tags=tags
+            tags= arrayListOf(template?.categoryId)
         )
 
 

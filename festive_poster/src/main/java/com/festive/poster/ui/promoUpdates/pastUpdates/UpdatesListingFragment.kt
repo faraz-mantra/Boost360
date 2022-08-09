@@ -20,6 +20,7 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
+import com.festive.poster.viewmodels.PastUpdatesViewModel
 import com.festive.poster.viewmodels.PostUpdatesViewModel
 import com.framework.constants.IntentConstants
 import com.framework.extensions.gone
@@ -34,17 +35,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, PostUpdatesViewModel>(), RecyclerItemClickListener {
+class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, PastUpdatesViewModel>(), RecyclerItemClickListener {
 
     private var pastPostListing = ArrayList<PastPostItem>()
     private lateinit var categoryDataList: ArrayList<PastCategoriesModel>
     private lateinit var postCategoryAdapter: AppBaseRecyclerViewAdapter<PastCategoriesModel>
     private lateinit var pastPostListingAdapter: AppBaseRecyclerViewAdapter<PastPostItem>
-    private lateinit var tagListAdapter: AppBaseRecyclerViewAdapter<PastTagModel>
+    private lateinit var tagListAdapter: AppBaseRecyclerViewAdapter<PastPromotionalCategoryModel>
     var postType: Int = 0
     var isFilterVisible = false
     var tagArray: MutableList<String> = mutableListOf()
-    var tagArrayList: ArrayList<PastTagModel> = arrayListOf()
+    var tagArrayList: ArrayList<PastPromotionalCategoryModel> = arrayListOf()
 
     companion object {
         @JvmStatic
@@ -59,8 +60,8 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
         return R.layout.fragment_updates_listing
     }
 
-    override fun getViewModelClass(): Class<PostUpdatesViewModel> {
-        return PostUpdatesViewModel::class.java
+    override fun getViewModelClass(): Class<PastUpdatesViewModel> {
+        return PastUpdatesViewModel::class.java
     }
 
     override fun onCreateView() {
@@ -85,30 +86,16 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
     }
 
     private fun getTemplateViewConfig() {
-        viewModel?.getTemplateConfig(
-            Constants.PROMO_FEATURE_CODE,
-            sessionLocal.fPID,
-            sessionLocal.fpTag
-        )
+        viewModel?.promoUpdatesCats
             ?.observeOnce(this) {
-                val response = it as? GetTemplateViewConfigResponse
-                response?.let {
-                    tagArrayList.clear()
-                    tagArrayList.addAll(prepareTagForApi(response.Result.allTemplates.tags))
-                    tagListAdapter = AppBaseRecyclerViewAdapter(baseActivity, tagArrayList, this)
-                    binding.rvFilterSubCategory.adapter = tagListAdapter
-                    getPostCategories()
-                }
+                tagArrayList.clear()
+                tagArrayList.addAll(it)
+                tagListAdapter = AppBaseRecyclerViewAdapter(baseActivity, tagArrayList, this)
+                binding.rvFilterSubCategory.adapter = tagListAdapter
+                getPostCategories()
             }
     }
 
-    private fun prepareTagForApi(tags: List<PosterPackTagModel>): ArrayList<PastTagModel> {
-        val list = ArrayList<PastTagModel>()
-        tags.forEach {
-            list.add(PastTagModel(it.description, it.icon, it.name, it.tag))
-        }
-        return list
-    }
 
     private fun apiCallPastUpdates() {
         viewModel?.getPastUpdatesListV6(
@@ -122,15 +109,20 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
                 if (it.isSuccess()) {
                     it as PastUpdatesNewListingResponse
 
-                    it.floats?.let { it1 ->
-                        if (it1.isNullOrEmpty()) {
+                    it.floats?.let { list ->
+                        if (list.isNullOrEmpty()) {
                             binding.tvNoPost.visible()
                             binding.rvPostListing.gone()
                         } else {
                             binding.tvNoPost.gone()
                             binding.rvPostListing.visible()
                             pastPostListing.clear()
-                            pastPostListing.addAll(it1)
+                            list.forEach {item->
+                                item.category = tagArrayList.find {category->
+                                    item.tags?.firstOrNull()==category.id
+                                }
+                            }
+                            pastPostListing.addAll(list)
                             pastPostListingAdapter.notifyDataSetChanged()
                         }
 
@@ -162,12 +154,17 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
             }
             RecyclerViewActionType.PAST_TAG_CLICKED.ordinal -> {
                 showProgress()
-                item as PastTagModel
-                if (tagArray.contains(item.tag))
-                    tagArray.remove(item.tag)
+                item as PastPromotionalCategoryModel
+                if (tagArray.contains(item.id))
+                    tagArray.remove(item.id)
                 else
-                    tagArray.add(item.tag)
-                tagListAdapter.notifyDataSetChanged()
+                    tagArray.add(item.id)
+
+                binding.rvFilterSubCategory.postDelayed(
+                    Runnable {
+                        tagListAdapter.notifyDataSetChanged()
+                    },100
+                )
                 apiCallPastUpdates()
             }
             RecyclerViewActionType.PAST_SHARE_BUTTON_CLICKED.ordinal -> {
@@ -190,7 +187,6 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
                          PostPreviewSocialActivity.launchActivity(activity =
                          baseActivity, caption = item.message.toString(),
                              posterImgPath = saveAsTempFile?.path.toString(),
-                             tags = item.tags,
                              updateType = IntentConstants.UpdateType.UPDATE_PROMO_POST.name,null)
                          }
                     }}
@@ -203,7 +199,7 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
         tagArray.clear()
         tagListAdapter.notifyDataSetChanged()
         binding.tagWrapper.apply {
-            if (postType == 0 || postType == 1) {
+            if (postType == 1) {
                 visible()
             } else {
                 gone()
@@ -225,11 +221,9 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Po
             R.id.filter_past -> {
                 if (isFilterVisible) {
                     binding.rvFilterCategory.gone()
-                    binding.tagWrapper.gone()
                     item.icon = ContextCompat.getDrawable(baseActivity, R.drawable.ic_filter_hollow_past)
                 } else {
                     binding.rvFilterCategory.visible()
-                    binding.tagWrapper.visible()
                     item.icon = ContextCompat.getDrawable(baseActivity, R.drawable.ic_filter_funnel_white)
                 }
                 isFilterVisible = isFilterVisible.not()

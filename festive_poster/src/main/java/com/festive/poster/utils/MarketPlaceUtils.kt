@@ -77,8 +77,7 @@ object MarketPlaceUtils {
     }
 
     fun launchCartActivity(activity:Activity,originActivityName:String,
-                           posterImgPath:String?,caption:String?,
-                           tags:List<String>?,updateType:String?,
+                           posterImgPath:String?,caption:String?,updateType:String?,
                             template:TemplateUi?){
         val session = UserSessionManager(BaseApplication.instance)
         val intent = Intent(
@@ -92,7 +91,6 @@ object MarketPlaceUtils {
             putString(MARKET_PLACE_ORIGIN_ACTIVITY,originActivityName)
             putString(IK_POSTER,posterImgPath)
             putString(IK_CAPTION_KEY,caption)
-            putString(IK_TAGS,Gson().toJson(tags))
             putString(IK_UPDATE_TYPE,updateType)
             putParcelable(IK_TEMPLATE,template)
         })

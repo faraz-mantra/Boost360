@@ -12,7 +12,8 @@ open class TemplateUi(
     val primarySvgUrl: String,
     val primaryText: String,
     val tags: List<String>,
-    val utilizationDate: String?
+    val utilizationDate: String?,
+    val categoryId:String
 ):Parcelable
 
 fun List<TemplateUi>.asBrowseAllModels(): List<BrowseAllTemplate> {
@@ -24,7 +25,8 @@ fun List<TemplateUi>.asBrowseAllModels(): List<BrowseAllTemplate> {
             _primaryText = it.primaryText,
             _primarySvgUrl = it.primarySvgUrl,
             _tags = it.tags,
-            _utilizationDate = it.utilizationDate
+            _utilizationDate = it.utilizationDate,
+            _categoryId = it.categoryId
         )
     }
 }
@@ -38,7 +40,8 @@ fun List<TemplateUi>.asTodaysPickModels(): List<TodayPickTemplate> {
             _primaryText = it.primaryText,
             _primarySvgUrl = it.primarySvgUrl,
             _tags = it.tags,
-            _utilizationDate = it.utilizationDate
+            _utilizationDate = it.utilizationDate,
+            _categoryId = it.categoryId
         )
     }
 }

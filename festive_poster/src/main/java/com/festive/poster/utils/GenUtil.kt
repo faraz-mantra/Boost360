@@ -47,7 +47,8 @@ fun posterWhatsappShareClicked(childItem:TemplateUi,activity: BaseActivity<*,*>)
         SubscribePlanBottomSheet.newInstance(object : SubscribePlanBottomSheet.Callbacks{
             override fun onBuyClick() {
                 MarketPlaceUtils.launchCartActivity(activity,
-                    PromoUpdatesActivity::class.java.name,null,null,childItem.tags,
+                    PromoUpdatesActivity::class.java.name,null,
+                    null,
                     null,childItem)
 
             }
@@ -71,9 +72,10 @@ fun posterPostClicked(childItem:TemplateUi,activity: AppBaseActivity<*, *>){
                 saveTemplateAction(TemplateSaveActionBody.ActionType.VIEW_DETAILS,childItem)
                 PostPreviewSocialActivity.launchActivity(
                     activity,
-                    childItem.primaryText,
+                    childItem.primaryText+"\n"+
+                            convertToHashTag(
+                        childItem.tags),
                     file.path,
-                    childItem.tags,
                     IntentConstants.UpdateType.UPDATE_PROMO_POST.name,
                     childItem
 
@@ -104,3 +106,7 @@ fun AppBaseRecyclerViewAdapter<BrowseAllTemplate>.setUpUsingDiffUtil(newList: Li
     diffResult.dispatchUpdatesTo(this)
 }
 
+fun convertToHashTag(list:List<String>?): String {
+    if (list==null) return ""
+  return  list.map { "#"+it }.joinToString(" ")
+}

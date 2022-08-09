@@ -74,6 +74,8 @@ data class PastPostItem(
 
 ) :AppBaseRecyclerViewItem {
 
+	var category:PastPromotionalCategoryModel?=null
+
 	override fun getViewType(): Int {
 		return RecyclerViewItemType.PAST_UPDATE_ITEM.getLayout()
 	}
