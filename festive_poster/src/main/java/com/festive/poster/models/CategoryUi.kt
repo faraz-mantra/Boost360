@@ -1,16 +1,21 @@
 package com.festive.poster.models
 
+import android.os.Parcelable
 import com.festive.poster.constant.RecyclerViewItemType
+import com.festive.poster.models.promoModele.PastPromotionalCategoryModel
+import com.festive.poster.models.response.Category
 import com.festive.poster.models.response.GetCategoryResponseResult
 import com.festive.poster.recyclerView.AppBaseRecyclerViewItem
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 open class CategoryUi(
     val iconUrl: String,
     val id: String,
     val name: String,
     val thumbnailUrl: String,
     private var templates:List<TemplateUi>?=null,
-){
+):Parcelable{
     fun setTemplates(templates: List<TemplateUi>?){
         this.templates=templates
     }
@@ -21,6 +26,13 @@ open class CategoryUi(
 
 }
 
+
+fun List<CategoryUi>.asPastPromotionalCategoryModels()=map {
+    PastPromotionalCategoryModel(
+        id = it.id,
+        name = it.name
+    )
+}
 
 fun List<CategoryUi>.asBrowseTabModels(): List<BrowseTabCategory> {
     return map {

@@ -4,18 +4,24 @@ package com.festive.poster.reset.repo
 
 import com.festive.poster.base.rest.AppBaseLocalService
 import com.festive.poster.base.rest.AppBaseRepository
+import com.festive.poster.models.CategoryUi
 import com.festive.poster.models.response.GetTemplatesBody
 import com.festive.poster.models.response.GetTodaysTemplateBody
 import com.festive.poster.models.response.TemplateSaveActionBody
+import com.festive.poster.models.response.asDomainModels
 import com.festive.poster.reset.TaskCode
 import com.festive.poster.reset.apiClients.NowFloatsApiClient
 import com.festive.poster.reset.services.NowFloatsRemoteData
 import com.framework.base.BaseResponse
+import com.framework.utils.getResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.Retrofit
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 
 object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocalService>() {
@@ -113,6 +119,19 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
       TaskCode.GET_CATEGORIES
     )
   }
+
+  suspend fun getCategoriesUI()=
+    suspendCoroutine<List<CategoryUi>>{ cont->
+      getCategories().getResponse {
+        if (it.isSuccess()){
+          val response = it as? com.festive.poster.models.response.GetCategoryResponse
+          cont.resume(response!!.Result.asDomainModels())
+
+        }else{
+          cont.resumeWithException(Exception())
+        }
+      }
+    }
 
   fun getTodaysTemplates(): Observable<BaseResponse> {
     val body =GetTodaysTemplateBody(session.fPID,

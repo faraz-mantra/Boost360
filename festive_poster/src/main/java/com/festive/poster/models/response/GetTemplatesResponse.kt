@@ -37,7 +37,8 @@ fun List<GetTemplatesResponseTemplate>.asDomainModels(): List<TemplateUi> {
             primarySvgUrl = it.primarySvgUrl,
             primaryText = it.primaryText,
             tags = it.tags,
-            utilizationDate = it.utilizationDate
+            utilizationDate = it.utilizationDate,
+            categoryId = it.categories.first().id
         )
     }
 }

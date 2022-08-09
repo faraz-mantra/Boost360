@@ -22,6 +22,7 @@ import com.festive.poster.models.TemplateUi
 import com.festive.poster.ui.promoUpdates.bottomSheet.DeleteDraftBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.EditTemplateBottomSheet
 import com.festive.poster.utils.SvgUtils
+import com.festive.poster.utils.convertToHashTag
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.analytics.SentryController
 import com.framework.constants.IntentConstants
@@ -90,7 +91,8 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
         lifecycleScope.launch {
             binding!!.ivTemplate.setImageBitmap(SvgUtils.svgToBitmap(posterModel?.primarySvgUrl))
         }
-        binding?.captionLayout?.etInput?.setText(highlightHashTag(posterModel?.primaryText,R.color.black_4a4a4a,R.font.bold))
+        binding?.captionLayout?.etInput?.setText(highlightHashTag(
+            posterModel?.primaryText+"\n"+ convertToHashTag(posterModel?.tags),R.color.black_4a4a4a,R.font.bold))
         binding?.captionLayout?.etInput?.requestFocus()
         val imm =
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -231,8 +233,10 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
                         withContext(Dispatchers.Default){
                            val file =  SvgUtils.svgToBitmap(it.primarySvgUrl)?.saveAsImageToAppFolder(getExternalFilesDir(null)?.path+File.separator+UPDATE_PIC_FILE_NAME)
                             if (file?.exists() == true){
-                                PostPreviewSocialActivity.launchActivity(this@EditPostActivity,binding?.captionLayout?.etInput?.text.toString(),
-                                    file.path, posterModel?.tags,
+                                PostPreviewSocialActivity.launchActivity(
+                                    this@EditPostActivity,
+                                    binding?.captionLayout?.etInput?.text.toString(),
+                                    file.path,
                                     IntentConstants.UpdateType.UPDATE_PROMO_POST.name,
                                 it)
                             }
