@@ -610,6 +610,14 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 binding?.badge121?.visibility = View.GONE
                 packageInCartStatus = false
 
+                binding?.bottomBoxOnlyBtn?.setTextColor(this.resources.getColor(R.color.white))
+                binding?.bottomBoxOnlyBtn?.background = ContextCompat.getDrawable(
+                    this.applicationContext,
+                    R.drawable.ic_cart_continue_bg
+                )
+                binding?.bottomBoxOnlyBtn?.setText("Buy ${bundleData!!.name}")
+                binding?.bottomBoxOnlyBtn?.isClickable = true
+
             }
         })
 

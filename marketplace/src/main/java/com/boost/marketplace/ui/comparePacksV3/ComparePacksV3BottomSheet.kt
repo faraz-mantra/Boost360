@@ -7,13 +7,11 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.boost.cart.adapter.BenifitsPageTransformer
 import com.boost.cart.CartActivity
-import com.boost.cart.adapter.SimplePageTransformerSmall
+import com.boost.cart.adapter.BenifitsPageTransformer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
-import com.boost.dbcenterapi.utils.HorizontalMarginItemDecoration
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.dbcenterapi.utils.WebEngageController
 import com.boost.marketplace.Adapters.PacksV3BenefitsViewPagerAdapter
@@ -32,7 +30,6 @@ import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_feature_details.*
 
 class ComparePacksV3BottomSheet :
     BaseBottomSheetDialog<Comparepacksv3PopupBinding, ComparePacksViewModel>() {
@@ -292,9 +289,7 @@ class ComparePacksV3BottomSheet :
             viewModel?.setCurrentExperienceCode(code, fpTag!!)
         }
         try {
-            viewModel?.getAllFeaturesFromDB()
             viewModel?.getCartItems()
-            viewModel?.loadPackageUpdates()
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
