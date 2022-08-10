@@ -2455,6 +2455,9 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                 (activity as UpgradeActivity).fpid!!,
                 (activity as UpgradeActivity).clientid
             )
+        } else{
+//            viewModel.getCartItems()
+            viewModel.getCartItemsBack()
         }
     }
 
