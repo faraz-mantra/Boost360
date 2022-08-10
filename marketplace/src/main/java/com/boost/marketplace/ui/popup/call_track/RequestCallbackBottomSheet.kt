@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.boost.cart.utils.SharedPrefs
 import com.boost.marketplace.R
-import com.boost.marketplace.ui.details.FeatureDetailsActivity
+import com.boost.marketplace.ui.pack_details.PackDetailsActivity
 import kotlinx.android.synthetic.main.popup_request_callback_custom_domain.*
 
 
@@ -36,7 +36,7 @@ class RequestCallbackBottomSheet : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.layout_request_callback_bottomsheet_call_track, container, false)
-        prefs = SharedPrefs(activity as FeatureDetailsActivity)
+        prefs = SharedPrefs(activity as PackDetailsActivity)
         return root
     }
     override fun onActivityCreated(savedInstanceState: Bundle?) {

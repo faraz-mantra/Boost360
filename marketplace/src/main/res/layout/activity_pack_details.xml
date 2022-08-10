@@ -46,8 +46,8 @@
                         android:gravity="center">
 
                         <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:layout_margin="4dp"
                             android:src="@drawable/ic_cart" />
                     </LinearLayout>
@@ -57,6 +57,7 @@
                         android:id="@+id/badge121"
                         android:layout_width="28dp"
                         android:layout_height="28dp"
+                        android:layout_marginEnd="3dp"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         app:nbMaxTextLength="2" />

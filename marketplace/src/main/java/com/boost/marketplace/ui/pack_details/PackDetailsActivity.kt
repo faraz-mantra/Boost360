@@ -2,6 +2,7 @@ package com.boost.marketplace.ui.pack_details
 
 import android.animation.Animator
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.StrikethroughSpan
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -45,6 +47,8 @@ import com.boost.marketplace.ui.comparePacksV3.ComparePacksV3Activity
 import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
 import com.boost.marketplace.ui.popup.call_track.RequestCallbackBottomSheet
 import com.bumptech.glide.Glide
+import com.framework.analytics.SentryController
+import com.framework.pref.UserSessionManager
 import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
@@ -398,6 +402,28 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadData()
+    }
+
+    private fun loadData() {
+        val pref = this?.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+        val fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
+        val code: String =
+            if (experienceCode.isNullOrEmpty()) experienceCode!! else UserSessionManager(
+                this
+            ).fP_AppExperienceCode!!
+        if (!code.equals("null", true)) {
+            viewModel?.setCurrentExperienceCode(code, fpTag!!)
+        }
+        try {
+            viewModel?.getCartItems()
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
+    }
+
     fun addUpdatePacks(list: ArrayList<BundlesModel>) {
         if (list.size > 0) {
             layout_need_more.visibility = VISIBLE
@@ -573,10 +599,15 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 }
 
                 cartCount = cartList!!.size
+                badgeNumber = cartList!!.size
+                binding?.badge121?.setText(badgeNumber.toString())
+                binding?.badge121?.visibility = View.VISIBLE
+                Log.v("badgeNumber", " " + badgeNumber)
 
             } else {
                 cartCount = 0
-
+                badgeNumber = 0
+                binding?.badge121?.visibility = View.GONE
                 packageInCartStatus = false
 
             }
