@@ -1,6 +1,7 @@
 package com.festive.poster.utils
 
 import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
@@ -19,6 +20,7 @@ import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
 import com.festive.poster.ui.promoUpdates.bottomSheet.SubscribePlanBottomSheet
 import com.framework.BaseApplication
 import com.framework.base.BaseActivity
+import com.framework.base.setFragmentType
 import com.framework.constants.IntentConstants
 import com.framework.constants.PackageNames
 import com.framework.constants.UPDATE_PIC_FILE_NAME
@@ -109,4 +111,10 @@ fun AppBaseRecyclerViewAdapter<BrowseAllTemplate>.setUpUsingDiffUtil(newList: Li
 fun convertToHashTag(list:List<String>?): String {
     if (list==null) return ""
   return  list.map { "#"+it }.joinToString(" ")
+}
+
+fun launchPostNewUpdate(activity:Activity){
+    val intent = Intent(activity, Class.forName("com.appservice.ui.updatesBusiness.UpdateBusinessContainerActivity"))
+    intent.setFragmentType("ADD_UPDATE_BUSINESS_FRAGMENT_V2")
+    activity.startActivity(intent)
 }

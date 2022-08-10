@@ -1,6 +1,7 @@
 package com.festive.poster.ui.promoUpdates.holders
 
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.marginStart
 import com.bumptech.glide.Glide
 import com.festive.poster.FestivePosterApplication
@@ -27,8 +28,9 @@ class PastUpdateViewHolder(binding: ListItemPastUpdateBinding) :
         binding.apply {
             Glide.with(FestivePosterApplication.instance).load(postItem?.imageUri)
                 .placeholder(R.drawable.placeholder_image).into(ivSocialIcon)
-            tvSocialTitle.text =
-                highlightHashTag(postItem?.message, R.color.black_4a4a4a, R.font.bold)
+            tvSocialTitle.setText(
+                highlightHashTag(postItem?.message,
+                    R.color.black_4a4a4a, R.font.bold), TextView.BufferType.SPANNABLE)
 
             reuseWrapper.apply {
                 if (postItem?.type == PastCategoryApiCode.PROMOTIONAL_UPDATES.postCode) visible() else gone() //1: Promotional Update type

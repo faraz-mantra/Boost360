@@ -18,6 +18,7 @@ import com.festive.poster.constant.PreferenceConstant
 import com.festive.poster.databinding.FragmentPromoLandingPageBinding
 import com.festive.poster.models.promoModele.SocialConnModel
 import com.festive.poster.utils.WebEngageController
+import com.festive.poster.utils.launchPostNewUpdate
 import com.framework.base.setFragmentType
 import com.framework.extensions.gone
 import com.framework.models.BaseViewModel
@@ -138,9 +139,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
 
                         }
                         2->{
-                            val intent = Intent(requireActivity(), Class.forName("com.appservice.ui.updatesBusiness.UpdateBusinessContainerActivity"))
-                            intent.setFragmentType("ADD_UPDATE_BUSINESS_FRAGMENT_V2")
-                            startActivity(intent)
+                           launchPostNewUpdate(requireActivity())
                         }
                     }
                 }
