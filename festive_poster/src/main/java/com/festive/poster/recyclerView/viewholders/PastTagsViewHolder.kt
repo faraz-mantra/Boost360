@@ -35,10 +35,12 @@ class PastTagsViewHolder(binding: ListItemPastTagsBinding) :
                 pastTagItem.isSelected = pastTagItem.isSelected.not()
                 listener?.onItemClick(position, pastTagItem, RecyclerViewActionType.PAST_TAG_CLICKED.ordinal)
             }
-            binding.chkbxTags.setOnCheckedChangeListener { compoundButton, b ->
+            binding.chkbxTags.setOnClickListener {
                 pastTagItem.isSelected = pastTagItem.isSelected.not()
                 listener?.onItemClick(position, pastTagItem, RecyclerViewActionType.PAST_TAG_CLICKED.ordinal)
+
             }
+
         }
         super.bind(position, item)
     }

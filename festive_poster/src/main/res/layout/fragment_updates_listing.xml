@@ -37,16 +37,43 @@
 
 
 
-    <com.framework.views.viewgroups.BaseRecyclerView
-        android:id="@+id/rv_post_listing"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:itemCount="5"
-        android:layout_marginTop="@dimen/size_16"
-        android:layout_marginHorizontal="@dimen/size_20"
-        tools:listitem="@layout/list_item_past_update"
-        android:orientation="vertical"/>
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.framework.views.viewgroups.BaseRecyclerView
+                android:id="@+id/rv_post_listing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="5"
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginHorizontal="@dimen/size_20"
+                tools:listitem="@layout/list_item_past_update"
+                android:orientation="vertical"/>
+
+
+            <com.framework.views.customViews.CustomButton
+                android:visibility="gone"
+                android:id="@+id/btn_post_new_update"
+                style="@style/CustomRoundedYellowButton"
+                android:layout_height="42dp"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="34dp"
+                android:layout_marginBottom="@dimen/size_42"
+                android:fontFamily="@font/semi_bold"
+                android:background="@drawable/fab_rounded_square_bg"
+                android:stateListAnimator="@null"
+                android:text="@string/post_a_new_update" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
 
     <com.framework.views.customViews.CustomTextView
         android:id="@+id/tv_no_post"

@@ -1,27 +1,24 @@
 package com.festive.poster.ui.promoUpdates.pastUpdates
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
-import com.festive.poster.constant.Constants
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.FragmentUpdatesListingBinding
-import com.festive.poster.models.PosterPackTagModel
 import com.festive.poster.models.promoModele.*
-import com.festive.poster.models.response.GetTemplateViewConfigResponse
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
+import com.festive.poster.utils.launchPostNewUpdate
 import com.festive.poster.viewmodels.PastUpdatesViewModel
-import com.festive.poster.viewmodels.PostUpdatesViewModel
 import com.framework.constants.IntentConstants
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -29,7 +26,6 @@ import com.framework.extensions.visible
 import com.framework.pref.clientId
 import com.framework.utils.ContentSharing
 import com.framework.utils.saveAsTempFile
-import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,7 +41,7 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Pa
     var postType: Int = 0
     var isFilterVisible = false
     var tagArray: MutableList<String> = mutableListOf()
-    var tagArrayList: ArrayList<PastPromotionalCategoryModel> = arrayListOf()
+    var categoryUiList: ArrayList<PastPromotionalCategoryModel> = arrayListOf()
 
     companion object {
         @JvmStatic
@@ -67,15 +63,25 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Pa
     override fun onCreateView() {
         super.onCreateView()
         initUI()
+        setOnClickListener(binding.btnPostNewUpdate)
+
     }
 
     private fun initUI() {
         showSimmer(true)
         getTemplateViewConfig()
 
-        pastPostListingAdapter = AppBaseRecyclerViewAdapter(baseActivity, pastPostListing, this)
-        binding.rvPostListing.adapter = pastPostListingAdapter
+
         //apiCallPastUpdates()
+    }
+
+    override fun onClick(v: View) {
+        super.onClick(v)
+        when(v){
+            binding.btnPostNewUpdate->{
+                launchPostNewUpdate(requireActivity())
+            }
+        }
     }
 
     private fun getPostCategories() {
@@ -88,9 +94,9 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Pa
     private fun getTemplateViewConfig() {
         viewModel?.promoUpdatesCats
             ?.observeOnce(this) {
-                tagArrayList.clear()
-                tagArrayList.addAll(it)
-                tagListAdapter = AppBaseRecyclerViewAdapter(baseActivity, tagArrayList, this)
+                categoryUiList.clear()
+                categoryUiList.addAll(it)
+                tagListAdapter = AppBaseRecyclerViewAdapter(baseActivity, categoryUiList, this)
                 binding.rvFilterSubCategory.adapter = tagListAdapter
                 getPostCategories()
             }
@@ -109,37 +115,42 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Pa
                 if (it.isSuccess()) {
                     it as PastUpdatesNewListingResponse
 
-                    it.floats?.let { list ->
-                        if (list.isNullOrEmpty()) {
-                            binding.tvNoPost.visible()
-                            binding.rvPostListing.gone()
-                        } else {
-                            binding.tvNoPost.gone()
-                            binding.rvPostListing.visible()
-                            pastPostListing.clear()
-                            list.forEach {item->
-                                item.category = tagArrayList.find {category->
-                                    item.tags?.firstOrNull()==category.id
-                                }
-                            }
-                            pastPostListing.addAll(list)
-                            pastPostListingAdapter.notifyDataSetChanged()
-                        }
-
-                        //Setting Category Counts
-                        if (categoryDataList.isNotEmpty()) {
-                            categoryDataList[0].categoryCount = it.totalCount ?: 0
-                            categoryDataList[1].categoryCount = it.postCount ?: 0
-                            categoryDataList[2].categoryCount = it.imageCount ?: 0
-                            categoryDataList[3].categoryCount = it.textCount ?: 0
-                            postCategoryAdapter.notifyItemRangeChanged(0, 4)
-                        }
-                    }
+                  handleListResponse(it)
 
                 }
                 showSimmer(false)
                 Log.i("pastUpdates", "PastUpdates: $it")
             }
+    }
+
+    private fun handleListResponse(it: PastUpdatesNewListingResponse) {
+        it.floats?.let { list ->
+            if (list.isNullOrEmpty()) {
+                binding.tvNoPost.visible()
+                binding.rvPostListing.gone()
+            } else {
+                binding.tvNoPost.gone()
+                binding.rvPostListing.visible()
+                pastPostListing.clear()
+                list.forEach {item->
+                    item.category = categoryUiList.find { category->
+                        item.tags?.firstOrNull()==category.id
+                    }
+                }
+                pastPostListing.addAll(list)
+                pastPostListingAdapter = AppBaseRecyclerViewAdapter(baseActivity, pastPostListing, this)
+                binding.rvPostListing.adapter = pastPostListingAdapter
+            }
+
+            //Setting Category Counts
+            if (categoryDataList.isNotEmpty()) {
+                categoryDataList[0].categoryCount = it.totalCount ?: 0
+                categoryDataList[1].categoryCount = it.postCount ?: 0
+                categoryDataList[2].categoryCount = it.imageCount ?: 0
+                categoryDataList[3].categoryCount = it.textCount ?: 0
+                postCategoryAdapter.notifyItemRangeChanged(0, 4)
+            }
+        }
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -195,7 +206,7 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Pa
     }
 
     private fun tagChanges() {
-        tagArrayList.forEach { it.isSelected = false }
+        categoryUiList.forEach { it.isSelected = false }
         tagArray.clear()
         tagListAdapter.notifyDataSetChanged()
         binding.tagWrapper.apply {
@@ -240,7 +251,9 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Pa
                 binding.shimmerLayoutPast.parentShimmerLayout.startShimmer()
                 binding.rvPostListing.gone()
                 binding.tagWrapper.gone()
+                binding.btnPostNewUpdate.gone()
             } else {
+                binding.btnPostNewUpdate.visible()
                 binding.rvPostListing.visible()
                 binding.shimmerLayoutPast.parentShimmerLayout.gone()
                 binding.shimmerLayoutPast.parentShimmerLayout.stopShimmer()

@@ -168,8 +168,8 @@ class PromoUpdatesViewModel: BaseViewModel() {
                 val allDummyCat = CategoryUi(
                     iconUrl = "",
                     id="",
-                    name = "All",
-                    thumbnailUrl = "https://i.ibb.co/7Xg48cN/Coming-soon-card.png",
+                    name = fetchString(R.string.all_favs),
+                    thumbnailUrl = "https://i.ibb.co/BfrgDmq/My-project-1.png",
                     templates = allUiTemplates
                 )
 
