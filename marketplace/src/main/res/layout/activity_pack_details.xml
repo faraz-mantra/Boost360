@@ -122,6 +122,16 @@
                         app:layout_constraintTop_toTopOf="parent"
                         tools:src="@drawable/addons" />
 
+                    <ImageView
+                        android:id="@+id/package_img1"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="@dimen/dimen_16dp"
+                        android:layout_marginEnd="@dimen/dimen_16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:src="@drawable/addons" />
+
                     <TextView
                         android:id="@+id/tv_saving"
                         android:layout_width="wrap_content"

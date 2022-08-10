@@ -56,7 +56,6 @@ import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_compare_packs.*
 import kotlinx.android.synthetic.main.activity_pack_details.*
 import kotlinx.android.synthetic.main.layout_black_for_savings.*
 import java.text.NumberFormat
@@ -238,6 +237,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                     itemIds.add(i.feature_code)
                 }
 
+                binding?.packageImg?.let { it1 -> makeFlyAnimation(it1) }
+
                 CompositeDisposable().add(
                     AppDatabase.getInstance(application)!!
                         .featuresDao()
@@ -332,36 +333,36 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 )
             }
 
-            val intent = Intent(
-                applicationContext,
-                CartActivity::class.java
-            )
-            intent.putExtra("fpid", fpid)
-            intent.putExtra("expCode", experienceCode)
-            intent.putExtra("isDeepLink", isDeepLink)
-            intent.putExtra("deepLinkViewType", deepLinkViewType)
-            intent.putExtra("deepLinkDay", deepLinkDay)
-            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-            intent.putExtra(
-                "accountType",
-                accountType
-            )
-            intent.putStringArrayListExtra(
-                "userPurchsedWidgets",
-                userPurchsedWidgets
-            )
-            if (email != null) {
-                intent.putExtra("email", email)
-            } else {
-                intent.putExtra("email", "ria@nowfloats.com")
-            }
-            if (mobileNo != null) {
-                intent.putExtra("mobileNo", mobileNo)
-            } else {
-                intent.putExtra("mobileNo", "9160004303")
-            }
-            intent.putExtra("profileUrl", profileUrl)
-            startActivity(intent)
+//            val intent = Intent(
+//                applicationContext,
+//                CartActivity::class.java
+//            )
+//            intent.putExtra("fpid", fpid)
+//            intent.putExtra("expCode", experienceCode)
+//            intent.putExtra("isDeepLink", isDeepLink)
+//            intent.putExtra("deepLinkViewType", deepLinkViewType)
+//            intent.putExtra("deepLinkDay", deepLinkDay)
+//            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+//            intent.putExtra(
+//                "accountType",
+//                accountType
+//            )
+//            intent.putStringArrayListExtra(
+//                "userPurchsedWidgets",
+//                userPurchsedWidgets
+//            )
+//            if (email != null) {
+//                intent.putExtra("email", email)
+//            } else {
+//                intent.putExtra("email", "ria@nowfloats.com")
+//            }
+//            if (mobileNo != null) {
+//                intent.putExtra("mobileNo", mobileNo)
+//            } else {
+//                intent.putExtra("mobileNo", "9160004303")
+//            }
+//            intent.putExtra("profileUrl", profileUrl)
+//            startActivity(intent)
         }
 
         binding?.back?.setOnClickListener {
@@ -615,6 +616,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         if (bundleData?.name!= null) {
             Glide.with(binding?.packageImg!!).load(bundleData?.primary_image!!.url)
                 .into(binding?.packageImg!!)
+            Glide.with(binding?.packageImg1!!).load(bundleData?.primary_image!!.url)
+                .into(binding?.packageImg1!!)
             binding?.title?.text = bundleData?.name
             binding?.bottomBoxOnlyBtn?.text = "Buy " + bundleData?.name
             binding?.addItemToCart?.text = "Buy " + bundleData?.name
@@ -919,20 +922,18 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         startActivity(intent)
     }
 
-    private fun makeFlyAnimation(targetView: ImageView) {
-        CircleAnimationUtil().attachActivity(this).setTargetView(targetView)
-            .setMoveDuration(600)
-            .setDestView(package_cart_icon)
+     private fun makeFlyAnimation(targetView: ImageView) {
+        CircleAnimationUtil().attachActivity(this).setTargetView(targetView).setMoveDuration(600)
+            .setDestView(featureDetailsCartIcon)
             .setAnimationListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animation: Animator) {}
                 override fun onAnimationEnd(animation: Animator) {
-                    package_viewpager.currentItem = 0
                     viewModel.getCartItems()
                 }
+
                 override fun onAnimationCancel(animation: Animator) {}
                 override fun onAnimationRepeat(animation: Animator) {}
             }).startAnimation()
-
     }
 
 }
