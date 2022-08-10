@@ -432,7 +432,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             packItemAdapter.notifyDataSetChanged()
         } else {
             layout_need_more.visibility = GONE
-
         }
     }
 

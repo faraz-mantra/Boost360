@@ -42,8 +42,8 @@ class PackDetailsFeatureAdapter(
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
 
-        holder.name.setText(upgradeList.get(position).name)
-        holder.title.setText(upgradeList.get(position).target_business_usecase)
+        holder.name.setText(upgradeList.get(position).description_title)
+        holder.title.setText(upgradeList.get(position).name)
 
         Glide.with(context).load(upgradeList.get(position).primary_image).into(holder.image)
         holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
