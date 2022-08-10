@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrderV2.WidgetDetail
 import com.boost.marketplace.R
-import java.lang.Long
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.Int
@@ -39,6 +38,8 @@ class HistoryOrdersParentAdapter (itemList: LinkedHashMap<String, ArrayList<Widg
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
         //get the keys for the position
         val itemKey = ArrayList<String>(list.keys).get(position)
+        val dateExpired = SimpleDateFormat("dd-MMM-yyyy").parse(itemKey).before(Date())
+
 //        val dataString = list.get(position).CreatedOn
 //        val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
 //        val dateFormat = SimpleDateFormat("dd-MMM-yyyy")
@@ -46,7 +47,7 @@ class HistoryOrdersParentAdapter (itemList: LinkedHashMap<String, ArrayList<Widg
         val layoutManager1 = LinearLayoutManager(holder.recycler.context)
         layoutManager1.orientation = LinearLayoutManager.VERTICAL
         val singleList = list.get(itemKey)
-        val sectionLayout = HistoryOrdersChildAdapter(singleList)
+        val sectionLayout = HistoryOrdersChildAdapter(singleList, dateExpired)
         holder.recycler.setAdapter(sectionLayout)
         holder.recycler.setLayoutManager(layoutManager1)
     }
