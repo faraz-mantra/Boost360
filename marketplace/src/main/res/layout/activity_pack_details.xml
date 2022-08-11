@@ -454,6 +454,7 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@id/how_to_use_title_layout"
                         tools:itemCount="4"
+                        android:visibility="gone"
                         tools:listitem="@layout/how_to_use_item_pack_details"
                         tools:visibility="visible" />
 

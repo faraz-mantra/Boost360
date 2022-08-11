@@ -25,15 +25,10 @@ import com.boost.marketplace.R
 import com.boost.marketplace.adapter.FAQAdapter
 import com.boost.marketplace.adapter.HowToUseAdapter
 import com.boost.marketplace.databinding.PackDetailsBottomSheetBinding
-import com.boost.marketplace.interfaces.AddonsListener
-import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
 import com.bumptech.glide.Glide
-import com.framework.base.BaseActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.inventoryorder.databinding.BottomSheetPickInventoryNatureBinding
-import kotlinx.android.synthetic.main.pack_details_bottom_sheet.*
 
 class PackDetailsPopUpFragment : DialogFragment() {
 
@@ -219,10 +214,10 @@ class PackDetailsPopUpFragment : DialogFragment() {
             binding.howToUseTitleLayout.visibility = View.VISIBLE
             binding.howToUseTitleLayout.setOnClickListener {
                 if (binding.howToUseRecycler.visibility == View.VISIBLE) {
-                    binding.howToUseArrow.setImageResource(R.drawable.ic_arrow_down_gray)
+                    binding.howToUseArrow.setImageResource(R.drawable.packs_arrow)
                     binding.howToUseRecycler.visibility = View.GONE
                 } else {
-                    binding.howToUseArrow.setImageResource(R.drawable.ic_arrow_up_gray)
+                    binding.howToUseArrow.setImageResource(R.drawable.packs_arrow_up)
                     binding.howToUseRecycler.visibility = View.VISIBLE
                 }
             }

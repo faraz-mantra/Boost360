@@ -24,9 +24,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
-import com.boost.cart.adapter.BenifitsPageTransformer
 import com.boost.cart.adapter.BenifitsPageTransformerFullWidth
-import com.boost.cart.adapter.SimplePageTransformerSmall
 import com.boost.cart.adapter.ZoomOutPageTransformer
 import com.boost.cart.utils.Utils
 import com.boost.cart.utils.Utils.priceCalculatorForYear
@@ -281,7 +279,7 @@ class FeatureDetailsActivity :
         learn_more_btn.setOnClickListener {
             when {
                 addonDetails?.boost_widget_key?.equals("IVR")!! || addonDetails?.boost_widget_key?.equals(
-                    "CALL TRACKER"
+                    "CALLTRACKER"
                 )!! -> {
                     add_item_to_cart.text = "Buy call tracking"
                 }
@@ -443,7 +441,7 @@ class FeatureDetailsActivity :
             }
 
             when {
-                it.boost_widget_key.equals("IVR") || it.boost_widget_key.equals("CALL TRACKER") -> {
+                it.boost_widget_key.equals("IVR") || it.boost_widget_key.equals("CALLTRACKER") -> {
                     add_item_to_cart.text = "Buy call tracking"
                     add_item_to_cart_new.text = "Buy call tracking"
 
@@ -708,7 +706,7 @@ class FeatureDetailsActivity :
             if (addonDetails != null) {
                 when {
                     addonDetails?.boost_widget_key?.equals("IVR")!! || addonDetails?.boost_widget_key?.equals(
-                        "CALL TRACKER"
+                        "CALLTRACKER"
                     )!! -> {
                         loadNumberList()
                     }
