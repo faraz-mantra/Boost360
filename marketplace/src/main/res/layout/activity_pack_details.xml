@@ -467,7 +467,7 @@
                     android:layout_marginTop="@dimen/dimen_32_dp"
                     android:background="#E0EEFF"
                     android:paddingBottom="@dimen/dimen_16dp"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     tools:visibility="visible">
 
                     <TextView

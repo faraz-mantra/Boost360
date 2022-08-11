@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Context
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
-import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +20,6 @@ import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.DetailsFragmentListener
-import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
 import com.framework.utils.RootUtil
@@ -69,9 +67,9 @@ class PackDetailsPacksAdapter(
             SentryController.captureException(e)
         }
 
-        holder.add_to_cart.setOnClickListener {
-            listener.goToCart()
-        }
+//        holder.add_to_cart.setOnClickListener {
+//            listener.goToCart()
+//        }
 
         holder.viewPacks.setOnClickListener {
 
@@ -110,8 +108,8 @@ class PackDetailsPacksAdapter(
         var mrpPrice = itemView.findViewById<TextView>(R.id.mrpPrice)
         var price = itemView.findViewById<TextView>(R.id.price)
         var discount = itemView.findViewById<TextView>(R.id.discount)
-        var viewPacks = itemView.findViewById<TextView>(R.id.btn_compare_packs)
-        var add_to_cart = itemView.findViewById<TextView>(R.id.btn_add_to_cart)
+        var viewPacks = itemView.findViewById<TextView>(R.id.view_packs)
+//        var add_to_cart = itemView.findViewById<TextView>(R.id.btn_add_to_cart)
         var image = itemView.findViewById<ImageView>(R.id.package_img)
     }
 

@@ -1,6 +1,7 @@
 package com.boost.payment.utils
 
 import com.boost.payment.ui.checkoutkyc.BusinessDetailsFragment
+import com.boost.payment.ui.confirmation.FailedTransactionFragment
 import com.boost.payment.ui.confirmation.OrderConfirmationFragment
 import com.boost.payment.ui.payment.PaymentFragment
 import com.boost.payment.ui.popup.*
@@ -28,7 +29,7 @@ class Constants {
         var STATE_LIST_FRAGMENT: String = StateListPopFragment::class.java.getName()
         var ORDER_CONFIRMATION_FRAGMENT: String = OrderConfirmationFragment::class.java.getName()
         var WEB_VIEW_FRAGMENT: String = WebViewFragment::class.java.getName()
-        var FAILED_TRANSACTION_FRAGMENT: String = FailedTransactionPopUpFragment::class.java.getName()
+        var FAILED_TRANSACTION_FRAGMENT: String = FailedTransactionFragment::class.java.getName()
         var BUSINESS_DETAILS_FRAGMENT: String = BusinessDetailsFragment::class.java.getName()
 
         const val ALERT_YES = 1

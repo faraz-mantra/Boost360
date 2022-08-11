@@ -91,6 +91,7 @@
                             android:gravity="end">
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/order_id_details"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/semi_bold"
@@ -123,6 +124,7 @@
                             android:gravity="end">
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/order_id_details1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/semi_bold"
@@ -155,6 +157,7 @@
                             android:gravity="end">
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/order_details_feature_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/semi_bold"
@@ -196,6 +199,7 @@
                             android:gravity="end">
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/order_details_feature_count1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/bold"
@@ -219,6 +223,7 @@
 
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/transaction_failed_retry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -233,6 +238,7 @@
 
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/marketplace_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

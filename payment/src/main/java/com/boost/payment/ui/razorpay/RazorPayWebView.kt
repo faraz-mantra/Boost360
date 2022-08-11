@@ -8,12 +8,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
-import com.boost.payment.R
-import com.boost.payment.PaymentActivity
 import com.boost.dbcenterapi.data.api_model.Razorpay.PaymentErrorModule
+import com.boost.payment.PaymentActivity
+import com.boost.payment.R
+import com.boost.payment.ui.confirmation.FailedTransactionFragment
 import com.boost.payment.ui.confirmation.OrderConfirmationFragment
 import com.boost.payment.ui.payment.PaymentViewModel
-import com.boost.payment.ui.popup.FailedTransactionPopUpFragment
 import com.boost.payment.utils.Constants
 import com.boost.payment.utils.SharedPrefs
 import com.boost.payment.utils.Utils
@@ -31,8 +31,6 @@ import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.razor_pay_web_view_fragment.*
 import org.json.JSONObject
-import java.lang.IllegalStateException
-import kotlin.collections.HashMap
 
 
 class RazorPayWebView : DialogFragment() {
@@ -41,7 +39,7 @@ class RazorPayWebView : DialogFragment() {
 
     lateinit var razorpay: Razorpay
 
-    val failedTransactionPopUpFragment = FailedTransactionPopUpFragment()
+    val failedTransactionFragment = FailedTransactionFragment()
 
     var data = JSONObject()
     lateinit var prefs: SharedPrefs
@@ -219,8 +217,12 @@ class RazorPayWebView : DialogFragment() {
     fun redirectTransactionFailure(data: String){
         val args = Bundle()
         args.putString("data", data)
-        failedTransactionPopUpFragment.arguments = args
-        failedTransactionPopUpFragment.show((activity as PaymentActivity).supportFragmentManager,
+        failedTransactionFragment.arguments = args
+//        failedTransactionPopUpFragment.show((activity as PaymentActivity).supportFragmentManager,
+//            Constants.FAILED_TRANSACTION_FRAGMENT
+//        )
+        (activity as PaymentActivity).replaceFragment(
+            FailedTransactionFragment.newInstance(),
             Constants.FAILED_TRANSACTION_FRAGMENT
         )
     }
