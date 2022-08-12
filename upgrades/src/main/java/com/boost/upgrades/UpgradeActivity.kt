@@ -243,7 +243,7 @@ class UpgradeActivity : AppCompatActivity() {
                 if (tag == Constants.COMPARE_FRAGMENT) {
                   Log.e("Add tags", ">>>$tag")
                   compareBackListener!!.backComparePress()
-                } else if (tag == Constants.HOME_FRAGMENT) {
+                } else if (tag == HOME_FRAGMENT) {
                   compareBackListener!!.backComparePress()
                 }
               }
@@ -344,6 +344,7 @@ class UpgradeActivity : AppCompatActivity() {
       fragmentManager!!.popBackStack(DETAILS_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     } else {
       fragmentManager!!.popBackStack(CART_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+      compareBackListener!!.backComparePress()
     }
   }
 
