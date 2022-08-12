@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.AllFrequentlyAskedQuestion
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.FrequentlyAskedQuestion
 import com.boost.marketplace.R
 
@@ -41,6 +40,10 @@ class PackDetailsFaqAdapter(
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
         holder.title.text = upgradeList[position].question
         holder.desc.text = upgradeList[position].answer
+        if (position==0){
+            holder.desc.visibility=View.VISIBLE
+            holder.downArrow.setImageResource(R.drawable.packs_arrow_up)
+        }
         holder.title.setOnClickListener {
             if(holder.desc.isVisible) {
                 holder.desc.visibility = View.GONE
@@ -57,6 +60,20 @@ class PackDetailsFaqAdapter(
                 holder.desc.visibility = View.VISIBLE
             }
         }
+
+        holder.title.setOnClickListener {
+            if(holder.desc.isVisible) {
+                holder.downArrow.setImageResource(R.drawable.ic_down_arrow_pack_details)
+                holder.desc.visibility = View.GONE
+            }else{
+                holder.downArrow.setImageResource(R.drawable.ic_up_arrow_with_bg)
+                holder.desc.visibility = View.VISIBLE
+            }
+        }
+        holder.divider.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+        if (upgradeList.size - 1 == position) {
+            holder.divider.visibility = View.GONE
+        }
     }
 
     fun addupdates(upgradeModel: List<FrequentlyAskedQuestion>) {
@@ -71,5 +88,6 @@ class PackDetailsFaqAdapter(
         var title = itemView.findViewById<TextView>(R.id.title)
         var downArrow = itemView.findViewById<ImageView>(R.id.arrow_btn)
         var desc = itemView.findViewById<TextView>(R.id.desc)
+        var divider = itemView.findViewById<View>(R.id.dummy1)
     }
 }

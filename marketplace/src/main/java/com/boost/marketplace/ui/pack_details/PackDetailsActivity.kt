@@ -187,6 +187,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         initializeFeatureAdapter()
         initializePackItemRecycler()
         initMvvm()
+        loadData()
 
 
         val callExpertString = SpannableString("Have a query? Call an expert")
@@ -420,6 +421,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         }
         try {
             viewModel?.getCartItems()
+            viewModel?.getAllPackages()
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
@@ -446,8 +448,14 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     }
 
     fun updatePackItemRecycler(list: ArrayList<BundlesModel>) {
-
-        packItemAdapter.addupdates(list)
+        if (list.size > 0) {
+            layout_need_more.visibility = VISIBLE
+            packItemAdapter.addupdates(list)
+            packItemAdapter.notifyDataSetChanged()
+        }
+        else {
+            layout_need_more.visibility = GONE
+        }
     }
 
     private fun initializeIncludedFeature() {
@@ -522,24 +530,24 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
     private fun initMvvm() {
 
-        val bundlesList = ArrayList<BundlesModel>()
+        val bundlesList = arrayListOf<BundlesModel>()
 
         viewModel.bundleResult().observe(this, androidx.lifecycle.Observer {
             if (it != null) {
+                bundlesList.add(it[2])
+                if (bundleData?.name == it[2].name){
 
-                for (singleBundle in it) {
-
-                    if (bundleData?.name != singleBundle.name) {
-                        bundlesList.add(singleBundle)
-
-                    }
                 }
-                //update recyclerview
-//                addUpdatePacks(bundlesList)
+//                for (singleBundle in it) {
+//                    if (bundleData?.name != singleBundle.name) {
+//                        bundlesList.add(singleBundle)
+//                    }
+//                }
                 updatePackItemRecycler(bundlesList)
                 packItemAdapter.notifyDataSetChanged()
             }
         })
+
         viewModel.addonsError().observe(this, androidx.lifecycle.Observer
         {
             println("addonsError ${it}")
@@ -749,6 +757,9 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
                             }
 
+                            binding?.includedBlack?.tvDesc?.text= "If you buy ${bundleData!!.included_features.size} \nfeatures seperately"
+                            binding?.includedBlack?.tvDesc1?.text= "If you buy same ${bundleData!!.included_features.size} features \nin ${bundleData!!.name}"
+
                             if (!prefs.getYearPricing() && bundleData?.min_purchase_months != null && bundleData?.min_purchase_months!! > 1) {
 
                                 binding?.includedBlack?.tvPrice1?.text = "₹" +
@@ -836,12 +847,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     override fun onclick(item: FeaturesModel) {
         val packagePopup = PackDetailsPopUpFragment( )
         val args = Bundle()
-//        args.putString("bundleData", Gson().toJson(item))
-//        args.putString("cartList", Gson().toJson(cart_list))
-
-
-//        val dialogCard = PackDetailsBottomSheet()
-//        val args = Bundle()
         args.putString("fpid", fpid)
         args.putString("expCode", experienceCode)
         args.putString("isDeepLink", isDeepLink.toString())
@@ -877,15 +882,43 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         }
         packagePopup.arguments = args
         packagePopup.show(supportFragmentManager, "PACKAGE_POPUP")
-//        dialogCard.arguments = args
-//        dialogCard.show(this.supportFragmentManager, PackDetailsBottomSheet::class.java.name)
+
     }
 
     override fun imagePreviewPosition(list: ArrayList<String>, pos: Int) {
     }
 
     override fun onPackageClicked(item: Bundles?) {
-        startActivity(Intent(this, ComparePacksV3Activity::class.java))
+        val intent = Intent(this, ComparePacksV3Activity::class.java)
+        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+
+        intent.putExtra("fpid", fpid)
+        intent.putExtra("expCode", experienceCode)
+        intent.putExtra("isDeepLink", isDeepLink)
+        intent.putExtra("deepLinkViewType", deepLinkViewType)
+        intent.putExtra("deepLinkDay", deepLinkDay)
+        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+        intent.putExtra(
+            "accountType",
+            accountType
+        )
+        intent.putStringArrayListExtra(
+            "userPurchsedWidgets",
+            userPurchsedWidgets
+        )
+        if (email != null) {
+            intent.putExtra("email", email)
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com")
+        }
+        if (mobileNo != null) {
+            intent.putExtra("mobileNo", mobileNo)
+        } else {
+            intent.putExtra("mobileNo", "9160004303")
+        }
+        intent.putExtra("profileUrl", profileUrl)
+        startActivity(intent)
+
     }
 
     override fun itemAddedToCart(status: Boolean) {

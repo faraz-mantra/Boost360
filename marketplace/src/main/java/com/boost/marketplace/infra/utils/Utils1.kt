@@ -22,6 +22,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.IOException
 import java.io.InputStream
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.temporal.ChronoField
+import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -301,5 +306,29 @@ object Utils1 {
             }
         }
 
+    }
+
+    fun isExpired(createdOnDate: Date): Boolean {
+        val localDate: LocalDate =
+            createdOnDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+        val year: Int = localDate.year
+        val month: Int = localDate.monthValue
+        val day: Int = localDate.dayOfMonth
+
+        val current = LocalDateTime.now()
+        val isYearPassed = year < current.get(ChronoField.YEAR)
+        val isMonthPassed = month < current.get(ChronoField.MONTH_OF_YEAR)
+        val isDatePassed = day < current.get(ChronoField.DAY_OF_MONTH)
+
+        if (isYearPassed)
+            return true
+
+        if (isYearPassed == false && isMonthPassed == true)
+            return true
+
+        if (isYearPassed == false && isMonthPassed == false && isDatePassed == true)
+            return true
+
+        return false
     }
 }

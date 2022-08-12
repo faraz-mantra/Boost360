@@ -60,7 +60,7 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
       holder.MRPPrice.visibility = View.GONE
     }
     if(list.get(position).boost_widget_key!!.contains("DOMAINPURCHASE")
-      || list.get(position).boost_widget_key!!.contains("EMAILACCOUNTS")
+//      || list.get(position).boost_widget_key!!.contains("EMAILACCOUNTS")
       || list.get(position).boost_widget_key!!.contains("CALLTRACKER")
       || list.get(position).boost_widget_key!!.contains("IVR")){
 //      holder.desc.visibility = View.GONE

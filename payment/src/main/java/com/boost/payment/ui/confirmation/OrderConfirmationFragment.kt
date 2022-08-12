@@ -106,6 +106,7 @@ class OrderConfirmationFragment : BaseFragment() {
       order_id_details.text = //"Order placed on " + formatter.format(date) +
            prefs.getLatestPurchaseOrderId() // + "\nTransaction ID #" + prefs.getTransactionIdFromCart()
       order_id_details1.text = prefs.getTransactionIdFromCart()
+      validity.text=prefs.getValidityMonths()
 
       //clear CartRelatedInfo
       prefs.storeOrderSuccessFlag(true)
