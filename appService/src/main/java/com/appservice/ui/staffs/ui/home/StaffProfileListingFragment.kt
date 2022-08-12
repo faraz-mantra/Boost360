@@ -236,15 +236,15 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
   private fun nonEmptyView() {
     binding?.childContainer?.gone()
-    binding?.serviceEmpty?.root?.gone()
-    binding?.addStaffDoctor?.visible()
     binding?.mainlayout?.visible()
     binding?.rvStaffList?.visible()
+    binding?.serviceEmpty?.root?.gone()
+    binding?.addStaffDoctor?.visible()
   }
 
   private fun emptyView() {
-    binding?.addStaffDoctor?.gone()
     binding?.mainlayout?.gone()
+    binding?.addStaffDoctor?.gone()
     binding?.childContainer?.visible()
   }
 
