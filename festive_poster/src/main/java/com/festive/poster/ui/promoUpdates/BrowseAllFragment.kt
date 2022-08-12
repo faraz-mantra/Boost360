@@ -2,6 +2,7 @@ package com.festive.poster.ui.promoUpdates
 
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
@@ -13,6 +14,7 @@ import com.festive.poster.models.response.TemplateSaveActionBody
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.festive.poster.ui.TemplateDiffUtil
 import com.festive.poster.utils.*
 import com.festive.poster.viewmodels.PostUpdatesViewModel
 import com.festive.poster.viewmodels.PromoUpdatesViewModel
@@ -213,5 +215,18 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
             }
         }
 
+    }
+
+    fun AppBaseRecyclerViewAdapter<BrowseAllTemplate>.setUpUsingDiffUtil(newList: List<BrowseAllTemplate>){
+        val templateDiffUtil = TemplateDiffUtil(
+            this.list,
+            newList
+        )
+
+        val diffResult = DiffUtil.calculateDiff(templateDiffUtil)
+
+        this.list.clear()
+        this.list.addAll(newList)
+        diffResult.dispatchUpdatesTo(this)
     }
 }

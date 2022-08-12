@@ -11,9 +11,9 @@ import com.festive.poster.R
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.ListItemBrowseAllCatBinding
 import com.festive.poster.databinding.ListItemBrowseTabTemplateCatBinding
-import com.festive.poster.databinding.ListItemFavCatBinding
 import com.festive.poster.databinding.ListItemPosterPackBinding
-import com.festive.poster.models.FavouriteTemplatesDetail
+import com.festive.poster.models.BrowseAllCategory
+import com.festive.poster.models.BrowseAllTemplate
 import com.festive.poster.models.PosterPackModel
 import com.festive.poster.models.response.FavCategory
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
@@ -25,17 +25,15 @@ import com.framework.base.BaseActivity
 import com.framework.utils.loadFromUrl
 import com.framework.views.itemdecoration.LineItemDecoration
 import com.google.android.material.tabs.TabLayoutMediator
+import com.squareup.picasso.Picasso
 
-class FavPosterCatViewHolder(binding: ListItemFavCatBinding) :
-  AppBaseRecyclerViewHolder<ListItemFavCatBinding>(binding) {
+class FavCatViewHolder(binding: ListItemBrowseAllCatBinding) :
+  AppBaseRecyclerViewHolder<ListItemBrowseAllCatBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     val model = item as FavCategory
-
-      binding.tvCount.text =model.templates?.size.toString()
-      binding.ivImg.loadFromUrl(model.thumbnailUrl)
-
-    if (model.isSelected){
+    binding.ivIcon.loadFromUrl(model.thumbnailUrl)
+      if (model.isSelected){
          getColor(R.color.color4ACDFF)?.let {
         binding.borderCard.strokeColor=it
         }
@@ -47,7 +45,7 @@ class FavPosterCatViewHolder(binding: ListItemFavCatBinding) :
     binding.tvTitle.text = model.name
 
     binding.root.setOnClickListener {
-      listener?.onItemClick(position,model,RecyclerViewActionType.FAV_CAT_CLICKED.ordinal)
+      listener?.onItemClick(position,model,RecyclerViewActionType.BROWSE_ALL_POSTER_CAT_CLICKED.ordinal)
     }
 
     super.bind(position, item)
