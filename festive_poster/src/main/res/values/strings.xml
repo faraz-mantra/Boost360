@@ -129,4 +129,5 @@
     <string name="stats">Stats</string>
     <string name="post_a_new_update">Post a new update</string>
     <string name="all_favs">All Favourites</string>
+    <string name="view_placeholder_more">View %1$d+ More</string>
 </resources>

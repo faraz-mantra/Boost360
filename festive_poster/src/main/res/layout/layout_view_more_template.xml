@@ -36,7 +36,6 @@
                     android:background="@drawable/view_more_btn_bg"
                     android:fontFamily="@font/semi_bold"
                     android:gravity="center"
-                    android:text="@string/view_more2"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="@dimen/size_16"
@@ -48,6 +47,7 @@
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/customImageView3"
                     android:layout_width="0dp"
+                    android:visibility="gone"
                     android:layout_height="0dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_poster_pack_viewmore"
@@ -70,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.79" />
+                    app:layout_constraintGuide_percent="0.5" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.framework.views.customViews.CustomCardView>

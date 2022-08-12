@@ -27,7 +27,7 @@ class TodaysPickCategoryViewHolder(binding: ListItemTodaysPickTemplateBinding):
        // binding.tvCatDesc.text = model.description
         //binding.ivCategoryIcon.setImageResource(R.drawable.ic_dummy_poster_cat_icon)
         //binding.tvCatDesc.text = "Post about offers or friday sale upto 50% discount  on selected products"
-        model.templates?.let {
+        model._templates?.let {
             val adapter = AppBaseRecyclerViewAdapter(binding.root.context as BaseActivity<*, *>, it.toArrayList(),object :
                 RecyclerItemClickListener {
                 override fun onItemClick(c_position: Int, c_item: BaseRecyclerViewItem?, actionType: Int) {

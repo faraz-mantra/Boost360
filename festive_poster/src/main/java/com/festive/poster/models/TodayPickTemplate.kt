@@ -5,7 +5,7 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewItem
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class TodayPickTemplate(
+open class TodayPickTemplate(
     private val _id: String,
     private val _isFavourite: Boolean,
     private val _name: String,
