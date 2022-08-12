@@ -16,6 +16,21 @@ open class TemplateUi(
     val categoryId:String
 ):Parcelable
 
+
+fun List<TemplateUi>.asFavModels(): List<FavTemplate> {
+    return map {
+        FavTemplate(
+            _id = it.id,
+            _isFavourite = it.isFavourite,
+            _name = it.name,
+            _primaryText = it.primaryText,
+            _primarySvgUrl = it.primarySvgUrl,
+            _tags = it.tags,
+            _utilizationDate = it.utilizationDate,
+            _categoryId = it.categoryId
+        )
+    }
+}
 fun List<TemplateUi>.asBrowseAllModels(): List<BrowseAllTemplate> {
     return map {
         BrowseAllTemplate(

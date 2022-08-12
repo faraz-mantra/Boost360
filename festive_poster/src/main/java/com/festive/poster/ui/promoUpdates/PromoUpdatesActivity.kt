@@ -86,6 +86,7 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoU
     fun observeFragmentStack() {
         supportFragmentManager.addOnBackStackChangedListener {
             binding?.ivLove?.isVisible =true
+            binding?.ivStore?.isVisible=true
 
             when (getTopFragment()) {
                 is PromoLandingPageFragment -> {
@@ -98,6 +99,7 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoU
                     binding?.tvToolbarTitle?.text = getString(R.string.favourites)
 
                     binding?.ivLove?.isVisible =false
+                    binding?.ivStore?.isVisible=false
                 }
             }
         }

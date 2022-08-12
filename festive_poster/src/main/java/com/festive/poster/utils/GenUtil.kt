@@ -95,18 +95,7 @@ fun saveTemplateAction(action: TemplateSaveActionBody.ActionType, posterModel: T
 }
 
 
-fun AppBaseRecyclerViewAdapter<BrowseAllTemplate>.setUpUsingDiffUtil(newList: List<BrowseAllTemplate>){
-    val templateDiffUtil = TemplateDiffUtil(
-        this.list,
-        newList
-    )
 
-    val diffResult = DiffUtil.calculateDiff(templateDiffUtil)
-
-    this.list.clear()
-    this.list.addAll(newList)
-    diffResult.dispatchUpdatesTo(this)
-}
 
 fun convertToHashTag(list:List<String>?): String {
     if (list==null) return ""

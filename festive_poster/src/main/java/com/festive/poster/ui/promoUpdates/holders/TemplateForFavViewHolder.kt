@@ -4,6 +4,7 @@ import com.festive.poster.R
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.ListItemTemplateForFavBinding
 import com.festive.poster.models.BrowseAllTemplate
+import com.festive.poster.models.FavTemplate
 import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.ui.promoUpdates.edit_post.EditPostActivity
@@ -12,6 +13,8 @@ import com.festive.poster.utils.WebEngageController
 import com.framework.webengageconstant.Promotional_Update_Edit_Click
 import com.framework.webengageconstant.Promotional_Update_Post_Click
 import com.framework.webengageconstant.Promotional_Update_WhatsApp_Share_Click
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class TemplateForFavViewHolder(binding: ListItemTemplateForFavBinding):
@@ -19,12 +22,12 @@ class TemplateForFavViewHolder(binding: ListItemTemplateForFavBinding):
 
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
-        val model = item as BrowseAllTemplate
+        val model = item as FavTemplate
 
-       /* if (model.details?.markedAsFavouriteOn!=null){
-            binding.tvFav.text =activity?.getString(R.string.favourited_on)+DateUtils.parseDate(model.details?.markedAsFavouriteOn,
-                DateUtils.FORMAT_SERVER_1_DATE,DateUtils.FORMAT__DD__MM__YYYY)
-        }*/
+
+        binding.tvFavOn.text =activity?.getString(R.string.favourited_on)+
+                formateDate(System.currentTimeMillis())
+
         if (model.isFavourite){
             binding.ivLove.setTintColor(getColor(R.color.colorEB5757)!!)
         }else{
@@ -57,5 +60,10 @@ class TemplateForFavViewHolder(binding: ListItemTemplateForFavBinding):
         }
         super.bind(position, item)
 
+    }
+
+    fun formateDate(epoch:Long): String {
+        val dateFormat = SimpleDateFormat("dd MMM yyyy")
+       return dateFormat.format(Date(epoch))
     }
 }

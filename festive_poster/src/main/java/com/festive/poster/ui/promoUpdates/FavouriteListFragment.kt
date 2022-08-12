@@ -11,6 +11,7 @@ import com.festive.poster.base.AppBaseFragment
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.FragmentFavouriteListBinding
 import com.festive.poster.models.*
+import com.festive.poster.models.response.FavCategory
 import com.festive.poster.models.response.TemplateSaveActionBody
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
@@ -19,7 +20,6 @@ import com.festive.poster.ui.TemplateDiffUtil
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.utils.posterPostClicked
 import com.festive.poster.utils.posterWhatsappShareClicked
-import com.festive.poster.utils.setUpUsingDiffUtil
 import com.festive.poster.viewmodels.PostUpdatesViewModel
 import com.festive.poster.viewmodels.PromoUpdatesViewModel
 import com.framework.base.BaseActivity
@@ -38,9 +38,9 @@ class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, Post
     private var promoUpdatesViewModel: PromoUpdatesViewModel? = null
     private var session: UserSessionManager? = null
     private var selectedPos: Int = 0
-    private var posterRvAdapter: AppBaseRecyclerViewAdapter<BrowseAllTemplate>? = null
-    private var categoryAdapter: AppBaseRecyclerViewAdapter<BrowseAllCategory>? = null
-    var categoryList = ArrayList<BrowseAllCategory>()
+    private var posterRvAdapter: AppBaseRecyclerViewAdapter<FavTemplate>? = null
+    private var categoryAdapter: AppBaseRecyclerViewAdapter<FavCategory>? = null
+    var categoryList = ArrayList<FavCategory>()
 
 
     override fun getLayout(): Int {
@@ -120,11 +120,11 @@ class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, Post
                         setCatgories(data)
                         switchToSelectedItem(DEFAULT_SELECTED_POS,
                             data[DEFAULT_SELECTED_POS].getParentTemplates()
-                                ?.asBrowseAllModels())
+                                ?.asFavModels())
                     }else{
                         switchToSelectedItem(selectedPos,
                             data[selectedPos].getParentTemplates()
-                                ?.asBrowseAllModels())
+                                ?.asFavModels())
                         setCatgories(data)
                     }
                 }
@@ -142,7 +142,7 @@ class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, Post
 
     private fun setCatgories(it: java.util.ArrayList<CategoryUi>) {
         categoryList.clear()
-        categoryList.addAll(it.asBrowseAllModels().toArrayList())
+        categoryList.addAll(it.asFavModels().toArrayList())
         categoryAdapter?.notifyDataSetChanged()
     }
 
@@ -155,7 +155,7 @@ class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, Post
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
         when (actionType) {
-            RecyclerViewActionType.BROWSE_ALL_POSTER_CAT_CLICKED.ordinal -> {
+            RecyclerViewActionType.FAV_CAT_CLICKED.ordinal -> {
                 WebEngageController.trackEvent(Promotional_Update_Category_Click)
 
                 switchToSelectedItem(position,categoryList[position].templates)
@@ -193,7 +193,7 @@ class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, Post
 
     }
 
-    private fun switchToSelectedItem(positon:Int,newList: List<BrowseAllTemplate>?) {
+    private fun switchToSelectedItem(positon:Int,newList: List<FavTemplate>?) {
         if (newList==null){
             return
         }
@@ -209,6 +209,19 @@ class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, Post
         categoryAdapter?.notifyDataSetChanged()
         binding.tvCatTitle.text = selectedItem.name
         binding.tvCatSize.text = selectedItem.templates?.size.toString()
+    }
+
+    fun AppBaseRecyclerViewAdapter<FavTemplate>.setUpUsingDiffUtil(newList: List<FavTemplate>){
+        val templateDiffUtil = TemplateDiffUtil(
+            this.list,
+            newList
+        )
+
+        val diffResult = DiffUtil.calculateDiff(templateDiffUtil)
+
+        this.list.clear()
+        this.list.addAll(newList)
+        diffResult.dispatchUpdatesTo(this)
     }
 }
 
