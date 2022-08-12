@@ -1,5 +1,6 @@
 package com.boost.payment.ui.razorpay
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -198,6 +199,13 @@ class RazorPayWebView : DialogFragment() {
             }
 
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_RAZOR_PAY_VIEW_LOADED, RAZOR_PAY_VIEW, NO_EVENT_VALUE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 101) { //Razorpay.UPI_INTENT_REQUEST_CODE = 101
+            razorpay.onActivityResult(requestCode, resultCode, data);
         }
     }
 
