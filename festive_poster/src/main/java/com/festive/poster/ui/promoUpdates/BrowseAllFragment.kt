@@ -102,9 +102,11 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
                 is NetworkResult.Success->{
                     hideProgress()
                     val data = it.data?:return@observe
+
+                    findDefaultSelectedPos(data)
                     if (categoryList.isEmpty()){
                         setCatgories(data)
-                        switchToSelectedItem(DEFAULT_SELECTED_POS,data[DEFAULT_SELECTED_POS].getParentTemplates()?.asBrowseAllModels())
+                        switchToSelectedItem(selectedPos,data[selectedPos].getParentTemplates()?.asBrowseAllModels())
                     }else{
                         switchToSelectedItem(selectedPos,data[selectedPos].getParentTemplates()?.asBrowseAllModels())
                         setCatgories(data)
@@ -116,6 +118,14 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
                 }
             }
 
+        }
+    }
+
+    private fun findDefaultSelectedPos(data: java.util.ArrayList<CategoryUi>) {
+        selectedPos = if (argTag==null){
+            DEFAULT_SELECTED_POS
+        }else{
+            data.indexOfFirst { it.id==argTag }
         }
     }
 

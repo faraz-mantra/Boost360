@@ -67,7 +67,7 @@ fun List<CategoryUi>.asTodaysPickModels(): List<TodaysPickCategory> {
             iconUrl = it.iconUrl,
             name = it.name,
             thumbnailUrl = it.thumbnailUrl,
-            templates = it.getParentTemplates()?.asTodaysPickModels()
+            _templates = it.getParentTemplates()?.asTodaysPickModels()
         )
     }
 }

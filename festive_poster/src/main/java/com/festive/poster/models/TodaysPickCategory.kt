@@ -8,8 +8,8 @@ class TodaysPickCategory(
     id: String,
     name: String,
     thumbnailUrl: String,
-    val templates:List<TodayPickTemplate>?=null,
-):CategoryUi(iconUrl,id,name,thumbnailUrl,templates), AppBaseRecyclerViewItem {
+    var _templates:List<TodayPickTemplate>?=null,
+):CategoryUi(iconUrl,id,name,thumbnailUrl,_templates), AppBaseRecyclerViewItem {
     override fun getViewType(): Int {
         return RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()
     }

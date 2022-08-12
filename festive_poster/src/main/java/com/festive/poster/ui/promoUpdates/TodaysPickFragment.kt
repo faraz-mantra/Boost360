@@ -90,8 +90,10 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
                 is NetworkResult.Success->{
                     stopShimmer()
                     val data = it.data?:return@observe
+                    val uiList = data.asTodaysPickModels().toArrayList()
+                    addViewMoreInEachList(uiList)
                     adapter?.setUpUsingDiffUtil(
-                        data.asTodaysPickModels().toArrayList()
+                        uiList
                     )
                 }
                 is NetworkResult.Error->{
@@ -112,6 +114,20 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
 
 
 
+        }
+    }
+
+    private fun addViewMoreInEachList(uiList: java.util.ArrayList<TodaysPickCategory>) {
+        val itemsToShow = 5
+        uiList.forEach {cat->
+            if (itemsToShow < (cat._templates?.size ?: 0)){
+                val templates:List<TodayPickTemplate>? =cat._templates?.take(itemsToShow)?.toArrayList()?.apply {
+                    add(
+                        ViewMoreTodayPickTemplate((cat.getParentTemplates()?.size ?: 0 ) - itemsToShow)
+                    )
+                }
+                cat._templates = templates
+            }
         }
     }
 
