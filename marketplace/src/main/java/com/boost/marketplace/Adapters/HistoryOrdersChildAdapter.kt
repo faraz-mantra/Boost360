@@ -51,11 +51,11 @@ class HistoryOrdersChildAdapter(itemList: ArrayList<WidgetDetail>?,val dateExpir
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
         val tempCreatedOnDate = list.get(position).CreatedOn
         val createdOnDate = Date(Long.parseLong(tempCreatedOnDate.substring(6, tempCreatedOnDate.length - 2)))
-        val isExpired = Utils1.isExpired(createdOnDate)
         val default_validity_months = list.get(position).Expiry.Value
         val calendarDates = Calendar.getInstance()
         calendarDates.time = createdOnDate
         calendarDates.add(Calendar.MONTH, default_validity_months)
+        val isExpired = Utils1.isExpired(calendarDates.time)
         val nowFormat = SimpleDateFormat("dd MMM yy")
         nowFormat.timeZone = Calendar.getInstance().getTimeZone()
         if (isExpired)
