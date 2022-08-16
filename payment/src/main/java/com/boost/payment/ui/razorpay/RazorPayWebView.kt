@@ -230,7 +230,7 @@ class RazorPayWebView : DialogFragment() {
 //            Constants.FAILED_TRANSACTION_FRAGMENT
 //        )
         (activity as PaymentActivity).replaceFragment(
-            FailedTransactionFragment.newInstance(),
+            failedTransactionFragment,
             Constants.FAILED_TRANSACTION_FRAGMENT
         )
     }
