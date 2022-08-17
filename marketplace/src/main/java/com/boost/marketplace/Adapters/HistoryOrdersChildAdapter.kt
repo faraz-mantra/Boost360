@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrderV2.WidgetDetail
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.marketplace.R
+import com.boost.marketplace.infra.utils.Utils1
 import com.boost.marketplace.ui.Invoice.InvoiceActivity
 import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -52,7 +53,7 @@ class HistoryOrdersChildAdapter(itemList: ArrayList<WidgetDetail>?) :
         val calendarDates = Calendar.getInstance()
         calendarDates.time = createdOnDate
         calendarDates.add(Calendar.MONTH, default_validity_months)
-//        val isExpired = Utils1.isExpired(calendarDates.time)
+        val isExpired = Utils1.isExpired(calendarDates.time)
         val nowFormat = SimpleDateFormat("dd MMM yy")
         nowFormat.setTimeZone(Calendar.getInstance().getTimeZone())
         holder.validity.setText("Valid till " + nowFormat.format(calendarDates.time))

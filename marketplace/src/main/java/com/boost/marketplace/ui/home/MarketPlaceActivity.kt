@@ -1172,6 +1172,13 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         viewModel.getActivePremiumWidgets().observe(this, androidx.lifecycle.Observer {
             //display referal if there is any paid addons
             if (it.size > 0) {
+                for (singleItem in it){
+                    if (singleItem.expiryDate!=null && singleItem.is_premium){
+
+
+
+                    }
+                }
                 bottom_box.visibility = View.VISIBLE
                 footer.visibility = View.VISIBLE
             } else {
