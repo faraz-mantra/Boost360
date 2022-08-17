@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/size_34"
         android:paddingHorizontal="@dimen/size_12"
-        android:background="@color/black_4a4a4a"
+        android:background="@color/color_4a4a4a_jio_ec008c"
         android:orientation="vertical">
 
         <com.framework.views.customViews.CustomTextView

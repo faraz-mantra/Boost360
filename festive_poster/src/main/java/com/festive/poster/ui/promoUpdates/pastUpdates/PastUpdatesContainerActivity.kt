@@ -33,7 +33,7 @@ class PastUpdatesContainerActivity : AppBaseActivity<ActivityFragmentContainerBi
     }
 
     override fun getToolbarBackgroundColor(): Int {
-        return ContextCompat.getColor(this, R.color.black_4a4a4a)
+        return ContextCompat.getColor(this, com.framework.R.color.color_4a4a4a_jio_ec008c)
     }
 
     override fun getToolbarTitle(): String {
