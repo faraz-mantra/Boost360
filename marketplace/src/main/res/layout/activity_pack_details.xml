@@ -465,10 +465,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/how_to_use_container"
-                    android:layout_marginTop="@dimen/dimen_32_dp"
+                    android:layout_marginTop="20dp"
                     android:background="#E0EEFF"
                     android:paddingBottom="@dimen/dimen_16dp"
-                    android:visibility="gone"
                     tools:visibility="visible">
 
                     <TextView
@@ -484,18 +483,218 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_packs"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clipToPadding="false"
-                        android:nestedScrollingEnabled="false"
-                        android:orientation="vertical"
-                        android:overScrollMode="never"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintTop_toBottomOf="@id/tv_need_more_feature"
-                        tools:itemCount="1"
-                        tools:listitem="@layout/item_features_details" />
+                        android:padding="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_need_more_feature">
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="8dp"
+                            android:layout_marginEnd="@dimen/_21sdp"
+                            android:elevation="2dp"
+                            android:src="@drawable/ic_fold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/discount"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/discount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_25sdp"
+                            android:background="@drawable/ic_package_saving"
+                            android:elevation="2dp"
+                            android:fontFamily="@font/semi_bold"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="@string/discount_saving"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </TextView>
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="8dp"
+                            android:background="@drawable/rounded_curve_bg"
+                            android:paddingStart="@dimen/_15sdp"
+                            android:paddingEnd="@dimen/_15sdp"
+                            android:paddingBottom="@dimen/_10sdp"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/needMorePackageImg"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:src="@drawable/addons" />
+
+                            <TextView
+                                android:id="@+id/needMoreTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:text="Online Pack"
+                                android:textColor="@color/main_color_gray_dk"
+                                android:textFontWeight="600"
+                                android:textSize="16sp"
+                                app:layout_constraintStart_toEndOf="@id/needMorePackageImg"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                            <TextView
+                                android:id="@+id/view_packs"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="15dp"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:text="View Pack"
+                                android:textColor="@color/colorAccent1"
+                                android:textSize="14sp"
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/view_packs_arrow" />
+
+                            <ImageView
+                                android:id="@+id/view_packs_arrow"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:padding="10dp"
+                                android:src="@drawable/ic_right_arrow_yellow"
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toBottomOf="@id/view_packs"
+                                app:layout_constraintDimensionRatio="1:1"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@id/view_packs" />
+
+                            <LinearLayout
+                                android:id="@+id/featureList_layout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:orientation="horizontal"
+                                android:visibility="gone"
+                                app:layout_constraintStart_toEndOf="@id/needMorePackageImg"
+                                app:layout_constraintTop_toBottomOf="@id/needMoreTitle">
+
+                                <TextView
+                                    android:id="@+id/features_list"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/regular"
+                                    android:text="Call Tracking +3 features"
+                                    android:textColor="#7ED321"
+                                    android:textSize="12sp"
+                                    app:layout_constraintStart_toStartOf="parent" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/needMorePrice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:fontFamily="@font/bold"
+                                android:text="₹481/month"
+                                android:textFontWeight="700"
+                                android:textSize="14sp"
+                                app:layout_constraintStart_toEndOf="@id/needMorePackageImg"
+                                app:layout_constraintTop_toBottomOf="@id/featureList_layout" />
+
+                            <TextView
+                                android:id="@+id/needMoreMrpPrice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:fontFamily="@font/regular"
+                                android:text="₹481/month"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toEndOf="@id/needMorePrice"
+                                app:layout_constraintTop_toBottomOf="@id/featureList_layout" />
+
+                            <TextView
+                                android:id="@+id/everythingText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_24dp"
+                                android:fontFamily="@font/bold"
+                                android:text="Everything in “Online Advanced” plus"
+                                android:textFontWeight="700"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/needMoreMrpPrice" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/otherFeatureRecyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="@dimen/dimen_12dp"
+                                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                tools:orientation="horizontal"
+                                tools:itemCount="5"
+                                app:layout_constraintTop_toBottomOf="@id/everythingText"
+                                tools:listitem="@layout/item_more_feature"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layout_constraintTop_toBottomOf="@id/otherFeatureRecyclerView">
+
+                                <TextView
+                                    android:id="@+id/addToCart"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dimen_12dp"
+                                    android:layout_marginEnd="@dimen/dimen_16dp"
+                                    android:layout_marginBottom="@dimen/dimen_12dp"
+                                    android:layout_weight="0.5"
+                                    android:background="@drawable/cta_button_click_effect"
+                                    android:fontFamily="@font/regular"
+                                    android:gravity="center"
+                                    android:paddingTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:text="Add to cart"
+                                    android:textColor="@color/white"
+                                    android:textFontWeight="700"
+                                    android:textSize="@dimen/txt_16sp" />
+
+                                <TextView
+                                    android:id="@+id/comparePacks"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dimen_12dp"
+                                    android:layout_marginBottom="@dimen/dimen_12dp"
+                                    android:layout_weight="0.5"
+                                    android:background="@drawable/cta_button_hollow"
+                                    android:fontFamily="@font/regular"
+                                    android:gravity="center"
+                                    android:paddingTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:text="Compare packs"
+                                    android:textColor="@color/colorAccent1"
+                                    android:textFontWeight="700"
+                                    android:textSize="@dimen/txt_16sp" />
+                            </LinearLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
