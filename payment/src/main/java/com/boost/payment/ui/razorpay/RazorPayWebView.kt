@@ -1,5 +1,6 @@
 package com.boost.payment.ui.razorpay
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -199,6 +200,13 @@ class RazorPayWebView : DialogFragment() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 101) { //Razorpay.UPI_INTENT_REQUEST_CODE = 101
+            razorpay.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
 
     fun redirectOrderConfirmation(paymentTransactionId: String) {
         var prefs = SharedPrefs(activity as PaymentActivity)
@@ -222,7 +230,7 @@ class RazorPayWebView : DialogFragment() {
 //            Constants.FAILED_TRANSACTION_FRAGMENT
 //        )
         (activity as PaymentActivity).replaceFragment(
-            FailedTransactionFragment.newInstance(),
+            failedTransactionFragment,
             Constants.FAILED_TRANSACTION_FRAGMENT
         )
     }

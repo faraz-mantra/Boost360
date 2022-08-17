@@ -17,6 +17,7 @@ import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.*
+import com.boost.payment.BuildConfig
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -227,7 +228,11 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.setStatusBarColor(getResources().getColor(R.color.common_text_color))
         }
-
+        if (BuildConfig.FLAVOR.equals("jioonline")) {
+            jio_footer.visibility = View.VISIBLE
+        } else {
+            jio_footer.visibility = View.GONE
+        }
         loadData()
         loadCustomerInfo()
         initMvvm()

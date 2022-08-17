@@ -3,7 +3,6 @@ package com.boost.marketplace.Adapters
 import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,9 +23,8 @@ import java.lang.Long
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.Int
-import kotlin.collections.ArrayList
 
-class HistoryOrdersChildAdapter(itemList: ArrayList<WidgetDetail>?,val dateExpired: Boolean) :
+class HistoryOrdersChildAdapter(itemList: ArrayList<WidgetDetail>?) :
     RecyclerView.Adapter<HistoryOrdersChildAdapter.upgradeViewHolder>() {
 
     private var list = ArrayList<WidgetDetail>()
@@ -57,13 +55,8 @@ class HistoryOrdersChildAdapter(itemList: ArrayList<WidgetDetail>?,val dateExpir
         calendarDates.add(Calendar.MONTH, default_validity_months)
         val isExpired = Utils1.isExpired(calendarDates.time)
         val nowFormat = SimpleDateFormat("dd MMM yy")
-        nowFormat.timeZone = Calendar.getInstance().getTimeZone()
-        if (isExpired)
-            holder.validity.text = "Expired on " + nowFormat.format(calendarDates.time)
-        else
-            holder.validity.text = "Valid till " + nowFormat.format(calendarDates.time)
-        if (isExpired)
-            holder.validity.setTextColor(Color.parseColor("#E39595"))
+        nowFormat.setTimeZone(Calendar.getInstance().getTimeZone())
+        holder.validity.setText("Valid till " + nowFormat.format(calendarDates.time))
 
         val dataString = list.get(position).CreatedOn
         val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
@@ -90,9 +83,7 @@ class HistoryOrdersChildAdapter(itemList: ArrayList<WidgetDetail>?,val dateExpir
                     it.printStackTrace()
                 })
         )
-
-        if(isExpired)
-        holder.single_paidaddon_image.setColorFilter(Color.rgb(180, 180, 180), android.graphics.PorterDuff.Mode.MULTIPLY);
+     //   holder.single_paidaddon_image.setColorFilter(Color.rgb(123, 123, 123), android.graphics.PorterDuff.Mode.MULTIPLY);
     }
 
     fun addupdates(purchaseResult: List<WidgetDetail>) {

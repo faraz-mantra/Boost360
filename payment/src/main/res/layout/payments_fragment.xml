@@ -913,7 +913,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/payment_subscription_details_layout">
@@ -2091,6 +2090,29 @@
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/jio_footer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/payment_mode_ll"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:gravity="center|center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:textColor="@color/material_grey_400"
+                    android:text="This feature marketplace is powered by"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:src="@drawable/ic_nowfloats"/>
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

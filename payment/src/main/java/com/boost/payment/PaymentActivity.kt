@@ -1,5 +1,6 @@
 package com.boost.payment
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -135,6 +136,11 @@ class PaymentActivity : AppCompatActivity() {
 //            fragmentManager!!.popBackStack(CART_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 //        }
 //    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        razorpay.onActivityResult(requestCode, resultCode, data)
+    }
 
     fun goBackToMyAddonsScreen() {
 //        goToHomeFragment()
