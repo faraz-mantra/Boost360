@@ -15,7 +15,7 @@
             android:layout_height="44dp"
             app:cardCornerRadius="8dp"
             android:layout_marginStart="@dimen/size_26"
-            app:cardBackgroundColor="@color/color_ffb900_op_10"
+            app:cardBackgroundColor="@color/color_ffb900_op10_jio_ec008c_op10"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" >
 

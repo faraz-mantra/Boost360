@@ -3,17 +3,17 @@ package com.festive.poster.ui.promoUpdates.holders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
 import com.festive.poster.databinding.ListItemTodaysPickTemplateBinding
-import com.festive.poster.models.PosterPackModel
 import com.festive.poster.models.TodaysPickCategory
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.framework.base.BaseActivity
+import com.framework.utils.fetchColor
+import com.framework.utils.isJioBuild
 import com.framework.utils.loadFromUrl
 import com.framework.utils.toArrayList
 import com.framework.views.itemdecoration.LineItemDecoration
-import com.squareup.picasso.Picasso
 
 class TodaysPickCategoryViewHolder(binding: ListItemTodaysPickTemplateBinding):
     AppBaseRecyclerViewHolder<ListItemTodaysPickTemplateBinding>(binding) {
@@ -23,6 +23,12 @@ class TodaysPickCategoryViewHolder(binding: ListItemTodaysPickTemplateBinding):
         val model = item as TodaysPickCategory
         binding.tvCatTitle.text = model.name
         binding.ivCategoryImg.loadFromUrl(model.iconUrl)
+        if (isJioBuild()){
+            binding.ivCategoryImg.setColorFilter(fetchColor(R.color.color_ffb900_jio_ec008c),
+                android.graphics.PorterDuff.Mode.MULTIPLY);
+        }
+
+
 //        Picasso.get().load(model.tagsModel.icon).into(binding.ivCategoryIcon)
        // binding.tvCatDesc.text = model.description
         //binding.ivCategoryIcon.setImageResource(R.drawable.ic_dummy_poster_cat_icon)

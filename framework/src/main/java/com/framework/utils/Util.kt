@@ -65,6 +65,7 @@ import com.framework.BaseApplication
 import com.framework.R
 import com.framework.analytics.SentryController
 import com.framework.constants.PackageNames
+import com.framework.pref.APPLICATION_JIO_ID
 import com.framework.views.customViews.CustomTextView
 import com.google.android.material.snackbar.Snackbar
 import com.google.common.io.ByteStreams.readBytes
@@ -778,4 +779,8 @@ fun Uri.toBase64(): String? {
     error.printStackTrace() // This exception always occurs
     null
   }
+}
+
+fun isJioBuild(): Boolean {
+ return BaseApplication.instance.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)
 }

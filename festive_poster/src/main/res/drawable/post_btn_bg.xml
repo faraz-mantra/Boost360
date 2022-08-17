@@ -6,8 +6,8 @@
 
     <gradient
         android:angle="270"
-        android:startColor="@color/colorFCAF17Op70"
-        android:endColor="@color/colorFCAF17"
+        android:startColor="@color/color_fcaf17_op70_jio_0400a6"
+        android:endColor="@color/color_fcaf17_jio_0400a6"
         />
 
 
