@@ -52,6 +52,7 @@ class HistoryOrdersChildAdapter(itemList: ArrayList<WidgetDetail>?) :
         val calendarDates = Calendar.getInstance()
         calendarDates.time = createdOnDate
         calendarDates.add(Calendar.MONTH, default_validity_months)
+        val isExpired = Utils1.isExpired(calendarDates.time)
         val nowFormat = SimpleDateFormat("dd MMM yy")
         nowFormat.setTimeZone(Calendar.getInstance().getTimeZone())
         holder.validity.setText("Valid till " + nowFormat.format(calendarDates.time))

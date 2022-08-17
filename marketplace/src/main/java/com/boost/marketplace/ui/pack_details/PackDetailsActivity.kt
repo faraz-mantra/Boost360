@@ -28,6 +28,7 @@ import com.boost.cart.adapter.BenifitsPageTransformer
 import com.boost.cart.adapter.ZoomOutPageTransformer
 import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
@@ -109,9 +110,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     lateinit var benefitAdaptor: PackDetailsBenefitViewPagerAdapter
     lateinit var reviewAdaptor: TestimonialItemsAdapter
     lateinit var includedFeatureAdapter: IncludedFeatureAdapter
+    lateinit var needMoreFeatureAdapter: NeedMoreFeatureAdapter
     lateinit var packDetailsAdapter: PackDetailsFeatureAdapter
-    lateinit var packItemAdapter: PackDetailsPacksAdapter
-
 
     companion object {
         fun newInstance() = PackDetailsActivity()
@@ -158,8 +158,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         faqAdapter = PackDetailsFaqAdapter(this, ArrayList())
         benefitAdaptor = PackDetailsBenefitViewPagerAdapter(ArrayList())
         includedFeatureAdapter = IncludedFeatureAdapter(this, ArrayList())
+        needMoreFeatureAdapter = NeedMoreFeatureAdapter(this, ArrayList())
         packDetailsAdapter = PackDetailsFeatureAdapter(this, ArrayList(), this)
-        packItemAdapter = PackDetailsPacksAdapter(ArrayList(), this, this)
 
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -185,6 +185,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         initializeFAQRecycler()
         initializeIncludedFeature()
         initializeFeatureAdapter()
+        initializeNeedMoreAdapter()
         initializePackItemRecycler()
         initMvvm()
         loadData()
@@ -430,9 +431,9 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     fun addUpdatePacks(list: ArrayList<BundlesModel>) {
         if (list.size > 0) {
             layout_need_more.visibility = VISIBLE
-            packItemAdapter.addupdates(list)
+//            packItemAdapter.addupdates(list)
 //            rv_packs.adapter = packItemAdapter
-            packItemAdapter.notifyDataSetChanged()
+//            packItemAdapter.notifyDataSetChanged()
         } else {
             layout_need_more.visibility = GONE
         }
@@ -441,17 +442,17 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     private fun initializePackItemRecycler() {
         val gridLayoutManager = LinearLayoutManager(applicationContext)
         gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        binding?.rvPacks?.apply {
-            layoutManager = gridLayoutManager
-            binding?.rvPacks?.adapter = packItemAdapter
-        }
+//        binding?.rvPacks?.apply {
+//            layoutManager = gridLayoutManager
+//            binding?.rvPacks?.adapter = packItemAdapter
+//        }
     }
 
     fun updatePackItemRecycler(list: ArrayList<BundlesModel>) {
         if (list.size > 0) {
             layout_need_more.visibility = VISIBLE
-            packItemAdapter.addupdates(list)
-            packItemAdapter.notifyDataSetChanged()
+//            packItemAdapter.addupdates(list)
+//            packItemAdapter.notifyDataSetChanged()
         }
         else {
             layout_need_more.visibility = GONE
@@ -466,7 +467,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             binding?.rvIncludedFeatures?.adapter = includedFeatureAdapter
         }
     }
-
 
     private fun initializeHowToUseRecycler() {
         val gridLayoutManager = GridLayoutManager(applicationContext, 1)
@@ -492,6 +492,15 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         binding?.packRecycler?.apply {
             layoutManager = layoutManager1
             binding!!.packRecycler.adapter = packDetailsAdapter
+        }
+    }
+
+    private fun initializeNeedMoreAdapter() {
+        val mLayoutManager = LinearLayoutManager(this)
+        mLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        binding?.otherFeatureRecyclerView?.apply {
+            layoutManager = mLayoutManager
+            binding?.otherFeatureRecyclerView?.adapter = needMoreFeatureAdapter
         }
     }
 
@@ -532,21 +541,23 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
         val bundlesList = arrayListOf<BundlesModel>()
 
-        viewModel.bundleResult().observe(this, androidx.lifecycle.Observer {
+        viewModel.bundleResult().observe(this) {
             if (it != null) {
-                bundlesList.add(it[2])
-                if (bundleData?.name == it[2].name){
+                setupPackItemRecycler(it[2])
 
-                }
+//                bundlesList.add(it[2])
+//                if (bundleData?.name == it[2].name) {
+//
+//                }
 //                for (singleBundle in it) {
 //                    if (bundleData?.name != singleBundle.name) {
 //                        bundlesList.add(singleBundle)
 //                    }
 //                }
-                updatePackItemRecycler(bundlesList)
-                packItemAdapter.notifyDataSetChanged()
+//                updatePackItemRecycler(bundlesList)
+//                packItemAdapter.notifyDataSetChanged()
             }
-        })
+        }
 
         viewModel.addonsError().observe(this, androidx.lifecycle.Observer
         {
@@ -721,6 +732,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                                 }
                                 packDetailsAdapter.addupdates(it)
                                 includedFeatureAdapter.addupdates(it)
+                                needMoreFeatureAdapter.addupdates(it)
                                 binding?.packRecycler?.adapter = packDetailsAdapter
                             } else {
                                 binding?.packContainer?.visibility = GONE
@@ -816,11 +828,121 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                         }
                     )
             )
+        }
+    }
 
-
+    private fun setupPackItemRecycler(bundlesModel: BundlesModel) {
+        needMoreTitle.setText(bundlesModel.name)
+        Glide.with(this).load(bundlesModel.primary_image).into(needMorePackageImg)
+        if (bundlesModel.overall_discount_percent > 0) {
+            discount.visibility = View.VISIBLE
+            discount.setText(bundlesModel.overall_discount_percent.toString() + "% saving")
+        } else {
+            discount.visibility = View.GONE
+        }
+        try {
+            getPackageInfoFromDB( bundlesModel)
+        } catch (e: Exception) {
+            SentryController.captureException(e)
         }
 
+//        holder.add_to_cart.setOnClickListener {
+//            listener.goToCart()
+//        }
 
+//        viewPacks.setOnClickListener {
+//
+//            val item: Bundles = Bundles(
+//                bundleList.get(position).bundle_id,
+//                Gson().fromJson<List<IncludedFeature>>(
+//                    bundleList[position].included_features!!,
+//                    object : TypeToken<List<IncludedFeature>>() {}.type
+//                ),
+//                bundleList.get(position).min_purchase_months,
+//                bundleList.get(position).name,
+//                bundleList.get(position).overall_discount_percent,
+//                PrimaryImage(bundleList.get(position).primary_image!!),
+//                bundleList.get(position).target_business_usecase,
+//                Gson().fromJson<List<String>>(
+//                    bundleList.get(position).exclusive_to_categories!!,
+//                    object : TypeToken<List<String>>() {}.type
+//                ),
+//                arrayListOf(),
+//                null,null,null, null,
+//                bundleList.get(position).desc
+//            )
+//            onPackageClicked(item)
+//        }
+
+//        val otherFeatureAdapter = OtherFeatureAdapter(listOf())
+
+    }
+
+    fun getPackageInfoFromDB(bundles: BundlesModel) {
+        val itemsIds = arrayListOf<String>()
+        val includedFeatures =
+            Gson().fromJson<List<IncludedFeature>>(
+                bundles.included_features,
+                object :
+                    TypeToken<List<IncludedFeature>>() {}.type
+            )
+        for (item in includedFeatures) {
+            itemsIds.add(item.feature_code)
+        }
+
+        var offeredBundlePrice = 0.0
+        var originalBundlePrice = 0.0
+        val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) bundles.min_purchase_months!! else 1
+//    val minMonth: Int = 12
+        CompositeDisposable().add(
+            AppDatabase.getInstance(this.application)!!
+                .featuresDao()
+                .getallFeaturesInList(itemsIds)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        for (singleItem in it) {
+                            for (item in includedFeatures) {
+                                if (singleItem.feature_code == item.feature_code) {
+//                  originalBundlePrice += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt() * minMonth
+                                    originalBundlePrice += Utils.priceCalculatorForYear(
+                                        RootUtil.round(
+                                            (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
+                                            2
+                                        ) * minMonth, singleItem.widget_type, this)
+                                }
+                            }
+                        }
+                        if (bundles.overall_discount_percent > 0) {
+                            offeredBundlePrice = RootUtil.round(
+                                (originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent / 100.0)),
+                                2
+                            )
+                            discount.visibility = View.VISIBLE
+                            discount.setText(bundles.overall_discount_percent.toString() + "%\nSAVING")
+                        } else {
+                            offeredBundlePrice = originalBundlePrice
+                            discount.visibility = View.GONE
+                        }
+                        needMorePrice.setText("₹" + offeredBundlePrice + Utils.yearlyOrMonthlyOrEmptyValidity(
+                            "",
+                            this
+                        )
+                        )
+                        val mrpPriceString = SpannableString("₹" + originalBundlePrice + Utils.yearlyOrMonthlyOrEmptyValidity(
+                            "",
+                            this
+                        )
+                        )
+                        mrpPriceString.setSpan(StrikethroughSpan(), 0, mrpPriceString.length, 0)
+                        needMoreMrpPrice.setText(mrpPriceString)
+                    },
+                    {
+                        it.printStackTrace()
+                    }
+                )
+        )
     }
 
     fun spannableString(
@@ -833,7 +955,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                     + Utils.yearlyOrMonthlyOrEmptyValidity("", this, minMonth)
         )
         binding?.includedBlack?.tvPrice?.text = origCost
-
 
         origCost.setSpan(
             StrikethroughSpan(),
