@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -26,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.BenifitsPageTransformer
 import com.boost.cart.adapter.ZoomOutPageTransformer
+import com.boost.cart.utils.Constants
 import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
@@ -58,6 +60,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_pack_details.*
+import kotlinx.android.synthetic.main.activity_pack_details.add_item_to_cart
+import kotlinx.android.synthetic.main.activity_pack_details.featureDetailsCartIcon
 import kotlinx.android.synthetic.main.layout_black_for_savings.*
 import java.text.NumberFormat
 import java.util.*
@@ -277,6 +281,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
                                 //clear cartOrderInfo from SharedPref to requestAPI again
                                 prefs.storeCartOrderInfo(null)
+
                                 viewModel.addItemToCartPackage1(
                                     CartModel(
                                         bundleData!!._kid,
@@ -846,36 +851,70 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             SentryController.captureException(e)
         }
 
-//        holder.add_to_cart.setOnClickListener {
-//            listener.goToCart()
-//        }
+        comparePacks.setOnClickListener {
+            val intent = Intent(this, ComparePacksV3Activity::class.java)
+            intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
 
-//        viewPacks.setOnClickListener {
-//
-//            val item: Bundles = Bundles(
-//                bundleList.get(position).bundle_id,
-//                Gson().fromJson<List<IncludedFeature>>(
-//                    bundleList[position].included_features!!,
-//                    object : TypeToken<List<IncludedFeature>>() {}.type
-//                ),
-//                bundleList.get(position).min_purchase_months,
-//                bundleList.get(position).name,
-//                bundleList.get(position).overall_discount_percent,
-//                PrimaryImage(bundleList.get(position).primary_image!!),
-//                bundleList.get(position).target_business_usecase,
-//                Gson().fromJson<List<String>>(
-//                    bundleList.get(position).exclusive_to_categories!!,
-//                    object : TypeToken<List<String>>() {}.type
-//                ),
-//                arrayListOf(),
-//                null,null,null, null,
-//                bundleList.get(position).desc
-//            )
-//            onPackageClicked(item)
-//        }
+            intent.putExtra("fpid", fpid)
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("isDeepLink", isDeepLink)
+            intent.putExtra("deepLinkViewType", deepLinkViewType)
+            intent.putExtra("deepLinkDay", deepLinkDay)
+            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                userPurchsedWidgets
+            )
+            if (email != null) {
+                intent.putExtra("email", email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                intent.putExtra("mobileNo", mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", profileUrl)
+            startActivity(intent)
+        }
 
-//        val otherFeatureAdapter = OtherFeatureAdapter(listOf())
+        addToCart.setOnClickListener{
+                    prefs.storeCartOrderInfo(null)
 
+                    binding?.packageImg?.let { it1 -> makeFlyAnimation(it1) }
+
+                    viewModel.addItemToCartPackage1(
+                        CartModel(
+                            bundlesModel.bundle_id,
+                            null,
+                            null,
+                            bundlesModel.name,
+                            "",
+                            bundlesModel.primary_image,
+                            offeredBundlePrice.toDouble(),
+                            originalBundlePrice.toDouble(),
+                            bundlesModel.overall_discount_percent,
+                            1,
+                            if (!prefs.getYearPricing() && bundlesModel?.min_purchase_months != null) bundlesModel.min_purchase_months else 1,
+                            "bundles",
+                            null,
+                            ""
+                        )
+                    )
+                    badgeNumber = badgeNumber + 1
+                    Constants.CART_VALUE = badgeNumber
+                    add_item_to_cart.background = ContextCompat.getDrawable(
+                        applicationContext,
+                        com.boost.cart.R.drawable.grey_button_click_effect
+                    )
+                    add_item_to_cart.setTextColor(Color.parseColor("#bbbbbb"))
+                    add_item_to_cart.text = getString(com.boost.cart.R.string.added_to_cart)
+                }
     }
 
     fun getPackageInfoFromDB(bundles: BundlesModel) {
