@@ -23,6 +23,7 @@ class TodaysPickCategoryViewHolder(binding: ListItemTodaysPickTemplateBinding):
         val model = item as TodaysPickCategory
         binding.tvCatTitle.text = model.name
         binding.ivCategoryImg.loadFromUrl(model.iconUrl)
+        binding.tvCatDesc.text = model.description
         if (isJioBuild()){
             binding.ivCategoryImg.setColorFilter(fetchColor(R.color.color_ffb900_jio_ec008c),
                 android.graphics.PorterDuff.Mode.MULTIPLY);

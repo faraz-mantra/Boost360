@@ -25,7 +25,8 @@ data class GetTemplatesResponseTemplate(
     val primaryText: String,
     val secondarySvgUrls: List<Any>,
     val tags: List<String>,
-    val utilizationDate: String?
+    val utilizationDate: String?,
+    val favDate:Long,
 )
 
 fun List<GetTemplatesResponseTemplate>.asDomainModels(): List<TemplateUi> {
@@ -38,7 +39,8 @@ fun List<GetTemplatesResponseTemplate>.asDomainModels(): List<TemplateUi> {
             primaryText = it.primaryText,
             tags = it.tags,
             utilizationDate = it.utilizationDate,
-            categoryId = it.categories.first().id
+            categoryId = it.categories.first().id,
+            favDate = it.favDate
         )
     }
 }

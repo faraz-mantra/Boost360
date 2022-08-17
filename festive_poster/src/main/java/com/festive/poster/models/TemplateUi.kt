@@ -13,7 +13,8 @@ open class TemplateUi(
     val primaryText: String,
     val tags: List<String>,
     val utilizationDate: String?,
-    val categoryId:String
+    val categoryId:String,
+    val favDate:Long
 ):Parcelable
 
 
@@ -27,7 +28,8 @@ fun List<TemplateUi>.asFavModels(): List<FavTemplate> {
             _primarySvgUrl = it.primarySvgUrl,
             _tags = it.tags,
             _utilizationDate = it.utilizationDate,
-            _categoryId = it.categoryId
+            _categoryId = it.categoryId,
+            _favDate = it.favDate
         )
     }
 }
@@ -41,7 +43,8 @@ fun List<TemplateUi>.asBrowseAllModels(): List<BrowseAllTemplate> {
             _primarySvgUrl = it.primarySvgUrl,
             _tags = it.tags,
             _utilizationDate = it.utilizationDate,
-            _categoryId = it.categoryId
+            _categoryId = it.categoryId,
+            _favDate = it.favDate
         )
     }
 }
@@ -56,7 +59,8 @@ fun List<TemplateUi>.asTodaysPickModels(): List<TodayPickTemplate> {
             _primarySvgUrl = it.primarySvgUrl,
             _tags = it.tags,
             _utilizationDate = it.utilizationDate,
-            _categoryId = it.categoryId
+            _categoryId = it.categoryId,
+            _favDate = it.favDate
         )
     }
 }

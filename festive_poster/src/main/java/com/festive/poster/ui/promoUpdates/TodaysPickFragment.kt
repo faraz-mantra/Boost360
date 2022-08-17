@@ -118,7 +118,7 @@ class TodaysPickFragment: AppBaseFragment<FragmentTodaysPickBinding, FestivePost
     }
 
     private fun addViewMoreInEachList(uiList: java.util.ArrayList<TodaysPickCategory>) {
-        val itemsToShow = 5
+        val itemsToShow = 1
         uiList.forEach {cat->
             if (itemsToShow < (cat._templates?.size ?: 0)){
                 val templates:List<TodayPickTemplate>? =cat._templates?.take(itemsToShow)?.toArrayList()?.apply {

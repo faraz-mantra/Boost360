@@ -109,7 +109,7 @@ class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, Post
                 is NetworkResult.Success->{
                     hideProgress()
                     val data = it.data?:return@observe
-                    if (data.isEmpty()) {
+                    if (data.isEmpty()||data.firstOrNull()?.getParentTemplates()?.isEmpty()==true) {
                         zerothCase(true)
                         return@observe
                     } else {
@@ -148,6 +148,7 @@ class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, Post
 
 
     private fun zerothCase(b: Boolean) {
+        binding.dataLayout.isVisible = b.not()
         binding.layoutZeroth.isVisible = b
     }
 

@@ -14,8 +14,9 @@ open class TodayPickTemplate(
     private val _tags: List<String>,
     private val _utilizationDate: String?,
     private val _categoryId:String,
+    private val _favDate:Long,
 ):TemplateUi(_id,_isFavourite,_name,_primarySvgUrl,
-    _primaryText,_tags,_utilizationDate,_categoryId),AppBaseRecyclerViewItem{
+    _primaryText,_tags,_utilizationDate,_categoryId,_favDate),AppBaseRecyclerViewItem{
     override fun getViewType(): Int {
         return RecyclerViewItemType.TEMPLATE_VIEW_FOR_TODAY_PICK.getLayout()
     }

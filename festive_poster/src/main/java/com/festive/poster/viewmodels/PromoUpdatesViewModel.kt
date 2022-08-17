@@ -170,7 +170,8 @@ class PromoUpdatesViewModel: BaseViewModel() {
                     id="",
                     name = fetchString(R.string.all_favs),
                     thumbnailUrl = "https://i.ibb.co/BfrgDmq/My-project-1.png",
-                    templates = allUiTemplates
+                    templates = allUiTemplates,
+                    description = ""
                 )
 
                 categories.add(0,allDummyCat)

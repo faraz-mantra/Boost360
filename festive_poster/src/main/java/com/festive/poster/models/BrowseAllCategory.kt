@@ -11,9 +11,10 @@ class BrowseAllCategory(
     private val _id: String,
     private val _name: String,
     private val _thumbnailUrl: String,
+    private val _description:String,
     val templates:List<BrowseAllTemplate>?=null,
     var isSelected:Boolean=false
-):CategoryUi(_iconUrl,_id,_name,_thumbnailUrl,templates), AppBaseRecyclerViewItem {
+):CategoryUi(_iconUrl,_id,_name,_description,_thumbnailUrl,templates), AppBaseRecyclerViewItem {
     override fun getViewType(): Int {
         return RecyclerViewItemType.BROWSE_ALL_TEMPLATE_CAT.getLayout()
     }

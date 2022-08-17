@@ -14,9 +14,10 @@ class FavCategory(
     private val _id: String,
     private val _name: String,
     private val _thumbnailUrl: String,
+    private val _desc:String,
     val templates:List<FavTemplate>?=null,
     var isSelected:Boolean=false
-): CategoryUi(_iconUrl,_id,_name,_thumbnailUrl,templates), AppBaseRecyclerViewItem {
+): CategoryUi(_iconUrl,_id,_name,_desc,_thumbnailUrl,templates), AppBaseRecyclerViewItem {
     override fun getViewType(): Int {
         return RecyclerViewItemType.FAV_CAT.getLayout()
     }
