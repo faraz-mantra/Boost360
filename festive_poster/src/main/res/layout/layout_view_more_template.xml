@@ -25,7 +25,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/size_16"
-                    android:background="@drawable/yellow_rounded_border"
+                    android:background="@color/color_ffb900_op40_jio_ec008c_op40"
                     tools:layout_editor_absoluteX="16dp"
                     tools:layout_editor_absoluteY="16dp" />
 
@@ -36,6 +36,7 @@
                     android:background="@drawable/view_more_btn_bg"
                     android:fontFamily="@font/semi_bold"
                     android:gravity="center"
+                    android:text="@string/view_more2"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="@dimen/size_16"
@@ -47,14 +48,13 @@
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/customImageView3"
                     android:layout_width="0dp"
-                    android:visibility="gone"
                     android:layout_height="0dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_poster_pack_viewmore"
+                    android:src="@drawable/ic_viewmore_thumbnail"
                     app:layout_constraintEnd_toEndOf="@+id/relativeLayout2"
                     app:layout_constraintHeight_percent="0.59"
                     app:layout_constraintStart_toStartOf="@+id/relativeLayout2"
-                    app:layout_constraintTop_toTopOf="@+id/guideline6"
+                    app:layout_constraintTop_toTopOf="@+id/relativeLayout2"
                     app:layout_constraintWidth_percent="0.9" />
 
                 <androidx.constraintlayout.widget.Guideline
@@ -70,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.5" />
+                    app:layout_constraintGuide_percent="0.79" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.framework.views.customViews.CustomCardView>

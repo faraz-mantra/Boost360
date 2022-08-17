@@ -8,8 +8,9 @@ class BrowseTabCategory(
     id: String,
     name: String,
     thumbnailUrl: String,
+    description:String,
     val templates:List<BrowseAllTemplate>?=null,
-):CategoryUi(iconUrl,id,name,thumbnailUrl,templates), AppBaseRecyclerViewItem {
+):CategoryUi(iconUrl,id,name,description,thumbnailUrl,templates), AppBaseRecyclerViewItem {
     override fun getViewType(): Int {
         return RecyclerViewItemType.BROWSE_TAB_TEMPLATE_CAT.getLayout()
     }

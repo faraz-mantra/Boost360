@@ -127,7 +127,8 @@ class UpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, Pa
         it.floats?.let { list ->
             if (list.isNullOrEmpty()) {
                 binding.tvNoPost.visible()
-                binding.rvPostListing.gone()
+                pastPostListing.clear()
+                pastPostListingAdapter.notifyDataSetChanged()
             } else {
                 binding.tvNoPost.gone()
                 binding.rvPostListing.visible()

@@ -1,12 +1,8 @@
 package com.festive.poster.models
 
 import android.os.Parcelable
-import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.models.promoModele.PastPromotionalCategoryModel
-import com.festive.poster.models.response.Category
 import com.festive.poster.models.response.FavCategory
-import com.festive.poster.models.response.GetCategoryResponseResult
-import com.festive.poster.recyclerView.AppBaseRecyclerViewItem
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -14,6 +10,7 @@ open class CategoryUi(
     val iconUrl: String,
     val id: String,
     val name: String,
+    val description:String,
     val thumbnailUrl: String,
     private var templates:List<TemplateUi>?=null,
 ):Parcelable{
@@ -42,7 +39,8 @@ fun List<CategoryUi>.asBrowseTabModels(): List<BrowseTabCategory> {
             iconUrl = it.iconUrl,
             name = it.name,
             thumbnailUrl = it.thumbnailUrl,
-            templates = it.getParentTemplates()?.asBrowseAllModels()
+            templates = it.getParentTemplates()?.asBrowseAllModels(),
+            description = it.description
         )
     }
 }
@@ -55,7 +53,8 @@ fun List<CategoryUi>.asBrowseAllModels(): List<BrowseAllCategory> {
             _name = it.name,
             _thumbnailUrl = it.thumbnailUrl,
             isSelected = false,
-            templates = it.getParentTemplates()?.asBrowseAllModels()
+            templates = it.getParentTemplates()?.asBrowseAllModels(),
+            _description = it.description
         )
     }
 }
@@ -67,7 +66,8 @@ fun List<CategoryUi>.asTodaysPickModels(): List<TodaysPickCategory> {
             iconUrl = it.iconUrl,
             name = it.name,
             thumbnailUrl = it.thumbnailUrl,
-            _templates = it.getParentTemplates()?.asTodaysPickModels()
+            _templates = it.getParentTemplates()?.asTodaysPickModels(),
+            description = it.description
         )
     }
 }
@@ -80,7 +80,8 @@ fun List<CategoryUi>.asFavModels(): List<FavCategory> {
             _name = it.name,
             _thumbnailUrl = it.thumbnailUrl,
             isSelected = false,
-            templates = it.getParentTemplates()?.asFavModels()
+            templates = it.getParentTemplates()?.asFavModels(),
+            _desc = it.description
         )
     }
 }

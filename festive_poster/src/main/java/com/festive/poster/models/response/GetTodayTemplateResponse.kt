@@ -11,7 +11,7 @@ data class GetTodayTemplateResponse(
 ):BaseResponse()
 
 data class GetTodayTemplateResponseResult(
-    val category: Category,
+    val category: CategoryResponse,
     val templates: List<GetTodayTemplateResponseTemplate>
 )
 
@@ -25,7 +25,8 @@ data class GetTodayTemplateResponseTemplate(
     val primaryText: String,
     val secondarySvgUrls: List<Any>,
     val tags: List<String>,
-    val utilizationDate: String?
+    val utilizationDate: String?,
+    val favDate:Long
 )
 
 fun List<GetTodayTemplateResponseTemplate>.asDomainModels(categoryId: String): List<TemplateUi> {
@@ -38,7 +39,8 @@ fun List<GetTodayTemplateResponseTemplate>.asDomainModels(categoryId: String): L
             primaryText = it.primaryText,
             tags = it.tags,
             utilizationDate = it.utilizationDate,
-            categoryId = categoryId
+            categoryId = categoryId,
+            favDate = it.favDate
         )
     }
 }
@@ -49,7 +51,8 @@ fun List<GetTodayTemplateResponseResult>.asDomainModel(): List<CategoryUi> {
             name = it.category.name,
             thumbnailUrl = it.category.thumbnailUrl,
             templates = it.templates.asDomainModels(it.category.id),
-            iconUrl = it.category.iconUrl
+            iconUrl = it.category.iconUrl,
+            description = it.category.description
         )
     }
 }

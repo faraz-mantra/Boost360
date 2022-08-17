@@ -43,7 +43,8 @@
   <color name="color_dialog_bg">#FDFDFE</color>
   <color name="color_border_4a4a4a">#4a4a4a</color>
   <color name="color_border_ffb900">#ffb900</color>
-  <color name="color_ffb900_op10_jio_ec008c_op10">#EC008C</color>
+  <color name="color_ffb900_op10_jio_ec008c_op10">#1AFFB900</color>
+  <color name="color_ffb900_op40_jio_ec008c_op40">#66FFB900</color>
   <color name="color_ffb900_jio_ec008c">#FFB900</color>
 
   <!-- fab-->

@@ -25,8 +25,9 @@ class TemplateForFavViewHolder(binding: ListItemTemplateForFavBinding):
         val model = item as FavTemplate
 
 
-        binding.tvFavOn.text =activity?.getString(R.string.favourited_on)+
-                formateDate(System.currentTimeMillis())
+        val formattedDate  =formateDate(model.favDate)
+        binding.tvFavOn.text =activity?.getString(R.string.favourited_on)+formattedDate
+
 
         if (model.isFavourite){
             binding.ivLove.setTintColor(getColor(R.color.colorEB5757)!!)
@@ -64,6 +65,7 @@ class TemplateForFavViewHolder(binding: ListItemTemplateForFavBinding):
 
     fun formateDate(epoch:Long): String {
         val dateFormat = SimpleDateFormat("dd MMM yyyy")
-       return dateFormat.format(Date(epoch))
+        dateFormat.timeZone = TimeZone.getDefault()
+       return dateFormat.format(Date(epoch*1000L))
     }
 }

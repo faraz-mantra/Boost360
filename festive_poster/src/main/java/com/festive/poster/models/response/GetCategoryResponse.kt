@@ -13,6 +13,7 @@ data class GetCategoryResponseResult(
     val iconUrl: String,
     val id: String,
     val name: String,
+    val description:String,
     val thumbnailUrl: String
 )
 
@@ -22,7 +23,8 @@ fun List<GetCategoryResponseResult>.asDomainModels(): List<CategoryUi> {
             id = it.id,
             iconUrl = it.iconUrl,
             name = it.name,
-            thumbnailUrl = it.thumbnailUrl
+            thumbnailUrl = it.thumbnailUrl,
+            description = it.description
         )
     }
 }
