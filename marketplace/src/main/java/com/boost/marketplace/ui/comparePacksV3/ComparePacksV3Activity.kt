@@ -426,6 +426,14 @@ class ComparePacksV3Activity :
         })
 
         viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
+            if (it != null){
+                binding?.packsData?.visibility=View.VISIBLE
+                binding?.shimmerViewPacksv3?.visibility=View.GONE
+            }
+            else{
+                binding?.packsData?.visibility=View.GONE
+                binding?.shimmerViewPacksv3?.visibility=View.VISIBLE
+            }
             viewModel.getCartItems()
             if (it != null && it.size > 0) {
                 val listItem = arrayListOf<Bundles>()

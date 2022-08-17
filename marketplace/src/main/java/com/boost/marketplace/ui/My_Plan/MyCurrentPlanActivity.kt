@@ -144,7 +144,7 @@ class MyCurrentPlanActivity :
         binding?.arrowBtn?.setOnClickListener {
             cardViewVisibilty()
         }
-        binding?.cardView?.setOnClickListener {
+        binding?.paidAddonsTitle?.setOnClickListener {
             cardViewVisibilty()
         }
 
@@ -152,7 +152,7 @@ class MyCurrentPlanActivity :
             cardView1Visibilty()
         }
 
-        binding?.cardView1?.setOnClickListener {
+        binding?.paidAddonsTitle1?.setOnClickListener {
             cardView1Visibilty()
         }
 
@@ -181,11 +181,11 @@ class MyCurrentPlanActivity :
         if (binding?.expandableView1?.visibility == View.GONE) {
             TransitionManager.beginDelayedTransition(binding?.cardView1, AutoTransition())
             binding!!.expandableView1.visibility = View.VISIBLE
-            binding?.arrowBtn1?.animate()?.rotation(180f)?.start()
+            binding?.arrowBtn1?.animate()?.rotation(0f)?.start()
         } else {
             TransitionManager.beginDelayedTransition(binding?.cardView1, AutoTransition())
             binding?.expandableView1?.visibility = View.GONE
-            binding?.arrowBtn1?.animate()?.rotation(0f)?.start()
+            binding?.arrowBtn1?.animate()?.rotation(180f)?.start()
         }
     }
 
@@ -193,11 +193,11 @@ class MyCurrentPlanActivity :
         if (binding?.expandableView?.visibility == View.GONE) {
             TransitionManager.beginDelayedTransition(binding?.cardView, AutoTransition())
             binding?.expandableView!!.visibility = View.VISIBLE
-            binding?.arrowBtn?.animate()?.rotation(180f)?.start()
+            binding?.arrowBtn?.animate()?.rotation(0f)?.start()
         } else {
             TransitionManager.beginDelayedTransition(binding?.cardView, AutoTransition())
             binding?.expandableView?.visibility = View.GONE
-            binding?.arrowBtn?.animate()?.rotation(0f)?.start()
+            binding?.arrowBtn?.animate()?.rotation(180f)?.start()
         }
     }
 
