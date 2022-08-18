@@ -43,6 +43,9 @@
   <color name="color_dialog_bg">#FDFDFE</color>
   <color name="color_border_4a4a4a">#4a4a4a</color>
   <color name="color_border_ffb900">#ffb900</color>
+  <color name="color_ffb900_op10_jio_ec008c_op10">#1AFFB900</color>
+  <color name="color_ffb900_op40_jio_ec008c_op40">#66FFB900</color>
+  <color name="color_ffb900_jio_ec008c">#FFB900</color>
 
   <!-- fab-->
   <color name="colorFabText">#F5F5F5</color>
@@ -59,6 +62,19 @@
   <color name="grey_BBBBBB">#BBBBBB</color>
   <color name="gray_828282">#828282</color>
   <color name="color_error_code">#eb5757</color>
+  <color name="colorB3B3B3">#B3B3B3</color>
+  <color name="grey_E0E2E9">#E0E2E9</color>
+  <color name="grey_DADADA">#DADADA</color>
+  <color name="grey_09121F">#ECEFF1</color>
+  <color name="color_fcaf17_jio_0400a6">#FCAF17</color>
+  <color name="color_fcaf17_op70_jio_0400a6">#B3FCAF17</color>
+  <color name="colorPrimary_20">#33FFB900</color>
+  <color name="black_4a4a4a_20">#334A4A4A</color>
+  <color name="black_09121F">#09121F</color>
+  <color name="white_F5F7FA">#F5F7FA</color>
+  <color name="black_4a4a4a_40">#664A4A4A</color>
   <color name="inactive_D47661">#D47661</color>
+  <color name="color_4a4a4a_jio_ec008c">#4A4A4A</color>
+
 
 </resources>

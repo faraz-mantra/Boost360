@@ -4,13 +4,15 @@ import com.google.gson.annotations.SerializedName
 
 data class PosterDetailsModel(
     @SerializedName("description")
-    val Description: String,
+    val Description: String?,
     @SerializedName("favourite")
-    val Favourite: Boolean,
+    var Favourite: Boolean?,
     @SerializedName("price")
-    val Price: Double,
+    val Price: Double?,
     @SerializedName("title")
-    val Title: String,
+    val Title: String?,
     @SerializedName("isPurchased")
-    val isPurchased: Boolean
+    val isPurchased: Boolean?,
+    @SerializedName("markedAsFavouriteOn")
+    val markedAsFavouriteOn:String?
 )

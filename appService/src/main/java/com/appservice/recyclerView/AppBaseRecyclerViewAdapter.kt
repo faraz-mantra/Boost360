@@ -50,6 +50,10 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       GST_SLAB_SETTING -> GstSlabViewHolder(binding as ItemGstSlabBinding)
       VMN_CALL -> VmnCallViewHolder(binding as SingleItemVmnCallItemV2Binding)
       TESTIMONIAL_ITEM -> TestimonialViewHolder(binding as ItemTestimonialListBinding)
+      PAST_UPDATE_ITEM->PastUpdateViewHolder(binding as ListItemPastUpdateBinding)
+      PAST_POST_CATEGORIES->PastCategoryViewHolder(binding as ListItemPastCategoryBinding)
+      PAST_TAGS->PastTagsViewHolder(binding as ListItemPastTagsBinding)
+      PAST_SOCIAL_ICON_LIST_ITEM->PastSocialIconViewHolder(binding as ListItemSocialIconBinding)
     }
   }
 
