@@ -46,6 +46,7 @@ import com.framework.webengageconstant.PAGE_VIEW
 import com.framework.webengageconstant.Post_Promotional_Update_Click
 import java.util.*
 
+@Deprecated(" use PastUpdatesLisitngFragment")
 class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener,AppOnZeroCaseClicked {
 
   private val STORAGE_CODE = 120

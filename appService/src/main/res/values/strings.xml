@@ -1253,4 +1253,14 @@
     <string name="data_updated_successfully">Data updated successfully</string>
     <string name="please_fill_data_in_the_fields_highlighted_in_red">Please fill data in the fields highlighted in red</string>
   <string name="please_fill_valid_dates">Please fill valid dates. End time cannot be equal or before start Time !</string>
+
+  <string name="cat_0_all_updates">All updates</string>
+  <string name="cat_1_promotional_posts">Promotional posts</string>
+  <string name="cat_2_image_text">Images + Text</string>
+  <string name="cat_3_text_only">Text only</string>
+  <string name="posted_on">Posted on</string>
+  <string name="no_posts_available">No posts available!</string>
+  <string name="reuse">Reuse</string>
+  <string name="stats">Stats</string>
+  <string name="post_a_new_update">Post a new update</string>
 </resources>

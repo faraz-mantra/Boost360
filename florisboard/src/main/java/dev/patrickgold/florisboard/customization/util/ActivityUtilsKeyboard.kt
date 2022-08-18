@@ -153,7 +153,7 @@ fun startUpdateLatestStoryN(mContext: Context) {
     if (isInstall(mContext)) return
     WebEngageController.trackEvent(UPDATE_LATEST_STORY_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val intent = Intent(mContext, UpdateBusinessContainerActivity::class.java)
-    intent.setFragmentType(com.appservice.constant.FragmentType.UPDATE_BUSINESS_FRAGMENT)
+    intent.setFragmentType(com.appservice.constant.FragmentType.PAST_UPDATES)
     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     mContext.startActivity(intent)
   } catch (e: Exception) {

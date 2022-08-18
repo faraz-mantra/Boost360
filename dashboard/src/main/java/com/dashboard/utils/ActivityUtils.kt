@@ -313,7 +313,7 @@ fun AppCompatActivity.startNotification(session: UserSessionManager) {
 
 fun AppCompatActivity.startUpdateLatestStory(session: UserSessionManager) {
   WebEngageController.trackEvent(UPDATE_LATEST_STORY_PAGE_CLICK, CLICK, TO_BE_ADDED)
-  startUpdateFragmentActivity(com.appservice.constant.FragmentType.UPDATE_BUSINESS_FRAGMENT)
+  startUpdateFragmentActivity(com.appservice.constant.FragmentType.PAST_UPDATES)
 //  startAppActivity(fragmentType = "UPDATE_LATEST_STORY_VIEW")
 }
 
