@@ -12,14 +12,22 @@ import com.appservice.model.servicev1.UploadImageRequest
 import com.appservice.model.testimonial.AddTestimonialImageRequest
 import com.appservice.model.testimonial.AddUpdateTestimonialRequest
 import com.appservice.model.testimonial.ListTestimonialRequest
+import com.appservice.model.updateBusiness.pastupdates.CategoryUi
+import com.appservice.model.updateBusiness.pastupdates.GetCategoryResponse
+import com.appservice.model.updateBusiness.pastupdates.asDomainModels
 import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.NowfloatsApiClient
 import com.appservice.rest.services.NowfloatsRemoteData
 import com.framework.base.BaseResponse
+import com.framework.utils.getResponse
+import com.inventoryorder.rest.repositories.NowFloatsRepository
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import org.json.JSONObject
 import retrofit2.Retrofit
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 object NowfloatsApiRepository : AppBaseRepository<NowfloatsRemoteData, CatalogLocalDataSource>() {
 
@@ -136,4 +144,24 @@ object NowfloatsApiRepository : AppBaseRepository<NowfloatsRemoteData, CatalogLo
     return mutableMapOf<String, String>().apply { put("testimonialId", testimonialId ?: "") }
 
   }
+
+  fun getCategories(): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getUpdatesCategories(),
+      TaskCode.GET_UPDATES_CATS
+    )
+  }
+
+  suspend fun getCategoriesUI()=
+    suspendCoroutine<List<CategoryUi>>{ cont->
+      getCategories().getResponse {
+        if (it.isSuccess()){
+          val response = it as? GetCategoryResponse
+          cont.resume(response!!.Result.asDomainModels())
+
+        }else{
+          cont.resumeWithException(Exception())
+        }
+      }
+    }
 }

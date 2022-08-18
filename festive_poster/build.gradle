@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 
 android {
@@ -48,5 +49,6 @@ android {
 }
 
 dependencies {
-    api project(path: ':resources')
+    api project(path: ':onboarding')
+    implementation "com.github.skydoves:balloon:1.4.5"
 }
