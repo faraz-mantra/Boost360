@@ -1147,6 +1147,29 @@
   <string name="the_total_number_of_clicks_on_your_contact_number_displayed_on_website">The total number of clicks on your contact number displayed on website</string>
   <string name="total_calls">Total Calls</string>
   <string name="missed_calls">Missed Calls</string>
+    <string name="create_an_update">Create an update</string>
+    <string name="tell_your_customers_what_s_new">Tell your customers what’s new*</string>
+    <string name="type_in_the_caption_to_create_your_own_hashtags">Type ‘#’ in the caption to create your own hashtags</string>
+    <string name="preview_and_post2">Preview and post</string>
+    <string name="supported_format_jpeg_png_size_square_800_x_800px_minimum">Supported format: JPEG/PNG. Size: Square (800 x 800px minimum)</string>
+    <string name="discarding_the_post">Discarding the post?</string>
+    <string name="closing_this_page_will_not_save_the_changes_you_ve_made_do_you_want_to_save_a_draft_or_discard_this_post">Closing this page will not save the changes you’ve made. Do you want to save a draft or discard this post?</string>
+    <string name="no_save_as_draft">No, save as draft</string>
+    <string name="yes_discard">Yes, discard</string>
+    <string name="edit_image">Edit image</string>
+    <string name="rotate">Rotate</string>
+    <string name="choose_an_option">Choose an option</string>
+    <string name="take_a_photo">Take a photo</string>
+    <string name="choose_from_phone_gallery">Choose from phone gallery</string>
+  <string name="browse_other_images">Browse other images....</string>
+    <string name="tap_to_edit">Tap to Edit</string>
+    <string name="write_about_your_customer_location_recent_updates_timing_etc">Write about your customer, location, recent updates, timing, etc.</string>
+    <string name="add_image_optional">Add image (optional)</string>
+    <string name="image_format_is_not_supported_please_use_jpeg_jpg_or_png">Image format is not supported. Please use JPEG, JPG, or PNG</string>
+  <string name="image_resolution_is_smaller_than_800_x_800_px">Image resolution is smaller than 800 X 800 px</string>
+  <string name="image_file_size_is_bigger_than_2mb">Image file size is bigger than 2MB</string>
+    <string name="describe_what_you_want_to_say_in_the_picture_added_above">Describe what you want to say in the picture added above...</string>
+    <string name="your_post_was_saved_as_draft">Your post was saved as Draft</string>
   <string name="testimonial_update_success">Testimonial update successfully!</string>
   <string name="testimonial_add_success">Testimonial add successfully!</string>
   <string name="testimonial_delete_success">Testimonial delete successfully!</string>
@@ -1232,4 +1255,14 @@
     <string name="data_updated_successfully">Data updated successfully</string>
     <string name="please_fill_data_in_the_fields_highlighted_in_red">Please fill data in the fields highlighted in red</string>
   <string name="please_fill_valid_dates">Please fill valid dates. End time cannot be equal or before start Time !</string>
+
+  <string name="cat_0_all_updates">All updates</string>
+  <string name="cat_1_promotional_posts">Promotional posts</string>
+  <string name="cat_2_image_text">Images + Text</string>
+  <string name="cat_3_text_only">Text only</string>
+  <string name="posted_on">Posted on</string>
+  <string name="no_posts_available">No posts available!</string>
+  <string name="reuse">Reuse</string>
+  <string name="stats">Stats</string>
+  <string name="post_a_new_update">Post a new update</string>
 </resources>

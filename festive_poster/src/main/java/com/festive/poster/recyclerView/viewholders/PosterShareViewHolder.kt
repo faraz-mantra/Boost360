@@ -36,7 +36,8 @@ class PosterShareViewHolder(binding: ListItemPosterShareBinding):
         }
         binding.ivOther.setOnClickListener {
             WebEngageController.trackEvent(FESTIVAL_POSTER_SHARE_OTHER,event_value = HashMap())
-            SvgUtils.shareUncompressedSvg(model.variants?.firstOrNull()?.svgUrl,model,binding.root.context, "")
+            SvgUtils.shareUncompressedSvg(model.variants?.firstOrNull()?.svgUrl
+                ,model)
         }
 
         binding.ivDownload.setOnClickListener {
@@ -46,12 +47,12 @@ class PosterShareViewHolder(binding: ListItemPosterShareBinding):
 
         binding.ivWhatsapp.setOnClickListener {
             WebEngageController.trackEvent(FESTIVAL_POSTER_SHARE_WHATSAPP,event_value = HashMap())
-            SvgUtils.shareUncompressedSvg(model.variants?.firstOrNull()?.svgUrl,model,binding.root.context, PackageNames.WHATSAPP)
+            SvgUtils.shareUncompressedSvg(model.variants?.firstOrNull()?.svgUrl,model, PackageNames.WHATSAPP)
         }
 
         binding.ivInstagram.setOnClickListener {
             WebEngageController.trackEvent(FESTIVAL_POSTER_SHARE_INSTAGRAM,event_value = HashMap())
-            SvgUtils.shareUncompressedSvg(model.variants?.firstOrNull()?.svgUrl,model,binding.root.context, PackageNames.INSTAGRAM)
+            SvgUtils.shareUncompressedSvg(model.variants?.firstOrNull()?.svgUrl,model,PackageNames.INSTAGRAM)
         }
 
         super.bind(position, item)
