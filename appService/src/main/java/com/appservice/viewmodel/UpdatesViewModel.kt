@@ -1,12 +1,20 @@
 package com.appservice.viewmodel
 
 import androidx.lifecycle.LiveData
+import com.framework.models.UpdateDraftBody
 import com.appservice.model.updateBusiness.DeleteBizMessageRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
+import com.appservice.rest.TaskCode
+import com.appservice.rest.repository.UsCentralNowFloatsCloudRepo
+import com.appservice.rest.repository.WithFloatRepository
 import com.appservice.rest.repository.WithFloatTwoRepository
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
+import com.framework.pref.clientId
+import com.google.gson.JsonObject
+import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
+import io.reactivex.Observable
 import okhttp3.RequestBody
 
 class UpdatesViewModel : BaseViewModel() {
@@ -19,12 +27,33 @@ class UpdatesViewModel : BaseViewModel() {
     return WithFloatTwoRepository.putBizMessageUpdate(request).toLiveData()
   }
 
+  fun putBizMessageUpdateV2(request: PostUpdateTaskRequest?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.putBizMessageUpdateV2(request).toLiveData()
+  }
+
   fun deleteBizMessageUpdate(request: DeleteBizMessageRequest?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.deleteBizMessageUpdate(request).toLiveData()
   }
 
   fun getBizWebMessage(id: String?, clientId: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getBizWebMessage(id, clientId).toLiveData()
+  }
+  fun uploadDraftImage(id: String?, clientId: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getBizWebMessage(id, clientId).toLiveData()
+  }
+
+  fun updateFirebaseState(id: String?, clientId: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getBizWebMessage(id, clientId).toLiveData()
+  }
+
+  fun updateDraft(updateDraftBody: UpdateDraftBody): LiveData<BaseResponse> {
+    return UsCentralNowFloatsCloudRepo.updateDraft(
+      updateDraftBody
+    ).toLiveData()
+  }
+
+  fun putUploadImage(request: UploadFileBusinessRequest): LiveData<BaseResponse> {
+    return WithFloatRepository.putUploadImage(request).toLiveData()
   }
 
   fun putBizImageUpdate(
@@ -42,5 +71,16 @@ class UpdatesViewModel : BaseViewModel() {
       clientId, requestType, requestId, totalChunks,
       currentChunkNumber, socialParmeters, bizMessageId, sendToSubscribers, requestBody
     ).toLiveData()
+  }
+
+  fun putBizImageUpdateV2(
+    type: String?,
+    bizMessageId: String?,
+    imageBase64: String?,
+  ): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.putBizImageUpdateV2(
+        type,bizMessageId,imageBase64
+      ).toLiveData()
+
   }
 }
