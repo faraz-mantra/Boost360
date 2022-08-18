@@ -53,6 +53,8 @@ object EndPoints {
   const val GET_TAGS_V1 = "service/v1/tags"
   const val GET_SERVICE_DETAILS = "Service/v1/GetServiceDetails"
   const val DELETE_SECONDARY_IMAGE = "service/v1/DeleteSecondaryImage"
+  const val GET_UPDATES_CATEGORIES="/UpdateStudio/v1/GetCategory"
+
 
   //TODO Testimonial
   const val GET_TESTIMONIAL_LIST = "Testimonial/v1/GetListing"
@@ -89,6 +91,8 @@ object EndPoints {
   const val DELETE_BG_IMAGE="/Discover/v1/floatingPoint/backgroundImage/delete"
   const val PAN_GST_UPDATE="/discover/v9/business/paymentProfile/PanNGst/update"
   const val GET_PAN_GST_DETAILS="/discover/v9/business/paymentProfile/PanNGst/Get/{fpId}"
+  const val GET_PAST_UPDATES_LIST_V6 = "discover/v6/floatingPoint/bizFloats"
+
 
   //TODO PRODUCT API 2 WITH FLOAT
   const val CREATE_PRODUCT = "Product/v1/Create"

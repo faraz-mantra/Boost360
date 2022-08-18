@@ -1,5 +1,6 @@
 package com.festive.poster.ui.promoUpdates
 
+import android.content.Intent
 import android.graphics.BlendMode
 import android.graphics.PorterDuff
 import android.os.Bundle
@@ -20,6 +21,7 @@ import com.festive.poster.ui.promoUpdates.pastUpdates.startFragmentPastUpdatesCo
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.PromoUpdatesViewModel
+import com.framework.base.setFragmentType
 import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.utils.setStatusBarColor
@@ -72,7 +74,9 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoU
                 addFragmentReplace(binding?.container?.id, FavouriteListFragment.newInstance(), true, showAnim = true)
             }
             binding?.ivStore -> {
-                startFragmentPastUpdatesContainerActivity(this, type = FragmentType.UPDATES_LISTING_FRAGMENT, bundle = Bundle())
+                val intent = Intent(this, Class.forName("com.appservice.ui.updatesBusiness.UpdateBusinessContainerActivity"))
+                intent.setFragmentType("PAST_UPDATES")
+                startActivity(intent)
             }
         }
     }

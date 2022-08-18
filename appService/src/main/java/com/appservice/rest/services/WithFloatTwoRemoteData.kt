@@ -13,6 +13,8 @@ import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.model.updateBusiness.BusinessUpdateResponse
 import com.appservice.model.updateBusiness.DeleteBizMessageRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
+import com.appservice.model.updateBusiness.pastupdates.PastUpdatesNewListingResponse
+import com.appservice.model.updateBusiness.pastupdates.TagListRequest
 import com.appservice.rest.EndPoints
 import com.framework.pref.clientId
 import com.google.gson.JsonObject
@@ -216,4 +218,12 @@ interface WithFloatTwoRemoteData {
 
   @GET("/Wildfire/v1/calls/tracker")
   fun trackerCalls(@QueryMap data: Map<String, String?>?): Observable<Response<ArrayList<VmnCallModel?>?>>
+
+  @POST(EndPoints.GET_PAST_UPDATES_LIST_V6)
+  fun getPastUpdatesListV6(
+    @Query("clientId") clientId: String?,
+    @Query("fpId") fpId: String?,
+    @Query("postType") postType: Int?,
+    @Body request: TagListRequest
+  ):Observable<Response<PastUpdatesNewListingResponse>>
 }

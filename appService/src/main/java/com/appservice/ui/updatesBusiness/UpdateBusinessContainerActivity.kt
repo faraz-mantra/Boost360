@@ -67,6 +67,8 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
         this,
         R.color.colorPrimary
       )
+      FragmentType.PAST_UPDATES->ContextCompat.getColor(this,
+        com.framework.R.color.color_4a4a4a_jio_ec008c)
       else -> super.getToolbarBackgroundColor()
     }
   }
@@ -115,6 +117,7 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT -> AddUpdateBusinessFragment.newInstance()
       FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2 -> AddUpdateBusinessFragmentV2.newInstance()
       FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> DetailUpdateBusinessFragment.newInstance()
+      FragmentType.PAST_UPDATES->PastUpdatesListingFragment.newInstance()
       else -> AddUpdateBusinessFragmentV2.newInstance()
     }
   }
