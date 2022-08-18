@@ -75,7 +75,7 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getToolbarTitleColor(): Int? {
     return when (type) {
-      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> ContextCompat.getColor(
+      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT,FragmentType.PAST_UPDATES -> ContextCompat.getColor(
         this,
         R.color.white
       )
@@ -95,6 +95,7 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.UPDATE_BUSINESS_FRAGMENT -> getLatestUpdatesTaxonomyFromServiceCode(session?.fP_AppExperienceCode)
       FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT -> getString(R.string.post_an_update_n)
       FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> ""
+      FragmentType.PAST_UPDATES->getString(R.string.Posted_Updates)
       else -> super.getToolbarTitle()
     }
   }
