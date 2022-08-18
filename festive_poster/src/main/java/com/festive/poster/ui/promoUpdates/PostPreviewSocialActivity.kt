@@ -611,7 +611,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             sendToSubscribe,
             socialShare,
             updateType,
-            tags= arrayListOf(template?.categoryId)
+            tags=if (template==null) null else arrayListOf(template?.categoryId)
         )
 
 
@@ -642,6 +642,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                 } else {
                     showSuccessSheet()
                 }
+            }else{
+                showLongToast(getString(R.string.something_went_wrong))
             }
 
 
