@@ -16,6 +16,7 @@ import com.dashboard.utils.getBundleData
 import com.dashboard.utils.getSessionOrder
 import com.dashboard.utils.startTestimonial
 import com.framework.analytics.SentryController
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 import com.inventoryorder.constant.IntentConstant
@@ -153,7 +154,16 @@ fun startUpdateLatestStoryN(mContext: Context) {
     if (isInstall(mContext)) return
     WebEngageController.trackEvent(UPDATE_LATEST_STORY_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val intent = Intent(mContext, UpdateBusinessContainerActivity::class.java)
-    intent.setFragmentType(com.appservice.constant.FragmentType.PAST_UPDATES)
+    intent.setFragmentType(
+      if (FirebaseRemoteConfigUtil
+          .featureUpdateStudioSelectedUsers(
+            UserSessionManager(mContext).fpTag)
+      ) {
+        com.appservice.constant.FragmentType.PAST_UPDATES
+      }else{
+        com.appservice.constant.FragmentType.UPDATE_BUSINESS_FRAGMENT
+      }
+    )
     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     mContext.startActivity(intent)
   } catch (e: Exception) {

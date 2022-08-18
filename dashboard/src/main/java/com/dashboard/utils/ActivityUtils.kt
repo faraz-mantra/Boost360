@@ -29,6 +29,7 @@ import com.festive.poster.ui.festivePoster.FestivePosterContainerActivity
 import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
 import com.framework.analytics.SentryController
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureNewOnBoardingFlowEnable
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureUpdateStudioSelectedUsers
 import com.framework.pref.*
 import com.framework.utils.DateUtils
 import com.framework.webengageconstant.*
@@ -313,7 +314,11 @@ fun AppCompatActivity.startNotification(session: UserSessionManager) {
 
 fun AppCompatActivity.startUpdateLatestStory(session: UserSessionManager) {
   WebEngageController.trackEvent(UPDATE_LATEST_STORY_PAGE_CLICK, CLICK, TO_BE_ADDED)
-  startUpdateFragmentActivity(com.appservice.constant.FragmentType.PAST_UPDATES)
+  if (featureUpdateStudioSelectedUsers(session.fpTag)){
+    startUpdateFragmentActivity(com.appservice.constant.FragmentType.PAST_UPDATES)
+  }else{
+    startUpdateFragmentActivity(com.appservice.constant.FragmentType.UPDATE_BUSINESS_FRAGMENT)
+  }
 //  startAppActivity(fragmentType = "UPDATE_LATEST_STORY_VIEW")
 }
 
