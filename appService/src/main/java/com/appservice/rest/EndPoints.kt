@@ -172,7 +172,7 @@ object EndPoints {
   const val GET_FEATURE_DETAILS_2 = "Features/v1/GetFeatureDetails"
 
   // RIA MEMORY APIs
-  const val RIA_MEMORY_BASE_URL="https://riamemory.withfloats.com"
+  const val RIA_MEMORY_BASE_URL="https://jiw-ria-fpactivity-api-as-prod.azurewebsites.net/"
 
   //US CENTRAL
   const val US_CENTRAL_BASE="https://us-central1-nowfloats-boost.cloudfunctions.net/"
