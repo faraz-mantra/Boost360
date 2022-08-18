@@ -631,7 +631,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             } else {
                 cartCount = 0
                 badgeNumber = 0
-                binding?.badge121?.visibility = View.GONE
+                binding?.badge121?.visibility = GONE
                 packageInCartStatus = false
 
                 binding?.bottomBoxOnlyBtn?.setTextColor(this.resources.getColor(R.color.white))
@@ -659,7 +659,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 benefitAdaptor.addupdates(bundleData?.benefits!!)
                 benefitAdaptor.notifyDataSetChanged()
             } else {
-                binding?.containerKeyBenefits?.visibility = View.GONE
+                binding?.containerKeyBenefits?.visibility = GONE
             }
             if (bundleData?.included_features != null && bundleData?.included_features?.isNotEmpty()!!) {
                 binding?.rvIncludedFeatures?.visibility = VISIBLE
@@ -669,7 +669,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 featuresList?.let { includedFeatureAdapter.addupdates(it) }
                 includedFeatureAdapter.notifyDataSetChanged()
             } else {
-                binding?.rvIncludedFeatures?.visibility = View.GONE
+                binding?.rvIncludedFeatures?.visibility = GONE
                 binding?.tvPremiumFeaturesNo?.visibility = GONE
             }
 
@@ -678,7 +678,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 binding?.howToUseContainer?.setOnClickListener {
                     if (binding?.howToUseRecycler?.visibility == View.VISIBLE) {
                         how_to_use_arrow.setImageResource(R.drawable.ic_down_arrow_pack_details)
-                        how_to_use_recycler.visibility = View.GONE
+                        how_to_use_recycler.visibility = GONE
                     } else {
                         how_to_use_arrow.setImageResource(R.drawable.ic_up_arrow_with_bg)
                         how_to_use_recycler.visibility = View.VISIBLE
@@ -706,7 +706,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 faqAdapter.addupdates(faq)
                 faqAdapter.notifyDataSetChanged()
             } else {
-                faq_container.visibility = View.GONE
+                faq_container.visibility = GONE
             }
 
 
@@ -737,7 +737,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                                 }
                                 packDetailsAdapter.addupdates(it)
                                 includedFeatureAdapter.addupdates(it)
-                                needMoreFeatureAdapter.addupdates(it)
                                 binding?.packRecycler?.adapter = packDetailsAdapter
                             } else {
                                 binding?.packContainer?.visibility = GONE
@@ -770,7 +769,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                                     "SAVING " + bundleData?.overall_discount_percent!!.toString() + "%"
                             } else {
                                 offeredBundlePrice = originalBundlePrice
-                                binding?.containerBlack?.visibility = View.GONE
+                                binding?.containerBlack?.visibility = GONE
 
                             }
 
@@ -805,7 +804,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                                 } else {
                                     binding?.includedBlack?.tvPrice?.visibility = GONE
 
-                                    binding?.mrpPrice?.visibility = View.GONE
+                                    binding?.mrpPrice?.visibility = GONE
                                 }
                             } else {
                                 binding
@@ -823,7 +822,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                                     binding?.mrpPrice?.visibility = View.VISIBLE
                                 } else {
                                     binding?.includedBlack?.tvPrice?.visibility = GONE
-                                    binding?.price?.visibility = View.GONE
+                                    binding?.price?.visibility = GONE
                                 }
                             }
 
@@ -843,13 +842,15 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             discount.visibility = View.VISIBLE
             discount.setText(bundlesModel.overall_discount_percent.toString() + "% saving")
         } else {
-            discount.visibility = View.GONE
+            discount.visibility = GONE
         }
         try {
             getPackageInfoFromDB( bundlesModel)
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
+
+        setupFeatureIcons(bundlesModel)
 
         comparePacks.setOnClickListener {
             val intent = Intent(this, ComparePacksV3Activity::class.java)
@@ -917,6 +918,39 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 }
     }
 
+    private fun setupFeatureIcons(bundlesModel: BundlesModel) {
+        val temp = Gson().fromJson<List<IncludedFeature>>(
+            bundlesModel.included_features!!,
+            object : TypeToken<List<IncludedFeature>>() {}.type
+        )
+
+
+        val itemsIds = arrayListOf<String>()
+        for (item in temp) {
+            itemsIds.add(item.feature_code)
+        }
+
+        CompositeDisposable().add(
+            AppDatabase.getInstance(this.application)!!
+                .featuresDao()
+                .getallFeaturesInList(itemsIds)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        if (it.isNotEmpty()) {
+                            needMoreFeatureAdapter.addupdates(it)
+                        } else {
+                            binding?.otherFeatureRecyclerView?.visibility = GONE
+                        }
+                    },
+                    {
+                        it.printStackTrace()
+                    }
+                )
+        )
+    }
+
     fun getPackageInfoFromDB(bundles: BundlesModel) {
         val itemsIds = arrayListOf<String>()
         val includedFeatures =
@@ -962,7 +996,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                             discount.setText(bundles.overall_discount_percent.toString() + "%\nSAVING")
                         } else {
                             offeredBundlePrice = originalBundlePrice
-                            discount.visibility = View.GONE
+                            discount.visibility = GONE
                         }
                         needMorePrice.setText("₹" + offeredBundlePrice + Utils.yearlyOrMonthlyOrEmptyValidity(
                             "",
