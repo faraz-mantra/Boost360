@@ -28,11 +28,7 @@ enum class RecyclerViewItemType {
   GMB_PREVIEW_NO_IMAGE,
   TWITTER_PREVIEW_NO_IMAGE,
   VIEW_MORE_POSTER,
-  PAST_UPDATE_ITEM,
-  FAV_CAT,
-  PAST_POST_CATEGORIES,
-  PAST_TAGS,
-  PAST_SOCIAL_ICON_LIST_ITEM;
+  FAV_CAT ;
 
 
   @LayoutRes
@@ -61,14 +57,8 @@ enum class RecyclerViewItemType {
       GMB_PREVIEW_NO_IMAGE->R.layout.social_preview_gmb_no_image
       EMAIL_PREVIEW_NO_IMAGE->R.layout.social_preview_email_no_image
       TWITTER_PREVIEW_NO_IMAGE -> R.layout.social_preview_twitter_no_image
-
       VIEW_MORE_POSTER->R.layout.layout_view_more_template
-      PAST_UPDATE_ITEM->R.layout.list_item_past_update
       FAV_CAT->R.layout.list_item_fav_cat
-
-      PAST_POST_CATEGORIES->R.layout.list_item_past_category
-      PAST_TAGS->R.layout.list_item_past_tags
-      PAST_SOCIAL_ICON_LIST_ITEM->R.layout.list_item_social_icon
     }
   }
 }

@@ -17,7 +17,6 @@ import com.festive.poster.constant.FragmentType
 import com.festive.poster.databinding.ActivityPromoUpdatesBinding
 import com.festive.poster.models.promoModele.SocialConnModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
-import com.festive.poster.ui.promoUpdates.pastUpdates.startFragmentPastUpdatesContainerActivity
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.PromoUpdatesViewModel

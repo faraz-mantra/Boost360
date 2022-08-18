@@ -1,7 +1,6 @@
 package com.festive.poster.models
 
 import android.os.Parcelable
-import com.festive.poster.models.promoModele.PastPromotionalCategoryModel
 import com.festive.poster.models.response.FavCategory
 import kotlinx.android.parcel.Parcelize
 
@@ -25,12 +24,7 @@ open class CategoryUi(
 }
 
 
-fun List<CategoryUi>.asPastPromotionalCategoryModels()=map {
-    PastPromotionalCategoryModel(
-        id = it.id,
-        name = it.name
-    )
-}
+
 
 fun List<CategoryUi>.asBrowseTabModels(): List<BrowseTabCategory> {
     return map {
