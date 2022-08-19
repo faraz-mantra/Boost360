@@ -14,6 +14,7 @@ import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.MyAddonsListener
 import com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity
 import com.bumptech.glide.Glide
+import com.framework.utils.DateUtils
 
 
 class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
@@ -116,6 +117,7 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
   class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     var singleTitle = itemView.findViewById<TextView>(R.id.free_addons_name)!!
+    var validity2 = itemView.findViewById<TextView>(R.id.validity2)!!
     var image = itemView.findViewById<ImageView>(R.id.single_freeaddon_image)!!
     var mainLayout=itemView.findViewById<ConstraintLayout>(R.id.main_layout)
     var cardViews=itemView.findViewById<LinearLayout>(R.id.cardViews)
@@ -127,7 +129,9 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
 
     fun upgradeListItem(updateModel: FeaturesModel) {
       singleTitle.text = updateModel.name
-      val date= updateModel.expiryDate?.substring(0,10)
+      val date: String? =
+        DateUtils.parseDate(updateModel.expiryDate, DateUtils.FORMAT_SERVER_DATE1, DateUtils.FORMAT1_DD_MM_YYYY)
+      validity2.text= "Valid till " + date
       Glide.with(context).load(updateModel.primary_image).into(image)
       if (updateModel.featureState == 1) {
        img1.setImageResource(R.drawable.ic_active)

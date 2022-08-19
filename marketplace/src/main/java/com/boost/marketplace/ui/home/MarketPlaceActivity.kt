@@ -5,11 +5,14 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -34,6 +37,7 @@ import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.constant.RecyclerViewActionType
 import com.boost.marketplace.databinding.ActivityMarketplaceBinding
+import com.boost.marketplace.infra.utils.Utils1
 import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.interfaces.CompareBackListener
 import com.boost.marketplace.interfaces.HomeListener
@@ -54,6 +58,8 @@ import com.framework.analytics.SentryController
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
+import com.framework.utils.DateUtils
+import com.framework.utils.DateUtils.parseDate
 import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
@@ -170,7 +176,9 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         loadData()
         initMvvm()
         shimmer_view_package.startShimmer()
+        shimmer_view_package1.startShimmer()
         shimmer_view_banner.startShimmer()
+        shimmer_view_banner1.startShimmer()
         shimmer_view_recomm_addons.startShimmer()
         shimmer_view_addon_category.startShimmer()
         WebEngageController.trackEvent(ADDONS_MARKETPLACE_HOME, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
@@ -204,6 +212,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                         }
                         banner_viewpager.currentItem = 0
                         package_viewpager.currentItem = 0
+                        banner_viewpager1.currentItem = 0
+                        package_viewpager1.currentItem = 0
                         prefs.storeCartValidityMonths("1")
                         upgradeAdapter.notifyDataSetChanged()
                         packageViewPagerAdapter.notifyDataSetChanged()
@@ -268,7 +278,9 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         initializeVideosRecycler()
         initializePartnerViewPager()
         initializeBannerViewPager()
+        initializeBannerViewPager1()
         initializePackageViewPager()
+        initializePackageViewPager1()
         initializeFeatureDeals()
         initializeRecycler()
         initializeAddonCategoryRecycler()
@@ -402,6 +414,38 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                     Toast.LENGTH_LONG
                 ).show()
             }
+        }
+
+        package_compare_layout1.setOnClickListener {
+            val intent = Intent(this, ComparePacksV3Activity::class.java)
+            intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+
+            intent.putExtra("fpid", fpid)
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("isDeepLink", isDeepLink)
+            intent.putExtra("deepLinkViewType", deepLinkViewType)
+            intent.putExtra("deepLinkDay", deepLinkDay)
+            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                userPurchsedWidgets
+            )
+            if (email != null) {
+                intent.putExtra("email", email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                intent.putExtra("mobileNo", mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", profileUrl)
+            startActivity(intent)
         }
 
         package_compare_layout.setOnClickListener {
@@ -600,16 +644,29 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                     shimmer_view_package.stopShimmer()
                     shimmer_view_package.visibility = View.GONE
                 }
+                if (shimmer_view_package1.isShimmerStarted) {
+                    shimmer_view_package1.stopShimmer()
+                    shimmer_view_package1.visibility = View.GONE
+                }
                 package_layout.visibility = View.VISIBLE
+                package_layout1.visibility = View.VISIBLE
                 package_compare_layout.visibility = View.VISIBLE
+                package_compare_layout1.visibility = View.VISIBLE
                 updatePackageViewPager(list)
+                updatePackageViewPager1(list)
             } else {
                 if (shimmer_view_package.isShimmerStarted) {
                     shimmer_view_package.stopShimmer()
                     shimmer_view_package.visibility = View.GONE
                 }
+                if (shimmer_view_package1.isShimmerStarted) {
+                    shimmer_view_package1.stopShimmer()
+                    shimmer_view_package1.visibility = View.GONE
+                }
                 package_layout.visibility = View.GONE
+                package_layout1.visibility = View.GONE
                 package_compare_layout.visibility = View.GONE
+                package_compare_layout1.visibility = View.GONE
             }
         })
 
@@ -642,6 +699,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 package_compare_layout.visibility = View.VISIBLE
 //                updatePackageViewPager(list)
                 updatePackageBackPressViewPager(list)
+                updatePackageBackPressViewPager1(list)
             } else {
                 package_layout.visibility = View.GONE
                 package_compare_layout.visibility = View.GONE
@@ -1116,13 +1174,23 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                     shimmer_view_banner.stopShimmer()
                     shimmer_view_banner.visibility = View.GONE
                 }
+                if (shimmer_view_banner1.isShimmerStarted) {
+                    shimmer_view_banner1.stopShimmer()
+                    shimmer_view_banner1.visibility = View.GONE
+                }
                 banner_layout.visibility = View.VISIBLE
+                banner_layout1.visibility = View.VISIBLE
             } else {
                 if (shimmer_view_banner.isShimmerStarted) {
                     shimmer_view_banner.stopShimmer()
                     shimmer_view_banner.visibility = View.GONE
                 }
+                if (shimmer_view_banner1.isShimmerStarted) {
+                    shimmer_view_banner1.stopShimmer()
+                    shimmer_view_banner1.visibility = View.GONE
+                }
                 banner_layout.visibility = View.GONE
+                banner_layout1.visibility = View.GONE
             }
 
         })
@@ -1135,14 +1203,25 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                     shimmer_view_banner.stopShimmer()
                     shimmer_view_banner.visibility = View.GONE
                 }
+                if (shimmer_view_banner1.isShimmerStarted) {
+                    shimmer_view_banner1.stopShimmer()
+                    shimmer_view_banner1.visibility = View.GONE
+                }
                 updateBannerViewPager(it)
+                updateBannerViewPager1(it)
                 banner_layout.visibility = View.VISIBLE
+                banner_layout1.visibility = View.VISIBLE
             } else {
                 if (shimmer_view_banner.isShimmerStarted) {
                     shimmer_view_banner.stopShimmer()
                     shimmer_view_banner.visibility = View.GONE
                 }
+                if (shimmer_view_banner1.isShimmerStarted) {
+                    shimmer_view_banner1.stopShimmer()
+                    shimmer_view_banner1.visibility = View.GONE
+                }
                 banner_layout.visibility = View.GONE
+                banner_layout1.visibility = View.GONE
             }
         })
 
@@ -1170,18 +1249,76 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //        })
 
         viewModel.getActivePremiumWidgets().observe(this, androidx.lifecycle.Observer {
-            //display referal if there is any paid addons
+
             if (it.size > 0) {
                 for (singleItem in it){
-                    if (singleItem.expiryDate!=null && singleItem.is_premium){
-
-
-
+                    if (singleItem.feature_code =="DOMAINPURCHASE"){
+                        val domainPurchase = it.find { it.feature_code == "DOMAINPURCHASE" }
+                        val expired = domainPurchase?.expiryDate
+                        val date2 = expired!!.parseDate(DateUtils.FORMAT_SERVER_DATE1)
+                        val isExpired1 = date2?.let { it1 -> Utils1.isExpired(it1) }
+                        if (isExpired1 == true){
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                val window: Window = this.window
+                                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                                window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
+                            }
+                            welcome_txt.visibility=View.GONE
+                            welcome_txt1.visibility=View.VISIBLE
+                            screen_title.visibility=View.GONE
+                            screen_title1.visibility=View.VISIBLE
+                            expiry_layout.setBackgroundResource(R.drawable.curve_black_bg)
+                            layout_main.setBackgroundResource(R.color.primaryDark)
+                            banner_rl_layout.visibility=View.GONE
+                            package_compare_layout.visibility=View.GONE
+                            package_compare_layout1.visibility=View.VISIBLE
+                            banner_rl_layout1.visibility=View.VISIBLE
+                            mp_package_rl_layout.visibility=View.GONE
+                            mp_package_rl_layout1.visibility=View.VISIBLE
+                            banner_rl_layout1.setBackgroundResource(R.drawable.curve_white_bg)
+                        }
+                        else{
+                            expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
+                            welcome_txt.visibility=View.VISIBLE
+                            welcome_txt1.visibility=View.GONE
+                            screen_title.visibility=View.VISIBLE
+                            screen_title1.visibility=View.GONE
+                            banner_rl_layout.visibility=View.VISIBLE
+                            package_compare_layout1.visibility=View.GONE
+                            package_compare_layout.visibility=View.VISIBLE
+                            banner_rl_layout1.visibility=View.GONE
+                            mp_package_rl_layout.visibility=View.VISIBLE
+                            mp_package_rl_layout1.visibility=View.GONE
+                        }
                     }
                 }
+                //               for (singleItem in it){
+//                    if (singleItem.feature_code == "DOMAINPURCHASE" ){
+//                        val date2 = expired!!.parseDate(DateUtils.FORMAT_SERVER_DATE1)
+//                        val isExpired1 = date2?.let { it1 -> Utils1.isExpired(it1) }
+////                        if (isExpired1 == true)
+////                            view_my_current_plan.visibility=View.GONE
+////                        else
+////                            view_my_current_plan.visibility=View.VISIBLE
+//
+//                        when (isExpired1) {
+//                            isExpired1 == true-> {
+//                                expiry_layout.setBackgroundResource(R.drawable.curve_black_bg)
+//                            }
+//                            else -> {
+//                                expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
+//                            }
+//                        }
+//                        break
+//                    }
+//                    else{
+//                        expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
+//                    }
+
                 bottom_box.visibility = View.VISIBLE
                 footer.visibility = View.VISIBLE
-            } else {
+            }
+            else {
                 bottom_box.visibility = View.GONE
                 footer.visibility = View.GONE
             }
@@ -1236,6 +1373,29 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         }
     }
 
+    fun updateBannerViewPager1(list: List<PromoBanners>) {
+        banner_layout1.visibility = View.VISIBLE
+        banner_viewpager1.offscreenPageLimit = list.size
+        bannerViewPagerAdapter.addupdates(list)
+        bannerViewPagerAdapter.notifyDataSetChanged()
+        //show dot indicator only when the (list.size > 2)
+        if (list.size > 1) {
+            if (list.size > 2) {
+                banner_viewpager1.setPageTransformer(SimplePageTransformer())
+
+                val itemDecoration = HorizontalMarginItemDecoration(
+                    applicationContext,
+                    R.dimen.viewpager_current_item_horizontal_margin1,
+                    R.dimen.viewpager_current_item_horizontal_margin1
+                )
+                banner_viewpager1.addItemDecoration(itemDecoration)
+            }
+            banner_indicator1.visibility = View.VISIBLE
+        } else {
+            banner_indicator1.visibility = View.INVISIBLE
+        }
+    }
+
     fun updatePackageBackPressViewPager(list: List<Bundles>) {
         initializePackageViewPager()
         package_viewpager.offscreenPageLimit = list.size
@@ -1247,6 +1407,20 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         } else {
             package_indicator.visibility = View.INVISIBLE
             package_compare_layout.visibility = View.INVISIBLE
+        }
+    }
+
+    fun updatePackageBackPressViewPager1(list: List<Bundles>) {
+        initializePackageViewPager1()
+        package_viewpager1.offscreenPageLimit = list.size
+        packageViewPagerAdapter.addupdates(list)
+        packageViewPagerAdapter.notifyDataSetChanged()
+        //show dot indicator only when the (list.size > 2)
+        if (list.size > 1) {
+            package_indicator1.visibility = View.VISIBLE
+        } else {
+            package_indicator1.visibility = View.INVISIBLE
+            package_compare_layout1.visibility = View.INVISIBLE
         }
     }
 
@@ -1302,6 +1476,19 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         } else {
             package_indicator.visibility = View.INVISIBLE
             package_compare_layout.visibility = View.INVISIBLE
+        }
+    }
+
+    fun updatePackageViewPager1(list: List<Bundles>) {
+        package_viewpager1.offscreenPageLimit = list.size
+        packageViewPagerAdapter.addupdates(list)
+        packageViewPagerAdapter.notifyDataSetChanged()
+        //show dot indicator only when the (list.size > 2)
+        if (list.size > 1) {
+            package_indicator1.visibility = View.VISIBLE
+        } else {
+            package_indicator1.visibility = View.INVISIBLE
+            package_compare_layout1.visibility = View.INVISIBLE
         }
     }
 
@@ -1930,6 +2117,20 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
     }
 
+    private fun initializeBannerViewPager1() {
+        banner_layout1.visibility = View.VISIBLE
+        banner_viewpager1.adapter = bannerViewPagerAdapter
+        banner_viewpager1.offscreenPageLimit = 4
+        banner_indicator1.setViewPager2(banner_viewpager1)
+        val itemDecoration = HorizontalMarginItemDecoration(
+            applicationContext,
+            R.dimen.viewpager_current_item_horizontal_margin1,
+            R.dimen.viewpager_current_item_horizontal_margin1
+        )
+        banner_viewpager1.addItemDecoration(itemDecoration)
+
+    }
+
     private fun initializePartnerViewPager() {
         partner_viewpager.adapter = partnerViewPagerAdapter
         partner_viewpager.offscreenPageLimit = 4
@@ -1959,6 +2160,21 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             R.dimen.viewpager_current_item_horizontal_margin
         )
         package_viewpager.addItemDecoration(itemDecoration)
+
+    }
+
+    private fun initializePackageViewPager1() {
+        package_viewpager1.adapter = packageViewPagerAdapter
+        package_indicator1.setViewPager2(package_viewpager1)
+
+        package_viewpager1.setPageTransformer(SimplePageTransformer())
+
+        val itemDecoration = HorizontalMarginItemDecoration(
+            applicationContext,
+            R.dimen.viewpager_current_item_horizontal_margin,
+            R.dimen.viewpager_current_item_horizontal_margin
+        )
+        package_viewpager1.addItemDecoration(itemDecoration)
 
     }
 
