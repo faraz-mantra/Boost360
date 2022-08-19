@@ -65,19 +65,12 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   }
 
   override fun onCreateView() {
-    setOnClickListener(
-      binding?.textAdd,
-      binding?.buttonReviewDetails,
-      binding?.tvPaymentStatus,
-      binding?.textEdit
-    )
-    orderInitiateRequest =
-      arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
+    setOnClickListener(binding?.textAdd, binding?.buttonReviewDetails, binding?.tvPaymentStatus, binding?.textEdit)
+    orderInitiateRequest = arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
     totalPrice = arguments?.getDouble(IntentConstant.TOTAL_PRICE.name) ?: 0.0
     totalGst = MathUtils.calculateGST(totalPrice,orderInitiateRequest?.items?.firstOrNull()?.productDetails?.gstSlab?:0)
     discountedPrice = arguments?.getDouble(IntentConstant.DISCOUNTED_PRICE.name) ?: 0.0
-    selectedService =
-      arguments?.getSerializable(IntentConstant.SELECTED_SERVICE.name) as ServiceItem
+    selectedService = arguments?.getSerializable(IntentConstant.SELECTED_SERVICE.name) as ServiceItem
     prefData = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     // orderInitiateRequest?.sellerID = preferenceData?.fpTag.toString()
 
