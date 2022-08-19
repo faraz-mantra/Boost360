@@ -67,7 +67,7 @@ interface FeaturesDao {
   @Query("SELECT * FROM Features Where is_premium = :premiumType AND boost_widget_key IN (:list)")
   fun getallActiveFeatures(list: List<String>, premiumType: Boolean): Single<List<FeaturesModel>>
 
-  @Query("SELECT * FROM Features Where boost_widget_key IN (:list)")
+  @Query("SELECT * FROM Features Where feature_code IN (:list)")
   fun getallActiveFeatures1(list: List<String>): Single<List<FeaturesModel>>
 
   @Query("DELETE FROM Features WHERE boost_widget_key=:itemId")

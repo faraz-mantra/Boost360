@@ -53,8 +53,10 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
     var allBackBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
     var bundleExistsBool: MutableLiveData<Boolean> = MutableLiveData()
     var activePremiumWidgetList: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
+    var activePremiumWidgetList1: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var NewApiService =
         com.boost.cart.utils.Utils.getRetrofit(true).create(NewApiInterface::class.java)
+    var ApiService = Utils.getRetrofit().create(NewApiInterface::class.java)
 
 
     var experienceCode: String = "SVC"
@@ -152,6 +154,10 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
 
     fun getActivePremiumWidgets(): LiveData<List<FeaturesModel>> {
         return activePremiumWidgetList
+    }
+
+    fun getActivePremiumWidgets1(): LiveData<List<FeaturesModel>> {
+        return activePremiumWidgetList1
     }
 
     fun getCategoriesFromAssetJson(context: Context, expCode: String?) {
@@ -1074,6 +1080,67 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
         }
     }
 
+    //for enabling dark mode based on expired addons
+    fun loadPurchasedItems1(fpid: String, clientId: String) {
+        updatesLoader.postValue(true)
+        CompositeDisposable().add(
+            ApiService.GetFeatureDetails(fpid, clientId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {it1 ->
+                        val list= ArrayList<String>()
+                        for (singleItem in it1 ) {
+                            list.add(singleItem.featureCode)
+                        }
+                        CompositeDisposable().add(
+                            AppDatabase.getInstance(application)!!
+                                .featuresDao()
+                                .getallActiveFeatures1(list)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .doOnSuccess { it2 ->
+                                    val listFeaturesModel = it2.map { it3 ->
+                                        it1.firstOrNull { it.featureCode.equals(it3.feature_code) }
+                                            .apply {
+                                                it3.expiryDate = this?.expiryDate
+                                                it3.activatedDate = this?.activatedDate
+                                                it3.featureState = this?.featureState
+                                            };it3
+                                    }
+                                    Completable.fromAction {
+                                        AppDatabase.getInstance(application)!!
+                                            .featuresDao()
+                                            .insertAllFeatures(listFeaturesModel)
+                                    }
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .doOnComplete {
+                                            Log.i("insertAllFeatures", "Successfully")
+                                            activePremiumWidgetList1.postValue(listFeaturesModel)
+                                            updatesLoader.postValue(false)
+
+                                        }.doOnError {
+                                            updatesError.postValue(it.message)
+                                            updatesLoader.postValue(false)
+                                        }
+                                        .subscribe()
+
+                                }
+                                .doOnError {
+                                    updatesError.postValue(it.message)
+                                    updatesLoader.postValue(false)
+                                }
+                                .subscribe()
+                        )
+                    }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
+
+    //for displaying referall section based on paid user.
     fun loadPurchasedItems(fpid: String, clientId: String) {
         updatesLoader.postValue(true)
         CompositeDisposable().add(

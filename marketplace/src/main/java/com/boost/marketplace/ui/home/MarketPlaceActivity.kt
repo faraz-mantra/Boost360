@@ -586,6 +586,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 this.fpTag
             )
             viewModel.loadPurchasedItems(this.fpid!!, this.clientid)
+            viewModel.loadPurchasedItems1(this.fpid!!, this.clientid)
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
@@ -1249,8 +1250,71 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //        })
 
         viewModel.getActivePremiumWidgets().observe(this, androidx.lifecycle.Observer {
+            //display referal if there is any paid addons
+            if (it.size > 0) {
+                bottom_box.visibility = View.VISIBLE
+                footer.visibility = View.VISIBLE
+            }
+            else {
+                bottom_box.visibility = View.GONE
+                footer.visibility = View.GONE
+            }
+        })
+
+        viewModel.getActivePremiumWidgets1().observe(this, androidx.lifecycle.Observer {
 
             if (it.size > 0) {
+
+                //Enable Dark mode if all the addons are expired.
+//                var expiredaddonscount:Int=0
+//                for (singleItem in it){
+//                    val status:Boolean
+//                    val expired = singleItem.expiryDate
+//                    val date2 = expired!!.parseDate(DateUtils.FORMAT_SERVER_DATE1)
+//                    val isExpired1 = date2?.let { it1 -> Utils1.isExpired(it1) }
+//                    if (isExpired1==true){
+//                        status = true
+//                        expiredaddonscount++
+//                    }
+//                    else{
+//                        status = false
+//                    }
+//
+//                    if (expiredaddonscount == it.size  ){
+//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                            val window: Window = this.window
+//                            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+//                            window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
+//                        }
+//                        welcome_txt.visibility=View.GONE
+//                        welcome_txt1.visibility=View.VISIBLE
+//                        screen_title.visibility=View.GONE
+//                        screen_title1.visibility=View.VISIBLE
+//                        expiry_layout.setBackgroundResource(R.drawable.curve_black_bg)
+//                        layout_main.setBackgroundResource(R.color.primaryDark)
+//                        banner_rl_layout.visibility=View.GONE
+//                        package_compare_layout.visibility=View.GONE
+//                        package_compare_layout1.visibility=View.VISIBLE
+//                        banner_rl_layout1.visibility=View.VISIBLE
+//                        mp_package_rl_layout.visibility=View.GONE
+//                        mp_package_rl_layout1.visibility=View.VISIBLE
+//                        banner_rl_layout1.setBackgroundResource(R.drawable.curve_white_bg)
+//                    }
+//                    else{
+//                        expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
+//                        welcome_txt.visibility=View.VISIBLE
+//                        welcome_txt1.visibility=View.GONE
+//                        screen_title.visibility=View.VISIBLE
+//                        screen_title1.visibility=View.GONE
+//                        banner_rl_layout.visibility=View.VISIBLE
+//                        package_compare_layout1.visibility=View.GONE
+//                        package_compare_layout.visibility=View.VISIBLE
+//                        banner_rl_layout1.visibility=View.GONE
+//                        mp_package_rl_layout.visibility=View.VISIBLE
+//                        mp_package_rl_layout1.visibility=View.GONE
+//                    }
+
+                //Enable Dark mode if Customdomain is expired.
                 for (singleItem in it){
                     if (singleItem.feature_code =="DOMAINPURCHASE"){
                         val domainPurchase = it.find { it.feature_code == "DOMAINPURCHASE" }
@@ -1292,6 +1356,9 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                         }
                     }
                 }
+
+            // Enable Dark mode if any 1 of the addons are expired.
+
                 //               for (singleItem in it){
 //                    if (singleItem.feature_code == "DOMAINPURCHASE" ){
 //                        val date2 = expired!!.parseDate(DateUtils.FORMAT_SERVER_DATE1)
