@@ -176,9 +176,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         loadData()
         initMvvm()
         shimmer_view_package.startShimmer()
-        shimmer_view_package1.startShimmer()
         shimmer_view_banner.startShimmer()
-        shimmer_view_banner1.startShimmer()
         shimmer_view_recomm_addons.startShimmer()
         shimmer_view_addon_category.startShimmer()
         WebEngageController.trackEvent(ADDONS_MARKETPLACE_HOME, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
@@ -645,10 +643,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                     shimmer_view_package.stopShimmer()
                     shimmer_view_package.visibility = View.GONE
                 }
-                if (shimmer_view_package1.isShimmerStarted) {
-                    shimmer_view_package1.stopShimmer()
-                    shimmer_view_package1.visibility = View.GONE
-                }
                 package_layout.visibility = View.VISIBLE
                 package_layout1.visibility = View.VISIBLE
                 package_compare_layout.visibility = View.VISIBLE
@@ -659,10 +653,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 if (shimmer_view_package.isShimmerStarted) {
                     shimmer_view_package.stopShimmer()
                     shimmer_view_package.visibility = View.GONE
-                }
-                if (shimmer_view_package1.isShimmerStarted) {
-                    shimmer_view_package1.stopShimmer()
-                    shimmer_view_package1.visibility = View.GONE
                 }
                 package_layout.visibility = View.GONE
                 package_layout1.visibility = View.GONE
@@ -1175,20 +1165,12 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                     shimmer_view_banner.stopShimmer()
                     shimmer_view_banner.visibility = View.GONE
                 }
-                if (shimmer_view_banner1.isShimmerStarted) {
-                    shimmer_view_banner1.stopShimmer()
-                    shimmer_view_banner1.visibility = View.GONE
-                }
                 banner_layout.visibility = View.VISIBLE
                 banner_layout1.visibility = View.VISIBLE
             } else {
                 if (shimmer_view_banner.isShimmerStarted) {
                     shimmer_view_banner.stopShimmer()
                     shimmer_view_banner.visibility = View.GONE
-                }
-                if (shimmer_view_banner1.isShimmerStarted) {
-                    shimmer_view_banner1.stopShimmer()
-                    shimmer_view_banner1.visibility = View.GONE
                 }
                 banner_layout.visibility = View.GONE
                 banner_layout1.visibility = View.GONE
@@ -1204,10 +1186,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                     shimmer_view_banner.stopShimmer()
                     shimmer_view_banner.visibility = View.GONE
                 }
-                if (shimmer_view_banner1.isShimmerStarted) {
-                    shimmer_view_banner1.stopShimmer()
-                    shimmer_view_banner1.visibility = View.GONE
-                }
                 updateBannerViewPager(it)
                 updateBannerViewPager1(it)
                 banner_layout.visibility = View.VISIBLE
@@ -1216,10 +1194,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 if (shimmer_view_banner.isShimmerStarted) {
                     shimmer_view_banner.stopShimmer()
                     shimmer_view_banner.visibility = View.GONE
-                }
-                if (shimmer_view_banner1.isShimmerStarted) {
-                    shimmer_view_banner1.stopShimmer()
-                    shimmer_view_banner1.visibility = View.GONE
                 }
                 banner_layout.visibility = View.GONE
                 banner_layout1.visibility = View.GONE
