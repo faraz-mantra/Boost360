@@ -1315,47 +1315,49 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                    }
 
                 //Enable Dark mode if Customdomain is expired.
-                for (singleItem in it){
-                    if (singleItem.feature_code =="DOMAINPURCHASE"){
-                        val domainPurchase = it.find { it.feature_code == "DOMAINPURCHASE" }
-                        val expired = domainPurchase?.expiryDate
-                        val date2 = expired!!.parseDate(DateUtils.FORMAT_SERVER_DATE1)
-                        val isExpired1 = date2?.let { it1 -> Utils1.isExpired(it1) }
-                        if (isExpired1 == true){
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                val window: Window = this.window
-                                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                                window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
+                if (BuildConfig.FLAVOR.equals("partone")) {
+                    partner_layout.visibility = View.GONE
+
+                    for (singleItem in it) {
+                        if (singleItem.feature_code == "DOMAINPURCHASE") {
+                            val domainPurchase = it.find { it.feature_code == "DOMAINPURCHASE" }
+                            val expired = domainPurchase?.expiryDate
+                            val date2 = expired!!.parseDate(DateUtils.FORMAT_SERVER_DATE1)
+                            val isExpired1 = date2?.let { it1 -> Utils1.isExpired(it1) }
+                            if (isExpired1 == true) {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    val window: Window = this.window
+                                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                                    window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
+                                }
+                                welcome_txt.visibility = View.GONE
+                                welcome_txt1.visibility = View.VISIBLE
+                                screen_title.visibility = View.GONE
+                                screen_title1.visibility = View.VISIBLE
+                                expiry_layout.setBackgroundResource(R.drawable.curve_black_bg)
+                                layout_main.setBackgroundResource(R.color.primaryDark)
+                                banner_rl_layout.visibility = View.GONE
+                                package_compare_layout.visibility = View.GONE
+                                package_compare_layout1.visibility = View.VISIBLE
+                                banner_rl_layout1.visibility = View.VISIBLE
+                                mp_package_rl_layout.visibility = View.GONE
+                                mp_package_rl_layout1.visibility = View.VISIBLE
+                                banner_rl_layout1.setBackgroundResource(R.drawable.curve_white_bg)
+                            } else {
+                                expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
+                                welcome_txt.visibility = View.VISIBLE
+                                welcome_txt1.visibility = View.GONE
+                                screen_title.visibility = View.VISIBLE
+                                screen_title1.visibility = View.GONE
+                                banner_rl_layout.visibility = View.VISIBLE
+                                package_compare_layout1.visibility = View.GONE
+                                package_compare_layout.visibility = View.VISIBLE
+                                banner_rl_layout1.visibility = View.GONE
+                                mp_package_rl_layout.visibility = View.VISIBLE
+                                mp_package_rl_layout1.visibility = View.GONE
                             }
-                            welcome_txt.visibility=View.GONE
-                            welcome_txt1.visibility=View.VISIBLE
-                            screen_title.visibility=View.GONE
-                            screen_title1.visibility=View.VISIBLE
-                            expiry_layout.setBackgroundResource(R.drawable.curve_black_bg)
-                            layout_main.setBackgroundResource(R.color.primaryDark)
-                            banner_rl_layout.visibility=View.GONE
-                            package_compare_layout.visibility=View.GONE
-                            package_compare_layout1.visibility=View.VISIBLE
-                            banner_rl_layout1.visibility=View.VISIBLE
-                            mp_package_rl_layout.visibility=View.GONE
-                            mp_package_rl_layout1.visibility=View.VISIBLE
-                            banner_rl_layout1.setBackgroundResource(R.drawable.curve_white_bg)
-                        }
-                        else{
-                            expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
-                            welcome_txt.visibility=View.VISIBLE
-                            welcome_txt1.visibility=View.GONE
-                            screen_title.visibility=View.VISIBLE
-                            screen_title1.visibility=View.GONE
-                            banner_rl_layout.visibility=View.VISIBLE
-                            package_compare_layout1.visibility=View.GONE
-                            package_compare_layout.visibility=View.VISIBLE
-                            banner_rl_layout1.visibility=View.GONE
-                            mp_package_rl_layout.visibility=View.VISIBLE
-                            mp_package_rl_layout1.visibility=View.GONE
                         }
                     }
-                }
 
             // Enable Dark mode if any 1 of the addons are expired.
 
@@ -1382,8 +1384,9 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                        expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
 //                    }
 
-                bottom_box.visibility = View.VISIBLE
-                footer.visibility = View.VISIBLE
+                    bottom_box.visibility = View.VISIBLE
+                    footer.visibility = View.VISIBLE
+                }
             }
             else {
                 bottom_box.visibility = View.GONE
