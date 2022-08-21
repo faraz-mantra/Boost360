@@ -1314,8 +1314,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                 expiry_layout.setBackgroundResource(R.drawable.curve_black_bg)
                                 layout_main.setBackgroundResource(R.color.primaryDark)
                                 banner_rl_layout.visibility = View.GONE
-                                package_compare_layout.visibility = View.GONE
-                                package_compare_layout1.visibility = View.VISIBLE
+                                explore_layout.visibility = View.GONE
                                 banner_rl_layout1.visibility = View.VISIBLE
                                 mp_package_rl_layout.visibility = View.GONE
                                 mp_package_rl_layout1.visibility = View.VISIBLE
@@ -1328,7 +1327,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                 screen_title1.visibility = View.GONE
                                 banner_rl_layout.visibility = View.VISIBLE
                                 package_compare_layout1.visibility = View.GONE
-                                package_compare_layout.visibility = View.VISIBLE
+                                explore_layout.visibility = View.VISIBLE
                                 banner_rl_layout1.visibility = View.GONE
                                 mp_package_rl_layout.visibility = View.VISIBLE
                                 mp_package_rl_layout1.visibility = View.GONE
