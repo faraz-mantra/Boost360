@@ -30,10 +30,11 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
+                    android:id="@+id/menu_icon"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/circular_menu_option" />
+                    android:src="@drawable/circular_menu_options_black" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -47,10 +48,11 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
+                    android:id="@+id/cart_icon"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/circular_cart48" />
+                    android:src="@drawable/circular_cart_black" />
 
 
                 <com.nex3z.notificationbadge.NotificationBadge
@@ -75,9 +77,10 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
+                    android:id="@+id/back_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/circular_arrow_back" />
+                    android:background="@drawable/circular_arrow_back_black" />
             </LinearLayout>
 
 

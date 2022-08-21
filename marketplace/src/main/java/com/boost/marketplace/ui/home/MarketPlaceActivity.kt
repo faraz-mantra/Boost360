@@ -1304,6 +1304,9 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
                                     window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
                                 }
+                                back_icon.setBackgroundResource(R.drawable.circular_arrow_back)
+                                menu_icon.setImageResource(R.drawable.circular_menu_option)
+                                cart_icon.setImageResource(R.drawable.circular_cart48)
                                 welcome_txt.visibility = View.GONE
                                 welcome_txt1.visibility = View.VISIBLE
                                 screen_title.visibility = View.GONE
