@@ -32,17 +32,18 @@
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="true" />
-
-    <!--    requestLegacyExternalStorage="true" using this to access external storage
-    in api 29 for ImagePicker library in ManageProductFragment-->
-    <!--    android:usesCleartextTraffic="false"-->
+        android:required="true" /> <!-- Android 11 changes -->
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
 
     <application
         android:name="com.nowfloats.Volley.AppController"
         android:allowBackup="true"
-        android:fullBackupContent="@xml/boost_backup_rules"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        android:fullBackupContent="@xml/boost_backup_rules"
         android:hardwareAccelerated="true"
         android:icon="@drawable/app_launcher"
         android:label="@string/app_name"
@@ -67,7 +68,9 @@
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
-
+        <activity
+            android:name="com.nowfloats.BusinessProfile.UI.UI.New.BusinessHoursNewActivity"
+            android:exported="false" />
         <activity
             android:name="com.nowfloats.Restaurants.BookATable.BookATableActivity"
             android:screenOrientation="portrait" />
@@ -118,10 +121,9 @@
             android:value="us" />
 
         <activity
-            android:name="com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"
+            android:name=".ContactInformationActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
         <activity
             android:name="com.nowfloats.Image_Gallery.ImageViewerActivity"
             android:screenOrientation="portrait" />
@@ -200,9 +202,8 @@
         <activity
             android:name="com.nowfloats.managecustomers.FacebookChatActivity"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.nowfloats.BusinessProfile.UI.UI.BusinessDetailsActivity"
+            android:name=".BusinessDetailsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
@@ -291,13 +292,13 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity"
+            android:name=".Business_Address_Activity"
             android:label="@string/title_activity_business__address_"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
-            android:name="com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity"
+            android:name=".Contact_Info_Activity"
             android:label="@string/title_activity_contact__info_"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -306,9 +307,8 @@
             android:name="com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity"
+            android:name=".Business_Logo_Activity"
             android:label="@string/title_activity_business__logo_"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
@@ -319,11 +319,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.nowfloats.BusinessProfile.UI.UI.FeaturedImageActivity"
+            android:name=".FeaturedImageActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity"
+            android:name=".FaviconImageActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
@@ -331,7 +331,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity"
+            android:name=".Social_Sharing_Activity"
             android:label="@string/title_activity_social__sharing_"
             android:screenOrientation="portrait" />
 
@@ -362,7 +362,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.nowfloats.BusinessProfile.UI.UI.QuikrGuidelinesActivity"
+            android:name=".QuikrGuidelinesActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.NavigationDrawer.businessApps.BusinessAppsDetailsActivity"
@@ -396,63 +396,50 @@
         </activity>
         <activity
             android:name="com.nowfloats.Login.ForgotPassword"
-            android:screenOrientation="portrait" />
-
-        <!--    <activity-->
-        <!--      android:name="com.nowfloats.PreSignUp.SplashScreen_Activity"-->
-        <!--      android:label="@string/title_activity_splash_screen_"-->
-        <!--      android:screenOrientation="portrait"-->
-        <!--      android:theme="@style/AppTheme.Splash">-->
-        <!--      <intent-filter>-->
-        <!--        <action android:name="android.intent.action.MAIN" />-->
-        <!--        <category android:name="android.intent.category.LAUNCHER" />-->
-        <!--      </intent-filter>-->
-        <!--    </activity>-->
-
-        <!--    <activity-->
-        <!--      android:name="com.nowfloats.PreSignUp.SplashScreen_Activity"-->
-        <!--      android:label="@string/app_name"-->
-        <!--      android:launchMode="singleTask"-->
-        <!--      android:screenOrientation="portrait"-->
-        <!--      android:windowSoftInputMode="adjustResize">-->
-        <!--      <intent-filter android:autoVerify="true">-->
-        <!--        <action android:name="android.intent.action.VIEW" />-->
-
-        <!--        <category android:name="android.intent.category.DEFAULT" />-->
-        <!--        <category android:name="android.intent.category.BROWSABLE" />-->
-
-        <!--        <data-->
-        <!--          android:host="${applicationId}.PreSignUp.SplashScreen_Activity"-->
-        <!--          android:pathPrefix="/"-->
-        <!--          android:scheme="http" />-->
-        <!--      </intent-filter>-->
-
-        <!--      <intent-filter android:autoVerify="true">-->
-        <!--        <action android:name="android.intent.action.VIEW" />-->
-
-        <!--        <category android:name="android.intent.category.DEFAULT" />-->
-        <!--        <category android:name="android.intent.category.BROWSABLE" />-->
-
-        <!--        <data-->
-        <!--          android:host="nowfloat.onelink.me"-->
-        <!--          android:pathPrefix="/FX0L"-->
-        <!--          android:scheme="https" />-->
-        <!--      </intent-filter>-->
-
-        <!--      <meta-data-->
-        <!--        android:name="android.support.PARENT_ACTIVITY"-->
-        <!--        android:value="com.nowfloats.PreSignUp.SplashScreen_Activity" />-->
-        <!--    </activity>-->
-
+            android:screenOrientation="portrait" /> <!-- <activity -->
+        <!-- android:name="com.nowfloats.PreSignUp.SplashScreen_Activity" -->
+        <!-- android:label="@string/title_activity_splash_screen_" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/AppTheme.Splash"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+        <!-- <activity -->
+        <!-- android:name="com.nowfloats.PreSignUp.SplashScreen_Activity" -->
+        <!-- android:label="@string/app_name" -->
+        <!-- android:launchMode="singleTask" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:windowSoftInputMode="adjustResize"> -->
+        <!-- <intent-filter android:autoVerify="true"> -->
+        <!-- <action android:name="android.intent.action.VIEW" /> -->
+        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+        <!-- <category android:name="android.intent.category.BROWSABLE" /> -->
+        <!-- <data -->
+        <!-- android:host="${applicationId}.PreSignUp.SplashScreen_Activity" -->
+        <!-- android:pathPrefix="/" -->
+        <!-- android:scheme="http" /> -->
+        <!-- </intent-filter> -->
+        <!-- <intent-filter android:autoVerify="true"> -->
+        <!-- <action android:name="android.intent.action.VIEW" /> -->
+        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+        <!-- <category android:name="android.intent.category.BROWSABLE" /> -->
+        <!-- <data -->
+        <!-- android:host="nowfloat.onelink.me" -->
+        <!-- android:pathPrefix="/FX0L" -->
+        <!-- android:scheme="https" /> -->
+        <!-- </intent-filter> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.support.PARENT_ACTIVITY" -->
+        <!-- android:value="com.nowfloats.PreSignUp.SplashScreen_Activity" /> -->
+        <!-- </activity> -->
         <activity
             android:name="com.boost.presignin.ui.LoaderActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-
-        <!-- PreSignUp module -->
-
+            android:windowSoftInputMode="adjustResize" /> <!-- PreSignUp module -->
         <activity
             android:name="com.boost.presignup.SplashActivity"
             android:label="@string/app_name"
@@ -467,15 +454,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
 
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity"
+            android:name=".BusinessHoursActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity"
+            android:name=".Edit_Profile_Activity"
             android:label="@string/title_activity_edit__profile_"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -542,10 +530,10 @@
             android:name="com.nowfloats.Business_Enquiries.BusinessEnqUpdateDetails"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQMainAcivity"
+            android:name=".FAQ.FAQMainAcivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQ_QandA_Activity"
+            android:name=".FAQ.FAQ_QandA_Activity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.darsh.multipleimageselect.activities.AlbumSelectActivity"
@@ -739,16 +727,13 @@
         <activity
             android:name="com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresDetailsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name="com.nowfloats.helper.AppFragmentContainerActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name="com.nowfloats.helper.ReferralTransActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent.AppCompact" />
-
         <activity
             android:name="com.nowfloats.helper.LogoutActivity"
             android:screenOrientation="portrait"
@@ -767,17 +752,9 @@
         <activity
             android:name="zendesk.support.guide.HelpCenterActivity"
             android:theme="@style/ZendeskSdkTheme.Light" />
-
         <activity
             android:name="zendesk.support.requestlist.RequestListActivity"
             android:theme="@style/ZendeskSdkTheme.Light" />
     </application>
-
-    <!-- Android 11 changes -->
-    <queries>
-        <intent>
-            <action android:name="android.media.action.IMAGE_CAPTURE" />
-        </intent>
-    </queries>
 
 </manifest>
