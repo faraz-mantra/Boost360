@@ -1290,7 +1290,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
                 //Enable Dark mode if Customdomain is expired.
                 if (BuildConfig.FLAVOR.equals("partone")) {
-                    partner_layout.visibility = View.VISIBLE
 
                     for (singleItem in it) {
                         if (singleItem.feature_code == "DOMAINPURCHASE") {
