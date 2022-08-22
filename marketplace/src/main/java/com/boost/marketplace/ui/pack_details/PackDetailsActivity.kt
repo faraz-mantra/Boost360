@@ -542,18 +542,19 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
 
     private fun initMvvm() {
-
-        viewModel.bundleResult().observe(this) {
-            if (it != null) {
-                it.forEachIndexed { index, bundlesModel ->
-                    if(bundlesModel.bundle_id == bundleData?._kid) {
-                        try {
-                            setupPackItemRecycler(it[index+1])
-                        } catch (e:Exception){
-                            Log.d("","Exception")
-                            layout_need_more.visibility = View.GONE
-                        }
-                    }
+        viewModel.bundleResult().observe(this) { list ->
+            if (list != null) {
+                if(bundleData?.name == "Online Basic" ) {
+                    // show Online Classic
+                    val onlineClassic = list.find { it.name == "Online Classic" }
+                    onlineClassic?.let { it1 -> setupPackItemRecycler(it1) }
+                } else if(bundleData?.name == "Online Classic") {
+                    //show Online Advance
+                    val onlineAdvance = list.find { it.name == "Online Advanced" }
+                    onlineAdvance?.let { it1 -> setupPackItemRecycler(it1) }
+                } else {
+                    // hide the section - Need More Features
+                    layout_need_more.visibility = View.GONE
                 }
             }
         }
