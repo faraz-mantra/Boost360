@@ -68,6 +68,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     PackDetailsListener,
     DetailsFragmentListener {
 
+    private var includedFeaturesInPack: List<FeaturesModel>? = null
     var experienceCode: String? = null
     var screenType: String? = null
     var fpName: String? = null
@@ -542,8 +543,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
     private fun initMvvm() {
 
-        val bundlesList = arrayListOf<BundlesModel>()
-
         viewModel.bundleResult().observe(this) {
             if (it != null) {
                 it.forEachIndexed { index, bundlesModel ->
@@ -732,6 +731,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                                 }
                                 packDetailsAdapter.addupdates(it)
                                 includedFeatureAdapter.addupdates(it)
+                                includedFeaturesInPack = it
                                 binding?.packRecycler?.adapter = packDetailsAdapter
                             } else {
                                 binding?.packContainer?.visibility = GONE
@@ -831,6 +831,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     }
 
     private fun setupPackItemRecycler(bundlesModel: BundlesModel) {
+        everythingText.text = "Everything in \"" + bundleData?.name + "\" plus"
         needMoreTitle.setText(bundlesModel.name)
         Glide.with(this).load(bundlesModel.primary_image).into(needMorePackageImg)
         Glide.with(this).load(bundlesModel.primary_image).into(needMorePackageImg1)
@@ -935,7 +936,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 .subscribe(
                     {
                         if (it.isNotEmpty()) {
-                            needMoreFeatureAdapter.addupdates(it)
+                            needMoreFeatureAdapter.addupdates(compareFeatureIconsAndSet(it))
                         } else {
                             binding?.otherFeatureRecyclerView?.visibility = GONE
                         }
@@ -945,6 +946,18 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                     }
                 )
         )
+    }
+
+    private fun compareFeatureIconsAndSet(it: List<FeaturesModel>?): MutableList<FeaturesModel> {
+        val list = mutableListOf<FeaturesModel>()
+        it?.forEachIndexed { _, featuresModel ->
+            val isThere = includedFeaturesInPack?.find {it.feature_id == featuresModel.feature_id }
+            if(isThere == null) {
+                list.add(featuresModel)
+            }
+        }
+
+        return list
     }
 
     fun getPackageInfoFromDB(bundles: BundlesModel) {
