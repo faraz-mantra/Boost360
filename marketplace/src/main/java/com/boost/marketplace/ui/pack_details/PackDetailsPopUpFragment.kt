@@ -4,9 +4,11 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModel
@@ -27,6 +29,7 @@ import com.boost.marketplace.adapter.HowToUseAdapter
 import com.boost.marketplace.databinding.PackDetailsBottomSheetBinding
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
 import com.bumptech.glide.Glide
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.TAG
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -152,6 +155,28 @@ class PackDetailsPopUpFragment : DialogFragment() {
         binding.closeBtn.setOnClickListener {
             dismiss()
         }
+
+        binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY > oldScrollY) {
+                Log.i(TAG, "Scroll DOWN")
+                binding.titleBottom3.visibility = View.GONE
+                binding.learnMoreBtn.visibility = View.GONE
+                // Gone
+            }
+            if (scrollY < oldScrollY) {
+                Log.i(TAG, "Scroll UP")
+            }
+            if (scrollY == 0) {
+                Log.i(TAG, "TOP SCROLL")
+                binding.titleBottom3.visibility = View.VISIBLE
+                binding.learnMoreBtn.visibility = View.VISIBLE
+                binding.learnLessBtn.performClick()
+                //Visible
+            }
+            if (scrollY == v.measuredHeight - v.getChildAt(0).measuredHeight) {
+                Log.i(TAG, "BOTTOM SCROLL")
+            }
+        })
 
         initMvvm()
         return binding.root

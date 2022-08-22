@@ -645,11 +645,11 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginTop="@dimen/dimen_12dp"
-                                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                                tools:orientation="horizontal"
-                                tools:itemCount="5"
                                 app:layout_constraintTop_toBottomOf="@id/everythingText"
-                                tools:listitem="@layout/item_more_feature"/>
+                                tools:itemCount="5"
+                                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                tools:listitem="@layout/item_more_feature"
+                                tools:orientation="horizontal" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
