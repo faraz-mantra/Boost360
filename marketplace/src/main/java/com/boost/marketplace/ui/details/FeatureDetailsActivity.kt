@@ -3,8 +3,10 @@ package com.boost.marketplace.ui.details
 import android.animation.Animator
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Spannable
@@ -12,14 +14,19 @@ import android.text.SpannableString
 import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.text.style.StrikethroughSpan
+import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginTop
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,12 +36,14 @@ import com.boost.cart.adapter.ZoomOutPageTransformer
 import com.boost.cart.utils.Utils
 import com.boost.cart.utils.Utils.priceCalculatorForYear
 import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
+import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.*
+import com.boost.dbcenterapi.utils.Constants.Companion.clientid
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
@@ -43,6 +52,7 @@ import com.boost.marketplace.infra.utils.Constants.Companion.IMAGE_PREVIEW_POPUP
 import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.interfaces.DetailsFragmentListener
+import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 import com.boost.marketplace.ui.details.staff.StaffManagementBottomSheet
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
@@ -176,9 +186,77 @@ class FeatureDetailsActivity :
         initializeCustomerViewPager()
         initializeHowToUseRecycler()
         initializeFAQRecycler()
-
-
         featureEdgeCase()
+
+        if(specialAddons()){
+            primary_layout.visibility = GONE
+            second_layout.visibility = VISIBLE
+            app_bar_layout.background = null
+            details_image_bg.visibility = GONE
+            val appbar = findViewById<View>(R.id.app_bar_layout) as AppBarLayout
+            val lp: CoordinatorLayout.LayoutParams =
+                appbar.layoutParams as CoordinatorLayout.LayoutParams
+            lp.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 140f, resources.displayMetrics)
+                .toInt()
+            bottom_box.visibility = View.GONE
+            bottom_box_only_btn.visibility = View.GONE
+            if(singleWidgetKey!!.equals("DOMAINPURCHASE")) {
+                val status = "Loading Domain. Please wait..."
+                progressDialog.setMessage(status)
+                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
+                progressDialog.show()
+                val pref = getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+                val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
+                fpTag?.let { DomainRequest(clientid, it) }
+                    ?.let { viewModel.GetSuggestedDomains(it) }
+                selected_value_image.setImageResource(R.drawable.ic_custom_domain)
+                val param = seleced_value_text.layoutParams as ViewGroup.MarginLayoutParams
+                param.setMargins(
+                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30f, resources.displayMetrics).toInt(),
+                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80f, resources.displayMetrics).toInt(),
+                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30f, resources.displayMetrics).toInt(),
+                    0)
+                seleced_value_text.layoutParams = param
+            }else if(singleWidgetKey!!.equals("CALLTRACKER") || singleWidgetKey!!.equals("IVR")) {
+                loadNumberList()
+                val param = seleced_value_text.layoutParams as ViewGroup.MarginLayoutParams
+                if(singleWidgetKey!!.equals("CALLTRACKER")) {
+                    selected_value_image.setImageResource(R.drawable.ic_customer_call_tracking)
+                    param.setMargins(
+                        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30f, resources.displayMetrics).toInt(),
+                        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40f, resources.displayMetrics).toInt(),
+                        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30f, resources.displayMetrics).toInt(),
+                        0)
+                } else {
+                    selected_value_image.setImageResource(R.drawable.ic_customer_call_tracking_ivr)
+                    param.setMargins(
+                        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30f, resources.displayMetrics).toInt(),
+                        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35f, resources.displayMetrics).toInt(),
+                        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30f, resources.displayMetrics).toInt(),
+                        0)
+                }
+                seleced_value_text.layoutParams = param
+            }else if(singleWidgetKey!!.contains("EMAILACCOUNTS")) {
+                selected_value_image.setImageResource(R.drawable.ic_customer_call_tracking)
+                val param = seleced_value_text.layoutParams as ViewGroup.MarginLayoutParams
+                param.setMargins(
+                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30f, resources.displayMetrics).toInt(),
+                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40f, resources.displayMetrics).toInt(),
+                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30f, resources.displayMetrics).toInt(),
+                    0)
+                seleced_value_text.layoutParams = param
+            }
+        } else{
+            primary_layout.visibility = VISIBLE
+            second_layout.visibility = GONE
+            app_bar_layout.background = ContextCompat.getDrawable(this, R.color.colorPrimary1)
+            details_image_bg.visibility = VISIBLE
+            val appbar = findViewById<View>(R.id.app_bar_layout) as AppBarLayout
+            val lp: CoordinatorLayout.LayoutParams =
+                appbar.layoutParams as CoordinatorLayout.LayoutParams
+            lp.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250f, resources.displayMetrics)
+                .toInt()
+        }
 
         val termsString =
             SpannableString("This feature is provided by “Reseller Club” and is subject to their terms and conditions. Read T&C")
@@ -361,13 +439,99 @@ class FeatureDetailsActivity :
 
     @SuppressLint("FragmentLiveDataObserve")
     fun initMvvm() {
+        viewModel.updateCustomDomainsResultResult().observe(this) {
+            for(singleDomain in it.domains){
+                if(singleDomain.isAvailable){
+                    seleced_value_text.text = singleDomain.name
+                    break
+                }
+            }
+            val discount = 100 - addonDetails!!.discount_percent
+            val paymentPrice = Utils.priceCalculatorForYear(
+                (discount * addonDetails!!.price) / 100.0,
+                addonDetails!!.widget_type ?: "",
+                this
+            )
+            pricing = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                .format(paymentPrice) + Utils.yearlyOrMonthlyOrEmptyValidity(
+                addonDetails!!.widget_type ?: "", this
+            )
+            numberprice = pricing
+            val content = SpannableString("Claim the above number\n@ ${numberprice}")
+            content.setSpan(
+                StyleSpan(Typeface.BOLD),
+                0,
+                22,
+                0
+            )
+            claim_button.setText(content)
+            claim_button.setOnClickListener {
+                if (!itemInCartStatus) {
+                    if (addonDetails!! != null) {
+                        prefs.storeCartOrderInfo(null)
+                        viewModel.addItemToCart1(addonDetails!!, this, seleced_value_text.text.toString())
+                        val event_attributes: HashMap<String, Any> = HashMap()
+                        addonDetails!!.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
+                        event_attributes.put("Addon Price", addonDetails!!.price)
+                        event_attributes.put(
+                            "Addon Discounted Price",
+                            getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent)
+                        )
+                        event_attributes.put("Addon Discount %", addonDetails!!.discount_percent)
+                        event_attributes.put("Addon Validity", 1)
+                        event_attributes.put("Addon Feature Key", addonDetails!!.boost_widget_key)
+                        addonDetails!!.target_business_usecase?.let { it1 ->
+                            event_attributes.put(
+                                "Addon Tag",
+                                it1
+                            )
+                        }
+                        WebEngageController.trackEvent(
+                            ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
+                            ADDONS_MARKETPLACE,
+                            event_attributes
+                        )
+                        itemInCartStatus = true
+                    }
+                }
+                val pref = this?.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+                val fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
+                val intent = Intent(applicationContext, CartActivity::class.java)
+                intent.putExtra("fpid", fpid)
+                intent.putExtra("fpTag",fpTag)
+                intent.putExtra("expCode", experienceCode)
+                intent.putExtra("isDeepLink", isDeepLink)
+                intent.putExtra("deepLinkViewType", deepLinkViewType)
+                intent.putExtra("deepLinkDay", deepLinkDay)
+                intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+                intent.putExtra("accountType", accountType)
+                intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+                if (email != null) {
+                    intent.putExtra("email", email)
+                } else {
+                    intent.putExtra("email", "ria@nowfloats.com")
+                }
+                if (mobileNo != null) {
+                    intent.putExtra("mobileNo", mobileNo)
+                } else {
+                    intent.putExtra("mobileNo", "9160004303")
+                }
+                intent.putExtra("profileUrl", profileUrl)
+                startActivity(intent)
+            }
+            choose_different_value.setText("Pick another Domain")
+            choose_different_value.setOnClickListener {
+                goToDomainSelection()
+            }
+        }
         viewModel.getCallTrackingDetails().observe(this) {
             if (it != null) {
 
                 System.out.println("numberList" + it)
-
-                val dialogCard = SelectNumberBottomSheet()
-                val bundle = Bundle()
+                val selectedNum = it[0]
+                seleced_value_text.setText(selectedNum)
+//                val dialogCard = SelectNumberBottomSheet()
+//                val bundle = Bundle()
 
                 val discount = 100 - addonDetails!!.discount_percent
                 val paymentPrice = Utils.priceCalculatorForYear(
@@ -380,45 +544,150 @@ class FeatureDetailsActivity :
                     addonDetails!!.widget_type ?: "", this
                 )
                 numberprice = pricing
-                bundle.putString("price", numberprice)
+                val content = SpannableString("Claim the above number\n@ ${numberprice}")
+                content.setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    0,
+                    22,
+                    0
+                )
+                claim_button.setText(content)
+                claim_button.setOnClickListener {
+                    if (selectedNum != null) {
+                        if (!itemInCartStatus) {
+                            if (addonDetails != null) {
+                                prefs.storeCartOrderInfo(null)
+                                viewModel!!.addItemToCart1(addonDetails!!, this, selectedNum)
+                                val event_attributes: HashMap<String, Any> = HashMap()
+                                addonDetails!!.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
+                                event_attributes.put("Addon Price", addonDetails!!.price)
+                                event_attributes.put(
+                                    "Addon Discounted Price",
+                                    getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent)
+                                )
+                                event_attributes.put("Addon Discount %", addonDetails!!.discount_percent)
+                                event_attributes.put("Addon Validity", 1)
+                                event_attributes.put("Addon Feature Key", addonDetails!!.boost_widget_key)
+                                addonDetails!!.target_business_usecase?.let { it1 ->
+                                    event_attributes.put(
+                                        "Addon Tag",
+                                        it1
+                                    )
+                                }
+                                WebEngageController.trackEvent(
+                                    ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
+                                    ADDONS_MARKETPLACE,
+                                    event_attributes
+                                )
+                                itemInCartStatus = true
+                            }
+                        }
 
+                    } else {
+                        Toasty.error(
+                            this,
+                            "Number not available, please select other",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    val intent = Intent(this, CartActivity::class.java)
+                    intent.putExtra("fpid", fpid)
+                    intent.putExtra("expCode", experienceCode)
+                    intent.putExtra("isDeepLink", isDeepLink)
+                    intent.putExtra("deepLinkViewType", deepLinkViewType)
+                    intent.putExtra("deepLinkDay", deepLinkDay)
+                    intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+                    intent.putExtra("accountType", accountType)
+                    intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+                    if (email != null) {
+                        intent.putExtra("email", email)
+                    } else {
+                        intent.putExtra("email", "ria@nowfloats.com")
+                    }
+                    if (mobileNo != null) {
+                        intent.putExtra("mobileNo", mobileNo)
+                    } else {
+                        intent.putExtra("mobileNo", "9160004303")
+                    }
+                    intent.putExtra("profileUrl", profileUrl)
+                    startActivity(intent)
+                }
+                choose_different_value.setText("Pick another number")
+                choose_different_value.setOnClickListener {
 
-                bundle.putString("bundleData", Gson().toJson(addonDetails))
-                bundle.putDouble(
-                    "AddonDiscountedPrice",
-                    getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent)
-                )
-                bundle.putString("phone_number", it[0])
-                bundle.putString("fpid", fpid)
-                bundle.putString("expCode", experienceCode)
-                bundle.putBoolean("isDeepLink", isDeepLink)
-                bundle.putString("deepLinkViewType", deepLinkViewType)
-                bundle.putInt("deepLinkDay", deepLinkDay)
-                bundle.putBoolean("isOpenCardFragment", isOpenCardFragment)
-                bundle.putString(
-                    "accountType",
-                    accountType
-                )
-                bundle.putStringArrayList(
-                    "userPurchsedWidgets",
-                    userPurchsedWidgets
-                )
-                if (email != null) {
-                    bundle.putString("email", email)
-                } else {
-                    bundle.putString("email", "ria@nowfloats.com")
+                    val intent = Intent(this, CallTrackingActivity::class.java)
+                    intent.putExtra("fpid", fpid)
+                    intent.putExtra("bundleData", Gson().toJson(addonDetails))
+                    intent.putExtra("price", numberprice)
+                    intent.putExtra(
+                        "AddonDiscountedPrice",
+                        getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent)
+                    )
+                    intent.putExtra("expCode", experienceCode)
+                    intent.putExtra("isDeepLink", isDeepLink)
+                    intent.putExtra("deepLinkViewType", deepLinkViewType)
+                    intent.putExtra("deepLinkDay", deepLinkDay)
+                    intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+                    intent.putExtra(
+                        "accountType",
+                        accountType
+                    )
+                    intent.putExtra(
+                        "userPurchsedWidgets",
+                        userPurchsedWidgets
+                    )
+                    if (email != null) {
+                        intent.putExtra("email", email)
+                    } else {
+                        intent.putExtra("email", "ria@nowfloats.com")
+                    }
+                    if (mobileNo != null) {
+                        intent.putExtra("mobileNo", mobileNo)
+                    } else {
+                        intent.putExtra("mobileNo", "9160004303")
+                    }
+                    intent.putExtra("profileUrl", profileUrl)
+                    startActivity(intent)
                 }
-                if (mobileNo != null) {
-                    bundle.putString("mobileNo", mobileNo)
-                } else {
-                    bundle.putString("mobileNo", "9160004303")
-                }
-                bundle.putString("profileUrl", profileUrl)
-                dialogCard.arguments = bundle
-                dialogCard.show(
-                    this.supportFragmentManager,
-                    SelectNumberBottomSheet::class.java.name
-                )
+//                bundle.putString("price", numberprice)
+//
+//
+//                bundle.putString("bundleData", Gson().toJson(addonDetails))
+//                bundle.putDouble(
+//                    "AddonDiscountedPrice",
+//                    getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent)
+//                )
+//                bundle.putString("phone_number", it[0])
+//                bundle.putString("fpid", fpid)
+//                bundle.putString("expCode", experienceCode)
+//                bundle.putBoolean("isDeepLink", isDeepLink)
+//                bundle.putString("deepLinkViewType", deepLinkViewType)
+//                bundle.putInt("deepLinkDay", deepLinkDay)
+//                bundle.putBoolean("isOpenCardFragment", isOpenCardFragment)
+//                bundle.putString(
+//                    "accountType",
+//                    accountType
+//                )
+//                bundle.putStringArrayList(
+//                    "userPurchsedWidgets",
+//                    userPurchsedWidgets
+//                )
+//                if (email != null) {
+//                    bundle.putString("email", email)
+//                } else {
+//                    bundle.putString("email", "ria@nowfloats.com")
+//                }
+//                if (mobileNo != null) {
+//                    bundle.putString("mobileNo", mobileNo)
+//                } else {
+//                    bundle.putString("mobileNo", "9160004303")
+//                }
+//                bundle.putString("profileUrl", profileUrl)
+//                dialogCard.arguments = bundle
+//                dialogCard.show(
+//                    this.supportFragmentManager,
+//                    SelectNumberBottomSheet::class.java.name
+//                )
 
             }
         }
@@ -517,7 +786,7 @@ class FeatureDetailsActivity :
                 Glide.with(this).load(addonDetails!!.primary_image)
                     .into(image1222)
                 Glide.with(this).load(addonDetails!!.primary_image)
-                    .into(addon_icon)
+                    .into(if(specialAddons()) addon_iconV3 else addon_icon)
 
                 Glide.with(this).load(addonDetails!!.feature_banner)
                     .transition(DrawableTransitionOptions.withCrossFade())
@@ -541,9 +810,17 @@ class FeatureDetailsActivity :
                 } else {
                     title_top_1.visibility = View.INVISIBLE
                 }
-                title_top.text = addonDetails!!.name
+                if(singleWidgetKey!!.equals("DOMAINPURCHASE")){
+                    free_ssl.visibility = View.VISIBLE
+                }
+                if(specialAddons()){
+                    title_topV3.text = addonDetails!!.name
+                    title_bottomV3.text = addonDetails!!.description
+                }else {
+                    title_top.text = addonDetails!!.name
+                    title_bottom3.text = addonDetails!!.description
+                }
                 title_appbar.text = addonDetails!!.name
-                title_bottom3.text = addonDetails!!.description
                 pack_title.text = "Packs with ${addonDetails!!.name}"
                 tv_how_to_use_title.text ="How To Use " + addonDetails!!.name
                 if (addonDetails!!.total_installs.isNullOrEmpty() || addonDetails!!.total_installs.equals(
@@ -701,6 +978,17 @@ class FeatureDetailsActivity :
         })
     }
 
+    fun specialAddons(): Boolean {
+        if(singleWidgetKey.equals("IVR")
+            || singleWidgetKey.equals("CALLTRACKER")
+            || singleWidgetKey.equals("DOMAINPURCHASE")
+        //    || singleWidgetKey.equals("STAFFPROFILE")
+        ){
+            return true
+        }
+        return false
+    }
+
     fun addItemToCart() {
         if (!itemInCartStatus) {
             if (addonDetails != null) {
@@ -724,7 +1012,7 @@ class FeatureDetailsActivity :
                         )
                     }
                     else -> {
-                        makeFlyAnimation(addon_icon)
+                        makeFlyAnimation(if(singleWidgetKey!!.equals("DOMAINPURCHASE")) addon_iconV3 else addon_icon)
                         prefs.storeCartOrderInfo(null)
                         viewModel.addItemToCart1(addonDetails!!, this,null)
                         val event_attributes: HashMap<String, Any> = HashMap()
@@ -780,7 +1068,7 @@ class FeatureDetailsActivity :
                         add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
                         add_item_to_cart.text = getString(R.string.added_to_cart)
                         itemInCartStatus = true
-                        makeFlyAnimation(addon_icon)
+                        makeFlyAnimation(if(singleWidgetKey!!.equals("DOMAINPURCHASE")) addon_iconV3 else addon_icon)
                         Glide.with(this).load(addonDetails!!.primary_image)
                             .into(image1222)
                     }

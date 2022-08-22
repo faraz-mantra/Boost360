@@ -1,13 +1,18 @@
 package com.boost.cart.adapter
 
 import android.app.Activity
+import android.graphics.Insets
 import android.view.View
 import androidx.core.view.marginLeft
 import androidx.viewpager2.widget.ViewPager2
 import com.boost.cart.R
 import android.util.DisplayMetrics
+import android.view.WindowInsets
 
+import android.view.WindowMetrics
 
+import android.os.Build
+import androidx.annotation.NonNull
 
 
 class BenifitsPageTransformer(val activity: Activity) : ViewPager2.PageTransformer {
@@ -21,9 +26,10 @@ class BenifitsPageTransformer(val activity: Activity) : ViewPager2.PageTransform
         }
         position <= 1 -> { // [-1,1]
 
-          val displayMetrics = DisplayMetrics()
-          activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics)
-          val width = displayMetrics.widthPixels
+//          val displayMetrics = DisplayMetrics()
+//          activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics)
+//          val width = displayMetrics.widthPixels
+          val width = getScreenWidth(activity)
 //          val nextItemVisiblePx = resources.getDimension(R.dimen.viewpager_next_benifits)
           val nextItemVisiblePx = width * 0.3f
           val currentItemHorizontalMarginPx = width * 0.06f
@@ -42,6 +48,19 @@ class BenifitsPageTransformer(val activity: Activity) : ViewPager2.PageTransform
           alpha = 1f
         }
       }
+    }
+  }
+
+  fun getScreenWidth(@NonNull activity: Activity): Int {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+      val windowMetrics = activity.windowManager.currentWindowMetrics
+      val insets: Insets = windowMetrics.windowInsets
+        .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
+      windowMetrics.bounds.width() - insets.left - insets.right
+    } else {
+      val displayMetrics = DisplayMetrics()
+      activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
+      displayMetrics.widthPixels
     }
   }
 }

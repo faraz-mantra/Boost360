@@ -20,5 +20,7 @@ class Constants {
 //        val RAZORPAY_KEY: String = "rzp_test_OlLpIGwhA7bATX"
 //        val RAZORPAY_SECREAT: String = "wMa4K0UW4dPXD4ZJrkVg64mX"
 
+    var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+
   }
 }

@@ -8,6 +8,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.boost.cart.utils.Utils
+import com.boost.dbcenterapi.data.api_model.CustomDomain.CustomDomains
+import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
 import com.boost.dbcenterapi.data.api_model.blockingAPI.BlockApi
 import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
 import com.boost.dbcenterapi.data.api_model.gst.Error
@@ -38,6 +40,7 @@ class FeatureDetailsViewModel : BaseViewModel() {
     private var callTrackListResponse: MutableLiveData<CallTrackListResponse> = MutableLiveData()
     var updateStatus: MutableLiveData<BlockApi> = MutableLiveData()
 
+    var customDomainsResult: MutableLiveData<CustomDomains> = MutableLiveData()
 
     val compositeDisposable = CompositeDisposable()
 
@@ -84,6 +87,27 @@ class FeatureDetailsViewModel : BaseViewModel() {
     ) {
         this.application = application
         this.lifecycleOwner = lifecycleOwner
+    }
+
+    fun updateCustomDomainsResultResult(): LiveData<CustomDomains> {
+        return customDomainsResult
+    }
+
+    fun GetSuggestedDomains(domainRequest: DomainRequest) {
+        updatesLoader.postValue(true)
+        compositeDisposable.add(
+            ApiService.getDomains(domainRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        customDomainsResult.postValue(it)
+                        updatesLoader.postValue(false)
+                    }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
     }
 
     fun loadNumberList(fpid: String, clientId: String) {

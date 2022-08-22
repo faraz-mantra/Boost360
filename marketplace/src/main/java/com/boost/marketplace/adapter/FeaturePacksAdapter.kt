@@ -1,5 +1,6 @@
 package com.boost.marketplace.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
@@ -32,7 +33,7 @@ import io.reactivex.schedulers.Schedulers
 
 class FeaturePacksAdapter(
   var bundleList: ArrayList<BundlesModel>,
-  val activity: FeatureDetailsActivity,
+  val activity: Activity,
   val listener: DetailsFragmentListener
 ) : RecyclerView.Adapter<FeaturePacksAdapter.upgradeViewHolder>() {
 

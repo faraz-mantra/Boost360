@@ -3005,6 +3005,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 )
 
             } else {
+                UserSessionManager(requireActivity()).storeIntDetails(Key_Preferences.KEY_FP_CART_COUNT,0)
                 WebEngageController.trackEvent(
                     EVENT_NAME_ADDONS_MARKETPLACE_EMPTY_CART_LOADED,
                     EVENT_LABEL_ADDONS_MARKETPLACE_EMPTY_CART_LOADED,
