@@ -48,6 +48,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.WEBSITE_PREVIEW_NO_IMAGE->WebsitePreviewNoImageViewHolder(binding as SocialPreviewWebsiteNoImageBinding)
       RecyclerViewItemType.EMAIL_PREVIEW_NO_IMAGE->EmailPreviewNoImageViewHolder(binding as SocialPreviewEmailNoImageBinding)
       RecyclerViewItemType.FAV_CAT->FavPosterCatViewHolder(binding as  ListItemFavCatBinding)
+      RecyclerViewItemType.UPDATE_STUDIO_INTRO_SCREEN_ITEM->IntroScreenUpdateStudioViewHolder(binding as ListItemUpdateStudioIntroBinding)
     }
   }
 

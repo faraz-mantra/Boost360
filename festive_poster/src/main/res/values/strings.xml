@@ -130,4 +130,10 @@
     <string name="post_a_new_update">Post a new update</string>
     <string name="all_favs">All Favourites</string>
     <string name="view_placeholder_more">View %1$d+ More</string>
+    <string name="one_update_multiple_platforms">One update, multiple platforms</string>
+    <string name="your_brand_templates_for_quick_posting">Your brand templates for quick posting*</string>
+    <string name="post_free_updates_using_create_tab">Post FREE updates using ‘Create’ tab</string>
+    <string name="you_can_post_on_multiple_platforms_with_a_single_tap">You can post on multiple platforms with a single tap!</string>
+    <string name="this_premium_feature_is_available_in_online_classic_online_advanced_packs"><![CDATA[*This premium feature is available in ‘Online Classic’ & ‘Online Advanced’ packs.]]></string>
+    <string name="you_can_continue_to_post_good_old_updates_using_the_create_tab_on_top">You can continue to post good old updates using the ‘create’ tab on top.</string>
 </resources>

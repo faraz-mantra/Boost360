@@ -25,7 +25,7 @@
             android:theme="@style/TemplateTheme"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".ui.promoUpdates.pastUpdates.PastUpdatesContainerActivity"
+            android:name=".ui.promoUpdates.intro.UpdateStudioIntroActivity"
             android:screenOrientation="portrait"
             android:theme="@style/TemplateTheme"
             android:windowSoftInputMode="stateHidden|adjustPan" />

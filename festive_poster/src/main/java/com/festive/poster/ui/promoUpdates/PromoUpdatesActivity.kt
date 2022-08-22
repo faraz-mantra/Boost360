@@ -17,6 +17,7 @@ import com.festive.poster.constant.FragmentType
 import com.festive.poster.databinding.ActivityPromoUpdatesBinding
 import com.festive.poster.models.promoModele.SocialConnModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
+import com.festive.poster.ui.promoUpdates.intro.UpdateStudioIntroActivity
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.PromoUpdatesViewModel
@@ -43,6 +44,7 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoU
     override fun onCreateView() {
         super.onCreateView()
 
+        startActivity(Intent(this,UpdateStudioIntroActivity::class.java))
         WebEngageController.trackEvent(Post_Promotional_Update_Click)
         session = UserSessionManager(this)
         // sharedViewModel?.shouldRefresh=true
