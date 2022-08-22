@@ -541,6 +541,15 @@
                                 app:layout_constraintTop_toTopOf="parent"
                                 tools:src="@drawable/addons" />
 
+                            <ImageView
+                                android:id="@+id/needMorePackageImg1"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:src="@drawable/addons" />
+
                             <TextView
                                 android:id="@+id/needMoreTitle"
                                 android:layout_width="wrap_content"
@@ -548,9 +557,10 @@
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginTop="@dimen/_15sdp"
                                 android:text="Online Pack"
+                                android:fontFamily="@font/semi_bold"
                                 android:textColor="@color/main_color_gray_dk"
                                 android:textFontWeight="600"
-                                android:textSize="16sp"
+                                android:textSize="14sp"
                                 app:layout_constraintStart_toEndOf="@id/needMorePackageImg"
                                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -610,6 +620,7 @@
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:fontFamily="@font/bold"
+                                android:textColor="@color/main_color_gray_dk"
                                 android:text="₹481/month"
                                 android:textFontWeight="700"
                                 android:textSize="14sp"
@@ -621,19 +632,21 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_10sdp"
-                                android:layout_marginTop="@dimen/_5sdp"
                                 android:fontFamily="@font/regular"
                                 android:text="₹481/month"
                                 android:textSize="12sp"
+                                android:textColor="#828282"
+                                app:layout_constraintBottom_toBottomOf="@+id/needMorePrice"
                                 app:layout_constraintStart_toEndOf="@id/needMorePrice"
-                                app:layout_constraintTop_toBottomOf="@id/featureList_layout" />
+                                app:layout_constraintTop_toTopOf="@id/needMorePrice" />
 
                             <TextView
                                 android:id="@+id/everythingText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dimen_24dp"
-                                android:fontFamily="@font/bold"
+                                android:fontFamily="@font/semi_bold"
+                                android:textColor="#4A4A4A"
                                 android:text="Everything in “Online Advanced” plus"
                                 android:textFontWeight="700"
                                 android:textSize="12sp"
@@ -644,7 +657,7 @@
                                 android:id="@+id/otherFeatureRecyclerView"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_marginTop="@dimen/dimen_12dp"
+                                android:layout_marginTop="8dp"
                                 app:layout_constraintTop_toBottomOf="@id/everythingText"
                                 tools:itemCount="5"
                                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

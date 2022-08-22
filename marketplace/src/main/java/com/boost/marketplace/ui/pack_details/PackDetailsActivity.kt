@@ -60,8 +60,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_pack_details.*
-import kotlinx.android.synthetic.main.activity_pack_details.add_item_to_cart
-import kotlinx.android.synthetic.main.activity_pack_details.featureDetailsCartIcon
 import kotlinx.android.synthetic.main.layout_black_for_savings.*
 import java.text.NumberFormat
 import java.util.*
@@ -835,6 +833,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     private fun setupPackItemRecycler(bundlesModel: BundlesModel) {
         needMoreTitle.setText(bundlesModel.name)
         Glide.with(this).load(bundlesModel.primary_image).into(needMorePackageImg)
+        Glide.with(this).load(bundlesModel.primary_image).into(needMorePackageImg1)
         if (bundlesModel.overall_discount_percent > 0) {
             discount.visibility = View.VISIBLE
             discount.setText(bundlesModel.overall_discount_percent.toString() + "% saving")
@@ -884,7 +883,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         addToCart.setOnClickListener{
                     prefs.storeCartOrderInfo(null)
 
-                    binding?.packageImg?.let { it1 -> makeFlyAnimation(it1) }
+                    binding?.needMorePackageImg?.let { it1 -> makeFlyAnimation(it1) }
 
                     viewModel.addItemToCartPackage1(
                         CartModel(

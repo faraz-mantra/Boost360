@@ -4,7 +4,5 @@
     android:layout_width="24dp"
     android:layout_height="24dp"
     android:layout_gravity="top|start"
-    android:layout_marginStart="7dp"
-    android:layout_marginTop="@dimen/pad_20dp"
     android:src="@drawable/icon_no_calls"
     android:layout_marginBottom="@dimen/pad_10dp" />

@@ -587,7 +587,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:padding="@dimen/_10sdp"
-                            android:src="@drawable/ic_arrow_down_gray"
+                            android:src="@drawable/ic_down_arrow_pack_details"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -601,7 +601,7 @@
                         android:layout_height="wrap_content"
                         tools:listitem="@layout/how_to_use_item"
                         android:visibility="gone"
-                        tools:visibility="visible"
+                        tools:visibility="gone"
                         app:layout_constraintTop_toBottomOf="@id/how_to_use_title_layout" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
