@@ -548,19 +548,16 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
         viewModel.bundleResult().observe(this) {
             if (it != null) {
-                setupPackItemRecycler(it[2])
-
-//                bundlesList.add(it[2])
-//                if (bundleData?.name == it[2].name) {
-//
-//                }
-//                for (singleBundle in it) {
-//                    if (bundleData?.name != singleBundle.name) {
-//                        bundlesList.add(singleBundle)
-//                    }
-//                }
-//                updatePackItemRecycler(bundlesList)
-//                packItemAdapter.notifyDataSetChanged()
+                it.forEachIndexed { index, bundlesModel ->
+                    if(bundlesModel.bundle_id == bundleData?._kid) {
+                        try {
+                            setupPackItemRecycler(it[index+1])
+                        } catch (e:Exception){
+                            Log.d("","Exception")
+                            layout_need_more.visibility = View.GONE
+                        }
+                    }
+                }
             }
         }
 
