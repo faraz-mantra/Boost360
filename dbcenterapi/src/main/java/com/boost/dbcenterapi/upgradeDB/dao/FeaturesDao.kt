@@ -77,6 +77,12 @@ interface FeaturesDao {
 //    @Query("SELECT COUNT(*) FROM Features Where feature_code IN (:list)")
   fun getallActivefeatureCount(list: List<String>): Single<Int>
 
+  @Query("SELECT * FROM Features Where featureState= 1 AND feature_code IN (:list)")
+  fun getallActivefeatureCount1(list: List<String>): Single<List<FeaturesModel>>
+
+  @Query("SELECT * FROM Features Where featureState !=1  AND feature_code IN (:list)")
+  fun getallInActivefeatureCount(list: List<String>): Single<List<FeaturesModel>>
+
   @Query("SELECT COUNT(*) FROM Features Where target_business_usecase = :featureType AND feature_code != :excludeFeature AND is_premium = :premiumType")
   fun getFeatureTypeCountPremium(featureType: String, excludeFeature: String, premiumType: Boolean): Single<Int>
 

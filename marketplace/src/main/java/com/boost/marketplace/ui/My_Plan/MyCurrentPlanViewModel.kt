@@ -16,20 +16,23 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class MyCurrentPlanViewModel(): BaseViewModel() {
-    var updatesResult: MutableLiveData <ArrayList<FeatureDetailsV2Item>> = MutableLiveData()
+class MyCurrentPlanViewModel() : BaseViewModel() {
+    var updatesResult: MutableLiveData<ArrayList<FeatureDetailsV2Item>> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
-    var activeFreeWidgetList:MutableLiveData<List<FeaturesModel>> = MutableLiveData()
+    var activeFreeWidgetList: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var activePremiumWidgetList: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
+    var activeWidgetCount: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
+    var inActiveWidgetCount: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     val compositeDisposable = CompositeDisposable()
     var ApiService = Utils.getRetrofit().create(NewApiInterface::class.java)
     lateinit var application: Application
     lateinit var lifecycleOwner: LifecycleOwner
 
-    fun setApplicationLifecycle(application: Application,
-                                lifecycleOwner: LifecycleOwner
-    ){
+    fun setApplicationLifecycle(
+        application: Application,
+        lifecycleOwner: LifecycleOwner
+    ) {
         this.application = application
         this.lifecycleOwner = lifecycleOwner
     }
@@ -46,12 +49,20 @@ class MyCurrentPlanViewModel(): BaseViewModel() {
         return updatesLoader
     }
 
-    fun updateResult():LiveData<ArrayList<FeatureDetailsV2Item>>{
+    fun updateResult(): LiveData<ArrayList<FeatureDetailsV2Item>> {
         return updatesResult
     }
 
     fun getActivePremiumWidgets(): LiveData<List<FeaturesModel>> {
         return activePremiumWidgetList
+    }
+
+    fun activeWidgetCount(): LiveData<List<FeaturesModel>> {
+        return activeWidgetCount
+    }
+
+    fun inActiveWidgetCount(): LiveData<List<FeaturesModel>> {
+        return inActiveWidgetCount
     }
 
     fun loadPurchasedItems(fpid: String, clientId: String) {
@@ -61,9 +72,9 @@ class MyCurrentPlanViewModel(): BaseViewModel() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                    {it1 ->
-                        val list= ArrayList<String>()
-                        for (singleItem in it1 ) {
+                    { it1 ->
+                        val list = ArrayList<String>()
+                        for (singleItem in it1) {
                             list.add(singleItem.featureCode)
                         }
                         compositeDisposable.add(
@@ -89,6 +100,21 @@ class MyCurrentPlanViewModel(): BaseViewModel() {
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .doOnComplete {
+
+                                            compositeDisposable.add(
+                                                AppDatabase.getInstance(application)!!
+                                                    .featuresDao()
+                                                    .getallActivefeatureCount1(list)
+                                                    .subscribeOn(Schedulers.io())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .doOnSuccess {
+                                                        activeWidgetCount.postValue(it)
+                                                    }
+                                                    .doOnError {
+                                                        updatesError.postValue(it.message)
+                                                        updatesLoader.postValue(false)
+                                                    }.subscribe()
+                                            )
                                             Log.i("insertAllFeatures", "Successfully")
                                             activePremiumWidgetList.postValue(listFeaturesModel)
                                             updatesLoader.postValue(false)
@@ -113,13 +139,14 @@ class MyCurrentPlanViewModel(): BaseViewModel() {
                                 .getallActiveFeatures1(list)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .doOnSuccess {it2->
-                                    val listFeaturesModel=it2.map {it3->
-                                        it1.firstOrNull { it.featureCode.equals(it3.feature_code)}.apply {
-                                            it3.expiryDate=this?.expiryDate
-                                            it3.activatedDate=this?.activatedDate
-                                            it3.featureState=this?.featureState
-                                        };it3
+                                .doOnSuccess { it2 ->
+                                    val listFeaturesModel = it2.map { it3 ->
+                                        it1.firstOrNull { it.featureCode.equals(it3.feature_code) }
+                                            .apply {
+                                                it3.expiryDate = this?.expiryDate
+                                                it3.activatedDate = this?.activatedDate
+                                                it3.featureState = this?.featureState
+                                            };it3
                                     }
                                     Completable.fromAction {
                                         AppDatabase.getInstance(application)!!
@@ -129,8 +156,23 @@ class MyCurrentPlanViewModel(): BaseViewModel() {
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .doOnComplete {
+
+                                            compositeDisposable.add(
+                                                AppDatabase.getInstance(application)!!
+                                                    .featuresDao()
+                                                    .getallInActivefeatureCount(list)
+                                                    .subscribeOn(Schedulers.io())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .doOnSuccess {
+                                                        inActiveWidgetCount.postValue(it)
+                                                    }
+                                                    .doOnError {
+                                                        updatesError.postValue(it.message)
+                                                        updatesLoader.postValue(false)
+                                                    }.subscribe()
+                                            )
                                             Log.i("insertAllFeatures", "Successfully")
-                                            activeFreeWidgetList.postValue(listFeaturesModel)
+                                            activePremiumWidgetList.postValue(listFeaturesModel)
                                             updatesLoader.postValue(false)
 
                                         }.doOnError {

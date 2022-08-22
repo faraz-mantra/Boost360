@@ -251,6 +251,7 @@ class OrderConfirmationFragment : BaseFragment() {
       if (buyItemKey != null && buyItemKey!!.isNotEmpty()) intent.putExtra("buyItemKey", buyItemKey)
       intent.putExtra("profileUrl", session?.fPLogo)
       startActivity(intent)
+      requireActivity().finish()
     } catch (e: Exception) {
       SentryController.captureException(e)
       e.printStackTrace()

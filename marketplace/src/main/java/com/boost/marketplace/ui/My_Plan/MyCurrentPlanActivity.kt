@@ -219,7 +219,7 @@ class MyCurrentPlanActivity :
     @SuppressLint("FragmentLiveDataObserve")
     private fun initMVVM() {
 
-        viewModel.getActivePremiumWidgets().observe(this,androidx.lifecycle.Observer{
+        viewModel.activeWidgetCount().observe(this,androidx.lifecycle.Observer{
             totalPaidItemList = it
             totalActivePremiumWidgetCount = totalPaidItemList!!.size
             val paidItemsCount = totalPaidItemList!!.size
@@ -251,7 +251,7 @@ class MyCurrentPlanActivity :
             updatePaidAddonsRecycler(it)
         })
 
-        viewModel.getActiveFreeWidgets().observe(this,androidx.lifecycle.Observer{
+        viewModel.inActiveWidgetCount().observe(this,androidx.lifecycle.Observer{
             totalFreeItemList = it
             totalActiveFreeWidgetCount = totalFreeItemList!!.size
             binding?.paidTitle?.text = totalActiveFreeWidgetCount.toString() + " Inactive features"
@@ -275,6 +275,7 @@ class MyCurrentPlanActivity :
                     updateFreeAddonsRecycler(totalFreeItemList!!)
                 }
             }
+            updateFreeAddonsRecycler(totalFreeItemList!!)
         })
         viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
             if (it) {
