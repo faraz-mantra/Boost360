@@ -871,7 +871,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     when (type) {
       QuickActionItem.QuickActionType.POST_NEW_UPDATE ->{
         if (FirebaseRemoteConfigUtil.featureUpdateStudioSelectedUsers(session?.fpTag))
-            baseActivity.startPromotionUpdates()
+            baseActivity.startPromotionUpdatesFromDashboard()
         else
            baseActivity.startPostUpdate()
       }

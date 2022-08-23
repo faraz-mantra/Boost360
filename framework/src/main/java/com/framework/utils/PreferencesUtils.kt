@@ -9,6 +9,7 @@ enum class PreferencesKey {
   FACEBOOK_USER_ID,
   REQUEST_FLOAT,
   NAVIGATION_STACK,
+  UPDATE_STUDIO_FIRST_TIME
 }
 
 class PreferencesUtils {

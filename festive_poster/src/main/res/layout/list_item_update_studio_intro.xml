@@ -15,7 +15,7 @@
             style="@style/WhiteBoldL"
             android:textSize="30sp"
             android:ellipsize="end"
-            android:layout_weight="0.25"
+            android:layout_weight="0.27"
             tools:text="One update, multiple platforms"
             android:layout_height="0dp"/>
 
@@ -23,7 +23,7 @@
             android:id="@+id/iv_icon"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.6"
+            android:layout_weight="0.55"
             android:layout_marginTop="@dimen/size_10"
             android:src="@drawable/update_studio_intro1"
              />
@@ -32,12 +32,13 @@
             style="@style/BlackRegularM"
             android:id="@+id/tv_desc"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:gravity="center"
             android:textSize="@dimen/size_16"
+            android:layout_marginTop="@dimen/size_16"
             android:ellipsize="end"
             android:layout_weight="0.1"
-            tools:text="You can post on multiple platforms with a single tap!"
+            tools:text="You can post on jhhgmultiple platforms with a single tap!"
              />
     </LinearLayout>
 </layout>

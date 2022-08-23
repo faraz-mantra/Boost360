@@ -27,11 +27,12 @@ import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
 import com.festive.poster.ui.festivePoster.FestivePosterContainerActivity
 import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
+import com.festive.poster.ui.promoUpdates.intro.UpdateStudioIntroActivity
 import com.framework.analytics.SentryController
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureNewOnBoardingFlowEnable
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureUpdateStudioSelectedUsers
 import com.framework.pref.*
-import com.framework.utils.DateUtils
+import com.framework.utils.*
 import com.framework.webengageconstant.*
 import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.IntentConstant
@@ -1099,12 +1100,10 @@ fun Context.startHelpSupportVideoActivity(supportType: String) {
   }
 }
 
-fun AppCompatActivity.startPromotionUpdates() {
+fun AppCompatActivity.startPromotionUpdatesFromDashboard() {
   try {
     WebEngageController.trackEvent(Post_Promotional_Update_Click)
-    val posterIntent = Intent(this,PromoUpdatesActivity::class.java)
-
-    startActivity(posterIntent)
+    startPromotionUpdates()
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()

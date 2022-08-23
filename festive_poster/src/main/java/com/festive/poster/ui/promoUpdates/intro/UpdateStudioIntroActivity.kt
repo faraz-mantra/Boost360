@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.BlendMode
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
@@ -20,10 +22,13 @@ import com.festive.poster.databinding.ActivityUpdateStudioIntroBinding
 import com.festive.poster.models.IntroUpdateStudioItem
 import com.festive.poster.models.promoModele.SocialConnModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
+import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.PromoUpdatesViewModel
 import com.framework.base.setFragmentType
+import com.framework.extensions.gone
+import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.utils.setStatusBarColor
@@ -34,6 +39,7 @@ import kotlin.math.abs
 
 class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBinding, PromoUpdatesViewModel>() {
 
+    private lateinit var sliderRunnable: Runnable
     private var session: UserSessionManager?=null
 
     override fun getLayout(): Int {
@@ -47,10 +53,13 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
     override fun onCreateView() {
         super.onCreateView()
         setupSlider()
+        setOnClickListener(binding?.btnUpdateStudio,binding?.btnNext)
 
     }
 
+
     private fun setupSlider() {
+
         val data = arrayListOf(
             IntroUpdateStudioItem(
                 getString(R.string.one_update_multiple_platforms),
@@ -71,18 +80,64 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
         val adapter = AppBaseRecyclerViewAdapter(this,data,null)
         binding?.slider?.adapter=adapter
         binding?.slider?.setPageTransformer(SlideBottomTransformer())
+        TabLayoutMediator(binding!!.sliderIndicator,binding!!.slider)
+        { tab, position ->
+        }.attach()
+
+        binding?.slider?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                when(position){
+                    0->{
+                        binding?.btnNext?.visible()
+                        binding?.btnUpdateStudio?.gone()
+                    }
+                    1->{
+                        binding?.btnNext?.visible()
+                        binding?.btnUpdateStudio?.gone()
+                    }
+                    2->{
+                        binding?.btnNext?.gone()
+                        binding?.btnUpdateStudio?.visible()
+                    }
+                }
+            }
+        })
+
+        autoSlide()
+    }
+
+    private fun autoSlide() {
+        sliderRunnable = Runnable {
+            if (binding!!.slider.currentItem>=2){
+                binding!!.slider.currentItem=0
+            }else{
+                binding!!.slider.currentItem = binding!!.slider.currentItem+1
+            }
+
+            Handler(Looper.getMainLooper()).postDelayed(sliderRunnable,
+                2500)
+        }
+        Handler(Looper.getMainLooper()).postDelayed(sliderRunnable,
+            2500)
     }
 
 
     override fun onResume() {
         super.onResume()
-        setStatusBarColor(R.color.toolbar_bg)
+        setStatusBarColor(R.color.color_4a4a4a_jio_ec008c)
     }
 
     override fun onClick(v: View?) {
         super.onClick(v)
         when (v) {
-
+            binding?.btnNext->{
+                binding!!.slider.currentItem = binding!!.slider.currentItem+1
+            }
+            binding?.btnUpdateStudio->{
+                PromoUpdatesActivity.launchActivity(this)
+                finish()
+            }
         }
     }
 
