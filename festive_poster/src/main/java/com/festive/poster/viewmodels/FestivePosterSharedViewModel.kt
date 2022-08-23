@@ -1,5 +1,6 @@
 package com.festive.poster.viewmodels
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.festive.poster.models.PosterCustomizationModel
@@ -16,4 +17,7 @@ class FestivePosterSharedViewModel: BaseViewModel() {
     var selectedPoster:PosterModel?=null
     var posterPackLoadListener = MutableLiveData<Boolean>()
     var shouldRefresh = false
+
+    var todaysPosterPackList:ArrayList<PosterPackModel>?=null
+
 }
