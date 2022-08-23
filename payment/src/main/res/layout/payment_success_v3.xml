@@ -208,6 +208,7 @@
                         android:gravity="end">
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/validity_period_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/semi_bold"

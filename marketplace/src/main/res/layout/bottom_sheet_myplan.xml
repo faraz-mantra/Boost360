@@ -146,31 +146,31 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_desc" />
 
-                <TextView
-                    android:id="@+id/title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:fontFamily="@font/semi_bold"
-                    android:text=""
-                    android:textColor="#15c216"
-                    android:textSize="@dimen/_8sdp"
-                    app:layout_constraintBottom_toBottomOf="@+id/txt_message"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/txt_message"
-                    app:layout_constraintVertical_bias="0.428" />
+<!--                <TextView-->
+<!--                    android:id="@+id/title"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginEnd="16dp"-->
+<!--                    android:fontFamily="@font/semi_bold"-->
+<!--                    android:text=""-->
+<!--                    android:textColor="#15c216"-->
+<!--                    android:textSize="@dimen/_8sdp"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@+id/txt_message"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/txt_message"-->
+<!--                    app:layout_constraintVertical_bias="0.428" />-->
 
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:layout_marginRight="@dimen/_5sdp"
-                    android:src="@drawable/ic_tick_green"
-                    app:layout_constraintBottom_toBottomOf="@+id/txt_message"
-                    app:layout_constraintEnd_toStartOf="@+id/title"
-                    app:layout_constraintTop_toTopOf="@+id/txt_message"
-                    app:layout_constraintVertical_bias="0.6" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageView3"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:visibility="gone"-->
+<!--                    android:layout_marginRight="@dimen/_5sdp"-->
+<!--                    android:src="@drawable/ic_tick_green"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@+id/txt_message"-->
+<!--                    app:layout_constraintEnd_toStartOf="@+id/title"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/txt_message"-->
+<!--                    app:layout_constraintVertical_bias="0.6" />-->
 
                 <TextView
                     android:id="@+id/title3"
@@ -207,42 +207,86 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:id="@+id/cslayout1"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:background="@drawable/ic_action_white_bg"
-                android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintEnd_toEndOf="@+id/cslayout"
-                app:layout_constraintStart_toStartOf="@+id/cslayout"
-                app:layout_constraintTop_toBottomOf="@id/cslayout">
-
-
-                <TextView
-                    android:id="@+id/action_required"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_25sdp"
-                    android:padding="@dimen/_10ssp"
-                    android:background="@drawable/ic_action_red_bg"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginBottom="@dimen/_15sdp"
-                    android:drawableStart="@drawable/ic_action_req"/>
-
-                <TextView
-                    android:id="@+id/action_text"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/edge_cases_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_6ssp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/action_required"
-                    android:text="Please activate this feature by setting up your adding a custom domain to your website."/>
+                    android:background="@drawable/rounded_border_red_white_bg"
+                    android:padding="16dp"
+                    android:visibility="visible"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    app:layout_constraintEnd_toEndOf="@+id/cslayout"
+                    app:layout_constraintStart_toStartOf="@+id/cslayout"
+                    app:layout_constraintTop_toBottomOf="@id/cslayout">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/edge_case_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Something went wrong!"
+                        android:textColor="@color/red"
+                        android:drawableStart="@drawable/ic_error_red"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:textFontWeight="600"
+                        android:fontFamily="@font/semi_bold"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/edge_case_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="There is an internal error inside Boost 360. We are working to resolve this issue."
+                        android:paddingStart="22dp"
+                        android:paddingEnd="5dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:textFontWeight="600"
+                        android:fontFamily="@font/semi_bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/edge_case_title"/>
+
+                    <TextView
+                        android:id="@+id/edge_case_hyperlink"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/action_required"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/semi_bold"
+                        android:textFontWeight="600"
+                        android:textColor="@color/orange"
+                        android:paddingStart="22dp"
+                        android:paddingEnd="5dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/edge_case_desc"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+<!--                <TextView-->
+<!--                    android:id="@+id/action_required"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="@dimen/_25sdp"-->
+<!--                    android:padding="@dimen/_10ssp"-->
+<!--                    android:background="@drawable/ic_action_red_bg"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    android:layout_marginBottom="@dimen/_15sdp"-->
+<!--                    android:drawableStart="@drawable/ic_action_req"/>-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/action_text"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:padding="@dimen/_6ssp"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/action_required"-->
+<!--                    android:text="Please activate this feature by setting up your adding a custom domain to your website."/>-->
 
 
             <Button
@@ -259,7 +303,7 @@
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cslayout1" />
+                app:layout_constraintTop_toBottomOf="@+id/edge_cases_layout" />
 
             <Button
                 android:id="@+id/btn_feature_details"
@@ -281,8 +325,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btn_Use_this_feature" />
 
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
