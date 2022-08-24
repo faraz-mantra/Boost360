@@ -1,5 +1,6 @@
 package com.appservice.holder
 
+import androidx.core.view.isVisible
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.ListItemPastCategoryBinding
 import com.appservice.model.updateBusiness.pastupdates.PastCategoriesModel
@@ -16,6 +17,8 @@ class PastCategoryViewHolder(binding: ListItemPastCategoryBinding) :
         binding.root.setOnClickListener {
             listener?.onItemClick(position, categoryItem, RecyclerViewActionType.PAST_CATEGORY_CLICKED.ordinal)
         }
+
+        binding.vwSelectIndicator.isVisible = categoryItem.isSelected
 
         super.bind(position, item)
     }

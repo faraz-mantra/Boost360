@@ -9,14 +9,16 @@ import java.io.Serializable
 class PastCategoriesModel(
     val postType: Int = 0,
     val categoryTitle: String? = null,
-    var categoryCount: Int = 0
+    var categoryCount: Int = 0,
+    var isSelected:Boolean=false,
 ) : Serializable, AppBaseRecyclerViewItem {
 
     fun getData(c: Context): ArrayList<PastCategoriesModel> {
         return arrayListOf(
             PastCategoriesModel(
                 postType = 0,
-                categoryTitle = c.getString(R.string.cat_0_all_updates)
+                categoryTitle = c.getString(R.string.cat_0_all_updates),
+                isSelected=true
             ),
             PastCategoriesModel(
                 postType = 1,

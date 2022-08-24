@@ -42,7 +42,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding
     var postType: Int = 0
     var isFilterVisible = false
     var tagArray: MutableList<String> = mutableListOf()
-    var categoryUiList: ArrayList<PastPromotionalCategoryModel> = arrayListOf()
+    var promoUpdateCatsList: ArrayList<PastPromotionalCategoryModel> = arrayListOf()
 
     companion object {
         @JvmStatic
@@ -96,9 +96,9 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding
     private fun getTemplateViewConfig() {
         viewModel?.promoUpdatesCats
             ?.observeOnce(this) {
-                categoryUiList.clear()
-                categoryUiList.addAll(it)
-                tagListAdapter = AppBaseRecyclerViewAdapter(baseActivity, categoryUiList, this)
+                promoUpdateCatsList.clear()
+                promoUpdateCatsList.addAll(it)
+                tagListAdapter = AppBaseRecyclerViewAdapter(baseActivity, promoUpdateCatsList, this)
                 binding.rvFilterSubCategory.adapter = tagListAdapter
                 getPostCategories()
             }
@@ -136,7 +136,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding
                 binding.rvPostListing.visible()
                 pastPostListing.clear()
                 list.forEach {item->
-                    item.category = categoryUiList.find { category->
+                    item.category = promoUpdateCatsList.find { category->
                         item.tags?.firstOrNull()==category.id
                     }
                 }
@@ -161,6 +161,10 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding
             RecyclerViewActionType.PAST_CATEGORY_CLICKED.ordinal -> {
                 showProgress()
                 val pastCategoriesModel = item as PastCategoriesModel
+
+                categoryDataList.forEach { it.isSelected=false }
+                categoryDataList[position].isSelected=true
+
                 postType = pastCategoriesModel.postType
                 tagChanges()
                 postCategoryAdapter.notifyDataSetChanged()
@@ -231,7 +235,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding
     }
 
     private fun tagChanges() {
-        categoryUiList.forEach { it.isSelected = false }
+        promoUpdateCatsList.forEach { it.isSelected = false }
         tagArray.clear()
         tagListAdapter.notifyDataSetChanged()
         binding.tagWrapper.apply {
