@@ -161,7 +161,8 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
     when (actionType) {
       RecyclerViewActionType.PRODUCT_ITEM_ADD.ordinal -> {
         val productItem = item as? ProductItem ?: return
-        if (productItem.availableUnits?:0.0 > 0) {
+        val  units = (productItem.availableUnits ?: 0.0)
+        if ( units> 0||units==-1.0) {
           productItem.productQuantityAdded = productItem.productQuantityAdded + 1
           finalProductList.firstOrNull { productItem._id.equals(it._id) }?.productQuantityAdded =
             productItem.productQuantityAdded
