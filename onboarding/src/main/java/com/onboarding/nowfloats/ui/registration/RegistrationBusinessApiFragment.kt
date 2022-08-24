@@ -16,7 +16,6 @@ import com.framework.utils.makeCall
 import com.framework.views.DotProgressBar
 import com.framework.webengageconstant.DIGITAL_CHANNELS
 import com.framework.webengageconstant.WHATS_APP_CONNECTED
-import com.invitereferrals.invitereferrals.InviteReferralsApi
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.constant.PreferenceConstant

@@ -227,8 +227,9 @@ fun clickEventUpdateScoreN(type: DrScoreItem.DrScoreItemType?, baseActivity: App
       baseActivity.startBusinessLogo(session)
     }
     DrScoreItem.DrScoreItemType.boolean_add_business_hours -> {
-      if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS) == "TIMINGS") baseActivity.startBusinessHours(session)
-      else alertDialogBusinessHours(baseActivity, session)
+//      if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS) == "TIMINGS")
+        baseActivity.startBusinessHours(session)
+//      else alertDialogBusinessHours(baseActivity, session)
     }
     DrScoreItem.DrScoreItemType.boolean_add_contact_details -> {
       baseActivity.startBusinessInfoEmail(session)

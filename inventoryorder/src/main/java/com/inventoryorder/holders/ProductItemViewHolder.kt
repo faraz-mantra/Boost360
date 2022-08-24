@@ -31,18 +31,10 @@ class ProductItemViewHolder(binding: ItemProductBinding) : AppBaseRecyclerViewHo
       binding.layoutItemCounter.visibility = View.GONE
     }
     binding.tvIncrementCount.setOnClickListener {
-      listener?.onItemClick(
-        adapterPosition,
-        data,
-        RecyclerViewActionType.PRODUCT_ITEM_INCREASE_COUNT.ordinal
-      )
+      listener?.onItemClick(adapterPosition, data, RecyclerViewActionType.PRODUCT_ITEM_INCREASE_COUNT.ordinal)
     }
     binding.tvDecrementCount.setOnClickListener {
-      listener?.onItemClick(
-        adapterPosition,
-        data,
-        RecyclerViewActionType.PRODUCT_ITEM_DECREASE_COUNT.ordinal
-      )
+      listener?.onItemClick(adapterPosition, data, RecyclerViewActionType.PRODUCT_ITEM_DECREASE_COUNT.ordinal)
     }
   }
 }

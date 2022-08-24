@@ -16,6 +16,9 @@ private val shimmer = Shimmer.AlphaHighlightBuilder()// The attributes for a Shi
 val shimmerDrawable = ShimmerDrawable().apply {
   setShimmer(shimmer)
 }
+val UPDATE_PIC_FILE_NAME = "update_temp.jpg"
+
+
 
 const val AUTH_KEY = "597ee93f5d64370820a6127c"
 

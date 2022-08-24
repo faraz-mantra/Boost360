@@ -8,7 +8,7 @@ data class BillingDetailsN(
   val AssuredPurchaseCharges: Double? = null,
   val CurrencyCode: String? = null,
   val DiscountAmount: Double? = null,
-  val ExtraProperties: Any? = null,
+  val ExtraProperties: HashMap<String, Any>? = null,
   val GrossAmount: Double? = null,
   val GstCharges: Double? = null,
   val InvoiceFileName: String? = null,

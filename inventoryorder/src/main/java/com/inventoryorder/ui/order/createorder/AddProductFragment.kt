@@ -161,25 +161,34 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
     when (actionType) {
       RecyclerViewActionType.PRODUCT_ITEM_ADD.ordinal -> {
         val productItem = item as? ProductItem ?: return
-        productItem.productQuantityAdded = productItem.productQuantityAdded + 1
-        finalProductList.firstOrNull { productItem._id.equals(it._id) }?.productQuantityAdded = productItem.productQuantityAdded
-        itemsAdapter?.notifyDataSetChanged()
-        totalPrice = totalPrice.plus(productItem.getPayablePrice())
-        binding?.tvItemTotalPrice?.text = "${productItem.getCurrencyCodeValue()} $totalPrice"
-        if (binding?.layoutTotalPricePanel?.visibility == View.GONE) {
-          binding?.layoutTotalPricePanel?.visibility = View.VISIBLE
+        if (productItem.availableUnits?:0.0 > 0) {
+          productItem.productQuantityAdded = productItem.productQuantityAdded + 1
+          finalProductList.firstOrNull { productItem._id.equals(it._id) }?.productQuantityAdded =
+            productItem.productQuantityAdded
+          itemsAdapter?.notifyDataSetChanged()
+          totalPrice = totalPrice.plus(productItem.getPayablePrice())
+          binding?.tvItemTotalPrice?.text = "${productItem.getCurrencyCodeValue()} $totalPrice"
+          if (binding?.layoutTotalPricePanel?.visibility == View.GONE) {
+            binding?.layoutTotalPricePanel?.visibility = View.VISIBLE
+          }
+          totalCartItems += 1
+        }else{
+          showShortToast(getString(R.string.product_quantity_not_available))
         }
-        totalCartItems += 1
       }
 
       RecyclerViewActionType.PRODUCT_ITEM_INCREASE_COUNT.ordinal -> {
         val productItem = item as? ProductItem ?: return
-        productItem.productQuantityAdded = productItem.productQuantityAdded + 1
-        finalProductList.firstOrNull { productItem._id.equals(it._id) }?.productQuantityAdded = productItem.productQuantityAdded
-        itemsAdapter?.notifyDataSetChanged()
-        totalPrice = finalProductList.map { it.getPayablePWithCount() }.sum()
-        binding?.tvItemTotalPrice?.text = "${productItem.getCurrencyCodeValue()} $totalPrice"
-        totalCartItems += 1
+        if (productItem.productQuantityAdded < productItem.availableUnits?.toInt()?:0) {
+          productItem.productQuantityAdded = productItem.productQuantityAdded + 1
+          finalProductList.firstOrNull { productItem._id.equals(it._id) }?.productQuantityAdded = productItem.productQuantityAdded
+          itemsAdapter?.notifyDataSetChanged()
+          totalPrice = finalProductList.map { it.getPayablePWithCount() }.sum()
+          binding?.tvItemTotalPrice?.text = "${productItem.getCurrencyCodeValue()} $totalPrice"
+          totalCartItems += 1
+        } else {
+          showShortToast("${productItem.availableUnits?.toInt()} ${if(productItem.availableUnits?.toInt() == 1) "unit" else "units"} ${getString(R.string.units_available)}")
+        }
       }
 
       RecyclerViewActionType.PRODUCT_ITEM_DECREASE_COUNT.ordinal -> {

@@ -1,19 +1,11 @@
 package com.nowfloats.hotel.seasonalOffers;
 
-import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -23,16 +15,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.appservice.ui.catalog.widgets.ClickType;
 import com.bumptech.glide.Glide;
+import com.framework.imagepicker.ImagePicker;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
@@ -47,28 +35,16 @@ import com.nowfloats.hotel.API.model.GetOffers.Data;
 import com.nowfloats.hotel.API.model.UpdateOffer.UpdateOfferRequest;
 import com.nowfloats.hotel.Interfaces.SeasonalOffersDetailsListener;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.util.Constants;
-import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
-import com.nowfloats.util.MixPanelController;
-import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
-
-import java.io.File;
-import java.io.IOException;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import java.util.List;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
-
-import static com.framework.webengageconstant.EventLabelKt.UPDATED_BUINSESS_LOGO;
-import static com.framework.webengageconstant.EventNameKt.UPLOAD_LOGO;
 
 public class SeasonalOffersDetailsActivity extends AppCompatActivity implements SeasonalOffersDetailsListener {
 
@@ -220,10 +196,22 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
 
   private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
     if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
-      cameraIntent();
+      //cameraIntent();
+      openImagePicker(ClickType.CAMERA);
     } else if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())) {
-      galleryIntent();
+      //galleryIntent();
+      openImagePicker(ClickType.GALLERY);
     }
+  }
+
+  private void openImagePicker(ClickType clickType){
+    ImagePicker.Mode type = clickType == ClickType.CAMERA ? ImagePicker.Mode.CAMERA : ImagePicker.Mode.GALLERY;
+    new ImagePicker.Builder(SeasonalOffersDetailsActivity.this)
+            .mode(type)
+            .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
+            .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
+            .scale(800, 800)
+            .enableDebuggingMode(true).build();
   }
 
   public void displayData() {
@@ -324,7 +312,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
   }
 
 
-  public void cameraIntent() {
+  /*public void cameraIntent() {
     try {
       // use standard intent to capture an image
       if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
@@ -361,25 +349,25 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
     } catch (Exception e) {
       e.printStackTrace();
     }
-  }
+  }*/
 
-  private File createImageFile() throws IOException {
+  /*private File createImageFile() throws IOException {
     // Create an image file name
     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
     String imageFileName = "JPEG_" + timeStamp + "_";
     File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
     File image = File.createTempFile(
-        imageFileName,  /* prefix */
-        ".jpg",         /* suffix */
-        storageDir      /* directory */
+        imageFileName,  *//* prefix *//*
+        ".jpg",         *//* suffix *//*
+        storageDir      *//* directory *//*
     );
 
     // Save a file: path for use with ACTION_VIEW intents
     path = image.getAbsolutePath();
     return image;
-  }
+  }*/
 
-  public void galleryIntent() {
+  /*public void galleryIntent() {
     try {
       if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
           PackageManager.PERMISSION_GRANTED) {
@@ -397,7 +385,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
       String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
       Methods.showSnackBarNegative(SeasonalOffersDetailsActivity.this, errorMessage);
     }
-  }
+  }*/
 
 
   void createNewOfferAPI() {
@@ -472,7 +460,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
     return true;
   }
 
-  @Override
+ /* @Override
   protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     try {
@@ -485,6 +473,23 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
             path = Methods.getPath(this, picUri);
             updateOffersImage();
           }
+        }
+      }
+    } catch (Exception e) {
+      Log.e("onActivityResult ->", "Failed ->" + e.getMessage());
+      e.printStackTrace();
+    }
+  }*/
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    try {
+      if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
+        List<String> mPaths = (List<String>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH);
+        if (!mPaths.isEmpty()) {
+          path = mPaths.get(0);
+          updateOffersImage();
         }
       }
     } catch (Exception e) {

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginVertical="@dimen/size_16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <com.framework.views.customViews.CustomCardView
+            android:id="@+id/iv_category_icon"
+            android:layout_width="44dp"
+            app:cardElevation="@dimen/size_0"
+            android:layout_height="44dp"
+            app:cardCornerRadius="8dp"
+            android:layout_marginStart="@dimen/size_26"
+            app:cardBackgroundColor="@color/color_ffb900_op10_jio_ec008c_op10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" >
+
+
+            <com.framework.views.customViews.CustomImageView
+                android:layout_width="15dp"
+                android:id="@+id/iv_category_img"
+                android:layout_gravity="center"
+                android:layout_height="15dp"/>
+
+        </com.framework.views.customViews.CustomCardView>
+
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_cat_title"
+            style="@style/BlackSemiBoldM"
+            android:layout_marginEnd="@dimen/size_26"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_category_icon"
+            app:layout_constraintTop_toTopOf="@+id/iv_category_icon"
+            tools:text="Discounts and Offers" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_cat_desc"
+            style="@style/BlackRegularSS"
+            android:layout_marginEnd="@dimen/size_26"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_category_icon"
+            app:layout_constraintTop_toBottomOf="@+id/tv_cat_title"
+            tools:text="Post about offers or friday sale upto 50% discount  on selected products" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/vp_template"
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/size_20"
+            android:paddingEnd="@dimen/size_26"
+            app:layout_constraintHorizontal_bias="0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_cat_desc" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
