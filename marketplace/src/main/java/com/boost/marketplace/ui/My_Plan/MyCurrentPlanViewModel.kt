@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.boost.dbcenterapi.data.api_model.Edgecase.EdgeCases
 import com.boost.dbcenterapi.data.api_model.GetFeatureDetails.FeatureDetailsV2Item
 import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
@@ -24,6 +25,7 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
     var activePremiumWidgetList: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var activeWidgetCount: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var inActiveWidgetCount: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
+    var edgecaseResult: MutableLiveData<EdgeCases> = MutableLiveData()
     val compositeDisposable = CompositeDisposable()
     var ApiService = Utils.getRetrofit().create(NewApiInterface::class.java)
     lateinit var application: Application
@@ -63,6 +65,10 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
 
     fun inActiveWidgetCount(): LiveData<List<FeaturesModel>> {
         return inActiveWidgetCount
+    }
+
+    fun edgecaseResult(): LiveData<EdgeCases> {
+        return edgecaseResult
     }
 
     fun loadPurchasedItems(fpid: String, clientId: String) {
@@ -191,6 +197,23 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
                         )
 //                        updatesResult.postValue(it)
 //                        updatesLoader.postValue(false)
+                    }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
+
+    fun edgecases(auth:String,fpid: String,featureKey:String) {
+        updatesLoader.postValue(true)
+        compositeDisposable.add(
+            ApiService.getEdgeCases(auth,fpid,featureKey)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        edgecaseResult.postValue(it)
+                        updatesLoader.postValue(false)
                     }, {
                         updatesLoader.postValue(false)
                         updatesError.postValue(it.message)
