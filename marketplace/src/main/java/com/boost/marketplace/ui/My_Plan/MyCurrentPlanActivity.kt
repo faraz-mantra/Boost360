@@ -91,19 +91,23 @@ class MyCurrentPlanActivity :
         }
 
         binding?.history?.setOnClickListener {
-            val intent= Intent(this, HistoryOrdersActivity::class.java)
-            intent.putExtra("fpid",fpid)
+            val intent = Intent(this, HistoryOrdersActivity::class.java)
+            intent.putExtra("fpid", fpid)
             startActivity(intent)
 
         }
 
         binding?.renwhistry?.setOnClickListener {
-            val intent= Intent(this, HistoryOrdersActivity::class.java)
-            intent.putExtra("fpid",fpid)
+            val intent = Intent(this, HistoryOrdersActivity::class.java)
+            intent.putExtra("fpid", fpid)
             startActivity(intent)
         }
 
-        WebEngageController.trackEvent(ADDONS_MARKETPLACE_MY_ADDONS_LOADED, MY_ADDONS, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(
+            ADDONS_MARKETPLACE_MY_ADDONS_LOADED,
+            MY_ADDONS,
+            NO_EVENT_VALUE
+        )
 
         search_icon.setOnClickListener {
             search_icon.visibility = View.GONE
@@ -122,9 +126,9 @@ class MyCurrentPlanActivity :
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if(p0!=null && p0?.length!! >3){
+                if (p0 != null && p0?.length!! > 3) {
                     updateAllItemBySearchValue(p0.toString())
-                } else{
+                } else {
                     updateFreeAddonsRecycler(totalFreeItemList!!)
                     updatePaidAddonsRecycler(totalPaidItemList!!)
                 }
@@ -144,7 +148,7 @@ class MyCurrentPlanActivity :
         binding?.arrowBtn?.setOnClickListener {
             cardViewVisibilty()
         }
-        binding?.cardView?.setOnClickListener {
+        binding?.paidAddonsTitle?.setOnClickListener {
             cardViewVisibilty()
         }
 
@@ -152,25 +156,25 @@ class MyCurrentPlanActivity :
             cardView1Visibilty()
         }
 
-        binding?.cardView1?.setOnClickListener {
+        binding?.paidAddonsTitle1?.setOnClickListener {
             cardView1Visibilty()
         }
 
     }
 
-    fun updateAllItemBySearchValue(searchValue: String){
+    fun updateAllItemBySearchValue(searchValue: String) {
         var freeitemList: java.util.ArrayList<FeaturesModel> = arrayListOf()
         var paiditemList: java.util.ArrayList<FeaturesModel> = arrayListOf()
 
-        for(singleFreeFeature in totalFreeItemList!!){
-            if(singleFreeFeature.name?.lowercase()?.indexOf(searchValue.lowercase()) != -1 ){
+        for (singleFreeFeature in totalFreeItemList!!) {
+            if (singleFreeFeature.name?.lowercase()?.indexOf(searchValue.lowercase()) != -1) {
                 freeitemList.add(singleFreeFeature)
             }
         }
         updateFreeAddonsRecycler(freeitemList)
 
-        for(singlePaidFeature in totalFreeItemList!!){
-            if(singlePaidFeature.name?.lowercase()?.indexOf(searchValue.lowercase()) != -1 ){
+        for (singlePaidFeature in totalFreeItemList!!) {
+            if (singlePaidFeature.name?.lowercase()?.indexOf(searchValue.lowercase()) != -1) {
                 paiditemList.add(singlePaidFeature)
             }
         }
@@ -181,11 +185,11 @@ class MyCurrentPlanActivity :
         if (binding?.expandableView1?.visibility == View.GONE) {
             TransitionManager.beginDelayedTransition(binding?.cardView1, AutoTransition())
             binding!!.expandableView1.visibility = View.VISIBLE
-            binding?.arrowBtn1?.animate()?.rotation(180f)?.start()
+            binding?.arrowBtn1?.animate()?.rotation(0f)?.start()
         } else {
             TransitionManager.beginDelayedTransition(binding?.cardView1, AutoTransition())
             binding?.expandableView1?.visibility = View.GONE
-            binding?.arrowBtn1?.animate()?.rotation(0f)?.start()
+            binding?.arrowBtn1?.animate()?.rotation(180f)?.start()
         }
     }
 
@@ -193,11 +197,11 @@ class MyCurrentPlanActivity :
         if (binding?.expandableView?.visibility == View.GONE) {
             TransitionManager.beginDelayedTransition(binding?.cardView, AutoTransition())
             binding?.expandableView!!.visibility = View.VISIBLE
-            binding?.arrowBtn?.animate()?.rotation(180f)?.start()
+            binding?.arrowBtn?.animate()?.rotation(0f)?.start()
         } else {
             TransitionManager.beginDelayedTransition(binding?.cardView, AutoTransition())
             binding?.expandableView?.visibility = View.GONE
-            binding?.arrowBtn?.animate()?.rotation(0f)?.start()
+            binding?.arrowBtn?.animate()?.rotation(180f)?.start()
         }
     }
 
@@ -219,26 +223,32 @@ class MyCurrentPlanActivity :
     @SuppressLint("FragmentLiveDataObserve")
     private fun initMVVM() {
 
-        viewModel.getActivePremiumWidgets().observe(this,androidx.lifecycle.Observer{
+        viewModel.activeWidgetCount().observe(this, androidx.lifecycle.Observer {
             totalPaidItemList = it
+
+            for (singleItem in it) {
+                val ans = singleItem.feature_code.toString()
+                viewModel.edgecases(
+                    intent.getStringExtra("fpid") ?: "",
+                    "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21", ans
+                )
+            }
+
             totalActivePremiumWidgetCount = totalPaidItemList!!.size
             val paidItemsCount = totalPaidItemList!!.size
             if (paidItemsCount != null && paidItemsCount > 0) {
                 if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
                     binding?.shimmerViewHistory?.stopShimmer()
                     binding?.shimmerViewHistory?.visibility = View.GONE
-                    binding?.nestedscroll?.visibility=View.VISIBLE
+                    binding?.nestedscroll?.visibility = View.VISIBLE
                 }
                 binding?.paidTitle1?.text = totalPaidItemList!!.size.toString() + " Active features"
-//                binding?.paidSubtitle1?.text =
-//                    totalPaidItemList!!.size.toString() + " Activated, 0 Syncing and 0 needs Attention"
             } else {
                 if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
                     binding?.shimmerViewHistory?.stopShimmer()
                     binding?.shimmerViewHistory?.visibility = View.GONE
                 }
                 binding?.paidTitle1?.text = "No Premium add-ons active."
-//                binding?.paidSubtitle1?.text = "check out the recommended add-ons for your business"
             }
 
             if (totalPaidItemList != null) {
@@ -251,18 +261,24 @@ class MyCurrentPlanActivity :
             updatePaidAddonsRecycler(it)
         })
 
-        viewModel.getActiveFreeWidgets().observe(this,androidx.lifecycle.Observer{
+        viewModel.edgecaseResult().observe(this, androidx.lifecycle.Observer {
+
+            val featursCode = it.Result.FeatureDetails.FeatureState
+
+        })
+
+        viewModel.inActiveWidgetCount().observe(this, androidx.lifecycle.Observer {
+
             totalFreeItemList = it
             totalActiveFreeWidgetCount = totalFreeItemList!!.size
             binding?.paidTitle?.text = totalActiveFreeWidgetCount.toString() + " Inactive features"
-//            binding?.paidSubtitle?.text =
-//                totalActiveFreeWidgetCount!!.toString() + " Activated, 0 Syncing and 0 needs Attention"
+
             if (totalFreeItemList != null) {
                 if (totalFreeItemList!!.size > 0) {
                     if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
                         binding?.shimmerViewHistory?.stopShimmer()
                         binding?.shimmerViewHistory?.visibility = View.GONE
-                        binding?.nestedscroll?.visibility=View.VISIBLE
+                        binding?.nestedscroll?.visibility = View.VISIBLE
                     }
                     updateFreeAddonsRecycler(totalFreeItemList!!)
                     binding?.expandableView?.visibility = View.VISIBLE
@@ -275,6 +291,7 @@ class MyCurrentPlanActivity :
                     updateFreeAddonsRecycler(totalFreeItemList!!)
                 }
             }
+            updateFreeAddonsRecycler(totalFreeItemList!!)
         })
         viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
             if (it) {
@@ -323,15 +340,21 @@ class MyCurrentPlanActivity :
         val args = Bundle()
         args.putString("bundleData", Gson().toJson(item))
         dialogCard.arguments = args
-        dialogCard.show(this@MyCurrentPlanActivity.supportFragmentManager, MyPlanBottomSheet::class.java.name)
+        dialogCard.show(
+            this@MyCurrentPlanActivity.supportFragmentManager,
+            MyPlanBottomSheet::class.java.name
+        )
     }
 
     override fun onPaidAddonsClicked(item: FeaturesModel) {
         val dialogCard = MyPlanBottomSheet()
         val args = Bundle()
-        args.putString("fpid",fpid)
+        args.putString("fpid", fpid)
         args.putString("bundleData", Gson().toJson(item))
         dialogCard.arguments = args
-        dialogCard.show(this@MyCurrentPlanActivity.supportFragmentManager, MyPlanBottomSheet::class.java.name)
+        dialogCard.show(
+            this@MyCurrentPlanActivity.supportFragmentManager,
+            MyPlanBottomSheet::class.java.name
+        )
     }
 }

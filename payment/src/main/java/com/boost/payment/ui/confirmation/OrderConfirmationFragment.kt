@@ -31,6 +31,7 @@ class OrderConfirmationFragment : BaseFragment() {
   var session:UserSessionManager? = null
   var screenType: String = ""
   var buyItemKey: String? = ""
+  var default_validity_months = 1
 
   companion object {
     fun newInstance() = OrderConfirmationFragment()
@@ -98,8 +99,8 @@ class OrderConfirmationFragment : BaseFragment() {
       }
       val months = if(prefs.getValidityMonths().isNullOrEmpty()) 0 else prefs.getValidityMonths()!!.toInt()
       order_details_feature_count.text =
-        "You have ordered " + prefs.getFeaturesCountInLastOrder() //+ " features for ₹" + prefs.getLatestPurchaseOrderTotalPrice() +"/"+ if(months>1) months else "" + Utils.yearOrMonthText(months,requireActivity(), false)//"/month."
-      order_details_feature_count1.text = "₹" + prefs.getLatestPurchaseOrderTotalPrice() +"/"+ if(months>1) months else "" + Utils.yearOrMonthText(months,requireActivity(), false)//"/month."
+        prefs.getFeaturesCountInLastOrder().toString() //+ " features for ₹" + prefs.getLatestPurchaseOrderTotalPrice() +"/"+ if(months>1) months else "" + Utils.yearOrMonthText(months,requireActivity(), false)//"/month."
+      order_details_feature_count1.text = "₹" + prefs.getLatestPurchaseOrderTotalPrice() // +"/"+ if(months>1) months else "" + Utils.yearOrMonthText(months,requireActivity(), false)//"/month."
       //  paymentBanner.text = "Order #" + prefs.getLatestPurchaseOrderId()
       val date = Calendar.getInstance().time
       val formatter = SimpleDateFormat("EEE, MMM d, yyyy 'at' hh:mm aaa")
@@ -109,6 +110,21 @@ class OrderConfirmationFragment : BaseFragment() {
 
       validity.text=prefs.getValidityMonths()+ prefs.getValidityMonths()?.toInt()
         ?.let { Utils.yearOrMonthText(it,requireActivity(),true) }
+
+      val oneMonthFromNow = Calendar.getInstance()
+      oneMonthFromNow.add(
+        Calendar.MONTH,
+        if (prefs.getYearPricing()) default_validity_months * 12 else default_validity_months
+      )
+      val nowFormat = SimpleDateFormat("dd MMM yy")
+      nowFormat.setTimeZone(Calendar.getInstance().getTimeZone())
+      val oneMonthFormat = SimpleDateFormat("dd MMM yy")
+      oneMonthFormat.setTimeZone(oneMonthFromNow.getTimeZone())
+      validity_period_value.setText(
+        nowFormat.format(Calendar.getInstance().time) + " - " + nowFormat.format(
+          oneMonthFromNow.time
+        )
+      )
 
 
       //clear CartRelatedInfo
@@ -235,6 +251,7 @@ class OrderConfirmationFragment : BaseFragment() {
       if (buyItemKey != null && buyItemKey!!.isNotEmpty()) intent.putExtra("buyItemKey", buyItemKey)
       intent.putExtra("profileUrl", session?.fPLogo)
       startActivity(intent)
+      requireActivity().finish()
     } catch (e: Exception) {
       SentryController.captureException(e)
       e.printStackTrace()

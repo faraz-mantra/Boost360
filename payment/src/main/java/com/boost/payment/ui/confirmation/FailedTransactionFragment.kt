@@ -12,7 +12,6 @@ import com.boost.payment.base_class.BaseFragment
 import com.boost.payment.ui.razorpay.RazorPayWebView
 import com.boost.payment.utils.Constants
 import com.boost.payment.utils.SharedPrefs
-import com.boost.payment.utils.Utils
 import com.boost.payment.utils.WebEngageController
 import com.framework.analytics.SentryController
 import com.framework.pref.Key_Preferences
@@ -21,7 +20,6 @@ import com.framework.webengageconstant.ADDONS_MARKETPLACE_FAILED_PAYMENT_TRANSAC
 import com.framework.webengageconstant.FAILED_PAYMENT_TRANSACTION
 import com.framework.webengageconstant.MARKETPLACE_FALIURE_TRY_AGAIN_CLICK
 import com.framework.webengageconstant.NO_EVENT_VALUE
-import kotlinx.android.synthetic.main.failed_transaction_fragment.transaction_failed_retry
 import kotlinx.android.synthetic.main.payment_failure_v3.*
 
 class FailedTransactionFragment : BaseFragment() {
@@ -47,12 +45,13 @@ class FailedTransactionFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        root = inflater.inflate(R.layout.payment_failure_v3, container, false)
+       // root = inflater.inflate(R.layout.payment_failure_v3, container, false)
+
         session = UserSessionManager(activity as PaymentActivity)
         prefs = SharedPrefs(activity as PaymentActivity)
         razorPayWebView = RazorPayWebView.newInstance()
         data = arguments?.getString("data")
-        return root
+        return inflater.inflate(R.layout.payment_failure_v3, container, false)
 
     }
 
@@ -60,7 +59,7 @@ class FailedTransactionFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         viewModel = ViewModelProviders.of(this).get(OrderConfirmationViewModel::class.java)
-        viewModel.emptyCurrentCart((activity as PaymentActivity).application);
+    //    viewModel.emptyCurrentCart((activity as PaymentActivity).application);
 
         transaction_failed_retry.setOnClickListener {
 
@@ -95,8 +94,8 @@ class FailedTransactionFragment : BaseFragment() {
 
             val months = if(prefs.getValidityMonths().isNullOrEmpty()) 0 else prefs.getValidityMonths()!!.toInt()
             order_details_feature_count.text =
-                "You have ordered " + prefs.getFeaturesCountInLastOrder()
-            order_details_feature_count1.text = "₹" + prefs.getLatestPurchaseOrderTotalPrice() +"/"+ if(months>1) months else "" + Utils.yearOrMonthText(months,requireActivity(), false)//"/month."
+                prefs.getFeaturesCountInLastOrder().toString()
+            order_details_feature_count1.text = "₹" + prefs.getLatestPurchaseOrderTotalPrice() //+"/"+ if(months>1) months else "" + Utils.yearOrMonthText(months,requireActivity(), false)//"/month."
             order_id_details.text = prefs.getLatestPurchaseOrderId()
             order_id_details1.text = prefs.getTransactionIdFromCart()
 
@@ -106,7 +105,7 @@ class FailedTransactionFragment : BaseFragment() {
         try {
             val intent = Intent(context, Class.forName("com.boost.marketplace.ui.home.MarketplaceActivity"))
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.putExtra("isComingFromOrderConfirmActivation",true)
+            intent.putExtra("isComingFromOrderConfirmActivation",false)
             intent.putExtra("expCode", session?.fP_AppExperienceCode)
             intent.putExtra("fpName", session?.fPName)
             intent.putExtra("fpid", session?.fPID)

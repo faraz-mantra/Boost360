@@ -42,7 +42,7 @@
                         android:textFontWeight="700"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:fontFamily="@font/semi_bold"
-                        android:text="My Current Plan"
+                        android:text="My current plan"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -100,11 +100,11 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:padding="@dimen/_13sdp"
-                                android:visibility="gone"
-                                tools:visibility="visible"
                                 android:src="@drawable/ic_info_offers"
+                                android:visibility="gone"
                                 app:layout_constraintDimensionRatio="1:1"
-                                app:layout_constraintEnd_toEndOf="parent" />
+                                app:layout_constraintEnd_toEndOf="parent"
+                                tools:visibility="visible" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 

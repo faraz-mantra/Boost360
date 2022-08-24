@@ -2,6 +2,7 @@ package com.boost.dbcenterapi.data.remote
 
 import com.boost.dbcenterapi.data.api_model.CustomDomain.CustomDomains
 import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
+import com.boost.dbcenterapi.data.api_model.Edgecase.EdgeCases
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
 import com.boost.dbcenterapi.data.api_model.GetFeatureDetails.FeatureDetailsV2Item
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrderV2.GetPurchaseOrderResponseV2
@@ -87,5 +88,14 @@ interface NewApiInterface {
          @Query("clientId") clientId: String,
          @Query("blockedItem") blockedItem :String
     ):Observable<BlockApi>
+
+    //MyCurrentPlan  Marketplace V3
+    @Headers("Content-Type: application/json")
+    @GET("https://api2.withfloats.com/discover/v1/GetFeatureDetailForEdgeCases?")
+    fun getEdgeCases(
+        @Query("fpId") floatingPointId: String,
+        @Query("clientId") clientId: String,
+        @Query("featureKey") featureKey: String
+    ): Observable<EdgeCases>
 
 }

@@ -114,6 +114,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         binding?.btnSelectDomain?.setOnClickListener {
             if(blockedItem!=null //&& result ==false
             ) {
+                binding?.btnSelectDomain?.isClickable = true
                 val dialogCard = ConfirmedCustomDomainBottomSheet()
                 val bundle = Bundle()
                 bundle.putString("blockedItem", blockedItem)
@@ -149,7 +150,8 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
 //                Toasty.error(this, "Domain unavailable select other", Toast.LENGTH_SHORT).show()
 //            }
             else{
-                Toasty.error(this, "No domain selected ", Toast.LENGTH_SHORT).show()
+              //  Toasty.error(this, "No domain selected ", Toast.LENGTH_SHORT).show()
+                binding?.btnSelectDomain?.isClickable = false
             }
         }
         binding?.tvLearmore?.setOnClickListener {
@@ -384,6 +386,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
     override fun onSelectedDomain(itemList: Domain?) {
         blockedItem=itemList?.name
         binding?.btnSelectDomain?.setBackgroundResource(R.color.colorAccent1);
+        binding?.btnSelectDomain?.isClickable = true
 
     }
 
