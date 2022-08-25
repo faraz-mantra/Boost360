@@ -156,28 +156,6 @@ class PackDetailsPopUpFragment : DialogFragment() {
             dismiss()
         }
 
-        binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-            if (scrollY > oldScrollY) {
-                Log.i(TAG, "Scroll DOWN")
-                binding.titleBottom3.visibility = View.GONE
-                binding.learnMoreBtn.visibility = View.GONE
-                // Gone
-            }
-            if (scrollY < oldScrollY) {
-                Log.i(TAG, "Scroll UP")
-            }
-            if (scrollY == 0) {
-                Log.i(TAG, "TOP SCROLL")
-                binding.titleBottom3.visibility = View.VISIBLE
-                binding.learnMoreBtn.visibility = View.VISIBLE
-                binding.learnLessBtn.performClick()
-                //Visible
-            }
-            if (scrollY == v.measuredHeight - v.getChildAt(0).measuredHeight) {
-                Log.i(TAG, "BOTTOM SCROLL")
-            }
-        })
-
         initMvvm()
         return binding.root
     }
