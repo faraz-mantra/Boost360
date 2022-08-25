@@ -1,18 +1,22 @@
 package com.boost.marketplace.ui.popup.myplan
 
+import android.app.Application
 import android.content.Intent
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProviders
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
 import com.boost.marketplace.databinding.BottomSheetMyplanBinding
 import com.boost.marketplace.infra.utils.DeepLink.Companion.getScreenType
+import com.boost.marketplace.ui.My_Plan.MyCurrentPlanViewModel
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.bumptech.glide.Glide
+import com.framework.analytics.SentryController
 import com.framework.base.BaseBottomSheetDialog
-import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
 import com.framework.utils.DateUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -20,19 +24,26 @@ import es.dmoral.toasty.Toasty
 
 
 
-class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseViewModel>() {
+class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, MyCurrentPlanViewModel>() {
 
     lateinit var singleAddon: FeaturesModel
+    var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+    var fpid: String? = null
 
     override fun getLayout(): Int {
         return R.layout.bottom_sheet_myplan
     }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
+    override fun getViewModelClass(): Class<MyCurrentPlanViewModel> {
+        return MyCurrentPlanViewModel::class.java
     }
 
     override fun onCreateView() {
+
+        viewModel?.setApplicationLifecycle(Application(), this)
+        viewModel = ViewModelProviders.of(this)
+            .get(MyCurrentPlanViewModel::class.java)
+        fpid = requireArguments().getString("fpid")
         singleAddon = Gson().fromJson<FeaturesModel>(
             requireArguments().getString("bundleData"),
             object : TypeToken<FeaturesModel>() {}.type
@@ -85,7 +96,38 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseVi
             binding?.btnFeatureDetails,
             binding?.rivCloseBottomSheet
         )
-        featureEdgeCase()
+       // featureEdgeCase(featureState, actionRequired)
+        loadData()
+        initMVVM()
+    }
+
+    private fun loadData() {
+        try {
+            fpid?.let {
+                singleAddon.feature_code?.let { it1 ->
+                    viewModel?.edgecases(
+                        it,
+                        "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21", it1
+                    )
+                }
+            }
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
+    }
+
+    private fun initMVVM() {
+        viewModel?.edgecaseResult()?.observe(this, androidx.lifecycle.Observer {
+
+            val actionRequired = it.Result.ActionNeeded.ActionNeeded
+            val featureState = it.Result.FeatureDetails.FeatureState
+            featureEdgeCase(actionRequired,featureState)
+
+        })
+    }
+
+    fun getAccessToken(): String {
+        return UserSessionManager(requireActivity()).getAccessTokenAuth()?.barrierToken() ?: ""
     }
 
     override fun onClick(v: View) {
@@ -136,9 +178,15 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseVi
         startActivity(intent)
     }
 
-    fun featureEdgeCase() {
-        val edgeState = singleAddon.featureState
-        if (edgeState==7) {
+    fun featureEdgeCase(actionRequired: Int,featureState: Int, ) {
+//        val featureState = singleAddon.featureState
+        if (actionRequired==2 && featureState==1) {
+            binding?.edgeCasesLayout?.visibility=View.VISIBLE
+            binding?.btn1?.visibility=View.VISIBLE
+            binding?.btn1?.setText("Choose Domain")
+            binding?.btn1?.setOnClickListener {
+                featuredetails()
+            }
                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                binding?.edgeCaseTitle?.setText("Action Required")
                binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
@@ -151,104 +199,147 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, BaseVi
                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
                binding?.edgeCaseDesc?.setText("There is an internal error inside Boost 360. We are working to resolve this issue.")
             }
-        else if (edgeState==7) {
+
+        if (actionRequired==3 && featureState==1) {
+            binding?.edgeCasesLayout?.visibility=View.VISIBLE
+            binding?.btn1?.visibility=View.VISIBLE
+            binding?.btn1?.setText("Choose VMN")
+            binding?.btn1?.setOnClickListener {
+                featuredetails()
+            }
             binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
-            binding?.edgeCaseTitle?.setText("Something went wrong!")
+            binding?.edgeCaseTitle?.setText("Action Required")
             binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
             binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_error_red,
-                    0,
-                    0,
-                    0
-                )
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
             binding?.edgeCaseDesc?.setText("There is an internal error inside Boost 360. We are working to resolve this issue.")
+        }
 
+        if (actionRequired==4 && featureState==1) {
+            binding?.edgeCasesLayout?.visibility=View.VISIBLE
+            binding?.btn1?.visibility=View.VISIBLE
+            binding?.btn1?.setText("Choose Email")
+            binding?.btn1?.setOnClickListener {
+                featuredetails()
             }
-        else if (edgeState==1) {
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+            binding?.edgeCaseDesc?.setText("There is an internal error inside Boost 360. We are working to resolve this issue.")
+        }
+
+        else if (actionRequired ==0 && featureState == 1) {
+            binding?.edgeCasesLayout?.visibility=View.VISIBLE
             binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
             binding?.edgeCaseTitle?.setText("Feature is currently active")
             binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
             binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_checked,
-                    0,
-                    0,
-                    0
-                )
+                R.drawable.ic_checked,
+                0,
+                0,
+                0
+            )
             binding?.edgeCaseDesc?.setText(
-                    "Feature validity expiring on Aug 23, 2021. You\n" +
-                            "can extend validity by renewing it for a\n" +
-                            "longer duration."
-                )
+                "Feature validity expiring on Aug 23, 2021. You\n" +
+                        "can extend validity by renewing it for a\n" +
+                        "longer duration."
+            )
 
-            }
-        else if (edgeState==1) {
-            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
-            binding?.edgeCaseTitle?.setText("Feature expired on Aug 23, 2021")
-            binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
-            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_error_red,
-                    0,
-                    0,
-                    0
-                )
-            binding?.edgeCaseDesc?.setText(
-                    "You need to renew this feature to continue\n" +
-                            "using a custom domain. Your domain may be\n" +
-                            "lost if you don’t renew it."
-                )
-            }
-        else if (edgeState==1) {
-            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_skyblue_white_bg)
-            binding?.edgeCaseTitle?.setText("Syncing information")
-            binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.light_blue2))
-            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_sync_blue,
-                    0,
-                    0,
-                    0
-                )
-            binding?.edgeCaseDesc?.setText("We are working on syncing your information for this feature. It may take some time to get updated. Contact support for help.")
-            }
-        else if (edgeState==1) {
-            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
-            binding?.edgeCaseTitle?.setText("Auto renewal is turned on")
-            binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
-            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_checked,
-                    0,
-                    0,
-                    0
-                )
-            binding?.edgeCaseDesc?.setText("We are working on syncing your information for this feature. It may take some time to get updated. Contact support for help.")
-            }
-        else if (edgeState==1) {
-            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_orange_white_bg)
-            binding?.edgeCaseTitle?.setText("Feature is currently in cart. ")
-            binding?.edgeCaseTitle?.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.common_text_color
-                    )
-                )
-            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_cart_black,
-                    0,
-                    0,
-                    0
-                )
-            binding?.edgeCaseDesc?.setText("Feature is currently in cart. ")
-            }
-        else if (edgeState==1) {
-            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
-            binding?.edgeCaseTitle?.setText("Feature is part of “Online Classic”")
-            binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
-            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_checked,
-                    0,
-                    0,
-                    0
-                )
-            binding?.edgeCaseDesc?.setText("")
-            }
+        }
+
+//        else if (edgeState==7) {
+//            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+//            binding?.edgeCaseTitle?.setText("Something went wrong!")
+//            binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+//            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+//                    R.drawable.ic_error_red,
+//                    0,
+//                    0,
+//                    0
+//                )
+//            binding?.edgeCaseDesc?.setText("There is an internal error inside Boost 360. We are working to resolve this issue.")
+//
+//            }
+//        else if (edgeState==1) {
+//            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+//            binding?.edgeCaseTitle?.setText("Feature expired on Aug 23, 2021")
+//            binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+//            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+//                    R.drawable.ic_error_red,
+//                    0,
+//                    0,
+//                    0
+//                )
+//            binding?.edgeCaseDesc?.setText(
+//                    "You need to renew this feature to continue\n" +
+//                            "using a custom domain. Your domain may be\n" +
+//                            "lost if you don’t renew it."
+//                )
+//            }
+//        else if (edgeState==1) {
+//            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_skyblue_white_bg)
+//            binding?.edgeCaseTitle?.setText("Syncing information")
+//            binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.light_blue2))
+//            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+//                    R.drawable.ic_sync_blue,
+//                    0,
+//                    0,
+//                    0
+//                )
+//            binding?.edgeCaseDesc?.setText("We are working on syncing your information for this feature. It may take some time to get updated. Contact support for help.")
+//            }
+//        else if (edgeState==1) {
+//            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
+//            binding?.edgeCaseTitle?.setText("Auto renewal is turned on")
+//            binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
+//            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+//                    R.drawable.ic_checked,
+//                    0,
+//                    0,
+//                    0
+//                )
+//            binding?.edgeCaseDesc?.setText("We are working on syncing your information for this feature. It may take some time to get updated. Contact support for help.")
+//            }
+//        else if (edgeState==1) {
+//            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_orange_white_bg)
+//            binding?.edgeCaseTitle?.setText("Feature is currently in cart. ")
+//            binding?.edgeCaseTitle?.setTextColor(
+//                    ContextCompat.getColor(
+//                        requireContext(),
+//                        R.color.common_text_color
+//                    )
+//                )
+//            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+//                    R.drawable.ic_cart_black,
+//                    0,
+//                    0,
+//                    0
+//                )
+//            binding?.edgeCaseDesc?.setText("Feature is currently in cart. ")
+//            }
+//        else if (edgeState==1) {
+//            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
+//            binding?.edgeCaseTitle?.setText("Feature is part of “Online Classic”")
+//            binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
+//            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+//                    R.drawable.ic_checked,
+//                    0,
+//                    0,
+//                    0
+//                )
+//            binding?.edgeCaseDesc?.setText("")
+//            }
         }
 }

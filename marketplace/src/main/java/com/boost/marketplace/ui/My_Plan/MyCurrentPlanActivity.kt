@@ -226,13 +226,13 @@ class MyCurrentPlanActivity :
         viewModel.activeWidgetCount().observe(this, androidx.lifecycle.Observer {
             totalPaidItemList = it
 
-            for (singleItem in it) {
-                val ans = singleItem.feature_code.toString()
-                viewModel.edgecases(
-                    intent.getStringExtra("fpid") ?: "",
-                    "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21", ans
-                )
-            }
+//            for (singleItem in it) {
+//                val ans = singleItem.feature_code.toString()
+//                viewModel.edgecases(
+//                    intent.getStringExtra("fpid") ?: "",
+//                    "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21", ans
+//                )
+//            }
 
             totalActivePremiumWidgetCount = totalPaidItemList!!.size
             val paidItemsCount = totalPaidItemList!!.size
@@ -261,11 +261,9 @@ class MyCurrentPlanActivity :
             updatePaidAddonsRecycler(it)
         })
 
-        viewModel.edgecaseResult().observe(this, androidx.lifecycle.Observer {
-
-            val featursCode = it.Result.FeatureDetails.FeatureState
-
-        })
+//        viewModel.edgecaseResult().observe(this, androidx.lifecycle.Observer {
+//            val featursCode = it.Result.FeatureDetails.FeatureState
+//        })
 
         viewModel.inActiveWidgetCount().observe(this, androidx.lifecycle.Observer {
 
@@ -338,6 +336,7 @@ class MyCurrentPlanActivity :
     override fun onFreeAddonsClicked(item: FeaturesModel) {
         val dialogCard = MyPlanBottomSheet()
         val args = Bundle()
+        args.putString("fpid", fpid)
         args.putString("bundleData", Gson().toJson(item))
         dialogCard.arguments = args
         dialogCard.show(

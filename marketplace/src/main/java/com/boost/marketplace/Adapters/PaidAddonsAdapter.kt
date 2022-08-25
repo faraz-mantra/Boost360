@@ -58,12 +58,12 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
       holder.itemView.layoutParams = RecyclerView.LayoutParams(0, 0)
     }
 
-    if (cryptocurrencyItem.is_premium== true){
-      holder.paid_addons_activate.visibility=View.VISIBLE
-    }
-    else{
-      holder.paid_addons_activate.visibility=View.GONE
-    }
+//    if (cryptocurrencyItem.is_premium== true){
+//      holder.paid_addons_activate.visibility=View.VISIBLE
+//    }
+//    else{
+//      holder.paid_addons_activate.visibility=View.GONE
+//    }
 //    holder.mainlayout.setOnClickListener {
 //      if (holder.detailsView.visibility==View.GONE) {
 //        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())

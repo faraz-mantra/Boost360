@@ -56,12 +56,12 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
       holder.itemView.layoutParams = RecyclerView.LayoutParams(0, 0)
     }
 
-    if (cryptocurrencyItem.is_premium.equals(true)){
-      holder.paid_addons_activate.visibility=View.VISIBLE
-    }
-    else{
-      holder.paid_addons_activate.visibility=View.GONE
-    }
+//    if (cryptocurrencyItem.is_premium.equals(true)){
+//      holder.paid_addons_activate.visibility=View.VISIBLE
+//    }
+//    else{
+//      holder.paid_addons_activate.visibility=View.GONE
+//    }
 
     if(position == list.size-1){
       holder.paid_single_dummy_view.visibility = View.GONE
