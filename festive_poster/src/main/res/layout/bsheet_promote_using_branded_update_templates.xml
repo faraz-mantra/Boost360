@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/riv_close_bottomSheet"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/size_15"
+            android:src="@drawable/ic_fposter_help_bsheet_close_white" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_24"
+            android:background="@drawable/rounded_rect_30_rad_white"
+            android:backgroundTint="@color/color_f2f2f2">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/iv_promo_mic"
+                android:layout_width="@dimen/size_112"
+                android:layout_height="@dimen/size_94"
+                android:layout_marginStart="@dimen/size_22"
+                android:layout_marginTop="@dimen/size_26"
+                android:src="@drawable/promo_plan_mic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_32"
+                android:layout_marginEnd="@dimen/size_32"
+                android:text="@string/promote_using_branded_update_templates_bold"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/text_26"
+                app:fontFamily="@font/regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_promo_mic"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/customTextView13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_26"
+                android:layout_marginTop="@dimen/size_16"
+                android:gravity="start"
+                android:text="@string/get_access_to_fresh_tailor_made_customizable_update_template"
+                android:textAlignment="gravity"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/text_12"
+                app:fontFamily="@font/regular_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/top_round_corner"
+                android:backgroundTint="@color/white"
+                android:elevation="@dimen/size_2"
+                android:paddingBottom="@dimen/size_24"
+                app:layout_constraintTop_toBottomOf="@+id/customTextView13">
+
+                <RadioGroup
+                    android:id="@+id/radioGroup1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/size_22"
+                    android:layout_marginTop="@dimen/size_22"
+                    android:background="@drawable/rounded_border_d8d8d8"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/linear_advanced_wrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_58"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/radioAdvanced"
+                            android:layout_width="@dimen/size_18"
+                            android:layout_height="@dimen/size_18"
+                            android:layout_marginStart="@dimen/size_12"
+                            android:button="@drawable/radio_selector_color_primary"
+                            android:clickable="false"
+                            android:enabled="false" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/size_12"
+                            android:orientation="vertical">
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:id="@+id/tv_advance_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:text="@string/buy_it_as_part_of_advanced_pack"
+                                android:textAlignment="viewStart"
+                                android:textColor="@color/color_888888"
+                                android:textSize="@dimen/text_12"
+                                app:fontFamily="@font/bold" />
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:text="@string/get_branded_update_templates_17_more_features"
+                                android:textAlignment="viewStart"
+                                android:textColor="@color/color_747474"
+                                android:textSize="@dimen/text_11"
+                                app:fontFamily="@font/regular" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/size_2"
+                        android:background="@drawable/line_stroke_1px_d8d8d8" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/linear_classic_wrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_58"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/radioClassic"
+                            android:layout_width="@dimen/size_18"
+                            android:layout_height="@dimen/size_18"
+                            android:layout_marginStart="@dimen/size_12"
+                            android:button="@drawable/radio_selector_color_primary"
+                            android:clickable="false"
+                            android:enabled="false" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/size_12"
+                            android:orientation="vertical">
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:id="@+id/tv_classic_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:text="@string/buy_it_as_part_of_classic_pack"
+                                android:textAlignment="viewStart"
+                                android:textColor="@color/color_888888"
+                                android:textSize="@dimen/text_12"
+                                app:fontFamily="@font/bold" />
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:text="@string/get_branded_update_templates_5_more_features"
+                                android:textAlignment="viewStart"
+                                android:textColor="@color/color_747474"
+                                android:textSize="@dimen/text_11"
+                                app:fontFamily="@font/regular" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/size_2"
+                        android:background="@drawable/line_stroke_1px_d8d8d8" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/linear_buy_this_wrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_58"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/radioBuyThisOnly"
+                            android:layout_width="@dimen/size_18"
+                            android:layout_height="@dimen/size_18"
+                            android:layout_marginStart="@dimen/size_12"
+                            android:button="@drawable/radio_selector_color_primary"
+                            android:clickable="false"
+                            android:enabled="false" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/size_12"
+                            android:orientation="vertical">
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:id="@+id/tv_buy_only_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:text="@string/buy_only_this_feature"
+                                android:textAlignment="viewStart"
+                                android:textColor="@color/color_888888"
+                                android:textSize="@dimen/text_12"
+                                app:fontFamily="@font/bold" />
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:text="@string/pay_499_or_5988_gst_extra"
+                                android:textAlignment="viewStart"
+                                android:textColor="@color/color_747474"
+                                android:textSize="@dimen/text_11"
+                                app:fontFamily="@font/regular" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </RadioGroup>
+
+                <com.framework.views.customViews.CustomMaterialButton
+                    android:id="@+id/btn_view_pack_details"
+                    style="@style/CustomRoundedYellowButton"
+                    android:layout_marginHorizontal="@dimen/size_22"
+                    android:layout_marginTop="@dimen/size_22"
+                    android:fontFamily="@font/semi_bold"
+                    android:text="@string/view_pack_details"
+                    app:cornerRadius="@dimen/size_10"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup1" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:text="@string/you_will_be_taken_to_feature_marketplace"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="@dimen/text_10"
+                    app:fontFamily="@font/regular"
+                    app:layout_constraintEnd_toEndOf="@+id/btn_view_pack_details"
+                    app:layout_constraintStart_toStartOf="@+id/btn_view_pack_details"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_view_pack_details" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
+

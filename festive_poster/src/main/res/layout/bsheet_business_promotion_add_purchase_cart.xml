@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/riv_close_bottomSheet"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/size_15"
+            android:src="@drawable/ic_fposter_help_bsheet_close_white" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_24"
+            android:background="@drawable/rounded_rect_30_rad_white">
+
+            <com.framework.views.customViews.CustomImageView
+                android:id="@+id/iv_promo_mic"
+                android:layout_width="@dimen/size_174"
+                android:layout_height="@dimen/size_148"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginEnd="@dimen/size_12"
+                android:src="@drawable/ic_promo_plan_mic_left"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/business_promotion_is_as_simple_as"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/text_26"
+                app:fontFamily="@font/bold"
+                android:layout_marginTop="@dimen/size_30"
+                android:layout_marginStart="@dimen/size_30"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/iv_promo_mic" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/customTextView13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_26"
+                android:layout_marginTop="@dimen/size_16"
+                android:gravity="start"
+                android:text="@string/get_access_to_fresh_tailor_made_customizable_update_template"
+                android:textAlignment="gravity"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/text_12"
+                app:fontFamily="@font/regular_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_2"
+                app:layout_constraintTop_toBottomOf="@+id/customTextView13"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/size_14"
+                android:layout_marginHorizontal="@dimen/size_22"
+                android:background="@drawable/dashed_stroke_line_1_px"/>
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_offer"
+                android:layout_width="@dimen/size_156"
+                android:layout_height="@dimen/size_56"
+                android:layout_marginStart="@dimen/size_28"
+                android:layout_marginTop="@dimen/size_16"
+                android:fontFamily="@font/bold"
+                android:textSize="@dimen/text_12"
+                android:paddingHorizontal="@dimen/size_12"
+                android:paddingVertical="@dimen/size_6"
+                android:includeFontPadding="false"
+                android:lineHeight="@dimen/size_14"
+                android:textColor="@color/white"
+                android:text="@string/festival_greetings_offers_deals_posts_inspirational_quotes"
+                android:background="@drawable/ic_green_offer_rectangle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="@dimen/size_26"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_offer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/tv_offer"
+                app:layout_constraintTop_toTopOf="@+id/tv_offer">
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="@dimen/text_24"
+                    app:fontFamily="@font/regular"
+                    android:text="₹499/month" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="@dimen/text_14"
+                    app:fontFamily="@font/regular"
+                    android:text="or ₹5,988/year" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/gray_828282"
+                    android:textSize="@dimen/text_10"
+                    app:fontFamily="@font/regular"
+                    android:text="+18% GST" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.framework.views.customViews.CustomMaterialButton
+                android:id="@+id/btn_add_go_to_cart"
+                style="@style/CustomRoundedYellowButton"
+                android:layout_marginHorizontal="@dimen/size_22"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="@dimen/size_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="@dimen/size_30"
+                android:fontFamily="@font/semi_bold"
+                app:cornerRadius="@dimen/size_10"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_offer"
+                android:text="@string/add_and_go_to_cart"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
+
