@@ -14,6 +14,7 @@ import com.boost.dbcenterapi.data.api_model.couponRequest.CouponRequest
 import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponRequest
 import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponResponse
 import com.boost.dbcenterapi.data.api_model.getCouponResponse.GetCouponResponse
+import com.boost.dbcenterapi.data.api_model.mycurrentPlanV3.MyPlanV3
 import com.boost.dbcenterapi.data.api_model.videos.GetVideos
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import io.reactivex.Observable
@@ -89,7 +90,7 @@ interface NewApiInterface {
          @Query("blockedItem") blockedItem :String
     ):Observable<BlockApi>
 
-    //MyCurrentPlan  Marketplace V3
+    //Edgecases
     @Headers("Content-Type: application/json")
     @GET("https://api2.withfloats.com/discover/v1/GetFeatureDetailForEdgeCases?")
     fun getEdgeCases(
@@ -97,5 +98,13 @@ interface NewApiInterface {
         @Query("clientId") clientId: String,
         @Query("featureCode") featureCode: String
     ): Observable<EdgeCases>
+
+    //MyCurrentPlan  Marketplace V3
+    @Headers("Content-Type: application/json")
+    @GET("https://api2.withfloats.com/discover/v1/GetFeatureDetails?")
+    fun GetMyPlanV3(
+        @Query("fpId") floatingPointId: String,
+        @Query("clientId") clientId: String
+    ): Observable<MyPlanV3>
 
 }
