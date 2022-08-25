@@ -584,7 +584,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 this.fpTag
             )
             viewModel.loadPurchasedItems(this.fpid!!, this.clientid)
-            viewModel.loadPurchasedItems1(this.fpid!!, this.clientid)
+  //          viewModel.loadPurchasedItems1(this.fpid!!, this.clientid)
         } catch (e: Exception) {
             SentryController.captureException(e)
         }

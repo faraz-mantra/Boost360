@@ -34,7 +34,6 @@ import com.boost.marketplace.interfaces.AddonsListenerV3
 import com.boost.marketplace.interfaces.PacksV3FooterListener
 import com.boost.marketplace.interfaces.PacksV3listener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
-import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.framework.utils.RootUtil
@@ -322,13 +321,13 @@ class ComparePacksV3Activity :
                         packsv3footerAdapter.notifyDataSetChanged()
                     }
                     R.id.help_section -> {
-                        val videoshelp = HelpVideosBottomSheet()
-                        val args = Bundle()
-                        videoshelp.arguments = args
-                        videoshelp.show(
-                            this.supportFragmentManager,
-                            HelpVideosBottomSheet::class.java.name
-                        )
+//                        val videoshelp = HelpVideosBottomSheet()
+//                        val args = Bundle()
+//                        videoshelp.arguments = args
+//                        videoshelp.show(
+//                            this.supportFragmentManager,
+//                            HelpVideosBottomSheet::class.java.name
+//                        )
                     }
                 }
 

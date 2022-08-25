@@ -204,10 +204,10 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
         )
     }
 
-    fun edgecases(auth:String,fpid: String,featureKey:String) {
+    fun edgecases(fpid: String,clientId:String,featureCode:String) {
         updatesLoader.postValue(true)
         compositeDisposable.add(
-            ApiService.getEdgeCases(auth,fpid,featureKey)
+            ApiService.getEdgeCases(fpid,clientId,featureCode)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

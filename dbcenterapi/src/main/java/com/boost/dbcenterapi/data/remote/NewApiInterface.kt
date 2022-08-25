@@ -95,7 +95,7 @@ interface NewApiInterface {
     fun getEdgeCases(
         @Query("fpId") floatingPointId: String,
         @Query("clientId") clientId: String,
-        @Query("featureKey") featureKey: String
+        @Query("featureCode") featureCode: String
     ): Observable<EdgeCases>
 
 }
