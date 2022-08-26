@@ -20,10 +20,7 @@ object GMBRepository : AppBaseRepository<GMBRemoteDataSource, AppBaseLocalServic
   }
 
   fun getAccountLocations(auth: String?, userId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.getAccountLocations(auth, userId),
-      Taskcode.GET_GMB_ACCOUNT_LOCATIONS
-    )
+    return makeRemoteRequest(remoteDataSource.getAccountLocations(auth, userId), Taskcode.GET_GMB_ACCOUNT_LOCATIONS)
   }
 
   fun getAccounts(auth: String?, userId: String?): Observable<BaseResponse> {
