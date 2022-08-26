@@ -32,7 +32,7 @@ import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
 import com.framework.utils.setStatusBarColor
-import com.framework.webengageconstant.Post_Promotional_Update_Click
+import com.framework.webengageconstant.*
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlin.math.abs
@@ -89,14 +89,17 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
                 super.onPageSelected(position)
                 when(position){
                     0->{
+                        WebEngageController.trackEvent(Update_studio_intro_1_loaded)
                         binding?.btnNext?.visible()
                         binding?.btnUpdateStudio?.gone()
                     }
                     1->{
+                        WebEngageController.trackEvent(Update_studio_intro_2_loaded)
                         binding?.btnNext?.visible()
                         binding?.btnUpdateStudio?.gone()
                     }
                     2->{
+                        WebEngageController.trackEvent(Update_studio_intro_3_loaded)
                         binding?.btnNext?.gone()
                         binding?.btnUpdateStudio?.visible()
                     }
@@ -132,9 +135,16 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
         super.onClick(v)
         when (v) {
             binding?.btnNext->{
-                binding!!.slider.currentItem = binding!!.slider.currentItem+1
+                val currentItem = binding!!.slider.currentItem
+                if (currentItem==0){
+                    WebEngageController.trackEvent(Update_studio_intro_1_next_click)
+                }else if (currentItem==1){
+                    WebEngageController.trackEvent(Update_studio_intro_2_next_click)
+                }
+                binding!!.slider.currentItem = currentItem+1
             }
             binding?.btnUpdateStudio->{
+                WebEngageController.trackEvent(Update_studio_intro_3_next_click)
                 PromoUpdatesActivity.launchActivity(this)
                 finish()
             }
