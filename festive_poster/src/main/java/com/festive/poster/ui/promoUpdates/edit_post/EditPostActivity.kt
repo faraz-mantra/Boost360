@@ -1,7 +1,6 @@
 package com.festive.poster.ui.promoUpdates.edit_post
 
 import android.content.*
-import android.content.Intent
 import android.graphics.Typeface
 import android.text.Editable
 import android.text.Spannable
@@ -17,22 +16,20 @@ import androidx.lifecycle.lifecycleScope
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
 import com.festive.poster.databinding.ActivityEditPostBinding
-import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
 import com.festive.poster.models.TemplateUi
+import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
 import com.festive.poster.ui.promoUpdates.bottomSheet.DeleteDraftBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.EditTemplateBottomSheet
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.convertToHashTag
+import com.festive.poster.utils.isBusinessLogoUpdated
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.framework.analytics.SentryController
 import com.framework.constants.IntentConstants
 import com.framework.constants.UPDATE_PIC_FILE_NAME
 import com.framework.extensions.gone
+import com.framework.extensions.visible
 import com.framework.pref.UserSessionManager
-import com.framework.utils.STTUtils
-import com.framework.utils.convertStringToObj
-import com.framework.utils.highlightHashTag
-import com.framework.utils.saveAsImageToAppFolder
 import com.framework.utils.*
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
@@ -41,14 +38,13 @@ import kotlinx.coroutines.withContext
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 import java.io.File
-import java.lang.Exception
-
 
 
 class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterViewModel>() {
 
 
-    private var sttUtils:STTUtils?=null
+    private var sttUtils: STTUtils? = null
+    private var isBusinessLogoUpdated = false
 
     private var sessionLocal: UserSessionManager?=null
     var posterModel:TemplateUi?=null
@@ -78,8 +74,15 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
         try {
             posterModel = convertStringToObj(intent.getStringExtra(IK_POSTER)!!)
             initUI()
-            setOnClickListener(binding?.btnTapToEdit, binding?.captionLayout?.etInput,
-                binding?.ivCloseEditing, binding?.tvPreviewAndPost,binding?.ivVoiceOver,binding?.ivCloseHashtag)
+            setOnClickListener(
+                binding?.btnTapToEdit,
+                binding?.captionLayout?.etInput,
+                binding?.ivCloseEditing,
+                binding?.tvPreviewAndPost,
+                binding?.ivVoiceOver,
+                binding?.ivCloseHashtag,
+                binding?.alertBusinessLogo?.tvAddLogo
+            )
         }catch (e:Exception){
             SentryController.captureException(e)
         }
@@ -113,7 +116,6 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
                     binding?.captionLayout?.inputLayout?.strokeColor = ContextCompat.getColor(this,R.color.colorAFAFAF)
                 }
             })
-
     }
 
     override fun onBackPressed() {
@@ -139,11 +141,25 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
     override fun onResume() {
         super.onResume()
         setStatusBarColor(R.color.white)
+        refreshBusinessLogoStatus()
     }
+
+    private fun refreshBusinessLogoStatus() {
+        binding?.alertBusinessLogo?.constAlertWrapper?.apply {
+            if (isBusinessLogoUpdated()) {
+                isBusinessLogoUpdated = true
+                gone()
+            } else {
+                isBusinessLogoUpdated = false
+                visible()
+            }
+        }
+    }
+
     private fun initStt() {
-        sttUtils = STTUtils(object : STTUtils.Callbacks{
+        sttUtils = STTUtils(object : STTUtils.Callbacks {
             override fun onDone(text: String?) {
-                binding?.captionLayout?.etInput?.setText(highlightHashTag(text,R.color.black_4a4a4a,R.font.bold))
+                binding?.captionLayout?.etInput?.setText(highlightHashTag(text, R.color.black_4a4a4a, R.font.bold))
             }
         })
         sttUtils?.init(this)
@@ -228,27 +244,37 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
             }
             binding?.tvPreviewAndPost -> {
                // saveUpdatePost()
-                posterModel?.let {
-                    lifecycleScope.launch {
-                        withContext(Dispatchers.Default){
-                           val file =  SvgUtils.svgToBitmap(it.primarySvgUrl)?.saveAsImageToAppFolder(getExternalFilesDir(null)?.path+File.separator+UPDATE_PIC_FILE_NAME)
-                            if (file?.exists() == true){
-                                PostPreviewSocialActivity.launchActivity(
-                                    this@EditPostActivity,
-                                    binding?.captionLayout?.etInput?.text.toString(),
-                                    file.path,
-                                    IntentConstants.UpdateType.UPDATE_PROMO_POST.name,
-                                it)
+                if (isBusinessLogoUpdated) {
+                    posterModel?.let {
+                        lifecycleScope.launch {
+                            withContext(Dispatchers.Default) {
+                                val file = SvgUtils.svgToBitmap(it.primarySvgUrl)
+                                    ?.saveAsImageToAppFolder(getExternalFilesDir(null)?.path + File.separator + UPDATE_PIC_FILE_NAME)
+                                if (file?.exists() == true) {
+                                    PostPreviewSocialActivity.launchActivity(
+                                        this@EditPostActivity,
+                                        binding?.captionLayout?.etInput?.text.toString(),
+                                        file.path,
+                                        IntentConstants.UpdateType.UPDATE_PROMO_POST.name,
+                                        it
+                                    )
+                                }
+
                             }
 
                         }
-
                     }
 
+                }else {
+                    showShortToast(getString(R.string.please_add_business_logo_before_proceeding))
                 }
             }
-            binding?.ivVoiceOver->{
+            binding?.ivVoiceOver -> {
                 sttUtils?.promptSpeechInput()
+            }
+
+            binding?.alertBusinessLogo?.tvAddLogo -> {
+                startBusinessLogo()
             }
         }
     }
@@ -284,8 +310,7 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
                 text.trim().split(Regex("\\s+")).forEach {
                     Log.i(TAG, "addHashTagFunction: $it")
                     if (it.isNotEmpty() && it[0] == '#'){
-                        val boldSpan = StyleSpan(Typeface
-                            .BOLD)
+                        val boldSpan = StyleSpan(Typeface.BOLD)
                         val foregroundSpan = ForegroundColorSpan(ContextCompat.getColor(this@EditPostActivity, R.color.black))
                         mSpannable?.setSpan(foregroundSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
                         mSpannable?.setSpan(boldSpan, text.indexOf(it,startIndex = last_index), text.indexOf(it,startIndex = last_index)+it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
