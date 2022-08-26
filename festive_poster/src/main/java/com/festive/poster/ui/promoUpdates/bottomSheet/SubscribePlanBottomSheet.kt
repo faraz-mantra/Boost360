@@ -12,6 +12,7 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
 import com.festive.poster.utils.MarketPlaceUtils
 import com.festive.poster.viewmodels.FestivePosterViewModel
+import com.festive.poster.viewmodels.UpdateStudioPurchaseViewModel
 import com.framework.BaseApplication
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
@@ -24,7 +25,8 @@ import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidityBinding, FestivePosterViewModel>() {
+@Deprecated("old use case")
+class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidityBinding, UpdateStudioPurchaseViewModel>() {
 
     private var feature_promo: UpgradeGetDataFeature?=null
     private val TAG = "SubscribePlanBottomShee"
@@ -53,8 +55,8 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
         return R.layout.bsheet_subscribe_plan_validity
     }
 
-    override fun getViewModelClass(): Class<FestivePosterViewModel> {
-        return FestivePosterViewModel::class.java
+    override fun getViewModelClass(): Class<UpdateStudioPurchaseViewModel> {
+        return UpdateStudioPurchaseViewModel::class.java
     }
 
     override fun onCreateView() {

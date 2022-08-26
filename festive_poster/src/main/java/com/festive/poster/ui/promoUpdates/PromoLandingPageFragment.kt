@@ -71,7 +71,14 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
         WebEngageController.trackEvent(Promotional_Update_Home_Loaded)
 
         setupViewPager()
-        setupTabBaloons(ToolTipType.CREATE)
+        if (PreferencesUtils.instance.getData(
+                PreferencesKey.UPDATE_STUDIO_FIRST_TIME.name,
+                true)){
+            PreferencesUtils.instance.saveData(
+                PreferencesKey.UPDATE_STUDIO_FIRST_TIME.name,false)
+            setupTabBaloons(ToolTipType.FOR_TODAY)
+        }
+
     }
 
     private fun setupView() {

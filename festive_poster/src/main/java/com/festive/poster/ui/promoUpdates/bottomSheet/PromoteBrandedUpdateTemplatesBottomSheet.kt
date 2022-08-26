@@ -36,27 +36,18 @@ class PromoteBrandedUpdateTemplatesBottomSheet : BaseBottomSheetDialog<BsheetPro
     override fun onCreateView() {
         color888888 = ContextCompat.getColor(baseActivity, R.color.color_888888)
         color4a4a4a = ContextCompat.getColor(baseActivity, R.color.black_4a4a4a)
-        setOnClickListener(binding?.linearAdvancedWrapper, binding?.linearClassicWrapper, binding?.linearBuyThisWrapper)
         setRadioButtonListeners()
         binding?.rivCloseBottomSheet?.setOnClickListener { dismiss() }
     }
 
     private fun setRadioButtonListeners() {
-        binding?.radioAdvanced?.setOnClickListener {
 
-        }
-        binding?.radioClassic?.setOnClickListener {
-
-        }
-        binding?.radioBuyThisOnly?.setOnClickListener {
-
-        }
     }
 
     override fun onClick(v: View) {
         super.onClick(v)
         when(v){
-            binding?.linearAdvancedWrapper -> {
+           /* binding?.linearAdvancedWrapper -> {
                 binding?.radioAdvanced?.isChecked = true
                 binding?.radioClassic?.isChecked = false
                 binding?.radioBuyThisOnly?.isChecked = false
@@ -82,7 +73,7 @@ class PromoteBrandedUpdateTemplatesBottomSheet : BaseBottomSheetDialog<BsheetPro
                 binding?.tvClassicTitle?.setTextColor(color888888)
                 binding?.tvBuyOnlyTitle?.setTextColor(color4a4a4a)
                 binding?.btnViewPackDetails?.text = getString(R.string.add_and_go_to_cart)
-            }
+            }*/
         }
     }
 }

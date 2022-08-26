@@ -29,7 +29,8 @@ enum class RecyclerViewItemType {
   TWITTER_PREVIEW_NO_IMAGE,
   VIEW_MORE_POSTER,
   FAV_CAT,
-  UPDATE_STUDIO_INTRO_SCREEN_ITEM;
+  UPDATE_STUDIO_INTRO_SCREEN_ITEM,
+  FEATURE_PURCHASE;
 
 
   @LayoutRes
@@ -61,6 +62,7 @@ enum class RecyclerViewItemType {
       VIEW_MORE_POSTER->R.layout.layout_view_more_template
       FAV_CAT->R.layout.list_item_fav_cat
       UPDATE_STUDIO_INTRO_SCREEN_ITEM->R.layout.list_item_update_studio_intro
+      FEATURE_PURCHASE->R.layout.list_item_update_studio_feature_purchase
     }
   }
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.appcompat.widget.LinearLayoutCompat android:id="@+id/linear_advanced_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_58"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/radioAdvanced"
+            android:layout_width="@dimen/size_18"
+            android:layout_height="@dimen/size_18"
+            android:layout_marginStart="@dimen/size_12"
+            android:button="@drawable/radio_selector_color_primary"
+            android:clickable="false"
+            android:enabled="false" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_12"
+            android:orientation="vertical">
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_advance_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxLines="1"
+                tools:text="@string/buy_it_as_part_of_advanced_pack"
+                android:textAlignment="viewStart"
+                android:textColor="@color/color_888888"
+                android:textSize="@dimen/text_12"
+                app:fontFamily="@font/bold" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxLines="1"
+                tools:text="@string/get_branded_update_templates_17_more_features"
+                android:textAlignment="viewStart"
+                android:textColor="@color/color_747474"
+                android:textSize="@dimen/text_11"
+                app:fontFamily="@font/regular" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>
+

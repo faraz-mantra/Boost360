@@ -47,8 +47,7 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoU
 
     override fun onCreateView() {
         super.onCreateView()
-        PreferencesUtils.instance.saveData(
-            PreferencesKey.UPDATE_STUDIO_FIRST_TIME.name,false)
+
 
         WebEngageController.trackEvent(Post_Promotional_Update_Click)
         session = UserSessionManager(this)
