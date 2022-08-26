@@ -86,7 +86,7 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
     }
 
     private fun getPriceOfPosterPacks() {
-        viewModel?.getUpgradeData()?.observeOnce(viewLifecycleOwner, {
+        /*viewModel?.getUpgradeData()?.observeOnce(viewLifecycleOwner, {
             val response = it as? UpgradeGetDataResponse
             response?.let {
                     feature_promo= response.Data.firstOrNull()?.features?.find { feature ->
@@ -128,7 +128,7 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
 
 
             }
-        })
+        })*/
     }
 
     fun addItemToCart() {

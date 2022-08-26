@@ -3,13 +3,27 @@ package com.festive.poster.ui.promoUpdates.bottomSheet
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.facebook.appevents.suggestedevents.ViewOnClickListener
 import com.festive.poster.R
 import com.festive.poster.databinding.BsheetPromoteUsingBrandedUpdateTemplatesBinding
+import com.festive.poster.models.FeaturePurchaseUiModel
+import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
+import com.festive.poster.recyclerView.BaseRecyclerViewItem
+import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.festive.poster.viewmodels.UpdateStudioPurchaseViewModel
+import com.framework.base.BaseActivity
 import com.framework.base.BaseBottomSheetDialog
+import com.framework.extensions.gone
+import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.framework.rest.NetworkResult
+import com.framework.utils.showSnackBarNegative
+import com.framework.utils.toArrayList
 
-class PromoteBrandedUpdateTemplatesBottomSheet : BaseBottomSheetDialog<BsheetPromoteUsingBrandedUpdateTemplatesBinding, BaseViewModel>() {
+class PromoteBrandedUpdateTemplatesBottomSheet :
+    BaseBottomSheetDialog<BsheetPromoteUsingBrandedUpdateTemplatesBinding,
+            UpdateStudioPurchaseViewModel>(),RecyclerItemClickListener {
 
     private var color888888: Int = 0
     private var color4a4a4a: Int = 0
@@ -29,8 +43,8 @@ class PromoteBrandedUpdateTemplatesBottomSheet : BaseBottomSheetDialog<BsheetPro
         return R.layout.bsheet_promote_using_branded_update_templates
     }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
+    override fun getViewModelClass(): Class<UpdateStudioPurchaseViewModel> {
+        return UpdateStudioPurchaseViewModel::class.java
     }
 
     override fun onCreateView() {
@@ -38,6 +52,43 @@ class PromoteBrandedUpdateTemplatesBottomSheet : BaseBottomSheetDialog<BsheetPro
         color4a4a4a = ContextCompat.getColor(baseActivity, R.color.black_4a4a4a)
         setRadioButtonListeners()
         binding?.rivCloseBottomSheet?.setOnClickListener { dismiss() }
+
+        observeApis()
+    }
+
+    private fun observeApis() {
+        viewModel?.featurePurchaseData?.observe(this){
+            when(it){
+                is NetworkResult.Loading->{
+                    binding?.progressBar?.visible()
+                    binding!!.dataLayout!!.gone()
+                }
+                is NetworkResult.Success->{
+                    binding?.progressBar?.gone()
+                    binding!!.dataLayout!!.visible()
+                    if (viewModel?.doesUserHavePurchasedAnything == true){
+                        BusinessPromotionAddToCartBottomSheet.newInstance()
+                            .show(parentFragmentManager,BusinessPromotionAddToCartBottomSheet::class.java.canonicalName)
+                        dismiss()
+                        return@observe
+                    }
+                    setPurchaseList(it.data)
+                }
+                is NetworkResult.Error->{
+                    binding?.progressBar?.gone()
+                    binding!!.dataLayout!!.gone()
+                    showSnackBarNegative(requireActivity(),getString(R.string.something_went_wrong))
+                }
+            }
+        }
+    }
+
+    private fun setPurchaseList(data: List<FeaturePurchaseUiModel>?) {
+        data?:return
+        val adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,
+            data.toArrayList(),this)
+        binding!!.rvPacks.adapter=adapter
+        binding!!.rvPacks.layoutManager = LinearLayoutManager(requireActivity())
     }
 
     private fun setRadioButtonListeners() {
@@ -75,5 +126,9 @@ class PromoteBrandedUpdateTemplatesBottomSheet : BaseBottomSheetDialog<BsheetPro
                 binding?.btnViewPackDetails?.text = getString(R.string.add_and_go_to_cart)
             }*/
         }
+    }
+
+    override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+
     }
 }

@@ -1,10 +1,31 @@
 package com.festive.poster.models.response
 
+import com.festive.poster.constant.PreferenceConstant
 import com.framework.base.BaseResponse
+import com.framework.utils.PreferencesUtils
+import com.framework.utils.convertJsonToObj
+import com.framework.utils.getData
+import com.framework.utils.saveData
+import com.google.gson.Gson
 
 data class UpgradeGetDataResponse(
     val Data: List<UpgradeGetDataData>,
-):BaseResponse()
+):BaseResponse(){
+
+    companion object{
+        fun getFromCache():UpgradeGetDataResponse?{
+            val json =  PreferencesUtils.instance.getData(
+                PreferenceConstant.UPGRADE_DATA_RESPONSE,
+                null)
+
+            return if (json!=null){
+                convertJsonToObj(json)
+            }else{
+                null
+            }
+        }
+    }
+}
 data class UpgradeGetDataData(
     val _kid: String,
     val createdon: String,
@@ -134,3 +155,7 @@ data class FeatureTestimonial(
     val updatedon: String,
     val websiteid: String
 )
+fun UpgradeGetDataResponse.saveCache(){
+    PreferencesUtils.instance.saveData(PreferenceConstant.UPGRADE_DATA_RESPONSE,Gson().toJson(this))
+}
+
