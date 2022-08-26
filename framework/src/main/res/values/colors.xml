@@ -78,5 +78,7 @@
   <color name="color_4a4a4a_jio_ec008c">#4A4A4A</color>
   <color name="boost_jio_website_card_color">@color/transparent</color>
   <color name="boost_jio_website_arrow_color">@color/white</color>
+  <color name="green_light">#00C42D</color>
+
 
 </resources>
