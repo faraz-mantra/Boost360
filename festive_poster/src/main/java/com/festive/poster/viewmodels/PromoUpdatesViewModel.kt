@@ -1,20 +1,19 @@
 package com.festive.poster.viewmodels
 
-import android.net.Uri
-import androidx.annotation.LayoutRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.festive.poster.R
-import com.festive.poster.constant.RecyclerViewItemType
+import com.festive.poster.constant.Constants
 import com.festive.poster.models.*
 import com.festive.poster.models.response.*
 import com.festive.poster.reset.repo.*
-import com.framework.BaseApplication
 import com.framework.base.BaseResponse
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
 import com.framework.rest.NetworkResult
+import com.framework.utils.application
 import com.framework.utils.fetchString
 import com.framework.utils.getResponse
 import com.framework.utils.toArrayList
@@ -27,7 +26,7 @@ import kotlin.coroutines.suspendCoroutine
 class PromoUpdatesViewModel: BaseViewModel() {
 
 
-
+    private  val TAG = "PromoUpdatesViewModel"
 
     private val browseAllMData=MutableLiveData<NetworkResult<
             ArrayList<CategoryUi>>>()
@@ -52,8 +51,16 @@ class PromoUpdatesViewModel: BaseViewModel() {
             BaseResponse>> get() = _favStatus
 
 
+    var doesUserHavePurchasedAnything = false
+
+    private val _featurePurchaseData=MutableLiveData<NetworkResult<
+            List<FeaturePurchaseUiModel>>>()
+    val featurePurchaseData:LiveData<NetworkResult<
+            List<FeaturePurchaseUiModel>>> get() = _featurePurchaseData
+
     init {
        refreshTemplates()
+        getPurchaseItem()
     }
 
     fun refreshTemplates(){
@@ -189,5 +196,115 @@ class PromoUpdatesViewModel: BaseViewModel() {
     }
 
 
+    suspend fun getUpgradeData()= suspendCoroutine<UpgradeGetDataResponse> {cont->
+        DevBoostRepository.getUpgradeData().getResponse { response->
+            if (response.isSuccess()){
+                cont.resume(response as UpgradeGetDataResponse)
+            }else{
+                cont.resumeWithException(Exception(response.message))
+            }
 
+        }
+    }
+
+    suspend fun getUserPurchasedFeatures()= suspendCoroutine<Array<CapLimitFeatureResponseItem>> {cont->
+        AzureWebsiteNewRepository.getFeatureDetails().getResponse { response->
+            if (response.isSuccess()){
+                cont.resume(response.arrayResponse as Array<CapLimitFeatureResponseItem>)
+            }else{
+                cont.resumeWithException(Exception(response.message))
+            }
+
+        }
+    }
+
+    fun getPurchaseItem(){
+        _featurePurchaseData.postValue(NetworkResult.Loading())
+        viewModelScope.launch {
+            try {
+                val appFeaturesResponse = getUpgradeData()
+                val userPurchasedFeatures = getUserPurchasedFeatures()
+
+
+                val featureUiList =convertFeatureResponseToUiItem(appFeaturesResponse)
+
+                doesUserHavePurchasedAnything=checkUserHavePurchasedAnything(userPurchasedFeatures,appFeaturesResponse)
+
+                _featurePurchaseData.postValue(NetworkResult.Success(featureUiList))
+            }
+            catch (e:Exception){
+                _featurePurchaseData.postValue(NetworkResult.Error(e.message))
+            }
+
+
+        }
+    }
+
+    private fun checkUserHavePurchasedAnything(
+        userPurchasedFeatures: Array<CapLimitFeatureResponseItem>,
+        appFeaturesResponse: UpgradeGetDataResponse
+    ): Boolean {
+      return  userPurchasedFeatures.filter { purchasedFeature->
+
+            val isPremium = getFeatureDetails(purchasedFeature.featureKey,
+            appFeaturesResponse.Data.firstOrNull()?.features)?.is_premium
+
+            purchasedFeature.featureState==1
+                    && isPremium!!
+        }.isNotEmpty()
+    }
+
+    private fun convertFeatureResponseToUiItem(appFeaturesResponse: UpgradeGetDataResponse): ArrayList<FeaturePurchaseUiModel> {
+        val featurePurchaseList =  getBundlesWhereUpdateStudioPresent(appFeaturesResponse)
+
+        val updateStudioFeature = getFeatureDetails(Constants.UPDATES_STUDIO_WIDGET_KEY,appFeaturesResponse.Data.firstOrNull()?.features)
+
+        val desc = application().getString(R.string.pay_placeholder_or_placeholder_gst_extra,
+            updateStudioFeature?.price, updateStudioFeature?.price ?: (0 * 12)
+        )
+
+        featurePurchaseList.add(
+            FeaturePurchaseUiModel(
+                title = fetchString(R.string.buy_only_this_feature),
+                desc =desc,
+                updateStudioFeature?.price
+            )
+        )
+
+        return featurePurchaseList
+    }
+
+    private fun getBundlesWhereUpdateStudioPresent(appFeaturesResponse: UpgradeGetDataResponse): ArrayList<FeaturePurchaseUiModel> {
+       val featurePurchaseUiList = ArrayList<FeaturePurchaseUiModel>()
+
+        val bundles =  appFeaturesResponse.Data.firstOrNull()?.bundles?.filter { bundle->
+            bundle.included_features.find {feature->
+                feature.feature_code==Constants.UPDATES_STUDIO_WIDGET_KEY
+            }!=null }
+
+
+        bundles?.forEach {
+
+            val title = application().getString(R.string.buy_it_as_part_of_placeholder,
+                it.name)
+
+            val desc = application().getString(R.string.get_branded_update_templates_placeholder_more_features,
+                it.included_features)
+
+
+            val item = FeaturePurchaseUiModel(
+                title,
+                desc,
+                null,
+            )
+
+            featurePurchaseUiList.add(item)
+
+        }
+        return featurePurchaseUiList
+    }
+
+    fun getFeatureDetails(featureCode: String?, features: List<UpgradeGetDataFeature>?):UpgradeGetDataFeature?{
+       return features?.find { it.feature_code==featureCode }
+    }
 }

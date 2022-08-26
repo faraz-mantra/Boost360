@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -83,162 +84,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:id="@+id/linear_advanced_wrapper"
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_packs"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/list_item_update_studio_feature_purchase"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_58"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"/>
 
-                        <androidx.appcompat.widget.AppCompatRadioButton
-                            android:id="@+id/radioAdvanced"
-                            android:layout_width="@dimen/size_18"
-                            android:layout_height="@dimen/size_18"
-                            android:layout_marginStart="@dimen/size_12"
-                            android:button="@drawable/radio_selector_color_primary"
-                            android:clickable="false"
-                            android:enabled="false" />
-
-                        <androidx.appcompat.widget.LinearLayoutCompat
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/size_12"
-                            android:orientation="vertical">
-
-                            <com.framework.views.customViews.CustomTextView
-                                android:id="@+id/tv_advance_title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="end"
-                                android:lines="1"
-                                android:maxLines="1"
-                                android:text="@string/buy_it_as_part_of_advanced_pack"
-                                android:textAlignment="viewStart"
-                                android:textColor="@color/color_888888"
-                                android:textSize="@dimen/text_12"
-                                app:fontFamily="@font/bold" />
-
-                            <com.framework.views.customViews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="end"
-                                android:lines="1"
-                                android:maxLines="1"
-                                android:text="@string/get_branded_update_templates_17_more_features"
-                                android:textAlignment="viewStart"
-                                android:textColor="@color/color_747474"
-                                android:textSize="@dimen/text_11"
-                                app:fontFamily="@font/regular" />
-                        </androidx.appcompat.widget.LinearLayoutCompat>
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    <View
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/size_2"
-                        android:background="@drawable/line_stroke_1px_d8d8d8" />
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:id="@+id/linear_classic_wrapper"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_58"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <androidx.appcompat.widget.AppCompatRadioButton
-                            android:id="@+id/radioClassic"
-                            android:layout_width="@dimen/size_18"
-                            android:layout_height="@dimen/size_18"
-                            android:layout_marginStart="@dimen/size_12"
-                            android:button="@drawable/radio_selector_color_primary"
-                            android:clickable="false"
-                            android:enabled="false" />
-
-                        <androidx.appcompat.widget.LinearLayoutCompat
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/size_12"
-                            android:orientation="vertical">
-
-                            <com.framework.views.customViews.CustomTextView
-                                android:id="@+id/tv_classic_title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="end"
-                                android:lines="1"
-                                android:maxLines="1"
-                                android:text="@string/buy_it_as_part_of_classic_pack"
-                                android:textAlignment="viewStart"
-                                android:textColor="@color/color_888888"
-                                android:textSize="@dimen/text_12"
-                                app:fontFamily="@font/bold" />
-
-                            <com.framework.views.customViews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="end"
-                                android:lines="1"
-                                android:maxLines="1"
-                                android:text="@string/get_branded_update_templates_5_more_features"
-                                android:textAlignment="viewStart"
-                                android:textColor="@color/color_747474"
-                                android:textSize="@dimen/text_11"
-                                app:fontFamily="@font/regular" />
-                        </androidx.appcompat.widget.LinearLayoutCompat>
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    <View
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/size_2"
-                        android:background="@drawable/line_stroke_1px_d8d8d8" />
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:id="@+id/linear_buy_this_wrapper"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_58"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <androidx.appcompat.widget.AppCompatRadioButton
-                            android:id="@+id/radioBuyThisOnly"
-                            android:layout_width="@dimen/size_18"
-                            android:layout_height="@dimen/size_18"
-                            android:layout_marginStart="@dimen/size_12"
-                            android:button="@drawable/radio_selector_color_primary"
-                            android:clickable="false"
-                            android:enabled="false" />
-
-                        <androidx.appcompat.widget.LinearLayoutCompat
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/size_12"
-                            android:orientation="vertical">
-
-                            <com.framework.views.customViews.CustomTextView
-                                android:id="@+id/tv_buy_only_title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="end"
-                                android:lines="1"
-                                android:maxLines="1"
-                                android:text="@string/buy_only_this_feature"
-                                android:textAlignment="viewStart"
-                                android:textColor="@color/color_888888"
-                                android:textSize="@dimen/text_12"
-                                app:fontFamily="@font/bold" />
-
-                            <com.framework.views.customViews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="end"
-                                android:lines="1"
-                                android:maxLines="1"
-                                android:text="@string/pay_499_or_5988_gst_extra"
-                                android:textAlignment="viewStart"
-                                android:textColor="@color/color_747474"
-                                android:textSize="@dimen/text_11"
-                                app:fontFamily="@font/regular" />
-                        </androidx.appcompat.widget.LinearLayoutCompat>
-                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </RadioGroup>
 
