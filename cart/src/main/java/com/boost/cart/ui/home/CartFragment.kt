@@ -644,11 +644,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                     null
                                 ),
                                 BusinessDetails(
-                                    null,
-                                    null,
-                                    null
+                                    "+91",
+                                    et_email.text.toString(),
+                                    (activity as CartActivity).mobileNo
                                 ),
-
                                 (activity as CartActivity).clientid,
                                 "+91",
                                 "ANDROID",
@@ -680,14 +679,14 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                         null
                                     ),
                                     BusinessDetails(
-                                        null,
-                                        null,
-                                        null
+                                        "+91",
+                                        et_email.text.toString(),
+                                        (activity as CartActivity).mobileNo
                                     ),
                                     (activity as CartActivity).clientid,
                                     "+91",
                                     "ANDROID",
-                                    et_email.text.toString(),
+                                    null,
                                     (activity as CartActivity).fpid,
                                     (activity as CartActivity).mobileNo,
                                     null,
@@ -713,9 +712,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                         gstInfoResult?.address?.pincode
                                     ),
                                     BusinessDetails(
-                                        null,
-                                        null,
-                                        null
+                                        "+91",
+                                        et_email.text.toString(),
+                                        (activity as CartActivity).mobileNo
                                     ),
                                     (activity as CartActivity).clientid,
                                     "+91",
@@ -746,9 +745,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                         null
                                     ),
                                     BusinessDetails(
-                                        null,
-                                        null,
-                                        null
+                                        "+91",
+                                        et_email.text.toString(),
+                                        (activity as CartActivity).mobileNo
                                     ),
                                     (activity as CartActivity).clientid,
                                     "+91",
