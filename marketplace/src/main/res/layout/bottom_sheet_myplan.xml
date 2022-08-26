@@ -9,9 +9,12 @@
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="false"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:orientation="vertical">
 
         <ImageView
@@ -120,6 +123,7 @@
                     android:layout_marginBottom="16dp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toTopOf="@+id/txt_desc2"
                     app:layout_constraintTop_toBottomOf="@+id/txt_desc"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -138,6 +142,7 @@
                     android:textFontWeight="400"
                     android:textStyle="normal"
                     android:gravity="start"
+                    android:visibility="gone"
                     android:includeFontPadding="false"
                     android:text="Valid till "
                     android:textColor="@color/black_4a4a4a"
@@ -197,6 +202,7 @@
                     android:text="30 Dec 2022"
                     android:fontFamily="@font/semi_bold"
                     android:textStyle="normal"
+                    android:visibility="gone"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@+id/txt_desc2"

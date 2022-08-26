@@ -22,6 +22,7 @@ import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityMyCurrentPlanBinding
 import com.boost.marketplace.ui.History_Orders.HistoryOrdersActivity
+import com.boost.marketplace.ui.browse.BrowseFeaturesActivity
 import com.boost.marketplace.ui.popup.myplan.MyPlanBottomSheet
 import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
 import com.framework.analytics.SentryController
@@ -41,7 +42,23 @@ class MyCurrentPlanActivity :
     lateinit var freeAddonsAdapter: FreeAddonsAdapter
     lateinit var paidAddonsAdapter: PaidAddonsAdapter
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+    var experienceCode: String? = null
+    var screenType: String? = null
+    var fpName: String? = null
     var fpid: String? = null
+    var fpTag: String? = null
+    var email: String? = null
+    var mobileNo: String? = null
+    var profileUrl: String? = null
+    var accountType: String? = null
+    var isOpenCardFragment: Boolean = false
+    var isBackCart: Boolean = false
+    var isOpenHomeFragment: Boolean = false
+    var isOpenAddOnsFragment: Boolean = false
+    var deepLinkViewType: String = ""
+    var deepLinkDay: Int = 7
+    var isDeepLink: Boolean = false
+    var userPurchsedWidgets = ArrayList<String>()
     var totalActiveFreeWidgetCount = 0
     var totalActivePremiumWidgetCount = 0
     var totalFreeItemList: List<FeaturesModel>? = null
@@ -64,7 +81,22 @@ class MyCurrentPlanActivity :
 
     override fun onCreateView() {
         super.onCreateView()
+        isDeepLink = intent.getBooleanExtra("isDeepLink", false)
+        deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
+        deepLinkDay = intent.getIntExtra("deepLinkDay", 7)
+        experienceCode = intent.getStringExtra("expCode")
+        screenType = intent.getStringExtra("screenType")
+        fpName = intent.getStringExtra("fpName")
         fpid = intent.getStringExtra("fpid")
+        fpTag = intent.getStringExtra("fpTag")
+        email = intent.getStringExtra("email")
+        mobileNo = intent.getStringExtra("mobileNo")
+        profileUrl = intent.getStringExtra("profileUrl")
+        accountType = intent.getStringExtra("accountType")
+        isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
+        isOpenHomeFragment = intent.getBooleanExtra("isComingFromOrderConfirm", false)
+        isOpenAddOnsFragment = intent.getBooleanExtra("isComingFromOrderConfirmActivation", false)
+        userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
         viewModel.setApplicationLifecycle(application, this)
         viewModel = ViewModelProviders.of(this)
             .get(MyCurrentPlanViewModel::class.java)
@@ -145,6 +177,38 @@ class MyCurrentPlanActivity :
             videoshelp.show(this.supportFragmentManager, HelpVideosBottomSheet::class.java.name)
         }
 
+        binding?.btnBrowseFeature?.setOnClickListener {
+            val intent = Intent(this, BrowseFeaturesActivity::class.java)
+            intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+            intent.putExtra("fpid", fpid)
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("isDeepLink", isDeepLink)
+            intent.putExtra("deepLinkViewType", deepLinkViewType)
+            intent.putExtra("deepLinkDay", deepLinkDay)
+            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                userPurchsedWidgets
+            )
+            if (email != null) {
+                intent.putExtra("email", email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                intent.putExtra("mobileNo", mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", profileUrl)
+
+            startActivity(intent)
+        }
+
         binding?.arrowBtn?.setOnClickListener {
             cardViewVisibilty()
         }
@@ -211,6 +275,8 @@ class MyCurrentPlanActivity :
                 intent.getStringExtra("fpid") ?: "",
                 "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
             )
+//            viewModel.loadPurchasedItems1( intent.getStringExtra("fpid") ?: "",
+//                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
@@ -248,7 +314,8 @@ class MyCurrentPlanActivity :
                     binding?.shimmerViewHistory?.stopShimmer()
                     binding?.shimmerViewHistory?.visibility = View.GONE
                 }
-                binding?.paidTitle1?.text = "No Premium add-ons active."
+                binding?.paidTitle1?.text = "No add-ons active."
+                binding?.emptyFeatures?.visibility=View.VISIBLE
             }
 
             if (totalPaidItemList != null) {
@@ -261,9 +328,6 @@ class MyCurrentPlanActivity :
             updatePaidAddonsRecycler(it)
         })
 
-//        viewModel.edgecaseResult().observe(this, androidx.lifecycle.Observer {
-//            val featursCode = it.Result.FeatureDetails.FeatureState
-//        })
 
         viewModel.inActiveWidgetCount().observe(this, androidx.lifecycle.Observer {
 

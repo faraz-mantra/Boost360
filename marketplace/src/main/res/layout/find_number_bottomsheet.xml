@@ -30,15 +30,14 @@
             android:layout_alignParentBottom="true"
             android:background="@drawable/curve_top_bg"
             android:paddingTop="52dp"
-            android:paddingBottom="52dp"
-            >
+            android:paddingBottom="52dp">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lotty_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:lottie_rawRes="@raw/find_number_loader" />
 
@@ -50,7 +49,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/semi_bold"
                 android:lineHeight="24dp"
-                android:text="@string/finding_a_number_for_you"
+                android:text="Loading please wait.."
                 android:textColor="@color/main_color_gray_dk"
                 android:textFontWeight="600"
                 android:textSize="@dimen/txt_16sp"

@@ -12,6 +12,9 @@ import com.boost.marketplace.databinding.BottomSheetMyplanBinding
 import com.boost.marketplace.infra.utils.DeepLink.Companion.getScreenType
 import com.boost.marketplace.ui.My_Plan.MyCurrentPlanViewModel
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
+import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
+import com.boost.marketplace.ui.details.domain.CustomDomainActivity
+import com.boost.marketplace.ui.popup.call_track.FindingNumberLoaderBottomSheet
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
 import com.framework.base.BaseBottomSheetDialog
@@ -21,11 +24,13 @@ import com.framework.utils.DateUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.activity_feature_details.*
 
 
+class MyPlanBottomSheet :
+    BaseBottomSheetDialog<BottomSheetMyplanBinding, MyCurrentPlanViewModel>() {
 
-class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, MyCurrentPlanViewModel>() {
-
+    val dialogCard = FindingNumberLoaderBottomSheet()
     lateinit var singleAddon: FeaturesModel
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
     var fpid: String? = null
@@ -49,30 +54,37 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, MyCurr
             object : TypeToken<FeaturesModel>() {}.type
         )
         binding?.addonsTitle?.text = singleAddon.name
-        if (singleAddon.feature_code=="STAFFPROFILE" || singleAddon.feature_code=="STAFFPROFILE15"
-            || singleAddon.feature_code=="FACULTY" || singleAddon.feature_code=="OUR-TOPPERS"
-            || singleAddon.feature_code=="MEMBERSHIP" || singleAddon.feature_code=="DOCTORBIO"
-            || singleAddon.feature_code=="BOOSTKEYBOARD" || singleAddon.feature_code=="BOOKING-ENGINE"
-            || singleAddon.feature_code=="APPOINTMENTENGINE")
-        {
-            binding!!.btnUseThisFeature.visibility=View.VISIBLE
-        }
-        else{
-            binding!!.btnUseThisFeature.visibility=View.GONE
+        if (singleAddon.feature_code == "STAFFPROFILE" || singleAddon.feature_code == "STAFFPROFILE15"
+            || singleAddon.feature_code == "FACULTY" || singleAddon.feature_code == "OUR-TOPPERS"
+            || singleAddon.feature_code == "MEMBERSHIP" || singleAddon.feature_code == "DOCTORBIO"
+            || singleAddon.feature_code == "BOOSTKEYBOARD" || singleAddon.feature_code == "BOOKING-ENGINE"
+            || singleAddon.feature_code == "APPOINTMENTENGINE"
+        ) {
+            binding!!.btnUseThisFeature.visibility = View.VISIBLE
+        } else {
+            binding!!.btnUseThisFeature.visibility = View.GONE
         }
         binding?.addonsDesc?.text = singleAddon.description_title
 
-        if (singleAddon.is_premium.equals(false)){
-            binding?.cslayout?.visibility=View.GONE
+        if (singleAddon.is_premium.equals(false)) {
+            binding?.cslayout?.visibility = View.GONE
         }
 
         val date1: String? =
-            DateUtils.parseDate(singleAddon.activatedDate, DateUtils.FORMAT_SERVER_DATE1, DateUtils.FORMAT1_DD_MM_YYYY)
-        binding?.title3?.text= date1
+            DateUtils.parseDate(
+                singleAddon.activatedDate,
+                DateUtils.FORMAT_SERVER_DATE1,
+                DateUtils.FORMAT1_DD_MM_YYYY
+            )
+        binding?.title3?.text = date1
 
         val date: String? =
-            DateUtils.parseDate(singleAddon.expiryDate, DateUtils.FORMAT_SERVER_DATE1, DateUtils.FORMAT1_DD_MM_YYYY)
-        binding?.title4?.text= date
+            DateUtils.parseDate(
+                singleAddon.expiryDate,
+                DateUtils.FORMAT_SERVER_DATE1,
+                DateUtils.FORMAT1_DD_MM_YYYY
+            )
+        binding?.title4?.text = date
 
         Glide.with(baseActivity).load(singleAddon.primary_image).into(binding!!.addonsIcon)
 //        if (singleAddon.featureState == 1) {
@@ -96,7 +108,7 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, MyCurr
             binding?.btnFeatureDetails,
             binding?.rivCloseBottomSheet
         )
-       // featureEdgeCase(featureState, actionRequired)
+        // featureEdgeCase(featureState, actionRequired)
         loadData()
         initMVVM()
     }
@@ -121,8 +133,21 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, MyCurr
 
             val actionRequired = it.Result.ActionNeeded.ActionNeeded
             val featureState = it.Result.FeatureDetails.FeatureState
-            featureEdgeCase(actionRequired,featureState)
+            featureEdgeCase(actionRequired, featureState)
 
+        })
+
+        viewModel?.updatesLoader()?.observe(this, androidx.lifecycle.Observer {
+            if (it) {
+                dialogCard.show(
+                    childFragmentManager,
+                    FindingNumberLoaderBottomSheet::class.java.name
+                )
+                binding?.main?.visibility=View.GONE
+            } else {
+                dialogCard.dismiss()
+                binding?.main?.visibility=View.VISIBLE
+            }
         })
     }
 
@@ -146,16 +171,19 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, MyCurr
     }
 
     private fun Usefeature() {
-        val screenType= singleAddon.feature_code?.let { getScreenType(it) }
-        if (screenType.isNullOrEmpty().not()){
-        try {
-           val intent = Intent(requireActivity(), Class.forName("com.dashboard.controller.DeepLinkTransActivity"))
-           intent.putExtra("SCREEN_TYPE",screenType)
-           startActivity(intent)
-       } catch(e:Exception){
-           e.printStackTrace()
-       }
-        }else{
+        val screenType = singleAddon.feature_code?.let { getScreenType(it) }
+        if (screenType.isNullOrEmpty().not()) {
+            try {
+                val intent = Intent(
+                    requireActivity(),
+                    Class.forName("com.dashboard.controller.DeepLinkTransActivity")
+                )
+                intent.putExtra("SCREEN_TYPE", screenType)
+                startActivity(intent)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        } else {
             Toasty.error(requireContext(), "Coming Soon...", Toast.LENGTH_SHORT, true).show();
         }
     }
@@ -178,38 +206,59 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, MyCurr
         startActivity(intent)
     }
 
-    fun featureEdgeCase(actionRequired: Int,featureState: Int, ) {
-//        val featureState = singleAddon.featureState
-        if (actionRequired==2 && featureState==1) {
-            binding?.edgeCasesLayout?.visibility=View.VISIBLE
-            binding?.btn1?.visibility=View.VISIBLE
-            binding?.btn1?.setText("Choose Domain")
-            binding?.btn1?.setOnClickListener {
-                featuredetails()
-            }
-               binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
-               binding?.edgeCaseTitle?.setText("Action Required")
-               binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
-               binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_error_red,
-                    0,
-                    0,
-                    0
-                )
-               binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
-               binding?.edgeCaseDesc?.setText("There is an internal error inside Boost 360. We are working to resolve this issue.")
-            }
+    private fun chooseDomain() {
+        val intent = Intent(requireActivity(), CustomDomainActivity::class.java)
+        intent.putExtra("fpid", UserSessionManager(requireActivity()).fPID)
+        intent.putExtra("expCode", UserSessionManager(requireActivity()).fP_AppExperienceCode)
+        intent.putExtra(
+            "accountType",
+            UserSessionManager(requireActivity()).getFPDetails("GET_FP_DETAILS_CATEGORY")
+        )
+        intent.putStringArrayListExtra(
+            "userPurchsedWidgets",
+            ArrayList(UserSessionManager(requireActivity()).getStoreWidgets())
+        )
+        intent.putExtra("email", "ria@nowfloats.com")
+        intent.putExtra("mobileNo", "9160004303")
+        intent.putExtra("itemId", singleAddon.boost_widget_key)
+        startActivity(intent)
+    }
 
-        if (actionRequired==3 && featureState==1) {
-            binding?.edgeCasesLayout?.visibility=View.VISIBLE
-            binding?.btn1?.visibility=View.VISIBLE
-            binding?.btn1?.setText("Choose VMN")
+    private fun chooseVMN() {
+        val intent = Intent(requireActivity(), CallTrackingActivity::class.java)
+        intent.putExtra("fpid", UserSessionManager(requireActivity()).fPID)
+        intent.putExtra("expCode", UserSessionManager(requireActivity()).fP_AppExperienceCode)
+        intent.putExtra(
+            "accountType",
+            UserSessionManager(requireActivity()).getFPDetails("GET_FP_DETAILS_CATEGORY")
+        )
+        intent.putStringArrayListExtra(
+            "userPurchsedWidgets",
+            ArrayList(UserSessionManager(requireActivity()).getStoreWidgets())
+        )
+        intent.putExtra("email", "ria@nowfloats.com")
+        intent.putExtra("mobileNo", "9160004303")
+        intent.putExtra("itemId", singleAddon.boost_widget_key)
+        startActivity(intent)
+    }
+
+    fun featureEdgeCase(actionRequired: Int, featureState: Int) {
+
+        if (actionRequired == 1 && featureState == 1) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
+            binding?.btn1?.setText("Contact support")
             binding?.btn1?.setOnClickListener {
                 featuredetails()
             }
             binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
             binding?.edgeCaseTitle?.setText("Action Required")
-            binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
             binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
                 R.drawable.ic_error_red,
                 0,
@@ -217,19 +266,71 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, MyCurr
                 0
             )
             binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
-            binding?.edgeCaseDesc?.setText("There is an internal error inside Boost 360. We are working to resolve this issue.")
         }
 
-        if (actionRequired==4 && featureState==1) {
-            binding?.edgeCasesLayout?.visibility=View.VISIBLE
-            binding?.btn1?.visibility=View.VISIBLE
+        if (actionRequired == 2 && featureState == 1) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
+            binding?.btn1?.setText("Choose Domain")
+            binding?.btn1?.setOnClickListener {
+                chooseDomain()
+            }
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+        }
+
+        else  if (actionRequired == 3 && featureState == 1) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
+            binding?.btn1?.setText("Choose VMN")
+            binding?.btn1?.setOnClickListener {
+                chooseVMN()
+            }
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+        }
+
+        else if (actionRequired == 4 && featureState == 1) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
             binding?.btn1?.setText("Choose Email")
             binding?.btn1?.setOnClickListener {
                 featuredetails()
             }
             binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
             binding?.edgeCaseTitle?.setText("Action Required")
-            binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
             binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
                 R.drawable.ic_error_red,
                 0,
@@ -237,109 +338,53 @@ class MyPlanBottomSheet : BaseBottomSheetDialog<BottomSheetMyplanBinding, MyCurr
                 0
             )
             binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
-            binding?.edgeCaseDesc?.setText("There is an internal error inside Boost 360. We are working to resolve this issue.")
         }
-
-        else if (actionRequired ==0 && featureState == 1) {
-            binding?.edgeCasesLayout?.visibility=View.VISIBLE
+        else if (actionRequired == 0 && featureState == 1) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.edgeCaseHyperlink?.visibility=View.GONE
             binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
             binding?.edgeCaseTitle?.setText("Feature is currently active")
-            binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.green
+                )
+            )
             binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
                 R.drawable.ic_checked,
                 0,
                 0,
                 0
             )
-            binding?.edgeCaseDesc?.setText(
-                "Feature validity expiring on Aug 23, 2021. You\n" +
-                        "can extend validity by renewing it for a\n" +
-                        "longer duration."
-            )
-
-        }
-
-//        else if (edgeState==7) {
-//            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
-//            binding?.edgeCaseTitle?.setText("Something went wrong!")
-//            binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
-//            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
-//                    R.drawable.ic_error_red,
-//                    0,
-//                    0,
-//                    0
-//                )
-//            binding?.edgeCaseDesc?.setText("There is an internal error inside Boost 360. We are working to resolve this issue.")
-//
-//            }
-//        else if (edgeState==1) {
-//            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
-//            binding?.edgeCaseTitle?.setText("Feature expired on Aug 23, 2021")
-//            binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
-//            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
-//                    R.drawable.ic_error_red,
-//                    0,
-//                    0,
-//                    0
-//                )
 //            binding?.edgeCaseDesc?.setText(
-//                    "You need to renew this feature to continue\n" +
-//                            "using a custom domain. Your domain may be\n" +
-//                            "lost if you don’t renew it."
-//                )
-//            }
-//        else if (edgeState==1) {
-//            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_skyblue_white_bg)
-//            binding?.edgeCaseTitle?.setText("Syncing information")
-//            binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.light_blue2))
-//            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
-//                    R.drawable.ic_sync_blue,
-//                    0,
-//                    0,
-//                    0
-//                )
-//            binding?.edgeCaseDesc?.setText("We are working on syncing your information for this feature. It may take some time to get updated. Contact support for help.")
-//            }
-//        else if (edgeState==1) {
-//            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
-//            binding?.edgeCaseTitle?.setText("Auto renewal is turned on")
-//            binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
-//            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
-//                    R.drawable.ic_checked,
-//                    0,
-//                    0,
-//                    0
-//                )
-//            binding?.edgeCaseDesc?.setText("We are working on syncing your information for this feature. It may take some time to get updated. Contact support for help.")
-//            }
-//        else if (edgeState==1) {
-//            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_orange_white_bg)
-//            binding?.edgeCaseTitle?.setText("Feature is currently in cart. ")
-//            binding?.edgeCaseTitle?.setTextColor(
-//                    ContextCompat.getColor(
-//                        requireContext(),
-//                        R.color.common_text_color
-//                    )
-//                )
-//            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
-//                    R.drawable.ic_cart_black,
-//                    0,
-//                    0,
-//                    0
-//                )
-//            binding?.edgeCaseDesc?.setText("Feature is currently in cart. ")
-//            }
-//        else if (edgeState==1) {
-//            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
-//            binding?.edgeCaseTitle?.setText("Feature is part of “Online Classic”")
-//            binding?.edgeCaseTitle?.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
-//            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
-//                    R.drawable.ic_checked,
-//                    0,
-//                    0,
-//                    0
-//                )
-//            binding?.edgeCaseDesc?.setText("")
-//            }
+//                "Feature validity expiring on Aug 23, 2021. You\n" +
+//                        "can extend validity by renewing it for a\n" +
+//                        "longer duration."
+//            )
+
         }
+        else if (actionRequired == 0 && featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.edgeCaseHyperlink?.visibility=View.GONE
+            edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_skyblue_white_bg)
+            edge_case_title.setText("Syncing information")
+            edge_case_title.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.light_blue2
+                )
+            )
+            edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_sync_blue,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText(
+                "We are working on syncing your information for this feature.it may take some time to get updated"
+            )
+            binding?.edgeCaseDesc?.visibility=View.VISIBLE
+        }
+
+    }
 }
