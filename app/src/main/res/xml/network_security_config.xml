@@ -6,15 +6,15 @@
   <domain-config cleartextTrafficPermitted="false">
     <domain includeSubdomains="true">api.withfloats.com</domain>
     <pin-set>
-      <pin digest="SHA-256">BmcGsXgzGy/Cn9OXEWzLlBt0OZvgAoU5ueKMiyjMphU=</pin>
-      <pin digest="SHA-256">5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=</pin>
+      <pin digest="SHA-256">DRvqwTGU0gk+PEtxpNvDq7m7m/rlV+ki8v4NmGUaqu4=</pin>
+      <pin digest="SHA-256">RQeZkB42znUfsDIIFWIRiYEcKl7nHwNFwWCrnMMJbVc=</pin>
     </pin-set>
   </domain-config>
   <domain-config cleartextTrafficPermitted="false">
     <domain includeSubdomains="true">api2.withfloats.com</domain>
     <pin-set>
-      <pin digest="SHA-256">BmcGsXgzGy/Cn9OXEWzLlBt0OZvgAoU5ueKMiyjMphU=</pin>
-      <pin digest="SHA-256">5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=</pin>
+      <pin digest="SHA-256">DRvqwTGU0gk+PEtxpNvDq7m7m/rlV+ki8v4NmGUaqu4=</pin>
+      <pin digest="SHA-256">RQeZkB42znUfsDIIFWIRiYEcKl7nHwNFwWCrnMMJbVc=</pin>
     </pin-set>
   </domain-config>
   <domain-config cleartextTrafficPermitted="false">
@@ -34,14 +34,14 @@
   <domain-config cleartextTrafficPermitted="false">
     <domain includeSubdomains="true">kit-webaction-api.withfloats.com</domain>
     <pin-set>
-      <pin digest="SHA-256">FG29k0WHWQUHn1cAHCX5Spsj/QxAsMQ7+Ru2MiTTjU0=</pin>
+      <pin digest="SHA-256">XdYurxLpExzNLPvEjGJyWP+nwAVh7eaIWGYli9vtxOY=</pin>
       <pin digest="SHA-256">JSMzqOOrtyOT1kmau6zKhgT676hGgczD5VMdRMyJZFA=</pin>
     </pin-set>
   </domain-config>
   <domain-config cleartextTrafficPermitted="false">
     <domain includeSubdomains="true">developer.api.boostkit.dev</domain>
     <pin-set>
-      <pin digest="SHA-256">uFPhPLoAfq1NCSKf3HdqUEGcP/vIN00UArVuZIJ+kdI=</pin>
+      <pin digest="SHA-256">t5QV4A9m3Kuxgs8Lwb/hLz0VF95IPPTXLVQkumgpFpM=</pin>
       <pin digest="SHA-256">JSMzqOOrtyOT1kmau6zKhgT676hGgczD5VMdRMyJZFA=</pin>
     </pin-set>
   </domain-config>
@@ -52,13 +52,7 @@
       <pin digest="SHA-256">8Rw90Ej3Ttt8RRkrg+WYDS9n7IS03bk5bjP/UXPtaY8=</pin>
     </pin-set>
   </domain-config>
-  <domain-config cleartextTrafficPermitted="false">
-    <domain includeSubdomains="true">developers.api.boostkit.dev</domain>
-    <pin-set>
-      <pin digest="SHA-256">uFPhPLoAfq1NCSKf3HdqUEGcP/vIN00UArVuZIJ+kdI=</pin>
-      <pin digest="SHA-256">JSMzqOOrtyOT1kmau6zKhgT676hGgczD5VMdRMyJZFA=</pin>
-    </pin-set>
-  </domain-config>
+
   <domain-config cleartextTrafficPermitted="false">
     <domain includeSubdomains="true">boost.nowfloats.com</domain>
     <pin-set>
@@ -69,21 +63,21 @@
   <domain-config cleartextTrafficPermitted="false">
     <domain includeSubdomains="true">ria.withfloats.com</domain>
     <pin-set>
-      <pin digest="SHA-256">oJj6yBxOmmZWa+cXx68ipoDYAU1KJUfHPx+wN463+FY=</pin>
+      <pin digest="SHA-256">0xzJ9EjOYpTP8yo7cYlKqQLFIyrKxYcQG6jZ6qhAKVQ=</pin>
       <pin digest="SHA-256">8Rw90Ej3Ttt8RRkrg+WYDS9n7IS03bk5bjP/UXPtaY8=</pin>
     </pin-set>
   </domain-config>
   <domain-config cleartextTrafficPermitted="false">
     <domain includeSubdomains="true">nfx.withfloats.com</domain>
     <pin-set>
-      <pin digest="SHA-256">BmcGsXgzGy/Cn9OXEWzLlBt0OZvgAoU5ueKMiyjMphU=</pin>
-      <pin digest="SHA-256">5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=</pin>
+      <pin digest="SHA-256">DRvqwTGU0gk+PEtxpNvDq7m7m/rlV+ki8v4NmGUaqu4=</pin>
+      <pin digest="SHA-256">RQeZkB42znUfsDIIFWIRiYEcKl7nHwNFwWCrnMMJbVc=</pin>
     </pin-set>
   </domain-config>
   <domain-config cleartextTrafficPermitted="false">
     <domain includeSubdomains="true">content.withfloats.com</domain>
     <pin-set>
-      <pin digest="SHA-256">9ZmvZgQ3bNU0IiN4qcubmAUdF94L81MD2wv/iwIuS88=</pin>
+      <pin digest="SHA-256">NlTCEUOK3rS6ZaVyuMN4CC2YIeR06xAUj/WZLqwRg5U=</pin>
       <pin digest="SHA-256">JSMzqOOrtyOT1kmau6zKhgT676hGgczD5VMdRMyJZFA=</pin>
     </pin-set>
   </domain-config>
@@ -97,14 +91,14 @@
   <domain-config cleartextTrafficPermitted="false">
     <domain includeSubdomains="true">api2.kitsune.tools</domain>
     <pin-set>
-      <pin digest="SHA-256">gEs2A5IHWO3Pi3gUEIXCxCIDu8a356h/ayf/u3O6jjU=</pin>
+      <pin digest="SHA-256">JaykXMOZXNCAoIr2nejTW5KQ9c0tiU2LR0LaJ8YHc2s=</pin>
       <pin digest="SHA-256">JSMzqOOrtyOT1kmau6zKhgT676hGgczD5VMdRMyJZFA=</pin>
     </pin-set>
   </domain-config>
   <domain-config cleartextTrafficPermitted="false">
     <domain includeSubdomains="true">onboarding-boost.withfloats.com</domain>
     <pin-set>
-      <pin digest="SHA-256">oJj6yBxOmmZWa+cXx68ipoDYAU1KJUfHPx+wN463+FY=</pin>
+      <pin digest="SHA-256">0xzJ9EjOYpTP8yo7cYlKqQLFIyrKxYcQG6jZ6qhAKVQ=</pin>
       <pin digest="SHA-256">8Rw90Ej3Ttt8RRkrg+WYDS9n7IS03bk5bjP/UXPtaY8=</pin>
     </pin-set>
   </domain-config>
