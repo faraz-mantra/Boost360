@@ -652,9 +652,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                 (activity as CartActivity).clientid,
                                 "+91",
                                 "ANDROID",
-                                "",
+                                et_email.text.toString(),
                                 (activity as CartActivity).fpid!!,
-                                null,
+                                (activity as CartActivity).mobileNo,
                                 null,
                                 com.boost.dbcenterapi.data.api_model.customerId.customerInfo.TaxDetails(
                                     if (business_gstin_number.text?.isEmpty() == true) null else business_gstin_number.text.toString(),
@@ -685,11 +685,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                         null
                                     ),
                                     (activity as CartActivity).clientid,
-                                    null,
-                                    null,
+                                    "+91",
+                                    "ANDROID",
                                     et_email.text.toString(),
                                     (activity as CartActivity).fpid,
-                                    null,
+                                    (activity as CartActivity).mobileNo,
                                     null,
                                     com.boost.dbcenterapi.data.api_model.customerId.customerInfo.TaxDetails(
                                         if (business_gstin_number.text?.isEmpty() == true) null else business_gstin_number.text.toString(),
@@ -718,11 +718,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                         null
                                     ),
                                     (activity as CartActivity).clientid,
-                                    null,
-                                    null,
+                                    "+91",
+                                    "ANDROID",
                                     et_email.text.toString(),
                                     (activity as CartActivity).fpid,
-                                    null,
+                                    (activity as CartActivity).mobileNo,
                                     null,
                                     com.boost.dbcenterapi.data.api_model.customerId.customerInfo.TaxDetails(
                                         if (business_gstin_number.text?.isEmpty() == true) null else business_gstin_number.text.toString(),
@@ -751,11 +751,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                         null
                                     ),
                                     (activity as CartActivity).clientid,
-                                    null,
-                                    null,
+                                    "+91",
+                                    "ANDROID",
                                     et_email.text.toString(),
                                     (activity as CartActivity).fpid,
-                                    null,
+                                    (activity as CartActivity).mobileNo,
                                     null,
                                     com.boost.dbcenterapi.data.api_model.customerId.customerInfo.TaxDetails(
                                         if (business_gstin_number.text?.isEmpty() == true) null else business_gstin_number.text.toString(),
