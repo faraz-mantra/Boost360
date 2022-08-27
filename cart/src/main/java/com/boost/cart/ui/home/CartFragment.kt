@@ -644,17 +644,16 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                     null
                                 ),
                                 BusinessDetails(
-                                    null,
-                                    null,
-                                    null
+                                    "+91",
+                                    et_email.text.toString(),
+                                    (activity as CartActivity).mobileNo
                                 ),
-
                                 (activity as CartActivity).clientid,
                                 "+91",
                                 "ANDROID",
-                                "",
+                                et_email.text.toString(),
                                 (activity as CartActivity).fpid!!,
-                                null,
+                                (activity as CartActivity).mobileNo,
                                 null,
                                 com.boost.dbcenterapi.data.api_model.customerId.customerInfo.TaxDetails(
                                     if (business_gstin_number.text?.isEmpty() == true) null else business_gstin_number.text.toString(),
@@ -680,16 +679,16 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                         null
                                     ),
                                     BusinessDetails(
-                                        null,
-                                        null,
-                                        null
+                                        "+91",
+                                        et_email.text.toString(),
+                                        (activity as CartActivity).mobileNo
                                     ),
                                     (activity as CartActivity).clientid,
+                                    "+91",
+                                    "ANDROID",
                                     null,
-                                    null,
-                                    et_email.text.toString(),
                                     (activity as CartActivity).fpid,
-                                    null,
+                                    (activity as CartActivity).mobileNo,
                                     null,
                                     com.boost.dbcenterapi.data.api_model.customerId.customerInfo.TaxDetails(
                                         if (business_gstin_number.text?.isEmpty() == true) null else business_gstin_number.text.toString(),
@@ -713,16 +712,16 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                         gstInfoResult?.address?.pincode
                                     ),
                                     BusinessDetails(
-                                        null,
-                                        null,
-                                        null
+                                        "+91",
+                                        et_email.text.toString(),
+                                        (activity as CartActivity).mobileNo
                                     ),
                                     (activity as CartActivity).clientid,
-                                    null,
-                                    null,
+                                    "+91",
+                                    "ANDROID",
                                     et_email.text.toString(),
                                     (activity as CartActivity).fpid,
-                                    null,
+                                    (activity as CartActivity).mobileNo,
                                     null,
                                     com.boost.dbcenterapi.data.api_model.customerId.customerInfo.TaxDetails(
                                         if (business_gstin_number.text?.isEmpty() == true) null else business_gstin_number.text.toString(),
@@ -746,16 +745,16 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                         null
                                     ),
                                     BusinessDetails(
-                                        null,
-                                        null,
-                                        null
+                                        "+91",
+                                        et_email.text.toString(),
+                                        (activity as CartActivity).mobileNo
                                     ),
                                     (activity as CartActivity).clientid,
-                                    null,
-                                    null,
+                                    "+91",
+                                    "ANDROID",
                                     et_email.text.toString(),
                                     (activity as CartActivity).fpid,
-                                    null,
+                                    (activity as CartActivity).mobileNo,
                                     null,
                                     com.boost.dbcenterapi.data.api_model.customerId.customerInfo.TaxDetails(
                                         if (business_gstin_number.text?.isEmpty() == true) null else business_gstin_number.text.toString(),

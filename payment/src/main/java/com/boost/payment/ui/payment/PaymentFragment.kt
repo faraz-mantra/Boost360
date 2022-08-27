@@ -1214,7 +1214,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                         business_email_value.visibility = View.INVISIBLE
                         business_email_missing.visibility = View.VISIBLE
                     }
-                    if (createCustomerInfoRequest!!.Name!!.length < 1) {
+                    if (!createCustomerInfoRequest!!.Name.isNullOrEmpty() && createCustomerInfoRequest!!.Name!!.length < 1) {
                         paymentProceedFlag = false
                         business_name.setTextColor(resources.getColor(R.color.global_red))
                         business_name_value.visibility = View.INVISIBLE

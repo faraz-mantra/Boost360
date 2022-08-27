@@ -78,7 +78,7 @@ class OrderConfirmationFragment : BaseFragment() {
     super.onActivityCreated(savedInstanceState)
 
     viewModel = ViewModelProviders.of(this).get(OrderConfirmationViewModel::class.java)
-    viewModel.emptyCurrentCart((activity as PaymentActivity).application);
+    viewModel.emptyCurrentCart((activity as PaymentActivity).application, requireActivity())
 
     //firsttimepurchase logic for app review
     if(prefs.getFirstTimePurchase()){

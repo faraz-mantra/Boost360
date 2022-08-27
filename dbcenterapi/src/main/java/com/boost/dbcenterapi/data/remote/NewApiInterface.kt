@@ -2,6 +2,7 @@ package com.boost.dbcenterapi.data.remote
 
 import com.boost.dbcenterapi.data.api_model.CustomDomain.CustomDomains
 import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
+import com.boost.dbcenterapi.data.api_model.Domain.DomainBookingRequest
 import com.boost.dbcenterapi.data.api_model.Edgecase.EdgeCases
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
 import com.boost.dbcenterapi.data.api_model.GetFeatureDetails.FeatureDetailsV2Item
@@ -106,5 +107,9 @@ interface NewApiInterface {
         @Query("fpId") floatingPointId: String,
         @Query("clientId") clientId: String
     ): Observable<MyPlanV3>
+
+    @Headers("Content-Type: application/json")
+    @PUT("/DomainService/v2/DomainWithWebsite/create")
+    fun buyDomainBooking(@Body domainBookingRequest: DomainBookingRequest): Observable<String>
 
 }

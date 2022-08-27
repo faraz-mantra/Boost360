@@ -651,7 +651,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                             customerInfoState.postValue(false)
                                         }
                                         updatesLoader.postValue(false)
-                                        updatesError.postValue(it.message())
+                                        if(!it.message.isNullOrEmpty())
+                                            updatesError.postValue(it.message)
                                     }
                             )
             )
@@ -676,7 +677,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                             "Failed to create new payment profile for your account - " + it.message,
                                             Toast.LENGTH_LONG
                                     ).show()
-                                    updatesError.postValue(it.message)
+                                    if(!it.message.isNullOrEmpty())
+                                        updatesError.postValue(it.message)
                                     updatesLoader.postValue(false)
                                 }
                         )
@@ -701,7 +703,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                             "Failed to create new payment profile for your account - " + it.message,
                                             Toast.LENGTH_LONG
                                     ).show()
-                                    updatesError.postValue(it.message)
+                                    if(!it.message.isNullOrEmpty())
+                                        updatesError.postValue(it.message)
                                     updatesLoader.postValue(false)
                                 }
                         )
