@@ -131,9 +131,11 @@ class MyPlanBottomSheet :
     private fun initMVVM() {
         viewModel?.edgecaseResult()?.observe(this, androidx.lifecycle.Observer {
 
-            val actionRequired = it.Result.ActionNeeded.ActionNeeded
-            val featureState = it.Result.FeatureDetails.FeatureState
-            featureEdgeCase(actionRequired, featureState)
+            if (it.Result.FeatureDetails !=null && it.Result.ActionNeeded.ActionNeeded!=null){
+                val actionRequired = it.Result.ActionNeeded.ActionNeeded
+                val featureState = it.Result.FeatureDetails.FeatureState
+                featureEdgeCase(actionRequired, featureState)
+            }
 
         })
 
@@ -184,7 +186,7 @@ class MyPlanBottomSheet :
                 e.printStackTrace()
             }
         } else {
-            Toasty.error(requireContext(), "Coming Soon...", Toast.LENGTH_SHORT, true).show();
+            Toasty.success(requireContext(), "Coming Soon...", Toast.LENGTH_SHORT, true).show();
         }
     }
 
@@ -218,6 +220,7 @@ class MyPlanBottomSheet :
             "userPurchsedWidgets",
             ArrayList(UserSessionManager(requireActivity()).getStoreWidgets())
         )
+        intent.putExtra("bundleData", Gson().toJson(singleAddon))
         intent.putExtra("email", "ria@nowfloats.com")
         intent.putExtra("mobileNo", "9160004303")
         intent.putExtra("itemId", singleAddon.boost_widget_key)
@@ -236,6 +239,7 @@ class MyPlanBottomSheet :
             "userPurchsedWidgets",
             ArrayList(UserSessionManager(requireActivity()).getStoreWidgets())
         )
+        intent.putExtra("bundleData", Gson().toJson(singleAddon))
         intent.putExtra("email", "ria@nowfloats.com")
         intent.putExtra("mobileNo", "9160004303")
         intent.putExtra("itemId", singleAddon.boost_widget_key)
@@ -244,10 +248,11 @@ class MyPlanBottomSheet :
 
     fun featureEdgeCase(actionRequired: Int, featureState: Int) {
 
-        if (actionRequired == 1 && featureState == 1) {
+         if(actionRequired == 1 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+            || featureState == 5 || featureState == 6)) {
             binding?.edgeCasesLayout?.visibility = View.VISIBLE
             binding?.btn1?.visibility = View.VISIBLE
-            binding?.btn1?.setText("Contact support")
+            binding?.btn1?.text = "Contact Support"
             binding?.btn1?.setOnClickListener {
                 featuredetails()
             }
@@ -268,10 +273,11 @@ class MyPlanBottomSheet :
             binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
         }
 
-        if (actionRequired == 2 && featureState == 1) {
+        else if (actionRequired == 2 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                     || featureState == 5 || featureState == 6))  {
             binding?.edgeCasesLayout?.visibility = View.VISIBLE
             binding?.btn1?.visibility = View.VISIBLE
-            binding?.btn1?.setText("Choose Domain")
+            binding?.btn1?.text = "Choose Domain"
             binding?.btn1?.setOnClickListener {
                 chooseDomain()
             }
@@ -292,12 +298,14 @@ class MyPlanBottomSheet :
             binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
         }
 
-        else  if (actionRequired == 3 && featureState == 1) {
+        else if(actionRequired == 3 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                     || featureState == 5 || featureState == 6))  {
             binding?.edgeCasesLayout?.visibility = View.VISIBLE
             binding?.btn1?.visibility = View.VISIBLE
-            binding?.btn1?.setText("Choose VMN")
+            binding?.btn1?.text = "Choose VMN"
             binding?.btn1?.setOnClickListener {
-                chooseVMN()
+             //   chooseVMN()
+                Toasty.success(requireContext(), "Coming Soon...", Toast.LENGTH_SHORT, true).show();
             }
             binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
             binding?.edgeCaseTitle?.setText("Action Required")
@@ -316,10 +324,11 @@ class MyPlanBottomSheet :
             binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
         }
 
-        else if (actionRequired == 4 && featureState == 1) {
+        else if (actionRequired == 4 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                     || featureState == 5 || featureState == 6))  {
             binding?.edgeCasesLayout?.visibility = View.VISIBLE
             binding?.btn1?.visibility = View.VISIBLE
-            binding?.btn1?.setText("Choose Email")
+            binding?.btn1?.text = "Choose Email"
             binding?.btn1?.setOnClickListener {
                 featuredetails()
             }
