@@ -357,8 +357,8 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
     }
 
     fun updateItemBySearchValue(searchValue: String) {
-        val freeitemList: java.util.ArrayList<Domain> = arrayListOf()
-        val paiditemList: java.util.ArrayList<Domain> = arrayListOf()
+        val freeitemList: ArrayList<Domain> = arrayListOf()
+        val paiditemList: ArrayList<Domain> = arrayListOf()
         for (singleDomain in allDomainsList!!) {
             if (singleDomain.name.lowercase().indexOf(searchValue.lowercase()) != -1) {
                 binding?.tvSuggestedDomains?.text = "Search results"
