@@ -755,7 +755,7 @@
                     android:id="@+id/what_our_customer_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:visibility="visible"
+                    tools:visibility="gone"
                     android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@id/how_to_use_container">
 
@@ -806,6 +806,7 @@
                     android:layout_height="wrap_content"
                     tools:visibility="visible"
                     android:visibility="gone"
+                    android:layout_marginTop="10dp"
                     app:layout_constraintBottom_toTopOf="@+id/terms"
                     app:layout_constraintTop_toBottomOf="@id/what_our_customer_container">
 

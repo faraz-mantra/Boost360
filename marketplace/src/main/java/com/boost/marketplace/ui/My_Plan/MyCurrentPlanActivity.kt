@@ -327,7 +327,7 @@ class MyCurrentPlanActivity :
                                 }
                                 binding?.expandableView?.visibility = View.VISIBLE
                                 updateFreeAddonsRecycler(it)
-                                binding?.paidTitle?.text = " ${it.size} In Active features"
+                                binding?.paidTitle?.text = " ${it.size} Inactive features"
                             } else {
                                 if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
                                     binding?.shimmerViewHistory?.stopShimmer()
@@ -359,7 +359,7 @@ class MyCurrentPlanActivity :
                                 }
                                 binding?.expandableView?.visibility = View.VISIBLE
                                 updatePaidAddonsRecycler(it)
-                                binding?.paidTitle1?.text = " ${it.size} In Active features"
+                                binding?.paidTitle1?.text = " ${it.size} Active features"
                             } else {
                                 if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
                                     binding?.shimmerViewHistory?.stopShimmer()

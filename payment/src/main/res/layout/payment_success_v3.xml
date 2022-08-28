@@ -241,6 +241,8 @@
                         android:drawablePadding="5dp"
                         android:fontFamily="@font/bold"
                         android:lineSpacingExtra="1sp"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         android:text="Download Invoice"
                         android:textColor="@color/colorAccent1"
                         android:textSize="@dimen/txt_14sp" />

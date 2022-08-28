@@ -8,6 +8,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -26,7 +27,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginTop
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -60,7 +60,6 @@ import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
 import com.boost.marketplace.ui.popup.call_track.FindingNumberLoaderBottomSheet
 import com.boost.marketplace.ui.popup.call_track.RequestCallbackBottomSheet
-import com.boost.marketplace.ui.popup.call_track.SelectNumberBottomSheet
 import com.boost.marketplace.ui.popup.removeItems.RemovePackageBottomSheet
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.bumptech.glide.Glide
@@ -292,24 +291,29 @@ class FeatureDetailsActivity :
 
         query_text.setText(callExpertString)
         query_text.setOnClickListener {
-            val from = 900
-            val to = 1800
-            val date = Date()
-            val c = Calendar.getInstance()
-            c.time = date
-            val t = c[Calendar.HOUR_OF_DAY] * 100 + c[Calendar.MINUTE]
-            val isBetween = to > from && t >= from && t <= to || to < from && (t >= from || t <= to)
-            if (isBetween) {
-                callTrackingHelpBottomSheet.show(
-                    supportFragmentManager,
-                    CallTrackingHelpBottomSheet::class.java.getName()
-                )
-            } else {
-                requestCallbackBottomSheet.show(
-                    supportFragmentManager,
-                    RequestCallbackBottomSheet::class.java.getName()
-                )
-            }
+//            val from = 900
+//            val to = 1800
+//            val date = Date()
+//            val c = Calendar.getInstance()
+//            c.time = date
+//            val t = c[Calendar.HOUR_OF_DAY] * 100 + c[Calendar.MINUTE]
+//            val isBetween = to > from && t >= from && t <= to || to < from && (t >= from || t <= to)
+//            if (isBetween) {
+//                callTrackingHelpBottomSheet.show(
+//                    supportFragmentManager,
+//                    CallTrackingHelpBottomSheet::class.java.getName()
+//                )
+//            } else {
+//                requestCallbackBottomSheet.show(
+//                    supportFragmentManager,
+//                    RequestCallbackBottomSheet::class.java.getName()
+//                )
+//            }
+
+            val callIntent = Intent(Intent.ACTION_DIAL)
+            callIntent.data = Uri.parse("tel:" + prefs.getExpertContact())
+            startActivity(Intent.createChooser(callIntent, "Call by:"))
+
         }
 
         app_bar_layout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->

@@ -686,7 +686,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                     (activity as CartActivity).clientid,
                                     "+91",
                                     "ANDROID",
-                                    null,
+                                    et_email.text.toString(),
                                     (activity as CartActivity).fpid,
                                     (activity as CartActivity).mobileNo,
                                     null,
