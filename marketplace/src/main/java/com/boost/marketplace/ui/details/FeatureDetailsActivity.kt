@@ -706,7 +706,8 @@ class FeatureDetailsActivity :
 
             when {
                 it.boost_widget_key.equals("DOMAINPURCHASE") || it.feature_code.equals("DOMAINPURCHASE") -> {
-                    terms.visibility = VISIBLE
+                   // terms.visibility = VISIBLE
+                    terms.visibility = GONE
                 }
                 else -> {
                     terms.visibility = View.GONE
