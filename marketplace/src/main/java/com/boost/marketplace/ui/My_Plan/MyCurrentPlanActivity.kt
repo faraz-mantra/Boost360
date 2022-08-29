@@ -320,20 +320,22 @@ class MyCurrentPlanActivity :
                     .doOnSuccess {
                         if (it != null) {
                             if (it.size > 0) {
-                                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
-                                    binding?.shimmerViewHistory?.stopShimmer()
-                                    binding?.shimmerViewHistory?.visibility = View.GONE
-                                    binding?.nestedscroll?.visibility = View.VISIBLE
-                                }
+//                                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
+//                                    binding?.shimmerViewHistory?.stopShimmer()
+//                                    binding?.shimmerViewHistory?.visibility = View.GONE
+//                                    binding?.nestedscroll?.visibility = View.VISIBLE
+//                                }
                                 binding?.expandableView?.visibility = View.VISIBLE
                                 updateFreeAddonsRecycler(it)
                                 binding?.paidTitle?.text = " ${it.size} Inactive features"
                             } else {
-                                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
-                                    binding?.shimmerViewHistory?.stopShimmer()
-                                    binding?.shimmerViewHistory?.visibility = View.GONE
-                                }
+//                                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
+//                                    binding?.shimmerViewHistory?.stopShimmer()
+//                                    binding?.shimmerViewHistory?.visibility = View.GONE
+//                                }
                                 binding?.expandableView?.visibility = View.INVISIBLE
+                                //binding?.nestedscroll?.visibility = View.VISIBLE
+                                binding?.paidTitle?.text = " No Inactive features"
                             }
                         }
                     }
@@ -352,19 +354,19 @@ class MyCurrentPlanActivity :
                     .doOnSuccess {
                         if (it != null) {
                             if (it.size > 0) {
-                                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
-                                    binding?.shimmerViewHistory?.stopShimmer()
-                                    binding?.shimmerViewHistory?.visibility = View.GONE
-                                    binding?.nestedscroll?.visibility = View.VISIBLE
-                                }
+//                                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
+//                                    binding?.shimmerViewHistory?.stopShimmer()
+//                                    binding?.shimmerViewHistory?.visibility = View.GONE
+//                                    binding?.nestedscroll?.visibility = View.VISIBLE
+//                                }
                                 binding?.expandableView?.visibility = View.VISIBLE
                                 updatePaidAddonsRecycler(it)
                                 binding?.paidTitle1?.text = " ${it.size} Active features"
                             } else {
-                                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
-                                    binding?.shimmerViewHistory?.stopShimmer()
-                                    binding?.shimmerViewHistory?.visibility = View.GONE
-                                }
+//                                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
+//                                    binding?.shimmerViewHistory?.stopShimmer()
+//                                    binding?.shimmerViewHistory?.visibility = View.GONE
+//                                }
                                 binding?.emptyFeatures?.visibility = View.VISIBLE
                                 binding?.paidTitle1?.text = "No add-ons active."
                             }
@@ -449,8 +451,16 @@ class MyCurrentPlanActivity :
                 progressDialog.setMessage(status)
                 progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
                 progressDialog.show()
+
+                    binding?.shimmerViewHistory?.startShimmer()
+                    binding?.shimmerViewHistory?.visibility = View.VISIBLE
+                    binding?.nestedscroll?.visibility = View.GONE
+
             } else {
                 progressDialog.dismiss()
+                binding?.shimmerViewHistory?.stopShimmer()
+                binding?.shimmerViewHistory?.visibility = View.GONE
+                binding?.nestedscroll?.visibility = View.VISIBLE
             }
         })
     }
