@@ -3,6 +3,7 @@ package com.boost.marketplace.ui.popup.customdomains
 import android.app.Application
 import android.app.ProgressDialog
 import android.content.Intent
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.boost.cart.CartActivity
 import com.boost.dbcenterapi.data.api_model.CustomDomain.Domain
@@ -32,6 +33,7 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
     var profileUrl: String? = null
     var accountType: String? = null
     var isDeepLink: Boolean = false
+    var doDomainBooking: Boolean = false
     var isOpenCardFragment: Boolean = false
     var deepLinkViewType: String = ""
     var deepLinkDay: Int = 7
@@ -60,6 +62,7 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
         domainPricing= requireArguments().getString("price")
         experienceCode = requireArguments().getString("expCode")
         fpid = requireArguments().getString("fpid")
+        doDomainBooking = requireArguments().getBoolean("doDomainBooking", false)
         isDeepLink = requireArguments().getBoolean("isDeepLink", false)
         deepLinkViewType = requireArguments().getString("deepLinkViewType") ?: ""
         deepLinkDay =requireArguments().getString("deepLinkDay")?.toIntOrNull() ?: 7
@@ -72,15 +75,18 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
         val jsonString = requireArguments().getString("bundleData")
         singleAddon = Gson().fromJson<FeaturesModel>(jsonString, object : TypeToken<FeaturesModel>() {}.type)
         viewModel?.setApplicationLifecycle(Application(), this)
-        viewModel = ViewModelProviders.of(this).get(CustomDomainViewModel::class.java)
         progressDialog = ProgressDialog(context)
         prefs = SharedPrefs(baseActivity)
 
         binding?.tvTitle?.text=blockedItem
-        binding?.tvCart?.text = "Add to cart at $domainPricing"
+        if(doDomainBooking){
+            binding?.tvCart?.text = "Book Domain"
+        }else {
+            binding?.tvCart?.text = "Add to cart at $domainPricing"
+        }
 
         //loadData()
-        //initMVVM()
+        initMVVM()
 
         binding?.backBtn?.setOnClickListener {
             dismiss()
@@ -88,7 +94,10 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
 
         binding?.tvCart?.setOnClickListener {
 
-          //  if (blockedItem != null && result == false) {
+            if (doDomainBooking) {
+                viewModel?.bookDomainActivation(blockedItem!!, requireActivity().application, requireActivity())
+            } else {
+                //  if (blockedItem != null && result == false) {
                 if (!itemInCartStatus) {
                     if (singleAddon != null) {
                         prefs.storeCartOrderInfo(null)
@@ -139,27 +148,32 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
                 intent.putExtra("profileUrl", profileUrl)
                 startActivity(intent)
                 dismiss()
-         //   }
+                //   }
 //            else if (blockedItem!=null && result ==true){
 //                Toasty.error(requireContext(), "Domain unavailable select other", Toast.LENGTH_SHORT).show()
 //            }
-        }
-    }
-
-    private fun loadData() {
-        blockedItem?.let {
-            fpid?.let { it1 ->
-                viewModel!!.domainStatus(
-                    (this).getAccessToken() ?: "", it1,
-                    "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21", it
-                )
             }
         }
     }
 
+//    private fun loadData() {
+//        blockedItem?.let {
+//            fpid?.let { it1 ->
+//                viewModel!!.domainStatus(
+//                    (this).getAccessToken() ?: "", it1,
+//                    "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21", it
+//                )
+//            }
+//        }
+//    }
+
     private fun initMVVM() {
-        viewModel?.updateStatus()?.observe(this, androidx.lifecycle.Observer{
-            result=it.Result
+//        viewModel?.updateStatus()?.observe(this, androidx.lifecycle.Observer{
+//            result=it.Result
+//        })
+
+        viewModel?.domainBookingStatus()?.observe(this, Observer {
+            requireActivity().finish()
         })
     }
     fun getAccessToken(): String {

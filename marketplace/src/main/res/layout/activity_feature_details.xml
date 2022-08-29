@@ -219,10 +219,10 @@
                             android:layout_marginTop="16dp"
                             android:layout_marginEnd="16dp"
                             android:layout_marginBottom="16dp"
-                            android:visibility="gone"
-                            tools:visibility="gone"
                             android:background="@drawable/rounded_curve_bg"
-                            android:padding="@dimen/_15sdp">
+                            android:padding="@dimen/_15sdp"
+                            android:visibility="gone"
+                            tools:visibility="visible">
 
 
                             <ImageView
@@ -373,7 +373,7 @@
                             android:clickable="false"
                             android:layout_alignParentStart="true"
                             android:visibility="gone"
-                            tools:visibility="visible">
+                            tools:visibility="gone">
 
                             <ImageView
                                 android:id="@+id/addon_iconV3"
@@ -526,6 +526,7 @@
                     android:padding="16dp"
                     android:layout_marginEnd="16dp"
                     android:visibility="gone"
+                    tools:visibility="visible"
                     app:layout_constraintTop_toBottomOf="@id/header">
 
                     <TextView

@@ -30,6 +30,7 @@ import com.boost.marketplace.ui.popup.customdomains.ConfirmedCustomDomainBottomS
 import com.boost.marketplace.ui.popup.customdomains.CustomDomainHelpBottomSheet
 import com.boost.marketplace.ui.popup.customdomains.CustomDomainLearnDomainBottomSheet
 import com.boost.marketplace.ui.popup.customdomains.SSLCertificateBottomSheet
+import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
 import com.framework.utils.hideKeyBoard
@@ -60,6 +61,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
     var userPurchsedWidgets = java.util.ArrayList<String>()
     var allDomainsList: List<Domain>? = null
     var itemInCartStatus = false
+    var doDomainBooking = false
      var  result:Boolean? = null
     lateinit var customDomainListAdapter1: CustomDomainListAdapter1
     lateinit var customDomainListAdapter: CustomDomainListAdapter
@@ -86,6 +88,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
 
         experienceCode = intent.getStringExtra("expCode")
         fpid = intent.getStringExtra("fpid")
+        doDomainBooking = intent.getBooleanExtra("doDomainBooking", false)
         isDeepLink = intent.getBooleanExtra("isDeepLink", false)
         deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
         deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
@@ -121,6 +124,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
                 bundle.putString("fpid", fpid)
                 bundle.putString("fpTag", fpTag)
                 bundle.putString("price",pricing)
+                bundle.putBoolean("doDomainBooking", doDomainBooking)
                 bundle.putString("expCode", experienceCode)
                 bundle.putString("bundleData", Gson().toJson(singleAddon))
                 bundle.putString("isDeepLink", isDeepLink.toString())
@@ -307,12 +311,14 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         })
 
         viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
-            if (it) {
+            if (it.length>0) {
                 binding?.scrollView?.visibility = View.GONE
                 binding?.shimmerViewDomain?.visibility = View.VISIBLE
+                showProgress(it,false)
             } else {
                 binding?.scrollView?.visibility = View.VISIBLE
                 binding?.shimmerViewDomain?.visibility = View.GONE
+                hideProgress()
             }
         })
 
