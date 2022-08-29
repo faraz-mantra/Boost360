@@ -852,8 +852,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
         setupFeatureIcons(bundlesModel)
 
-        setupAddToCartButton()
-
         viewModel.cartResult().observe(this, androidx.lifecycle.Observer {
             needMoreFeatureItemInCart = false
             if (cartList != null && cartList!!.size > 0) {
@@ -885,6 +883,14 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                         }
                     }
                 }
+            } else {
+                binding?.addToCart?.setTextColor(this.resources.getColor(R.color.white))
+                binding?.addToCart?.background = ContextCompat.getDrawable(
+                    this.applicationContext,
+                    R.drawable.ic_cart_continue_bg
+                )
+                binding?.addToCart?.setText(this.getString(R.string.add_to_cart))
+                binding?.addToCart?.isClickable = true
             }
         })
 
@@ -969,29 +975,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 }
     }
 
-    private fun setupAddToCartButton() {
-        if(!needMoreFeatureItemInCart ) {
-            if(::needMoreFeatureItem.isInitialized) {
-                binding?.addToCart?.setTextColor(this.resources.getColor(R.color.white))
-                binding?.addToCart?.background = ContextCompat.getDrawable(
-                    this.applicationContext,
-                    R.drawable.ic_cart_continue_bg
-                )
-//                        binding?.addToCart?.setText("Buy ${needMoreFeatureItem.name}")
-                binding?.addToCart?.isClickable = true
-            }
-        } else {
-            binding?.addToCart?.background = ContextCompat.getDrawable(
-                this.applicationContext,
-                R.drawable.ic_packsv3_added_to_cart_bg
-            )
-            binding?.addToCart?.setTextColor(
-                this.getResources().getColor(R.color.tv_color_BB)
-            )
-            binding?.addToCart?.setText(this.getString(R.string.added_to_cart))
-            binding?.addToCart?.isClickable = false
-        }
-    }
 
     private fun setupFeatureIcons(bundlesModel: BundlesModel) {
         val temp = Gson().fromJson<List<IncludedFeature>>(
