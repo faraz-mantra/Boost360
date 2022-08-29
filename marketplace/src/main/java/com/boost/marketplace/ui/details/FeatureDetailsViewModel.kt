@@ -293,6 +293,7 @@ class FeatureDetailsViewModel : BaseViewModel() {
                         edgecaseResult.postValue(it)
                         updatesLoader.postValue(false)
                     }, {
+                        edgecaseResult.postValue(null)
                         updatesLoader.postValue(false)
                         updatesError.postValue(it.message)
                     })
