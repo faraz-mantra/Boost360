@@ -338,7 +338,12 @@ class MyCurrentPlanActivity :
                 if (singleItem.ActionNeeded != null && singleItem.FeatureDetails != null) {
                     if (singleItem.ActionNeeded.ActionNeeded != 0 && singleItem.FeatureDetails.FeatureState != 7) {
                         inActiveList.add(singleItem.FeatureDetails.FeatureKey)
-                    } else if (singleItem.ActionNeeded.ActionNeeded == 0 && singleItem.FeatureDetails.FeatureState == 1) {
+                    }
+                    else if (singleItem.ActionNeeded.ActionNeeded == 0 && (singleItem.FeatureDetails.FeatureState == 3
+                                || singleItem.FeatureDetails.FeatureState == 4 || singleItem.FeatureDetails.FeatureState == 5
+                                || singleItem.FeatureDetails.FeatureState == 6) ) {
+                        inActiveList.add(singleItem.FeatureDetails.FeatureKey)
+                    }else if (singleItem.ActionNeeded.ActionNeeded == 0 && singleItem.FeatureDetails.FeatureState == 1) {
                         activeList.add(singleItem.FeatureDetails.FeatureKey)
                     }
                 }
