@@ -406,6 +406,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             bundle.putString("fpid", fpid)
             bundle.putString("fpTag", fpTag)
             bundle.putString("expCode", experienceCode)
+            bundle.putString("price",pricing)
             bundle.putString("bundleData", Gson().toJson(singleAddon))
             bundle.putString("isDeepLink", isDeepLink.toString())
             bundle.putString("deepLinkViewType", deepLinkViewType)

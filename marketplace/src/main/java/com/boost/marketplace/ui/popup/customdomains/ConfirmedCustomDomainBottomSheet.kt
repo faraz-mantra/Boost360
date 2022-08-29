@@ -3,6 +3,7 @@ package com.boost.marketplace.ui.popup.customdomains
 import android.app.Application
 import android.app.ProgressDialog
 import android.content.Intent
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.boost.cart.CartActivity
@@ -13,6 +14,7 @@ import com.boost.dbcenterapi.utils.WebEngageController
 import com.boost.marketplace.R
 import com.boost.marketplace.databinding.PopupConfirmedCustomDomainBinding
 import com.boost.marketplace.ui.details.domain.CustomDomainViewModel
+import com.framework.analytics.SentryController
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
@@ -172,10 +174,41 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
 //            result=it.Result
 //        })
 
+        viewModel?.updatesLoader()?.observe(this, Observer {
+            if (it.length>0) {
+                showProgress(it)
+            } else {
+                hideProgress()
+            }
+        })
+
         viewModel?.domainBookingStatus()?.observe(this, Observer {
             requireActivity().finish()
         })
     }
+
+    private fun showProgress(message: String = "Please wait...") {
+        try {
+            if (!progressDialog.isShowing) {
+                progressDialog.setMessage(message)
+                progressDialog.setCancelable(false)
+                progressDialog.show()
+            }
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+            e.printStackTrace()
+        }
+    }
+
+    private fun hideProgress() {
+        try {
+            if (progressDialog.isShowing) progressDialog.cancel()
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+            e.printStackTrace()
+        }
+    }
+
     fun getAccessToken(): String {
         return UserSessionManager(requireContext()).getAccessTokenAuth()?.barrierToken() ?: ""
     }

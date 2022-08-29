@@ -109,7 +109,7 @@ interface NewApiInterface {
     ): Observable<MyPlanV3>
 
     @Headers("Content-Type: application/json")
-    @PUT("/DomainService/v2/DomainWithWebsite/create")
-    fun buyDomainBooking(@Body domainBookingRequest: DomainBookingRequest): Observable<String>
+    @PUT("https://plugin.withfloats.com/DomainService/v2/domainWithWebsite/create")
+    fun buyDomainBooking(@Header("Authorization") auth: String, @Body domainBookingRequest: DomainBookingRequest): Observable<String>
 
 }

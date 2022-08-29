@@ -188,6 +188,8 @@ class FeatureDetailsActivity :
         initializeHowToUseRecycler()
         initializeFAQRecycler()
 
+        shimmer_layout.startShimmer()
+
         if (specialAddons() && !addonStateActivated) {
 //            primary_layout.visibility = GONE
 //            second_layout.visibility = VISIBLE
@@ -505,7 +507,9 @@ class FeatureDetailsActivity :
     @SuppressLint("FragmentLiveDataObserve")
     fun initMvvm() {
         viewModel.edgecaseResult().observe(this, androidx.lifecycle.Observer {
-
+            nestedScrollView.visibility = View.VISIBLE
+            shimmer_layout.stopShimmer()
+            shimmer_layout.visibility = View.GONE
             if (it != null && it.Result.FeatureDetails != null && it.Result.ActionNeeded.ActionNeeded != null) {
                 val actionRequired = it.Result.ActionNeeded.ActionNeeded
                 val featureState = it.Result.FeatureDetails.FeatureState
@@ -534,6 +538,7 @@ class FeatureDetailsActivity :
                     second_layout.visibility = View.GONE
                 }
             }
+            footer_layout.visibility = View.VISIBLE
 
         })
 

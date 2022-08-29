@@ -73,6 +73,8 @@ class OrderConfirmationFragment : BaseFragment() {
     )
     session = UserSessionManager(activity as PaymentActivity)
     prefs = SharedPrefs(activity as PaymentActivity)
+
+    viewModel = ViewModelProviders.of(this).get(OrderConfirmationViewModel::class.java)
     return inflater.inflate(R.layout.payment_success_v3, container, false)
   }
 
@@ -81,8 +83,6 @@ class OrderConfirmationFragment : BaseFragment() {
 
     initMvvm()
     progressDialog = ProgressDialog(requireContext())
-
-    viewModel = ViewModelProviders.of(this).get(OrderConfirmationViewModel::class.java)
     viewModel.emptyCurrentCartWithDomainActivate((activity as PaymentActivity).application, requireActivity())
 
     //firsttimepurchase logic for app review

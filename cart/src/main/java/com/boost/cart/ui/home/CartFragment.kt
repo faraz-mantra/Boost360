@@ -868,6 +868,33 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
 //            )
             val intent = Intent(context, Class.forName("com.boost.marketplace.ui.comparePacksV3.ComparePacksV3Activity"))
             intent.putExtra("expCode", (activity as CartActivity).experienceCode)
+            intent.putStringArrayListExtra("userPurchsedWidgets", (activity as CartActivity).userPurchsedWidgets)
+
+            intent.putExtra("fpid", (activity as CartActivity).fpid)
+            intent.putExtra("expCode", (activity as CartActivity).experienceCode)
+            intent.putExtra("isDeepLink", (activity as CartActivity).isDeepLink)
+            intent.putExtra("deepLinkViewType", (activity as CartActivity).deepLinkViewType)
+            intent.putExtra("deepLinkDay", (activity as CartActivity).deepLinkDay)
+            intent.putExtra("isOpenCardFragment", (activity as CartActivity).isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                (activity as CartActivity).accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                (activity as CartActivity).userPurchsedWidgets
+            )
+            if ((activity as CartActivity).email != null) {
+                intent.putExtra("email", (activity as CartActivity).email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if ((activity as CartActivity).mobileNo != null) {
+                intent.putExtra("mobileNo", (activity as CartActivity).mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", (activity as CartActivity).profileUrl)
             startActivity(intent)
         }
         cart_spk_to_expert.setOnClickListener {

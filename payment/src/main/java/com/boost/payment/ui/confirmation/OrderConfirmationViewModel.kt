@@ -15,6 +15,8 @@ import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.utils.Constants.Companion.clientid
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.dbcenterapi.utils.Utils
+import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
 import es.dmoral.toasty.Toasty
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -48,11 +50,11 @@ class OrderConfirmationViewModel : ViewModel() {
               val prefs = SharedPrefs(activity)
               var validityInYears = "1"
               var months: Double = 0.0
-              if (prefs.getYearPricing()){
+              if (prefs.getYearPricing()) {
                 //do the yearly calculation here
-                months = (prefs.getStoreMonthsValidity() * 12).toDouble()
-              }else{
-                months = prefs.getStoreMonthsValidity().toDouble()
+                months = (if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toDouble() else 1.toDouble() * 12).toDouble()
+              } else {
+                months = if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toDouble() else 1.toDouble()
               }
               val tempMonth: Double = months / 12.0
               if(tempMonth.toInt() < tempMonth){ //example 1 < 1.2
@@ -84,7 +86,8 @@ class OrderConfirmationViewModel : ViewModel() {
                 fpTag!!,
                 validityInYears
               )
-              ApiService.buyDomainBooking(bookingRequest)
+              val auth = UserSessionManager(activity.applicationContext).getAccessTokenAuth()?.barrierToken() ?: ""
+              ApiService.buyDomainBooking(auth, bookingRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

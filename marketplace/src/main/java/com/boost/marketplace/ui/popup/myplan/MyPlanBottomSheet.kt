@@ -227,6 +227,7 @@ class MyPlanBottomSheet :
         intent.putExtra("mobileNo", "9160004303")
         intent.putExtra("itemId", singleAddon.boost_widget_key)
         startActivity(intent)
+        dismiss()
     }
 
     private fun chooseVMN() {
@@ -297,7 +298,9 @@ class MyPlanBottomSheet :
                 0,
                 0
             )
-            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+             binding?.edgeCaseDesc?.visibility=View.VISIBLE
+             binding?.edgeCaseDesc?.setText("You need to choose a domain name to\n" +
+                     "activate this feature..")
         }
 
         else if(actionRequired == 3 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4

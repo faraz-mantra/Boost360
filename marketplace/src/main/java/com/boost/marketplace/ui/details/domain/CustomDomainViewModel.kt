@@ -21,6 +21,8 @@ import com.boost.dbcenterapi.utils.DataLoader
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.dbcenterapi.utils.Utils
 import com.framework.models.BaseViewModel
+import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
 import es.dmoral.toasty.Toasty
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -157,9 +159,9 @@ class CustomDomainViewModel() : BaseViewModel() {
         var months: Double = 0.0
         if (prefs.getYearPricing()) {
             //do the yearly calculation here
-            months = (prefs.getStoreMonthsValidity() * 12).toDouble()
+            months = (if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toDouble() else 1.toDouble() * 12).toDouble()
         } else {
-            months = prefs.getStoreMonthsValidity().toDouble()
+            months = if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toDouble() else 1.toDouble()
         }
         val tempMonth: Double = months / 12.0
         if (tempMonth.toInt() < tempMonth) { //example 1 < 1.2
@@ -191,7 +193,9 @@ class CustomDomainViewModel() : BaseViewModel() {
             fpTag!!,
             validityInYears
         )
-        ApiService.buyDomainBooking(bookingRequest)
+        val auth = UserSessionManager(activity.applicationContext).getAccessTokenAuth()?.barrierToken() ?: ""
+        compositeDisposable.add(
+        ApiService.buyDomainBooking(auth, bookingRequest)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -201,8 +205,8 @@ class CustomDomainViewModel() : BaseViewModel() {
                     Toasty.success(
                         activity.applicationContext,
                         "Successfully Booked Your Domain. It Takes 24 to 48 hours to activate",
-                        Toast.LENGTH_LONG
-                    )
+                        Toast.LENGTH_LONG, true
+                    ).show()
                     domainBookingStatus.postValue(true)
                 }, {
                     Log.i("buyDomainBooking", "Failure >>>$it")
@@ -210,10 +214,11 @@ class CustomDomainViewModel() : BaseViewModel() {
                     Toasty.error(
                         activity.applicationContext,
                         "Payment is successsfull. But Failed to Booked Your Domain. Try after 24 hours in [My Current Plan]",
-                        Toast.LENGTH_LONG
-                    )
+                        Toast.LENGTH_LONG, true
+                    ).show()
                     domainBookingStatus.postValue(false)
                 }
             )
+        )
     }
 }
