@@ -512,7 +512,7 @@ class UpgradeActivity : AppCompatActivity() {
                     Gson().toJson(selectedBundle)
                   )
                   packageFragment.arguments = args
-                  (activity as UpgradeActivity).addFragment(
+                  addFragment(
                     packageFragment,
                     Constants.PACKAGE_FRAGMENT
                   )
@@ -523,7 +523,7 @@ class UpgradeActivity : AppCompatActivity() {
             )
           } else {
             Toasty.error(
-              requireContext(),
+              this,
               "Bundle Not Available To This Account",
               Toast.LENGTH_LONG
             ).show()
