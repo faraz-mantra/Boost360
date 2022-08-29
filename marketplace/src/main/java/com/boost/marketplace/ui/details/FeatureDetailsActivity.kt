@@ -185,7 +185,6 @@ class FeatureDetailsActivity :
         initializeCustomerViewPager()
         initializeHowToUseRecycler()
         initializeFAQRecycler()
-        featureEdgeCase()
 
         if(specialAddons()){
             primary_layout.visibility = GONE
@@ -443,6 +442,28 @@ class FeatureDetailsActivity :
 
     @SuppressLint("FragmentLiveDataObserve")
     fun initMvvm() {
+        viewModel.edgecaseResult().observe(this, androidx.lifecycle.Observer {
+
+            if (it.Result.FeatureDetails !=null && it.Result.ActionNeeded.ActionNeeded!=null){
+                val actionRequired = it.Result.ActionNeeded.ActionNeeded
+                val featureState = it.Result.FeatureDetails.FeatureState
+                featureEdgeCase(actionRequired, featureState)
+                primary_layout.visibility = View.VISIBLE
+                second_layout.visibility = View.GONE
+                app_bar_layout.background = ContextCompat.getDrawable(this, R.color.colorPrimary1)
+                details_image_bg.visibility = VISIBLE
+                val appbar = findViewById<View>(R.id.app_bar_layout) as AppBarLayout
+                val lp: CoordinatorLayout.LayoutParams =
+                    appbar.layoutParams as CoordinatorLayout.LayoutParams
+                lp.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250f, resources.displayMetrics)
+                    .toInt()
+            } else {
+                primary_layout.visibility = View.GONE
+                second_layout.visibility = View.VISIBLE
+            }
+
+        })
+
         viewModel.updateCustomDomainsResultResult().observe(this) {
             for(singleDomain in it.domains){
                 if(singleDomain.isAvailable){
@@ -461,7 +482,7 @@ class FeatureDetailsActivity :
                 addonDetails!!.widget_type ?: "", this
             )
             numberprice = pricing
-            val content = SpannableString("Claim the above number\n@ ${numberprice}")
+            val content = SpannableString("Claim the above domain\n@ ${numberprice}")
             content.setSpan(
                 StyleSpan(Typeface.BOLD),
                 0,
@@ -1315,6 +1336,11 @@ class FeatureDetailsActivity :
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
+        viewModel.edgecases(
+            fpid!!,
+            "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
+            singleWidgetKey!!
+        )
     }
 
     override fun onClick(v: View?) {
@@ -1336,123 +1362,123 @@ class FeatureDetailsActivity :
     }
 
 
-    fun featureEdgeCase() {
-        val edgeState = "AutoRenewalOn"
-        when (edgeState) {
-            "ActionRequired" -> {
-                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
-                edge_case_title.setText("Action Required")
-                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.red))
-                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_error_red,
-                    0,
-                    0,
-                    0
-                )
-                edge_case_desc.setText("You need to take action to activate this feature.")
-                edge_case_desc.setText("There is an internal error inside Boost 360. We are working to resolve this issue.")
-            }
-            "SomethingWentWrong!" -> {
-                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
-                edge_case_title.setText("Something went wrong!")
-                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.red))
-                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_error_red,
-                    0,
-                    0,
-                    0
-                )
-                edge_case_desc.setText("There is an internal error inside Boost 360. We are working to resolve this issue.")
-
-            }
-            "active" -> {
-                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
-                edge_case_title.setText("Feature is currently active")
-                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.green))
-                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_checked,
-                    0,
-                    0,
-                    0
-                )
-                edge_case_desc.setText(
-                    "Feature validity expiring on Aug 23, 2021. You\n" +
-                            "can extend validity by renewing it for a\n" +
-                            "longer duration."
-                )
-
-            }
-            "expired" -> {
-                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
-                edge_case_title.setText("Feature expired on Aug 23, 2021")
-                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.red))
-                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_error_red,
-                    0,
-                    0,
-                    0
-                )
-                edge_case_desc.setText(
-                    "You need to renew this feature to continue\n" +
-                            "using a custom domain. Your domain may be\n" +
-                            "lost if you don’t renew it."
-                )
-            }
-            "Syncing" -> {
-                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_skyblue_white_bg)
-                edge_case_title.setText("Syncing information")
-                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.light_blue2))
-                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_sync_blue,
-                    0,
-                    0,
-                    0
-                )
-                edge_case_desc.setText("We are working on syncing your information for this feature. It may take some time to get updated. Contact support for help.")
-            }
-            "AutoRenewalOn" -> {
-                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
-                edge_case_title.setText("Auto renewal is turned on")
-                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.green))
-                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_checked,
-                    0,
-                    0,
-                    0
-                )
-                edge_case_desc.setText("We are working on syncing your information for this feature. It may take some time to get updated. Contact support for help.")
-            }
-            "AddedToCart" -> {
-                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_orange_white_bg)
-                edge_case_title.setText("Feature is currently in cart. ")
-                edge_case_title.setTextColor(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.common_text_color
-                    )
-                )
-                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_cart_black,
-                    0,
-                    0,
-                    0
-                )
-                edge_case_desc.setText("Feature is currently in cart. ")
-            }
-            "PartOfPackage" -> {
-                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
-                edge_case_title.setText("Feature is part of “Online Classic”")
-                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.green))
-                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_checked,
-                    0,
-                    0,
-                    0
-                )
-                edge_case_desc.setText("")
-            }
-        }
-    }
+//    fun featureEdgeCase() {
+//        val edgeState = "AutoRenewalOn"
+//        when (edgeState) {
+//            "ActionRequired" -> {
+//                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+//                edge_case_title.setText("Action Required")
+//                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.red))
+//                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
+//                    R.drawable.ic_error_red,
+//                    0,
+//                    0,
+//                    0
+//                )
+//                edge_case_desc.setText("You need to take action to activate this feature.")
+//                edge_case_desc.setText("There is an internal error inside Boost 360. We are working to resolve this issue.")
+//            }
+//            "SomethingWentWrong!" -> {
+//                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+//                edge_case_title.setText("Something went wrong!")
+//                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.red))
+//                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
+//                    R.drawable.ic_error_red,
+//                    0,
+//                    0,
+//                    0
+//                )
+//                edge_case_desc.setText("There is an internal error inside Boost 360. We are working to resolve this issue.")
+//
+//            }
+//            "active" -> {
+//                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
+//                edge_case_title.setText("Feature is currently active")
+//                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.green))
+//                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
+//                    R.drawable.ic_checked,
+//                    0,
+//                    0,
+//                    0
+//                )
+//                edge_case_desc.setText(
+//                    "Feature validity expiring on Aug 23, 2021. You\n" +
+//                            "can extend validity by renewing it for a\n" +
+//                            "longer duration."
+//                )
+//
+//            }
+//            "expired" -> {
+//                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+//                edge_case_title.setText("Feature expired on Aug 23, 2021")
+//                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.red))
+//                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
+//                    R.drawable.ic_error_red,
+//                    0,
+//                    0,
+//                    0
+//                )
+//                edge_case_desc.setText(
+//                    "You need to renew this feature to continue\n" +
+//                            "using a custom domain. Your domain may be\n" +
+//                            "lost if you don’t renew it."
+//                )
+//            }
+//            "Syncing" -> {
+//                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_skyblue_white_bg)
+//                edge_case_title.setText("Syncing information")
+//                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.light_blue2))
+//                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
+//                    R.drawable.ic_sync_blue,
+//                    0,
+//                    0,
+//                    0
+//                )
+//                edge_case_desc.setText("We are working on syncing your information for this feature. It may take some time to get updated. Contact support for help.")
+//            }
+//            "AutoRenewalOn" -> {
+//                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
+//                edge_case_title.setText("Auto renewal is turned on")
+//                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.green))
+//                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
+//                    R.drawable.ic_checked,
+//                    0,
+//                    0,
+//                    0
+//                )
+//                edge_case_desc.setText("We are working on syncing your information for this feature. It may take some time to get updated. Contact support for help.")
+//            }
+//            "AddedToCart" -> {
+//                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_orange_white_bg)
+//                edge_case_title.setText("Feature is currently in cart. ")
+//                edge_case_title.setTextColor(
+//                    ContextCompat.getColor(
+//                        this,
+//                        R.color.common_text_color
+//                    )
+//                )
+//                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
+//                    R.drawable.ic_cart_black,
+//                    0,
+//                    0,
+//                    0
+//                )
+//                edge_case_desc.setText("Feature is currently in cart. ")
+//            }
+//            "PartOfPackage" -> {
+//                edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
+//                edge_case_title.setText("Feature is part of “Online Classic”")
+//                edge_case_title.setTextColor(ContextCompat.getColor(this, R.color.green))
+//                edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
+//                    R.drawable.ic_checked,
+//                    0,
+//                    0,
+//                    0
+//                )
+//                edge_case_desc.setText("")
+//            }
+//        }
+//    }
 
     override fun onPackageClicked(item: Bundles?) {
 
@@ -1655,6 +1681,138 @@ class FeatureDetailsActivity :
 
 
         }
+    }
+
+
+    fun featureEdgeCase(actionRequired: Int, featureState: Int) {
+
+        if(actionRequired == 1 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6)) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+        }
+
+        else if (actionRequired == 2 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6))  {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+        }
+
+        else if(actionRequired == 3 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6))  {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+        }
+
+        else if (actionRequired == 4 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6))  {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+        }
+        else if (actionRequired == 0 && featureState == 1) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.edgeCaseHyperlink?.visibility=View.GONE
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
+            binding?.edgeCaseTitle?.setText("Feature is currently active")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.green
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_checked,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.visibility = View.GONE
+//            binding?.edgeCaseDesc?.setText(
+//                "Feature validity expiring on Aug 23, 2021. You\n" +
+//                        "can extend validity by renewing it for a\n" +
+//                        "longer duration."
+//            )
+
+        }
+        else if (actionRequired == 0 && featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.edgeCaseHyperlink?.visibility=View.GONE
+            edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_skyblue_white_bg)
+            edge_case_title.setText("Syncing information")
+            edge_case_title.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.light_blue2
+                )
+            )
+            edge_case_title.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_sync_blue,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText(
+                "We are working on syncing your information for this feature.it may take some time to get updated"
+            )
+            binding?.edgeCaseDesc?.visibility=View.VISIBLE
+        }
+
     }
 
 }
