@@ -87,6 +87,7 @@ class OrderConfirmationViewModel : ViewModel() {
                 validityInYears
               )
               val auth = UserSessionManager(activity.applicationContext).getAccessTokenAuth()?.barrierToken() ?: ""
+              CompositeDisposable().add(
               ApiService.buyDomainBooking(auth, bookingRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -94,15 +95,22 @@ class OrderConfirmationViewModel : ViewModel() {
                   {
                     Log.i("buyDomainBooking","Success >>>"+it)
                     updatesLoader.postValue("")
-                    Toasty.success(activity.applicationContext,"Successfully Booked Your Domain. It Takes 24 to 48 hours to activate",
-                      Toast.LENGTH_LONG)
+                    Toasty.success(
+                      activity.applicationContext,
+                      "Successfully Booked Your Domain. It Takes 24 to 48 hours to activate",
+                      Toast.LENGTH_LONG, true
+                    ).show()
                   },{
                     Log.i("buyDomainBooking", "Failure >>>$it")
                     updatesLoader.postValue("")
-                    Toasty.error(activity.applicationContext,"Payment is successsfull. But Failed to Booked Your Domain. Try after 24 hours in [My Current Plan]",
-                      Toast.LENGTH_LONG)
+                    Toasty.error(
+                      activity.applicationContext,
+                      "Payment is successsfull. But Failed to Booked Your Domain. Try after 24 hours in [My Current Plan]",
+                      Toast.LENGTH_LONG, true
+                    ).show()
                   }
                 )
+              )
             }
           }
           Completable.fromAction {
