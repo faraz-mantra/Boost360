@@ -1,16 +1,12 @@
 package com.festive.poster.ui.promoUpdates
 
-import android.content.Intent
 import android.graphics.BlendMode
 import android.graphics.PorterDuff
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.widget.TextViewCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
@@ -19,7 +15,6 @@ import com.festive.poster.databinding.FragmentPromoLandingPageBinding
 import com.festive.poster.models.promoModele.SocialConnModel
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.utils.launchPostNewUpdate
-import com.framework.base.setFragmentType
 import com.framework.extensions.gone
 import com.framework.models.BaseViewModel
 import com.framework.utils.*
@@ -35,7 +30,6 @@ import com.skydoves.balloon.ArrowOrientation
 import com.skydoves.balloon.Balloon
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
-import java.lang.reflect.Type
 import kotlin.math.abs
 
 
