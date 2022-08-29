@@ -494,7 +494,6 @@
                                     android:background="@drawable/mp_home_share_click_effect"
                                     android:enabled="true"
                                     android:gravity="center"
-                                    android:visibility="gone"
                                     android:text="Check feature"
                                     android:textAllCaps="false"
                                     android:textColor="@color/colorAccent1"
