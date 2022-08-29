@@ -177,7 +177,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
                 binding?.btnSelectDomain?.visibility=View.GONE
-                binding?.learnDomain?.visibility=View.VISIBLE
+             //   binding?.learnDomain?.visibility=View.VISIBLE
 
             }
 
