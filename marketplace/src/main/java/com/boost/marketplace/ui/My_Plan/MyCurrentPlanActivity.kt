@@ -336,6 +336,7 @@ class MyCurrentPlanActivity :
                                 binding?.expandableView?.visibility = View.INVISIBLE
                                 //binding?.nestedscroll?.visibility = View.VISIBLE
                                 binding?.paidTitle?.text = " No Inactive features"
+                                binding?.arrowBtn?.visibility = View.GONE
                             }
                         }
                     }
