@@ -16,10 +16,23 @@
             android:layout_marginBottom="@dimen/size_15"
             android:src="@drawable/ic_fposter_help_bsheet_close_white" />
 
+        <ProgressBar
+            android:layout_marginBottom="@dimen/size_24"
+            android:layout_gravity="center"
+            android:id="@+id/progressBar"
+            tools:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/progressBar"
+            />
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_24"
+            android:visibility="gone"
+            tools:visibility="visible"
+
+            android:id="@+id/data_layout"
             android:background="@drawable/rounded_rect_30_rad_white">
 
             <com.framework.views.customViews.CustomImageView
@@ -109,8 +122,9 @@
                     android:textAlignment="gravity"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="@dimen/text_24"
+                    android:id="@+id/tv_monthly_price"
                     app:fontFamily="@font/regular"
-                    android:text="₹499/month" />
+                    tools:text="₹499/month" />
 
                 <com.framework.views.customViews.CustomTextView
                     android:layout_width="wrap_content"
@@ -119,8 +133,9 @@
                     android:textAlignment="gravity"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="@dimen/text_14"
+                    android:id="@+id/tv_yearly_price"
                     app:fontFamily="@font/regular"
-                    android:text="or ₹5,988/year" />
+                    tools:text="or ₹5,988/year" />
 
                 <com.framework.views.customViews.CustomTextView
                     android:layout_width="wrap_content"
@@ -130,7 +145,7 @@
                     android:textColor="@color/gray_828282"
                     android:textSize="@dimen/text_10"
                     app:fontFamily="@font/regular"
-                    android:text="+18% GST" />
+                    android:text="@string/_18_gst" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <com.framework.views.customViews.CustomMaterialButton
