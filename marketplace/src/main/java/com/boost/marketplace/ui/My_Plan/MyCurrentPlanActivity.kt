@@ -26,6 +26,7 @@ import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityMyCurrentPlanBinding
 import com.boost.marketplace.ui.History_Orders.HistoryOrdersActivity
 import com.boost.marketplace.ui.browse.BrowseFeaturesActivity
+import com.boost.marketplace.ui.comparePacksV3.ComparePacksV3Activity
 import com.boost.marketplace.ui.popup.myplan.MyPlanBottomSheet
 import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
 import com.framework.analytics.SentryController
@@ -183,6 +184,38 @@ class MyCurrentPlanActivity :
         }
 
         binding?.btnBrowseFeature?.setOnClickListener {
+            val intent = Intent(this, ComparePacksV3Activity::class.java)
+            intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+
+            intent.putExtra("fpid", fpid)
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("isDeepLink", isDeepLink)
+            intent.putExtra("deepLinkViewType", deepLinkViewType)
+            intent.putExtra("deepLinkDay", deepLinkDay)
+            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                userPurchsedWidgets
+            )
+            if (email != null) {
+                intent.putExtra("email", email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                intent.putExtra("mobileNo", mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", profileUrl)
+            startActivity(intent)
+        }
+
+        binding?.btnFeatureDetails?.setOnClickListener {
             val intent = Intent(this, BrowseFeaturesActivity::class.java)
             intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
             intent.putExtra("fpid", fpid)
