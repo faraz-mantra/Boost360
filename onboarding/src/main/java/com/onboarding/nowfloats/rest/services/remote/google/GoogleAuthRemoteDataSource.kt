@@ -14,7 +14,7 @@ interface GoogleAuthRemoteDataSource {
     @Query("client_id") client_id: String? = null,
     @Query("client_secret") client_secret: String? = null,
     @Query("code") auth_code: String? = null,
-    @Query("grant_type") grant_type: String? = "authorization_code",
+    @Query("grantType") grant_type: String? = "authorization_code",
     @Query("redirect_uri") redirect_uri: String? = ""
   ): Observable<Response<GoogleAuthResponse>>
 

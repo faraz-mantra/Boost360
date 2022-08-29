@@ -31,8 +31,8 @@ android {
         }
         jioonline {
             dimension "default"
-            buildConfigField "String", "GOOGLE_SERVER_CLIENT_ID", '"87687526880-dm4f3tml0ht88oer6gcc10r62l72pm1a.apps.googleusercontent.com"'
-            buildConfigField "String", "GOOGLE_SERVER_CLIENT_SECRET", '"APvjD8ABZg5c8e-VeHBi3AAG"'
+            buildConfigField "String", "GOOGLE_SERVER_CLIENT_ID", '"316471373124-0vmpnsv0jf25m2ko7ttcfqgp8h7rcm0o.apps.googleusercontent.com"'
+            buildConfigField "String", "GOOGLE_SERVER_CLIENT_SECRET", '"8fs1vG_oYJcrje3eTv25O0Ul"'
         }
     }
 

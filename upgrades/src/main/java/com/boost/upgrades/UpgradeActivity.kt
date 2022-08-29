@@ -512,7 +512,7 @@ class UpgradeActivity : AppCompatActivity() {
                     Gson().toJson(selectedBundle)
                   )
                   packageFragment.arguments = args
-                  addFragment(
+                  this.addFragment(
                     packageFragment,
                     Constants.PACKAGE_FRAGMENT
                   )
