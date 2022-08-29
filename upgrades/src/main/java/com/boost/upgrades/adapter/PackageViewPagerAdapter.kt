@@ -120,13 +120,18 @@ class PackageViewPagerAdapter(
                                     for (singleItem in it) {
                                         for (item in bundles.included_features) {
                                             if (singleItem.feature_code == item.feature_code) {
-                                                originalBundlePrice += Utils.priceCalculatorForYear(RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),2) * minMonth, singleItem.widget_type, activity)
+                                                originalBundlePrice += Utils.priceCalculatorForYear(
+                                                    RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
+                                                        2) * minMonth, singleItem.widget_type, activity)
+                                                Log.e("single addons", bundles.name+">>>>"+Utils.priceCalculatorForYear(
+                                                    RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
+                                                        2) * minMonth, singleItem.widget_type, activity).toString())
                                             }
                                         }
                                     }
 
                                     if(bundles.overall_discount_percent > 0){
-                                        offeredBundlePrice = (RootUtil.round(originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100.0),2))
+                                        offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100.0),2)
 //                                        if(prefs.getYearPricing())
 //                                            offeredBundlePrice = Utils.priceCalculatorForYear(offeredBundlePrice, "", activity)
                                         holder.bundleDiscount.visibility = View.VISIBLE

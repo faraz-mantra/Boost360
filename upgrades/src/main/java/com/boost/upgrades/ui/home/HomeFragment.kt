@@ -2455,6 +2455,9 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                 (activity as UpgradeActivity).fpid!!,
                 (activity as UpgradeActivity).clientid
             )
+        } else{
+//            viewModel.getCartItems()
+            viewModel.getCartItemsBack()
         }
     }
 
@@ -2815,7 +2818,7 @@ class HomeFragment : BaseFragment("MarketPlaceHomeFragment"), HomeListener, Comp
                         originalBundlePrice = (bundleMonthlyMRP * minMonth)
 
                         if (item!!.overall_discount_percent > 0)
-                            offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100.0),2)
+                            offeredBundlePrice = originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100.0)
                         else
                             offeredBundlePrice = originalBundlePrice
 

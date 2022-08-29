@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="MissingDefaultResource">
+
+    <item
+        android:id="@+id/filter_past"
+        android:title=""
+        android:icon="@drawable/ic_filter_hollow_past"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/help_past"
+        android:title=""
+        android:icon="@drawable/ic_help_white"
+        app:showAsAction="always" />
+
+</menu>

@@ -1,7 +1,9 @@
 package com.framework.analytics
 
+import android.app.Activity
 import android.util.Log
 import com.appsflyer.AppsFlyerLib
+import com.framework.BaseApplication
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.webengage.sdk.android.Analytics
 import com.webengage.sdk.android.User
@@ -10,6 +12,10 @@ import com.webengage.sdk.android.WebEngage
 object NFWebEngageController {
 
   private var weAnalytics: Analytics = WebEngage.get().analytics()
+  private val activity: Activity?
+  get() {
+    return if (weAnalytics.activity!=null) weAnalytics.activity.get() else BaseApplication.currentActivity()
+  }
   private var weUser: User = WebEngage.get().user()
   private var isUserLoggedIn = false
   private val TAG = "NFController"
@@ -40,8 +46,7 @@ object NFWebEngageController {
     UserExperiorController.trackEvent(event_name, HashMap(trackEvent))
     //AppsFlyerEvent...
     try {
-      AppsFlyerLib.getInstance()
-        .logEvent(weAnalytics.activity?.get()?.applicationContext, event_name, trackEvent.toMap())
+      AppsFlyerLib.getInstance().logEvent(activity?.applicationContext, event_name, trackEvent.toMap())
     } catch (e: Exception) {
       e.printStackTrace()
     }
@@ -58,10 +63,7 @@ object NFWebEngageController {
 
       //AppsFlyerEvent...
       try {
-        AppsFlyerLib.getInstance().logEvent(
-          weAnalytics.activity.get()?.applicationContext,
-          event_name, event_value.toMap()
-        )
+        AppsFlyerLib.getInstance().logEvent(activity?.applicationContext, event_name, event_value.toMap())
       } catch (e: Exception) {
         e.printStackTrace()
       }
@@ -86,7 +88,7 @@ object NFWebEngageController {
 
       //AppsFlyerEvent...
       try {
-        AppsFlyerLib.getInstance().logEvent(weAnalytics.activity?.get()?.applicationContext, event_name, event_value.toMap())
+        AppsFlyerLib.getInstance().logEvent(activity?.applicationContext, event_name, event_value.toMap())
       } catch (e: Exception) {
         e.printStackTrace()
       }
@@ -150,8 +152,8 @@ object NFWebEngageController {
       FirebaseAnalyticsUtilsHelper.identifyUser(userId)
 
       //AppsFlyer Analytics User Session Event
-      if (weAnalytics.activity != null) {
-        AppsFlyerLib.getInstance().logSession(weAnalytics.activity?.get()?.applicationContext)
+      if (activity != null) {
+        AppsFlyerLib.getInstance().logSession(activity?.applicationContext)
       }
       AppsFlyerLib.getInstance().setCustomerUserId(userId)
       isUserLoggedIn = true
@@ -162,8 +164,7 @@ object NFWebEngageController {
   fun setCategory(userCategory: String?) {
     try {
       if (!userCategory.isNullOrEmpty()) {
-        val activity = weAnalytics.activity.get()
-        val version = activity?.packageManager?.getPackageInfo(activity.packageName, 0)?.versionName
+        val version = activity?.packageManager?.getPackageInfo(activity?.packageName?:"", 0)?.versionName
         weUser.setAttribute("Category", userCategory)
         weUser.setAttribute("Version", version ?: "")
 

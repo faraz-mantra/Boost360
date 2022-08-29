@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "316471373124-qgaqm2p8f5sc155njsqf67hbi0613oj7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jio.online",
+            "certificate_hash": "362e44c1b2a945acf138561e323adb78330b1393"
+          }
+        },
+        {
           "client_id": "316471373124-0vmpnsv0jf25m2ko7ttcfqgp8h7rcm0o.apps.googleusercontent.com",
           "client_type": 3
         }

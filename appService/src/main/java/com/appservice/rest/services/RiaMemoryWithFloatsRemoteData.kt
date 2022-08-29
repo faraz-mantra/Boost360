@@ -33,7 +33,7 @@ interface RiaMemoryWithFloatsRemoteData {
     @Query("identifierType") type: String?,
   ):Observable<Response<JsonObject?>>*/
 
-  @GET("/memory/api/fpactivity/countfpactivity")
+  @GET("/api/fpactivity/countfpactivity")
   fun getCallCountByType(
     @Query("fptag") fptag: String?,
     @Query("eventType") eventType: String?,

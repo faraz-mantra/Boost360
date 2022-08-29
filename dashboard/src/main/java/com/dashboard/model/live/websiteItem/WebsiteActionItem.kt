@@ -52,7 +52,8 @@ data class WebsiteActionItem(
     seasonal_offers(R.drawable.ic_offer_d),
     website_theme(R.drawable.ic_website_theme),
     owners_information(R.drawable.ic_owner),
-    doctor_e_profile_listing(R.drawable.ic_doctors_e_profile);
+    doctor_e_profile_listing(R.drawable.ic_doctors_e_profile),
+    e_commerce_appointment_set_up(R.drawable.ic_e_commerce_set_up);
 
     companion object {
       fun fromName(name: String?): IconType? =

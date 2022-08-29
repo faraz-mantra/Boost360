@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_fcaf17_jio_0400a6">#0400A6</color>
+    <color name="color_fcaf17_op70_jio_0400a6">#0400A6</color>
+    <color name="color_ffb900_op10_jio_ec008c_op10">#1AEC008C</color>
+    <color name="color_ffb900_jio_ec008c">#EC008C</color>
+    <color name="colorPrimary_20">#33EC008C</color>
+    <color name="color_4a4a4a_jio_ec008c">#EC008C</color>
+    <color name="color_ffb900_op40_jio_ec008c_op40">#66FFB900</color>
+    <color name="boost_jio_website_card_color">@color/white</color>
+    <color name="boost_jio_website_arrow_color">@color/gray_333333</color>
+
+</resources>

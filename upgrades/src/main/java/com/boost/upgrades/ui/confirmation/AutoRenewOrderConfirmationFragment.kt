@@ -59,8 +59,8 @@ class AutoRenewOrderConfirmationFragment : BaseFragment("MarketPlaceAutoRenewOrd
 //                    external_link_payment_status.visibility = View.GONE
         }
       }
-      external_link_payment_status.text =
-        "Your have ordered " + prefs.getFeaturesCountInLastOrder() + " features for ₹" + prefs.getLatestPurchaseOrderTotalPrice() + "/month."
+      val pluralFeaturesText = if (prefs.getFeaturesCountInLastOrder() == 1) "feature" else "features"
+      external_link_payment_status.text = "You have ordered " + prefs.getFeaturesCountInLastOrder() + " $pluralFeaturesText for ₹" + prefs.getLatestPurchaseOrderTotalPrice() + "/month."
 //            paymentBanner.setText("Order #"+prefs.getLatestPurchaseOrderId())
       val date = Calendar.getInstance().time
       val formatter = SimpleDateFormat("EEE, MMM d, yyyy 'at' hh:mm aaa")

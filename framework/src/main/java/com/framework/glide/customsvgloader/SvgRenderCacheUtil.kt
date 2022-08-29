@@ -48,7 +48,6 @@ class SvgRenderCacheUtil private constructor() {
         svgString: String?,
         posterKeys: List<PosterKeyModel>?,
         context: Context,
-        isPurchased: Boolean
     ): String? {
         var result =svgString
 
