@@ -190,7 +190,7 @@
             android:layout_gravity="bottom"
             android:visibility="gone"
             android:layout_height="59dp"
-            android:text="@string/choose_a_promo_updates_pack"
+            android:text="@string/get_this_feature"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

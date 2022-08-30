@@ -66,6 +66,9 @@ class BusinessPromotionAddToCartBottomSheet :
         val updateStudioFeature = viewModel?.updateStudioFeature!!
 
         binding?.tvMonthlyPrice?.text =getString(R.string.placeholder_per_month,
-            updateStudioFeature.price)
+            updateStudioFeature.price.toString())
+        binding?.tvYearlyPrice?.text = getString(R.string.or_placeholder_per_year,
+            (updateStudioFeature.price*12).toString()
+        )
     }
 }

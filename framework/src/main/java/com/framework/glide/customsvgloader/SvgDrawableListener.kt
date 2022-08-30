@@ -1,56 +1,66 @@
-package com.framework.glide.customsvgloader;
+package com.framework.glide.customsvgloader
 
-import android.graphics.Picture;
-import android.graphics.drawable.PictureDrawable;
-import android.util.Log;
-import android.widget.ImageView;
+import com.framework.glide.customsvgloader.SingletonExecutor.submit
+import com.framework.glide.customsvgloader.CustomPictureDrawable
+import com.framework.glide.customsvgloader.PosterKeyModel
+import com.framework.glide.customsvgloader.BoostSvgStringLoader
+import com.framework.glide.customsvgloader.SingletonExecutor
+import com.caverock.androidsvg.SVG
+import android.graphics.drawable.PictureDrawable
+import android.util.Log
+import android.widget.ImageView
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.ImageViewTarget
+import com.bumptech.glide.request.target.Target
+import com.caverock.androidsvg.SVGParseException
 
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.ImageViewTarget;
-import com.bumptech.glide.request.target.Target;
-import com.caverock.androidsvg.SVG;
-import com.caverock.androidsvg.SVGParseException;
+class SvgDrawableListener : RequestListener<CustomPictureDrawable?> {
+    var model: List<PosterKeyModel>? = null
+    var url: String? = null
+    var type:SvgRenderCacheUtil.SVG_TYPE?=null
 
-import java.util.List;
+    constructor() {}
 
-public class SvgDrawableListener implements RequestListener<CustomPictureDrawable> {
-    public List<PosterKeyModel> model;
-    public String url;
-    public Boolean isPurchased;
-
-    public SvgDrawableListener() {
-
+    constructor(model: List<PosterKeyModel>?, url: String?,
+                type: SvgRenderCacheUtil.SVG_TYPE) {
+        this.model = model
+        this.url = url
+        this.type=type
     }
 
-    public SvgDrawableListener(List<PosterKeyModel> model, String url,Boolean isPurchased) {
-        this.model = model;
-        this.isPurchased = isPurchased;
-        this.url = url;
+    constructor(type: SvgRenderCacheUtil.SVG_TYPE, url: String?,) {
+        this.type=type
+        this.url = url
+    }
+    override fun onLoadFailed(
+        e: GlideException?,
+        model: Any,
+        target: Target<CustomPictureDrawable?>,
+        isFirstResource: Boolean
+    ): Boolean {
+        val view = (target as ImageViewTarget<*>).view
+        view.setLayerType(ImageView.LAYER_TYPE_NONE, null)
+        return false
     }
 
-    @Override
-    public boolean onLoadFailed(
-            GlideException e, Object model, Target<CustomPictureDrawable> target, boolean isFirstResource) {
-    ImageView view = ((ImageViewTarget<?>) target).getView();
-    view.setLayerType(ImageView.LAYER_TYPE_NONE, null);
-        return false;
-    }
-
-    @Override
-    public boolean onResourceReady(
-            CustomPictureDrawable resource,
-            Object model,
-            Target<CustomPictureDrawable> target,
-            DataSource dataSource,
-            boolean isFirstResource) {
-        Log.d("SvgDrawableListener", "onResourceReady() called with: resource "+Thread.currentThread());
-        ImageView view = ((ImageViewTarget<?>) target).getView();
-
-        BoostSvgStringLoader v = new BoostSvgStringLoader(url, this.model, resource, view.getContext(), view);
-        SingletonExecutor.INSTANCE.submit(v);
-//
+    override fun onResourceReady(
+        resource: CustomPictureDrawable?,
+        model: Any,
+        target: Target<CustomPictureDrawable?>,
+        dataSource: DataSource,
+        isFirstResource: Boolean
+    ): Boolean {
+        Log.d(
+            "SvgDrawableListener",
+            "onResourceReady() called with: resource " + Thread.currentThread()
+        )
+        val view = (target as ImageViewTarget<*>).view
+        val v = BoostSvgStringLoader(url!!, this.model, resource!!,
+            view.context, view,type!!)
+        submit(v)
+        //
 //
 //        String svgString = SvgRenderCacheUtil.Companion.getInstance().retrieveFromCache(url);
 //        if (svgString == null || svgString.isEmpty()) {
@@ -64,19 +74,18 @@ public class SvgDrawableListener implements RequestListener<CustomPictureDrawabl
 
 
 //    view.setLayerType(ImageView.LAYER_TYPE_SOFTWARE, null);
-        return true;
+        return true
     }
 
-    public void setSvgFromString(String s, ImageView view) {
-        SVG svg = null;
+    fun setSvgFromString(s: String?, view: ImageView) {
+        var svg: SVG? = null
         try {
-            svg = SVG.getFromString(s);
-            Picture picture = svg.renderToPicture();
-            PictureDrawable drawable = new PictureDrawable(picture);
-            view.setImageDrawable(drawable);
-        } catch (SVGParseException e) {
-            e.printStackTrace();
+            svg = SVG.getFromString(s)
+            val picture = svg.renderToPicture()
+            val drawable = PictureDrawable(picture)
+            view.setImageDrawable(drawable)
+        } catch (e: SVGParseException) {
+            e.printStackTrace()
         }
-
     }
 }

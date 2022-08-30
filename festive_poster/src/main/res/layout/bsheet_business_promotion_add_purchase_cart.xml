@@ -41,8 +41,8 @@
                 android:layout_height="@dimen/size_148"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/size_16"
+                android:src="@drawable/mic_business_promotion"
                 android:layout_marginEnd="@dimen/size_12"
-                android:src="@drawable/ic_promo_plan_mic_left"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

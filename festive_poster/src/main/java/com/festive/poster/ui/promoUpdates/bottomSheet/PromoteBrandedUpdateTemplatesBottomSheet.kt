@@ -3,9 +3,11 @@ package com.festive.poster.ui.promoUpdates.bottomSheet
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.facebook.appevents.suggestedevents.ViewOnClickListener
 import com.festive.poster.R
+import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.BsheetPromoteUsingBrandedUpdateTemplatesBinding
 import com.festive.poster.models.FeaturePurchaseUiModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
@@ -25,6 +27,8 @@ class PromoteBrandedUpdateTemplatesBottomSheet :
     BaseBottomSheetDialog<BsheetPromoteUsingBrandedUpdateTemplatesBinding,
             UpdateStudioPurchaseViewModel>(),RecyclerItemClickListener {
 
+    private var adapter: AppBaseRecyclerViewAdapter<FeaturePurchaseUiModel>?=null
+    private var purchaseList: ArrayList<FeaturePurchaseUiModel>?=null
     private var color888888: Int = 0
     private var color4a4a4a: Int = 0
 
@@ -85,10 +89,14 @@ class PromoteBrandedUpdateTemplatesBottomSheet :
 
     private fun setPurchaseList(data: List<FeaturePurchaseUiModel>?) {
         data?:return
-        val adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,
-            data.toArrayList(),this)
+        purchaseList = data.toArrayList()
+        purchaseItemClicked(0)
+        adapter = AppBaseRecyclerViewAdapter(requireActivity() as BaseActivity<*, *>,
+            purchaseList!!,this)
         binding!!.rvPacks.adapter=adapter
         binding!!.rvPacks.layoutManager = LinearLayoutManager(requireActivity())
+        binding!!.rvPacks.addItemDecoration(DividerItemDecoration(requireActivity(),
+        DividerItemDecoration.VERTICAL))
     }
 
     private fun setRadioButtonListeners() {
@@ -130,5 +138,26 @@ class PromoteBrandedUpdateTemplatesBottomSheet :
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
 
+        when(actionType){
+            RecyclerViewActionType.PURCHASE_ITEM_CLICKED.ordinal->{
+                purchaseItemClicked(position)
+            }
+        }
+    }
+
+    private fun purchaseItemClicked(position: Int) {
+        purchaseList?:return
+        purchaseList!!.forEach {
+            it.isSelected=false
+        }
+        val selectedItem = purchaseList!![position]
+        selectedItem.isSelected=true
+
+        if (selectedItem.isPack){
+            binding?.btnViewPackDetails?.text = getString(R.string.view_pack_details)
+        }else{
+            binding?.btnViewPackDetails?.text=getString(R.string.add_and_go_to_cart)
+        }
+        adapter?.notifyDataSetChanged()
     }
 }

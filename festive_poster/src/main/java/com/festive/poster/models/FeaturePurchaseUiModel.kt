@@ -8,7 +8,9 @@ class FeaturePurchaseUiModel(
     val title:String,
     val desc:String,
     val price:Double?,
-    val isSelected:Boolean=false
+    val code:String,
+    val isPack:Boolean,
+    var isSelected:Boolean=false,
 ):AppBaseRecyclerViewItem {
     override fun getViewType(): Int {
         return RecyclerViewItemType.FEATURE_PURCHASE.getLayout()

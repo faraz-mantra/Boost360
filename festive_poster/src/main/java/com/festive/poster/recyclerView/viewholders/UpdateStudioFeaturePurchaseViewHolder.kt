@@ -26,6 +26,14 @@ class UpdateStudioFeaturePurchaseViewHolder(binding: ListItemUpdateStudioFeature
     val model = item as FeaturePurchaseUiModel
 
     binding.tvAdvanceTitle.text = model.title
+    binding.tvDesc.text = model.desc
+    binding.radioAdvanced.isChecked = model.isSelected
+    binding.root.setOnClickListener {
+      listener?.onItemClick(position,item,RecyclerViewActionType.PURCHASE_ITEM_CLICKED.ordinal)
+    }
+    binding.radioAdvanced.setOnClickListener {
+      listener?.onItemClick(position,item,RecyclerViewActionType.PURCHASE_ITEM_CLICKED.ordinal)
+    }
     super.bind(position, item)
   }
 

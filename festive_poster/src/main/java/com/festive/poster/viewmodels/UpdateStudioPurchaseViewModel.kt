@@ -19,6 +19,7 @@ import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.firebaseUtils.caplimit_feature.saveCache
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
+import com.framework.pref.UserSessionManager
 import com.framework.rest.NetworkResult
 import com.framework.utils.application
 import com.framework.utils.fetchString
@@ -72,14 +73,17 @@ class UpdateStudioPurchaseViewModel: BaseViewModel() {
 
         val desc = application().getString(
             R.string.pay_placeholder_or_placeholder_gst_extra,
-            updateStudioFeature?.price, updateStudioFeature?.price ?: (0 * 12)
+            updateStudioFeature?.price.toString(),
+            ((updateStudioFeature?.price ?: 0.0)*12).toString()
         )
 
         featurePurchaseList.add(
             FeaturePurchaseUiModel(
                 title = fetchString(R.string.buy_only_this_feature),
                 desc =desc,
-                updateStudioFeature?.price
+                updateStudioFeature?.price,
+                Constants.UPDATES_STUDIO_WIDGET_KEY,
+                false
             )
         )
 
@@ -89,10 +93,14 @@ class UpdateStudioPurchaseViewModel: BaseViewModel() {
     fun getBundlesWhereUpdateStudioPresent(appFeaturesResponse: UpgradeGetDataResponse): ArrayList<FeaturePurchaseUiModel> {
         val featurePurchaseUiList = ArrayList<FeaturePurchaseUiModel>()
 
+        val session = UserSessionManager(application())
         val bundles =  appFeaturesResponse.Data.firstOrNull()?.bundles?.filter { bundle->
             bundle.included_features.find {feature->
                 feature.feature_code== Constants.UPDATES_STUDIO_WIDGET_KEY
-            }!=null }
+            }!=null &&
+                    bundle.exclusive_to_categories.find {
+                            exp->exp==session.fP_AppExperienceCode }!=null
+        }
 
 
         bundles?.forEach {
@@ -103,13 +111,15 @@ class UpdateStudioPurchaseViewModel: BaseViewModel() {
 
             val desc = application().getString(
                 R.string.get_branded_update_templates_placeholder_more_features,
-                it.included_features)
+                it.included_features.size)
 
 
             val item = FeaturePurchaseUiModel(
                 title,
                 desc,
                 null,
+                it._kid,
+                true
             )
 
             featurePurchaseUiList.add(item)
@@ -137,14 +147,18 @@ class UpdateStudioPurchaseViewModel: BaseViewModel() {
     }
 
     suspend fun getUpgradeData()= suspendCoroutine<UpgradeGetDataResponse> { cont->
+        var isResumed=false
         if (UpgradeGetDataResponse.getFromCache()!=null){
+            isResumed=true
             cont.resume(UpgradeGetDataResponse.getFromCache()!!)
         }
         DevBoostRepository.getUpgradeData().getResponse { response->
             if (response.isSuccess()){
                 val data = response as UpgradeGetDataResponse
                 data.saveCache()
-                cont.resume(data)
+                if (isResumed.not()){
+                    cont.resume(data)
+                }
             }else{
                 cont.resumeWithException(Exception(response.message))
             }
@@ -153,14 +167,18 @@ class UpdateStudioPurchaseViewModel: BaseViewModel() {
     }
 
     suspend fun getUserPurchasedFeatures()= suspendCoroutine<Array<CapLimitFeatureResponseItem>> { cont->
+        var isResumed=false
         if (CapLimitFeatureResponseItem.getFromCache()!=null){
+            isResumed=true
             cont.resume(CapLimitFeatureResponseItem.getFromCache()!!)
         }
         AzureWebsiteNewRepository.getFeatureDetails().getResponse { response->
             if (response.isSuccess()){
                 val data = response.arrayResponse as Array<CapLimitFeatureResponseItem>
                 data.saveCache()
-                cont.resume(data)
+                if (isResumed.not()){
+                    cont.resume(data)
+                }
             }else{
                 cont.resumeWithException(Exception(response.message))
             }
