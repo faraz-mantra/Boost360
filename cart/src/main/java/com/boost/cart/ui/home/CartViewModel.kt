@@ -643,6 +643,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                         updatesLoader.postValue(false)
                                     },
                                     {
+                                        Log.e("getCustomerInfo"," >> "+it.message)
                                         val temp = (it as HttpException).response()!!.errorBody()!!.string()
                                         val errorBody: CreateCustomerIDResponse = Gson().fromJson(
                                                 temp, object : TypeToken<CreateCustomerIDResponse>() {}.type
@@ -651,8 +652,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                             customerInfoState.postValue(false)
                                         }
                                         updatesLoader.postValue(false)
-                                        if(!it.message.isNullOrEmpty())
-                                            updatesError.postValue(it.message)
+//                                        if(!it.message.isNullOrEmpty())
+//                                            updatesError.postValue(it.message)
                                     }
                             )
             )
@@ -672,13 +673,14 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                     updatesLoader.postValue(false)
                                 },
                                 {
-                                    Toasty.error(
-                                            getApplication(),
-                                            "Failed to create new payment profile for your account - " + it.message,
-                                            Toast.LENGTH_LONG
-                                    ).show()
-                                    if(!it.message.isNullOrEmpty())
-                                        updatesError.postValue(it.message)
+                                    Log.e("createCustomerInfo"," >> "+it.message)
+//                                    Toasty.error(
+//                                            getApplication(),
+//                                            "Failed to create new payment profile for your account - " + it.message,
+//                                            Toast.LENGTH_LONG
+//                                    ).show()
+//                                    if(!it.message.isNullOrEmpty())
+//                                        updatesError.postValue(it.message)
                                     updatesLoader.postValue(false)
                                 }
                         )
@@ -698,13 +700,14 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                     updatesLoader.postValue(false)
                                 },
                                 {
-                                    Toasty.error(
-                                            getApplication(),
-                                            "Failed to create new payment profile for your account - " + it.message,
-                                            Toast.LENGTH_LONG
-                                    ).show()
-                                    if(!it.message.isNullOrEmpty())
-                                        updatesError.postValue(it.message)
+                                    Log.e("updateCustomerInfo"," >> "+it.message)
+//                                    Toasty.error(
+//                                            getApplication(),
+//                                            "Failed to create new payment profile for your account - " + it.message,
+//                                            Toast.LENGTH_LONG
+//                                    ).show()
+//                                    if(!it.message.isNullOrEmpty())
+//                                        updatesError.postValue(it.message)
                                     updatesLoader.postValue(false)
                                 }
                         )
