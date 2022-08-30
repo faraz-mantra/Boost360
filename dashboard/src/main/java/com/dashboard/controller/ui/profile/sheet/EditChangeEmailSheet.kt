@@ -1,6 +1,10 @@
 package com.dashboard.controller.ui.profile.sheet
 
+import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.widget.addTextChangedListener
 import com.dashboard.R
 import com.dashboard.databinding.SheetChangeEmailBinding
@@ -10,6 +14,7 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
 
 class EditChangeEmailSheet : BaseBottomSheetDialog<SheetChangeEmailBinding, UserProfileViewModel>() {
@@ -30,6 +35,8 @@ class EditChangeEmailSheet : BaseBottomSheetDialog<SheetChangeEmailBinding, User
     val email = arguments?.getString(IK_EMAIL)
     WebEngageController.trackEvent(USER_MERCHANT_PROFILE_EMAIL_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.cetEmail?.setText(email)
+    binding?.cetEmail?.requestFocus()
+    baseActivity.showKeyBoard(binding?.cetEmail)
     setOnClickListener(binding?.btnPublish, binding?.rivCloseBottomSheet)
     viewListeners()
   }
