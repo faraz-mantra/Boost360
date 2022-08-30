@@ -61,8 +61,9 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
     }
     if(list.get(position).boost_widget_key!!.contains("DOMAINPURCHASE")
 //      || list.get(position).boost_widget_key!!.contains("EMAILACCOUNTS")
-      || list.get(position).boost_widget_key!!.contains("CALLTRACKER")
-      || list.get(position).boost_widget_key!!.contains("IVR")){
+//      || list.get(position).boost_widget_key!!.contains("CALLTRACKER")
+//      || list.get(position).boost_widget_key!!.contains("IVR")
+    ){
 //      holder.desc.visibility = View.GONE
       holder.title.text = list.get(position).addon_title
       holder.desc.text=list.get(position).item_name

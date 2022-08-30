@@ -1250,14 +1250,16 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
         viewModel.getActivePremiumWidgets().observe(this, androidx.lifecycle.Observer {
             //display referal if there is any paid addons
-            if (it.size > 0) {
-                bottom_box.visibility = View.VISIBLE
-                footer.visibility = View.VISIBLE
-            }
-            else {
-                bottom_box.visibility = View.GONE
-                footer.visibility = View.GONE
-            }
+//            if (it.size > 0) {
+//                bottom_box.visibility = View.VISIBLE
+//                footer.visibility = View.VISIBLE
+//            }
+//            else {
+//                bottom_box.visibility = View.GONE
+//                footer.visibility = View.GONE
+//            }
+            bottom_box.visibility = View.GONE
+            footer.visibility = View.GONE
         })
 
         viewModel.getActivePremiumWidgets1().observe(this, androidx.lifecycle.Observer {
@@ -1384,8 +1386,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                        expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
 //                    }
 
-                    bottom_box.visibility = View.VISIBLE
-                    footer.visibility = View.VISIBLE
+//                    bottom_box.visibility = View.VISIBLE
+//                    footer.visibility = View.VISIBLE
                 }
             }
             else {

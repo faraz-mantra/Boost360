@@ -423,11 +423,11 @@ class FeatureDetailsActivity :
         }
         learn_more_btn.setOnClickListener {
             when {
-                addonDetails?.boost_widget_key?.equals("IVR")!! || addonDetails?.boost_widget_key?.equals(
-                    "CALLTRACKER"
-                )!! -> {
-                    add_item_to_cart.text = "Buy call tracking"
-                }
+//                addonDetails?.boost_widget_key?.equals("IVR")!! || addonDetails?.boost_widget_key?.equals(
+//                    "CALLTRACKER"
+//                )!! -> {
+//                    add_item_to_cart.text = "Buy call tracking"
+//                }
                 addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
                     add_item_to_cart.text = "Choose custom domain"
 
@@ -835,11 +835,11 @@ class FeatureDetailsActivity :
             }
 
             when {
-                it.boost_widget_key.equals("IVR") || it.boost_widget_key.equals("CALLTRACKER") -> {
-                    add_item_to_cart.text = "Buy call tracking"
-                    add_item_to_cart_new.text = "Buy call tracking"
-
-                }
+//                it.boost_widget_key.equals("IVR") || it.boost_widget_key.equals("CALLTRACKER") -> {
+//                    add_item_to_cart.text = "Buy call tracking"
+//                    add_item_to_cart_new.text = "Buy call tracking"
+//
+//                }
                 it.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
                     add_item_to_cart.text = "Choose custom domain"
                     add_item_to_cart_new.text = "Choose custom domain"
@@ -1103,9 +1103,9 @@ class FeatureDetailsActivity :
     }
 
     fun specialAddons(): Boolean {
-        if (singleWidgetKey.equals("IVR")
-            || singleWidgetKey.equals("CALLTRACKER")
-            || singleWidgetKey.equals("DOMAINPURCHASE")
+        if (singleWidgetKey.equals("DOMAINPURCHASE")
+//            || singleWidgetKey.equals("IVR")
+//            || singleWidgetKey.equals("CALLTRACKER")
         //    || singleWidgetKey.equals("STAFFPROFILE")
         ) {
             return true
@@ -1117,24 +1117,24 @@ class FeatureDetailsActivity :
         if (!itemInCartStatus) {
             if (addonDetails != null) {
                 when {
-                    addonDetails?.boost_widget_key?.equals("IVR")!! || addonDetails?.boost_widget_key?.equals(
-                        "CALLTRACKER"
-                    )!! -> {
-                        loadNumberList()
-                    }
+//                    addonDetails?.boost_widget_key?.equals("IVR")!! || addonDetails?.boost_widget_key?.equals(
+//                        "CALLTRACKER"
+//                    )!! -> {
+//                        loadNumberList()
+//                    }
                     addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
                         goToDomainSelection()
                     }
-                    addonDetails?.boost_widget_key?.equals("STAFFPROFILE")!! -> {
-                        val args = Bundle()
-                        args.putString("addonDetails", Gson().toJson(addonDetails))
-                        args.putBoolean("addedToCart", addedToCart)
-                        staffManagementBottomSheet.arguments = args
-                        staffManagementBottomSheet.show(
-                            supportFragmentManager,
-                            StaffManagementBottomSheet::class.java.name
-                        )
-                    }
+//                    addonDetails?.boost_widget_key?.equals("STAFFPROFILE")!! -> {
+//                        val args = Bundle()
+//                        args.putString("addonDetails", Gson().toJson(addonDetails))
+//                        args.putBoolean("addedToCart", addedToCart)
+//                        staffManagementBottomSheet.arguments = args
+//                        staffManagementBottomSheet.show(
+//                            supportFragmentManager,
+//                            StaffManagementBottomSheet::class.java.name
+//                        )
+//                    }
                     else -> {
                         makeFlyAnimation(if (singleWidgetKey!!.equals("DOMAINPURCHASE")) addon_iconV3 else addon_icon)
                         prefs.storeCartOrderInfo(null)
