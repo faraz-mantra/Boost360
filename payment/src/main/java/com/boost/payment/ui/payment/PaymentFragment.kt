@@ -503,6 +503,15 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         auto_renew_switch.setOnClickListener {
             if (autoRenewState) {
                 autoRenewState = false
+                netbanking_layout.visibility = View.VISIBLE
+                feature_validity.text = ""
+                validity_months.setText(
+                    prefs.getValidityMonths() + Utils.yearOrMonthText(prefs.getValidityMonths()!!.toInt(), requireActivity(), true)
+                )
+                validity_period.text = "Validity period"
+                validity_period_value.setText(
+                    nowFormat.format(Calendar.getInstance().time) + " - " + nowFormat.format(oneMonthFromNow.time)
+                )
                 WebEngageController.trackEvent(
                         MARKETPLACE_AUTO_RENEWAL_OFF,
                         PAYMENT_SCREEN,
@@ -562,6 +571,13 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 updateAutoRenewState()
             } else {
                 autoRenewState = true
+                netbanking_layout.visibility = View.GONE
+                feature_validity.text = "Renewal period"
+                validity_months.setText(
+                    "Every "+prefs.getValidityMonths() + Utils.yearOrMonthText(prefs.getValidityMonths()!!.toInt(), requireActivity(), true)
+                )
+                validity_period.text = "Next billing date"
+                validity_period_value.setText(nowFormat.format(oneMonthFromNow.time))
                 WebEngageController.trackEvent(
                         MARKETPLACE_AUTO_RENEWAL_ON,
                         PAYMENT_SCREEN,
