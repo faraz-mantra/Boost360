@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.boost.upgrades.UpgradeActivity;
+import com.boost.marketplace.ui.home.MarketPlaceActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.manufacturing.API.ManufacturingAPIInterfaces;
 import com.nowfloats.manufacturing.API.model.GetProjects.GetProjectsData;
@@ -209,7 +209,7 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
         progressDialog.setMessage(status);
         progressDialog.setCancelable(false);
         progressDialog.show();
-        Intent intent = new Intent(ProjectAndTermsActivity.this, UpgradeActivity.class);
+        Intent intent = new Intent(ProjectAndTermsActivity.this, MarketPlaceActivity.class);
         intent.putExtra("expCode", session.getFP_AppExperienceCode());
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID());

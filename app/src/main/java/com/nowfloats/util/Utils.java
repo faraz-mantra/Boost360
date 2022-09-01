@@ -426,7 +426,7 @@ public class Utils {
     try {
 //            if (isLoadingShow) delayProgressShow()
       WebEngageController.trackEvent(ADDON_MARKETPLACE_PAGE_CLICK, CLICK, session.getFpTag());
-      Intent intent = new Intent(context, Class.forName("com.boost.upgrades.UpgradeActivity"));
+      Intent intent = new Intent(context, Class.forName("com.boost.marketplace.ui.home.MarketPlaceActivity"));
       intent.putExtra("expCode", session.getFP_AppExperienceCode());
       intent.putExtra("fpName", session.getFPName());
       intent.putExtra("fpid", session.getFPID());

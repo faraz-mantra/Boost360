@@ -1,5 +1,6 @@
 package com.framework.utils
 
+import android.app.*
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.PendingIntent
@@ -19,6 +20,8 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.ColorFilter
 import android.graphics.Typeface
+import android.graphics.*
+import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -47,6 +50,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
@@ -485,6 +491,14 @@ fun makeCall(number: String?) {
   BaseApplication.instance.startActivity(callIntent)
 }
 
+fun Activity.makeCall(number: String) {
+  val callIntent = Intent(Intent.ACTION_DIAL)
+  callIntent.addCategory(Intent.CATEGORY_DEFAULT)
+  callIntent.data = Uri.parse("tel:$number")
+  callIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+  this.startActivity(Intent.createChooser(callIntent, "Call by:"))
+}
+
 fun getAppVersionName(): String? {
   try {
     val pInfo: PackageInfo = BaseApplication.instance.packageManager.getPackageInfo(BaseApplication.instance.packageName, 0)
@@ -541,6 +555,7 @@ fun highlightHashTag(text: String?,@ColorRes colorId: Int,@FontRes fontId:Int): 
 
 
 inline fun <reified T> convertJsonToObj(json: String?) = Gson().fromJson<T>(json, object : TypeToken<T>() {}.type)
+
 fun Bitmap.zoom(percent: Float): Bitmap? {
 
   val scaleFactor = percent // Set this to the zoom factor
@@ -579,8 +594,63 @@ fun spanBold(fullText: String, vararg boldTextList: String): SpannableString {
   return spannable
 }
 
-
-
+fun sendNotification(
+  c: Context,
+  messageTitle: String?,
+  messageBody: String,
+  deepLinkUrl: String
+) {
+  val intent = Intent("com.dashboard.controller.DashboardActivity")
+  val stackBuilder = TaskStackBuilder.create(c)
+  intent.putExtra("from", "notification")
+  intent.putExtra("url", deepLinkUrl)
+  intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+  stackBuilder.addNextIntentWithParentStack(intent)
+  val pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+  val notificationBuilder: NotificationCompat.Builder =
+    NotificationCompat.Builder(c, "111")
+      .setSmallIcon(R.drawable.app_launcher2)
+      .setLargeIcon(
+        BitmapFactory.decodeResource(
+          c.resources,
+          R.drawable.app_launcher
+        )
+      )
+      .setContentText(messageBody)
+      .setAutoCancel(false)
+      .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
+      .setColor(ContextCompat.getColor(c, R.color.colorPrimary))
+      .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+//        .setContentIntent(pendingIntent)
+      .addAction(R.drawable.app_launcher, "Renew now", pendingIntent)
+      .setStyle(NotificationCompat.BigTextStyle().bigText(messageBody))
+      .setPriority(NotificationCompat.PRIORITY_HIGH)
+      .setLights(Color.GREEN, 3000, 3000)
+  if (messageTitle != null && messageTitle.isNotEmpty())
+    notificationBuilder.setContentTitle(messageTitle)
+  else
+    notificationBuilder.setContentTitle(c.resources.getString(R.string.app_name))
+  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    val notificationManager =
+      c.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
+    val importance = NotificationManager.IMPORTANCE_HIGH
+    val notificationChannel =
+      NotificationChannel("111", "NOTIFICATION_CHANNEL_NAME", importance)
+    notificationChannel.enableLights(true)
+    notificationChannel.lightColor = Color.YELLOW
+    notificationChannel.enableVibration(true)
+    notificationChannel.setShowBadge(false)
+    notificationChannel.vibrationPattern =
+      longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
+    assert(notificationManager != null)
+    notificationBuilder.setChannelId("111")
+    notificationManager!!.createNotificationChannel(notificationChannel)
+    notificationManager.notify(0, notificationBuilder.build())
+  } else {
+    val notificationManager = NotificationManagerCompat.from(c)
+    notificationManager.notify(0, notificationBuilder.build())
+  }
+}
 
 fun spanColor(fullText:String,@ColorRes color: Int,vararg colorTextList:String): SpannableString {
   val spannable = SpannableString(fullText)
@@ -717,6 +787,7 @@ fun File.toBase64(): String? {
 
   return result
 }
+
 fun copyToClipBoard(text: String) {
   val clipboard = BaseApplication.instance.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
   val clip: ClipData = ClipData.newPlainText("boost-label", text)

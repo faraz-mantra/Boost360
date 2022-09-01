@@ -328,7 +328,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_arrow_trans_website_d"
-                        app:tint="@color/white" />
+                        app:tint="@color/boost_jio_website_arrow_color" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -375,7 +375,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/size_12"
                         app:srcCompat="@drawable/ic_arrow_trans_website_d"
-                        app:tint="@color/white" />
+                        app:tint="@color/boost_jio_website_arrow_color" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
 

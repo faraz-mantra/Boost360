@@ -3,6 +3,7 @@ package com.appservice.ui.staffs.ui.services
 import android.content.Intent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
@@ -11,6 +12,7 @@ import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.model.staffModel.*
+import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.viewmodel.StaffViewModel
 import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
@@ -19,10 +21,19 @@ import java.util.*
 class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, StaffViewModel>(), RecyclerItemClickListener {
 
   private var isEdit: Boolean? = null
-  lateinit var data: List<DataItemService?>
-  var adapter: AppBaseRecyclerViewAdapter<DataItemService>? = null
+  var data: ArrayList<DataItemService?> = arrayListOf()
+  var adapterServices: AppBaseRecyclerViewAdapter<DataItemService>? = null
   private var listServices: ArrayList<DataItemService>? = null
   private var serviceIds: ArrayList<String>? = null
+  private var layoutManagerN: LinearLayoutManager? = null
+
+  /* Paging */
+  private var isLoadingD = false
+  private var TOTAL_ELEMENTS = 0
+  private var TOTAL_COUNT = 0
+  private var offSet: Int = PaginationScrollListener.PAGE_START
+  private var limit: Int = PaginationScrollListener.PAGE_SIZE
+  private var isLastPageD = false
 
   companion object {
     fun newInstance(): StaffServicesFragment {
@@ -44,47 +55,96 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
     getBundleData()
   }
 
+  private fun init() {
+    layoutManagerN = LinearLayoutManager(baseActivity)
+    binding?.ctvHeading?.text = if (isDoctorClinic) getString(R.string.select_what_services_that_the_doctor_will_provide) else getString(R.string.select_what_services_that_the_staff_will_provide)
+    binding?.ctvSubheading?.text = if (isDoctorClinic) getString(R.string.doctor_service_customer_know_provide_service_looking_for) else getString(R.string.staff_service_customer_know_provide_service_looking_for)
+    setOnClickListener(binding?.flConfirmServices)
+    loadData(isFirst = true, offSet = offSet, limit = limit)
+    layoutManagerN?.let { scrollPagingListener(it) }
+  }
+
   private fun getBundleData() {
     if (listServices == null) listServices = arrayListOf()
     serviceIds = arguments?.getStringArrayList(IntentConstant.STAFF_SERVICES.name)
     isEdit = serviceIds.isNullOrEmpty().not()
   }
 
+  private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
+    binding?.rvServiceProvided?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
+      override fun loadMoreItems() {
+        if (!isLastPageD) {
+          isLoadingD = true
+          adapterServices?.addLoadingFooter(DataItemService().getLoaderItem())
+          offSet += limit
+          loadData(offSet = offSet, limit = limit)
+        }
+      }
 
-  private fun fetchServices() {
-    showProgress(getString(R.string.loading_))
-    val request =
-      ServiceListRequest(FilterBy("ALL", 0, 0), "", floatingPointTag = sessionLocal.fpTag)
+      override val totalPageCount: Int
+        get() = TOTAL_ELEMENTS
+      override val isLastPage: Boolean
+        get() = isLastPageD
+      override val isLoading: Boolean
+        get() = isLoadingD
+    })
+  }
+
+  private fun loadData(isFirst: Boolean = false, offSet: Int? = null, limit: Int? = null) {
+    if (isFirst) showProgress(getString(R.string.loading_))
+    val request = ServiceListRequest(FilterBy("ALL", limit, offSet), "", floatingPointTag = sessionLocal.fpTag)
     viewModel?.getServiceListing(request)?.observeOnce(viewLifecycleOwner) {
+      if (it.isSuccess()){
+        val response = (it as? ServiceListResponse)?.result
+        setDataServices(response, isFirst)
+      } else if (isFirst) showShortToast(it.errorFlowMessage() ?: getString(R.string.something_went_wrong))
       hideProgress()
-      data = (it as? ServiceListResponse)?.result?.data ?: return@observeOnce
-      setServiceCount()
-      this.adapter = AppBaseRecyclerViewAdapter(
-        activity = baseActivity,
-        list = data as ArrayList<DataItemService>,
-        itemClickListener = this@StaffServicesFragment
-      )
-      binding?.rvServiceProvided?.adapter = adapter
-      when (isEdit) {
-        true -> {
-          data.forEach { datum ->
-            if (serviceIds?.contains(datum?.id) == true) {
-              datum?.isChecked = true
+    }
+  }
+
+  private fun setDataServices(response: ResultService?, isFirstLoad: Boolean) {
+    val serviceListData = response?.data
+    TOTAL_COUNT = response?.paging?.count?:0
+    if (isFirstLoad) data.clear()
+    if (serviceListData.isNullOrEmpty().not()) {
+      removeLoader()
+      data.addAll(serviceListData!!)
+      TOTAL_ELEMENTS = data.size
+      isLastPageD = false
+      setAdapterNotify()
+    }else{
+      if (!isFirstLoad){
+        removeLoader()
+        isLastPageD = true
+      }
+    }
+  }
+
+  private fun setAdapterNotify() {
+    setServiceCount()
+    if (adapterServices == null) {
+      binding?.rvServiceProvided?.apply {
+        adapterServices = AppBaseRecyclerViewAdapter(activity = baseActivity, list = data as ArrayList<DataItemService>, itemClickListener = this@StaffServicesFragment)
+        layoutManager = layoutManagerN
+        adapter = adapterServices
+      }
+    } else adapterServices?.notifyDataSetChanged()
+
+    when (isEdit) {
+      true -> {
+        data.forEach { datum ->
+          if (serviceIds?.contains(datum?.id) == true) {
+            datum?.isChecked = true
+            val matchedRecords = listServices?.filter { (it.id == datum?.id) }
+            if (matchedRecords?.isNullOrEmpty() == true){
               listServices?.add(datum!!)
             }
           }
         }
       }
-      setServiceCount()
-      adapter?.notifyDataSetChanged()
     }
-  }
-
-  private fun init() {
-    binding?.ctvHeading?.text = if (isDoctorClinic) getString(R.string.select_what_services_that_the_doctor_will_provide) else getString(R.string.select_what_services_that_the_staff_will_provide)
-    binding?.ctvSubheading?.text = if (isDoctorClinic) getString(R.string.doctor_service_customer_know_provide_service_looking_for) else getString(R.string.staff_service_customer_know_provide_service_looking_for)
-    fetchServices()
-    setOnClickListener(binding?.flConfirmServices)
+    setServiceCount()
+    adapterServices?.notifyDataSetChanged()
   }
 
 
@@ -99,8 +159,18 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
       }
     }
     when (dataItem.isChecked) {
-      true -> listServices?.add(dataItem)
-      false -> listServices?.remove(dataItem)
+      true -> {
+        val matchedRecords = listServices?.filter { (it.id == dataItem.id) }
+        if (matchedRecords?.isNullOrEmpty() == true){
+          listServices?.add(dataItem)
+        }
+      }
+      false -> {
+        val matchedRecords = listServices?.filter { (it.id == dataItem.id) }
+        if (matchedRecords?.isNullOrEmpty() == false){
+          listServices?.remove(dataItem)
+        }
+      }
     }
     setServiceCount()
 
@@ -137,6 +207,13 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
         baseActivity.setResult(AppCompatActivity.RESULT_OK, intent)
         baseActivity.finish()
       }
+    }
+  }
+
+  private fun removeLoader() {
+    if (isLoadingD) {
+      isLoadingD = false
+      adapterServices?.removeLoadingFooter()
     }
   }
 }

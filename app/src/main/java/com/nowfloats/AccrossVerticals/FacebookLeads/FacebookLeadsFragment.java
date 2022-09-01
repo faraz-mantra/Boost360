@@ -16,7 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.boost.upgrades.UpgradeActivity;
+import com.boost.marketplace.ui.home.MarketPlaceActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.util.Constants;
@@ -88,7 +88,7 @@ public class FacebookLeadsFragment extends Fragment {
         progressDialog.setMessage(status);
         progressDialog.setCancelable(false);
         progressDialog.show();
-        Intent intent = new Intent(getActivity(), UpgradeActivity.class);
+        Intent intent = new Intent(getActivity(), MarketPlaceActivity.class);
         intent.putExtra("expCode", session.getFP_AppExperienceCode());
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID());

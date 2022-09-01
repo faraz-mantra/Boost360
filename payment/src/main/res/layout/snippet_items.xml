@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="@color/transparent">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/_5sdp"
+    android:background="@drawable/all_side_curve_bg"
+    android:elevation="@dimen/cardview_default_elevation"
+    android:padding="16dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <ImageView
+      android:id="@+id/cir_img"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="8dp"
+      android:src="@drawable/button_spherical_yellow"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+      android:id="@+id/name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"
+      android:lineSpacingExtra="2sp"
+      android:text="Keshava Reddy"
+      android:textColor="@color/common_bold_text_color"
+      android:textSize="@dimen/_12sdp"
+      android:textStyle="bold"
+      app:layout_constraintLeft_toRightOf="@+id/cir_img"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+      android:id="@+id/textView16"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:lineSpacingExtra="3sp"
+      android:text="Sparkle Salon &amp; Spa, Indore"
+      android:textColor="@color/common_text_color"
+      android:textSize="@dimen/_10sdp"
+      app:layout_constraintStart_toStartOf="@+id/name"
+      app:layout_constraintTop_toBottomOf="@id/name" />
+
+    <LinearLayout
+      android:id="@+id/rating_layout"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="@dimen/_10sdp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/cir_img">
+
+
+      <ImageView
+        android:id="@+id/rating_1"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_margin="@dimen/_3sdp"
+        android:src="@drawable/star"
+        android:visibility="invisible"
+        tools:visibility="visible" />
+
+      <ImageView
+        android:id="@+id/rating_2"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_margin="@dimen/_3sdp"
+        android:src="@drawable/star"
+        android:visibility="invisible"
+        tools:visibility="visible" />
+
+      <ImageView
+        android:id="@+id/rating_3"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_margin="@dimen/_3sdp"
+        android:src="@drawable/star"
+        android:visibility="invisible"
+        tools:visibility="visible" />
+
+      <ImageView
+        android:id="@+id/rating_4"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_margin="@dimen/_3sdp"
+        android:src="@drawable/star"
+        android:visibility="invisible"
+        tools:visibility="visible" />
+
+      <ImageView
+        android:id="@+id/rating_5"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_margin="@dimen/_3sdp"
+        android:src="@drawable/star"
+        android:visibility="invisible"
+        tools:visibility="visible" />
+
+    </LinearLayout>
+
+    <TextView
+      android:id="@+id/txt21"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:text="“Works like a charm”"
+      android:textColor="@color/light_blue"
+      android:textSize="17sp"
+      android:textStyle="bold"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/rating_layout" />
+
+    <TextView
+      android:id="@+id/review_description"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:lineSpacingExtra="2sp"
+      android:padding="8dp"
+      android:text="I’m not really sure how old I was when I got the gift for Christmas, but I remember thinking it was a pretty impressive piece of electronic hardware. It was really cool looking (technologically speaking), and I was awfully proud to own it."
+      android:textColor="@color/common_text_color"
+      android:textSize="@dimen/_10sdp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/txt21" />
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

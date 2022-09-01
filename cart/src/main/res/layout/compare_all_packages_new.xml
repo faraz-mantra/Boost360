@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/activity_main"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/main_color_gray"
+  android:fitsSystemWindows="true"
+  android:orientation="vertical">
+
+  <FrameLayout
+    android:id="@+id/ly_content"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:elevation="3dp"
+    app:layout_constraintBottom_toTopOf="@+id/upgradeTextBottom"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/addons_toolbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+          android:id="@+id/package_cart_icon"
+          android:layout_width="0dp"
+          android:layout_height="50dp"
+          android:layout_marginTop="10dp"
+
+          android:layout_marginEnd="@dimen/_10sdp"
+          android:foreground="?android:attr/selectableItemBackground"
+          app:layout_constraintDimensionRatio="1:1"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
+
+          <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/cart48" />
+
+
+          <com.nex3z.notificationbadge.NotificationBadge
+              android:id="@+id/badge121"
+              android:layout_width="28dp"
+              android:layout_height="28dp"
+              android:layout_alignParentTop="true"
+              android:layout_alignParentEnd="true"
+              app:nbMaxTextLength="2" />
+        </RelativeLayout>
+
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="25dp"
+          android:fontFamily="@font/regular"
+          android:text="Compare and choose pack"
+          android:textColor="@color/white"
+          android:textSize="@dimen/txt_14sp"
+          android:textStyle="bold"
+          app:layout_constraintEnd_toStartOf="@+id/package_cart_icon"
+          app:layout_constraintStart_toEndOf="@+id/package_back"
+          app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+          android:id="@+id/package_back"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="20dp"
+          android:background="@drawable/arrow_white"
+          app:layout_constraintDimensionRatio="1:1"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+          android:id="@+id/package_indicator2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerHorizontal="true"
+          android:paddingTop="10dp"
+          android:paddingBottom="10dp"
+          android:visibility="visible"
+          app:dotsColor="@color/dot_grey"
+          app:dotsCornerRadius="8dp"
+          app:dotsSize="6dp"
+          app:dotsSpacing="4dp"
+          app:dotsWidthFactor="2.5"
+          app:layout_constraintBottom_toTopOf="@+id/mew"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/package_back"
+          app:progressMode="false"
+          app:selectedDotColor="@color/white" />
+
+        <LinearLayout
+          android:id="@+id/mew"
+          android:layout_width="match_parent"
+          android:layout_height="50dp"
+          android:orientation="horizontal"
+          app:layout_constraintEnd_toEndOf="@+id/package_indicator2"
+          app:layout_constraintStart_toStartOf="@+id/package_indicator2"
+          app:layout_constraintTop_toBottomOf="@id/package_indicator2" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="50dp"
+      android:orientation="vertical">
+      <!--android:padding="16dp"-->
+      <!--<androidx.core.widget.NestedScrollView
+          android:id="@+id/scroll_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:scrollbars="none"
+          android:layout_marginTop="25dp">-->
+      <RelativeLayout
+        android:id="@+id/rl_viewpage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp">
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+          android:id="@+id/shimmer_view_compare"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_gravity="center"
+          android:layout_marginStart="35dp"
+          android:layout_marginEnd="35dp"
+          android:background="@color/white"
+          android:orientation="vertical"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          tools:visibility="visible">
+
+          <!-- Adding 7 rows of placeholders -->
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/data_placeholder_layout" />
+
+            <include layout="@layout/data_placeholder_layout" />
+
+            <include layout="@layout/data_placeholder_layout" />
+
+            <include layout="@layout/data_placeholder_layout" />
+
+            <include layout="@layout/data_placeholder_layout" />
+
+            <include layout="@layout/data_placeholder_layout" />
+
+            <include layout="@layout/data_placeholder_layout" />
+
+            <include layout="@layout/data_place2" />
+
+            <include layout="@layout/data_place2" />
+
+
+          </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/package_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="0dp"
+          android:clickable="true"
+          android:focusable="true"
+          android:visibility="visible"
+
+          tools:visibility="visible">
+
+          <TextView
+            android:id="@+id/package_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:fontFamily="@font/regular"
+            android:text="Featured Packs"
+            android:textColor="@color/common_text_color"
+            android:textFontWeight="600"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+          <LinearLayout
+            android:id="@+id/ll_package_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toTopOf="@+id/upgradeText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/package_name">
+
+
+            <androidx.viewpager2.widget.ViewPager2
+              android:id="@+id/package_viewpager"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:clipChildren="false"
+              android:clipToPadding="false"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@id/package_name"
+              tools:listitem="@layout/snippet_items" />
+          </LinearLayout>
+          <!--app:layout_constraintTop_toBottomOf="@id/package_name"-->
+
+          <TextView
+            android:id="@+id/upgradeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="If you don’t upgrade to any of the premium plans listed above, you will be moved to our Free forever base plan. View features available in the Free plan here."
+            android:textColor="@color/dot_grey"
+            android:textFontWeight="400"
+            android:textSize="@dimen/_11sdp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_package_viewpager" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+      </RelativeLayout>
+      <!-- </androidx.core.widget.NestedScrollView>-->
+
+
+    </LinearLayout>
+
+  </FrameLayout>
+
+  <TextView
+    android:id="@+id/upgradeTextBottom"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_20sdp"
+    android:layout_marginEnd="@dimen/_20sdp"
+    android:fontFamily="@font/regular"
+    android:gravity="center"
+    android:paddingBottom="5dp"
+    android:text="If you don’t upgrade to any of the premium plans listed above, you will be moved to our Free forever base plan. View features available in the Free plan here."
+    android:textColor="@color/dot_grey"
+    android:textFontWeight="400"
+    android:textSize="@dimen/txt_10sp"
+    android:visibility="visible"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

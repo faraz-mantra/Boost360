@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <com.framework.views.customViews.CustomCardView
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/size_16"
+    android:layout_marginTop="@dimen/size_2"
+    android:layout_marginEnd="@dimen/size_16"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/size_10"
+    app:cardUseCompatPadding="true">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_12"
+        android:layout_marginEnd="@dimen/size_16"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <FrameLayout
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent">
+
+          <FrameLayout
+            android:id="@+id/view_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <com.framework.views.CircularProgressBar
+              android:id="@+id/progress_bar"
+              android:layout_width="@dimen/size_50"
+              android:layout_height="@dimen/size_50"
+              android:layout_gravity="center"
+              app:cpb_background_progressbar_color="@color/grey_light_1_d"
+              app:cpb_background_progressbar_width="@dimen/size_9"
+              app:cpb_progress_direction="to_right"
+              app:cpb_progressbar_color="@color/red_light_1"
+              app:cpb_progressbar_width="@dimen/size_9"
+              app:cpb_round_border="false" />
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/img_icon"
+              android:layout_width="@dimen/size_16"
+              android:layout_height="@dimen/size_16"
+              android:layout_gravity="center"
+              tools:srcCompat="@drawable/ic_add_home_d" />
+          </FrameLayout>
+
+          <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lotty_sync_ok"
+            android:layout_width="@dimen/size_94"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:repeatCount="infinite"
+            android:repeatMode="restart"
+            android:visibility="gone"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/completed_lottie_animation" />
+        </FrameLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_12"
+          android:layout_weight="1"
+          android:orientation="vertical">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_4f4f4f"
+            android:textFontWeight="600"
+            app:textType="HEADING_6"
+            tools:text="Business profile setup" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/txt_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red_light_1"
+            android:textFontWeight="600"
+            app:textType="BODY_1"
+            tools:text="40% remaining" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/view_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/light_grey_2" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/btn_add_item_start"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_42"
+          android:layout_gravity="center_vertical"
+          android:layout_marginStart="@dimen/size_14"
+          android:layout_marginEnd="@dimen/size_14"
+          android:clickable="true"
+          android:focusable="true">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/btn_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:textAllCaps="false"
+            android:textColor="@color/black_4a4a4a"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="8sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            tools:text="Add working hours" />
+
+          <com.framework.views.GifView
+            android:id="@+id/img_arrow_gif"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_22"
+            android:layout_gravity="center_vertical"
+            app:gif="@raw/ic_next_arrow_gif_d"
+            app:paused="true" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+  </com.framework.views.customViews.CustomCardView>
+</layout>
