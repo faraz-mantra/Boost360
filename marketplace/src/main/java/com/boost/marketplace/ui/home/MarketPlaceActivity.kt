@@ -109,6 +109,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     var isBackCart: Boolean = false
     var isOpenHomeFragment: Boolean = false
     var isOpenAddOnsFragment: Boolean = false
+    var isOpenPackageWithID: String? = null
 
     var deepLinkViewType: String = ""
     var deepLinkDay: Int = 7
@@ -143,6 +144,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         isOpenAddOnsFragment = intent.getBooleanExtra("isComingFromOrderConfirmActivation", false)
         widgetFeatureCode = intent.getStringExtra("buyItemKey")
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
+        //festive poster purchase
+        isOpenPackageWithID = intent.getStringExtra("isOpenPackageWithID")
 
         progressDialog = ProgressDialog(this)
 
@@ -683,6 +686,14 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 package_layout1.visibility = View.GONE
                 package_compare_layout.visibility = View.GONE
                 package_compare_layout1.visibility = View.GONE
+            }
+            //go to particular package screen
+            if(isOpenPackageWithID!=null){
+                for(singleBundle in list){
+                    if(singleBundle._kid.equals(isOpenPackageWithID)){
+                        onPackageClicked(singleBundle)
+                    }
+                }
             }
         })
 
