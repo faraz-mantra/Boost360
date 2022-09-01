@@ -83,8 +83,15 @@ class OrderConfirmationFragment : BaseFragment() {
 
     initMvvm()
     progressDialog = ProgressDialog(requireContext())
-    viewModel.emptyCurrentCartWithDomainActivate((activity as PaymentActivity).application, requireActivity())
+    viewModel.emptyCurrentCartWithDomainActivate((activity as PaymentActivity).application, prefs.getDomainOrderType(), requireActivity())
 
+    //reset domainOrderType to new
+//    DomainOrderType {
+//        NEW,
+//        RENEW,
+//        LINK
+//    }
+    prefs.storeDomainOrderType(0)
     //firsttimepurchase logic for app review
     if(prefs.getFirstTimePurchase()){
       InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.in_app_review_first_purchase)
@@ -169,7 +176,7 @@ class OrderConfirmationFragment : BaseFragment() {
   }
 
   private fun initMvvm() {
-    viewModel.getLoaderStatus().observe(this, androidx.lifecycle.Observer {
+    viewModel.getLoaderStatus().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
       if(it.length>0){
         showProgress(it)
       }else{
