@@ -18,7 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.boost.upgrades.UpgradeActivity;
+import com.boost.marketplace.ui.home.MarketPlaceActivity;
 import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.RiaSupportModel;
@@ -168,7 +168,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
             progressDialog.setCancelable(false);
             progressDialog.show();
             UserSessionManager session = new UserSessionManager(getContext(), getActivity());
-            Intent intent = new Intent(getActivity(), UpgradeActivity.class);
+            Intent intent = new Intent(getActivity(), MarketPlaceActivity.class);
             intent.putExtra("expCode", session.getFP_AppExperienceCode());
             intent.putExtra("fpName", session.getFPName());
             intent.putExtra("fpid", session.getFPID());
@@ -204,7 +204,6 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
         if (is_premium_support) {
           DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
           Date dateobj = new Date();
-
           if (sessionManager != null) {
             ProfileProvider profileProvider = Chat.INSTANCE.providers().profileProvider();
 

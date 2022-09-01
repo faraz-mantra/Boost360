@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/cardView"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:focusable="true"
+  android:orientation="vertical">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:layout_marginBottom="@dimen/_10sdp">
+
+    <ImageView
+      android:id="@+id/single_paidaddon_arrowIcon"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:padding="@dimen/_8sdp"
+      android:src="@drawable/next"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+      android:id="@+id/imageLayout"
+      android:layout_width="70dp"
+      android:layout_height="67dp"
+      android:layout_marginStart="13dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <ImageView
+        android:id="@+id/single_paidaddon_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/backgroundwhite"
+        android:padding="8dp"
+        android:scaleType="fitCenter" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="13dp"
+      android:gravity="center_vertical"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@id/single_paidaddon_arrowIcon"
+      app:layout_constraintStart_toEndOf="@+id/imageLayout"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+
+        <TextView
+          android:id="@+id/title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/semi_bold"
+          android:text="SECURITY"
+          android:textColor="@color/colorAccent1"
+          android:textSize="@dimen/_8sdp" />
+      </LinearLayout>
+
+      <TextView
+        android:id="@+id/paid_addons_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/regular"
+        android:lineSpacingExtra="1.3sp"
+        android:textColor="@color/common_bold_text_color"
+        android:textSize="@dimen/_10sdp"
+        tools:text="Facebook Ads (upto 75 leads)" />
+
+
+    </LinearLayout>
+
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <View
+    android:id="@+id/paid_single_dummy_view"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_3sdp"
+    android:background="@drawable/view_dot_lines_bg"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+</LinearLayout>
+
