@@ -13,6 +13,7 @@
     <string name="auto_next_renewal_date">Your next auto-renewal date will be %1$s.</string>
     <string name="feature_coming_soon">Coming Soon: View all your previous orders. In case of a concern please write to ria@nowfloats.com</string>
     <string name="added_to_cart">Added to cart</string>
+    <string name="add_to_cart">Add to cart</string>
     <string name="auto_renewal_date">Your next auto-renewal date will be %1$s. You can disable auto renewal of any feature/package at anytime.</string>
     <string name="facebook_lead_ads_upto_75_leads">Facebook Lead Ads (upto 75 leads)</string>
     <string name="marketing">Marketing</string>

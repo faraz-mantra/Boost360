@@ -46,22 +46,22 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
     holder.upgradeListItem(cryptocurrencyItem)
     holder.singleTitle.text = cryptocurrencyItem.name
 
-    if (cryptocurrencyItem.featureState !=null && cryptocurrencyItem.featureState != 1){
-      holder.itemView.visibility=View.VISIBLE
-      holder.itemView.layoutParams =
-        RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-    }
-    else{
-      holder.itemView.visibility=View.GONE
-      holder.itemView.layoutParams = RecyclerView.LayoutParams(0, 0)
-    }
+//    if (cryptocurrencyItem.featureState !=null && cryptocurrencyItem.featureState != 1){
+//      holder.itemView.visibility=View.VISIBLE
+//      holder.itemView.layoutParams =
+//        RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+//    }
+//    else{
+//      holder.itemView.visibility=View.GONE
+//      holder.itemView.layoutParams = RecyclerView.LayoutParams(0, 0)
+//    }
 
-    if (cryptocurrencyItem.is_premium.equals(true)){
-      holder.paid_addons_activate.visibility=View.VISIBLE
-    }
-    else{
-      holder.paid_addons_activate.visibility=View.GONE
-    }
+//    if (cryptocurrencyItem.is_premium.equals(true)){
+//      holder.paid_addons_activate.visibility=View.VISIBLE
+//    }
+//    else{
+//      holder.paid_addons_activate.visibility=View.GONE
+//    }
 
     if(position == list.size-1){
       holder.paid_single_dummy_view.visibility = View.GONE
@@ -134,7 +134,7 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
       validity2.text= "Valid till " + date
       Glide.with(context).load(updateModel.primary_image).into(image)
       if (updateModel.featureState == 1) {
-       img1.setImageResource(R.drawable.ic_active)
+       img1.setImageResource(R.drawable.ic_action_req)
       }
       else {
         img1.setImageResource(R.drawable.ic_action_req)

@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.CustomDomain.CustomDomains
 import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
+import com.boost.dbcenterapi.data.api_model.Edgecase.EdgeCases
 import com.boost.dbcenterapi.data.api_model.blockingAPI.BlockApi
 import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
 import com.boost.dbcenterapi.data.api_model.gst.Error
@@ -39,8 +40,12 @@ class FeatureDetailsViewModel : BaseViewModel() {
     var allBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
     private var callTrackListResponse: MutableLiveData<CallTrackListResponse> = MutableLiveData()
     var updateStatus: MutableLiveData<BlockApi> = MutableLiveData()
-
+    var edgecaseResult: MutableLiveData<EdgeCases> = MutableLiveData()
     var customDomainsResult: MutableLiveData<CustomDomains> = MutableLiveData()
+
+    lateinit var application: Application
+    lateinit var lifecycleOwner: LifecycleOwner
+    var ApiService = com.boost.dbcenterapi.utils.Utils.getRetrofit().create(NewApiInterface::class.java)
 
     val compositeDisposable = CompositeDisposable()
 
@@ -76,10 +81,10 @@ class FeatureDetailsViewModel : BaseViewModel() {
         return callTrackListResponse
     }
 
-    lateinit var application: Application
-    lateinit var lifecycleOwner: LifecycleOwner
-    var ApiService =
-        com.boost.dbcenterapi.utils.Utils.getRetrofit().create(NewApiInterface::class.java)
+
+    fun edgecaseResult(): LiveData<EdgeCases> {
+        return edgecaseResult
+    }
 
     fun setApplicationLifecycle(
         application: Application,
@@ -271,6 +276,24 @@ class FeatureDetailsViewModel : BaseViewModel() {
                     {
                         updateStatus.postValue(it)
                     }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
+
+    fun edgecases(fpid: String,clientId:String,featureCode:String) {
+        updatesLoader.postValue(true)
+        compositeDisposable.add(
+            ApiService.getEdgeCases(fpid,clientId,featureCode)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        edgecaseResult.postValue(it)
+                        updatesLoader.postValue(false)
+                    }, {
+                        edgecaseResult.postValue(null)
                         updatesLoader.postValue(false)
                         updatesError.postValue(it.message)
                     })

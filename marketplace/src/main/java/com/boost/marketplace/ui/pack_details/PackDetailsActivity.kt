@@ -68,12 +68,13 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     PackDetailsListener,
     DetailsFragmentListener {
 
+    private lateinit var needMoreFeatureItem: BundlesModel
     private var includedFeaturesInPack: List<FeaturesModel>? = null
     var experienceCode: String? = null
     var screenType: String? = null
     var fpName: String? = null
     var itemInCart = false
-
+    var needMoreFeatureItemInCart = false
     var fpid: String? = null
     var fpTag: String? = null
     var email: String? = null
@@ -832,6 +833,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     }
 
     private fun setupPackItemRecycler(bundlesModel: BundlesModel) {
+        needMoreFeatureItem = bundlesModel
         everythingText.text = "Everything in \"" + bundleData?.name + "\" plus"
         needMoreTitle.setText(bundlesModel.name)
         Glide.with(this).load(bundlesModel.primary_image).into(needMorePackageImg)
@@ -849,6 +851,48 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         }
 
         setupFeatureIcons(bundlesModel)
+
+        viewModel.cartResult().observe(this, androidx.lifecycle.Observer {
+            needMoreFeatureItemInCart = false
+            if (cartList != null && cartList!!.size > 0) {
+
+                if (cartList?.size!! > 0) {
+                    if (cartList != null) {
+                        for (singleCartItem in cartList!!) {
+                            if (singleCartItem.item_id.equals(needMoreFeatureItem.bundle_id)) {
+                                needMoreFeatureItemInCart = true
+                                binding?.addToCart?.background = ContextCompat.getDrawable(
+                                    this.applicationContext,
+                                    R.drawable.ic_packsv3_added_to_cart_bg
+                                )
+                                binding?.addToCart?.setTextColor(
+                                    this.getResources().getColor(R.color.tv_color_BB)
+                                )
+                                binding?.addToCart?.setText(this.getString(R.string.added_to_cart))
+                                binding?.addToCart?.isClickable = false
+                                break
+                            } else {
+                                binding?.addToCart?.setTextColor(this.resources.getColor(R.color.white))
+                                binding?.addToCart?.background = ContextCompat.getDrawable(
+                                    this.applicationContext,
+                                    R.drawable.ic_cart_continue_bg
+                                )
+                                binding?.addToCart?.setText(this.getString(R.string.add_to_cart))
+                                binding?.addToCart?.isClickable = true
+                            }
+                        }
+                    }
+                }
+            } else {
+                binding?.addToCart?.setTextColor(this.resources.getColor(R.color.white))
+                binding?.addToCart?.background = ContextCompat.getDrawable(
+                    this.applicationContext,
+                    R.drawable.ic_cart_continue_bg
+                )
+                binding?.addToCart?.setText(this.getString(R.string.add_to_cart))
+                binding?.addToCart?.isClickable = true
+            }
+        })
 
         comparePacks.setOnClickListener {
             val intent = Intent(this, ComparePacksV3Activity::class.java)
@@ -905,6 +949,20 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                             ""
                         )
                     )
+
+            viewModel.addToCartResult.observe(this) { isSuccess ->
+                if (isSuccess) {
+                    binding?.addToCart?.background = ContextCompat.getDrawable(
+                        this.applicationContext,
+                        R.drawable.ic_packsv3_added_to_cart_bg
+                    )
+                    binding?.addToCart?.setTextColor(
+                        this.getResources().getColor(R.color.tv_color_BB)
+                    )
+                    binding?.addToCart?.setText(this.getString(R.string.added_to_cart))
+                    binding?.addToCart?.isClickable = false
+                }
+            }
                     badgeNumber = badgeNumber + 1
                     Constants.CART_VALUE = badgeNumber
                     add_item_to_cart.background = ContextCompat.getDrawable(
@@ -913,8 +971,10 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                     )
                     add_item_to_cart.setTextColor(Color.parseColor("#bbbbbb"))
                     add_item_to_cart.text = getString(com.boost.cart.R.string.added_to_cart)
+
                 }
     }
+
 
     private fun setupFeatureIcons(bundlesModel: BundlesModel) {
         val temp = Gson().fromJson<List<IncludedFeature>>(

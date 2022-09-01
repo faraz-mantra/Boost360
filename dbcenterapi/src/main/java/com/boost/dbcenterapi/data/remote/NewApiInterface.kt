@@ -2,6 +2,8 @@ package com.boost.dbcenterapi.data.remote
 
 import com.boost.dbcenterapi.data.api_model.CustomDomain.CustomDomains
 import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
+import com.boost.dbcenterapi.data.api_model.Domain.DomainBookingRequest
+import com.boost.dbcenterapi.data.api_model.Edgecase.EdgeCases
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
 import com.boost.dbcenterapi.data.api_model.GetFeatureDetails.FeatureDetailsV2Item
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrderV2.GetPurchaseOrderResponseV2
@@ -13,6 +15,7 @@ import com.boost.dbcenterapi.data.api_model.couponRequest.CouponRequest
 import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponRequest
 import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponResponse
 import com.boost.dbcenterapi.data.api_model.getCouponResponse.GetCouponResponse
+import com.boost.dbcenterapi.data.api_model.mycurrentPlanV3.MyPlanV3
 import com.boost.dbcenterapi.data.api_model.videos.GetVideos
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import io.reactivex.Observable
@@ -87,5 +90,26 @@ interface NewApiInterface {
          @Query("clientId") clientId: String,
          @Query("blockedItem") blockedItem :String
     ):Observable<BlockApi>
+
+    //Edgecases
+    @Headers("Content-Type: application/json")
+    @GET("https://api2.withfloats.com/discover/v1/GetFeatureDetailForEdgeCases?")
+    fun getEdgeCases(
+        @Query("fpId") floatingPointId: String,
+        @Query("clientId") clientId: String,
+        @Query("featureCode") featureCode: String
+    ): Observable<EdgeCases>
+
+    //MyCurrentPlan  Marketplace V3
+    @Headers("Content-Type: application/json")
+    @GET("https://api2.withfloats.com/discover/v1/GetFeatureDetails?")
+    fun GetMyPlanV3(
+        @Query("fpId") floatingPointId: String,
+        @Query("clientId") clientId: String
+    ): Observable<MyPlanV3>
+
+    @Headers("Content-Type: application/json")
+    @PUT("https://plugin.withfloats.com/DomainService/v2/domainWithWebsite/create")
+    fun buyDomainBooking(@Header("Authorization") auth: String, @Body domainBookingRequest: DomainBookingRequest): Observable<String>
 
 }

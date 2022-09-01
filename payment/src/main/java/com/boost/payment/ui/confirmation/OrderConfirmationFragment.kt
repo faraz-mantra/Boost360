@@ -1,5 +1,6 @@
 package com.boost.payment.ui.confirmation
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -32,6 +33,7 @@ class OrderConfirmationFragment : BaseFragment() {
   var screenType: String = ""
   var buyItemKey: String? = ""
   var default_validity_months = 1
+  lateinit var progressDialog: ProgressDialog
 
   companion object {
     fun newInstance() = OrderConfirmationFragment()
@@ -71,14 +73,17 @@ class OrderConfirmationFragment : BaseFragment() {
     )
     session = UserSessionManager(activity as PaymentActivity)
     prefs = SharedPrefs(activity as PaymentActivity)
+
+    viewModel = ViewModelProviders.of(this).get(OrderConfirmationViewModel::class.java)
     return inflater.inflate(R.layout.payment_success_v3, container, false)
   }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
 
-    viewModel = ViewModelProviders.of(this).get(OrderConfirmationViewModel::class.java)
-    viewModel.emptyCurrentCart((activity as PaymentActivity).application);
+    initMvvm()
+    progressDialog = ProgressDialog(requireContext())
+    viewModel.emptyCurrentCartWithDomainActivate((activity as PaymentActivity).application, requireActivity())
 
     //firsttimepurchase logic for app review
     if(prefs.getFirstTimePurchase()){
@@ -161,6 +166,39 @@ class OrderConfirmationFragment : BaseFragment() {
 //      ).show()
 //    }
 
+  }
+
+  private fun initMvvm() {
+    viewModel.getLoaderStatus().observe(this, androidx.lifecycle.Observer {
+      if(it.length>0){
+        showProgress(it)
+      }else{
+        hideProgress()
+      }
+    })
+  }
+
+  private fun showProgress(message: String = "Please wait...") {
+    try {
+      if (!progressDialog.isShowing) {
+        progressDialog.setMessage(message)
+        progressDialog.setCancelable(false)
+        progressDialog.show()
+      }
+    } catch (e: Exception) {
+      SentryController.captureException(e)
+      e.printStackTrace()
+    }
+  }
+
+  private fun hideProgress() {
+    try {
+//      if (progressDialog.isShowing) progressDialog.hide()
+      if (progressDialog.isShowing) progressDialog.cancel()
+    } catch (e: Exception) {
+      SentryController.captureException(e)
+      e.printStackTrace()
+    }
   }
 
   override fun onResume() {

@@ -30,6 +30,7 @@ class ComparePacksViewModel: BaseViewModel() {
     var _fpTag: String = "ABC"
     var allBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
     var allFeatureResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
+    var addToCartResult: MutableLiveData<Boolean> = MutableLiveData()
 
     var updatesResult: MutableLiveData<FeaturesModel> = MutableLiveData()
 
@@ -256,10 +257,12 @@ class ComparePacksViewModel: BaseViewModel() {
             .doOnComplete {
                 updatesLoader.postValue(false)
                 //add cartitem to firebase
+                addToCartResult.postValue(true)
                 DataLoader.updateCartItemsToFirestore(Application())
             }
             .doOnError {
                 updatesError.postValue(it.message)
+                addToCartResult.postValue(false)
                 updatesLoader.postValue(false)
             }
             .subscribe()

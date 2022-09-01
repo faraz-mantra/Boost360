@@ -5,7 +5,9 @@ import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.boost.dbcenterapi.data.api_model.Edgecase.EdgeCases
 import com.boost.dbcenterapi.data.api_model.GetFeatureDetails.FeatureDetailsV2Item
+import com.boost.dbcenterapi.data.api_model.mycurrentPlanV3.MyPlanV3
 import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
@@ -18,12 +20,14 @@ import io.reactivex.schedulers.Schedulers
 
 class MyCurrentPlanViewModel() : BaseViewModel() {
     var updatesResult: MutableLiveData<ArrayList<FeatureDetailsV2Item>> = MutableLiveData()
+    var myplanV3Result: MutableLiveData<MyPlanV3> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
     var activeFreeWidgetList: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var activePremiumWidgetList: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var activeWidgetCount: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var inActiveWidgetCount: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
+    var edgecaseResult: MutableLiveData<EdgeCases> = MutableLiveData()
     val compositeDisposable = CompositeDisposable()
     var ApiService = Utils.getRetrofit().create(NewApiInterface::class.java)
     lateinit var application: Application
@@ -63,6 +67,14 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
 
     fun inActiveWidgetCount(): LiveData<List<FeaturesModel>> {
         return inActiveWidgetCount
+    }
+
+    fun edgecaseResult(): LiveData<EdgeCases> {
+        return edgecaseResult
+    }
+
+    fun myplanResultV3(): LiveData<MyPlanV3> {
+        return myplanV3Result
     }
 
     fun loadPurchasedItems(fpid: String, clientId: String) {
@@ -197,4 +209,42 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
                     })
         )
     }
+
+    fun edgecases(fpid: String,clientId:String,featureCode:String) {
+        updatesLoader.postValue(true)
+        compositeDisposable.add(
+            ApiService.getEdgeCases(fpid,clientId,featureCode)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        edgecaseResult.postValue(it)
+                        updatesLoader.postValue(false)
+                    }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
+
+    fun myPlanV3Status(fpid: String,clientId:String){
+
+        updatesLoader.postValue(true)
+        compositeDisposable.add(
+            ApiService.GetMyPlanV3(fpid,clientId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        myplanV3Result.postValue(it)
+                        updatesLoader.postValue(false)
+                    }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
+
+
+
 }

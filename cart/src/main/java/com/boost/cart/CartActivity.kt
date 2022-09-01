@@ -40,6 +40,8 @@ class CartActivity : AppCompatActivity() {
     var userPurchsedWidgets = ArrayList<String>()
     var isBackCart: Boolean = false
     var deepLinkDay: Int = 7
+    var accountType: String? = null
+    var deepLinkViewType: String = ""
 
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
 
@@ -57,6 +59,8 @@ class CartActivity : AppCompatActivity() {
         mobileNo = intent.getStringExtra("mobileNo")
         profileUrl = intent.getStringExtra("profileUrl")
         fpName = intent.getStringExtra("fpName")
+        accountType = intent.getStringExtra("accountType")
+        deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
 
         prefs = SharedPrefs(this)
 

@@ -5,8 +5,8 @@ import android.util.AttributeSet
 import android.util.Log
 import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SVGImageView
-import com.framework.glide.customsvgloader.PosterKeyModel
 import com.festive.poster.utils.SvgUtils
+import com.framework.glide.customsvgloader.PosterKeyModel
 import kotlinx.coroutines.*
 
 class CustomSvgImageView: SVGImageView {

@@ -115,24 +115,12 @@
                         android:background="@drawable/curve_gray_bg"
                         android:orientation="vertical">
 
-                        <androidx.cardview.widget.CardView
+                        <ImageView
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:layout_gravity="center_horizontal"
                             android:layout_marginTop="48dp"
-                            android:background="@color/white"
-                            app:cardCornerRadius="10dp"
-                            app:cardElevation="4dp">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_gravity="center"
-                                android:layout_margin="5dp"
-                                android:src="@drawable/ic_boost_logo_arrow" />
-
-
-                        </androidx.cardview.widget.CardView>
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_boost_logo_arrow" />
 
                         <TextView
                             android:id="@+id/welcome_txt"
@@ -1215,9 +1203,9 @@
                         android:id="@+id/footer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/bottom_box"
                         android:visibility="gone"
-                        tools:visibility="visible"
-                        android:layout_below="@+id/bottom_box">
+                        tools:visibility="visible">
 
 
                         <TextView
@@ -1265,10 +1253,10 @@
                             android:textSize="13sp"
                             android:textStyle="bold"
                             android:visibility="gone"
-                            tools:visibility="visible"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/refer_and_earn" />
+                            app:layout_constraintTop_toBottomOf="@id/refer_and_earn"
+                            tools:visibility="visible" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

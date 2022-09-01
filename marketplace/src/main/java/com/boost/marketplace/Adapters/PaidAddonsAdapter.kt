@@ -48,22 +48,22 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
     if (list.size - 1 == position) {
       holder.view.visibility = View.GONE
     }
-    if (cryptocurrencyItem.featureState !=null && cryptocurrencyItem.featureState == 1){
-      holder.itemView.visibility=View.VISIBLE
-      holder.itemView.layoutParams =
-        RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-    }
-    else{
-      holder.itemView.visibility=View.GONE
-      holder.itemView.layoutParams = RecyclerView.LayoutParams(0, 0)
-    }
+//    if (cryptocurrencyItem.featureState !=null && cryptocurrencyItem.featureState == 1){
+//      holder.itemView.visibility=View.VISIBLE
+//      holder.itemView.layoutParams =
+//        RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+//    }
+//    else{
+//      holder.itemView.visibility=View.GONE
+//      holder.itemView.layoutParams = RecyclerView.LayoutParams(0, 0)
+//    }
 
-    if (cryptocurrencyItem.is_premium== true){
-      holder.paid_addons_activate.visibility=View.VISIBLE
-    }
-    else{
-      holder.paid_addons_activate.visibility=View.GONE
-    }
+//    if (cryptocurrencyItem.is_premium== true){
+//      holder.paid_addons_activate.visibility=View.VISIBLE
+//    }
+//    else{
+//      holder.paid_addons_activate.visibility=View.GONE
+//    }
 //    holder.mainlayout.setOnClickListener {
 //      if (holder.detailsView.visibility==View.GONE) {
 //        TransitionManager.beginDelayedTransition(holder.detailsView, AutoTransition())
@@ -128,7 +128,7 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
         img1.setImageResource(R.drawable.ic_active)
       }
       else {
-        img1.setImageResource(R.drawable.ic_action_req)
+        img1.setImageResource(R.drawable.ic_active)
       }
     }
   }

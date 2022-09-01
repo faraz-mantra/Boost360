@@ -97,7 +97,7 @@ import kotlin.concurrent.schedule
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
-  private val MY_REQUEST_CODE = 120
+
   private var doubleBackToExitPressedOnce = false
   private var mDeepLinkUrl: String? = null;
   private var mPayload: String? = null
@@ -106,8 +106,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private var session: UserSessionManager? = null
   private var adapterDrawer: AppBaseRecyclerViewAdapter<DrawerHomeData>? = null
   private var isSecondaryImage = false
-  private lateinit var appUpdateManager: AppUpdateManager
-  private lateinit var appUpdateInfoTask: Task<AppUpdateInfo>
   var isLoadShimmer = true
   var count = 0
   var activePreviousItem = 0
@@ -156,57 +154,15 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
     initRemoteConfigData(this)
     reloadCapLimitData()
-    checkForUpdate()
   }
 
   private fun bottomNavInitializer() {
     binding?.viewBottomBar?.navView?.setOnItemSelectedListener(this)
   }
 
-  private fun checkForUpdate() {
-    Log.i(TAG, "checkForUpdate: Inside Method")
-    appUpdateManager = AppUpdateManagerFactory.create(this)
-    appUpdateManager.registerListener(appUpdateListener)
-    appUpdateInfoTask = appUpdateManager.appUpdateInfo
-    appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-      Log.i(TAG, "checkForUpdate: ${appUpdateInfo.updateAvailability()} ${appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)}")
-      if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE || appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
-        startUpdate(appUpdateInfo)
-      } else if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
-        popupSnackBarForCompleteUpdate();
-      }
-    }
-  }
 
-  private fun startUpdate(appUpdateInfo: AppUpdateInfo) {
-    try {
-      appUpdateManager.startUpdateFlowForResult(appUpdateInfo, appUpdateType(), this, MY_REQUEST_CODE)
-    } catch (e: IntentSender.SendIntentException) {
-      e.printStackTrace();
-      SentryController.captureException(e)
-    }
-  }
 
-  private val appUpdateListener: InstallStateUpdatedListener = InstallStateUpdatedListener { state ->
-    when {
-      state.installStatus() == InstallStatus.DOWNLOADED -> popupSnackBarForCompleteUpdate()
-      state.installStatus() == InstallStatus.INSTALLED -> removeInstallStateUpdateListener()
-      else -> showShortToast("InstallStateUpdatedListener: state: ${state.installStatus()}")
-    }
-  }
 
-  private fun popupSnackBarForCompleteUpdate() {
-    Snackbar.make(
-      findViewById<View>(android.R.id.content).rootView,
-      getString(R.string.download_complete), Snackbar.LENGTH_INDEFINITE
-    ).setAction(getString(R.string.install)) {
-      if (this::appUpdateManager.isInitialized) appUpdateManager.completeUpdate()
-    }.setActionTextColor(ContextCompat.getColor(this, R.color.green_light)).show()
-  }
-
-  private fun removeInstallStateUpdateListener() {
-    if (this::appUpdateManager.isInitialized) appUpdateManager.unregisterListener(appUpdateListener)
-  }
 
 //  private fun loadMarketPlaceData() {
 //    Log.e("loadMarketPlaceData", "Initialized")
@@ -544,13 +500,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    if (requestCode == MY_REQUEST_CODE) {
-      when (resultCode) {
-        RESULT_OK -> showShortToast("App updated successfully")
-        RESULT_CANCELED -> showShortToast("App update cancelled")
-        ActivityResult.RESULT_IN_APP_UPDATE_FAILED -> showShortToast("App update failed")
-      }
-    }
+
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK && isSecondaryImage) {
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
       if (mPaths.isNullOrEmpty().not()) uploadSecondaryImage(mPaths[0])
@@ -689,8 +639,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onStop() {
     super.onStop()
     BadgesFirestoreManager.listenerBadges = null
-    removeInstallStateUpdateListener()
-    CartFirestoreManager.listener = null
   }
 
   override fun onStart() {

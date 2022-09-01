@@ -3,6 +3,7 @@ package com.festive.poster.utils
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.collection.LruCache
+import com.framework.analytics.SentryController
 
 class SvgCaching private constructor() {
 
@@ -26,6 +27,8 @@ class SvgCaching private constructor() {
         try {
             SvgCaching.instance.lru.put(key, svgString)
         } catch (e: Exception) {
+            SentryController.captureException(e)
+
             Log.e(TAG, "saveToCache: $e", )
         }
 
@@ -36,6 +39,8 @@ class SvgCaching private constructor() {
         try {
             return SvgCaching.instance.lru.get(key) as String?
         } catch (e: Exception) {
+            SentryController.captureException(e)
+
         }
 
         return null

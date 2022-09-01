@@ -73,12 +73,12 @@
                             android:id="@+id/title_appbar"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:background="@color/colorTransparentPrimary1"
                             android:fontFamily="@font/bold"
+                            android:gravity="center_vertical"
+                            android:maxLines="1"
                             android:paddingStart="@dimen/_50sdp"
                             android:paddingEnd="@dimen/_50sdp"
-                            android:maxLines="1"
-                            android:gravity="center_vertical"
-                            android:background="@color/colorTransparentPrimary1"
                             android:text="@string/facebook_lead_ads_upto_75_leads"
                             android:textColor="@color/white"
                             android:textSize="16sp"
@@ -143,16 +143,62 @@
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/app_bar_layout"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/shimmer_bg"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible">
+
+            <!-- Adding 7 rows of placeholders -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/feature_details_placeholder_layout" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/_25sdp">
+
+                    <include layout="@layout/feature_data_place" />
+
+                    <include layout="@layout/feature_data_place" />
+
+                    <include layout="@layout/feature_data_place" />
+
+                    <include layout="@layout/feature_data_place" />
+
+                    <include layout="@layout/feature_data_place" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:overScrollMode="never"
-            app:behavior_overlapTop="104dp"
-            android:paddingBottom="80dp"
             android:clipToPadding="false"
             android:fillViewport="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:overScrollMode="never"
+            android:paddingBottom="80dp"
+            android:visibility="gone"
+            app:behavior_overlapTop="104dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:visibility="gone">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -219,11 +265,10 @@
                             android:layout_marginTop="16dp"
                             android:layout_marginEnd="16dp"
                             android:layout_marginBottom="16dp"
-                            android:visibility="gone"
-                            tools:visibility="gone"
                             android:background="@drawable/rounded_curve_bg"
-                            android:padding="@dimen/_15sdp">
-
+                            android:padding="@dimen/_15sdp"
+                            android:visibility="gone"
+                            tools:visibility="gone">
 
                             <ImageView
                                 android:id="@+id/image1222"
@@ -370,8 +415,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/imagexx"
-                            android:clickable="false"
                             android:layout_alignParentStart="true"
+                            android:clickable="false"
                             android:visibility="gone"
                             tools:visibility="visible">
 
@@ -471,6 +516,7 @@
                                 android:layout_marginTop="32dp"
                                 android:layout_marginEnd="@dimen/_15sdp"
                                 android:background="@drawable/cta_button_click_effect"
+                                android:clickable="true"
                                 android:fontFamily="@font/bold"
                                 android:gravity="center"
                                 android:minHeight="52dp"
@@ -478,7 +524,6 @@
                                 android:paddingTop="10dp"
                                 android:paddingEnd="@dimen/_30sdp"
                                 android:paddingBottom="10dp"
-                                android:clickable="true"
                                 android:text="Claim the above"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"
@@ -521,55 +566,56 @@
                     android:id="@+id/edge_cases_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_border_red_white_bg"
                     android:layout_marginStart="16dp"
-                    android:padding="16dp"
                     android:layout_marginEnd="16dp"
+                    android:background="@drawable/rounded_border_red_white_bg"
+                    android:padding="16dp"
                     android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@id/header">
+                    app:layout_constraintTop_toBottomOf="@id/header"
+                    tools:visibility="visible">
 
                     <TextView
                         android:id="@+id/edge_case_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_error_red"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:fontFamily="@font/semi_bold"
                         android:text="Something went wrong!"
                         android:textColor="@color/red"
-                        android:drawableStart="@drawable/ic_error_red"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:drawablePadding="@dimen/_5sdp"
                         android:textFontWeight="600"
-                        android:fontFamily="@font/semi_bold"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/edge_case_desc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="There is an internal error inside Boost 360. We are working to resolve this issue."
-                        android:paddingStart="22dp"
-                        android:paddingEnd="5dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:textFontWeight="600"
                         android:fontFamily="@font/semi_bold"
+                        android:paddingStart="22dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="There is an internal error inside Boost 360. We are working to resolve this issue."
+                        android:textFontWeight="600"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/edge_case_title"/>
+                        app:layout_constraintTop_toBottomOf="@id/edge_case_title" />
 
                     <TextView
                         android:id="@+id/edge_case_hyperlink"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/action_required"
-                        android:textSize="12sp"
                         android:fontFamily="@font/semi_bold"
-                        android:textFontWeight="600"
-                        android:textColor="@color/orange"
                         android:paddingStart="22dp"
-                        android:paddingEnd="5dp"
                         android:paddingTop="5dp"
+                        android:paddingEnd="5dp"
                         android:paddingBottom="5dp"
+                        android:text="@string/action_required"
+                        android:textColor="@color/orange"
+                        android:textFontWeight="600"
+                        android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/edge_case_desc"/>
+                        app:layout_constraintTop_toBottomOf="@id/edge_case_desc" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -579,15 +625,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    tools:visibility="visible"
-                    app:layout_constraintTop_toBottomOf="@id/edge_cases_layout">
+                    app:layout_constraintTop_toBottomOf="@id/edge_cases_layout"
+                    tools:visibility="visible">
 
                     <TextView
                         android:id="@+id/benefit_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/bold"
-                        android:padding="16dp"
+                        android:paddingHorizontal="@dimen/dimen_16dp"
+                        android:paddingVertical="8dp"
                         android:text="Benefits For Your Business"
                         android:textColor="@color/main_color_gray_dk"
                         android:textFontWeight="600"
@@ -649,8 +696,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/bold"
-                        android:padding="16dp"
                         android:maxLines="1"
+                        android:paddingHorizontal="@dimen/dimen_16dp"
+                        android:paddingVertical="8dp"
                         android:text="Packs with “Staff Management”"
                         android:textColor="@color/main_color_gray_dk"
                         android:textFontWeight="600"
@@ -705,25 +753,25 @@
                         android:id="@+id/how_to_use_title_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:visibility="visible"
                         android:visibility="gone"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="visible">
 
                         <TextView
                             android:id="@+id/tv_how_to_use_title"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:maxLines="1"
                             android:fontFamily="@font/semi_bold"
+                            android:maxLines="1"
                             android:padding="16dp"
-                            tools:text="How To Use Staff Management?"
                             android:textColor="@color/main_color_gray_dk"
                             android:textFontWeight="600"
                             android:textSize="16sp"
                             app:layout_constraintEnd_toStartOf="@id/how_to_use_arrow"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="How To Use Staff Management?" />
 
                         <ImageView
                             android:id="@+id/how_to_use_arrow"
@@ -742,10 +790,10 @@
                         android:id="@+id/how_to_use_recycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:listitem="@layout/how_to_use_item"
                         android:visibility="gone"
-                        tools:visibility="gone"
-                        app:layout_constraintTop_toBottomOf="@id/how_to_use_title_layout" />
+                        app:layout_constraintTop_toBottomOf="@id/how_to_use_title_layout"
+                        tools:listitem="@layout/how_to_use_item"
+                        tools:visibility="gone" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -753,9 +801,9 @@
                     android:id="@+id/what_our_customer_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:visibility="visible"
                     android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@id/how_to_use_container">
+                    app:layout_constraintTop_toBottomOf="@id/how_to_use_container"
+                    tools:visibility="gone">
 
                     <TextView
                         android:id="@+id/what_our_customer_title"
@@ -802,17 +850,19 @@
                     android:id="@+id/faq_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:visibility="visible"
+                    android:layout_marginTop="10dp"
                     android:visibility="gone"
                     app:layout_constraintBottom_toTopOf="@+id/terms"
-                    app:layout_constraintTop_toBottomOf="@id/what_our_customer_container">
+                    app:layout_constraintTop_toBottomOf="@id/what_our_customer_container"
+                    tools:visibility="visible">
 
                     <TextView
                         android:id="@+id/faq_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/bold"
-                        android:padding="16dp"
+                        android:paddingHorizontal="@dimen/dimen_16dp"
+                        android:paddingVertical="8dp"
                         android:text="Frequently asked questions"
                         android:textColor="@color/main_color_gray_dk"
                         android:textFontWeight="600"
@@ -824,12 +874,12 @@
                         android:id="@+id/faq_recycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_curve_bg"
                         android:layout_margin="16dp"
-                        tools:listitem="@layout/faq_item"
+                        android:background="@drawable/rounded_curve_bg"
                         android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/faq_title" />
+                        app:layout_constraintTop_toBottomOf="@id/faq_title"
+                        tools:listitem="@layout/faq_item" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -854,91 +904,103 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
-        <LinearLayout
-            android:id="@+id/bottom_box"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/footer_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:layout_gravity="bottom"
             android:visibility="gone"
-            tools:visibility="visible"
-            android:orientation="horizontal">
+            tools:visibility="visible">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:orientation="vertical"
-                android:gravity="center_vertical">
+                android:id="@+id/bottom_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/final_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/semi_bold"
+                        android:text="₹2,999"
+                        android:textColor="@color/color_1919"
+                        android:textFontWeight="600"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/mrp_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/staff/month" />
+
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/final_price"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/add_item_to_cart"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="₹2,999"
-                    android:fontFamily="@font/semi_bold"
-                    android:textFontWeight="600"
-                    android:textSize="18sp"
-                    android:textColor="@color/color_1919"/>
-
-                <TextView
-                    android:id="@+id/mrp_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="/staff/month"
-                    />
+                    android:layout_margin="20dp"
+                    android:background="@drawable/cta_button_click_effect"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_30sdp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="@dimen/_30sdp"
+                    android:paddingBottom="10dp"
+                    android:text="Add to cart"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title_bottom3" />
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/add_item_to_cart"
+            <LinearLayout
+                android:id="@+id/bottom_box_only_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:textSize="16sp"
-                android:background="@drawable/cta_button_click_effect"
-                android:fontFamily="@font/bold"
-                android:gravity="center"
-                android:paddingStart="@dimen/_30sdp"
-                android:paddingTop="10dp"
-                android:paddingEnd="@dimen/_30sdp"
-                android:paddingBottom="10dp"
-                android:text="Add to cart"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_bottom3" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/bottom_box_only_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:layout_gravity="bottom"
-            android:visibility="visible"
-            tools:visibility="visible"
-            android:orientation="horizontal">
+                android:layout_gravity="bottom"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible">
 
 
-            <TextView
-                android:id="@+id/add_item_to_cart_new"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="@drawable/cta_button_click_effect"
-                android:fontFamily="@font/semi_bold"
-                android:gravity="center"
-                android:paddingStart="@dimen/_30sdp"
-                android:paddingTop="10dp"
-                android:paddingEnd="@dimen/_30sdp"
-                android:paddingBottom="10dp"
-                android:text="Add To Cart"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_bottom3" />
+                <TextView
+                    android:id="@+id/add_item_to_cart_new"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/cta_button_click_effect"
+                    android:fontFamily="@font/semi_bold"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_30sdp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="@dimen/_30sdp"
+                    android:paddingBottom="10dp"
+                    android:text="Add To Cart"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title_bottom3" />
 
-        </LinearLayout>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

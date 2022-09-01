@@ -18,11 +18,10 @@ import java.lang.ref.WeakReference
 
 class BoostSvgStringLoader(
     var url: String,
-    var model: MutableList<PosterKeyModel>,
+    var model: MutableList<PosterKeyModel>?,
     var resource: CustomPictureDrawable,
     var context: Context,
     view: ImageView?,
-    val isPurchased: Boolean
 ) : Runnable {
     var view: WeakReference<ImageView?>
     override fun run() {
@@ -32,7 +31,7 @@ class BoostSvgStringLoader(
             svgString?.let { instance.saveToCache(url, it) }
         }
         if (svgString != null && !svgString.isEmpty()) {
-            svgString = instance.replace(svgString, model, context,isPurchased)
+            svgString = instance.replace(svgString, model, context)
             setSvg(svgString)
         }
     }

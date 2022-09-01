@@ -101,6 +101,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="600"
+                        android:visibility="gone"
                         android:fontFamily="@font/regular"
                         android:lineSpacingExtra="1.3sp"
                         android:textColor="@color/coupon_text_color"

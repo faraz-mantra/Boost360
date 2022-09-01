@@ -322,7 +322,7 @@
                             android:layout_marginStart="@dimen/dimen_16dp"
                             android:layout_marginTop="@dimen/dimen_24dp"
                             android:layout_marginEnd="@dimen/dimen_16dp"
-                            android:layout_marginBottom="140dp"
+                            android:layout_marginBottom="180dp"
                             android:background="@drawable/rounded_curve_bg"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -351,10 +351,7 @@
                                 tools:itemCount="2"
                                 tools:listitem="@layout/faq_item" />
 
-
                         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.core.widget.NestedScrollView>
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.Utils
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.AddonsListener
@@ -86,7 +87,14 @@ class BrowseParentFeaturesAdapter(
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        val adapter = BrowseChildFeaturesAdapter(ArrayList(it.subList(0,4)), accountType , addonsListener, activity)
+                        val tempList = ArrayList(it.subList(0,4))
+                        val list = ArrayList<FeaturesModel>()
+                        for(singleItem in tempList){
+                            if(!singleItem.feature_code.equals("LIMITED_CONTENT")){
+                                list.add(singleItem)
+                            }
+                        }
+                        val adapter = BrowseChildFeaturesAdapter(list, accountType , addonsListener, activity)
                         holder.recyclerview.adapter = adapter
                         adapter.notifyDataSetChanged()
                     }, {
@@ -101,7 +109,13 @@ class BrowseParentFeaturesAdapter(
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        val adapter = BrowseChildFeaturesAdapter(it, accountType, addonsListener, activity)
+                        val list = ArrayList<FeaturesModel>()
+                        for(singleItem in it){
+                            if(!singleItem.feature_code.equals("LIMITED_CONTENT")){
+                                list.add(singleItem)
+                            }
+                        }
+                        val adapter = BrowseChildFeaturesAdapter(list, accountType, addonsListener, activity)
                         holder.recyclerview.adapter = adapter
                         adapter.notifyDataSetChanged()
                     }, {

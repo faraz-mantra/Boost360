@@ -299,6 +299,31 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             val intent = Intent(this, MyCurrentPlanActivity::class.java)
             intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
             intent.putExtra("fpid", fpid)
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("isDeepLink", isDeepLink)
+            intent.putExtra("deepLinkViewType", deepLinkViewType)
+            intent.putExtra("deepLinkDay", deepLinkDay)
+            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                userPurchsedWidgets
+            )
+            if (email != null) {
+                intent.putExtra("email", email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                intent.putExtra("mobileNo", mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", profileUrl)
+
             startActivity(intent)
         }
 
@@ -584,7 +609,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 this.fpTag
             )
             viewModel.loadPurchasedItems(this.fpid!!, this.clientid)
-            viewModel.loadPurchasedItems1(this.fpid!!, this.clientid)
+  //          viewModel.loadPurchasedItems1(this.fpid!!, this.clientid)
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
@@ -1225,14 +1250,16 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
         viewModel.getActivePremiumWidgets().observe(this, androidx.lifecycle.Observer {
             //display referal if there is any paid addons
-            if (it.size > 0) {
-                bottom_box.visibility = View.VISIBLE
-                footer.visibility = View.VISIBLE
-            }
-            else {
-                bottom_box.visibility = View.GONE
-                footer.visibility = View.GONE
-            }
+//            if (it.size > 0) {
+//                bottom_box.visibility = View.VISIBLE
+//                footer.visibility = View.VISIBLE
+//            }
+//            else {
+//                bottom_box.visibility = View.GONE
+//                footer.visibility = View.GONE
+//            }
+            bottom_box.visibility = View.GONE
+            footer.visibility = View.GONE
         })
 
         viewModel.getActivePremiumWidgets1().observe(this, androidx.lifecycle.Observer {
@@ -1359,8 +1386,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                        expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
 //                    }
 
-                    bottom_box.visibility = View.VISIBLE
-                    footer.visibility = View.VISIBLE
+//                    bottom_box.visibility = View.VISIBLE
+//                    footer.visibility = View.VISIBLE
                 }
             }
             else {

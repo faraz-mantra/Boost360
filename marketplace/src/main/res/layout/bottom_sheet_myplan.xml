@@ -9,9 +9,12 @@
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="false"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:orientation="vertical">
 
         <ImageView
@@ -87,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:id="@+id/cslayout"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:paddingTop="11dp"
                 app:layout_constraintTop_toBottomOf="@id/addons_icon">
@@ -120,6 +123,7 @@
                     android:layout_marginBottom="16dp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toTopOf="@+id/txt_desc2"
                     app:layout_constraintTop_toBottomOf="@+id/txt_desc"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -138,6 +142,7 @@
                     android:textFontWeight="400"
                     android:textStyle="normal"
                     android:gravity="start"
+                    android:visibility="gone"
                     android:includeFontPadding="false"
                     android:text="Valid till "
                     android:textColor="@color/black_4a4a4a"
@@ -197,6 +202,7 @@
                     android:text="30 Dec 2022"
                     android:fontFamily="@font/semi_bold"
                     android:textStyle="normal"
+                    android:visibility="gone"
                     android:textColor="@color/black_4a4a4a"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@+id/txt_desc2"
@@ -213,7 +219,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_border_red_white_bg"
                     android:padding="16dp"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:layout_marginTop="@dimen/_15sdp"
                     app:layout_constraintEnd_toEndOf="@+id/cslayout"
                     app:layout_constraintStart_toStartOf="@+id/cslayout"
@@ -236,6 +242,7 @@
                         android:id="@+id/edge_case_desc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:text="There is an internal error inside Boost 360. We are working to resolve this issue."
                         android:paddingStart="22dp"
                         android:paddingEnd="5dp"
@@ -306,6 +313,23 @@
                 app:layout_constraintTop_toBottomOf="@+id/edge_cases_layout" />
 
             <Button
+                android:id="@+id/btn1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/cta_button_click_effect"
+                android:enabled="true"
+                android:fontFamily="@font/bold"
+                android:textSize="@dimen/_12sdp"
+                android:text="Choose ..."
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_Use_this_feature" />
+
+            <Button
                 android:id="@+id/btn_feature_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -323,7 +347,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.228"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_Use_this_feature" />
+                app:layout_constraintTop_toBottomOf="@+id/btn1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>

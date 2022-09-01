@@ -42,7 +42,7 @@ class AutoRenewOrderConfirmationFragment : BaseFragment() {
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
     viewModel = ViewModelProviders.of(this).get(OrderConfirmationViewModel::class.java)
-    viewModel.emptyCurrentCart((activity as CartActivity).application);
+    viewModel.emptyCurrentCart((activity as CartActivity).application)
 
     //clear CartRelatedInfo
     prefs.storeOrderSuccessFlag(true)

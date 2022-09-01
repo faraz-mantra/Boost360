@@ -96,8 +96,8 @@
                     android:id="@+id/paid_addons_activate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    tools:visibility="visible">
+                    android:visibility="gone"
+                    tools:visibility="gone">
 
                     <TextView
                         android:id="@+id/validity2"
