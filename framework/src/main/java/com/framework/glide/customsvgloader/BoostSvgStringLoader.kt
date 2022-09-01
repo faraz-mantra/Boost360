@@ -47,7 +47,7 @@ class BoostSvgStringLoader(
             svgString =  if (svgType==SvgRenderCacheUtil.SVG_TYPE.FESTIVE_POSTER){
                 festiveRender.replace(svgString,model,context)
             }else{
-                updateStudioRendrer.replace(svgString)
+                updateStudioRendrer.replace(svgString,context)
             }
             setSvg(svgString)
         }

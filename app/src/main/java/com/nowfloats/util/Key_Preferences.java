@@ -1,5 +1,7 @@
 package com.nowfloats.util;
 
+import com.framework.utils.PreferencesKey;
+
 /**
  * Created by NowFloatsDev on 26/05/2015.
  */
@@ -95,7 +97,7 @@ public class Key_Preferences {
     public static String GET_FP_DETAILS_WIDGET_FB_LIKE_BOX = "GET_FP_DETAILS_WIDGET_FB_LIKE_BOX";
     public static String GET_FP_DETAILS_PINCODE = "GET_FP_DETAILS_PINCODE";
     public static String GET_FP_DETAILS_ROOTALIASURI = "GET_FP_DETAILS_ROOTALIASURI";
-    public static String GET_FP_DETAILS_LogoUrl = "GET_FP_DETAILS_LogoUrl";
+    public static String GET_FP_DETAILS_LogoUrl = PreferencesKey.GET_FP_DETAILS_LogoUrl.name();
     public static String GET_FP_DETAILS_IMAGE_URI = "GET_FP_DETAILS_IMAGE_URI";
     public static String GET_FP_DETAILS_FAVICON_IMAGE_URI = "GET_FP_DETAILS_FAVICON_IMAGE_URI";
     public static String GET_FP_DETAILS_TILE_IMAGE_URI = "GET_FP_DETAILS_TILE_IMAGE_URI";

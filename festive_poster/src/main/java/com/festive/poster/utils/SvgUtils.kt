@@ -22,6 +22,7 @@ import com.framework.analytics.SentryController
 import com.framework.constants.PackageNames
 import com.framework.glide.customsvgloader.*
 import com.framework.utils.RegexUtils
+import com.framework.utils.application
 import com.framework.utils.saveImageToStorage
 import com.framework.utils.shareAsImage
 import kotlinx.coroutines.CoroutineScope
@@ -292,6 +293,7 @@ object SvgUtils {
         if (svgString != null && !svgString.isEmpty()) {
             svgString = UpdateStudioSvgRenderCache.instance.replace(
                 svgString,
+                application()
             )
 
             val svg = SVG.getFromString(svgString)
