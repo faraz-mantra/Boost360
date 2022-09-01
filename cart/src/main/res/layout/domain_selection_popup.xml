@@ -110,7 +110,9 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:text="Select your website address"
                     android:fontFamily="@font/regular"
-                    android:textSize="12dp"/>
+                    android:textSize="20dp"
+                    android:textFontWeight="700"
+                    android:textColor="@color/main_color_gray_dk"/>
 
                 <TextView
                     android:id="@+id/desc"
@@ -120,7 +122,8 @@
                     android:text="Custom domain with Free SSL Security"
                     android:fontFamily="@font/regular"
                     android:textFontWeight="400"
-                    android:textSize="12dp"/>
+                    android:textSize="12dp"
+                    android:textColor="@color/main_color_gray_dk"/>
 
 
                 <TextView
