@@ -377,7 +377,7 @@
     <color name="tv_color_BB">#BBBBBB</color>
 
     <color name="colorPrimaryLight">@color/colorPrimary1</color>
-    <color name="colorAccentLight">#FDD835</color>
+    <color name="color_accentlight_marketplace">#FDD835</color>
     <color name="yellowBorder">@color/yellow</color>
     <color name="searchBGborder">#FFB900</color>
 
