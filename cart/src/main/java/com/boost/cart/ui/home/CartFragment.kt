@@ -3877,21 +3877,44 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
     }
 
     override fun applycoupon(mList: Data) {
-        val event_attributes: HashMap<String, Any> = HashMap()
-        event_attributes.put("Coupon_code", mList.code!!)
-        WebEngageController.trackEvent(
-            ADDONS_MARKETPLACE_Discount_Coupon_Loaded,
-            NO_EVENT_LABLE,
-            NO_EVENT_VALUE
-        )
-        mList.code?.let {
-            viewModel.getCouponRedeem(mList.code?.let {
-                RedeemCouponRequest(
-                    total,
-                    it,
-                    (activity as CartActivity).fpid!!
-                )
-            }!!, it)
+        if (couponDiwaliRedundant.contains("WILDFIRE_FB_LEAD_ADS")) {
+            Toasty.error(
+                requireContext(),
+                "In order to apply coupon remove the item " + couponDiwaliRedundant.get("WILDFIRE_FB_LEAD_ADS"),
+                Toast.LENGTH_SHORT,
+                true
+            ).show()
+        } else if (couponDiwaliRedundant.contains("WILDFIRE")) {
+            Toasty.error(
+                requireContext(),
+                "In order to apply coupon remove the item " + couponDiwaliRedundant.get("WILDFIRE"),
+                Toast.LENGTH_SHORT,
+                true
+            ).show()
+        } else if (couponDiwaliRedundant.contains("DICTATE")) {
+            Toasty.error(
+                requireContext(),
+                "In order to apply coupon remove the item " + couponDiwaliRedundant.get("DICTATE"),
+                Toast.LENGTH_SHORT,
+                true
+            ).show()
+        } else {
+            val event_attributes: HashMap<String, Any> = HashMap()
+            event_attributes.put("Coupon_code", mList.code!!)
+            WebEngageController.trackEvent(
+                ADDONS_MARKETPLACE_Discount_Coupon_Loaded,
+                NO_EVENT_LABLE,
+                NO_EVENT_VALUE
+            )
+            mList.code?.let {
+                viewModel.getCouponRedeem(mList.code?.let {
+                    RedeemCouponRequest(
+                        total,
+                        it,
+                        (activity as CartActivity).fpid!!
+                    )
+                }!!, it)
+            }
         }
     }
 
