@@ -89,7 +89,6 @@
             android:text="@string/explore_update_studio"
             android:textColor="@color/white"
             android:textSize="@dimen/size_16"
-            android:visibility="gone"
             app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/white_bg"
