@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:background="#F5F8FD"
+        android:orientation="vertical">
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:id="@+id/package_menu_icon"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_packs_menu" />
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:fontFamily="@font/regular"
+                    android:text="Compare packs"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/package_back"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <ImageView
+                    android:id="@+id/package_back"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/arrow_white"
+                    android:padding="15dp"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_view_packsv3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_below="@id/toolbar"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible">
+
+            <!-- Adding 7 rows of placeholders -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <include layout="@layout/data_place_packs" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/packs_data"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+
+                    <LinearLayout
+                        android:id="@+id/trip_cv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:padding="16dp"
+                        android:background="@drawable/packsv3_bg1"
+                        app:cardCornerRadius="10dp"
+                        android:elevation="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <LinearLayout
+                                android:id="@+id/mainll"
+                                android:layout_width="100dp"
+                                android:layout_height="match_parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:gravity="center"
+                                app:layout_constraintEnd_toStartOf="@+id/packsv3recycler"
+                                app:layout_constraintBottom_toBottomOf="parent">
+
+
+                                <ImageView
+                                    android:id="@+id/packs_details"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="5dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="16dp"
+                                    android:src="@drawable/ic_pack_icon_details" />
+
+
+                            </LinearLayout>
+
+<!--                            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                                android:id="@+id/cs"-->
+<!--                                android:layout_width="80dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginTop="8dp"-->
+<!--                                app:layout_constraintStart_toEndOf="@+id/mainll"-->
+<!--                                app:layout_constraintTop_toTopOf="parent"-->
+<!--                                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                app:layout_constraintBottom_toTopOf="@+id/packsv3recycler">-->
+
+<!--                                <ImageView-->
+<!--                                    android:id="@+id/best_pack"-->
+<!--                                    android:layout_width="62dp"-->
+<!--                                    android:layout_height="14dp"-->
+<!--                                    android:visibility="visible"-->
+<!--                                    android:src="@drawable/ic_bestvalue"-->
+<!--                                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                    app:layout_constraintBottom_toBottomOf="parent"/>-->
+<!--                            </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/packsv3recycler"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:nestedScrollingEnabled="true"
+                                app:layout_constraintStart_toEndOf="@+id/mainll"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                tools:itemCount="3"
+                                android:overScrollMode="never"
+                                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                tools:listitem="@layout/item_packsv3"
+                                tools:orientation="horizontal" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/main_scroller"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:background="#F5F8FD"
+            app:layout_constraintBottom_toTopOf="@+id/footer_checkout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trip_cv">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cs1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="10dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:elevation="7dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/savings"
+                        android:background="@drawable/packsv3_lower_bg"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/maincs2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toTopOf="@+id/addons_recycler">
+
+                            <LinearLayout
+                                android:id="@+id/mainll1"
+                                android:layout_width="100dp"
+                                android:layout_height="match_parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent">
+
+
+                            <TextView
+                                android:id="@+id/price_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="15dp"
+                                android:fontFamily="@font/bold"
+                                android:text="Pack price"
+                                android:textColor="#333333"
+                                android:textFontWeight="400"
+                                android:textSize="12sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            </LinearLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/packs_price_recycler"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:layout_marginStart="5dp"
+                                android:overScrollMode="never"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/mainll1"
+                                tools:itemCount="4"
+                                android:nestedScrollingEnabled="true"
+                                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                tools:listitem="@layout/item_packs_pricev3"
+                                tools:orientation="horizontal" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/addons_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="30dp"
+                            tools:itemCount="3"
+                            android:overScrollMode="never"
+                            android:nestedScrollingEnabled="true"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/item_packsv3_addons"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/maincs2"
+                            app:layout_constraintBottom_toBottomOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+<!--                    <ImageView-->
+<!--                        android:id="@+id/img"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="30dp"-->
+<!--                        android:scaleType="centerCrop"-->
+<!--                        android:src="@drawable/packs_offer_v3"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@+id/cs1" />-->
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/savings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:layout_marginTop="30dp"
+                    android:background="#E0EEFF"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cs1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_discount"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_packsv3_new"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:padding="16dp">
+
+
+
+                        <TextView
+                            android:id="@+id/savings_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="save upto"
+                            android:textSize="12sp"
+                            android:textFontWeight="600"
+                            android:fontFamily="@font/regular"
+                            android:textColor="@color/colorAccent1"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/savings_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="45%"
+                            android:textSize="24sp"
+                            android:textFontWeight="700"
+                            android:fontFamily="@font/regular"
+                            android:textColor="@color/colorAccent1"
+                            app:layout_constraintStart_toStartOf="@+id/savings_title"
+                            app:layout_constraintTop_toBottomOf="@+id/savings_title"/>
+
+                        <View
+                            android:id="@+id/view"
+                            android:layout_width="1dp"
+                            android:layout_height="32dp"
+                            android:background="#BBBBBB"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            app:layout_constraintStart_toEndOf="@+id/savings_title"
+                            app:layout_constraintBottom_toBottomOf="@+id/savings_txt"
+                            app:layout_constraintTop_toTopOf="@+id/savings_title"/>
+
+                        <TextView
+                            android:id="@+id/savings_desc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Compared to \nbuy features individually"
+                            android:textSize="12sp"
+                            android:textFontWeight="600"
+                            android:lineHeight="16dp"
+                            android:fontFamily="@font/bold"
+                            android:textColor="@color/common_text_color"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/view"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/how_to_use_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        tools:visibility="visible"
+                        android:visibility="gone"
+                        android:background="@drawable/rounded_curve_bg"
+                        app:layout_constraintTop_toBottomOf="@id/savings">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/how_to_use_title_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/tv_how_to_use_title"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/semi_bold"
+                                android:padding="16dp"
+                                android:text="How to activate this Pack"
+                                android:textColor="@color/main_color_gray_dk"
+                                android:textFontWeight="600"
+                                android:textSize="16sp"
+                                app:layout_constraintEnd_toStartOf="@id/how_to_use_arrow"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/how_to_use_arrow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:padding="@dimen/_10sdp"
+                                android:src="@drawable/packs_arrow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintDimensionRatio="1:1"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/packs_how_to_use_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:listitem="@layout/item_packsv3_how_to_use"
+                            tools:itemCount="2"
+                            android:visibility="gone"
+                            app:layout_constraintTop_toBottomOf="@id/how_to_use_title_layout" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/faq_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:layout_marginBottom="40dp"
+                        tools:visibility="visible"
+                        android:visibility="gone"
+                        android:background="@drawable/rounded_curve_bg"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/how_to_use_container">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/faq_title_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/faq_title"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/semi_bold"
+                                android:padding="16dp"
+                                android:text="Frequently Asked Questions"
+                                android:textColor="@color/main_color_gray_dk"
+                                android:textFontWeight="600"
+                                android:textSize="16sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/packs_faq_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:listitem="@layout/item_packs_faq"
+                            tools:itemCount="2"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/faq_title_layout" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.core.widget.NestedScrollView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/footer_checkout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@drawable/rect_top_bg"
+                android:elevation="@dimen/_10sdp"
+                android:padding="16dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/main_scroller"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/packsv3footerrecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/buy_pack"
+                    tools:itemCount="3"
+                    android:overScrollMode="never"
+                    android:nestedScrollingEnabled="true"
+                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_packsv3footer"
+                    tools:orientation="horizontal" />
+
+                <TextView
+                    android:id="@+id/buy_pack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textFontWeight="700"
+                    android:layout_marginTop="16dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:fontFamily="@font/regular"
+                    android:background="@drawable/ic_cart_continue_bg"
+                    android:gravity="center"
+                    android:text="Buy online basic"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/packsv3footerrecycler" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/main_color_gray"
+  android:clickable="true"
+  android:focusable="true">
+
+  <ImageView
+    android:id="@+id/back_image"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:scaleType="centerCrop"
+    app:layout_constraintBottom_toTopOf="@id/back_image3"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_100sdp"
+    android:background="@drawable/background_image_fade"
+    app:layout_constraintBottom_toTopOf="@+id/back_image3"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+
+  <View
+    android:id="@+id/back_image3"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:background="#efefef"
+    android:scaleType="center"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/back_image" />
+
+  <androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:background="@color/addons_toolbar"
+    android:contentInsetStart="0dp"
+    android:contentInsetEnd="0dp"
+    app:contentInsetEnd="0dp"
+    app:contentInsetStart="0dp"
+    app:layout_collapseMode="parallax"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <RelativeLayout
+        android:id="@+id/package_cart_icon"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          android:layout_centerInParent="true"
+          android:background="@drawable/cart48" />
+
+
+        <com.nex3z.notificationbadge.NotificationBadge
+          android:id="@+id/badge121"
+          android:layout_width="28dp"
+          android:layout_height="28dp"
+          android:layout_alignParentTop="true"
+          android:layout_alignParentEnd="true"
+          app:nbMaxTextLength="2" />
+      </RelativeLayout>
+
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bold"
+        android:text="Package Details"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_11sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/package_cart_icon"
+        app:layout_constraintStart_toEndOf="@+id/package_back"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <LinearLayout
+        android:id="@+id/package_back"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:background="@drawable/arrow_white" />
+      </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+  </androidx.appcompat.widget.Toolbar>
+
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:overScrollMode="never"
+    android:scrollbars="none"
+    app:layout_constraintBottom_toTopOf="@id/package_submit"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="@dimen/_20sdp">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/pack_cl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/all_side_curve_bg">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/package_main_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/_10sdp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
+
+          <ImageView
+            android:id="@+id/package_profile_image"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:src="@drawable/group"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+          <ImageView
+            android:id="@+id/package_profile_image_copy"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:src="@drawable/group"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/old_package_cl"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/package_profile_image"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <RelativeLayout
+              android:id="@+id/package_use_case_layout"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent">
+
+              <ImageView
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_centerInParent="true"
+                app:srcCompat="@drawable/ic_flag_mask" />
+
+              <TextView
+                android:id="@+id/package_use_case"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:fontFamily="@font/semi_bold"
+                android:text="Blossom Pack"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_6sdp" />
+            </RelativeLayout>
+
+            <TextView
+              android:id="@+id/package_count"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="6"
+              android:textColor="@color/common_text_color"
+              android:textSize="@dimen/_35sdp"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@id/package_use_case_layout" />
+
+            <TextView
+              android:id="@+id/package_title"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/_10sdp"
+              android:fontFamily="@font/semi_bold"
+              android:lines="2"
+              android:maxLines="3"
+              android:text="Exciting \nAdd-ons"
+              android:textColor="@color/common_text_color"
+              android:textSize="@dimen/_12sdp"
+              app:layout_constraintBottom_toTopOf="@id/package_amount_layout"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toEndOf="@id/package_count"
+              app:layout_constraintTop_toBottomOf="@id/package_use_case_layout" />
+
+            <LinearLayout
+              android:id="@+id/package_amount_layout"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@id/package_count">
+
+              <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="0dp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:text="Just for"
+                android:textColor="@color/globalLight"
+                android:textSize="@dimen/_8sdp" />
+
+              <TextView
+                android:id="@+id/offer_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="0dp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:text="₹2,099/month"
+                android:textColor="@color/light_blue"
+                android:textSize="@dimen/_8sdp" />
+
+              <!--                <TextView
+                                  android:id="@+id/orig_cost"
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:paddingStart="0dp"
+                                  android:paddingEnd="@dimen/_5sdp"
+                                  android:text="₹2,559/month"
+                                  android:textColor="@color/globalLight"
+                                  android:textSize="@dimen/_8sdp" />-->
+
+            </LinearLayout>
+
+            <TextView
+              android:id="@+id/orig_cost"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingStart="0dp"
+              android:paddingEnd="@dimen/_5sdp"
+              android:text="₹2,559/month"
+              android:textColor="@color/globalLight"
+              android:textSize="@dimen/_8sdp"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@id/package_amount_layout" />
+
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+          android:id="@+id/old_package_compare_layout"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginStart="20dp"
+          android:layout_marginTop="5dp"
+          android:paddingTop="10dp"
+          android:paddingBottom="10dp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/package_main_layout">
+
+          <ImageView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/ic_information" />
+
+          <TextView
+            android:id="@+id/package_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:layout_marginEnd="@dimen/_9sdp"
+            android:fontFamily="@font/regular"
+            android:text="Includes all free forever add-ons. Ideal for small businesses that want to get started with online sales."
+            android:textColor="@color/common_text_color"
+            android:textFontWeight="400"
+            android:textSize="@dimen/txt_10sp" />
+        </LinearLayout>
+
+
+        <View
+          android:id="@+id/package_main_layout_view"
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="@dimen/_10sdp"
+          android:layout_marginBottom="@dimen/_10sdp"
+          android:background="@color/material_grey_400"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/old_package_compare_layout" />
+
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/package_addons_recycler"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:nestedScrollingEnabled="false"
+          android:overScrollMode="never"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/package_main_layout_view"
+          tools:listitem="@layout/package_details_items" />
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RelativeLayout>
+
+  </androidx.core.widget.NestedScrollView>
+
+  <TextView
+    android:id="@+id/package_submit"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_10sdp"
+    android:background="@drawable/orange_button_click_effect"
+    android:fontFamily="@font/semi_bold"
+    android:gravity="center"
+    android:padding="@dimen/_10sdp"
+    android:text="Add Package to cart"
+    android:textColor="@color/white"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,7 +24,7 @@ class PosterViewHolder(binding: ListItemPosterBinding) :
                     ?: "https://siriablobstorage.blob.core.windows.net/svg-templates/61644f0c503d2a74e5b68963/DurgaPuja03.svg"
 //            val url ="https://siriablobstorage.blob.core.windows.net/svg-templates/61644f0c503d2a74e5b68963/DurgaPuja03.svg" // 63KB
 //            val url ="https://siriablobstorage.blob.core.windows.net/svg-templates/61644f3a503d2a74e5b68966/Dussehra01.svg" // 500KB
-            SvgUtils.loadImage(url, binding.ivSvg, model.keys,model.isPurchased)
+            SvgUtils.loadImage(url, binding.ivSvg, model.keys)
             Log.d("PosterViewHolder", "bind() called ${model.keys?.get(0)}")
         }
 

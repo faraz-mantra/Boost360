@@ -24,7 +24,7 @@ class PosterShareViewHolder(binding: ListItemPosterShareBinding):
 //                model.variants.firstOrNull()?.svgUrl,
 //                it
 //            )
-            SvgUtils.loadImage(url, binding.ivSvgPurchased, model.keys, model.isPurchased)
+            SvgUtils.loadImage(url, binding.ivSvgPurchased, model.keys)
         }
         binding.tvGreetingMsg.text = model.greeting_message
         binding.tvGreetingMsg.setOnClickListener {

@@ -17,6 +17,7 @@ import com.festive.poster.reset.repo.NowFloatsRepository
 import com.festive.poster.ui.TemplateDiffUtil
 import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
 import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
+import com.festive.poster.ui.promoUpdates.bottomSheet.PromoteBrandedUpdateTemplatesBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.SubscribePlanBottomSheet
 import com.framework.BaseApplication
 import com.framework.base.BaseActivity
@@ -37,7 +38,7 @@ import java.io.File
 
 fun isPromoWidgetActive(): Boolean{
     val session = UserSessionManager(BaseApplication.instance)
-    return /*session.getStoreWidgets()?.contains(Constants.PROMO_WIDGET_KEY)==true*/ true
+    return session.getStoreWidgets()?.contains(Constants.UPDATES_STUDIO_WIDGET_KEY)==true
 }
 
 fun posterWhatsappShareClicked(childItem:TemplateUi,activity: BaseActivity<*,*>){
@@ -47,15 +48,8 @@ fun posterWhatsappShareClicked(childItem:TemplateUi,activity: BaseActivity<*,*>)
             childItem.primaryText,
             PackageNames.WHATSAPP)
     }else{
-        SubscribePlanBottomSheet.newInstance(object : SubscribePlanBottomSheet.Callbacks{
-            override fun onBuyClick() {
-                MarketPlaceUtils.launchCartActivity(activity,
-                    PromoUpdatesActivity::class.java.name,null,
-                    null,
-                    null,childItem)
-
-            }
-        }).show(activity.supportFragmentManager, SubscribePlanBottomSheet::class.java.name)
+        PromoteBrandedUpdateTemplatesBottomSheet
+            .newInstance().show(activity.supportFragmentManager, PromoteBrandedUpdateTemplatesBottomSheet::class.java.name)
     }
 }
 

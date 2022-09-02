@@ -44,8 +44,16 @@ android {
     }
 
     dataBinding.enabled = true
+    sourceSets {
+        jioonline {
+            res {
+                srcDirs 'src/jioonline/res'
+            }
+        }
+    }
 }
 
 dependencies {
     api project(path: ':onboarding')
+    implementation project(path: ':cart')
 }

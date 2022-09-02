@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
-        android:background="@drawable/gradient_33333_4a4a4a"
         android:layout_height="match_parent"
-        >
+        android:background="@drawable/gradient_33333_4a4a4a"
+        app:layoutDescription="@xml/activity_update_studio_intro_xml_constraintlayout3_scene">
 
         <com.framework.views.customViews.CustomImageView
             android:id="@+id/tv"
@@ -19,12 +19,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.08" />
+            app:layout_constraintVertical_bias="0.5" />
 
         <com.framework.views.customViews.CustomImageView
             android:id="@+id/white_bg"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:alpha="0"
             android:background="@drawable/shape_fposter_gradient_f4f4f4_ffffff_top_rounded_40rad_rect_"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHeight_percent="0.57" />
@@ -32,27 +33,28 @@
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/slider"
-            android:clipToPadding="false"
-            android:paddingHorizontal="@dimen/size_28"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintVertical_bias="0"
+            android:clipToPadding="false"
+            android:paddingHorizontal="@dimen/size_28"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHeight_percent="0.65"
-            app:layout_constraintTop_toBottomOf="@+id/tv" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
 
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/slider_indicator"
             android:layout_width="wrap_content"
-            app:tabGravity="center"
-            app:tabIndicatorHeight="3dp"
-            android:layout_gravity="bottom"
-            app:tabBackground="@drawable/intro_slider_indicator_update_studio"
             android:layout_height="3dp"
+            android:layout_gravity="bottom"
+            android:alpha="0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/slider" />
+            app:layout_constraintTop_toBottomOf="@+id/slider"
+            app:tabBackground="@drawable/intro_slider_indicator_update_studio"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="3dp" />
 
 
         <com.framework.views.customViews.CustomMaterialButton
@@ -67,6 +69,7 @@
             android:textColor="@color/color_ffb900_jio_ec008c"
             android:textSize="@dimen/size_16"
             app:cornerRadius="10dp"
+            android:alpha="0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/white_bg"
             app:layout_constraintStart_toEndOf="@+id/white_bg"
@@ -79,7 +82,6 @@
             android:id="@+id/btn_update_studio"
             style="@style/CustomRoundedYellowButton"
             android:layout_height="55dp"
-            android:visibility="gone"
             android:layout_marginHorizontal="27dp"
             android:backgroundTint="@color/color_ffb900_jio_ec008c"
             android:fontFamily="@font/bold"
@@ -94,5 +96,5 @@
             app:layout_constraintTop_toBottomOf="@+id/slider_indicator" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

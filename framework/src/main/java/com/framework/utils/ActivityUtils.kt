@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 
 fun AppCompatActivity.startPromotionUpdates() {
     try {
-        val posterIntent = if (PreferencesUtils.instance.getData(
+        val posterIntent = if (true/*PreferencesUtils.instance.getData(
                 PreferencesKey.UPDATE_STUDIO_FIRST_TIME.name,
-                true)){
+                true)*/){
             Intent(this, Class.forName("com.festive.poster.ui.promoUpdates.intro.UpdateStudioIntroActivity"))
 
         }else{

@@ -15,7 +15,6 @@
             android:layout_height="@dimen/size_18"
             android:layout_marginStart="@dimen/size_12"
             android:button="@drawable/radio_selector_color_primary"
-            android:clickable="false"
             android:enabled="false" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -42,6 +41,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:lines="1"
+                android:id="@+id/tv_desc"
                 android:maxLines="1"
                 tools:text="@string/get_branded_update_templates_17_more_features"
                 android:textAlignment="viewStart"

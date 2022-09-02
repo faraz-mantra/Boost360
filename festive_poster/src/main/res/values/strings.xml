@@ -43,7 +43,7 @@
 
     <string name="app_name">template</string>
     <string name="promo_updates">Promo updates</string>
-    <string name="update_studios">Update studio</string>
+    <string name="update_studios">Updates studio</string>
     <string name="for_today">For today</string>
     <string name="browse">Browse</string>
     <string name="find">Find</string>
@@ -87,8 +87,9 @@
     <string name="post_on_placeholder_platform">Post on %1$d platform</string>
     <string name="post_on_placeholder_platforms">Post on %1$d platforms</string>
     <string name="now">Now</string>
-    <string name="placeholder_per_month">₹%1$d/month</string>
-    <string name="placeholder_per_year">₹%1$d/year</string>
+    <string name="placeholder_per_month">₹%1$s/month</string>
+    <string name="placeholder_per_year">₹%1$s/year</string>
+    <string name="or_placeholder_per_year">or ₹%1$s/year</string>
     <string name="get_annual_pack_for_placeholder">Get annual pack for ₹%1$d</string>
     <string name="get_monthly_pack_for_placeholder">Get monthly pack for ₹%1$d</string>
     <string name="placeholder_percent_off">%1$d% OFF</string>
@@ -153,7 +154,7 @@
     <string name="get_branded_update_templates_placeholder_more_features">Get ‘Branded update templates’ + %1$d more features</string>
 
     <string name="pay_499_or_5988_gst_extra">Pay ₹499/mo or ₹5988/yr (GST extra)</string>
-    <string name="pay_placeholder_or_placeholder_gst_extra">Pay ₹%1$d/mo or ₹%1$d/yr (GST extra)</string>
+    <string name="pay_placeholder_or_placeholder_gst_extra">Pay ₹%1$s/mo or ₹%1$s/yr (GST extra)</string>
 
     <string name="view_pack_details">View pack details</string>
     <string name="you_will_be_taken_to_feature_marketplace">You’ll be taken to feature marketplace</string>
@@ -163,4 +164,5 @@
     <string name="to_build_customer_trust_using_branded_updates_please_add_business_logo">To build customer trust using branded\nupdates, please add business logo.</string>
     <string name="please_add_business_logo_before_proceeding">Please add Business Logo before proceeding!</string>
     <string name="_18_gst">+18% GST</string>
+    <string name="get_this_feature">Get this feature</string>
 </resources>

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:clickable="false"
+      android:orientation="vertical">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottoms_sheet_top20dp_white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="60dp"
+          android:orientation="horizontal"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          android:background="@color/colorPrimary1"
+          app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/monitor_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/ic_monitor_play" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toEndOf="@+id/monitor_play"
+            android:orientation="vertical">
+
+          <androidx.appcompat.widget.AppCompatTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Videos on"
+              android:textColor="@color/white"
+              android:textSize="@dimen/txt_11sp" />
+
+          <androidx.appcompat.widget.AppCompatTextView
+              android:id="@+id/main_txt"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="How add-ons work?"
+              android:textColor="@color/white"
+              android:textSize="@dimen/txt_14sp"
+              android:textStyle="bold" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:text="Playing 1 of 4"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_12sp" />
+      </RelativeLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <com.framework.views.customViews.CustomCardView
+        android:id="@+id/customCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/playerView"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        app:buffered_color="@color/gray_light_3"
+        app:played_color="@color/red_E39595"
+        app:player_layout_id="@layout/exo_player_ui"
+        app:resize_mode="fit"
+        app:show_buffering="always"
+        app:use_artwork="true" />
+
+    </com.framework.views.customViews.CustomCardView>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/ctvVideoTitle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Watch how a chatbot makes your site 2x interactive"
+      android:textColor="@color/black"
+      android:layout_margin="5dp"
+      android:textSize="@dimen/txt_16sp"
+      android:textStyle="bold"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="5dp"
+      android:orientation="horizontal">
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/video_website_img1"/>
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_gravity="center"
+        android:textSize="@dimen/txt_11sp"
+        android:text="Website Chatbot"/>
+
+      <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_video_arrow_right"/>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="5dp"
+      android:weightSum="2"
+      android:background="#F0F0F0"
+      android:orientation="horizontal">
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/mp_talk_expert_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="14dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:text="Video contents"
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_12sp" />
+
+      <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@color/gray707070" />
+
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/mp_review_cart_tv"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="14dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:text="All videos"
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_12sp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/videos_pop_up_recycler_view"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      tools:itemCount="5"
+      tools:listitem="@layout/video_item"
+      android:layout_margin="5dp"/>
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</layout>
