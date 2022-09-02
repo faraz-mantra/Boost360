@@ -1255,6 +1255,11 @@ class FeatureDetailsActivity :
             "AddonDiscountedPrice",
             getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent)
         )
+        if (actionRequired == 2 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6)
+        ) {
+            intent.putExtra("doDomainBooking", true)
+        }
         startActivity(intent)
     }
 
