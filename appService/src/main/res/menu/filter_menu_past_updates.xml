@@ -13,7 +13,7 @@
     <item
         android:id="@+id/help_past"
         android:title=""
-        android:icon="@drawable/ic_help_white"
+        android:icon="@drawable/ic_help_white_past_update"
         app:showAsAction="always" />
 
 </menu>

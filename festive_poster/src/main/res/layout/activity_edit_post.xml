@@ -252,7 +252,7 @@
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_preview_and_post"
-            style="@style/yellow_squared_button"
+            style="@style/primary_squared_button"
             android:text="@string/done"
             android:layout_height="@dimen/size_52"
             app:layout_constraintEnd_toEndOf="parent"

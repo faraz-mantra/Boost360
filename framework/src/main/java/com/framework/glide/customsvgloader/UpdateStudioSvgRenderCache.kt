@@ -14,9 +14,6 @@ import com.framework.utils.toBase64
 class UpdateStudioSvgRenderCache:SvgRenderCacheUtil() {
 
     private  val TAG = "FestivePosterSvgRenderC"
-    private object HOLDER {
-        val INSTANCE = UpdateStudioSvgRenderCache()
-    }
 
     val session = UserSessionManager(application())
     val userWebsite = session.getDomainName(true)?:""
@@ -27,7 +24,11 @@ class UpdateStudioSvgRenderCache:SvgRenderCacheUtil() {
 
 
     companion object {
-        val instance: UpdateStudioSvgRenderCache by lazy { HOLDER.INSTANCE }
+        var instance=UpdateStudioSvgRenderCache()
+
+        suspend fun refresh(){
+            instance=UpdateStudioSvgRenderCache()
+        }
     }
     fun replace(
         svgString: String?,
@@ -67,4 +68,6 @@ class UpdateStudioSvgRenderCache:SvgRenderCacheUtil() {
 
         }
     }
+
+
 }

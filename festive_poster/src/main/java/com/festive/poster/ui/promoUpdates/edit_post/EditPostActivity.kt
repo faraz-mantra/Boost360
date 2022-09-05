@@ -29,6 +29,7 @@ import com.framework.constants.IntentConstants
 import com.framework.constants.UPDATE_PIC_FILE_NAME
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.glide.customsvgloader.UpdateStudioSvgRenderCache
 import com.framework.pref.UserSessionManager
 import com.framework.utils.*
 import com.google.gson.Gson
@@ -91,9 +92,6 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
     }
 
     private fun initUI() {
-        lifecycleScope.launch {
-            binding!!.ivTemplate.setImageBitmap(SvgUtils.svgToBitmap(posterModel?.primarySvgUrl))
-        }
         binding?.captionLayout?.etInput?.setText(highlightHashTag(
             posterModel?.primaryText+"\n"+ convertToHashTag(posterModel?.tags),R.color.black_4a4a4a,R.font.bold))
         binding?.captionLayout?.etInput?.requestFocus()
@@ -153,6 +151,13 @@ class EditPostActivity: AppBaseActivity<ActivityEditPostBinding, FestivePosterVi
                 isBusinessLogoUpdated = false
                 visible()
             }
+        }
+
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO){
+                UpdateStudioSvgRenderCache.refresh()
+            }
+            binding!!.ivTemplate.setImageBitmap(SvgUtils.svgToBitmap(posterModel?.primarySvgUrl))
         }
     }
 
