@@ -1,10 +1,7 @@
 package com.dashboard.controller.ui.profile.sheet
 
-import android.content.Context
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.View
-import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import com.dashboard.R
 import com.dashboard.databinding.SheetChangeEmailBinding
@@ -22,6 +19,8 @@ class EditChangeEmailSheet : BaseBottomSheetDialog<SheetChangeEmailBinding, User
   companion object {
     val IK_EMAIL: String = "IK_EMAIL"
   }
+
+  private val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
 
   override fun getLayout(): Int {
     return R.layout.sheet_change_email
@@ -53,15 +52,19 @@ class EditChangeEmailSheet : BaseBottomSheetDialog<SheetChangeEmailBinding, User
   }
 
   private fun sendOtp() {
-    val email = binding?.cetEmail?.text.toString()
-    binding?.progressBar?.visible()
-    viewModel?.sendEmailOTP(email)?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        startVerifyMobEmailSheet(VerifyOtpEmailMobileSheet.SheetType.EMAIL.name, email)
+    val email = binding?.cetEmail?.text.toString().trim()
+    if (email.matches(emailPattern.toRegex())) {
+      binding?.progressBar?.visible()
+      viewModel?.sendEmailOTP(email)?.observeOnce(viewLifecycleOwner) {
+        if (it.isSuccess()) {
+          startVerifyMobEmailSheet(VerifyOtpEmailMobileSheet.SheetType.EMAIL.name, email)
+        }
+        binding?.progressBar?.gone()
+        dismiss()
       }
-      binding?.progressBar?.gone()
-      dismiss()
-    })
+    } else {
+      Toast.makeText(context, "Invalid email address", Toast.LENGTH_SHORT).show()
+    }
   }
 
   private fun viewListeners() {
