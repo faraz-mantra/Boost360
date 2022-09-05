@@ -3676,15 +3676,15 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         }
     }
 
-    override fun deleteCartAddonsItem(itemID: String) {
-        viewModel.deleteCartItems(itemID)
-        couponDiwaliRedundant.remove(itemID)
+    override fun deleteCartAddonsItem(item: CartModel) {
+        viewModel.deleteCartItems(item.item_id)
+        couponDiwaliRedundant.remove(item.feature_code)
         //remove saved orderdetails from prefs
         prefs.storeCartOrderInfo(null)
         prefs.storeAutoRenewSubscriptionID(null)
 //        prefs.storeCartValidityMonths(null)
         //remove item from firebase
-        CartFirestoreManager.removeDocument(itemID)
+        CartFirestoreManager.removeDocument(item.item_id)
     }
 
     override fun showBundleDetails(itemID: String) {

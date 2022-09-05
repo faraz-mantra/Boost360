@@ -86,7 +86,7 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
           it1
         )
       }
-      listener.deleteCartAddonsItem(list.get(position).item_id)
+      listener.deleteCartAddonsItem(list.get(position))
     }
 //    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 //    holder.view.visibility = if (list.size - 1 == position) View.GONE else View.VISIBLE
