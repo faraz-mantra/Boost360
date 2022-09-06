@@ -1270,4 +1270,6 @@
   <string name="post_a_new_update">Post a new update</string>
     <string name="Posted_Updates">Posted Updates</string>
     <string name="your_discarded_post">You discarded post</string>
+
+  <string name="please_try_again">Please try again</string>
 </resources>
