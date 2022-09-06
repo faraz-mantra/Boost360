@@ -2802,17 +2802,17 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 item_count.text = cartList.size.toString() + " items"
                 val features = arrayListOf<CartModel>()
                 val bundles = arrayListOf<CartModel>()
+                couponDiwaliRedundant.clear()
                 for (items in it) {
                     if (items.item_type.equals("features")) {
-                        couponDiwaliRedundant.clear()
-                        if (items.feature_code.equals("WILDFIRE_FB_LEAD_ADS") || items.feature_code.equals(
-                                "WILDFIRE"
-                            ) || items.feature_code.equals("DICTATE")
-                        ) {
-                            Log.v("couponDiwaliRedundant", " " + items.item_id)
+                        if (items.feature_code.equals("WILDFIRE_FB_LEAD_ADS")
+                            || items.feature_code.equals("WILDFIRE")
+                            || items.feature_code.equals("DICTATE")) {
+                            Log.v("couponDiwaliRedundant", " " + items.feature_code+" "+ items.item_name)
 //                            couponDiwaliRedundant.add(items.feature_code)
                             couponDiwaliRedundant.put(items.feature_code, items.item_name)
                         }
+                        Log.v("couponDiwaliRedundant>>", couponDiwaliRedundant.toString())
                         features.add(items)
                         if (!recommendedAddonsWidgetKey.contains(items.boost_widget_key!!)) {
                             recommendedAddonsWidgetKey.add(items.boost_widget_key!!)
