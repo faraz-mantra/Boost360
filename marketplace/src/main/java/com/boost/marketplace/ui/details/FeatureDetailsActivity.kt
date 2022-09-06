@@ -983,7 +983,7 @@ class FeatureDetailsActivity :
                 title_top.text = addonDetails!!.name
                 title_bottom3.text = addonDetails!!.description
                 title_appbar.text = addonDetails!!.name
-                pack_title.text = "Packs with ${addonDetails!!.name}"
+                pack_title.text = "Packs with \"${addonDetails!!.name}\" "
                 tv_how_to_use_title.text = "How To Use " + addonDetails!!.name
                 if (addonDetails!!.total_installs.isNullOrEmpty() || addonDetails!!.total_installs.equals(
                         "--"

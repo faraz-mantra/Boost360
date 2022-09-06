@@ -693,10 +693,9 @@
 
                     <TextView
                         android:id="@+id/pack_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/bold"
-                        android:maxLines="1"
                         android:paddingHorizontal="@dimen/dimen_16dp"
                         android:paddingVertical="8dp"
                         android:text="Packs with “Staff Management”"
@@ -763,7 +762,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/semi_bold"
-                            android:maxLines="1"
                             android:padding="16dp"
                             android:textColor="@color/main_color_gray_dk"
                             android:textFontWeight="600"
