@@ -3567,6 +3567,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             cart_apply_coupon.visibility = View.VISIBLE
             cart_coupon_code_rv.visibility = View.VISIBLE
             discount_banner.visibility = View.GONE
+//            prefs.storeApplyedCouponDetails(null)
 
             if (tv_Show_less.visibility == VISIBLE) {
                 tv_Show_more.visibility = GONE
@@ -3661,6 +3662,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 )
                 choosed_validity_period.setText("(Valid till " + nowFormat.format(oneMonthFromNow.time) + ")")
 
+                //remove coupon if there specific addons
+                if(couponDiwaliRedundant.size > 0 && (couponDiwaliRedundant.contains("WILDFIRE_FB_LEAD_ADS")
+                            || couponDiwaliRedundant.contains("WILDFIRE")
+                            || couponDiwaliRedundant.contains("DICTATE"))){
+                    prefs.storeApplyedCouponDetails(null)
+                }
                 //When coupon is available and not been applyed
                 if (prefs.getApplyedCouponDetails() != null && !cart_applied_coupon_full_layout.isVisible()) {
                     viewModel.getCouponRedeem(
