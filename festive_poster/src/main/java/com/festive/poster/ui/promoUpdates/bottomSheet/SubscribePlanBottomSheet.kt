@@ -12,6 +12,7 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
 import com.festive.poster.utils.MarketPlaceUtils
 import com.festive.poster.viewmodels.FestivePosterViewModel
+import com.festive.poster.viewmodels.UpdateStudioPurchaseViewModel
 import com.framework.BaseApplication
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
@@ -24,7 +25,8 @@ import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidityBinding, FestivePosterViewModel>() {
+@Deprecated("old use case")
+class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidityBinding, UpdateStudioPurchaseViewModel>() {
 
     private var feature_promo: UpgradeGetDataFeature?=null
     private val TAG = "SubscribePlanBottomShee"
@@ -53,8 +55,8 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
         return R.layout.bsheet_subscribe_plan_validity
     }
 
-    override fun getViewModelClass(): Class<FestivePosterViewModel> {
-        return FestivePosterViewModel::class.java
+    override fun getViewModelClass(): Class<UpdateStudioPurchaseViewModel> {
+        return UpdateStudioPurchaseViewModel::class.java
     }
 
     override fun onCreateView() {
@@ -84,7 +86,7 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
     }
 
     private fun getPriceOfPosterPacks() {
-        viewModel?.getUpgradeData()?.observeOnce(viewLifecycleOwner, {
+        /*viewModel?.getUpgradeData()?.observeOnce(viewLifecycleOwner, {
             val response = it as? UpgradeGetDataResponse
             response?.let {
                     feature_promo= response.Data.firstOrNull()?.features?.find { feature ->
@@ -126,7 +128,7 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
 
 
             }
-        })
+        })*/
     }
 
     fun addItemToCart() {
@@ -143,6 +145,7 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
             }
             val discountPrice = (it.discount_percent*price).div(100)
             val discountedPrice = price.minus(discountPrice)
+
 
             /*val cartItem = CartModel(it._kid,it.boost_widget_key,it.feature_code,it.name,
                 it.description_title,null,discountedPrice,price,discountPrice.toInt(),

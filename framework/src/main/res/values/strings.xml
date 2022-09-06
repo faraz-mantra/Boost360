@@ -211,9 +211,16 @@
   <string name="restaurant_story">Restaurant Story</string>
   <string name="menu_pictures">Menu Pictures</string>
   <string name="business_keyboard">Business Keyboard</string>
+    <string name="your_email_address">Your email address</string>
+  <string name="your_business_name">"Your business name "</string>
+  <string name="your_name">Your name</string>
+  <string name="your_mobile_number">Your mobile number</string>
 
   <string name="speech_prompt">Say something</string>
   <string name="speech_not_supported">Speech to text not supported</string>
+
+  <string name="install">Install</string>
+  <string name="download_complete">Download Complete</string>
   <string name="expert_contact_number">+91 63669 37299</string>
 
 </resources>

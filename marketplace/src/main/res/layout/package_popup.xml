@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/transparent_black"
+      android:clickable="true"
+      android:focusable="true">
+
+    <ImageView
+        android:id="@+id/back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_close_circle_gray"
+        android:layout_marginBottom="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/container"/>
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:id="@+id/container"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:layout_constraintBottom_toBottomOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/rl_cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+          <LinearLayout
+              android:id="@+id/cardView"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/curve_top_bg"
+              android:paddingTop="10dp"
+              app:cardElevation="1dp"
+              app:cardPreventCornerOverlap="false"
+              app:cardUseCompatPadding="false"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/package_main_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+              <ImageView
+                  android:id="@+id/package_profile_image"
+                  android:layout_width="@dimen/pad_70dp"
+                  android:layout_height="@dimen/pad_70dp"
+                  android:layout_margin="20dp"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintTop_toTopOf="parent" />
+
+              <ImageView
+                  android:id="@+id/package_profile_image_compare_new"
+                  android:layout_width="@dimen/pad_70dp"
+                  android:layout_height="@dimen/pad_70dp"
+                  android:layout_margin="20dp"
+                  tools:src="@drawable/ic_package_image"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintTop_toTopOf="parent" />
+
+              <androidx.constraintlayout.widget.ConstraintLayout
+                  android:id="@+id/const_title"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:padding="@dimen/_7sdp"
+                  app:layout_constraintBottom_toBottomOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintStart_toEndOf="@id/package_profile_image"
+                  app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/package_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginEnd="9dp"
+                    android:layout_marginBottom="13dp"
+                    android:fontFamily="@font/bold"
+                    android:text="Online Pack"
+                    android:maxLines="2"
+                    android:textAllCaps="false"
+                    android:textColor="@color/common_text_color"
+                    android:textFontWeight="800"
+                    android:textSize="@dimen/txt_20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/package_amount_layout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pack_discount_tv" />
+
+                <LinearLayout
+                    android:id="@+id/package_amount_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginEnd="9dp"
+                    app:layout_constraintTop_toBottomOf="@+id/package_title"
+                    android:gravity="center_vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                  <TextView
+                      android:id="@+id/tv_price"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:fontFamily="@font/regular"
+                      android:paddingStart="0dp"
+                      android:paddingEnd="@dimen/_5sdp"
+                      tools:text="₹2,559/month"
+                      android:textColor="@color/colorAccent1"
+                      android:textFontWeight="600"
+                      android:textSize="@dimen/txt_12sp"
+                      android:textStyle="bold" />
+
+                  <TextView
+                      android:id="@+id/upgrade_list_orig_cost"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textColor="@color/dot_grey"
+                      android:textSize="@dimen/_8sdp"
+                      app:layout_constraintStart_toStartOf="@+id/money"
+                      app:layout_constraintTop_toBottomOf="@+id/money"
+                      tools:text="₹699/month" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/pack_discount_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/ic_pack_discount_bg"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    tools:text="@string/discount_off"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toTopOf="@+id/package_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+
+              </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+          </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_inlcuded_add_on"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:fontFamily="@font/regular"
+            android:paddingTop="10dp"
+            tools:text="Includes these 5 add-ons"
+            android:textColor="@color/common_text_color"
+            android:textFontWeight="600"
+            android:textSize="@dimen/txt_11sp"
+            android:textStyle="bold"
+            android:background="#FAFAFA"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rl_cardView" />
+
+          <androidx.recyclerview.widget.RecyclerView
+              android:id="@+id/child_recyclerview"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/_330sdp"
+              android:background="#FAFAFA"
+              android:paddingStart="@dimen/_10sdp"
+              android:paddingEnd="@dimen/_10sdp"
+              app:layout_constraintTop_toBottomOf="@id/tv_inlcuded_add_on"
+              app:spanCount="3"
+              app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+              tools:listitem="@layout/item_packs_list" />
+
+
+        <TextView
+            android:id="@+id/package_addCartNew"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccentLight"
+            android:fontFamily="@font/semi_bold"
+            android:gravity="center"
+            android:padding="@dimen/_10sdp"
+            android:text="Add To Cart"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/child_recyclerview"/>
+      </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

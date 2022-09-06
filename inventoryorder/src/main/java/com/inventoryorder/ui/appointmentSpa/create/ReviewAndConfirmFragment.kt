@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.View
 import com.framework.extensions.observeOnce
 import com.framework.utils.DateUtils
+import com.framework.utils.MathUtils
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
-import com.inventoryorder.constant.AppConstant.Companion.GST_PERCENTAGE
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentReviewAndConfirmBinding
@@ -28,15 +28,15 @@ import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.capitalizeUtil
 import com.squareup.picasso.Picasso
-import java.math.RoundingMode
-import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmBinding>() {
 
   private var serviceFee = 0.0
   private var totalPrice = 0.0
+  private var totalGst= 0.0
   private var discountedPrice = 0.0
   private var orderInitiateRequest: OrderInitiateRequest? = null
   private var orderBottomSheet = OrderBottomSheet()
@@ -63,18 +63,12 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   }
 
   override fun onCreateView() {
-    setOnClickListener(
-      binding?.textAdd,
-      binding?.buttonReviewDetails,
-      binding?.tvPaymentStatus,
-      binding?.textEdit
-    )
-    orderInitiateRequest =
-      arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
+    setOnClickListener(binding?.textAdd, binding?.buttonReviewDetails, binding?.tvPaymentStatus, binding?.textEdit)
+    orderInitiateRequest = arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
     totalPrice = arguments?.getDouble(IntentConstant.TOTAL_PRICE.name) ?: 0.0
+    totalGst = MathUtils.calculateGST(totalPrice, (arguments?.getDouble(IntentConstant.GST_SLAB.name) ?: 0.0).roundToInt())
     discountedPrice = arguments?.getDouble(IntentConstant.DISCOUNTED_PRICE.name) ?: 0.0
-    selectedService =
-      arguments?.getSerializable(IntentConstant.SELECTED_SERVICE.name) as ServiceItem
+    selectedService = arguments?.getSerializable(IntentConstant.SELECTED_SERVICE.name) as ServiceItem
     prefData = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     // orderInitiateRequest?.sellerID = preferenceData?.fpTag.toString()
 
@@ -101,7 +95,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     binding?.textAmount?.text = "${selectedService?.Currency} $totalPrice"
     binding?.textActualAmount?.text = "${selectedService?.Currency} $discountedPrice"
     binding?.textGstAmount?.text =
-      "${selectedService?.Currency} ${calculateGST(discountedPrice + serviceFee)}"
+      "${selectedService?.Currency} ${totalGst}"
     // binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${(discountedPrice + calculateGST(discountedPrice))}"
     binding?.textTotalPayableValue?.text = "${selectedService?.Currency} $discountedPrice"
 
@@ -111,7 +105,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
       binding?.tvGstin?.visibility = View.VISIBLE
     }
 
-    orderInitiateRequest?.gstCharges = calculateGST(discountedPrice)
+    orderInitiateRequest?.gstCharges = totalGst
     val paymentDetails =
       PaymentDetails(method = PaymentDetailsN.METHOD.COD.type, status = paymentStatus)
     orderInitiateRequest?.paymentDetails = paymentDetails
@@ -181,7 +175,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   private fun onServiceFeeAdded(fee: Double) {
     serviceFee = fee
     binding?.textGstAmount?.text =
-      "${selectedService?.Currency} ${calculateGST(discountedPrice + serviceFee)}"
+      "${selectedService?.Currency} ${totalGst}"
 
     if (fee > 0.0) {
       binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${discountedPrice + fee}"
@@ -260,11 +254,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     return ""
   }
 
-  private fun calculateGST(amount: Double): Double {
-    val df = DecimalFormat("#.##")
-    df.roundingMode = RoundingMode.CEILING
-    return df.format((amount - (df.format(amount / GST_PERCENTAGE).toDouble()))).toDouble()
-  }
+
 
   private fun preparePaymentStatusOptions() {
     orderBottomSheet.title = getString(R.string.str_payment_status)

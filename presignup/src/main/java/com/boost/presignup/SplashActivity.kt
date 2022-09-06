@@ -2,15 +2,31 @@ package com.boost.presignup
 
 import android.animation.Animator
 import android.content.Intent
+import android.content.IntentSender
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.boost.presignup.utils.DynamicLinkParams
 import com.boost.presignup.utils.FirebaseDynamicLinksManager
+import com.framework.analytics.SentryController
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureNewOnBoardingFlowEnable
 import com.framework.pref.UserSessionManager
 import com.framework.utils.AppsFlyerUtils
+import com.framework.utils.InAppUpdateUtil
+import com.framework.utils.showToast
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.play.core.appupdate.AppUpdateInfo
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.InstallStateUpdatedListener
+import com.google.android.play.core.install.model.ActivityResult
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.InstallStatus
+import com.google.android.play.core.install.model.UpdateAvailability
 import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : AppCompatActivity() {
@@ -20,10 +36,14 @@ class SplashActivity : AppCompatActivity() {
   private var deepLinkFpId = ""
   private var deepLinkFpTag = ""
   private var deepLinkDay = ""
+  private val INAPP_UPDATE_REQUEST_CODE = 120
+  lateinit var inAppUpdateUtil: InAppUpdateUtil
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_splash)
+    FirebaseRemoteConfigUtil.initRemoteConfigData(this)
+    inAppUpdateUtil = InAppUpdateUtil(this)
     session = UserSessionManager(this)
     val uri = intent.data
     if (uri != null) {
@@ -60,8 +80,15 @@ class SplashActivity : AppCompatActivity() {
     onCreateView()
   }
 
+  private fun checkForUpdate() {
+    FirebaseRemoteConfigUtil.remoteConfig?.fetchAndActivate()?.addOnCompleteListener {
+      inAppUpdateUtil.checkForUpdate(INAPP_UPDATE_REQUEST_CODE, onComplete = {
+        gotToNextScreen()
+      })
+    }
+  }
+
   private fun onCreateView() {
-    FirebaseRemoteConfigUtil.initRemoteConfigData(this)
     if (session?.isUserLoggedIn == true && deepLinkViewType.isNotEmpty()) {
       try {
         val intent = Intent(applicationContext, Class.forName("com.boost.presignin.ui.LoaderActivity"))
@@ -87,11 +114,7 @@ class SplashActivity : AppCompatActivity() {
 
       override fun onAnimationEnd(animation: Animator?) {
         animation_view?.cancelAnimation()
-        when {
-          (session?.isUserLoggedIn == true) -> splashLoader()
-          (session?.isUserSignUpComplete == true) -> startNewSignUpSuccess()
-          else -> startNewSignIn()
-        }
+        checkForUpdate()
       }
 
       override fun onAnimationCancel(animation: Animator?) {
@@ -102,6 +125,14 @@ class SplashActivity : AppCompatActivity() {
 
     })
     animation_view.playAnimation()
+  }
+
+  fun gotToNextScreen(){
+    when {
+      (session?.isUserLoggedIn == true) -> splashLoader()
+      (session?.isUserSignUpComplete == true) -> startNewSignUpSuccess()
+      else -> startNewSignIn()
+    }
   }
 
   private fun splashLoader() {
@@ -140,8 +171,9 @@ class SplashActivity : AppCompatActivity() {
   private fun startNewSignIn() {
     try {
       val intent : Intent = if (featureNewOnBoardingFlowEnable()) {
+        val fragmentType = if (UserSessionManager(this).hasUserLoggedInOnce) "ENTER_PHONE_FRAGMENT" else "INTRO_SLIDE_SHOW_FRAGMENT"
         Intent(applicationContext, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity")).
-        putExtra(FRAGMENT_TYPE, "INTRO_SLIDE_SHOW_FRAGMENT") // 0 stands for New screen Enter Phone Number ordinal from FragmentType in Presignin constants
+        putExtra(FRAGMENT_TYPE, fragmentType) // 0 stands for New screen Enter Phone Number ordinal from FragmentType in Presignin constants
       }else Intent(applicationContext, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
       startActivity(intent)
       finish()
@@ -155,4 +187,31 @@ class SplashActivity : AppCompatActivity() {
     animation_view?.cancelAnimation()
     super.onDestroy()
   }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == INAPP_UPDATE_REQUEST_CODE) {
+      when (resultCode) {
+        RESULT_OK ->{
+          gotToNextScreen()
+        }
+        RESULT_CANCELED ->{
+          gotToNextScreen()
+        }
+        ActivityResult.RESULT_IN_APP_UPDATE_FAILED ->{
+          showToast("App update failed")
+          gotToNextScreen()
+        }
+      }
+
+
+    }
+  }
+
+
+  override fun onStop() {
+    super.onStop()
+    inAppUpdateUtil.removeInstallStateUpdateListener()
+  }
+
 }

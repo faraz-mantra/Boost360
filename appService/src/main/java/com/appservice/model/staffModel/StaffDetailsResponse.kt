@@ -46,7 +46,7 @@ data class StaffDetailsResult(
   var name: String? = null,
 
   @field:SerializedName("Experience")
-  var experience: Int? = null,
+  var experience: Double? = null,
 
   @field:SerializedName("TileImageUrl")
   var tileImageUrl: String? = null,
@@ -84,7 +84,12 @@ data class StaffDetailsResult(
   }
 
   fun getExperienceN(): String {
-    return if (experience == null || experience == 0) "0 year" else if (experience!! > 5) "5+ years" else "$experience years"
+    return if (experience == null) "" else if (experience!! > 5) "5+ years" else "$experience ${if (experience!! > 1) "years" else "year"}"
+  }
+
+  fun getExperienceValue(): Int {
+    val experience = experience?.toInt() ?: 0
+    return if (experience > 5) 6 else experience
   }
 
   fun getBookingWindowN(): String {
@@ -93,6 +98,18 @@ data class StaffDetailsResult(
 
   fun getGenderAndAge(): String {
     return if (gender.isNullOrEmpty() || gender == "null") getAge() else "$gender, ${getAge()}"
+  }
+
+  fun getUrlImage(): String {
+    return if (image.equals("null").not() && image.isNullOrEmpty().not()) image!! else ""
+  }
+
+  fun getUrlTileImageUrl(): String {
+    return if (tileImageUrl.equals("null").not() && tileImageUrl.isNullOrEmpty().not()) tileImageUrl!! else ""
+  }
+
+  fun getUrlSignature(): String {
+    return if (signature.equals("null").not() && signature.isNullOrEmpty().not()) signature!! else ""
   }
 }
 

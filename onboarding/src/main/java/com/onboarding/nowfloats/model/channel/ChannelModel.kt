@@ -187,7 +187,7 @@ fun ChannelModel.getDrawable(context: Context?): Drawable? {
   return when (getType()) {
     ChannelType.G_SEARCH -> ResourcesCompat.getDrawable(
       context.resources,
-      R.drawable.bg_rounded_white_20,
+      R.drawable.ic_website_channel_onboarding,
       context.theme
     )
     ChannelType.FB_PAGE -> ResourcesCompat.getDrawable(

@@ -17,7 +17,7 @@ import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.FragmentPosterListBinding
 import com.festive.poster.databinding.SheetEditShareMessageBinding
 import com.festive.poster.models.PosterModel
-import com.festive.poster.models.response.GetTemplatesResponse
+import com.festive.poster.models.response.GetFestivePosterResponse
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
@@ -136,7 +136,7 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
       session?.fpTag,
       arrayListOf(packTag!!)
     )?.observeOnce(viewLifecycleOwner, {
-        val response = it as? GetTemplatesResponse
+        val response = it as? GetFestivePosterResponse
         response?.let {
           dataList = response.Result.templates?.toArrayList()
           dataList?.forEach { posterModel -> posterModel.isPurchased = true
@@ -201,8 +201,9 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
   }
 
   private fun downloadSelectedPoster() {
-    SvgUtils.shareUncompressedSvg(selectedPosterModelForDownload?.variants?.firstOrNull()?.svgUrl,
-      selectedPosterModelForDownload,requireContext())
+    SvgUtils.shareUncompressedSvg(
+      selectedPosterModelForDownload?.variants?.firstOrNull()?.svgUrl,
+      selectedPosterModelForDownload)
   }
 
   override fun onRequestPermissionsResult(

@@ -1,161 +1,192 @@
 package com.festive.poster.viewmodels
 
-import androidx.annotation.LayoutRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.festive.poster.constant.RecyclerViewItemType
+import com.festive.poster.R
+import com.festive.poster.constant.Constants
 import com.festive.poster.models.*
-import com.festive.poster.models.response.GetTemplateViewConfigResponse
-import com.festive.poster.models.response.GetTemplatesResponse
+import com.festive.poster.models.response.*
 import com.festive.poster.reset.repo.*
 import com.framework.base.BaseResponse
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
+import com.framework.rest.NetworkResult
+import com.framework.utils.application
+import com.framework.utils.fetchString
 import com.framework.utils.getResponse
 import com.framework.utils.toArrayList
-import io.reactivex.Observable
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
-import okhttp3.RequestBody
-import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class PromoUpdatesViewModel: BaseViewModel() {
 
 
-    private var configResponse: GetTemplateViewConfigResult?=null
-    private val todaysPickMData=MutableLiveData<ArrayList<PosterPackModel>?>()
-    val todaysPickLData:LiveData<ArrayList<PosterPackModel>?> get() =
-        todaysPickMData
+    private  val TAG = "PromoUpdatesViewModel"
 
-    private val browseAllMData=MutableLiveData<ArrayList<PosterPackModel>?>()
-    val browseAllLData:LiveData<ArrayList<PosterPackModel>?> get() =
+    private val browseAllMData=MutableLiveData<NetworkResult<
+            ArrayList<CategoryUi>>>()
+    val browseAllLData:LiveData<NetworkResult<
+            ArrayList<CategoryUi>>> get() =
         browseAllMData
 
 
+    private val _favData=MutableLiveData<NetworkResult<
+            ArrayList<CategoryUi>>>()
+    val favData:LiveData<NetworkResult<
+            ArrayList<CategoryUi>>> get() = _favData
 
-    suspend fun getTemplates(floatingPointId: String?, floatingPointTag: String?,
-                             tags:List<String>?,
-                             configSection:FestivePosterSectionModel?,
-                             @LayoutRes templateViewId:Int,@LayoutRes packViewId:Int)=
-        suspendCoroutine<ArrayList<PosterPackModel>?> {cont->
-        NowFloatsRepository.getTemplates(floatingPointId,floatingPointTag,tags).getResponse {
-            if (it.isSuccess()){
-                val templates_response = it as? GetTemplatesResponse
-                var todaysPickList: ArrayList<PosterPackModel>? = ArrayList()
-                templates_response?.let {
-                    configSection?.tags?.forEach { pack_tag ->
-                        val templateList = ArrayList<PosterModel>()
-                        templates_response.Result.templates?.forEach { template ->
-                            var posterTag =
-                                template.tags?.find { posterTag -> posterTag == pack_tag.tag }
-                            if (posterTag != null && template.active == true) {
-                                template.greeting_message = pack_tag.description
-                                template.layout_id =templateViewId
+    private val _todayPickData=MutableLiveData<NetworkResult<
+            ArrayList<CategoryUi>>>()
+    val todayPickData:LiveData<NetworkResult<
+            ArrayList<CategoryUi>>> get() = _todayPickData
 
-                                templateList.add(template.clone()!!)
-                            }
-                        }
-                        /* val filterdList= ArrayList<PosterModel>()
-                        if (templateList.size>=4){
-                            filterdList.addAll(
-                                templateList.take(4))
-                            filterdList.add(PosterModel(layout_id = RecyclerViewItemType.VIEW_MORE_POSTER.getLayout()))
-                        }else{
-                            filterdList.addAll(templateList)
-                        }*/
+    private val _favStatus=MutableLiveData<NetworkResult<
+            BaseResponse>>()
+    val favStatus:LiveData<NetworkResult<
+            BaseResponse>> get() = _favStatus
 
-                        /*todaysPickList?.add(
-                            PosterPackModel(
-                                pack_tag,
-                                filterdList,
-                                isPurchased = pack_tag.isPurchased==true,
-                                list_layout = RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()
-                            )
-                        )*/
 
-                        todaysPickList?.add(
-                            PosterPackModel(
-                                pack_tag,
-                                templateList,
-                                isPurchased = pack_tag.isPurchased == true,
-                                list_layout = packViewId
-                            )
-                        )
+    var doesUserHavePurchasedAnything = false
 
+
+
+    init {
+       refreshTemplates()
+    }
+
+    fun refreshTemplates(){
+        getTodaysPickTemplate()
+        getTemplatesUi()
+    }
+
+
+    fun getTodaysPickTemplate(){
+        _todayPickData.postValue(NetworkResult.Loading())
+        try {
+            NowFloatsRepository.getTodaysTemplates().getResponse {
+                if (it.isSuccess()){
+                    val response = it as? GetTodayTemplateResponse
+                    _todayPickData.postValue(
+                        NetworkResult.Success(data =
+                        response?.Result?.asDomainModel()?.toArrayList())
+                    )
+                }else{
+                    throw Exception(it.errorMessage())
+                }
+            }
+        }catch (e:Exception){
+            _todayPickData.postValue(NetworkResult.Error(msg = fetchString(com.framework.R.string.something_went_wrong)))
+        }
+
+    }
+
+
+    fun markAsFav(isFav:Boolean, templateId:String) {
+        _favStatus.postValue(NetworkResult.Loading())
+        NowFloatsRepository.saveTemplateAction(
+            TemplateSaveActionBody.ActionType.FAVOURITE,isFav,templateId).getResponse {
+                if (it.isSuccess()){
+                    refreshTemplates()
+                    _favStatus.postValue(NetworkResult.Success(it))
+                }else{
+                    _favStatus.postValue(NetworkResult.Error(it.errorMessage()))
+                }
+        }
+    }
+
+
+    fun templateSaveAction(action: TemplateSaveActionBody.ActionType,
+                           isFav:Boolean, templateId:String): LiveData<BaseResponse> {
+        return NowFloatsRepository.saveTemplateAction(action,isFav,templateId).toLiveData()
+    }
+
+
+
+    private suspend fun getTemplates(isFav:Boolean?=null)=
+        suspendCoroutine<List<GetTemplatesResponseTemplate>>{cont->
+            NowFloatsRepository.getTemplates(isFav).getResponse {
+                if (it.isSuccess()){
+                    val response = it as? GetTemplatesResponse
+                    cont.resume(response!!.Result.templates)
+
+                }else{
+                    cont.resumeWithException(Exception())
+                }
+            }
+        }
+
+    fun getTemplatesUi(){
+        browseAllMData.postValue(NetworkResult.Loading())
+        viewModelScope.launch {
+            try {
+                val categories = NowFloatsRepository.getCategoriesUI()
+                val allTemplates = getTemplates()
+                categories.forEach {uicat->
+                    val dbTemplates = allTemplates.filter { template->
+                        template.categories.find {dbcat->
+                            dbcat.id==uicat.id
+                        }!=null
                     }
+
+                    uicat.setTemplates(dbTemplates.asDomainModels())
                 }
+                browseAllMData.postValue(
+                    NetworkResult.Success(categories.toArrayList()))
+                getFavTemplates()
+            }catch (e:Exception){
+                e.printStackTrace()
+                browseAllMData.postValue(NetworkResult.Error(msg = fetchString(com.framework.R.string.something_went_wrong)))
 
-                cont.resume(todaysPickList)
-            }else{
-                cont.resume(null)
             }
-
         }
     }
 
 
-    fun getTodaysPickData(fKey:String,floatingPointId: String?,floatingPointTag: String?){
+    fun getFavTemplates() {
+        _favData.postValue(NetworkResult.Loading())
         viewModelScope.launch {
-            if (configResponse==null){
-                configResponse = getTemplateConfig(fKey,floatingPointId,floatingPointTag)
-            }
-            if (configResponse==null){
-                todaysPickMData.postValue(null)
-            }
-            val tags = prepareTagForApi(configResponse?.todayPick?.tags)
-            val todaysPickList = getTemplates(floatingPointId,floatingPointTag,tags,
-                configResponse?.todayPick,
-                RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP.getLayout(),
-                RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW.getLayout()
+            try {
+                val categories = NowFloatsRepository.getCategoriesUI().toArrayList()
+                val allTemplates = getTemplates(isFav=true)
+
+                val allUiTemplates = ArrayList<TemplateUi>()
+
+                categories.forEach {uicat->
+                    val dbTemplates = allTemplates.filter { template->
+                        template.categories.find {dbcat->
+                            dbcat.id==uicat.id
+                        }!=null
+                    }
+                    val domainModels =dbTemplates.asDomainModels()
+                    uicat.setTemplates(domainModels)
+                    allUiTemplates.addAll(domainModels)
+                }
+
+
+                val allDummyCat = CategoryUi(
+                    iconUrl = "",
+                    id="",
+                    name = fetchString(R.string.all_favs),
+                    thumbnailUrl = "https://i.ibb.co/BfrgDmq/My-project-1.png",
+                    templates = allUiTemplates,
+                    description = ""
                 )
-            todaysPickMData.postValue(todaysPickList)
 
-        }
+                categories.add(0,allDummyCat)
 
-    }
+                _favData.postValue(
+                    NetworkResult.Success(
+                    categories.toArrayList()))
 
-    fun getBrowseAllData(fKey:String,floatingPointId: String?,floatingPointTag: String?){
-        viewModelScope.launch {
-            if (configResponse==null){
-                configResponse = getTemplateConfig(fKey,floatingPointId,floatingPointTag)
-            }
-            if (configResponse==null){
-                browseAllMData.postValue(null)
-            }
-            val tags = prepareTagForApi(configResponse?.allTemplates?.tags)
-            val browseAllList = getTemplates(floatingPointId,floatingPointTag,tags,configResponse?.allTemplates,-1,RecyclerViewItemType.BROWSE_TAB_TEMPLATE_CAT.getLayout())
-            browseAllMData.postValue(browseAllList)
+            }catch (e:Exception){
+                e.printStackTrace()
+                _favData.postValue(NetworkResult.Error(msg = fetchString(com.framework.R.string.something_went_wrong)))
 
-        }
-
-    }
-
-    private fun prepareTagForApi(tags: List<PosterPackTagModel>?): ArrayList<String> {
-        val list = ArrayList<String>()
-        tags?.forEach {
-            it.tag?.let { tag -> list.add(tag) }
-        }
-        return list
-    }
-
-    suspend fun getTemplateConfig(fKey:String,floatingPointId: String?,floatingPointTag: String?)=
-        suspendCoroutine<GetTemplateViewConfigResult?>{cont->
-        NowFloatsRepository.getTemplateConfig(fKey,floatingPointId,floatingPointTag).getResponse {
-            if (it.isSuccess()){
-                val response = it as? GetTemplateViewConfigResponse
-                response?.let {res->
-                    cont.resume(res.Result)
-                }
-            }else{
-                cont.resume(null)
             }
         }
     }

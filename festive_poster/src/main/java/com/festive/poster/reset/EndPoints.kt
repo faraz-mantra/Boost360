@@ -5,15 +5,20 @@ object EndPoints {
 
     const val NOW_FLOATS_BASE = "https://api.nowfloats.com/"
     const val WITH_FLOATS_TWO_BASE = "https://api2.withfloats.com/"
+    const val AZURE_WEBSITE_NET_URL = "https://jiw-wf-featureprocessor-api-as-prod.azurewebsites.net/"
 
 
     const val TEMPLATE_VIEW_CONFIG="Templates/v1/GetTemplatesViewConfig"
     const val GET_TEMPLATES="Templates/v1/GetTemplates"
     const val GET_FAV_TEMPLATES="/Templates/v1/GetFavouriteTemplates"
     const val FAV_TEMPLATE="/Templates/v1/MarkTemplateAsFavourite"
+    const val GET_CATEGORIES="/UpdateStudio/v1/GetCategory"
+    const val GET_TEMPLATES_V2="/UpdateStudio/v1/GetTemplates"
+    const val TEMPLATE_SAVE_ACTION="/UpdateStudio/v1/SaveAction"
+    const val GET_TODAY_TEMPLATES="UpdateStudio/v1/TodayTemplates"
 
-    const val FEATURE_PROCESSOR_BASE = "https://featureprocessor.withfloats.com/"
-    const val GET_FEATURE_DETAILS="Features/v1/GetFeatureDetils"
+    const val FEATURE_PROCESSOR_BASE = "https://jiw-wf-featureprocessor-api-as-prod.azurewebsites.net/"
+    const val GET_FEATURE_DETILS="Features/v1/GetFeatureDetils"
 
     const val BOOST_KIT_DEV_BASE = "https://developer.api.boostkit.dev/"
     const val GET_UPGRADE_DATA="language/v1/upgrade/get-data"
@@ -39,6 +44,10 @@ object EndPoints {
     const val US_CENTRAL_BASE="https://us-central1-nowfloats-boost.cloudfunctions.net/"
     const val UPDATE_DRAFT="onpostUpdateDraftApi"
 
+    const val GET_PAST_UPDATES_LIST = "discover/v1/floatingPoint/bizFloats"
+    const val GET_PAST_UPDATES_LIST_V5 = "discover/v5/floatingPoint/bizFloats"
+    const val GET_PAST_UPDATES_LIST_V6 = "discover/v6/floatingPoint/bizFloats"
 
+    const val GET_FEATURE_DETAILS_2 = "Features/v1/GetFeatureDetails"
 
 }

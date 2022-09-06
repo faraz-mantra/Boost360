@@ -211,7 +211,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
-      binding?.tvOrderAmount?.text = "$currency ${DecimalFormat("##,##,##0").format(bill.GrossAmount)}"
+      binding?.tvOrderAmount?.text = "$currency ${DecimalFormat("##,##,##0").format(bill.NetAmount?:0.0)}"
     }
     binding?.orderDate?.text = DateUtils.parseDate(
       order.UpdatedOn,

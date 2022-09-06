@@ -20,13 +20,27 @@ import java.util.*
 const val facebook_chat_main = "facebookchatMain"
 const val feedback_chat = "feedbackchat"
 const val deep_link_call_tracker = "callTracker"
-const val deeplink_manage_customer = "managecustomer"
+const val deeplink_customer_enquires = "customerenquires"
 const val keyboard = "Keyboard"
 const val testimonials = "Testimonials"
+const val payment_gateway = "Payment_Gateway"
+const val digital_brochure= "Digital_Brochure"
+const val projectteam= "ProjectTeam"
+const val staff_profile ="Staff_Profile"
+const val our_toppers ="Our_Toppers"
+const val upcoming_batches ="Upcoming_Batches"
+const val faculty ="Faculty"
+const val latest_updates ="Latest_Updates"
+const val featured_image ="Featured_Image"
+const val doctor_profile ="Doctor_Profile"
+const val trip_advisor ="Trip_Advisor"
+const val nearby_places ="Nearby_Places"
+const val business_kyc ="Business_Kyc"
 const val facebook_chat = "facebookchat"
 const val third_party_queries = "thirdPartyQueries"
 const val facebookpage = "facebookpage"
 const val addProduct = "addProduct"
+const val addService = "addService"
 const val keyboardSettings = "keyboardSettings"
 const val addCustomPage = "addCustomPage"
 const val myorders = "myorders"
@@ -37,7 +51,8 @@ const val consultation_fragment = "CONSULTATION_FRAGMENT"
 const val enquiries = "enquiries"
 const val store_url = "store"
 const val blog = "blog"
-const val subscribers = "subscribers"
+const val deeplink_subscribers = "subscribers"
+const val deeplink_unsubscribe = "unsubscribe"
 const val new_subscribers = "newsubscriber"
 const val share_lower_case = "share"
 const val visits = "visits"
@@ -84,6 +99,7 @@ const val deeplink_purchased_plans = "your_purchased_plans"
 const val deeplink_digital_channels = "digital_channels"
 const val deeplink_call_tracker_add_on = "call_tracker_add_on"
 const val deeplink_service_catalogue = "service_catalogue"
+const val deeplink_product_catalogue = "product_catalogue"
 const val deeplink_ecommerce_setting = "e_commerce_setting"
 const val deeplink_appointment_setting = "appointment_setting"
 const val deeplink_all_custom_pages = "all_custom_pages"
@@ -91,8 +107,8 @@ const val deeplink_analytics_website_visits = "total_website_visits"
 const val deeplink_analytics_website_visitors = "total_website_visitors"
 const val deeplink_background_images = "background_images"
 const val deeplink_favicon = "favicon"
+const val deeplink_order_summary = "order_summary"
 const val deeplink_appointment_summary = "appointment_summary"
-const val deeplink_book_table = "book_table"
 const val deeplink_my_add_ons = "my_add_ons"
 const val deeplink_recommended_add_ons = "recommended_add_ons"
 const val deeplink_item_on_market_place = "ITEM_ONS_MARKETPLACE"
@@ -101,17 +117,34 @@ const val deeplink_compare_package = "compare_package_selection"
 const val deeplink_package_bundle = "package_bundle"
 const val deeplink_promo_banner = "promo_banner"
 const val deeplink_expert_contact = "expert_connect"
-const val deeplink_create_order = "create_order"
-const val deeplink_create_appointment = "create_appointment"
-const val deeplink_create_consultation = "create_consultation"
 const val deeplink_website_theme = "website_customization"
 const val deeplink_dashboard_tab = "dashboard_tab"
 const val deeplink_website_tab = "website_tab"
 const val deeplink_enquiries_tab = "enquiries_tab"
 const val deeplink_more_tab = "more_tab"
+const val deeplink_open_business_card = "open_business_card"
 const val deeplink_owner_info = "owner_info"
 const val deeplink_festive_poster = "festive_poster"
 const val deeplink_domain_booking = "domain_booking"
+const val deeplink_topper_list = "topper_list"
+const val deeplink_upcoming_batch = "upcoming_batch"
+const val deeplink_faculty_member = "faculty_member"
+const val deeplink_book_table = "book_table"
+const val deeplink_create_order = "create_order"
+const val deeplink_create_appointment = "create_appointment"
+const val deeplink_create_consultation = "create_consultation"
+
+const val deeplink_add_to_menu = "add_to_menu"
+const val deeplink_add_table_booking = "add_table_booking"
+const val deeplink_add_customer_testimonial = "add_customer_testimonial"
+const val deeplink_book_in_clinic_appointment = "book_in_clinic_appointment"
+const val deeplink_book_video_consultation = "book_video_consultation"
+const val deeplink_add_doctor = "add_doctor"
+const val deeplink_add_new_room_type = "add_new_room_type"
+const val deeplink_post_seasonal_offer = "post_seasonal_offer"
+const val deeplink_add_nearby_attraction = "add_nearby_attraction"
+const val deeplink_add_featured_image = "add_featured_image"
+
 const val deeplink_user_merchant_profile = "user_merchant_profile"
 const val visit_to_new_website = "Woohoo! We have a new website. Visit it at"
 const val tag_for_partners = ".nowfloats.com"
@@ -119,7 +152,7 @@ const val tag_for_partners = ".nowfloats.com"
 const val VISITS_TABLE = 0
 const val VISITORS_TABLE = 1
 
-class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSessionManager,var baseFragment: Fragment) {
+class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSessionManager, var baseFragment: Fragment?) {
   private val TAG = "DeepLinkUtil"
   fun deepLinkPage(url: String, buyItemKey: String, isFromRia: Boolean) {
     Log.i(TAG, "deepLinkPage: " + url)
@@ -131,16 +164,16 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           //pending
         } else if (url.contains(third_party_queries)) {
           baseActivity.startThirdPartyQueries(session)
-        } else if (url.contains(deeplink_create_appointment)) {
+        } else if (session.isService() && (url.contains(deeplink_create_appointment) || url.contains(deeplink_book_in_clinic_appointment))) {
           baseActivity.startBookAppointmentConsult(session, false)
-        } else if (url.contains(deeplink_create_consultation)) {
+        } else if (session.isDocHos() && (url.contains(deeplink_create_consultation) || url.contains(deeplink_book_video_consultation))) {
           baseActivity.startBookAppointmentConsult(session, true)
-        } else if (url.contains(deeplink_create_order)) {
+        } else if (session.isProduct() && url.contains(deeplink_create_order)) {
           baseActivity.startOrderCreate(session)
         } else if (url.contains(facebook_chat_main)) {
           //pending
-        } else if (url.contains(deeplink_manage_customer)) {
-          baseActivity.startManageCustomer(session)
+        } else if (url.contains(deeplink_customer_enquires)) {
+          baseActivity.startBusinessEnquiry(session)
         } else if (url.contains(feedback_chat)) {
           baseActivity.startHelpAndSupportActivity(session)
         } else if (url.contains(facebookpage)) {
@@ -149,18 +182,22 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startPostUpdate()
         } else if (url.contains(deeplink_featuredimage)) {
           baseActivity.startBusinessProfileDetailEdit(session)
-        } else if (url.contains(addProduct)) {
+        } else if (session.isProduct() && url.contains(addProduct)) {
+          baseActivity.startAddServiceProduct(session)
+        } else if (session.isService() && url.contains(addService)) {
+          baseActivity.startAddServiceProduct(session)
+        } else if (session.isRestaurant() && url.contains(deeplink_add_to_menu)) {
+          baseActivity.startAddServiceProduct(session)
+        } else if (session.isHotel() && url.contains(deeplink_add_new_room_type)) {
           baseActivity.startAddServiceProduct(session)
         } else if (url.contains(addCustomPage)) {
           baseActivity.startCustomPage(session, true)
-        } else if (url.contains(myorders) || url.contains(myorderdetail) || url.contains(appointment_fragment)
-          || url.contains(order_fragment) || url.contains(consultation_fragment)
-        ) {
-          when (getAptType(session.fP_AppExperienceCode)) {
-            "DOC_HOS" -> baseActivity.startOrderAptConsultList(session, isConsult = url.contains(consultation_fragment))
-            "SPA_SAL_SVC" -> baseActivity.startOrderAptConsultList(session)
-            else -> baseActivity.startOrderAptConsultList(session, isOrder = true)
-          }
+        } else if (session.isProduct() && (url.contains(myorders) || url.contains(myorderdetail) || url.contains(order_fragment))) {
+          baseActivity.startOrderAptConsultList(session, isOrder = true)
+        } else if (session.isSpaSalSvc() && url.contains(appointment_fragment)) {
+          baseActivity.startOrderAptConsultList(session)
+        } else if (session.isDocHos() && url.contains(consultation_fragment)) {
+          baseActivity.startOrderAptConsultList(session, isConsult = url.contains(consultation_fragment))
         } else if (url.contains(deeplink_upgrade)) {
           baseActivity.upgradeApp()
         } else if (url.contains(deeplink_analytics)) {
@@ -179,7 +216,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
 //          baseActivity.startSearchQuery(session)
         } else if (url.contains(blog)) {
           baseActivity.startBlog(url, session)
-        } else if (url.contains(subscribers) || url.contains(new_subscribers)) {
+        } else if (url.contains(deeplink_subscribers) || url.contains(new_subscribers) || url.contains(deeplink_unsubscribe)) {
           baseActivity.startSubscriber(session)
         } else if (url.contains(share_lower_case)) {
           baseActivity.shareWebsite(session)
@@ -222,7 +259,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.initiateAddonMarketplace(session, false, "", "")
         } else if (url.contains(deeplink_cart_fragment)) {
           baseActivity.delayProgressShow()
-          baseActivity.initiateAddonMarketplace(session, true, "", "")
+          baseActivity.initiateCart(session, true, "", buyItemKey)
         } else if (url.contains(deeplink_manage_content)) {
           baseActivity.startManageContentActivity(session)
         } else if (url.contains(deeplink_my_bank_account)) {
@@ -235,9 +272,13 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startDigitalChannel(session)
         } else if (url.contains(deeplink_call_tracker_add_on)) {
           baseActivity.startVmnCallCard(session)
-        } else if (url.contains(deeplink_service_catalogue)) {
+        } else if (session.isService() && url.contains(deeplink_service_catalogue)) {
           baseActivity.startListServiceProduct(session)
-        } else if (url.contains(deeplink_ecommerce_setting) || url.contains(deeplink_appointment_setting)) {
+        } else if (session.isProduct() && url.contains(deeplink_product_catalogue)) {
+          baseActivity.startListServiceProduct(session)
+        } else if (session.isProduct() && url.contains(deeplink_ecommerce_setting)) {
+          baseActivity.startEcommerceAppointmentSetting(session)
+        } else if (session.isService() && url.contains(deeplink_appointment_setting)) {
           baseActivity.startEcommerceAppointmentSetting(session)
         } else if (url.contains(deeplink_all_custom_pages)) {
           baseActivity.startCustomPage(session, false)
@@ -246,13 +287,17 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_analytics_website_visitors)) {
           baseActivity.startSiteViewAnalytic(session, "UNIQUE")
         } else if (url.contains(deeplink_background_images)) {
-          baseFragment.startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
+          baseFragment!!.startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
         } else if (url.contains(deeplink_favicon)) {
           baseActivity.startFeviconImage(session)
-        } else if (url.contains(deeplink_appointment_summary)) {
+        } else if (session.isProduct() && url.contains(deeplink_order_summary)) {
           baseActivity.startAptOrderSummary(session)
-        } else if (url.contains(deeplink_book_table)) {
+        } else if (session.isService() && url.contains(deeplink_appointment_summary)) {
+          baseActivity.startAptOrderSummary(session)
+        } else if (session.isRestaurant() && url.contains(deeplink_book_table)) {
           baseActivity.startBookTable(session)
+        } else if (session.isRestaurant() && url.contains(deeplink_add_table_booking)) {
+          baseActivity.startBookTable(session, true)
         } else if (url.contains(deeplink_my_add_ons)) {
           baseActivity.delayProgressShow()
           baseActivity.initiateAddonMarketplace(session, false, "myAddOns", "")
@@ -265,9 +310,8 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_compare_package)) {
           baseActivity.initiateAddonMarketplace(session, false, "comparePackageSelection", "")
         } else if (url.contains(deeplink_package_bundle)) {
-//          println("deeplink_package_bundle ${url}  ${buyItemKey}")
-          Log.v("deeplink_package_bundle", " " + url + " " + buyItemKey)
-//          baseActivity.initiateAddonMarketplace(session, false, "packageBundle", "")
+          Log.v("deeplink_package_bundle", " $url $buyItemKey")
+//        baseActivity.initiateAddonMarketplace(session, false, "packageBundle", "")
           baseActivity.initiateAddonMarketplace(session, false, "packageBundle", buyItemKey)
 
         } else if (url.contains(deeplink_promo_banner)) {
@@ -278,8 +322,8 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startWebsiteTheme(session)
         } else if (url.contains(deeplink_expert_contact)) {
           Log.v("deeplink_expert_contact", " $url $buyItemKey")
-          baseActivity.initiateAddonMarketplace(session, false, "expertContact", "")
-        } else if (url.contains(deeplink_owner_info)) {
+          baseActivity.initiateAddonMarketplace(session, false, "expertContact", "",false)
+        } else if (session.isSpa() && url.contains(deeplink_owner_info)) {
           baseActivity.startOwnersInfo(session)
         } else if (url.contains(deeplink_domain_booking)) {
           baseActivity.startDomainDetail(session)
@@ -287,6 +331,50 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startFestivePosterActivity(true)
         } else if (url.contains(deeplink_user_merchant_profile)) {
           baseActivity.startUserProfileDetail(session)
+        }else if (url.contains(testimonials)) {
+          baseActivity.startTestimonial(session)
+        } else if (url.contains(projectteam)) {
+          baseActivity.startListProjectAndTeams(session)
+        }else if (url.contains(digital_brochure)) {
+          baseActivity.startAddDigitalBrochure(session)
+        } else if (url.contains(payment_gateway)) {
+          baseActivity.startSelfBrandedGateway(session)
+        }else if (url.contains(staff_profile)) {
+          baseActivity.startListStaff(session)
+        }else if (url.contains(our_toppers)) {
+          baseActivity.startListToppers(session)
+        }else if (url.contains(upcoming_batches)) {
+          baseActivity.startListBatches(session)
+        }else if (url.contains(faculty)) {
+          baseActivity.startFacultyMember(session)
+        }else if (url.contains(latest_updates)) {
+          baseActivity.startUpdateLatestStory(session)
+        }else if (url.contains(featured_image)) {
+          baseActivity.startFeatureLogo(session)
+        }else if (url.contains(doctor_profile)) {
+          baseActivity.startListDoctors(session)
+        }else if (url.contains(trip_advisor)) {
+          baseActivity.startListTripAdvisor(session)
+        }else if (url.contains(nearby_places)) {
+          baseActivity.startNearByView(session)
+        }else if (url.contains(business_kyc)) {
+          baseActivity.startBusinessKycBoost(session)
+        } else if (session.isEducation() && url.contains(deeplink_topper_list)) {
+          baseActivity.startListToppers(session)
+        } else if (session.isEducation() && url.contains(deeplink_upcoming_batch)) {
+          baseActivity.startListBatches(session)
+        } else if (session.isEducation() && url.contains(deeplink_faculty_member)) {
+          baseActivity.startFacultyMember(session)
+        } else if (url.contains(deeplink_add_customer_testimonial)) {
+          baseActivity.startTestimonial(session, true)
+        } else if (session.isDocHos() && url.contains(deeplink_add_doctor)) {
+          baseActivity.startAddStaff(session)
+        } else if (session.isHotel() && url.contains(deeplink_post_seasonal_offer)) {
+          baseActivity.startAddSeasonalOffer(session)
+        } else if (session.isHotel() && url.contains(deeplink_add_nearby_attraction)) {
+          baseActivity.startNearByView(session, true)
+        } else if (url.contains(deeplink_add_featured_image)) {
+          baseActivity.startFeatureLogo(session)
         }
       }
     } catch (e: Exception) {
@@ -365,7 +453,8 @@ fun AppCompatActivity.shareWebsite(session: UserSessionManager) {
 }
 
 enum class DashboardTabs(var title: String, var position: Int) {
-  dashboard_tab(deeplink_dashboard_tab, 0), website_tab(deeplink_website_tab, 1), enquiries_tab(deeplink_enquiries_tab, 2), more_tab(deeplink_more_tab, 4);
+  dashboard_tab(deeplink_dashboard_tab, 0), website_tab(deeplink_website_tab, 1), enquiries_tab(deeplink_enquiries_tab, 2),
+  more_tab(deeplink_more_tab, 4), open_business_card(deeplink_open_business_card, 0);
 
   companion object {
     fun fromUrl(url: String?): DashboardTabs? = values().firstOrNull { url?.contains(it.title) == true }

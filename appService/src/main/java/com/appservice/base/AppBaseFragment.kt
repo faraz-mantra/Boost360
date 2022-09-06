@@ -147,7 +147,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
   fun startStorePage(buyItemKey: String = "") {
     try {
       showProgress("Loading. Please wait...")
-      val intent = Intent(baseActivity, Class.forName("com.boost.upgrades.UpgradeActivity"))
+      val intent = Intent(baseActivity, Class.forName("com.boost.marketplace.ui.home.MarketPlaceActivity"))
       intent.putExtra("expCode", sessionLocal.fP_AppExperienceCode)
       intent.putExtra("fpName", sessionLocal.fpTag)
       intent.putExtra("fpid", sessionLocal.fPID)
@@ -176,6 +176,13 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
 
 fun isDoctorClinicProfile(category_code: String?): Boolean {
   return (category_code.equals("DOC", true) || category_code.equals("HOS", true))
+}
+
+fun getProductType(category_code: String?): String {
+  return when (category_code) {
+    "SVC", "DOC", "HOS", "SPA", "SAL" -> "Services"
+    else -> "Products"
+  }
 }
 
 fun getSingleProductTaxonomyFromServiceCode(category_code: String?): String? {

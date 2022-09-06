@@ -3,10 +3,19 @@ package com.framework.glide.customsvgloader
 import android.content.Context
 import android.util.Log
 import androidx.collection.LruCache
+import com.framework.R
+import com.framework.constants.PosterKeys
+import com.framework.utils.fetchString
 import java.io.File
 
-class SvgRenderCacheUtil private constructor() {
+open class SvgRenderCacheUtil() {
     private  val TAG = "SvgCaching"
+
+    enum class SVG_TYPE{
+        FESTIVE_POSTER,
+        UPDATE_STUDIO
+    }
+
     private object HOLDER {
         val INSTANCE = SvgRenderCacheUtil()
     }
@@ -41,46 +50,7 @@ class SvgRenderCacheUtil private constructor() {
         return null
     }
 
-    fun replace(
-        svgString: String?,
-        posterKeys: List<PosterKeyModel>?,
-        context: Context,
-        isPurchased: Boolean
-    ): String? {
-        var result =svgString
 
-        posterKeys?.forEach {
-            val replaceVal = if (it.custom!=null){
-                it.custom
-            } else it.default
-//            Log.i(TAG, "replace: $replaceVal")
-//            result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
-            if (it.type=="IMAGE"){
-                Log.i(TAG, "replace: $replaceVal")
 
-                if (replaceVal?.startsWith("https:") == true){
-                    val fileName = replaceVal.substring(replaceVal.lastIndexOf("/")+1)
-                    val file = File(FileUtils.getPathOfImages(context)+fileName)
-                    if (!file.exists()){
-                        FileUtils.saveImage(replaceVal,file, context)
-                        Log.i(TAG, "image saved: ${file.path}")
-                    }
-                    if (file.exists())
-                        result = result?.replace("{{"+it.name+"}}",file.path)
-                    Log.i(TAG, "replace image path: ${it.name} ${file.path}")
 
-                }else{
-
-                    Log.i(TAG, "replace image path: ${replaceVal.toString()}")
-                    result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
-
-                }
-                result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
-            }else{
-                result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
-            }
-        }
-
-        return result
-    }
 }

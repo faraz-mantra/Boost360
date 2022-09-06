@@ -37,6 +37,7 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.getDomainName
 import com.framework.utils.ContentSharing.Companion.shareUpdates
+import com.framework.utils.startPromotionUpdates
 import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
@@ -46,6 +47,7 @@ import com.framework.webengageconstant.PAGE_VIEW
 import com.framework.webengageconstant.Post_Promotional_Update_Click
 import java.util.*
 
+@Deprecated(" use PastUpdatesLisitngFragment")
 class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener,AppOnZeroCaseClicked {
 
   private val STORAGE_CODE = 120
@@ -267,13 +269,7 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
 
   override fun primaryButtonClicked() {
     if (FirebaseRemoteConfigUtil.featureUpdateStudioSelectedUsers(sessionLocal.fpTag)){
-      try {
-        val posterIntent = Intent(requireActivity(), Class.forName("com.festive.poster.ui.promoUpdates.PromoUpdatesActivity"))
-        startActivity(posterIntent)
-        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-      } catch (e: ClassNotFoundException) {
-        e.printStackTrace()
-      }
+      baseActivity.startPromotionUpdates()
     } else
       startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, isResult = true)
   }

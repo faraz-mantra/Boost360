@@ -19,8 +19,15 @@ import com.onboarding.nowfloats.base.AppBaseActivity
 import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.databinding.ActivityWebViewNBinding
 import com.onboarding.nowfloats.utils.getWebViewUrl
+import im.delight.android.webview.AdvancedWebView
 
-class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>() {
+
+import android.webkit.WebView
+
+
+
+
+class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(),AdvancedWebView.Listener {
 
   override fun getLayout(): Int {
     return R.layout.activity_web_view_n
@@ -48,18 +55,8 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
   }
 
   private fun loadData(urlData: String) {
-    binding?.webview?.settings?.javaScriptEnabled = true
-    binding?.webview?.settings?.loadWithOverviewMode = true
-    binding?.webview?.settings?.useWideViewPort = true
-    binding?.webview?.settings?.allowFileAccess = true
-    binding?.webview?.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
     binding?.webview?.webChromeClient = WebChromeClient()
-    val webSettings = binding?.webview?.settings
-    webSettings?.javaScriptCanOpenWindowsAutomatically = true
-    webSettings?.setSupportMultipleWindows(true)
-    webSettings?.cacheMode = WebSettings.LOAD_DEFAULT
-    webSettings?.domStorageEnabled = true
-
+    binding?.webview?.setListener(this,this)
     binding?.webview?.webChromeClient = object : WebChromeClient() {
       override fun onCreateWindow(view: WebView?, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message?): Boolean {
         val result = view!!.hitTestResult
@@ -73,6 +70,8 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
       }
     }
     binding?.webview?.webViewClient = object : WebViewClient() {
+
+
       override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
         Log.i(TAG, "shouldOverrideUrlLoading: $url")
         handleOrderSuccess(url)
@@ -154,6 +153,34 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
   override fun onBackPressed() {
     val b = binding?.webview?.canGoBack()
     if (b != null && b) binding?.webview?.goBack() else super.onBackPressed()
+  }
+
+  override fun onPageStarted(url: String?, favicon: Bitmap?) {
+
+  }
+
+  override fun onPageFinished(url: String?) {
+  }
+
+  override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) {
+  }
+
+  override fun onDownloadRequested(
+    url: String?,
+    suggestedFilename: String?,
+    mimeType: String?,
+    contentLength: Long,
+    contentDisposition: String?,
+    userAgent: String?
+  ) {
+  }
+
+  override fun onExternalPageRequest(url: String?) {
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    binding?.webview?.onActivityResult(requestCode,resultCode,data)
   }
 }
 

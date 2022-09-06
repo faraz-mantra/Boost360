@@ -13,10 +13,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
-import com.appservice.ui.updatesBusiness.AddUpdateBusinessFragment
-import com.appservice.ui.updatesBusiness.AddUpdateBusinessFragmentV2
 import com.bumptech.glide.Glide
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
@@ -98,6 +97,8 @@ import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.LocalSessionModel
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.VisitingCardSheet
 import com.onboarding.nowfloats.ui.webview.WebViewBottomDialog
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import java.io.File
@@ -145,6 +146,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   override fun onCreateView() {
+    baseActivity.startPromotionUpdatesFromDashboard()
     if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(true)
     session = UserSessionManager(baseActivity)
     session?.let { deepLinkUtil = DeepLinkUtil(baseActivity, it, Fragment()) }
@@ -161,6 +163,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     getPremiumBanner()
     getChannelAccessToken()
     displayFestiveButtonView()
+    lifecycleScope.launch {
+      MutableDataUtils.openBusinessCard.collect { if (it) binding?.btnVisitingCard?.performClick() }
+    }
   }
 
   private fun displayFestiveButtonView() {
@@ -551,7 +556,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun apiWebsiteReport(filterDate: FilterDateModel, isLoader: Boolean = false) {
     if (isLoader) showProgress()
-    if (isFirstLoad()) Handler().postDelayed({ baseActivity.runOnUiThread { showSimmer(false) } }, 2000)
+    Handler().postDelayed({ baseActivity.runOnUiThread { showSimmer(false) } }, 2000)
+
     val scope = if (session?.iSEnterprise == "true") "1" else "0"
     viewModel?.getUserSummary(session?.fpTag, clientId, session?.fPParentId, scope, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner) { it1 ->
       val response1 = it1 as? UserSummaryResponse
@@ -867,7 +873,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     when (type) {
       QuickActionItem.QuickActionType.POST_NEW_UPDATE ->{
         if (FirebaseRemoteConfigUtil.featureUpdateStudioSelectedUsers(session?.fpTag))
-            baseActivity.startPromotionUpdates()
+            baseActivity.startPromotionUpdatesFromDashboard()
         else
            baseActivity.startPostUpdate()
       }
@@ -877,14 +883,12 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       QuickActionItem.QuickActionType.ADD_STAFF_PROFILE -> baseActivity.startAddStaff(session)
       QuickActionItem.QuickActionType.LIST_SERVICES,
       QuickActionItem.QuickActionType.LIST_PRODUCT,
-      QuickActionItem.QuickActionType.LIST_DRUG_MEDICINE,
-      -> baseActivity.startListServiceProduct(session)
+      QuickActionItem.QuickActionType.LIST_DRUG_MEDICINE, -> baseActivity.startListServiceProduct(session)
       QuickActionItem.QuickActionType.ADD_SERVICE,
       QuickActionItem.QuickActionType.ADD_PRODUCT,
       QuickActionItem.QuickActionType.ADD_COURSE,
       QuickActionItem.QuickActionType.ADD_MENU,
-      QuickActionItem.QuickActionType.ADD_ROOM_TYPE,
-      -> baseActivity.startAddServiceProduct(session)
+      QuickActionItem.QuickActionType.ADD_ROOM_TYPE, -> baseActivity.startAddServiceProduct(session)
       QuickActionItem.QuickActionType.PLACE_APPOINTMENT -> baseActivity.startBookAppointmentConsult(session, false)
       QuickActionItem.QuickActionType.PLACE_CONSULT -> baseActivity.startBookAppointmentConsult(session, true)
       QuickActionItem.QuickActionType.ADD_PROJECT -> {
@@ -908,8 +912,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       QuickActionItem.QuickActionType.ADD_NEARBY_ATTRACTION -> baseActivity.startNearByView(session)
       QuickActionItem.QuickActionType.ADD_FACULTY_MEMBER -> baseActivity.startFacultyMember(session)
       QuickActionItem.QuickActionType.PLACE_ORDER_BOOKING -> baseActivity.startOrderCreate(session)
-      QuickActionItem.QuickActionType.ADD_TABLE_BOOKING -> baseActivity.startBookTable(session,true)
-      QuickActionItem.QuickActionType.ADD_STAFF_MEMBER->baseActivity.startAddStaff(session)
+      QuickActionItem.QuickActionType.ADD_TABLE_BOOKING -> baseActivity.startBookTable(session, true)
+      QuickActionItem.QuickActionType.ADD_STAFF_MEMBER -> baseActivity.startAddStaff(session)
 
       QuickActionItem.QuickActionType.POST_STATUS_STORY,
       QuickActionItem.QuickActionType.ADD_SLIDER_BANNER,

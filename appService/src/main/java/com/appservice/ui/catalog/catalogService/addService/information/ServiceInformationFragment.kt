@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -42,6 +43,7 @@ import kotlin.collections.ArrayList
 
 class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBinding, ServiceViewModelV1>(), RecyclerItemClickListener {
 
+  private val RC_SERVICE_TIMING=102;
   private var product: ServiceModelV1? = null
   private var isEdit: Boolean = false
   private var tagList = ArrayList<String>()
@@ -93,8 +95,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
       (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>)
         ?: ArrayList()
     tagList = product?.tags ?: ArrayList()
-    specList =
-      if (product?.otherSpecification.isNullOrEmpty()) arrayListOf(KeySpecification()) else product?.otherSpecification!!
+    specList = if (product?.otherSpecification.isNullOrEmpty()) arrayListOf(KeySpecification()) else product?.otherSpecification!!
     if (isEdit) {
       secondaryDataImage = product?.secondaryImages
       if (secondaryImage.isNullOrEmpty()) secondaryDataImage?.forEach {
@@ -112,6 +113,8 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
   private fun setUiText() {
     bindTimingWithBusinessHour()
+    binding?.edtGst?.isVisible = isDoctorClinic.not()
+    binding?.llGst?.isVisible = isDoctorClinic.not()
     ordersQuantity = product?.maxCodOrders ?: 0
     binding?.cetSpecKey?.setText(product?.keySpecification?.key ?: "")
     binding?.cetSpecValue?.setText(product?.keySpecification?.value ?: "")
@@ -119,13 +122,6 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     binding?.cetWebsite?.setText(product?.BuyOnlineLink?.description ?: "")
     binding?.cetWebsiteValue?.setText(product?.BuyOnlineLink?.url ?: "")
     binding?.ctvQuantityOrderStatus?.text = ordersQuantity.toString()
-    if (product?.isPriceToggleOn() == true) {
-      binding?.edtGst?.visible()
-      binding?.llGst?.visible()
-    } else {
-      binding?.edtGst?.gone()
-      binding?.llGst?.gone()
-    }
     if (product?.GstSlab != null) binding?.edtGst?.setText("${(product?.GstSlab ?: 0.0)} %")
     setAdapter()
     val listYesNo = mutableListOf(
@@ -219,7 +215,8 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     super.onClick(v)
     when (v) {
       binding?.edtGst -> {
-      } //openGStDetail()
+        openGStDetail()
+      }
       binding?.btnAddTag -> {
         val txtTag = binding?.edtServiceTag?.text.toString()
         if (txtTag.isNotEmpty()) {
@@ -230,9 +227,11 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
       }
       binding?.btnAddSpecification -> {
         specList.add(KeySpecification())
-        binding?.rvSpecification?.removeAllViewsInLayout()
-        binding?.rvSpecification?.adapter = null
-        specificationAdapter()
+        //binding?.rvSpecification?.removeAllViewsInLayout()
+        //binding?.rvSpecification?.adapter = null
+        adapterSpec?.notifyDataSetChanged()
+        //adapterSpec?.notifyItemInserted(specList.size.minus(1))
+        //specificationAdapter()
       }
       binding?.btnConfirm -> validateAnnGoBack()
       binding?.btnClickPhoto -> openImagePicker()
@@ -255,7 +254,8 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         startFragmentActivity(
           FragmentType.SERVICE_TIMING_FRAGMENT,
           bundle = bundle,
-          isResult = true
+          isResult = true,
+          requestCode = RC_SERVICE_TIMING
         )
       }
     }
@@ -282,6 +282,19 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   }
 
   private fun validateAnnGoBack() {
+    if (specList.any { it.key.isNullOrEmpty() && it.value.isNullOrEmpty().not() || it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty()}) {
+      specList.forEachIndexed { index, _ ->
+          adapterSpec?.notifyItemChanged(index)
+      }
+      binding?.linearErrorMsg?.visible()
+      return
+    }
+    binding?.linearErrorMsg?.gone()
+
+    val otherSpec = specList/*(specList.filter {
+      it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not()
+    } as? ArrayList<KeySpecification>) ?: ArrayList()*/
+
     val spinnerCod = binding?.spinnerCod?.selectedItem as SpinnerImageModel
     val spinnerOnlinePayment = binding?.spinnerOnlinePayment?.selectedItem as SpinnerImageModel
     val brand = binding?.edtBrand?.text?.toString() ?: ""
@@ -290,10 +303,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     val keySpecification = binding?.cetSpecKey?.text?.toString() ?: ""
     val valSpecification = binding?.cetSpecValue?.text?.toString() ?: ""
     val gst = (binding?.edtGst?.text?.toString() ?: "").replace("%", "").trim()
-    val otherSpec = (specList.filter {
-      it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not()
-    } as? ArrayList<KeySpecification>)
-      ?: ArrayList()
+
     when {
       else -> {
         WebEngageController.trackEvent(SERVICE_INFORMATION_CONFIRM, CLICK, NO_EVENT_VALUE)
@@ -313,7 +323,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         product?.maxCodOrders = ordersQuantity
         product?.otherSpecification = otherSpec
         product?.BuyOnlineLink = UniquePaymentUrlN(description = websiteName, url = websiteValue)
-        product?.GstSlab = 18//gst.toIntOrNull() ?: 0;
+        product?.GstSlab = gst.toInt()//gst.toIntOrNull() ?: 0;
         val output = Intent()
         output.putExtra(IntentConstant.PRODUCT_DATA.name, product)
         output.putExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)
@@ -346,7 +356,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
       secondaryImage(mPaths)
-    } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
+    } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == RC_SERVICE_TIMING) {
       this.serviceTimingList =
         data?.getSerializableExtra(IntentConstant.SERVICE_TIMING_DATA.name) as? ArrayList<ServiceTiming>
       val serviceTimingTxt = ServiceTiming().getStringActive(this.serviceTimingList)
@@ -374,8 +384,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   private fun setAdapter() {
     if (adapterImage == null) {
       binding?.rvAdditionalDocs?.apply {
-        adapterImage =
-          AppBaseRecyclerViewAdapter(baseActivity, secondaryImage, this@ServiceInformationFragment)
+        adapterImage = AppBaseRecyclerViewAdapter(baseActivity, secondaryImage, this@ServiceInformationFragment)
         adapter = adapterImage
       }
     } else adapterImage?.notifyDataSetChanged()
@@ -386,12 +395,11 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
       RecyclerViewActionType.IMAGE_CLEAR_CLICK.ordinal -> {
         val data = item as? FileModel
         if (isEdit && data?.pathUrl.isNullOrEmpty().not()) {
-          val dataImage = secondaryDataImage?.firstOrNull { it.ActualImage == data?.pathUrl }
-            ?: return
+          val dataImage = secondaryDataImage?.firstOrNull { it.ActualImage == data?.pathUrl } ?: return
           showProgress(resources.getString(R.string.removing_image))
           val request = DeleteSecondaryImageRequest(product?.productId, dataImage.ImageId)
           viewModel?.deleteSecondaryImage(request)?.observeOnce(viewLifecycleOwner, Observer {
-            if (it.status == 200 || it.status == 201 || it.status == 202) {
+            if (it.isSuccess()) {
               secondaryDataImage?.remove(dataImage)
               secondaryImage.remove(data)
               setAdapter()
@@ -402,29 +410,26 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
           secondaryImage.remove(data)
           setAdapter()
         }
-
       }
       RecyclerViewActionType.IMAGE_CHANGE.ordinal -> {
         val data = item as? FileModel
         if (isEdit && data?.pathUrl.isNullOrEmpty().not()) {
-          val dataImage = secondaryDataImage?.firstOrNull { it.ActualImage == data?.pathUrl }
-            ?: return
+          val dataImage = secondaryDataImage?.firstOrNull { it.ActualImage == data?.pathUrl } ?: return
           showProgress(resources.getString(R.string.removing_image))
           val request = DeleteSecondaryImageRequest(product?.productId, dataImage.ImageId)
-          viewModel?.deleteSecondaryImage(request)?.observeOnce(viewLifecycleOwner, {
-            if (it.status == 200 || it.status == 201 || it.status == 202) {
+          viewModel?.deleteSecondaryImage(request)?.observeOnce(viewLifecycleOwner) {
+            if (it.isSuccess()) {
               secondaryDataImage?.remove(dataImage)
               secondaryImage.remove(data)
               setAdapter()
             } else showLongToast(resources.getString(R.string.removing_image_failed))
             hideProgress()
-          })
+          }
         } else {
           secondaryImage.remove(data)
           setAdapter()
         }
         openImagePicker()
-
       }
       RecyclerViewActionType.CLEAR_SPECIFICATION_CLICK.ordinal -> {
         if (specList.size > 1) {
@@ -439,6 +444,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
           val data = specList[position]
           data.key = element.key
           data.value = element.value
+          specList[position] = data
         }
       }
     }

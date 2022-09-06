@@ -59,5 +59,11 @@
       android:screenOrientation="portrait"
       android:theme="@style/DashboardTheme"
       android:windowSoftInputMode="adjustPan" />
+
+    <activity
+        android:name=".controller.DeepLinkTransActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/Theme_Transparent_DeepLink" />
+
   </application>
 </manifest>

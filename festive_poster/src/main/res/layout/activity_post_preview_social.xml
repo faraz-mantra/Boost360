@@ -69,7 +69,8 @@
                         android:id="@+id/rv_post_preview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/size_16"
+                        android:clipToPadding="false"
+                        android:paddingHorizontal="@dimen/size_16"
                         android:layout_centerHorizontal="true"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -134,7 +135,7 @@
                         android:gravity="center"
                         android:paddingHorizontal="@dimen/size_10"
                         android:paddingVertical="@dimen/size_6"
-                        android:textColor="@color/colorFCAF17"
+                        android:textColor="@color/color_fcaf17_jio_0400a6"
                         android:textSize="@dimen/text_12"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_preview_title"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -185,11 +186,11 @@
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_choose_a_promo_pack"
-            style="@style/yellow_squared_button"
+            style="@style/primary_squared_button"
             android:layout_gravity="bottom"
             android:visibility="gone"
             android:layout_height="59dp"
-            android:text="@string/choose_a_promo_updates_pack"
+            android:text="@string/get_this_feature"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -197,7 +198,7 @@
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_post_update"
-            style="@style/yellow_squared_button"
+            style="@style/primary_squared_button"
             android:layout_gravity="bottom"
             android:background="@drawable/yellow_bg_with_drop_shadow"
             android:layout_height="59dp"

@@ -22,6 +22,7 @@ import com.framework.analytics.SentryController
 import com.framework.constants.PackageNames
 import com.framework.glide.customsvgloader.*
 import com.framework.utils.RegexUtils
+import com.framework.utils.application
 import com.framework.utils.saveImageToStorage
 import com.framework.utils.shareAsImage
 import kotlinx.coroutines.CoroutineScope
@@ -44,12 +45,15 @@ object SvgUtils {
         return requestBuilder
     }
 
-    fun loadImage(url: String?, view: ImageView, model: List<PosterKeyModel>?, isPurchased: Boolean?){
-        if (url==null||model==null){
+    fun loadImage(url: String?, view: ImageView,
+                  model: List<PosterKeyModel>?=null,
+                  svgType: SvgRenderCacheUtil.SVG_TYPE=SvgRenderCacheUtil.SVG_TYPE.FESTIVE_POSTER,
+                  ){
+        if (url==null){
             return
         }
         val uri = Uri.parse(url)
-        val listener = SvgDrawableListener(model, url,isPurchased)
+        val listener = SvgDrawableListener(model, url,svgType)
         Log.d(TAG, "loadImage() called with: url = $url, model = $model $view")
 
         initReqBuilder(view.context)?.let{
@@ -57,6 +61,12 @@ object SvgUtils {
             return
         }
         Log.d(TAG, "loadImage() called with: url = $url, model = $model request builder is null")
+
+    }
+
+    fun loadImage(url: String?, view: ImageView,
+                  ){
+        loadImage(url, view,null, SvgRenderCacheUtil.SVG_TYPE.UPDATE_STUDIO)
 
     }
 
@@ -174,7 +184,6 @@ object SvgUtils {
     fun shareUncompressedSvg(
             url: String?,
             model: PosterModel?,
-            context: Context,
             packageName:String?=null
         ) {
         if (url==null||model==null){
@@ -183,48 +192,56 @@ object SvgUtils {
         url.let {
             CoroutineScope(Dispatchers.IO).launch {
                 val b = svgToBitmap(model)
-                withContext(Dispatchers.Default) {
-                    when (packageName) {
-                        PackageNames.INSTAGRAM ->{
-                            b?.shareAsImage(
-                                PackageNames.INSTAGRAM,
-                                text = model.greeting_message
-                            )
-                        }
-                        PackageNames.WHATSAPP ->{
-                            b?.shareAsImage(
-                                PackageNames.WHATSAPP,
-                                text = RegexUtils.addStarToNumbers(model.greeting_message)
-                            )
-                        }
-                        "" -> b?.shareAsImage(text = model.greeting_message)
-                        else -> b?.saveImageToStorage(showNoti = true)
-                    }
-                }
+                shareBitmap(b,model.greeting_message,packageName)
             }
         }
 
+    }
+
+    fun shareUncompressedSvg(
+        svgUrl: String?,
+        msg:String?=null,
+        packageName:String?=null
+    ) {
+        if (svgUrl==null){
+            return
+        }
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val b = svgToBitmap(svgUrl)
+                shareBitmap(b,msg,packageName)
             }
 
 
+    }
 
-
-    suspend fun svgToBitmap(model: PosterModel): Bitmap? {
-        val url = model.url()!!
-
-            var svgString = SvgRenderCacheUtil.instance.retrieveFromCache(url)
-            if (svgString == null || svgString.isEmpty()) {
-                svgString = getSvgAsAString(url)
-                svgString?.let { SvgRenderCacheUtil.instance.saveToCache(url, it) }
+    suspend fun shareBitmap(b:Bitmap?,msg:String?,packageName: String?,){
+        withContext(Dispatchers.Default) {
+            when (packageName) {
+                PackageNames.INSTAGRAM ->{
+                    b?.shareAsImage(
+                        PackageNames.INSTAGRAM,
+                        text = msg
+                    )
+                }
+                PackageNames.WHATSAPP ->{
+                    b?.shareAsImage(
+                        PackageNames.WHATSAPP,
+                        text = RegexUtils.addStarToNumbers(msg)
+                    )
+                }
+                "" -> b?.shareAsImage(text = msg)
+                else -> b?.saveImageToStorage(showNoti = true)
             }
-            if (svgString != null && !svgString.isEmpty()) {
-                svgString = SvgRenderCacheUtil.instance.replace(
-                    svgString,
-                    model.keys!!,
-                    BaseApplication.instance,
-                    model.isPurchased
-                )
-                val svg = SVG.getFromString(svgString)
+        }
+
+    }
+
+
+
+
+    suspend fun svgToBitmap(svg:SVG): Bitmap? {
+
                /* svg.renderDPI =
                     BaseApplication.instance.resources?.displayMetrics?.densityDpi?.toFloat()
                         ?: 480.0f
@@ -238,7 +255,52 @@ object SvgUtils {
                 svg.renderToCanvas(canvas)
 
                 return b
-            }
+
+    }
+
+    suspend fun svgToBitmap(model:PosterModel): Bitmap? {
+        val svgUrl = model.url()!!
+        var svgString = FestivePosterSvgRenderCache.instance.retrieveFromCache(svgUrl)
+        if (svgString == null || svgString.isEmpty()) {
+            svgString = getSvgAsAString(svgUrl)
+            svgString?.let { FestivePosterSvgRenderCache.instance.saveToCache(svgUrl, it) }
+        }
+        if (svgString != null && !svgString.isEmpty()) {
+            svgString = FestivePosterSvgRenderCache.instance.replace(
+                    svgString,
+                    model.keys!!,
+                    BaseApplication.instance,
+                )
+
+            val svg = SVG.getFromString(svgString)
+
+            return svgToBitmap(svg)
+        }
+
         return null
+    }
+
+    suspend fun svgToBitmap(svgUrl:String?): Bitmap? {
+        if (svgUrl==null){
+            return null
+        }
+        var svgString = UpdateStudioSvgRenderCache.instance.retrieveFromCache(svgUrl)
+        if (svgString == null || svgString.isEmpty()) {
+            svgString = getSvgAsAString(svgUrl)
+            svgString?.let { UpdateStudioSvgRenderCache.instance.saveToCache(svgUrl, it) }
+        }
+
+        if (svgString != null && !svgString.isEmpty()) {
+            svgString = UpdateStudioSvgRenderCache.instance.replace(
+                svgString,
+                application()
+            )
+
+            val svg = SVG.getFromString(svgString)
+
+            return svgToBitmap(svg)
+        }
+        return null
+
     }
 }

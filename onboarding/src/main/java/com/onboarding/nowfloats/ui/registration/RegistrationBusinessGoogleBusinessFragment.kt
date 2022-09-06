@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
 import auth.google.GoogleLoginHelper
 import auth.google.constants.GoogleGraphPath
 import com.framework.extensions.gone
@@ -33,22 +32,20 @@ import com.onboarding.nowfloats.rest.response.AccountLocationResponse
 import com.onboarding.nowfloats.ui.InternetErrorDialog
 import com.onboarding.nowfloats.utils.WebEngageController
 
-class RegistrationBusinessGoogleBusinessFragment :
-  BaseRegistrationFragment<FragmentRegistrationBusinessGoogleBinding>(), GoogleLoginHelper {
+class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<FragmentRegistrationBusinessGoogleBinding>(), GoogleLoginHelper {
 
-  private var channelAccessToken =
-    ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.googlemybusiness.name.toLowerCase())
-  private var googleChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
-  private var isShowProfile = false
+    private var channelAccessToken = ChannelAccessToken(type = ChannelAccessToken.AccessTokenType.googlemybusiness.name.toLowerCase())
+    private var googleChannelsAdapter: AppBaseRecyclerViewAdapter<ChannelModel>? = null
+    private var isShowProfile = false
 
-  companion object {
-    @JvmStatic
-    fun newInstance(bundle: Bundle? = null): RegistrationBusinessGoogleBusinessFragment {
-      val fragment = RegistrationBusinessGoogleBusinessFragment()
-      fragment.arguments = bundle
-      return fragment
+    companion object {
+        @JvmStatic
+        fun newInstance(bundle: Bundle? = null): RegistrationBusinessGoogleBusinessFragment {
+            val fragment = RegistrationBusinessGoogleBusinessFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
     }
-  }
 
   override fun onCreateView() {
     super.onCreateView()
@@ -70,37 +67,30 @@ class RegistrationBusinessGoogleBusinessFragment :
     setSavedData()
   }
 
-  private fun checkIsUpdate() {
-    if (requestFloatsModel?.isUpdate == true) {
-      requestFloatsModel?.channelAccessTokens?.forEach {
-        if (it.type == ChannelAccessToken.AccessTokenType.googlemybusiness.name) {
-          channelAccessToken = it
-          channelAccessToken.profilePicture = ""
-          isShowProfile = true
+    private fun checkIsUpdate() {
+        if (requestFloatsModel?.isUpdate == true) {
+            requestFloatsModel?.channelAccessTokens?.forEach {
+                if (it.type == ChannelAccessToken.AccessTokenType.googlemybusiness.name) {
+                    channelAccessToken = it
+                    channelAccessToken.profilePicture = ""
+                    isShowProfile = true
+                }
+            }
         }
-      }
     }
-  }
 
-  override fun setSavedData() {
-    val channelAccessToken =
-      requestFloatsModel?.channelAccessTokens?.firstOrNull { it.getType() == channelAccessToken.getType() }
-        ?: return
-    setProfileDetails(channelAccessToken.userAccountName, channelAccessToken.profilePicture)
-    requestFloatsModel?.channelAccessTokens?.remove(channelAccessToken)
-    this.channelAccessToken = channelAccessToken
-  }
+    override fun setSavedData() {
+        val channelAccessToken = requestFloatsModel?.channelAccessTokens?.firstOrNull { it.getType() == channelAccessToken.getType() } ?: return
+        setProfileDetails(channelAccessToken.userAccountName, channelAccessToken.profilePicture)
+        requestFloatsModel?.channelAccessTokens?.remove(channelAccessToken)
+        this.channelAccessToken = channelAccessToken
+    }
 
-  private fun setSetSelectedGoogleChannels(list: ArrayList<ChannelModel>) {
-    val selectedItems = list.filter { it.isGoogleBusinessChannel() }
-      .map { it.recyclerViewType = RecyclerViewItemType.SELECTED_CHANNEL_ITEM.getLayout(); it }
-    googleChannelsAdapter = binding?.googleChannels?.setGridRecyclerViewAdapter(
-      baseActivity,
-      selectedItems.size,
-      selectedItems
-    )
-    googleChannelsAdapter?.notifyDataSetChanged()
-  }
+    private fun setSetSelectedGoogleChannels(list: ArrayList<ChannelModel>) {
+        val selectedItems = list.filter { it.isGoogleBusinessChannel() }.map { it.recyclerViewType = RecyclerViewItemType.SELECTED_CHANNEL_ITEM.getLayout(); it }
+        googleChannelsAdapter = binding.googleChannels.setGridRecyclerViewAdapter(baseActivity, selectedItems.size, selectedItems)
+        googleChannelsAdapter?.notifyDataSetChanged()
+    }
 
   override fun onClick(v: View) {
     super.onClick(v)
@@ -180,106 +170,83 @@ class RegistrationBusinessGoogleBusinessFragment :
     channelAccessToken.clear()
   }
 
-  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
-    if (requestCode == GoogleGraphPath.RC_SIGN_IN) handleGoogleSignInResult(data)
-  }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == GoogleGraphPath.RC_SIGN_IN) handleGoogleSignInResult(data)
+    }
 
 
-  override fun onGoogleLoginSuccess(result: GoogleSignInAccount?) {
-    showProgress()
-    val userId = result?.id
-    val clientIdGoogle=  auth.google.BuildConfig.GOOGLE_SERVER_CLIENT_ID
-    val clientSecretGoogle=  auth.google.BuildConfig.GOOGLE_SERVER_CLIENT_SECRET
-    val request = GoogleAuthTokenRequest(clientIdGoogle, clientSecretGoogle, result?.serverAuthCode)
-    viewModel?.getGoogleAuthToken(request)?.observeOnce(viewLifecycleOwner, Observer {
-      val response = it as? GoogleAuthResponse
-      if (response != null && response.access_token.isNullOrEmpty().not()) {
-        viewModel?.getAccountLocationsGMB(response.getAuth(), userId)
-          ?.observeOnce(viewLifecycleOwner, Observer { it1 ->
-            hideProgress()
-            val responseLocation = it1 as? AccountLocationResponse
-            if ((it1.status == 200 || it1.status == 201 || it1.status == 202) && responseLocation?.locations.isNullOrEmpty()
-                .not()
-            ) {
-              selectLocation(result, response, responseLocation?.locations)
+    override fun onGoogleLoginSuccess(result: GoogleSignInAccount?) {
+        showProgress()
+        val userId = result?.id
+        val clientIdGoogle = auth.google.BuildConfig.GOOGLE_SERVER_CLIENT_ID
+        val clientSecretGoogle = auth.google.BuildConfig.GOOGLE_SERVER_CLIENT_SECRET
+        val request = GoogleAuthTokenRequest(clientIdGoogle, clientSecretGoogle, result?.serverAuthCode)
+        viewModel?.getGoogleAuthToken(request)?.observeOnce(viewLifecycleOwner) {
+            val response = it as? GoogleAuthResponse
+            if (response != null && response.access_token.isNullOrEmpty().not()) {
+                viewModel?.getAccountLocationsGMB(response.getAuth(), userId)?.observeOnce(viewLifecycleOwner) { it1 ->
+                    hideProgress()
+                    val responseLocation = it1 as? AccountLocationResponse
+                    if ((it1.isSuccess()) && responseLocation?.locations.isNullOrEmpty().not()) {
+                        selectLocation(result, response, responseLocation?.locations)
+                    } else {
+                        logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
+                        GmbLocationAddDialog().show(parentFragmentManager, GmbLocationAddDialog::class.java.name)
+                    }
+                }
             } else {
-              logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
-              GmbLocationAddDialog().show(
-                parentFragmentManager,
-                GmbLocationAddDialog::class.java.name
-              )
+                hideProgress()
+                logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
+                onGoogleLoginError(ApiException(Status(400, "Auth token getting error.")))
             }
-          })
-      } else {
-        hideProgress()
-        logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
-        onGoogleLoginError(ApiException(Status(400, "Auth token getting error.")))
-      }
-    })
-
-  }
-
-  private fun selectLocation(
-    result: GoogleSignInAccount?,
-    responseAuth: GoogleAuthResponse?,
-    locations: List<LocationNew>?
-  ) {
-    val singleItems = ArrayList<String>()
-    locations?.forEach { it.locationName?.let { it1 -> singleItems.add(it1) } }
-    var checkedItem = 0
-    AlertDialog.Builder(baseActivity, R.style.DialogTheme)
-      .setTitle(getString(R.string.select_the_location_on_map))
-      .setPositiveButton(resources.getString(R.string.ok)) { dialog, _ ->
-        dialog.dismiss()
-        val data = locations?.firstOrNull { singleItems[checkedItem] == it.locationName }
-        requestFloatsModel?.fpTag?.let {
-          WebEngageController.trackEvent(
-            GOOGLE_MY_BUSINESS_AND_GOOGLE_MAPS_CONNECTED,
-            DIGITAL_CHANNELS,
-            it
-          )
         }
-        setDataGoogle(result, responseAuth, data)
-        setProfileDetails(data?.locationName?.capitalizeWords(), result?.photoUrl?.toString())
-      }.setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
-        logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
-        dialog.dismiss()
-      }
-      .setSingleChoiceItems(singleItems.toTypedArray(), checkedItem) { _, position ->
-        checkedItem = position
-      }.setCancelable(false).show()
-  }
+    }
 
-  private fun setDataGoogle(
-    result: GoogleSignInAccount?,
-    responseAuth: GoogleAuthResponse?,
-    data: LocationNew?
-  ) {
-    val res = ChannelTokenResponse(
-      responseAuth?.access_token,
-      responseAuth?.token_type,
-      responseAuth?.expires_in,
-      responseAuth?.refresh_token
-    )
-    channelAccessToken.token_expiry = responseAuth?.getExpiryDate()
-    channelAccessToken.invalid = false
-    channelAccessToken.token_response = res
-    channelAccessToken.refresh_token = responseAuth?.refresh_token
-    channelAccessToken.userAccessTokenKey = responseAuth?.access_token
-    channelAccessToken.userAccountId = result?.id
-    channelAccessToken.userAccountName = result?.displayName
-    channelAccessToken.LocationId = data?.name //TODO name refer location id
-    channelAccessToken.LocationName = data?.locationName
-    channelAccessToken.verified_location = null
-  }
+    private fun selectLocation(result: GoogleSignInAccount?, responseAuth: GoogleAuthResponse?, locations: List<LocationNew>?) {
+        val singleItems = ArrayList<String>()
+        locations?.forEach { it.locationName?.let { it1 -> singleItems.add(it1) } }
+        var checkedItem = 0
+        AlertDialog.Builder(baseActivity, R.style.DialogTheme).setTitle(getString(R.string.select_the_location_on_map)).setPositiveButton(resources.getString(R.string.ok)) { dialog, _ ->
+            dialog.dismiss()
+            val data = locations?.firstOrNull { singleItems[checkedItem] == it.locationName }
+            requestFloatsModel?.fpTag?.let {
+                WebEngageController.trackEvent(
+                    GOOGLE_MY_BUSINESS_AND_GOOGLE_MAPS_CONNECTED,
+                    DIGITAL_CHANNELS,
+                    it
+                )
+            }
+            setDataGoogle(result, responseAuth, data)
+            setProfileDetails(data?.locationName?.capitalizeWords(), result?.photoUrl?.toString())
+        }.setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+            logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
+            dialog.dismiss()
+        }.setSingleChoiceItems(singleItems.toTypedArray(), checkedItem) { _, position ->
+            checkedItem = position
+        }.setCancelable(false).show()
+    }
 
-  override fun onGoogleLoginError(error: ApiException?) {
-    showLongToast(getString(R.string.google_login_error))
-  }
+    private fun setDataGoogle(result: GoogleSignInAccount?, responseAuth: GoogleAuthResponse?, data: LocationNew?) {
+        val res = ChannelTokenResponse(responseAuth?.access_token, responseAuth?.token_type, responseAuth?.expires_in, responseAuth?.refresh_token)
+        channelAccessToken.token_expiry = responseAuth?.getExpiryDate()
+        channelAccessToken.invalid = false
+        channelAccessToken.token_response = res
+        channelAccessToken.refresh_token = responseAuth?.refresh_token
+        channelAccessToken.userAccessTokenKey = responseAuth?.access_token
+        channelAccessToken.userAccountId = result?.id
+        channelAccessToken.userAccountName = result?.displayName
+        channelAccessToken.LocationId = data?.name //TODO name refer location id
+        channelAccessToken.LocationName = data?.locationName
+        channelAccessToken.verified_location = null
+    }
 
-  override fun updateInfo() {
-    requestFloatsModel?.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.googlemybusiness }
-    super.updateInfo()
-  }
+    override fun onGoogleLoginError(error: ApiException?) {
+        showLongToast(getString(R.string.google_login_error))
+    }
+
+    override fun updateInfo() {
+        requestFloatsModel?.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.googlemybusiness }
+        super.updateInfo()
+    }
 }

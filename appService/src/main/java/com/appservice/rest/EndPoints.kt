@@ -24,6 +24,8 @@ object EndPoints {
   const val STAFF_UPDATE_IMAGE = "staff/v1/UpdateStaffImage"
   const val STAFF_DELETE_IMAGE = "staff/v1/DeleteStaffImage"
   const val GET_STAFF_DETAILS = "Staff/v1/GetStaffDetails"
+  const val UPDATE_GENERAL_SERVICE = "Service/v1/UpdateGeneralService"
+  const val GET_GENERAL_SERVICE = "Service/v1/GetGeneralServiceDetails"
 
   //TODO WEEKLY APPOINTMENT APIS
   const val POST_UPDATE_SERVICE_TIMING = "service/v1/UpdateServiceTiming"
@@ -51,6 +53,8 @@ object EndPoints {
   const val GET_TAGS_V1 = "service/v1/tags"
   const val GET_SERVICE_DETAILS = "Service/v1/GetServiceDetails"
   const val DELETE_SECONDARY_IMAGE = "service/v1/DeleteSecondaryImage"
+  const val GET_UPDATES_CATEGORIES="/UpdateStudio/v1/GetCategory"
+
 
   //TODO Testimonial
   const val GET_TESTIMONIAL_LIST = "Testimonial/v1/GetListing"
@@ -85,6 +89,10 @@ object EndPoints {
   const val GET_MERCHANT_SUMMARY = "/Support/v1/dashboard/GetMerchantSummary"
   const val CREATE_BG_IMAGE="/Discover/v1/floatingPoint/createBackgroundImage"
   const val DELETE_BG_IMAGE="/Discover/v1/floatingPoint/backgroundImage/delete"
+  const val PAN_GST_UPDATE="/discover/v9/business/paymentProfile/PanNGst/update"
+  const val GET_PAN_GST_DETAILS="/discover/v9/business/paymentProfile/PanNGst/Get/{fpId}"
+  const val GET_PAST_UPDATES_LIST_V6 = "discover/v6/floatingPoint/bizFloats"
+
 
   //TODO PRODUCT API 2 WITH FLOAT
   const val CREATE_PRODUCT = "Product/v1/Create"
@@ -106,6 +114,7 @@ object EndPoints {
   const val UPLOAD_MERCHANT_SIGNATURE = "discover/v9/business/paymentProfile/uploadSignature"
   const val ADD_MERCHANT_UPI = "discover/v9/business/paymentProfile/upiid/update"
   const val GET_PAYMENT_PROFILE_DETAILS = "discover/v9/business/paymentProfile"
+  const val POST_PAYMENT_ACCEPT_PROFILE = "discover/v9/business/paymentProfile/paymentAcceptance/update"
 
   //TODO SERVICE API WITH NOWFLOATS API
   const val GET_SERVICE_LISTING = "product/v13/GetAllServiceListings"
@@ -155,12 +164,13 @@ object EndPoints {
   const val ADD_EXISTING_DOMAIN_DETAILS = "api/Service/EmailRIASupportTeamV2"
 
   // TODO AZURE WEBSITE NET APIs
-  const val AZURE_WEBSITE_NET_URL = "https://withfloats-feature-processor-api.azurewebsites.net/"
+  const val AZURE_WEBSITE_NET_URL = "https://jiw-wf-featureprocessor-api-as-prod.azurewebsites.net/"
+
   const val GET_FEATURE_DETAILS = "Features/v1/GetFeatureDetils"
   const val GET_FEATURE_DETAILS_2 = "Features/v1/GetFeatureDetails"
 
   // RIA MEMORY APIs
-  const val RIA_MEMORY_BASE_URL="https://riamemory.withfloats.com"
+  const val RIA_MEMORY_BASE_URL="https://jiw-ria-fpactivity-api-as-prod.azurewebsites.net/"
 
   //US CENTRAL
   const val US_CENTRAL_BASE="https://us-central1-nowfloats-boost.cloudfunctions.net/"

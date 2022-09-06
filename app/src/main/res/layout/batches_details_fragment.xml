@@ -29,6 +29,7 @@
       android:text="@string/course_name" />
 
     <EditText
+        android:maxLength="100"
       android:id="@+id/course_name_edit_text"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -70,6 +71,7 @@
       android:text="@string/course_duration" />
 
     <EditText
+        android:maxLength="10"
       android:id="@+id/course_duration_edit_text"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -112,7 +114,7 @@
       android:layout_marginStart="@dimen/_10sdp"
       android:layout_marginTop="@dimen/_50sdp"
       android:layout_marginEnd="@dimen/_10sdp"
-      android:background="@drawable/orange_button_click_effect"
+      android:background="@drawable/cta_button_click_effect"
       android:elevation="@dimen/_2sdp"
       android:fontFamily="@font/semi_bold"
       android:gravity="center"

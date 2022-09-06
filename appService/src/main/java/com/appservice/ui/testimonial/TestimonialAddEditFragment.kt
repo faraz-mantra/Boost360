@@ -165,8 +165,8 @@ class TestimonialAddEditFragment : BaseTestimonialFragment<FragmentTestimonialAd
       val imageToByteArray: ByteArray = imageToByteArray(imageFileUri)
       ProfileImage(
         image = "data:image/png;base64,${Base64.encodeToString(imageToByteArray, Base64.DEFAULT)}",
-        fileName = "testimonial_${System.currentTimeMillis()}$imageExtension",
-        imageFileType = imageExtension?.removePrefix(".")
+        fileName = "testimonial_${System.currentTimeMillis()}.png",
+        imageFileType = "png"//imageExtension?.removePrefix(".")
       )
     } else null
   }

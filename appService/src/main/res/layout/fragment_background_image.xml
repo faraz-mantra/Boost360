@@ -119,6 +119,7 @@
           android:background="@drawable/bg_button_proceed"
           android:fontFamily="@font/semi_bold"
           android:gravity="center"
+            android:visibility="gone"
           android:stateListAnimator="@null"
           android:text="@string/upload_image_n"
           android:textAllCaps="false"

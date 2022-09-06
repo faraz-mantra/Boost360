@@ -3,18 +3,20 @@ package dev.patrickgold.florisboard.customization.util
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.setFragmentType
 import com.appservice.ui.staffs.ui.StaffFragmentContainerActivity
+import com.appservice.ui.testimonial.TestimonialContainerActivity
+import com.appservice.ui.testimonial.startTestimonialFragmentActivity
 import com.appservice.ui.updatesBusiness.UpdateBusinessContainerActivity
 import com.dashboard.controller.DashboardFragmentContainerActivity
 import com.dashboard.controller.setFragmentType
-import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.utils.getAptType
 import com.dashboard.utils.getBundleData
 import com.dashboard.utils.getSessionOrder
+import com.dashboard.utils.startTestimonial
 import com.framework.analytics.SentryController
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
 import com.inventoryorder.constant.IntentConstant
@@ -93,10 +95,11 @@ fun startTestimonialN(mContext: Context, isAdd: Boolean = false) {
     if (isInstall(mContext)) return
     val text = if (isAdd) ADD_TESTIMONIAL_PAGE else TESTIMONIAL_PAGE
     WebEngageController.trackEvent(text, CLICK, TO_BE_ADDED)
-    val webIntent = Intent(mContext, Class.forName("com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity"))
-    webIntent.putExtra("IS_ADD", isAdd)
-    webIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-    mContext.startActivity(webIntent)
+    val type = if (isAdd) com.appservice.constant.FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT else com.appservice.constant.FragmentType.TESTIMONIAL_LIST_FRAGMENT
+    val intent = Intent(mContext, TestimonialContainerActivity::class.java)
+    intent.setFragmentType(type)
+    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    mContext.startActivity(intent)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
@@ -151,7 +154,16 @@ fun startUpdateLatestStoryN(mContext: Context) {
     if (isInstall(mContext)) return
     WebEngageController.trackEvent(UPDATE_LATEST_STORY_PAGE_CLICK, CLICK, TO_BE_ADDED)
     val intent = Intent(mContext, UpdateBusinessContainerActivity::class.java)
-    intent.setFragmentType(com.appservice.constant.FragmentType.UPDATE_BUSINESS_FRAGMENT)
+    intent.setFragmentType(
+      if (FirebaseRemoteConfigUtil
+          .featureUpdateStudioSelectedUsers(
+            UserSessionManager(mContext).fpTag)
+      ) {
+        com.appservice.constant.FragmentType.PAST_UPDATES
+      }else{
+        com.appservice.constant.FragmentType.UPDATE_BUSINESS_FRAGMENT
+      }
+    )
     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     mContext.startActivity(intent)
   } catch (e: Exception) {
@@ -228,7 +240,7 @@ fun startBusinessAddressN(mContext: Context) {
 fun startBusinessContactInfoN(mContext: Context) {
   try {
     if (isInstall(mContext)) return
-    com.dashboard.utils.WebEngageController.trackEvent(CONTACT_INFORMATION_HOURS_PAGE, CLICK, TO_BE_ADDED)
+    com.dashboard.utils.WebEngageController.trackEvent(CONTACT_INFORMATION_PAGE, CLICK, TO_BE_ADDED)
     val webIntent = Intent(mContext, Class.forName("com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"))
     webIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     mContext.startActivity(webIntent)

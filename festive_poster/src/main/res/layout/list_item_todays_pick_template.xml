@@ -8,18 +8,31 @@
         android:layout_height="wrap_content">
 
 
-        <com.framework.views.customViews.CustomImageView
+        <com.framework.views.customViews.CustomCardView
             android:id="@+id/iv_category_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_dummy_poster_cat_icon"
+            android:layout_width="44dp"
+            app:cardElevation="@dimen/size_0"
+            android:layout_height="44dp"
+            app:cardCornerRadius="8dp"
+            android:layout_marginStart="@dimen/size_26"
+            app:cardBackgroundColor="@color/color_ffb900_op10_jio_ec008c_op10"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
+
+
+            <com.framework.views.customViews.CustomImageView
+                android:layout_width="15dp"
+                android:id="@+id/iv_category_img"
+                android:layout_gravity="center"
+                android:layout_height="15dp"/>
+
+        </com.framework.views.customViews.CustomCardView>
 
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_cat_title"
             style="@style/BlackSemiBoldM"
+            android:layout_marginEnd="@dimen/size_26"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -31,6 +44,7 @@
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_cat_desc"
             style="@style/BlackRegularSS"
+            android:layout_marginEnd="@dimen/size_26"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -43,10 +57,13 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/vp_template"
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/size_20"
+            android:paddingEnd="@dimen/size_26"
             app:layout_constraintHorizontal_bias="0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_cat_desc" />

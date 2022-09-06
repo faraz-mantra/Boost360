@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -56,5 +57,17 @@ android {
 
 dependencies {
     api project(path: ':presignin')
+    api project(path: ':dbcenterapi')
+    api project(path: ':marketplace')
     api project(path: ':festive_poster')
+    api project(path: ':payment')
+
+
+    //room
+    implementation 'androidx.room:room-runtime:2.2.4'
+    implementation "androidx.room:room-rxjava2:2.2.5"
+    kapt 'androidx.room:room-compiler:2.2.4'
+
+    //json
+    implementation "com.squareup.moshi:moshi-kotlin:1.8.0"
 }

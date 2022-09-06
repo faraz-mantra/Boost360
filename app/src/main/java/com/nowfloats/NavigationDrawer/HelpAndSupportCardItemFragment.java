@@ -18,7 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.boost.upgrades.UpgradeActivity;
+import com.boost.marketplace.ui.home.MarketPlaceActivity;
 import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.RiaSupportModel;
@@ -26,16 +26,18 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
-import com.webengage.sdk.android.WebEngage;
-import com.zopim.android.sdk.api.ZopimChat;
-import com.zopim.android.sdk.model.VisitorInfo;
-import com.zopim.android.sdk.prechat.ZopimChatActivity;
+
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import zendesk.chat.Chat;
+import zendesk.chat.ChatEngine;
+import zendesk.chat.ProfileProvider;
+import zendesk.chat.VisitorInfo;
+import zendesk.messaging.MessagingActivity;
 import zendesk.support.guide.HelpCenterActivity;
 import zendesk.support.requestlist.RequestListActivity;
 
@@ -166,7 +168,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
             progressDialog.setCancelable(false);
             progressDialog.show();
             UserSessionManager session = new UserSessionManager(getContext(), getActivity());
-            Intent intent = new Intent(getActivity(), UpgradeActivity.class);
+            Intent intent = new Intent(getActivity(), MarketPlaceActivity.class);
             intent.putExtra("expCode", session.getFP_AppExperienceCode());
             intent.putExtra("fpName", session.getFPName());
             intent.putExtra("fpid", session.getFPID());
@@ -202,18 +204,21 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
         if (is_premium_support) {
           DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
           Date dateobj = new Date();
-
           if (sessionManager != null) {
-            VisitorInfo visitorInfo = new VisitorInfo.Builder()
-                .name(sessionManager.getFPName())
-                .email(sessionManager.getFPEmail())
-                .phoneNumber(sessionManager.getFPPrimaryContactNumber())
-                .note("FPTag: " + sessionManager.getFpTag() + "\n\nUserId: " + sessionManager.getUserProfileId() + "\nUserContact: " + sessionManager.getUserProfileMobile())
+            ProfileProvider profileProvider = Chat.INSTANCE.providers().profileProvider();
+
+            VisitorInfo visitorInfo = VisitorInfo.builder()
+                .withName(sessionManager.getFPName())
+                .withEmail(sessionManager.getFPEmail())
+                .withPhoneNumber(sessionManager.getFPPrimaryContactNumber())
+               // .note("FPTag: " + sessionManager.getFpTag() + "\n\nUserId: " + sessionManager.getUserProfileId() + "\nUserContact: " + sessionManager.getUserProfileMobile())
                 .build();
-            ZopimChat.setVisitorInfo(visitorInfo);
+            profileProvider.setVisitorInfo(visitorInfo,null);
           }
 
-          startActivity(new Intent(WebEngage.getApplicationContext(), ZopimChatActivity.class));
+          MessagingActivity.builder()
+                  .withEngines(ChatEngine.engine())
+                  .show(view.getContext());
         } else
           showPremiumAddOnDialog();
         break;

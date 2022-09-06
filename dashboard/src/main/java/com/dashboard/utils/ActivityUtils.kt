@@ -21,16 +21,20 @@ import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
 import com.appservice.ui.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.testimonial.startTestimonialFragmentActivity
 import com.appservice.ui.updatesBusiness.startUpdateFragmentActivity
+import com.boost.dbcenterapi.utils.DataLoader
+import com.boost.payment.PaymentActivity
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
 import com.festive.poster.ui.festivePoster.FestivePosterContainerActivity
 import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
+import com.festive.poster.ui.promoUpdates.intro.UpdateStudioIntroActivity
 import com.framework.analytics.SentryController
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureNewOnBoardingFlowEnable
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureUpdateStudioSelectedUsers
 import com.framework.pref.*
-import com.framework.utils.DateUtils
+import com.framework.utils.*
 import com.framework.webengageconstant.*
 import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.IntentConstant
@@ -236,7 +240,7 @@ fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOp
   try {
     if (isLoadingShow) delayProgressShow()
     WebEngageController.trackEvent(ADDON_MARKETPLACE_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val intent = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
+    val intent = Intent(this, Class.forName("com.boost.marketplace.ui.home.MarketPlaceActivity"))
     intent.putExtra("expCode", session.fP_AppExperienceCode)
     intent.putExtra("fpName", session.fPName)
     intent.putExtra("fpid", session.fPID)
@@ -265,6 +269,48 @@ fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOp
   } catch (e: Exception) {
     e.printStackTrace()
   }
+}
+
+fun AppCompatActivity.initiateCart(
+    session: UserSessionManager,
+    isOpenCardFragment: Boolean,
+    screenType: String,
+    buyItemKey: String?,
+    isLoadingShow: Boolean = true
+) {
+    try {
+        //additem to cart
+        if(buyItemKey.isNullOrEmpty().not()) DataLoader.addItemtoCart(application, buyItemKey!!)
+
+        if (isLoadingShow) delayProgressShow()
+        WebEngageController.trackEvent(ADDON_MARKETPLACE_PAGE_CLICK, CLICK, TO_BE_ADDED)
+        val intent = Intent(this, Class.forName("com.boost.cart.CartActivity"))
+        intent.putExtra("expCode", session.fP_AppExperienceCode)
+        intent.putExtra("isDeepLink", true)
+        intent.putExtra("fpName", session.fPName)
+        intent.putExtra("fpid", session.fPID)
+        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+        intent.putStringArrayListExtra(
+            "userPurchsedWidgets",
+            session.getStoreWidgets() as ArrayList<String>
+        )
+        if (session.userProfileEmail != null) {
+            intent.putExtra("email", session.userProfileEmail)
+        } else {
+            intent.putExtra("email", getString(R.string.ria_customer_mail))
+        }
+        if (session.userPrimaryMobile != null) {
+            intent.putExtra("mobileNo", session.userPrimaryMobile)
+        } else {
+            intent.putExtra("mobileNo", getString(R.string.ria_customer_number))
+        }
+        if (buyItemKey != null && buyItemKey.isNotEmpty()) intent.putExtra("buyItemKey", buyItemKey)
+        intent.putExtra("profileUrl", session.fPLogo)
+        startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
 }
 
 fun AppCompatActivity.delayProgressShow() {
@@ -313,7 +359,11 @@ fun AppCompatActivity.startNotification(session: UserSessionManager) {
 
 fun AppCompatActivity.startUpdateLatestStory(session: UserSessionManager) {
   WebEngageController.trackEvent(UPDATE_LATEST_STORY_PAGE_CLICK, CLICK, TO_BE_ADDED)
-  startUpdateFragmentActivity(com.appservice.constant.FragmentType.UPDATE_BUSINESS_FRAGMENT)
+  if (featureUpdateStudioSelectedUsers(session.fpTag)){
+    startUpdateFragmentActivity(com.appservice.constant.FragmentType.PAST_UPDATES)
+  }else{
+    startUpdateFragmentActivity(com.appservice.constant.FragmentType.UPDATE_BUSINESS_FRAGMENT)
+  }
 //  startAppActivity(fragmentType = "UPDATE_LATEST_STORY_VIEW")
 }
 
@@ -577,7 +627,9 @@ fun AppCompatActivity.startPreSignUp(session: UserSessionManager?, isClearTask: 
   try {
     WebEngageController.trackEvent(PRE_SIGN_UP_PAGE, START_VIEW, TO_BE_ADDED)
     val webIntent: Intent = if (featureNewOnBoardingFlowEnable()) {
-      Intent(this, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity")).putExtra("FRAGMENT_TYPE", "INTRO_SLIDE_SHOW_FRAGMENT")
+      val fragmentType = if (UserSessionManager(this).hasUserLoggedInOnce) "ENTER_PHONE_FRAGMENT" else "INTRO_SLIDE_SHOW_FRAGMENT"
+
+      Intent(this, Class.forName("com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity")).putExtra("FRAGMENT_TYPE", fragmentType)
     } else {
       Intent(this, Class.forName("com.boost.presignin.ui.intro.IntroActivity"))
     }
@@ -747,7 +799,7 @@ fun AppCompatActivity.startUserProfileDetail(session: UserSessionManager?) {
 
 fun AppCompatActivity.startBusinessContactInfo(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent(CONTACT_INFORMATION_HOURS_PAGE, CLICK, TO_BE_ADDED)
+    WebEngageController.trackEvent(CONTACT_INFORMATION_PAGE, CLICK, TO_BE_ADDED)
     val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -1008,10 +1060,11 @@ fun AppCompatActivity.startListBatches(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startNearByView(session: UserSessionManager?) {
+fun AppCompatActivity.startNearByView(session: UserSessionManager?, isAdd: Boolean = false) {
   try {
     WebEngageController.trackEvent(NEAR_BY_PAGE, CLICK, TO_BE_ADDED)
     val webIntent = Intent(this, Class.forName("com.nowfloats.hotel.placesnearby.PlacesNearByActivity"))
+    webIntent.putExtra("is_add", isAdd)
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
@@ -1091,12 +1144,10 @@ fun Context.startHelpSupportVideoActivity(supportType: String) {
   }
 }
 
-fun AppCompatActivity.startPromotionUpdates() {
+fun AppCompatActivity.startPromotionUpdatesFromDashboard() {
   try {
     WebEngageController.trackEvent(Post_Promotional_Update_Click)
-    val posterIntent = Intent(this,PromoUpdatesActivity::class.java)
-
-    startActivity(posterIntent)
+    startPromotionUpdates()
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()

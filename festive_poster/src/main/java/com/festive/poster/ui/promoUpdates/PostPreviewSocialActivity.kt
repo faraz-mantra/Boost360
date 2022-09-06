@@ -19,18 +19,22 @@ import com.festive.poster.databinding.ActivityPostPreviewSocialBinding
 import com.festive.poster.models.CustomerDetails
 import com.festive.poster.models.MerchantSummaryResponse
 import com.festive.poster.models.PostUpdateTaskRequest
+import com.festive.poster.models.TemplateUi
 import com.festive.poster.models.promoModele.SocialPlatformModel
 import com.festive.poster.models.promoModele.SocialPreviewChannel
 import com.festive.poster.models.promoModele.SocialPreviewModel
+import com.festive.poster.models.response.TemplateSaveActionBody
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.festive.poster.ui.promoUpdates.bottomSheet.PostSuccessBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.PostingProgressBottomSheet
+import com.festive.poster.ui.promoUpdates.bottomSheet.PromoteBrandedUpdateTemplatesBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.SubscribePlanBottomSheet
 import com.festive.poster.utils.MarketPlaceUtils
 import com.festive.poster.utils.WebEngageController
 import com.festive.poster.utils.isPromoWidgetActive
+import com.festive.poster.utils.saveTemplateAction
 import com.festive.poster.viewmodels.PostUpdatesViewModel
 import com.framework.constants.IntentConstants
 import com.framework.exceptions.NoNetworkException
@@ -72,29 +76,32 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     private var session:UserSessionManager?=null
     private var captionIntent :String?=null
     private var dataloaded=false
+
+    private val template:TemplateUi? by lazy {
+        intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getParcelable(IntentConstants.IK_TEMPLATE)
+    }
     private val updateType by lazy {
         intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IntentConstants.IK_UPDATE_TYPE)
     }
     private val posterImgPath by lazy {
         intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IntentConstants.IK_POSTER)
     }
-    private val tags:ArrayList<String>? by lazy {
-        convertJsonToObj(
-            intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IntentConstants.IK_TAGS)
-        )
-    }
+
 
     companion object{
 
 
-        fun launchActivity(activity:Activity,caption:String?,
-                           posterImgPath:String,tags:List<String>?,updateType:String){
+        fun launchActivity(activity:Activity,
+                           caption:String?,
+                           posterImgPath:String,
+                           updateType:String,
+                            template:TemplateUi?){
             activity.startActivity(Intent(activity,PostPreviewSocialActivity::class.java)
                 .putExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
                     putString(IntentConstants.IK_CAPTION_KEY,caption)
                     putString(IntentConstants.IK_POSTER, posterImgPath)
-                    putString(IntentConstants.IK_TAGS, Gson().toJson(tags))
                     putString(IntentConstants.IK_UPDATE_TYPE, updateType)
+                    putParcelable(IntentConstants.IK_TEMPLATE,template)
 
                 })
 
@@ -125,18 +132,13 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     override fun onCreateView() {
         session = UserSessionManager(this)
         captionIntent =intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IntentConstants.IK_CAPTION_KEY)
-
-
         initUI()
-
     }
 
     override fun onResume() {
         super.onResume()
         setStatusBarColor(R.color.white)
-
         refreshUserWidgets()
-
     }
 
     private fun refreshUserWidgets() {
@@ -144,12 +146,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             if (it.isSuccess()) {
                 val detail = it as? CustomerDetails
                 detail?.FPWebWidgets?.let { list ->
-                    session?.storeFPDetails(
-                        Key_Preferences.STORE_WIDGETS,
-                        convertListObjToString(list)
-                    )
+                    session?.storeFPDetails(Key_Preferences.STORE_WIDGETS, convertListObjToString(list))
                     isUserPremium(isPromoWidgetActive()||updateType!=IntentConstants.UpdateType.UPDATE_PROMO_POST.name)
-
                 }
             }
         }
@@ -157,13 +155,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     private fun initUI() {
         binding?.tvChooseAPromoPack?.setOnClickListener {
-            SubscribePlanBottomSheet.newInstance(object :SubscribePlanBottomSheet.Callbacks{
-                override fun onBuyClick() {
-                    MarketPlaceUtils.launchCartActivity(this@PostPreviewSocialActivity,
-                        PostPreviewSocialActivity::class.java.name,posterImgPath,captionIntent,tags,updateType)
-
-                }
-            }).show(supportFragmentManager, SubscribePlanBottomSheet::class.java.name)
+            PromoteBrandedUpdateTemplatesBottomSheet
+                .newInstance().show(supportFragmentManager, PromoteBrandedUpdateTemplatesBottomSheet::class.java.name)
         }
 
         binding?.tvPostUpdate?.setOnClickListener {
@@ -213,12 +206,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             onBackPressed()
         }
 
-
         setChannels()
-
-
-
-
     }
 
     private fun isUserPremium(isUserPremium:Boolean = false){
@@ -242,14 +230,12 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-
         when(actionType){
             RecyclerViewActionType.SOCIAL_CHANNEL_CHECK_CLICKED.ordinal->{
                 val model = uiChBoxChannelList?.get(position)
                 uiPreviewChannelList?.find { it.channelType==model?.channelType }?.shouldShow = model?.isChecked == true
                 setupPreviewList()
                 setupCountsUI()
-
             }
         }
     }
@@ -260,11 +246,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     fun setChannelAdapter(){
         //   val socialPlatformModel = SocialPlatformModel().getData(this@PostPreviewSocialActivity)
-        chkChannelAdapter = AppBaseRecyclerViewAdapter(
-            this@PostPreviewSocialActivity,
-            uiChBoxChannelList!!,
-            this@PostPreviewSocialActivity
-        )
+        chkChannelAdapter = AppBaseRecyclerViewAdapter(this@PostPreviewSocialActivity, uiChBoxChannelList!!, this@PostPreviewSocialActivity)
         binding?.rvSocialPlatforms?.apply {
             adapter = chkChannelAdapter
         }
@@ -314,8 +296,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                     )
                     else {
                         val categoryList = (it as? ResponseDataCategory)?.data
-                        val categoryData =
-                            categoryList?.singleOrNull { c -> c.experienceCode() == experienceCode }
+                        val categoryData = categoryList?.singleOrNull { c -> c.experienceCode() == experienceCode }
                         if (categoryData != null) {
                             getChannelAccessToken(categoryData, floatingPoint, fpTag)
 
@@ -338,23 +319,14 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                     val response = it1 as? ChannelAccessStatusResponse
                     setDataRequestChannels(categoryData, response?.channels, floatingPoint, fpTag)
                 }
-                it1.status == 404 || it1.status == 400 -> setDataRequestChannels(
-                    categoryData,
-                    null,
-                    floatingPoint,
-                    fpTag
-                )
+                it1.status == 404 || it1.status == 400 ->
+                    setDataRequestChannels(categoryData, null, floatingPoint, fpTag)
                 else -> errorMessage(it1.message())
             }
         }
     }
 
-    private fun setDataRequestChannels(
-        categoryData: CategoryDataModel?,
-        channelsAccessToken: ChannelsType?,
-        floatingPoint: String?,
-        fpTag: String?
-    ) {
+    private fun setDataRequestChannels(categoryData: CategoryDataModel?, channelsAccessToken: ChannelsType?, floatingPoint: String?, fpTag: String?) {
         uiChBoxChannelList= ArrayList()
         uiPreviewChannelList = ArrayList()
         val requestFloatsNew = RequestFloatsModel()
@@ -577,8 +549,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     private fun shouldAddToChannelList(channel: ChannelModel): Boolean {
 
-        if (channel.isWhatsAppChannel()||channel.getAccessTokenType()==ChannelsType.AccountType.facebookshop.name
-            ){
+        if (channel.isWhatsAppChannel()||channel.getAccessTokenType()==ChannelsType.AccountType.facebookshop.name){
             return false
         }
         return true
@@ -684,7 +655,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             sendToSubscribe,
             socialShare,
             updateType,
-            tags=tags
+            tags=if (template==null) null else arrayListOf(template?.categoryId)
         )
 
 
@@ -715,6 +686,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                 } else {
                     showSuccessSheet()
                 }
+            }else{
+                showLongToast(getString(R.string.something_went_wrong))
             }
 
 
@@ -726,6 +699,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
         viewModel.updateDraft(UpdateDraftBody(clientId,"",session?.fpTag,"")).observe(this){
 
         }
+        saveTemplateAction(TemplateSaveActionBody.ActionType.UPDATE_CREATED,
+            template)
         posterProgressSheet?.dismiss()
         if (PreferencesUtils.instance.getData(
                 com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE,
