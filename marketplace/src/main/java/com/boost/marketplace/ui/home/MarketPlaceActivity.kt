@@ -148,6 +148,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
         //festive poster purchase
         isOpenPackageWithID = intent.getStringExtra("isOpenPackageWithID") //"60d1a02ef83dd80001114011"
+        //addons added to cart and go to cart
         buyAddonWithIDAndGoToCart = intent.getStringExtra("buyAddonWithIDAndGoToCart") //"BOOSTKEYBOARD"
 
         progressDialog = ProgressDialog(this)
