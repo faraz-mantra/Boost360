@@ -45,6 +45,6 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
     val alert = alertDialog.create()
     alert.show()
     alert.findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
-    alert.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getColor(R.color.colorAccentLight))
+    alert.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getColor(R.color.color_accentlight_marketplace))
   }
 }

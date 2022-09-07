@@ -44,6 +44,7 @@ class SharedPrefs(activity: Activity) {
   private val yearPricing = "yearPricing"
   private val LAST_USED_PAYMENT_MODE = "LAST_USED_PAYMENT_MODE"
   private val CART_VALIDITY_MONTHS = "CART_VALIDITY_MONTHS"
+  private val DOMAIN_ORDER_TYPE = "DOMAIN_ORDER_TYPE"
 
   private var editor: SharedPreferences.Editor? = null
 
@@ -213,7 +214,7 @@ class SharedPrefs(activity: Activity) {
 
   //storing couponDetails
   fun storeApplyedCouponDetails(couponDetails: CouponsModel?) {
-    val couponInfo = Gson().toJson(couponDetails)
+    val couponInfo = if(couponDetails != null) Gson().toJson(couponDetails) else null
     editor!!.putString(CART_COUPON_DETAILS, couponInfo).apply()
   }
 
@@ -283,6 +284,14 @@ class SharedPrefs(activity: Activity) {
 
   fun getYearPricing(): Boolean {
     return pref!!.getBoolean(yearPricing, true)
+  }
+
+  fun storeDomainOrderType(value: Int){
+    editor!!.putInt(DOMAIN_ORDER_TYPE, value).apply()
+  }
+
+  fun getDomainOrderType(): Int {
+    return pref!!.getInt(DOMAIN_ORDER_TYPE, 0)
   }
 
 }

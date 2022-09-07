@@ -2,6 +2,7 @@ package com.boost.dbcenterapi.data.remote
 
 import com.boost.dbcenterapi.data.api_model.CustomDomain.CustomDomains
 import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
+import com.boost.dbcenterapi.data.api_model.Domain.AlreadyPurchasedDomainResponse.PurchasedDomainResponse
 import com.boost.dbcenterapi.data.api_model.Domain.DomainBookingRequest
 import com.boost.dbcenterapi.data.api_model.Edgecase.EdgeCases
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
@@ -99,6 +100,14 @@ interface NewApiInterface {
         @Query("clientId") clientId: String,
         @Query("featureCode") featureCode: String
     ): Observable<EdgeCases>
+
+    @Headers("Content-Type: application/json")
+    @GET("https://plugin.withfloats.com/DomainService/v3/GetDomainDetailsForFloatingPoint/{fpTag}")
+    fun getAlreadyPurchasedDomain(
+        @Header("Authorization") auth: String,
+        @Path("fpTag") fpTag: String,
+        @Query("clientId") clientId: String
+    ): Observable<PurchasedDomainResponse>
 
     //MyCurrentPlan  Marketplace V3
     @Headers("Content-Type: application/json")

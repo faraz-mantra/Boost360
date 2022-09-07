@@ -194,7 +194,8 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
                         binding?.btnSelectDomain?.visibility=View.VISIBLE
                         binding?.searchBtn?.visibility = View.GONE
                         binding?.tvSuggestedDomains?.text = "Search results"
-                        updateItemBySearchValue(p0.toString())
+//                        updateItemBySearchValue(p0.toString())
+                        viewModel.GetSuggestedDomains(DomainRequest(clientid, p0.toString()))
                     }
                     binding?.ivCross?.visibility = View.VISIBLE
                 } else {
@@ -287,8 +288,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
     private fun loadData() {
         val pref = getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
         val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
-        fpTag?.let { DomainRequest(clientid, it) }
-            ?.let { viewModel.GetSuggestedDomains(it) }
+        fpTag?.let { viewModel.GetSuggestedDomains(DomainRequest(clientid, it)) }
     }
 
     private fun initMVVM() {
@@ -352,13 +352,13 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
 
     private fun updateDomainsRecycler(list: List<Domain>) {
         customDomainListAdapter.addupdates(list)
-        customDomainListAdapter.notifyDataSetChanged()
+//        customDomainListAdapter.notifyDataSetChanged()
         binding?.rvCustomDomain?.setFocusable(false)
     }
 
     private fun updateFreeAddonsRecycler1(list: List<Domain>) {
         customDomainListAdapter1.addupdates(list)
-        customDomainListAdapter1.notifyDataSetChanged()
+//        customDomainListAdapter1.notifyDataSetChanged()
         binding?.rvCustomDomain1?.setFocusable(false)
     }
 

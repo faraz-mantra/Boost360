@@ -258,7 +258,7 @@ object Utils {
     if(prefs.getYearPricing() && !(widgetType.equals("RECHARGE") || widgetType.equals("ONE_TIME"))){
       return months * 12
     }
-    return 1
+    return months
   }
 
   fun yearlyOrMonthlyOrEmptyValidity(widgetType: String? = "", activity: Activity, minMonth: Int = 1): String{
