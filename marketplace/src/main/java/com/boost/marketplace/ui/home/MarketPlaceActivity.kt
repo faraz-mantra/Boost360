@@ -16,6 +16,7 @@ import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
@@ -110,6 +111,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     var isOpenHomeFragment: Boolean = false
     var isOpenAddOnsFragment: Boolean = false
     var isOpenPackageWithID: String? = null
+    var buyAddonWithIDAndGoToCart: String? = null
 
     var deepLinkViewType: String = ""
     var deepLinkDay: Int = 7
@@ -145,7 +147,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         widgetFeatureCode = intent.getStringExtra("buyItemKey")
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
         //festive poster purchase
-        isOpenPackageWithID = intent.getStringExtra("isOpenPackageWithID")
+        isOpenPackageWithID = intent.getStringExtra("isOpenPackageWithID") //"60d1a02ef83dd80001114011"
+        buyAddonWithIDAndGoToCart = intent.getStringExtra("buyAddonWithIDAndGoToCart") //"BOOSTKEYBOARD"
 
         progressDialog = ProgressDialog(this)
 
@@ -620,6 +623,40 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
     @SuppressLint("FragmentLiveDataObserve")
     private fun initMvvm() {
+        viewModel.itemAddedToCartAndGoToCart().observe(this, Observer {
+            if(it){
+                val intent = Intent(
+                    applicationContext,
+                    CartActivity::class.java
+                )
+                intent.putExtra("fpid", fpid)
+                intent.putExtra("expCode", experienceCode)
+                intent.putExtra("isDeepLink", isDeepLink)
+                intent.putExtra("deepLinkViewType", deepLinkViewType)
+                intent.putExtra("deepLinkDay", deepLinkDay)
+                intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+                intent.putExtra(
+                    "accountType",
+                    accountType
+                )
+                intent.putStringArrayListExtra(
+                    "userPurchsedWidgets",
+                    userPurchsedWidgets
+                )
+                if (email != null) {
+                    intent.putExtra("email", email)
+                } else {
+                    intent.putExtra("email", "ria@nowfloats.com")
+                }
+                if (mobileNo != null) {
+                    intent.putExtra("mobileNo", mobileNo)
+                } else {
+                    intent.putExtra("mobileNo", "9160004303")
+                }
+                intent.putExtra("profileUrl", profileUrl)
+                startActivity(intent)
+            }
+        })
         viewModel.updatesError().observe(this, androidx.lifecycle.Observer {
             longToast(applicationContext, "onFailure: " + it)
         })
@@ -628,6 +665,14 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             all_recommended_addons.visibility = View.VISIBLE
             updateRecycler(it)
             updateAddonCategoryRecycler(it)
+            if(buyAddonWithIDAndGoToCart != null) {
+                for (singleitem in it) {
+                    if (singleitem.feature_code.equals(buyAddonWithIDAndGoToCart)) {
+                        viewModel.addItemAndGoTOCart(singleitem, 1)
+                        break
+                    }
+                }
+            }
         })
 
         viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
