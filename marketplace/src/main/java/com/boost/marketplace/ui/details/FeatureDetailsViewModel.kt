@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.CustomDomain.CustomDomains
 import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
+import com.boost.dbcenterapi.data.api_model.Domain.AlreadyPurchasedDomainResponse.PurchasedDomainResponse
 import com.boost.dbcenterapi.data.api_model.Edgecase.EdgeCases
 import com.boost.dbcenterapi.data.api_model.blockingAPI.BlockApi
 import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
@@ -42,6 +43,7 @@ class FeatureDetailsViewModel : BaseViewModel() {
     var updateStatus: MutableLiveData<BlockApi> = MutableLiveData()
     var edgecaseResult: MutableLiveData<EdgeCases> = MutableLiveData()
     var customDomainsResult: MutableLiveData<CustomDomains> = MutableLiveData()
+    var purchasedDomainResult: MutableLiveData<PurchasedDomainResponse> = MutableLiveData()
 
     lateinit var application: Application
     lateinit var lifecycleOwner: LifecycleOwner
@@ -84,6 +86,10 @@ class FeatureDetailsViewModel : BaseViewModel() {
 
     fun edgecaseResult(): LiveData<EdgeCases> {
         return edgecaseResult
+    }
+
+    fun PurchasedDomainResponse(): LiveData<PurchasedDomainResponse> {
+        return purchasedDomainResult
     }
 
     fun setApplicationLifecycle(
@@ -294,6 +300,23 @@ class FeatureDetailsViewModel : BaseViewModel() {
                         updatesLoader.postValue(false)
                     }, {
                         edgecaseResult.postValue(null)
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
+
+    fun getAlreadyPurchasedDomain(auth: String, fpTag: String, clientId:String) {
+        updatesLoader.postValue(true)
+        compositeDisposable.add(
+            ApiService.getAlreadyPurchasedDomain(auth, fpTag, clientId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        purchasedDomainResult.postValue(it)
+                        updatesLoader.postValue(false)
+                    },{
                         updatesLoader.postValue(false)
                         updatesError.postValue(it.message)
                     })

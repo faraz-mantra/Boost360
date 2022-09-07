@@ -64,10 +64,12 @@ class CustomDomainListAdapter(
     }
 
     fun addupdates(availableDomains: List<Domain>) {
-        val initPosition = upgradeList.size
-        upgradeList.clear()
-        upgradeList.addAll(availableDomains)
-        notifyItemRangeInserted(initPosition, upgradeList.size)
+        upgradeList = availableDomains as ArrayList<Domain>
+        notifyDataSetChanged()
+//        val initPosition = upgradeList.size
+//        upgradeList.clear()
+//        upgradeList.addAll(availableDomains)
+//        notifyItemRangeInserted(initPosition, upgradeList.size)
     }
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -206,7 +206,7 @@
             android:id="@+id/package_addCartNew"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccentLight"
+            android:background="@color/color_accentlight_marketplace"
             android:fontFamily="@font/semi_bold"
             android:gravity="center"
             android:padding="@dimen/_10sdp"
