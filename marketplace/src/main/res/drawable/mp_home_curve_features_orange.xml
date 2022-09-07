@@ -4,12 +4,12 @@
     <shape>
       <stroke
           android:width="0dp"
-          android:color="@color/colorAccentLight" />
+          android:color="@color/color_accentlight_marketplace" />
 
       <gradient
           android:angle="90"
-          android:endColor="@color/colorAccentLight"
-          android:startColor="@color/colorAccentLight" />
+          android:endColor="@color/color_accentlight_marketplace"
+          android:startColor="@color/color_accentlight_marketplace" />
 
       <corners
           android:bottomLeftRadius="45dp"

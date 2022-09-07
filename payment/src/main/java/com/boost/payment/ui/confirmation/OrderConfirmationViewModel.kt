@@ -31,7 +31,7 @@ class OrderConfirmationViewModel : ViewModel() {
     return updatesLoader
   }
 
-  fun emptyCurrentCartWithDomainActivate(app: Application, activity: Activity) {
+  fun emptyCurrentCartWithDomainActivate(app: Application, domainOrderType: Int = 0, activity: Activity) {
     CompositeDisposable().add(
       AppDatabase.getInstance(app)!!
         .cartDao()
@@ -77,7 +77,7 @@ class OrderConfirmationViewModel : ViewModel() {
                 }
               }
               val bookingRequest = DomainBookingRequest(
-                0,
+                domainOrderType,
                 0,
                 clientid,
                 1,
