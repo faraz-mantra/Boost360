@@ -18,7 +18,7 @@ object EndPoints {
     const val GET_TODAY_TEMPLATES="UpdateStudio/v1/TodayTemplates"
 
     const val FEATURE_PROCESSOR_BASE = "https://jiw-wf-featureprocessor-api-as-prod.azurewebsites.net/"
-    const val GET_FEATURE_DETAILS="Features/v1/GetFeatureDetils"
+    const val GET_FEATURE_DETILS="Features/v1/GetFeatureDetils"
 
     const val BOOST_KIT_DEV_BASE = "https://developer.api.boostkit.dev/"
     const val GET_UPGRADE_DATA="language/v1/upgrade/get-data"

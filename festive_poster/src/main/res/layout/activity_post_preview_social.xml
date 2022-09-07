@@ -186,7 +186,7 @@
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_choose_a_promo_pack"
-            style="@style/yellow_squared_button"
+            style="@style/primary_squared_button"
             android:layout_gravity="bottom"
             android:visibility="gone"
             android:layout_height="59dp"
@@ -198,7 +198,7 @@
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tv_post_update"
-            style="@style/yellow_squared_button"
+            style="@style/primary_squared_button"
             android:layout_gravity="bottom"
             android:background="@drawable/yellow_bg_with_drop_shadow"
             android:layout_height="59dp"

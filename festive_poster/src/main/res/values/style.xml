@@ -306,7 +306,7 @@
         <item name="android:statusBarColor">@color/white</item>
     </style>
 
-    <style name="yellow_squared_button">
+    <style name="primary_squared_button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/size_52</item>
         <item name="android:background">@color/colorPrimary</item>

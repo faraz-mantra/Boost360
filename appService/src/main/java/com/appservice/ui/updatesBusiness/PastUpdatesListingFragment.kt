@@ -249,7 +249,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.filter_menu_past, menu)
+        inflater.inflate(R.menu.filter_menu_past_updates, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

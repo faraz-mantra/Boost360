@@ -52,6 +52,10 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
 
     override fun onCreateView() {
         super.onCreateView()
+        Handler(Looper.getMainLooper()).postDelayed(Runnable {
+            binding!!.constraintLayout3.transitionToEnd()
+            binding?.btnNext?.gone()
+        },1500)
         setupSlider()
         setOnClickListener(binding?.btnUpdateStudio,binding?.btnNext)
 
@@ -119,7 +123,7 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
             }
 
             Handler(Looper.getMainLooper()).postDelayed(sliderRunnable,
-                2500)
+                3000)
         }
         Handler(Looper.getMainLooper()).postDelayed(sliderRunnable,
             2500)

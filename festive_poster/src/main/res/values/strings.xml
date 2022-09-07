@@ -43,7 +43,7 @@
 
     <string name="app_name">template</string>
     <string name="promo_updates">Promo updates</string>
-    <string name="update_studios">Update studio</string>
+    <string name="update_studios">Updates studio</string>
     <string name="for_today">For today</string>
     <string name="browse">Browse</string>
     <string name="find">Find</string>
@@ -159,6 +159,10 @@
     <string name="view_pack_details">View pack details</string>
     <string name="you_will_be_taken_to_feature_marketplace">You’ll be taken to feature marketplace</string>
     <string name="promote_using_branded_update_templates_bold">Promote using\n<b>Branded Update\nTemplates</b></string>
+    <string name="business_logo_missing">Business logo missing.</string>
+    <string name="add_logo">Add logo</string>
+    <string name="to_build_customer_trust_using_branded_updates_please_add_business_logo">To build customer trust using branded\nupdates, please add business logo.</string>
+    <string name="please_add_business_logo_before_proceeding">Please add Business Logo before proceeding!</string>
     <string name="_18_gst">+18% GST</string>
     <string name="get_this_feature">Get this feature</string>
 </resources>

@@ -25,6 +25,7 @@ import com.framework.base.setFragmentType
 import com.framework.constants.IntentConstants
 import com.framework.constants.PackageNames
 import com.framework.constants.UPDATE_PIC_FILE_NAME
+import com.framework.firebaseUtils.firestore.FirestoreManager.getDrScoreData
 import com.framework.pref.UserSessionManager
 import com.framework.utils.getResponse
 import com.framework.utils.runOnUi
@@ -89,8 +90,6 @@ fun saveTemplateAction(action: TemplateSaveActionBody.ActionType, posterModel: T
 }
 
 
-
-
 fun convertToHashTag(list:List<String>?): String {
     if (list==null) return ""
   return  list.map { "#"+it }.joinToString(" ")
@@ -100,4 +99,10 @@ fun launchPostNewUpdate(activity:Activity){
     val intent = Intent(activity, Class.forName("com.appservice.ui.updatesBusiness.UpdateBusinessContainerActivity"))
     intent.setFragmentType("ADD_UPDATE_BUSINESS_FRAGMENT_V2")
     activity.startActivity(intent)
+}
+
+fun isBusinessLogoUpdated() : Boolean {
+    return if (getDrScoreData() != null && getDrScoreData()!!.metricdetail != null) {
+        getDrScoreData()!!.metricdetail!!.boolean_add_clinic_logo == true
+    } else false
 }
