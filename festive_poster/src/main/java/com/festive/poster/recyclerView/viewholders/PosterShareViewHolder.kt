@@ -37,7 +37,7 @@ class PosterShareViewHolder(binding: ListItemPosterShareBinding):
         binding.ivOther.setOnClickListener {
             WebEngageController.trackEvent(FESTIVAL_POSTER_SHARE_OTHER,event_value = HashMap())
             SvgUtils.shareUncompressedSvg(model.variants?.firstOrNull()?.svgUrl
-                ,model)
+                ,model,packageName = "")
         }
 
         binding.ivDownload.setOnClickListener {

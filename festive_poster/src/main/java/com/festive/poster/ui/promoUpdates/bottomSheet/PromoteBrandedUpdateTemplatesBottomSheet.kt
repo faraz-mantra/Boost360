@@ -13,6 +13,7 @@ import com.festive.poster.models.FeaturePurchaseUiModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.festive.poster.utils.MarketPlaceUtils
 import com.festive.poster.viewmodels.UpdateStudioPurchaseViewModel
 import com.framework.base.BaseActivity
 import com.framework.base.BaseBottomSheetDialog
@@ -29,8 +30,6 @@ class PromoteBrandedUpdateTemplatesBottomSheet :
 
     private var adapter: AppBaseRecyclerViewAdapter<FeaturePurchaseUiModel>?=null
     private var purchaseList: ArrayList<FeaturePurchaseUiModel>?=null
-    private var color888888: Int = 0
-    private var color4a4a4a: Int = 0
 
     companion object {
 
@@ -52,12 +51,11 @@ class PromoteBrandedUpdateTemplatesBottomSheet :
     }
 
     override fun onCreateView() {
-        color888888 = ContextCompat.getColor(baseActivity, R.color.color_888888)
-        color4a4a4a = ContextCompat.getColor(baseActivity, R.color.black_4a4a4a)
-        setRadioButtonListeners()
         binding?.rivCloseBottomSheet?.setOnClickListener { dismiss() }
 
         observeApis()
+
+        setOnClickListener(binding?.btnViewPackDetails)
     }
 
     private fun observeApis() {
@@ -99,13 +97,21 @@ class PromoteBrandedUpdateTemplatesBottomSheet :
         DividerItemDecoration.VERTICAL))
     }
 
-    private fun setRadioButtonListeners() {
 
-    }
 
     override fun onClick(v: View) {
         super.onClick(v)
         when(v){
+            binding?.btnViewPackDetails->{
+                val selectedItem = purchaseList?.find { it.isSelected }
+                if (selectedItem?.isPack == true){
+                    MarketPlaceUtils.initiateAddonMarketplace(
+                        sessionManager!!, context = requireActivity(), packId = selectedItem.code)
+                }else{
+                    MarketPlaceUtils.initiateAddonMarketplace(
+                        sessionManager!!, context = requireActivity(), buyItemKey = selectedItem?.code)
+                }
+            }
            /* binding?.linearAdvancedWrapper -> {
                 binding?.radioAdvanced?.isChecked = true
                 binding?.radioClassic?.isChecked = false
