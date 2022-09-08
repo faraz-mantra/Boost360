@@ -39,7 +39,12 @@ class BusinessPromotionAddToCartBottomSheet :
         binding?.btnAddGoToCart?.setOnClickListener {
 
             MarketPlaceUtils.initiateAddonMarketplace(
-                sessionManager!!, context = requireActivity(), buyItemKey = viewModel?.updateStudioFeature?.feature_code)
+                sessionManager!!,
+                viewModel?.updateStudioFeature?.feature_code,
+                requireActivity(),
+                null,
+                true
+                )
         }
         observeApis()
     }

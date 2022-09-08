@@ -106,10 +106,20 @@ class PromoteBrandedUpdateTemplatesBottomSheet :
                 val selectedItem = purchaseList?.find { it.isSelected }
                 if (selectedItem?.isPack == true){
                     MarketPlaceUtils.initiateAddonMarketplace(
-                        sessionManager!!, context = requireActivity(), packId = selectedItem.code)
+                        sessionManager!!,
+                        null,
+                        requireActivity(),
+                        selectedItem.code,
+                        false
+                    )
                 }else{
                     MarketPlaceUtils.initiateAddonMarketplace(
-                        sessionManager!!, context = requireActivity(), buyItemKey = selectedItem?.code)
+                        sessionManager!!,
+                        selectedItem?.code,
+                        requireActivity(),
+                        null,
+                    true
+                    )
                 }
             }
            /* binding?.linearAdvancedWrapper -> {

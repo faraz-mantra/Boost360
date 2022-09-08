@@ -33,6 +33,7 @@ object MarketPlaceUtils {
         buyItemKey: String?=null,
         context: Context,
         packId:String?=null,
+        goToCart: Boolean = false
     ) {
         try {
            // if (isLoadingShow) delayProgressShow()
@@ -59,10 +60,16 @@ object MarketPlaceUtils {
                 intent.putExtra("mobileNo", context.getString(R.string.ria_customer_mail))
             }
 
-            if (buyItemKey != null && buyItemKey.isNotEmpty()) intent.putExtra("buyItemKey", buyItemKey)
+            if (buyItemKey != null && buyItemKey.isNotEmpty()) {
+                if(goToCart)
+                    intent.putExtra("buyAddonWithIDAndGoToCart",buyItemKey)
+                else
+                    intent.putExtra("buyItemKey", buyItemKey)
+            }
 
-            intent.putExtra("isOpenPackageWithID",packId)
-            intent.putExtra("buyAddonWithIDAndGoToCart",buyItemKey)
+            if(packId != null) {
+                intent.putExtra("isOpenPackageWithID", packId)
+            }
             intent.putExtra("profileUrl", session.fPLogo)
             context.startActivity(intent)
            // overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
