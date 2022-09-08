@@ -45,6 +45,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_feature_details.*
+import java.util.*
 
 
 class ComparePacksV3Activity :
@@ -393,7 +394,10 @@ class ComparePacksV3Activity :
                         this.applicationContext,
                         R.drawable.ic_cart_continue_bg
                     )
-                    binding?.buyPack?.setText("Buy ${selectedBundle!!.name}")
+                    var originalText = selectedBundle?.name
+                    originalText = originalText?.lowercase(Locale.getDefault())
+                    binding?.buyPack?.text = "Buy " + originalText
+                  //  binding?.buyPack?.setText("Buy ${selectedBundle!!.name}".toLowerCase())
                     binding?.buyPack?.isClickable = true
                 } else {
                     binding?.buyPack?.background = ContextCompat.getDrawable(
@@ -571,7 +575,10 @@ class ComparePacksV3Activity :
             this.applicationContext,
             R.drawable.ic_cart_continue_bg
         )
-        binding?.buyPack?.setText("Buy ${list.get(0).name}")
+        var originalText = list.get(0).name
+        originalText = originalText?.lowercase(Locale.getDefault())
+        binding?.buyPack?.text = "Buy " + originalText
+       // binding?.buyPack?.setText("Buy ${list.get(0).name}".toLowerCase())
         binding?.buyPack?.isClickable = true
     }
 
@@ -711,7 +718,10 @@ class ComparePacksV3Activity :
 
         itemInCart = false
         this.selectedBundle = selectedBundle
-        binding?.buyPack?.text = "Buy ${selectedBundle.name}"
+       // binding?.buyPack?.text = "Buy" + selectedBundle.name?.toLowerCase()
+        var originalText = selectedBundle.name
+        originalText = originalText?.lowercase(Locale.getDefault())
+        binding?.buyPack?.text = "Buy " + originalText
 //        selectedBundle.how_to_activate?.let { updateHowToUseRecycler(it) }
 //        howToUseAdapter.notifyDataSetChanged()
 
@@ -748,7 +758,10 @@ class ComparePacksV3Activity :
                 this.applicationContext,
                 R.drawable.ic_cart_continue_bg
             )
-            binding?.buyPack?.setText("Buy ${selectedBundle!!.name}")
+            var originalText = selectedBundle.name
+            originalText = originalText?.lowercase(Locale.getDefault())
+            binding?.buyPack?.text = "Buy " + originalText
+          //  binding?.buyPack?.setText("Buy ${selectedBundle!!.name}".toLowerCase())
             binding?.buyPack?.isClickable = true
         } else {
             binding?.buyPack?.background = ContextCompat.getDrawable(
