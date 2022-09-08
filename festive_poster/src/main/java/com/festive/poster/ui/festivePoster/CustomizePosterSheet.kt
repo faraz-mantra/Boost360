@@ -244,9 +244,7 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
     dismiss()
   }
 
-  private fun gotoMarketPlace() {
-    MarketPlaceUtils.initiateAddonMarketplace(session!!,true,"","",true,requireContext())
-  }
+
 
   private fun validation(): Boolean {
     if (path.isNullOrEmpty()&&imageUrl.isNullOrEmpty()) {

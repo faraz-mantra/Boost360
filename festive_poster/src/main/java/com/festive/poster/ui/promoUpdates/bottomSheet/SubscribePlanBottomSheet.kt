@@ -194,8 +194,6 @@ class SubscribePlanBottomSheet : BaseBottomSheetDialog<BsheetSubscribePlanValidi
         }
     }
 
-    private fun gotoMarketPlace() {
-        MarketPlaceUtils.initiateAddonMarketplace(session!!,true,"",Constants.PROMO_FEATURE_CODE,true,requireContext())
-    }
+
 
 }

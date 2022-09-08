@@ -28,6 +28,13 @@ class UpdateStudioFeaturePurchaseViewHolder(binding: ListItemUpdateStudioFeature
     binding.tvAdvanceTitle.text = model.title
     binding.tvDesc.text = model.desc
     binding.radioAdvanced.isChecked = model.isSelected
+    if (model.isSelected){
+      binding.tvAdvanceTitle.setTextColor(getColor(
+        R.color.color_4a4a4a_jio_ec008c)!!)
+    }else{
+      binding.tvAdvanceTitle.setTextColor(getColor(
+        R.color.color_888888)!!)
+    }
     binding.root.setOnClickListener {
       listener?.onItemClick(position,item,RecyclerViewActionType.PURCHASE_ITEM_CLICKED.ordinal)
     }

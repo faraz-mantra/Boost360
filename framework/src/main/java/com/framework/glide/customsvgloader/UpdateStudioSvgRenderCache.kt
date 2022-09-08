@@ -36,7 +36,7 @@ class UpdateStudioSvgRenderCache:SvgRenderCacheUtil() {
     ): String? {
 
 
-        var result= application().resources.openRawResource(R.raw.dushera172).bufferedReader().use { it.readText() }
+        var result= svgString
 
 
         result= result?.replace("Lorumipsum.com",userWebsite)
@@ -45,11 +45,8 @@ class UpdateStudioSvgRenderCache:SvgRenderCacheUtil() {
         result= result?.replace("+91 9999999999",userPhone)
         val imgIdIndex = result?.indexOf("data-name=\"biz_logo.png\"")
         imgIdIndex?:return result
-        val test1 = result?.substring(imgIdIndex,imgIdIndex+50)
         val imgStart = result?.indexOf("data:image/png;base64,",imgIdIndex)?:result?.indexOf("data:image/jpeg;base64,",imgIdIndex)
         imgStart?:return result
-        val test2= result?.substring(imgStart,imgStart+50)
-
         val imgEnd = result?.indexOf("/>",imgStart)
         imgEnd?:return result
         result= result?.replaceRange(imgStart,imgEnd,"data:image/jpeg;base64,$base64\"")

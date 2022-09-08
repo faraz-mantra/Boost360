@@ -30,11 +30,9 @@ object MarketPlaceUtils {
 
     fun initiateAddonMarketplace(
         session: UserSessionManager,
-        isOpenCardFragment: Boolean,
-        screenType: String,
-        buyItemKey: String?,
-        isLoadingShow: Boolean = true,
-        context: Context
+        buyItemKey: String?=null,
+        context: Context,
+        packId:String?=null,
     ) {
         try {
            // if (isLoadingShow) delayProgressShow()
@@ -44,12 +42,7 @@ object MarketPlaceUtils {
             intent.putExtra("fpName", session.fPName)
             intent.putExtra("fpid", session.fPID)
             intent.putExtra("fpTag", session.fpTag)
-            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-            intent.putExtra("screenType", screenType)
             intent.putExtra("accountType", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
-            intent.putExtra("boost_widget_key","TESTIMONIALS")
-            intent.putExtra("feature_code","TESTIMONIALS")
-            intent.putExtra("isFestivePoster",true)
 
             intent.putStringArrayListExtra(
                 "userPurchsedWidgets",
@@ -65,7 +58,11 @@ object MarketPlaceUtils {
             } else {
                 intent.putExtra("mobileNo", context.getString(R.string.ria_customer_mail))
             }
+
             if (buyItemKey != null && buyItemKey.isNotEmpty()) intent.putExtra("buyItemKey", buyItemKey)
+
+            intent.putExtra("isOpenPackageWithID",packId)
+            intent.putExtra("buyAddonWithIDAndGoToCart",buyItemKey)
             intent.putExtra("profileUrl", session.fPLogo)
             context.startActivity(intent)
            // overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

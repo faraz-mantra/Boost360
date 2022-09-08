@@ -3,6 +3,7 @@ package com.festive.poster.ui.promoUpdates.bottomSheet
 import android.os.Bundle
 import com.festive.poster.R
 import com.festive.poster.databinding.BsheetBusinessPromotionAddPurchaseCartBinding
+import com.festive.poster.utils.MarketPlaceUtils
 import com.festive.poster.viewmodels.UpdateStudioPurchaseViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
@@ -35,7 +36,11 @@ class BusinessPromotionAddToCartBottomSheet :
 
     override fun onCreateView() {
         binding?.rivCloseBottomSheet?.setOnClickListener { dismiss() }
-        binding?.btnAddGoToCart?.setOnClickListener { dismiss() }
+        binding?.btnAddGoToCart?.setOnClickListener {
+
+            MarketPlaceUtils.initiateAddonMarketplace(
+                sessionManager!!, context = requireActivity(), buyItemKey = viewModel?.updateStudioFeature?.feature_code)
+        }
         observeApis()
     }
 
