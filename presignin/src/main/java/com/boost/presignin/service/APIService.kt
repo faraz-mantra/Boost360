@@ -7,10 +7,11 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.IBinder
 import android.util.Log
-import com.appservice.R
 import com.appservice.model.accountDetails.saveBanKDetail
+import com.appservice.model.domainBooking.DomainDetailsResponse
 import com.appservice.model.kycData.saveBusinessKycDetail
 import com.appservice.rest.repository.AzureWebsiteNewRepository
+import com.appservice.rest.repository.BoostPluginWithFloatsRepository
 import com.boost.dbcenterapi.utils.DataLoader
 import com.appservice.model.aptsetting.AppointmentStatusResponse
 import com.boost.presignin.model.other.AccountDetailsResponse
@@ -75,7 +76,18 @@ class APIService : Service() {
           userSessionManager?.fpTag
       )
       checkExpiryAddonsPackages()
+      getAndSaveDomainDetails()
   }
+
+    private fun getAndSaveDomainDetails() {
+        BoostPluginWithFloatsRepository.domainDetails(userSessionManager?.fpTag, clientId).toLiveData().observeForever {
+            if (it.isSuccess()) {
+                val domainDetailsResponse = it as? DomainDetailsResponse
+                DomainDetailsResponse.saveDomainDetailsData(domainDetailsResponse!!)
+            }
+            checkAllApiComplete()
+        }
+    }
 
     @SuppressLint("LongLogTag")
     private fun checkExpiryAddonsPackages() {
@@ -256,6 +268,6 @@ class APIService : Service() {
 
   private fun checkAllApiComplete() {
     countApiSuccess++
-    if (countApiSuccess == 5) stopSelf()
+    if (countApiSuccess == 6) stopSelf()
   }
 }

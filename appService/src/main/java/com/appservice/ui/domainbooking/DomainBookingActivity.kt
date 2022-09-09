@@ -232,7 +232,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
 
   private fun setupUI() {
     setupSteps()
-    if (isPremium()) domainDetailsApi() else nonPremiumMode()
+    if (isPremium()) premiumMode() else nonPremiumMode()
   }
 
   private fun nonPremiumMode() {
@@ -245,6 +245,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
   }
 
   private fun premiumMode() {
+    onDomainAddedOrUpdated(false)
     binding?.layoutBuyAddon?.gone()
     binding?.ivRiaSteps?.visible()
     binding?.btnBookNewDomain?.visible()
@@ -252,7 +253,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
     binding?.rvSteps?.visible()
   }
 
-  private fun domainDetailsApi() {
+  /*private fun domainDetailsApi() {
     showProgress()
     viewModel.domainDetails(session.fpTag, clientId).observeOnce(this) {
       if (it.isSuccess()) {
@@ -262,13 +263,12 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
           startFragmentDomainBookingActivity(activity = this, type = com.appservice.constant.FragmentType.ACTIVE_NEW_DOMAIN_FRAGMENT, bundle = Bundle(), clearTop = false)
           finish()
         } else {
-          onDomainAddedOrUpdated(false)
           premiumMode()
         }
       } else showShortToast(it.message())
       hideProgress()
     }
-  }
+  }*/
 
   private fun onDomainAddedOrUpdated(isAdded: Boolean) {
     val instance = FirestoreManager
