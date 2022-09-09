@@ -57,8 +57,8 @@ class PostUpdatesViewModel : BaseViewModel() {
     ).toLiveData()
   }
 
-  fun getUserDetails(fpTag: String?, clientId: String): LiveData<BaseResponse> {
-    return WithFloatTwoRepository.getUserDetails(fpTag,clientId).toLiveData()
+  fun getUserDetails(): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getUserDetails().toLiveData()
   }
 
   fun getCategories(context: Context): LiveData<BaseResponse> {

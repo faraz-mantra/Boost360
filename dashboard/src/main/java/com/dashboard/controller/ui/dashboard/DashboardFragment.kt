@@ -146,7 +146,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   override fun onCreateView() {
-    baseActivity.startPromotionUpdatesFromDashboard()
     if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(true)
     session = UserSessionManager(baseActivity)
     session?.let { deepLinkUtil = DeepLinkUtil(baseActivity, it, Fragment()) }

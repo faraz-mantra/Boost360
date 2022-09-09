@@ -39,7 +39,7 @@ class FestivePosterViewModel: BaseViewModel() {
     }
 
     fun getUserDetails(fpTag: String?, clientId: String): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.getUserDetails(fpTag,clientId).toLiveData()
+        return WithFloatTwoRepository.getUserDetails().toLiveData()
     }
     fun getUpgradeData(): LiveData<BaseResponse> {
         return DevBoostRepository.getUpgradeData().toLiveData()

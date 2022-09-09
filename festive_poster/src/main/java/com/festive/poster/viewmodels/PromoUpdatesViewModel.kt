@@ -12,11 +12,11 @@ import com.framework.base.BaseResponse
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
+import com.framework.pref.Key_Preferences
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.framework.rest.NetworkResult
-import com.framework.utils.application
-import com.framework.utils.fetchString
-import com.framework.utils.getResponse
-import com.framework.utils.toArrayList
+import com.framework.utils.*
 import kotlinx.coroutines.launch
 import kotlin.collections.ArrayList
 import kotlin.coroutines.resume
@@ -57,6 +57,7 @@ class PromoUpdatesViewModel: BaseViewModel() {
 
     init {
        refreshTemplates()
+        refreshUserWidgets()
     }
 
     fun refreshTemplates(){
@@ -64,6 +65,21 @@ class PromoUpdatesViewModel: BaseViewModel() {
         getTemplatesUi()
     }
 
+    private fun refreshUserWidgets() {
+        WithFloatTwoRepository.getUserDetails().getResponse {
+            if (it.isSuccess()) {
+                val detail = it as? CustomerDetails
+                detail?.FPWebWidgets?.let { list ->
+                    UserSessionManager(
+                        application()).storeFPDetails(
+                        Key_Preferences.STORE_WIDGETS,
+                        convertListObjToString(list)
+                    )
+
+                }
+            }
+        }
+    }
 
     fun getTodaysPickTemplate(){
         _todayPickData.postValue(NetworkResult.Loading())

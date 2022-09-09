@@ -142,7 +142,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     }
 
     private fun refreshUserWidgets() {
-        viewModel.getUserDetails(session?.fpTag, clientId).observe(this) {
+        viewModel.getUserDetails().observe(this) {
             if (it.isSuccess()) {
                 val detail = it as? CustomerDetails
                 detail?.FPWebWidgets?.let { list ->

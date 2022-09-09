@@ -55,7 +55,6 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
         Handler(Looper.getMainLooper()).postDelayed(Runnable {
             binding!!.constraintLayout3.transitionToEnd()
             binding?.btnNext?.gone()
-            autoSlide()
         },1500)
         setupSlider()
         setOnClickListener(binding?.btnUpdateStudio,binding?.btnNext)
@@ -112,6 +111,7 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
             }
         })
 
+        autoSlide()
 
     }
 
@@ -124,10 +124,10 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
             }
 
             Handler(Looper.getMainLooper()).postDelayed(sliderRunnable,
-                3000)
+                4000)
         }
         Handler(Looper.getMainLooper()).postDelayed(sliderRunnable,
-            2500)
+            4000)
     }
 
 
