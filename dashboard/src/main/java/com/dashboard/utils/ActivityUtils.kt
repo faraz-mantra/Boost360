@@ -11,12 +11,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
+import com.appservice.model.domainBooking.DomainDetailsResponse
 import com.appservice.ui.bgImage.BackgroundImageContainerActivity
 import com.appservice.ui.bgImage.setFragmentTypeNew
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.setFragmentType
 import com.appservice.ui.catalog.startFragmentActivity
+import com.appservice.ui.domainbooking.startFragmentDomainBookingActivity
 import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
 import com.appservice.ui.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.testimonial.startTestimonialFragmentActivity
@@ -191,9 +193,13 @@ fun AppCompatActivity.startFeviconImage(session: UserSessionManager?) {
 fun AppCompatActivity.startDomainDetail(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(DOMAIN_EMAIL_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val queries = Intent(this, Class.forName("com.appservice.ui.domainbooking.DomainBookingActivity"))
-    startActivity(queries)
-    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    if (DomainDetailsResponse.isDomainAvailable()){
+      startFragmentDomainBookingActivity(activity = this, type = com.appservice.constant.FragmentType.ACTIVE_NEW_DOMAIN_FRAGMENT, bundle = Bundle(), clearTop = false)
+    }else{
+      val queries = Intent(this, Class.forName("com.appservice.ui.domainbooking.DomainBookingActivity"))
+      startActivity(queries)
+      overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    }
   } catch (e: Exception) {
     e.printStackTrace()
   }
