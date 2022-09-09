@@ -203,13 +203,13 @@ class SharedPrefs(activity: Activity) {
 
   //storing couponDetails
   fun storeApplyedCouponDetails(couponDetails: CouponsModel?) {
-    val couponInfo = Gson().toJson(couponDetails)
+    val couponInfo = if(couponDetails != null) Gson().toJson(couponDetails) else null
     editor!!.putString(CART_COUPON_DETAILS, couponInfo).apply()
   }
 
   fun getApplyedCouponDetails(): CouponsModel? {
-    val jsonString = pref!!.getString(CART_COUPON_DETAILS, null)
-    if (jsonString != null) {
+    val jsonString: String? = pref!!.getString(CART_COUPON_DETAILS, null)
+    if (jsonString != null && !jsonString.equals("null")) {
       return Gson().fromJson<CouponsModel>(jsonString, object : TypeToken<CouponsModel>() {}.type)
     } else {
       return null

@@ -310,7 +310,7 @@ class MyPlanBottomSheet :
             binding?.btn1?.text = "Choose VMN"
             binding?.btn1?.setOnClickListener {
              //   chooseVMN()
-                Toasty.success(requireContext(), "Coming Soon...", Toast.LENGTH_SHORT, true).show();
+                Toasty.info(requireContext(),"Coming soon...",Toast.LENGTH_LONG, true).show()
             }
             binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
             binding?.edgeCaseTitle?.setText("Action Required")
@@ -335,7 +335,8 @@ class MyPlanBottomSheet :
             binding?.btn1?.visibility = View.VISIBLE
             binding?.btn1?.text = "Choose Email"
             binding?.btn1?.setOnClickListener {
-                featuredetails()
+//                featuredetails()
+                Toasty.info(requireContext(),"Coming soon...",Toast.LENGTH_LONG, true).show()
             }
             binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
             binding?.edgeCaseTitle?.setText("Action Required")

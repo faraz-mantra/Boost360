@@ -142,7 +142,7 @@
             android:layout_height="50dp"
             android:layout_alignParentEnd="true"
             android:layout_margin="@dimen/_25ssp"
-            android:backgroundTint="@color/colorAccentLight"
+            android:backgroundTint="@color/color_accentlight_marketplace"
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -94,7 +94,7 @@ class CartPackageAdaptor(
                 it1
         )
       }
-      listener.deleteCartAddonsItem(bundlesList.get(position).item_id)
+      listener.deleteCartAddonsItem(bundlesList.get(position))
     }
     updateFeatures(bundlesList.get(position).item_id, holder)
 

@@ -29,8 +29,7 @@ import com.boost.cart.adapter.BenifitsPageTransformer
 import com.boost.cart.adapter.ZoomOutPageTransformer
 import com.boost.cart.utils.Constants
 import com.boost.cart.utils.Utils
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
@@ -300,8 +299,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                                         ""
                                     )
                                 )
-                                val event_attributes: java.util.HashMap<String, Any> =
-                                    java.util.HashMap()
+                                val event_attributes: HashMap<String, Any> =
+                                    HashMap()
                                 bundleData!!.name?.let { it1 ->
                                     event_attributes.put(
                                         "Package Name",
@@ -408,6 +407,81 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             intent.putExtra("profileUrl", profileUrl)
             startActivity(intent)
         }
+    }
+
+    private fun onClickNeedMoreFeatureCard(item: BundlesModel) {
+        val event_attributes: HashMap<String, Any> = HashMap()
+        item.name?.let { it1 -> event_attributes.put("Package Name", it1) }
+        item.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
+
+        event_attributes.put("Discount %", item.overall_discount_percent)
+        event_attributes.put("Package Identifier", item.bundle_id)
+        item.min_purchase_months.let { it1 -> event_attributes.put("Validity", it1) }
+        WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, ADDONS_MARKETPLACE, event_attributes)
+        val intent = Intent(this, PackDetailsActivity::class.java)
+        intent.putExtra("bundleData", Gson().toJson(getBundlesFromBundleModel(item)))
+        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+
+        intent.putExtra("fpid", fpid)
+        intent.putExtra("expCode", experienceCode)
+        intent.putExtra("isDeepLink", isDeepLink)
+        intent.putExtra("deepLinkViewType", deepLinkViewType)
+        intent.putExtra("deepLinkDay", deepLinkDay)
+        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+        intent.putExtra(
+            "accountType",
+            accountType
+        )
+        intent.putStringArrayListExtra(
+            "userPurchsedWidgets",
+            userPurchsedWidgets
+        )
+        if (email != null) {
+            intent.putExtra("email", email)
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com")
+        }
+        if (mobileNo != null) {
+            intent.putExtra("mobileNo", mobileNo)
+        } else {
+            intent.putExtra("mobileNo", "9160004303")
+        }
+        intent.putExtra("profileUrl", profileUrl)
+        startActivity(intent)
+    }
+
+    private fun getBundlesFromBundleModel(item: BundlesModel): Bundles? {
+        val temp = Gson().fromJson<List<IncludedFeature>>(
+            item.included_features!!,
+            object : TypeToken<List<IncludedFeature>>() {}.type
+        )
+
+       return Bundles(
+            item.bundle_id,
+            temp,
+            item.min_purchase_months,
+            item.name,
+            item.overall_discount_percent,
+            PrimaryImage(item.primary_image),
+            item.target_business_usecase,
+            Gson().fromJson<List<String>>(
+                item.exclusive_to_categories,
+                object : TypeToken<List<String>>() {}.type
+            ),
+            null, Gson().fromJson<List<HowToActivate>>(
+                item.how_to_activate,
+                object : TypeToken<List<HowToActivate>>() {}.type
+            ), Gson().fromJson<List<Testimonial>>(
+                item.testimonials,
+                object : TypeToken<List<Testimonial>>() {}.type
+            ), Gson().fromJson<List<FrequentlyAskedQuestion>>(
+                item.frequently_asked_questions,
+                object : TypeToken<List<FrequentlyAskedQuestion>>() {}.type
+            ),Gson().fromJson<List<String>>(
+                item.benefits,
+                object : TypeToken<List<String>>() {}.type
+            ),item.desc
+        )
     }
 
     override fun onResume() {
@@ -973,6 +1047,10 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                     add_item_to_cart.text = getString(com.boost.cart.R.string.added_to_cart)
 
                 }
+
+        binding?.needMoreFeatureLayout?.setOnClickListener {
+            onClickNeedMoreFeatureCard(needMoreFeatureItem)
+        }
     }
 
 

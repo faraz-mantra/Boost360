@@ -2802,17 +2802,17 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 item_count.text = cartList.size.toString() + " items"
                 val features = arrayListOf<CartModel>()
                 val bundles = arrayListOf<CartModel>()
+                couponDiwaliRedundant.clear()
                 for (items in it) {
                     if (items.item_type.equals("features")) {
-                        couponDiwaliRedundant.clear()
-                        if (items.feature_code.equals("WILDFIRE_FB_LEAD_ADS") || items.feature_code.equals(
-                                "WILDFIRE"
-                            ) || items.feature_code.equals("DICTATE")
-                        ) {
-                            Log.v("couponDiwaliRedundant", " " + items.item_id)
+                        if (items.feature_code.equals("WILDFIRE_FB_LEAD_ADS")
+                            || items.feature_code.equals("WILDFIRE")
+                            || items.feature_code.equals("DICTATE")) {
+                            Log.v("couponDiwaliRedundant", " " + items.feature_code+" "+ items.item_name)
 //                            couponDiwaliRedundant.add(items.feature_code)
                             couponDiwaliRedundant.put(items.feature_code, items.item_name)
                         }
+                        Log.v("couponDiwaliRedundant>>", couponDiwaliRedundant.toString())
                         features.add(items)
                         if (!recommendedAddonsWidgetKey.contains(items.boost_widget_key!!)) {
                             recommendedAddonsWidgetKey.add(items.boost_widget_key!!)
@@ -3567,6 +3567,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             cart_apply_coupon.visibility = View.VISIBLE
             cart_coupon_code_rv.visibility = View.VISIBLE
             discount_banner.visibility = View.GONE
+//            prefs.storeApplyedCouponDetails(null)
 
             if (tv_Show_less.visibility == VISIBLE) {
                 tv_Show_more.visibility = GONE
@@ -3661,6 +3662,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 )
                 choosed_validity_period.setText("(Valid till " + nowFormat.format(oneMonthFromNow.time) + ")")
 
+                //remove coupon if there specific addons
+                if(couponDiwaliRedundant.size > 0 && (couponDiwaliRedundant.contains("WILDFIRE_FB_LEAD_ADS")
+                            || couponDiwaliRedundant.contains("WILDFIRE")
+                            || couponDiwaliRedundant.contains("DICTATE"))){
+                    prefs.storeApplyedCouponDetails(null)
+                }
                 //When coupon is available and not been applyed
                 if (prefs.getApplyedCouponDetails() != null && !cart_applied_coupon_full_layout.isVisible()) {
                     viewModel.getCouponRedeem(
@@ -3676,15 +3683,15 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         }
     }
 
-    override fun deleteCartAddonsItem(itemID: String) {
-        viewModel.deleteCartItems(itemID)
-        couponDiwaliRedundant.remove(itemID)
+    override fun deleteCartAddonsItem(item: CartModel) {
+        viewModel.deleteCartItems(item.item_id)
+        couponDiwaliRedundant.remove(item.feature_code)
         //remove saved orderdetails from prefs
         prefs.storeCartOrderInfo(null)
         prefs.storeAutoRenewSubscriptionID(null)
 //        prefs.storeCartValidityMonths(null)
         //remove item from firebase
-        CartFirestoreManager.removeDocument(itemID)
+        CartFirestoreManager.removeDocument(item.item_id)
     }
 
     override fun showBundleDetails(itemID: String) {
@@ -3877,21 +3884,44 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
     }
 
     override fun applycoupon(mList: Data) {
-        val event_attributes: HashMap<String, Any> = HashMap()
-        event_attributes.put("Coupon_code", mList.code!!)
-        WebEngageController.trackEvent(
-            ADDONS_MARKETPLACE_Discount_Coupon_Loaded,
-            NO_EVENT_LABLE,
-            NO_EVENT_VALUE
-        )
-        mList.code?.let {
-            viewModel.getCouponRedeem(mList.code?.let {
-                RedeemCouponRequest(
-                    total,
-                    it,
-                    (activity as CartActivity).fpid!!
-                )
-            }!!, it)
+        if (couponDiwaliRedundant.contains("WILDFIRE_FB_LEAD_ADS")) {
+            Toasty.error(
+                requireContext(),
+                "In order to apply coupon remove the item " + couponDiwaliRedundant.get("WILDFIRE_FB_LEAD_ADS"),
+                Toast.LENGTH_SHORT,
+                true
+            ).show()
+        } else if (couponDiwaliRedundant.contains("WILDFIRE")) {
+            Toasty.error(
+                requireContext(),
+                "In order to apply coupon remove the item " + couponDiwaliRedundant.get("WILDFIRE"),
+                Toast.LENGTH_SHORT,
+                true
+            ).show()
+        } else if (couponDiwaliRedundant.contains("DICTATE")) {
+            Toasty.error(
+                requireContext(),
+                "In order to apply coupon remove the item " + couponDiwaliRedundant.get("DICTATE"),
+                Toast.LENGTH_SHORT,
+                true
+            ).show()
+        } else {
+            val event_attributes: HashMap<String, Any> = HashMap()
+            event_attributes.put("Coupon_code", mList.code!!)
+            WebEngageController.trackEvent(
+                ADDONS_MARKETPLACE_Discount_Coupon_Loaded,
+                NO_EVENT_LABLE,
+                NO_EVENT_VALUE
+            )
+            mList.code?.let {
+                viewModel.getCouponRedeem(mList.code?.let {
+                    RedeemCouponRequest(
+                        total,
+                        it,
+                        (activity as CartActivity).fpid!!
+                    )
+                }!!, it)
+            }
         }
     }
 
