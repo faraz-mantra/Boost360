@@ -2,9 +2,11 @@ package com.boost.marketplace.infra.utils
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.util.Log
+import android.util.TypedValue
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.boost.cart.utils.Constants
@@ -306,5 +308,14 @@ object Utils1 {
 
     fun isExpired(createdOnDate: Date): Boolean {
         return createdOnDate.before(Date())
+    }
+
+    fun getPixelValue(context: Context, dimenId: Float): Int {
+        val resources: Resources = context.resources
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dimenId,
+            resources.displayMetrics
+        ).toInt()
     }
 }

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/reviewSelectionLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="16dp"
+    app:layout_constraintTop_toBottomOf="@id/topImageView">
+
+    <TextView
+        android:id="@+id/tv_review_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:fontFamily="@font/bold"
+        android:gravity="center_horizontal"
+        android:lineHeight="26dp"
+        android:text="Review your selections"
+        android:textColor="@color/main_color_gray_dk"
+        android:textFontWeight="700"
+        android:textSize="@dimen/txt_20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/reviewSelectionDomainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/pad_15dp"
+        android:background="@drawable/round_corner_bottom_curve"
+        app:layout_constraintTop_toBottomOf="@id/tv_review_selection">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/yourDomainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="71dp"
+            android:background="@drawable/round_corner_white"
+            android:padding="10dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_title_domain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/bold"
+                android:lineHeight="22dp"
+                android:lineSpacingExtra="6dp"
+                android:text="Custom Domain"
+                android:textColor="#333333"
+                android:textFontWeight="400"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iconPencil"
+                android:layout_width="@dimen/dimen_16dp"
+                android:layout_height="@dimen/dimen_16dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_edit_pencil"
+                android:tint="@color/colorAccent1"
+                app:layout_constraintBottom_toBottomOf="@id/tv_title_domain"
+                app:layout_constraintStart_toEndOf="@id/tv_title_domain"
+                app:layout_constraintTop_toTopOf="@id/tv_title_domain" />
+
+            <TextView
+                android:id="@+id/tv_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/regular"
+                android:text="@string/edit_underline"
+                android:textColor="@color/colorAccent1"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/tv_title_domain"
+                app:layout_constraintStart_toEndOf="@id/iconPencil"
+                app:layout_constraintTop_toTopOf="@id/tv_title_domain" />
+
+            <TextView
+                android:id="@+id/tv_subTitle_domain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/regular"
+                android:lineHeight="22dp"
+                android:lineSpacingExtra="6dp"
+                android:text="Custom domain with Free SSL Security"
+                android:textColor="#333333"
+                android:textFontWeight="400"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_domain" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tvSubTextYourDomainLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/regular"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="8dp"
+            android:text="Post successful payment towards your selected pack, above domain will be mapped to your website address."
+            android:textColor="#888888"
+            android:textFontWeight="400"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/yourDomainLayout" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/reviewSelectionNumberLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/pad_15dp"
+        android:background="@drawable/round_corner_bottom_curve"
+        app:layout_constraintTop_toBottomOf="@id/reviewSelectionDomainLayout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/yourNumberLayout"
+            android:layout_width="match_parent"
+            android:layout_height="71dp"
+            android:background="@drawable/round_corner_white"
+            android:padding="10dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_title_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/bold"
+                android:lineHeight="22dp"
+                android:lineSpacingExtra="6dp"
+                android:text="+91 8012-345-673"
+                android:textColor="#333333"
+                android:textFontWeight="400"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iconPencilNumber"
+                android:layout_width="@dimen/dimen_16dp"
+                android:layout_height="@dimen/dimen_16dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_edit_pencil"
+                android:tint="@color/colorAccent1"
+                app:layout_constraintBottom_toBottomOf="@id/tv_title_number"
+                app:layout_constraintStart_toEndOf="@id/tv_title_number"
+                app:layout_constraintTop_toTopOf="@id/tv_title_number" />
+
+            <TextView
+                android:id="@+id/tv_edit_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/regular"
+                android:text="@string/edit_underline"
+                android:textColor="@color/colorAccent1"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/tv_title_number"
+                app:layout_constraintStart_toEndOf="@id/iconPencilNumber"
+                app:layout_constraintTop_toTopOf="@id/tv_title_number" />
+
+            <TextView
+                android:id="@+id/tv_subTitle_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/regular"
+                android:lineHeight="22dp"
+                android:lineSpacingExtra="6dp"
+                android:text="Track customer calls via VMN"
+                android:textColor="#333333"
+                android:textFontWeight="400"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_number" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tvSubTextYourNumberLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/regular"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="8dp"
+            android:text="Post successful payment towards your selected pack, above VMN will be mapped to your website."
+            android:textColor="#888888"
+            android:textFontWeight="400"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/yourNumberLayout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/continueToCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/pad_20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="@dimen/pad_20dp"
+        android:background="@drawable/cta_button_click_effect"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:paddingStart="@dimen/_30sdp"
+        android:paddingTop="10dp"
+        android:paddingEnd="@dimen/_30sdp"
+        android:paddingBottom="10dp"
+        android:text="Continute to cart"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reviewSelectionNumberLayout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

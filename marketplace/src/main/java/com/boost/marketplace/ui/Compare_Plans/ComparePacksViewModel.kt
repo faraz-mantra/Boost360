@@ -2,8 +2,13 @@ package com.boost.marketplace.ui.Compare_Plans
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.boost.dbcenterapi.data.api_model.CustomDomain.CustomDomains
+import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
+import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
+import com.boost.dbcenterapi.data.api_model.gst.Error
 import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
@@ -14,10 +19,13 @@ import com.boost.dbcenterapi.utils.Utils
 import com.facebook.FacebookSdk.getApplicationContext
 import com.framework.models.BaseViewModel
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import es.dmoral.toasty.Toasty
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 
 class ComparePacksViewModel: BaseViewModel() {
 
@@ -31,8 +39,10 @@ class ComparePacksViewModel: BaseViewModel() {
     var allBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
     var allFeatureResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var addToCartResult: MutableLiveData<Boolean> = MutableLiveData()
-
+    var customDomainsResult: MutableLiveData<CustomDomains> = MutableLiveData()
     var updatesResult: MutableLiveData<FeaturesModel> = MutableLiveData()
+    val compositeDisposable = CompositeDisposable()
+    private var callTrackListResponse: MutableLiveData<CallTrackListResponse> = MutableLiveData()
 
     fun getSpecificFeature(): LiveData<List<FeaturesModel>> {
         return featureResult
@@ -145,6 +155,10 @@ class ComparePacksViewModel: BaseViewModel() {
 
     fun getAllBundles(): LiveData<List<BundlesModel>> {
         return allBundleResult
+    }
+
+    fun updateCustomDomainsResultResult(): LiveData<CustomDomains> {
+        return customDomainsResult
     }
 
     fun loadPackageUpdates() {
@@ -266,5 +280,56 @@ class ComparePacksViewModel: BaseViewModel() {
                 updatesLoader.postValue(false)
             }
             .subscribe()
+    }
+
+    fun getSuggestedDomains(domainRequest: DomainRequest) {
+        updatesLoader.postValue(true)
+        compositeDisposable.add(
+            NewApiService.getDomains(domainRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        customDomainsResult.postValue(it)
+                        updatesLoader.postValue(false)
+                    }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
+
+    fun getCallTrackingDetails(): LiveData<CallTrackListResponse> {
+        return callTrackListResponse
+    }
+
+    fun loadNumberList(fpid: String, clientId: String) {
+//        findingNumberLoader.postValue(true)
+        if (com.boost.cart.utils.Utils.isConnectedToInternet(getApplicationContext())) {
+            CompositeDisposable().add(
+                NewApiService.getCallTrackDetails(fpid, clientId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+//                            findingNumberLoader.postValue(false)
+                            var NumberList = it
+                            callTrackListResponse.postValue(NumberList)
+                        },
+                        {
+//                            val temp = (it as HttpException).response()!!.errorBody()!!.string()
+//                            val errorBody: Error =
+//                                Gson().fromJson(temp, object : TypeToken<Error>() {}.type)
+                            Toasty.error(
+                                getApplicationContext(),
+                                "Error in Loading Numbers!!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    )
+
+            )
+
+        }
     }
 }
