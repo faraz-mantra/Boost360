@@ -7,6 +7,9 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.marginTop
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
@@ -30,6 +33,7 @@ import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.pack_details_bottom_sheet.*
 
 class ComparePacksV3AddonsPopUpFragment : DialogFragment() {
 
@@ -218,6 +222,14 @@ class ComparePacksV3AddonsPopUpFragment : DialogFragment() {
                 )
                 benefitAdaptor.addupdates(benefits)
                 benefitAdaptor.notifyDataSetChanged()
+            } else {
+                binding.benefitContainerItem.visibility = View.INVISIBLE
+                val params = ConstraintLayout.LayoutParams(
+                    ConstraintLayout.LayoutParams.MATCH_PARENT,
+                    ConstraintLayout.LayoutParams.MATCH_PARENT
+                )
+                params.setMargins(0, 1300, 0, 0)
+                binding.linearLayoutCompat.layoutParams = params
             }
             if (it.how_to_use_steps != null) {
                 binding.howToUseContainer.visibility = View.VISIBLE

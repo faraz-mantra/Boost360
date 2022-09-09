@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/noSelectionLayout"
+    app:layout_constraintTop_toBottomOf="@id/topImageView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_marginTop="16dp"
+    android:background="@drawable/curve_top_white"
+    android:paddingStart="@dimen/dimen_24dp"
+    android:paddingTop="16dp"
+    android:paddingEnd="@dimen/dimen_24dp"
+    android:paddingBottom="@dimen/dimen_24dp"
+    android:visibility="gone">
+
+    <TextView
+        android:id="@+id/tv_title_no_selection"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:fontFamily="@font/bold"
+        android:gravity="center_horizontal"
+        android:lineHeight="26dp"
+        android:text="No selection made"
+        android:textColor="@color/main_color_gray_dk"
+        android:textFontWeight="700"
+        android:textSize="@dimen/txt_20sp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id="@+id/customDomainLayout"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_no_selection"
+        android:layout_width="match_parent"
+        android:layout_height="71dp"
+        android:layout_marginTop="@dimen/pad_15dp"
+        android:background="@drawable/red_border_box"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_title_custom_domain"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/bold"
+            android:lineHeight="22dp"
+            android:lineSpacingExtra="6dp"
+            android:text="Custom Domain"
+            android:textColor="#333333"
+            android:textFontWeight="400"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_subTitle_custom_domain"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_custom_domain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/regular"
+            android:lineHeight="22dp"
+            android:lineSpacingExtra="6dp"
+            android:text="Custom domain with Free SSL Security"
+            android:textColor="#333333"
+            android:textFontWeight="400"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_select"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/regular"
+            android:lineHeight="22dp"
+            android:lineSpacingExtra="6dp"
+            android:text="@string/select_underline"
+            android:textColor="@color/not_available_text_color"
+            android:textFontWeight="400"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/callTrackLayout"
+        app:layout_constraintTop_toBottomOf="@id/customDomainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="71dp"
+        android:layout_marginTop="@dimen/pad_15dp"
+        android:background="@drawable/red_border_box"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_title_call_track"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/bold"
+            android:lineHeight="22dp"
+            android:lineSpacingExtra="6dp"
+            android:text="Call tracker number"
+            android:textColor="#333333"
+            android:textFontWeight="400"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_subTitle_call_track"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_call_track"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/regular"
+            android:lineHeight="22dp"
+            android:lineSpacingExtra="6dp"
+            android:text="Track customer calls via VMN"
+            android:textColor="#333333"
+            android:textFontWeight="400"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_select_call_track"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/regular"
+            android:lineHeight="22dp"
+            android:lineSpacingExtra="6dp"
+            android:text="@string/select_underline"
+            android:textColor="@color/not_available_text_color"
+            android:textFontWeight="400"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <TextView
+        android:id="@+id/tv_bottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/callTrackLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/regular"
+        android:lineSpacingExtra="1dp"
+        android:text="If you don’t want to select the above items right now, you’ll be do so right after making payment for the pack you’re about to purchase."
+        android:textColor="#888888"
+        android:textFontWeight="400"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/continueToCartButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/pad_20dp"
+        android:layout_marginTop="@dimen/pad_20dp"
+        android:layout_marginBottom="@dimen/pad_20dp"
+        android:background="@drawable/cta_button_click_effect"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:paddingStart="@dimen/_30sdp"
+        android:paddingTop="10dp"
+        android:paddingEnd="@dimen/_30sdp"
+        android:paddingBottom="10dp"
+        android:text="Continue to cart"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/tv_no_selection_sub_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_no_selection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/regular"
+        android:lineHeight="22dp"
+        android:lineSpacingExtra="6dp"
+        android:text="Custom domain with Free SSL Security"
+        android:textColor="#333333"
+        android:textFontWeight="400"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

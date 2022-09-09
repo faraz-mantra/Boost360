@@ -44,7 +44,9 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
   override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
     val cryptocurrencyItem = list[position]
     holder.upgradeListItem(cryptocurrencyItem)
-    holder.singleTitle.text = cryptocurrencyItem.name
+    holder.singleTitle.text = cryptocurrencyItem.expiryDate
+
+    //Check here
 
 //    if (cryptocurrencyItem.featureState !=null && cryptocurrencyItem.featureState != 1){
 //      holder.itemView.visibility=View.VISIBLE
