@@ -47,7 +47,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020134
+        versionCode 2020020136
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -74,7 +74,7 @@ android {
     flavorDimensions "default"
     productFlavors {
         partone {
-            versionName "6.1.23.4"
+            versionName "6.1.25.5"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
@@ -85,7 +85,7 @@ android {
             buildConfigField "int", "REFERRAL_CAMPAIGN_CODE", '26277'
         }
         jioonline {
-            versionName "1.0.0.1"
+            versionName "1.0.0.2"
             applicationId "com.jio.online"
             dimension "default"
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
@@ -134,8 +134,6 @@ dependencies {
     implementation project(path: ':presignup')
 
     api project(path: ':dashboard')
-
-    implementation project(path: ':upgrades')
 
     implementation('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
         transitive = true
@@ -220,4 +218,6 @@ dependencies {
     implementation "org.koin:koin-androidx-scope:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     implementation "org.koin:koin-androidx-fragment:$koin_version"
+    implementation 'androidx.room:room-runtime:2.3.0'
+    annotationProcessor 'androidx.room:room-compiler:2.3.0'
 }

@@ -1,0 +1,34 @@
+<resources>
+  <string name="app_name">cart</string>
+  <!-- Common Error -->
+  <string name="no_internet">Internet is not available. Please check your data/wifi connection</string>
+  <string name="exception">Something went wrong. Please try again</string>
+  <string name="_10_digit_mobile_number">10 digit mobile number</string>
+  <string name="enter_gstin_number">Enter your GSTIN</string>
+  <string name="gst_text">Any change made to business name &amp; address info on GST portal takes atleast 15 days to reflect here.</string>
+  <string name="enter_business_name">Enter your Business name</string>
+  <string name="enter_business_address">Enter your business address</string>
+  <string name="auto_renew_message"><b>Auto Renewal is ON </b></string>
+  <string name="auto_next_renewal_date">Your next auto-renewal date will be %1$s.</string>
+  <string name="feature_coming_soon">Coming Soon: View all your previous orders. In case of a concern please write to ria@nowfloats.com</string>
+  <string name="added_to_cart">ADDED TO CART</string>
+  <string name="auto_renewal_date">Your next auto-renewal date will be %1$s. You can disable auto renewal of any feature/package at anytime.</string>
+  <string name="facebook_lead_ads_upto_75_leads">Facebook Lead Ads (upto 75 leads)</string>
+  <string name="marketing">Marketing</string>
+  <string name="_262_businesses_have_added_this">40k+ businesses have added this</string>
+  <string name="add_now_for_99_month">₹99/month</string>
+  <string name="original_cost_799_month">Original cost ₹799/month</string>
+  <string name="_90_off">90% OFF</string>
+  <string name="learn_why_running_a_facebook_ad_campaign_is_always_a_good_idea">Learn why running a Facebook ad campaign is always a good idea.</string>
+  <string name="the_luxury_of_traveling_with_yacht_charter_companies">The luxury of traveling with yacht charter companies.</string>
+  <string name="information">Information ...</string>
+  <string name="read_more">Read More..</string>
+  <string name="addons_description"><![CDATA[75 leads (Rs.266.67 effective lead cost) from the campaigns run by us. Lead ads are the best way to run lead generation campaigns on Facebook. Lead ads let people show their interest in a product or service by filling out a form in the ad with their details and allowing a business to follow up with them. Facebook lead ad is the expression of interest of user where they give consent to the advertiser to contact them for the particular product and service, it should not be taken as the sale of product or service, ultimate responsibility of selling and pitching the product & service is with Advertiser only.]]></string>
+  <string name="read_less">Read Less..</string>
+  <string name="setup_mandate_txt">An eMandate allows you to schedule automatic payments for all your feature renewals directly from your bank account.</string>
+  <string name="setup_mandate_note">Please not that It may take 2-5 business days for your bank to activate the mandate and you may be charged a one-time setup fee (upto ₹5).</string>
+  <string name="invoice_txt">A copy of the GST Invoice was also sent on your registered email address (brajmadhav@gmail.com) and mobile (+91 8243558406).</string>
+  <string name="contact_support_for_help"><u>Contact support for help</u></string>
+    <string name="paytm">\@paytm</string>
+
+</resources>

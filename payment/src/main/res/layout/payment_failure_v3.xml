@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true">
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F8FD">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/ic_failure_exclamation" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/semi_bold"
+                android:gravity="center"
+                android:lineSpacingExtra="0sp"
+                android:text="Payment failed!"
+                android:textColor="@color/common_text_color"
+                android:textSize="@dimen/txt_18sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/regular"
+                android:gravity="center"
+                android:lineSpacingExtra="0sp"
+                android:text="Your payment was not successful due to some\n problem with your bank"
+                android:textColor="@color/common_text_color"
+                android:textSize="@dimen/txt_12sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/semi_bold"
+                android:gravity="center"
+                android:lineSpacingExtra="0sp"
+                android:text="@string/contact_support_for_help"
+                android:textColor="@color/colorAccent1"
+                android:textSize="@dimen/txt_12sp" />
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/ic_pay_invoice_bg1"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="48dp"
+                    android:layout_marginEnd="30dp"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:text="Order ID"
+                            android:textColor="@color/body_grey"
+                            android:textSize="@dimen/txt_12sp" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:gravity="end">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/order_id_details"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/semi_bold"
+                                android:text="GK7C4FM"
+                                android:textColor="@color/main_color_gray_dk"
+                                android:textSize="@dimen/txt_12sp" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Transaction ID:"
+                            android:textColor="@color/body_grey"
+                            android:textSize="12sp" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:gravity="end">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/order_id_details1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/semi_bold"
+                                android:text="3446758347484"
+                                android:textColor="@color/main_color_gray_dk"
+                                android:textSize="12sp" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Features in cart"
+                            android:textColor="@color/body_grey"
+                            android:textSize="@dimen/txt_12sp" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:gravity="end">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/order_details_feature_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/semi_bold"
+                                android:text="10 (Ten)"
+                                android:textColor="@color/main_color_gray_dk"
+                                android:textSize="@dimen/txt_12sp" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="22dp"
+                        android:background="@drawable/dashed_line_invoice" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/regular"
+                            android:lineSpacingExtra="1sp"
+                            android:text="Total amount"
+                            android:textColor="@color/body_grey"
+                            android:textSize="@dimen/txt_12sp" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:gravity="end">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/order_details_feature_count1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/bold"
+                                android:text="₹1,661.00"
+                                android:textColor="@color/common_text_color"
+                                android:textSize="16sp" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/dashed_line_invoice" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/transaction_failed_retry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_try_again_bg"
+                android:fontFamily="@font/bold"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Try again"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_14sp" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/marketplace_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/ic_view_active_features_bg"
+                android:fontFamily="@font/bold"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Go to marketplace"
+                android:textColor="@color/colorAccent1"
+                android:textSize="@dimen/txt_14sp" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

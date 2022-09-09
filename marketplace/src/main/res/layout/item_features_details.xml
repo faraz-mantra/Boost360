@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="8dp"
+            android:elevation="2dp"
+            android:src="@drawable/ic_fold"
+            android:layout_marginEnd="@dimen/_21sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/discount"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/discount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_package_saving"
+            android:elevation="2dp"
+            android:gravity="center"
+            android:text="@string/discount_saving"
+            android:padding="5dp"
+            android:fontFamily="@font/semi_bold"
+            android:layout_marginEnd="@dimen/_25sdp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" >
+
+        </TextView>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:paddingBottom="@dimen/_10sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/rounded_curve_bg"
+        android:paddingStart="@dimen/_15sdp"
+        android:paddingEnd="@dimen/_15sdp">
+
+        <ImageView
+            android:id="@+id/package_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/_15sdp"
+            tools:src="@drawable/addons"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:text="Online Pack"
+            android:textColor="@color/main_color_gray_dk"
+            android:textFontWeight="600"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/package_img"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/view_packs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="15dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="View Pack"
+            android:textColor="@color/colorAccent1"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@id/view_packs_arrow"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <ImageView
+            android:id="@+id/view_packs_arrow"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_right_arrow_yellow"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="10dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toTopOf="@id/view_packs"
+            app:layout_constraintBottom_toBottomOf="@id/view_packs"/>
+
+        <LinearLayout
+            android:id="@+id/featureList_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@id/package_img"
+            app:layout_constraintTop_toBottomOf="@id/title">
+
+            <TextView
+                android:id="@+id/features_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:text="Call Tracking +3 features"
+                android:textSize="12sp"
+                android:textColor="#7ED321"
+                app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/mrpPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/regular"
+            android:text="₹481/month"
+            android:textSize="12sp"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@id/package_img"
+            app:layout_constraintTop_toBottomOf="@id/featureList_layout" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="₹481/month"
+            android:textSize="14sp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:textFontWeight="700"
+            android:fontFamily="@font/bold"
+            app:layout_constraintStart_toEndOf="@id/package_img"
+            app:layout_constraintTop_toBottomOf="@id/mrpPrice" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

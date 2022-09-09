@@ -35,6 +35,7 @@ import com.framework.models.UserProfileData
 import com.framework.models.UserProfileDataResult
 import com.framework.models.UserProfileDataResult.Companion.getMerchantProfileDetails
 import com.framework.models.UserProfileDataResult.Companion.saveMerchantProfileDetails
+import com.framework.pref.APPLICATION_JIO_ID
 import com.framework.pref.BASE_IMAGE_URL
 import com.framework.pref.Key_Preferences
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_IMAGE_URI
@@ -250,7 +251,11 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
         likeUsFacebook(baseActivity, "")
       }
       rate_us_on_google_play -> {
-        rateGooglePlayStore()
+        if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)) {
+          showShortToast(getString(R.string.coming_soon))
+        }else {
+          rateGooglePlayStore()
+        }
       }
       else -> showShortToast(getString(R.string.coming_soon))
     }

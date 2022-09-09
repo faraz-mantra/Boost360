@@ -157,7 +157,7 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
 
 
   private fun initiateAddonMarketplace() {
-    val intent = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
+    val intent = Intent(this, Class.forName("com.boost.marketplace.ui.home.MarketPlaceActivity"))
     intent.putExtra("expCode", session.fP_AppExperienceCode)
     intent.putExtra("fpName", session.fPName)
     intent.putExtra("fpid", session.fPID?.trim { it <= ' ' })

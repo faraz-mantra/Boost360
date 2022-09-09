@@ -3,6 +3,7 @@ package com.dashboard.controller
 import android.content.Intent
 import android.content.IntentSender
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -21,6 +22,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.anachat.chatsdk.AnaCore
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.boost.dbcenterapi.utils.DataLoader
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.RecyclerViewActionType
@@ -52,6 +54,9 @@ import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.getBa
 import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.initDataBadges
 import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.readDrScoreDocument
 import com.framework.firebaseUtils.firestore.badges.BadgesModel
+import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
+import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager.getCartData
+import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager.initDataCart
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.pref.*
@@ -144,6 +149,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     intentDataCheckAndDeepLink(intent)
     session?.initializeWebEngageLogin()
     initialize()
+    session?.let { initDataCart(it.fpTag ?: "", it.fPID ?: "", clientId) }
     session?.let { initDataBadges(it.fpTag ?: "", it.fPID ?: "", clientId) }
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
     initRemoteConfigData(this)
@@ -151,14 +157,17 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun bottomNavInitializer() {
-    if (this.packageName.equals(APPLICATION_JIO_ID, true))
-      binding?.viewBottomBar?.navView?.setClickPosition(ArrayList())
     binding?.viewBottomBar?.navView?.setOnItemSelectedListener(this)
   }
 
 
 
 
+
+//  private fun loadMarketPlaceData() {
+//    Log.e("loadMarketPlaceData", "Initialized")
+//    viewModel.loadMarketPlaceData(application, session?.fP_AppExperienceCode, session?.fpTag)
+//  }
 
   private fun reloadCapLimitData() {
     viewModel.getCapLimitFeatureDetails(session?.fPID ?: "", clientId).observeOnce(this) {
@@ -238,7 +247,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
         if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType, buyItemKey, false)
       } else {
-        if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", "", false)
+        val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(Uri.parse(mDeepLinkUrl?:""))
+          val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
+        if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", buyItemKey?:"", false)
       }
       AppsFlyerUtils.sAttributionData = mapOf()
     }
@@ -262,6 +273,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onResume() {
     super.onResume()
+    Log.e(this::class.java.simpleName, "onResume")
     setUserData()
   }
 
@@ -387,16 +399,16 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         disableBadgeNotification(BadgesModel.BadgesType.ENQUIRYBADGE.name)
       }
       3 -> {
-        if (this.packageName.equals(APPLICATION_JIO_ID, true)) {
-          mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
-          toolbarPropertySet(pos)
-          disableBadgeNotification(BadgesModel.BadgesType.MENUBADGE.name)
-        } else {
+//        if (this.packageName.equals(APPLICATION_JIO_ID, true)) {
+//          mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
+//          toolbarPropertySet(pos)
+//          disableBadgeNotification(BadgesModel.BadgesType.MENUBADGE.name)
+//        } else {
           val dataAddOns = welcomeData?.get(2)
           if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let { showWelcomeDialog(it) }
           else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
           disableBadgeNotification(BadgesModel.BadgesType.MARKETPLACEBADGE.name)
-        }
+//        }
       }
       4 -> {
         mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
@@ -456,7 +468,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onItemClick(pos: Int) {
     super.onItemClick(pos)
     when (pos) {
-      3 -> if (this.packageName.equals(APPLICATION_JIO_ID, true).not()) checkWelcomeShowScreen(pos)
+      3 -> checkWelcomeShowScreen(pos)
       4 -> {
 //        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
 //        binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
@@ -527,7 +539,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
       binding?.drawerView?.backgroundImage -> openImagePicker(true)
-      binding?.viewCartCount -> session?.let { this.initiateAddonMarketplace(it, true, "", "") }
+      binding?.viewCartCount -> session?.let { this.initiateCart(it, true, "", "") }
     }
   }
 
@@ -627,7 +639,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onStop() {
     super.onStop()
     BadgesFirestoreManager.listenerBadges = null
-
   }
 
   override fun onStart() {
@@ -635,6 +646,17 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     BadgesFirestoreManager.listenerBadges = {
       dataBadges = getBadgesData()
       setBadgesData(dataBadges)
+    }
+      //get firestore cart items and update in local
+    CartFirestoreManager.listener = {
+      val cartData = getCartData()
+      if(cartData!=null) {
+        val list = ArrayList<String>()
+        for (singleItem in cartData.entries) {
+            list.add(singleItem.key)
+        }
+        DataLoader.addAllItemstoFirebaseCart(application, list)
+      }
     }
   }
 

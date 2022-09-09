@@ -59,7 +59,7 @@
           app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
           app:spanCount="4"
           tools:itemCount="4"
-          tools:listitem="@layout/item_manage_business_d" />
+          tools:listitem="@layout/item_manage_business" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <View
