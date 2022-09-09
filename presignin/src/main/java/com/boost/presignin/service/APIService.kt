@@ -12,6 +12,7 @@ import com.appservice.model.accountDetails.saveBanKDetail
 import com.appservice.model.kycData.saveBusinessKycDetail
 import com.appservice.rest.repository.AzureWebsiteNewRepository
 import com.boost.dbcenterapi.utils.DataLoader
+import com.appservice.model.aptsetting.AppointmentStatusResponse
 import com.boost.presignin.model.other.AccountDetailsResponse
 import com.boost.presignin.model.other.PaymentKycDataResponse
 import com.boost.presignin.rest.repository.WebActionBoostKitRepository
@@ -19,6 +20,7 @@ import com.boost.presignin.rest.repository.WithFloatRepository
 import com.boost.presignin.rest.repository.WithFloatTwoRepository
 import com.framework.analytics.SentryController
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
+import com.framework.extensions.observeOnce
 import com.framework.models.toLiveData
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
@@ -142,15 +144,21 @@ class APIService : Service() {
   }
 
   private fun hitSelfBrandedKycAPI() {
-    WebActionBoostKitRepository.getSelfBrandedKyc(query = getQuery()).toLiveData().observeForever {
-      val paymentKycDataResponse = it as? PaymentKycDataResponse
-      if (it.isSuccess() && paymentKycDataResponse?.data.isNullOrEmpty().not()) {
-        userSessionManager?.isSelfBrandedKycAdd = true
-        paymentKycDataResponse?.data?.first()?.saveBusinessKycDetail()
+
+    com.appservice.rest.repository.WithFloatTwoRepository?.getAppointmentCatalogStatus(userSessionManager?.fPID
+      , clientId).toLiveData().observeForever {
+
+      val dataItem = it as? AppointmentStatusResponse
+      if (dataItem?.isSuccess() == true && dataItem.result != null) {
+        val invoicesSetup = dataItem.result?.customerInvoicesSetup
+        userSessionManager?.isSelfBrandedKycAdd = invoicesSetup?.gSTIN!=null&& invoicesSetup.panNo !=null
+        dataItem.saveInPref()
       }
       checkAllApiComplete()
+
     }
-  }
+
+    }
 
     private fun registerRia() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->

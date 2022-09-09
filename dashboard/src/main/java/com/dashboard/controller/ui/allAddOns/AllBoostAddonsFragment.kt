@@ -7,6 +7,8 @@ import android.view.MenuInflater
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import com.appservice.constant.FragmentType
+import com.appservice.ui.catalog.startFragmentActivity
 import com.dashboard.AppDashboardApplication
 import com.dashboard.R
 

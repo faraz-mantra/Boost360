@@ -8,12 +8,14 @@ import com.appservice.R
 import com.appservice.base.getProductType
 import com.appservice.base.isDoctorClinicProfile
 import com.appservice.constant.RecyclerViewItemType
+import com.appservice.model.kycData.BUSINESS_KYC_SAVE
+import com.appservice.model.kycData.DataKyc
 import com.appservice.recyclerView.AppBaseRecyclerViewItem
 import com.appservice.utils.capitalizeUtil
 import com.framework.BaseApplication
 import com.framework.base.BaseResponse
 import com.framework.pref.UserSessionManager
-import com.framework.utils.fromHtml
+import com.framework.utils.*
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -36,6 +38,21 @@ data class AppointmentStatusResponse(
       return RecyclerViewItemType.CATALOG_SETTING_TILES.getLayout()
     }
   }
+
+  companion object{
+    const val PREF_KEY="AppointmentStatusResponse_PREF"
+    fun getFromPref(): AppointmentStatusResponse? {
+      return convertStringToObj(PreferencesUtils.instance.getData(PREF_KEY, "") ?: "")
+    }
+  }
+
+
+  fun saveInPref() {
+    PreferencesUtils.instance.saveData(PREF_KEY,
+      convertObjToString(this))
+  }
+
+
 }
 
 enum class IconType(var icon: Int) {

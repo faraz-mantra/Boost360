@@ -34,6 +34,7 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.concurrent.schedule
 
+@Deprecated(message = "new screen: com.appservice.ui.ecommerce.FragmentEcommerceSettings")
 class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitViewModel>() {
 
   private var session: SessionData? = null
