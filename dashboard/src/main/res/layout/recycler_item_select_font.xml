@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:buttonTint="@color/colorAccentLight"
-        android:text="@string/open_sans"
+        android:text="@string/regular"
         android:textColor="@color/black_4a4a4a"
         app:fontFamily="@font/regular"
         app:textType="BODY_3" />
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.2"
-        android:text="@string/open_sans"
+        android:text="@string/regular"
         android:textColor="@color/black_4a4a4a"
         app:fontFamily="@font/regular"
         app:textType="BODY_3" />

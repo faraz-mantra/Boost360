@@ -111,7 +111,7 @@
   <string name="secondary_font">Secondary font</string>
   <string name="default_theme_shade">Default</string>
   <string name="optional_shades_to_choose_from">Optional shades to choose from</string>
-  <string name="open_sans">Open Sans</string>
+  <string name="regular">Open Sans</string>
   <string name="change_font_type">Change font type</string>
   <string name="the_font_you_want_to_change_as_primary">The font you want to change as primary.</string>
   <string name="save">Save</string>
