@@ -124,10 +124,10 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
             }
 
             Handler(Looper.getMainLooper()).postDelayed(sliderRunnable,
-                4000)
+                3000)
         }
         Handler(Looper.getMainLooper()).postDelayed(sliderRunnable,
-            4000)
+            3000)
     }
 
 
