@@ -32,6 +32,7 @@ import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
+import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_MY_ADDONS_LOADED
 import com.framework.webengageconstant.MY_ADDONS
 import com.framework.webengageconstant.NO_EVENT_VALUE
@@ -156,6 +157,11 @@ class MyCurrentPlanActivity :
             search_value.setText("")
             search_icon.visibility = View.VISIBLE
             search_layout.visibility = View.GONE
+            binding?.nestedscroll?.visibility=View.VISIBLE
+            binding?.searchZeroth?.visibility=View.GONE
+            updateFreeAddonsRecycler(totalFreeItemList!!)
+            updatePaidAddonsRecycler(totalPaidItemList!!)
+            hideKeyBoard()
         }
 
         search_value.addTextChangedListener(object : TextWatcher {
@@ -164,7 +170,7 @@ class MyCurrentPlanActivity :
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (p0 != null && p0?.length!! > 3) {
+                if (p0 != null && p0?.length!! > 2) {
                     updateAllItemBySearchValue(p0.toString())
                 } else {
                     updateFreeAddonsRecycler(totalFreeItemList!!)
@@ -265,22 +271,39 @@ class MyCurrentPlanActivity :
     }
 
     fun updateAllItemBySearchValue(searchValue: String) {
-        var freeitemList: java.util.ArrayList<FeaturesModel> = arrayListOf()
-        var paiditemList: java.util.ArrayList<FeaturesModel> = arrayListOf()
+        val freeitemList: java.util.ArrayList<FeaturesModel> = arrayListOf()
+        val paiditemList: java.util.ArrayList<FeaturesModel> = arrayListOf()
 
         for (singleFreeFeature in totalFreeItemList!!) {
             if (singleFreeFeature.name?.lowercase()?.indexOf(searchValue.lowercase()) != -1) {
                 freeitemList.add(singleFreeFeature)
             }
         }
-        updateFreeAddonsRecycler(freeitemList)
+        if (freeitemList.size!=0 || paiditemList.size!=0){
+            binding?.searchZeroth?.visibility = View.GONE
+            binding?.nestedscroll?.visibility = View.VISIBLE
+            updateFreeAddonsRecycler(freeitemList)
+        } else{
+            binding?.searchZeroth?.visibility = View.VISIBLE
+            binding?.nestedscroll?.visibility = View.GONE
+            updateFreeAddonsRecycler(freeitemList)
+        }
 
-        for (singlePaidFeature in totalFreeItemList!!) {
+        for (singlePaidFeature in totalPaidItemList!!) {
             if (singlePaidFeature.name?.lowercase()?.indexOf(searchValue.lowercase()) != -1) {
                 paiditemList.add(singlePaidFeature)
             }
         }
-        updatePaidAddonsRecycler(paiditemList)
+        if (freeitemList.size!=0 || paiditemList.size!=0){
+            binding?.searchZeroth?.visibility = View.GONE
+            binding?.nestedscroll?.visibility = View.VISIBLE
+            updatePaidAddonsRecycler(paiditemList)
+        } else{
+            binding?.searchZeroth?.visibility = View.VISIBLE
+            binding?.nestedscroll?.visibility = View.GONE
+            updatePaidAddonsRecycler(paiditemList)
+        }
+
     }
 
     private fun cardView1Visibilty() {
@@ -365,6 +388,7 @@ class MyCurrentPlanActivity :
 //                                }
                                 binding?.expandableView?.visibility = View.VISIBLE
                                 updateFreeAddonsRecycler(it)
+                                totalFreeItemList=it
                                 binding?.paidTitle?.text = " ${it.size} Inactive features"
                             } else {
 //                                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
@@ -400,6 +424,7 @@ class MyCurrentPlanActivity :
 //                                }
                                 binding?.expandableView?.visibility = View.VISIBLE
                                 updatePaidAddonsRecycler(it)
+                                totalPaidItemList = it
                                 binding?.paidTitle1?.text = " ${it.size} Active features"
                             } else {
 //                                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {

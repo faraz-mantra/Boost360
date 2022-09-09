@@ -30,6 +30,7 @@ import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 
 class ComparePacksV3BottomSheet :
     BaseBottomSheetDialog<Comparepacksv3PopupBinding, ComparePacksViewModel>() {
@@ -113,7 +114,10 @@ class ComparePacksV3BottomSheet :
             binding?.packDiscountTv?.visibility = View.VISIBLE
         }
 
-        binding?.buyPack?.text = "Buy " + bundleData.name
+        var originalText = bundleData.name
+        originalText = originalText?.lowercase(Locale.getDefault())
+        binding?.buyPack?.text = "Buy " + originalText
+      //  binding?.buyPack?.text = "Buy " + bundleData.name
 
         binding?.addonsCountTv?.text =
             addonsSize.toString() + " PREMIUM FEATURES ideal for small businesses that want to get started with online sales."
@@ -319,7 +323,10 @@ class ComparePacksV3BottomSheet :
                         requireContext(),
                         R.drawable.ic_cart_continue_bg
                     )
-                    binding?.buyPack?.setText("Buy ${bundleData.name}")
+                    var originalText = bundleData.name
+                    originalText = originalText?.lowercase(Locale.getDefault())
+                    binding?.buyPack?.text = "Buy " + originalText
+                   // binding?.buyPack?.setText("Buy ${bundleData.name}")
                     binding?.buyPack?.isClickable = true
                 } else {
                     binding?.buyPack?.background = ContextCompat.getDrawable(
