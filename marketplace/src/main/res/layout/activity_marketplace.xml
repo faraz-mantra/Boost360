@@ -836,7 +836,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:visibility="gone"
-                        tools:visibility="visible">
+                        tools:visibility="gone">
 
                         <androidx.viewpager2.widget.ViewPager2
                             android:id="@+id/feature_deals_viewpager"
@@ -870,7 +870,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="45dp"
                         android:gravity="start"
                         android:orientation="vertical">
 
@@ -888,7 +888,9 @@
                             android:id="@+id/videos_recycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="10dp"
                             android:orientation="vertical"
                             tools:itemCount="3"
                             tools:listitem="@layout/video_item"/>
@@ -910,6 +912,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
+                        android:layout_marginTop="25dp"
                         android:fontFamily="@font/regular"
                         android:text="@string/partner_offerings"
                         android:textColor="@color/colorPrimary1"
@@ -922,6 +925,7 @@
                         android:layout_height="@dimen/size_146"
                         android:clipChildren="false"
                         android:clipToPadding="false"
+                        android:layout_marginTop="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
