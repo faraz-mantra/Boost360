@@ -420,8 +420,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 progressDialog.hide()
             }
             callExpertContact(prefs.getExpertContact())
-
-
         }
 
         //share feed back button
@@ -625,6 +623,17 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             all_recommended_addons.visibility = View.VISIBLE
             updateRecycler(it)
             updateAddonCategoryRecycler(it)
+            if(screenType=="deeplinkRedirection"){
+                if (progressDialog.isShowing) {
+                    progressDialog.hide()
+                }
+                for(singleItem in it){
+                    if(singleItem.feature_code.equals(widgetFeatureCode)){
+                        onAddonsClicked(singleItem)
+                        break
+                    }
+                }
+            }
         })
 
         viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
