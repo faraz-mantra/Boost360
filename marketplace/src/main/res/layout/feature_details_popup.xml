@@ -31,16 +31,17 @@
             android:id="@+id/upi_popup_container_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/curve_top_grey"
-            android:paddingTop="24dp"
-            android:paddingBottom="@dimen/dimen_24dp">
+            android:layout_alignParentBottom="true">
+<!--            android:background="@drawable/curve_top_grey"-->
+<!--            android:paddingTop="24dp"-->
+<!--            android:paddingBottom="@dimen/dimen_24dp">-->
 
             <ImageView
                 android:id="@+id/topImageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/domain_selected"
+                android:visibility="gone"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <include
@@ -51,7 +52,8 @@
             <include
                 android:id="@+id/select_website_layout"
                 layout="@layout/view_select_website"
-                android:visibility="gone" />
+                android:visibility="visible"
+                tools:layout_editor_absoluteY="16dp" />
 
             <include
                 android:id="@+id/select_domain_layout"

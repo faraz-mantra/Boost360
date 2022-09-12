@@ -159,8 +159,13 @@ class MyCurrentPlanActivity :
             search_layout.visibility = View.GONE
             binding?.nestedscroll?.visibility=View.VISIBLE
             binding?.searchZeroth?.visibility=View.GONE
-            updateFreeAddonsRecycler(totalFreeItemList!!)
-            updatePaidAddonsRecycler(totalPaidItemList!!)
+            if (totalFreeItemList?.size!=null){
+                updateFreeAddonsRecycler(totalFreeItemList!!)
+            }
+            if (totalPaidItemList?.size!=null){
+                updatePaidAddonsRecycler(totalPaidItemList!!)
+            }
+
             hideKeyBoard()
         }
 
@@ -170,11 +175,19 @@ class MyCurrentPlanActivity :
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (p0 != null && p0?.length!! > 2) {
+                if (p0 != null && p0.length > 2) {
                     updateAllItemBySearchValue(p0.toString())
                 } else {
-                    updateFreeAddonsRecycler(totalFreeItemList!!)
-                    updatePaidAddonsRecycler(totalPaidItemList!!)
+                    if (totalFreeItemList?.size!=null){
+                        updateFreeAddonsRecycler(totalFreeItemList!!)
+                        binding?.paidTitle?.text = " ${totalFreeItemList!!.size} Inactive features"
+                    }
+                    if (totalPaidItemList?.size!=null){
+                        updatePaidAddonsRecycler(totalPaidItemList!!)
+                        binding?.paidTitle1?.text = " ${totalPaidItemList!!.size} Active features"
+                    }
+//                    updateFreeAddonsRecycler(totalFreeItemList!!)
+//                    updatePaidAddonsRecycler(totalPaidItemList!!)
                 }
             }
 
@@ -274,34 +287,45 @@ class MyCurrentPlanActivity :
         val freeitemList: java.util.ArrayList<FeaturesModel> = arrayListOf()
         val paiditemList: java.util.ArrayList<FeaturesModel> = arrayListOf()
 
-        for (singleFreeFeature in totalFreeItemList!!) {
-            if (singleFreeFeature.name?.lowercase()?.indexOf(searchValue.lowercase()) != -1) {
-                freeitemList.add(singleFreeFeature)
+        if (totalFreeItemList?.size!=null){
+            for (singleFreeFeature in totalFreeItemList!!) {
+                if (singleFreeFeature.name?.lowercase()?.indexOf(searchValue.lowercase()) != -1) {
+                    freeitemList.add(singleFreeFeature)
+                }
             }
-        }
-        if (freeitemList.size!=0 || paiditemList.size!=0){
-            binding?.searchZeroth?.visibility = View.GONE
-            binding?.nestedscroll?.visibility = View.VISIBLE
-            updateFreeAddonsRecycler(freeitemList)
-        } else{
-            binding?.searchZeroth?.visibility = View.VISIBLE
-            binding?.nestedscroll?.visibility = View.GONE
-            updateFreeAddonsRecycler(freeitemList)
         }
 
-        for (singlePaidFeature in totalPaidItemList!!) {
-            if (singlePaidFeature.name?.lowercase()?.indexOf(searchValue.lowercase()) != -1) {
-                paiditemList.add(singlePaidFeature)
+        if (freeitemList.size!=0 || paiditemList.size!=0){
+            binding?.searchZeroth?.visibility = View.GONE
+            binding?.nestedscroll?.visibility = View.VISIBLE
+            updateFreeAddonsRecycler(freeitemList)
+            binding?.paidTitle?.text = " ${freeitemList.size} Inactive features"
+        } else{
+            binding?.searchZeroth?.visibility = View.VISIBLE
+            binding?.nestedscroll?.visibility = View.GONE
+            updateFreeAddonsRecycler(freeitemList)
+            binding?.paidTitle?.text = " ${freeitemList.size} Inactive features"
+        }
+
+        if (totalPaidItemList?.size!=null){
+
+            for (singlePaidFeature in totalPaidItemList!!) {
+                if (singlePaidFeature.name?.lowercase()?.indexOf(searchValue.lowercase()) != -1) {
+                    paiditemList.add(singlePaidFeature)
+                }
             }
         }
+
         if (freeitemList.size!=0 || paiditemList.size!=0){
             binding?.searchZeroth?.visibility = View.GONE
             binding?.nestedscroll?.visibility = View.VISIBLE
             updatePaidAddonsRecycler(paiditemList)
+            binding?.paidTitle1?.text = " ${paiditemList.size} Active features"
         } else{
             binding?.searchZeroth?.visibility = View.VISIBLE
             binding?.nestedscroll?.visibility = View.GONE
             updatePaidAddonsRecycler(paiditemList)
+            binding?.paidTitle1?.text = " ${paiditemList.size} Active features"
         }
 
     }
@@ -332,6 +356,7 @@ class MyCurrentPlanActivity :
 
     private fun loadData() {
         try {
+            // old api
 //            viewModel.loadPurchasedItems(
 //                intent.getStringExtra("fpid") ?: "",
 //                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
