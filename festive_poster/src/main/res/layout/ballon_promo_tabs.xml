@@ -44,12 +44,11 @@
                 tools:text="@string/for_regular_free_updates_click_on_create_and_keep_posting_like_always" />
 
             <com.framework.views.customViews.CustomImageView
-                android:layout_width="@dimen/size_10"
+                android:layout_width="wrap_content"
                 android:id="@+id/iv_close"
                 android:padding="1dp"
-                android:src="@drawable/ic_close_black"
-                android:tint="@color/grey_300"
-                android:layout_height="@dimen/size_10"
+                android:src="@drawable/ic_close_tooltip"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

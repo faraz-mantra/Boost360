@@ -24,7 +24,7 @@ class PosterShareViewHolder(binding: ListItemPosterShareBinding):
 //                model.variants.firstOrNull()?.svgUrl,
 //                it
 //            )
-            SvgUtils.loadImage(url, binding.ivSvgPurchased, model.keys, model.isPurchased)
+            SvgUtils.loadImage(url, binding.ivSvgPurchased, model.keys)
         }
         binding.tvGreetingMsg.text = model.greeting_message
         binding.tvGreetingMsg.setOnClickListener {
@@ -37,7 +37,7 @@ class PosterShareViewHolder(binding: ListItemPosterShareBinding):
         binding.ivOther.setOnClickListener {
             WebEngageController.trackEvent(FESTIVAL_POSTER_SHARE_OTHER,event_value = HashMap())
             SvgUtils.shareUncompressedSvg(model.variants?.firstOrNull()?.svgUrl
-                ,model)
+                ,model,packageName = "")
         }
 
         binding.ivDownload.setOnClickListener {

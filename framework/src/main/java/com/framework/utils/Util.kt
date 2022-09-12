@@ -855,3 +855,13 @@ fun Uri.toBase64(): String? {
 fun isJioBuild(): Boolean {
  return BaseApplication.instance.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)
 }
+
+fun application()=BaseApplication.instance
+
+fun Bitmap.toBase64(): String {
+  val byteStream = ByteArrayOutputStream()
+  compress(Bitmap.CompressFormat.JPEG, 100, byteStream)
+  val byteArray = byteStream.toByteArray()
+  val baseString: String = Base64.encodeToString(byteArray, Base64.DEFAULT)
+  return baseString
+}

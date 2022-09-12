@@ -66,11 +66,11 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
       TaskCode.PUT_BIZ_MESSAGE_UPDATEV2
     )
   }
-  fun getUserDetails(fpTag: String?, clientId: String): Observable<BaseResponse> {
+  fun getUserDetails(): Observable<BaseResponse> {
     val queries: MutableMap<String, String> = HashMap()
     queries["clientId"] = clientId
     return makeRemoteRequest(
-      remoteDataSource.getUserDetails(fpTag,queries),
+      remoteDataSource.getUserDetails(session.fpTag,queries),
       TaskCode.GET_CUSTOMER_DETAILS
     )
   }

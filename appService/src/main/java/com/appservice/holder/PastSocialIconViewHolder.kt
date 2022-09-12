@@ -15,7 +15,7 @@ class PastSocialIconViewHolder(binding: ListItemSocialIconBinding) :
         val pastSocialModel = item as PastSocialModel
         binding.ivSocialPastItem.setImageResource(
             when(pastSocialModel.socialPlatformName){
-                PastSocialChannelUpdated.FACEBOOK.name -> {
+                PastSocialChannelUpdated.FACEBOOK.name,PastSocialChannelUpdated.FACEBOOK_PAGE.name -> {
                     R.drawable.ic_facebook_past
                 }
                 PastSocialChannelUpdated.TWITTER.name -> {

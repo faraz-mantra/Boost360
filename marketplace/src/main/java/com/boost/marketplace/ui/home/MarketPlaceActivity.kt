@@ -16,6 +16,7 @@ import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
@@ -109,6 +110,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     var isBackCart: Boolean = false
     var isOpenHomeFragment: Boolean = false
     var isOpenAddOnsFragment: Boolean = false
+    var isOpenPackageWithID: String? = null
+    var buyAddonWithIDAndGoToCart: String? = null
 
     var deepLinkViewType: String = ""
     var deepLinkDay: Int = 7
@@ -143,6 +146,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         isOpenAddOnsFragment = intent.getBooleanExtra("isComingFromOrderConfirmActivation", false)
         widgetFeatureCode = intent.getStringExtra("buyItemKey")
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
+        //festive poster purchase
+        isOpenPackageWithID = intent.getStringExtra("isOpenPackageWithID") //"60d1a02ef83dd80001114011"
+        //addons added to cart and go to cart
+        buyAddonWithIDAndGoToCart = intent.getStringExtra("buyAddonWithIDAndGoToCart") //"BOOSTKEYBOARD"
 
         progressDialog = ProgressDialog(this)
 
@@ -615,6 +622,40 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
     @SuppressLint("FragmentLiveDataObserve")
     private fun initMvvm() {
+        viewModel.itemAddedToCartAndGoToCart().observe(this, Observer {
+            if(it){
+                val intent = Intent(
+                    applicationContext,
+                    CartActivity::class.java
+                )
+                intent.putExtra("fpid", fpid)
+                intent.putExtra("expCode", experienceCode)
+                intent.putExtra("isDeepLink", isDeepLink)
+                intent.putExtra("deepLinkViewType", deepLinkViewType)
+                intent.putExtra("deepLinkDay", deepLinkDay)
+                intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+                intent.putExtra(
+                    "accountType",
+                    accountType
+                )
+                intent.putStringArrayListExtra(
+                    "userPurchsedWidgets",
+                    userPurchsedWidgets
+                )
+                if (email != null) {
+                    intent.putExtra("email", email)
+                } else {
+                    intent.putExtra("email", "ria@nowfloats.com")
+                }
+                if (mobileNo != null) {
+                    intent.putExtra("mobileNo", mobileNo)
+                } else {
+                    intent.putExtra("mobileNo", "9160004303")
+                }
+                intent.putExtra("profileUrl", profileUrl)
+                startActivity(intent)
+            }
+        })
         viewModel.updatesError().observe(this, androidx.lifecycle.Observer {
             longToast(applicationContext, "onFailure: " + it)
         })
@@ -630,6 +671,14 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 for(singleItem in it){
                     if(singleItem.feature_code.equals(widgetFeatureCode)){
                         onAddonsClicked(singleItem)
+                        break
+                    }
+                }
+            }
+            if(buyAddonWithIDAndGoToCart != null) {
+                for (singleitem in it) {
+                    if (singleitem.feature_code.equals(buyAddonWithIDAndGoToCart)) {
+                        viewModel.addItemAndGoTOCart(singleitem, 1)
                         break
                     }
                 }
@@ -692,6 +741,14 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 package_layout1.visibility = View.GONE
                 package_compare_layout.visibility = View.GONE
                 package_compare_layout1.visibility = View.GONE
+            }
+            //go to particular package screen
+            if(isOpenPackageWithID!=null){
+                for(singleBundle in list){
+                    if(singleBundle._kid.equals(isOpenPackageWithID)){
+                        onPackageClicked(singleBundle)
+                    }
+                }
             }
         })
 

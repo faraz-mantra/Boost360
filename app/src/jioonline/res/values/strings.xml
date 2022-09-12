@@ -637,15 +637,15 @@
   <string name="boost_360_file">JioOnline File</string>
 
   <string name="settings_facebook_like_link">https://www.facebook.com/Jio</string>
-  <string name="settings_facebook_page_id"></string>
+  <string name="settings_facebook_page_id">https://www.facebook.com/Jio</string>
   <string name="settings_twitter_url">https://twitter.com/reliancejio</string>
-  <string name="settings_twitter_url_id"></string>
+  <string name="settings_twitter_url_id">https://twitter.com/reliancejio</string>
   <string name="google_form_help_business_boost"></string>
 
   <string name="enable_boost_keyboard">Enable JioOnline keyboard</string>
   <string name="select_boost_keyboard">Select JioOnline keyboard</string>
 
-  <string name="google_map_key" translatable="false">AIzaSyD6mt4XepThpyfQg7AtV9WX25SnLlfBwnc</string> <!--place api-->
+  <string name="google_map_key" translatable="false">AIzaSyBn5n7dzjEH39IETb8Ej7xo2pZINnwCJMQ</string> <!--place api-->
 
   <string name="sentry_url">https://59f88b513d054d9a9e09fd0afef2b9f3@o282435.ingest.sentry.io/6085786</string>
 

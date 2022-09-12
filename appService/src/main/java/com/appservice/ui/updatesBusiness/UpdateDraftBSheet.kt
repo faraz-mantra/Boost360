@@ -100,6 +100,8 @@ class UpdateDraftBSheet:AppBaseBottomSheetFragment<BsheetUpdateDraftBinding,Upda
             viewModel?.updateDraft(updateDraftBody)?.observe(viewLifecycleOwner,{
                 if (updateDraftBody.content.isNullOrEmpty().not()){
                     showLongToast(getString(R.string.your_post_was_saved_as_draft))
+                }else{
+                    showLongToast(getString(R.string.your_discarded_post))
                 }
                 hideProgress()
                 requireActivity().finish()

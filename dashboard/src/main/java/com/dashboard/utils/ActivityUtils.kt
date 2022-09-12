@@ -11,12 +11,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
+import com.appservice.model.domainBooking.DomainDetailsResponse
 import com.appservice.ui.bgImage.BackgroundImageContainerActivity
 import com.appservice.ui.bgImage.setFragmentTypeNew
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.setFragmentType
 import com.appservice.ui.catalog.startFragmentActivity
+import com.appservice.ui.domainbooking.startFragmentDomainBookingActivity
 import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
 import com.appservice.ui.staffs.ui.startStaffFragmentActivity
 import com.appservice.ui.testimonial.startTestimonialFragmentActivity
@@ -29,11 +31,12 @@ import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.controller.ui.ownerinfo.startOwnersInfoNewActivity
 import com.festive.poster.ui.festivePoster.FestivePosterContainerActivity
 import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
+import com.festive.poster.ui.promoUpdates.intro.UpdateStudioIntroActivity
 import com.framework.analytics.SentryController
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureNewOnBoardingFlowEnable
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureUpdateStudioSelectedUsers
 import com.framework.pref.*
-import com.framework.utils.DateUtils
+import com.framework.utils.*
 import com.framework.webengageconstant.*
 import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.IntentConstant
@@ -191,9 +194,13 @@ fun AppCompatActivity.startFeviconImage(session: UserSessionManager?) {
 fun AppCompatActivity.startDomainDetail(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(DOMAIN_EMAIL_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    val queries = Intent(this, Class.forName("com.appservice.ui.domainbooking.DomainBookingActivity"))
-    startActivity(queries)
-    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    if (DomainDetailsResponse.isDomainAvailable()){
+      startFragmentDomainBookingActivity(activity = this, type = com.appservice.constant.FragmentType.ACTIVE_NEW_DOMAIN_FRAGMENT, bundle = Bundle(), clearTop = false)
+    }else{
+      val queries = Intent(this, Class.forName("com.appservice.ui.domainbooking.DomainBookingActivity"))
+      startActivity(queries)
+      overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    }
   } catch (e: Exception) {
     e.printStackTrace()
   }
@@ -876,11 +883,11 @@ fun AppCompatActivity.startSelfBrandedGateway(session: UserSessionManager?) {
 fun AppCompatActivity.startBusinessKycBoost(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(BUSINESS_KYC_BOOST_PAGE, CLICK, TO_BE_ADDED)
-    session?.getBundleDataKyc()?.let {
-      if (session.isSelfBrandedKycAdd == true) {
-        startFragmentPaymentActivityNew(this, com.appservice.constant.FragmentType.KYC_STATUS, it, false)
-      } else startFragmentPaymentActivityNew(this, com.appservice.constant.FragmentType.BUSINESS_KYC_VIEW, it, false)
-    }
+
+      if (session?.isSelfBrandedKycAdd == true) {
+        startFragmentActivity(com.appservice.constant.FragmentType.ECOMMERCE_SETTINGS)
+      } else startFragmentActivity(com.appservice.constant.FragmentType.ECOMMERCE_BUSINESS_VERIFICATION)
+
   } catch (e: Exception) {
     e.printStackTrace()
   }
@@ -1143,12 +1150,10 @@ fun Context.startHelpSupportVideoActivity(supportType: String) {
   }
 }
 
-fun AppCompatActivity.startPromotionUpdates() {
+fun AppCompatActivity.startPromotionUpdatesFromDashboard() {
   try {
     WebEngageController.trackEvent(Post_Promotional_Update_Click)
-    val posterIntent = Intent(this,PromoUpdatesActivity::class.java)
-
-    startActivity(posterIntent)
+    startPromotionUpdates()
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()

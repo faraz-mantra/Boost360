@@ -22,6 +22,7 @@ import com.framework.analytics.SentryController
 import com.framework.constants.PackageNames
 import com.framework.glide.customsvgloader.*
 import com.framework.utils.RegexUtils
+import com.framework.utils.application
 import com.framework.utils.saveImageToStorage
 import com.framework.utils.shareAsImage
 import kotlinx.coroutines.CoroutineScope
@@ -44,13 +45,15 @@ object SvgUtils {
         return requestBuilder
     }
 
-    fun loadImage(url: String?, view: ImageView, model: List<PosterKeyModel>?=null,
-                  isPurchased: Boolean?=null){
+    fun loadImage(url: String?, view: ImageView,
+                  model: List<PosterKeyModel>?=null,
+                  svgType: SvgRenderCacheUtil.SVG_TYPE=SvgRenderCacheUtil.SVG_TYPE.FESTIVE_POSTER,
+                  ){
         if (url==null){
             return
         }
         val uri = Uri.parse(url)
-        val listener = SvgDrawableListener(model, url,isPurchased)
+        val listener = SvgDrawableListener(model, url,svgType)
         Log.d(TAG, "loadImage() called with: url = $url, model = $model $view")
 
         initReqBuilder(view.context)?.let{
@@ -58,6 +61,12 @@ object SvgUtils {
             return
         }
         Log.d(TAG, "loadImage() called with: url = $url, model = $model request builder is null")
+
+    }
+
+    fun loadImage(url: String?, view: ImageView,
+                  ){
+        loadImage(url, view,null, SvgRenderCacheUtil.SVG_TYPE.UPDATE_STUDIO)
 
     }
 
@@ -251,17 +260,18 @@ object SvgUtils {
 
     suspend fun svgToBitmap(model:PosterModel): Bitmap? {
         val svgUrl = model.url()!!
-        var svgString = SvgRenderCacheUtil.instance.retrieveFromCache(svgUrl)
+        var svgString = FestivePosterSvgRenderCache.instance.retrieveFromCache(svgUrl)
         if (svgString == null || svgString.isEmpty()) {
             svgString = getSvgAsAString(svgUrl)
-            svgString?.let { SvgRenderCacheUtil.instance.saveToCache(svgUrl, it) }
+            svgString?.let { FestivePosterSvgRenderCache.instance.saveToCache(svgUrl, it) }
         }
         if (svgString != null && !svgString.isEmpty()) {
-            svgString = SvgRenderCacheUtil.instance.replace(
-                svgString,
-                model.keys!!,
-                BaseApplication.instance,
-            )
+            svgString = FestivePosterSvgRenderCache.instance.replace(
+                    svgString,
+                    model.keys!!,
+                    BaseApplication.instance,
+                )
+
             val svg = SVG.getFromString(svgString)
 
             return svgToBitmap(svg)
@@ -274,13 +284,23 @@ object SvgUtils {
         if (svgUrl==null){
             return null
         }
-        var svgString = SvgRenderCacheUtil.instance.retrieveFromCache(svgUrl)
+        var svgString = UpdateStudioSvgRenderCache.instance.retrieveFromCache(svgUrl)
         if (svgString == null || svgString.isEmpty()) {
             svgString = getSvgAsAString(svgUrl)
-            svgString?.let { SvgRenderCacheUtil.instance.saveToCache(svgUrl, it) }
+            svgString?.let { UpdateStudioSvgRenderCache.instance.saveToCache(svgUrl, it) }
         }
-        val svg = SVG.getFromString(svgString)
-        return svgToBitmap(svg)
+
+        if (svgString != null && !svgString.isEmpty()) {
+            svgString = UpdateStudioSvgRenderCache.instance.replace(
+                svgString,
+                application()
+            )
+
+            val svg = SVG.getFromString(svgString)
+
+            return svgToBitmap(svg)
+        }
+        return null
 
     }
 }

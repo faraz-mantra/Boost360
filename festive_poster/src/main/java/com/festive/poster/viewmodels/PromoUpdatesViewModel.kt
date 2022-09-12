@@ -1,23 +1,22 @@
 package com.festive.poster.viewmodels
 
-import android.net.Uri
-import androidx.annotation.LayoutRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.festive.poster.R
-import com.festive.poster.constant.RecyclerViewItemType
+import com.festive.poster.constant.Constants
 import com.festive.poster.models.*
 import com.festive.poster.models.response.*
 import com.festive.poster.reset.repo.*
-import com.framework.BaseApplication
 import com.framework.base.BaseResponse
+import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
+import com.framework.pref.Key_Preferences
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.framework.rest.NetworkResult
-import com.framework.utils.fetchString
-import com.framework.utils.getResponse
-import com.framework.utils.toArrayList
+import com.framework.utils.*
 import kotlinx.coroutines.launch
 import kotlin.collections.ArrayList
 import kotlin.coroutines.resume
@@ -27,7 +26,7 @@ import kotlin.coroutines.suspendCoroutine
 class PromoUpdatesViewModel: BaseViewModel() {
 
 
-
+    private  val TAG = "PromoUpdatesViewModel"
 
     private val browseAllMData=MutableLiveData<NetworkResult<
             ArrayList<CategoryUi>>>()
@@ -52,8 +51,13 @@ class PromoUpdatesViewModel: BaseViewModel() {
             BaseResponse>> get() = _favStatus
 
 
+    var doesUserHavePurchasedAnything = false
+
+
+
     init {
        refreshTemplates()
+        refreshUserWidgets()
     }
 
     fun refreshTemplates(){
@@ -61,6 +65,21 @@ class PromoUpdatesViewModel: BaseViewModel() {
         getTemplatesUi()
     }
 
+    private fun refreshUserWidgets() {
+        WithFloatTwoRepository.getUserDetails().getResponse {
+            if (it.isSuccess()) {
+                val detail = it as? CustomerDetails
+                detail?.FPWebWidgets?.let { list ->
+                    UserSessionManager(
+                        application()).storeFPDetails(
+                        Key_Preferences.STORE_WIDGETS,
+                        convertListObjToString(list)
+                    )
+
+                }
+            }
+        }
+    }
 
     fun getTodaysPickTemplate(){
         _todayPickData.postValue(NetworkResult.Loading())
@@ -187,7 +206,6 @@ class PromoUpdatesViewModel: BaseViewModel() {
             }
         }
     }
-
 
 
 }

@@ -133,24 +133,10 @@ class BrowseAllFragment: AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesVi
         super.onResume()
         session = UserSessionManager(requireActivity())
 
-        refreshUserWidgets()
 
     }
 
-    private fun refreshUserWidgets() {
-        viewModel?.getUserDetails(session?.fpTag, clientId)?.observe(this) {
-            if (it.isSuccess()) {
-                val detail = it as? CustomerDetails
-                detail?.FPWebWidgets?.let { list ->
-                    session?.storeFPDetails(
-                        Key_Preferences.STORE_WIDGETS,
-                        convertListObjToString(list)
-                    )
 
-                }
-            }
-        }
-    }
 
 
 

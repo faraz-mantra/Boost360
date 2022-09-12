@@ -9,7 +9,6 @@ import com.framework.utils.DateUtils
 import com.framework.utils.MathUtils
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
-import com.inventoryorder.constant.AppConstant.Companion.GST_PERCENTAGE
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentReviewAndConfirmBinding
@@ -29,10 +28,9 @@ import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.capitalizeUtil
 import com.squareup.picasso.Picasso
-import java.math.RoundingMode
-import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmBinding>() {
 
@@ -65,19 +63,12 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   }
 
   override fun onCreateView() {
-    setOnClickListener(
-      binding?.textAdd,
-      binding?.buttonReviewDetails,
-      binding?.tvPaymentStatus,
-      binding?.textEdit
-    )
-    orderInitiateRequest =
-      arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
+    setOnClickListener(binding?.textAdd, binding?.buttonReviewDetails, binding?.tvPaymentStatus, binding?.textEdit)
+    orderInitiateRequest = arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
     totalPrice = arguments?.getDouble(IntentConstant.TOTAL_PRICE.name) ?: 0.0
-    totalGst = MathUtils.calculateGST(totalPrice,orderInitiateRequest?.items?.firstOrNull()?.productDetails?.gstSlab?:0)
+    totalGst = MathUtils.calculateGST(totalPrice, (arguments?.getDouble(IntentConstant.GST_SLAB.name) ?: 0.0).roundToInt())
     discountedPrice = arguments?.getDouble(IntentConstant.DISCOUNTED_PRICE.name) ?: 0.0
-    selectedService =
-      arguments?.getSerializable(IntentConstant.SELECTED_SERVICE.name) as ServiceItem
+    selectedService = arguments?.getSerializable(IntentConstant.SELECTED_SERVICE.name) as ServiceItem
     prefData = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     // orderInitiateRequest?.sellerID = preferenceData?.fpTag.toString()
 

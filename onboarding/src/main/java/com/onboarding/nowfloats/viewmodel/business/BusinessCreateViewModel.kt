@@ -68,12 +68,20 @@ class BusinessCreateViewModel : BaseViewModel() {
     return UploadImageRepository.putUploadImageProfile(request).toLiveData()
   }
 
+  fun getGoogleAuthToken(req: GoogleAuthTokenRequest?): LiveData<BaseResponse> {
+    return GoogleAuthRepository.getGoogleAuthToken(req).toLiveData()
+  }
+
   fun getAccountLocationsGMB(auth: String?, userId: String?): LiveData<BaseResponse> {
     return GMBRepository.getAccountLocations(auth, userId).toLiveData()
   }
 
-  fun getGoogleAuthToken(req: GoogleAuthTokenRequest?): LiveData<BaseResponse> {
-    return GoogleAuthRepository.getGoogleAuthToken(req).toLiveData()
+  fun getAccountsGMB(auth: String?, userId: String?): LiveData<BaseResponse> {
+    return GMBRepository.getAccounts(auth, userId).toLiveData()
+  }
+
+  fun getAccountListGMB(auth: String?): LiveData<BaseResponse> {
+    return GMBRepository.getAccountList(auth).toLiveData()
   }
 
   fun updateRiaWhatsapp(req: RiaWhatsappRequest?): LiveData<BaseResponse> {
@@ -81,13 +89,11 @@ class BusinessCreateViewModel : BaseViewModel() {
   }
 
   fun validateUsersEmail(requestValidateEmail: RequestValidateEmail?): LiveData<BaseResponse> {
-    return BusinessCreateRepository.validateUsersEmail(requestValidateEmail = requestValidateEmail)
-      .toLiveData()
+    return BusinessCreateRepository.validateUsersEmail(requestValidateEmail = requestValidateEmail).toLiveData()
   }
 
   fun validateUsersPhone(requestValidatePhone: RequestValidatePhone?): LiveData<BaseResponse> {
-    return BusinessCreateRepository.validateUsersPhone(requestValidatePhone = requestValidatePhone)
-      .toLiveData()
+    return BusinessCreateRepository.validateUsersPhone(requestValidatePhone = requestValidatePhone).toLiveData()
   }
 
   fun getCategoriesPlan(context: Context): LiveData<BaseResponse> {

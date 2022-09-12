@@ -8,9 +8,11 @@ import android.view.*
 import android.widget.PopupWindow
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.LinearLayoutCompat
+import com.appservice.constant.FragmentType
 import com.appservice.model.accountDetails.getBankDetail
+import com.appservice.model.aptsetting.AppointmentStatusResponse
 import com.appservice.model.kycData.DataKyc
-import com.appservice.model.kycData.getBusinessKycDetail
+import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.updatesBusiness.showDialog
 import com.boost.presignin.model.other.KYCDetails
 import com.dashboard.R
@@ -179,9 +181,9 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
             it
           }
           UsefulLinksItem.IconType.business_kyc.name -> {
-            val dataKyc = getBusinessKycDetail()
+            val dataKyc = AppointmentStatusResponse.getFromPref()
             if (dataKyc != null) {
-              if (dataKyc.isVerified == DataKyc.Verify.YES.name) {
+              if (dataKyc.result?.customerInvoicesSetup?.isPending?.not() == true) {
                 it.actionBtn?.color = "#F2FBE9"
                 it.actionBtn?.textColor = "#7ED321"
                 it.actionBtn?.title = "Verified"

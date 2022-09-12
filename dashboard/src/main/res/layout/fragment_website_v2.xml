@@ -192,7 +192,7 @@
                                 android:backgroundTint="@color/website_button_tint"
                                 android:drawableStart="@drawable/ic_briefcase_white"
                                 android:drawableEnd="@drawable/ic_arrow_trans_website_d"
-                                android:drawablePadding="@dimen/size_10"
+                                android:drawablePadding="@dimen/size_8"
                                 android:drawableTint="@color/text_color_light_white"
                                 android:fontFamily="@font/semi_bold"
                                 android:gravity="center_vertical"
@@ -292,7 +292,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawableStart="@drawable/ic_clock_white"
-                        android:drawablePadding="@dimen/size_10"
+                        android:drawablePadding="@dimen/size_8"
                         android:fontFamily="@font/semi_bold"
                         android:gravity="center_vertical"
                         android:maxLines="2"
@@ -328,7 +328,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_arrow_trans_website_d"
-                        app:tint="@color/white" />
+                        app:tint="@color/boost_jio_website_arrow_color" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -352,7 +352,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawableStart="@drawable/ic_palette_white"
-                        android:drawablePadding="@dimen/size_10"
+                        android:drawablePadding="@dimen/size_8"
                         android:fontFamily="@font/semi_bold"
                         android:gravity="center_vertical"
                         android:maxLines="2"
@@ -375,7 +375,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/size_12"
                         app:srcCompat="@drawable/ic_arrow_trans_website_d"
-                        app:tint="@color/white" />
+                        app:tint="@color/boost_jio_website_arrow_color" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
 

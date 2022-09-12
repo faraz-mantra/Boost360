@@ -17,6 +17,7 @@ import com.festive.poster.reset.repo.NowFloatsRepository
 import com.festive.poster.ui.TemplateDiffUtil
 import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
 import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
+import com.festive.poster.ui.promoUpdates.bottomSheet.PromoteBrandedUpdateTemplatesBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.SubscribePlanBottomSheet
 import com.framework.BaseApplication
 import com.framework.base.BaseActivity
@@ -24,6 +25,7 @@ import com.framework.base.setFragmentType
 import com.framework.constants.IntentConstants
 import com.framework.constants.PackageNames
 import com.framework.constants.UPDATE_PIC_FILE_NAME
+import com.framework.firebaseUtils.firestore.FirestoreManager.getDrScoreData
 import com.framework.pref.UserSessionManager
 import com.framework.utils.getResponse
 import com.framework.utils.runOnUi
@@ -36,7 +38,7 @@ import java.io.File
 
 fun isPromoWidgetActive(): Boolean{
     val session = UserSessionManager(BaseApplication.instance)
-    return /*session.getStoreWidgets()?.contains(Constants.PROMO_WIDGET_KEY)==true*/ true
+    return session.getStoreWidgets()?.contains(Constants.UPDATES_STUDIO_WIDGET_KEY)==true
 }
 
 fun posterWhatsappShareClicked(childItem:TemplateUi,activity: BaseActivity<*,*>){
@@ -46,15 +48,8 @@ fun posterWhatsappShareClicked(childItem:TemplateUi,activity: BaseActivity<*,*>)
             childItem.primaryText,
             PackageNames.WHATSAPP)
     }else{
-        SubscribePlanBottomSheet.newInstance(object : SubscribePlanBottomSheet.Callbacks{
-            override fun onBuyClick() {
-                MarketPlaceUtils.launchCartActivity(activity,
-                    PromoUpdatesActivity::class.java.name,null,
-                    null,
-                    null,childItem)
-
-            }
-        }).show(activity.supportFragmentManager, SubscribePlanBottomSheet::class.java.name)
+        PromoteBrandedUpdateTemplatesBottomSheet
+            .newInstance().show(activity.supportFragmentManager, PromoteBrandedUpdateTemplatesBottomSheet::class.java.name)
     }
 }
 
@@ -95,8 +90,6 @@ fun saveTemplateAction(action: TemplateSaveActionBody.ActionType, posterModel: T
 }
 
 
-
-
 fun convertToHashTag(list:List<String>?): String {
     if (list==null) return ""
   return  list.map { "#"+it }.joinToString(" ")
@@ -106,4 +99,10 @@ fun launchPostNewUpdate(activity:Activity){
     val intent = Intent(activity, Class.forName("com.appservice.ui.updatesBusiness.UpdateBusinessContainerActivity"))
     intent.setFragmentType("ADD_UPDATE_BUSINESS_FRAGMENT_V2")
     activity.startActivity(intent)
+}
+
+fun isBusinessLogoUpdated() : Boolean {
+    return if (getDrScoreData() != null && getDrScoreData()!!.metricdetail != null) {
+        getDrScoreData()!!.metricdetail!!.boolean_add_clinic_logo == true
+    } else false
 }

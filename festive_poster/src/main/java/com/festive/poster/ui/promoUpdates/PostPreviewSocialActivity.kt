@@ -29,6 +29,7 @@ import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.festive.poster.ui.promoUpdates.bottomSheet.PostSuccessBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.PostingProgressBottomSheet
+import com.festive.poster.ui.promoUpdates.bottomSheet.PromoteBrandedUpdateTemplatesBottomSheet
 import com.festive.poster.ui.promoUpdates.bottomSheet.SubscribePlanBottomSheet
 import com.festive.poster.utils.MarketPlaceUtils
 import com.festive.poster.utils.WebEngageController
@@ -141,7 +142,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     }
 
     private fun refreshUserWidgets() {
-        viewModel.getUserDetails(session?.fpTag, clientId).observe(this) {
+        viewModel.getUserDetails().observe(this) {
             if (it.isSuccess()) {
                 val detail = it as? CustomerDetails
                 detail?.FPWebWidgets?.let { list ->
@@ -154,16 +155,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     private fun initUI() {
         binding?.tvChooseAPromoPack?.setOnClickListener {
-            SubscribePlanBottomSheet.newInstance(object :SubscribePlanBottomSheet.Callbacks{
-                override fun onBuyClick() {
-                    MarketPlaceUtils.launchCartActivity(
-                        this@PostPreviewSocialActivity,
-                        PostPreviewSocialActivity::class.java.name,
-                        posterImgPath,captionIntent,
-                        updateType,template)
-
-                }
-            }).show(supportFragmentManager, SubscribePlanBottomSheet::class.java.name)
+            PromoteBrandedUpdateTemplatesBottomSheet
+                .newInstance().show(supportFragmentManager, PromoteBrandedUpdateTemplatesBottomSheet::class.java.name)
         }
 
         binding?.tvPostUpdate?.setOnClickListener {

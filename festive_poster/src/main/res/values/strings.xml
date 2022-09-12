@@ -43,7 +43,7 @@
 
     <string name="app_name">template</string>
     <string name="promo_updates">Promo updates</string>
-    <string name="update_studios">Update studio</string>
+    <string name="update_studios">Updates studio</string>
     <string name="for_today">For today</string>
     <string name="browse">Browse</string>
     <string name="find">Find</string>
@@ -87,8 +87,9 @@
     <string name="post_on_placeholder_platform">Post on %1$d platform</string>
     <string name="post_on_placeholder_platforms">Post on %1$d platforms</string>
     <string name="now">Now</string>
-    <string name="placeholder_per_month">₹%1$d/month</string>
-    <string name="placeholder_per_year">₹%1$d/year</string>
+    <string name="placeholder_per_month">₹%1$s/month</string>
+    <string name="placeholder_per_year">₹%1$s/year</string>
+    <string name="or_placeholder_per_year">or ₹%1$s/year</string>
     <string name="get_annual_pack_for_placeholder">Get annual pack for ₹%1$d</string>
     <string name="get_monthly_pack_for_placeholder">Get monthly pack for ₹%1$d</string>
     <string name="placeholder_percent_off">%1$d% OFF</string>
@@ -130,4 +131,38 @@
     <string name="post_a_new_update">Post a new update</string>
     <string name="all_favs">All Favourites</string>
     <string name="view_placeholder_more">View %1$d+ More</string>
+    <string name="one_update_multiple_platforms">One update, multiple platforms</string>
+    <string name="your_brand_templates_for_quick_posting">Your brand templates for quick posting*</string>
+    <string name="post_free_updates_using_create_tab">Post FREE updates using ‘Create’ tab</string>
+    <string name="you_can_post_on_multiple_platforms_with_a_single_tap">You can post on multiple platforms with a single tap!</string>
+    <string name="this_premium_feature_is_available_in_online_classic_online_advanced_packs"><![CDATA[*This premium feature is available in ‘Online Classic’ & ‘Online Advanced’ packs.]]></string>
+    <string name="you_can_continue_to_post_good_old_updates_using_the_create_tab_on_top">You can continue to post good old updates using the ‘create’ tab on top.</string>
+    <string name="explore_update_studio">Explore update studio</string>
+    <string name="premium_updates_custom_designed_for_you">Premium updates custom designed for you.</string>
+    <string name="free_updates_tap_on_create_to_post_like_before">FREE updates: tap on ‘Create’ to post like before.</string>
+    <string name="promote_using_branded_update_templates">Promote using Branded Update Templates</string>
+    <string name="business_promotion_is_as_simple_as">Business\npromotion is\nas simple as 1–2–3.</string>
+    <string name="get_access_to_fresh_tailor_made_customizable_update_template">Get access to <b>1000+ fresh, tailor made &amp; customisable\nupdate templates</b> to promote your business with your\ncustomers on your business website &amp; social media.</string>
+    <string name="festival_greetings_offers_deals_posts_inspirational_quotes">Festival greetings,\nOffers &amp; deals posts,\nInspirational quotes</string>
+    <string name="add_and_go_to_cart">Add &amp; Go to cart</string>
+    <string name="buy_it_as_part_of_advanced_pack">Buy it as part of ‘Advanced pack’</string>
+    <string name="buy_it_as_part_of_classic_pack">Buy it as part of ‘Classic pack’</string>
+    <string name="buy_it_as_part_of_placeholder">Buy it as part of ‘%1$s’</string>
+    <string name="buy_only_this_feature">Buy only this feature’</string>
+    <string name="get_branded_update_templates_17_more_features">Get ‘Branded update templates’ + 17 more features</string>
+    <string name="get_branded_update_templates_5_more_features">Get ‘Branded update templates’ + 5 more features</string>
+    <string name="get_branded_update_templates_placeholder_more_features">Get ‘Branded update templates’ + %1$d more features</string>
+
+    <string name="pay_499_or_5988_gst_extra">Pay ₹499/mo or ₹5988/yr (GST extra)</string>
+    <string name="pay_placeholder_or_placeholder_gst_extra">Pay ₹%1$s/mo or ₹%1$s/yr (GST extra)</string>
+
+    <string name="view_pack_details">View pack details</string>
+    <string name="you_will_be_taken_to_feature_marketplace">You’ll be taken to feature marketplace</string>
+    <string name="promote_using_branded_update_templates_bold">Promote using\n<b>Branded Update\nTemplates</b></string>
+    <string name="business_logo_missing">Business logo missing.</string>
+    <string name="add_logo">Add logo</string>
+    <string name="to_build_customer_trust_using_branded_updates_please_add_business_logo">To build customer trust using branded\nupdates, please add business logo.</string>
+    <string name="please_add_business_logo_before_proceeding">Please add Business Logo before proceeding!</string>
+    <string name="_18_gst">+18% GST</string>
+    <string name="get_this_feature">Get this feature</string>
 </resources>
