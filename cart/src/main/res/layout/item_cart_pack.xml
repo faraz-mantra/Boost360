@@ -155,7 +155,6 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/edgecase_red"
             android:padding="16dp"
-            android:visibility="gone"
             tools:visibility="visible">
 
           <TextView

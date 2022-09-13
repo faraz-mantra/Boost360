@@ -9,10 +9,10 @@
     android:layout_alignParentBottom="true"
     android:layout_marginTop="16dp"
     android:background="@drawable/curve_top_white"
-    android:paddingStart="@dimen/dimen_24dp"
+    android:paddingStart="24dp"
     android:paddingTop="16dp"
-    android:paddingEnd="@dimen/dimen_24dp"
-    android:paddingBottom="@dimen/dimen_24dp"
+    android:paddingEnd="24dp"
+    android:paddingBottom="24dp"
     android:visibility="gone">
 
     <TextView

@@ -1,10 +1,17 @@
-package com.boost.marketplace.ui.feature_details_popup
+package com.boost.cart.ui.popup
 
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProviders
 import com.boost.cart.CartActivity
+import com.boost.cart.R
+import com.boost.cart.ui.home.CartViewModel
 import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
@@ -12,31 +19,23 @@ import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.Constants
 import com.boost.dbcenterapi.utils.SharedPrefs
-import com.boost.marketplace.R
-import com.boost.marketplace.databinding.PopupCustomdomainLearnDomainBinding
-import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
-import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 import com.framework.analytics.SentryController
-import com.framework.base.BaseBottomSheetDialog
 import com.framework.utils.RootUtil
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_feature_details.*
-import kotlinx.android.synthetic.main.feature_details_popup.*
-import kotlinx.android.synthetic.main.view_review_selection.*
+import kotlinx.android.synthetic.main.feature_details_bottomsheet.*
+import kotlinx.android.synthetic.main.feature_details_bottomsheet.view.*
 import kotlinx.android.synthetic.main.view_select_website.*
-import kotlinx.android.synthetic.main.view_select_website.selectWebsiteSubmit
+import kotlinx.android.synthetic.main.view_select_website.view.*
+import kotlinx.android.synthetic.main.view_select_website.view.selectWebsiteSubmit
 import kotlinx.android.synthetic.main.view_selected_number.*
-import kotlinx.android.synthetic.main.view_selected_website.*
+import kotlinx.android.synthetic.main.view_selected_website.view.*
 
-class FeatureDetailsPopup :
-    BaseBottomSheetDialog<PopupCustomdomainLearnDomainBinding, ComparePacksViewModel>() {
+class FeatureDetailsPopup : DialogFragment() {
     private var domainName: String? = null
-
-    //    private var featuresModel: FeaturesModel? = null
     var experienceCode: String? = null
     var screenType: String? = null
     var fpName: String? = null
@@ -62,17 +61,28 @@ class FeatureDetailsPopup :
     var offeredBundlePrice = 0.0
     var originalBundlePrice = 0.0
     lateinit var singleAddon: FeaturesModel
+    lateinit var viewModel: CartViewModel
+//    override fun getLayout(): Int {
+//        return R.layout.feature_details_bottomsheet
+//    }
 
-    override fun getLayout(): Int {
-        return R.layout.feature_details_popup
+//    override fun getViewModelClass(): Class<CartViewModel> {
+//        return CartViewModel::class.java
+//    }
+
+    override fun onStart() {
+        super.onStart()
+        val width = ViewGroup.LayoutParams.MATCH_PARENT
+        val height = ViewGroup.LayoutParams.MATCH_PARENT
+        dialog!!.window!!.setLayout(width, height)
+        dialog!!.window!!.setBackgroundDrawableResource(R.color.fullscreen_color)
     }
 
-    override fun getViewModelClass(): Class<ComparePacksViewModel> {
-        return ComparePacksViewModel::class.java
-    }
-
-    override fun onCreateView() {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val view  =  inflater.inflate(R.layout.feature_details_bottomsheet, container,false)
+        viewModel = ViewModelProviders.of(this).get(CartViewModel::class.java)
         prefs = SharedPrefs(requireActivity())
+
         fpid = requireArguments().getString("fpid")
         isDeepLink = requireArguments().getBoolean("isDeepLink", false)
         deepLinkViewType = requireArguments().getString("deepLinkViewType") ?: ""
@@ -93,24 +103,24 @@ class FeatureDetailsPopup :
         widgetFeatureCode = requireArguments().getString("buyItemKey")
         userPurchsedWidgets =
             requireArguments().getStringArrayList("userPurchsedWidgets") ?: ArrayList()
-        singleAddon = Gson().fromJson<FeaturesModel>(
-            requireArguments().getString("featuresData"),
-            object : TypeToken<FeaturesModel>() {}.type
-        )
+//        singleAddon = Gson().fromJson<FeaturesModel>(
+//            requireArguments().getString("featuresData"),
+//            object : TypeToken<FeaturesModel>() {}.type
+//        )
 
         val jsonString = requireArguments().getString("bundleData")
         bundleData = Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type)
 
-        back_btn.setOnClickListener {
+        view.riv_close_bottomSheet.setOnClickListener {
             dismiss()
         }
 
         // Default layout to open
-        select_website_layout.visibility = View.VISIBLE
-        selectWebsiteIwillDoItLater.text = "Skip & continue to cart"
-        selectWebsiteIwillDoItLater.setOnClickListener {
+        view.select_website_layout.visibility = View.VISIBLE
+        view.selectWebsiteIwillDoItLater.text = "Skip & continue to cart"
+        view.selectWebsiteIwillDoItLater.setOnClickListener {
             // hideAllLayout()
-            skipToCart()
+            dismiss()
             //  select_domain_layout.visibility = View.VISIBLE
         }
 
@@ -119,12 +129,12 @@ class FeatureDetailsPopup :
 //            no_selection_layout.visibility = View.VISIBLE
 //        }
 
-        selectWebsiteSubmit.setOnClickListener {
+        view.selectWebsiteSubmit.setOnClickListener {
             hideAllLayout()
-            selected_website_layout.visibility = View.VISIBLE
-            selectedWebsiteContinueButton.text = "continue to cart"
-            tv_empty_selected_website.text = domainName
-            tv_explore_select_website1.setOnClickListener {
+            view.selected_website_layout.visibility = View.VISIBLE
+            view.selectedWebsiteContinueButton.text = "continue to cart"
+            view.tv_empty_selected_website.text = domainName
+            view.tv_explore_select_website1.setOnClickListener {
                 exploreDomainOptions()
             }
         }
@@ -134,7 +144,7 @@ class FeatureDetailsPopup :
 //            review_selection_layout.visibility = View.VISIBLE
 //        }
 
-        selectedWebsiteContinueButton.setOnClickListener {
+        view.selectedWebsiteContinueButton.setOnClickListener {
             // Onclick of continue button
            // hideAllLayout()
             addToCart()
@@ -142,12 +152,13 @@ class FeatureDetailsPopup :
             //   fpid?.let { viewModel?.loadNumberList(it, clientId) }
         }
 
-        tv_explore_select_website.setOnClickListener {
+        view.tv_explore_select_website.setOnClickListener {
             exploreDomainOptions()
         }
 
         loadData()
         initMvvm()
+        return view
     }
 
     private fun addToCart() {
@@ -196,7 +207,7 @@ class FeatureDetailsPopup :
                             //clear cartOrderInfo from SharedPref to requestAPI again
                             prefs.storeCartOrderInfo(null)
 
-                            viewModel?.addItemToCartPackage1(
+                            viewModel.addItemToCartPackage1(
                                 CartModel(
                                     bundleData!!._kid,
                                     null,
@@ -223,7 +234,7 @@ class FeatureDetailsPopup :
         }
 
         val intent = Intent(
-            requireContext(),
+            activity,
             CartActivity::class.java
         )
         intent.putExtra("fpid", fpid)
@@ -252,6 +263,7 @@ class FeatureDetailsPopup :
         }
         intent.putExtra("profileUrl", profileUrl)
         startActivity(intent)
+        dismiss()
     }
 
     private fun skipToCart() {
@@ -370,6 +382,37 @@ class FeatureDetailsPopup :
     }
 
     private fun initMvvm() {
+
+        if (bundleData != null) {
+            prefs.storeAddedPackageDesc(bundleData!!.desc ?: "")
+
+            val itemIds = arrayListOf<String>()
+            for (i in bundleData!!.included_features) {
+                itemIds.add(i.feature_code)
+            }
+            CompositeDisposable().add(
+                AppDatabase.getInstance(Application())!!
+                    .featuresDao()
+                    .getallFeaturesInList(itemIds)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            if (it.isNotEmpty()) {
+                                for (singleItem in it){
+                                    if (singleItem.feature_code == "DOMAINPURCHASE"){
+                                        singleAddon= singleItem
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            it.printStackTrace()
+                        }
+                    )
+            )
+        }
+
         viewModel?.updateCustomDomainsResultResult()?.observe(this) {
             for (singleDomain in it.domains) {
                 if (singleDomain.isAvailable) {
@@ -483,32 +526,24 @@ class FeatureDetailsPopup :
 //                    intent.putExtra("profileUrl", profileUrl)
 //                    startActivity(intent)
 //                }
-                choose_different_value.setText("Pick another number")
+//                choose_different_value.setText("Pick another number")
             }
         }
     }
 
     fun exploreDomainOptions() {
-        val intent = Intent(
-            activity,
-            CustomDomainActivity::class.java
-        )
-        intent.putExtra("expCode", experienceCode)
-        intent.putExtra("fpid", fpid)
-        intent.putExtra("bundleData", Gson().toJson(singleAddon))
-        startActivity(intent)
-    }
-
-    fun showReviewSelection() {
-        reviewSelectionLayout.visibility = View.VISIBLE
-    }
-
-    fun showSelectWebsiteLayout() {
-        select_website_layout.visibility = View.VISIBLE
-    }
-
-    fun showNoSelectionLayout() {
-        no_selection_layout.visibility = View.VISIBLE
+        try {
+            val intent = Intent(
+                activity,
+                Class.forName("com.boost.marketplace.ui.details.domain.CustomDomainActivity")
+            )
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("fpid", fpid)
+            intent.putExtra("bundleData", Gson().toJson(singleAddon))
+            startActivity(intent)
+        } catch (e: ClassNotFoundException) {
+            e.printStackTrace()
+        }
     }
 
     fun hideAllLayout() {
