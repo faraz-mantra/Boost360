@@ -30,7 +30,6 @@ import com.boost.marketplace.ui.popup.customdomains.ConfirmedCustomDomainBottomS
 import com.boost.marketplace.ui.popup.customdomains.CustomDomainHelpBottomSheet
 import com.boost.marketplace.ui.popup.customdomains.CustomDomainLearnDomainBottomSheet
 import com.boost.marketplace.ui.popup.customdomains.SSLCertificateBottomSheet
-import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
 import com.framework.utils.hideKeyBoard
@@ -106,6 +105,13 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         customDomainListAdapter = CustomDomainListAdapter(this, ArrayList(),this)
         progressDialog = ProgressDialog(this)
         prefs = SharedPrefs(this)
+
+
+        if(doDomainBooking){
+            binding?.tvSkipTocart?.visibility = View.GONE
+        }else {
+            binding?.tvSkipTocart?.visibility = View.VISIBLE
+        }
 
         binding?.help?.setOnClickListener {
             val dialogCard = CustomDomainHelpBottomSheet()

@@ -17,7 +17,6 @@ import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.*
-import com.boost.payment.BuildConfig
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -28,6 +27,7 @@ import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentPriorityE
 import com.boost.dbcenterapi.data.api_model.autorenew.OrderAutoRenewRequest
 import com.boost.dbcenterapi.data.api_model.customerId.get.Result
 import com.boost.dbcenterapi.data.api_model.datamodule.SingleNetBankData
+import com.boost.payment.BuildConfig
 import com.boost.payment.PaymentActivity
 import com.boost.payment.R
 import com.boost.payment.adapter.CardPaymentAdapter
@@ -804,12 +804,13 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         val netPrice = requireArguments().getDouble("netPrice")
         val temp = (netPrice * 18) / 100
         val taxValue = RootUtil.round(Math.round(temp * 100) / 100.0, 2)
-        txtSub.setText(" ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(netPrice + prefs.getApplyedCouponDetails()!!.discount_amount, 2)))
         if(prefs.getApplyedCouponDetails() !=null){
             discountTitle.visibility = View.VISIBLE
             txtSub1.visibility = View.VISIBLE
+            txtSub.setText(" ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(netPrice + prefs.getApplyedCouponDetails()!!.discount_amount, 2)))
             txtSub1.setText(" -₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(prefs.getApplyedCouponDetails()!!.discount_amount, 2)))
         }else{
+            txtSub.setText(" ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(netPrice, 2)))
             discountTitle.visibility = View.GONE
             txtSub1.visibility = View.GONE
         }
