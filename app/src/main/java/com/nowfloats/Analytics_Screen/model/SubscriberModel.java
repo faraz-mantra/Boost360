@@ -46,12 +46,20 @@ public class SubscriberModel {
     this.subscriptionStatus = subscriptionStatus;
   }
 
+//  public String getUserCountryCode() {
+//    if (userCountryCode != null && !userCountryCode.isEmpty()) {
+//      if (userCountryCode.contains("+")) {
+//        return userCountryCode;
+//      } else return "+" + userCountryCode;
+//    } else return "+91";
+//  }
+
   public String getUserCountryCode() {
     if (userCountryCode != null && !userCountryCode.isEmpty()) {
-      if (userCountryCode.contains("+")) {
-        return userCountryCode;
-      } else return "+" + userCountryCode;
-    } else return "+91";
+      return userCountryCode;
+    } else {
+      return "91";
+    }
   }
 
   public void setUserCountryCode(String userCountryCode) {
