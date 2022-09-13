@@ -20,9 +20,7 @@ import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.Constants
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.framework.analytics.SentryController
-import com.framework.base.BaseBottomSheetDialog
 import com.framework.utils.RootUtil
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -31,11 +29,9 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.feature_details_bottomsheet.*
 import kotlinx.android.synthetic.main.feature_details_bottomsheet.view.*
 import kotlinx.android.synthetic.main.view_select_website.*
-import kotlinx.android.synthetic.main.view_select_website.selectWebsiteSubmit
 import kotlinx.android.synthetic.main.view_select_website.view.*
 import kotlinx.android.synthetic.main.view_select_website.view.selectWebsiteSubmit
 import kotlinx.android.synthetic.main.view_selected_number.*
-import kotlinx.android.synthetic.main.view_selected_website.*
 import kotlinx.android.synthetic.main.view_selected_website.view.*
 
 class FeatureDetailsPopup : DialogFragment() {
@@ -115,16 +111,16 @@ class FeatureDetailsPopup : DialogFragment() {
         val jsonString = requireArguments().getString("bundleData")
         bundleData = Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type)
 
-//        view.back_btn.setOnClickListener {
-//            dismiss()
-//        }
+        view.riv_close_bottomSheet.setOnClickListener {
+            dismiss()
+        }
 
         // Default layout to open
         view.select_website_layout.visibility = View.VISIBLE
         view.selectWebsiteIwillDoItLater.text = "Skip & continue to cart"
         view.selectWebsiteIwillDoItLater.setOnClickListener {
             // hideAllLayout()
-            skipToCart()
+            dismiss()
             //  select_domain_layout.visibility = View.VISIBLE
         }
 
@@ -386,6 +382,37 @@ class FeatureDetailsPopup : DialogFragment() {
     }
 
     private fun initMvvm() {
+
+        if (bundleData != null) {
+            prefs.storeAddedPackageDesc(bundleData!!.desc ?: "")
+
+            val itemIds = arrayListOf<String>()
+            for (i in bundleData!!.included_features) {
+                itemIds.add(i.feature_code)
+            }
+            CompositeDisposable().add(
+                AppDatabase.getInstance(Application())!!
+                    .featuresDao()
+                    .getallFeaturesInList(itemIds)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            if (it.isNotEmpty()) {
+                                for (singleItem in it){
+                                    if (singleItem.feature_code == "DOMAINPURCHASE"){
+                                        singleAddon= singleItem
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            it.printStackTrace()
+                        }
+                    )
+            )
+        }
+
         viewModel?.updateCustomDomainsResultResult()?.observe(this) {
             for (singleDomain in it.domains) {
                 if (singleDomain.isAvailable) {
@@ -512,7 +539,7 @@ class FeatureDetailsPopup : DialogFragment() {
             )
             intent.putExtra("expCode", experienceCode)
             intent.putExtra("fpid", fpid)
-//            intent.putExtra("bundleData", Gson().toJson(singleAddon))
+            intent.putExtra("bundleData", Gson().toJson(singleAddon))
             startActivity(intent)
         } catch (e: ClassNotFoundException) {
             e.printStackTrace()
