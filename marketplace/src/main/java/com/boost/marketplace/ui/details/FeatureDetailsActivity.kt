@@ -55,7 +55,6 @@ import com.boost.marketplace.interfaces.DetailsFragmentListener
 import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 import com.boost.marketplace.ui.details.staff.StaffManagementBottomSheet
-import com.boost.marketplace.ui.feature_details_popup.FeatureDetailsPopup
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet

@@ -59,8 +59,8 @@
 
             <ImageView
                 android:id="@+id/iconPencil"
-                android:layout_width="@dimen/dimen_16dp"
-                android:layout_height="@dimen/dimen_16dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:layout_marginStart="8dp"
                 android:src="@drawable/ic_edit_pencil"
                 android:tint="@color/colorAccent1"
@@ -152,8 +152,8 @@
 
             <ImageView
                 android:id="@+id/iconPencilNumber"
-                android:layout_width="@dimen/dimen_16dp"
-                android:layout_height="@dimen/dimen_16dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:layout_marginStart="8dp"
                 android:src="@drawable/ic_edit_pencil"
                 android:tint="@color/colorAccent1"

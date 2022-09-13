@@ -46,4 +46,6 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
+  <string name="select_underline"><u>Select</u></string>
+  <string name="edit_underline"><u>Edit</u></string>
 </resources>
