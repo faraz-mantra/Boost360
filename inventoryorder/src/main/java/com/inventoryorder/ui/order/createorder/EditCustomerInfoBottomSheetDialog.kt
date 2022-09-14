@@ -70,6 +70,9 @@ class EditCustomerInfoBottomSheetDialog(private val contactDetails: ContactDetai
         onClicked(contactDetails)
         dismiss()
       }
+      binding?.tvCancel -> {
+        dismiss()
+      }
     }
   }
 
