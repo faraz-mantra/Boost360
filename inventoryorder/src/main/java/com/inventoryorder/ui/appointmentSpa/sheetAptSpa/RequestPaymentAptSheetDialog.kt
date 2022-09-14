@@ -77,6 +77,9 @@ class RequestPaymentAptSheetDialog : BaseBottomSheetDialog<BottomSheetRequestPay
           showShortToast(getString(R.string.please_select_at_least_one_option))
         }
       }
+      binding?.tvCancel -> {
+        dismiss()
+      }
     }
   }
 
