@@ -1,7 +1,6 @@
 package com.boost.cart.adapter
 
 import android.app.Activity
-import android.app.Application
 import android.content.Context
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
@@ -10,13 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
+import com.boost.cart.interfaces.ActionRequiredListener
 import com.boost.cart.interfaces.CartFragmentListener
 import com.boost.cart.utils.Utils
 import com.boost.cart.utils.Utils.priceCalculatorForYear
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
@@ -37,6 +37,7 @@ import java.util.*
 class CartPackageAdaptor(
         list: List<CartModel>?,
         val listener: CartFragmentListener,
+        val listener1: ActionRequiredListener,
         cryptoCurrencies: List<FeaturesModel>?,
         val activity: Activity
 ) : RecyclerView.Adapter<CartPackageAdaptor.upgradeViewHolder>() {
@@ -95,6 +96,10 @@ class CartPackageAdaptor(
         )
       }
       listener.deleteCartAddonsItem(bundlesList.get(position))
+    }
+
+    holder.edge_cases_layout.setOnClickListener {
+      listener1.actionClick(bundlesList.get(position))
     }
     updateFeatures(bundlesList.get(position).item_id, holder)
 
@@ -210,6 +215,7 @@ class CartPackageAdaptor(
     val removePackage = itemView.findViewById<ImageView>(R.id.package_close)
     val ChildRecyclerView = itemView.findViewById<RecyclerView>(R.id.child_recyclerview)
     val addon_amount = itemView.findViewById<TextView>(R.id.tv_Addons)
+    val edge_cases_layout = itemView.findViewById<ConstraintLayout>(R.id.edge_cases_layout)
     var adapter:NewAddonsAdapter? = null
     //   var view = itemView.findViewById<View>(R.id.cart_single_package_bottom_view)!!
   }

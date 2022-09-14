@@ -31,15 +31,13 @@ import com.boost.cart.CartActivity
 import com.boost.cart.R
 import com.boost.cart.adapter.*
 import com.boost.cart.base_class.BaseFragment
+import com.boost.cart.interfaces.ActionRequiredListener
 import com.boost.cart.interfaces.ApplyCouponListener
 import com.boost.cart.interfaces.CartFragmentListener
 import com.boost.cart.ui.autorenew.AutoRenewSubsFragment
 import com.boost.cart.ui.checkoutkyc.CheckoutKycFragment
 import com.boost.cart.ui.packages.PackageFragment
-import com.boost.cart.ui.popup.CouponPopUpFragment
-import com.boost.cart.ui.popup.GSTINPopUpFragment
-import com.boost.cart.ui.popup.RenewalPopUpFragment
-import com.boost.cart.ui.popup.TANPopUpFragment
+import com.boost.cart.ui.popup.*
 import com.boost.cart.ui.splash.SplashFragment
 import com.boost.cart.ui.webview.WebViewFragment
 import com.boost.cart.utils.*
@@ -94,7 +92,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
+class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, ActionRequiredListener {
 
     lateinit var root: View
 
@@ -228,7 +226,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.setStatusBarColor(getResources().getColor(R.color.common_text_color))
         }
-        cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, ArrayList(), requireActivity())
+        cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, this, ArrayList(), requireActivity())
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this, requireActivity())
         cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
         cartRechargeAdaptor = CartRechargeAdaptor(ArrayList(), this, requireActivity())
@@ -3957,6 +3955,66 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) popupWindow.elevation =
             5.0f
         popupWindow.showAsDropDown(anchor, (anchor.width - 40), -166)
+    }
+
+    override fun actionClick(cartModel: CartModel) {
+        var selectedBundle: Bundles? = null
+        for (item in bundlesList) {
+            if (item.bundle_id == cartModel.item_id) {
+                val temp = Gson().fromJson<List<IncludedFeature>>(
+                    item.included_features,
+                    object : TypeToken<List<IncludedFeature>>() {}.type
+                )
+                selectedBundle = Bundles(
+                    item.bundle_id,
+                    temp,
+                    item.min_purchase_months,
+                    item.name,
+                    item.overall_discount_percent,
+                    PrimaryImage(item.primary_image),
+                    item.target_business_usecase,
+                    Gson().fromJson<List<String>>(
+                        item.exclusive_to_categories,
+                        object : TypeToken<List<String>>() {}.type
+                    ),
+                    null, null,null,null,null,item.desc
+                )
+                break
+            }
+        }
+
+        val dialogCard = FeatureDetailsPopup()
+        val args = Bundle()
+        args.putString("expCode", (activity as CartActivity).experienceCode)
+        args.putStringArrayList("userPurchsedWidgets", (activity as CartActivity).userPurchsedWidgets)
+        args.putString("bundleData", Gson().toJson(selectedBundle))
+        args.putString("fpid", (activity as CartActivity).fpid)
+        args.putString("expCode", (activity as CartActivity).experienceCode)
+        args.putBoolean("isDeepLink", (activity as CartActivity).isDeepLink)
+        args.putString("deepLinkViewType", (activity as CartActivity).deepLinkViewType)
+        args.putInt("deepLinkDay", (activity as CartActivity).deepLinkDay)
+        args.putBoolean("isOpenCardFragment", (activity as CartActivity).isOpenCardFragment)
+        args.putString(
+            "accountType",
+            (activity as CartActivity).accountType
+        )
+        args.putStringArrayList(
+            "userPurchsedWidgets",
+            (activity as CartActivity).userPurchsedWidgets
+        )
+        if ((activity as CartActivity).email != null) {
+            args.putString("email", (activity as CartActivity).email)
+        } else {
+            args.putString("email", "ria@nowfloats.com")
+        }
+        if ((activity as CartActivity).mobileNo != null) {
+            args.putString("mobileNo", (activity as CartActivity).mobileNo)
+        } else {
+            args.putString("mobileNo", "9160004303")
+        }
+        args.putString("profileUrl", (activity as CartActivity).profileUrl)
+        dialogCard.arguments = args
+        activity?.supportFragmentManager?.let { dialogCard.show(it, FeatureDetailsPopup::class.java.name) }
     }
 
 }

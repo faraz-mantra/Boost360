@@ -360,5 +360,7 @@
     <color name="tv_color_4d">#4D4D4D</color>
     <color name="colorLightAccent">#FFF0C9</color>
     <color name="colorPopupBackground">#F0F0F0</color>
-
+    <color name="background_colour">#1d000000</color>
+    <color name="not_available_text_color">#EB5757</color>
+    <color name="green_accent">#F2FBE9</color>
 </resources>
