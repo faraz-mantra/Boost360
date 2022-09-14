@@ -532,6 +532,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
         CapLimitFeatureResponseItem data = filterFeature(getCapData(), CapLimitFeatureResponseItem.FeatureKey.CUSTOMPAGES);
         if (data != null && pageDetail != null) {
           PropertiesItem capLimitCustomPage = data.filterProperty(PropertiesItem.KeyType.LIMIT);
+          Log.i("test_limit_cap", "Total: " + pageDetail.getTotal() + " capLimit: " + capLimitCustomPage.getValueN());
           if (pageDetail.getTotal() != null && capLimitCustomPage.getValueN() != null && pageDetail.getTotal() >= capLimitCustomPage.getValueN()) {
             hideKeyBoard(activity);
             showAlertCapLimit("Can't add the custom page, please activate your premium Add-ons plan.");
