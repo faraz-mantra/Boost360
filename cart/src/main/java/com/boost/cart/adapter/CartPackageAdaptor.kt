@@ -23,6 +23,7 @@ import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.WebEngageController
 import com.bumptech.glide.Glide
+import com.framework.utils.RootUtil
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_PACKAGE_CROSSED_DELETED_FROM_CART
 import com.google.gson.Gson
@@ -70,7 +71,7 @@ class CartPackageAdaptor(
     val selectedBundle = bundlesList.get(position)
 
     holder.name.text = selectedBundle.item_name
-    val price = priceCalculatorForYear(selectedBundle.price, "", activity)
+    val price = RootUtil.round(priceCalculatorForYear(selectedBundle.price, "", activity),2)
     val MRPPrice = priceCalculatorForYear(selectedBundle.MRPPrice, "", activity)
     holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + Utils.yearlyOrMonthlyOrEmptyValidity("", activity, selectedBundle.min_purchase_months)
 

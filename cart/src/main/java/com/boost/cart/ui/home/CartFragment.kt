@@ -3626,7 +3626,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
                 grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
                 cart_amount_title.text = "Cart total (" + cartList.size + " items)"
                 cart_amount.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                    .format(couponDiscountAmount + total + taxValue)
+                    .format(RootUtil.round((couponDiscountAmount + total + taxValue),2))
                 coupontotal = total
                 //       igst_value.text = "+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue)
 //                order_total_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
@@ -3939,7 +3939,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
         val txtSub2: TextView = popupWindow.contentView.findViewById(R.id.price3)
         txtSub.setText(
             " ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                .format(total + couponDiscountAmount)
+                .format(RootUtil.round(total,2) + couponDiscountAmount)
         )
         if (couponDiscountAmount > 0) {
             discountTitle.visibility = View.VISIBLE
