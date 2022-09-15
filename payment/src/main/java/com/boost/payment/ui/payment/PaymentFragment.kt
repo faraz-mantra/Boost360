@@ -1,6 +1,7 @@
 package com.boost.payment.ui.payment
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Typeface
@@ -17,6 +18,7 @@ import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.*
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -875,13 +877,29 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 //            }
             pay_link.text=it.Result
             val link = it.Result
-            pay_link.setOnClickListener {
-                val payFragment = WebViewFragment
-                val args = Bundle()
-                args.putString("link", link)
-                payFragment.arguments = args
-                (activity as PaymentActivity).addFragment(payFragment, Constants.WEB_VIEW_FRAGMENT)
-            }
+//            pay_link.setOnClickListener {
+//                val payFragment = WebViewFragment
+//                val args = Bundle()
+//                args.putString("link", link)
+//                payFragment.arguments = args
+//                (activity as PaymentActivity).addFragment(payFragment, Constants.WEB_VIEW_FRAGMENT)
+
+                pay_link.setOnClickListener {
+                    val customIntent = CustomTabsIntent.Builder()
+
+                    customIntent.setToolbarColor(
+                        ContextCompat.getColor(
+                            activity as PaymentActivity,
+                            R.color.colorAccent1
+                        )
+                    )
+                    openCustomTab(
+                        activity as PaymentActivity,
+                        customIntent.build(),
+                        Uri.parse(link)
+                    )
+                }
+
             copy_link.setOnClickListener {
                 val clipboard: ClipboardManager =(activity as PaymentActivity).getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 val clip = ClipData.newPlainText(pay_link?.text, pay_link?.text)
@@ -1428,6 +1446,18 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         })
 
 
+    }
+
+    fun openCustomTab(activity: Activity, customTabsIntent: CustomTabsIntent, uri: Uri?) {
+        // package name is the default package
+        // for our custom chrome tab
+        val packageName = "com.android.chrome"
+        if (packageName != null) {
+            customTabsIntent.intent.setPackage(packageName)
+            customTabsIntent.launchUrl(activity, uri!!)
+        } else {
+            activity.startActivity(Intent(Intent.ACTION_VIEW, uri))
+        }
     }
 
     fun payViaPaymentLink() {
