@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:fontFamily="@font/regular"
-                    android:text="Compare packs"
+                    android:text="Compare Packs"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"

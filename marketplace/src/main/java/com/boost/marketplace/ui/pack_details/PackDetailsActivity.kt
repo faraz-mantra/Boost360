@@ -67,6 +67,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     PackDetailsListener,
     DetailsFragmentListener {
 
+    private var featuresModel: List<FeaturesModel>? = null
+    lateinit var singleAddon: FeaturesModel
     private lateinit var needMoreFeatureItem: BundlesModel
     private var includedFeaturesInPack: List<FeaturesModel>? = null
     var experienceCode: String? = null
@@ -339,36 +341,29 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 )
             }
 
-//            val intent = Intent(
-//                applicationContext,
-//                CartActivity::class.java
-//            )
-//            intent.putExtra("fpid", fpid)
-//            intent.putExtra("expCode", experienceCode)
-//            intent.putExtra("isDeepLink", isDeepLink)
-//            intent.putExtra("deepLinkViewType", deepLinkViewType)
-//            intent.putExtra("deepLinkDay", deepLinkDay)
-//            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-//            intent.putExtra(
-//                "accountType",
-//                accountType
-//            )
-//            intent.putStringArrayListExtra(
-//                "userPurchsedWidgets",
-//                userPurchsedWidgets
-//            )
-//            if (email != null) {
-//                intent.putExtra("email", email)
-//            } else {
-//                intent.putExtra("email", "ria@nowfloats.com")
-//            }
-//            if (mobileNo != null) {
-//                intent.putExtra("mobileNo", mobileNo)
-//            } else {
-//                intent.putExtra("mobileNo", "9160004303")
-//            }
-//            intent.putExtra("profileUrl", profileUrl)
-//            startActivity(intent)
+//            val dialogCard = FeatureDetailsPopup()
+//            val args = Bundle()
+//            args.putBoolean("isDeepLink", false)
+//            args.putString("deepLinkViewType", deepLinkViewType) ?: ""
+//            args.putInt("deepLinkDay", deepLinkDay) ?: 7
+//            args.putString("expCode", experienceCode)
+//            args.putString("screenType", screenType)
+//            args.putString("fpName", fpName)
+//            args.putString("fpid", fpid)
+//            args.putString("fpTag", fpTag)
+//            args.putString("email", email)
+//            args.putString("mobileNo", mobileNo)
+//            args.putString("profileUrl", profileUrl)
+//            args.putString("accountType", accountType)
+//            args.putBoolean("isOpenCardFragment", false)
+//            args.putBoolean("isComingFromOrderConfirm", false)
+//            args.putBoolean("isComingFromOrderConfirmActivation", false)
+//            args.putString("buyItemKey", widgetFeatureCode)
+//            args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+//            args.putString("featuresData", Gson().toJson(singleAddon))
+//            args.putString("bundleData", Gson().toJson(bundleData))
+//            dialogCard.arguments = args
+//            dialogCard.show(this.supportFragmentManager, FeatureDetailsPopup::class.java.name)
         }
 
         binding?.back?.setOnClickListener {
@@ -413,7 +408,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         val event_attributes: HashMap<String, Any> = HashMap()
         item.name?.let { it1 -> event_attributes.put("Package Name", it1) }
         item.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
-
         event_attributes.put("Discount %", item.overall_discount_percent)
         event_attributes.put("Package Identifier", item.bundle_id)
         item.min_purchase_months.let { it1 -> event_attributes.put("Validity", it1) }
@@ -421,7 +415,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         val intent = Intent(this, PackDetailsActivity::class.java)
         intent.putExtra("bundleData", Gson().toJson(getBundlesFromBundleModel(item)))
         intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
-
         intent.putExtra("fpid", fpid)
         intent.putExtra("expCode", experienceCode)
         intent.putExtra("isDeepLink", isDeepLink)
@@ -631,6 +624,33 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                     // hide the section - Need More Features
                     layout_need_more.visibility = View.GONE
                 }
+
+                // this is for domain & Vmn selection addon details.
+                val itemsIds = arrayListOf<String>()
+                for (item in bundleData?.included_features!!) {
+                    itemsIds.add(item.feature_code)
+                }
+                CompositeDisposable().add(
+                    AppDatabase.getInstance(this.application)!!
+                        .featuresDao()
+                        .getallFeaturesInList(itemsIds)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                            {
+                                if (it.isNotEmpty()) {
+                                    for (singleItem in it){
+                                        if (singleItem.feature_code == "DOMAINPURCHASE"){
+                                            singleAddon= singleItem
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                it.printStackTrace()
+                            }
+                        )
+                )
             }
         }
 

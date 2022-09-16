@@ -55,11 +55,13 @@ import com.boost.marketplace.interfaces.DetailsFragmentListener
 import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 import com.boost.marketplace.ui.details.staff.StaffManagementBottomSheet
+import com.boost.marketplace.ui.feature_details_popup.FeatureDetailsPopup
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
 import com.boost.marketplace.ui.popup.call_track.FindingNumberLoaderBottomSheet
 import com.boost.marketplace.ui.popup.call_track.RequestCallbackBottomSheet
+import com.boost.marketplace.ui.popup.customdomains.CustomDomainLearnDomainBottomSheet
 import com.boost.marketplace.ui.popup.removeItems.RemovePackageBottomSheet
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.bumptech.glide.Glide
@@ -77,6 +79,18 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_feature_details.*
+import kotlinx.android.synthetic.main.activity_feature_details.benefits_indicator
+import kotlinx.android.synthetic.main.activity_feature_details.benefits_viewpager
+import kotlinx.android.synthetic.main.activity_feature_details.faq_container
+import kotlinx.android.synthetic.main.activity_feature_details.faq_recycler
+import kotlinx.android.synthetic.main.activity_feature_details.how_to_use_arrow
+import kotlinx.android.synthetic.main.activity_feature_details.how_to_use_recycler
+import kotlinx.android.synthetic.main.activity_feature_details.how_to_use_title_layout
+import kotlinx.android.synthetic.main.activity_feature_details.learn_less_btn
+import kotlinx.android.synthetic.main.activity_feature_details.learn_more_btn
+import kotlinx.android.synthetic.main.activity_feature_details.title_bottom3
+import kotlinx.android.synthetic.main.activity_feature_details.tv_how_to_use_title
+import kotlinx.android.synthetic.main.pack_details_bottom_sheet.*
 import retrofit2.Retrofit
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -983,7 +997,7 @@ class FeatureDetailsActivity :
                 title_top.text = addonDetails!!.name
                 title_bottom3.text = addonDetails!!.description
                 title_appbar.text = addonDetails!!.name
-                pack_title.text = "Packs with ${addonDetails!!.name}"
+                pack_title.text = "Packs with \"${addonDetails!!.name}\" "
                 tv_how_to_use_title.text = "How To Use " + addonDetails!!.name
                 if (addonDetails!!.total_installs.isNullOrEmpty() || addonDetails!!.total_installs.equals(
                         "--"
