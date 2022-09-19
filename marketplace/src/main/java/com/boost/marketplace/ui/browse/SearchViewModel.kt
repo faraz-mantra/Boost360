@@ -21,6 +21,7 @@ class SearchViewModel: BaseViewModel()  {
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
     var allBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
+    var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
 
     val compositeDisposable = CompositeDisposable()
 
@@ -34,6 +35,9 @@ class SearchViewModel: BaseViewModel()  {
         this.lifecycleOwner = lifecycleOwner
     }
 
+    fun cartResult(): LiveData<List<CartModel>> {
+        return cartResult
+    }
 
     fun addonsResult(): LiveData<List<FeaturesModel>> {
         return allFeaturesResult
@@ -51,6 +55,25 @@ class SearchViewModel: BaseViewModel()  {
         return updatesLoader
     }
 
+    fun getCartItems() {
+        updatesLoader.postValue(true)
+        CompositeDisposable().add(
+            AppDatabase.getInstance(Application())!!
+                .cartDao()
+                .getCartItems()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess {
+                    cartResult.postValue(it)
+                    updatesLoader.postValue(false)
+                }
+                .doOnError {
+                    updatesError.postValue(it.message)
+                    updatesLoader.postValue(false)
+                }
+                .subscribe()
+        )
+    }
 
     fun loadAddonsFromDB() {
         updatesLoader.postValue(true)

@@ -14,6 +14,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
@@ -43,6 +44,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_search.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>(), HomeListener,
     CompareListener, AddonsListener {
@@ -107,9 +110,14 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
         prefs = SharedPrefs(this)
         packageAdaptor = PackageRecyclerAdapter(allBundles, this, this)
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
+        loadData()
         initView()
         initMvvm()
 
+    }
+
+    private fun loadData() {
+        viewModel.getCartItems()
     }
 
     private fun initView() {
@@ -200,7 +208,12 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
                 progressDialog.dismiss()
             }
         })
+
+        viewModel.cartResult().observe(this, Observer {
+            cart_list = it
+        })
     }
+
 
     fun updateAllItemBySearchValue(searchValue: String){
         var searchFeatures: ArrayList<FeaturesModel> = arrayListOf()

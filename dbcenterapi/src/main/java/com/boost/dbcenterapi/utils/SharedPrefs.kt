@@ -45,6 +45,7 @@ class SharedPrefs(activity: Activity) {
   private val GST_API_RESULT = "GST API RESULT"
   private val LAST_USED_PAYMENT_MODE = "LAST_USED_PAYMENT_MODE"
   private val CART_VALIDITY_MONTHS = "CART_VALIDITY_MONTHS"
+  private val UPI_IDS = "UPI_IDS"
 
   private var editor: SharedPreferences.Editor? = null
 
@@ -298,6 +299,16 @@ class SharedPrefs(activity: Activity) {
 
   fun getSelectedDomainName(): String? {
     return pref!!.getString(SELECTED_DOMAIN_NAME, null)
+  }
+
+  fun storeUPIId(upiIdList: List<String>) {
+    val orderInfo = Gson().toJson(upiIdList)
+    editor!!.putString(UPI_IDS, orderInfo).apply()
+  }
+
+  fun getUPIId(): MutableList<String> {
+    val str = pref!!.getString(UPI_IDS, "")
+    return if (TextUtils.isEmpty(str)) ArrayList() else Gson().fromJson(str, object : TypeToken<MutableList<String?>?>() {}.type)
   }
 
 }

@@ -417,6 +417,7 @@ class FeatureDetailsActivity :
         }
 
         add_item_to_cart_new.setOnClickListener {
+            WebEngageController.trackEvent(ADD_ON_ACTIVATION_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
             if ((actionRequired == 3 || actionRequired == 4) && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                         || featureState == 5 || featureState == 6)
             ) {
@@ -1930,6 +1931,7 @@ class FeatureDetailsActivity :
                 )
                 add_item_to_cart_new.setTextColor(Color.WHITE)
             } else if (actionRequired == 0 && featureState == 1) {
+                WebEngageController.trackEvent(ADD_ON_VALIDITY_EXTENSION_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCaseHyperlink?.visibility = View.GONE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
@@ -2025,8 +2027,10 @@ class FeatureDetailsActivity :
                 else if (addonDetails!!.feature_code.equals("IVR") || addonDetails!!.feature_code.equals(
                         "CALLTRACKER"
                     )
-                )
+                ) {
+                    WebEngageController.trackEvent(ADD_ON_RENEW_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
                     add_item_to_cart_new.setText("Renew Call Tracking")
+                }
                 else if (addonDetails!!.feature_code!!.contains("EMAILACCOUNTS"))
                     add_item_to_cart_new.setText("Renew Business Email")
                 else
