@@ -640,17 +640,17 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
     }
 
     public void showDialogToGetImage() {
-        final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
-        imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
+        if (path.size() < 3){
+            final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
+            imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
+        }else {
+            Toast.makeText(getApplicationContext(),"You have added maximum number of images!",Toast.LENGTH_LONG).show();
+        }
     }
 
     private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
         if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
-            if (path.size() < 3){
-                cameraIntent();
-            }else {
-                Toast.makeText(getApplicationContext(),"You have added maximum number of images!",Toast.LENGTH_LONG).show();
-            }
+            cameraIntent();
         } else if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())) {
             galleryIntent();
         }
@@ -775,12 +775,8 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                 {
                     Uri picUri = data.getData();
                     if (picUri != null) {
-                        if (path.size() < 3){
-                            path.add(Methods.getPath(this, picUri));
-                            updateRecyclerView();
-                        }else {
-                            Toast.makeText(getApplicationContext(),"You have added maximum number of images!",Toast.LENGTH_LONG).show();
-                        }
+                        path.add(Methods.getPath(this, picUri));
+                        updateRecyclerView();
                     }
                 }
             }
