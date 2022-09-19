@@ -646,7 +646,11 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
 
     private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
         if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
-            cameraIntent();
+            if (path.size() < 3){
+                cameraIntent();
+            }else {
+                Toast.makeText(getApplicationContext(),"You have added maximum number of images!",Toast.LENGTH_LONG).show();
+            }
         } else if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())) {
             galleryIntent();
         }
@@ -771,8 +775,12 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                 {
                     Uri picUri = data.getData();
                     if (picUri != null) {
-                        path.add(Methods.getPath(this, picUri));
-                        updateRecyclerView();
+                        if (path.size() < 3){
+                            path.add(Methods.getPath(this, picUri));
+                            updateRecyclerView();
+                        }else {
+                            Toast.makeText(getApplicationContext(),"You have added maximum number of images!",Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             }
