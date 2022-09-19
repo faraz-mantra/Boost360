@@ -4,6 +4,7 @@ import android.app.Application
 import android.app.ProgressDialog
 import android.content.Intent
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProviders
 import com.boost.cart.CartActivity
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
@@ -15,8 +16,7 @@ import com.boost.marketplace.ui.details.FeatureDetailsViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
-import com.framework.webengageconstant.ADDONS_MARKETPLACE
-import com.framework.webengageconstant.ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART
+import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
@@ -88,7 +88,17 @@ class CallTrackAddToCartBottomSheet :
             dismiss()
         }
         binding?.tvCart?.setOnClickListener {
+            val event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()
+            event_attributes.put("Addon Discounted Price", singleAddon.price)
+            event_attributes.put("Addon Tag", singleAddon.name.toString())
+            event_attributes.put("Addon Discount %", singleAddon.discount_percent)
+            event_attributes.put("Addon Name", singleAddon.name.toString())
+            event_attributes.put("Addon Price", singleAddon.price)
+            event_attributes.put("Addon activatedDate", singleAddon.activatedDate.toString())
+            event_attributes.put("Addon expiryDate", singleAddon.expiryDate.toString())
 
+
+            WebEngageController.trackEvent(ADD_ON_MARKET_PLACE_ADDED_TO_CART, ADDONS_MARKETPLACE, event_attributes)
             if (blockedItem != null) {
                 if (!itemInCartStatus) {
                     if (singleAddon != null) {
