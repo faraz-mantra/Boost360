@@ -343,6 +343,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                      UPI_POPUP_FRAGMENT
                  )*/
                 val upiFragment = UPIPopUpFragement.newInstance(this)
+                upiFragment.setAmount("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
                 upiFragment.show(
                         (activity as PaymentActivity).supportFragmentManager,
                         UPI_POPUP_FRAGMENT
@@ -666,6 +667,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                      UPI_POPUP_FRAGMENT
                  )*/
                 val upiFragment = UPIPopUpFragement.newInstance(this)
+                upiFragment.setAmount("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
                 upiFragment.show(
                     (activity as PaymentActivity).supportFragmentManager,
                     UPI_POPUP_FRAGMENT

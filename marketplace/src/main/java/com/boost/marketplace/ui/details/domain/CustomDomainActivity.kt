@@ -35,6 +35,7 @@ import com.framework.pref.getAccessTokenAuth
 import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART
+import com.framework.webengageconstant.ADD_ON_ACTIVATION_CLICKED
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty

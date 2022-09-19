@@ -27,6 +27,7 @@ import org.json.JSONObject
 
 class UPIPopUpFragement : DialogFragment() {
 
+  private lateinit var amountValue: String
   lateinit var root: View
   private lateinit var viewModel: PaymentViewModel
 
@@ -75,6 +76,7 @@ class UPIPopUpFragement : DialogFragment() {
     }
     upi_popup_container_layout.setOnClickListener {}
 
+    upi_popup_submit.text = upi_popup_submit.text.toString() + " "+ amountValue
     upi_popup_submit.setOnClickListener {
       if (!validatingStatus) {
         validatingStatus = true
@@ -190,5 +192,9 @@ class UPIPopUpFragement : DialogFragment() {
     super.onResume()
 //    UserExperiorController.startScreen("MarketPlaceUPIPopUpFragement")
 
+  }
+
+  fun setAmount(amount: String) {
+    amountValue = amount
   }
 }
