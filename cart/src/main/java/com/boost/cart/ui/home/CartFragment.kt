@@ -3682,6 +3682,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
     }
 
     override fun deleteCartAddonsItem(item: CartModel) {
+        //remove selected domain
+        if(item.boost_widget_key!!.contains("DOMAINPURCHASE")){
+            prefs.storeSelectedDomainName(null)
+        }
         viewModel.deleteCartItems(item.item_id)
         couponDiwaliRedundant.remove(item.feature_code)
         //remove saved orderdetails from prefs
@@ -3957,6 +3961,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
         popupWindow.showAsDropDown(anchor, (anchor.width - 40), -166)
     }
 
+    override fun featureDetailsPopup(domain: String) {
+        cartPackageAdaptor.selectedDomain(domain)
+        prefs.storeSelectedDomainName(domain)
+    }
+
     override fun actionClick(cartModel: CartModel) {
         var selectedBundle: Bundles? = null
         for (item in bundlesList) {
@@ -3983,7 +3992,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
             }
         }
 
-        val dialogCard = FeatureDetailsPopup()
+        val dialogCard = FeatureDetailsPopup(this)
         val args = Bundle()
         args.putString("expCode", (activity as CartActivity).experienceCode)
         args.putStringArrayList("userPurchsedWidgets", (activity as CartActivity).userPurchsedWidgets)

@@ -103,6 +103,7 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
                 if (!itemInCartStatus) {
                     if (singleAddon != null) {
                         prefs.storeCartOrderInfo(null)
+                        prefs.storeSelectedDomainName(blockedItem)
                         viewModel!!.addItemToCart1(singleAddon, blockedItem ?: "")
                         val event_attributes: HashMap<String, Any> = HashMap()
                         singleAddon.name?.let { it1 -> event_attributes.put("Addon Name", it1) }

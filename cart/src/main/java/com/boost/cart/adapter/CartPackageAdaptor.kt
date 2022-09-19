@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
 import com.boost.cart.interfaces.ActionRequiredListener
 import com.boost.cart.interfaces.CartFragmentListener
+import com.boost.cart.utils.SharedPrefs
 import com.boost.cart.utils.Utils
 import com.boost.cart.utils.Utils.priceCalculatorForYear
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
@@ -47,6 +48,7 @@ class CartPackageAdaptor(
   private lateinit var context: Context
   private var upgradeList = ArrayList<FeaturesModel>()
   var minMonth = 1
+  var selectedDomainName = ""
 
 
   init {
@@ -96,12 +98,23 @@ class CartPackageAdaptor(
                 it1
         )
       }
+      if(selectedDomainName.isNotEmpty()){
+        val prefs = SharedPrefs(activity)
+        prefs.storeSelectedDomainName(null)
+      }
       listener.deleteCartAddonsItem(bundlesList.get(position))
+    }
+
+    if(selectedDomainName.isNotEmpty()){
+      holder.edge_cases_layout.visibility = View.GONE
+    }else{
+      holder.edge_cases_layout.visibility = View.VISIBLE
     }
 
     holder.edge_cases_layout.setOnClickListener {
       listener1.actionClick(bundlesList.get(position))
     }
+
     updateFeatures(bundlesList.get(position).item_id, holder)
 
 //    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
@@ -205,6 +218,11 @@ class CartPackageAdaptor(
     notifyItemRangeInserted(initPosition, upgradeList.size)
   }
 
+  fun selectedDomain(domainName: String){
+    this.selectedDomainName = domainName
+    notifyDataSetChanged()
+  }
+
   class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val name = itemView.findViewById<TextView>(R.id.package_title)
     val price = itemView.findViewById<TextView>(R.id.package_price)
@@ -249,7 +267,13 @@ class CartPackageAdaptor(
           for(singleFeaturesCode in temp){
             for(singleFeature in upgradeList) {
               if (singleFeaturesCode.feature_code.equals(singleFeature.feature_code!!)) {
-                tempFeatures.add(singleFeature)
+                if(singleFeaturesCode.feature_code.equals("DOMAINPURCHASE") && selectedDomainName.isNotEmpty()){
+                  val tempItem = singleFeature
+                  tempItem.name = selectedDomainName
+                  tempFeatures.add(tempItem)
+                }else {
+                  tempFeatures.add(singleFeature)
+                }
               }
             }
           }

@@ -23,6 +23,7 @@ class SharedPrefs(activity: Activity) {
   private val po_price = "Last_Purchase_Order_Price"
   private val po_payment_success = "Last_payment_status"
   private val DOMAIN_ORDER_TYPE = "DOMAIN_ORDER_TYPE"
+  private val SELECTED_DOMAIN_NAME = "SELECTED_DOMAIN_NAME"
   private val fp_email = "GET_FP_DETAILS_EMAIL"
 
   private val CART_ORDER_INFO = "CART_ORDER_INFO"
@@ -289,6 +290,14 @@ class SharedPrefs(activity: Activity) {
 
   fun getDomainOrderType(): Int {
     return pref!!.getInt(DOMAIN_ORDER_TYPE, 0)
+  }
+
+  fun storeSelectedDomainName(value: String?){
+    editor!!.putString(SELECTED_DOMAIN_NAME, value).apply()
+  }
+
+  fun getSelectedDomainName(): String? {
+    return pref!!.getString(SELECTED_DOMAIN_NAME, null)
   }
 
 }

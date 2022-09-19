@@ -11,6 +11,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import com.boost.cart.CartActivity
 import com.boost.cart.R
+import com.boost.cart.interfaces.CartFragmentListener
+import com.boost.cart.ui.home.CartFragment
 import com.boost.cart.ui.home.CartViewModel
 import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
@@ -34,7 +36,7 @@ import kotlinx.android.synthetic.main.view_select_website.view.selectWebsiteSubm
 import kotlinx.android.synthetic.main.view_selected_number.*
 import kotlinx.android.synthetic.main.view_selected_website.view.*
 
-class FeatureDetailsPopup : DialogFragment() {
+class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment() {
     private var domainName: String? = null
     var experienceCode: String? = null
     var screenType: String? = null
@@ -125,6 +127,7 @@ class FeatureDetailsPopup : DialogFragment() {
             view.tv_explore_select_website1.setOnClickListener {
                 exploreDomainOptions()
             }
+            listener.featureDetailsPopup(domainName!!)
         }
 
 //        selectedNumberContinue.setOnClickListener {

@@ -7,4 +7,5 @@ interface CartFragmentListener {
   fun deleteCartAddonsItem(item: CartModel)
   fun showBundleDetails(itemID: String)
   fun actionClickRenewal(position: Int, renewalResult: CartModel, action: Int)
+  fun featureDetailsPopup(domain: String)
 }

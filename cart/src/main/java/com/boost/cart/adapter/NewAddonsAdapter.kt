@@ -1,6 +1,7 @@
 package com.boost.cart.adapter
 
 import android.content.Context
+import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.CartActivity
 import com.boost.cart.R
@@ -39,7 +41,13 @@ class NewAddonsAdapter(
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
 
-        holder.name.setText(upgradeList.get(position).name)
+        if(upgradeList.get(position).feature_code.equals("DOMAINPURCHASE") && upgradeList.get(position).name!!.contains(".")){
+            holder.name.setText(upgradeList.get(position).name)
+            holder.name.setTypeface(ResourcesCompat.getFont(context, R.font.bold))
+        }else{
+            holder.name.setText(upgradeList.get(position).name)
+            holder.name.setTypeface(ResourcesCompat.getFont(context, R.font.regular))
+        }
 
         Glide.with(context).load(upgradeList.get(position).primary_image).into(holder.image)
 

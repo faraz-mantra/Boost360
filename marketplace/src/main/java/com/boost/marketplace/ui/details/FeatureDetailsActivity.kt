@@ -540,6 +540,7 @@ class FeatureDetailsActivity :
     fun initMvvm() {
         viewModel.PurchasedDomainResponse().observe(this, Observer {
             prefs.storeDomainOrderType(1)
+            prefs.storeSelectedDomainName(it.domainName+it.domainType)
             viewModel.addItemToCart1(addonDetails!!, this, it.domainName+it.domainType)
             viewModel.getCartItems()
         })
