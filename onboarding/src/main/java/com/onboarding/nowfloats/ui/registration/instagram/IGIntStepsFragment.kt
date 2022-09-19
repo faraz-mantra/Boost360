@@ -128,7 +128,7 @@ class IGIntStepsFragment: AppBaseFragment<FragmentIgIntStepsBinding, BusinessCre
 
         video?.videourl?.url?.let {
             ExoPlayerUtils.prepare(it)
-        }?:showLongToast(getString(R.string.unable_to_play_video))
+        }//?:showLongToast(getString(R.string.unable_to_play_video))
 
 
     }
