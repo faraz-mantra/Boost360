@@ -21,8 +21,7 @@ import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
-import com.framework.webengageconstant.ADDONS_MARKETPLACE
-import com.framework.webengageconstant.ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART
+import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
@@ -116,6 +115,7 @@ class SelectNumberBottomSheet :
 
         binding?.tvSelectNumber?.text = ss
         binding?.tvSelectNumber?.setOnClickListener {
+            WebEngageController.trackEvent(VIRTUAL_NUMBER_SEARCH_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
             fpid = requireArguments().getString("fpid")
 
             val intent = Intent(requireContext(), CallTrackingActivity::class.java)
