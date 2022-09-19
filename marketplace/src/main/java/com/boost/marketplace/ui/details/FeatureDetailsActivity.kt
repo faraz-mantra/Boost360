@@ -417,7 +417,14 @@ class FeatureDetailsActivity :
         }
 
         add_item_to_cart_new.setOnClickListener {
-            WebEngageController.trackEvent(ADD_ON_ACTIVATION_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
+            if(add_item_to_cart_new.text.equals("Add to cart")){
+                WebEngageController.trackEvent(ADD_ON_ACTIVATION_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
+            } else {
+                val event_attributes: HashMap<String, Any> = HashMap()
+                addonDetails?.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
+                WebEngageController.trackEvent(ADD_ON_ACTIVATION_CLICKED, ADDONS_MARKETPLACE, event_attributes)
+            }
+
             if ((actionRequired == 3 || actionRequired == 4) && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                         || featureState == 5 || featureState == 6)
             ) {
