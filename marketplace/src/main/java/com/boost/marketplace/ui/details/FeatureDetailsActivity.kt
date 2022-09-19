@@ -33,7 +33,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.BenifitsPageTransformerFullWidth
 import com.boost.cart.adapter.ZoomOutPageTransformer
-import com.boost.cart.utils.MixPanelConstants
 import com.boost.cart.utils.Utils
 import com.boost.cart.utils.Utils.priceCalculatorForYear
 import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
