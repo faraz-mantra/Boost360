@@ -1,18 +1,23 @@
 package com.boost.payment.ui.popup
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
-import com.boost.payment.R
+import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.payment.PaymentActivity
+import com.boost.payment.R
 import com.boost.payment.interfaces.UpiPayListener
 import com.boost.payment.ui.payment.PaymentViewModel
 import com.boost.payment.utils.Utils
 import com.boost.payment.utils.WebEngageController
+import com.framework.utils.toArrayList
 import com.framework.webengageconstant.*
 import com.razorpay.Razorpay
 import com.razorpay.ValidateVpaCallback
@@ -28,6 +33,7 @@ class UPIPopUpFragement : DialogFragment() {
   lateinit var razorpay: Razorpay
 
   var validatingStatus = false
+  lateinit var prefs: SharedPrefs
 
   companion object {
     lateinit var listener: UpiPayListener
@@ -50,7 +56,7 @@ class UPIPopUpFragement : DialogFragment() {
     savedInstanceState: Bundle?
   ): View? {
     root = inflater.inflate(R.layout.add_upi_id_popup, container, false)
-
+    prefs = activity?.let { SharedPrefs(it) }!!
     razorpay = (activity as PaymentActivity).getRazorpayObject()
 
     return root
@@ -78,6 +84,16 @@ class UPIPopUpFragement : DialogFragment() {
       }
     }
     WebEngageController.trackEvent(ADDONS_MARKETPLACE_ADD_UPI_LOADED, ADD_UPI, NO_EVENT_VALUE)
+
+    val adapter = context?.let {
+      ArrayAdapter(
+        requireActivity(),
+        android.R.layout.simple_dropdown_item_1line,
+        prefs.getUPIId().toList()
+      )
+    }
+
+    upi_popup_value.setAdapter(adapter)
   }
 
   fun validateVPA() {
@@ -91,6 +107,12 @@ class UPIPopUpFragement : DialogFragment() {
           return
         }
         if (p0!!.get("success") == true) {
+          if(save_upi_info.isChecked){
+            val upiIdList = prefs.getUPIId()
+            upiIdList?.add(upi_popup_value.text.toString())
+            prefs.storeUPIId(upiIdList)
+          }
+
           WebEngageController.trackEvent(
             ADDONS_MARKETPLACE_UPI_VALIDATION_SUCCESS,
             upi_popup_value.text.toString(),

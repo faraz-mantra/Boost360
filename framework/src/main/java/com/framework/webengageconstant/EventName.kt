@@ -611,3 +611,11 @@ const val Promotional_Update_Category_Album_View_Click="Promotional_Update_Categ
 
 const val ECOM_BUSINESS_VERIFICATION_LOAD="Ecom_Business_Verification_Load"
 const val ECOM_BUSINESS_VERIFICATION_UPDATE="Ecom_Business_Verification_Update"
+
+const val ADD_ON_ACTIVATION_CLICKED = "Addon_activation_clicked"
+const val ADD_ON_VALIDITY_EXTENSION_CLICKED =  "Addon_validty_extention_clicked"
+const val ADD_ON_RENEW_CLICKED = "Addon_renew_clicked"
+const val ADD_ON_MARKET_PLACE_ADDED_TO_CART = "ADDONS_MARKETPLACE Addon added to cart"
+const val VIRTUAL_NUMBER_SEARCH_CLICKED = "Virtual Number Search Clicked"
+const val VIRTUAL_NUMBER_SEARCH_LOADED = "Virtual Number Search Loaded"
+const val VIRTUAL_NUMBER_SELECTED = "Virtual Number Selected"
