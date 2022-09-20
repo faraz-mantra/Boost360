@@ -55,6 +55,7 @@ class FestivePosterSvgRenderCache:SvgRenderCacheUtil() {
                 if (replaceVal==null){
                     replaceVal =  getDefaultReplaceVal(it.name)
                 }
+                replaceVal = replaceVal?.replace("&","AND")
                 result = result?.replace("{{"+it.name+"}}",replaceVal.toString())
             }
         }

@@ -29,7 +29,11 @@ class BusinessNameBottomSheet : BaseBottomSheetDialog<BottomSheetBusinessNameBin
     this.businessProfileModel = arguments?.get(IntentConstant.BUSINESS_DETAILS.name) as? BusinessProfileModel
     binding?.cetBusinessName?.post {
       binding?.cetBusinessName?.setText(businessProfileModel?.businessName)
-      binding?.cetBusinessName?.setSelection(businessProfileModel?.businessName?.length ?: 0)
+      if ((binding?.cetBusinessName?.text?.length
+          ?: 0) >= (businessProfileModel?.businessName?.length ?: 0)
+      ){
+        binding?.cetBusinessName?.setSelection(businessProfileModel?.businessName?.length ?: 0)
+      }
     }
     baseActivity.showKeyBoard(binding?.cetBusinessName)
     binding?.btnPublish?.isEnabled = false
