@@ -122,7 +122,7 @@ class OrderConfirmationFragment : BaseFragment() {
 
       validity.text=prefs.getValidityMonths()+ prefs.getValidityMonths()?.toInt()
         ?.let { Utils.yearOrMonthText(it,requireActivity(),true) }
-
+      default_validity_months = if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toInt() else 1
       val oneMonthFromNow = Calendar.getInstance()
       oneMonthFromNow.add(
         Calendar.MONTH,
