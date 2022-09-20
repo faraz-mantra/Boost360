@@ -37,6 +37,7 @@ class PaymentActivity : AppCompatActivity() {
     var amount: Double = 0.0
     var netPrice: Double = 0.0
     var months:Int = -1
+    lateinit var items : String
 
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
 
@@ -57,8 +58,10 @@ class PaymentActivity : AppCompatActivity() {
             couponAmount = intent.getDoubleExtra("couponAmount",0.0)
         }
         months = intent.getIntExtra("months",0)
+        items = intent.getStringExtra("cartItems")!!
 
         prefs = SharedPrefs(this)
+
 
         initView()
         initRazorPay()

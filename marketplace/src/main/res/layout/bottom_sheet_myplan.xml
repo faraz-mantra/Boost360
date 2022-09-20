@@ -220,6 +220,7 @@
                     android:background="@drawable/rounded_border_red_white_bg"
                     android:padding="16dp"
                     android:visibility="gone"
+                    tools:visibility="visible"
                     android:layout_marginTop="@dimen/_15sdp"
                     app:layout_constraintEnd_toEndOf="@+id/cslayout"
                     app:layout_constraintStart_toStartOf="@+id/cslayout"

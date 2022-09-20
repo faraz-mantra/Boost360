@@ -1,6 +1,7 @@
 package com.boost.payment.ui.confirmation
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -60,6 +61,12 @@ class FailedTransactionFragment : BaseFragment() {
 
         viewModel = ViewModelProviders.of(this).get(OrderConfirmationViewModel::class.java)
     //    viewModel.emptyCurrentCart((activity as PaymentActivity).application);
+
+        contact_support.setOnClickListener {
+            val callIntent = Intent(Intent.ACTION_DIAL)
+            callIntent.data = Uri.parse("tel:" + prefs.getExpertContact())
+            startActivity(Intent.createChooser(callIntent, "Call by:"))
+        }
 
         transaction_failed_retry.setOnClickListener {
 
