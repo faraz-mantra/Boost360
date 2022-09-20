@@ -3394,6 +3394,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
                 for (i in 0 until it.size) {
                     it[i].data?.let { it1 -> couponData.addAll(it1) }
                 }
+                if (couponData.size == 1){
+                    tv_Show_less.visibility = GONE
+                    tv_Show_more.visibility = GONE
+                }
                 if (couponData.size > 0) {
                     divider5.visibility = VISIBLE
                     System.out.println("CouponData" + couponData)
@@ -3806,6 +3810,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
             )
             intent.putExtra("couponAmount", couponDiscountAmount)
         }
+        intent.putExtra("cartItems",cartList.size.toString())
         intent.putExtra("discountText", total)
         intent.putExtra("transaction_id", result.Result.TransactionId)
         intent.putExtra("email", (activity as CartActivity).email)

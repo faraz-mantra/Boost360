@@ -266,6 +266,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             (activity as PaymentActivity).popFragmentFromBackStack()
         }
 
+        payment_amount_title.text = "Cart total (" + (activity as PaymentActivity).items  + " items)"
+
         payment_submit.setOnClickListener {
             if (paymentData.length() > 0) {
                 payThroughRazorPay()
