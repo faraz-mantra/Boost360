@@ -417,7 +417,14 @@ class FeatureDetailsActivity :
         }
 
         add_item_to_cart_new.setOnClickListener {
-            WebEngageController.trackEvent(ADD_ON_ACTIVATION_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
+            if(add_item_to_cart_new.text.equals("Add to cart")){
+                WebEngageController.trackEvent(ADD_ON_ACTIVATION_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
+            } else {
+                val event_attributes: HashMap<String, Any> = HashMap()
+                addonDetails?.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
+                WebEngageController.trackEvent(ADD_ON_ACTIVATION_CLICKED, ADDONS_MARKETPLACE, event_attributes)
+            }
+
             if ((actionRequired == 3 || actionRequired == 4) && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                         || featureState == 5 || featureState == 6)
             ) {
@@ -455,6 +462,13 @@ class FeatureDetailsActivity :
                     }
                     else -> {
                         add_item_to_cart.text = "Add to cart"
+                        val event_attributes: HashMap<String, Any> = HashMap()
+                        addonDetails?.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
+                        WebEngageController.trackEvent(
+                            ADD_ON_GOTO_CART_CLICKED,
+                            ADDONS_MARKETPLACE,
+                            event_attributes
+                        )
                     }
                 }
                 bottom_box.visibility = VISIBLE
@@ -1878,6 +1892,13 @@ class FeatureDetailsActivity :
                     R.drawable.cta_button_click_effect
                 )
                 add_item_to_cart_new.setTextColor(Color.WHITE)
+                val event_attributes: HashMap<String, Any> = HashMap()
+                addonDetails?.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
+                WebEngageController.trackEvent(
+                    ADD_ON_ACTIVATION_CLICKED,
+                    ADDONS_MARKETPLACE,
+                    event_attributes
+                )
             } else if (actionRequired == 3 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                         || featureState == 5 || featureState == 6)
             ) {
@@ -1961,6 +1982,13 @@ class FeatureDetailsActivity :
                     R.drawable.cta_button_click_effect
                 )
                 add_item_to_cart_new.setTextColor(Color.WHITE)
+                val event_attributes: HashMap<String, Any> = HashMap()
+                addonDetails?.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
+                WebEngageController.trackEvent(
+                    ADD_ON_VALIDITY_EXTENSION_CLICKED,
+                    ADDONS_MARKETPLACE,
+                    event_attributes
+                )
             } else if (actionRequired == 0 && featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6) {
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCaseHyperlink?.visibility = View.GONE
@@ -2022,8 +2050,16 @@ class FeatureDetailsActivity :
                 )
                 binding?.edgeCaseDesc?.setText("You need to renew this feature to continue using this feature.")
                 bottom_box_only_btn.visibility = VISIBLE
-                if (addonDetails!!.feature_code.equals("DOMAINPURCHASE"))
+                if (addonDetails!!.feature_code.equals("DOMAINPURCHASE")) {
                     add_item_to_cart_new.setText("Renew Custom Domain")
+                    val event_attributes: HashMap<String, Any> = HashMap()
+                    addonDetails?.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
+                    WebEngageController.trackEvent(
+                        ADD_ON_RENEW_CLICKED,
+                        ADDONS_MARKETPLACE,
+                        event_attributes
+                    )
+                }
                 else if (addonDetails!!.feature_code.equals("IVR") || addonDetails!!.feature_code.equals(
                         "CALLTRACKER"
                     )

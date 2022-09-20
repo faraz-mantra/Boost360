@@ -625,3 +625,6 @@ const val ADD_ON_MARKET_PLACE_ADDED_TO_CART = "ADDONS_MARKETPLACE Addon added to
 const val VIRTUAL_NUMBER_SEARCH_CLICKED = "Virtual Number Search Clicked"
 const val VIRTUAL_NUMBER_SEARCH_LOADED = "Virtual Number Search Loaded"
 const val VIRTUAL_NUMBER_SELECTED = "Virtual Number Selected"
+const val ADD_ON_MANAGE_ACTIVE_FEATURES_CLICKED = "Addon_manage_active_features_clicked"
+const val ADD_ON_GOTO_CART_CLICKED = "Addon_goto_cart_clicked"
+const val ADD_ONS_DETAILED_JOURNEY_CLICKED = "ADDONS_detailed_journey_Clicked"
