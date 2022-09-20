@@ -3,9 +3,7 @@ package com.boost.marketplace.ui.popup.customdomains
 import android.app.Application
 import android.app.ProgressDialog
 import android.content.Intent
-import android.view.View
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.boost.cart.CartActivity
 import com.boost.dbcenterapi.data.api_model.CustomDomain.Domain
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
@@ -13,6 +11,7 @@ import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.dbcenterapi.utils.WebEngageController
 import com.boost.marketplace.R
 import com.boost.marketplace.databinding.PopupConfirmedCustomDomainBinding
+import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 import com.boost.marketplace.ui.details.domain.CustomDomainViewModel
 import com.framework.analytics.SentryController
 import com.framework.base.BaseBottomSheetDialog
@@ -23,7 +22,7 @@ import com.framework.webengageconstant.ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCustomDomainBinding, CustomDomainViewModel>() {
+class ConfirmedCustomDomainBottomSheet(val activity: CustomDomainActivity) : BaseBottomSheetDialog<PopupConfirmedCustomDomainBinding, CustomDomainViewModel>() {
 
     var blockedItem: String?=null
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
@@ -36,6 +35,7 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
     var accountType: String? = null
     var isDeepLink: Boolean = false
     var doDomainBooking: Boolean = false
+    var domainSelectionForCart: Boolean = false
     var isOpenCardFragment: Boolean = false
     var deepLinkViewType: String = ""
     var deepLinkDay: Int = 7
@@ -51,10 +51,6 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
         return R.layout.popup_confirmed_custom_domain
     }
 
-    companion object {
-        fun newInstance() = ConfirmedCustomDomainBottomSheet()
-    }
-
     override fun getViewModelClass(): Class<CustomDomainViewModel> {
         return CustomDomainViewModel::class.java
     }
@@ -65,6 +61,7 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
         experienceCode = requireArguments().getString("expCode")
         fpid = requireArguments().getString("fpid")
         doDomainBooking = requireArguments().getBoolean("doDomainBooking", false)
+        domainSelectionForCart = requireArguments().getBoolean("domainSelectionForCart", false)
         isDeepLink = requireArguments().getBoolean("isDeepLink", false)
         deepLinkViewType = requireArguments().getString("deepLinkViewType") ?: ""
         deepLinkDay =requireArguments().getString("deepLinkDay")?.toIntOrNull() ?: 7
@@ -81,10 +78,14 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
         prefs = SharedPrefs(baseActivity)
 
         binding?.tvTitle?.text=blockedItem
-        if(doDomainBooking){
-            binding?.tvCart?.text = "Book Domain"
+        if(domainSelectionForCart){
+            binding?.tvCart?.text = "Select above domain"
         }else {
-            binding?.tvCart?.text = "Add to cart at $domainPricing"
+            if (doDomainBooking) {
+                binding?.tvCart?.text = "Book Domain"
+            } else {
+                binding?.tvCart?.text = "Add to cart at $domainPricing"
+            }
         }
 
         //loadData()
@@ -95,7 +96,12 @@ class ConfirmedCustomDomainBottomSheet : BaseBottomSheetDialog<PopupConfirmedCus
         }
 
         binding?.tvCart?.setOnClickListener {
-
+            if(domainSelectionForCart){
+                prefs.storeSelectedDomainName(blockedItem!!)
+                activity.finish()
+                dismiss()
+                return@setOnClickListener
+            }
             if (doDomainBooking) {
                 viewModel?.bookDomainActivation(blockedItem!!, requireActivity().application, requireActivity())
             } else {

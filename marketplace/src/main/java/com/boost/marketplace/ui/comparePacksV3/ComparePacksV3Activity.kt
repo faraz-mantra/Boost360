@@ -1,5 +1,6 @@
 package com.boost.marketplace.ui.comparePacksV3
 
+import android.app.Application
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -12,6 +13,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -33,7 +35,10 @@ import com.boost.marketplace.databinding.ActivityComparePacksv3Binding
 import com.boost.marketplace.interfaces.AddonsListenerV3
 import com.boost.marketplace.interfaces.PacksV3FooterListener
 import com.boost.marketplace.interfaces.PacksV3listener
+import com.boost.marketplace.interfaces.AddonsListener
+import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
+import com.boost.marketplace.ui.popup.removeItems.RemoveFeatureBottomSheet
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.framework.utils.RootUtil
@@ -41,6 +46,7 @@ import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_COMPARE_PACKAGE_ADDED_TO_CART
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -50,7 +56,7 @@ import java.util.*
 
 class ComparePacksV3Activity :
     AppBaseActivity<ActivityComparePacksv3Binding, ComparePacksViewModel>(), PacksV3listener,
-    PacksV3FooterListener,AddonsListenerV3 {
+    PacksV3FooterListener,AddonsListenerV3, CompareListener, AddonsListener {
 
     var experienceCode: String? = null
     var screenType: String? = null
@@ -84,6 +90,9 @@ class ComparePacksV3Activity :
     private var annualPlan = false
     var selectedBundle: Bundles? = null
     var itemInCart = false
+
+    val sameAddonsInCart = ArrayList<String>()
+    val addonsListInCart = ArrayList<String>()
 
     //  var listItem=ArrayList<Bundles>()
     var upgradeList: ArrayList<Bundles>? = null
@@ -143,7 +152,7 @@ class ComparePacksV3Activity :
             window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
         }
 
-//      loadData()
+      loadData()
         initMvvm()
         initializeHowToUseRecycler()
         initializeFAQRecycler()
@@ -172,7 +181,32 @@ class ComparePacksV3Activity :
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                             {
-//                                            featuresList = it
+
+                                if(cartList != null) {
+                                    //same features available in cart
+                                    for (singleItem in cartList!!) {
+                                        for (singleFeature in it) {
+                                            if (singleFeature.boost_widget_key.equals(singleItem.boost_widget_key)) {
+                                                sameAddonsInCart.add(singleFeature.name!!)
+                                                addonsListInCart.add(singleItem.item_id)
+                                            }
+                                        }
+                                        //if there is any other bundle available remove it
+                                        if (singleItem.item_type.equals("bundles")) {
+                                            addonsListInCart.add(singleItem.item_id)
+                                        }
+                                    }
+                                }
+
+                                if(sameAddonsInCart.size > 0){
+                                    val removeFeatureBottomSheet = RemoveFeatureBottomSheet(this, this, null)
+                                    val args = Bundle()
+                                    args.putStringArrayList("addonNames", sameAddonsInCart)
+                                    args.putStringArrayList("addonsListInCart", addonsListInCart)
+                                    args.putString("packageDetails", Gson().toJson(bundleData!!))
+                                    removeFeatureBottomSheet.arguments = args
+                                    removeFeatureBottomSheet.show(supportFragmentManager, RemoveFeatureBottomSheet::class.java.name)
+                                }else {
                                 var bundleMonthlyMRP = 0.0
                                 val minMonth: Int =
                                     if (!prefs.getYearPricing() && selectedBundle!!.min_purchase_months != null && selectedBundle!!.min_purchase_months!! > 1) selectedBundle!!.min_purchase_months!! else 1
@@ -200,24 +234,10 @@ class ComparePacksV3Activity :
 
                                 //clear cartOrderInfo from SharedPref to requestAPI again
                                 prefs.storeCartOrderInfo(null)
-                                viewModel.addItemToCartPackage1(
-                                    CartModel(
-                                        selectedBundle!!._kid,
-                                        null,
-                                        null,
-                                        selectedBundle!!.name,
-                                        "",
-                                        selectedBundle!!.primary_image!!.url,
-                                        offeredBundlePrice.toDouble(),
-                                        originalBundlePrice.toDouble(),
-                                        selectedBundle!!.overall_discount_percent,
-                                        1,
-                                        if (!prefs.getYearPricing() && selectedBundle!!.min_purchase_months != null) selectedBundle!!.min_purchase_months!! else 1,
-                                        "bundles",
-                                        null,
-                                        ""
-                                    )
-                                )
+
+                                    //remove other bundle and add existing bundle to cart
+                                    removeOtherBundlesAndAddExistingBundle(addonsListInCart)
+
                                 val event_attributes: java.util.HashMap<String, Any> =
                                     java.util.HashMap()
                                 selectedBundle!!.name?.let { it1 ->
@@ -249,6 +269,7 @@ class ComparePacksV3Activity :
                                     ADDONS_MARKETPLACE,
                                     event_attributes
                                 )
+                                }
                             },
                             {
                                 it.printStackTrace()
@@ -339,9 +360,46 @@ class ComparePacksV3Activity :
         
     }
 
+    fun removeOtherBundlesAndAddExistingBundle(addonsListInCart: List<String>){
+        Completable.fromAction {
+            AppDatabase.getInstance(Application())!!.cartDao().deleteCartItemsInList(addonsListInCart)
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnComplete {
+                viewModel.addItemToCartPackage1(
+                    CartModel(
+                        selectedBundle!!._kid,
+                        null,
+                        null,
+                        selectedBundle!!.name,
+                        "",
+                        selectedBundle!!.primary_image!!.url,
+                        offeredBundlePrice.toDouble(),
+                        originalBundlePrice.toDouble(),
+                        selectedBundle!!.overall_discount_percent,
+                        1,
+                        if (!prefs.getYearPricing() && selectedBundle!!.min_purchase_months != null) selectedBundle!!.min_purchase_months!! else 1,
+                        "bundles",
+                        null,
+                        ""
+                    )
+                )
+                viewModel.getCartItems()
+            }
+            .doOnError {
+                Toast.makeText(this, "Not able to Delete the Add-ons!!", Toast.LENGTH_LONG).show()
+                viewModel.getCartItems()
+            }
+            .subscribe()
+    }
+
     override fun onResume() {
         super.onResume()
-        loadData()
+//        loadData()
+        if(upgradeList!=null) {
+            viewModel.getCartItems()
+        }
     }
 
     private fun loadData() {
@@ -418,6 +476,16 @@ class ComparePacksV3Activity :
 //                Log.v("badgeNumber", " " + badgeNumber)
             } else {
                 cartCount = 0
+                binding?.buyPack?.setTextColor(this.resources.getColor(R.color.white))
+                binding?.buyPack?.background = ContextCompat.getDrawable(
+                    this.applicationContext,
+                    R.drawable.ic_cart_continue_bg
+                )
+                var originalText = selectedBundle?.name
+                originalText = originalText?.lowercase(Locale.getDefault())
+                binding?.buyPack?.text = "Buy " + originalText
+                //  binding?.buyPack?.setText("Buy ${selectedBundle!!.name}".toLowerCase())
+                binding?.buyPack?.isClickable = true
                 //badgeNumber = 0
                 //   badge121.visibility = View.GONE
                 packageInCartStatus = false
@@ -673,7 +741,7 @@ class ComparePacksV3Activity :
         packsAddonsAdapter.addupdates(addonsList)
     }
 
-    override fun onPackageClicked(item: Bundles?, image: ImageView?) {
+    override fun onPackageClickedV3(item: Bundles?, image: ImageView?) {
         val dialogCard = ComparePacksV3BottomSheet()
         val args = Bundle()
         args.putString("fpid", fpid)
@@ -806,6 +874,35 @@ class ComparePacksV3Activity :
         args.putDouble("price1", originalBundlePrice)
         packagePopup.arguments = args
         packagePopup.show(supportFragmentManager, "PACKAGE_POPUP")
+    }
+
+    override fun onAddonsClicked(item: FeaturesModel) {
+    }
+
+    override fun onRefreshCart() {
+        viewModel.getCartItems()
+    }
+
+    override fun onPackageClicked(item: Bundles?, image: ImageView?) {
+        viewModel.addItemToCartPackage1(
+            CartModel(
+                selectedBundle!!._kid,
+                null,
+                null,
+                selectedBundle!!.name,
+                "",
+                selectedBundle!!.primary_image!!.url,
+                offeredBundlePrice.toDouble(),
+                originalBundlePrice.toDouble(),
+                selectedBundle!!.overall_discount_percent,
+                1,
+                if (!prefs.getYearPricing() && selectedBundle!!.min_purchase_months != null) selectedBundle!!.min_purchase_months!! else 1,
+                "bundles",
+                null,
+                ""
+            )
+        )
+        viewModel.getCartItems()
     }
 
 }

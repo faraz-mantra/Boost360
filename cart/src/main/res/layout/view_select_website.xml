@@ -148,9 +148,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
-                        android:layout_marginTop="17dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="24dp"
+                        android:padding="@dimen/_10sdp"
                         android:fontFamily="@font/regular"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:drawableEnd="@drawable/yellow_down_arrow"
                         android:lineHeight="22dp"
                         android:lineSpacingExtra="6dp"
                         android:text="Explore domain options"
@@ -161,15 +164,6 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_empty_select_website" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:src="@drawable/yellow_down_arrow"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_explore_select_website"
-                        app:layout_constraintStart_toEndOf="@id/tv_explore_select_website"
-                        app:layout_constraintTop_toTopOf="@id/tv_explore_select_website" />
 
                     <TextView
                         android:id="@+id/selectWebsiteSubmit"

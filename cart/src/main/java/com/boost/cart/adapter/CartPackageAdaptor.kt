@@ -115,7 +115,7 @@ class CartPackageAdaptor(
       listener1.actionClick(bundlesList.get(position))
     }
 
-    updateFeatures(bundlesList.get(position).item_id, holder)
+    updateFeatures(bundlesList.get(position), holder)
 
 //    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 //    if (bundlesList.size - 1 == position) {
@@ -254,11 +254,11 @@ class CartPackageAdaptor(
     holder.orig_cost.text = origCost
   }
 
-  fun updateFeatures(bundleId: String, holder: upgradeViewHolder) {
+  fun updateFeatures(bundleItem: CartModel, holder: upgradeViewHolder) {
     CompositeDisposable().add(
       AppDatabase.getInstance(activity.application)!!
         .bundlesDao()
-        .getBundleItemById(bundleId)
+        .getBundleItemById(bundleItem.item_id)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({
@@ -279,7 +279,7 @@ class CartPackageAdaptor(
           }
           holder.addon_amount.text = "Includes "+tempFeatures.size+" addons"
           val linearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-          holder.adapter = NewAddonsAdapter(tempFeatures)
+          holder.adapter = NewAddonsAdapter(tempFeatures, listener, bundleItem)
           holder.ChildRecyclerView.adapter = holder.adapter
           holder.ChildRecyclerView.layoutManager = linearLayoutManager
 //          holder.used_by.setText("Used by "+it.+"+ businesses")

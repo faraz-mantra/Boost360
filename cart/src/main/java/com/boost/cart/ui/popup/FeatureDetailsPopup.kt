@@ -426,7 +426,9 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
             intent.putExtra("expCode", experienceCode)
             intent.putExtra("fpid", fpid)
             intent.putExtra("bundleData", Gson().toJson(singleAddon))
+            intent.putExtra("domainSelectionForCart", true)
             startActivity(intent)
+            dismiss()
         } catch (e: ClassNotFoundException) {
             e.printStackTrace()
         }

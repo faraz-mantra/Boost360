@@ -137,8 +137,7 @@ class OrderConfirmationFragment : BaseFragment() {
           oneMonthFromNow.time
         )
       )
-
-
+      
       //clear CartRelatedInfo
       prefs.storeOrderSuccessFlag(true)
       prefs.storeCartOrderInfo(null)

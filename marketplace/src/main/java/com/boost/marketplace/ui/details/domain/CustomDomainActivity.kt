@@ -35,7 +35,6 @@ import com.framework.pref.getAccessTokenAuth
 import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART
-import com.framework.webengageconstant.ADD_ON_ACTIVATION_CLICKED
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
@@ -56,6 +55,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
     var accountType: String? = null
     var isDeepLink: Boolean = false
     var isOpenCardFragment: Boolean = false
+    var domainSelectionForCart: Boolean = false
     var deepLinkViewType: String = ""
     var deepLinkDay: Int = 7
     var userPurchsedWidgets = java.util.ArrayList<String>()
@@ -97,6 +97,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         profileUrl = intent.getStringExtra("profileUrl")
         accountType = intent.getStringExtra("accountType")
         isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
+        domainSelectionForCart = intent.getBooleanExtra("domainSelectionForCart", false)
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: java.util.ArrayList()
         val jsonString = intent.extras?.getString("bundleData")
         singleAddon = Gson().fromJson<FeaturesModel>(jsonString, object : TypeToken<FeaturesModel>() {}.type)
@@ -125,13 +126,14 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             if(blockedItem!=null //&& result ==false
             ) {
                 binding?.btnSelectDomain?.isClickable = true
-                val dialogCard = ConfirmedCustomDomainBottomSheet()
+                val dialogCard = ConfirmedCustomDomainBottomSheet(this)
                 val bundle = Bundle()
                 bundle.putString("blockedItem", blockedItem)
                 bundle.putString("fpid", fpid)
                 bundle.putString("fpTag", fpTag)
                 bundle.putString("price",pricing)
                 bundle.putBoolean("doDomainBooking", doDomainBooking)
+                bundle.putBoolean("domainSelectionForCart", domainSelectionForCart)
                 bundle.putString("expCode", experienceCode)
                 bundle.putString("bundleData", Gson().toJson(singleAddon))
                 bundle.putString("isDeepLink", isDeepLink.toString())
@@ -407,7 +409,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         blockedItem=itemList?.name
         if(blockedItem!=null //&& result ==false
         ) {
-            val dialogCard = ConfirmedCustomDomainBottomSheet()
+            val dialogCard = ConfirmedCustomDomainBottomSheet(this)
             val bundle = Bundle()
             bundle.putString("blockedItem", blockedItem)
             bundle.putString("fpid", fpid)

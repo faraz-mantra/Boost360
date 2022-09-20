@@ -245,6 +245,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
         super.onResume()
         Log.e("onResume", "onResume of LoginFragment")
         viewModel.updateRenewValue("")
+        if(!prefs.getSelectedDomainName().isNullOrEmpty() && ::cartPackageAdaptor.isInitialized){
+            cartPackageAdaptor.selectedDomain(prefs.getSelectedDomainName()!!)
+        }
 //        initMvvM()
     }
 
@@ -3687,7 +3690,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
 
     override fun deleteCartAddonsItem(item: CartModel) {
         //remove selected domain
-        if(item.boost_widget_key!!.contains("DOMAINPURCHASE")){
+        if(item.item_type.equals("bundles") && !prefs.getSelectedDomainName().isNullOrEmpty()){
             prefs.storeSelectedDomainName(null)
         }
         viewModel.deleteCartItems(item.item_id)
@@ -3971,7 +3974,15 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
         prefs.storeSelectedDomainName(domain)
     }
 
-    override fun actionClick(cartModel: CartModel) {
+    override fun editSelectedDomain(bundleItem: CartModel) {
+        featureDetailsPopUp(bundleItem)
+    }
+
+    override fun actionClick(bundleItem: CartModel) {
+        featureDetailsPopUp(bundleItem)
+    }
+
+    private fun featureDetailsPopUp(cartModel: CartModel){
         var selectedBundle: Bundles? = null
         for (item in bundlesList) {
             if (item.bundle_id == cartModel.item_id) {
