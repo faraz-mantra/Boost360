@@ -742,7 +742,7 @@ class ComparePacksV3Activity :
     }
 
     override fun onPackageClickedV3(item: Bundles?, image: ImageView?) {
-        val dialogCard = ComparePacksV3BottomSheet()
+        val dialogCard = ComparePacksV3BottomSheet(this)
         val args = Bundle()
         args.putString("fpid", fpid)
         args.putString("expCode", experienceCode)
