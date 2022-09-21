@@ -128,18 +128,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
     override fun onCreateView() {
         super.onCreateView()
-        initView()
-    }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        setIntent(intent)
-        initView()
-    }
-
-    @SuppressLint("NewApi")
-    private fun initView() {
-
         isDeepLink = intent.getBooleanExtra("isDeepLink", false)
         deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
         deepLinkDay = intent.getIntExtra("deepLinkDay", 7)
@@ -171,6 +159,27 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.circular_menu_back)
         viewModel.setApplicationLifecycle(application, this)
+        initView()
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        isOpenMyCurrentPlan = intent!!.getBooleanExtra("isComingFromOrderConfirmActivation", false)
+        if(isOpenMyCurrentPlan){
+            redirectMyCurrentPlanActivity()
+        }
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.activity_marketplace
+    }
+
+    override fun getViewModelClass(): Class<MarketPlaceHomeViewModel> {
+        return MarketPlaceHomeViewModel::class.java
+    }
+
+    @SuppressLint("NewApi")
+    private fun initView() {
 
         packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList(), this, this)
         featureDealsAdapter = FeatureDealsAdapter(ArrayList(), ArrayList(), this, this)
@@ -565,14 +574,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         intent.putExtra("profileUrl", profileUrl)
 
         startActivity(intent)
-    }
-
-    override fun getLayout(): Int {
-        return R.layout.activity_marketplace
-    }
-
-    override fun getViewModelClass(): Class<MarketPlaceHomeViewModel> {
-        return MarketPlaceHomeViewModel::class.java
     }
 
     private fun initializeRecycler() {
@@ -2305,7 +2306,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     private fun initializePackageViewPager() {
         package_viewpager.adapter = packageViewPagerAdapter
         package_indicator.setViewPager2(package_viewpager)
-
+        //clear previous design
         package_viewpager.setPageTransformer(SimplePageTransformer())
 
         val itemDecoration = HorizontalMarginItemDecoration(
@@ -2313,6 +2314,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             R.dimen.viewpager_current_item_horizontal_margin,
             R.dimen.viewpager_current_item_horizontal_margin
         )
+        //clear previous decoration
+        package_viewpager.removeItemDecoration(itemDecoration)
         package_viewpager.addItemDecoration(itemDecoration)
 
     }
