@@ -162,7 +162,6 @@ class OrderConfirmationFragment : BaseFragment() {
         NO_EVENT_VALUE
       )
       goToAddOnsFragment()
-      (activity as PaymentActivity).finish()
     }
 
 //    order_needs_help.setOnClickListener {
@@ -266,8 +265,9 @@ class OrderConfirmationFragment : BaseFragment() {
 
   private fun goToAddOnsFragment() {
     try {
-      val intent = Intent(context, Class.forName("com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity"))
-      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//      val intent = Intent(context, Class.forName("com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity"))
+      val intent = Intent(context, Class.forName("com.boost.marketplace.ui.home.MarketPlaceActivity"))
+//      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       intent.putExtra("isComingFromOrderConfirmActivation",true)
       intent.putExtra("expCode", session?.fP_AppExperienceCode)
       intent.putExtra("fpName", session?.fPName)

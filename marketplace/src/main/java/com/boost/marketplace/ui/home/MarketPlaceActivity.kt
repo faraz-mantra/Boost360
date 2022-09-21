@@ -109,7 +109,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     var isOpenCardFragment: Boolean = false
     var isBackCart: Boolean = false
     var isOpenHomeFragment: Boolean = false
-    var isOpenAddOnsFragment: Boolean = false
+    var isOpenMyCurrentPlan: Boolean = false
     var isOpenPackageWithID: String? = null
     var buyAddonWithIDAndGoToCart: String? = null
 
@@ -128,6 +128,18 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
     override fun onCreateView() {
         super.onCreateView()
+        initView()
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        initView()
+    }
+
+    @SuppressLint("NewApi")
+    private fun initView() {
+
         isDeepLink = intent.getBooleanExtra("isDeepLink", false)
         deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
         deepLinkDay = intent.getIntExtra("deepLinkDay", 7)
@@ -143,7 +155,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         accountType = intent.getStringExtra("accountType")
         isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
         isOpenHomeFragment = intent.getBooleanExtra("isComingFromOrderConfirm", false)
-        isOpenAddOnsFragment = intent.getBooleanExtra("isComingFromOrderConfirmActivation", false)
+        isOpenMyCurrentPlan = intent.getBooleanExtra("isComingFromOrderConfirmActivation", false)
         widgetFeatureCode = intent.getStringExtra("buyItemKey")
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
         //festive poster purchase
@@ -159,11 +171,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.circular_menu_back)
         viewModel.setApplicationLifecycle(application, this)
-        initView()
-    }
 
-    @SuppressLint("NewApi")
-    private fun initView() {
         packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList(), this, this)
         featureDealsAdapter = FeatureDealsAdapter(ArrayList(), ArrayList(), this, this)
         partnerViewPagerAdapter = PartnerViewPagerAdapter(ArrayList(), this, this)
@@ -303,35 +311,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
 
         view_my_current_plan.setOnClickListener {
-            val intent = Intent(this, MyCurrentPlanActivity::class.java)
-            intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
-            intent.putExtra("fpid", fpid)
-            intent.putExtra("expCode", experienceCode)
-            intent.putExtra("isDeepLink", isDeepLink)
-            intent.putExtra("deepLinkViewType", deepLinkViewType)
-            intent.putExtra("deepLinkDay", deepLinkDay)
-            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-            intent.putExtra(
-                "accountType",
-                accountType
-            )
-            intent.putStringArrayListExtra(
-                "userPurchsedWidgets",
-                userPurchsedWidgets
-            )
-            if (email != null) {
-                intent.putExtra("email", email)
-            } else {
-                intent.putExtra("email", "ria@nowfloats.com")
-            }
-            if (mobileNo != null) {
-                intent.putExtra("mobileNo", mobileNo)
-            } else {
-                intent.putExtra("mobileNo", "9160004303")
-            }
-            intent.putExtra("profileUrl", profileUrl)
-
-            startActivity(intent)
+            redirectMyCurrentPlanActivity()
         }
 
 
@@ -371,6 +351,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
             startActivity(intent)
 
+        }
+
+        if(isOpenMyCurrentPlan){
+            redirectMyCurrentPlanActivity()
         }
 
         if (screenType == "myAddOns") {
@@ -549,6 +533,38 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
         }
 
+    }
+
+    fun redirectMyCurrentPlanActivity(){
+        val intent = Intent(this, MyCurrentPlanActivity::class.java)
+        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+        intent.putExtra("fpid", fpid)
+        intent.putExtra("expCode", experienceCode)
+        intent.putExtra("isDeepLink", isDeepLink)
+        intent.putExtra("deepLinkViewType", deepLinkViewType)
+        intent.putExtra("deepLinkDay", deepLinkDay)
+        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+        intent.putExtra(
+            "accountType",
+            accountType
+        )
+        intent.putStringArrayListExtra(
+            "userPurchsedWidgets",
+            userPurchsedWidgets
+        )
+        if (email != null) {
+            intent.putExtra("email", email)
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com")
+        }
+        if (mobileNo != null) {
+            intent.putExtra("mobileNo", mobileNo)
+        } else {
+            intent.putExtra("mobileNo", "9160004303")
+        }
+        intent.putExtra("profileUrl", profileUrl)
+
+        startActivity(intent)
     }
 
     override fun getLayout(): Int {
