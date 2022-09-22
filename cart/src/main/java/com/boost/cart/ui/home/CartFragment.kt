@@ -2256,7 +2256,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
                             if (outputExtendedProps.size > 0) outputExtendedProps else null,
                             net_quantity,
                             "MONTHLY",
-                            item.boost_widget_key!!,
+                            item.feature_code!!,
                             item.item_id
                         )
                     )
@@ -2340,7 +2340,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
                                                     if (outputExtendedProps.size > 0) outputExtendedProps else null,
                                                     1,
                                                     "MONTHLY",
-                                                    singleFeature.boost_widget_key,
+                                                    singleFeature.feature_code!!,
                                                     singleFeature.feature_id
                                                 )
                                             )

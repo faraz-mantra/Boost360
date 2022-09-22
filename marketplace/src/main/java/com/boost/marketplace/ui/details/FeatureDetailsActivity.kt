@@ -431,16 +431,14 @@ class FeatureDetailsActivity :
                 Toasty.info(this, "Coming soon...", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             } else if (actionRequired == 2 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
-                        || featureState == 5 || featureState == 6)
-            ) {
+                        || featureState == 5 || featureState == 6)) {
                 goToDomainSelection()
+            } else if (actionRequired == 5 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                        || featureState == 5 || featureState == 6))
+            {
+                Toasty.info(this, "Coming soon...", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
             }
-//            else if (actionRequired == 5 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
-//                        || featureState == 5 || featureState == 6))
-//            {
-//                Toasty.info(this, "Coming soon...", Toast.LENGTH_LONG).show()
-//                return@setOnClickListener
-//            }
             else {
                 if (packageItem) {
                     val args = Bundle()
@@ -1977,6 +1975,13 @@ class FeatureDetailsActivity :
                 )
                 binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
                 binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                bottom_box_only_btn.visibility = VISIBLE
+                add_item_to_cart_new.setText("Choose VMN")
+                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                    applicationContext,
+                    R.drawable.cta_button_click_effect
+                )
+                add_item_to_cart_new.setTextColor(Color.WHITE)
             } else if (actionRequired == 0 && featureState == 1) {
                 WebEngageController.trackEvent(ADD_ON_VALIDITY_EXTENSION_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
