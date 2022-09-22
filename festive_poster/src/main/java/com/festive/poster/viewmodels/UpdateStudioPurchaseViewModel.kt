@@ -139,10 +139,10 @@ class UpdateStudioPurchaseViewModel: BaseViewModel() {
         return  userPurchasedFeatures.filter { purchasedFeature->
 
             val isPremium = getFeatureDetails(purchasedFeature.featureKey,
-                appFeaturesResponse.Data.firstOrNull()?.features)?.is_premium
+                appFeaturesResponse.Data.firstOrNull()?.features)?.is_premium?:false
 
             purchasedFeature.featureState==1
-                    && isPremium!!
+                    && isPremium
         }.isNotEmpty()
     }
 

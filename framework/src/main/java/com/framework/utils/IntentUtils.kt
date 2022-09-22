@@ -11,7 +11,7 @@ import com.framework.R
 
 object IntentUtils {
 
-    fun shareText(context:Context,text:String,packageName:String){
+    fun shareText(context:Context,text:String,packageName:String?=null){
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
         intent.putExtra(Intent.EXTRA_TEXT, text)

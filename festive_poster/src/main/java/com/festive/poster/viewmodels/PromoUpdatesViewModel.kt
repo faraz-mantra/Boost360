@@ -152,7 +152,7 @@ class PromoUpdatesViewModel: BaseViewModel() {
                         }!=null
                     }
 
-                    uicat.setTemplates(dbTemplates.asDomainModels())
+                    uicat.setTemplates(dbTemplates.sortedByDescending { it.utilizationDate }.asDomainModels())
                 }
                 browseAllMData.postValue(
                     NetworkResult.Success(categories.toArrayList()))

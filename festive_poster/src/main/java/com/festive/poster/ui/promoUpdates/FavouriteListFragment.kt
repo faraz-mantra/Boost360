@@ -122,10 +122,11 @@ class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, Post
                             data[DEFAULT_SELECTED_POS].getParentTemplates()
                                 ?.asFavModels())
                     }else{
+                        setCatgories(data)
                         switchToSelectedItem(selectedPos,
                             data[selectedPos].getParentTemplates()
                                 ?.asFavModels())
-                        setCatgories(data)
+
                     }
                 }
                 is NetworkResult.Error->{
