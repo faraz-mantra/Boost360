@@ -1295,13 +1295,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     -->
     <string name="business_logo_info_text">A logo is an identity of your business that appears on top of your business website.</string>
     <string name="business_logo_instructions_1" translatable="false">Supported format: .jpeg, .png or .gif\nRecommended dimension: Square (400x400 px)\nMax file size: 500 kb</string>
-    <string name="business_logo_instructions_2" translatable="false">Keep the background white or transparant (in png). For bigger display, remove all padding from the main object in your logo.</string>
+    <string name="business_logo_instructions_2" translatable="false">Keep the background white or transparent (in png). For bigger display, remove all padding from the main object in your logo.</string>
     <string name="image_gallery_info_text" translatable="false">Flaunt your business with beautiful images. Number of images you can upload depends upon the plan you’ve picked.</string>
     <string name="image_gallery_instructions_1" translatable="false">Supported format: .jpeg, .png\nRecommended dimension: Horizontal rectangle, 1200 px (width) x 800 px (height)\nMax file size: 800 kb</string>
     <string name="image_gallery_instructions_2" translatable="false">Number of images you can upload depends upon the Boost plan you’ve picked.</string>
     <string name="featured_image_info_text" translatable="false">It is a key visual to define your business that appears along with the business description or in about section.</string>
     <string name="featured_image_instructions_1" translatable="false">Supported format: .jpeg, .png\nRecommended dimension: Horizontal rectangle, 800 px (width) x 600 px (height)\nMax file size: 800 kb</string>
-    <string name="featured_image_instructions_2" translatable="false">You can upload a key picture which defines your business. (e.g. a detailed logo, picture of front desk of your business. key product or proprieter’s portrait).</string>
+    <string name="featured_image_instructions_2" translatable="false">You can upload a key picture which defines your business. (e.g. a detailed logo, picture of front desk of your business. key product or proprietor’s portrait).</string>
     <string name="favicon_image_info_text" translatable="false">Your site visitor sees it on the edge of their browser tab. Your minimal logo will look good here.</string>
     <string name="favicon_image_instructions_1" translatable="false">Supported format: .jpeg, .png\nRecommended dimension: Square,  Max 100 px x 100 px\nMax file size: 100 kb</string>
     <string name="favicon_image_instructions_2" translatable="false">Your business logo with transparent background (png format) is recommended. Keep it as minimal as possible.</string>

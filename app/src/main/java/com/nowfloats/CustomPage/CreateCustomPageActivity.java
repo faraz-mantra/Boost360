@@ -257,10 +257,10 @@ public class CreateCustomPageActivity extends AppCompatActivity {
         }
         boolean flag = true;
         final String name = titleTxt.getText().toString(), html = richText.getHtml();
-        if (!(titleTxt.getText().toString().trim().length() > 0)) {
+        if (!(name.trim().length() > 0)) {
           flag = false;
           Methods.showSnackBarNegative(activity, getString(R.string.enter_the_title));
-        } else if (!(html.trim().length() > 0)) {
+        } else if (html == null || !(html.trim().length() > 0)) {
           flag = false;
           Methods.showSnackBarNegative(activity, getString(R.string.enter_the_description));
         }

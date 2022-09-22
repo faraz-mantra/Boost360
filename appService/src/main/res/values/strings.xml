@@ -297,7 +297,7 @@
     <string name="add_change_warehouse"><u>Add/Change warehouse</u></string>
     <string name="service_delivery_configuration">Service delivery configuration*</string>
     <string name="u_add_session_u"><u>Add session</u></string>
-    <string name="business_hours_timing"><b>Note:</b> Since the clinic business hours are from 9:30 am to 7:30 pm, all your sessions will be between same. </string>
+    <string name="business_hours_timing"><b>Note:</b> Since business hours are from 9:30 am to 7:30 pm, all your sessions will be between same. </string>
     <string name="from">From</string>
     <string name="to">to</string>
     <string name="edit_">Edit</string>
