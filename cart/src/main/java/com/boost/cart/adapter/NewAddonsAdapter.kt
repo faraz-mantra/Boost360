@@ -41,14 +41,14 @@ class NewAddonsAdapter(
         if(upgradeList.get(position).feature_code.equals("DOMAINPURCHASE") && upgradeList.get(position).name!!.contains(".")){
             holder.name.setText(upgradeList.get(position).name)
             holder.name.setTypeface(ResourcesCompat.getFont(context, R.font.bold))
-            holder.notify.visibility = View.GONE
+//            holder.notify.visibility = View.GONE
             holder.edit.visibility = View.VISIBLE
         }else{
-            if(upgradeList.get(position).feature_code.equals("DOMAINPURCHASE")){
-                holder.notify.visibility = View.VISIBLE
-            }else{
-                holder.notify.visibility = View.GONE
-            }
+//            if(upgradeList.get(position).feature_code.equals("DOMAINPURCHASE")){
+//                holder.notify.visibility = View.VISIBLE
+//            }else{
+//                holder.notify.visibility = View.GONE
+//            }
             holder.edit.visibility = View.GONE
             holder.name.setText(upgradeList.get(position).name)
             holder.name.setTypeface(ResourcesCompat.getFont(context, R.font.regular))
@@ -84,7 +84,7 @@ class NewAddonsAdapter(
         val image = itemView.findViewById<ImageView>(R.id.imageView2)!!
         val name = itemView.findViewById<TextView>(R.id.title)!!
         val edit = itemView.findViewById<TextView>(R.id.edit)!!
-        val notify = itemView.findViewById<ImageView>(R.id.notify)!!
+//        val notify = itemView.findViewById<ImageView>(R.id.notify)!!
 
     }
 
