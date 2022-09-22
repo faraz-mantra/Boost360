@@ -83,21 +83,24 @@ class PromoUpdatesViewModel: BaseViewModel() {
 
     fun getTodaysPickTemplate(){
         _todayPickData.postValue(NetworkResult.Loading())
-        try {
+
             NowFloatsRepository.getTodaysTemplates().getResponse {
-                if (it.isSuccess()){
-                    val response = it as? GetTodayTemplateResponse
-                    _todayPickData.postValue(
-                        NetworkResult.Success(data =
-                        response?.Result?.asDomainModel()?.toArrayList())
-                    )
-                }else{
-                    throw Exception(it.errorMessage())
+                try {
+                    if (it.isSuccess()){
+                        val response = it as? GetTodayTemplateResponse
+                        _todayPickData.postValue(
+                            NetworkResult.Success(data =
+                            response?.Result?.asDomainModel()?.toArrayList())
+                        )
+                    }else{
+                        throw Exception(it.errorMessage())
+                    }
+                }catch (e:Exception){
+                    _todayPickData.postValue(NetworkResult.Error(msg = fetchString(com.framework.R.string.something_went_wrong)))
                 }
+
             }
-        }catch (e:Exception){
-            _todayPickData.postValue(NetworkResult.Error(msg = fetchString(com.framework.R.string.something_went_wrong)))
-        }
+
 
     }
 
