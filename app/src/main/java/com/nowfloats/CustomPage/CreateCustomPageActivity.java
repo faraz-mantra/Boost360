@@ -257,10 +257,10 @@ public class CreateCustomPageActivity extends AppCompatActivity {
         }
         boolean flag = true;
         final String name = titleTxt.getText().toString(), html = richText.getHtml();
-        if (!(titleTxt.getText().toString().trim().length() > 0)) {
+        if (!(name.trim().length() > 0)) {
           flag = false;
           Methods.showSnackBarNegative(activity, getString(R.string.enter_the_title));
-        } else if (!(html.trim().length() > 0)) {
+        } else if (html == null || !(html.trim().length() > 0)) {
           flag = false;
           Methods.showSnackBarNegative(activity, getString(R.string.enter_the_description));
         }
@@ -532,6 +532,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
         CapLimitFeatureResponseItem data = filterFeature(getCapData(), CapLimitFeatureResponseItem.FeatureKey.CUSTOMPAGES);
         if (data != null && pageDetail != null) {
           PropertiesItem capLimitCustomPage = data.filterProperty(PropertiesItem.KeyType.LIMIT);
+          Log.i("test_limit_cap", "Total: " + pageDetail.getTotal() + " capLimit: " + capLimitCustomPage.getValueN());
           if (pageDetail.getTotal() != null && capLimitCustomPage.getValueN() != null && pageDetail.getTotal() >= capLimitCustomPage.getValueN()) {
             hideKeyBoard(activity);
             showAlertCapLimit("Can't add the custom page, please activate your premium Add-ons plan.");
