@@ -434,7 +434,14 @@ class FeatureDetailsActivity :
                         || featureState == 5 || featureState == 6)
             ) {
                 goToDomainSelection()
-            } else {
+            }
+//            else if (actionRequired == 5 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+//                        || featureState == 5 || featureState == 6))
+//            {
+//                Toasty.info(this, "Coming soon...", Toast.LENGTH_LONG).show()
+//                return@setOnClickListener
+//            }
+            else {
                 if (packageItem) {
                     val args = Bundle()
                     args.putString("addonName", addonDetails!!.name)
@@ -1951,6 +1958,25 @@ class FeatureDetailsActivity :
                     R.drawable.cta_button_click_effect
                 )
                 add_item_to_cart_new.setTextColor(Color.WHITE)
+            }  else if (actionRequired == 5 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                        || featureState == 5 || featureState == 6)) {
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.red
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
+                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                binding?.edgeCaseDesc?.visibility = View.VISIBLE
             } else if (actionRequired == 0 && featureState == 1) {
                 WebEngageController.trackEvent(ADD_ON_VALIDITY_EXTENSION_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE

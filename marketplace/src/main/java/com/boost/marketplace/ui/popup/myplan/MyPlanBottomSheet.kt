@@ -284,6 +284,7 @@ class MyPlanBottomSheet :
                 0
             )
             binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+            binding?.edgeCaseDesc?.visibility = View.VISIBLE
         } else if (actionRequired == 2 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                     || featureState == 5 || featureState == 6)
         ) {
@@ -343,6 +344,7 @@ class MyPlanBottomSheet :
                 0
             )
             binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+            binding?.edgeCaseDesc?.visibility = View.VISIBLE
         } else if (actionRequired == 4 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                     || featureState == 5 || featureState == 6)
         ) {
@@ -371,6 +373,7 @@ class MyPlanBottomSheet :
                 0
             )
             binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+            binding?.edgeCaseDesc?.visibility = View.VISIBLE
         } else if (actionRequired == 0 && featureState == 1) {
             binding?.edgeCasesLayout?.visibility = View.VISIBLE
             binding?.edgeCaseHyperlink?.visibility = View.GONE
@@ -394,7 +397,7 @@ class MyPlanBottomSheet :
 //                        "longer duration."
 //            )
 
-        } else if (actionRequired == 0 && featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6) {
+        } else if (actionRequired == 0 && (featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6)) {
             binding?.edgeCasesLayout?.visibility = View.VISIBLE
             binding?.edgeCaseHyperlink?.visibility = View.GONE
             edge_cases_layout.setBackgroundResource(R.drawable.rounded_border_skyblue_white_bg)
@@ -414,6 +417,35 @@ class MyPlanBottomSheet :
             binding?.edgeCaseDesc?.setText(
                 "We are working on syncing your information for this feature.it may take some time to get updated"
             )
+            binding?.edgeCaseDesc?.visibility = View.VISIBLE
+        }
+        else if (actionRequired == 5 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6)) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
+            binding?.btn1?.text = "Choose virtual number/\n" + "Setup IVR"
+            binding?.edgeCaseHyperlink?.setOnClickListener {
+                Toasty.info(requireContext(), "Coming soon...", Toast.LENGTH_LONG, true).show()
+            }
+            binding?.btn1?.setOnClickListener {
+//                featuredetails()
+                Toasty.info(requireContext(), "Coming soon...", Toast.LENGTH_LONG, true).show()
+            }
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
             binding?.edgeCaseDesc?.visibility = View.VISIBLE
         }
 
