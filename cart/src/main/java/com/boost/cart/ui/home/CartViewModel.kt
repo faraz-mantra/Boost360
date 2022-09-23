@@ -11,8 +11,11 @@ import androidx.lifecycle.MutableLiveData
 import com.boost.cart.base_class.BaseViewModel
 import com.boost.cart.utils.SingleLiveEvent
 import com.boost.cart.utils.Utils
+import com.boost.dbcenterapi.data.api_model.CustomDomain.CustomDomains
+import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
+import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
 import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsRequest
 import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsResponse
 import com.boost.dbcenterapi.data.api_model.couponRequest.CouponRequest
@@ -34,6 +37,7 @@ import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.CouponsModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.dbcenterapi.utils.DataLoader
 import com.framework.analytics.SentryController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -54,10 +58,10 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
     var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
     var allFeatures: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
-
+    var customDomainsResult: MutableLiveData<CustomDomains> = MutableLiveData()
     private var couponApiInfo: MutableLiveData<GetCouponResponse> = MutableLiveData()
     private var recommendedAddonsInfo: MutableLiveData<RecommendedAddonsResponse> = MutableLiveData()
-
+    var updatesResult: MutableLiveData<CustomDomains> = MutableLiveData()
     var renewalPurchaseList: MutableLiveData<List<RenewalResult>> = MutableLiveData()
     var allBundles: MutableLiveData<List<BundlesModel>> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
@@ -84,7 +88,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
     var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
     var NewApiService = Utils.getRetrofit(true).create(NewApiInterface::class.java)
-
+    private var callTrackListResponse: MutableLiveData<CallTrackListResponse> = MutableLiveData()
 
     val compositeDisposable = CompositeDisposable()
 
@@ -114,7 +118,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     private var updateInfo: MutableLiveData<CreateCustomerIDResponse> = MutableLiveData()
 
     private var gstApiInfo: MutableLiveData<GSTApiResponse> = MutableLiveData()
-
+    var addToCartResult: MutableLiveData<Boolean> = MutableLiveData()
 
     fun updatesError(): LiveData<String> {
         return updatesError
@@ -273,6 +277,14 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         return gstApiInfo
     }
 
+    fun updateCustomDomainsResultResult(): LiveData<CustomDomains> {
+        return customDomainsResult
+    }
+
+    fun getCallTrackingDetails(): LiveData<CallTrackListResponse> {
+        return callTrackListResponse
+    }
+
     fun writeStringAsFile(fileContents: String?, fileName: String?) {
         val context: Context = getApplication()
         try {
@@ -304,7 +316,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                     },
                                     {
                                         Toasty.error(
-                                                getApplication(),
+                                            getApplication(),
                                                 "Error occurred while registering your order - " + it.message,
                                                 Toast.LENGTH_LONG
                                         ).show()
@@ -333,7 +345,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                     },
                                     {
                                         Toasty.error(
-                                                getApplication(),
+                                            getApplication(),
                                                 "Error occurred while registering your order - " + it.message,
                                                 Toast.LENGTH_LONG
                                         ).show()
@@ -772,7 +784,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                             redeemCouponResult.postValue(couponServiceModel)
                                         } else {
                                             Toasty.error(
-                                                    getApplication(),
+                                                getApplication(),
                                                     "Error occurred while applying coupon - " + it.message,
                                                     Toast.LENGTH_LONG
                                             ).show()
@@ -782,7 +794,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                     },
                                     {
                                         Toasty.error(
-                                                getApplication(),
+                                            getApplication(),
                                                 "Error occurred while applying coupon - " + it.message,
                                                 Toast.LENGTH_LONG
                                         ).show()
@@ -933,6 +945,62 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
             )
 
         }
+    }
+
+    fun addItemToCartPackage1(cartItem: CartModel) {
+        updatesLoader.postValue(true)
+        Completable.fromAction {
+            AppDatabase.getInstance(Application())!!.cartDao()
+                .insertToCart(cartItem)
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnComplete {
+                updatesLoader.postValue(false)
+                //add cartitem to firebase
+                addToCartResult.postValue(true)
+                DataLoader.updateCartItemsToFirestore(Application())
+            }
+            .doOnError {
+                updatesError.postValue(it.message)
+                addToCartResult.postValue(false)
+                updatesLoader.postValue(false)
+            }
+            .subscribe()
+    }
+
+    fun GetSuggestedDomains(domainRequest: DomainRequest) {
+        updatesLoader.postValue(true)
+        compositeDisposable.add(
+            NewApiService.getDomains(domainRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        updatesResult.postValue(it)
+                        updatesLoader.postValue(false)
+                    }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
+
+    fun getSuggestedDomains(domainRequest: DomainRequest) {
+        updatesLoader.postValue(true)
+        compositeDisposable.add(
+            NewApiService.getDomains(domainRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        customDomainsResult.postValue(it)
+                        updatesLoader.postValue(false)
+                    }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
     }
 
 }

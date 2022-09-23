@@ -151,5 +151,6 @@
 
   <dimen name="viewpager_next_item_visible2">75dp</dimen>
   <dimen name="viewpager_current_item_horizontal_margin5">100dp</dimen>
+    <dimen name="dimen_24dp">24dp</dimen>
 </resources>
 

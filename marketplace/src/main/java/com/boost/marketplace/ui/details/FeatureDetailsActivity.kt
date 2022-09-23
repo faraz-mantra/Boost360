@@ -55,13 +55,11 @@ import com.boost.marketplace.interfaces.DetailsFragmentListener
 import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 import com.boost.marketplace.ui.details.staff.StaffManagementBottomSheet
-import com.boost.marketplace.ui.feature_details_popup.FeatureDetailsPopup
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
 import com.boost.marketplace.ui.popup.call_track.FindingNumberLoaderBottomSheet
 import com.boost.marketplace.ui.popup.call_track.RequestCallbackBottomSheet
-import com.boost.marketplace.ui.popup.customdomains.CustomDomainLearnDomainBottomSheet
 import com.boost.marketplace.ui.popup.removeItems.RemovePackageBottomSheet
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.bumptech.glide.Glide
@@ -79,18 +77,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_feature_details.*
-import kotlinx.android.synthetic.main.activity_feature_details.benefits_indicator
-import kotlinx.android.synthetic.main.activity_feature_details.benefits_viewpager
-import kotlinx.android.synthetic.main.activity_feature_details.faq_container
-import kotlinx.android.synthetic.main.activity_feature_details.faq_recycler
-import kotlinx.android.synthetic.main.activity_feature_details.how_to_use_arrow
-import kotlinx.android.synthetic.main.activity_feature_details.how_to_use_recycler
-import kotlinx.android.synthetic.main.activity_feature_details.how_to_use_title_layout
-import kotlinx.android.synthetic.main.activity_feature_details.learn_less_btn
-import kotlinx.android.synthetic.main.activity_feature_details.learn_more_btn
-import kotlinx.android.synthetic.main.activity_feature_details.title_bottom3
-import kotlinx.android.synthetic.main.activity_feature_details.tv_how_to_use_title
-import kotlinx.android.synthetic.main.pack_details_bottom_sheet.*
 import retrofit2.Retrofit
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -431,16 +417,29 @@ class FeatureDetailsActivity :
         }
 
         add_item_to_cart_new.setOnClickListener {
+            if(add_item_to_cart_new.text.equals("Add to cart")){
+                WebEngageController.trackEvent(ADD_ON_ACTIVATION_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
+            } else {
+                val event_attributes: HashMap<String, Any> = HashMap()
+                addonDetails?.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
+                WebEngageController.trackEvent(ADD_ON_ACTIVATION_CLICKED, ADDONS_MARKETPLACE, event_attributes)
+            }
+
             if ((actionRequired == 3 || actionRequired == 4) && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                         || featureState == 5 || featureState == 6)
             ) {
                 Toasty.info(this, "Coming soon...", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             } else if (actionRequired == 2 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
-                        || featureState == 5 || featureState == 6)
-            ) {
+                        || featureState == 5 || featureState == 6)) {
                 goToDomainSelection()
-            } else {
+            } else if (actionRequired == 5 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                        || featureState == 5 || featureState == 6))
+            {
+                Toasty.info(this, "Coming soon...", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            else {
                 if (packageItem) {
                     val args = Bundle()
                     args.putString("addonName", addonDetails!!.name)
@@ -468,6 +467,13 @@ class FeatureDetailsActivity :
                     }
                     else -> {
                         add_item_to_cart.text = "Add to cart"
+                        val event_attributes: HashMap<String, Any> = HashMap()
+                        addonDetails?.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
+                        WebEngageController.trackEvent(
+                            ADD_ON_GOTO_CART_CLICKED,
+                            ADDONS_MARKETPLACE,
+                            event_attributes
+                        )
                     }
                 }
                 bottom_box.visibility = VISIBLE
@@ -554,6 +560,7 @@ class FeatureDetailsActivity :
     fun initMvvm() {
         viewModel.PurchasedDomainResponse().observe(this, Observer {
             prefs.storeDomainOrderType(1)
+            prefs.storeSelectedDomainName(it.domainName+it.domainType)
             viewModel.addItemToCart1(addonDetails!!, this, it.domainName+it.domainType)
             viewModel.getCartItems()
         })
@@ -998,7 +1005,7 @@ class FeatureDetailsActivity :
                 title_bottom3.text = addonDetails!!.description
                 title_appbar.text = addonDetails!!.name
                 pack_title.text = "Packs with \"${addonDetails!!.name}\" "
-                tv_how_to_use_title.text = "How To Use " + addonDetails!!.name
+                tv_how_to_use_title.text = "How To Use " + addonDetails!!.name + " ?"
                 if (addonDetails!!.total_installs.isNullOrEmpty() || addonDetails!!.total_installs.equals(
                         "--"
                     )
@@ -1890,6 +1897,13 @@ class FeatureDetailsActivity :
                     R.drawable.cta_button_click_effect
                 )
                 add_item_to_cart_new.setTextColor(Color.WHITE)
+                val event_attributes: HashMap<String, Any> = HashMap()
+                addonDetails?.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
+                WebEngageController.trackEvent(
+                    ADD_ON_ACTIVATION_CLICKED,
+                    ADDONS_MARKETPLACE,
+                    event_attributes
+                )
             } else if (actionRequired == 3 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                         || featureState == 5 || featureState == 6)
             ) {
@@ -1942,7 +1956,34 @@ class FeatureDetailsActivity :
                     R.drawable.cta_button_click_effect
                 )
                 add_item_to_cart_new.setTextColor(Color.WHITE)
+            }  else if (actionRequired == 5 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                        || featureState == 5 || featureState == 6)) {
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.red
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
+                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                bottom_box_only_btn.visibility = VISIBLE
+                add_item_to_cart_new.setText("Choose VMN")
+                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                    applicationContext,
+                    R.drawable.cta_button_click_effect
+                )
+                add_item_to_cart_new.setTextColor(Color.WHITE)
             } else if (actionRequired == 0 && featureState == 1) {
+                WebEngageController.trackEvent(ADD_ON_VALIDITY_EXTENSION_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCaseHyperlink?.visibility = View.GONE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
@@ -1972,6 +2013,13 @@ class FeatureDetailsActivity :
                     R.drawable.cta_button_click_effect
                 )
                 add_item_to_cart_new.setTextColor(Color.WHITE)
+                val event_attributes: HashMap<String, Any> = HashMap()
+                addonDetails?.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
+                WebEngageController.trackEvent(
+                    ADD_ON_VALIDITY_EXTENSION_CLICKED,
+                    ADDONS_MARKETPLACE,
+                    event_attributes
+                )
             } else if (actionRequired == 0 && featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6) {
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCaseHyperlink?.visibility = View.GONE
@@ -2033,13 +2081,23 @@ class FeatureDetailsActivity :
                 )
                 binding?.edgeCaseDesc?.setText("You need to renew this feature to continue using this feature.")
                 bottom_box_only_btn.visibility = VISIBLE
-                if (addonDetails!!.feature_code.equals("DOMAINPURCHASE"))
+                if (addonDetails!!.feature_code.equals("DOMAINPURCHASE")) {
                     add_item_to_cart_new.setText("Renew Custom Domain")
+                    val event_attributes: HashMap<String, Any> = HashMap()
+                    addonDetails?.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
+                    WebEngageController.trackEvent(
+                        ADD_ON_RENEW_CLICKED,
+                        ADDONS_MARKETPLACE,
+                        event_attributes
+                    )
+                }
                 else if (addonDetails!!.feature_code.equals("IVR") || addonDetails!!.feature_code.equals(
                         "CALLTRACKER"
                     )
-                )
+                ) {
+                    WebEngageController.trackEvent(ADD_ON_RENEW_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
                     add_item_to_cart_new.setText("Renew Call Tracking")
+                }
                 else if (addonDetails!!.feature_code!!.contains("EMAILACCOUNTS"))
                     add_item_to_cart_new.setText("Renew Business Email")
                 else

@@ -23,6 +23,7 @@ class SharedPrefs(activity: Activity) {
   private val po_price = "Last_Purchase_Order_Price"
   private val po_payment_success = "Last_payment_status"
   private val DOMAIN_ORDER_TYPE = "DOMAIN_ORDER_TYPE"
+  private val SELECTED_DOMAIN_NAME = "SELECTED_DOMAIN_NAME"
   private val fp_email = "GET_FP_DETAILS_EMAIL"
 
   private val CART_ORDER_INFO = "CART_ORDER_INFO"
@@ -44,6 +45,7 @@ class SharedPrefs(activity: Activity) {
   private val GST_API_RESULT = "GST API RESULT"
   private val LAST_USED_PAYMENT_MODE = "LAST_USED_PAYMENT_MODE"
   private val CART_VALIDITY_MONTHS = "CART_VALIDITY_MONTHS"
+  private val UPI_IDS = "UPI_IDS"
 
   private var editor: SharedPreferences.Editor? = null
 
@@ -289,6 +291,24 @@ class SharedPrefs(activity: Activity) {
 
   fun getDomainOrderType(): Int {
     return pref!!.getInt(DOMAIN_ORDER_TYPE, 0)
+  }
+
+  fun storeSelectedDomainName(value: String?){
+    editor!!.putString(SELECTED_DOMAIN_NAME, value).apply()
+  }
+
+  fun getSelectedDomainName(): String? {
+    return pref!!.getString(SELECTED_DOMAIN_NAME, null)
+  }
+
+  fun storeUPIId(upiIdList: List<String>) {
+    val orderInfo = Gson().toJson(upiIdList)
+    editor!!.putString(UPI_IDS, orderInfo).apply()
+  }
+
+  fun getUPIId(): MutableList<String> {
+    val str = pref!!.getString(UPI_IDS, "")
+    return if (TextUtils.isEmpty(str)) ArrayList() else Gson().fromJson(str, object : TypeToken<MutableList<String?>?>() {}.type)
   }
 
 }
