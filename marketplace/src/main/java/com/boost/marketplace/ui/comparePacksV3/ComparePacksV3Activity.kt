@@ -77,7 +77,6 @@ class ComparePacksV3Activity :
     var isOpenAddOnsFragment: Boolean = false
     var refreshViewPager: Boolean = false
     var packageInCartStatus = false
-    var bundleData: Bundles? = null
     var featuresList: List<FeaturesModel>? = null
     var cartList: List<CartModel>? = null
     var offeredBundlePrice = 0.0
@@ -203,7 +202,7 @@ class ComparePacksV3Activity :
                                     val args = Bundle()
                                     args.putStringArrayList("addonNames", sameAddonsInCart)
                                     args.putStringArrayList("addonsListInCart", addonsListInCart)
-                                    args.putString("packageDetails", Gson().toJson(bundleData!!))
+                                    args.putString("packageDetails", Gson().toJson(selectedBundle!!))
                                     removeFeatureBottomSheet.arguments = args
                                     removeFeatureBottomSheet.show(supportFragmentManager, RemoveFeatureBottomSheet::class.java.name)
                                 }else {
@@ -278,37 +277,6 @@ class ComparePacksV3Activity :
                         )
                 )
             }
-
-            val intent = Intent(
-                applicationContext,
-                CartActivity::class.java
-            )
-            intent.putExtra("fpid", fpid)
-            intent.putExtra("expCode", experienceCode)
-            intent.putExtra("isDeepLink", isDeepLink)
-            intent.putExtra("deepLinkViewType", deepLinkViewType)
-            intent.putExtra("deepLinkDay", deepLinkDay)
-            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-            intent.putExtra(
-                "accountType",
-                accountType
-            )
-            intent.putStringArrayListExtra(
-                "userPurchsedWidgets",
-                userPurchsedWidgets
-            )
-            if (email != null) {
-                intent.putExtra("email", email)
-            } else {
-                intent.putExtra("email", "ria@nowfloats.com")
-            }
-            if (mobileNo != null) {
-                intent.putExtra("mobileNo", mobileNo)
-            } else {
-                intent.putExtra("mobileNo", "9160004303")
-            }
-            intent.putExtra("profileUrl", profileUrl)
-            startActivity(intent)
         }
 
         binding?.packageBack?.setOnClickListener {
@@ -579,6 +547,41 @@ class ComparePacksV3Activity :
                     upgradeList = listItem
 
                 }
+            }
+        })
+
+        viewModel.addedToCartResult().observe(this, Observer {
+            if(it){
+                val intent = Intent(
+                    applicationContext,
+                    CartActivity::class.java
+                )
+                intent.putExtra("fpid", fpid)
+                intent.putExtra("expCode", experienceCode)
+                intent.putExtra("isDeepLink", isDeepLink)
+                intent.putExtra("deepLinkViewType", deepLinkViewType)
+                intent.putExtra("deepLinkDay", deepLinkDay)
+                intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+                intent.putExtra(
+                    "accountType",
+                    accountType
+                )
+                intent.putStringArrayListExtra(
+                    "userPurchsedWidgets",
+                    userPurchsedWidgets
+                )
+                if (email != null) {
+                    intent.putExtra("email", email)
+                } else {
+                    intent.putExtra("email", "ria@nowfloats.com")
+                }
+                if (mobileNo != null) {
+                    intent.putExtra("mobileNo", mobileNo)
+                } else {
+                    intent.putExtra("mobileNo", "9160004303")
+                }
+                intent.putExtra("profileUrl", profileUrl)
+                startActivity(intent)
             }
         })
     }

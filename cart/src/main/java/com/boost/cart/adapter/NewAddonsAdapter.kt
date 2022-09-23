@@ -42,23 +42,23 @@ class NewAddonsAdapter(
             holder.name.setText(upgradeList.get(position).name)
             holder.name.setTypeface(ResourcesCompat.getFont(context, R.font.bold))
 //            holder.notify.visibility = View.GONE
-            holder.edit.visibility = View.VISIBLE
+//            holder.edit.visibility = View.VISIBLE
         }else{
 //            if(upgradeList.get(position).feature_code.equals("DOMAINPURCHASE")){
 //                holder.notify.visibility = View.VISIBLE
 //            }else{
 //                holder.notify.visibility = View.GONE
 //            }
-            holder.edit.visibility = View.GONE
+//            holder.edit.visibility = View.GONE
             holder.name.setText(upgradeList.get(position).name)
             holder.name.setTypeface(ResourcesCompat.getFont(context, R.font.regular))
         }
 
         Glide.with(context).load(upgradeList.get(position).primary_image).into(holder.image)
 
-        holder.edit.setOnClickListener {
-            listener.editSelectedDomain(bundleItem)
-        }
+//        holder.edit.setOnClickListener {
+//            listener.editSelectedDomain(bundleItem)
+//        }
 
 
 //        holder.itemView.setOnClickListener {
@@ -83,7 +83,7 @@ class NewAddonsAdapter(
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image = itemView.findViewById<ImageView>(R.id.imageView2)!!
         val name = itemView.findViewById<TextView>(R.id.title)!!
-        val edit = itemView.findViewById<TextView>(R.id.edit)!!
+//        val edit = itemView.findViewById<TextView>(R.id.edit)!!
 //        val notify = itemView.findViewById<ImageView>(R.id.notify)!!
 
     }
