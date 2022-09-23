@@ -365,6 +365,9 @@ class ComparePacksV3Activity :
     override fun onResume() {
         super.onResume()
 //        loadData()
+        //clear previous existing data
+        sameAddonsInCart.clear()
+        addonsListInCart.clear()
         if(upgradeList!=null) {
             viewModel.getCartItems()
         }
@@ -518,6 +521,31 @@ class ComparePacksV3Activity :
                     updatePackagePricingRecycler(listItem)
                     // updateHowToUseRecycler(listItem.steps)
                     this.selectedBundle = listItem.get(0)
+
+                    var bundleMonthlyMRP = 0.0
+                    val minMonth: Int =
+                        if (!prefs.getYearPricing() && selectedBundle!!.min_purchase_months != null && selectedBundle!!.min_purchase_months!! > 1) selectedBundle!!.min_purchase_months!! else 1
+
+                    for (singleItem in featuresList!!) {
+                        for (item in selectedBundle!!.included_features) {
+                            if (singleItem.feature_code == item.feature_code) {
+                                bundleMonthlyMRP += RootUtil.round(
+                                    singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),
+                                    2
+                                )
+                            }
+                        }
+                    }
+                    offeredBundlePrice = (bundleMonthlyMRP * minMonth)
+                    originalBundlePrice = (bundleMonthlyMRP * minMonth)
+
+                    if (selectedBundle!!.overall_discount_percent > 0)
+                        offeredBundlePrice = RootUtil.round(
+                            originalBundlePrice - (originalBundlePrice * selectedBundle!!.overall_discount_percent / 100),
+                            2
+                        )
+                    else
+                        offeredBundlePrice = originalBundlePrice
 
                     if ( listItem.get(1).frequently_asked_questions != null) {
                        binding?.faqContainer?.visibility = View.VISIBLE
@@ -789,6 +817,32 @@ class ComparePacksV3Activity :
 
         itemInCart = false
         this.selectedBundle = selectedBundle
+
+        var bundleMonthlyMRP = 0.0
+        val minMonth: Int =
+            if (!prefs.getYearPricing() && selectedBundle!!.min_purchase_months != null && selectedBundle!!.min_purchase_months!! > 1) selectedBundle!!.min_purchase_months!! else 1
+
+        for (singleItem in featuresList!!) {
+            for (item in selectedBundle!!.included_features) {
+                if (singleItem.feature_code == item.feature_code) {
+                    bundleMonthlyMRP += RootUtil.round(
+                        singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),
+                        2
+                    )
+                }
+            }
+        }
+        offeredBundlePrice = (bundleMonthlyMRP * minMonth)
+        originalBundlePrice = (bundleMonthlyMRP * minMonth)
+
+        if (selectedBundle!!.overall_discount_percent > 0)
+            offeredBundlePrice = RootUtil.round(
+                originalBundlePrice - (originalBundlePrice * selectedBundle!!.overall_discount_percent / 100),
+                2
+            )
+        else
+            offeredBundlePrice = originalBundlePrice
+
        // binding?.buyPack?.text = "Buy" + selectedBundle.name?.toLowerCase()
         var originalText = selectedBundle.name
         originalText = originalText?.lowercase(Locale.getDefault())
