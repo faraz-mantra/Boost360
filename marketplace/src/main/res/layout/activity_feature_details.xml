@@ -943,7 +943,7 @@
                         android:id="@+id/mrp_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="/staff/month" />
+                        android:text="/month" />
 
                 </LinearLayout>
 

@@ -476,8 +476,10 @@ class FeatureDetailsActivity :
                         )
                     }
                 }
-                bottom_box.visibility = VISIBLE
-                bottom_box_only_btn.visibility = GONE
+                if (addonDetails!!.is_premium){
+                    bottom_box.visibility = VISIBLE
+                    bottom_box_only_btn.visibility = GONE
+                }
             }
             learn_more_btn.visibility = View.GONE
             learn_less_btn.visibility = View.VISIBLE
