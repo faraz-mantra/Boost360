@@ -474,7 +474,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
                         generateImageResource(this@PostPreviewSocialActivity)
                     })
 
-                    uiPreviewChannelList?.add(SocialPreviewModel(posterImgPath,title,captionIntent,true,channelType!!))
+                    uiPreviewChannelList?.add(SocialPreviewModel(posterImgPath,title,captionIntent,isConnected,channelType!!))
                 }
 
 

@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -41,6 +42,7 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
 
     private lateinit var sliderRunnable: Runnable
     private var session: UserSessionManager?=null
+    private val SLIDING_DUR=4500L
 
     override fun getLayout(): Int {
         return R.layout.activity_update_studio_intro
@@ -56,6 +58,37 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
             binding!!.constraintLayout3.transitionToEnd()
             binding?.btnNext?.gone()
         },1500)
+        binding?.constraintLayout3?.addTransitionListener(object :MotionLayout.TransitionListener{
+            override fun onTransitionStarted(
+                motionLayout: MotionLayout?,
+                startId: Int,
+                endId: Int
+            ) {
+
+            }
+
+            override fun onTransitionChange(
+                motionLayout: MotionLayout?,
+                startId: Int,
+                endId: Int,
+                progress: Float
+            ) {
+            }
+
+            override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
+                binding?.btnNext?.visible()
+
+            }
+
+            override fun onTransitionTrigger(
+                motionLayout: MotionLayout?,
+                triggerId: Int,
+                positive: Boolean,
+                progress: Float
+            ) {
+            }
+
+        })
         setupSlider()
         setOnClickListener(binding?.btnUpdateStudio,binding?.btnNext)
 
@@ -72,7 +105,7 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
 
             IntroUpdateStudioItem(
                 getString(R.string.your_brand_templates_for_quick_posting),
-                R.drawable.update_studio_intro3,
+                R.drawable.update_studio_intro2,
                 getString(R.string.this_premium_feature_is_available_in_online_classic_online_advanced_packs)),
 
             IntroUpdateStudioItem(
@@ -124,10 +157,10 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
             }
 
             Handler(Looper.getMainLooper()).postDelayed(sliderRunnable,
-                3000)
+                SLIDING_DUR)
         }
         Handler(Looper.getMainLooper()).postDelayed(sliderRunnable,
-            3000)
+            SLIDING_DUR)
     }
 
 
