@@ -122,7 +122,7 @@ class OrderConfirmationFragment : BaseFragment() {
 
       validity.text=prefs.getValidityMonths()+ prefs.getValidityMonths()?.toInt()
         ?.let { Utils.yearOrMonthText(it,requireActivity(),true) }
-
+      default_validity_months = if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toInt() else 1
       val oneMonthFromNow = Calendar.getInstance()
       oneMonthFromNow.add(
         Calendar.MONTH,
@@ -137,8 +137,7 @@ class OrderConfirmationFragment : BaseFragment() {
           oneMonthFromNow.time
         )
       )
-
-
+      
       //clear CartRelatedInfo
       prefs.storeOrderSuccessFlag(true)
       prefs.storeCartOrderInfo(null)
@@ -163,7 +162,6 @@ class OrderConfirmationFragment : BaseFragment() {
         NO_EVENT_VALUE
       )
       goToAddOnsFragment()
-      (activity as PaymentActivity).finish()
     }
 
 //    order_needs_help.setOnClickListener {
@@ -267,8 +265,9 @@ class OrderConfirmationFragment : BaseFragment() {
 
   private fun goToAddOnsFragment() {
     try {
-      val intent = Intent(context, Class.forName("com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity"))
-      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//      val intent = Intent(context, Class.forName("com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity"))
+      val intent = Intent(context, Class.forName("com.boost.marketplace.ui.home.MarketPlaceActivity"))
+//      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       intent.putExtra("isComingFromOrderConfirmActivation",true)
       intent.putExtra("expCode", session?.fP_AppExperienceCode)
       intent.putExtra("fpName", session?.fPName)

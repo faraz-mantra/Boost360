@@ -1,5 +1,6 @@
 package com.festive.poster.ui.promoUpdates.holders
 
+import androidx.core.view.isVisible
 import com.festive.poster.R
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.ListItemTemplateForFavBinding
@@ -24,6 +25,8 @@ class TemplateForFavViewHolder(binding: ListItemTemplateForFavBinding):
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as FavTemplate
 
+
+        binding.isNew.isVisible = model.isFeatured
 
         val formattedDate  =formateDate(model.favDate)
         binding.tvFavOn.text =activity?.getString(R.string.favourited_on)+formattedDate

@@ -31,6 +31,7 @@ class SharedPrefs(activity: Activity) {
   private val COUPON_IDS = "COUPON_IDS"
   private val CART_COUPON_DETAILS = "CART_COUPON_DETAILS"
   private val VALIDITY_MONTHS = "VALIDITY_MONTHS"
+  private val SELECTED_DOMAIN_NAME = "SELECTED_DOMAIN_NAME"
 
   private val temp_cartAmount = "Cart_Orig_Price"
   private val temp_couponDiscount = "Coupon_Discount"
@@ -273,6 +274,14 @@ class SharedPrefs(activity: Activity) {
 
   fun getYearPricing(): Boolean {
     return pref!!.getBoolean(yearPricing, true)
+  }
+
+  fun storeSelectedDomainName(value: String?){
+    editor!!.putString(SELECTED_DOMAIN_NAME, value).apply()
+  }
+
+  fun getSelectedDomainName(): String? {
+    return pref!!.getString(SELECTED_DOMAIN_NAME, null)
   }
 
 }

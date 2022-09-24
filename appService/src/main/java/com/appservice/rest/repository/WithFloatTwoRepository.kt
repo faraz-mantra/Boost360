@@ -242,8 +242,8 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.addUpdatePaymentProfile(request), TaskCode.ADD_PAYMENT_ACCEPT_PROFILE)
   }
 
-  fun getPastUpdatesListV6(clientId: String?, fpId:String?, postType:Int?, tagRequest: TagListRequest):Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getPastUpdatesListV6(clientId = clientId, fpId = fpId, postType = postType, request = tagRequest),
+  fun getPastUpdatesListV6(clientId: String?, fpId:String?, postType:Int?,skipBy: Int?, tagRequest: TagListRequest):Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getPastUpdatesListV6(clientId = clientId, fpId = fpId, postType = postType,skipBy, request = tagRequest),
       TaskCode.GET_PAST_UPDATES)
   }
 }

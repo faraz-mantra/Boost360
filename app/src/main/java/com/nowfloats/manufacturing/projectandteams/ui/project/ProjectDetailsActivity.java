@@ -640,8 +640,12 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
     }
 
     public void showDialogToGetImage() {
-        final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
-        imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
+        if (path.size() < 3){
+            final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
+            imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
+        }else {
+            Toast.makeText(getApplicationContext(),"You have added maximum number of images!",Toast.LENGTH_LONG).show();
+        }
     }
 
     private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {

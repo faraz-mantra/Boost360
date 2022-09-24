@@ -11,6 +11,7 @@ import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.constants.PackageNames
 import com.framework.models.BaseViewModel
+import com.framework.utils.IntentUtils
 import com.framework.utils.loadFromFile
 import com.framework.utils.shareAsImage
 import java.io.File
@@ -68,7 +69,6 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
 
             when (v) {
                 binding?.ivWhatsapp -> {
-
                     imgFile.shareAsImage(requireActivity(), PackageNames.WHATSAPP, caption)
 
                 }
@@ -78,6 +78,24 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
                 }
                 binding?.ivOther -> {
                     imgFile.shareAsImage(requireActivity(), null, caption)
+
+                }
+
+                binding?.ivClosePostSuccess -> {
+                    dismiss()
+                }
+            }
+        }else{
+            when (v) {
+                binding?.ivWhatsapp -> {
+                    IntentUtils.shareText(requireActivity(),caption?:"",PackageNames.WHATSAPP)
+
+                }
+                binding?.ivInstagram -> {
+                    IntentUtils.shareText(requireActivity(),caption?:"",PackageNames.INSTAGRAM)
+                }
+                binding?.ivOther -> {
+                    IntentUtils.shareText(requireActivity(),caption?:"")
 
                 }
 

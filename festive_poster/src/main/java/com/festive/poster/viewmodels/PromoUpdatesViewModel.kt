@@ -90,7 +90,7 @@ class PromoUpdatesViewModel: BaseViewModel() {
                         val response = it as? GetTodayTemplateResponse
                         _todayPickData.postValue(
                             NetworkResult.Success(data =
-                            response?.Result?.asDomainModel()?.toArrayList())
+                            response?.Result?.asDomainModel(true)?.toArrayList())
                         )
                     }else{
                         throw Exception(it.errorMessage())
@@ -152,7 +152,7 @@ class PromoUpdatesViewModel: BaseViewModel() {
                         }!=null
                     }
 
-                    uicat.setTemplates(dbTemplates.asDomainModels())
+                    uicat.setTemplates(dbTemplates.sortedByDescending { it.utilizationDate }.asDomainModels())
                 }
                 browseAllMData.postValue(
                     NetworkResult.Success(categories.toArrayList()))

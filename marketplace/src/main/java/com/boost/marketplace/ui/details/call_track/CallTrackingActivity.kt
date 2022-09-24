@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.SharedPrefs
+import com.boost.dbcenterapi.utils.WebEngageController
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.ExactMatchListAdapter
 import com.boost.marketplace.adapter.MatchNumberListAdapter
@@ -28,6 +29,7 @@ import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
 import com.framework.utils.hideKeyBoard
+import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -77,7 +79,7 @@ class CallTrackingActivity :
 
     override fun onCreateView() {
         super.onCreateView()
-
+        WebEngageController.trackEvent(VIRTUAL_NUMBER_SEARCH_LOADED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
         experienceCode = intent.getStringExtra("expCode")
         fpid = intent.getStringExtra("fpid")
         isDeepLink = intent.getBooleanExtra("isDeepLink", false)
@@ -119,7 +121,7 @@ class CallTrackingActivity :
             )
         }
         binding?.btnSelectNumber?.setOnClickListener {
-
+            WebEngageController.trackEvent(VIRTUAL_NUMBER_SELECTED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
             val dialogCard = CallTrackAddToCartBottomSheet()
             val bundle = Bundle()
 

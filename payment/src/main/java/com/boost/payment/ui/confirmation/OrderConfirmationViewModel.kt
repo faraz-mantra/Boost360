@@ -32,22 +32,14 @@ class OrderConfirmationViewModel : ViewModel() {
   }
 
   fun emptyCurrentCartWithDomainActivate(app: Application, domainOrderType: Int = 0, activity: Activity) {
-    CompositeDisposable().add(
-      AppDatabase.getInstance(app)!!
-        .cartDao()
-        .getCartItems()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnSuccess {
-          for(singleItem in it){
-            if(singleItem.feature_code!!.equals("DOMAINPURCHASE") && !singleItem.addon_title.isNullOrEmpty()){
+            val prefs = SharedPrefs(activity)
+            if(!prefs.getSelectedDomainName().isNullOrEmpty()){
               updatesLoader.postValue("Domain Activation Is in Progress")
               val pref = app.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
               val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
-              val splitStr: ArrayList<String> = singleItem.addon_title!!.split(".")?.toCollection(ArrayList())!!
+              val splitStr = prefs.getSelectedDomainName()!!.split(".")?.toCollection(ArrayList())!!
               var domainName = ""
               var domainType = "."
-              val prefs = SharedPrefs(activity)
               var validityInYears = "1"
               var months: Double = 0.0
               if (prefs.getYearPricing()) {
@@ -112,7 +104,7 @@ class OrderConfirmationViewModel : ViewModel() {
                 )
               )
             }
-          }
+            prefs.storeSelectedDomainName(null) //Clear selected name
           Completable.fromAction {
             AppDatabase.getInstance(app)!!.cartDao().emptyCart()
           }
@@ -125,12 +117,6 @@ class OrderConfirmationViewModel : ViewModel() {
               //in case of error
             }
             .subscribe()
-        }
-        .doOnError {
-          Log.e("getCartItems","Failed to get item -> "+it.message)
-        }
-        .subscribe()
-    )
   }
 
   fun emptyCurrentCart(app: Application) {
