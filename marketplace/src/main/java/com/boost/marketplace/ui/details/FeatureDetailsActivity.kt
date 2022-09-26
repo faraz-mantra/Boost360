@@ -1984,7 +1984,370 @@ class FeatureDetailsActivity :
                     R.drawable.cta_button_click_effect
                 )
                 add_item_to_cart_new.setTextColor(Color.WHITE)
-            } else if (actionRequired == 0 && featureState == 1) {
+            } else if (actionRequired == 6 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                        || featureState == 5 || featureState == 6)) {
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.red
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
+                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                bottom_box_only_btn.visibility = VISIBLE
+                add_item_to_cart_new.setText("Extend Validity")
+                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                    applicationContext,
+                    R.drawable.cta_button_click_effect
+                )
+                add_item_to_cart_new.setTextColor(Color.WHITE)
+            }
+
+            else if (actionRequired == 8 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                        || featureState == 5 || featureState == 6)) {
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.red
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
+                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                bottom_box_only_btn.visibility = VISIBLE
+                add_item_to_cart_new.setText("Extend Validity")
+                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                    applicationContext,
+                    R.drawable.cta_button_click_effect
+                )
+                add_item_to_cart_new.setTextColor(Color.WHITE)
+            }
+
+            else if (actionRequired == 9 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                        || featureState == 5 || featureState == 6)) {
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.red
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
+                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                bottom_box_only_btn.visibility = VISIBLE
+                add_item_to_cart_new.setText("Extend Validity")
+                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                    applicationContext,
+                    R.drawable.cta_button_click_effect
+                )
+                add_item_to_cart_new.setTextColor(Color.WHITE)
+            }
+
+            else if (actionRequired == 10 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                        || featureState == 5 || featureState == 6)) {
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.red
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
+                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                bottom_box_only_btn.visibility = VISIBLE
+                add_item_to_cart_new.setText("Extend Validity")
+                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                    applicationContext,
+                    R.drawable.cta_button_click_effect
+                )
+                add_item_to_cart_new.setTextColor(Color.WHITE)
+            }
+
+            else if (actionRequired == 11 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                        || featureState == 5 || featureState == 6)) {
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.red
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
+                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                bottom_box_only_btn.visibility = VISIBLE
+                add_item_to_cart_new.setText("Extend Validity")
+                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                    applicationContext,
+                    R.drawable.cta_button_click_effect
+                )
+                add_item_to_cart_new.setTextColor(Color.WHITE)
+            }
+
+            else if (actionRequired == 12 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                        || featureState == 5 || featureState == 6)) {
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.red
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
+                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                bottom_box_only_btn.visibility = VISIBLE
+                add_item_to_cart_new.setText("Extend Validity")
+                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                    applicationContext,
+                    R.drawable.cta_button_click_effect
+                )
+                add_item_to_cart_new.setTextColor(Color.WHITE)
+            }
+
+            else if (actionRequired == 13 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                        || featureState == 5 || featureState == 6)) {
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.red
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
+                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                bottom_box_only_btn.visibility = VISIBLE
+                add_item_to_cart_new.setText("Extend Validity")
+                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                    applicationContext,
+                    R.drawable.cta_button_click_effect
+                )
+                add_item_to_cart_new.setTextColor(Color.WHITE)
+            }
+
+            else if (actionRequired == 14 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                        || featureState == 5 || featureState == 6)) {
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.red
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
+                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                bottom_box_only_btn.visibility = VISIBLE
+                add_item_to_cart_new.setText("Extend Validity")
+                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                    applicationContext,
+                    R.drawable.cta_button_click_effect
+                )
+                add_item_to_cart_new.setTextColor(Color.WHITE)
+            }
+
+            else if (actionRequired == 15 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                        || featureState == 5 || featureState == 6)) {
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.red
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
+                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                bottom_box_only_btn.visibility = VISIBLE
+                add_item_to_cart_new.setText("Extend Validity")
+                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                    applicationContext,
+                    R.drawable.cta_button_click_effect
+                )
+                add_item_to_cart_new.setTextColor(Color.WHITE)
+            }
+
+            else if (actionRequired == 16 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                        || featureState == 5 || featureState == 6)) {
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.red
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
+                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                bottom_box_only_btn.visibility = VISIBLE
+                add_item_to_cart_new.setText("Extend Validity")
+                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                    applicationContext,
+                    R.drawable.cta_button_click_effect
+                )
+                add_item_to_cart_new.setTextColor(Color.WHITE)
+            }
+
+            else if (actionRequired == 17 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                        || featureState == 5 || featureState == 6)) {
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.red
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
+                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                bottom_box_only_btn.visibility = VISIBLE
+                add_item_to_cart_new.setText("Extend Validity")
+                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                    applicationContext,
+                    R.drawable.cta_button_click_effect
+                )
+                add_item_to_cart_new.setTextColor(Color.WHITE)
+            }
+
+            else if (actionRequired == 21 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                        || featureState == 5 || featureState == 6)) {
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.red
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
+                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                bottom_box_only_btn.visibility = VISIBLE
+                add_item_to_cart_new.setText("Extend Validity")
+                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                    applicationContext,
+                    R.drawable.cta_button_click_effect
+                )
+                add_item_to_cart_new.setTextColor(Color.WHITE)
+            }
+
+            else if (actionRequired == 22 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                        || featureState == 5 || featureState == 6)) {
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.red
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
+                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                bottom_box_only_btn.visibility = VISIBLE
+                add_item_to_cart_new.setText("Extend Validity")
+                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                    applicationContext,
+                    R.drawable.cta_button_click_effect
+                )
+                add_item_to_cart_new.setTextColor(Color.WHITE)
+            }
+            else if (actionRequired == 0 && featureState == 1) {
                 WebEngageController.trackEvent(ADD_ON_VALIDITY_EXTENSION_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCaseHyperlink?.visibility = View.GONE

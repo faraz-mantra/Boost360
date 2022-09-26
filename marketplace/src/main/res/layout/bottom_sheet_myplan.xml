@@ -304,6 +304,7 @@
                 android:layout_marginTop="@dimen/_15sdp"
                 android:background="@drawable/cta_button_click_effect"
                 android:enabled="true"
+                android:visibility="gone"
                 android:fontFamily="@font/bold"
                 android:textSize="@dimen/_12sdp"
                 android:text="Activate this feature"
@@ -326,6 +327,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:visibility="gone"
+                tools:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btn_Use_this_feature" />
