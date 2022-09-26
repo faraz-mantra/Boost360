@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.checkSelfPermission
 import androidx.core.content.FileProvider
 import com.framework.R
 import java.io.File
@@ -30,27 +31,28 @@ open class ImageActivity : AppCompatActivity() {
 
   private var destination: File? = null
   private var mImageUri: Uri? = null
-  private var mImgConfig: ImageConfig? = null
+  private lateinit var mImgConfig: ImageConfig
   private var listOfImgs: List<String?>? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     overridePendingTransition(0, 0)
     val intent: Intent = intent
-    mImgConfig = intent.getSerializableExtra(ImageTags.Tags.IMG_CONFIG) as ImageConfig
+    mImgConfig = (intent.getSerializableExtra(ImageTags.Tags.IMG_CONFIG) as? ImageConfig) ?: ImageConfig()
     if (savedInstanceState == null) {
       pickImageWrapper()
       listOfImgs = ArrayList()
     }
-    if (mImgConfig!!.debug) Log.d(ImageTags.Tags.TAG, mImgConfig.toString())
+    if (mImgConfig.debug) Log.d(ImageTags.Tags.TAG, mImgConfig.toString())
   }
 
   private fun pickImage() {
-    Utility.createFolder(mImgConfig!!.directory)
-    destination = File(mImgConfig!!.directory, Utility.randomString + ImagePicker.Extension.JPG.value)
-    when (mImgConfig!!.mode) {
+    Utility.createFolder(mImgConfig.directory)
+    destination = File(mImgConfig.directory, Utility.randomString + mImgConfig.extension.value)
+    when (mImgConfig.mode) {
       ImagePicker.Mode.CAMERA -> startActivityFromCamera()
-      ImagePicker.Mode.GALLERY -> if (mImgConfig!!.allowMultiple) startActivityFromGalleryMultiImg() else startActivityFromGallery()
+      ImagePicker.Mode.GALLERY -> if (mImgConfig.allowMultiple) startActivityFromGalleryMultiImg() else startActivityFromGallery()
+      ImagePicker.Mode.GIF_IMAGE -> startActivityFromGallery()
       ImagePicker.Mode.CAMERA_AND_GALLERY -> showFromCameraOrGalleryAlert()
       else -> {
       }
@@ -61,31 +63,31 @@ open class ImageActivity : AppCompatActivity() {
     AlertDialog.Builder(this)
       .setTitle(getString(R.string.media_picker_select_from))
       .setPositiveButton(getString(R.string.media_picker_camera)) { _, _ ->
-        if (mImgConfig!!.debug) Log.d(ImageTags.Tags.TAG, "Alert Dialog - Start From Camera")
+        if (mImgConfig.debug) Log.d(ImageTags.Tags.TAG, "Alert Dialog - Start From Camera")
         startActivityFromCamera()
       }
       .setNegativeButton(getString(R.string.media_picker_gallery)) { _, _ ->
-        if (mImgConfig!!.debug) Log.d(ImageTags.Tags.TAG, "Alert Dialog - Start From Gallery")
-        if (mImgConfig!!.allowMultiple) startActivityFromGalleryMultiImg() else startActivityFromGallery()
+        if (mImgConfig.debug) Log.d(ImageTags.Tags.TAG, "Alert Dialog - Start From Gallery")
+        if (mImgConfig.allowMultiple) startActivityFromGalleryMultiImg() else startActivityFromGallery()
       }
       .setOnCancelListener {
-        if (mImgConfig!!.debug) Log.d(ImageTags.Tags.TAG, "Alert Dialog - Canceled")
+        if (mImgConfig.debug) Log.d(ImageTags.Tags.TAG, "Alert Dialog - Canceled")
         finish()
       }.show()
   }
 
-  private fun startActivityFromGallery() {
-    mImgConfig!!.isImgFromCamera = false
+  private fun startActivityFromGallery(isGif: Boolean = false) {
+    mImgConfig.isImgFromCamera = false
     val photoPickerIntent = Intent(Intent.ACTION_PICK)
     photoPickerIntent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
-    photoPickerIntent.type = "image/*"
+    photoPickerIntent.type = if (isGif.not()) "image/jpeg, image/jpg, image/png" else "image/gif"
     startActivityForResult(photoPickerIntent, ImageTags.IntentCode.REQUEST_CODE_SELECT_PHOTO)
-    if (mImgConfig!!.debug) Log.d(ImageTags.Tags.TAG, "Gallery Start with Single Image mode")
+    if (mImgConfig.debug) Log.d(ImageTags.Tags.TAG, "Gallery Start with Single Image mode")
   }
 
   @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
   private fun startActivityFromGalleryMultiImg() {
-    mImgConfig!!.isImgFromCamera = false
+    mImgConfig.isImgFromCamera = false
     val photoPickerIntent = Intent()
     photoPickerIntent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
     photoPickerIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
@@ -95,23 +97,18 @@ open class ImageActivity : AppCompatActivity() {
       Intent.createChooser(photoPickerIntent, "Select Picture"),
       ImageTags.IntentCode.REQUEST_CODE_SELECT_MULTI_PHOTO
     )
-    if (mImgConfig!!.debug) Log.d(ImageTags.Tags.TAG, "Gallery Start with Multiple Images mode")
+    if (mImgConfig.debug) Log.d(ImageTags.Tags.TAG, "Gallery Start with Multiple Images mode")
   }
 
   private fun startActivityFromCamera() {
-    mImgConfig!!.isImgFromCamera = true
+    mImgConfig.isImgFromCamera = true
     val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
     mImageUri = destination?.let {
-      FileProvider.getUriForFile(
-        this,
-        this.applicationContext.packageName.toString() + ".provider",
-        it
-      )
+      FileProvider.getUriForFile(this, this.applicationContext.packageName.toString() + ".provider", it)
     }
     intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri)
-    //        startActivityForResult(Intent.createChooser(intent, "Select Picture"), ImageTags.IntentCode.CAMERA_REQUEST);
     startActivityForResult(intent, ImageTags.IntentCode.CAMERA_REQUEST)
-    if (mImgConfig!!.debug) Log.d(ImageTags.Tags.TAG, "Camera Start")
+    if (mImgConfig.debug) Log.d(ImageTags.Tags.TAG, "Camera Start")
   }
 
   override fun onSaveInstanceState(outState: Bundle) {
@@ -184,35 +181,19 @@ open class ImageActivity : AppCompatActivity() {
     if (Build.VERSION.SDK_INT >= 23) {
       val permissionsNeeded: MutableList<String> = ArrayList()
       val permissionsList: MutableList<String> = ArrayList()
-      if ((mImgConfig!!.mode === ImagePicker.Mode.CAMERA || mImgConfig!!.mode === ImagePicker.Mode.CAMERA_AND_GALLERY) && !addPermission(
-          permissionsList,
-          Manifest.permission.CAMERA
-        )
-      ) permissionsNeeded.add(getString(R.string.media_picker_camera))
-      if (!addPermission(
-          permissionsList,
-          Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
-      ) permissionsNeeded.add(getString(R.string.media_picker_read_Write_external_storage))
+      if ((mImgConfig.mode === ImagePicker.Mode.CAMERA || mImgConfig.mode === ImagePicker.Mode.CAMERA_AND_GALLERY) && !addPermission(permissionsList, Manifest.permission.CAMERA)) permissionsNeeded.add(getString(R.string.media_picker_camera))
+      if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE)) permissionsNeeded.add(getString(R.string.media_picker_read_Write_external_storage))
       if (permissionsList.size > 0) {
         if (permissionsNeeded.size > 0) {
           // Need Rationale
-          var message: String =
-            getString(R.string.media_picker_you_need_to_grant_access_to) + " " + permissionsNeeded[0]
+          var message: String = getString(R.string.media_picker_you_need_to_grant_access_to) + " " + permissionsNeeded[0]
           for (i in 1 until permissionsNeeded.size) message = message + ", " + permissionsNeeded[i]
-          showMessageOKCancel(message,
-            DialogInterface.OnClickListener { _, _ ->
-              ActivityCompat.requestPermissions(
-                this@ImageActivity, permissionsList.toTypedArray(),
-                ImageTags.IntentCode.REQUEST_CODE_ASK_PERMISSIONS
-              )
-            })
+          showMessageOKCancel(message) { _, _ ->
+            ActivityCompat.requestPermissions(this@ImageActivity, permissionsList.toTypedArray(), ImageTags.IntentCode.REQUEST_CODE_ASK_PERMISSIONS)
+          }
           return
         }
-        ActivityCompat.requestPermissions(
-          this@ImageActivity, permissionsList.toTypedArray(),
-          ImageTags.IntentCode.REQUEST_CODE_ASK_PERMISSIONS
-        )
+        ActivityCompat.requestPermissions(this@ImageActivity, permissionsList.toTypedArray(), ImageTags.IntentCode.REQUEST_CODE_ASK_PERMISSIONS)
         return
       }
       pickImage()
@@ -233,27 +214,15 @@ open class ImageActivity : AppCompatActivity() {
   }
 
   private fun addPermission(permissionsList: MutableList<String>, permission: String): Boolean {
-    if (ActivityCompat.checkSelfPermission(
-        this@ImageActivity,
-        permission
-      ) !== PackageManager.PERMISSION_GRANTED
-    ) {
+    if (checkSelfPermission(this@ImageActivity, permission) !== PackageManager.PERMISSION_GRANTED) {
       permissionsList.add(permission)
       // Check for Rationale Option
-      if (!ActivityCompat.shouldShowRequestPermissionRationale(
-          this@ImageActivity,
-          permission
-        )
-      ) return false
+      if (!ActivityCompat.shouldShowRequestPermissionRationale(this@ImageActivity, permission)) return false
     }
     return true
   }
 
-  override fun onRequestPermissionsResult(
-    requestCode: Int,
-    @NonNull permissions: Array<String>,
-    @NonNull grantResults: IntArray
-  ) {
+  override fun onRequestPermissionsResult(requestCode: Int, @NonNull permissions: Array<String>, @NonNull grantResults: IntArray) {
     when (requestCode) {
       ImageTags.IntentCode.REQUEST_CODE_ASK_PERMISSIONS -> {
         val perms: MutableMap<String, Int> = HashMap()
@@ -286,12 +255,12 @@ open class ImageActivity : AppCompatActivity() {
   }
 
   private class CompressImageTask : AsyncTask<Void?, Void?, Void?> {
-    private val mImgConfig: ImageConfig?
+    private var mImgConfig: ImageConfig
     private val listOfImgs: List<String?>
     private var destinationPaths: MutableList<String>
     private var mContext: WeakReference<ImageActivity>
 
-    constructor(listOfImgs: List<String?>, imageConfig: ImageConfig?, context: ImageActivity) {
+    constructor(listOfImgs: List<String?>, imageConfig: ImageConfig, context: ImageActivity) {
       this.listOfImgs = listOfImgs
       mContext = WeakReference(context)
       mImgConfig = imageConfig
@@ -304,21 +273,21 @@ open class ImageActivity : AppCompatActivity() {
       listOfImgs = list
       mContext = WeakReference(context)
       destinationPaths = ArrayList()
-      mImgConfig = imageConfig
+      mImgConfig = imageConfig ?: ImageConfig()
     }
 
     override fun doInBackground(vararg params: Void?): Void? {
       for (mPath in listOfImgs) {
-        if (mPath!=null){
+        if (mPath != null) {
           try {
             val file = File(mPath)
             var destinationFile: File? = null
-            destinationFile = if (mImgConfig!!.isImgFromCamera) {
+            destinationFile = if (mImgConfig.isImgFromCamera) {
               file
             } else {
-              var ext = "."+MimeTypeMap.getFileExtensionFromUrl(file.toString())
-              if (ext.isNullOrEmpty()){
-                ext = ImagePicker.Extension.JPG.value
+              var ext = "." + MimeTypeMap.getFileExtensionFromUrl(file.toString())
+              if (ext.isEmpty()) {
+                ext = mImgConfig.extension.value
               }
               File(mImgConfig.directory, Utility.randomString + ext)
             }

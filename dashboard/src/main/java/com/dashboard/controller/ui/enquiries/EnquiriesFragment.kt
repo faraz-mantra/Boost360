@@ -81,8 +81,6 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
       viewModel?.getUserSummary(
         session?.fpTag,
         clientId,
-        session?.fPParentId,
-        scope,
         enquiriesFilter.startDate,
         enquiriesFilter.endDate
       )?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer { it1 ->

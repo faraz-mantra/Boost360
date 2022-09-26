@@ -10,6 +10,7 @@ import android.provider.OpenableColumns
 import com.framework.BaseApplication
 import com.framework.R
 import java.io.*
+import java.util.*
 
 //supported below and above android 11
 object FileUtils {
@@ -216,6 +217,11 @@ object FileUtils {
 
   fun getTempFile(extension:String):File{
     return File(BaseApplication.instance.getExternalFilesDir(null)?.path+File.separator+"temp."+extension)
+  }
+
+  fun File.getExtension(): String {
+    val strLength = absolutePath.lastIndexOf(".")
+    return if (strLength > 0) absolutePath.substring(strLength + 1).lowercase(Locale.getDefault()) else ""
   }
 }
 
