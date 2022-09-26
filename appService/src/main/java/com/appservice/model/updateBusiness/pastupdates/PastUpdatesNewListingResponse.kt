@@ -1,6 +1,7 @@
 package com.appservice.model.updateBusiness.pastupdates
 
 import com.appservice.constant.RecyclerViewItemType
+import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.recyclerView.AppBaseRecyclerViewItem
 import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
@@ -70,13 +71,20 @@ data class PastPostItem(
 	val htmlString: Any? = null,
 
 	@field:SerializedName("tags")
-	val tags: List<String>? = null
+	val tags: List<String>? = null,
+
+	var recyclerViewItem: Int = RecyclerViewItemType.PAST_UPDATE_ITEM.getLayout()
 
 ) : AppBaseRecyclerViewItem {
 
 	var category:PastPromotionalCategoryModel?=null
 
 	override fun getViewType(): Int {
-		return RecyclerViewItemType.PAST_UPDATE_ITEM.getLayout()
+		return recyclerViewItem
+	}
+
+	fun getLoaderItem(): PastPostItem {
+		this.recyclerViewItem = RecyclerViewItemType.PAGINATION_LOADER.getLayout()
+		return this
 	}
 }

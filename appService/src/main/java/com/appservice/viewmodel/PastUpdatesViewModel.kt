@@ -33,7 +33,7 @@ class PastUpdatesViewModel:BaseViewModel() {
         }
     }
 
-    fun getPastUpdatesListV6(fpId: String?, clientId: String, postType:Int?, tagListRequest: TagListRequest): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.getPastUpdatesListV6(fpId = fpId, clientId = clientId, postType = postType, tagRequest = tagListRequest).toLiveData()
+    fun getPastUpdatesListV6(fpId: String?, clientId: String, postType:Int?,skipBy:Int?, tagListRequest: TagListRequest): LiveData<BaseResponse> {
+        return WithFloatTwoRepository.getPastUpdatesListV6(fpId = fpId, clientId = clientId, postType = postType, skipBy = skipBy, tagRequest = tagListRequest).toLiveData()
     }
 }

@@ -1,7 +1,6 @@
 package com.dashboard.controller
 
 import android.content.Intent
-import android.content.IntentSender
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
@@ -11,7 +10,6 @@ import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
@@ -44,7 +42,6 @@ import com.framework.constants.PremiumCode
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.appUpdateType
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.initRemoteConfigData
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.firebaseUtils.caplimit_feature.saveCapData
@@ -70,14 +67,6 @@ import com.framework.webengageconstant.DASHBOARD_HOME_PAGE
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PAGE_VIEW
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.play.core.appupdate.AppUpdateInfo
-import com.google.android.play.core.appupdate.AppUpdateManager
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.InstallStateUpdatedListener
-import com.google.android.play.core.install.model.ActivityResult
-import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
@@ -575,7 +564,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun openImagePicker(isSecondaryImage: Boolean) {
     this.isSecondaryImage = isSecondaryImage
     val filterSheet = ImagePickerBottomSheet()
-    filterSheet.isHidePdf(true)
+    filterSheet.isHidePdfOrGif(true)
     filterSheet.onClicked = { clickPickerType(it) }
     filterSheet.show(supportFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
