@@ -49,6 +49,7 @@ import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityFeatureDetailsBinding
 import com.boost.marketplace.infra.utils.Constants.Companion.IMAGE_PREVIEW_POPUP_FRAGMENT
+import com.boost.marketplace.infra.utils.DeepLink
 import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.interfaces.DetailsFragmentListener
@@ -1989,6 +1990,9 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    Usefeature()
+                }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
                         this,
@@ -2017,6 +2021,9 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    Usefeature()
+                }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
                         this,
@@ -2045,6 +2052,9 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    Usefeature()
+                }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
                         this,
@@ -2073,6 +2083,9 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    Usefeature()
+                }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
                         this,
@@ -2101,6 +2114,9 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    Usefeature()
+                }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
                         this,
@@ -2129,6 +2145,9 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    Usefeature()
+                }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
                         this,
@@ -2157,6 +2176,9 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    Usefeature()
+                }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
                         this,
@@ -2185,6 +2207,9 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    Usefeature()
+                }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
                         this,
@@ -2213,6 +2238,9 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    Usefeature()
+                }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
                         this,
@@ -2241,6 +2269,9 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    Usefeature()
+                }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
                         this,
@@ -2269,6 +2300,9 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    Usefeature()
+                }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
                         this,
@@ -2297,6 +2331,9 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    Usefeature()
+                }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
                         this,
@@ -2325,6 +2362,9 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    Usefeature()
+                }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
                         this,
@@ -2477,4 +2517,21 @@ class FeatureDetailsActivity :
         }
     }
 
+    private fun Usefeature() {
+        val screenType = addonDetails?.feature_code?.let { DeepLink.getScreenType(it) }
+        if (screenType.isNullOrEmpty().not()) {
+            try {
+                val intent = Intent(
+                    this,
+                    Class.forName("com.dashboard.controller.DeepLinkTransActivity")
+                )
+                intent.putExtra("SCREEN_TYPE", screenType)
+                startActivity(intent)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        } else {
+            Toasty.success(this, "Coming Soon...", Toast.LENGTH_SHORT, true).show();
+        }
+    }
 }
