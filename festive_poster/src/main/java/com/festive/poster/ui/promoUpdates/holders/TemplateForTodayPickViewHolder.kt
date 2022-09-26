@@ -1,5 +1,6 @@
 package com.festive.poster.ui.promoUpdates.holders
 
+import androidx.core.view.isVisible
 import com.festive.poster.R
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.ListItemTemplateForVpBinding
@@ -26,6 +27,8 @@ class TemplateForTodayPickViewHolder(binding: ListItemTemplateForVpBinding):
 
 
         }
+
+        binding.isNew.isVisible = model.isFeatured
 
         if (model.isFavourite){
             binding.ivLove.setTintColor(getColor(R.color.colorEB5757)!!)

@@ -7,15 +7,12 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.media.ThumbnailUtils
 import android.net.Uri
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.webkit.MimeTypeMap
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import com.appservice.ui.catalog.widgets.ClickType
@@ -25,7 +22,6 @@ import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.CLICK
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.UPLOAD_GALLERY_IMAGE
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -162,9 +158,7 @@ fun changeColorOfSubstring(paramStringInt:Int, color: Int, substring:String, tex
 }
 
 fun openImagePicker(activity: Activity,fragmentManager: FragmentManager) {
-  //ImagePickerUtil.openPicker(this, object : ImagePickerUtil.Listener { override fun onFilePicked(filePath: String) { } })
   val filterSheet = ImagePickerBottomSheet()
-  filterSheet.isHidePdf(true)
   filterSheet.onClicked = { openImagePicker(activity,it) }
   filterSheet.show(fragmentManager, ImagePickerBottomSheet::class.java.name)
 }

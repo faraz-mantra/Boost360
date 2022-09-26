@@ -69,7 +69,7 @@ class PacksV3Adapter(
         }
 
         parentViewHolder.itemView.setOnClickListener {
-            packsListener.onPackageClicked(parentItem,null)
+            packsListener.onPackageClickedV3(parentItem,null)
         }
 
 

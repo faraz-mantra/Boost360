@@ -75,6 +75,9 @@ class AddonsCategoryAdapter(
       "Catalogue" -> {
         holder.image.setImageResource(R.drawable.addons_category_catalogue)
       }
+      "Staff Management" -> {
+        holder.image.setImageResource(R.drawable.ic_staff)
+      }
 
     }
     holder.title.setText(upgradeList.get(position))
@@ -109,7 +112,7 @@ class AddonsCategoryAdapter(
     CompositeDisposable().add(
       AppDatabase.getInstance(activity.application)!!
         .featuresDao()
-        .getFeatureTypeCount(upgradeList.get(position), "MERCHANT_TRAINING")
+        .getFeatureTypeCountPremium(upgradeList.get(position), "MERCHANT_TRAINING", true)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({

@@ -40,7 +40,8 @@ fun List<GetTemplatesResponseTemplate>.asDomainModels(): List<TemplateUi> {
             tags = it.tags,
             utilizationDate = it.utilizationDate,
             categoryId = it.categories.first().id,
-            favDate = it.favDate
+            favDate = it.favDate,
+            isFeatured = it.isFeatured
         )
     }
 }
