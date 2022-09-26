@@ -8,7 +8,7 @@ apply plugin: 'com.google.firebase.crashlytics'
 googleServices { disableVersionCheck = false }
 
 allprojects {
-    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
     tasks.withType(JavaCompile) {
         options.incremental = true
     }
@@ -37,7 +37,6 @@ android {
         }
     }
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
     useLibrary 'org.apache.http.legacy'
     lintOptions {
         abortOnError true
