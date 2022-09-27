@@ -14,6 +14,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.framework.R
 import com.framework.helper.Navigator
@@ -23,7 +24,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-abstract class NewBaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : BaseViewModel?> : BottomSheetDialogFragment(), View.OnClickListener {
+abstract class NewBaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BottomSheetDialogFragment(), View.OnClickListener {
 
   companion object {
     val RESULT_OK = -1
@@ -54,7 +55,7 @@ abstract class NewBaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : B
     binding = DataBindingUtil.inflate(inflater, getLayout(), container, false)
     binding?.lifecycleOwner = this
     sessionManager = UserSessionManager(baseActivity)
-    viewModel = ViewModelProviders.of(this).get(getViewModelClass())
+    viewModel = ViewModelProvider(this).get(getViewModelClass())
     return binding?.root
   }
 

@@ -13,7 +13,7 @@ class ImagePicker(builder: Builder) {
   private val imageConfig: ImageConfig
 
   enum class Extension(val value: String) {
-    PNG(".png"), JPG(".jpg");
+    PNG(".png"), JPG(".jpg"), GIF(".gif");
   }
 
   enum class ComperesLevel(val value: Int) {
@@ -28,7 +28,7 @@ class ImagePicker(builder: Builder) {
   }
 
   enum class Mode(val value: Int) {
-    CAMERA(0), GALLERY(1), CAMERA_AND_GALLERY(2);
+    CAMERA(0), GALLERY(1), CAMERA_AND_GALLERY(2), GIF_IMAGE(3);
 
   }
 
