@@ -242,11 +242,11 @@ object SvgUtils {
 
     suspend fun svgToBitmap(svg:SVG): Bitmap? {
 
-               /* svg.renderDPI =
+                svg.renderDPI =
                     BaseApplication.instance.resources?.displayMetrics?.densityDpi?.toFloat()
                         ?: 480.0f
                 svg.documentWidth = svg.documentWidth * 4
-                svg.documentHeight = svg.documentHeight * 4*/
+                svg.documentHeight = svg.documentHeight * 4
                 val b = Bitmap.createBitmap(
                     svg.documentWidth.toInt(),
                     svg.documentHeight.toInt(), Bitmap.Config.ARGB_8888
