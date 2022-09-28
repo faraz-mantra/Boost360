@@ -124,8 +124,8 @@ class DashboardViewModel : BaseViewModel() {
     return InventoryOrderRepository.getSellerSummaryV2_5(clientId, sellerId, request).toLiveData()
   }
 
-  fun getUserSummary(fpTag: String?, clientId: String?, fpIdParent: String?, scope: String?, startDate: String? = null, endDate: String? = null): LiveData<BaseResponse> {
-    return ApiWithFloatRepository.getUserSummary(fpTag, clientId, fpIdParent, scope, startDate, endDate).toLiveData()
+  fun getUserSummary(fpTag: String?, clientId: String?, startDate: String? = null, endDate: String? = null): LiveData<BaseResponse> {
+    return ApiWithFloatRepository.getUserSummary(fpTag, clientId, startDate, endDate).toLiveData()
   }
 
   fun getSubscriberCount(fpTag: String?, clientId: String?, startDate: String?, endDate: String?): LiveData<BaseResponse> {

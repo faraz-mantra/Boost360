@@ -58,16 +58,16 @@ class MyPlanBottomSheet :
             object : TypeToken<FeaturesModel>() {}.type
         )
         binding?.addonsTitle?.text = singleAddon.name
-        if (singleAddon.feature_code == "STAFFPROFILE" || singleAddon.feature_code == "STAFFPROFILE15"
-            || singleAddon.feature_code == "FACULTY" || singleAddon.feature_code == "OUR-TOPPERS"
-            || singleAddon.feature_code == "MEMBERSHIP" || singleAddon.feature_code == "DOCTORBIO"
-            || singleAddon.feature_code == "BOOSTKEYBOARD" || singleAddon.feature_code == "BOOKING-ENGINE"
-            || singleAddon.feature_code == "APPOINTMENTENGINE"
-        ) {
-            binding!!.btnUseThisFeature.visibility = View.VISIBLE
-        } else {
-            binding!!.btnUseThisFeature.visibility = View.GONE
-        }
+//        if (singleAddon.feature_code == "STAFFPROFILE" || singleAddon.feature_code == "STAFFPROFILE15"
+//            || singleAddon.feature_code == "FACULTY" || singleAddon.feature_code == "OUR-TOPPERS"
+//            || singleAddon.feature_code == "MEMBERSHIP" || singleAddon.feature_code == "DOCTORBIO"
+//            || singleAddon.feature_code == "BOOSTKEYBOARD" || singleAddon.feature_code == "BOOKING-ENGINE"
+//            || singleAddon.feature_code == "APPOINTMENTENGINE"
+//        ) {
+//            binding!!.btnUseThisFeature.visibility = View.VISIBLE
+//        } else {
+//            binding!!.btnUseThisFeature.visibility = View.GONE
+//        }
         binding?.addonsDesc?.text = singleAddon.description_title
 
         if (singleAddon.is_premium.equals(false)) {
@@ -91,20 +91,6 @@ class MyPlanBottomSheet :
         binding?.title4?.text = date
 
         Glide.with(baseActivity).load(singleAddon.primary_image).into(binding!!.addonsIcon)
-//        if (singleAddon.featureState == 1) {
-//            binding!!.imageView3.setImageResource(R.drawable.ic_active)
-//            binding!!.actionRequired.visibility=View.GONE
-//            binding!!.actionText.visibility=View.GONE
-//        }
-//        else {
-////            binding!!.imageView3.setImageResource(R.drawable.ic_action_req)
-//            binding!!.actionRequired.visibility=View.VISIBLE
-//            binding!!.actionText.visibility=View.VISIBLE
-//            binding!!.actionText.text="Please activate this feature by going to ${singleAddon.name} and provide the missing details."
-////            binding!!.txtMessage.visibility=View.GONE
-////            binding!!.paidSingleDummyView.visibility=View.GONE
-//            binding!!.imageView3.visibility=View.GONE
-//        }
 
         dialog.behavior.isDraggable = true
         setOnClickListener(
@@ -285,6 +271,7 @@ class MyPlanBottomSheet :
             )
             binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
             binding?.edgeCaseDesc?.visibility = View.VISIBLE
+
         } else if (actionRequired == 2 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                     || featureState == 5 || featureState == 6)
         ) {
@@ -316,6 +303,7 @@ class MyPlanBottomSheet :
                 "You need to choose a domain name to\n" +
                         "activate this feature.."
             )
+
         } else if (actionRequired == 3 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                     || featureState == 5 || featureState == 6)
         ) {
@@ -345,6 +333,7 @@ class MyPlanBottomSheet :
             )
             binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
             binding?.edgeCaseDesc?.visibility = View.VISIBLE
+
         } else if (actionRequired == 4 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                     || featureState == 5 || featureState == 6)
         ) {
@@ -374,7 +363,429 @@ class MyPlanBottomSheet :
             )
             binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
             binding?.edgeCaseDesc?.visibility = View.VISIBLE
-        } else if (actionRequired == 0 && featureState == 1) {
+
+        } else if (actionRequired == 5 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6)) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
+            binding?.btn1?.text = "Choose virtual number/\n" + "Setup IVR"
+            binding?.edgeCaseHyperlink?.setOnClickListener {
+                Toasty.info(requireContext(), "Coming soon...", Toast.LENGTH_LONG, true).show()
+            }
+            binding?.btn1?.setOnClickListener {
+//                featuredetails()
+                Toasty.info(requireContext(), "Coming soon...", Toast.LENGTH_LONG, true).show()
+            }
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+            binding?.edgeCaseDesc?.visibility = View.VISIBLE
+
+        } else if (actionRequired == 6 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6)) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
+            binding?.btn1?.text = "Add staff"
+            binding?.edgeCaseHyperlink?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.btn1?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+            binding?.edgeCaseDesc?.visibility = View.VISIBLE
+        }
+
+        else if (actionRequired == 8 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6)) {
+
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
+            binding?.btn1?.text = "Contact support"
+            binding?.edgeCaseHyperlink?.setText("Action required")
+            binding?.edgeCaseHyperlink?.setOnClickListener {
+                val callIntent = Intent(Intent.ACTION_DIAL)
+                callIntent.data = Uri.parse("tel:" + prefs.getExpertContact())
+                startActivity(Intent.createChooser(callIntent, "Call by:"))
+            }
+            binding?.btn1?.setOnClickListener {
+                val callIntent = Intent(Intent.ACTION_DIAL)
+                callIntent.data = Uri.parse("tel:" + prefs.getExpertContact())
+                startActivity(Intent.createChooser(callIntent, "Call by:"))
+            }
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+            binding?.edgeCaseDesc?.visibility = View.VISIBLE
+        }
+
+        else if (actionRequired == 9 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6)) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
+            binding?.btn1?.text = "Contact support"
+            binding?.edgeCaseHyperlink?.setText("Action required")
+            binding?.edgeCaseHyperlink?.setOnClickListener {
+                val callIntent = Intent(Intent.ACTION_DIAL)
+                callIntent.data = Uri.parse("tel:" + prefs.getExpertContact())
+                startActivity(Intent.createChooser(callIntent, "Call by:"))
+            }
+            binding?.btn1?.setOnClickListener {
+                val callIntent = Intent(Intent.ACTION_DIAL)
+                callIntent.data = Uri.parse("tel:" + prefs.getExpertContact())
+                startActivity(Intent.createChooser(callIntent, "Call by:"))
+            }
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+            binding?.edgeCaseDesc?.visibility = View.VISIBLE
+        }
+
+        else if (actionRequired == 10 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6)) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
+            binding?.btn1?.text = "Activate trip advisor rating"
+            binding?.edgeCaseHyperlink?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.btn1?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+            binding?.edgeCaseDesc?.visibility = View.VISIBLE
+        }
+
+        else if (actionRequired == 11 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6)) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
+            binding?.btn1?.text = "Create offers"
+            binding?.edgeCaseHyperlink?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.btn1?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+            binding?.edgeCaseDesc?.visibility = View.VISIBLE
+        }
+
+        else if (actionRequired == 12 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6)) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
+            binding?.btn1?.text = "Add places to look around"
+            binding?.edgeCaseHyperlink?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.btn1?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+            binding?.edgeCaseDesc?.visibility = View.VISIBLE
+        }
+
+        else if (actionRequired == 13 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6)) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
+            binding?.btn1?.text = "Add testimonials"
+            binding?.edgeCaseHyperlink?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.btn1?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+            binding?.edgeCaseDesc?.visibility = View.VISIBLE
+        }
+
+        else if (actionRequired == 14 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6)) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
+            binding?.btn1?.text = "Add upcoming batches"
+            binding?.edgeCaseHyperlink?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.btn1?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+            binding?.edgeCaseDesc?.visibility = View.VISIBLE
+        }
+
+        else if (actionRequired == 15 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6)) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
+            binding?.btn1?.text = "Add project portfolio"
+            binding?.edgeCaseHyperlink?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.btn1?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+            binding?.edgeCaseDesc?.visibility = View.VISIBLE
+        }
+
+        else if (actionRequired == 16 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6)) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
+            binding?.btn1?.text = "Add brochure"
+            binding?.edgeCaseHyperlink?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.btn1?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+            binding?.edgeCaseDesc?.visibility = View.VISIBLE
+        }
+
+        else if (actionRequired == 17 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6)) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
+            binding?.btn1?.text = "Add project & teams"
+            binding?.edgeCaseHyperlink?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.btn1?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+            binding?.edgeCaseDesc?.visibility = View.VISIBLE
+        }
+
+        else if (actionRequired == 21 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6)) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
+            binding?.btn1?.text = "Contact support"
+            binding?.edgeCaseHyperlink?.setOnClickListener {
+                val callIntent = Intent(Intent.ACTION_DIAL)
+                callIntent.data = Uri.parse("tel:" + prefs.getExpertContact())
+                startActivity(Intent.createChooser(callIntent, "Call by:"))
+            }
+            binding?.btn1?.setOnClickListener {
+                val callIntent = Intent(Intent.ACTION_DIAL)
+                callIntent.data = Uri.parse("tel:" + prefs.getExpertContact())
+                startActivity(Intent.createChooser(callIntent, "Call by:"))
+            }
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+            binding?.edgeCaseDesc?.visibility = View.VISIBLE
+        }
+
+        else if (actionRequired == 22 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6)) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
+            binding?.btn1?.text = "Activate boost keyboard"
+            binding?.edgeCaseHyperlink?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.btn1?.setOnClickListener {
+                Usefeature()
+            }
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+            binding?.edgeCaseDesc?.visibility = View.VISIBLE
+        }
+
+        else if (actionRequired == 0 && featureState == 1) {
             binding?.edgeCasesLayout?.visibility = View.VISIBLE
             binding?.edgeCaseHyperlink?.visibility = View.GONE
             binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
@@ -417,35 +828,6 @@ class MyPlanBottomSheet :
             binding?.edgeCaseDesc?.setText(
                 "We are working on syncing your information for this feature.it may take some time to get updated"
             )
-            binding?.edgeCaseDesc?.visibility = View.VISIBLE
-        }
-        else if (actionRequired == 5 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
-                    || featureState == 5 || featureState == 6)) {
-            binding?.edgeCasesLayout?.visibility = View.VISIBLE
-            binding?.btn1?.visibility = View.VISIBLE
-            binding?.btn1?.text = "Choose virtual number/\n" + "Setup IVR"
-            binding?.edgeCaseHyperlink?.setOnClickListener {
-                Toasty.info(requireContext(), "Coming soon...", Toast.LENGTH_LONG, true).show()
-            }
-            binding?.btn1?.setOnClickListener {
-//                featuredetails()
-                Toasty.info(requireContext(), "Coming soon...", Toast.LENGTH_LONG, true).show()
-            }
-            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
-            binding?.edgeCaseTitle?.setText("Action Required")
-            binding?.edgeCaseTitle?.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.red
-                )
-            )
-            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
-                R.drawable.ic_error_red,
-                0,
-                0,
-                0
-            )
-            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
             binding?.edgeCaseDesc?.visibility = View.VISIBLE
         }
 

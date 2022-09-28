@@ -114,7 +114,7 @@
 
                 <LinearLayout
                     android:id="@+id/package_features_ll"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/package_amount_layout"
                     android:layout_marginStart="15dp"

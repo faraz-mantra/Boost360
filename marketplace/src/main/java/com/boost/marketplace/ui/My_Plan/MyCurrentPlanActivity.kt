@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.utils.WebEngageController
@@ -39,6 +40,7 @@ import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_compare_packsv3.*
 import kotlinx.android.synthetic.main.activity_my_current_plan.*
 
 
@@ -151,6 +153,11 @@ class MyCurrentPlanActivity :
         search_icon.setOnClickListener {
             search_icon.visibility = View.GONE
             search_layout.visibility = View.VISIBLE
+
+            if (search_value.requestFocus()) {
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(search_value, InputMethodManager.SHOW_IMPLICIT)
+            }
         }
 
         clear_text.setOnClickListener {

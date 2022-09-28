@@ -259,38 +259,6 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity) :
                         )
                 )
             }
-
-            val intent = Intent(
-                requireContext(),
-                CartActivity::class.java
-            )
-            intent.putExtra("fpid", fpid)
-            intent.putExtra("expCode", experienceCode)
-            intent.putExtra("isDeepLink", isDeepLink)
-            intent.putExtra("deepLinkViewType", deepLinkViewType)
-            intent.putExtra("deepLinkDay", deepLinkDay)
-            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-            intent.putExtra(
-                "accountType",
-                accountType
-            )
-            intent.putStringArrayListExtra(
-                "userPurchsedWidgets",
-                userPurchsedWidgets
-            )
-            if (email != null) {
-                intent.putExtra("email", email)
-            } else {
-                intent.putExtra("email", "ria@nowfloats.com")
-            }
-            if (mobileNo != null) {
-                intent.putExtra("mobileNo", mobileNo)
-            } else {
-                intent.putExtra("mobileNo", "9160004303")
-            }
-            intent.putExtra("profileUrl", profileUrl)
-            startActivity(intent)
-
         }
     }
 
@@ -396,6 +364,42 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity) :
 
             } else {
                 cartCount = 0
+            }
+        })
+
+        viewModel!!.addedToCartResult().observe(this, Observer {
+            if(it){
+                val intent = Intent(
+                    requireContext(),
+                    CartActivity::class.java
+                )
+                intent.putExtra("fpid", fpid)
+                intent.putExtra("expCode", experienceCode)
+                intent.putExtra("isDeepLink", isDeepLink)
+                intent.putExtra("deepLinkViewType", deepLinkViewType)
+                intent.putExtra("deepLinkDay", deepLinkDay)
+                intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+                intent.putExtra(
+                    "accountType",
+                    accountType
+                )
+                intent.putStringArrayListExtra(
+                    "userPurchsedWidgets",
+                    userPurchsedWidgets
+                )
+                if (email != null) {
+                    intent.putExtra("email", email)
+                } else {
+                    intent.putExtra("email", "ria@nowfloats.com")
+                }
+                if (mobileNo != null) {
+                    intent.putExtra("mobileNo", mobileNo)
+                } else {
+                    intent.putExtra("mobileNo", "9160004303")
+                }
+                intent.putExtra("profileUrl", profileUrl)
+                startActivity(intent)
+                dismiss()
             }
         })
 

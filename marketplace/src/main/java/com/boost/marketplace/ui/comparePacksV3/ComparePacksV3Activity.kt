@@ -77,7 +77,6 @@ class ComparePacksV3Activity :
     var isOpenAddOnsFragment: Boolean = false
     var refreshViewPager: Boolean = false
     var packageInCartStatus = false
-    var bundleData: Bundles? = null
     var featuresList: List<FeaturesModel>? = null
     var cartList: List<CartModel>? = null
     var offeredBundlePrice = 0.0
@@ -203,7 +202,7 @@ class ComparePacksV3Activity :
                                     val args = Bundle()
                                     args.putStringArrayList("addonNames", sameAddonsInCart)
                                     args.putStringArrayList("addonsListInCart", addonsListInCart)
-                                    args.putString("packageDetails", Gson().toJson(bundleData!!))
+                                    args.putString("packageDetails", Gson().toJson(selectedBundle!!))
                                     removeFeatureBottomSheet.arguments = args
                                     removeFeatureBottomSheet.show(supportFragmentManager, RemoveFeatureBottomSheet::class.java.name)
                                 }else {
@@ -278,37 +277,6 @@ class ComparePacksV3Activity :
                         )
                 )
             }
-
-            val intent = Intent(
-                applicationContext,
-                CartActivity::class.java
-            )
-            intent.putExtra("fpid", fpid)
-            intent.putExtra("expCode", experienceCode)
-            intent.putExtra("isDeepLink", isDeepLink)
-            intent.putExtra("deepLinkViewType", deepLinkViewType)
-            intent.putExtra("deepLinkDay", deepLinkDay)
-            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-            intent.putExtra(
-                "accountType",
-                accountType
-            )
-            intent.putStringArrayListExtra(
-                "userPurchsedWidgets",
-                userPurchsedWidgets
-            )
-            if (email != null) {
-                intent.putExtra("email", email)
-            } else {
-                intent.putExtra("email", "ria@nowfloats.com")
-            }
-            if (mobileNo != null) {
-                intent.putExtra("mobileNo", mobileNo)
-            } else {
-                intent.putExtra("mobileNo", "9160004303")
-            }
-            intent.putExtra("profileUrl", profileUrl)
-            startActivity(intent)
         }
 
         binding?.packageBack?.setOnClickListener {
@@ -397,6 +365,9 @@ class ComparePacksV3Activity :
     override fun onResume() {
         super.onResume()
 //        loadData()
+        //clear previous existing data
+        sameAddonsInCart.clear()
+        addonsListInCart.clear()
         if(upgradeList!=null) {
             viewModel.getCartItems()
         }
@@ -551,6 +522,31 @@ class ComparePacksV3Activity :
                     // updateHowToUseRecycler(listItem.steps)
                     this.selectedBundle = listItem.get(0)
 
+                    var bundleMonthlyMRP = 0.0
+                    val minMonth: Int =
+                        if (!prefs.getYearPricing() && selectedBundle!!.min_purchase_months != null && selectedBundle!!.min_purchase_months!! > 1) selectedBundle!!.min_purchase_months!! else 1
+
+                    for (singleItem in featuresList!!) {
+                        for (item in selectedBundle!!.included_features) {
+                            if (singleItem.feature_code == item.feature_code) {
+                                bundleMonthlyMRP += RootUtil.round(
+                                    singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),
+                                    2
+                                )
+                            }
+                        }
+                    }
+                    offeredBundlePrice = (bundleMonthlyMRP * minMonth)
+                    originalBundlePrice = (bundleMonthlyMRP * minMonth)
+
+                    if (selectedBundle!!.overall_discount_percent > 0)
+                        offeredBundlePrice = RootUtil.round(
+                            originalBundlePrice - (originalBundlePrice * selectedBundle!!.overall_discount_percent / 100),
+                            2
+                        )
+                    else
+                        offeredBundlePrice = originalBundlePrice
+
                     if ( listItem.get(1).frequently_asked_questions != null) {
                        binding?.faqContainer?.visibility = View.VISIBLE
                         updateFAQRecycler(listItem.get(1).frequently_asked_questions!!)
@@ -579,6 +575,41 @@ class ComparePacksV3Activity :
                     upgradeList = listItem
 
                 }
+            }
+        })
+
+        viewModel.addedToCartResult().observe(this, Observer {
+            if(it){
+                val intent = Intent(
+                    applicationContext,
+                    CartActivity::class.java
+                )
+                intent.putExtra("fpid", fpid)
+                intent.putExtra("expCode", experienceCode)
+                intent.putExtra("isDeepLink", isDeepLink)
+                intent.putExtra("deepLinkViewType", deepLinkViewType)
+                intent.putExtra("deepLinkDay", deepLinkDay)
+                intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+                intent.putExtra(
+                    "accountType",
+                    accountType
+                )
+                intent.putStringArrayListExtra(
+                    "userPurchsedWidgets",
+                    userPurchsedWidgets
+                )
+                if (email != null) {
+                    intent.putExtra("email", email)
+                } else {
+                    intent.putExtra("email", "ria@nowfloats.com")
+                }
+                if (mobileNo != null) {
+                    intent.putExtra("mobileNo", mobileNo)
+                } else {
+                    intent.putExtra("mobileNo", "9160004303")
+                }
+                intent.putExtra("profileUrl", profileUrl)
+                startActivity(intent)
             }
         })
     }
@@ -786,6 +817,32 @@ class ComparePacksV3Activity :
 
         itemInCart = false
         this.selectedBundle = selectedBundle
+
+        var bundleMonthlyMRP = 0.0
+        val minMonth: Int =
+            if (!prefs.getYearPricing() && selectedBundle!!.min_purchase_months != null && selectedBundle!!.min_purchase_months!! > 1) selectedBundle!!.min_purchase_months!! else 1
+
+        for (singleItem in featuresList!!) {
+            for (item in selectedBundle!!.included_features) {
+                if (singleItem.feature_code == item.feature_code) {
+                    bundleMonthlyMRP += RootUtil.round(
+                        singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),
+                        2
+                    )
+                }
+            }
+        }
+        offeredBundlePrice = (bundleMonthlyMRP * minMonth)
+        originalBundlePrice = (bundleMonthlyMRP * minMonth)
+
+        if (selectedBundle!!.overall_discount_percent > 0)
+            offeredBundlePrice = RootUtil.round(
+                originalBundlePrice - (originalBundlePrice * selectedBundle!!.overall_discount_percent / 100),
+                2
+            )
+        else
+            offeredBundlePrice = originalBundlePrice
+
        // binding?.buyPack?.text = "Buy" + selectedBundle.name?.toLowerCase()
         var originalText = selectedBundle.name
         originalText = originalText?.lowercase(Locale.getDefault())
