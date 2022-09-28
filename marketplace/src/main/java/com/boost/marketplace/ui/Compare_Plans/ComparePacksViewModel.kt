@@ -67,6 +67,10 @@ class ComparePacksViewModel: BaseViewModel() {
         return updatesResult
     }
 
+    fun addedToCartResult(): MutableLiveData<Boolean> {
+        return addToCartResult
+    }
+
 
     fun getFeatureValues(list: List<String>) {
         CompositeDisposable().add(

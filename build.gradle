@@ -9,11 +9,11 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.1'
+        classpath 'com.android.tools.build:gradle:7.3.0'
         // in the individual module build.gradle files
-        classpath 'com.google.gms:google-services:4.3.3'
+        classpath 'com.google.gms:google-services:4.3.10'
         // kotlin support
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.20"
 
         // Add the Crashlytics Gradle plugin
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.0'
@@ -26,7 +26,8 @@ allprojects {
         google()
         jcenter()
         maven {
-            url "http://repo.apxor.com/artifactory/list/libs-release-android"
+            url = uri("http://repo.apxor.com/artifactory/list/libs-release-android")
+            allowInsecureProtocol = true
         }
         flatDir {
             dirs 'libs'

@@ -497,12 +497,16 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
         cart_discount_coupon_remove.setOnClickListener {
             cart_applied_coupon_full_layout.visibility = View.GONE
             cart_coupon_code_rv.visibility = View.VISIBLE
-            if (tv_Show_less.visibility == VISIBLE) {
+            if (couponData.size == 1) {
+                tv_Show_less.visibility = GONE
+                tv_Show_more.visibility = GONE
+            }
+//            if (tv_Show_less.visibility == VISIBLE) {
+//                tv_Show_more.visibility = View.GONE
+//            }
+            else {
+                tv_Show_less.visibility == VISIBLE
                 tv_Show_more.visibility = View.GONE
-
-            } else {
-                tv_Show_more.visibility = View.VISIBLE
-
             }
             discount_banner.visibility = View.GONE
             cart_apply_coupon.visibility = View.VISIBLE

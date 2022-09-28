@@ -202,6 +202,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         initializeFeatureAdapter()
         initializeNeedMoreAdapter()
         initializePackItemRecycler()
+        initView()
         initMvvm()
         loadData()
 
@@ -254,8 +255,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                     itemIds.add(i.feature_code)
                 }
 
-                binding?.packageImg?.let { it1 -> makeFlyAnimation(it1) }
-
                 CompositeDisposable().add(
                     AppDatabase.getInstance(application)!!
                         .featuresDao()
@@ -307,9 +306,11 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                                 offeredBundlePrice = (bundleMonthlyMRP * minMonth)
                                 originalBundlePrice = (bundleMonthlyMRP * minMonth)
 
-                                if (bundleData!!.overall_discount_percent > 0)
-                                    offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent / 100.0)
-                                else
+                                if (bundleData!!.overall_discount_percent > 0){
+                                    offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent / 100.0),
+                                        2
+                                    )
+                                }else
                                     offeredBundlePrice = originalBundlePrice
 
                                 //clear cartOrderInfo from SharedPref to requestAPI again
@@ -405,6 +406,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnComplete {
+                binding?.packageImg?.let { it1 -> makeFlyAnimation(it1) }
                 viewModel.addItemToCartPackage1(
                     CartModel(
                         bundle._kid,
@@ -507,6 +509,9 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
     override fun onResume() {
         super.onResume()
+        //clear previous existing data
+        sameAddonsInCart.clear()
+        addonsListInCart.clear()
         loadData()
     }
 
@@ -636,133 +641,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         binding?.whatOurCustomerViewpager?.addItemDecoration(itemDecoration)
     }
 
-
-    private fun initMvvm() {
-        viewModel.bundleResult().observe(this) { list ->
-            if (list != null) {
-                if(bundleData?.name == "Online Basic" ) {
-                    // show Online Classic
-                    val onlineClassic = list.find { it.name == "Online Classic" }
-                    onlineClassic?.let { it1 -> setupPackItemRecycler(it1) }
-                } else if(bundleData?.name == "Online Classic") {
-                    //show Online Advance
-                    val onlineAdvance = list.find { it.name == "Online Advanced" }
-                    onlineAdvance?.let { it1 -> setupPackItemRecycler(it1) }
-                } else {
-                    // hide the section - Need More Features
-                    layout_need_more.visibility = View.GONE
-                }
-
-                // this is for domain & Vmn selection addon details.
-                val itemsIds = arrayListOf<String>()
-                for (item in bundleData?.included_features!!) {
-                    itemsIds.add(item.feature_code)
-                }
-                CompositeDisposable().add(
-                    AppDatabase.getInstance(this.application)!!
-                        .featuresDao()
-                        .getallFeaturesInList(itemsIds)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            {
-                                if (it.isNotEmpty()) {
-                                    for (singleItem in it){
-                                        if (singleItem.feature_code == "DOMAINPURCHASE"){
-                                            singleAddon= singleItem
-                                        }
-                                    }
-                                }
-                            },
-                            {
-                                it.printStackTrace()
-                            }
-                        )
-                )
-            }
-        }
-
-        viewModel.addonsError().observe(this, androidx.lifecycle.Observer
-        {
-            println("addonsError ${it}")
-            if (it.contains("Query returned empty"))
-                finish()
-        })
-
-        viewModel.addonsLoader().observe(this, androidx.lifecycle.Observer
-        {
-            if (it) {
-                val status = "Loading. Please wait..."
-                progressDialog.setMessage(status)
-                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
-                progressDialog.show()
-            } else {
-                progressDialog.dismiss()
-            }
-        })
-        viewModel.cartResult().observe(this, androidx.lifecycle.Observer {
-            cartList = it
-            itemInCart = false
-            packageInCartStatus = false
-            if (cartList != null && cartList!!.size > 0) {
-                // packsv3footerAdapter.updateCartItem(cartList!!)
-                if (refreshViewPager) {
-                    refreshViewPager = false
-                }
-
-                if (cartList?.size!! > 0) {
-                    if (cartList != null) {
-                        for (singleCartItem in cartList!!) {
-                            if (singleCartItem.item_id.equals(bundleData!!._kid)) {
-                                itemInCart = true
-                                break
-                            }
-                        }
-                    }
-                }
-                if (!itemInCart) {
-                    binding?.bottomBoxOnlyBtn?.setTextColor(this.resources.getColor(R.color.white))
-                    binding?.bottomBoxOnlyBtn?.background = ContextCompat.getDrawable(
-                        this.applicationContext,
-                        R.drawable.ic_cart_continue_bg
-                    )
-                    binding?.bottomBoxOnlyBtn?.setText("Buy ${bundleData!!.name}")
-                    binding?.bottomBoxOnlyBtn?.isClickable = true
-                } else {
-                    binding?.bottomBoxOnlyBtn?.background = ContextCompat.getDrawable(
-                        this.applicationContext,
-                        R.drawable.ic_packsv3_added_to_cart_bg
-                    )
-                    binding?.bottomBoxOnlyBtn?.setTextColor(
-                        this.getResources().getColor(R.color.tv_color_BB)
-                    )
-                    binding?.bottomBoxOnlyBtn?.setText(this.getString(R.string.added_to_cart))
-                    binding?.bottomBoxOnlyBtn?.isClickable = false
-                }
-
-                cartCount = cartList!!.size
-                badgeNumber = cartList!!.size
-                binding?.badge121?.setText(badgeNumber.toString())
-                binding?.badge121?.visibility = View.VISIBLE
-                Log.v("badgeNumber", " " + badgeNumber)
-
-            } else {
-                cartCount = 0
-                badgeNumber = 0
-                binding?.badge121?.visibility = GONE
-                packageInCartStatus = false
-
-                binding?.bottomBoxOnlyBtn?.setTextColor(this.resources.getColor(R.color.white))
-                binding?.bottomBoxOnlyBtn?.background = ContextCompat.getDrawable(
-                    this.applicationContext,
-                    R.drawable.ic_cart_continue_bg
-                )
-                binding?.bottomBoxOnlyBtn?.setText("Buy ${bundleData!!.name}")
-                binding?.bottomBoxOnlyBtn?.isClickable = true
-
-            }
-        })
-
+    private fun initView(){
         if (bundleData?.name!= null) {
             Glide.with(binding?.packageImg!!).load(bundleData?.primary_image!!.url)
                 .into(binding?.packageImg!!)
@@ -859,21 +738,23 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                                 binding?.packRecycler?.adapter = packDetailsAdapter
                             } else {
                                 binding?.packContainer?.visibility = GONE
-
                             }
 
+                            var bundleMonthlyMRP = 0.0
                             for (singleItem in it) {
                                 for (item in bundleData?.included_features!!) {
                                     if (singleItem.feature_code == item.feature_code) {
-                                        originalBundlePrice += Utils.priceCalculatorForYear(
+                                        bundleMonthlyMRP +=
                                             RootUtil.round(
                                                 (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
                                                 2
-                                            ) * minMonth, singleItem.widget_type, this
-                                        )
+                                            ) * minMonth
                                     }
                                 }
                             }
+                            offeredBundlePrice = (bundleMonthlyMRP * minMonth)
+                            originalBundlePrice = (bundleMonthlyMRP * minMonth)
+
                             if (bundleData?.overall_discount_percent!! > 0) {
                                 offeredBundlePrice = RootUtil.round(
                                     originalBundlePrice - (originalBundlePrice * bundleData?.overall_discount_percent!! / 100.0),
@@ -926,14 +807,13 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                                     binding?.mrpPrice?.visibility = GONE
                                 }
                             } else {
-                                binding
-                                    ?.price?.text = ("₹" +
+                                binding?.price?.text = ("₹" +
                                         NumberFormat.getNumberInstance(Locale.ENGLISH)
-                                            .format(offeredBundlePrice)
+                                            .format(Utils.priceCalculatorForYear(offeredBundlePrice, "", this))
                                         + Utils.yearlyOrMonthlyOrEmptyValidity("", this))
                                 binding?.includedBlack?.tvPrice1?.text = ("₹" +
                                         NumberFormat.getNumberInstance(Locale.ENGLISH)
-                                            .format(offeredBundlePrice)
+                                            .format(Utils.priceCalculatorForYear(offeredBundlePrice, "", this))
                                         + Utils.yearlyOrMonthlyOrEmptyValidity("", this))
                                 if (offeredBundlePrice != originalBundlePrice) {
                                     spannableString(originalBundlePrice)
@@ -952,6 +832,130 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                     )
             )
         }
+    }
+
+
+    private fun initMvvm() {
+        viewModel.bundleResult().observe(this) { list ->
+            if (list != null) {
+                if(bundleData?.name == "Online Basic" ) {
+                    // show Online Classic
+                    val onlineClassic = list.find { it.name == "Online Classic" }
+                    onlineClassic?.let { it1 -> setupPackItemRecycler(it1) }
+                } else if(bundleData?.name == "Online Classic") {
+                    //show Online Advance
+                    val onlineAdvance = list.find { it.name == "Online Advanced" }
+                    onlineAdvance?.let { it1 -> setupPackItemRecycler(it1) }
+                } else {
+                    // hide the section - Need More Features
+                    layout_need_more.visibility = View.GONE
+                }
+
+                // this is for domain & Vmn selection addon details.
+                val itemsIds = arrayListOf<String>()
+                for (item in bundleData?.included_features!!) {
+                    itemsIds.add(item.feature_code)
+                }
+                CompositeDisposable().add(
+                    AppDatabase.getInstance(this.application)!!
+                        .featuresDao()
+                        .getallFeaturesInList(itemsIds)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                            {
+                                if (it.isNotEmpty()) {
+                                    for (singleItem in it){
+                                        if (singleItem.feature_code == "DOMAINPURCHASE"){
+                                            singleAddon= singleItem
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                it.printStackTrace()
+                            }
+                        )
+                )
+            }
+        }
+        viewModel.addonsError().observe(this, androidx.lifecycle.Observer {
+            println("addonsError ${it}")
+            if (it.contains("Query returned empty"))
+                finish()
+        })
+        viewModel.addonsLoader().observe(this, androidx.lifecycle.Observer {
+            if (it) {
+                val status = "Loading. Please wait..."
+                progressDialog.setMessage(status)
+                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
+                progressDialog.show()
+            } else {
+                progressDialog.dismiss()
+            }
+        })
+        viewModel.cartResult().observe(this, androidx.lifecycle.Observer {
+            cartList = it
+            itemInCart = false
+            packageInCartStatus = false
+            if (cartList != null && cartList!!.size > 0) {
+                // packsv3footerAdapter.updateCartItem(cartList!!)
+                if (refreshViewPager) {
+                    refreshViewPager = false
+                }
+
+                if (cartList?.size!! > 0) {
+                    if (cartList != null) {
+                        for (singleCartItem in cartList!!) {
+                            if (singleCartItem.item_id.equals(bundleData!!._kid)) {
+                                itemInCart = true
+                                break
+                            }
+                        }
+                    }
+                }
+                if (!itemInCart) {
+                    binding?.bottomBoxOnlyBtn?.setTextColor(this.resources.getColor(R.color.white))
+                    binding?.bottomBoxOnlyBtn?.background = ContextCompat.getDrawable(
+                        this.applicationContext,
+                        R.drawable.ic_cart_continue_bg
+                    )
+                    binding?.bottomBoxOnlyBtn?.setText("Buy ${bundleData!!.name}")
+                    binding?.bottomBoxOnlyBtn?.isClickable = true
+                } else {
+                    binding?.bottomBoxOnlyBtn?.background = ContextCompat.getDrawable(
+                        this.applicationContext,
+                        R.drawable.ic_packsv3_added_to_cart_bg
+                    )
+                    binding?.bottomBoxOnlyBtn?.setTextColor(
+                        this.getResources().getColor(R.color.tv_color_BB)
+                    )
+                    binding?.bottomBoxOnlyBtn?.setText(this.getString(R.string.added_to_cart))
+                    binding?.bottomBoxOnlyBtn?.isClickable = false
+                }
+
+                cartCount = cartList!!.size
+                badgeNumber = cartList!!.size
+                binding?.badge121?.setText(badgeNumber.toString())
+                binding?.badge121?.visibility = View.VISIBLE
+                Log.v("badgeNumber", " " + badgeNumber)
+
+            } else {
+                cartCount = 0
+                badgeNumber = 0
+                binding?.badge121?.visibility = GONE
+                packageInCartStatus = false
+
+                binding?.bottomBoxOnlyBtn?.setTextColor(this.resources.getColor(R.color.white))
+                binding?.bottomBoxOnlyBtn?.background = ContextCompat.getDrawable(
+                    this.applicationContext,
+                    R.drawable.ic_cart_continue_bg
+                )
+                binding?.bottomBoxOnlyBtn?.setText("Buy ${bundleData!!.name}")
+                binding?.bottomBoxOnlyBtn?.isClickable = true
+
+            }
+        })
     }
 
     private fun setupPackItemRecycler(bundlesModel: BundlesModel) {
@@ -1135,11 +1139,11 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                                     }
                                 }
                                 var offeredBundlePrice = (bundleMonthlyMRP * minMonth)
-                                var originalBundlePrice = (bundleMonthlyMRP * minMonth)
+                                val originalBundlePrice = (bundleMonthlyMRP * minMonth)
 
                                 if (bundle.overall_discount_percent > 0)
                                     offeredBundlePrice = RootUtil.round(
-                                        originalBundlePrice - (originalBundlePrice * bundle.overall_discount_percent / 100),
+                                        originalBundlePrice - (originalBundlePrice * bundle.overall_discount_percent / 100.0),
                                         2
                                     )
                                 else
@@ -1358,7 +1362,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     ) {
 
         val origCost = SpannableString(
-            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value)
+            "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(Utils.priceCalculatorForYear(value, "", this))
                     + Utils.yearlyOrMonthlyOrEmptyValidity("", this, minMonth)
         )
         binding?.includedBlack?.tvPrice?.text = origCost
