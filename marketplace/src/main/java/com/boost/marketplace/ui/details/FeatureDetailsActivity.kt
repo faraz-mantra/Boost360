@@ -1854,6 +1854,11 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    val callIntent = Intent(Intent.ACTION_DIAL)
+                    callIntent.data = Uri.parse("tel:" + prefs.getExpertContact())
+                    startActivity(Intent.createChooser(callIntent, "Call by:"))
+                }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
                         this,
@@ -1880,6 +1885,9 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    goToDomainSelection()
+                }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
                         this,
@@ -1913,6 +1921,9 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    Toasty.success(this, "Coming Soon...", Toast.LENGTH_SHORT, true).show();
+                }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
                         this,
@@ -1939,6 +1950,9 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    Toasty.success(this, "Coming Soon...", Toast.LENGTH_SHORT, true).show();
+                }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
                         this,
@@ -1962,6 +1976,9 @@ class FeatureDetailsActivity :
             }  else if (actionRequired == 5 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                         || featureState == 5 || featureState == 6)) {
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    Toasty.success(this, "Coming Soon...", Toast.LENGTH_SHORT, true).show();
+                }
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
                 binding?.edgeCaseTitle?.setTextColor(
