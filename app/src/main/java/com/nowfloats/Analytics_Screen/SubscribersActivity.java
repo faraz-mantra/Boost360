@@ -35,6 +35,7 @@ import com.framework.views.zero.old.AppOnZeroCaseClicked;
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
 import com.framework.views.zero.old.AppZeroCases;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Analytics_Screen.API.SubscriberApis;
 import com.nowfloats.Analytics_Screen.Search_Query_Adapter.SubscribersAdapter;
 import com.nowfloats.Analytics_Screen.model.AddSubscriberModel;
@@ -48,7 +49,10 @@ import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivitySubscribersBinding;
+import com.zendesk.service.ErrorResponse;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -57,6 +61,7 @@ import java.util.regex.Pattern;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
 
 import static com.framework.webengageconstant.EventLabelKt.ADDED;
 import static com.framework.webengageconstant.EventLabelKt.ERROR_SUBSCRIBER;
@@ -66,6 +71,8 @@ import static com.framework.webengageconstant.EventNameKt.ADD_SUBSCRIBER_FAILED;
 import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_NEWSLETTER_SUBSCRIPTIONS;
 import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
 import static com.framework.webengageconstant.EventValueKt.TO_BE_ADDED;
+
+import org.json.JSONObject;
 
 public class SubscribersActivity extends AppCompatActivity implements View.OnClickListener,
     SubscribersAdapter.SubscriberInterfaceMethods, AppOnZeroCaseClicked {
@@ -273,9 +280,16 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
       @Override
       public void failure(RetrofitError error) {
         Log.v("ggg", error.getMessage());
+        byte[] responseBytes=((TypedByteArray) error.getResponse().getBody()).getBytes();
+        String statusString = new String(responseBytes);
         mProgressBar.setVisibility(View.GONE);
         progressDialog.dismiss();
-        Methods.showSnackBarNegative(SubscribersActivity.this, getString(R.string.something_went_wrong_try_again));
+        dialog.dismiss();
+        if (statusString.equals("User already subscribed")){
+          Methods.showSnackBarNegative(SubscribersActivity.this, "User already subscribed");
+        }else {
+          Methods.showSnackBarNegative(SubscribersActivity.this, getString(R.string.something_went_wrong_try_again));
+        }
         WebEngageController.trackEvent(ADD_SUBSCRIBER_FAILED, ERROR_SUBSCRIBER, mSessionManager.getFpTag());
       }
     });
