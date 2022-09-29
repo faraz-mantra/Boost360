@@ -39,10 +39,7 @@ import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.constant.RecyclerViewActionType
 import com.boost.marketplace.databinding.ActivityMarketplaceBinding
 import com.boost.marketplace.infra.utils.Utils1
-import com.boost.marketplace.interfaces.AddonsListener
-import com.boost.marketplace.interfaces.CompareBackListener
-import com.boost.marketplace.interfaces.HomeListener
-import com.boost.marketplace.interfaces.VideosListener
+import com.boost.marketplace.interfaces.*
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
 import com.boost.marketplace.ui.History_Orders.HistoryOrdersActivity
 import com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity
@@ -2203,7 +2200,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         startActivity(intent)
     }
 
-    override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
+
+    override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel, position: Int) {
         WebEngageController.trackEvent(
             VIDEO_GALLERY_CLICKED,
             CLICK,
@@ -2212,6 +2210,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         Log.i("onPlayYouTubeVideo", videoItem.youtube_link ?: "")
 
         val link = videoItem.youtube_link!!
+        val size = videosListAdapter.itemCount
 
         val dialogCard = HomeVideosBottomSheet()
         val args = Bundle()
@@ -2220,6 +2219,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         args.putString("fptag", fpTag)
         args.putString("title", videoItem.title)
         args.putString("link", link)
+        args.putInt("position",position)
+        args.putInt("size",size)
         dialogCard.arguments = args
         dialogCard.show(this.supportFragmentManager, HomeVideosBottomSheet::class.java.name)
     }

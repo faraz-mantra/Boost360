@@ -327,10 +327,6 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
         //not in use
     }
 
-    override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
-        //not in use
-    }
-
     override fun onPackageAddToCart(item: Bundles?, image: ImageView) {
         //not in use
     }
