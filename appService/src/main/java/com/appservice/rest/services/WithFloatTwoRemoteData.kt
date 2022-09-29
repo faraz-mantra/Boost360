@@ -224,6 +224,7 @@ interface WithFloatTwoRemoteData {
     @Query("clientId") clientId: String?,
     @Query("fpId") fpId: String?,
     @Query("postType") postType: Int?,
+    @Query("skipBy") skipBy: Int?,
     @Body request: TagListRequest
   ):Observable<Response<PastUpdatesNewListingResponse>>
 }

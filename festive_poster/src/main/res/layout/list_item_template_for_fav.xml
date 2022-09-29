@@ -227,6 +227,7 @@
             android:src="@drawable/ic_new"
             android:elevation="8dp"
             android:translationX="-6dp"
+            android:id="@+id/is_new"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

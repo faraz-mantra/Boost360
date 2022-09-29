@@ -80,7 +80,7 @@ class TestimonialAddEditFragment : BaseTestimonialFragment<FragmentTestimonialAd
 
   private fun openImagePicker() {
     val filterSheet = ImagePickerBottomSheet()
-    filterSheet.isHidePdf(true)
+    filterSheet.isHidePdfOrGif(true)
     filterSheet.onClicked = { openImagePicker(it) }
     filterSheet.show(this@TestimonialAddEditFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }

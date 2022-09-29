@@ -38,7 +38,6 @@ import com.framework.imagepicker.ImagePicker
 import com.framework.webengageconstant.*
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import java.util.*
 import kotlin.collections.ArrayList
 
 class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBinding, ServiceViewModelV1>(), RecyclerItemClickListener {
@@ -263,7 +262,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
   private fun openImagePicker() {
     val filterSheet = ImagePickerBottomSheet()
-    filterSheet.isHidePdf(true)
+    filterSheet.isHidePdfOrGif(true)
     filterSheet.onClicked = { openImagePicker(it) }
     filterSheet.show(
       this@ServiceInformationFragment.parentFragmentManager,

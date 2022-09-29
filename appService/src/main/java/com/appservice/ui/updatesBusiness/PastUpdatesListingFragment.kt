@@ -9,14 +9,17 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentUpdatesListingBinding
+import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.updateBusiness.pastupdates.*
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
+import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.viewmodel.PastUpdatesViewModel
 import com.framework.constants.IntentConstants
@@ -43,6 +46,13 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding
     var isFilterVisible = false
     var tagArray: MutableList<String> = mutableListOf()
     var promoUpdateCatsList: ArrayList<PastPromotionalCategoryModel> = arrayListOf()
+    lateinit var linearLayoutManager: LinearLayoutManager
+
+    /* Paging */
+    private var isLoadingD = false
+    private var TOTAL_ELEMENTS = 0
+  //  private var skip: Int = PaginationScrollListener.PAGE_START
+    private var isLastPageD = false
 
     companion object {
         @JvmStatic
@@ -63,18 +73,40 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding
 
     override fun onCreateView() {
         super.onCreateView()
+
         initUI()
         setOnClickListener(binding.btnPostNewUpdate)
 
     }
 
     private fun initUI() {
+        linearLayoutManager = LinearLayoutManager(requireActivity())
         baseActivity.window.statusBarColor = getColor(R.color.color_4a4a4a_jio_ec008c)
         showSimmer(true)
         getTemplateViewConfig()
 
-
+        handlePagination()
         //apiCallPastUpdates()
+    }
+
+    private fun handlePagination() {
+        binding?.rvPostListing.addOnScrollListener(object :
+            PaginationScrollListener(linearLayoutManager) {
+            override fun loadMoreItems() {
+                if (!isLastPageD) {
+                    isLoadingD = true
+                    pastPostListingAdapter.addLoadingFooter(PastPostItem().getLoaderItem())
+                    apiCallPastUpdates(false,pastPostListing.size)
+                }
+            }
+
+            override val totalPageCount: Int
+                get() = TOTAL_ELEMENTS
+            override val isLastPage: Boolean
+                get() = isLastPageD
+            override val isLoading: Boolean
+                get() = isLoadingD
+        })
     }
 
     override fun onClick(v: View) {
@@ -90,7 +122,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding
         categoryDataList = PastCategoriesModel().getData(baseActivity)
         postCategoryAdapter = AppBaseRecyclerViewAdapter(baseActivity, categoryDataList, this)
         binding.rvFilterCategory.adapter = postCategoryAdapter
-        apiCallPastUpdates()
+        apiCallPastUpdates(true,0)
     }
 
     private fun getTemplateViewConfig() {
@@ -105,19 +137,21 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding
     }
 
 
-    private fun apiCallPastUpdates() {
+    private fun apiCallPastUpdates(isFirst: Boolean,skipBy:Int) {
+
         viewModel?.getPastUpdatesListV6(
             clientId = clientId,
             fpId = sessionLocal.fPID,
             postType = postType,
-            tagListRequest = TagListRequest(tagArray)
+            tagListRequest = TagListRequest(tagArray),
+            skipBy = 0
         )
             ?.observeOnce(viewLifecycleOwner) { it ->
                 hideProgress()
                 if (it.isSuccess()) {
                     it as PastUpdatesNewListingResponse
 
-                  handleListResponse(it)
+                  handleListResponse(it,isFirst)
 
                 }
                 showSimmer(false)
@@ -125,34 +159,44 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding
             }
     }
 
-    private fun handleListResponse(it: PastUpdatesNewListingResponse) {
+    private fun handleListResponse(it: PastUpdatesNewListingResponse,isFirst:Boolean) {
+        if (isFirst){
+            pastPostListing.clear()
+        }
+
+        //Setting Category Counts
+        if (categoryDataList.isNotEmpty()) {
+            categoryDataList[0].categoryCount = it.totalCount ?: 0
+            categoryDataList[1].categoryCount = it.postCount ?: 0
+            categoryDataList[2].categoryCount = it.imageCount ?: 0
+            categoryDataList[3].categoryCount = it.textCount ?: 0
+            postCategoryAdapter.notifyItemRangeChanged(0, 4)
+        }
+        TOTAL_ELEMENTS = categoryDataList[postType].categoryCount
+        isLastPageD = pastPostListing.size==TOTAL_ELEMENTS
+
+
         it.floats?.let { list ->
-            if (list.isNullOrEmpty()) {
+            if (isFirst.not()){
+                removeLoader()
+            }
+            if (list.isNullOrEmpty()&&isFirst) {
                 binding.tvNoPost.visible()
-                pastPostListing.clear()
                 pastPostListingAdapter.notifyDataSetChanged()
             } else {
                 binding.tvNoPost.gone()
                 binding.rvPostListing.visible()
-                pastPostListing.clear()
                 list.forEach {item->
                     item.category = promoUpdateCatsList.find { category->
                         item.tags?.firstOrNull()==category.id
                     }
                 }
                 pastPostListing.addAll(list)
-                pastPostListingAdapter = AppBaseRecyclerViewAdapter(baseActivity, pastPostListing, this)
-                binding.rvPostListing.adapter = pastPostListingAdapter
+                notifyList()
             }
 
-            //Setting Category Counts
-            if (categoryDataList.isNotEmpty()) {
-                categoryDataList[0].categoryCount = it.totalCount ?: 0
-                categoryDataList[1].categoryCount = it.postCount ?: 0
-                categoryDataList[2].categoryCount = it.imageCount ?: 0
-                categoryDataList[3].categoryCount = it.textCount ?: 0
-                postCategoryAdapter.notifyItemRangeChanged(0, 4)
-            }
+
+
         }
     }
 
@@ -168,7 +212,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding
                 postType = pastCategoriesModel.postType
                 tagChanges()
                 postCategoryAdapter.notifyDataSetChanged()
-                apiCallPastUpdates()
+                apiCallPastUpdates(true,0)
             }
             RecyclerViewActionType.PAST_TAG_CLICKED.ordinal -> {
                 showProgress()
@@ -183,7 +227,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding
                         tagListAdapter.notifyDataSetChanged()
                     }, 100
                 )
-                apiCallPastUpdates()
+                apiCallPastUpdates(true,0)
             }
             RecyclerViewActionType.PAST_SHARE_BUTTON_CLICKED.ordinal -> {
                 showProgress()
@@ -288,6 +332,25 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding
                 binding.shimmerLayoutPast.parentShimmerLayout.stopShimmer()
             }
         }
+    }
+
+    private fun removeLoader() {
+        if (isLoadingD) {
+            isLoadingD = false
+            pastPostListingAdapter.removeLoadingFooter()
+        }
+    }
+
+    fun notifyList(){
+        if (::pastPostListingAdapter.isInitialized.not()){
+            pastPostListingAdapter = AppBaseRecyclerViewAdapter(baseActivity, pastPostListing, this)
+            binding.rvPostListing.adapter = pastPostListingAdapter
+            binding.rvPostListing.layoutManager =linearLayoutManager
+            pastPostListingAdapter.runLayoutAnimation(binding.rvPostListing)
+        }else{
+            pastPostListingAdapter.notifyDataSetChanged()
+        }
+
     }
 
 }
