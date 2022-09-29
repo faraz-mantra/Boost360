@@ -6,13 +6,20 @@ import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.boost.cart.base_class.BaseViewModel
 import com.boost.cart.utils.SingleLiveEvent
 import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.CustomDomain.CustomDomains
 import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.ExpertConnect
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.promoBannerFilter
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.promoMarketOfferFilter
+import com.boost.dbcenterapi.data.api_model.GetFloatingPointWebWidgets.response.GetFloatingPointWebWidgetsResponse
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
@@ -32,13 +39,14 @@ import com.boost.dbcenterapi.data.model.coupon.CouponServiceModel
 import com.boost.dbcenterapi.data.remote.ApiInterface
 import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.data.renewalcart.*
+import com.boost.dbcenterapi.data.rest.repository.MarketplaceNewRepository
+import com.boost.dbcenterapi.data.rest.repository.MarketplaceRepository
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
-import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
-import com.boost.dbcenterapi.upgradeDB.model.CartModel
-import com.boost.dbcenterapi.upgradeDB.model.CouponsModel
-import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.dbcenterapi.utils.DataLoader
 import com.framework.analytics.SentryController
+import com.framework.extensions.observeOnce
+import com.framework.models.toLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
@@ -112,6 +120,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     var selectedStateResult: MutableLiveData<String> = MutableLiveData()
     var selectedStateTinResult: MutableLiveData<String> = MutableLiveData()
 
+    var expertConnectDetails: MutableLiveData<ExpertConnect> = MutableLiveData()
+
     var stateValue: String? = null
     var cityValueResult: MutableLiveData<String> = MutableLiveData()
 
@@ -120,8 +130,23 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     private var gstApiInfo: MutableLiveData<GSTApiResponse> = MutableLiveData()
     var addToCartResult: MutableLiveData<Boolean> = MutableLiveData()
 
+
+    lateinit var lifecycleOwner: LifecycleOwner
+
+    fun setApplicationLifecycle(
+
+        lifecycleOwner: LifecycleOwner
+    ) {
+
+        this.lifecycleOwner = lifecycleOwner
+    }
+
     fun updatesError(): LiveData<String> {
         return updatesError
+    }
+
+    fun getExpertConnectDetails(): LiveData<ExpertConnect> {
+        return expertConnectDetails
     }
 
     fun cartResult(): LiveData<List<CartModel>> {
@@ -1003,4 +1028,19 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         )
     }
 
+    fun loadUpdates() {
+
+        updatesLoader.postValue(true)
+        if (com.boost.dbcenterapi.utils.Utils.isConnectedToInternet(getApplication())) {
+            MarketplaceNewRepository.getAllFeatures().toLiveData()
+                .observeOnce(lifecycleOwner, Observer {
+                    if (it.isSuccess()) {
+                        val response = it as? GetAllFeaturesResponse
+                        if (response != null) {
+                            expertConnectDetails.postValue(response.Data[0].expert_connect)
+                        }
+                    }
+                })
+        }
+    }
 }
