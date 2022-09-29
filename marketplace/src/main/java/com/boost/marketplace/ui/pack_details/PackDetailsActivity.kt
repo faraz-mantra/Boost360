@@ -307,13 +307,11 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                                 originalBundlePrice = (bundleMonthlyMRP * minMonth)
 
                                 if (bundleData!!.overall_discount_percent > 0){
-                                    offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent / 100.0),
-                                        2
-                                    )
+                                    offeredBundlePrice =originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent / 100.0)
                                 }else
                                     offeredBundlePrice = originalBundlePrice
 
-                                //clear cartOrderInfo from SharedPref to requestAPI again
+                                //clear cartOrderInfo from SharedPref to requestAPI againf
                                 prefs.storeCartOrderInfo(null)
 
                                     //remove other bundle and add existing bundle to cart
@@ -740,26 +738,20 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                                 binding?.packContainer?.visibility = GONE
                             }
 
-                            var bundleMonthlyMRP = 0.0
+                            originalBundlePrice = 0.0
                             for (singleItem in it) {
                                 for (item in bundleData?.included_features!!) {
                                     if (singleItem.feature_code == item.feature_code) {
-                                        bundleMonthlyMRP +=
-                                            RootUtil.round(
+                                        originalBundlePrice += RootUtil.round(
                                                 (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
                                                 2
                                             ) * minMonth
                                     }
                                 }
                             }
-                            offeredBundlePrice = (bundleMonthlyMRP * minMonth)
-                            originalBundlePrice = (bundleMonthlyMRP * minMonth)
 
                             if (bundleData?.overall_discount_percent!! > 0) {
-                                offeredBundlePrice = RootUtil.round(
-                                    originalBundlePrice - (originalBundlePrice * bundleData?.overall_discount_percent!! / 100.0),
-                                    2
-                                )
+                                offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundleData?.overall_discount_percent!! / 100.0)
                                 binding?.containerBlack?.visibility = View.VISIBLE
 
 
@@ -773,6 +765,9 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
                             }
 
+                            val temp = offeredBundlePrice
+                            val temp1 =  originalBundlePrice
+
                             binding?.includedBlack?.tvDesc?.text= "If you buy ${bundleData!!.included_features.size} \nfeatures seperately"
                             binding?.includedBlack?.tvDesc1?.text= "If you buy same ${bundleData!!.included_features.size} features \nin ${bundleData!!.name}"
 
@@ -780,7 +775,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
                                 binding?.includedBlack?.tvPrice1?.text = "₹" +
                                         NumberFormat.getNumberInstance(Locale.ENGLISH)
-                                            .format(offeredBundlePrice) +
+                                            .format(RootUtil.round(offeredBundlePrice,2)) +
                                         Utils.yearlyOrMonthlyOrEmptyValidity(
                                             "",
                                             this,
@@ -788,7 +783,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                                         )
                                 binding?.price?.text = "₹" +
                                         NumberFormat.getNumberInstance(Locale.ENGLISH)
-                                            .format(offeredBundlePrice) +
+                                            .format(RootUtil.round(offeredBundlePrice,2)) +
                                         Utils.yearlyOrMonthlyOrEmptyValidity(
                                             "",
                                             this,
@@ -809,11 +804,11 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                             } else {
                                 binding?.price?.text = ("₹" +
                                         NumberFormat.getNumberInstance(Locale.ENGLISH)
-                                            .format(Utils.priceCalculatorForYear(offeredBundlePrice, "", this))
+                                            .format(RootUtil.round(Utils.priceCalculatorForYear(offeredBundlePrice, "", this),2))
                                         + Utils.yearlyOrMonthlyOrEmptyValidity("", this))
                                 binding?.includedBlack?.tvPrice1?.text = ("₹" +
                                         NumberFormat.getNumberInstance(Locale.ENGLISH)
-                                            .format(Utils.priceCalculatorForYear(offeredBundlePrice, "", this))
+                                            .format(RootUtil.round(Utils.priceCalculatorForYear(offeredBundlePrice, "", this),2))
                                         + Utils.yearlyOrMonthlyOrEmptyValidity("", this))
                                 if (offeredBundlePrice != originalBundlePrice) {
                                     spannableString(originalBundlePrice)
@@ -1124,28 +1119,25 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                                 removeFeatureBottomSheet.arguments = args
                                 removeFeatureBottomSheet.show(supportFragmentManager, RemoveFeatureBottomSheet::class.java.name)
                             }else {
-                                var bundleMonthlyMRP = 0.0
+                                var offeredBundlePrice = 0.0
+                                var originalBundlePrice = 0.0
                                 val minMonth: Int =
                                     if (!prefs.getYearPricing() && bundle.min_purchase_months != null && bundle.min_purchase_months!! > 1) bundleData!!.min_purchase_months!! else 1
 
                                 for (singleItem in it) {
                                     for (item in bundle.included_features) {
                                         if (singleItem.feature_code == item.feature_code) {
-                                            bundleMonthlyMRP += RootUtil.round(
+                                            originalBundlePrice += RootUtil.round(
                                                 singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),
                                                 2
-                                            )
+                                            ) * minMonth
                                         }
                                     }
                                 }
-                                var offeredBundlePrice = (bundleMonthlyMRP * minMonth)
-                                val originalBundlePrice = (bundleMonthlyMRP * minMonth)
+
 
                                 if (bundle.overall_discount_percent > 0)
-                                    offeredBundlePrice = RootUtil.round(
-                                        originalBundlePrice - (originalBundlePrice * bundle.overall_discount_percent / 100.0),
-                                        2
-                                    )
+                                    offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * bundle.overall_discount_percent / 100.0), 2)
                                 else
                                     offeredBundlePrice = originalBundlePrice
 
@@ -1301,8 +1293,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             itemsIds.add(item.feature_code)
         }
 
-        var offeredBundlePrice = 0.0
-        var originalBundlePrice = 0.0
+        var offeredBundlePrice1 = 0.0
+        var originalBundlePrice1 = 0.0
         val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) bundles.min_purchase_months!! else 1
 //    val minMonth: Int = 12
         CompositeDisposable().add(
@@ -1316,8 +1308,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                         for (singleItem in it) {
                             for (item in includedFeatures) {
                                 if (singleItem.feature_code == item.feature_code) {
-//                  originalBundlePrice += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt() * minMonth
-                                    originalBundlePrice += Utils.priceCalculatorForYear(
+                                    originalBundlePrice1 += Utils.priceCalculatorForYear(
                                         RootUtil.round(
                                             (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
                                             2
@@ -1326,26 +1317,18 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                             }
                         }
                         if (bundles.overall_discount_percent > 0) {
-                            offeredBundlePrice = RootUtil.round(
-                                (originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent / 100.0)),
+                            offeredBundlePrice1 = RootUtil.round(
+                                (originalBundlePrice1 - (originalBundlePrice1 * bundles.overall_discount_percent / 100.0)),
                                 2
                             )
                             discount.visibility = View.VISIBLE
                             discount.setText(bundles.overall_discount_percent.toString() + "%\nSAVING")
                         } else {
-                            offeredBundlePrice = originalBundlePrice
+                            offeredBundlePrice1 = originalBundlePrice1
                             discount.visibility = GONE
                         }
-                        needMorePrice.setText("₹" + offeredBundlePrice + Utils.yearlyOrMonthlyOrEmptyValidity(
-                            "",
-                            this
-                        )
-                        )
-                        val mrpPriceString = SpannableString("₹" + originalBundlePrice + Utils.yearlyOrMonthlyOrEmptyValidity(
-                            "",
-                            this
-                        )
-                        )
+                        needMorePrice.setText("₹" + offeredBundlePrice1 + Utils.yearlyOrMonthlyOrEmptyValidity("", this))
+                        val mrpPriceString = SpannableString("₹" + originalBundlePrice1 + Utils.yearlyOrMonthlyOrEmptyValidity("", this))
                         mrpPriceString.setSpan(StrikethroughSpan(), 0, mrpPriceString.length, 0)
                         needMoreMrpPrice.setText(mrpPriceString)
                     },

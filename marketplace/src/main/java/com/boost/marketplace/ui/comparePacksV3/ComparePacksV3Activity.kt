@@ -216,18 +216,13 @@ class ComparePacksV3Activity :
                                             bundleMonthlyMRP += RootUtil.round(
                                                 singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),
                                                 2
-                                            )
+                                            )* minMonth
                                         }
                                     }
                                 }
-                                offeredBundlePrice = (bundleMonthlyMRP * minMonth)
-                                originalBundlePrice = (bundleMonthlyMRP * minMonth)
 
                                 if (selectedBundle!!.overall_discount_percent > 0)
-                                    offeredBundlePrice = RootUtil.round(
-                                        originalBundlePrice - (originalBundlePrice * selectedBundle!!.overall_discount_percent / 100),
-                                        2
-                                    )
+                                    offeredBundlePrice = originalBundlePrice - (originalBundlePrice * selectedBundle!!.overall_discount_percent / 100)
                                 else
                                     offeredBundlePrice = originalBundlePrice
 
