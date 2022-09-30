@@ -45,10 +45,7 @@ import com.appservice.model.serviceProduct.update.UpdateValue
 import com.appservice.ui.bankaccount.startFragmentAccountActivity
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.*
-import com.appservice.utils.WebEngageController
-import com.appservice.utils.changeColorOfSubstring
-import com.appservice.utils.getBitmap
-import com.appservice.utils.getExtension
+import com.appservice.utils.*
 import com.appservice.viewmodel.ProductViewModel
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
@@ -58,8 +55,8 @@ import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.firebaseUtils.caplimit_feature.PropertiesItem
 import com.framework.firebaseUtils.caplimit_feature.filterFeature
 import com.framework.firebaseUtils.caplimit_feature.getCapData
+import com.framework.glide.util.ImageService
 import com.framework.glide.util.glideLoad
-import com.framework.glide.util.loadGifGlide
 import com.framework.imagepicker.ImagePicker
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_TAG
 import com.framework.pref.clientId
@@ -287,9 +284,11 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       product?.ImageUri.isNullOrEmpty().not() -> {
         binding.imageAddBtn.gone()
         binding.clearImage.visible()
-        binding.productImageView.visible()
-        binding.productImageView.let {
-          activity?.glideLoad(it, product?.ImageUri, R.drawable.placeholder_image)
+        binding.productImg?.visible()
+        binding.productImg?.apply {
+          if (product?.ImageUri?.getExtension()?.contains("gif", true) == true) {
+            ImageService(requireContext()).loadGif(product?.ImageUri ?: "", R.drawable.placeholder_image_n, this, {}, {})
+          } else baseActivity.glideLoad(this, product?.ImageUri, R.drawable.placeholder_image_n)
         }
       }
     }
@@ -408,9 +407,10 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       uploadSecondaryImage(productId)
       return
     }
+    val fileName = takeIf { productImage?.name.isNullOrEmpty().not() }?.let { productImage?.name } ?: "product_${Date().time}.png"
     viewModel?.addUpdateProductImage(
       clientId, requestType = "sequential", requestId = deviceId, totalChunks = 1,
-      currentChunkNumber = 1, productId = productId, requestBody = getRequestServiceImage(productImage)
+      currentChunkNumber = 1, productId = productId, fileName, requestBody = getRequestServiceImage(productImage)
     )?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) uploadSecondaryImage(productId)
       else {
@@ -421,8 +421,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun getRequestServiceImage(serviceImage: File?): RequestBody {
-    val responseBody = serviceImage?.readBytes()?.let { it.toRequestBody("image/png".toMediaTypeOrNull(), 0, it.size) }
-    val fileName = takeIf { serviceImage?.name.isNullOrEmpty().not() }?.let { serviceImage?.name } ?: "service_${Date().time}.png"
+    val responseBody = serviceImage?.readBytes()?.let { it.toRequestBody("image/*".toMediaTypeOrNull(), 0, it.size) }
     return responseBody!!
   }
 
@@ -556,14 +555,13 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   private fun clearImage() {
     binding.imageAddBtn.visible()
     binding.clearImage.gone()
-    binding.productImageView.gone()
+    binding.productImg?.gone()
     product?.ImageUri = null
     productImage = null
   }
 
   private fun openImagePicker() {
     val filterSheet = ImagePickerBottomSheet()
-    filterSheet.isHidePdfOrGif(isGifHide = false)
     filterSheet.onClicked = { openImagePicker(it) }
     filterSheet.show(
       this@ProductDetailFragment.parentFragmentManager,
@@ -594,10 +592,12 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         productImage = File(mPaths[0])
         binding.imageAddBtn.gone()
         binding.clearImage.visible()
-        binding.productImageView.visible()
+        binding.productImg?.visible()
         if (productImage?.getExtension()?.contains("gif", true) == true) {
-          baseActivity.loadGifGlide(binding.productImageView, productImage)
-        } else productImage?.getBitmap()?.let { binding.productImageView.setImageBitmap(it) }
+          binding.productImg?.let { ImageService(requireContext()).loadGif(it, productImage!!, R.drawable.placeholder_image_n, {}, {}) }
+        } else {
+          productImage?.getBitmap()?.let { binding.productImg?.setImageBitmap(it) }
+        }
       }
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == RC_PRODCUT_INFO) {
       product = data?.getSerializableExtra(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct

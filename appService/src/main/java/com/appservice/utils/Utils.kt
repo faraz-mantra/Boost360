@@ -107,7 +107,7 @@ fun String.getBitmap(): Bitmap? {
 
 fun File.getMimeType(): String? {
   var mimeType: String? = null
-  val extension: String? = absolutePath?.getExtension()
+  val extension: String? = absolutePath.getExtension()
   if (MimeTypeMap.getSingleton().hasExtension(extension)) {
     mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
   }

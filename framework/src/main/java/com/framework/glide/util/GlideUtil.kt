@@ -36,7 +36,6 @@ import com.framework.pref.getAccessTokenAuth
 import com.framework.views.CircularImageView
 import com.framework.views.customViews.CustomImageView
 import com.framework.views.roundedimageview.RoundedImageView
-import com.squareup.picasso.Picasso
 import jp.wasabeef.glide.transformations.BlurTransformation
 import java.io.File
 
@@ -76,12 +75,12 @@ fun Context.glideLoad(mImageView: RoundedImageView?, url: String?) {
 }
 
 
-fun Context.glideLoad(mImageView: CustomImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
+fun Context.glideLoad(mImageView: CustomImageView, url: String?, placeholder: Int?, isCrop: Boolean? = false) {
   try {
     if (url.isNullOrEmpty()) return
     val glide = Glide.with(this).load(url).skipMemoryCache(true).thumbnail(0.1f).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
     placeholder?.let { glide.placeholder(it) }
-    if (isCrop) glide.centerCrop()
+    if (isCrop == true) glide.centerCrop()
     glide.into(mImageView)
   } catch (e: Exception) {
     Log.e("GlideUtil", "Error: ${e.localizedMessage}")
