@@ -372,7 +372,7 @@ class ComparePacksV3Activity :
         val pref = this.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
         val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
         val code: String =
-            if (experienceCode.isNullOrEmpty()) experienceCode!! else UserSessionManager(this).fP_AppExperienceCode!!
+            if (experienceCode.isNullOrEmpty()) UserSessionManager(this).fP_AppExperienceCode!! else UserSessionManager(this).fP_AppExperienceCode!!
         if (!code.equals("null", true)) {
             viewModel.setCurrentExperienceCode(code, fpTag!!)
         }
