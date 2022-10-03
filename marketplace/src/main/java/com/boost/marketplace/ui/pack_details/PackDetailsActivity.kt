@@ -1137,7 +1137,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
 
                                 if (bundle.overall_discount_percent > 0)
-                                    offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * bundle.overall_discount_percent / 100.0), 2)
+                                    offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundle.overall_discount_percent / 100.0)
                                 else
                                     offeredBundlePrice = originalBundlePrice
 
