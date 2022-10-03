@@ -1,9 +1,11 @@
 package com.nowfloats.Analytics_Screen;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -333,12 +335,9 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         .customView(view, false)
         .build();
 
-    Toast toast = Toast.makeText(this,"Add a valid email Id", Toast.LENGTH_SHORT);
-    setParametersForSubscriberDialogToast(toast);
-
     addBtn.setOnClickListener(view12 -> {
       if (!checkIsEmailOrNumber(email.getText().toString().trim())) {
-        toast.show();
+        Toast.makeText(SubscribersActivity.this,"Add a valid email Id", Toast.LENGTH_SHORT).show();
       } else {
         addSubscriber(email.getText().toString().trim(), subscriberDialog);
       }
@@ -348,14 +347,6 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
 
     subscriberDialog.show();
   }
-
-  private void setParametersForSubscriberDialogToast(Toast toast) {
-    View toastView = toast.getView();
-    toastView.getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.snackbar_negative_color), PorterDuff.Mode.SRC_IN);
-    TextView text = toastView.findViewById(android.R.id.message);
-    text.setTextColor(Color.WHITE);
-  }
-  //method call when view changed from adapter
 
   @Override
   public void onitemSeleted(int pos) {
