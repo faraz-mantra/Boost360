@@ -23,8 +23,8 @@ import retrofit2.http.QueryMap
 
 object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBaseLocalService>() {
 
-  fun getPanGstDetail(fpId: String?,clientId:String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getPanGstDetail(fpId,clientId), TaskCode.GET_PAN_GST_DETAILS)
+  fun getPanGstDetail(fpId: String?, clientId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getPanGstDetail(fpId, clientId), TaskCode.GET_PAN_GST_DETAILS)
   }
 
   fun panGstUpdate(body: PanGstUpdateBody): Observable<BaseResponse> {
@@ -123,12 +123,12 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
 
   fun addUpdateImageProduct(
     clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?,
-    currentChunkNumber: Int?, productId: String?, requestBody: RequestBody?,
+    currentChunkNumber: Int?, productId: String?, fileName: String?, requestBody: RequestBody?,
   ): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.addUpdateImageProduct(
-        clientId, requestType, requestId, totalChunks,
-        currentChunkNumber, productId, requestBody
+        clientId = clientId, requestType = requestType, requestId = requestId, totalChunks = totalChunks,
+        currentChunkNumber = currentChunkNumber, productId = productId, fileName = fileName, requestBody = requestBody
       ), TaskCode.ADD_UPDATE_IMAGE_PRODUCT_SERVICE
     )
   }
@@ -170,10 +170,10 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     imageBase64: String?,
   ): Observable<BaseResponse> {
     val jsonObject = JsonObject()
-    jsonObject.addProperty("type",type)
+    jsonObject.addProperty("type", type)
     jsonObject.addProperty("clientId", clientId)
     jsonObject.addProperty("bizMessageId", bizMessageId)
-    jsonObject.addProperty("imageBody",imageBase64)
+    jsonObject.addProperty("imageBody", imageBase64)
     return makeRemoteRequest(
       remoteDataSource.putBizImageUpdateV2(
         jsonObject
@@ -242,8 +242,10 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.addUpdatePaymentProfile(request), TaskCode.ADD_PAYMENT_ACCEPT_PROFILE)
   }
 
-  fun getPastUpdatesListV6(clientId: String?, fpId:String?, postType:Int?,skipBy: Int?, tagRequest: TagListRequest):Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getPastUpdatesListV6(clientId = clientId, fpId = fpId, postType = postType,skipBy, request = tagRequest),
-      TaskCode.GET_PAST_UPDATES)
+  fun getPastUpdatesListV6(clientId: String?, fpId: String?, postType: Int?, skipBy: Int?, tagRequest: TagListRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getPastUpdatesListV6(clientId = clientId, fpId = fpId, postType = postType, skipBy, request = tagRequest),
+      TaskCode.GET_PAST_UPDATES
+    )
   }
 }

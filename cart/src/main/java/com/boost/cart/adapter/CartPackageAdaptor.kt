@@ -74,7 +74,7 @@ class CartPackageAdaptor(
 
     holder.name.text = selectedBundle.item_name
     val price = RootUtil.round(priceCalculatorForYear(selectedBundle.price, "", activity),2)
-    val MRPPrice = priceCalculatorForYear(selectedBundle.MRPPrice, "", activity)
+    val MRPPrice = RootUtil.round(priceCalculatorForYear(selectedBundle.MRPPrice, "", activity),2)
     holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + Utils.yearlyOrMonthlyOrEmptyValidity("", activity, selectedBundle.min_purchase_months)
 
     if (selectedBundle.link != null) {

@@ -199,6 +199,10 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
       PosterKeys.user_image to imageUrl)
 
     val templateIds = ArrayList<String>()
+    if (sharedViewModel?.selectedPoster==null){
+      hideProgress()
+      return
+    }
     if (isAlreadyPurchased){
       templateIds.add(sharedViewModel?.selectedPoster?.id!!)
     }else{

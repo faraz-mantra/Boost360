@@ -374,6 +374,13 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
         startActivity(intent)
     }
 
+    override fun onResume() {
+        super.onResume()
+        //clear previous existing data
+        sameAddonsInCart.clear()
+        addonsListInCart.clear()
+    }
+
     override fun onRefreshCart() {
         viewModel.loadAllPackagesFromDB()
     }
