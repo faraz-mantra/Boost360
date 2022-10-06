@@ -1,14 +1,22 @@
 package com.dashboard.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.appservice.rest.repository.AzureWebsiteNewRepository
 import com.appservice.rest.repository.WithFloatTwoRepository
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.dashboard.model.DisableBadgeNotificationRequest
 import com.dashboard.rest.repository.*
 import com.framework.base.BaseResponse
+import com.framework.constants.PremiumCode
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
+import com.framework.utils.PreferencesKey
+import com.framework.utils.PreferencesUtils
+import com.framework.utils.application
+import com.framework.utils.saveData
 import com.inventoryorder.model.summary.request.SellerSummaryRequest
 import com.inventoryorder.rest.repositories.ApiTwoWithFloatRepository
 import com.inventoryorder.rest.repositories.ApiWithFloatRepository
@@ -19,14 +27,24 @@ import com.onboarding.nowfloats.rest.repositories.CategoryRepository
 import com.onboarding.nowfloats.rest.repositories.ChannelRepository
 import com.onboarding.nowfloats.rest.repositories.UploadImageRepository
 import com.onboarding.nowfloats.rest.repositories.WhatsAppRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.Dispatcher
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
 
 class DashboardViewModel : BaseViewModel() {
 
+  private val TAG = "DashboardViewModel"
+  init {
+    checkUpdateStudioAvailalbilty()
+  }
   fun getCategories(context: Context): LiveData<BaseResponse> {
     return CategoryRepository.getCategories(context).toLiveData()
   }
@@ -177,6 +195,29 @@ class DashboardViewModel : BaseViewModel() {
   fun disableBadgeNotification(request: DisableBadgeNotificationRequest): LiveData<BaseResponse> {
     return UsCentralNowFloatsCloudRepository.disableBadgeNotification(request).toLiveData()
   }
+
+  fun checkUpdateStudioAvailalbilty(){
+
+    AppDatabase.getInstance(application())
+      ?.featuresDao()?.getFeaturesItemByFeatureCode(PremiumCode.CALLTRACKER.value)
+      ?.subscribeOn(Schedulers.io())
+      ?.observeOn(AndroidSchedulers.mainThread())
+      ?.subscribe ({feature->
+        if (feature!=null){
+          PreferencesUtils.instance
+            .saveData(PreferencesKey.IS_UPDATE_STUDIO_ENABLED.name,true)
+        }
+
+
+      },
+        {t->
+          Log.e(TAG, "checkUpdateStudioAvailalbilty: ", )
+        }
+
+      )
+
+  }
+
 }
 
 
