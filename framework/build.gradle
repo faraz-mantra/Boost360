@@ -216,4 +216,10 @@ dependencies {
     //advanced webview
     api 'com.github.delight-im:Android-AdvancedWebView:v3.2.1'
 
+    //play integrity for security
+     api 'com.google.android.play:integrity:1.0.1'
+    api group: 'org.bitbucket.b_c', name: 'jose4j', version: '0.7.12'
+
+
+
 }

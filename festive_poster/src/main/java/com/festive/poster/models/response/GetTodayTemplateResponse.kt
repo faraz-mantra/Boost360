@@ -52,7 +52,7 @@ fun List<GetTodayTemplateResponseResult>.asDomainModel(sortByDate:Boolean=false)
             id = it.category.id,
             name = it.category.name,
             thumbnailUrl = it.category.thumbnailUrl,
-            templates = if (sortByDate) templates.sortedByDescending { it.utilizationDate } else templates,
+            templates = templates,
             iconUrl = it.category.iconUrl,
             description = it.category.description
         )
