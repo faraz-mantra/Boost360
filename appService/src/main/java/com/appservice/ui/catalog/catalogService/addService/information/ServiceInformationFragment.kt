@@ -95,8 +95,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
       (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>)
         ?: ArrayList()
     tagList = product?.tags ?: ArrayList()
-    specList =
-      if (product?.otherSpecification.isNullOrEmpty()) arrayListOf(KeySpecification()) else product?.otherSpecification!!
+    specList = if (product?.otherSpecification.isNullOrEmpty()) arrayListOf(KeySpecification()) else product?.otherSpecification!!
     if (isEdit) {
       secondaryDataImage = product?.secondaryImages
       if (secondaryImage.isNullOrEmpty()) secondaryDataImage?.forEach {
@@ -228,9 +227,11 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
       }
       binding?.btnAddSpecification -> {
         specList.add(KeySpecification())
-        binding?.rvSpecification?.removeAllViewsInLayout()
-        binding?.rvSpecification?.adapter = null
-        specificationAdapter()
+        //binding?.rvSpecification?.removeAllViewsInLayout()
+        //binding?.rvSpecification?.adapter = null
+        adapterSpec?.notifyDataSetChanged()
+        //adapterSpec?.notifyItemInserted(specList.size.minus(1))
+        //specificationAdapter()
       }
       binding?.btnConfirm -> validateAnnGoBack()
       binding?.btnClickPhoto -> openImagePicker()
@@ -281,6 +282,19 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   }
 
   private fun validateAnnGoBack() {
+    if (specList.any { it.key.isNullOrEmpty() && it.value.isNullOrEmpty().not() || it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty()}) {
+      specList.forEachIndexed { index, _ ->
+          adapterSpec?.notifyItemChanged(index)
+      }
+      binding?.linearErrorMsg?.visible()
+      return
+    }
+    binding?.linearErrorMsg?.gone()
+
+    val otherSpec = specList/*(specList.filter {
+      it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not()
+    } as? ArrayList<KeySpecification>) ?: ArrayList()*/
+
     val spinnerCod = binding?.spinnerCod?.selectedItem as SpinnerImageModel
     val spinnerOnlinePayment = binding?.spinnerOnlinePayment?.selectedItem as SpinnerImageModel
     val brand = binding?.edtBrand?.text?.toString() ?: ""
@@ -289,10 +303,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     val keySpecification = binding?.cetSpecKey?.text?.toString() ?: ""
     val valSpecification = binding?.cetSpecValue?.text?.toString() ?: ""
     val gst = (binding?.edtGst?.text?.toString() ?: "").replace("%", "").trim()
-    val otherSpec = (specList.filter {
-      it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not()
-    } as? ArrayList<KeySpecification>)
-      ?: ArrayList()
+
     when {
       else -> {
         WebEngageController.trackEvent(SERVICE_INFORMATION_CONFIRM, CLICK, NO_EVENT_VALUE)
@@ -433,6 +444,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
           val data = specList[position]
           data.key = element.key
           data.value = element.value
+          specList[position] = data
         }
       }
     }

@@ -15,9 +15,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.appservice.AppServiceApplication;
+import com.boost.dbcenterapi.DBCenterAPIApplication;
+import com.boost.marketplace.MarketplaceApplication;
 import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignup.locale.LocaleManager;
-import com.boost.upgrades.UpgradeApplication;
 import com.dashboard.AppDashboardApplication;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
@@ -135,11 +136,14 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
         FlorisApplication.initModule(this);
         FestivePosterApplication.instance = this;
         FestivePosterApplication.initModule(this);
+        //upgrade module changes
+        DBCenterAPIApplication.instance = this;
+        DBCenterAPIApplication.initModule(this);
+        //marketplace module changes
+        MarketplaceApplication.instance = this;
+        MarketplaceApplication.initModule(this);
         initWebEngage();
         UserExperiorController.INSTANCE.startRecording(this);
-        //upgrade module changes
-        UpgradeApplication.instance = this;
-        UpgradeApplication.initModule(this);
 
         //Invite Referral
         InviteReferralsApplication.register(this);

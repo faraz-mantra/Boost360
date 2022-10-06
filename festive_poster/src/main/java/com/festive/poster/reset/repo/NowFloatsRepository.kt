@@ -4,18 +4,24 @@ package com.festive.poster.reset.repo
 
 import com.festive.poster.base.rest.AppBaseLocalService
 import com.festive.poster.base.rest.AppBaseRepository
+import com.festive.poster.models.CategoryUi
+import com.festive.poster.models.response.GetTemplatesBody
+import com.festive.poster.models.response.GetTodaysTemplateBody
+import com.festive.poster.models.response.TemplateSaveActionBody
+import com.festive.poster.models.response.asDomainModels
 import com.festive.poster.reset.TaskCode
 import com.festive.poster.reset.apiClients.NowFloatsApiClient
 import com.festive.poster.reset.services.NowFloatsRemoteData
 import com.framework.base.BaseResponse
+import com.framework.utils.getResponse
 import com.google.gson.Gson
-import com.google.gson.JsonArray
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.Retrofit
-import retrofit2.http.Query
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 
 object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocalService>() {
@@ -28,7 +34,7 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
       add("tags", Gson().toJsonTree(tags).asJsonArray)
       addProperty("showFavourites",false)
     }
-    return NowFloatsRepository.makeRemoteRequest(
+    return makeRemoteRequest(
       remoteDataSource.getTemplates(body),
       TaskCode.GET_TEMPLATES
     )
@@ -41,7 +47,7 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
       addProperty("floatingPointTag",floatingPointTag)
       addProperty("featureKey",featureKey)
     }
-    return NowFloatsRepository.makeRemoteRequest(
+    return makeRemoteRequest(
       remoteDataSource.getFavTemp(body),
       TaskCode.GET_FAV_TEMPLATES
     )
@@ -54,7 +60,7 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
       addProperty("floatingPointTag",floatingPointTag)
       addProperty("templateId",templateId)
     }
-    return NowFloatsRepository.makeRemoteRequest(
+    return makeRemoteRequest(
       remoteDataSource.favPoster(body),
       TaskCode.GET_TEMPLATES
     )
@@ -66,7 +72,7 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
       addProperty("floatingPointTag",floatingPointTag)
       addProperty("featureKey",fKey)
     }
-    return NowFloatsRepository.makeRemoteRequest(
+    return makeRemoteRequest(
       remoteDataSource.getTemplateViewConfig(body),
       TaskCode.GET_TEMPLATE_CONFIG
     )
@@ -74,7 +80,7 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
 
   fun uploadProfileImage(floatingPointId: String?,floatingPointTag: String?,fileName:String,file: RequestBody?): Observable<BaseResponse> {
 
-    return NowFloatsRepository.makeRemoteRequest(
+    return makeRemoteRequest(
       remoteDataSource.uploadImage(floatingPointId,floatingPointTag,fileName,file),
       TaskCode.UPLOAD_IMAGE
     )
@@ -87,7 +93,7 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
       addProperty("templateId",templateId)
       add("keyDetails",Gson().toJsonTree(map).asJsonObject)
     }
-    return NowFloatsRepository.makeRemoteRequest(
+    return makeRemoteRequest(
       remoteDataSource.saveKeyValue(body),
       TaskCode.SAVE_KEY_VALUES
     )
@@ -101,11 +107,61 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
       addProperty("tag",posterTag)
       addProperty("isPurchased",true)
     }
-    return NowFloatsRepository.makeRemoteRequest(
+    return makeRemoteRequest(
       remoteDataSource.updatePurchaseStatus(body),
       TaskCode.SAVE_KEY_VALUES
     )
   }
+
+  fun getCategories(): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getCategories(),
+      TaskCode.GET_CATEGORIES
+    )
+  }
+
+  suspend fun getCategoriesUI()=
+    suspendCoroutine<List<CategoryUi>>{ cont->
+      getCategories().getResponse {
+        if (it.isSuccess()){
+          val response = it as? com.festive.poster.models.response.GetCategoryResponse
+          cont.resume(response!!.Result.asDomainModels())
+
+        }else{
+          cont.resumeWithException(Exception())
+        }
+      }
+    }
+
+  fun getTodaysTemplates(): Observable<BaseResponse> {
+    val body =GetTodaysTemplateBody(session.fPID,
+      session.fpTag)
+    return makeRemoteRequest(
+      remoteDataSource.getTodayTemplates(body),
+      TaskCode.GET_TODAY_TEMPLATES
+    )
+  }
+
+  fun getTemplates(isFav: Boolean?): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getTemplates(GetTemplatesBody(session.fPID!!,session.fpTag!!, showFavourites = isFav)),
+      TaskCode.GET_TEMPLATES_V2
+    )
+  }
+
+  fun saveTemplateAction(action:TemplateSaveActionBody.ActionType,
+  isFav:Boolean,templateId:String): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.templateSaveAction(
+        TemplateSaveActionBody(
+        action = action.name, favourite = isFav, floatingPointId = session.fPID!!,
+          floatingPointTag = session.fpTag!!,templateId=templateId
+      )
+      ),
+      TaskCode.GET_TEMPLATES_V2
+    )
+  }
+
 
   override fun getRemoteDataSourceClass(): Class<NowFloatsRemoteData> {
     return NowFloatsRemoteData::class.java

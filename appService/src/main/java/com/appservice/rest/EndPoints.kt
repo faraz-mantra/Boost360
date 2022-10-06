@@ -53,6 +53,8 @@ object EndPoints {
   const val GET_TAGS_V1 = "service/v1/tags"
   const val GET_SERVICE_DETAILS = "Service/v1/GetServiceDetails"
   const val DELETE_SECONDARY_IMAGE = "service/v1/DeleteSecondaryImage"
+  const val GET_UPDATES_CATEGORIES="/UpdateStudio/v1/GetCategory"
+
 
   //TODO Testimonial
   const val GET_TESTIMONIAL_LIST = "Testimonial/v1/GetListing"
@@ -89,6 +91,8 @@ object EndPoints {
   const val DELETE_BG_IMAGE="/Discover/v1/floatingPoint/backgroundImage/delete"
   const val PAN_GST_UPDATE="/discover/v9/business/paymentProfile/PanNGst/update"
   const val GET_PAN_GST_DETAILS="/discover/v9/business/paymentProfile/PanNGst/Get/{fpId}"
+  const val GET_PAST_UPDATES_LIST_V6 = "discover/v6/floatingPoint/bizFloats"
+
 
   //TODO PRODUCT API 2 WITH FLOAT
   const val CREATE_PRODUCT = "Product/v1/Create"
@@ -160,15 +164,13 @@ object EndPoints {
   const val ADD_EXISTING_DOMAIN_DETAILS = "api/Service/EmailRIASupportTeamV2"
 
   // TODO AZURE WEBSITE NET APIs
-//  const val AZURE_WEBSITE_NET_URL = "https://withfloats-feature-processor-api.azurewebsites.net/"
- // const val AZURE_WEBSITE_NET_URL = "https://featureprocessor.withfloats.com/"
   const val AZURE_WEBSITE_NET_URL = "https://jiw-wf-featureprocessor-api-as-prod.azurewebsites.net/"
 
   const val GET_FEATURE_DETAILS = "Features/v1/GetFeatureDetils"
   const val GET_FEATURE_DETAILS_2 = "Features/v1/GetFeatureDetails"
 
   // RIA MEMORY APIs
-  const val RIA_MEMORY_BASE_URL="https://riamemory.withfloats.com"
+  const val RIA_MEMORY_BASE_URL="https://jiw-ria-fpactivity-api-as-prod.azurewebsites.net/"
 
   //US CENTRAL
   const val US_CENTRAL_BASE="https://us-central1-nowfloats-boost.cloudfunctions.net/"

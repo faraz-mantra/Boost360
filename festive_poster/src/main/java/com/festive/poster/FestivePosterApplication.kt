@@ -35,6 +35,7 @@ open class FestivePosterApplication : BaseApplication() {
       NowFloatsApiClient.shared.init(EndPoints.NOW_FLOATS_BASE)
       FeatureProcessorApiClient.shared.init(EndPoints.FEATURE_PROCESSOR_BASE)
       DevBoostKitApiClient.shared.init(EndPoints.BOOST_KIT_DEV_BASE)
+      AzureWebsiteNetApiClient.shared.init(EndPoints.AZURE_WEBSITE_NET_URL)
     }
 
   }

@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey_f8f8f8">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary1"
+            android:contentInsetStart="0dp"
+            android:contentInsetEnd="0dp"
+            app:contentInsetEnd="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16sp"
+                        android:fontFamily="@font/bold"
+                        android:lineHeight="24dp"
+                        android:text="Choose Custom Domain"
+                        android:textColor="@color/white"
+                        android:textFontWeight="700"
+                        android:textSize="@dimen/txt_16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/addons_back"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/addons_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/mp_nav_icon_background"
+                        android:src="@drawable/arrow_white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <RelativeLayout
+                        android:id="@+id/offer_info_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="1.0">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/help"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:padding="@dimen/_13sdp"
+                                android:src="@drawable/ic_info_offers"
+                                app:layout_constraintDimensionRatio="1:1"
+                                app:layout_constraintEnd_toEndOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </RelativeLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/search_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/search_background"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_10sdp"
+                        android:src="@drawable/ic_search_whites" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/search_value"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:gravity="center_vertical"
+                        android:hint="Search.." />
+
+                    <ImageView
+                        android:id="@+id/clear_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_10sdp"
+                        android:src="@drawable/ic_x" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/btn_select_Domain"
+            android:layout_below="@id/toolbar"
+            android:background="#F5F8FD"
+            android:visibility="visible"
+
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="24dp">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/et_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <EditText
+                        android:id="@+id/et_domain"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_domain_edit_text_bg"
+                        android:drawableStart="@drawable/ic_search_gray"
+                        android:drawablePadding="@dimen/_14dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/regular"
+                        android:hint="Search for a domain name ..."
+                        android:lineHeight="19.07dp"
+                        android:maxLines="1"
+                        android:padding="12dp"
+                        android:textColor="@color/main_color_gray_dk"
+                        android:textColorHint="@color/tv_color_BB"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/txt_14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/ivCross"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_cross"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/search_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40.5dp"
+                        android:background="@drawable/cta_button_click_effect"
+                        android:clickable="true"
+                        android:enabled="true"
+                        android:fontFamily="@font/regular"
+                        android:paddingStart="32dp"
+                        android:paddingEnd="32dp"
+                        android:text="Search"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textFontWeight="700"
+                        android:textSize="@dimen/txt_14sp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="visible"
+
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/tv_red_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/regular"
+                    android:lineHeight="16.34dp"
+                    android:paddingBottom="16dp"
+                    android:text="Domain name can only contain: letters, numbers, and\nhyphen ( - ). Other special characters are not permitted."
+                    android:textColor="@color/not_available_text_color"
+                    android:textFontWeight="400"
+                    android:textSize="@dimen/txt_12sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@id/tv_note"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_layout"
+                    tools:visibility="visible" />
+
+
+                <TextView
+                    android:id="@+id/tv_note"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/regular"
+                    android:lineHeight="16.34dp"
+                    android:text="Boost 360 only provides .com, .net, and .in domains"
+                    android:textColor="@color/common_text_color"
+                    android:textFontWeight="400"
+                    android:textSize="@dimen/txt_12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_red_note" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/rv_custom_domain1_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/tv_note">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_custom_domain1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:itemCount="1"
+                        tools:listitem="@layout/layout_suggested_domain_item1" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/tv_suggested_domains"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/semi_bold"
+                    android:lineHeight="21.79dp"
+                    android:text="Suggested domains for you"
+                    android:textColor="@color/main_color_gray_dk"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/txt_16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rv_custom_domain1_layout" />
+
+                <TextView
+                    android:id="@+id/search_results"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/semi_bold"
+                    android:lineHeight="21.79dp"
+                    android:text="Oops!No search results  found."
+                    android:textColor="@color/main_color_gray_dk"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/txt_16sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rv_custom_domain1_layout" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@color/white"
+                    app:cardCornerRadius="@dimen/pad_10dp"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_title_free"
+                    app:layout_constraintTop_toBottomOf="@id/tv_suggested_domains">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_custom_domain"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:itemCount="4"
+                        tools:listitem="@layout/layout_suggested_domain_item" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/tv_title_free"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/semi_bold"
+                    android:lineHeight="21.79dp"
+                    android:text="With every domain you also get"
+                    android:textColor="@color/main_color_gray_dk"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/txt_16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/card_free"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card_list" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_free"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/white"
+                    android:theme="@style/Theme.MaterialComponents"
+                    app:cardCornerRadius="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title_free">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white">
+
+                        <ImageView
+                            android:id="@+id/iv1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp"
+                            android:src="@drawable/ic_secure"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:src="@drawable/ic_checkcircle_yellow"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="18dp"
+                            android:layout_marginTop="16dp"
+                            android:fontFamily="@font/regular"
+                            android:lineHeight="16.34dp"
+                            android:text="SSL Certificate worth"
+                            android:textColor="@color/main_color_gray_dk"
+                            android:textFontWeight="400"
+                            app:layout_constraintStart_toEndOf="@id/iv1"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="18dp"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/semi_bold"
+                            android:lineHeight="19.07dp"
+                            android:text="₹100/month included"
+                            android:textColor="@color/main_color_gray_dk"
+                            android:textFontWeight="600"
+                            android:textSize="@dimen/txt_14sp"
+                            app:layout_constraintStart_toEndOf="@id/iv1"
+                            app:layout_constraintTop_toBottomOf="@id/tv1" />
+
+                        <TextView
+                            android:id="@+id/tv_learmore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="18dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginBottom="16dp"
+                            android:fontFamily="@font/bold"
+                            android:lineHeight="16.34dp"
+                            android:text="@string/learn_more"
+                            android:textColor="@color/colorAccent1"
+                            android:textFontWeight="700"
+                            android:textSize="@dimen/txt_12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/iv1"
+                            app:layout_constraintTop_toBottomOf="@id/tv2" />
+
+                        <ImageView
+                            android:id="@+id/iv_free_text_bg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_green_bg_for_free_text"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/pad_20dp"
+                            android:layout_marginBottom="@dimen/pad_5dp"
+                            android:src="@drawable/ic_free_text"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/iv_free_text_bg"
+                            app:layout_constraintStart_toStartOf="@id/iv_free_text_bg" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+
+                <TextView
+                    android:id="@+id/tv_skip_tocart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="88dp"
+                    android:drawableEnd="@drawable/ic_arrow_yellow"
+                    android:drawablePadding="@dimen/pad_10dp"
+                    android:fontFamily="@font/semi_bold"
+                    android:text="Skip &amp; add to cart"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorAccent1"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/txt_14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card_free" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_view_domain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/btn_select_Domain"
+            android:layout_below="@id/toolbar"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="gone">
+
+            <!-- Adding 7 rows of placeholders -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <include layout="@layout/custom_domain_data_layout_1" />
+
+                <include layout="@layout/custom_domain_data_layout_2" />
+
+                <include layout="@layout/custom_domain_data_layout_2" />
+
+                <include layout="@layout/custom_domain_data_layout_2" />
+
+                <include layout="@layout/custom_domain_data_layout_2" />
+
+                <include layout="@layout/custom_domain_data_layout_2" />
+
+                <include layout="@layout/custom_domain_data_layout_2" />
+
+                <include layout="@layout/custom_domain_data_layout_3" />
+
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+        <Button
+            android:id="@+id/btn_select_Domain"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/btn_bg_color_disabled"
+            android:fontFamily="@font/bold"
+            android:lineHeight="24dp"
+            android:paddingTop="13dp"
+            android:paddingBottom="13dp"
+            android:text="Select domain name"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textFontWeight="600"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/learn_Domain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="13dp"
+            android:visibility="gone"
+            android:scaleType="centerCrop"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_learn_domain"
+         />
+
+
+    </RelativeLayout>
+</layout>

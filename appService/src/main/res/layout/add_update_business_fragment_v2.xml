@@ -210,7 +210,7 @@
                             android:id="@+id/layout_hashtag_tip"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/size_33"
-                            android:background="@color/colorFFF8E6"
+                            android:background="@color/color_ffb900_op10_jio_ec008c_op10"
                             android:orientation="horizontal"
                             android:paddingVertical="9dp"
                             app:layout_constraintBottom_toBottomOf="parent"

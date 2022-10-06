@@ -4,6 +4,7 @@ import com.festive.poster.base.rest.AppBaseLocalService
 import com.festive.poster.base.rest.AppBaseRepository
 import com.festive.poster.models.CustomerDetails
 import com.festive.poster.models.PostUpdateTaskRequest
+import com.festive.poster.models.promoModele.TagListRequest
 import com.festive.poster.reset.TaskCode
 import com.festive.poster.reset.apiClients.WithFloatsTwoApiClient
 import com.festive.poster.reset.services.WithFloatTwoRemoteData
@@ -65,11 +66,11 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
       TaskCode.PUT_BIZ_MESSAGE_UPDATEV2
     )
   }
-  fun getUserDetails(fpTag: String?, clientId: String): Observable<BaseResponse> {
+  fun getUserDetails(): Observable<BaseResponse> {
     val queries: MutableMap<String, String> = HashMap()
     queries["clientId"] = clientId
     return makeRemoteRequest(
-      remoteDataSource.getUserDetails(fpTag,queries),
+      remoteDataSource.getUserDetails(session.fpTag,queries),
       TaskCode.GET_CUSTOMER_DETAILS
     )
   }
@@ -97,6 +98,8 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
       ), TaskCode.PUT_IMAGE_BIZ_UPDATE
     )
   }
+
+
 
 
 }

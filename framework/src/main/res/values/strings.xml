@@ -218,4 +218,7 @@
 
   <string name="speech_prompt">Say something</string>
   <string name="speech_not_supported">Speech to text not supported</string>
+
+  <string name="install">Install</string>
+  <string name="download_complete">Download Complete</string>
 </resources>

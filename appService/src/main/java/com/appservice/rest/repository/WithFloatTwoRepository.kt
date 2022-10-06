@@ -9,6 +9,7 @@ import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.model.updateBusiness.DeleteBizMessageRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
+import com.appservice.model.updateBusiness.pastupdates.TagListRequest
 import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.WithFloatsApiTwoClient
 import com.appservice.rest.services.WithFloatTwoRemoteData
@@ -239,5 +240,10 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
 
   fun addUpdatePaymentProfile(request: AddPaymentAcceptProfileRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.addUpdatePaymentProfile(request), TaskCode.ADD_PAYMENT_ACCEPT_PROFILE)
+  }
+
+  fun getPastUpdatesListV6(clientId: String?, fpId:String?, postType:Int?, tagRequest: TagListRequest):Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getPastUpdatesListV6(clientId = clientId, fpId = fpId, postType = postType, request = tagRequest),
+      TaskCode.GET_PAST_UPDATES)
   }
 }

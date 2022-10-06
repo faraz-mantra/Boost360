@@ -7,17 +7,12 @@ import android.view.View
 import androidx.core.view.isVisible
 import com.festive.poster.R
 import com.festive.poster.databinding.BsheetPostSuccessBinding
-import com.festive.poster.models.PosterModel
-import com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity
 import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
-import com.festive.poster.utils.SvgUtils
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.constants.PackageNames
 import com.framework.models.BaseViewModel
-import com.framework.utils.convertStringToObj
-import com.framework.utils.loadUsingGlide
+import com.framework.utils.loadFromFile
 import com.framework.utils.shareAsImage
-import com.google.gson.Gson
 import java.io.File
 
 class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, BaseViewModel>() {
@@ -56,7 +51,7 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
 
         setOnClickListener(binding?.ivWhatsapp,binding?.ivInstagram,binding?.ivOther,binding?.ivClosePostSuccess)
 
-        binding!!.ivPosterIcon.loadUsingGlide(posterImgPath,false)
+        binding!!.ivPosterIcon.loadFromFile(posterImgPath,false)
         binding?.ivClosePostSuccess?.setOnClickListener {
             dismiss()
         }

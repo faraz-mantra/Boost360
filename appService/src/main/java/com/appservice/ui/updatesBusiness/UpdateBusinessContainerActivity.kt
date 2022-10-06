@@ -67,13 +67,15 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
         this,
         R.color.colorPrimary
       )
+      FragmentType.PAST_UPDATES->ContextCompat.getColor(this,
+        com.framework.R.color.color_4a4a4a_jio_ec008c)
       else -> super.getToolbarBackgroundColor()
     }
   }
 
   override fun getToolbarTitleColor(): Int? {
     return when (type) {
-      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> ContextCompat.getColor(
+      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT,FragmentType.PAST_UPDATES -> ContextCompat.getColor(
         this,
         R.color.white
       )
@@ -93,6 +95,7 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.UPDATE_BUSINESS_FRAGMENT -> getLatestUpdatesTaxonomyFromServiceCode(session?.fP_AppExperienceCode)
       FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT -> getString(R.string.post_an_update_n)
       FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> ""
+      FragmentType.PAST_UPDATES->getString(R.string.Posted_Updates)
       else -> super.getToolbarTitle()
     }
   }
@@ -115,6 +118,7 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT -> AddUpdateBusinessFragment.newInstance()
       FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2 -> AddUpdateBusinessFragmentV2.newInstance()
       FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> DetailUpdateBusinessFragment.newInstance()
+      FragmentType.PAST_UPDATES->PastUpdatesListingFragment.newInstance()
       else -> AddUpdateBusinessFragmentV2.newInstance()
     }
   }

@@ -3,33 +3,27 @@ package com.festive.poster.ui.promoUpdates
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseFragment
-import com.festive.poster.constant.Constants
 import com.festive.poster.constant.RecyclerViewActionType
-import com.festive.poster.constant.RecyclerViewItemType
 import com.festive.poster.databinding.FragmentBrowseTabBinding
-import com.festive.poster.models.PosterModel
-import com.festive.poster.models.PosterPackModel
-import com.festive.poster.models.PosterPackTagModel
-import com.festive.poster.models.response.GetTemplateViewConfigResponse
-import com.festive.poster.models.response.GetTemplatesResponse
+import com.festive.poster.models.*
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
-import com.festive.poster.viewmodels.FestivePosterSharedViewModel
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.festive.poster.viewmodels.PromoUpdatesViewModel
 import com.framework.base.BaseActivity
 import com.framework.extensions.gone
-import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.pref.UserSessionManager
+import com.framework.rest.NetworkResult
+import com.framework.utils.showToast
 import com.framework.utils.toArrayList
 
 class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePosterViewModel>(),RecyclerItemClickListener {
 
+    private var adapter: AppBaseRecyclerViewAdapter<BrowseTabCategory>?=null
     private var promoUpdatesViewModel: PromoUpdatesViewModel?=null
 
     private var session: UserSessionManager? = null
@@ -67,15 +61,32 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
         startShimmer()
        promoUpdatesViewModel?.browseAllLData?.observe(viewLifecycleOwner){
             stopShimmer()
-            it?.let {list->
-                val adapter = AppBaseRecyclerViewAdapter(
-                    requireActivity() as BaseActivity<*, *>,
-                    list,
-                    this
-                )
-                binding.rvCat.adapter = adapter
-                binding.rvCat.layoutManager = GridLayoutManager(requireActivity(), 2)
-            }
+
+           when(it){
+               is NetworkResult.Loading->{
+                   if (adapter?.isEmpty() == true)
+                        startShimmer()
+               }
+               is NetworkResult.Success->{
+                   stopShimmer()
+                   val data = it.data?:return@observe
+                   data.let {list->
+                       val uiList = list.asBrowseTabModels().toArrayList()
+                       adapter = AppBaseRecyclerViewAdapter(
+                           requireActivity() as BaseActivity<*, *>,
+                           uiList,
+                           this
+                       )
+                       binding.rvCat.adapter = adapter
+                       binding.rvCat.layoutManager = GridLayoutManager(requireActivity(), 2)
+                   }
+               }
+               is NetworkResult.Error->{
+                   stopShimmer()
+                   showToast(it.msg)
+               }
+           }
+
 
         }
     }
@@ -98,8 +109,9 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
         when(actionType){
             RecyclerViewActionType.BROWSE_TAB_POSTER_CAT_CLICKED.ordinal->{
-                item as PosterPackModel
-                addFragment(R.id.container,BrowseAllFragment.newInstance(item.tagsModel?.tag),true,true)
+                item as BrowseTabCategory
+                addFragment(R.id.container,
+                    BrowseAllFragment.newInstance(item.id),true,true)
             }
         }
     }

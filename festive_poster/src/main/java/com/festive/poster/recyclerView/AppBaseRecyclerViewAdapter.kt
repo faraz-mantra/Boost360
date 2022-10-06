@@ -25,9 +25,9 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.POSTER->PosterViewHolder(binding as ListItemPosterBinding)
       RecyclerViewItemType.POSTER_PACK_PURCHASED->PosterPackPurchasedViewHolder(binding as ListItemPurchasedPosterPackBinding) // Not currently used
       RecyclerViewItemType.POSTER_SHARE-> PosterShareViewHolder(binding as ListItemPosterShareBinding)
-      RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW-> TodaysPickTemplateListViewHolder(binding as ListItemTodaysPickTemplateBinding)
-      RecyclerViewItemType.TEMPLATE_VIEW_FOR_VP-> TemplateForVPViewHolder(binding as ListItemTemplateForVpBinding)
-      RecyclerViewItemType.TEMPLATE_VIEW_FOR_RV-> TemplateForRVViewHolder(binding as ListItemTemplateForRvBinding)
+      RecyclerViewItemType.TODAYS_PICK_TEMPLATE_VIEW-> TodaysPickCategoryViewHolder(binding as ListItemTodaysPickTemplateBinding)
+      RecyclerViewItemType.TEMPLATE_VIEW_FOR_TODAY_PICK-> TemplateForTodayPickViewHolder(binding as ListItemTemplateForVpBinding)
+      RecyclerViewItemType.TEMPLATE_VIEW_FOR_BROWSE_ALL-> TemplateForBrowseAllViewHolder(binding as ListItemTemplateForRvBinding)
       RecyclerViewItemType.TEMPLATE_VIEW_FOR_FAV-> TemplateForFavViewHolder(binding as ListItemTemplateForFavBinding)
 
       RecyclerViewItemType.VIEW_MORE_POSTER-> ViewMoreViewHolder(binding as LayoutViewMoreTemplateBinding)
@@ -48,7 +48,8 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.WEBSITE_PREVIEW_NO_IMAGE->WebsitePreviewNoImageViewHolder(binding as SocialPreviewWebsiteNoImageBinding)
       RecyclerViewItemType.EMAIL_PREVIEW_NO_IMAGE->EmailPreviewNoImageViewHolder(binding as SocialPreviewEmailNoImageBinding)
       RecyclerViewItemType.FAV_CAT->FavPosterCatViewHolder(binding as  ListItemFavCatBinding)
-
+      RecyclerViewItemType.UPDATE_STUDIO_INTRO_SCREEN_ITEM->IntroScreenUpdateStudioViewHolder(binding as ListItemUpdateStudioIntroBinding)
+      RecyclerViewItemType.FEATURE_PURCHASE->UpdateStudioFeaturePurchaseViewHolder(binding as ListItemUpdateStudioFeaturePurchaseBinding)
     }
   }
 

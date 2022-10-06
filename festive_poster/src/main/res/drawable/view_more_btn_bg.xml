@@ -6,7 +6,7 @@
 
     <gradient
         android:startColor="#B3FCAF17"
-        android:endColor="@color/colorFCAF17"
+        android:endColor="@color/color_fcaf17_jio_0400a6"
         />
 
     <corners

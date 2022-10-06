@@ -420,7 +420,7 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
   }
 
   private fun successResult() {
-    showShortToast("Post update successfully!")
+    showShortToast("Post updated successfully!")
     clearLocalData()
     onBackResult()
   }

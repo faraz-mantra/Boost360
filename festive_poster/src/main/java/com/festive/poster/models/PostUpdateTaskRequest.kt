@@ -12,5 +12,5 @@ data class PostUpdateTaskRequest(
   var sendToSubscribers: Boolean? = null,
   var socialParameters: String? = null,
   var type:String?=null,
-  var tags:ArrayList<String>?=null
+  var tags:ArrayList<String?>?=null
 ) : BaseRequest(), Serializable

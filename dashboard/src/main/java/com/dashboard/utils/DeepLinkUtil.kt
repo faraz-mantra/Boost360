@@ -20,8 +20,22 @@ import java.util.*
 const val facebook_chat_main = "facebookchatMain"
 const val feedback_chat = "feedbackchat"
 const val deep_link_call_tracker = "callTracker"
-const val deeplink_manage_customer = "managecustomer"
+const val deeplink_customer_enquires = "customerenquires"
 const val keyboard = "Keyboard"
+const val testimonials = "Testimonials"
+const val payment_gateway = "Payment_Gateway"
+const val digital_brochure= "Digital_Brochure"
+const val projectteam= "ProjectTeam"
+const val staff_profile ="Staff_Profile"
+const val our_toppers ="Our_Toppers"
+const val upcoming_batches ="Upcoming_Batches"
+const val faculty ="Faculty"
+const val latest_updates ="Latest_Updates"
+const val featured_image ="Featured_Image"
+const val doctor_profile ="Doctor_Profile"
+const val trip_advisor ="Trip_Advisor"
+const val nearby_places ="Nearby_Places"
+const val business_kyc ="Business_Kyc"
 const val facebook_chat = "facebookchat"
 const val third_party_queries = "thirdPartyQueries"
 const val facebookpage = "facebookpage"
@@ -138,7 +152,7 @@ const val tag_for_partners = ".nowfloats.com"
 const val VISITS_TABLE = 0
 const val VISITORS_TABLE = 1
 
-class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSessionManager, var baseFragment: Fragment) {
+class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSessionManager, var baseFragment: Fragment?) {
   private val TAG = "DeepLinkUtil"
   fun deepLinkPage(url: String, buyItemKey: String, isFromRia: Boolean) {
     Log.i(TAG, "deepLinkPage: " + url)
@@ -158,8 +172,8 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startOrderCreate(session)
         } else if (url.contains(facebook_chat_main)) {
           //pending
-        } else if (url.contains(deeplink_manage_customer)) {
-          baseActivity.startManageCustomer(session)
+        } else if (url.contains(deeplink_customer_enquires)) {
+          baseActivity.startBusinessEnquiry(session)
         } else if (url.contains(feedback_chat)) {
           baseActivity.startHelpAndSupportActivity(session)
         } else if (url.contains(facebookpage)) {
@@ -245,7 +259,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.initiateAddonMarketplace(session, false, "", "")
         } else if (url.contains(deeplink_cart_fragment)) {
           baseActivity.delayProgressShow()
-          baseActivity.initiateAddonMarketplace(session, true, "", "")
+          baseActivity.initiateCart(session, true, "", buyItemKey)
         } else if (url.contains(deeplink_manage_content)) {
           baseActivity.startManageContentActivity(session)
         } else if (url.contains(deeplink_my_bank_account)) {
@@ -273,7 +287,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_analytics_website_visitors)) {
           baseActivity.startSiteViewAnalytic(session, "UNIQUE")
         } else if (url.contains(deeplink_background_images)) {
-          baseFragment.startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
+          baseFragment!!.startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
         } else if (url.contains(deeplink_favicon)) {
           baseActivity.startFeviconImage(session)
         } else if (session.isProduct() && url.contains(deeplink_order_summary)) {
@@ -317,6 +331,34 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startFestivePosterActivity(true)
         } else if (url.contains(deeplink_user_merchant_profile)) {
           baseActivity.startUserProfileDetail(session)
+        }else if (url.contains(testimonials)) {
+          baseActivity.startTestimonial(session)
+        } else if (url.contains(projectteam)) {
+          baseActivity.startListProjectAndTeams(session)
+        }else if (url.contains(digital_brochure)) {
+          baseActivity.startAddDigitalBrochure(session)
+        } else if (url.contains(payment_gateway)) {
+          baseActivity.startSelfBrandedGateway(session)
+        }else if (url.contains(staff_profile)) {
+          baseActivity.startListStaff(session)
+        }else if (url.contains(our_toppers)) {
+          baseActivity.startListToppers(session)
+        }else if (url.contains(upcoming_batches)) {
+          baseActivity.startListBatches(session)
+        }else if (url.contains(faculty)) {
+          baseActivity.startFacultyMember(session)
+        }else if (url.contains(latest_updates)) {
+          baseActivity.startUpdateLatestStory(session)
+        }else if (url.contains(featured_image)) {
+          baseActivity.startFeatureLogo(session)
+        }else if (url.contains(doctor_profile)) {
+          baseActivity.startListDoctors(session)
+        }else if (url.contains(trip_advisor)) {
+          baseActivity.startListTripAdvisor(session)
+        }else if (url.contains(nearby_places)) {
+          baseActivity.startNearByView(session)
+        }else if (url.contains(business_kyc)) {
+          baseActivity.startBusinessKycBoost(session)
         } else if (session.isEducation() && url.contains(deeplink_topper_list)) {
           baseActivity.startListToppers(session)
         } else if (session.isEducation() && url.contains(deeplink_upcoming_batch)) {

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#efefef"
+  android:clickable="true"
+  android:focusable="true">
+
+  <androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/actionBarSize"
+    android:background="@color/white"
+    android:contentInsetStart="0dp"
+    android:contentInsetEnd="0dp"
+    android:elevation="@dimen/cardview_default_elevation"
+    app:contentInsetEnd="0dp"
+    app:contentInsetStart="0dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <LinearLayout
+        android:id="@+id/history_back"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:background="@drawable/ic_back_arrow_black" />
+      </LinearLayout>
+
+      <TextView
+        android:id="@+id/paymentBanner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/semi_bold"
+        android:gravity="center"
+        android:text="Renewals History"
+        android:textColor="@color/common_text_color"
+        android:textSize="@dimen/_11sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/history_dummyview"
+        app:layout_constraintStart_toEndOf="@id/history_back"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <View
+        android:id="@+id/history_dummyview"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+  </androidx.appcompat.widget.Toolbar>
+
+  <LinearLayout
+    android:id="@+id/empty_history"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/toolbar"
+    tools:visibility="gone">
+
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:srcCompat="@drawable/empty_history" />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/_15sdp"
+      android:fontFamily="@font/bold"
+      android:text="And up that goes"
+      android:textColor="@color/common_text_color"
+      android:textSize="@dimen/_14sdp" />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/_5sdp"
+      android:fontFamily="@font/regular"
+      android:text="There is nothing in your order history"
+      android:textColor="@color/globalLight"
+      android:textSize="@dimen/_12sdp" />
+
+  </LinearLayout>
+
+  <com.facebook.shimmer.ShimmerFrameLayout
+    android:id="@+id/shimmer_view_history"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_gravity="center"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:layout_marginEnd="@dimen/_10sdp"
+    android:background="@color/white"
+    android:orientation="vertical"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/toolbar"
+    tools:visibility="visible">
+
+    <!-- Adding 7 rows of placeholders -->
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:orientation="vertical">
+
+      <include layout="@layout/data_place2" />
+
+      <include layout="@layout/data_place2" />
+
+      <include layout="@layout/data_place2" />
+
+      <include layout="@layout/data_place2" />
+
+      <include layout="@layout/data_place2" />
+
+      <include layout="@layout/data_place2" />
+
+      <include layout="@layout/data_place2" />
+
+      <include layout="@layout/data_place2" />
+
+      <include layout="@layout/data_place2" />
+
+
+    </LinearLayout>
+
+  </com.facebook.shimmer.ShimmerFrameLayout>
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/order_history_recycler"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:layout_marginEnd="@dimen/_10sdp"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/toolbar"
+    tools:listitem="@layout/history_item"
+    tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

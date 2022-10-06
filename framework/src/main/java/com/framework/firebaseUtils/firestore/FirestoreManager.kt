@@ -31,6 +31,7 @@ object FirestoreManager {
   var clientId: String = ""
   var TAG = "FirestoreManager"
   const val COLLECTION_NAME = "drsMerchants"
+  const val COLLECTION_CART = "marketplaceCart"
   const val DRAFT_COLLECTION="postUpdateDrafts"
   var listener: (() -> Unit)? = null
 
@@ -141,6 +142,21 @@ object FirestoreManager {
         )
       ).apiCreateUpdate()
     }
+  }
+
+  fun getMarketplaceData(): DocumentReference?{
+    try {
+      return db?.collection(COLLECTION_CART)?.document(this.fpId)
+    } catch (e: Exception) {
+      e.printStackTrace()
+      SentryController.captureException(e)
+      Log.e(TAG, "Firestore document marketplaceCart")
+    }
+    return null
+  }
+
+  fun updateMarketplaceCartData(doc: DocumentReference?, map: Map<String, Any>){
+
   }
 
 

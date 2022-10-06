@@ -48,6 +48,14 @@
           "premiumCode": ""
         },
         {
+          "title": "Appointment setup",
+          "desc": "Not tried yet",
+          "type": "e_commerce_appointment_set_up",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
           "title": "Website customisation",
           "desc": "Change the look & feel of your website",
           "type": "website_theme",
@@ -82,6 +90,14 @@
           "title": "Our doctors",
           "desc": "Manage & add doctors listed on your website.",
           "type": "doctor_e_profile_listing",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
+          "title": "Appointment setup",
+          "desc": "Not tried yet",
+          "type": "e_commerce_appointment_set_up",
           "isLock": false,
           "isFeature": true,
           "premiumCode": ""
@@ -145,6 +161,14 @@
           "premiumCode": ""
         },
         {
+          "title": "E-commerce setup",
+          "desc": "Not tried yet",
+          "type": "e_commerce_appointment_set_up",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
           "title": "Website customisation",
           "desc": "Change the look & feel of your website",
           "type": "website_theme",
@@ -200,6 +224,14 @@
           "desc": "Add and manage courses on your website catalogue. This will make it easier for students to browse and request admission online.",
           "type": "service_product_catalogue",
           "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "E-commerce setup",
+          "desc": "Not tried yet",
+          "type": "e_commerce_appointment_set_up",
+          "isLock": false,
+          "isFeature": true,
           "premiumCode": ""
         },
         {
@@ -288,6 +320,14 @@
           "premiumCode": ""
         },
         {
+          "title": "E-commerce setup",
+          "desc": "Not tried yet",
+          "type": "e_commerce_appointment_set_up",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
           "title": "Website customisation",
           "desc": "Change the look & feel of your website",
           "type": "website_theme",
@@ -373,6 +413,14 @@
           "premiumCode": ""
         },
         {
+          "title": "E-commerce setup",
+          "desc": "Not tried yet",
+          "type": "e_commerce_appointment_set_up",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
           "title": "Website customisation",
           "desc": "Change the look & feel of your website",
           "type": "website_theme",
@@ -450,6 +498,14 @@
           "premiumCode": ""
         },
         {
+          "title": "E-commerce setup",
+          "desc": "Not tried yet",
+          "type": "e_commerce_appointment_set_up",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
           "title": "Website customisation",
           "desc": "Change the look & feel of your website",
           "type": "website_theme",
@@ -508,6 +564,14 @@
           "premiumCode": ""
         },
         {
+          "title": "Appointment setup",
+          "desc": "Not tried yet",
+          "type": "e_commerce_appointment_set_up",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
           "title": "Website customisation",
           "desc": "Change the look & feel of your website",
           "type": "website_theme",
@@ -563,6 +627,14 @@
           "desc": "Add and manage services you will be providing to your customers. This will make it easier for customers to schedule an appointment.",
           "type": "service_product_catalogue",
           "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Appointment setup",
+          "desc": "Not tried yet",
+          "type": "e_commerce_appointment_set_up",
+          "isLock": false,
+          "isFeature": true,
           "premiumCode": ""
         },
         {
@@ -627,6 +699,14 @@
           "title": "Owner’s info",
           "desc": "Add owner's info",
           "type": "owners_information",
+          "isLock": false,
+          "isFeature": true,
+          "premiumCode": ""
+        },
+        {
+          "title": "Appointment setup",
+          "desc": "Not tried yet",
+          "type": "e_commerce_appointment_set_up",
           "isLock": false,
           "isFeature": true,
           "premiumCode": ""

@@ -22,12 +22,17 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.IncludedFeature
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.PrimaryImage
 import com.boost.upgrades.interfaces.CompareBackListener
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
 import com.boost.upgrades.ui.home.HomeFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
+import com.boost.upgrades.ui.packages.PackageFragment
+import com.boost.upgrades.ui.packages.PackageFragmentNew
 import com.boost.upgrades.ui.splash.SplashFragment
 import com.boost.upgrades.utils.*
 import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
@@ -45,6 +50,8 @@ import com.boost.upgrades.utils.NetworkConnectivitySpeed.checkNetworkType
 import com.framework.analytics.SentryController
 import com.framework.pref.*
 import com.framework.utils.BuildConfigUtil
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -74,6 +81,7 @@ class UpgradeActivity : AppCompatActivity() {
   var isDeepLink: Boolean = false
   var isOpenCardFragment: Boolean = false
   var isBackCart: Boolean = false
+  var isOpenPackageWithID: String? = null
 
   var deepLinkViewType: String = ""
   var deepLinkDay: Int = 7
@@ -112,6 +120,8 @@ class UpgradeActivity : AppCompatActivity() {
     //user buying item directly
     widgetFeatureCode = intent.getStringExtra("buyItemKey")
     userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
+      //festive poster purchase
+      isOpenPackageWithID = intent.getStringExtra("isOpenPackageWithID")
 
       progressDialog = ProgressDialog(this)
 
@@ -174,6 +184,9 @@ class UpgradeActivity : AppCompatActivity() {
       if (isDeepLink || isOpenCardFragment) {
         cartFragment = CartFragment.newInstance()
         cartFragment?.let { addFragment(it, CART_FRAGMENT) }
+      }
+      if(!isOpenPackageWithID.isNullOrEmpty()){
+        goToSinglePackage(isOpenPackageWithID!!)
       }
     } else {
       Toasty.error(
@@ -243,7 +256,7 @@ class UpgradeActivity : AppCompatActivity() {
                 if (tag == Constants.COMPARE_FRAGMENT) {
                   Log.e("Add tags", ">>>$tag")
                   compareBackListener!!.backComparePress()
-                } else if (tag == Constants.HOME_FRAGMENT) {
+                } else if (tag == HOME_FRAGMENT) {
                   compareBackListener!!.backComparePress()
                 }
               }
@@ -344,6 +357,7 @@ class UpgradeActivity : AppCompatActivity() {
       fragmentManager!!.popBackStack(DETAILS_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     } else {
       fragmentManager!!.popBackStack(CART_FRAGMENT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+      compareBackListener!!.backComparePress()
     }
   }
 
@@ -434,11 +448,11 @@ class UpgradeActivity : AppCompatActivity() {
                 showingPopUp(checkNetworkType(applicationContext))
               } else {
                 loaderStatus(false)
-                Toasty.error(
-                  this,
-                  "Critical error occurred while loading the Addon Marketplace. Please close the app and try again.\n\nIf the issue persists, please get in touch with the Support Team.",
-                  Toast.LENGTH_LONG
-                ).show()
+//                Toasty.error(
+//                  this,
+//                  "Critical error occurred while loading the Addon Marketplace. Please close the app and try again.\n\nIf the issue persists, please get in touch with the Support Team.",
+//                  Toast.LENGTH_LONG
+//                ).show()
               }
             }, networkRecallTimer) // networkRecallTimer works based on the network speed
           }
@@ -448,6 +462,76 @@ class UpgradeActivity : AppCompatActivity() {
         })
     )
 
+  }
+
+  fun goToSinglePackage(bundleID: String){
+    CompositeDisposable().add(
+      AppDatabase.getInstance(application)!!
+        .bundlesDao()
+        .checkBundleKeyExist(bundleID)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe({
+          if (it == 1) {
+            CompositeDisposable().add(
+              AppDatabase.getInstance(application)!!
+                .bundlesDao()
+                .getBundleItemById(bundleID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                  var selectedBundle: Bundles? = null
+                  var item = it
+                  val temp =
+                    Gson().fromJson<List<IncludedFeature>>(
+                      item.included_features,
+                      object :
+                        TypeToken<List<IncludedFeature>>() {}.type
+                    )
+                  selectedBundle = Bundles(
+                    bundleID,
+                    temp,
+                    item.min_purchase_months,
+                    item.name,
+                    item.overall_discount_percent,
+                    PrimaryImage(item.primary_image),
+                    item.target_business_usecase,
+                    Gson().fromJson<List<String>>(
+                      item.exclusive_to_categories,
+                      object :
+                        TypeToken<List<String>>() {}.type
+                    ),
+                    null,
+                    item.desc
+                  )
+                  val packageFragment =
+                    PackageFragment.newInstance()
+                  val args = Bundle()
+                  args.putString(
+                    "bundleData",
+                    Gson().toJson(selectedBundle)
+                  )
+                  packageFragment.arguments = args
+                  this.addFragment(
+                    packageFragment,
+                    Constants.PACKAGE_FRAGMENT
+                  )
+
+                }, {
+                  it.printStackTrace()
+                })
+            )
+          } else {
+            Toasty.error(
+              this,
+              "Bundle Not Available To This Account",
+              Toast.LENGTH_LONG
+            ).show()
+          }
+        }, {
+          it.printStackTrace()
+        })
+    )
   }
 
   fun loaderStatus(status: Boolean) {

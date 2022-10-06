@@ -51,10 +51,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent.setEventListener
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 import java.io.File
-import java.net.URL
 
 
 class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2Binding, UpdatesViewModel>() {
@@ -68,7 +66,6 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   private var updateFloat: UpdateFloat? = null
   private var posterImagePath: String? = null
 
-
   private val mSharedPreferences: SharedPreferences?
     get() {
       return baseActivity.getSharedPreferences(PREF_NAME_TWITTER, Context.MODE_PRIVATE)
@@ -77,6 +74,8 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   companion object {
     val msgPost = "msg_post"
     val imagePost = "image_post"
+
+
     @JvmStatic
     fun newInstance(bundle: Bundle? = null): AddUpdateBusinessFragmentV2 {
       val fragment = AddUpdateBusinessFragmentV2()
@@ -93,23 +92,40 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     return UpdatesViewModel::class.java
   }
 
+  override fun onCreateView() {
+    super.onCreateView()
+    initUI()
+    initStt()
+    capLimitCheck()
+    baseActivity.onBackPressedDispatcher.addCallback(
+      viewLifecycleOwner,
+      object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+          openDraftSheet()
+        }
+      })
+
+    setOnClickListener(
+      binding!!.btnAddImage, binding!!.btnEdit, binding!!.ivMic, binding!!.ivHashtagCross,
+      binding!!.tvPreviewAndPost, binding.ivCross
+    )
+  }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     startForCropImageResult =
-      registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-          result: ActivityResult ->
-        if (result.resultCode==Activity.RESULT_OK){
-          val imgFile = File(
-          requireActivity().getExternalFilesDir(null)?.path+File.separator+UPDATE_PIC_FILE_NAME)
-        if (imgFile.exists()&&isImageValid(imgFile)){
+      registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+          val imgFile =
+            File(requireActivity().getExternalFilesDir(null)?.path + File.separator + UPDATE_PIC_FILE_NAME)
+          if (imgFile.exists() && isImageValid(imgFile)) {
             loadImage(imgFile.path)
-        }else{
-          loadImage(null)
+          } else {
+            loadImage(null)
+          }
+          toggleContinue()
         }
-        toggleContinue()
       }
-        }
 
   }
 
@@ -192,23 +208,6 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
   }
 
-  override fun onCreateView() {
-    super.onCreateView()
-    initUI()
-    initStt()
-    capLimitCheck()
-    baseActivity.onBackPressedDispatcher.addCallback(
-      viewLifecycleOwner,
-      object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-            openDraftSheet()
-        }
-      })
-
-    setOnClickListener(binding!!.btnAddImage,binding!!.btnEdit,binding!!.ivMic,binding!!.ivHashtagCross,
-      binding!!.tvPreviewAndPost,binding.ivCross)
-  }
-
   fun openDraftSheet(){
     if (binding!!.etUpdate.text.toString().isNotEmpty()||posterImagePath!=null){
             UpdateDraftBSheet.newInstance(binding
@@ -224,43 +223,39 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     super.onPause()
     lisReg?.remove()
   }
+
   private fun initUI() {
     binding.etUpdate.requestFocus()
-    val imm =
-      activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.showSoftInput(binding.etUpdate, InputMethodManager.SHOW_IMPLICIT)
-    binding!!.tvHashtagTip.text = spanColor(
-      getString(R.string.type_in_the_caption_to_create_your_own_hashtags),
-      R.color.blue_4889f8,
-      "#"
-      )
+    binding!!.tvHashtagTip.text = spanColor(getString(R.string.type_in_the_caption_to_create_your_own_hashtags), R.color.blue_4889f8, "#")
 
-    binding!!.btnAddImage.text = spanBold(
-      getString(R.string.add_image_optional),
-      "Add image"
-    )
+    binding!!.btnAddImage.text = spanBold(getString(R.string.add_image_optional), "Add image")
     FirestoreManager.readDraft {
       if (activity != null && isAdded) {
 
-        binding!!.etUpdate.setText(highlightHashTag(it?.content, R.color.black_4a4a4a,R.font.semi_bold))
+        val textPost = it?.content
+        binding!!.etUpdate.setText(
+          highlightHashTag(
+            textPost,
+            R.color.black_4a4a4a,
+            R.font.semi_bold
+          )
+        )
         addHashTagFunction()
-        binding!!.tvCount.text = (it?.content?.length ?: 0).toString()
+        binding!!.tvCount.text = (textPost?.length ?: 0).toString()
 
         lifecycleScope.launch {
           withContext(Dispatchers.IO) {
             if (it?.imageUri.isNullOrEmpty().not()) {
               Log.i(TAG, "initUI: ${it?.imageUri}")
               val bitmap = Picasso.get().load(it?.imageUri).get()
-              val imgFile = File(
-                requireActivity().getExternalFilesDir(null)?.path + File.separator
-                        + UPDATE_PIC_FILE_NAME
-              )
+              val imgFile =
+                File(requireActivity().getExternalFilesDir(null)?.path + File.separator + UPDATE_PIC_FILE_NAME)
               bitmap.saveAsImageToAppFolder(imgFile.path)
 
-              runOnUi {
-                loadImage(imgFile.path)
-              }
-            }else{
+              runOnUi { loadImage(imgFile.path) }
+            } else {
               loadImage(null)
             }
             runOnUi {
@@ -320,8 +315,6 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   }
 
   private fun addHashTagFunction() {
-
-
     mSpannable = binding?.etUpdate?.text
 
     binding?.etUpdate?.addTextChangedListener(object : TextWatcher {
@@ -407,8 +400,9 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
             putString(IntentConstants.IK_CAPTION_KEY,binding!!.etUpdate.text.toString())
             putString(IntentConstants.IK_POSTER, posterImagePath)
             putString(IntentConstants.IK_UPDATE_TYPE,
-              if (posterImagePath==null) IntentConstants.UpdateType.UPDATE_TEXT.name
-              else IntentConstants.UpdateType.UPDATE_IMAGE_TEXT.name)
+              if (posterImagePath == null) IntentConstants.UpdateType.UPDATE_TEXT.name
+              else IntentConstants.UpdateType.UPDATE_IMAGE_TEXT.name
+            )
           }))
         Log.i(TAG, "onClick: ${binding!!.etUpdate.text.toString().extractHashTag()}")
       }

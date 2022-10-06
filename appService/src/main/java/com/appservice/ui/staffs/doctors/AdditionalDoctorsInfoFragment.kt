@@ -88,7 +88,7 @@ class AdditionalDoctorsInfoFragment : AppBaseFragment<FragmentAdditionalDoctorIn
       }
     }
     staffDetailsResult?.education = education
-    staffDetailsResult?.experience = experience.toIntOrNull() ?: 0
+    staffDetailsResult?.experience = experience.toDoubleOrNull()
     staffDetailsResult?.memberships = membership
     staffDetailsResult?.registration = registration
     val intent = Intent()

@@ -14,7 +14,6 @@
       android:width="50dp"
       android:height="50dp" />
     <gradient
-      android:angle="0"
       android:centerColor="@color/colorPrimary"
       android:endColor="@color/colorPrimary"
       android:startColor="#3093d6d9"

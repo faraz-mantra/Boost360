@@ -4,14 +4,14 @@ import com.google.gson.annotations.SerializedName
 
 data class PosterPackTagModel(
     @SerializedName("description")
-    val description: String?,
+    val description: String,
     @SerializedName("icon")
-    val icon: String?,
+    val icon: String,
     @SerializedName("name")
-    val name: String?,
+    val name: String,
     @SerializedName("tag")
-    val tag: String?,
+    val tag: String,
     @SerializedName("isPurchased")
-    val isPurchased: Boolean?,
+    val isPurchased: Boolean,
     var drawableIcon:Int
 )

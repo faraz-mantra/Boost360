@@ -2,6 +2,7 @@ package com.framework.constants
 
 object IntentConstants {
 
+    val IK_TEMPLATE: String ="TEMPLATE_ID"
     val MARKET_PLACE_ORIGIN_NAV_DATA="MP_NAV_DATA"
     val MARKET_PLACE_ORIGIN_ACTIVITY="MP_ORIGIN_ACTIVITY"
     val IK_CAPTION_KEY="IK_CAPTION_KEY"

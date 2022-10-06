@@ -6,5 +6,5 @@ data class FestivePosterSectionModel(
     @SerializedName("description")
     val description: String?,
     @SerializedName("tags")
-    val tags: List<PosterPackTagModel>?
+    val tags: List<PosterPackTagModel>
 )

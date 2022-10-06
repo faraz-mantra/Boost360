@@ -13,6 +13,13 @@ object MediaPlayer {
       exoPlayer = ExoPlayer.Builder(context).build();
   }
 
+   fun releasePlayer() {
+    if (exoPlayer != null) {
+      exoPlayer?.release()
+      exoPlayer = null
+    }
+  }
+
   fun pausePlayer() {
     exoPlayer?.playWhenReady = false
     exoPlayer?.playbackState

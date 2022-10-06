@@ -14,5 +14,7 @@ fun RecyclerView.showDecoration(decoration: RecyclerView.ItemDecoration = Divide
 fun Observable<BaseResponse>.getResponse(func:(BaseResponse)->Unit){
   subscribeOn(Schedulers.io())
     .observeOn(AndroidSchedulers.mainThread())
-    .subscribe { func.invoke(it) }
+    .subscribe({s-> func.invoke(s) },{t->func.invoke(
+      BaseResponse(status = 400))})
+
 }

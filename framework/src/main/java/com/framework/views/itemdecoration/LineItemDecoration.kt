@@ -10,10 +10,11 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Interpolator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.framework.R
+import com.framework.utils.fetchColor
 
 
-class LineItemDecoration(val width:Int,val spacing:Int) : RecyclerView.ItemDecoration() {
-    private val colorActive = Color.parseColor("#FCAF17")
+class LineItemDecoration(val width:Int,val spacing:Int,val colorActive:Int= fetchColor(R.color.color_fcaf17_jio_0400a6)) : RecyclerView.ItemDecoration() {
     private val colorInactive = Color.parseColor("#DADADA")
 
     /**

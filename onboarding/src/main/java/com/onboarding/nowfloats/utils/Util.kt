@@ -15,8 +15,7 @@ fun String.getWebViewUrl(): String {
 
 fun String.checkHttp(): String {
   return when {
-    (this.startsWith("http://") || this.startsWith("https://")).not() -> "https://$this"
-    this.startsWith("http://") -> this.replace("http", "https")
+    (this.startsWith("http://").not() && this.startsWith("https://").not()) -> "http://$this"
     else -> this
   }
 }

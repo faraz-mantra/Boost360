@@ -727,7 +727,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
         QueryObject.Operator.EQ.name
       )
     )
-    queryList.add(
+    /*queryList.add(
       QueryObject(
         QueryObject.QueryKey.DeliveryMode.value,
         OrderSummaryRequest.DeliveryMode.ONLINE.name,
@@ -740,7 +740,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
         QueryObject.QueryValue.NF_VIDEO_CONSULATION.name,
         QueryObject.Operator.NE.name
       )
-    )
+    )*/
     return queryList
   }
 

@@ -1013,7 +1013,33 @@
 
         <View
           android:layout_width="match_parent"
-          android:layout_height="@dimen/size_40" />
+          android:layout_height="@dimen/size_16" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linear_error_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_10"
+            android:visibility="gone">
+
+          <com.framework.views.customViews.CustomImageView
+              android:layout_width="@dimen/size_14"
+              android:layout_height="@dimen/size_14"
+              android:layout_gravity="center_vertical"
+              android:src="@drawable/ic_info_red_eb5757" />
+
+          <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_error_msg_fill_data"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_vertical"
+              android:layout_marginHorizontal="@dimen/size_6"
+              android:fontFamily="@font/regular"
+              android:includeFontPadding="false"
+              android:text="@string/please_fill_data_in_the_fields_highlighted_in_red"
+              android:textColor="@color/red_EB5757"
+              android:textSize="@dimen/text_10"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
       </androidx.appcompat.widget.LinearLayoutCompat>
 

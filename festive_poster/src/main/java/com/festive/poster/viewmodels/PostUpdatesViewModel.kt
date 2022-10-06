@@ -3,6 +3,8 @@ package com.festive.poster.viewmodels
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.festive.poster.models.PostUpdateTaskRequest
+import com.festive.poster.models.response.TemplateSaveActionBody
+import com.festive.poster.models.promoModele.TagListRequest
 import com.festive.poster.reset.repo.NowFloatsRepository
 import com.festive.poster.reset.repo.UsCentralNowFloatsCloudRepo
 import com.festive.poster.reset.repo.WithFloatTwoRepository
@@ -31,9 +33,9 @@ class PostUpdatesViewModel : BaseViewModel() {
     return WithFloatTwoRepository.putBizMessageUpdateV2(request).toLiveData()
   }
 
-  fun favPoster(floatingPointId: String?,fpTag: String?,templateId: String?): LiveData<BaseResponse> {
+ /* fun favPoster(floatingPointId: String?,fpTag: String?,templateId: String?): LiveData<BaseResponse> {
     return NowFloatsRepository.makeTempFav(floatingPointId,fpTag,templateId).toLiveData()
-  }
+  }*/
 
   fun putBizImageUpdateV2(
     type: String?,
@@ -55,8 +57,8 @@ class PostUpdatesViewModel : BaseViewModel() {
     ).toLiveData()
   }
 
-  fun getUserDetails(fpTag: String?, clientId: String): LiveData<BaseResponse> {
-    return WithFloatTwoRepository.getUserDetails(fpTag,clientId).toLiveData()
+  fun getUserDetails(): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getUserDetails().toLiveData()
   }
 
   fun getCategories(context: Context): LiveData<BaseResponse> {
@@ -92,4 +94,14 @@ class PostUpdatesViewModel : BaseViewModel() {
   fun getMerchantSummary(clientId: String?,fpTag: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getMerchantSummary(clientId,fpTag).toLiveData()
   }
+
+
+
+
+
+  fun getTemplateConfig(fKey:String,floatingPointId: String?,floatingPointTag: String?): LiveData<BaseResponse> {
+    return NowFloatsRepository.getTemplateConfig(fKey,floatingPointId,floatingPointTag).toLiveData()
+  }
+
+
 }

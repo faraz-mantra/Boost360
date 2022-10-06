@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class Paging(
+  @SerializedName("TotalCount")
+  var totalCount: Int? = null,
   @SerializedName("Count")
   var count: Int? = null,
   @SerializedName("Limit")

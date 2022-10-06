@@ -12,6 +12,8 @@ import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.ListItemBrowseAllCatBinding
 import com.festive.poster.databinding.ListItemBrowseTabTemplateCatBinding
 import com.festive.poster.databinding.ListItemPosterPackBinding
+import com.festive.poster.models.BrowseAllCategory
+import com.festive.poster.models.BrowseAllTemplate
 import com.festive.poster.models.PosterPackModel
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.AppBaseRecyclerViewHolder
@@ -19,6 +21,7 @@ import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.framework.BaseApplication
 import com.framework.base.BaseActivity
+import com.framework.utils.loadFromUrl
 import com.framework.views.itemdecoration.LineItemDecoration
 import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
@@ -27,9 +30,8 @@ class BrowseAllPosterCatViewHolder(binding: ListItemBrowseAllCatBinding) :
   AppBaseRecyclerViewHolder<ListItemBrowseAllCatBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
-    val model = item as PosterPackModel
-//      Picasso.get().load(model.tagsModel.icon).into(binding.ivIcon)
-
+    val model = item as BrowseAllCategory
+    binding.ivIcon.loadFromUrl(model.thumbnailUrl)
       if (model.isSelected){
          getColor(R.color.color4ACDFF)?.let {
         binding.borderCard.strokeColor=it
@@ -39,7 +41,7 @@ class BrowseAllPosterCatViewHolder(binding: ListItemBrowseAllCatBinding) :
       binding.borderCard.strokeColor=0
       binding.root.alpha = 0.5F
     }
-    binding.tvTitle.text = model.tagsModel?.name
+    binding.tvTitle.text = model.name
 
     binding.root.setOnClickListener {
       listener?.onItemClick(position,model,RecyclerViewActionType.BROWSE_ALL_POSTER_CAT_CLICKED.ordinal)

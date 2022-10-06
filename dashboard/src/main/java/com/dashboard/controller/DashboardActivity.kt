@@ -3,6 +3,7 @@ package com.dashboard.controller
 import android.content.Intent
 import android.content.IntentSender
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -21,6 +22,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.anachat.chatsdk.AnaCore
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.boost.dbcenterapi.utils.DataLoader
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.RecyclerViewActionType
@@ -52,6 +54,9 @@ import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.getBa
 import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.initDataBadges
 import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.readDrScoreDocument
 import com.framework.firebaseUtils.firestore.badges.BadgesModel
+import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
+import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager.getCartData
+import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager.initDataCart
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.pref.*
@@ -92,7 +97,7 @@ import kotlin.concurrent.schedule
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
-  private val MY_REQUEST_CODE = 120
+
   private var doubleBackToExitPressedOnce = false
   private var mDeepLinkUrl: String? = null;
   private var mPayload: String? = null
@@ -101,8 +106,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private var session: UserSessionManager? = null
   private var adapterDrawer: AppBaseRecyclerViewAdapter<DrawerHomeData>? = null
   private var isSecondaryImage = false
-  private lateinit var appUpdateManager: AppUpdateManager
-  private lateinit var appUpdateInfoTask: Task<AppUpdateInfo>
   var isLoadShimmer = true
   var count = 0
   var activePreviousItem = 0
@@ -146,63 +149,25 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     intentDataCheckAndDeepLink(intent)
     session?.initializeWebEngageLogin()
     initialize()
+    session?.let { initDataCart(it.fpTag ?: "", it.fPID ?: "", clientId) }
     session?.let { initDataBadges(it.fpTag ?: "", it.fPID ?: "", clientId) }
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
     initRemoteConfigData(this)
     reloadCapLimitData()
-    checkForUpdate()
   }
 
   private fun bottomNavInitializer() {
-    if (this.packageName.equals(APPLICATION_JIO_ID, true))
-      binding?.viewBottomBar?.navView?.setClickPosition(ArrayList())
     binding?.viewBottomBar?.navView?.setOnItemSelectedListener(this)
   }
 
-  private fun checkForUpdate() {
-    Log.i(TAG, "checkForUpdate: Inside Method")
-    appUpdateManager = AppUpdateManagerFactory.create(this)
-    appUpdateManager.registerListener(appUpdateListener)
-    appUpdateInfoTask = appUpdateManager.appUpdateInfo
-    appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-      Log.i(TAG, "checkForUpdate: ${appUpdateInfo.updateAvailability()} ${appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)}")
-      if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE || appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
-        startUpdate(appUpdateInfo)
-      } else if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
-        popupSnackBarForCompleteUpdate();
-      }
-    }
-  }
 
-  private fun startUpdate(appUpdateInfo: AppUpdateInfo) {
-    try {
-      appUpdateManager.startUpdateFlowForResult(appUpdateInfo, appUpdateType(), this, MY_REQUEST_CODE)
-    } catch (e: IntentSender.SendIntentException) {
-      e.printStackTrace();
-      SentryController.captureException(e)
-    }
-  }
 
-  private val appUpdateListener: InstallStateUpdatedListener = InstallStateUpdatedListener { state ->
-    when {
-      state.installStatus() == InstallStatus.DOWNLOADED -> popupSnackBarForCompleteUpdate()
-      state.installStatus() == InstallStatus.INSTALLED -> removeInstallStateUpdateListener()
-      else -> showShortToast("InstallStateUpdatedListener: state: ${state.installStatus()}")
-    }
-  }
 
-  private fun popupSnackBarForCompleteUpdate() {
-    Snackbar.make(
-      findViewById<View>(android.R.id.content).rootView,
-      getString(R.string.download_complete), Snackbar.LENGTH_INDEFINITE
-    ).setAction(getString(R.string.install)) {
-      if (this::appUpdateManager.isInitialized) appUpdateManager.completeUpdate()
-    }.setActionTextColor(ContextCompat.getColor(this, R.color.green_light)).show()
-  }
 
-  private fun removeInstallStateUpdateListener() {
-    if (this::appUpdateManager.isInitialized) appUpdateManager.unregisterListener(appUpdateListener)
-  }
+//  private fun loadMarketPlaceData() {
+//    Log.e("loadMarketPlaceData", "Initialized")
+//    viewModel.loadMarketPlaceData(application, session?.fP_AppExperienceCode, session?.fpTag)
+//  }
 
   private fun reloadCapLimitData() {
     viewModel.getCapLimitFeatureDetails(session?.fPID ?: "", clientId).observeOnce(this) {
@@ -282,7 +247,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
         if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType, buyItemKey, false)
       } else {
-        if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", "", false)
+        val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(Uri.parse(mDeepLinkUrl?:""))
+          val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
+        if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", buyItemKey?:"", false)
       }
       AppsFlyerUtils.sAttributionData = mapOf()
     }
@@ -306,6 +273,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onResume() {
     super.onResume()
+    Log.e(this::class.java.simpleName, "onResume")
     setUserData()
   }
 
@@ -431,16 +399,16 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         disableBadgeNotification(BadgesModel.BadgesType.ENQUIRYBADGE.name)
       }
       3 -> {
-        if (this.packageName.equals(APPLICATION_JIO_ID, true)) {
-          mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
-          toolbarPropertySet(pos)
-          disableBadgeNotification(BadgesModel.BadgesType.MENUBADGE.name)
-        } else {
+//        if (this.packageName.equals(APPLICATION_JIO_ID, true)) {
+//          mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
+//          toolbarPropertySet(pos)
+//          disableBadgeNotification(BadgesModel.BadgesType.MENUBADGE.name)
+//        } else {
           val dataAddOns = welcomeData?.get(2)
           if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let { showWelcomeDialog(it) }
           else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
           disableBadgeNotification(BadgesModel.BadgesType.MARKETPLACEBADGE.name)
-        }
+//        }
       }
       4 -> {
         mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
@@ -500,7 +468,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onItemClick(pos: Int) {
     super.onItemClick(pos)
     when (pos) {
-      3 -> if (this.packageName.equals(APPLICATION_JIO_ID, true).not()) checkWelcomeShowScreen(pos)
+      3 -> checkWelcomeShowScreen(pos)
       4 -> {
 //        WebEngageController.trackEvent(DASHBOARD_MORE, CLICK, TO_BE_ADDED)
 //        binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
@@ -532,13 +500,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    if (requestCode == MY_REQUEST_CODE) {
-      when (resultCode) {
-        RESULT_OK -> showShortToast("App updated successfully")
-        RESULT_CANCELED -> showShortToast("App update cancelled")
-        ActivityResult.RESULT_IN_APP_UPDATE_FAILED -> showShortToast("App update failed")
-      }
-    }
+
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK && isSecondaryImage) {
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
       if (mPaths.isNullOrEmpty().not()) uploadSecondaryImage(mPaths[0])
@@ -577,7 +539,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
       binding?.drawerView?.backgroundImage -> openImagePicker(true)
-      binding?.viewCartCount -> session?.let { this.initiateAddonMarketplace(it, true, "", "") }
+      binding?.viewCartCount -> session?.let { this.initiateCart(it, true, "", "") }
     }
   }
 
@@ -677,7 +639,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onStop() {
     super.onStop()
     BadgesFirestoreManager.listenerBadges = null
-    removeInstallStateUpdateListener()
   }
 
   override fun onStart() {
@@ -685,6 +646,17 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     BadgesFirestoreManager.listenerBadges = {
       dataBadges = getBadgesData()
       setBadgesData(dataBadges)
+    }
+      //get firestore cart items and update in local
+    CartFirestoreManager.listener = {
+      val cartData = getCartData()
+      if(cartData!=null) {
+        val list = ArrayList<String>()
+        for (singleItem in cartData.entries) {
+            list.add(singleItem.key)
+        }
+        DataLoader.addAllItemstoFirebaseCart(application, list)
+      }
     }
   }
 

@@ -319,7 +319,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
     progressDialog.setCancelable(false)
     progressDialog.show()
     showProgress()
-    val intent = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
+    val intent = Intent(this, Class.forName("com.boost.marketplace.ui.home.MarketPlaceActivity"))
     intent.putExtra("expCode", session.fP_AppExperienceCode)
     intent.putExtra("fpName", session.fPName)
     intent.putExtra("fpid", session.fPID)

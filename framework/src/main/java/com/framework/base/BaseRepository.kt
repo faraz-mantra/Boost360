@@ -7,6 +7,7 @@ import com.framework.errorHandling.ErrorFlowInvokeObject
 import com.framework.exceptions.BaseException
 import com.framework.exceptions.NoNetworkException
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureErrorHandlingEnable
+import com.framework.pref.UserSessionManager
 import com.framework.utils.NetworkUtils
 import io.reactivex.Observable
 import okhttp3.ResponseBody
@@ -23,6 +24,8 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
 
   protected abstract fun getRemoteDataSourceClass(): Class<RemoteDataSource>
   protected abstract fun getLocalDataSourceInstance(): LocalDataSource
+
+  val session =  UserSessionManager(BaseApplication.instance)
 
   protected abstract fun getApiClient(): Retrofit
 

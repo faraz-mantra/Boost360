@@ -100,11 +100,27 @@
           }
         },
         {
+          "client_id": "87687526880-g8h03csird2iofu5sp15gfqm9246382q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.biz2.nowfloats",
+            "certificate_hash": "362e44c1b2a945acf138561e323adb78330b1393"
+          }
+        },
+        {
           "client_id": "87687526880-jp5erji0tbtm3ncll2mf5e10rld3at2l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.biz2.nowfloats",
             "certificate_hash": "79a80d34d6021e46e2210866f429f34470281b48"
+          }
+        },
+        {
+          "client_id": "87687526880-k2rhpvcttm983avhrthcofqb8omeceir.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.biz2.nowfloats",
+            "certificate_hash": "16d99a30ab78c422e4ec07f44a7c7d9cfa050b21"
           }
         },
         {
@@ -129,6 +145,14 @@
           "android_info": {
             "package_name": "com.biz2.nowfloats",
             "certificate_hash": "5426bf87df8e2dfef444809fd77c52cc04288efe"
+          }
+        },
+        {
+          "client_id": "87687526880-uertd3u9e78at8jr0i5m4fo169o0evu1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.biz2.nowfloats",
+            "certificate_hash": "59e84d713f7c4d6b690c085253da6406ec5c5d5a"
           }
         },
         {

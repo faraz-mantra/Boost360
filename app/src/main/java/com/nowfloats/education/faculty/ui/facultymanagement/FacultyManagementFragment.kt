@@ -17,7 +17,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.boost.upgrades.UpgradeActivity
+import com.boost.marketplace.ui.home.MarketPlaceActivity
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.views.fabButton.FloatingActionButton
@@ -225,7 +225,7 @@ class FacultyManagementFragment : BaseFragment(), ItemClickEventListener, AppOnZ
       progressDialog.setMessage(status)
       progressDialog.setCancelable(false)
       progressDialog.show()
-      val intent = Intent(requireActivity(), UpgradeActivity::class.java)
+      val intent = Intent(requireActivity(), MarketPlaceActivity::class.java)
       intent.putExtra("expCode", it.fP_AppExperienceCode)
       intent.putExtra("fpName", it.fpName)
       intent.putExtra("fpid", it.fpid)
