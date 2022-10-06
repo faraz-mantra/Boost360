@@ -95,7 +95,8 @@ object FirebaseRemoteConfigUtil {
   fun featureUpdateStudioSelectedUsers(fpTag:String?): Boolean {
     val selectedFps =remoteConfig?.getString(FEATURE_UPDATE_STUDIO_SELECTED_USERS)
 
-    return  PreferencesUtils.instance.getData(PreferencesKey.IS_UPDATE_STUDIO_ENABLED.name,false)
+  //  return  PreferencesUtils.instance.getData(PreferencesKey.IS_UPDATE_STUDIO_ENABLED.name,false)
+    return true
   }
 
 }

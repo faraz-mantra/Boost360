@@ -40,11 +40,11 @@ class TemplateForBrowseAllViewHolder(binding: ListItemTemplateForRvBinding):
             .`as`(LottieDrawable::class.java)
             .load("https://assets7.lottiefiles.com/packages/lf20_ehegqmwn.json")
 
-        GlideApp.with(binding.ivSvg)
+ /*       GlideApp.with(binding.ivSvg)
             .`as`(LottieDrawable::class.java)
             //   .thumbnail(thumbnailRequest)
             .load(variant?.svgUrl)
-            .into(binding.ivSvg)
+            .into(binding.ivSvg)*/
         SvgUtils.loadImage(model.primarySvgUrl, binding.ivSvg)
         binding.btnShare.setOnClickListener {
             WebEngageController.trackEvent(Promotional_Update_WhatsApp_Share_Click)
