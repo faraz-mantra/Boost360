@@ -49,6 +49,7 @@
                 android:textSize="@dimen/txt_12sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/contact_support"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp"

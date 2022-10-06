@@ -8,7 +8,7 @@ apply plugin: 'com.google.firebase.crashlytics'
 googleServices { disableVersionCheck = false }
 
 allprojects {
-    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
     tasks.withType(JavaCompile) {
         options.incremental = true
     }
@@ -39,7 +39,6 @@ android {
         }
     }
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
     useLibrary 'org.apache.http.legacy'
     lintOptions {
         abortOnError true
@@ -49,7 +48,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020136
+        versionCode 2020020137
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -71,12 +70,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
+
+        qa {
+            debuggable true
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
     }
 
     flavorDimensions "default"
     productFlavors {
         partone {
-            versionName "6.1.25.5"
+            versionName "6.1.26.3"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'

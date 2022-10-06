@@ -90,7 +90,7 @@ class AdditionalInfoFragment : AppBaseFragment<FragmentOfferAdditionalInfoBindin
 
   private fun openImagePicker() {
     val filterSheet = ImagePickerBottomSheet()
-    filterSheet.isHidePdf(true)
+    filterSheet.isHidePdfOrGif(true)
     filterSheet.onClicked = { openImagePicker(it) }
     filterSheet.show(this@AdditionalInfoFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }

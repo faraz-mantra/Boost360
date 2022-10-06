@@ -3,8 +3,7 @@ package com.framework.firebaseUtils
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.framework.R
-import com.framework.utils.InAppReviewUtils
-import com.framework.utils.convertJsonToObj
+import com.framework.utils.*
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -94,9 +93,9 @@ object FirebaseRemoteConfigUtil {
   }
 
   fun featureUpdateStudioSelectedUsers(fpTag:String?): Boolean {
-    //val selectedFps =remoteConfig?.getString(FEATURE_UPDATE_STUDIO_SELECTED_USERS)
+    val selectedFps =remoteConfig?.getString(FEATURE_UPDATE_STUDIO_SELECTED_USERS)
 
-    return  true
+    return  PreferencesUtils.instance.getData(PreferencesKey.IS_UPDATE_STUDIO_ENABLED.name,false)
   }
 
 }

@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 class ViewMoreTodayPickTemplate(
     val categorySize:Int
 ):TodayPickTemplate("",false,"","",
-    "", arrayListOf(),null,"",-1), AppBaseRecyclerViewItem {
+    "", arrayListOf(),null,"",-1,false), AppBaseRecyclerViewItem {
     override fun getViewType(): Int {
         return RecyclerViewItemType.VIEW_MORE_POSTER.getLayout()
     }

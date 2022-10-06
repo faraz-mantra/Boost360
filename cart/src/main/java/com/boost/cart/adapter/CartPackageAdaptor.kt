@@ -1,7 +1,6 @@
 package com.boost.cart.adapter
 
 import android.app.Activity
-import android.app.Application
 import android.content.Context
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
@@ -10,19 +9,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
+import com.boost.cart.interfaces.ActionRequiredListener
 import com.boost.cart.interfaces.CartFragmentListener
+import com.boost.cart.utils.SharedPrefs
 import com.boost.cart.utils.Utils
 import com.boost.cart.utils.Utils.priceCalculatorForYear
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.WebEngageController
 import com.bumptech.glide.Glide
+import com.framework.utils.RootUtil
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_PACKAGE_CROSSED_DELETED_FROM_CART
 import com.google.gson.Gson
@@ -37,6 +39,7 @@ import java.util.*
 class CartPackageAdaptor(
         list: List<CartModel>?,
         val listener: CartFragmentListener,
+        val listener1: ActionRequiredListener,
         cryptoCurrencies: List<FeaturesModel>?,
         val activity: Activity
 ) : RecyclerView.Adapter<CartPackageAdaptor.upgradeViewHolder>() {
@@ -45,6 +48,7 @@ class CartPackageAdaptor(
   private lateinit var context: Context
   private var upgradeList = ArrayList<FeaturesModel>()
   var minMonth = 1
+  var selectedDomainName = ""
 
 
   init {
@@ -69,8 +73,8 @@ class CartPackageAdaptor(
     val selectedBundle = bundlesList.get(position)
 
     holder.name.text = selectedBundle.item_name
-    val price = priceCalculatorForYear(selectedBundle.price, "", activity)
-    val MRPPrice = priceCalculatorForYear(selectedBundle.MRPPrice, "", activity)
+    val price = RootUtil.round(priceCalculatorForYear(selectedBundle.price, "", activity),2)
+    val MRPPrice = RootUtil.round(priceCalculatorForYear(selectedBundle.MRPPrice, "", activity),2)
     holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + Utils.yearlyOrMonthlyOrEmptyValidity("", activity, selectedBundle.min_purchase_months)
 
     if (selectedBundle.link != null) {
@@ -94,9 +98,24 @@ class CartPackageAdaptor(
                 it1
         )
       }
+      if(selectedDomainName.isNotEmpty()){
+        val prefs = SharedPrefs(activity)
+        prefs.storeSelectedDomainName(null)
+      }
       listener.deleteCartAddonsItem(bundlesList.get(position))
     }
-    updateFeatures(bundlesList.get(position).item_id, holder)
+
+//    if(selectedDomainName.isNotEmpty()){
+//      holder.edge_cases_layout.visibility = View.GONE
+//    }else{
+//      holder.edge_cases_layout.visibility = View.VISIBLE
+//    }
+
+    holder.edge_cases_layout.setOnClickListener {
+      listener1.actionClick(bundlesList.get(position))
+    }
+
+    updateFeatures(bundlesList.get(position), holder)
 
 //    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 //    if (bundlesList.size - 1 == position) {
@@ -199,6 +218,11 @@ class CartPackageAdaptor(
     notifyItemRangeInserted(initPosition, upgradeList.size)
   }
 
+  fun selectedDomain(domainName: String){
+    this.selectedDomainName = domainName
+    notifyDataSetChanged()
+  }
+
   class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val name = itemView.findViewById<TextView>(R.id.package_title)
     val price = itemView.findViewById<TextView>(R.id.package_price)
@@ -210,6 +234,7 @@ class CartPackageAdaptor(
     val removePackage = itemView.findViewById<ImageView>(R.id.package_close)
     val ChildRecyclerView = itemView.findViewById<RecyclerView>(R.id.child_recyclerview)
     val addon_amount = itemView.findViewById<TextView>(R.id.tv_Addons)
+    val edge_cases_layout = itemView.findViewById<ConstraintLayout>(R.id.edge_cases_layout)
     var adapter:NewAddonsAdapter? = null
     //   var view = itemView.findViewById<View>(R.id.cart_single_package_bottom_view)!!
   }
@@ -229,11 +254,11 @@ class CartPackageAdaptor(
     holder.orig_cost.text = origCost
   }
 
-  fun updateFeatures(bundleId: String, holder: upgradeViewHolder) {
+  fun updateFeatures(bundleItem: CartModel, holder: upgradeViewHolder) {
     CompositeDisposable().add(
       AppDatabase.getInstance(activity.application)!!
         .bundlesDao()
-        .getBundleItemById(bundleId)
+        .getBundleItemById(bundleItem.item_id)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({
@@ -242,13 +267,19 @@ class CartPackageAdaptor(
           for(singleFeaturesCode in temp){
             for(singleFeature in upgradeList) {
               if (singleFeaturesCode.feature_code.equals(singleFeature.feature_code!!)) {
-                tempFeatures.add(singleFeature)
+                if(singleFeaturesCode.feature_code.equals("DOMAINPURCHASE") && selectedDomainName.isNotEmpty()){
+                  val tempItem = singleFeature
+                  tempItem.name = selectedDomainName
+                  tempFeatures.add(tempItem)
+                }else {
+                  tempFeatures.add(singleFeature)
+                }
               }
             }
           }
           holder.addon_amount.text = "Includes "+tempFeatures.size+" addons"
           val linearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-          holder.adapter = NewAddonsAdapter(tempFeatures)
+          holder.adapter = NewAddonsAdapter(tempFeatures, listener, bundleItem)
           holder.ChildRecyclerView.adapter = holder.adapter
           holder.ChildRecyclerView.layoutManager = linearLayoutManager
 //          holder.used_by.setText("Used by "+it.+"+ businesses")

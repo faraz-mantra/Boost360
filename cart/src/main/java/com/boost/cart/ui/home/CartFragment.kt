@@ -31,15 +31,13 @@ import com.boost.cart.CartActivity
 import com.boost.cart.R
 import com.boost.cart.adapter.*
 import com.boost.cart.base_class.BaseFragment
+import com.boost.cart.interfaces.ActionRequiredListener
 import com.boost.cart.interfaces.ApplyCouponListener
 import com.boost.cart.interfaces.CartFragmentListener
 import com.boost.cart.ui.autorenew.AutoRenewSubsFragment
 import com.boost.cart.ui.checkoutkyc.CheckoutKycFragment
 import com.boost.cart.ui.packages.PackageFragment
-import com.boost.cart.ui.popup.CouponPopUpFragment
-import com.boost.cart.ui.popup.GSTINPopUpFragment
-import com.boost.cart.ui.popup.RenewalPopUpFragment
-import com.boost.cart.ui.popup.TANPopUpFragment
+import com.boost.cart.ui.popup.*
 import com.boost.cart.ui.splash.SplashFragment
 import com.boost.cart.ui.webview.WebViewFragment
 import com.boost.cart.utils.*
@@ -94,7 +92,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
+class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, ActionRequiredListener {
 
     lateinit var root: View
 
@@ -228,7 +226,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.setStatusBarColor(getResources().getColor(R.color.common_text_color))
         }
-        cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, ArrayList(), requireActivity())
+        cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, this, ArrayList(), requireActivity())
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this, requireActivity())
         cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
         cartRechargeAdaptor = CartRechargeAdaptor(ArrayList(), this, requireActivity())
@@ -247,6 +245,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         super.onResume()
         Log.e("onResume", "onResume of LoginFragment")
         viewModel.updateRenewValue("")
+        if(!prefs.getSelectedDomainName().isNullOrEmpty() && ::cartPackageAdaptor.isInitialized){
+            cartPackageAdaptor.selectedDomain(prefs.getSelectedDomainName()!!)
+        }
 //        initMvvM()
     }
 
@@ -496,12 +497,16 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         cart_discount_coupon_remove.setOnClickListener {
             cart_applied_coupon_full_layout.visibility = View.GONE
             cart_coupon_code_rv.visibility = View.VISIBLE
-            if (tv_Show_less.visibility == VISIBLE) {
+            if (couponData.size == 1) {
+                tv_Show_less.visibility = GONE
+                tv_Show_more.visibility = GONE
+            }
+//            if (tv_Show_less.visibility == VISIBLE) {
+//                tv_Show_more.visibility = View.GONE
+//            }
+            else {
+                tv_Show_less.visibility == VISIBLE
                 tv_Show_more.visibility = View.GONE
-
-            } else {
-                tv_Show_more.visibility = View.VISIBLE
-
             }
             discount_banner.visibility = View.GONE
             cart_apply_coupon.visibility = View.VISIBLE
@@ -2255,7 +2260,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                             if (outputExtendedProps.size > 0) outputExtendedProps else null,
                             net_quantity,
                             "MONTHLY",
-                            item.boost_widget_key!!,
+                            item.feature_code!!,
                             item.item_id
                         )
                     )
@@ -2339,7 +2344,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                                                     if (outputExtendedProps.size > 0) outputExtendedProps else null,
                                                     1,
                                                     "MONTHLY",
-                                                    singleFeature.boost_widget_key,
+                                                    singleFeature.feature_code!!,
                                                     singleFeature.feature_id
                                                 )
                                             )
@@ -3396,6 +3401,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 for (i in 0 until it.size) {
                     it[i].data?.let { it1 -> couponData.addAll(it1) }
                 }
+                if (couponData.size == 1){
+                    tv_Show_less.visibility = GONE
+                    tv_Show_more.visibility = GONE
+                }
                 if (couponData.size > 0) {
                     divider5.visibility = VISIBLE
                     System.out.println("CouponData" + couponData)
@@ -3628,7 +3637,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
                 grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
                 cart_amount_title.text = "Cart total (" + cartList.size + " items)"
                 cart_amount.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                    .format(couponDiscountAmount + total + taxValue)
+                    .format(RootUtil.round((couponDiscountAmount + total + taxValue),2))
                 coupontotal = total
                 //       igst_value.text = "+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue)
 //                order_total_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
@@ -3684,6 +3693,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
     }
 
     override fun deleteCartAddonsItem(item: CartModel) {
+        //remove selected domain
+        if(item.item_type.equals("bundles") && !prefs.getSelectedDomainName().isNullOrEmpty()){
+            prefs.storeSelectedDomainName(null)
+        }
         viewModel.deleteCartItems(item.item_id)
         couponDiwaliRedundant.remove(item.feature_code)
         //remove saved orderdetails from prefs
@@ -3808,6 +3821,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
             )
             intent.putExtra("couponAmount", couponDiscountAmount)
         }
+        intent.putExtra("cartItems",cartList.size.toString())
         intent.putExtra("discountText", total)
         intent.putExtra("transaction_id", result.Result.TransactionId)
         intent.putExtra("email", (activity as CartActivity).email)
@@ -3941,7 +3955,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         val txtSub2: TextView = popupWindow.contentView.findViewById(R.id.price3)
         txtSub.setText(
             " ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                .format(total + couponDiscountAmount)
+                .format(RootUtil.round(total,2) + couponDiscountAmount)
         )
         if (couponDiscountAmount > 0) {
             discountTitle.visibility = View.VISIBLE
@@ -3957,6 +3971,79 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) popupWindow.elevation =
             5.0f
         popupWindow.showAsDropDown(anchor, (anchor.width - 40), -166)
+    }
+
+    override fun featureDetailsPopup(domain: String) {
+        cartPackageAdaptor.selectedDomain(domain)
+        prefs.storeSelectedDomainName(domain)
+    }
+
+    override fun editSelectedDomain(bundleItem: CartModel) {
+        featureDetailsPopUp(bundleItem)
+    }
+
+    override fun actionClick(bundleItem: CartModel) {
+        featureDetailsPopUp(bundleItem)
+    }
+
+    private fun featureDetailsPopUp(cartModel: CartModel){
+        var selectedBundle: Bundles? = null
+        for (item in bundlesList) {
+            if (item.bundle_id == cartModel.item_id) {
+                val temp = Gson().fromJson<List<IncludedFeature>>(
+                    item.included_features,
+                    object : TypeToken<List<IncludedFeature>>() {}.type
+                )
+                selectedBundle = Bundles(
+                    item.bundle_id,
+                    temp,
+                    item.min_purchase_months,
+                    item.name,
+                    item.overall_discount_percent,
+                    PrimaryImage(item.primary_image),
+                    item.target_business_usecase,
+                    Gson().fromJson<List<String>>(
+                        item.exclusive_to_categories,
+                        object : TypeToken<List<String>>() {}.type
+                    ),
+                    null, null,null,null,null,item.desc
+                )
+                break
+            }
+        }
+
+        val dialogCard = FeatureDetailsPopup(this)
+        val args = Bundle()
+        args.putString("expCode", (activity as CartActivity).experienceCode)
+        args.putStringArrayList("userPurchsedWidgets", (activity as CartActivity).userPurchsedWidgets)
+        args.putString("bundleData", Gson().toJson(selectedBundle))
+        args.putString("fpid", (activity as CartActivity).fpid)
+        args.putString("expCode", (activity as CartActivity).experienceCode)
+        args.putBoolean("isDeepLink", (activity as CartActivity).isDeepLink)
+        args.putString("deepLinkViewType", (activity as CartActivity).deepLinkViewType)
+        args.putInt("deepLinkDay", (activity as CartActivity).deepLinkDay)
+        args.putBoolean("isOpenCardFragment", (activity as CartActivity).isOpenCardFragment)
+        args.putString(
+            "accountType",
+            (activity as CartActivity).accountType
+        )
+        args.putStringArrayList(
+            "userPurchsedWidgets",
+            (activity as CartActivity).userPurchsedWidgets
+        )
+        if ((activity as CartActivity).email != null) {
+            args.putString("email", (activity as CartActivity).email)
+        } else {
+            args.putString("email", "ria@nowfloats.com")
+        }
+        if ((activity as CartActivity).mobileNo != null) {
+            args.putString("mobileNo", (activity as CartActivity).mobileNo)
+        } else {
+            args.putString("mobileNo", "9160004303")
+        }
+        args.putString("profileUrl", (activity as CartActivity).profileUrl)
+        dialogCard.arguments = args
+        activity?.supportFragmentManager?.let { dialogCard.show(it, FeatureDetailsPopup::class.java.name) }
     }
 
 }

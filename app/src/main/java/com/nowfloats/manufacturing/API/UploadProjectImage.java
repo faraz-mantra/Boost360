@@ -88,7 +88,7 @@ public class UploadProjectImage extends AsyncTask<Void, String, String> {
 
             //https://webaction.api.boostkit.dev/api/v1/placesaround/upload-file?assetFileName=screenshot-assuredpurchase.withfloats.com-2020.07.17-14_38_42.png
             Request request = new Request.Builder()
-                    .url("https://webaction.api.boostkit.dev/api/v1/placesaround/upload-file?assetFileName=" + fileName + ".jpg")
+                    .url("https://webaction.api.boostkit.dev/api/v1/placesaround/upload-file?assetFileName=" + fileName + path.substring(path.lastIndexOf(".")))
                     .post(requestBody)
                     .addHeader("Authorization", "59c8add5dd304111404e7f04")
                     .build();
@@ -97,6 +97,7 @@ public class UploadProjectImage extends AsyncTask<Void, String, String> {
             if (response != null && response.code() == 200) {
                 return Objects.requireNonNull(response.body()).string();
             } else {
+                String msg = response.body().string();
                 Methods.showSnackBarNegative(appContext, appContext.getString(R.string.uploading_image_failed));
             }
 

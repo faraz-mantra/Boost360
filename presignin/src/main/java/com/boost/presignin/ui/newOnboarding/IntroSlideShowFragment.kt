@@ -1,14 +1,12 @@
 package com.boost.presignin.ui.newOnboarding
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.Window
-import android.view.WindowManager
+import android.util.Base64
+import android.util.Log
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.translationMatrix
 import androidx.viewpager2.widget.ViewPager2
 import com.boost.presignin.R
 import com.boost.presignin.adapter.IntroNewAdapter
@@ -21,9 +19,9 @@ import com.boost.presignin.model.newOnboarding.IntroItemNew
 import com.boost.presignin.ui.intro.CircularViewPagerHandler
 import com.boost.presignin.ui.intro.dialogRootError
 import com.boost.presignin.ui.login.LoginActivity
-import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.framework.models.BaseViewModel
 import com.framework.pref.APPLICATION_JIO_ID
+import com.framework.utils.DeviceVerificationUtils
 import com.framework.utils.RootUtil
 import com.framework.webengageconstant.GET_START_CLICKED
 import com.framework.webengageconstant.NO_EVENT_VALUE
@@ -35,6 +33,7 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
   private var currentPosition = 0
   private lateinit var introItems: ArrayList<IntroItemNew>
   private val handler = Handler(Looper.getMainLooper())
+  private  val TAG = "IntroSlideShowFragment"
 
   private val nextRunnable = Runnable {
     binding?.viewpagerIntro?.post {
@@ -99,18 +98,24 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
 
 
   private fun setOnListeners() {
-    binding?.btnGetStarted?.setOnClickListener {
-      if (RootUtil.isDeviceRooted.not()) {
-        WebEngageController.trackEvent(PS_INTRO_SCREEN_START, GET_START_CLICKED, NO_EVENT_VALUE)
-        if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true).not()) {
-          startFragmentFromNewOnBoardingActivity(
-            activity = baseActivity, type = FragmentType.ENTER_PHONE_FRAGMENT,
-            bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "") }, clearTop = false
-          )
-        } else {
-          startActivity(Intent(baseActivity, LoginActivity::class.java))
-        }
-      } else baseActivity.dialogRootError()
+
+    binding.btnGetStarted.setOnClickListener {
+      showProgress()
+      DeviceVerificationUtils.isDeviceTrustable(requireActivity()){
+        hideProgress()
+        if (it) {
+          WebEngageController.trackEvent(PS_INTRO_SCREEN_START, GET_START_CLICKED, NO_EVENT_VALUE)
+          if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true).not()) {
+            startFragmentFromNewOnBoardingActivity(
+              activity = baseActivity, type = FragmentType.ENTER_PHONE_FRAGMENT,
+              bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "") }, clearTop = false
+            )
+          } else {
+            startActivity(Intent(baseActivity, LoginActivity::class.java))
+          }
+        } else baseActivity.dialogRootError()
+      }
+
     }
   }
 

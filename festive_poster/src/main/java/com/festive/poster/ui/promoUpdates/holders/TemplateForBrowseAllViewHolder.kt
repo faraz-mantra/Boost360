@@ -1,5 +1,6 @@
 package com.festive.poster.ui.promoUpdates.holders
 
+import androidx.core.view.isVisible
 import android.graphics.drawable.Drawable
 import com.airbnb.lottie.LottieDrawable
 import com.bumptech.glide.RequestBuilder
@@ -25,6 +26,8 @@ class TemplateForBrowseAllViewHolder(binding: ListItemTemplateForRvBinding):
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as BrowseAllTemplate
 
+
+        binding.isNew.isVisible = model.isFeatured
 
         if (model.isFavourite){
             binding.ivLove.setTintColor(getColor(R.color.colorEB5757)!!)

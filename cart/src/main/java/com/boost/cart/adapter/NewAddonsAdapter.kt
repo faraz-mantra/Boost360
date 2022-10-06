@@ -1,24 +1,23 @@
 package com.boost.cart.adapter
 
 import android.content.Context
-import android.os.Bundle
-import android.text.SpannableString
-import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.boost.cart.CartActivity
 import com.boost.cart.R
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.cart.interfaces.CartFragmentListener
+import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.bumptech.glide.Glide
-import kotlin.collections.ArrayList
 
 class NewAddonsAdapter(
-    val upgradeList: List<FeaturesModel>
+    val upgradeList: List<FeaturesModel>,
+    val listener: CartFragmentListener,
+    val bundleItem: CartModel
 ) : RecyclerView.Adapter<NewAddonsAdapter.upgradeViewHolder>() {
 
     var minMonth = 1
@@ -39,9 +38,27 @@ class NewAddonsAdapter(
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
 
-        holder.name.setText(upgradeList.get(position).name)
+        if(upgradeList.get(position).feature_code.equals("DOMAINPURCHASE") && upgradeList.get(position).name!!.contains(".")){
+            holder.name.setText(upgradeList.get(position).name)
+            holder.name.setTypeface(ResourcesCompat.getFont(context, R.font.bold))
+//            holder.notify.visibility = View.GONE
+//            holder.edit.visibility = View.VISIBLE
+        }else{
+//            if(upgradeList.get(position).feature_code.equals("DOMAINPURCHASE")){
+//                holder.notify.visibility = View.VISIBLE
+//            }else{
+//                holder.notify.visibility = View.GONE
+//            }
+//            holder.edit.visibility = View.GONE
+            holder.name.setText(upgradeList.get(position).name)
+            holder.name.setTypeface(ResourcesCompat.getFont(context, R.font.regular))
+        }
 
         Glide.with(context).load(upgradeList.get(position).primary_image).into(holder.image)
+
+//        holder.edit.setOnClickListener {
+//            listener.editSelectedDomain(bundleItem)
+//        }
 
 
 //        holder.itemView.setOnClickListener {
@@ -66,6 +83,8 @@ class NewAddonsAdapter(
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image = itemView.findViewById<ImageView>(R.id.imageView2)!!
         val name = itemView.findViewById<TextView>(R.id.title)!!
+//        val edit = itemView.findViewById<TextView>(R.id.edit)!!
+//        val notify = itemView.findViewById<ImageView>(R.id.notify)!!
 
     }
 

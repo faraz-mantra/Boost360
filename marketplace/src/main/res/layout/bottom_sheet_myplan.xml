@@ -220,6 +220,7 @@
                     android:background="@drawable/rounded_border_red_white_bg"
                     android:padding="16dp"
                     android:visibility="gone"
+                    tools:visibility="visible"
                     android:layout_marginTop="@dimen/_15sdp"
                     app:layout_constraintEnd_toEndOf="@+id/cslayout"
                     app:layout_constraintStart_toStartOf="@+id/cslayout"
@@ -303,9 +304,10 @@
                 android:layout_marginTop="@dimen/_15sdp"
                 android:background="@drawable/cta_button_click_effect"
                 android:enabled="true"
+                android:visibility="gone"
                 android:fontFamily="@font/bold"
                 android:textSize="@dimen/_12sdp"
-                android:text="Use this feature"
+                android:text="Activate this feature"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -325,6 +327,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:visibility="gone"
+                tools:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btn_Use_this_feature" />
@@ -337,7 +340,6 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:background="@drawable/cta_button_click_effect"
                 android:enabled="true"
-                android:elevation="2dp"
                 android:fontFamily="@font/bold"
                 android:textSize="16sp"
                 android:text="View feature details"
@@ -345,7 +347,6 @@
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.228"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btn1" />
 

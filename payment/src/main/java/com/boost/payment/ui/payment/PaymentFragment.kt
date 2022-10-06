@@ -1,6 +1,7 @@
 package com.boost.payment.ui.payment
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Typeface
@@ -17,7 +18,7 @@ import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.*
-import com.boost.payment.BuildConfig
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -28,6 +29,7 @@ import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentPriorityE
 import com.boost.dbcenterapi.data.api_model.autorenew.OrderAutoRenewRequest
 import com.boost.dbcenterapi.data.api_model.customerId.get.Result
 import com.boost.dbcenterapi.data.api_model.datamodule.SingleNetBankData
+import com.boost.payment.BuildConfig
 import com.boost.payment.PaymentActivity
 import com.boost.payment.R
 import com.boost.payment.adapter.CardPaymentAdapter
@@ -264,6 +266,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             (activity as PaymentActivity).popFragmentFromBackStack()
         }
 
+        payment_amount_title.text = "Cart total (" + (activity as PaymentActivity).items  + " items)"
+
         payment_submit.setOnClickListener {
             if (paymentData.length() > 0) {
                 payThroughRazorPay()
@@ -341,6 +345,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                      UPI_POPUP_FRAGMENT
                  )*/
                 val upiFragment = UPIPopUpFragement.newInstance(this)
+                upiFragment.setAmount("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
                 upiFragment.show(
                         (activity as PaymentActivity).supportFragmentManager,
                         UPI_POPUP_FRAGMENT
@@ -664,6 +669,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                      UPI_POPUP_FRAGMENT
                  )*/
                 val upiFragment = UPIPopUpFragement.newInstance(this)
+                upiFragment.setAmount("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
                 upiFragment.show(
                     (activity as PaymentActivity).supportFragmentManager,
                     UPI_POPUP_FRAGMENT
@@ -804,12 +810,13 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         val netPrice = requireArguments().getDouble("netPrice")
         val temp = (netPrice * 18) / 100
         val taxValue = RootUtil.round(Math.round(temp * 100) / 100.0, 2)
-        txtSub.setText(" ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(netPrice + prefs.getApplyedCouponDetails()!!.discount_amount, 2)))
         if(prefs.getApplyedCouponDetails() !=null){
             discountTitle.visibility = View.VISIBLE
             txtSub1.visibility = View.VISIBLE
+            txtSub.setText(" ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(netPrice + prefs.getApplyedCouponDetails()!!.discount_amount, 2)))
             txtSub1.setText(" -₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(prefs.getApplyedCouponDetails()!!.discount_amount, 2)))
         }else{
+            txtSub.setText(" ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(RootUtil.round(netPrice, 2)))
             discountTitle.visibility = View.GONE
             txtSub1.visibility = View.GONE
         }
@@ -874,13 +881,29 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 //            }
             pay_link.text=it.Result
             val link = it.Result
-            pay_link.setOnClickListener {
-                val payFragment = WebViewFragment
-                val args = Bundle()
-                args.putString("link", link)
-                payFragment.arguments = args
-                (activity as PaymentActivity).addFragment(payFragment, Constants.WEB_VIEW_FRAGMENT)
-            }
+//            pay_link.setOnClickListener {
+//                val payFragment = WebViewFragment
+//                val args = Bundle()
+//                args.putString("link", link)
+//                payFragment.arguments = args
+//                (activity as PaymentActivity).addFragment(payFragment, Constants.WEB_VIEW_FRAGMENT)
+
+                pay_link.setOnClickListener {
+                    val customIntent = CustomTabsIntent.Builder()
+
+                    customIntent.setToolbarColor(
+                        ContextCompat.getColor(
+                            activity as PaymentActivity,
+                            R.color.colorAccent1
+                        )
+                    )
+                    openCustomTab(
+                        activity as PaymentActivity,
+                        customIntent.build(),
+                        Uri.parse(link)
+                    )
+                }
+
             copy_link.setOnClickListener {
                 val clipboard: ClipboardManager =(activity as PaymentActivity).getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 val clip = ClipData.newPlainText(pay_link?.text, pay_link?.text)
@@ -1427,6 +1450,18 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         })
 
 
+    }
+
+    fun openCustomTab(activity: Activity, customTabsIntent: CustomTabsIntent, uri: Uri?) {
+        // package name is the default package
+        // for our custom chrome tab
+        val packageName = "com.android.chrome"
+        if (packageName != null) {
+            customTabsIntent.intent.setPackage(packageName)
+            customTabsIntent.launchUrl(activity, uri!!)
+        } else {
+            activity.startActivity(Intent(Intent.ACTION_VIEW, uri))
+        }
     }
 
     fun payViaPaymentLink() {

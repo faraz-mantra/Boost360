@@ -45,10 +45,7 @@ import com.appservice.model.serviceProduct.update.UpdateValue
 import com.appservice.ui.bankaccount.startFragmentAccountActivity
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.*
-import com.appservice.utils.WebEngageController
-import com.appservice.utils.changeColorOfSubstring
-import com.appservice.utils.getBitmap
-import com.appservice.utils.getExtension
+import com.appservice.utils.*
 import com.appservice.viewmodel.ProductViewModel
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
@@ -58,19 +55,19 @@ import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.firebaseUtils.caplimit_feature.PropertiesItem
 import com.framework.firebaseUtils.caplimit_feature.filterFeature
 import com.framework.firebaseUtils.caplimit_feature.getCapData
+import com.framework.glide.util.ImageService
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_TAG
 import com.framework.pref.clientId
+import com.framework.utils.FileUtils.getExtension
 import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import okio.Buffer
@@ -82,7 +79,7 @@ import java.util.*
 
 class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, ProductViewModel>() {
 
-  private val RC_PRODCUT_INFO: Int=101
+  private val RC_PRODCUT_INFO: Int = 101
   private var menuDelete: MenuItem? = null
   private var productImage: File? = null
   private var product: CatalogProduct? = null
@@ -121,22 +118,22 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     getBundleData()
     setupUIColor()
     getPickUpAddress()
-    binding?.vwChangeDeliverConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-    binding?.vwPaymentConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+    binding.vwChangeDeliverConfig.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+    binding.vwPaymentConfig.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     setOnClickListener(
-      binding?.vwChangeDeliverConfig, binding?.vwChangeDeliverLocation,
-      binding?.vwPaymentConfig, binding?.vwSavePublish, binding?.imageAddBtn,
-      binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView
+      binding.vwChangeDeliverConfig, binding.vwChangeDeliverLocation,
+      binding.vwPaymentConfig, binding.vwSavePublish, binding.imageAddBtn,
+      binding.clearImage, binding.btnOtherInfo, binding.bankAccountView
     )
-    binding?.toggleProduct?.isOn = product?.isPriceToggleOn() ?: false
-    binding?.payProductView?.visibility = View.GONE
-    binding?.toggleProduct?.setOnToggledListener { _, _ -> initProductToggleView() }
+    binding.toggleProduct.isOn = product?.isPriceToggleOn() ?: false
+    binding.payProductView.visibility = View.GONE
+    binding.toggleProduct.setOnToggledListener { _, _ -> initProductToggleView() }
     initProductToggleView()
     listenerEditText()
     capLimitCheck()
   }
 
-  fun getDefaultGst(){
+  fun getDefaultGst() {
     viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner) {
       val dataItem = it as? AppointmentStatusResponse
       if (dataItem?.isSuccess() == true && dataItem.result != null) {
@@ -152,9 +149,9 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
 
 
   private fun setupUIColor() {
-    changeColorOfSubstring(R.string.product_category_, R.color.black_4a4a4a, "*", binding?.tvProductCategoryVw!!)
-    changeColorOfSubstring(R.string.product_description_, R.color.black_4a4a4a, "*", binding?.tvProductDescVw!!)
-    changeColorOfSubstring(R.string.product_name_, R.color.black_4a4a4a, "*", binding?.tvProductNameVw!!)
+    changeColorOfSubstring(R.string.product_category_, R.color.black_4a4a4a, "*", binding.tvProductCategoryVw)
+    changeColorOfSubstring(R.string.product_description_, R.color.black_4a4a4a, "*", binding.tvProductDescVw)
+    changeColorOfSubstring(R.string.product_name_, R.color.black_4a4a4a, "*", binding.tvProductNameVw)
   }
 
   private fun capLimitCheck() {
@@ -172,16 +169,16 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun initProductToggleView() {
-    binding?.payProductView?.visibility = if (binding?.toggleProduct?.isOn!!) View.VISIBLE else View.GONE
-    binding?.freeProductView?.visibility = if (binding?.toggleProduct?.isOn!!) View.GONE else View.VISIBLE
+    binding.payProductView.visibility = if (binding.toggleProduct.isOn) View.VISIBLE else View.GONE
+    binding.freeProductView.visibility = if (binding.toggleProduct.isOn) View.GONE else View.VISIBLE
   }
 
   private fun listenerEditText() {
-    binding?.amountEdt?.afterTextChanged {
-      calculate(binding?.amountEdt?.text.toString(), binding?.discountEdt?.text.toString())
+    binding.amountEdt.afterTextChanged {
+      calculate(binding.amountEdt.text.toString(), binding.discountEdt.text.toString())
     }
-    binding?.discountEdt?.afterTextChanged {
-      calculate(binding?.amountEdt?.text.toString(), binding?.discountEdt?.text.toString())
+    binding.discountEdt.afterTextChanged {
+      calculate(binding.amountEdt.text.toString(), binding.discountEdt.text.toString())
     }
   }
 
@@ -190,12 +187,12 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     val distD = dist.toFloatOrNull() ?: 0F
     if (distD > amountD) {
       showLongToast(resources.getString(R.string.discount_amount_not_greater_than_price))
-      binding?.discountEdt?.setText("")
+      binding.discountEdt.setText("")
       return
     }
     //val finalAmount = String.format("%.1f", (amountD - ((amountD * distD) / 100))).toFloatOrNull() ?: 0F
     val finalAmount = String.format("%.1f", (amountD - distD)).toFloatOrNull() ?: 0F
-    binding?.finalPriceTxt?.setText("$currencyType $finalAmount")
+    binding.finalPriceTxt.setText("$currencyType $finalAmount")
   }
 
   private fun getPickUpAddress() {
@@ -223,14 +220,14 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   private fun setBankAccountData() {
     if (bankAccountDetail != null) {
       product?.paymentType = CatalogProduct.PaymentType.ASSURED_PURCHASE.value
-      binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-      binding?.bankAccountView?.visible()
-      binding?.externalUrlView?.gone()
-      binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-      binding?.bankAccountName?.visible()
-      binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.getAccountNumberN() ?: ""}"
-      binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-      binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
+      binding.txtPaymentType.text = resources.getString(R.string.boost_payment_gateway)
+      binding.bankAccountView.visible()
+      binding.externalUrlView.gone()
+      binding.txtPaymentType.text = resources.getString(R.string.boost_payment_gateway)
+      binding.bankAccountName.visible()
+      binding.bankAccountName.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.getAccountNumberN() ?: ""}"
+      binding.titleBankAdded.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
+      binding.titleBankAdded.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
     }
   }
 
@@ -252,44 +249,46 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun updateUiPreviousDat() {
-    binding?.tvProductName?.setText(product?.Name)
-    binding?.tvDesc?.setText(product?.Description)
-    binding?.edtProductCategory?.setText(product?.category)
+    binding.tvProductName.setText(product?.Name)
+    binding.tvDesc.setText(product?.Description)
+    binding.edtProductCategory.setText(product?.category)
     if (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value) {
-      binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
-      binding?.edtUrl?.setText(product?.uniquePaymentUrl?.url ?: "")
-      binding?.edtNameDesc?.setText(product?.uniquePaymentUrl?.description ?: "")
-      binding?.bankAccountView?.gone()
-      binding?.externalUrlView?.visible()
+      binding.txtPaymentType.text = resources.getString(R.string.external_url)
+      binding.edtUrl.setText(product?.uniquePaymentUrl?.url ?: "")
+      binding.edtNameDesc.setText(product?.uniquePaymentUrl?.description ?: "")
+      binding.bankAccountView.gone()
+      binding.externalUrlView.visible()
     } else if (product?.paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail?.isValidAccount() == true) {
-      binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-      binding?.bankAccountName?.visible()
-      binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.getAccountNumberN() ?: ""}"
-      binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-      binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
+      binding.txtPaymentType.text = resources.getString(R.string.boost_payment_gateway)
+      binding.bankAccountName.visible()
+      binding.bankAccountName.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.getAccountNumberN() ?: ""}"
+      binding.titleBankAdded.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
+      binding.titleBankAdded.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
     } else {
-      binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-      binding?.bankAccountName?.gone()
-      binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
-      binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_not_added)
+      binding.txtPaymentType.text = resources.getString(R.string.boost_payment_gateway)
+      binding.bankAccountName.gone()
+      binding.titleBankAdded.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
+      binding.titleBankAdded.text = resources.getString(R.string.bank_account_not_added)
     }
 
     when {
-      product?.Price ?: 0.0 <= 0.0 -> {
-        binding?.toggleProduct?.isOn = false
-        binding?.payProductView?.gone()
-        binding?.freeProductView?.visible()
+      (product?.Price ?: 0.0) <= 0.0 -> {
+        binding.toggleProduct.isOn = false
+        binding.payProductView.gone()
+        binding.freeProductView.visible()
       }
     }
-    binding?.amountEdt?.setText("${product?.Price ?: 0}")
-    binding?.discountEdt?.setText("${product?.DiscountAmount ?: 0.0}")
+    binding.amountEdt.setText("${product?.Price ?: 0}")
+    binding.discountEdt.setText("${product?.DiscountAmount ?: 0.0}")
     when {
       product?.ImageUri.isNullOrEmpty().not() -> {
-        binding?.imageAddBtn?.gone()
-        binding?.clearImage?.visible()
-        binding?.productImageView?.visible()
-        binding?.productImageView?.let {
-          activity?.glideLoad(it, product?.ImageUri, R.drawable.placeholder_image)
+        binding.imageAddBtn.gone()
+        binding.clearImage.visible()
+        binding.productImg?.visible()
+        binding.productImg?.apply {
+          if (product?.ImageUri?.getExtension()?.contains("gif", true) == true) {
+            ImageService(requireContext()).loadGif(product?.ImageUri ?: "", R.drawable.placeholder_image_n, this, {}, {})
+          } else baseActivity.glideLoad(this, product?.ImageUri, R.drawable.placeholder_image_n)
         }
       }
     }
@@ -311,15 +310,15 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.bankAccountView -> {
-        if (binding?.bankAccountView?.visibility == View.VISIBLE) goAddBankView()
+      binding.bankAccountView -> {
+        if (binding.bankAccountView.visibility == View.VISIBLE) goAddBankView()
       }
-      binding?.imageAddBtn -> openImagePicker()
-      binding?.clearImage -> clearImage()
-      binding?.vwChangeDeliverConfig -> showServiceDeliveryConfigBottomSheet()
+      binding.imageAddBtn -> openImagePicker()
+      binding.clearImage -> clearImage()
+      binding.vwChangeDeliverConfig -> showServiceDeliveryConfigBottomSheet()
 //      binding?.vwChangeDeliverLocation -> showServiceDeliveryLocationBottomSheet()
-      binding?.vwPaymentConfig -> showPaymentConfigBottomSheet()
-      binding?.btnOtherInfo -> {
+      binding.vwPaymentConfig -> showPaymentConfigBottomSheet()
+      binding.btnOtherInfo -> {
         WebEngageController.trackEvent(PRODUCT_OTHER_INFORMATION, CLICK, NO_EVENT_VALUE)
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PRODUCT_DATA.name, product)
@@ -328,7 +327,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         bundle.putSerializable(IntentConstant.PRODUCT_GST_DETAIL.name, gstProductData)
         startFragmentActivity(FragmentType.PRODUCT_INFORMATION, bundle, isResult = true, requestCode = RC_PRODCUT_INFO)
       }
-      binding?.vwSavePublish -> if (isValid()) createUpdateApi()
+      binding.vwSavePublish -> if (isValid()) createUpdateApi()
     }
   }
 
@@ -408,9 +407,10 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       uploadSecondaryImage(productId)
       return
     }
+    val fileName = takeIf { productImage?.name.isNullOrEmpty().not() }?.let { productImage?.name } ?: "product_${Date().time}.png"
     viewModel?.addUpdateProductImage(
       clientId, requestType = "sequential", requestId = deviceId, totalChunks = 1,
-      currentChunkNumber = 1, productId = productId, requestBody = getRequestServiceImage(productImage)
+      currentChunkNumber = 1, productId = productId, fileName, requestBody = getRequestServiceImage(productImage)
     )?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) uploadSecondaryImage(productId)
       else {
@@ -421,8 +421,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun getRequestServiceImage(serviceImage: File?): RequestBody {
-    val responseBody = serviceImage?.readBytes()?.let { it.toRequestBody("image/png".toMediaTypeOrNull(), 0, it.size) }
-    val fileName = takeIf { serviceImage?.name.isNullOrEmpty().not() }?.let { serviceImage?.name } ?: "service_${Date().time}.png"
+    val responseBody = serviceImage?.readBytes()?.let { it.toRequestBody("image/*".toMediaTypeOrNull(), 0, it.size) }
     return responseBody!!
   }
 
@@ -466,9 +465,11 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         }
       }
     } else {
-      showLongToast(if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
+      showLongToast(
+        if (isEdit == true) getString(R.string.product_updated_successfully) else getString(
           R.string.product_saved_successfully
-        ))
+        )
+      )
       goBack()
     }
   }
@@ -491,14 +492,14 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
 
   private fun isValid(): Boolean {
     if (product == null) product = CatalogProduct()
-    val productName = binding?.tvProductName?.text.toString()
-    val productCategory = binding?.edtProductCategory?.text.toString()
-    val productDesc = binding?.tvDesc?.text.toString()
-    val amount = binding?.amountEdt?.text.toString().toDoubleOrNull() ?: 0.0
-    val discount = binding?.discountEdt?.text.toString().toDoubleOrNull() ?: 0.0
-    val toggle = binding?.toggleProduct?.isOn ?: false
-    val externalUrlName = binding?.edtNameDesc?.text?.toString() ?: ""
-    val externalUrl = binding?.edtUrl?.text?.toString() ?: ""
+    val productName = binding.tvProductName.text.toString()
+    val productCategory = binding.edtProductCategory.text.toString()
+    val productDesc = binding.tvDesc.text.toString()
+    val amount = binding.amountEdt.text.toString().toDoubleOrNull() ?: 0.0
+    val discount = binding.discountEdt.text.toString().toDoubleOrNull() ?: 0.0
+    val toggle = binding.toggleProduct.isOn ?: false
+    val externalUrlName = binding.edtNameDesc.text?.toString() ?: ""
+    val externalUrl = binding.edtUrl.text?.toString() ?: ""
 
     if (productImage == null && product?.ImageUri.isNullOrEmpty()) {
       showLongToast(resources.getString(R.string.error_add_product_image))
@@ -552,16 +553,15 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun clearImage() {
-    binding?.imageAddBtn?.visible()
-    binding?.clearImage?.gone()
-    binding?.productImageView?.gone()
+    binding.imageAddBtn.visible()
+    binding.clearImage.gone()
+    binding.productImg?.gone()
     product?.ImageUri = null
     productImage = null
   }
 
   private fun openImagePicker() {
     val filterSheet = ImagePickerBottomSheet()
-    filterSheet.isHidePdf(true)
     filterSheet.onClicked = { openImagePicker(it) }
     filterSheet.show(
       this@ProductDetailFragment.parentFragmentManager,
@@ -573,26 +573,31 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   private fun openImagePicker(it: ClickType) {
     val type = when (it) {
       ClickType.CAMERA -> ImagePicker.Mode.CAMERA
+      ClickType.GIF_IMAGE -> ImagePicker.Mode.GIF_IMAGE
       else -> ImagePicker.Mode.GALLERY
     }
-    ImagePicker.Builder(baseActivity)
-      .mode(type)
-      .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
-      .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
-      .scale(800, 800)
-      .enableDebuggingMode(true).build()
+    ImagePicker.Builder(baseActivity).mode(type).compressLevel(ImagePicker.ComperesLevel.SOFT)
+      .directory(ImagePicker.Directory.DEFAULT).allowMultipleImages(false)
+      .scale(800, 800).enableDebuggingMode(true).apply {
+        extension(if (it == ClickType.GIF_IMAGE) ImagePicker.Extension.GIF else ImagePicker.Extension.PNG)
+      }.build()
+
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
-      val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as List<String>
+      val mPaths = (data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as? List<String>) ?: listOf()
       if (mPaths.isNotEmpty()) {
         productImage = File(mPaths[0])
-        binding?.imageAddBtn?.gone()
-        binding?.clearImage?.visible()
-        binding?.productImageView?.visible()
-        productImage?.getBitmap()?.let { binding?.productImageView?.setImageBitmap(it) }
+        binding.imageAddBtn.gone()
+        binding.clearImage.visible()
+        binding.productImg?.visible()
+        if (productImage?.getExtension()?.contains("gif", true) == true) {
+          binding.productImg?.let { ImageService(requireContext()).loadGif(it, productImage!!, R.drawable.placeholder_image_n, {}, {}) }
+        } else {
+          productImage?.getBitmap()?.let { binding.productImg?.setImageBitmap(it) }
+        }
       }
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == RC_PRODCUT_INFO) {
       product = data?.getSerializableExtra(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct
@@ -602,12 +607,12 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       bankAccountDetail = data?.getSerializableExtra(IntentConstant.USER_BANK_DETAIL.name) as? BankAccountDetails
       if (bankAccountDetail != null) {
         product?.paymentType = CatalogProduct.PaymentType.ASSURED_PURCHASE.value
-        binding?.bankAccountView?.visible()
-        binding?.externalUrlView?.gone()
-        binding?.bankAccountName?.visible()
-        binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
-        binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-        binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_added)
+        binding.bankAccountView.visible()
+        binding.externalUrlView.gone()
+        binding.bankAccountName.visible()
+        binding.bankAccountName.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
+        binding.titleBankAdded.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
+        binding.titleBankAdded.text = resources.getString(R.string.bank_account_added)
       }
     }
   }
@@ -634,35 +639,35 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     val dialog = PaymentConfigBottomSheet()
     dialog.onClicked = {
       product?.paymentType = it
-      binding?.bankAccountView?.visible()
-      binding?.externalUrlView?.gone()
+      binding.bankAccountView.visible()
+      binding.externalUrlView.gone()
       when (it) {
         CatalogProduct.PaymentType.ASSURED_PURCHASE.value -> {
-          binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-          binding?.bankAccountName?.visible()
-          binding?.bankAccountName?.text =
+          binding.txtPaymentType.text = resources.getString(R.string.boost_payment_gateway)
+          binding.bankAccountName.visible()
+          binding.bankAccountName.text =
             "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
           when {
             bankAccountDetail?.accountNumber.isNullOrBlank() || bankAccountDetail?.accountName.isNullOrBlank() -> {
-              binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
-              binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_not_added)
+              binding.titleBankAdded.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
+              binding.titleBankAdded.text = resources.getString(R.string.bank_account_not_added)
             }
             else -> {
-              binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-              binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
+              binding.titleBankAdded.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
+              binding.titleBankAdded.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
             }
           }
         }
         CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value -> {
-          binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
-          binding?.bankAccountView?.gone()
-          binding?.externalUrlView?.visible()
+          binding.txtPaymentType.text = resources.getString(R.string.external_url)
+          binding.bankAccountView.gone()
+          binding.externalUrlView.visible()
         }
         else -> {
-          binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-          binding?.bankAccountName?.gone()
-          binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
-          binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_not_added)
+          binding.txtPaymentType.text = resources.getString(R.string.boost_payment_gateway)
+          binding.bankAccountName.gone()
+          binding.titleBankAdded.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
+          binding.titleBankAdded.text = resources.getString(R.string.bank_account_not_added)
         }
       }
     }
@@ -708,8 +713,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
             d.dismiss()
             showProgress()
             WebEngageController.trackEvent(DELETE_PRODUCT_CATALOGUE, DELETE, NO_EVENT_VALUE)
-            val request =
-              DeleteProductRequest(clientId, "SINGLE", product?.productId, product?.productType)
+            val request = DeleteProductRequest(clientId, "SINGLE", product?.productId, product?.productType)
             viewModel?.deleteService(request)?.observeOnce(viewLifecycleOwner, Observer {
               hideProgress()
               if ((it.error is NoNetworkException).not()) {

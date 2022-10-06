@@ -40,17 +40,19 @@ fun List<GetTodayTemplateResponseTemplate>.asDomainModels(categoryId: String): L
             tags = it.tags,
             utilizationDate = it.utilizationDate,
             categoryId = categoryId,
-            favDate = it.favDate
+            favDate = it.favDate,
+            isFeatured = it.isFeatured
         )
     }
 }
-fun List<GetTodayTemplateResponseResult>.asDomainModel(): List<CategoryUi> {
+fun List<GetTodayTemplateResponseResult>.asDomainModel(sortByDate:Boolean=false): List<CategoryUi> {
     return map {
+       val templates = it.templates.asDomainModels(it.category.id)
         CategoryUi(
             id = it.category.id,
             name = it.category.name,
             thumbnailUrl = it.category.thumbnailUrl,
-            templates = it.templates.asDomainModels(it.category.id),
+            templates = templates,
             iconUrl = it.category.iconUrl,
             description = it.category.description
         )

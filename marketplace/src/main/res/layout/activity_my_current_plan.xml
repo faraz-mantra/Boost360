@@ -40,9 +40,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textFontWeight="700"
-                        android:layout_marginStart="@dimen/_10sdp"
                         android:fontFamily="@font/semi_bold"
-                        android:text="My current plan"
+                        android:text="My Current Plan"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -201,6 +200,28 @@
 
         </com.facebook.shimmer.ShimmerFrameLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/search_zeroth"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#F8F8F8"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_search_zeroth"
+                android:layout_marginTop="150dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedscroll"
             android:layout_width="match_parent"
@@ -262,7 +283,7 @@
                                     android:layout_marginStart="18dp"
                                     android:fontFamily="@font/bold"
                                     android:gravity="center_vertical"
-                                    android:text="3 Inactive features"
+                                    android:text=" Inactive features"
                                     android:textColor="#333333"
                                     android:textFontWeight="700"
                                     android:textSize="16sp"
@@ -377,7 +398,7 @@
                                     android:layout_marginStart="18dp"
                                     android:fontFamily="@font/bold"
                                     android:lineHeight="21.79dp"
-                                    android:text="4 Active features"
+                                    android:text=" Active features"
                                     android:textColor="#333333"
                                     android:textFontWeight="700"
                                     android:textSize="16sp"

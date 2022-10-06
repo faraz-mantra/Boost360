@@ -4,7 +4,6 @@ import android.content.Intent
 import android.view.View
 import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
@@ -12,12 +11,10 @@ import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentProductInformationBinding
 import com.appservice.model.FileModel
 import com.appservice.model.KeySpecification
-import com.appservice.model.auth_3
 import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.addProductImage.deleteRequest.ProductImageDeleteRequest
 import com.appservice.model.serviceProduct.addProductImage.response.DataImage
 import com.appservice.model.serviceProduct.gstProduct.response.GstData
-import com.appservice.model.servicev1.DeleteSecondaryImageRequest
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
@@ -360,7 +357,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 
   private fun openImagePicker() {
     val filterSheet = ImagePickerBottomSheet()
-    filterSheet.isHidePdf(true)
+    filterSheet.isHidePdfOrGif(true)
     filterSheet.onClicked = { openImagePicker(it) }
     filterSheet.show(
       this@ProductInformationFragment.parentFragmentManager,

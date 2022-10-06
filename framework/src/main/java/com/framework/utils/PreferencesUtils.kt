@@ -11,7 +11,8 @@ enum class PreferencesKey {
   NAVIGATION_STACK,
   UPDATE_STUDIO_FIRST_TIME,
   CAP_LIMIT_FEATURE_RESPONSE,
-  GET_FP_DETAILS_LogoUrl
+  GET_FP_DETAILS_LogoUrl,
+  IS_UPDATE_STUDIO_ENABLED
 }
 
 class PreferencesUtils {

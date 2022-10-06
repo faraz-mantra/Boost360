@@ -46,6 +46,8 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
     holder.upgradeListItem(cryptocurrencyItem)
     holder.singleTitle.text = cryptocurrencyItem.name
 
+    //Check here
+
 //    if (cryptocurrencyItem.featureState !=null && cryptocurrencyItem.featureState != 1){
 //      holder.itemView.visibility=View.VISIBLE
 //      holder.itemView.layoutParams =

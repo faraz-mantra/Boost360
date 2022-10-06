@@ -306,7 +306,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.initiateAddonMarketplace(session, false, "recommendedAddOns", "")
         } else if (buyItemKey.isNotEmpty() && url.contains(deeplink_item_on_market_place)) {
           baseActivity.delayProgressShow()
-          baseActivity.initiateAddonMarketplace(session, false, "", buyItemKey)
+          baseActivity.initiateAddonMarketplace(session, false, "deeplinkRedirection", buyItemKey)
         } else if (url.contains(deeplink_compare_package)) {
           baseActivity.initiateAddonMarketplace(session, false, "comparePackageSelection", "")
         } else if (url.contains(deeplink_package_bundle)) {

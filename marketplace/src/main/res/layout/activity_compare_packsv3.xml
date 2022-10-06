@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:fontFamily="@font/regular"
-                    android:text="Compare packs"
+                    android:text="Compare Packs"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -70,7 +70,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/arrow_white"
-                    android:padding="15dp"
+                    android:padding="10dp"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +96,7 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <!-- Adding 7 rows of placeholders -->
             <LinearLayout
@@ -147,6 +147,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:visibility="gone"
+            tools:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar">
@@ -387,15 +388,15 @@
 
                         <TextView
                             android:id="@+id/savings_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="45%"
-                            android:textSize="24sp"
-                            android:textFontWeight="700"
+                            android:layout_width="54dp"
+                            android:layout_height="29dp"
                             android:fontFamily="@font/regular"
+                            android:text="45%"
                             android:textColor="@color/colorAccent1"
+                            android:textFontWeight="700"
+                            android:textSize="24sp"
                             app:layout_constraintStart_toStartOf="@+id/savings_title"
-                            app:layout_constraintTop_toBottomOf="@+id/savings_title"/>
+                            app:layout_constraintTop_toBottomOf="@+id/savings_title" />
 
                         <View
                             android:id="@+id/view"

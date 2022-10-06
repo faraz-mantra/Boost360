@@ -109,7 +109,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     var isOpenCardFragment: Boolean = false
     var isBackCart: Boolean = false
     var isOpenHomeFragment: Boolean = false
-    var isOpenAddOnsFragment: Boolean = false
+    var isOpenMyCurrentPlan: Boolean = false
     var isOpenPackageWithID: String? = null
     var buyAddonWithIDAndGoToCart: String? = null
 
@@ -143,7 +143,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         accountType = intent.getStringExtra("accountType")
         isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
         isOpenHomeFragment = intent.getBooleanExtra("isComingFromOrderConfirm", false)
-        isOpenAddOnsFragment = intent.getBooleanExtra("isComingFromOrderConfirmActivation", false)
+        isOpenMyCurrentPlan = intent.getBooleanExtra("isComingFromOrderConfirmActivation", false)
         widgetFeatureCode = intent.getStringExtra("buyItemKey")
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: ArrayList()
         //festive poster purchase
@@ -162,8 +162,25 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         initView()
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        isOpenMyCurrentPlan = intent!!.getBooleanExtra("isComingFromOrderConfirmActivation", false)
+        if(isOpenMyCurrentPlan){
+            redirectMyCurrentPlanActivity()
+        }
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.activity_marketplace
+    }
+
+    override fun getViewModelClass(): Class<MarketPlaceHomeViewModel> {
+        return MarketPlaceHomeViewModel::class.java
+    }
+
     @SuppressLint("NewApi")
     private fun initView() {
+
         packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList(), this, this)
         featureDealsAdapter = FeatureDealsAdapter(ArrayList(), ArrayList(), this, this)
         partnerViewPagerAdapter = PartnerViewPagerAdapter(ArrayList(), this, this)
@@ -303,35 +320,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
 
         view_my_current_plan.setOnClickListener {
-            val intent = Intent(this, MyCurrentPlanActivity::class.java)
-            intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
-            intent.putExtra("fpid", fpid)
-            intent.putExtra("expCode", experienceCode)
-            intent.putExtra("isDeepLink", isDeepLink)
-            intent.putExtra("deepLinkViewType", deepLinkViewType)
-            intent.putExtra("deepLinkDay", deepLinkDay)
-            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-            intent.putExtra(
-                "accountType",
-                accountType
-            )
-            intent.putStringArrayListExtra(
-                "userPurchsedWidgets",
-                userPurchsedWidgets
-            )
-            if (email != null) {
-                intent.putExtra("email", email)
-            } else {
-                intent.putExtra("email", "ria@nowfloats.com")
-            }
-            if (mobileNo != null) {
-                intent.putExtra("mobileNo", mobileNo)
-            } else {
-                intent.putExtra("mobileNo", "9160004303")
-            }
-            intent.putExtra("profileUrl", profileUrl)
-
-            startActivity(intent)
+            redirectMyCurrentPlanActivity()
         }
 
 
@@ -371,6 +360,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
             startActivity(intent)
 
+        }
+
+        if(isOpenMyCurrentPlan){
+            redirectMyCurrentPlanActivity()
         }
 
         if (screenType == "myAddOns") {
@@ -427,8 +420,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 progressDialog.hide()
             }
             callExpertContact(prefs.getExpertContact())
-
-
         }
 
         //share feed back button
@@ -553,12 +544,36 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
     }
 
-    override fun getLayout(): Int {
-        return R.layout.activity_marketplace
-    }
+    fun redirectMyCurrentPlanActivity(){
+        val intent = Intent(this, MyCurrentPlanActivity::class.java)
+        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+        intent.putExtra("fpid", fpid)
+        intent.putExtra("expCode", experienceCode)
+        intent.putExtra("isDeepLink", isDeepLink)
+        intent.putExtra("deepLinkViewType", deepLinkViewType)
+        intent.putExtra("deepLinkDay", deepLinkDay)
+        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+        intent.putExtra(
+            "accountType",
+            accountType
+        )
+        intent.putStringArrayListExtra(
+            "userPurchsedWidgets",
+            userPurchsedWidgets
+        )
+        if (email != null) {
+            intent.putExtra("email", email)
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com")
+        }
+        if (mobileNo != null) {
+            intent.putExtra("mobileNo", mobileNo)
+        } else {
+            intent.putExtra("mobileNo", "9160004303")
+        }
+        intent.putExtra("profileUrl", profileUrl)
 
-    override fun getViewModelClass(): Class<MarketPlaceHomeViewModel> {
-        return MarketPlaceHomeViewModel::class.java
+        startActivity(intent)
     }
 
     private fun initializeRecycler() {
@@ -666,6 +681,17 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             all_recommended_addons.visibility = View.VISIBLE
             updateRecycler(it)
             updateAddonCategoryRecycler(it)
+            if(screenType=="deeplinkRedirection"){
+                if (progressDialog.isShowing) {
+                    progressDialog.hide()
+                }
+                for(singleItem in it){
+                    if(singleItem.feature_code.equals(widgetFeatureCode)){
+                        onAddonsClicked(singleItem)
+                        break
+                    }
+                }
+            }
             if(buyAddonWithIDAndGoToCart != null) {
                 for (singleitem in it) {
                     if (singleitem.feature_code.equals(buyAddonWithIDAndGoToCart)) {
@@ -2280,7 +2306,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     private fun initializePackageViewPager() {
         package_viewpager.adapter = packageViewPagerAdapter
         package_indicator.setViewPager2(package_viewpager)
-
+        //clear previous design
         package_viewpager.setPageTransformer(SimplePageTransformer())
 
         val itemDecoration = HorizontalMarginItemDecoration(
@@ -2288,6 +2314,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             R.dimen.viewpager_current_item_horizontal_margin,
             R.dimen.viewpager_current_item_horizontal_margin
         )
+        //clear previous decoration
+        package_viewpager.removeItemDecoration(itemDecoration)
         package_viewpager.addItemDecoration(itemDecoration)
 
     }

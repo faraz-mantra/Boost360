@@ -12,6 +12,7 @@
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linearLayoutCompat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="200dp"
@@ -197,6 +198,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/packsv3_bg"
                         app:layout_constraintBottom_toBottomOf="parent">
+
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/benefit_container_item"

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
@@ -33,7 +34,6 @@
       android:background="?android:attr/selectableItemBackground"
       android:clickable="true"
       android:focusable="true"
-
       android:gravity="center_vertical"
       android:orientation="horizontal"
       android:padding="@dimen/size_14">
@@ -51,15 +51,11 @@
           app:srcCompat="@drawable/circle_bakground" />
 
         <com.framework.views.customViews.CustomImageView
-          android:layout_width="15dp"
-          android:layout_height="15dp"
+          android:layout_width="@dimen/_10sdp"
+          android:layout_height="@dimen/_10sdp"
           android:layout_gravity="center"
           app:srcCompat="@drawable/featured_gallery" />
       </FrameLayout>
-      <!--      <androidx.appcompat.widget.AppCompatImageView-->
-      <!--        android:layout_width="@dimen/size_24"-->
-      <!--        android:layout_height="@dimen/size_24"-->
-      <!--        app:srcCompat="@drawable/ic_gallery_round" />-->
 
       <com.framework.views.customViews.CustomTextView
         android:layout_width="wrap_content"
@@ -67,6 +63,50 @@
         android:layout_marginStart="@dimen/size_16"
         android:includeFontPadding="false"
         android:text="@string/gallery"
+        android:textColor="@color/primary_text"
+        app:fontFamily="@font/bold"
+        app:textType="HEADING_6" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/gallery_gif"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="?android:attr/selectableItemBackground"
+      android:clickable="true"
+      android:focusable="true"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:padding="@dimen/size_14"
+      android:visibility="gone"
+      tools:visibility="visible">
+
+      <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical">
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/pop_gif"
+          android:layout_width="@dimen/size_32"
+          android:layout_height="@dimen/size_32"
+          android:tint="@color/colorPrimary"
+          app:srcCompat="@drawable/circle_bakground" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="@dimen/_12sdp"
+          android:layout_height="@dimen/_12sdp"
+          android:layout_gravity="center"
+          app:srcCompat="@drawable/ic_gif_image" />
+      </FrameLayout>
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_16"
+        android:includeFontPadding="false"
+        android:text="@string/gif_image"
         android:textColor="@color/primary_text"
         app:fontFamily="@font/bold"
         app:textType="HEADING_6" />
@@ -96,15 +136,11 @@
           app:srcCompat="@drawable/circle_bakground" />
 
         <com.framework.views.customViews.CustomImageView
-          android:layout_width="15dp"
-          android:layout_height="15dp"
+          android:layout_width="@dimen/_12sdp"
+          android:layout_height="@dimen/_12sdp"
           android:layout_gravity="center"
           app:srcCompat="@drawable/ic_camera_lens" />
       </FrameLayout>
-      <!--      <androidx.appcompat.widget.AppCompatImageView-->
-      <!--        android:layout_width="@dimen/size_24"-->
-      <!--        android:layout_height="@dimen/size_24"-->
-      <!--        app:srcCompat="@drawable/ic_photo_camera" />-->
 
       <com.framework.views.customViews.CustomTextView
         android:layout_width="wrap_content"
@@ -127,7 +163,9 @@
       android:focusable="true"
       android:gravity="center_vertical"
       android:orientation="horizontal"
-      android:padding="@dimen/size_14">
+      android:padding="@dimen/size_14"
+      android:visibility="gone"
+      tools:visibility="visible">
 
       <FrameLayout
         android:layout_width="wrap_content"
@@ -141,16 +179,12 @@
           app:srcCompat="@drawable/circle_bakground" />
 
         <com.framework.views.customViews.CustomImageView
-          android:layout_width="15dp"
-          android:layout_height="15dp"
+          android:layout_width="@dimen/_12sdp"
+          android:layout_height="@dimen/_12sdp"
           android:layout_gravity="center"
           android:tint="@color/white"
           app:srcCompat="@drawable/ic_attachment" />
       </FrameLayout>
-      <!--      <androidx.appcompat.widget.AppCompatImageView-->
-      <!--        android:layout_width="@dimen/size_24"-->
-      <!--        android:layout_height="@dimen/size_24"-->
-      <!--        app:srcCompat="@drawable/ic_pdf" />-->
 
       <com.framework.views.customViews.CustomTextView
         android:layout_width="wrap_content"
@@ -187,15 +221,11 @@
           app:srcCompat="@drawable/circle_bakground" />
 
         <com.framework.views.customViews.CustomImageView
-          android:layout_width="15dp"
-          android:layout_height="15dp"
+          android:layout_width="@dimen/_12sdp"
+          android:layout_height="@dimen/_12sdp"
           android:layout_gravity="center"
           app:srcCompat="@drawable/ic_round_close_white" />
       </FrameLayout>
-      <!--      <androidx.appcompat.widget.AppCompatImageView-->
-      <!--        android:layout_width="@dimen/size_24"-->
-      <!--        android:layout_height="@dimen/size_24"-->
-      <!--        app:srcCompat="@drawable/ic_close_round" />-->
 
       <com.framework.views.customViews.CustomTextView
         android:layout_width="wrap_content"
