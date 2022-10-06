@@ -57,6 +57,7 @@ import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 import com.boost.marketplace.ui.details.staff.StaffManagementBottomSheet
 import com.boost.marketplace.ui.feature_details_popup.FeatureDetailsPopup
+import com.boost.marketplace.ui.pack_details.PackDetailsActivity
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
@@ -1658,7 +1659,7 @@ class FeatureDetailsActivity :
 
     override fun onPackageClicked(item: Bundles?) {
 
-        val event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()
+        /*val event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()
         item!!.name?.let { it1 -> event_attributes.put("Package Name", it1) }
         item!!.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
 
@@ -1672,7 +1673,38 @@ class FeatureDetailsActivity :
         args.putString("bundleData", Gson().toJson(item))
         args.putString("cartList", Gson().toJson(cart_list))
         packagePopup.arguments = args
-        packagePopup.show(supportFragmentManager, "PACKAGE_POPUP")
+        packagePopup.show(supportFragmentManager, "PACKAGE_POPUP")*/
+
+        val intent = Intent(this, PackDetailsActivity::class.java)
+        intent.putExtra("bundleData", Gson().toJson(item))
+        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+
+        intent.putExtra("fpid", fpid)
+        intent.putExtra("expCode", experienceCode)
+        intent.putExtra("isDeepLink", isDeepLink)
+        intent.putExtra("deepLinkViewType", deepLinkViewType)
+        intent.putExtra("deepLinkDay", deepLinkDay)
+        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+        intent.putExtra(
+            "accountType",
+            accountType
+        )
+        intent.putStringArrayListExtra(
+            "userPurchsedWidgets",
+            userPurchsedWidgets
+        )
+        if (email != null) {
+            intent.putExtra("email", email)
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com")
+        }
+        if (mobileNo != null) {
+            intent.putExtra("mobileNo", mobileNo)
+        } else {
+            intent.putExtra("mobileNo", "9160004303")
+        }
+        intent.putExtra("profileUrl", profileUrl)
+        startActivity(intent)
     }
 
     override fun itemAddedToCart(status: Boolean) {

@@ -1084,9 +1084,9 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         }
 
         addToCart.setOnClickListener{
-                    prefs.storeCartOrderInfo(null)
+            prefs.storeCartOrderInfo(null)
 
-                    binding?.needMorePackageImg?.let { it1 -> makeFlyAnimation(it1) }
+            binding?.needMorePackageImg?.let { it1 -> makeFlyAnimation(it1) }
 
             val temp = Gson().fromJson<List<IncludedFeature>>(
                 bundlesModel.included_features,
@@ -1118,6 +1118,42 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 ),
                 null, steps, null, faq, benefits, bundlesModel.desc ?: ""
             )
+
+            val dialogCard = FeatureDetailsPopup(this)
+            val args = Bundle()
+            args.putString("expCode", experienceCode)
+            args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+            args.putString("bundleData", Gson().toJson(bundle))
+            args.putString("fpid", fpid)
+            args.putString("expCode", experienceCode)
+            args.putBoolean("isDeepLink", isDeepLink)
+            args.putString("deepLinkViewType", deepLinkViewType)
+            args.putInt("deepLinkDay", deepLinkDay)
+            args.putBoolean("isOpenCardFragment", isOpenCardFragment)
+            args.putString(
+                "accountType",
+                accountType
+            )
+            args.putStringArrayList(
+                "userPurchsedWidgets",
+                userPurchsedWidgets
+            )
+            if (email != null) {
+                args.putString("email", email)
+            } else {
+                args.putString("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                args.putString("mobileNo", mobileNo)
+            } else {
+                args.putString("mobileNo", "9160004303")
+            }
+            args.putString("profileUrl", profileUrl)
+            dialogCard.arguments = args
+            this.supportFragmentManager.let { dialogCard.show(it, com.boost.cart.ui.popup.FeatureDetailsPopup::class.java.name) }
+
+        /*
+
             val itemIds = arrayListOf<String>()
             for (i in bundle.included_features) {
                 itemIds.add(i.feature_code)
@@ -1266,6 +1302,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                     )
                     add_item_to_cart.setTextColor(Color.parseColor("#bbbbbb"))
                     add_item_to_cart.text = getString(com.boost.cart.R.string.added_to_cart)
+*/
+
 
                 }
 

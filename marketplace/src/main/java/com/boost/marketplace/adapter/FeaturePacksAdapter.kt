@@ -13,9 +13,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.utils.Utils
 import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PrimaryImage
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.marketplace.R
@@ -72,7 +70,37 @@ class FeaturePacksAdapter(
     holder.viewPacks.setText(temp)
     holder.viewPacks.setOnClickListener {
 
-      val item: Bundles = Bundles(
+      val item: Bundles =
+        Bundles(
+          bundleList.get(position).bundle_id,
+          Gson().fromJson(
+            bundleList.get(position).included_features!!,
+            object : TypeToken<List<IncludedFeature>>() {}.type
+          ),
+          bundleList.get(position).min_purchase_months,
+          bundleList.get(position).name,
+          bundleList.get(position).overall_discount_percent,
+          PrimaryImage(bundleList.get(position).primary_image),
+          bundleList.get(position).target_business_usecase,
+          Gson().fromJson<List<String>>(
+            bundleList.get(position).exclusive_to_categories,
+            object : TypeToken<List<String>>() {}.type
+          ),
+          null, Gson().fromJson<List<HowToActivate>>(
+            bundleList.get(position).how_to_activate,
+            object : TypeToken<List<HowToActivate>>() {}.type
+          ), Gson().fromJson<List<Testimonial>>(
+            bundleList.get(position).testimonials,
+            object : TypeToken<List<Testimonial>>() {}.type
+          ), Gson().fromJson<List<FrequentlyAskedQuestion>>(
+            bundleList.get(position).frequently_asked_questions,
+            object : TypeToken<List<FrequentlyAskedQuestion>>() {}.type
+          ),Gson().fromJson<List<String>>(
+            bundleList.get(position).benefits,
+            object : TypeToken<List<String>>() {}.type
+          ),bundleList.get(position).desc
+        )
+        /*Bundles(
         bundleList.get(position).bundle_id,
         Gson().fromJson<List<IncludedFeature>>(
           bundleList.get(position).included_features!!,
@@ -90,7 +118,7 @@ class FeaturePacksAdapter(
         arrayListOf(),
         null,null,null, null,
         bundleList.get(position).desc
-      )
+      )*/
       listener.onPackageClicked(item)
     }
   }

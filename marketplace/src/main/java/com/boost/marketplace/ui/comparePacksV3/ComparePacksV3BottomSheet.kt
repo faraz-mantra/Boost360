@@ -11,15 +11,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.BenifitsPageTransformer
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.dbcenterapi.utils.WebEngageController
 import com.boost.marketplace.Adapters.PacksV3BenefitsViewPagerAdapter
 import com.boost.marketplace.R
 import com.boost.marketplace.databinding.Comparepacksv3PopupBinding
+import com.boost.marketplace.interfaces.MarketPlacePopupListener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
+import com.boost.marketplace.ui.feature_details_popup.FeatureDetailsPopup
 import com.boost.marketplace.ui.popup.removeItems.RemoveFeatureBottomSheet
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
@@ -37,7 +40,8 @@ import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity) :
-    BaseBottomSheetDialog<Comparepacksv3PopupBinding, ComparePacksViewModel>() {
+    BaseBottomSheetDialog<Comparepacksv3PopupBinding, ComparePacksViewModel>(),
+    MarketPlacePopupListener {
 
     lateinit var bundleData: Bundles
     var experienceCode: String? = null
@@ -147,6 +151,99 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity) :
 
         binding?.buyPack?.setOnClickListener {
             if (bundleData != null) {
+                prefs.storeCartOrderInfo(null)
+
+//                binding?.needMorePackageImg?.let { it1 -> makeFlyAnimation(it1) }
+
+                val bundlesModel = BundlesModel(
+                    bundleData._kid,
+                    bundleData.name,
+                    if (bundleData.min_purchase_months != null && bundleData.min_purchase_months!! > 1) bundleData.min_purchase_months!! else 1,
+                    bundleData.overall_discount_percent,
+                    if (bundleData.primary_image != null) bundleData.primary_image!!.url else null,
+                    Gson().toJson(bundleData.included_features),
+                    bundleData.target_business_usecase,
+                    Gson().toJson(bundleData.exclusive_to_categories),
+                    if (bundleData.frequently_asked_questions != null && bundleData.frequently_asked_questions!!.isNotEmpty()) Gson().toJson(
+                        bundleData.frequently_asked_questions
+                    ) else null,
+                    if (bundleData.how_to_activate != null && bundleData.how_to_activate!!.isNotEmpty()) Gson().toJson(
+                        bundleData.how_to_activate
+                    ) else null,
+                    if (bundleData.testimonials != null && bundleData.testimonials!!.isNotEmpty()) Gson().toJson(
+                        bundleData.testimonials
+                    ) else null,
+                    if (bundleData.benefits != null && bundleData.benefits!!.isNotEmpty()) Gson().toJson(
+                        bundleData.benefits
+                    ) else null,
+                    bundleData.desc,
+                )
+
+                val temp = Gson().fromJson<List<IncludedFeature>>(
+                    bundlesModel.included_features,
+                    object : TypeToken<List<IncludedFeature>>() {}.type
+                )
+                val faq = Gson().fromJson<List<FrequentlyAskedQuestion>>(
+                    bundlesModel.frequently_asked_questions,
+                    object : TypeToken<List<FrequentlyAskedQuestion>>() {}.type
+                )
+                val steps = Gson().fromJson<List<HowToActivate>>(
+                    bundlesModel.how_to_activate,
+                    object : TypeToken<List<HowToActivate>>() {}.type
+                )
+                val benefits = if(bundleData.benefits != null) Gson().fromJson<List<String>>(
+                    bundlesModel.benefits!!,
+                    object : TypeToken<List<String>>() {}.type
+                ) else arrayListOf()
+                val bundle = Bundles(
+                    bundlesModel.bundle_id,
+                    temp,
+                    bundlesModel.min_purchase_months,
+                    bundlesModel.name,
+                    bundlesModel.overall_discount_percent,
+                    PrimaryImage(bundlesModel.primary_image),
+                    bundlesModel.target_business_usecase,
+                    Gson().fromJson<List<String>>(
+                        bundlesModel.exclusive_to_categories,
+                        object : TypeToken<List<String>>() {}.type
+                    ),
+                    null, steps, null, faq, benefits, bundlesModel.desc ?: ""
+                )
+
+                val dialogCard = FeatureDetailsPopup(this)
+                val args = Bundle()
+                args.putString("expCode", experienceCode)
+                args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+                args.putString("bundleData", Gson().toJson(bundle))
+                args.putString("fpid", fpid)
+                args.putString("expCode", experienceCode)
+                args.putBoolean("isDeepLink", isDeepLink)
+                args.putString("deepLinkViewType", deepLinkViewType)
+                args.putInt("deepLinkDay", deepLinkDay)
+                args.putBoolean("isOpenCardFragment", isOpenCardFragment)
+                args.putString(
+                    "accountType",
+                    accountType
+                )
+                args.putStringArrayList(
+                    "userPurchsedWidgets",
+                    userPurchsedWidgets
+                )
+                if (email != null) {
+                    args.putString("email", email)
+                } else {
+                    args.putString("email", "ria@nowfloats.com")
+                }
+                if (mobileNo != null) {
+                    args.putString("mobileNo", mobileNo)
+                } else {
+                    args.putString("mobileNo", "9160004303")
+                }
+                args.putString("profileUrl", profileUrl)
+                dialogCard.arguments = args
+                requireActivity().supportFragmentManager.let { dialogCard.show(it, com.boost.cart.ui.popup.FeatureDetailsPopup::class.java.name) }
+
+            /*
                 prefs.storeAddedPackageDesc(bundleData.desc ?: "")
 
                 val itemIds = arrayListOf<String>()
@@ -257,7 +354,7 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity) :
                             }
 
                         )
-                )
+                )*/
             }
         }
     }
@@ -429,4 +526,7 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity) :
 
     }
 
+    override fun featureDetailsPopup(domain: String) {
+        prefs.storeSelectedDomainName(domain)
+    }
 }
