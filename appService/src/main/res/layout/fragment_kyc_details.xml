@@ -277,14 +277,14 @@
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tv_account_holder_name"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginStart="@dimen/size_1"
-              android:layout_marginTop="@dimen/size_14"
-              android:text="@string/account_holder_s_name"
-              android:textColor="@color/greyish_brown"
-              app:fontFamily="@font/regular"
-              app:textType="BODY_1" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_1"
+                android:layout_marginTop="@dimen/size_14"
+                android:text="@string/account_holder_s_name"
+                android:textColor="@color/greyish_brown"
+                app:fontFamily="@font/regular"
+                app:textType="BODY_1" />
 
             <com.framework.views.customViews.CustomEditText
               android:id="@+id/edt_bank_account_holder_name"

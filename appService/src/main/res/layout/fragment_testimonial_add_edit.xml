@@ -94,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=" *"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/black_4a4a4a"
             app:textType="HEADING_6" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -161,7 +161,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=" *"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/black_4a4a4a"
             app:textType="HEADING_6" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -193,8 +193,8 @@
           <com.framework.views.customViews.CustomTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/space_start"
-            android:textColor="@color/colorAccent"
+            android:text=" *"
+            android:textColor="@color/black_4a4a4a"
             app:textType="HEADING_6" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 

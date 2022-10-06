@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_250sdp"
+    android:orientation="vertical"
+    app:cardCornerRadius="@dimen/_16sdp">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/appCompatImageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="33dp"
+            android:layout_marginEnd="29dp"
+            android:src="@drawable/ic_cart_applied_coupon_dialog_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/cart_coupon_success_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="28dp"
+            android:src="@drawable/ic_cart_applied_coupon_dialog_success"
+            app:layout_constraintBottom_toTopOf="@+id/cart_applied_coupon_amt_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/cart_applied_coupon_amt_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cart_coupon_success_iv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="21dp"
+            android:fontFamily="@font/semi_bold"
+            android:gravity="center"
+            android:text="₹98 Saved!"
+            android:textColor="@color/offer_border"
+            android:textFontWeight="600"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/cart_applied_coupon_name_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/cart_applied_coupon_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cart_applied_coupon_amt_tv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="36dp"
+            android:fontFamily="@font/regular"
+            android:gravity="center"
+            android:text="FESTIVE coupon code applied."
+            android:textColor="@color/copy_coupon_text_color"
+            android:textFontWeight="400"
+            android:textSize="@dimen/txt_13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
+
+
+

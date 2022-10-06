@@ -162,7 +162,6 @@ public class Business_Enquiries_Fragment extends Fragment implements AppOnZeroCa
         binding.childContainer.setVisibility(View.GONE);
     }
 
-
     private void emptyView() {
         binding.mainlayout.setVisibility(View.GONE);
         binding.childContainer.setVisibility(View.VISIBLE);

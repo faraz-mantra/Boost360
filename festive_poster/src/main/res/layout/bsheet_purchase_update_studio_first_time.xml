@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/riv_close_bottomSheet"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/size_15"
+            android:src="@drawable/ic_help_bsheet_close" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:minHeight="@dimen/size_150"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_24"
+            android:background="@drawable/shape_fposter_white_top_rounded_rect"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/progressBar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:id="@+id/data_layout"
+                android:background="@color/color_f2f2f2"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/iv_promo_mic"
+                    android:layout_width="@dimen/size_111"
+                    android:layout_height="@dimen/size_94"
+                    android:src="@drawable/promo_plan_mic"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="@dimen/size_32"
+                    android:layout_marginTop="@dimen/size_32"
+                    android:layout_marginBottom="@dimen/size_15"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_8"
+                    android:text="@string/promote_using_branded_update_templates"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="@dimen/text_23"
+                    app:fontFamily="@font/bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_promo_mic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/iv_promo_mic"
+                    app:layout_constraintTop_toTopOf="@+id/iv_promo_mic" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/customTextView3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/size_24"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:gravity="center"
+                    android:text="@string/get_access_to_1000_fresh_tailor_made_customisable_posts_to_instantly_promote_your_business_with_your_customers_on_your_business_website_and_social_media"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="@dimen/text_12"
+                    app:fontFamily="@font/regular_medium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_promo_mic" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_200"
+                    android:layout_marginTop="@dimen/size_24"
+                    android:background="@drawable/rounded_rect_white_18"
+                    app:layout_constraintTop_toBottomOf="@+id/customTextView3">
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.framework.views.customViews.CustomMaterialButton
+                    android:id="@+id/btn_get_pack"
+                    style="@style/CustomRoundedYellowButton"
+                    android:layout_marginHorizontal="@dimen/size_22"
+                    android:layout_marginTop="@dimen/size_12"
+                    tools:text="@string/get_annual_pack_for_placeholder"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                     />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_12"
+                    android:layout_marginBottom="@dimen/size_25"
+                    android:gravity="center"
+                    android:text="@string/price_includes_all_applicable_taxes"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/grey_828282"
+                    android:textSize="@dimen/text_10"
+                    app:fontFamily="@font/regular_medium"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/btn_get_pack"
+                    app:layout_constraintStart_toStartOf="@+id/btn_get_pack"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_get_pack" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
+

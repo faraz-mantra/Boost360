@@ -40,7 +40,8 @@
       android:theme="@style/AppTheme_staff_home"
       android:windowSoftInputMode="adjustPan" />
 
-    <activity android:name=".offers.FragmentOffersContainerActivity" />
+     <activity android:name=".offers.FragmentOffersContainerActivity" />
+    <activity android:name=".ui.updatesBusiness.UpdateCropImageActivity" />
 
     <activity
       android:name=".ui.testimonial.TestimonialContainerActivity"

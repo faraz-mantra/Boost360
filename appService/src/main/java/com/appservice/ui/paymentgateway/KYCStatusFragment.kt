@@ -65,7 +65,7 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
   }
 
   private fun setupUIColor() {
-    changeColorOfSubstring(R.string.name_as_mentioned_on_pan_card, R.color.colorAccent, "*", binding?.headingPanName!!)
+    changeColorOfSubstring(R.string.name_as_mentioned_on_pan_card, R.color.warm_grey, "*", binding?.headingPanName!!)
   }
 
   private fun getKycDetails() {

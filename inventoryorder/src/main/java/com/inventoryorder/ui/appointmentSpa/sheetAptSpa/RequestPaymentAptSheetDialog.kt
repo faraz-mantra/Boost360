@@ -16,6 +16,8 @@ import java.text.DecimalFormat
 
 class RequestPaymentAptSheetDialog : BaseBottomSheetDialog<BottomSheetRequestPaymentAptBinding, BaseViewModel>() {
 
+  private var number: String? = null
+  private var email: String? = null
   private var orderItem: OrderItem? = null
   var onClicked: () -> Unit = {}
 
@@ -45,8 +47,14 @@ class RequestPaymentAptSheetDialog : BaseBottomSheetDialog<BottomSheetRequestPay
         "Collect $currency $ss for appointment ID #${orderItem?.ReferenceNumber ?: ""}"
     }
 
-    val number = orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber
-    val email = orderItem?.BuyerDetails?.ContactDetails?.EmailId
+    number = orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber
+    email = orderItem?.BuyerDetails?.ContactDetails?.EmailId
+
+    if (number.isNullOrEmpty().not() && email.isNullOrEmpty().not()){
+      binding?.checkboxSms?.isClickable = true
+      binding?.checkboxEmail?.isClickable = true
+    }
+
     if (number.isNullOrEmpty().not()) {
       binding?.checkboxSms?.visible()
       binding?.checkboxSms?.text = "via SMS ($number)"
@@ -60,9 +68,15 @@ class RequestPaymentAptSheetDialog : BaseBottomSheetDialog<BottomSheetRequestPay
 
   override fun onClick(v: View) {
     super.onClick(v)
-    dismiss()
     when (v) {
-      binding?.buttonDone -> onClicked()
+      binding?.buttonDone -> {
+        if (binding?.checkboxSms?.isChecked == true || binding?.checkboxEmail?.isChecked == true) {
+          dismiss()
+          onClicked()
+        }else{
+          showShortToast(getString(R.string.please_select_at_least_one_option))
+        }
+      }
     }
   }
 

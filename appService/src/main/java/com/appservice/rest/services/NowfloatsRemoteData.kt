@@ -13,6 +13,7 @@ import com.appservice.model.testimonial.AddUpdateTestimonialRequest
 import com.appservice.model.testimonial.ListTestimonialRequest
 import com.appservice.model.testimonial.TestimonialAddResponse
 import com.appservice.model.testimonial.response.TestimonialListResponse
+import com.appservice.model.updateBusiness.pastupdates.GetCategoryResponse
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -130,4 +131,7 @@ interface NowfloatsRemoteData {
 
   @POST(EndPoints.DELETE_IMAGE_TESTIMONIAL)
   fun deleteTestimonialImage(@Body request: MutableMap<String, String>?): Observable<Response<Any>>
+
+  @GET(EndPoints.GET_UPDATES_CATEGORIES)
+  fun getUpdatesCategories():Observable<Response<GetCategoryResponse>>
 }

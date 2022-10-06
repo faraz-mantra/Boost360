@@ -1,7 +1,6 @@
 package com.dashboard.controller.ui.ownerinfo
 
 import android.os.Bundle
-import com.appservice.utils.changeColorOfSubstring
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.databinding.FragmentAddDoctorBinding

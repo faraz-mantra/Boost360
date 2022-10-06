@@ -26,6 +26,7 @@
             android:id="@+id/et_desc"
             android:layout_width="match_parent"
             android:layout_marginHorizontal="@dimen/size_24"
+
             android:layout_height="@dimen/size_80"
             android:layout_marginTop="8dp"
             android:background="@drawable/shape_fposter_grey_stroke_rect"

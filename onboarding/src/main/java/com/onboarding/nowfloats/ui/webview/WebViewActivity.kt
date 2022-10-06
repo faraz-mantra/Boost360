@@ -21,6 +21,12 @@ import com.onboarding.nowfloats.databinding.ActivityWebViewNBinding
 import com.onboarding.nowfloats.utils.getWebViewUrl
 import im.delight.android.webview.AdvancedWebView
 
+
+import android.webkit.WebView
+
+
+
+
 class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(),AdvancedWebView.Listener {
 
   override fun getLayout(): Int {
@@ -64,6 +70,8 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>(
       }
     }
     binding?.webview?.webViewClient = object : WebViewClient() {
+
+
       override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
         Log.i(TAG, "shouldOverrideUrlLoading: $url")
         handleOrderSuccess(url)

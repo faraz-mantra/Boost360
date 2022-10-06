@@ -65,8 +65,8 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
   }
 
   private fun setupUIColor() {
-    changeColorOfSubstring(R.string.owner_s_name, R.color.colorAccent, "*", binding?.tvOwnerNameVw!!)
-    changeColorOfSubstring(R.string.owner_s_designation, R.color.colorAccent, "*", binding?.tvOwnerDesignationVw!!)
+    changeColorOfSubstring(R.string.owner_s_name, R.color.black_4a4a4a, "*", binding?.tvOwnerNameVw!!)
+    changeColorOfSubstring(R.string.owner_s_designation, R.color.black_4a4a4a, "*", binding?.tvOwnerDesignationVw!!)
   }
 
   override fun onClick(v: View) {

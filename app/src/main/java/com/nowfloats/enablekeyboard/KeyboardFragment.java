@@ -39,7 +39,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.boost.upgrades.UpgradeActivity;
+import com.boost.marketplace.ui.home.MarketPlaceActivity;
 import com.framework.views.zero.old.AppFragmentZeroCase;
 import com.framework.views.zero.old.AppOnZeroCaseClicked;
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
@@ -410,7 +410,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     progressDialog.setMessage(status);
     progressDialog.setCancelable(false);
     progressDialog.show();
-    Intent intent = new Intent(getActivity(), UpgradeActivity.class);
+    Intent intent = new Intent(getActivity(), MarketPlaceActivity.class);
     intent.putExtra("expCode", session.getFP_AppExperienceCode());
     intent.putExtra("fpName", session.getFPName());
     intent.putExtra("fpid", session.getFPID());

@@ -82,7 +82,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
     staffProfile.isAvailable = staffDetails?.isAvailable
     staffProfile.age = staffDetails?.age
     staffProfile.gender = staffDetails?.gender
-    staffProfile.experience = staffDetails?.experience
+    staffProfile.experience = staffDetails?.experience?.toInt()
     staffProfile.staffId = staffDetails?.id
     staffProfile.education = staffDetails?.education
     staffProfile.contactNumber = staffDetails?.contactNumber
@@ -104,7 +104,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
         binding?.ctvStaffGenderAge?.text = staffDetails?.getGenderAndAge()
         binding?.ctvAboutHeading?.text = "About ${staffDetails?.name}"
         binding?.ctvAboutStaff?.text = staffDetails?.description
-        binding?.civStaffProfileImg?.let { activity?.glideLoad(it, staffDetails?.image ?: "", R.drawable.placeholder_image_n) }
+        binding?.civStaffProfileImg?.let { activity?.glideLoad(it, staffDetails?.getUrlImage(), R.drawable.placeholder_image_n) }
         binding?.ctvSpecialization?.text = staffDetails?.specialisations?.firstOrNull()?.value ?: ""
         if (staffDetails?.isAvailable == false) showInactiveProfile()
         fetchServices()
@@ -132,7 +132,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
     binding?.ctvMembership?.text = staffDetails?.memberships
     binding?.ctvRegistration?.text = staffDetails?.registration
     binding?.ctvAppointmentType?.text = AppointmentType.typeMap[staffDetails?.appointmentType]
-    binding?.civDoctorsSignature?.let { activity?.glideLoad(it, staffDetails?.signature.toString(), R.drawable.placeholder_image_n) }
+    binding?.civDoctorsSignature?.let { activity?.glideLoad(it, staffDetails?.getUrlSignature(), R.drawable.placeholder_image_n) }
 
   }
 

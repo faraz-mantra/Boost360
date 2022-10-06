@@ -32,7 +32,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
-import com.boost.upgrades.UpgradeActivity;
+import com.boost.marketplace.ui.home.MarketPlaceActivity;
 import com.bumptech.glide.Glide;
 import com.framework.analytics.SentryController;
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem;
@@ -750,7 +750,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     progressDialog.setMessage(status);
     progressDialog.setCancelable(false);
     progressDialog.show();
-    Intent intent = new Intent(activity, UpgradeActivity.class);
+    Intent intent = new Intent(activity, MarketPlaceActivity.class);
     intent.putExtra("expCode", session.getFP_AppExperienceCode());
     intent.putExtra("fpName", session.getFPName());
     intent.putExtra("fpid", session.getFPID());

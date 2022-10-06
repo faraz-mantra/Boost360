@@ -92,21 +92,17 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     isEdit = (staffDetails != null && staffDetails?.id.isNullOrEmpty().not())
     if (isEdit == true) {
       updatePreviousData()
-      (requireActivity() as StaffFragmentContainerActivity).getToolbar()?.getToolbarTitleTextView()?.gravity = Gravity.START
+      (baseActivity as? StaffFragmentContainerActivity)?.getToolbar()?.getToolbarTitleTextView()?.gravity = Gravity.START
     }
-//    else {
-//      (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor = getColor(R.color.color_primary_dark)
-//      (requireActivity() as StaffFragmentContainerActivity).getToolbar()?.setBackgroundColor(resources.getColor(R.color.color_primary))
-//    }
     if (staffDetails == null) staffDetails = StaffDetailsResult()
   }
 
   private fun setupUIColor() {
-    changeColorOfSubstring(R.string.age, R.color.colorAccent, "*", binding?.tvAge!!)
-    changeColorOfSubstring(R.string.staff_member_name, R.color.colorAccent, "*", binding?.tvStaffMemName!!)
-    changeColorOfSubstring(R.string.select_gender, R.color.colorAccent, "*", binding?.tvSelectGender!!)
-    changeColorOfSubstring(R.string.specialization, R.color.colorAccent, "*", binding?.tvSpecialization!!)
-    changeColorOfSubstring(R.string.years_of_experience, R.color.colorAccent, "*", binding?.tvYearsOfExp!!)
+    changeColorOfSubstring(R.string.age, R.color.black_4f4f4f, "*", binding?.tvAge!!)
+    changeColorOfSubstring(R.string.staff_member_name, R.color.black_4f4f4f, "*", binding?.tvStaffMemName!!)
+    changeColorOfSubstring(R.string.select_gender, R.color.black_4f4f4f, "*", binding?.tvSelectGender!!)
+    changeColorOfSubstring(R.string.specialization, R.color.black_4f4f4f, "*", binding?.tvSpecialization!!)
+    changeColorOfSubstring(R.string.years_of_experience, R.color.black_4f4f4f, "*", binding?.tvYearsOfExp!!)
   }
 
   private fun updatePreviousData() {
@@ -148,7 +144,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     experienceSheet.arguments = Bundle().apply { putString(EXPERIENCE_VALUE, yearOfExperience) }
     experienceSheet.onClicked = {
       yearOfExperience = it?.toString() ?: ""
-      staffDetails?.experience = it
+      staffDetails?.experience = it?.toDouble()?:0.0
       staffProfile?.experience = it
       setExperience()
     }
@@ -218,7 +214,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     this.specialization = binding?.etvSpecialization?.text.toString()
     this.serviceListId = ArrayList()
     this.specializationList = ArrayList()
-    this.yearOfExperience = staffDetails?.experience.toString()
+    this.yearOfExperience = staffDetails?.experience?.toInt()?.toString()
     this.staffName = binding?.etvName?.text.toString()
     this.staffAge = binding?.cetAge?.text.toString().toIntOrNull()
     this.staffDescription = binding?.etvStaffDescription?.text.toString()

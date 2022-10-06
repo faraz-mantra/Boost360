@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.boost.marketplace">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application>
+        <activity
+            android:name=".ui.pack_details.PackDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.details.call_track.CallTrackingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.comparePacksV3.ComparePacksV3Activity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.details.domain.CustomDomainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.coupons.OfferCouponsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.details.FeatureDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.browse.BrowseFeaturesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.MarketPlaceActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Pre.MarketPlace"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.marketplace_Offers.MarketPlaceOffersActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.My_Plan.MyCurrentPlanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.Compare_Plans.ComparePacksActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.Invoice.InvoiceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.History_Orders.HistoryOrdersActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.webview.WebViewActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.browse.SearchActivity" />
+        <activity android:name=".ui.details.emails.EmailActivity" />
+    </application>
+
+</manifest>

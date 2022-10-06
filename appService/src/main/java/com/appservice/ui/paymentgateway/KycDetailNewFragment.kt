@@ -33,7 +33,7 @@ class KycDetailNewFragment : AppBaseFragment<FragmentKycDetailNewBinding, BaseVi
   }
 
   private fun setupUIColor() {
-    changeColorOfSubstring(R.string.pan_number_individual_or_company, R.color.colorAccent, "*", binding?.tvNameOnPan!!)
+    changeColorOfSubstring(R.string.pan_number_individual_or_company, R.color.warm_grey, "*", binding?.tvNameOnPan!!)
   }
 
   private fun setUi(dataKyc: DataKyc) {

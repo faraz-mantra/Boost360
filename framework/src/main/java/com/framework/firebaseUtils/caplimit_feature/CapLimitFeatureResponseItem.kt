@@ -2,6 +2,7 @@ package com.framework.firebaseUtils.caplimit_feature
 
 import com.framework.base.BaseResponse
 import com.framework.utils.*
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -51,6 +52,20 @@ data class CapLimitFeatureResponseItem(
   fun filterProperty(type: PropertiesItem.KeyType): PropertiesItem {
     return properties?.firstOrNull { it.key == type.name } ?: PropertiesItem()
   }
+
+  companion object{
+    fun getFromCache():Array<CapLimitFeatureResponseItem>?{
+      val json =  com.framework.utils.PreferencesUtils.instance.getData(
+        com.framework.utils.PreferencesKey.CAP_LIMIT_FEATURE_RESPONSE,
+        null)
+
+      return if (json!=null){
+        convertJsonToObj(json)
+      }else{
+        null
+      }
+    }
+  }
 }
 
 fun getCapData(): List<CapLimitFeatureResponseItem> {
@@ -67,3 +82,9 @@ fun List<CapLimitFeatureResponseItem>.filterFeature(type: CapLimitFeatureRespons
   val isActiveLimit = capLimitData?.featureState != null && capLimitData.featureState!! == CapLimitFeatureResponseItem.FeatureState.Activated.state
   return if (isActiveLimit) capLimitData else null
 }
+
+fun Array<CapLimitFeatureResponseItem>.saveCache(){
+  com.framework.utils.PreferencesUtils.instance.saveData(PreferencesKey.CAP_LIMIT_FEATURE_RESPONSE,
+    Gson().toJson(this))
+}
+

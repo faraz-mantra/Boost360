@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="30dp">
+
+
+
+    <LinearLayout
+        android:id="@+id/layout_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="@dimen/padding_10"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="@dimen/placeholderTextHeight"
+            android:layout_marginTop="5dp"
+            android:background="@color/background2" />
+
+        <View
+            android:layout_width="70dp"
+            android:layout_height="@dimen/placeholderTextHeight"
+            android:layout_marginTop="10dp"
+            android:background="@color/background2" />
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="@dimen/placeholderTextHeight"
+            android:layout_marginTop="10dp"
+            android:background="@color/background2" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/thumbnail"
+        android:layout_width="60dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="@dimen/padding_10"
+        android:layout_marginEnd="@dimen/activityPadding"
+        android:layout_toEndOf="@id/layout_tv"
+        android:background="@color/background2" />
+
+    <View
+        android:id="@+id/thumbnail2"
+        android:layout_width="60dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="@dimen/padding_10"
+        android:layout_marginEnd="@dimen/activityPadding"
+        android:layout_toEndOf="@id/thumbnail"
+        android:background="@color/background2" />
+
+    <View
+        android:id="@+id/thumbnail3"
+        android:layout_width="60dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="@dimen/padding_10"
+        android:layout_marginEnd="@dimen/activityPadding"
+        android:layout_toEndOf="@id/thumbnail2"
+        android:background="@color/background2" />
+
+
+    <View
+        android:id="@+id/view_et"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="@dimen/activityPadding"
+        android:layout_below="@id/thumbnail"
+        android:background="@drawable/edit_text_shimmer_bg" />
+
+
+<!--    <View-->
+<!--        android:id="@+id/thumbnail33"-->
+<!--        android:layout_width="70dp"-->
+<!--        android:layout_height="67dp"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginEnd="@dimen/activityPadding"-->
+<!--        android:layout_below="@id/view_et"-->
+<!--        android:background="@color/background2" />-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:layout_toRightOf="@id/thumbnail33"-->
+<!--        android:layout_below="@id/view_et"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <View-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="@dimen/placeholderTextHeight"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:background="@color/background2" />-->
+
+<!--        <View-->
+<!--            android:layout_width="70dp"-->
+<!--            android:layout_height="@dimen/placeholderTextHeight"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:background="@color/background2" />-->
+
+<!--        <View-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="@dimen/placeholderTextHeight"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:background="@color/background2" />-->
+<!--    </LinearLayout>-->
+
+<!--    <View-->
+<!--        android:id="@+id/thumbnail34"-->
+<!--        android:layout_width="70dp"-->
+<!--        android:layout_height="67dp"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginEnd="@dimen/activityPadding"-->
+<!--        android:layout_below="@id/thumbnail33"-->
+<!--        android:background="@color/background2" />-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:layout_toRightOf="@id/thumbnail33"-->
+<!--        android:layout_below="@id/thumbnail33"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <View-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="@dimen/placeholderTextHeight"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:background="@color/background2" />-->
+
+<!--        <View-->
+<!--            android:layout_width="70dp"-->
+<!--            android:layout_height="@dimen/placeholderTextHeight"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:background="@color/background2" />-->
+
+<!--        <View-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="@dimen/placeholderTextHeight"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:background="@color/background2" />-->
+<!--    </LinearLayout>-->
+
+
+
+
+
+
+
+
+</RelativeLayout>
+

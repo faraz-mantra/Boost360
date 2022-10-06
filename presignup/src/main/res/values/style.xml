@@ -52,7 +52,7 @@
     <item name="android:textSize">@dimen/_8ssp</item>
     <item name="android:textAllCaps">false</item>
     <item name="android:gravity">center</item>
-    <item name="android:fontFamily">"@font/open_sans"</item>
+    <item name="android:fontFamily">"@font/regular"</item>
     <item name="android:background">@drawable/un_selected_language_button_style</item>
     <!--        <item name="android:fontFamily">@font/quicksand_bold</item>-->
   </style>
@@ -63,7 +63,7 @@
     <item name="android:textSize">@dimen/_8ssp</item>
     <item name="android:textAllCaps">false</item>
     <item name="android:gravity">center</item>
-    <item name="android:fontFamily">"@font/open_sans"</item>
+    <item name="android:fontFamily">"@font/regular"</item>
     <item name="android:background">@drawable/selected_language_button_style</item>
     <!--        <item name="android:fontFamily">@font/quicksand_bold</item>-->
   </style>

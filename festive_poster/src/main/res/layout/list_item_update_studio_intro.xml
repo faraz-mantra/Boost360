@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:weightSum="1"
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            style="@style/WhiteBoldL"
+            android:textSize="30sp"
+            android:ellipsize="end"
+            android:layout_weight="0.27"
+            tools:text="One update, multiple platforms"
+            android:layout_height="0dp"/>
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.55"
+            android:layout_marginTop="@dimen/size_10"
+            android:src="@drawable/update_studio_intro1"
+             />
+
+        <com.framework.views.customViews.CustomTextView
+            style="@style/BlackRegularM"
+            android:id="@+id/tv_desc"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:textSize="@dimen/size_16"
+            android:layout_marginTop="@dimen/size_16"
+            android:ellipsize="end"
+            android:layout_weight="0.1"
+            tools:text="You can post on jhhgmultiple platforms with a single tap!"
+             />
+    </LinearLayout>
+</layout>
