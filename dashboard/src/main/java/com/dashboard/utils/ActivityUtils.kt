@@ -33,6 +33,7 @@ import com.festive.poster.ui.festivePoster.FestivePosterContainerActivity
 import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
 import com.festive.poster.ui.promoUpdates.intro.UpdateStudioIntroActivity
 import com.framework.analytics.SentryController
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureNewOnBoardingFlowEnable
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureUpdateStudioSelectedUsers
 import com.framework.pref.*
@@ -392,11 +393,17 @@ fun AppCompatActivity.startAppActivity(bundle: Bundle = Bundle(), fragmentType: 
 
 fun AppCompatActivity.startPostUpdate() {
   try {
-    WebEngageController.trackEvent(POST_UPDATE_MESSAGE_PAGE_CLICK, CLICK, TO_BE_ADDED)
-    startUpdateFragmentActivity(com.appservice.constant.FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT)
+    val session = UserSessionManager(application())
+    if (FirebaseRemoteConfigUtil.featureUpdateStudioSelectedUsers(session.fpTag)){
+      startPromotionUpdatesFromDashboard()
+    }else{
+      WebEngageController.trackEvent(POST_UPDATE_MESSAGE_PAGE_CLICK, CLICK, TO_BE_ADDED)
+      startUpdateFragmentActivity(com.appservice.constant.FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT)
 //    val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.Create_Message_Activity"))
 //    startActivity(webIntent)
 //    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    }
+
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
