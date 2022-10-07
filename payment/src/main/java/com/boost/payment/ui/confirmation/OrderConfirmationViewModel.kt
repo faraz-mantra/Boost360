@@ -87,11 +87,13 @@ class OrderConfirmationViewModel : ViewModel() {
                   {
                     Log.i("buyDomainBooking","Success >>>"+it)
                     updatesLoader.postValue("")
-                    Toasty.success(
-                      activity.applicationContext,
-                      "Successfully Booked Your Domain. It Takes 24 to 48 hours to activate",
-                      Toast.LENGTH_LONG, true
-                    ).show()
+                    if(domainOrderType == 0) {
+                      Toasty.success(
+                        activity.applicationContext,
+                        "Successfully Booked Your Domain. It Takes 24 to 48 hours to activate",
+                        Toast.LENGTH_LONG, true
+                      ).show()
+                    }
                   },{
                     Log.i("buyDomainBooking", "Failure >>>$it")
                     updatesLoader.postValue("")

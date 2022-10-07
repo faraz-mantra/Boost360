@@ -540,20 +540,27 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                    (activity as CartActivity).supportFragmentManager,
                    RENEW_POPUP_FRAGEMENT
            )*/
+
             if (bundles_in_cart && months_validity.text.toString().split(" ").get(0)
                     .toInt() < package_validity_months
             ) {
                 months_validity.setBackgroundResource(R.drawable.et_validity_error)
                 Toasty.error(requireContext(), "Validity is not valid", Toast.LENGTH_SHORT).show()
-            } else if (et_email.text.toString().isEmpty()) {
+            } else if (et_email.text.toString().isEmpty() || !Utils.isValidMail(et_email.text.toString())) {
                 et_email.setBackgroundResource(R.drawable.et_validity_error)
-                Toasty.error(requireContext(), "Email is Empty", Toast.LENGTH_SHORT).show()
+                if (et_email.text.toString().isEmpty()) {
+                    Toasty.error(requireContext(), "Email is Empty", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toasty.error(requireContext(), "InValid Email Address", Toast.LENGTH_SHORT)
+                        .show()
+                }
                 cart_billing_details_edit_layout.visibility = View.VISIBLE
                 billing_details.visibility = View.VISIBLE
                 edit.visibility = View.GONE
                 billing_details.visibility = View.GONE
                 prefs.storeCartOrderInfo(null)
             } else {
+                et_email.setBackgroundResource(R.drawable.edittext_selector1)
                 months_validity.setBackgroundResource(R.drawable.et_validity)
                 if (prefs.getCartOrderInfo() != null) {
                     proceedToPayment(prefs.getCartOrderInfo()!!)
@@ -575,6 +582,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     ).show()
                 }
             }
+
 
 //            }
 
