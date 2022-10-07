@@ -43,7 +43,6 @@ import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.interfaces.CompareBackListener
 import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.interfaces.VideosListener
-import com.boost.marketplace.ui.Compare_Plans.ComparePacksActivity
 import com.boost.marketplace.ui.History_Orders.HistoryOrdersActivity
 import com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity
 import com.boost.marketplace.ui.browse.BrowseFeaturesActivity
@@ -386,7 +385,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 progressDialog.hide()
             }
 
-            val intent = Intent(this, ComparePacksActivity::class.java)
+            val intent = Intent(this, ComparePacksV3Activity::class.java)
             intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
             startActivity(intent)
         } else if (screenType == "packageBundle") {
@@ -1677,7 +1676,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         if (actionType == RecyclerViewActionType.MARKETPLACE_PROMO_BANNER_CLICK.ordinal) {
             intent = Intent(this, MarketPlaceOffersActivity::class.java)
         } else if (actionType == RecyclerViewActionType.PACKS_CLICK.ordinal) {
-            intent = Intent(this, ComparePacksActivity::class.java)
+            intent = Intent(this, ComparePacksV3Activity::class.java)
         } else if (actionType == RecyclerViewActionType.TOP_FEATURES_CLICK.ordinal) {
             intent = Intent(this, FeatureDetailsActivity::class.java)
 
@@ -1913,7 +1912,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                     )
                                                     val intent = Intent(
                                                         this,
-                                                        ComparePacksActivity::class.java
+                                                        ComparePacksV3Activity::class.java
                                                     )
                                                     intent.putExtra(
                                                         "bundleData",
@@ -1988,7 +1987,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                 )
                                                 val intent = Intent(
                                                     this,
-                                                    ComparePacksActivity::class.java
+                                                    ComparePacksV3Activity::class.java
                                                 )
                                                 intent.putExtra(
                                                     "bundleData",
@@ -2124,7 +2123,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe({
-                                        val intent = Intent(this, ComparePacksActivity::class.java)
+                                        val intent = Intent(this, ComparePacksV3Activity::class.java)
                                         intent.putExtra("bundleData", Gson().toJson(it))
                                         intent.putStringArrayListExtra(
                                             "userPurchsedWidgets",
@@ -2203,7 +2202,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         startActivity(intent)
     }
 
-    override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
+
+    override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel, position: Int) {
         WebEngageController.trackEvent(
             VIDEO_GALLERY_CLICKED,
             CLICK,
@@ -2212,6 +2212,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         Log.i("onPlayYouTubeVideo", videoItem.youtube_link ?: "")
 
         val link = videoItem.youtube_link!!
+        val size = videosListAdapter.itemCount
 
         val dialogCard = HomeVideosBottomSheet()
         val args = Bundle()
@@ -2220,6 +2221,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         args.putString("fptag", fpTag)
         args.putString("title", videoItem.title)
         args.putString("link", link)
+        args.putInt("position",position)
+        args.putInt("size",size)
         dialogCard.arguments = args
         dialogCard.show(this.supportFragmentManager, HomeVideosBottomSheet::class.java.name)
     }
@@ -2493,7 +2496,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                             null,
                                             null, null,null,null,item.desc
                                         )
-                                        val intent = Intent(this, ComparePacksActivity::class.java)
+                                        val intent = Intent(this, ComparePacksV3Activity::class.java)
                                         intent.putExtra("bundleData", Gson().toJson(selectedBundle))
                                         intent.putStringArrayListExtra(
                                             "userPurchsedWidgets",
@@ -2578,7 +2581,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                             null,
                                             null, null,null,null,item.desc
                                         )
-                                        val intent = Intent(this, ComparePacksActivity::class.java)
+                                        val intent = Intent(this, ComparePacksV3Activity::class.java)
                                         intent.putExtra("bundleData", Gson().toJson(selectedBundle))
                                         intent.putStringArrayListExtra(
                                             "userPurchsedWidgets",

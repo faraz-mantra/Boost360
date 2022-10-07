@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+    android:id="@+id/subDiaRoot"
   android:orientation="vertical"
   android:padding="15dp">
 
@@ -21,5 +22,33 @@
     android:layout_marginTop="5dp"
     android:hint="Enter email address"
     android:inputType="textEmailAddress" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="12dp">
+
+      <TextView
+          android:id="@+id/txtCancel"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/roboto_medium"
+          android:textColor="@color/black_4a4a4a"
+          android:text="CANCEL"/>
+
+      <TextView
+          android:id="@+id/txtAdd"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/roboto_medium"
+          android:textColor="@color/colorAccentLight"
+          android:layout_marginStart="@dimen/dimen_32_dp"
+          android:layout_marginEnd="@dimen/dimen_16dp"
+          android:text="ADD"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </LinearLayout>

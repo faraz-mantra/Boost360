@@ -206,10 +206,9 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity) :
                                 originalBundlePrice = (bundleMonthlyMRP * minMonth)
 
                                 if (bundleData!!.overall_discount_percent > 0)
-                                    offeredBundlePrice = RootUtil.round(
-                                        originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent / 100),
-                                        2
-                                    )
+                                    offeredBundlePrice =
+                                        originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent / 100)
+
                                 else
                                     offeredBundlePrice = originalBundlePrice
 

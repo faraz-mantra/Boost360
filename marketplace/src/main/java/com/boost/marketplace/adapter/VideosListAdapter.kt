@@ -58,7 +58,8 @@ class VideosListAdapter(videoList: List<YoutubeVideoModel>, listen: VideosListen
     //holder.videoType.setText(list.get(position).desc)
 
     holder.itemView.setNoDoubleClickListener ({
-      listener.onPlayYouTubeVideo(list.get(position))
+      val position1: Int = holder.getAdapterPosition()
+      listener.onPlayYouTubeVideo(list.get(position),position1)
     }, 3000)
 
   }
