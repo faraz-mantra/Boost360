@@ -92,7 +92,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, ActionRequiredListener {
+class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
+    ActionRequiredListener {
 
     lateinit var root: View
 
@@ -226,7 +227,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.setStatusBarColor(getResources().getColor(R.color.common_text_color))
         }
-        cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this, this, ArrayList(), requireActivity())
+        cartPackageAdaptor =
+            CartPackageAdaptor(ArrayList(), this, this, ArrayList(), requireActivity())
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this, requireActivity())
         cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
         cartRechargeAdaptor = CartRechargeAdaptor(ArrayList(), this, requireActivity())
@@ -245,7 +247,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
         super.onResume()
         Log.e("onResume", "onResume of LoginFragment")
         viewModel.updateRenewValue("")
-        if(!prefs.getSelectedDomainName().isNullOrEmpty() && ::cartPackageAdaptor.isInitialized){
+        if (!prefs.getSelectedDomainName().isNullOrEmpty() && ::cartPackageAdaptor.isInitialized) {
             cartPackageAdaptor.selectedDomain(prefs.getSelectedDomainName()!!)
         }
 //        initMvvM()
@@ -261,6 +263,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity()).get(CartViewModel::class.java)
+        viewModel.setApplicationLifecycle(this)
         shimmer_view_banner.startShimmer()
         showProgress("Please wait...")
         Constants.COMPARE_BACK_VALUE = 1
@@ -871,9 +874,15 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
 //                ComparePackageFragment.newInstance(),
 //                Constants.COMPARE_FRAGMENT, args
 //            )
-            val intent = Intent(context, Class.forName("com.boost.marketplace.ui.comparePacksV3.ComparePacksV3Activity"))
+            val intent = Intent(
+                context,
+                Class.forName("com.boost.marketplace.ui.comparePacksV3.ComparePacksV3Activity")
+            )
             intent.putExtra("expCode", (activity as CartActivity).experienceCode)
-            intent.putStringArrayListExtra("userPurchsedWidgets", (activity as CartActivity).userPurchsedWidgets)
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                (activity as CartActivity).userPurchsedWidgets
+            )
 
             intent.putExtra("fpid", (activity as CartActivity).fpid)
             intent.putExtra("expCode", (activity as CartActivity).experienceCode)
@@ -902,6 +911,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
             intent.putExtra("profileUrl", (activity as CartActivity).profileUrl)
             startActivity(intent)
         }
+
         cart_spk_to_expert.setOnClickListener {
             speakToExpert(prefs.getExpertContact())
         }
@@ -2787,10 +2797,25 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
         Handler().postDelayed({
             viewModel.getCartItems()
         }, 2000)
+
+        viewModel.loadUpdates()
     }
 
     @SuppressLint("FragmentLiveDataObserve")
     fun initMvvM() {
+
+        viewModel.getExpertConnectDetails().observe(this, androidx.lifecycle.Observer {
+            if (it.is_online) {
+                prefs.storeExpertContact(it.contact_number)
+            } else {
+                Toasty.error(
+                    requireContext(),
+                    "Expert will be available tomorrow from 10AM",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        })
+
         viewModel.cartResult().observe(this, Observer {
             if (it.isNullOrEmpty().not()) {
                 if (shimmer_view_banner.isShimmerStarted) {
@@ -2812,8 +2837,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
                     if (items.item_type.equals("features")) {
                         if (items.feature_code.equals("WILDFIRE_FB_LEAD_ADS")
                             || items.feature_code.equals("WILDFIRE")
-                            || items.feature_code.equals("DICTATE")) {
-                            Log.v("couponDiwaliRedundant", " " + items.feature_code+" "+ items.item_name)
+                            || items.feature_code.equals("DICTATE")
+                        ) {
+                            Log.v(
+                                "couponDiwaliRedundant",
+                                " " + items.feature_code + " " + items.item_name
+                            )
 //                            couponDiwaliRedundant.add(items.feature_code)
                             couponDiwaliRedundant.put(items.feature_code, items.item_name)
                         }
@@ -3036,7 +3065,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
                 )
 
             } else {
-                UserSessionManager(requireActivity()).storeIntDetails(Key_Preferences.KEY_FP_CART_COUNT,0)
+                UserSessionManager(requireActivity()).storeIntDetails(
+                    Key_Preferences.KEY_FP_CART_COUNT,
+                    0
+                )
                 WebEngageController.trackEvent(
                     EVENT_NAME_ADDONS_MARKETPLACE_EMPTY_CART_LOADED,
                     EVENT_LABEL_ADDONS_MARKETPLACE_EMPTY_CART_LOADED,
@@ -3335,7 +3367,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
 
                             tv_coupon_saved.text =
                                 "₹" + RootUtil.round(couponDiscountAmt, 2).toString() + " Saved!"
-                            tv_coupon_name.text = "'"+it.coupon_key.toString()+"'" + " coupon code applied."
+                            tv_coupon_name.text =
+                                "'" + it.coupon_key.toString() + "'" + " coupon code applied."
                             val closeBtn =
                                 dialog.findViewById(R.id.close_dialog) as AppCompatImageView
                             val iv_coupon_saved =
@@ -3401,7 +3434,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
                 for (i in 0 until it.size) {
                     it[i].data?.let { it1 -> couponData.addAll(it1) }
                 }
-                if (couponData.size == 1){
+                if (couponData.size == 1) {
                     tv_Show_less.visibility = GONE
                     tv_Show_more.visibility = GONE
                 }
@@ -3637,7 +3670,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
                 grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
                 cart_amount_title.text = "Cart total (" + cartList.size + " items)"
                 cart_amount.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                    .format(RootUtil.round((couponDiscountAmount + total + taxValue),2))
+                    .format(RootUtil.round((couponDiscountAmount + total + taxValue), 2))
                 coupontotal = total
                 //       igst_value.text = "+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue)
 //                order_total_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
@@ -3672,9 +3705,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
                 choosed_validity_period.setText("(Valid till " + nowFormat.format(oneMonthFromNow.time) + ")")
 
                 //remove coupon if there specific addons
-                if(couponDiwaliRedundant.size > 0 && (couponDiwaliRedundant.contains("WILDFIRE_FB_LEAD_ADS")
+                if (couponDiwaliRedundant.size > 0 && (couponDiwaliRedundant.contains("WILDFIRE_FB_LEAD_ADS")
                             || couponDiwaliRedundant.contains("WILDFIRE")
-                            || couponDiwaliRedundant.contains("DICTATE"))){
+                            || couponDiwaliRedundant.contains("DICTATE"))
+                ) {
                     prefs.storeApplyedCouponDetails(null)
                 }
                 //When coupon is available and not been applyed
@@ -3694,7 +3728,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
 
     override fun deleteCartAddonsItem(item: CartModel) {
         //remove selected domain
-        if(item.item_type.equals("bundles") && !prefs.getSelectedDomainName().isNullOrEmpty()){
+        if (item.item_type.equals("bundles") && !prefs.getSelectedDomainName().isNullOrEmpty()) {
             prefs.storeSelectedDomainName(null)
         }
         viewModel.deleteCartItems(item.item_id)
@@ -3727,7 +3761,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
                         item.exclusive_to_categories,
                         object : TypeToken<List<String>>() {}.type
                     ),
-                    null, null,null,null,null,item.desc
+                    null, null, null, null, null, item.desc
                 )
                 break
             }
@@ -3821,7 +3855,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
             )
             intent.putExtra("couponAmount", couponDiscountAmount)
         }
-        intent.putExtra("cartItems",cartList.size.toString())
+        intent.putExtra("cartItems", cartList.size.toString())
         intent.putExtra("discountText", total)
         intent.putExtra("transaction_id", result.Result.TransactionId)
         intent.putExtra("email", (activity as CartActivity).email)
@@ -3955,7 +3989,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
         val txtSub2: TextView = popupWindow.contentView.findViewById(R.id.price3)
         txtSub.setText(
             " ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                .format(RootUtil.round(total,2) + couponDiscountAmount)
+                .format(RootUtil.round(total, 2) + couponDiscountAmount)
         )
         if (couponDiscountAmount > 0) {
             discountTitle.visibility = View.VISIBLE
@@ -3986,7 +4020,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
         featureDetailsPopUp(bundleItem)
     }
 
-    private fun featureDetailsPopUp(cartModel: CartModel){
+    private fun featureDetailsPopUp(cartModel: CartModel) {
         var selectedBundle: Bundles? = null
         for (item in bundlesList) {
             if (item.bundle_id == cartModel.item_id) {
@@ -4006,7 +4040,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
                         item.exclusive_to_categories,
                         object : TypeToken<List<String>>() {}.type
                     ),
-                    null, null,null,null,null,item.desc
+                    null, null, null, null, null, item.desc
                 )
                 break
             }
@@ -4015,7 +4049,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
         val dialogCard = FeatureDetailsPopup(this)
         val args = Bundle()
         args.putString("expCode", (activity as CartActivity).experienceCode)
-        args.putStringArrayList("userPurchsedWidgets", (activity as CartActivity).userPurchsedWidgets)
+        args.putStringArrayList(
+            "userPurchsedWidgets",
+            (activity as CartActivity).userPurchsedWidgets
+        )
         args.putString("bundleData", Gson().toJson(selectedBundle))
         args.putString("fpid", (activity as CartActivity).fpid)
         args.putString("expCode", (activity as CartActivity).experienceCode)
@@ -4043,7 +4080,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener, 
         }
         args.putString("profileUrl", (activity as CartActivity).profileUrl)
         dialogCard.arguments = args
-        activity?.supportFragmentManager?.let { dialogCard.show(it, FeatureDetailsPopup::class.java.name) }
+        activity?.supportFragmentManager?.let {
+            dialogCard.show(
+                it,
+                FeatureDetailsPopup::class.java.name
+            )
+        }
     }
 
 }

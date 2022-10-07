@@ -870,9 +870,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun quickActionClick(type: QuickActionItem.QuickActionType) {
     when (type) {
       QuickActionItem.QuickActionType.POST_NEW_UPDATE ->{
-        if (FirebaseRemoteConfigUtil.featureUpdateStudioSelectedUsers(session?.fpTag))
-            baseActivity.startPromotionUpdatesFromDashboard()
-        else
            baseActivity.startPostUpdate()
       }
       QuickActionItem.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)

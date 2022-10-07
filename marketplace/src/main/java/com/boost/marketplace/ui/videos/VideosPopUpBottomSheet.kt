@@ -44,7 +44,7 @@ class VideosPopUpBottomSheet :
     }
 
     private fun initView() {
-        videosListAdapter = VideosListAdapter(ArrayList(), this)
+    //    videosListAdapter = VideosListAdapter(ArrayList(), this)
         viewModel?.GetHelp()
         initializeVideosRecycler()
     }
@@ -139,7 +139,7 @@ class VideosPopUpBottomSheet :
         player.release()
     }
 
-    override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
+    override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel,position: Int) {
         Toast.makeText(context, "Loading", Toast.LENGTH_LONG).show()
         link = videoItem.youtube_link.toString()
         MediaPlayer.releasePlayer()
