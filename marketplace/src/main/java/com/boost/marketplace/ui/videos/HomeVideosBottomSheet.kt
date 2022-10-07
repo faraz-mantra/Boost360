@@ -15,6 +15,7 @@ import com.boost.marketplace.databinding.BottomSheetHomeVideosBinding
 import com.boost.marketplace.interfaces.VideosListener
 import com.boost.marketplace.ui.home.MarketPlaceHomeViewModel
 import com.framework.base.BaseBottomSheetDialog
+import com.onboarding.nowfloats.extensions.getInt
 import kotlinx.android.synthetic.main.bottom_sheet_home_videos.*
 import kotlinx.android.synthetic.main.bottom_sheet_videos.videos_pop_up_recycler_view
 import java.util.regex.Matcher
@@ -22,11 +23,14 @@ import java.util.regex.Pattern
 
 
 class HomeVideosBottomSheet :
-    BaseBottomSheetDialog<BottomSheetHomeVideosBinding, MarketPlaceHomeViewModel>(), VideosListener {
+    BaseBottomSheetDialog<BottomSheetHomeVideosBinding, MarketPlaceHomeViewModel>(),VideosListener {
 
     lateinit var link: String
     private var videoItem: String? = null
     lateinit var videosListAdapter: VideosListAdapter
+    var videoCount : Int = 0
+    var position1 : Int = 0
+    var size : Int = 0
 
     override fun getLayout(): Int {
         return R.layout.bottom_sheet_home_videos
@@ -58,6 +62,7 @@ class HomeVideosBottomSheet :
         webSettings?.domStorageEnabled = true
 
         link = requireArguments().getString("link").toString()
+        binding?.videoCount?.text= "playing $position1 of $size "
         videoPlayerWebView1.loadUrl("http://www.youtube.com/embed/" + getVideoId(link))
     }
 
@@ -90,13 +95,15 @@ class HomeVideosBottomSheet :
 
     private fun getBundle() {
         this.videoItem = requireArguments().getString("title") ?: ""
+        position1 = requireArguments().getInt("position")+1
+        size = requireArguments().getInt("size")
         link = ((requireArguments().getString("link"))).toString()
         binding?.ctvVideoTitle?.text = videoItem
         binding?.mainTxt?.text = videoItem
     }
 
-    override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
-        Toast.makeText(context, "Loading", Toast.LENGTH_LONG).show()
+    override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel, position: Int) {
+        Toast.makeText(context, "Loading", Toast.LENGTH_SHORT).show()
         videoPlayerWebView1?.settings?.javaScriptEnabled = true
         videoPlayerWebView1?.settings?.loadWithOverviewMode = true
         videoPlayerWebView1?.settings?.useWideViewPort = true
@@ -110,10 +117,13 @@ class HomeVideosBottomSheet :
         webSettings?.cacheMode = WebSettings.LOAD_DEFAULT
         webSettings?.domStorageEnabled = true
 
-        link = requireArguments().getString("link").toString()
+        link = videoItem.youtube_link.toString()
         videoPlayerWebView1.loadUrl("http://www.youtube.com/embed/" + getVideoId(link))
+        binding?.mainTxt?.text = videoItem.title
         binding?.ctvVideoTitle?.text = videoItem.title
-        binding?.mainTxt?.text = videoItem.desc
+        videoCount = videosListAdapter.itemCount
+        val position1 : Int = position+1
+        binding?.videoCount?.text= "playing $position1 of $videoCount "
 
     }
 

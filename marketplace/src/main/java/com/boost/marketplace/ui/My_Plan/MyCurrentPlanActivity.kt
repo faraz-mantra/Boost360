@@ -186,10 +186,14 @@ class MyCurrentPlanActivity :
                     updateAllItemBySearchValue(p0.toString())
                 } else {
                     if (totalFreeItemList?.size!=null){
+                        binding?.searchZeroth?.visibility = View.GONE
+                        binding?.nestedscroll?.visibility = View.VISIBLE
                         updateFreeAddonsRecycler(totalFreeItemList!!)
                         binding?.paidTitle?.text = " ${totalFreeItemList!!.size} Inactive features"
                     }
                     if (totalPaidItemList?.size!=null){
+                        binding?.searchZeroth?.visibility = View.GONE
+                        binding?.nestedscroll?.visibility = View.VISIBLE
                         updatePaidAddonsRecycler(totalPaidItemList!!)
                         binding?.paidTitle1?.text = " ${totalPaidItemList!!.size} Active features"
                     }
