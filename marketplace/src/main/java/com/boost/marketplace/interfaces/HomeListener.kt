@@ -14,6 +14,5 @@ interface HomeListener {
     fun onShowHidePartnerZoneIndicator(status: Boolean)
     fun onAddFeatureDealItemToCart(item: FeaturesModel?, minMonth: Int)
     fun onAddonsCategoryClicked(categoryType: String)
-    fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel)
     fun onPackageAddToCart(item: Bundles?,image: ImageView)
 }
