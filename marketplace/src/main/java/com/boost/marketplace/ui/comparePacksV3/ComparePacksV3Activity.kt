@@ -32,12 +32,9 @@ import com.boost.marketplace.Adapters.*
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityComparePacksv3Binding
-import com.boost.marketplace.interfaces.AddonsListenerV3
-import com.boost.marketplace.interfaces.PacksV3FooterListener
-import com.boost.marketplace.interfaces.PacksV3listener
-import com.boost.marketplace.interfaces.AddonsListener
-import com.boost.marketplace.interfaces.CompareListener
+import com.boost.marketplace.interfaces.*
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
+import com.boost.marketplace.ui.feature_details_popup.FeatureDetailsPopup
 import com.boost.marketplace.ui.popup.removeItems.RemoveFeatureBottomSheet
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
@@ -56,7 +53,7 @@ import java.util.*
 
 class ComparePacksV3Activity :
     AppBaseActivity<ActivityComparePacksv3Binding, ComparePacksViewModel>(), PacksV3listener,
-    PacksV3FooterListener,AddonsListenerV3, CompareListener, AddonsListener {
+    PacksV3FooterListener,AddonsListenerV3, CompareListener, AddonsListener, MarketPlacePopupListener {
 
     var experienceCode: String? = null
     var screenType: String? = null
@@ -164,7 +161,40 @@ class ComparePacksV3Activity :
         //Add to cart..
         binding?.buyPack?.setOnClickListener {
 
-            if (selectedBundle != null) {
+            val dialogCard = FeatureDetailsPopup(this)
+            val args = Bundle()
+            args.putString("expCode", experienceCode)
+            args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+            args.putString("bundleData", Gson().toJson(selectedBundle))
+            args.putString("fpid", fpid)
+            args.putString("expCode", experienceCode)
+            args.putBoolean("isDeepLink", isDeepLink)
+            args.putString("deepLinkViewType", deepLinkViewType)
+            args.putInt("deepLinkDay", deepLinkDay)
+            args.putBoolean("isOpenCardFragment", isOpenCardFragment)
+            args.putString(
+                "accountType",
+                accountType
+            )
+            args.putStringArrayList(
+                "userPurchsedWidgets",
+                userPurchsedWidgets
+            )
+            if (email != null) {
+                args.putString("email", email)
+            } else {
+                args.putString("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                args.putString("mobileNo", mobileNo)
+            } else {
+                args.putString("mobileNo", "9160004303")
+            }
+            args.putString("profileUrl", profileUrl)
+            dialogCard.arguments = args
+            this.supportFragmentManager.let { dialogCard.show(it, com.boost.cart.ui.popup.FeatureDetailsPopup::class.java.name) }
+
+            /*if (selectedBundle != null) {
                 prefs.storeAddedPackageDesc(selectedBundle!!.desc ?: "")
 
                 val itemIds = arrayListOf<String>()
@@ -271,7 +301,7 @@ class ComparePacksV3Activity :
                             }
                         )
                 )
-            }
+            }*/
         }
 
         binding?.packageBack?.setOnClickListener {
@@ -957,4 +987,7 @@ class ComparePacksV3Activity :
         viewModel.getCartItems()
     }
 
+    override fun featureDetailsPopup(domain: String) {
+        prefs.storeSelectedDomainName(domain)
+    }
 }

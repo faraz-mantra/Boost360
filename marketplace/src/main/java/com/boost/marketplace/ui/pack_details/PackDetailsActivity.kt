@@ -44,12 +44,10 @@ import com.boost.marketplace.R
 import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityPackDetailsBinding
-import com.boost.marketplace.interfaces.AddonsListener
-import com.boost.marketplace.interfaces.CompareListener
-import com.boost.marketplace.interfaces.DetailsFragmentListener
-import com.boost.marketplace.interfaces.PackDetailsListener
+import com.boost.marketplace.interfaces.*
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
 import com.boost.marketplace.ui.comparePacksV3.ComparePacksV3Activity
+import com.boost.marketplace.ui.feature_details_popup.FeatureDetailsPopup
 import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
 import com.boost.marketplace.ui.popup.call_track.RequestCallbackBottomSheet
 import com.boost.marketplace.ui.popup.removeItems.RemoveFeatureBottomSheet
@@ -72,7 +70,7 @@ import java.util.*
 class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, ComparePacksViewModel>(),
     PackDetailsListener,
     DetailsFragmentListener,
-    CompareListener, AddonsListener {
+    CompareListener, AddonsListener, MarketPlacePopupListener {
 
     private var featuresModel: List<FeaturesModel>? = null
     lateinit var singleAddon: FeaturesModel
@@ -357,6 +355,39 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                         )
                 )
             }
+
+            val dialogCard = FeatureDetailsPopup(this)
+            val args = Bundle()
+            args.putString("expCode", experienceCode)
+            args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+            args.putString("bundleData", Gson().toJson(bundleData))
+            args.putString("fpid", fpid)
+            args.putString("expCode", experienceCode)
+            args.putBoolean("isDeepLink", isDeepLink)
+            args.putString("deepLinkViewType", deepLinkViewType)
+            args.putInt("deepLinkDay", deepLinkDay)
+            args.putBoolean("isOpenCardFragment", isOpenCardFragment)
+            args.putString(
+                "accountType",
+                accountType
+            )
+            args.putStringArrayList(
+                "userPurchsedWidgets",
+                userPurchsedWidgets
+            )
+            if (email != null) {
+                args.putString("email", email)
+            } else {
+                args.putString("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                args.putString("mobileNo", mobileNo)
+            } else {
+                args.putString("mobileNo", "9160004303")
+            }
+            args.putString("profileUrl", profileUrl)
+            dialogCard.arguments = args
+            this.supportFragmentManager.let { dialogCard.show(it, com.boost.cart.ui.popup.FeatureDetailsPopup::class.java.name) }
         }
 
         binding?.back?.setOnClickListener {
@@ -1048,9 +1079,9 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         }
 
         addToCart.setOnClickListener{
-                    prefs.storeCartOrderInfo(null)
+            prefs.storeCartOrderInfo(null)
 
-                    binding?.needMorePackageImg?.let { it1 -> makeFlyAnimation(it1) }
+            binding?.needMorePackageImg?.let { it1 -> makeFlyAnimation(it1) }
 
             val temp = Gson().fromJson<List<IncludedFeature>>(
                 bundlesModel.included_features,
@@ -1082,6 +1113,42 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 ),
                 null, steps, null, faq, benefits, bundlesModel.desc ?: ""
             )
+
+            val dialogCard = FeatureDetailsPopup(this)
+            val args = Bundle()
+            args.putString("expCode", experienceCode)
+            args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+            args.putString("bundleData", Gson().toJson(bundle))
+            args.putString("fpid", fpid)
+            args.putString("expCode", experienceCode)
+            args.putBoolean("isDeepLink", isDeepLink)
+            args.putString("deepLinkViewType", deepLinkViewType)
+            args.putInt("deepLinkDay", deepLinkDay)
+            args.putBoolean("isOpenCardFragment", isOpenCardFragment)
+            args.putString(
+                "accountType",
+                accountType
+            )
+            args.putStringArrayList(
+                "userPurchsedWidgets",
+                userPurchsedWidgets
+            )
+            if (email != null) {
+                args.putString("email", email)
+            } else {
+                args.putString("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                args.putString("mobileNo", mobileNo)
+            } else {
+                args.putString("mobileNo", "9160004303")
+            }
+            args.putString("profileUrl", profileUrl)
+            dialogCard.arguments = args
+            this.supportFragmentManager.let { dialogCard.show(it, com.boost.cart.ui.popup.FeatureDetailsPopup::class.java.name) }
+
+        /*
+
             val itemIds = arrayListOf<String>()
             for (i in bundle.included_features) {
                 itemIds.add(i.feature_code)
@@ -1227,6 +1294,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                     )
                     add_item_to_cart.setTextColor(Color.parseColor("#bbbbbb"))
                     add_item_to_cart.text = getString(com.boost.cart.R.string.added_to_cart)
+*/
+
 
                 }
 
@@ -1257,6 +1326,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 .subscribe(
                     {
                         if (it.isNotEmpty()) {
+                            featuresModel = it
                             needMoreFeatureAdapter.addupdates(compareFeatureIconsAndSet(it))
                         } else {
                             binding?.otherFeatureRecyclerView?.visibility = GONE
@@ -1521,4 +1591,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         viewModel.getCartItems()
     }
 
+    override fun featureDetailsPopup(domain: String) {
+//        cartPackageAdaptor.selectedDomain(domain)
+        prefs.storeSelectedDomainName(domain)
+    }
 }

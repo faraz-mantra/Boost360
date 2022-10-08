@@ -97,7 +97,7 @@ class PackageRecyclerAdapter(
         val offerPrice = itemView.findViewById<TextView>(R.id.offer_price)
         val origCost = itemView.findViewById<TextView>(R.id.orig_cost)
         val getNowButton = itemView.findViewById<TextView>(R.id.getnow_button)
-        val details_button = itemView.findViewById<TextView>(R.id.details_button)
+//        val details_button = itemView.findViewById<TextView>(R.id.details_button)
         val primaryImage = itemView.findViewById<ImageView>(R.id.package_primary_image)
         val primaryImageCopy = itemView.findViewById<ImageView>(R.id.package_primary_image_copy)
         val bundleDiscount = itemView.findViewById<TextView>(R.id.bundle_level_discount)
