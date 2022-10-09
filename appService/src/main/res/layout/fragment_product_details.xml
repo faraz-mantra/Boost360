@@ -179,7 +179,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
-                android:text="This will help you group multiple products under this category"
+                android:text="@string/this_will_help_you_group_multiple_products_under_this_category"
                 android:textColor="@color/warm_grey"
                 android:textSize="12sp"
                 app:fontFamily="@font/regular" />

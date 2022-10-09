@@ -61,6 +61,7 @@ import com.framework.imagepicker.ImagePicker
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_TAG
 import com.framework.pref.clientId
 import com.framework.utils.FileUtils.getExtension
+import com.framework.utils.ValidationUtils
 import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -522,7 +523,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     } else if (toggle && (product?.paymentType.isNullOrEmpty() || (product?.paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail == null))) {
       showLongToast(resources.getString(R.string.please_add_bank_detail))
       return false
-    } else if (toggle && (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value && (externalUrlName.isNullOrEmpty() || externalUrl.isNullOrEmpty()))) {
+    } else if (toggle && (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value && ((externalUrlName.isNullOrEmpty() || externalUrl.isNullOrEmpty())  || ValidationUtils.isValidWebURL(externalUrl).not()))) {
       showLongToast(resources.getString(R.string.please_enter_valid_url_name))
       return false
     }

@@ -1271,4 +1271,5 @@
     <string name="select_underline"><u>Select</u></string>
     <string name="edit_underline"><u>Edit</u></string>
     <string name="your_discarded_post" tools:ignore="ExtraTranslation">You discarded post</string>
+    <string name="this_will_help_you_group_multiple_products_under_this_category">This will help you group multiple products under this category</string>
 </resources>

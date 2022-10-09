@@ -1,5 +1,6 @@
 package com.framework.utils
 
+import android.util.Patterns
 import java.util.regex.Pattern
 import java.util.regex.Pattern.matches
 
@@ -59,4 +60,9 @@ object ValidationUtils {
     return Pattern.compile("\\d{2}[A-Z]{5}\\d{4}[A-Z]{1}[A-Z\\d]{1}[Z]{1}[A-Z\\d]{1}").matcher(panNumber).matches()
   }
 
+  fun isValidWebURL(url: String?):Boolean {
+    if (url.isNullOrEmpty())
+      return false
+    return Patterns.WEB_URL.matcher(url).matches()
+  }
 }
