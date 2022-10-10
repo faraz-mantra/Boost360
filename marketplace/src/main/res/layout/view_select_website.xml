@@ -75,6 +75,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/bold"
             android:gravity="center_horizontal"
+            android:layout_marginTop="5dp"
             android:lineHeight="26dp"
             android:text="Select your website address"
             android:textColor="@color/main_color_gray_dk"
@@ -179,7 +180,8 @@
                         android:paddingBottom="10dp"
                         android:text="Select above domain"
                         android:textColor="@color/white"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_explore_select_website" />
 
                     <TextView

@@ -38,6 +38,7 @@ import com.boost.marketplace.ui.feature_details_popup.FeatureDetailsPopup
 import com.boost.marketplace.ui.popup.removeItems.RemoveFeatureBottomSheet
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
 import com.framework.utils.RootUtil
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_COMPARE_PACKAGE_ADDED_TO_CART
@@ -399,6 +400,11 @@ class ComparePacksV3Activity :
     }
 
     private fun loadData() {
+        try {
+            getAlreadyPurchasedDomain()
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
         val pref = this.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
         val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
         val code: String =
@@ -416,6 +422,14 @@ class ComparePacksV3Activity :
     }
 
     private fun initMvvm() {
+
+        viewModel.PurchasedDomainResponse().observe(this) {
+            prefs.storeDomainOrderType(1)
+            prefs.storeSelectedDomainName(it.domainName + it.domainType)
+            //  viewModel.addItemToCart1(singleAddon, this, it.domainName + it.domainType)
+         //   viewModel.getCartItems
+        }
+
         viewModel.getAllFeatures().observe(this, {
             Log.v("AllFeaturesResultValue", Gson().toJson(it))
             featuresList = it
@@ -989,5 +1003,15 @@ class ComparePacksV3Activity :
 
     override fun featureDetailsPopup(domain: String) {
         prefs.storeSelectedDomainName(domain)
+    }
+
+    private fun getAlreadyPurchasedDomain() {
+        val pref = this?.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+        val fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
+        val auth = UserSessionManager(this).getAccessTokenAuth()?.barrierToken() ?: ""
+        viewModel.getAlreadyPurchasedDomain(
+            auth,
+            fpTag?:"",
+            "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
     }
 }

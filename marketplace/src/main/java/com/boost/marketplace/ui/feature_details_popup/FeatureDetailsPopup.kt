@@ -108,7 +108,37 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
         view.select_website_layout.visibility = View.VISIBLE
         view.select_website_layout.selectWebsiteIwillDoItLater.text = "Skip & continue to cart"
         view.selectWebsiteIwillDoItLater.setOnClickListener {
-            // hideAllLayout()
+             hideAllLayout()
+            val intent = Intent(
+                activity,
+                CartActivity::class.java
+            )
+            intent.putExtra("fpid", fpid)
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("isDeepLink", isDeepLink)
+            intent.putExtra("deepLinkViewType", deepLinkViewType)
+            intent.putExtra("deepLinkDay", deepLinkDay)
+            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+            intent.putExtra(
+                "accountType",
+                accountType
+            )
+            intent.putStringArrayListExtra(
+                "userPurchsedWidgets",
+                userPurchsedWidgets
+            )
+            if (email != null) {
+                intent.putExtra("email", email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                intent.putExtra("mobileNo", mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", profileUrl)
+            startActivity(intent)
             dismiss()
             //  select_domain_layout.visibility = View.VISIBLE
         }
@@ -427,7 +457,7 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
             intent.putExtra("bundleData", Gson().toJson(singleAddon))
             intent.putExtra("domainSelectionForCart", true)
             startActivity(intent)
-            dismiss()
+          //  dismiss()
         } catch (e: ClassNotFoundException) {
             e.printStackTrace()
         }

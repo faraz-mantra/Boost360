@@ -54,6 +54,7 @@ import com.boost.marketplace.ui.popup.removeItems.RemoveFeatureBottomSheet
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
 import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
@@ -560,6 +561,11 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
+        try {
+            getAlreadyPurchasedDomain()
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
     }
 
     fun addUpdatePacks(list: ArrayList<BundlesModel>) {
@@ -862,6 +868,14 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
 
     private fun initMvvm() {
+
+        viewModel.PurchasedDomainResponse().observe(this) {
+            prefs.storeDomainOrderType(1)
+            prefs.storeSelectedDomainName(it.domainName + it.domainType)
+          //  viewModel.addItemToCart1(singleAddon, this, it.domainName + it.domainType)
+            viewModel.getCartItems()
+        }
+
         viewModel.bundleResult().observe(this) { list ->
             if (list != null) {
                 if(bundleData?.name == "Online Basic" ) {
@@ -1594,5 +1608,15 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     override fun featureDetailsPopup(domain: String) {
 //        cartPackageAdaptor.selectedDomain(domain)
         prefs.storeSelectedDomainName(domain)
+    }
+
+    private fun getAlreadyPurchasedDomain() {
+        val pref = this?.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+        val fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
+        val auth = UserSessionManager(this).getAccessTokenAuth()?.barrierToken() ?: ""
+        viewModel.getAlreadyPurchasedDomain(
+            auth,
+            fpTag?:"",
+            "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
     }
 }
