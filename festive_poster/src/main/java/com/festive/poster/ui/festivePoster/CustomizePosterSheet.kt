@@ -166,9 +166,9 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
       val imgFile = File(path)
       viewModel?.uploadProfileImage(
         clientId2, session?.userProfileId,imgFile.name,
-        imgFile.asRequestBody("image/*".toMediaTypeOrNull()))?.observe(viewLifecycleOwner,{
+        imgFile.asRequestBody("image/*".toMediaTypeOrNull()))?.observe(viewLifecycleOwner) {
 
-        if (it.isSuccess()){
+        if (it.isSuccess()) {
           Log.i(TAG, "uploadImage: success ${Gson().toJson(it)}")
           imageUrl = it.stringResponse
           val profileData = UserProfileDataResult.getMerchantProfileDetails()
@@ -177,10 +177,10 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
             UserProfileDataResult.saveMerchantProfileDetails(profileData)
           }
           saveKeyValue()
-        }else{
+        } else {
           hideProgress()
         }
-      })
+      }
     }else{
       saveKeyValue()
     }
@@ -216,26 +216,27 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
     var countApiCallSuccess =0
     var totalApiCall=0
 
-    viewModel?.saveKeyValue(session?.fPID,session?.fpTag,templateIds,map)?.observe(viewLifecycleOwner,{
+    viewModel?.saveKeyValue(session?.fPID,session?.fpTag,templateIds,map)?.observe(viewLifecycleOwner) {
       hideProgress()
 
       totalApiCall++
-      if (it.isSuccess()){
+      if (it.isSuccess()) {
 
         countApiCallSuccess++
-        if (countApiCallSuccess==templateIds.size){
+        if (countApiCallSuccess == templateIds.size) {
           Log.i(TAG, "saveKeyValue: success")
+          showShortToast(getString(R.string.poster_updated_successfully))
           navigateToNextFragment()
         }
 
       }
-        if (totalApiCall==templateIds.size&&countApiCallSuccess!=templateIds.size){
-          showLongToast("Unable to update info")
-        }
+      if (totalApiCall == templateIds.size && countApiCallSuccess != templateIds.size) {
+        showLongToast("Unable to update info")
+      }
 
       Log.i(TAG, "saveKeyValue: totalCalls $totalApiCall successcall $countApiCallSuccess")
 
-    })
+    }
   }
 
   private fun navigateToNextFragment() {
@@ -252,32 +253,32 @@ class CustomizePosterSheet : AppBaseBottomSheetFragment<BsheetCustomizePosterBin
 
   private fun validation(): Boolean {
     if (path.isNullOrEmpty()&&imageUrl.isNullOrEmpty()) {
-      showLongToast("Please upload image")
+      showLongToast(getString(R.string.please_upload_image))
       return false
     }
     if (binding?.etName?.text?.toString().isNullOrEmpty()) {
-      showLongToast("Please enter Name")
+      showLongToast(getString(R.string.please_enter_name))
       return false
     }
     if (binding?.etEmail?.text?.toString().isNullOrEmpty()) {
-      showLongToast("Please enter email")
+      showLongToast(getString(R.string.please_enter_email))
       return false
     }
     if (ValidationUtils.isEmailValid(binding?.etEmail?.text.toString()).not()) {
-      showLongToast("Please enter valid email")
+      showLongToast(getString(R.string.please_enter_valid_email))
       return false
     }
     if (binding?.etWhatsapp?.text?.toString().isNullOrEmpty()) {
-      showLongToast("Please enter whatsapp")
+      showLongToast(getString(R.string.please_enter_whatsapp))
       return false
     }
     if (ValidationUtils.isMobileNumberValid(binding?.etWhatsapp?.text.toString()).not()) {
-      showLongToast("Please enter valid whatsapp")
+      showLongToast(getString(R.string.please_enter_valid_whatsapp))
       return false
     }
 
     if (binding?.etWhatsapp?.text?.toString().isNullOrEmpty()) {
-      showLongToast("Please enter whatsapp")
+      showLongToast(getString(R.string.please_enter_whatsapp))
       return false
     }
     return true

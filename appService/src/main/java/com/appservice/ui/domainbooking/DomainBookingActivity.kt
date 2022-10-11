@@ -283,7 +283,7 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
   }
 
   private fun setupSteps() {
-    val secondStep = "${getString(R.string.in_case_you_have_a_different_website_connected_to_the_domain)} <b><u>(what’s subdomain?)</u></b>"
+    val secondStep = "${getString(R.string.in_case_you_have_a_different_website_connected_to_the_domain)} <b>(what’s subdomain?)</b>"
     val whatsSubdomain = getString(R.string.whats_subdomain)
     val whatsSubdomainIndex = secondStep.indexOf(whatsSubdomain)
 

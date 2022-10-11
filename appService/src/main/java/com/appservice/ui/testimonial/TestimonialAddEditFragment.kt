@@ -28,6 +28,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.utils.ValidationUtils
 import com.framework.webengageconstant.*
 import java.io.ByteArrayOutputStream
 
@@ -136,6 +137,10 @@ class TestimonialAddEditFragment : BaseTestimonialFragment<FragmentTestimonialAd
 
     if (titleName.isNullOrEmpty()) {
       showShortToast(getString(R.string.name_field_can_not_empty))
+      return false
+    }
+    if (ValidationUtils.isValidName(titleName).not()){
+      showShortToast(getString(R.string.name_field_can_not_contain_special_char))
       return false
     }
     /*if (titleDec.isNullOrEmpty()) {

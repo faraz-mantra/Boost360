@@ -271,7 +271,7 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
     staffProfile.isAvailable = true
     staffProfile.age = staffDetails?.age
     staffProfile.gender = staffDetails?.gender
-    staffProfile.experience = yearOfExperience.toIntOrNull()
+    staffProfile.experience = yearOfExperience.toFloatOrNull()?.toInt()
     staffProfile.staffId = staffDetails?.id
     staffProfile.education = staffDetails?.education
     staffProfile.contactNumber = staffDetails?.contactNumber
@@ -363,7 +363,7 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
     staffProfile.isAvailable = true
     staffProfile.age = staffDetails?.age
     staffProfile.gender = staffDetails?.gender
-    staffProfile.experience = yearOfExperience.toIntOrNull()
+    staffProfile.experience = yearOfExperience.toFloatOrNull()?.toInt()
     staffProfile.education = staffDetails?.education
     staffProfile.contactNumber = staffDetails?.contactNumber
     staffProfile.memberships = staffDetails?.memberships

@@ -27,13 +27,13 @@ import retrofit2.http.*
 interface WithFloatTwoRemoteData {
 
   @POST(EndPoints.PAN_GST_UPDATE)
-  fun panGstUpdate(@Body panGstUpdateBody: PanGstUpdateBody):Observable<Response<ResponseBody>>
+  fun panGstUpdate(@Body panGstUpdateBody: PanGstUpdateBody): Observable<Response<ResponseBody>>
 
   @GET(EndPoints.GET_PAN_GST_DETAILS)
   fun getPanGstDetail(
     @Path("fpId") fpId: String?,
-    @Query("clientId") clientId:String?
-  ):Observable<Response<PanGstDetailResponse>>
+    @Query("clientId") clientId: String?
+  ): Observable<Response<PanGstDetailResponse>>
 
 
   @POST(EndPoints.CREATE_SERVICE)
@@ -91,13 +91,16 @@ interface WithFloatTwoRemoteData {
   @Headers("Accept: application/json", "Content-Type: application/octet-stream")
   @PUT(EndPoints.ADD_IMAGE)
   fun addUpdateImageProduct(
-    @Query("clientId") clientId: String?,
-    @Query("requestType") requestType: String?,
-    @Query("requestId") requestId: String?,
-    @Query("totalChunks") totalChunks: Int?,
-    @Query("currentChunkNumber") currentChunkNumber: Int?,
-    @Query("productId") productId: String?,
-    @Body requestBody: RequestBody?,
+    @Query("clientId") clientId: String? = null,
+    @Query("requestType") requestType: String? = null,
+    @Query("requestId") requestId: String? = null,
+    @Query("totalChunks") totalChunks: Int? = null,
+    @Query("currentChunkNumber") currentChunkNumber: Int? = null,
+    @Query("productId") productId: String? = null,
+    @Query("identifierType") identifierType: String? = "SINGLE",
+    @Query("sharingPlatforms") sharingPlatforms: String? = "",
+    @Query("fileName") fileName: String? = null,
+    @Body requestBody: RequestBody? = null,
   ): Observable<Response<String>>
 
   @GET(EndPoints.GET_FP_DETAILS)
@@ -152,7 +155,7 @@ interface WithFloatTwoRemoteData {
   @POST(EndPoints.PUT_BIZ_IMAGE_V2)
   fun putBizImageUpdateV2(
     @Body body: JsonObject
-    ): Observable<Response<String>>
+  ): Observable<Response<String>>
 //  fun getDeliveryDetails(): Observable<Response<ResponseBody>>
 
   //TODO APPOINTMENT
@@ -226,5 +229,5 @@ interface WithFloatTwoRemoteData {
     @Query("postType") postType: Int?,
     @Query("skipBy") skipBy: Int?,
     @Body request: TagListRequest
-  ):Observable<Response<PastUpdatesNewListingResponse>>
+  ): Observable<Response<PastUpdatesNewListingResponse>>
 }
