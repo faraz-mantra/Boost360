@@ -161,148 +161,153 @@ class ComparePacksV3Activity :
 
         //Add to cart..
         binding?.buyPack?.setOnClickListener {
-
-            val dialogCard = FeatureDetailsPopup(this)
-            val args = Bundle()
-            args.putString("expCode", experienceCode)
-            args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
-            args.putString("bundleData", Gson().toJson(selectedBundle))
-            args.putString("fpid", fpid)
-            args.putString("expCode", experienceCode)
-            args.putBoolean("isDeepLink", isDeepLink)
-            args.putString("deepLinkViewType", deepLinkViewType)
-            args.putInt("deepLinkDay", deepLinkDay)
-            args.putBoolean("isOpenCardFragment", isOpenCardFragment)
-            args.putString(
-                "accountType",
-                accountType
-            )
-            args.putStringArrayList(
-                "userPurchsedWidgets",
-                userPurchsedWidgets
-            )
-            if (email != null) {
-                args.putString("email", email)
-            } else {
-                args.putString("email", "ria@nowfloats.com")
-            }
-            if (mobileNo != null) {
-                args.putString("mobileNo", mobileNo)
-            } else {
-                args.putString("mobileNo", "9160004303")
-            }
-            args.putString("profileUrl", profileUrl)
-            dialogCard.arguments = args
-            this.supportFragmentManager.let { dialogCard.show(it, com.boost.cart.ui.popup.FeatureDetailsPopup::class.java.name) }
-
-            /*if (selectedBundle != null) {
-                prefs.storeAddedPackageDesc(selectedBundle!!.desc ?: "")
-
-                val itemIds = arrayListOf<String>()
-                for (i in selectedBundle!!.included_features) {
-                    itemIds.add(i.feature_code)
+            if (prefs.getSelectedDomainName().isNullOrEmpty() || prefs.getSelectedDomainName()?.contains("null") == true) {
+                // show Popup
+                val dialogCard = FeatureDetailsPopup(this)
+                val args = Bundle()
+                args.putString("expCode", experienceCode)
+                args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+                args.putString("bundleData", Gson().toJson(selectedBundle))
+                args.putString("fpid", fpid)
+                args.putString("expCode", experienceCode)
+                args.putBoolean("isDeepLink", isDeepLink)
+                args.putString("deepLinkViewType", deepLinkViewType)
+                args.putInt("deepLinkDay", deepLinkDay)
+                args.putBoolean("isOpenCardFragment", isOpenCardFragment)
+                args.putString(
+                    "accountType",
+                    accountType
+                )
+                args.putStringArrayList(
+                    "userPurchsedWidgets",
+                    userPurchsedWidgets
+                )
+                if (email != null) {
+                    args.putString("email", email)
+                } else {
+                    args.putString("email", "ria@nowfloats.com")
                 }
+                if (mobileNo != null) {
+                    args.putString("mobileNo", mobileNo)
+                } else {
+                    args.putString("mobileNo", "9160004303")
+                }
+                args.putString("profileUrl", profileUrl)
+                dialogCard.arguments = args
+                this.supportFragmentManager.let { dialogCard.show(it, com.boost.cart.ui.popup.FeatureDetailsPopup::class.java.name) }
+            } else {
+                // Move without popup
 
-                CompositeDisposable().add(
-                    AppDatabase.getInstance(application)!!
-                        .featuresDao()
-                        .getallFeaturesInList(itemIds)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            {
+                if (selectedBundle != null) {
+                    prefs.storeAddedPackageDesc(selectedBundle!!.desc ?: "")
 
-                                if(cartList != null) {
-                                    //same features available in cart
-                                    for (singleItem in cartList!!) {
-                                        for (singleFeature in it) {
-                                            if (singleFeature.boost_widget_key.equals(singleItem.boost_widget_key)) {
-                                                sameAddonsInCart.add(singleFeature.name!!)
+                    val itemIds = arrayListOf<String>()
+                    for (i in selectedBundle!!.included_features) {
+                        itemIds.add(i.feature_code)
+                    }
+
+                    CompositeDisposable().add(
+                        AppDatabase.getInstance(application)!!
+                            .featuresDao()
+                            .getallFeaturesInList(itemIds)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                {
+
+                                    if(cartList != null) {
+                                        //same features available in cart
+                                        for (singleItem in cartList!!) {
+                                            for (singleFeature in it) {
+                                                if (singleFeature.boost_widget_key.equals(singleItem.boost_widget_key)) {
+                                                    sameAddonsInCart.add(singleFeature.name!!)
+                                                    addonsListInCart.add(singleItem.item_id)
+                                                }
+                                            }
+                                            //if there is any other bundle available remove it
+                                            if (singleItem.item_type.equals("bundles")) {
                                                 addonsListInCart.add(singleItem.item_id)
                                             }
                                         }
-                                        //if there is any other bundle available remove it
-                                        if (singleItem.item_type.equals("bundles")) {
-                                            addonsListInCart.add(singleItem.item_id)
-                                        }
                                     }
-                                }
 
-                                if(sameAddonsInCart.size > 0){
-                                    val removeFeatureBottomSheet = RemoveFeatureBottomSheet(this, this, null)
-                                    val args = Bundle()
-                                    args.putStringArrayList("addonNames", sameAddonsInCart)
-                                    args.putStringArrayList("addonsListInCart", addonsListInCart)
-                                    args.putString("packageDetails", Gson().toJson(selectedBundle!!))
-                                    removeFeatureBottomSheet.arguments = args
-                                    removeFeatureBottomSheet.show(supportFragmentManager, RemoveFeatureBottomSheet::class.java.name)
-                                }else {
-                                var bundleMonthlyMRP = 0.0
-                                val minMonth: Int =
-                                    if (!prefs.getYearPricing() && selectedBundle!!.min_purchase_months != null && selectedBundle!!.min_purchase_months!! > 1) selectedBundle!!.min_purchase_months!! else 1
+                                    if(sameAddonsInCart.size > 0){
+                                        val removeFeatureBottomSheet = RemoveFeatureBottomSheet(this, this, null)
+                                        val args = Bundle()
+                                        args.putStringArrayList("addonNames", sameAddonsInCart)
+                                        args.putStringArrayList("addonsListInCart", addonsListInCart)
+                                        args.putString("packageDetails", Gson().toJson(selectedBundle!!))
+                                        removeFeatureBottomSheet.arguments = args
+                                        removeFeatureBottomSheet.show(supportFragmentManager, RemoveFeatureBottomSheet::class.java.name)
+                                    }else {
+                                        var bundleMonthlyMRP = 0.0
+                                        val minMonth: Int =
+                                            if (!prefs.getYearPricing() && selectedBundle!!.min_purchase_months != null && selectedBundle!!.min_purchase_months!! > 1) selectedBundle!!.min_purchase_months!! else 1
 
-                                for (singleItem in it) {
-                                    for (item in selectedBundle!!.included_features) {
-                                        if (singleItem.feature_code == item.feature_code) {
-                                            bundleMonthlyMRP += RootUtil.round(
-                                                singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),
-                                                2
-                                            )* minMonth
+                                        for (singleItem in it) {
+                                            for (item in selectedBundle!!.included_features) {
+                                                if (singleItem.feature_code == item.feature_code) {
+                                                    bundleMonthlyMRP += RootUtil.round(
+                                                        singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),
+                                                        2
+                                                    )* minMonth
+                                                }
+                                            }
                                         }
+
+                                        if (selectedBundle!!.overall_discount_percent > 0)
+                                            offeredBundlePrice = originalBundlePrice - (originalBundlePrice * selectedBundle!!.overall_discount_percent / 100)
+                                        else
+                                            offeredBundlePrice = originalBundlePrice
+
+                                        //clear cartOrderInfo from SharedPref to requestAPI again
+                                        prefs.storeCartOrderInfo(null)
+
+                                        //remove other bundle and add existing bundle to cart
+                                        removeOtherBundlesAndAddExistingBundle(addonsListInCart)
+
+                                        val event_attributes: java.util.HashMap<String, Any> =
+                                            java.util.HashMap()
+                                        selectedBundle!!.name?.let { it1 ->
+                                            event_attributes.put(
+                                                "Package Name",
+                                                it1
+                                            )
+                                        }
+                                        selectedBundle!!.target_business_usecase?.let { it1 ->
+                                            event_attributes.put(
+                                                "Package Tag",
+                                                it1
+                                            )
+                                        }
+                                        event_attributes.put("Package Price", originalBundlePrice)
+                                        event_attributes.put("Discounted Price", offeredBundlePrice)
+                                        event_attributes.put(
+                                            "Discount %",
+                                            selectedBundle!!.overall_discount_percent
+                                        )
+                                        selectedBundle!!.min_purchase_months?.let { it1 ->
+                                            event_attributes.put(
+                                                "Validity",
+                                                if (!prefs.getYearPricing()) it1 else 1
+                                            )
+                                        }
+                                        WebEngageController.trackEvent(
+                                            ADDONS_MARKETPLACE_COMPARE_PACKAGE_ADDED_TO_CART,
+                                            ADDONS_MARKETPLACE,
+                                            event_attributes
+                                        )
                                     }
-                                }
+                                },
+                                {
+                                    it.printStackTrace()
 
-                                if (selectedBundle!!.overall_discount_percent > 0)
-                                    offeredBundlePrice = originalBundlePrice - (originalBundlePrice * selectedBundle!!.overall_discount_percent / 100)
-                                else
-                                    offeredBundlePrice = originalBundlePrice
-
-                                //clear cartOrderInfo from SharedPref to requestAPI again
-                                prefs.storeCartOrderInfo(null)
-
-                                    //remove other bundle and add existing bundle to cart
-                                    removeOtherBundlesAndAddExistingBundle(addonsListInCart)
-
-                                val event_attributes: java.util.HashMap<String, Any> =
-                                    java.util.HashMap()
-                                selectedBundle!!.name?.let { it1 ->
-                                    event_attributes.put(
-                                        "Package Name",
-                                        it1
-                                    )
                                 }
-                                selectedBundle!!.target_business_usecase?.let { it1 ->
-                                    event_attributes.put(
-                                        "Package Tag",
-                                        it1
-                                    )
-                                }
-                                event_attributes.put("Package Price", originalBundlePrice)
-                                event_attributes.put("Discounted Price", offeredBundlePrice)
-                                event_attributes.put(
-                                    "Discount %",
-                                    selectedBundle!!.overall_discount_percent
-                                )
-                                selectedBundle!!.min_purchase_months?.let { it1 ->
-                                    event_attributes.put(
-                                        "Validity",
-                                        if (!prefs.getYearPricing()) it1 else 1
-                                    )
-                                }
-                                WebEngageController.trackEvent(
-                                    ADDONS_MARKETPLACE_COMPARE_PACKAGE_ADDED_TO_CART,
-                                    ADDONS_MARKETPLACE,
-                                    event_attributes
-                                )
-                                }
-                            },
-                            {
-                                it.printStackTrace()
+                            )
+                    )
+                }
+            }
 
-                            }
-                        )
-                )
-            }*/
         }
 
         binding?.packageBack?.setOnClickListener {

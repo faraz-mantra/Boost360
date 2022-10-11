@@ -70,7 +70,7 @@ class FeaturePacksAdapter(
     holder.viewPacks.setText(temp)
     holder.viewPacks.setOnClickListener {
 
-      val item: Bundles =
+      val item =
         Bundles(
           bundleList.get(position).bundle_id,
           Gson().fromJson(
