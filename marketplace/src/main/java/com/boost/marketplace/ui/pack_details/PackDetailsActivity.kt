@@ -880,6 +880,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             viewModel.getCartItems()
         }
 
+        // viewmodel
         viewModel.bundleResult().observe(this) { list ->
             if (list != null) {
                 if(bundleData?.name == "Online Basic" ) {
