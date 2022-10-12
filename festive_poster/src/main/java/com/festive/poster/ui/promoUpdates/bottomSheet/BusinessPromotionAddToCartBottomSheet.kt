@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.festive.poster.R
 import com.festive.poster.databinding.BsheetBusinessPromotionAddPurchaseCartBinding
 import com.festive.poster.utils.MarketPlaceUtils
+import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.UpdateStudioPurchaseViewModel
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
@@ -11,6 +12,7 @@ import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.framework.rest.NetworkResult
 import com.framework.utils.showSnackBarNegative
+import com.framework.webengageconstant.Update_studio_Get_feature_View_pack_details
 
 class BusinessPromotionAddToCartBottomSheet :
     BaseBottomSheetDialog<BsheetBusinessPromotionAddPurchaseCartBinding, UpdateStudioPurchaseViewModel>() {
@@ -37,7 +39,7 @@ class BusinessPromotionAddToCartBottomSheet :
     override fun onCreateView() {
         binding?.rivCloseBottomSheet?.setOnClickListener { dismiss() }
         binding?.btnAddGoToCart?.setOnClickListener {
-
+            WebEngageController.trackEvent(Update_studio_Get_feature_View_pack_details)
             MarketPlaceUtils.initiateAddonMarketplace(
                 sessionManager!!,
                 viewModel?.updateStudioFeature?.feature_code,

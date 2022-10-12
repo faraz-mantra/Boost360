@@ -49,6 +49,7 @@ import com.framework.pref.getDomainName
 import com.framework.utils.*
 import com.framework.webengageconstant.EVENT_LABEL_NULL
 import com.framework.webengageconstant.POST_AN_UPDATE
+import com.framework.webengageconstant.Update_studio_Get_feature_click
 import com.google.gson.Gson
 import com.onboarding.nowfloats.constant.PreferenceConstant
 import com.onboarding.nowfloats.managers.NavigatorManager
@@ -155,6 +156,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     private fun initUI() {
         binding?.tvChooseAPromoPack?.setOnClickListener {
+            WebEngageController.trackEvent(Update_studio_Get_feature_click)
             PromoteBrandedUpdateTemplatesBottomSheet
                 .newInstance().show(supportFragmentManager, PromoteBrandedUpdateTemplatesBottomSheet::class.java.name)
         }
