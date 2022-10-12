@@ -245,7 +245,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
         //Add to cart..
         binding?.bottomBoxOnlyBtn?.setOnClickListener {
-            val string = prefs.getSelectedDomainName()
             if (prefs.getSelectedDomainName().isNullOrEmpty() || prefs.getSelectedDomainName()?.contains("null") == true) {
                 val dialogCard = FeatureDetailsPopup(this)
                 val args = Bundle()
@@ -870,10 +869,13 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
 
     private fun initMvvm() {
-
         viewModel.PurchasedDomainResponse().observe(this) {
             prefs.storeDomainOrderType(1)
-            prefs.storeSelectedDomainName(it.domainName + it.domainType)
+            if(it.domainName != null && it.domainType != null) {
+                if(!(it.domainName.contains("null") || it.domainType.contains("null")))
+                    prefs.storeSelectedDomainName(it.domainName + it.domainType)
+            }
+
           //  viewModel.addItemToCart1(singleAddon, this, it.domainName + it.domainType)
             viewModel.getCartItems()
         }
