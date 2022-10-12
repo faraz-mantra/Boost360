@@ -2019,7 +2019,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 if (!item!!.cta_web_link.isNullOrBlank()) {
                     if (item!!.cta_web_link != null) {
 
-                        if (item!!.cta_web_link.contains("com.biz2.nowfloats.keyboard.home")) {
+                        if (item!!.cta_web_link.contains("${this.packageName}.keyboard.home")) {
 
                             val deepHashMap: HashMap<DynamicLinkParams, String> =
                                 DynamicLinksManager().getURILinkParams(Uri.parse(item.cta_web_link))
