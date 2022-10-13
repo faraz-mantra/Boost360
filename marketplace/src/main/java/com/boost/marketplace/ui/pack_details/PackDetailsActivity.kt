@@ -73,6 +73,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     DetailsFragmentListener,
     CompareListener, AddonsListener, MarketPlacePopupListener {
 
+    private var purchasedDomainType: String? = null
+    private var purchasedDomainName: String? = null
     private var featuresModel: List<FeaturesModel>? = null
     lateinit var singleAddon: FeaturesModel
     private lateinit var needMoreFeatureItem: BundlesModel
@@ -245,7 +247,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
         //Add to cart..
         binding?.bottomBoxOnlyBtn?.setOnClickListener {
-            if (prefs.getSelectedDomainName().isNullOrEmpty() || prefs.getSelectedDomainName()?.contains("null") == true) {
+            if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) {
                 val dialogCard = FeatureDetailsPopup(this)
                 val args = Bundle()
                 args.putString("expCode", experienceCode)
@@ -870,6 +872,9 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
     private fun initMvvm() {
         viewModel.PurchasedDomainResponse().observe(this) {
+            purchasedDomainName = it.domainName
+            purchasedDomainType = it.domainType
+
             prefs.storeDomainOrderType(1)
             if(it.domainName != null && it.domainType != null) {
                 if(!(it.domainName.contains("null") || it.domainType.contains("null")))
@@ -1098,7 +1103,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         }
 
         addToCart.setOnClickListener{
-            if (prefs.getSelectedDomainName().isNullOrEmpty() || prefs.getSelectedDomainName()?.contains("null") == true) {
+            if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) {
                 prefs.storeCartOrderInfo(null)
 
                 binding?.needMorePackageImg?.let { it1 -> makeFlyAnimation(it1) }
