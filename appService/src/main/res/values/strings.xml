@@ -830,7 +830,7 @@
     <string name="fb_enabled">Facebook enabled</string>
     <string name="message_soon">Start talking about your business, now!</string>
     <string name="Message_empty">You can post an offer, news or upload your catalog. \nClick on the + button below to start posting.</string>
-    <string name="add_product_image_n">Add product image</string>
+    <string name="add_product_image_n">Add product image*</string>
     <string name="post_n">Post</string>
     <string name="refreshing_status">Refreshing status...</string>
     <string name="total_money_collected_till_date">Total money collected till date</string>
