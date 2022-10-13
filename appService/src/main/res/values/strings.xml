@@ -976,7 +976,7 @@
     <string name="set_the_default_delivery_fee_inclusive_of_taxes_that_you_want_to_charge_for_all_orders_requiring_home_delivery_please_note_that_the_shipping_charges_will_be_taxed_with_the_rate_of_that_item_which_has_the_highest_rate_of_tax_in_the_order">Set the default delivery fee (inclusive of taxes) that you want to charge for all orders requiring home delivery. Please note that the shipping charges will be taxed with the rate of that item which has the highest rate of tax in the order.</string>
     <string name="flat_charges">Flat charges</string>
     <string name="cart_value_slab_s">Cart value slab(s)</string>
-    <string name="above_delivery_fee_will_be_charged_for_all_home_delivery_orders_irrespective_or_cart_value">Above delivery fee will be charged for all home delivery orders irrespective or cart value.</string>
+    <string name="above_delivery_fee_will_be_charged_for_all_home_delivery_orders_irrespective_or_cart_value">Above delivery fee will be charged for all home delivery orders irrespective of cart value.</string>
     <string name="_50">50</string>
     <string name="enter_upper_limit">Enter upper limit</string>
     <string name="enter_delivery_charges">Enter delivery charges</string>
@@ -1186,7 +1186,7 @@
     <string name="testimonial_title_n">Testimonial title</string>
     <string name="enter_company_occupation">Enter company/ occupation...</string>
     <string name="company_occupation">Company/ Occupation</string>
-    <string name="customer_name">Customer Name</string>
+    <string name="customer_name">Customer Name*</string>
     <string name="jpg_png_n_800x800px">Jpg/png\n(800x800px)</string>
     <string name="add_customer_image">Add customer image</string>
     <string name="space_start"> *</string>
