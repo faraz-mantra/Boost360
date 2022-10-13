@@ -56,11 +56,14 @@ import com.boost.marketplace.interfaces.DetailsFragmentListener
 import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 import com.boost.marketplace.ui.details.staff.StaffManagementBottomSheet
+import com.boost.marketplace.ui.feature_details_popup.FeatureDetailsPopup
+import com.boost.marketplace.ui.pack_details.PackDetailsActivity
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
 import com.boost.marketplace.ui.popup.call_track.FindingNumberLoaderBottomSheet
 import com.boost.marketplace.ui.popup.call_track.RequestCallbackBottomSheet
+import com.boost.marketplace.ui.popup.customdomains.CustomDomainLearnDomainBottomSheet
 import com.boost.marketplace.ui.popup.removeItems.RemovePackageBottomSheet
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.bumptech.glide.Glide
@@ -78,6 +81,18 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_feature_details.*
+import kotlinx.android.synthetic.main.activity_feature_details.benefits_indicator
+import kotlinx.android.synthetic.main.activity_feature_details.benefits_viewpager
+import kotlinx.android.synthetic.main.activity_feature_details.faq_container
+import kotlinx.android.synthetic.main.activity_feature_details.faq_recycler
+import kotlinx.android.synthetic.main.activity_feature_details.how_to_use_arrow
+import kotlinx.android.synthetic.main.activity_feature_details.how_to_use_recycler
+import kotlinx.android.synthetic.main.activity_feature_details.how_to_use_title_layout
+import kotlinx.android.synthetic.main.activity_feature_details.learn_less_btn
+import kotlinx.android.synthetic.main.activity_feature_details.learn_more_btn
+import kotlinx.android.synthetic.main.activity_feature_details.title_bottom3
+import kotlinx.android.synthetic.main.activity_feature_details.tv_how_to_use_title
+import kotlinx.android.synthetic.main.pack_details_bottom_sheet.*
 import retrofit2.Retrofit
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -1644,7 +1659,7 @@ class FeatureDetailsActivity :
 
     override fun onPackageClicked(item: Bundles?) {
 
-        val event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()
+        /*val event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()
         item!!.name?.let { it1 -> event_attributes.put("Package Name", it1) }
         item!!.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
 
@@ -1658,7 +1673,38 @@ class FeatureDetailsActivity :
         args.putString("bundleData", Gson().toJson(item))
         args.putString("cartList", Gson().toJson(cart_list))
         packagePopup.arguments = args
-        packagePopup.show(supportFragmentManager, "PACKAGE_POPUP")
+        packagePopup.show(supportFragmentManager, "PACKAGE_POPUP")*/
+
+        val intent = Intent(this, PackDetailsActivity::class.java)
+        intent.putExtra("bundleData", Gson().toJson(item))
+        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+
+        intent.putExtra("fpid", fpid)
+        intent.putExtra("expCode", experienceCode)
+        intent.putExtra("isDeepLink", isDeepLink)
+        intent.putExtra("deepLinkViewType", deepLinkViewType)
+        intent.putExtra("deepLinkDay", deepLinkDay)
+        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+        intent.putExtra(
+            "accountType",
+            accountType
+        )
+        intent.putStringArrayListExtra(
+            "userPurchsedWidgets",
+            userPurchsedWidgets
+        )
+        if (email != null) {
+            intent.putExtra("email", email)
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com")
+        }
+        if (mobileNo != null) {
+            intent.putExtra("mobileNo", mobileNo)
+        } else {
+            intent.putExtra("mobileNo", "9160004303")
+        }
+        intent.putExtra("profileUrl", profileUrl)
+        startActivity(intent)
     }
 
     override fun itemAddedToCart(status: Boolean) {
