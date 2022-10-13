@@ -56,6 +56,8 @@ class ComparePacksV3Activity :
     AppBaseActivity<ActivityComparePacksv3Binding, ComparePacksViewModel>(), PacksV3listener,
     PacksV3FooterListener,AddonsListenerV3, CompareListener, AddonsListener, MarketPlacePopupListener {
 
+    private var purchasedDomainType: String? = null
+    private var purchasedDomainName: String? = null
     var experienceCode: String? = null
     var screenType: String? = null
     var fpName: String? = null
@@ -161,7 +163,7 @@ class ComparePacksV3Activity :
 
         //Add to cart..
         binding?.buyPack?.setOnClickListener {
-            if (prefs.getSelectedDomainName().isNullOrEmpty() || prefs.getSelectedDomainName()?.contains("null") == true) {
+            if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) {
                 // show Popup
                 val dialogCard = FeatureDetailsPopup(this)
                 val args = Bundle()
@@ -429,6 +431,8 @@ class ComparePacksV3Activity :
     private fun initMvvm() {
 
         viewModel.PurchasedDomainResponse().observe(this) {
+            purchasedDomainName = it.domainName
+            purchasedDomainType = it.domainType
             prefs.storeDomainOrderType(1)
             prefs.storeSelectedDomainName(it.domainName + it.domainType)
             //  viewModel.addItemToCart1(singleAddon, this, it.domainName + it.domainType)
