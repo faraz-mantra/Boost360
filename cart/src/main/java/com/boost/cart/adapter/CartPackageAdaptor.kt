@@ -105,11 +105,11 @@ class CartPackageAdaptor(
       listener.deleteCartAddonsItem(bundlesList.get(position))
     }
 
-//    if(selectedDomainName.isNotEmpty()){
-//      holder.edge_cases_layout.visibility = View.GONE
-//    }else{
-//      holder.edge_cases_layout.visibility = View.VISIBLE
-//    }
+    if(selectedDomainName.isNotEmpty()){
+      holder.edge_cases_layout.visibility = View.GONE
+    }else{
+      holder.edge_cases_layout.visibility = View.VISIBLE
+    }
 
     holder.edge_cases_layout.setOnClickListener {
       listener1.actionClick(bundlesList.get(position))

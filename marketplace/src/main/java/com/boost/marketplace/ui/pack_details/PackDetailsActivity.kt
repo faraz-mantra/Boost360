@@ -1103,7 +1103,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         }
 
         addToCart.setOnClickListener{
-            if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) {
+            if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null")?:false) {
                 prefs.storeCartOrderInfo(null)
 
                 binding?.needMorePackageImg?.let { it1 -> makeFlyAnimation(it1) }
