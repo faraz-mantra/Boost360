@@ -20,6 +20,8 @@ import com.boost.dbcenterapi.utils.WebEngageController
 import com.boost.marketplace.Adapters.PacksV3BenefitsViewPagerAdapter
 import com.boost.marketplace.R
 import com.boost.marketplace.databinding.Comparepacksv3PopupBinding
+import com.boost.marketplace.interfaces.AddonsListener
+import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.interfaces.MarketPlacePopupListener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
 import com.boost.marketplace.ui.feature_details_popup.FeatureDetailsPopup
@@ -39,7 +41,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
-class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity) :
+class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity, val homeListener: CompareListener, val addonsListener: AddonsListener) :
     BaseBottomSheetDialog<Comparepacksv3PopupBinding, ComparePacksViewModel>(),
     MarketPlacePopupListener {
 
@@ -214,7 +216,7 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity) :
                         null, steps, null, faq, benefits, bundlesModel.desc ?: ""
                     )
 
-                    val dialogCard = FeatureDetailsPopup(this)
+                    val dialogCard = FeatureDetailsPopup(this, homeListener, addonsListener)
                     val args = Bundle()
                     args.putString("expCode", experienceCode)
                     args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)

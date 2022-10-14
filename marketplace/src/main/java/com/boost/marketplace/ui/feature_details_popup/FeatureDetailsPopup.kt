@@ -1,12 +1,16 @@
 package com.boost.marketplace.ui.feature_details_popup
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import com.boost.cart.CartActivity
@@ -19,11 +23,15 @@ import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.Constants
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.R
+import com.boost.marketplace.interfaces.AddonsListener
+import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.interfaces.MarketPlacePopupListener
+import com.boost.marketplace.ui.popup.removeItems.RemoveFeatureBottomSheet
 import com.framework.analytics.SentryController
 import com.framework.utils.RootUtil
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -35,7 +43,7 @@ import kotlinx.android.synthetic.main.view_select_website.view.selectWebsiteSubm
 import kotlinx.android.synthetic.main.view_selected_number.*
 import kotlinx.android.synthetic.main.view_selected_website.view.*
 
-class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragment() {
+class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListener: CompareListener, val addonsListener: AddonsListener) : DialogFragment() {
     private var domainName: String? = null
     var experienceCode: String? = null
     var screenType: String? = null
@@ -63,6 +71,9 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
     var originalBundlePrice = 0.0
     lateinit var singleAddon: FeaturesModel
     lateinit var viewModel: CartViewModel
+    var cartList: List<CartModel>? = null
+    val sameAddonsInCart = java.util.ArrayList<String>()
+    val addonsListInCart = java.util.ArrayList<String>()
 
     override fun onStart() {
         super.onStart()
@@ -72,8 +83,12 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
         dialog!!.window!!.setBackgroundDrawableResource(com.boost.cart.R.color.fullscreen_color)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view  =  inflater.inflate(R.layout.layout_details_popup, container,false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val view = inflater.inflate(R.layout.layout_details_popup, container, false)
         viewModel = ViewModelProviders.of(this).get(CartViewModel::class.java)
         prefs = SharedPrefs(requireActivity())
         fpid = requireArguments().getString("fpid")
@@ -108,7 +123,7 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
         view.select_website_layout.visibility = View.VISIBLE
         view.select_website_layout.selectWebsiteIwillDoItLater.text = "Skip & continue to cart"
         view.selectWebsiteIwillDoItLater.setOnClickListener {
-             hideAllLayout()
+            hideAllLayout()
             val intent = Intent(
                 activity,
                 CartActivity::class.java
@@ -177,8 +192,41 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
         }
 
         loadData()
+        initView()
         initMvvm()
         return view
+    }
+
+    private fun initView() {
+        if (bundleData != null) {
+            prefs.storeAddedPackageDesc(bundleData!!.desc ?: "")
+
+            val itemIds = arrayListOf<String>()
+            for (i in bundleData!!.included_features) {
+                itemIds.add(i.feature_code)
+            }
+            CompositeDisposable().add(
+                AppDatabase.getInstance(Application())!!
+                    .featuresDao()
+                    .getallFeaturesInList(itemIds)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            if (it.isNotEmpty()) {
+                                for (singleItem in it) {
+                                    if (singleItem.feature_code == "DOMAINPURCHASE") {
+                                        singleAddon = singleItem
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            it.printStackTrace()
+                        }
+                    )
+            )
+        }
     }
 
     private fun addToCart() {
@@ -198,52 +246,67 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                         {
-                            var bundleMonthlyMRP = 0.0
-                            val minMonth: Int =
-                                if (!prefs.getYearPricing() && bundleData!!.min_purchase_months != null && bundleData!!.min_purchase_months!! > 1) bundleData!!.min_purchase_months!! else 1
-
-                            for (singleItem in it) {
-                                for (item in bundleData!!.included_features) {
-                                    if (singleItem.feature_code == item.feature_code) {
-                                        bundleMonthlyMRP += RootUtil.round(
-                                            singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),
-                                            2
-                                        )
+                            if (cartList != null) {
+                                //same features available in cart
+                                for (singleItem in cartList!!) {
+                                    for (singleFeature in it) {
+                                        if (singleFeature.boost_widget_key.equals(singleItem.boost_widget_key)) {
+                                            sameAddonsInCart.add(singleFeature.name!!)
+                                            addonsListInCart.add(singleItem.item_id)
+                                        }
+                                    }
+                                    //if there is any other bundle available remove it
+                                    if (singleItem.item_type.equals("bundles")) {
+                                        addonsListInCart.add(singleItem.item_id)
                                     }
                                 }
                             }
-                            offeredBundlePrice = (bundleMonthlyMRP * minMonth)
-                            originalBundlePrice = (bundleMonthlyMRP * minMonth)
 
-                            if (bundleData!!.overall_discount_percent > 0)
-                                offeredBundlePrice = RootUtil.round(
-                                    originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent / 100),
-                                    2
+                            if (sameAddonsInCart.size > 0) {
+                                val removeFeatureBottomSheet =
+                                    RemoveFeatureBottomSheet(homeListener, addonsListener, null)
+                                val args = Bundle()
+                                args.putStringArrayList("addonNames", sameAddonsInCart)
+                                args.putStringArrayList("addonsListInCart", addonsListInCart)
+                                args.putString("packageDetails", Gson().toJson(bundleData))
+                                removeFeatureBottomSheet.arguments = args
+                                removeFeatureBottomSheet.show(
+                                    childFragmentManager,
+                                    RemoveFeatureBottomSheet::class.java.name
                                 )
-                            else
-                                offeredBundlePrice = originalBundlePrice
+                            } else {
+                                var bundleMonthlyMRP = 0.0
+                                val minMonth: Int =
+                                    if (!prefs.getYearPricing() && bundleData!!.min_purchase_months != null && bundleData!!.min_purchase_months!! > 1) bundleData!!.min_purchase_months!! else 1
 
-                            //clear cartOrderInfo from SharedPref to requestAPI again
-                            prefs.storeCartOrderInfo(null)
+                                for (singleItem in it) {
+                                    for (item in bundleData!!.included_features) {
+                                        if (singleItem.feature_code == item.feature_code) {
+                                            bundleMonthlyMRP += RootUtil.round(
+                                                singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),
+                                                2
+                                            )
+                                        }
+                                    }
+                                }
+                                offeredBundlePrice = (bundleMonthlyMRP * minMonth)
+                                originalBundlePrice = (bundleMonthlyMRP * minMonth)
 
-                            viewModel.addItemToCartPackage1(
-                                CartModel(
-                                    bundleData!!._kid,
-                                    null,
-                                    null,
-                                    bundleData!!.name,
-                                    "",
-                                    bundleData!!.primary_image!!.url,
-                                    offeredBundlePrice.toDouble(),
-                                    originalBundlePrice.toDouble(),
-                                    bundleData!!.overall_discount_percent,
-                                    1,
-                                    if (!prefs.getYearPricing() && bundleData!!.min_purchase_months != null) bundleData!!.min_purchase_months!! else 1,
-                                    "bundles",
-                                    null,
-                                    ""
-                                )
-                            )
+                                if (bundleData!!.overall_discount_percent > 0)
+                                    offeredBundlePrice = RootUtil.round(
+                                        originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent / 100),
+                                        2
+                                    )
+                                else
+                                    offeredBundlePrice = originalBundlePrice
+
+                                //clear cartOrderInfo from SharedPref to requestAPI again
+                                prefs.storeCartOrderInfo(null)
+
+                                //remove other bundle and add existing bundle to cart
+                                removeOtherBundlesAndAddExistingBundle(addonsListInCart, bundleData!!, offeredBundlePrice, originalBundlePrice)
+
+                            }
                         },
                         {
                             it.printStackTrace()
@@ -285,12 +348,52 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
         dismiss()
     }
 
+    fun removeOtherBundlesAndAddExistingBundle(addonsListInCart: List<String>, bundle: Bundles, offerBundlePrice: Double, originalBundlePrice: Double ){
+        Completable.fromAction {
+            AppDatabase.getInstance(Application())!!.cartDao().deleteCartItemsInList(addonsListInCart)
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnComplete {
+                viewModel.addItemToCartPackage1(
+                    CartModel(
+                        bundle._kid,
+                        null,
+                        null,
+                        bundle.name,
+                        "",
+                        bundle.primary_image!!.url,
+                        offerBundlePrice,
+                        originalBundlePrice,
+                        bundle.overall_discount_percent,
+                        1,
+                        if (!prefs.getYearPricing() && bundle.min_purchase_months != null) bundle.min_purchase_months!! else 1,
+                        "bundles",
+                        null,
+                        ""
+                    )
+                )
+            }
+            .doOnError {
+                Toast.makeText(requireContext(), "Not able to Delete the Add-ons!!", Toast.LENGTH_LONG).show()
+            }
+            .subscribe()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //clear previous existing data
+        sameAddonsInCart.clear()
+        addonsListInCart.clear()
+    }
+
     private fun loadData() {
         try {
             val pref = activity?.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
             val fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
             fpTag?.let { DomainRequest(Constants.clientid, it) }
                 ?.let { viewModel.getSuggestedDomains(it) }
+            viewModel.getCartItems()
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
@@ -298,35 +401,9 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
 
     private fun initMvvm() {
 
-        if (bundleData != null) {
-            prefs.storeAddedPackageDesc(bundleData!!.desc ?: "")
-
-            val itemIds = arrayListOf<String>()
-            for (i in bundleData!!.included_features) {
-                itemIds.add(i.feature_code)
-            }
-            CompositeDisposable().add(
-                AppDatabase.getInstance(Application())!!
-                    .featuresDao()
-                    .getallFeaturesInList(itemIds)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                        {
-                            if (it.isNotEmpty()) {
-                                for (singleItem in it){
-                                    if (singleItem.feature_code == "DOMAINPURCHASE"){
-                                        singleAddon= singleItem
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            it.printStackTrace()
-                        }
-                    )
-            )
-        }
+        viewModel.cartResult().observe(this, androidx.lifecycle.Observer {
+            cartList = it
+        })
 
         viewModel.updateCustomDomainsResultResult().observe(this) {
             for (singleDomain in it.domains) {
@@ -339,14 +416,14 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
 
         }
 
-        viewModel.updatesLoader.observe(this)  {
+        viewModel.updatesLoader.observe(this) {
             if (it) {
-                mainll.visibility=View.GONE
-                shimmer_anim.visibility=View.VISIBLE
+                mainll.visibility = View.GONE
+                shimmer_anim.visibility = View.VISIBLE
 
             } else {
-                mainll.visibility=View.VISIBLE
-                shimmer_anim.visibility=View.GONE
+                mainll.visibility = View.VISIBLE
+                shimmer_anim.visibility = View.GONE
             }
         }
 
@@ -457,7 +534,7 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
             intent.putExtra("bundleData", Gson().toJson(singleAddon))
             intent.putExtra("domainSelectionForCart", true)
             startActivity(intent)
-          //  dismiss()
+            //  dismiss()
         } catch (e: ClassNotFoundException) {
             e.printStackTrace()
         }

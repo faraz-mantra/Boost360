@@ -27,6 +27,7 @@ import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.SharedPrefs
+import com.boost.dbcenterapi.utils.Utils
 import com.boost.dbcenterapi.utils.WebEngageController
 import com.boost.marketplace.Adapters.*
 import com.boost.marketplace.R
@@ -35,6 +36,8 @@ import com.boost.marketplace.databinding.ActivityComparePacksv3Binding
 import com.boost.marketplace.interfaces.*
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
 import com.boost.marketplace.ui.feature_details_popup.FeatureDetailsPopup
+import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
+import com.boost.marketplace.ui.popup.call_track.RequestCallbackBottomSheet
 import com.boost.marketplace.ui.popup.removeItems.RemoveFeatureBottomSheet
 import com.framework.analytics.SentryController
 import com.framework.pref.UserSessionManager
@@ -89,9 +92,12 @@ class ComparePacksV3Activity :
     private var annualPlan = false
     var selectedBundle: Bundles? = null
     var itemInCart = false
+    var allowPackageToCart = true
 
     val sameAddonsInCart = ArrayList<String>()
     val addonsListInCart = ArrayList<String>()
+    val callTrackingHelpBottomSheet = CallTrackingHelpBottomSheet()
+    val requestCallbackBottomSheet = RequestCallbackBottomSheet()
 
     //  var listItem=ArrayList<Bundles>()
     var upgradeList: ArrayList<Bundles>? = null
@@ -151,7 +157,6 @@ class ComparePacksV3Activity :
             window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
         }
 
-      loadData()
         initMvvm()
         initializeHowToUseRecycler()
         initializeFAQRecycler()
@@ -159,13 +164,31 @@ class ComparePacksV3Activity :
         initializePacksV3Recycler()
         initializePacksV3FooterRecycler()
         initializePacksV3PricingRecycler()
+        loadData()
 
 
         //Add to cart..
         binding?.buyPack?.setOnClickListener {
+            if(!allowPackageToCart){
+                if (Utils.isExpertAvailable()) {
+                    val arg = Bundle()
+                    arg.putBoolean("allowPackageToCart", allowPackageToCart)
+                    callTrackingHelpBottomSheet.arguments = arg
+                    callTrackingHelpBottomSheet.show(
+                        supportFragmentManager,
+                        CallTrackingHelpBottomSheet::class.java.name
+                    )
+                } else {
+                    requestCallbackBottomSheet.show(
+                        supportFragmentManager,
+                        RequestCallbackBottomSheet::class.java.name
+                    )
+                }
+                return@setOnClickListener
+            }
             if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) {
                 // show Popup
-                val dialogCard = FeatureDetailsPopup(this)
+                val dialogCard = FeatureDetailsPopup(this, this, this)
                 val args = Bundle()
                 args.putString("expCode", experienceCode)
                 args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
@@ -423,12 +446,35 @@ class ComparePacksV3Activity :
             viewModel.getAllFeaturesFromDB()
             refreshViewPager = true
             viewModel.loadPackageUpdates()
+            viewModel.myPlanV3Status(
+                intent.getStringExtra("fpid") ?: "",
+                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+            )
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
     }
 
     private fun initMvvm() {
+        viewModel.myplanResultV3().observe(this, androidx.lifecycle.Observer {
+            if (it != null){
+                binding?.packsData?.visibility=View.VISIBLE
+                binding?.shimmerViewPacksv3?.visibility=View.GONE
+                val tempList = arrayListOf<String>()
+                for (item in selectedBundle!!.included_features){
+                    tempList.add(item.feature_code)
+                }
+                for(singleItem in it.Result){
+                    if(tempList.contains(singleItem.FeatureDetails.FeatureKey)){
+                        allowPackageToCart = false
+                        break
+                    }
+                }
+            } else{
+                binding?.packsData?.visibility=View.GONE
+                binding?.shimmerViewPacksv3?.visibility=View.VISIBLE
+            }
+        })
 
         viewModel.PurchasedDomainResponse().observe(this) {
             purchasedDomainName = it.domainName
@@ -516,14 +562,6 @@ class ComparePacksV3Activity :
         })
 
         viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
-            if (it != null){
-                binding?.packsData?.visibility=View.VISIBLE
-                binding?.shimmerViewPacksv3?.visibility=View.GONE
-            }
-            else{
-                binding?.packsData?.visibility=View.GONE
-                binding?.shimmerViewPacksv3?.visibility=View.VISIBLE
-            }
             viewModel.getCartItems()
             if (it != null && it.size > 0) {
                 val listItem = arrayListOf<Bundles>()
@@ -821,7 +859,7 @@ class ComparePacksV3Activity :
     }
 
     override fun onPackageClickedV3(item: Bundles?, image: ImageView?) {
-        val dialogCard = ComparePacksV3BottomSheet(this)
+        val dialogCard = ComparePacksV3BottomSheet(this, this, this)
         val args = Bundle()
         args.putString("fpid", fpid)
         args.putString("expCode", experienceCode)
