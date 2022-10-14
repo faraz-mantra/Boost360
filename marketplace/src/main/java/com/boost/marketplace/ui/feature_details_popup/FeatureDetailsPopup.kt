@@ -472,4 +472,11 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
         selected_number_layout.visibility = View.GONE
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(prefs.getSelectedDomainName().isNullOrEmpty().not()) {
+            domainName = prefs.getSelectedDomainName()
+            tv_empty_select_website.text = prefs.getSelectedDomainName()
+        }
+    }
 }
