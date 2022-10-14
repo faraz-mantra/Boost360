@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.text.InputFilter
 import android.util.Base64
 import android.util.Log
 import android.view.Gravity
@@ -33,6 +34,7 @@ import com.appservice.ui.staffs.ui.Constants
 import com.appservice.ui.staffs.widgets.EXPERIENCE_VALUE
 import com.appservice.viewmodel.StaffViewModel
 import com.appservice.ui.staffs.widgets.ExperienceBottomSheet
+import com.appservice.utils.MinMaxFilter
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.changeColorOfSubstring
 import com.framework.extensions.gone
@@ -155,6 +157,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     this.genderArray = arrayOf("Male", "Female", "Please select")
     binding?.spinnerGender?.setHintAdapter(requireContext(), list = genderArray)
     binding?.toggleIsAvailable?.isOn = true
+    binding.cetAge.filters = arrayOf<InputFilter>(MinMaxFilter(1, 99))
   }
 
   override fun onClick(v: View) {
@@ -236,7 +239,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     } else if (staffAge == null) {
       showLongToast(getString(R.string.please_enter_your_age))
       return false
-    } else if (staffAge == 0 || staffAge ?: 0 >= 100) {
+    } else if (staffAge!! < 18) {
       showLongToast(getString(R.string.please_enter_valid_age))
       return false
     } else if (specialization.isEmpty()) {

@@ -151,7 +151,7 @@
                 android:background="@drawable/bg_rect_edit_txt"
                 android:hint="@string/enter_age"
                 android:inputType="number"
-                android:maxLength="3"
+                android:maxLength="2"
                 android:padding="@dimen/size_12"
                 android:singleLine="true"
                 android:textColor="@color/warm_grey_10"
