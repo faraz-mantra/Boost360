@@ -111,7 +111,7 @@ interface NewApiInterface {
 
     //MyCurrentPlan  Marketplace V3
     @Headers("Content-Type: application/json")
-    @GET("https://api2.withfloats.com/discover/v1/GetFeatureDetails?")
+    @GET("https://api2.withfloats.com/discover/v1/GetFeatureDetails")
     fun GetMyPlanV3(
         @Query("fpId") floatingPointId: String,
         @Query("clientId") clientId: String

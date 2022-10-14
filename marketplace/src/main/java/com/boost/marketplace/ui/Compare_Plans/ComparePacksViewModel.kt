@@ -11,6 +11,7 @@ import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
 import com.boost.dbcenterapi.data.api_model.Domain.AlreadyPurchasedDomainResponse.PurchasedDomainResponse
 import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
 import com.boost.dbcenterapi.data.api_model.gst.Error
+import com.boost.dbcenterapi.data.api_model.mycurrentPlanV3.MyPlanV3
 import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
@@ -36,6 +37,7 @@ class ComparePacksViewModel: BaseViewModel() {
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
     var NewApiService = Utils.getRetrofit(true).create(NewApiInterface::class.java)
+    var NewApiService1 = Utils.getRetrofit().create(NewApiInterface::class.java)
     var experienceCode: String = "SVC"
     var _fpTag: String = "ABC"
     var allBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
@@ -46,6 +48,7 @@ class ComparePacksViewModel: BaseViewModel() {
     val compositeDisposable = CompositeDisposable()
     private var callTrackListResponse: MutableLiveData<CallTrackListResponse> = MutableLiveData()
     var purchasedDomainResult: MutableLiveData<PurchasedDomainResponse> = MutableLiveData()
+    var myplanV3Result: MutableLiveData<MyPlanV3> = MutableLiveData()
 
     fun getSpecificFeature(): LiveData<List<FeaturesModel>> {
         return featureResult
@@ -78,6 +81,9 @@ class ComparePacksViewModel: BaseViewModel() {
         return purchasedDomainResult
     }
 
+    fun myplanResultV3(): LiveData<MyPlanV3> {
+        return myplanV3Result
+    }
 
     fun getFeatureValues(list: List<String>) {
         CompositeDisposable().add(
@@ -400,5 +406,22 @@ class ComparePacksViewModel: BaseViewModel() {
                 updatesLoader.postValue(false)
             }
             .subscribe()
+    }
+
+    fun myPlanV3Status(fpid: String,clientId:String){
+        updatesLoader.postValue(true)
+        compositeDisposable.add(
+            NewApiService1.GetMyPlanV3(fpid,clientId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        myplanV3Result.postValue(it)
+                        updatesLoader.postValue(false)
+                    }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
     }
 }

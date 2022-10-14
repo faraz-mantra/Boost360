@@ -39,6 +39,7 @@ import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.CircleAnimationUtil
 import com.boost.dbcenterapi.utils.HorizontalMarginItemDecoration
 import com.boost.dbcenterapi.utils.SharedPrefs
+import com.boost.dbcenterapi.utils.Utils.isExpertAvailable
 import com.boost.dbcenterapi.utils.WebEngageController
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.*
@@ -112,6 +113,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     var originalBundlePrice = 0.0
     var featureCount = 0
     var cartCount = 0
+    var allowPackageToCart = true
 
     val sameAddonsInCart = ArrayList<String>()
     val addonsListInCart = ArrayList<String>()
@@ -225,14 +227,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
         binding?.queryText?.text = callExpertString
         query_text.setOnClickListener {
-            val from = 900
-            val to = 1800
-            val date = Date()
-            val c = Calendar.getInstance()
-            c.time = date
-            val t = c[Calendar.HOUR_OF_DAY] * 100 + c[Calendar.MINUTE]
-            val isBetween = to > from && t >= from && t <= to || to < from && (t >= from || t <= to)
-            if (isBetween) {
+            if (isExpertAvailable()) {
                 callTrackingHelpBottomSheet.show(
                     supportFragmentManager,
                     CallTrackingHelpBottomSheet::class.java.name
@@ -247,6 +242,23 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
         //Add to cart..
         binding?.bottomBoxOnlyBtn?.setOnClickListener {
+            if(!allowPackageToCart){
+                if (isExpertAvailable()) {
+                    val arg = Bundle()
+                    arg.putBoolean("allowPackageToCart", allowPackageToCart)
+                    callTrackingHelpBottomSheet.arguments = arg
+                    callTrackingHelpBottomSheet.show(
+                        supportFragmentManager,
+                        CallTrackingHelpBottomSheet::class.java.name
+                    )
+                } else {
+                    requestCallbackBottomSheet.show(
+                        supportFragmentManager,
+                        RequestCallbackBottomSheet::class.java.name
+                    )
+                }
+                return@setOnClickListener
+            }
             if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) {
 
                 if (bundleData != null) {
@@ -671,12 +683,12 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             viewModel?.setCurrentExperienceCode(code, fpTag!!)
         }
         try {
+            viewModel.myPlanV3Status(
+                intent.getStringExtra("fpid") ?: "",
+                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+            )
             viewModel?.getCartItems()
             viewModel?.getAllPackages()
-        } catch (e: Exception) {
-            SentryController.captureException(e)
-        }
-        try {
             getAlreadyPurchasedDomain()
         } catch (e: Exception) {
             SentryController.captureException(e)
@@ -983,6 +995,21 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
 
     private fun initMvvm() {
+        viewModel.myplanResultV3().observe(this, androidx.lifecycle.Observer {
+            if(it!=null) {
+                val tempList = arrayListOf<String>()
+                for (item in bundleData!!.included_features){
+                    tempList.add(item.feature_code)
+                }
+                for(singleItem in it.Result){
+                    if(tempList.contains(singleItem.FeatureDetails.FeatureKey)){
+                        allowPackageToCart = false
+                        break
+                    }
+                }
+
+            }
+        })
         viewModel.PurchasedDomainResponse().observe(this) {
             purchasedDomainName = it.domainName
             purchasedDomainType = it.domainType
@@ -1215,6 +1242,23 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         }
 
         addToCart.setOnClickListener{
+            if(!allowPackageToCart){
+                if (isExpertAvailable()) {
+                    val arg = Bundle()
+                    arg.putBoolean("allowPackageToCart", allowPackageToCart)
+                    callTrackingHelpBottomSheet.arguments = arg
+                    callTrackingHelpBottomSheet.show(
+                        supportFragmentManager,
+                        CallTrackingHelpBottomSheet::class.java.name
+                    )
+                } else {
+                    requestCallbackBottomSheet.show(
+                        supportFragmentManager,
+                        RequestCallbackBottomSheet::class.java.name
+                    )
+                }
+                return@setOnClickListener
+            }
             if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null")?:false) {
                 prefs.storeCartOrderInfo(null)
 
