@@ -180,7 +180,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
 
       RecyclerViewActionType.PRODUCT_ITEM_INCREASE_COUNT.ordinal -> {
         val productItem = item as? ProductItem ?: return
-        if (productItem.productQuantityAdded < productItem.availableUnits?.toInt()?:0) {
+        if (productItem.availableUnits == -1.0 || productItem.productQuantityAdded < productItem.availableUnits?.toInt()!!){
           productItem.productQuantityAdded = productItem.productQuantityAdded + 1
           finalProductList.firstOrNull { productItem._id.equals(it._id) }?.productQuantityAdded = productItem.productQuantityAdded
           itemsAdapter?.notifyDataSetChanged()
