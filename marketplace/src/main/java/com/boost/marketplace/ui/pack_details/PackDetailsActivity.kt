@@ -242,7 +242,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         //Add to cart..
         binding?.bottomBoxOnlyBtn?.setOnClickListener {
             if(!allowPackageToCart){
-                if (isExpertAvailable()) {
                     val arg = Bundle()
                     arg.putBoolean("allowPackageToCart", allowPackageToCart)
                     callTrackingHelpBottomSheet.arguments = arg
@@ -250,12 +249,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                         supportFragmentManager,
                         CallTrackingHelpBottomSheet::class.java.name
                     )
-                } else {
-                    requestCallbackBottomSheet.show(
-                        supportFragmentManager,
-                        RequestCallbackBottomSheet::class.java.name
-                    )
-                }
                 return@setOnClickListener
             }
             if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) {
@@ -578,6 +571,13 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
+        try {
+            viewModel?.getCartItems()
+            viewModel?.getAllPackages()
+            getAlreadyPurchasedDomain()
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
     }
 
     fun addUpdatePacks(list: ArrayList<BundlesModel>) {
@@ -896,14 +896,9 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
         viewModel.myplanResultV3().observe(this, androidx.lifecycle.Observer {
             if(it!=null) {
+                binding?.shimmerViewPacksv3?.visibility=View.GONE
+                binding?.scrollView?.visibility=View.VISIBLE
                 //load other data only after MyPlan details loaded
-                try {
-                    viewModel?.getCartItems()
-                    viewModel?.getAllPackages()
-                    getAlreadyPurchasedDomain()
-                } catch (e: Exception) {
-                    SentryController.captureException(e)
-                }
                 val tempList = arrayListOf<String>()
                 for (item in bundleData!!.included_features){
                     tempList.add(item.feature_code)
@@ -914,6 +909,10 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                         break
                     }
                 }
+            }
+            else{
+                binding?.scrollView?.visibility=View.GONE
+                binding?.shimmerViewPacksv3?.visibility=View.VISIBLE
             }
         })
         viewModel.PurchasedDomainResponse().observe(this) {
@@ -1149,7 +1148,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
         addToCart.setOnClickListener{
             if(!allowPackageToCart){
-                if (isExpertAvailable()) {
                     val arg = Bundle()
                     arg.putBoolean("allowPackageToCart", allowPackageToCart)
                     callTrackingHelpBottomSheet.arguments = arg
@@ -1157,12 +1155,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                         supportFragmentManager,
                         CallTrackingHelpBottomSheet::class.java.name
                     )
-                } else {
-                    requestCallbackBottomSheet.show(
-                        supportFragmentManager,
-                        RequestCallbackBottomSheet::class.java.name
-                    )
-                }
                 return@setOnClickListener
             }
             if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null")?:false) {

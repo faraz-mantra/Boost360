@@ -30,6 +30,7 @@ import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.pref.UserSessionManager
+import com.framework.pref.getAccessTokenAuth
 import com.framework.utils.RootUtil
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_COMPARE_PACKAGE_ADDED_TO_CART
@@ -70,6 +71,9 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity, va
 
     val sameAddonsInCart = ArrayList<String>()
     val addonsListInCart = ArrayList<String>()
+
+    private var purchasedDomainType: String? = null
+    private var purchasedDomainName: String? = null
 
     override fun getLayout(): Int {
         return R.layout.comparepacksv3_popup
@@ -154,12 +158,8 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity, va
         binding?.buyPack?.setOnClickListener {
             if (bundleData != null) {
 
-                if (prefs.getSelectedDomainName().isNullOrEmpty() || prefs.getSelectedDomainName()?.contains("null") == true) {
-                    // show Popup
+                if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) {                    // show Popup
                     prefs.storeCartOrderInfo(null)
-
-//                binding?.needMorePackageImg?.let { it1 -> makeFlyAnimation(it1) }
-
 
                     val bundlesModel = BundlesModel(
                         bundleData._kid,
@@ -413,6 +413,7 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity, va
             viewModel?.setCurrentExperienceCode(code, fpTag!!)
         }
         try {
+            getAlreadyPurchasedDomain()
             viewModel?.getCartItems()
         } catch (e: Exception) {
             SentryController.captureException(e)
@@ -420,6 +421,15 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity, va
     }
 
     private fun initMvvm() {
+
+        viewModel?.PurchasedDomainResponse()?.observe(this) {
+            purchasedDomainName = it.domainName
+            purchasedDomainType = it.domainType
+            prefs.storeDomainOrderType(1)
+            prefs.storeSelectedDomainName(it.domainName + it.domainType)
+            //  viewModel.addItemToCart1(singleAddon, this, it.domainName + it.domainType)
+            //   viewModel.getCartItems
+        }
 
         viewModel?.cartResult()?.observe(this, Observer {
             cartList = it
@@ -531,5 +541,15 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity, va
 
     override fun featureDetailsPopup(domain: String) {
         prefs.storeSelectedDomainName(domain)
+    }
+
+    private fun getAlreadyPurchasedDomain() {
+        val pref = context?.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+        val fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
+        val auth = context?.let { UserSessionManager(it).getAccessTokenAuth()?.barrierToken() } ?: ""
+        viewModel?.getAlreadyPurchasedDomain(
+            auth,
+            fpTag?:"",
+            "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
     }
 }
