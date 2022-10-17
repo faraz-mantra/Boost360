@@ -170,7 +170,6 @@ class ComparePacksV3Activity :
         //Add to cart..
         binding?.buyPack?.setOnClickListener {
             if(!allowPackageToCart){
-                if (Utils.isExpertAvailable()) {
                     val arg = Bundle()
                     arg.putBoolean("allowPackageToCart", allowPackageToCart)
                     callTrackingHelpBottomSheet.arguments = arg
@@ -178,12 +177,6 @@ class ComparePacksV3Activity :
                         supportFragmentManager,
                         CallTrackingHelpBottomSheet::class.java.name
                     )
-                } else {
-                    requestCallbackBottomSheet.show(
-                        supportFragmentManager,
-                        RequestCallbackBottomSheet::class.java.name
-                    )
-                }
                 return@setOnClickListener
             }
             if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) {
@@ -443,9 +436,9 @@ class ComparePacksV3Activity :
             viewModel.setCurrentExperienceCode(code, fpTag!!)
         }
         try {
+            viewModel.loadPackageUpdates()
             viewModel.getAllFeaturesFromDB()
             refreshViewPager = true
-            viewModel.loadPackageUpdates()
             viewModel.myPlanV3Status(
                 intent.getStringExtra("fpid") ?: "",
                 "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"

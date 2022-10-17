@@ -417,7 +417,7 @@ class ComparePacksViewModel: BaseViewModel() {
                 .subscribe(
                     {
                         myplanV3Result.postValue(it)
-                        updatesLoader.postValue(false)
+//                        updatesLoader.postValue(false)
                     }, {
                         updatesLoader.postValue(false)
                         updatesError.postValue(it.message)
