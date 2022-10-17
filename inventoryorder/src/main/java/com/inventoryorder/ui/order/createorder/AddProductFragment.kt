@@ -217,14 +217,14 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         (context as? FragmentContainerOrderActivity)?.onBackPressed()
       } else if (addMore && req != null) {
         createOrderRequest = req
-        finalProductList.forEach { prod ->
-          val addedProduct = createOrderRequest.items?.firstOrNull { it.productOrOfferId.equals(prod._id) }
-          if (addedProduct != null) {
-            totalPrice += addedProduct.getPayablePriceAmount()
-            prod.productQuantityAdded = addedProduct.quantity
-            totalCartItems += addedProduct.quantity
-          } else prod.productQuantityAdded = 0
-        }
+//        finalProductList.forEach { prod ->
+//          val addedProduct = createOrderRequest.items?.firstOrNull { it.productOrOfferId.equals(prod._id) }
+//          if (addedProduct != null) {
+//            totalPrice += addedProduct.getPayablePriceAmount()
+//            prod.productQuantityAdded = addedProduct.quantity
+//            totalCartItems += addedProduct.quantity
+//          } else prod.productQuantityAdded = 0
+//        }
         productList.clear()
         productList.addAll(finalProductList)
         itemsAdapter?.notifyDataSetChanged()
