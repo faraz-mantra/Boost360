@@ -5,7 +5,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.facebook.appevents.suggestedevents.ViewOnClickListener
+import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.festive.poster.R
 import com.festive.poster.constant.RecyclerViewActionType
 import com.festive.poster.databinding.BsheetPromoteUsingBrandedUpdateTemplatesBinding
@@ -23,6 +23,9 @@ import com.framework.models.BaseViewModel
 import com.framework.rest.NetworkResult
 import com.framework.utils.showSnackBarNegative
 import com.framework.utils.toArrayList
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 class PromoteBrandedUpdateTemplatesBottomSheet :
     BaseBottomSheetDialog<BsheetPromoteUsingBrandedUpdateTemplatesBinding,
@@ -30,6 +33,7 @@ class PromoteBrandedUpdateTemplatesBottomSheet :
 
     private var adapter: AppBaseRecyclerViewAdapter<FeaturePurchaseUiModel>?=null
     private var purchaseList: ArrayList<FeaturePurchaseUiModel>?=null
+    val packageListInCart = arrayListOf<String>()
 
     companion object {
 
@@ -54,7 +58,7 @@ class PromoteBrandedUpdateTemplatesBottomSheet :
         binding?.rivCloseBottomSheet?.setOnClickListener { dismiss() }
 
         observeApis()
-
+        getCartItems()
         setOnClickListener(binding?.btnViewPackDetails)
     }
 
@@ -113,13 +117,18 @@ class PromoteBrandedUpdateTemplatesBottomSheet :
                         false
                     )
                 }else{
-                    MarketPlaceUtils.initiateAddonMarketplace(
-                        sessionManager!!,
-                        selectedItem?.code,
-                        requireActivity(),
-                        null,
-                    true
-                    )
+                    if(packageListInCart.size > 0){
+                        val removePackageBottomSheet = RemovePackageBottomSheet(packageListInCart, selectedItem?.code!!)
+                        removePackageBottomSheet.show(childFragmentManager, RemovePackageBottomSheet::class.java.name)
+                    }else {
+                        MarketPlaceUtils.initiateAddonMarketplace(
+                            sessionManager!!,
+                            selectedItem?.code,
+                            requireActivity(),
+                            null,
+                            true
+                        )
+                    }
                 }
             }
            /* binding?.linearAdvancedWrapper -> {
@@ -175,5 +184,26 @@ class PromoteBrandedUpdateTemplatesBottomSheet :
             binding?.btnViewPackDetails?.text=getString(R.string.add_and_go_to_cart)
         }
         adapter?.notifyDataSetChanged()
+    }
+
+    fun getCartItems(){
+            CompositeDisposable().add(
+            AppDatabase.getInstance(requireActivity().application)!!
+                .cartDao()
+                .getCartItems()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess {
+                    for(singleItem in it){
+                        if(singleItem.item_type.equals("bundles")){
+                            packageListInCart.add(singleItem.item_id)
+                        }
+                    }
+                }
+                .doOnError {
+                    it.printStackTrace()
+                }
+                .subscribe()
+        )
     }
 }
