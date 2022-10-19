@@ -450,6 +450,7 @@ class ComparePacksV3Activity :
 
     private fun initMvvm() {
         viewModel.myplanResultV3().observe(this, androidx.lifecycle.Observer {
+            allowPackageToCart = true
             if (it != null){
                 binding?.packsData?.visibility=View.VISIBLE
                 binding?.shimmerViewPacksv3?.visibility=View.GONE
@@ -898,6 +899,10 @@ class ComparePacksV3Activity :
 
     override fun onSelectedPack(selectedBundle: Bundles, itemList1: List<CartModel>?) {
 
+        viewModel.myPlanV3Status(
+            intent.getStringExtra("fpid") ?: "",
+            "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+        )
         itemInCart = false
         this.selectedBundle = selectedBundle
 

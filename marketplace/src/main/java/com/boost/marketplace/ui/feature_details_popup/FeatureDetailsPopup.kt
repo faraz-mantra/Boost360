@@ -168,7 +168,7 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
                                     args.putStringArrayList("addonsListInCart", addonsListInCart)
                                     args.putString("packageDetails", Gson().toJson(bundleData!!))
                                     removeFeatureBottomSheet.arguments = args
-                                    removeFeatureBottomSheet.show(childFragmentManager, RemoveFeatureBottomSheet::class.java.name)
+                                    fragmentManager?.let { it1 -> removeFeatureBottomSheet.show(it1, RemoveFeatureBottomSheet::class.java.name) }
                                 }else {
 
                                     var bundleMonthlyMRP = 0.0
@@ -385,10 +385,13 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
                                 args.putStringArrayList("addonsListInCart", addonsListInCart)
                                 args.putString("packageDetails", Gson().toJson(bundleData))
                                 removeFeatureBottomSheet.arguments = args
-                                removeFeatureBottomSheet.show(
-                                    childFragmentManager,
-                                    RemoveFeatureBottomSheet::class.java.name
-                                )
+                                fragmentManager?.let { it1 ->
+                                    removeFeatureBottomSheet.show(
+                                        it1,
+                                        RemoveFeatureBottomSheet::class.java.name
+                                    )
+                                }
+                                dismiss()
                             } else {
                                 var bundleMonthlyMRP = 0.0
                                 val minMonth: Int =
@@ -421,6 +424,37 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
                                 //remove other bundle and add existing bundle to cart
                                 removeOtherBundlesAndAddExistingBundle(addonsListInCart, bundleData!!, offeredBundlePrice, originalBundlePrice)
 
+                                val intent = Intent(
+                                    activity,
+                                    CartActivity::class.java
+                                )
+                                intent.putExtra("fpid", fpid)
+                                intent.putExtra("expCode", experienceCode)
+                                intent.putExtra("isDeepLink", isDeepLink)
+                                intent.putExtra("deepLinkViewType", deepLinkViewType)
+                                intent.putExtra("deepLinkDay", deepLinkDay)
+                                intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+                                intent.putExtra(
+                                    "accountType",
+                                    accountType
+                                )
+                                intent.putStringArrayListExtra(
+                                    "userPurchsedWidgets",
+                                    userPurchsedWidgets
+                                )
+                                if (email != null) {
+                                    intent.putExtra("email", email)
+                                } else {
+                                    intent.putExtra("email", "ria@nowfloats.com")
+                                }
+                                if (mobileNo != null) {
+                                    intent.putExtra("mobileNo", mobileNo)
+                                } else {
+                                    intent.putExtra("mobileNo", "9160004303")
+                                }
+                                intent.putExtra("profileUrl", profileUrl)
+                                startActivity(intent)
+                                dismiss()
                             }
                         },
                         {
@@ -430,37 +464,7 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
             )
         }
 
-        val intent = Intent(
-            activity,
-            CartActivity::class.java
-        )
-        intent.putExtra("fpid", fpid)
-        intent.putExtra("expCode", experienceCode)
-        intent.putExtra("isDeepLink", isDeepLink)
-        intent.putExtra("deepLinkViewType", deepLinkViewType)
-        intent.putExtra("deepLinkDay", deepLinkDay)
-        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-        intent.putExtra(
-            "accountType",
-            accountType
-        )
-        intent.putStringArrayListExtra(
-            "userPurchsedWidgets",
-            userPurchsedWidgets
-        )
-        if (email != null) {
-            intent.putExtra("email", email)
-        } else {
-            intent.putExtra("email", "ria@nowfloats.com")
-        }
-        if (mobileNo != null) {
-            intent.putExtra("mobileNo", mobileNo)
-        } else {
-            intent.putExtra("mobileNo", "9160004303")
-        }
-        intent.putExtra("profileUrl", profileUrl)
-        startActivity(intent)
-        dismiss()
+
     }
 
     fun removeOtherBundlesAndAddExistingBundle(addonsListInCart: List<String>, bundle: Bundles, offerBundlePrice: Double, originalBundlePrice: Double ){

@@ -3863,7 +3863,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
             )
             intent.putExtra("couponAmount", couponDiscountAmount)
         }
-        intent.putExtra("cartItems", cartList.size.toString())
+        intent.putExtra("cartItems", cartList.size)
         intent.putExtra("discountText", total)
         intent.putExtra("transaction_id", result.Result.TransactionId)
         intent.putExtra("email", (activity as CartActivity).email)
