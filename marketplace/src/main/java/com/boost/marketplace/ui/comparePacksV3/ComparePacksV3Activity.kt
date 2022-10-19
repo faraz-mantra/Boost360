@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.cart.CartActivity
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
+import com.boost.dbcenterapi.data.api_model.mycurrentPlanV3.MyPlanV3
 import com.boost.dbcenterapi.data.api_model.packageAddonsCompares.AddonsPacksIn
 import com.boost.dbcenterapi.data.api_model.packageAddonsCompares.PackageAddonsCompares
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
@@ -93,6 +94,7 @@ class ComparePacksV3Activity :
     var selectedBundle: Bundles? = null
     var itemInCart = false
     var allowPackageToCart = true
+    var myPlanV3: MyPlanV3? = null
 
     val sameAddonsInCart = ArrayList<String>()
     val addonsListInCart = ArrayList<String>()
@@ -450,20 +452,11 @@ class ComparePacksV3Activity :
 
     private fun initMvvm() {
         viewModel.myplanResultV3().observe(this, androidx.lifecycle.Observer {
-            allowPackageToCart = true
             if (it != null){
                 binding?.packsData?.visibility=View.VISIBLE
                 binding?.shimmerViewPacksv3?.visibility=View.GONE
-                val tempList = arrayListOf<String>()
-                for (item in selectedBundle!!.included_features){
-                    tempList.add(item.feature_code)
-                }
-                for(singleItem in it.Result){
-                    if(tempList.contains(singleItem.FeatureDetails.FeatureKey)){
-                        allowPackageToCart = false
-                        break
-                    }
-                }
+                myPlanV3 = it
+                getAllowPackageToCart()
             } else{
                 binding?.packsData?.visibility=View.GONE
                 binding?.shimmerViewPacksv3?.visibility=View.VISIBLE
@@ -698,6 +691,20 @@ class ComparePacksV3Activity :
         })
     }
 
+    private fun getAllowPackageToCart() {
+        allowPackageToCart = true
+        val tempList = arrayListOf<String>()
+        for (item in selectedBundle!!.included_features){
+            tempList.add(item.feature_code)
+        }
+        for(singleItem in myPlanV3!!.Result){
+            if(tempList.contains(singleItem.FeatureDetails.FeatureKey)){
+                allowPackageToCart = false
+                break
+            }
+        }
+    }
+
     private fun initializeHowToUseRecycler() {
         val gridLayoutManager = GridLayoutManager(applicationContext, 1)
         gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -898,13 +905,9 @@ class ComparePacksV3Activity :
 
 
     override fun onSelectedPack(selectedBundle: Bundles, itemList1: List<CartModel>?) {
-
-        viewModel.myPlanV3Status(
-            intent.getStringExtra("fpid") ?: "",
-            "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
-        )
         itemInCart = false
         this.selectedBundle = selectedBundle
+        getAllowPackageToCart()
 
         var bundleMonthlyMRP = 0.0
         val minMonth: Int =

@@ -32,6 +32,7 @@ import com.boost.cart.adapter.ZoomOutPageTransformer
 import com.boost.cart.utils.Constants
 import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
+import com.boost.dbcenterapi.data.api_model.mycurrentPlanV3.MyPlanV3
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
@@ -114,6 +115,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     var featureCount = 0
     var cartCount = 0
     var allowPackageToCart = true
+    var myPlanV3: MyPlanV3? = null
 
     val sameAddonsInCart = ArrayList<String>()
     val addonsListInCart = ArrayList<String>()
@@ -241,6 +243,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
         //Add to cart..
         binding?.bottomBoxOnlyBtn?.setOnClickListener {
+            getAllowPackageToCart(bundleData!!)
             if(!allowPackageToCart){
                     val arg = Bundle()
                     arg.putBoolean("allowPackageToCart", allowPackageToCart)
@@ -899,19 +902,9 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             if(it!=null) {
                 binding?.shimmerViewPacksv3?.visibility=View.GONE
                 binding?.scrollView?.visibility=View.VISIBLE
-                //load other data only after MyPlan details loaded
-                val tempList = arrayListOf<String>()
-                for (item in bundleData!!.included_features){
-                    tempList.add(item.feature_code)
-                }
-                for(singleItem in it.Result){
-                    if(tempList.contains(singleItem.FeatureDetails.FeatureKey)){
-                        allowPackageToCart = false
-                        break
-                    }
-                }
-            }
-            else{
+                myPlanV3 = it
+                getAllowPackageToCart(bundleData!!)
+            } else{
                 binding?.scrollView?.visibility=View.GONE
                 binding?.shimmerViewPacksv3?.visibility=View.VISIBLE
             }
@@ -1149,6 +1142,38 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         }
 
         addToCart.setOnClickListener{
+
+            val temp = Gson().fromJson<List<IncludedFeature>>(
+                bundlesModel.included_features,
+                object : TypeToken<List<IncludedFeature>>() {}.type
+            )
+            val faq = Gson().fromJson<List<FrequentlyAskedQuestion>>(
+                bundlesModel.frequently_asked_questions,
+                object : TypeToken<List<FrequentlyAskedQuestion>>() {}.type
+            )
+            val steps = Gson().fromJson<List<HowToActivate>>(
+                bundlesModel.how_to_activate,
+                object : TypeToken<List<HowToActivate>>() {}.type
+            )
+            val benefits = if(bundlesModel.benefits != null) Gson().fromJson<List<String>>(
+                bundlesModel.benefits!!,
+                object : TypeToken<List<String>>() {}.type
+            ) else arrayListOf()
+            val bundle = Bundles(
+                bundlesModel.bundle_id,
+                temp,
+                bundlesModel.min_purchase_months,
+                bundlesModel.name,
+                bundlesModel.overall_discount_percent,
+                PrimaryImage(bundlesModel.primary_image),
+                bundlesModel.target_business_usecase,
+                Gson().fromJson<List<String>>(
+                    bundlesModel.exclusive_to_categories,
+                    object : TypeToken<List<String>>() {}.type
+                ),
+                null, steps, null, faq, benefits, bundlesModel.desc ?: ""
+            )
+            getAllowPackageToCart(bundle)
             if(!allowPackageToCart){
                     val arg = Bundle()
                     arg.putBoolean("allowPackageToCart", allowPackageToCart)
@@ -1161,37 +1186,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             }
             if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null")?:false) {
                 prefs.storeCartOrderInfo(null)
-
-                val temp = Gson().fromJson<List<IncludedFeature>>(
-                    bundlesModel.included_features,
-                    object : TypeToken<List<IncludedFeature>>() {}.type
-                )
-                val faq = Gson().fromJson<List<FrequentlyAskedQuestion>>(
-                    bundlesModel.frequently_asked_questions,
-                    object : TypeToken<List<FrequentlyAskedQuestion>>() {}.type
-                )
-                val steps = Gson().fromJson<List<HowToActivate>>(
-                    bundlesModel.how_to_activate,
-                    object : TypeToken<List<HowToActivate>>() {}.type
-                )
-                val benefits = if(bundlesModel.benefits != null) Gson().fromJson<List<String>>(
-                    bundlesModel.benefits!!,
-                    object : TypeToken<List<String>>() {}.type
-                ) else arrayListOf()
-                val bundle = Bundles(
-                    bundlesModel.bundle_id,
-                    temp,
-                    bundlesModel.min_purchase_months,
-                    bundlesModel.name,
-                    bundlesModel.overall_discount_percent,
-                    PrimaryImage(bundlesModel.primary_image),
-                    bundlesModel.target_business_usecase,
-                    Gson().fromJson<List<String>>(
-                        bundlesModel.exclusive_to_categories,
-                        object : TypeToken<List<String>>() {}.type
-                    ),
-                    null, steps, null, faq, benefits, bundlesModel.desc ?: ""
-                )
 
                 val dialogCard = FeatureDetailsPopup(this, this, this)
                 val args = Bundle()
@@ -1685,5 +1679,19 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             auth,
             fpTag?:"",
             "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
+    }
+
+    private fun getAllowPackageToCart(selectedBundle: Bundles) {
+        allowPackageToCart = true
+        val tempList = arrayListOf<String>()
+        for (item in selectedBundle.included_features){
+            tempList.add(item.feature_code)
+        }
+        for(singleItem in myPlanV3!!.Result){
+            if(tempList.contains(singleItem.FeatureDetails.FeatureKey)){
+                allowPackageToCart = false
+                break
+            }
+        }
     }
 }
