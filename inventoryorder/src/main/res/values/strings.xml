@@ -215,7 +215,7 @@
   <string name="order_shipped">Order shipped successfully!</string>
   <string name="apt_start_success">Appointment start successfully!</string>
   <string name="apt_served_success">Appointment served successfully!</string>
-  <string name="re_booking_reminder">Reminder send successfully!</string>
+  <string name="re_booking_reminder">Reminder sent successfully!</string>
   <string name="appointment_feedback_requested">Appointment feedback requested!</string>
   <string name="order_feedback_requested">Order feedback requested!</string>
   <string name="order_delivery">Order delivery successfully!</string>
