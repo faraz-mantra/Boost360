@@ -895,6 +895,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         })
 
         viewModel.myplanResultV3().observe(this, androidx.lifecycle.Observer {
+            allowPackageToCart = true
             if(it!=null) {
                 binding?.shimmerViewPacksv3?.visibility=View.GONE
                 binding?.scrollView?.visibility=View.VISIBLE
