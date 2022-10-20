@@ -157,6 +157,8 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   override fun onResume() {
     super.onResume()
+    offSet = PAGE_START
+    getListServiceFilterApi(isFirst = true, offSet = offSet, limit = limit)
     var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
     if (fpDetails.isNullOrEmpty()) fpDetails = "Services"
     setToolbarTitle("$fpDetails ${if (TOTAL_ELEMENTS > 0) "(${TOTAL_ELEMENTS})" else ""}".capitalizeUtil())
