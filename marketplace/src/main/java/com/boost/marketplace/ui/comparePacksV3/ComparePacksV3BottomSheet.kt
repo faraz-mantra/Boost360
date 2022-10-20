@@ -447,13 +447,13 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity, va
         viewModel?.myplanResultV3()?.observe(this, androidx.lifecycle.Observer {
             allowPackageToCart = true
             if(it!=null) {
-//                binding?.shimmerViewPacksv3?.visibility=View.GONE
-//                binding?.scrollView?.visibility=View.VISIBLE
+                binding?.shimmerViewDomainv3?.visibility=View.GONE
+                binding?.container1?.visibility=View.VISIBLE
                 myPlanV3 = it
                 getAllowPackageToCart(bundleData)
             } else{
-//                binding?.scrollView?.visibility=View.GONE
-//                binding?.shimmerViewPacksv3?.visibility=View.VISIBLE
+                binding?.shimmerViewDomainv3?.visibility=View.VISIBLE
+                binding?.container1?.visibility=View.GONE
             }
         })
 
