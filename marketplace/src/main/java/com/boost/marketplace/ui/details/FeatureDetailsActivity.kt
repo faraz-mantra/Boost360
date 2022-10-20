@@ -454,8 +454,7 @@ class FeatureDetailsActivity :
             {
                 Toasty.info(this, "Coming soon...", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
-            }
-            else {
+            } else {
                 if (packageItem) {
                     val args = Bundle()
                     args.putString("addonName", addonDetails!!.name)
@@ -646,65 +645,85 @@ class FeatureDetailsActivity :
             )
             claim_button.setText(content)
             claim_button.setOnClickListener {
-                if (!itemInCartStatus) {
-                    if (addonDetails!! != null) {
-                        prefs.storeCartOrderInfo(null)
-                        viewModel.addItemToCart1(
-                            addonDetails!!,
-                            this,
-                            seleced_value_text.text.toString()
+                    if(packageItem){
+                        val args = Bundle()
+                        args.putString("addonName", addonDetails!!.name)
+                        removePackageBottomSheet.arguments = args
+                        removePackageBottomSheet.show(
+                            supportFragmentManager,
+                            RemovePackageBottomSheet::class.java.name
                         )
-                        val event_attributes: HashMap<String, Any> = HashMap()
-                        addonDetails!!.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
-                        event_attributes.put("Addon Price", addonDetails!!.price)
-                        event_attributes.put(
-                            "Addon Discounted Price",
-                            getDiscountedPrice(
-                                addonDetails!!.price,
+                    }else {
+                        if(!itemInCartStatus) {
+                            prefs.storeCartOrderInfo(null)
+                            viewModel.addItemToCart1(
+                                addonDetails!!,
+                                this,
+                                seleced_value_text.text.toString()
+                            )
+                            val event_attributes: HashMap<String, Any> = HashMap()
+                            addonDetails!!.name?.let { it1 ->
+                                event_attributes.put(
+                                    "Addon Name",
+                                    it1
+                                )
+                            }
+                            event_attributes.put("Addon Price", addonDetails!!.price)
+                            event_attributes.put(
+                                "Addon Discounted Price",
+                                getDiscountedPrice(
+                                    addonDetails!!.price,
+                                    addonDetails!!.discount_percent
+                                )
+                            )
+                            event_attributes.put(
+                                "Addon Discount %",
                                 addonDetails!!.discount_percent
                             )
-                        )
-                        event_attributes.put("Addon Discount %", addonDetails!!.discount_percent)
-                        event_attributes.put("Addon Validity", 1)
-                        event_attributes.put("Addon Feature Key", addonDetails!!.boost_widget_key)
-                        addonDetails!!.target_business_usecase?.let { it1 ->
+                            event_attributes.put("Addon Validity", 1)
                             event_attributes.put(
-                                "Addon Tag",
-                                it1
+                                "Addon Feature Key",
+                                addonDetails!!.boost_widget_key
                             )
+                            addonDetails!!.target_business_usecase?.let { it1 ->
+                                event_attributes.put(
+                                    "Addon Tag",
+                                    it1
+                                )
+                            }
+                            WebEngageController.trackEvent(
+                                ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
+                                ADDONS_MARKETPLACE,
+                                event_attributes
+                            )
+                            itemInCartStatus = true
                         }
-                        WebEngageController.trackEvent(
-                            ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
-                            ADDONS_MARKETPLACE,
-                            event_attributes
-                        )
-                        itemInCartStatus = true
+                        val pref = this?.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+                        val fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
+                        val intent = Intent(applicationContext, CartActivity::class.java)
+                        intent.putExtra("fpid", fpid)
+                        intent.putExtra("fpTag", fpTag)
+                        intent.putExtra("expCode", experienceCode)
+                        intent.putExtra("isDeepLink", isDeepLink)
+                        intent.putExtra("deepLinkViewType", deepLinkViewType)
+                        intent.putExtra("deepLinkDay", deepLinkDay)
+                        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+                        intent.putExtra("accountType", accountType)
+                        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+                        if (email != null) {
+                            intent.putExtra("email", email)
+                        } else {
+                            intent.putExtra("email", "ria@nowfloats.com")
+                        }
+                        if (mobileNo != null) {
+                            intent.putExtra("mobileNo", mobileNo)
+                        } else {
+                            intent.putExtra("mobileNo", "9160004303")
+                        }
+                        intent.putExtra("profileUrl", profileUrl)
+                        startActivity(intent)
                     }
-                }
-                val pref = this?.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
-                val fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
-                val intent = Intent(applicationContext, CartActivity::class.java)
-                intent.putExtra("fpid", fpid)
-                intent.putExtra("fpTag", fpTag)
-                intent.putExtra("expCode", experienceCode)
-                intent.putExtra("isDeepLink", isDeepLink)
-                intent.putExtra("deepLinkViewType", deepLinkViewType)
-                intent.putExtra("deepLinkDay", deepLinkDay)
-                intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-                intent.putExtra("accountType", accountType)
-                intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
-                if (email != null) {
-                    intent.putExtra("email", email)
-                } else {
-                    intent.putExtra("email", "ria@nowfloats.com")
-                }
-                if (mobileNo != null) {
-                    intent.putExtra("mobileNo", mobileNo)
-                } else {
-                    intent.putExtra("mobileNo", "9160004303")
-                }
-                intent.putExtra("profileUrl", profileUrl)
-                startActivity(intent)
+
             }
             choose_different_value.setText("Pick another Domain")
             choose_different_value.setOnClickListener {
@@ -783,7 +802,6 @@ class FeatureDetailsActivity :
                                 itemInCartStatus = true
                             }
                         }
-
                     } else {
                         Toasty.error(
                             this,
