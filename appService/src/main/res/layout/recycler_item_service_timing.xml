@@ -24,7 +24,6 @@
       style="@style/StaffProfileTextContent"
       android:layout_width="0dp"
       android:layout_weight="1"
-      android:maxLines="1"
       android:paddingStart="@dimen/size_8"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toEndOf="@+id/customImageView" />
