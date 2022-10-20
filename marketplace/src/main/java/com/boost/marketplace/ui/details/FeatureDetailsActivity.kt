@@ -697,6 +697,7 @@ class FeatureDetailsActivity :
                                 event_attributes
                             )
                             itemInCartStatus = true
+                            viewModel.getCartItems()
                         }
                         val pref = this?.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
                         val fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
@@ -1131,6 +1132,13 @@ class FeatureDetailsActivity :
                                 )
                                 add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
                                 add_item_to_cart.text = getString(R.string.added_to_cart)
+                            } else if(claim_button.visibility == VISIBLE){
+                                claim_button.background = ContextCompat.getDrawable(
+                                    this,
+                                    R.drawable.added_to_cart_grey
+                                )
+                                claim_button.setTextColor(getResources().getColor(R.color.tv_color_BB))
+                                claim_button.text = getString(R.string.added_to_cart)
                             } else {
                                 add_item_to_cart_new.background = ContextCompat.getDrawable(
                                     this,
@@ -1453,6 +1461,31 @@ class FeatureDetailsActivity :
                         R.drawable.cta_button_click_effect
                     )
                     add_item_to_cart.setTextColor(Color.WHITE)
+                } else if(claim_button.visibility == VISIBLE){
+                    val discount = 100 - addonDetails!!.discount_percent
+                    val paymentPrice = Utils.priceCalculatorForYear(
+                        (discount * addonDetails!!.price) / 100.0,
+                        addonDetails!!.widget_type ?: "",
+                        this
+                    )
+                    pricing = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                        .format(paymentPrice) + Utils.yearlyOrMonthlyOrEmptyValidity(
+                        addonDetails!!.widget_type ?: "", this
+                    )
+                    numberprice = pricing
+                    val content = SpannableString("Claim the above domain\n@ ${numberprice}")
+                    content.setSpan(
+                        StyleSpan(Typeface.BOLD),
+                        0,
+                        22,
+                        0
+                    )
+                    claim_button.setText(content)
+                    claim_button.background = ContextCompat.getDrawable(
+                        this,
+                        R.drawable.cta_button_click_effect
+                    )
+                    claim_button.setTextColor(getResources().getColor(R.color.white))
                 } else {
                     add_item_to_cart_new.visibility = View.VISIBLE
                     add_item_to_cart_new.background = ContextCompat.getDrawable(
