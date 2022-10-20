@@ -27,6 +27,7 @@ import com.boost.dbcenterapi.data.api_model.packageAddonsCompares.PackageAddonsC
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.dbcenterapi.utils.Constants
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.dbcenterapi.utils.Utils
 import com.boost.dbcenterapi.utils.WebEngageController
@@ -1032,23 +1033,70 @@ class ComparePacksV3Activity :
     }
 
     override fun onPackageClicked(item: Bundles?, image: ImageView?) {
-        viewModel.addItemToCartPackage1(
-            CartModel(
-                selectedBundle!!._kid,
-                null,
-                null,
-                selectedBundle!!.name,
-                "",
-                selectedBundle!!.primary_image!!.url,
-                offeredBundlePrice.toDouble(),
-                originalBundlePrice.toDouble(),
-                selectedBundle!!.overall_discount_percent,
-                1,
-                if (!prefs.getYearPricing() && selectedBundle!!.min_purchase_months != null) selectedBundle!!.min_purchase_months!! else 1,
-                "bundles",
-                null,
-                ""
-            )
+        val itemIds = arrayListOf<String>()
+        for (i in item?.included_features!!) {
+            itemIds.add(i.feature_code)
+        }
+        CompositeDisposable().add(
+            AppDatabase.getInstance(application)!!
+                .featuresDao()
+                .getallFeaturesInList(itemIds)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        var bundleMonthlyMRP = 0.0
+                        val minMonth: Int =
+                            if (item.min_purchase_months != null && item.min_purchase_months!! > 1) item.min_purchase_months!! else 1
+
+                        for (singleItem in it) {
+                            for (items in item.included_features) {
+                                if (singleItem.feature_code == items.feature_code) {
+                                    bundleMonthlyMRP += RootUtil.round(
+                                        singleItem.price - ((singleItem.price * items.feature_price_discount_percent) / 100.0),
+                                        2
+                                    )
+                                }
+                            }
+                        }
+
+                        offeredBundlePrice = (bundleMonthlyMRP * minMonth)
+                        originalBundlePrice = (bundleMonthlyMRP * minMonth)
+
+                        if (item.overall_discount_percent > 0)
+                            offeredBundlePrice = RootUtil.round(
+                                originalBundlePrice - (originalBundlePrice * item.overall_discount_percent / 100),
+                                2
+                            )
+                        else
+                            offeredBundlePrice = originalBundlePrice
+
+                        //clear cartOrderInfo from SharedPref to requestAPI again
+                        prefs.storeCartOrderInfo(null)
+                        viewModel.addItemToCartPackage1(
+                            CartModel(
+                                item._kid,
+                                null,
+                                null,
+                                item.name,
+                                "",
+                                item.primary_image!!.url,
+                                offeredBundlePrice.toDouble(),
+                                originalBundlePrice.toDouble(),
+                                item.overall_discount_percent,
+                                1,
+                                if (item.min_purchase_months != null) item.min_purchase_months!! else 1,
+                                "bundles",
+                                null,
+                                ""
+                            )
+                        )
+                    },
+                    {
+                        it.printStackTrace()
+
+                    }
+                )
         )
         viewModel.getCartItems()
     }
