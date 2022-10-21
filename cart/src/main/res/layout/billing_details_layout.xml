@@ -77,7 +77,7 @@
                 android:id="@+id/gstcheck1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="#FFB900"
+                android:buttonTint="@color/themeColor"
                 android:checked="true"
                 android:fontFamily="@font/regular"
                 android:text="Want to claim GST input credit?"
