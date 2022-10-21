@@ -14,6 +14,7 @@ import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.festive.poster.utils.MarketPlaceUtils
+import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.UpdateStudioPurchaseViewModel
 import com.framework.base.BaseActivity
 import com.framework.base.BaseBottomSheetDialog
@@ -23,6 +24,8 @@ import com.framework.models.BaseViewModel
 import com.framework.rest.NetworkResult
 import com.framework.utils.showSnackBarNegative
 import com.framework.utils.toArrayList
+import com.framework.webengageconstant.Update_studio_Get_feature_View_pack_details
+import com.framework.webengageconstant.Update_studio_Get_feature_add_goto_cart
 
 class PromoteBrandedUpdateTemplatesBottomSheet :
     BaseBottomSheetDialog<BsheetPromoteUsingBrandedUpdateTemplatesBinding,
@@ -105,6 +108,7 @@ class PromoteBrandedUpdateTemplatesBottomSheet :
             binding?.btnViewPackDetails->{
                 val selectedItem = purchaseList?.find { it.isSelected }
                 if (selectedItem?.isPack == true){
+                    WebEngageController.trackEvent(Update_studio_Get_feature_View_pack_details)
                     MarketPlaceUtils.initiateAddonMarketplace(
                         sessionManager!!,
                         null,
@@ -113,6 +117,7 @@ class PromoteBrandedUpdateTemplatesBottomSheet :
                         false
                     )
                 }else{
+                    WebEngageController.trackEvent(Update_studio_Get_feature_add_goto_cart)
                     MarketPlaceUtils.initiateAddonMarketplace(
                         sessionManager!!,
                         selectedItem?.code,
