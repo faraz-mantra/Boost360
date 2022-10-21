@@ -186,7 +186,7 @@ class FeaturePacksAdapter(
               holder.discount.visibility = View.GONE
             }
             holder.price.setText("₹" + offeredBundlePrice + yearlyOrMonthlyOrEmptyValidity("",activity))
-            val mrpPriceString = SpannableString("₹" + originalBundlePrice + yearlyOrMonthlyOrEmptyValidity("",activity))
+            val mrpPriceString = SpannableString("₹" + RootUtil.round(originalBundlePrice,2) + yearlyOrMonthlyOrEmptyValidity("",activity))
             mrpPriceString.setSpan(StrikethroughSpan(), 0, mrpPriceString.length, 0)
             holder.mrpPrice.setText(mrpPriceString)
           },

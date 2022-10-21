@@ -50,7 +50,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/regular"
             android:lineHeight="22dp"
-            android:text="Our experts are available from 9am-6pm on working days. You can request a callback and an expert from the team will reach out to you."
+            android:text="Our experts are available from 9am-9pm on working days. You can request a callback and an expert from the team will reach out to you."
             android:textColor="@color/common_text_color"
             android:textFontWeight="400"
             android:textSize="@dimen/txt_12sp"

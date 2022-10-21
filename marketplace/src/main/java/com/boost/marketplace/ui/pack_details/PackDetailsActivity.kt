@@ -32,6 +32,7 @@ import com.boost.cart.adapter.ZoomOutPageTransformer
 import com.boost.cart.utils.Constants
 import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
+import com.boost.dbcenterapi.data.api_model.mycurrentPlanV3.MyPlanV3
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
@@ -39,6 +40,7 @@ import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.CircleAnimationUtil
 import com.boost.dbcenterapi.utils.HorizontalMarginItemDecoration
 import com.boost.dbcenterapi.utils.SharedPrefs
+import com.boost.dbcenterapi.utils.Utils.isExpertAvailable
 import com.boost.dbcenterapi.utils.WebEngageController
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.*
@@ -112,6 +114,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     var originalBundlePrice = 0.0
     var featureCount = 0
     var cartCount = 0
+    var allowPackageToCart = true
+    var myPlanV3: MyPlanV3? = null
 
     val sameAddonsInCart = ArrayList<String>()
     val addonsListInCart = ArrayList<String>()
@@ -194,7 +198,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             window.statusBarColor = resources.getColor(com.boost.cart.R.color.common_text_color)
         }
 
-
         initializeViewPager()
         initializeCustomerViewPager()
         initializeHowToUseRecycler()
@@ -225,14 +228,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
         binding?.queryText?.text = callExpertString
         query_text.setOnClickListener {
-            val from = 900
-            val to = 1800
-            val date = Date()
-            val c = Calendar.getInstance()
-            c.time = date
-            val t = c[Calendar.HOUR_OF_DAY] * 100 + c[Calendar.MINUTE]
-            val isBetween = to > from && t >= from && t <= to || to < from && (t >= from || t <= to)
-            if (isBetween) {
+            if (isExpertAvailable()) {
                 callTrackingHelpBottomSheet.show(
                     supportFragmentManager,
                     CallTrackingHelpBottomSheet::class.java.name
@@ -247,8 +243,20 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
         //Add to cart..
         binding?.bottomBoxOnlyBtn?.setOnClickListener {
+            getAllowPackageToCart(bundleData!!)
+            if(!allowPackageToCart){
+                    val arg = Bundle()
+                    arg.putBoolean("allowPackageToCart", allowPackageToCart)
+                    callTrackingHelpBottomSheet.arguments = arg
+                    callTrackingHelpBottomSheet.show(
+                        supportFragmentManager,
+                        CallTrackingHelpBottomSheet::class.java.name
+                    )
+                return@setOnClickListener
+            }
             if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) {
-                val dialogCard = FeatureDetailsPopup(this)
+
+                val dialogCard = FeatureDetailsPopup(this, this, this)
                 val args = Bundle()
                 args.putString("expCode", experienceCode)
                 args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
@@ -559,12 +567,16 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             viewModel?.setCurrentExperienceCode(code, fpTag!!)
         }
         try {
-            viewModel?.getCartItems()
-            viewModel?.getAllPackages()
+            viewModel.myPlanV3Status(
+                intent.getStringExtra("fpid") ?: "",
+                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+            )
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
         try {
+            viewModel?.getCartItems()
+            viewModel?.getAllPackages()
             getAlreadyPurchasedDomain()
         } catch (e: Exception) {
             SentryController.captureException(e)
@@ -871,14 +883,41 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
 
     private fun initMvvm() {
+        viewModel.addedToCartResult().observe(this, androidx.lifecycle.Observer {
+            if (it) {
+                binding?.addToCart?.background = ContextCompat.getDrawable(
+                    this.applicationContext,
+                    R.drawable.ic_packsv3_added_to_cart_bg
+                )
+                binding?.addToCart?.setTextColor(
+                    this.getResources().getColor(R.color.tv_color_BB)
+                )
+                binding?.addToCart?.setText(this.getString(R.string.added_to_cart))
+                binding?.addToCart?.isClickable = false
+            }
+        })
+
+        viewModel.myplanResultV3().observe(this, androidx.lifecycle.Observer {
+            allowPackageToCart = true
+            if(it!=null) {
+                binding?.shimmerViewPacksv3?.visibility=View.GONE
+                binding?.scrollView?.visibility=View.VISIBLE
+                myPlanV3 = it
+                getAllowPackageToCart(bundleData!!)
+            } else{
+                binding?.scrollView?.visibility=View.GONE
+                binding?.shimmerViewPacksv3?.visibility=View.VISIBLE
+            }
+        })
         viewModel.PurchasedDomainResponse().observe(this) {
             purchasedDomainName = it.domainName
             purchasedDomainType = it.domainType
 
-            prefs.storeDomainOrderType(1)
             if(it.domainName != null && it.domainType != null) {
-                if(!(it.domainName.contains("null") || it.domainType.contains("null")))
+                if(!(it.domainName.contains("null") || it.domainType.contains("null"))) {
+                    prefs.storeDomainOrderType(1)
                     prefs.storeSelectedDomainName(it.domainName + it.domainType)
+                }
             }
 
           //  viewModel.addItemToCart1(singleAddon, this, it.domainName + it.domainType)
@@ -1103,43 +1142,52 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         }
 
         addToCart.setOnClickListener{
-            if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) {
+
+            val temp = Gson().fromJson<List<IncludedFeature>>(
+                bundlesModel.included_features,
+                object : TypeToken<List<IncludedFeature>>() {}.type
+            )
+            val faq = Gson().fromJson<List<FrequentlyAskedQuestion>>(
+                bundlesModel.frequently_asked_questions,
+                object : TypeToken<List<FrequentlyAskedQuestion>>() {}.type
+            )
+            val steps = Gson().fromJson<List<HowToActivate>>(
+                bundlesModel.how_to_activate,
+                object : TypeToken<List<HowToActivate>>() {}.type
+            )
+            val benefits = if(bundlesModel.benefits != null) Gson().fromJson<List<String>>(
+                bundlesModel.benefits!!,
+                object : TypeToken<List<String>>() {}.type
+            ) else arrayListOf()
+            val bundle = Bundles(
+                bundlesModel.bundle_id,
+                temp,
+                bundlesModel.min_purchase_months,
+                bundlesModel.name,
+                bundlesModel.overall_discount_percent,
+                PrimaryImage(bundlesModel.primary_image),
+                bundlesModel.target_business_usecase,
+                Gson().fromJson<List<String>>(
+                    bundlesModel.exclusive_to_categories,
+                    object : TypeToken<List<String>>() {}.type
+                ),
+                null, steps, null, faq, benefits, bundlesModel.desc ?: ""
+            )
+            getAllowPackageToCart(bundle)
+            if(!allowPackageToCart){
+                    val arg = Bundle()
+                    arg.putBoolean("allowPackageToCart", allowPackageToCart)
+                    callTrackingHelpBottomSheet.arguments = arg
+                    callTrackingHelpBottomSheet.show(
+                        supportFragmentManager,
+                        CallTrackingHelpBottomSheet::class.java.name
+                    )
+                return@setOnClickListener
+            }
+            if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null")?:false) {
                 prefs.storeCartOrderInfo(null)
 
-                binding?.needMorePackageImg?.let { it1 -> makeFlyAnimation(it1) }
-
-                val temp = Gson().fromJson<List<IncludedFeature>>(
-                    bundlesModel.included_features,
-                    object : TypeToken<List<IncludedFeature>>() {}.type
-                )
-                val faq = Gson().fromJson<List<FrequentlyAskedQuestion>>(
-                    bundlesModel.frequently_asked_questions,
-                    object : TypeToken<List<FrequentlyAskedQuestion>>() {}.type
-                )
-                val steps = Gson().fromJson<List<HowToActivate>>(
-                    bundlesModel.how_to_activate,
-                    object : TypeToken<List<HowToActivate>>() {}.type
-                )
-                val benefits = if(bundlesModel.benefits != null) Gson().fromJson<List<String>>(
-                    bundlesModel.benefits!!,
-                    object : TypeToken<List<String>>() {}.type
-                ) else arrayListOf()
-                val bundle = Bundles(
-                    bundlesModel.bundle_id,
-                    temp,
-                    bundlesModel.min_purchase_months,
-                    bundlesModel.name,
-                    bundlesModel.overall_discount_percent,
-                    PrimaryImage(bundlesModel.primary_image),
-                    bundlesModel.target_business_usecase,
-                    Gson().fromJson<List<String>>(
-                        bundlesModel.exclusive_to_categories,
-                        object : TypeToken<List<String>>() {}.type
-                    ),
-                    null, steps, null, faq, benefits, bundlesModel.desc ?: ""
-                )
-
-                val dialogCard = FeatureDetailsPopup(this)
+                val dialogCard = FeatureDetailsPopup(this, this, this)
                 val args = Bundle()
                 args.putString("expCode", experienceCode)
                 args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
@@ -1314,38 +1362,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                         )
                 )
 
-//                    viewModel.addItemToCartPackage1(
-//                        CartModel(
-//                            bundlesModel.bundle_id,
-//                            null,
-//                            null,
-//                            bundlesModel.name,
-//                            "",
-//                            bundlesModel.primary_image,
-//                            offeredBundlePrice.toDouble(),
-//                            originalBundlePrice.toDouble(),
-//                            bundlesModel.overall_discount_percent,
-//                            1,
-//                            if (!prefs.getYearPricing() && bundlesModel?.min_purchase_months != null) bundlesModel.min_purchase_months else 1,
-//                            "bundles",
-//                            null,
-//                            ""
-//                        )
-//                    )
-
-                viewModel.addToCartResult.observe(this) { isSuccess ->
-                    if (isSuccess) {
-                        binding?.addToCart?.background = ContextCompat.getDrawable(
-                            this.applicationContext,
-                            R.drawable.ic_packsv3_added_to_cart_bg
-                        )
-                        binding?.addToCart?.setTextColor(
-                            this.getResources().getColor(R.color.tv_color_BB)
-                        )
-                        binding?.addToCart?.setText(this.getString(R.string.added_to_cart))
-                        binding?.addToCart?.isClickable = false
-                    }
-                }
                 badgeNumber = badgeNumber + 1
                 Constants.CART_VALUE = badgeNumber
                 add_item_to_cart.background = ContextCompat.getDrawable(
@@ -1355,14 +1371,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 add_item_to_cart.setTextColor(Color.parseColor("#bbbbbb"))
                 add_item_to_cart.text = getString(com.boost.cart.R.string.added_to_cart)
             }
-
-
-
-
-        /*
-
-*/
-
 
                 }
 
@@ -1671,5 +1679,19 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             auth,
             fpTag?:"",
             "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
+    }
+
+    private fun getAllowPackageToCart(selectedBundle: Bundles) {
+        allowPackageToCart = true
+        val tempList = arrayListOf<String>()
+        for (item in selectedBundle.included_features){
+            tempList.add(item.feature_code)
+        }
+        for(singleItem in myPlanV3!!.Result){
+            if(tempList.contains(singleItem.FeatureDetails.FeatureKey)){
+                allowPackageToCart = false
+                break
+            }
+        }
     }
 }

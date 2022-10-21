@@ -50,7 +50,7 @@ data class UpgradeGetDataFeature(
     val description: String,
     val description_title: String,
     val discount_percent: Double,
-    val exclusive_to_categories: List<String>,
+    val exclusive_to_categories: List<String>?,
     val feature_code: String,
     val feature_importance: Double,
     val is_premium: Boolean,

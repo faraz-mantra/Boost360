@@ -41,7 +41,9 @@ enum class PremiumCode(val value: String) {
   CALLTRACKER("CALLTRACKER"), MERCHANT_TRAINING("MERCHANT_TRAINING"), CUSTOM_PAYMENTGATEWAY("CUSTOM_PAYMENTGATEWAY"),
   CUSTOMERSUPPORT("CUSTOMERSUPPORT"), StoreWidgets("StoreWidgets"), BOOSTKEYBOARD("BOOSTKEYBOARD"),
   BOOKTABLE("BOOKTABLE"), BROCHURE("BROCHURE"), TRIPADVISOR_REVIEWS("TRIPADVISOR-REVIEWS"),
-  PLACES_TO_LOOK_AROUND("PLACES-TO-LOOK-AROUND"), PROJECTTEAM("PROJECTTEAM"), get_fp_details_mode("get_fp_details_mode");
+  PLACES_TO_LOOK_AROUND("PLACES-TO-LOOK-AROUND"), PROJECTTEAM("PROJECTTEAM"), get_fp_details_mode("get_fp_details_mode"),
+  UPDATES_STUDIO_WIDGET_KEY("UPDATE_STUDIO_TEMPLATES")
+  ;
 
   companion object {
     fun fromValue(value: String?): PremiumCode? = values().firstOrNull { it.value == value }

@@ -10,12 +10,12 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.RecyclerViewActionType
-import com.appservice.databinding.FragmentUpdatesListingBinding
-import com.appservice.model.serviceProduct.CatalogProduct
+import com.appservice.databinding.FragmentPastUpdatesListingBinding
 import com.appservice.model.updateBusiness.pastupdates.*
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
@@ -34,7 +34,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class PastUpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding, PastUpdatesViewModel>(),
+
+class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBinding, PastUpdatesViewModel>(),
     RecyclerItemClickListener {
 
     private var pastPostListing = ArrayList<PastPostItem>()
@@ -64,7 +65,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding
     }
 
     override fun getLayout(): Int {
-        return R.layout.fragment_updates_listing
+        return R.layout.fragment_past_updates_listing
     }
 
     override fun getViewModelClass(): Class<PastUpdatesViewModel> {
@@ -85,11 +86,29 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding
         showSimmer(true)
         getTemplateViewConfig()
 
-        handlePagination()
         //apiCallPastUpdates()
     }
 
     private fun handlePagination() {
+
+/*        binding.rvPostListing.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) { //check for scroll down
+                   val  visibleItemCount = linearLayoutManager.getChildCount()
+                   val  totalItemCount = linearLayoutManager.getItemCount()
+                   val  pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition()
+                    if (isLoadingD) {
+                        if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
+                            isLoadingD = false
+                            Log.v("...", "Last Item Wow !")
+                            // Do pagination.. i.e. fetch new data
+                            apiCallPastUpdates(false,pastPostListing.size)
+
+                        }
+                    }
+                }
+            }
+        })*/
         binding?.rvPostListing.addOnScrollListener(object :
             PaginationScrollListener(linearLayoutManager) {
             override fun loadMoreItems() {
@@ -144,7 +163,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding
             fpId = sessionLocal.fPID,
             postType = postType,
             tagListRequest = TagListRequest(tagArray),
-            skipBy = 0
+            skipBy = skipBy
         )
             ?.observeOnce(viewLifecycleOwner) { it ->
                 hideProgress()
@@ -347,6 +366,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentUpdatesListingBinding
             binding.rvPostListing.adapter = pastPostListingAdapter
             binding.rvPostListing.layoutManager =linearLayoutManager
             pastPostListingAdapter.runLayoutAnimation(binding.rvPostListing)
+            handlePagination()
         }else{
             pastPostListingAdapter.notifyDataSetChanged()
         }

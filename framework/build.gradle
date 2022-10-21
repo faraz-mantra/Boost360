@@ -25,6 +25,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        qa {
+            buildConfigField "String", "APP_SIGNATURE_HASH", '"W5izmPg6WcR"'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
 
     flavorDimensions "default"
@@ -209,5 +215,11 @@ dependencies {
 
     //advanced webview
     api 'com.github.delight-im:Android-AdvancedWebView:v3.2.1'
+
+    //play integrity for security
+     api 'com.google.android.play:integrity:1.0.1'
+    api group: 'org.bitbucket.b_c', name: 'jose4j', version: '0.7.12'
+
+
 
 }

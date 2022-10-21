@@ -1,12 +1,16 @@
 package com.boost.marketplace.ui.feature_details_popup
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import com.boost.cart.CartActivity
@@ -18,12 +22,19 @@ import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.Constants
 import com.boost.dbcenterapi.utils.SharedPrefs
+import com.boost.dbcenterapi.utils.WebEngageController
 import com.boost.marketplace.R
+import com.boost.marketplace.interfaces.AddonsListener
+import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.interfaces.MarketPlacePopupListener
+import com.boost.marketplace.ui.popup.removeItems.RemoveFeatureBottomSheet
 import com.framework.analytics.SentryController
 import com.framework.utils.RootUtil
+import com.framework.webengageconstant.ADDONS_MARKETPLACE
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_COMPARE_PACKAGE_ADDED_TO_CART
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -33,9 +44,11 @@ import kotlinx.android.synthetic.main.view_select_website.*
 import kotlinx.android.synthetic.main.view_select_website.view.*
 import kotlinx.android.synthetic.main.view_select_website.view.selectWebsiteSubmit
 import kotlinx.android.synthetic.main.view_selected_number.*
+import kotlinx.android.synthetic.main.view_selected_website.*
 import kotlinx.android.synthetic.main.view_selected_website.view.*
+import java.util.HashMap
 
-class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragment() {
+class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListener: CompareListener, val addonsListener: AddonsListener) : DialogFragment() {
     private var domainName: String? = null
     var experienceCode: String? = null
     var screenType: String? = null
@@ -63,6 +76,9 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
     var originalBundlePrice = 0.0
     lateinit var singleAddon: FeaturesModel
     lateinit var viewModel: CartViewModel
+    var cartList: List<CartModel>? = null
+    val sameAddonsInCart = java.util.ArrayList<String>()
+    val addonsListInCart = java.util.ArrayList<String>()
 
     override fun onStart() {
         super.onStart()
@@ -72,8 +88,12 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
         dialog!!.window!!.setBackgroundDrawableResource(com.boost.cart.R.color.fullscreen_color)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view  =  inflater.inflate(R.layout.layout_details_popup, container,false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val view = inflater.inflate(R.layout.layout_details_popup, container, false)
         viewModel = ViewModelProviders.of(this).get(CartViewModel::class.java)
         prefs = SharedPrefs(requireActivity())
         fpid = requireArguments().getString("fpid")
@@ -108,38 +128,8 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
         view.select_website_layout.visibility = View.VISIBLE
         view.select_website_layout.selectWebsiteIwillDoItLater.text = "Skip & continue to cart"
         view.selectWebsiteIwillDoItLater.setOnClickListener {
-             hideAllLayout()
-            val intent = Intent(
-                activity,
-                CartActivity::class.java
-            )
-            intent.putExtra("fpid", fpid)
-            intent.putExtra("expCode", experienceCode)
-            intent.putExtra("isDeepLink", isDeepLink)
-            intent.putExtra("deepLinkViewType", deepLinkViewType)
-            intent.putExtra("deepLinkDay", deepLinkDay)
-            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-            intent.putExtra(
-                "accountType",
-                accountType
-            )
-            intent.putStringArrayListExtra(
-                "userPurchsedWidgets",
-                userPurchsedWidgets
-            )
-            if (email != null) {
-                intent.putExtra("email", email)
-            } else {
-                intent.putExtra("email", "ria@nowfloats.com")
-            }
-            if (mobileNo != null) {
-                intent.putExtra("mobileNo", mobileNo)
-            } else {
-                intent.putExtra("mobileNo", "9160004303")
-            }
-            intent.putExtra("profileUrl", profileUrl)
-            startActivity(intent)
-            dismiss()
+            hideAllLayout()
+            addToCart()
             //  select_domain_layout.visibility = View.VISIBLE
         }
 
@@ -177,8 +167,41 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
         }
 
         loadData()
+        initView()
         initMvvm()
         return view
+    }
+
+    private fun initView() {
+        if (bundleData != null) {
+            prefs.storeAddedPackageDesc(bundleData!!.desc ?: "")
+
+            val itemIds = arrayListOf<String>()
+            for (i in bundleData!!.included_features) {
+                itemIds.add(i.feature_code)
+            }
+            CompositeDisposable().add(
+                AppDatabase.getInstance(Application())!!
+                    .featuresDao()
+                    .getallFeaturesInList(itemIds)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            if (it.isNotEmpty()) {
+                                for (singleItem in it) {
+                                    if (singleItem.feature_code == "DOMAINPURCHASE") {
+                                        singleAddon = singleItem
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            it.printStackTrace()
+                        }
+                    )
+            )
+        }
     }
 
     private fun addToCart() {
@@ -198,52 +221,101 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                         {
-                            var bundleMonthlyMRP = 0.0
-                            val minMonth: Int =
-                                if (!prefs.getYearPricing() && bundleData!!.min_purchase_months != null && bundleData!!.min_purchase_months!! > 1) bundleData!!.min_purchase_months!! else 1
-
-                            for (singleItem in it) {
-                                for (item in bundleData!!.included_features) {
-                                    if (singleItem.feature_code == item.feature_code) {
-                                        bundleMonthlyMRP += RootUtil.round(
-                                            singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),
-                                            2
-                                        )
+                            if (cartList != null) {
+                                //same features available in cart
+                                for (singleItem in cartList!!) {
+                                    for (singleFeature in it) {
+                                        if (singleFeature.boost_widget_key.equals(singleItem.boost_widget_key)) {
+                                            sameAddonsInCart.add(singleFeature.name!!)
+                                            addonsListInCart.add(singleItem.item_id)
+                                        }
+                                    }
+                                    //if there is any other bundle available remove it
+                                    if (singleItem.item_type.equals("bundles")) {
+                                        addonsListInCart.add(singleItem.item_id)
                                     }
                                 }
                             }
-                            offeredBundlePrice = (bundleMonthlyMRP * minMonth)
-                            originalBundlePrice = (bundleMonthlyMRP * minMonth)
 
-                            if (bundleData!!.overall_discount_percent > 0)
-                                offeredBundlePrice = RootUtil.round(
-                                    originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent / 100),
-                                    2
+                            if (sameAddonsInCart.size > 0) {
+                                val removeFeatureBottomSheet =
+                                    RemoveFeatureBottomSheet(homeListener, addonsListener, null)
+                                val args = Bundle()
+                                args.putStringArrayList("addonNames", sameAddonsInCart)
+                                args.putStringArrayList("addonsListInCart", addonsListInCart)
+                                args.putString("packageDetails", Gson().toJson(bundleData))
+                                removeFeatureBottomSheet.arguments = args
+                                fragmentManager?.let { it1 ->
+                                    removeFeatureBottomSheet.show(
+                                        it1,
+                                        RemoveFeatureBottomSheet::class.java.name
+                                    )
+                                }
+                                dismiss()
+                            } else {
+                                var bundleMonthlyMRP = 0.0
+                                val minMonth: Int =
+                                    if (!prefs.getYearPricing() && bundleData!!.min_purchase_months != null && bundleData!!.min_purchase_months!! > 1) bundleData!!.min_purchase_months!! else 1
+
+                                for (singleItem in it) {
+                                    for (item in bundleData!!.included_features) {
+                                        if (singleItem.feature_code == item.feature_code) {
+                                            bundleMonthlyMRP += RootUtil.round(
+                                                singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),
+                                                2
+                                            )
+                                        }
+                                    }
+                                }
+                                offeredBundlePrice = (bundleMonthlyMRP * minMonth)
+                                originalBundlePrice = (bundleMonthlyMRP * minMonth)
+
+                                if (bundleData!!.overall_discount_percent > 0)
+                                    offeredBundlePrice = RootUtil.round(
+                                        originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent / 100),
+                                        2
+                                    )
+                                else
+                                    offeredBundlePrice = originalBundlePrice
+
+                                //clear cartOrderInfo from SharedPref to requestAPI again
+                                prefs.storeCartOrderInfo(null)
+
+                                //remove other bundle and add existing bundle to cart
+                                removeOtherBundlesAndAddExistingBundle(addonsListInCart, bundleData!!, offeredBundlePrice, originalBundlePrice)
+
+                                val intent = Intent(
+                                    activity,
+                                    CartActivity::class.java
                                 )
-                            else
-                                offeredBundlePrice = originalBundlePrice
-
-                            //clear cartOrderInfo from SharedPref to requestAPI again
-                            prefs.storeCartOrderInfo(null)
-
-                            viewModel.addItemToCartPackage1(
-                                CartModel(
-                                    bundleData!!._kid,
-                                    null,
-                                    null,
-                                    bundleData!!.name,
-                                    "",
-                                    bundleData!!.primary_image!!.url,
-                                    offeredBundlePrice.toDouble(),
-                                    originalBundlePrice.toDouble(),
-                                    bundleData!!.overall_discount_percent,
-                                    1,
-                                    if (!prefs.getYearPricing() && bundleData!!.min_purchase_months != null) bundleData!!.min_purchase_months!! else 1,
-                                    "bundles",
-                                    null,
-                                    ""
+                                intent.putExtra("fpid", fpid)
+                                intent.putExtra("expCode", experienceCode)
+                                intent.putExtra("isDeepLink", isDeepLink)
+                                intent.putExtra("deepLinkViewType", deepLinkViewType)
+                                intent.putExtra("deepLinkDay", deepLinkDay)
+                                intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+                                intent.putExtra(
+                                    "accountType",
+                                    accountType
                                 )
-                            )
+                                intent.putStringArrayListExtra(
+                                    "userPurchsedWidgets",
+                                    userPurchsedWidgets
+                                )
+                                if (email != null) {
+                                    intent.putExtra("email", email)
+                                } else {
+                                    intent.putExtra("email", "ria@nowfloats.com")
+                                }
+                                if (mobileNo != null) {
+                                    intent.putExtra("mobileNo", mobileNo)
+                                } else {
+                                    intent.putExtra("mobileNo", "9160004303")
+                                }
+                                intent.putExtra("profileUrl", profileUrl)
+                                startActivity(intent)
+                                dismiss()
+                            }
                         },
                         {
                             it.printStackTrace()
@@ -252,37 +324,51 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
             )
         }
 
-        val intent = Intent(
-            activity,
-            CartActivity::class.java
-        )
-        intent.putExtra("fpid", fpid)
-        intent.putExtra("expCode", experienceCode)
-        intent.putExtra("isDeepLink", isDeepLink)
-        intent.putExtra("deepLinkViewType", deepLinkViewType)
-        intent.putExtra("deepLinkDay", deepLinkDay)
-        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-        intent.putExtra(
-            "accountType",
-            accountType
-        )
-        intent.putStringArrayListExtra(
-            "userPurchsedWidgets",
-            userPurchsedWidgets
-        )
-        if (email != null) {
-            intent.putExtra("email", email)
-        } else {
-            intent.putExtra("email", "ria@nowfloats.com")
+
+    }
+
+    fun removeOtherBundlesAndAddExistingBundle(addonsListInCart: List<String>, bundle: Bundles, offerBundlePrice: Double, originalBundlePrice: Double ){
+        Completable.fromAction {
+            AppDatabase.getInstance(Application())!!.cartDao().deleteCartItemsInList(addonsListInCart)
         }
-        if (mobileNo != null) {
-            intent.putExtra("mobileNo", mobileNo)
-        } else {
-            intent.putExtra("mobileNo", "9160004303")
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnComplete {
+                viewModel.addItemToCartPackage1(
+                    CartModel(
+                        bundle._kid,
+                        null,
+                        null,
+                        bundle.name,
+                        "",
+                        bundle.primary_image!!.url,
+                        offerBundlePrice,
+                        originalBundlePrice,
+                        bundle.overall_discount_percent,
+                        1,
+                        if (!prefs.getYearPricing() && bundle.min_purchase_months != null) bundle.min_purchase_months!! else 1,
+                        "bundles",
+                        null,
+                        ""
+                    )
+                )
+            }
+            .doOnError {
+                Toast.makeText(requireContext(), "Not able to Delete the Add-ons!!", Toast.LENGTH_LONG).show()
+            }
+            .subscribe()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //clear previous existing data
+        sameAddonsInCart.clear()
+        addonsListInCart.clear()
+        if(prefs.getSelectedDomainName().isNullOrEmpty().not()) {
+            domainName = prefs.getSelectedDomainName()
+            tv_empty_select_website.text = prefs.getSelectedDomainName()
+            tv_empty_selected_website.text = prefs.getSelectedDomainName()
         }
-        intent.putExtra("profileUrl", profileUrl)
-        startActivity(intent)
-        dismiss()
     }
 
     private fun loadData() {
@@ -291,6 +377,7 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
             val fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
             fpTag?.let { DomainRequest(Constants.clientid, it) }
                 ?.let { viewModel.getSuggestedDomains(it) }
+            viewModel.getCartItems()
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
@@ -298,35 +385,9 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
 
     private fun initMvvm() {
 
-        if (bundleData != null) {
-            prefs.storeAddedPackageDesc(bundleData!!.desc ?: "")
-
-            val itemIds = arrayListOf<String>()
-            for (i in bundleData!!.included_features) {
-                itemIds.add(i.feature_code)
-            }
-            CompositeDisposable().add(
-                AppDatabase.getInstance(Application())!!
-                    .featuresDao()
-                    .getallFeaturesInList(itemIds)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                        {
-                            if (it.isNotEmpty()) {
-                                for (singleItem in it){
-                                    if (singleItem.feature_code == "DOMAINPURCHASE"){
-                                        singleAddon= singleItem
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            it.printStackTrace()
-                        }
-                    )
-            )
-        }
+        viewModel.cartResult().observe(this, androidx.lifecycle.Observer {
+            cartList = it
+        })
 
         viewModel.updateCustomDomainsResultResult().observe(this) {
             for (singleDomain in it.domains) {
@@ -339,14 +400,14 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
 
         }
 
-        viewModel.updatesLoader.observe(this)  {
+        viewModel.updatesLoader.observe(this) {
             if (it) {
-                mainll.visibility=View.GONE
-                shimmer_anim.visibility=View.VISIBLE
+                mainll.visibility = View.GONE
+                shimmer_anim.visibility = View.VISIBLE
 
             } else {
-                mainll.visibility=View.VISIBLE
-                shimmer_anim.visibility=View.GONE
+                mainll.visibility = View.VISIBLE
+                shimmer_anim.visibility = View.GONE
             }
         }
 
@@ -457,7 +518,7 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
             intent.putExtra("bundleData", Gson().toJson(singleAddon))
             intent.putExtra("domainSelectionForCart", true)
             startActivity(intent)
-          //  dismiss()
+            //  dismiss()
         } catch (e: ClassNotFoundException) {
             e.printStackTrace()
         }
@@ -472,11 +533,4 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener) : DialogFragme
         selected_number_layout.visibility = View.GONE
     }
 
-    override fun onResume() {
-        super.onResume()
-        if(prefs.getSelectedDomainName().isNullOrEmpty().not()) {
-            domainName = prefs.getSelectedDomainName()
-            tv_empty_select_website.text = prefs.getSelectedDomainName()
-        }
-    }
 }

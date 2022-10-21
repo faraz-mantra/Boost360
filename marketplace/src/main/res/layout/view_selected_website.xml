@@ -113,7 +113,7 @@
                         android:fontFamily="@font/regular"
                         android:lineHeight="22dp"
                         android:lineSpacingExtra="6dp"
-                        android:text="Explore more suggestions"
+                        android:text="Explore domain options"
                         android:textColor="@color/colorAccent1"
                         android:textFontWeight="400"
                         android:textSize="12sp"

@@ -102,7 +102,7 @@ class FailedTransactionFragment : BaseFragment() {
             val months = if(prefs.getValidityMonths().isNullOrEmpty()) 0 else prefs.getValidityMonths()!!.toInt()
             order_details_feature_count.text =
                 prefs.getFeaturesCountInLastOrder().toString()
-            order_details_feature_count1.text = "₹" + prefs.getLatestPurchaseOrderTotalPrice() //+"/"+ if(months>1) months else "" + Utils.yearOrMonthText(months,requireActivity(), false)//"/month."
+        order_details_feature_count1.text = "₹" + prefs.getLatestPurchaseOrderTotalPrice() //+"/"+ if(months>1) months else "" + Utils.yearOrMonthText(months,requireActivity(), false)//"/month."
             order_id_details.text = prefs.getLatestPurchaseOrderId()
             order_id_details1.text = prefs.getTransactionIdFromCart()
 

@@ -23,9 +23,11 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.*
+import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import kotlin.collections.ArrayList
 
 object Utils {
 
@@ -273,6 +275,16 @@ object Utils {
     }
 
     return Gson().fromJson(writer.toString(),object : TypeToken<List<Bundles>>() {}.type)
+  }
+
+  fun isExpertAvailable(): Boolean {
+    val from = 900
+    val to = 2100
+    val date = Date()
+    val c = Calendar.getInstance()
+    c.time = date
+    val t = c[Calendar.HOUR_OF_DAY] * 100 + c[Calendar.MINUTE]
+    return to > from && t >= from && t <= to || to < from && (t >= from || t <= to)
   }
 
 }

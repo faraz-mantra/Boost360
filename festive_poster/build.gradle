@@ -21,6 +21,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        qa {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
 
     flavorDimensions "default"
@@ -47,4 +51,5 @@ android {
 
 dependencies {
     api project(path: ':onboarding')
+    api project(path: ':dbcenterapi')
 }
