@@ -1,5 +1,6 @@
 package com.boost.cart.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
 import com.boost.cart.interfaces.CartFragmentListener
+import com.boost.cart.utils.SharedPrefs
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.bumptech.glide.Glide
@@ -17,7 +19,8 @@ import com.bumptech.glide.Glide
 class NewAddonsAdapter(
     val upgradeList: List<FeaturesModel>,
     val listener: CartFragmentListener,
-    val bundleItem: CartModel
+    val bundleItem: CartModel,
+    val activity: Activity
 ) : RecyclerView.Adapter<NewAddonsAdapter.upgradeViewHolder>() {
 
     var minMonth = 1
@@ -42,7 +45,11 @@ class NewAddonsAdapter(
             holder.name.setText(upgradeList.get(position).name)
             holder.name.setTypeface(ResourcesCompat.getFont(context, R.font.bold))
             holder.notify.visibility = View.GONE
-            holder.edit.visibility = View.VISIBLE
+            val prefs = SharedPrefs(activity)
+            if(prefs.getDomainOrderType() == 0)
+                holder.edit.visibility = View.VISIBLE
+            else
+                holder.edit.visibility = View.GONE
         }else{
             if(upgradeList.get(position).feature_code.equals("DOMAINPURCHASE")){
                 holder.notify.visibility = View.VISIBLE

@@ -44,6 +44,7 @@ class SharedPrefs(activity: Activity) {
   private val GST_API_RESULT = "GST API RESULT"
   private val LAST_USED_PAYMENT_MODE = "LAST_USED_PAYMENT_MODE"
   private val CART_VALIDITY_MONTHS = "CART_VALIDITY_MONTHS"
+  private val DOMAIN_ORDER_TYPE = "DOMAIN_ORDER_TYPE"
 
   private var editor: SharedPreferences.Editor? = null
 
@@ -274,6 +275,14 @@ class SharedPrefs(activity: Activity) {
 
   fun getYearPricing(): Boolean {
     return pref!!.getBoolean(yearPricing, true)
+  }
+
+  fun storeDomainOrderType(value: Int){
+    editor!!.putInt(DOMAIN_ORDER_TYPE, value).apply()
+  }
+
+  fun getDomainOrderType(): Int {
+    return pref!!.getInt(DOMAIN_ORDER_TYPE, 0)
   }
 
   fun storeSelectedDomainName(value: String?){

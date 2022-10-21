@@ -279,7 +279,7 @@ class CartPackageAdaptor(
           }
           holder.addon_amount.text = "Includes "+tempFeatures.size+" addons"
           val linearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-          holder.adapter = NewAddonsAdapter(tempFeatures, listener, bundleItem)
+          holder.adapter = NewAddonsAdapter(tempFeatures, listener, bundleItem, activity)
           holder.ChildRecyclerView.adapter = holder.adapter
           holder.ChildRecyclerView.layoutManager = linearLayoutManager
 //          holder.used_by.setText("Used by "+it.+"+ businesses")
