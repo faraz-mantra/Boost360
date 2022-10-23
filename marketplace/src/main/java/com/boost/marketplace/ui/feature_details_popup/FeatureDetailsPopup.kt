@@ -143,9 +143,12 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
             view.selected_website_layout.visibility = View.VISIBLE
             view.selectedWebsiteContinueButton.text = "continue to cart"
             view.tv_empty_selected_website.text = domainName
-            view.tv_explore_select_website1.setOnClickListener {
-                exploreDomainOptions()
-            }
+            listener.featureDetailsPopup(domainName!!)
+        }
+
+        view.tv_explore_select_website1.setOnClickListener {
+            exploreDomainOptions()
+            view.tv_empty_selected_website.text = domainName
             listener.featureDetailsPopup(domainName!!)
         }
 

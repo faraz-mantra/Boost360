@@ -460,10 +460,13 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity, va
         viewModel?.PurchasedDomainResponse()?.observe(this) {
             purchasedDomainName = it.domainName
             purchasedDomainType = it.domainType
-            prefs.storeDomainOrderType(1)
-            prefs.storeSelectedDomainName(it.domainName + it.domainType)
-            //  viewModel.addItemToCart1(singleAddon, this, it.domainName + it.domainType)
-            //   viewModel.getCartItems
+            if(it.domainName != null && it.domainType != null) {
+                if(!(it.domainName.contains("null") || it.domainType.contains("null"))) {
+                    prefs.storeDomainOrderType(1)
+                    prefs.storeSelectedDomainName(it.domainName + it.domainType)
+                }
+            }
+
         }
 
         viewModel?.cartResult()?.observe(this, Observer {
