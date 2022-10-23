@@ -90,6 +90,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         fpid = intent.getStringExtra("fpid")
         doDomainBooking = intent.getBooleanExtra("doDomainBooking", false)
         isDeepLink = intent.getBooleanExtra("isDeepLink", false)
+        itemInCartStatus = intent.getBooleanExtra("itemInCartStatus",false)
         deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
         deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
         email = intent.getStringExtra("email")
@@ -129,6 +130,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
                 val dialogCard = ConfirmedCustomDomainBottomSheet(this)
                 val bundle = Bundle()
                 bundle.putString("blockedItem", blockedItem)
+                bundle.putBoolean("itemInCartStatus",itemInCartStatus)
                 bundle.putString("fpid", fpid)
                 bundle.putString("fpTag", fpTag)
                 bundle.putString("price",pricing)
@@ -412,6 +414,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             val dialogCard = ConfirmedCustomDomainBottomSheet(this)
             val bundle = Bundle()
             bundle.putString("blockedItem", blockedItem)
+            bundle.putBoolean("itemInCartStatus",itemInCartStatus)
             bundle.putString("fpid", fpid)
             bundle.putString("fpTag", fpTag)
             bundle.putString("expCode", experienceCode)

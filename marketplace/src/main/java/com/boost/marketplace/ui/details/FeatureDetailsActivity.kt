@@ -648,6 +648,7 @@ class FeatureDetailsActivity :
                     if(packageItem){
                         val args = Bundle()
                         args.putString("addonName", addonDetails!!.name)
+                        args.putBoolean("activty1", false)
                         removePackageBottomSheet.arguments = args
                         removePackageBottomSheet.show(
                             supportFragmentManager,
@@ -760,55 +761,66 @@ class FeatureDetailsActivity :
                 )
                 claim_button.setText(content)
                 claim_button.setOnClickListener {
-                    if (selectedNum != null) {
-                        if (!itemInCartStatus) {
-                            if (addonDetails != null) {
-                                prefs.storeCartOrderInfo(null)
-                                viewModel!!.addItemToCart1(addonDetails!!, this, selectedNum)
-                                val event_attributes: HashMap<String, Any> = HashMap()
-                                addonDetails!!.name?.let { it1 ->
+                    if (packageItem) {
+                        val args = Bundle()
+                        args.putString("addonName", addonDetails!!.name)
+                        args.putBoolean("activty1", false)
+                        removePackageBottomSheet.arguments = args
+                        removePackageBottomSheet.show(
+                            supportFragmentManager,
+                            RemovePackageBottomSheet::class.java.name
+                        )
+                    } else {
+                        if (selectedNum != null) {
+                            if (!itemInCartStatus) {
+                                if (addonDetails != null) {
+                                    prefs.storeCartOrderInfo(null)
+                                    viewModel!!.addItemToCart1(addonDetails!!, this, selectedNum)
+                                    val event_attributes: HashMap<String, Any> = HashMap()
+                                    addonDetails!!.name?.let { it1 ->
+                                        event_attributes.put(
+                                            "Addon Name",
+                                            it1
+                                        )
+                                    }
+                                    event_attributes.put("Addon Price", addonDetails!!.price)
                                     event_attributes.put(
-                                        "Addon Name",
-                                        it1
+                                        "Addon Discounted Price",
+                                        getDiscountedPrice(
+                                            addonDetails!!.price,
+                                            addonDetails!!.discount_percent
+                                        )
                                     )
-                                }
-                                event_attributes.put("Addon Price", addonDetails!!.price)
-                                event_attributes.put(
-                                    "Addon Discounted Price",
-                                    getDiscountedPrice(
-                                        addonDetails!!.price,
+                                    event_attributes.put(
+                                        "Addon Discount %",
                                         addonDetails!!.discount_percent
                                     )
-                                )
-                                event_attributes.put(
-                                    "Addon Discount %",
-                                    addonDetails!!.discount_percent
-                                )
-                                event_attributes.put("Addon Validity", 1)
-                                event_attributes.put(
-                                    "Addon Feature Key",
-                                    addonDetails!!.boost_widget_key
-                                )
-                                addonDetails!!.target_business_usecase?.let { it1 ->
+                                    event_attributes.put("Addon Validity", 1)
                                     event_attributes.put(
-                                        "Addon Tag",
-                                        it1
+                                        "Addon Feature Key",
+                                        addonDetails!!.boost_widget_key
                                     )
+                                    addonDetails!!.target_business_usecase?.let { it1 ->
+                                        event_attributes.put(
+                                            "Addon Tag",
+                                            it1
+                                        )
+                                    }
+                                    WebEngageController.trackEvent(
+                                        ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
+                                        ADDONS_MARKETPLACE,
+                                        event_attributes
+                                    )
+                                    itemInCartStatus = true
                                 }
-                                WebEngageController.trackEvent(
-                                    ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
-                                    ADDONS_MARKETPLACE,
-                                    event_attributes
-                                )
-                                itemInCartStatus = true
                             }
+                        } else {
+                            Toasty.error(
+                                this,
+                                "Number not available, please select other",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                    } else {
-                        Toasty.error(
-                            this,
-                            "Number not available, please select other",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
                     val intent = Intent(this, CartActivity::class.java)
                     intent.putExtra("fpid", fpid)
@@ -838,6 +850,7 @@ class FeatureDetailsActivity :
                     val intent = Intent(this, CallTrackingActivity::class.java)
                     intent.putExtra("fpid", fpid)
                     intent.putExtra("bundleData", Gson().toJson(addonDetails))
+                    intent.putExtra("itemInCartStatus",packageItem )
                     intent.putExtra("price", numberprice)
                     intent.putExtra(
                         "AddonDiscountedPrice",
@@ -1316,6 +1329,7 @@ class FeatureDetailsActivity :
         intent.putExtra("expCode", experienceCode)
         intent.putExtra("fpid", fpid)
         intent.putExtra("bundleData", Gson().toJson(addonDetails))
+        intent.putExtra("itemInCartStatus",packageItem )
         intent.putExtra(
             "AddonDiscountedPrice",
             getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent)

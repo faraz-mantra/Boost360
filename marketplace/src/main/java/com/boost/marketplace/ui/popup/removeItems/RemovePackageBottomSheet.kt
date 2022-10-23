@@ -16,6 +16,7 @@ import com.boost.cart.utils.Utils
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.DetailsFragmentListener
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
+import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 import kotlinx.android.synthetic.main.activity_feature_details.*
 import kotlinx.android.synthetic.main.remove_package_bottomsheet.*
 import java.text.NumberFormat
@@ -25,6 +26,7 @@ import java.util.*
 class RemovePackageBottomSheet(val listener: DetailsFragmentListener) : DialogFragment() {
     lateinit var root: View
     lateinit var prefs: SharedPrefs
+    var activity1 = false
 
     override fun onStart() {
         super.onStart()
@@ -40,7 +42,14 @@ class RemovePackageBottomSheet(val listener: DetailsFragmentListener) : DialogFr
         savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.remove_package_bottomsheet, container, false)
-        prefs = SharedPrefs(activity as FeatureDetailsActivity)
+
+        activity1 = arguments?.getBoolean("activty1", false) == true
+        if(activity1){
+            prefs = SharedPrefs(activity as CustomDomainActivity)
+        }else {
+            prefs = SharedPrefs(activity as FeatureDetailsActivity)
+        }
+       // prefs = SharedPrefs(activity as FeatureDetailsActivity)
         return root
     }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
