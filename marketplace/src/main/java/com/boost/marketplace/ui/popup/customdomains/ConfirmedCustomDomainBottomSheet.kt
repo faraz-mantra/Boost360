@@ -175,6 +175,8 @@ class ConfirmedCustomDomainBottomSheet(val activity: CustomDomainActivity) :
                         itemInCartStatus = true
                         viewModel?.getCartItems()
                     }
+                    dismiss()
+
                     val pref = context?.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
                     val fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
                     val intent = Intent(context, CartActivity::class.java)

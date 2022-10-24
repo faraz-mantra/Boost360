@@ -31,8 +31,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:background="?actionBarItemBackground"                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -48,6 +47,7 @@
                         <ImageView
                             android:layout_width="25dp"
                             android:layout_height="25dp"
+                            android:background="?actionBarItemBackground"
                             android:layout_margin="4dp"
                             android:src="@drawable/ic_cart" />
                     </LinearLayout>
@@ -65,20 +65,20 @@
 
                 <LinearLayout
                     android:id="@+id/back"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/_3sdp"
-                    android:foreground="?android:attr/selectableItemBackground"
+                    android:background="?actionBarItemBackground"
                     android:gravity="center"
+                    android:padding="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/mp_nav_icon_background"
+                        android:layout_width="38dp"
+                        android:layout_height="50dp"
+                        android:background="?actionBarItemBackground"
                         android:src="@drawable/arrow_white" />
                 </LinearLayout>
 

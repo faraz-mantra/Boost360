@@ -36,8 +36,7 @@
                     android:layout_weight="1"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:layout_constraintDimensionRatio="1:1"
+                    android:background="?actionBarItemBackground"                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -69,7 +68,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/arrow_white"
+                    android:src="@drawable/arrow_white"
+                    android:background="?actionBarItemBackground"
                     android:padding="10dp"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintBottom_toBottomOf="parent"
