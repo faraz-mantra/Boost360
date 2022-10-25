@@ -236,10 +236,10 @@ class ComparePacksV3AddonsPopUpFragment : DialogFragment() {
                 binding.howToUseTitleLayout.visibility = View.VISIBLE
                 binding.howToUseTitleLayout.setOnClickListener {
                     if (binding.howToUseRecycler.visibility == View.VISIBLE) {
-                        binding.howToUseArrow.setImageResource(R.drawable.ic_arrow_down_gray)
+                        binding.howToUseArrow.setImageResource(R.drawable.ic_down_arrow_pack_details)
                         binding.howToUseRecycler.visibility = View.GONE
                     } else {
-                        binding.howToUseArrow.setImageResource(R.drawable.ic_arrow_up_gray)
+                        binding.howToUseArrow.setImageResource(R.drawable.ic_up_arrow_with_bg)
                         binding.howToUseRecycler.visibility = View.VISIBLE
                     }
                 }

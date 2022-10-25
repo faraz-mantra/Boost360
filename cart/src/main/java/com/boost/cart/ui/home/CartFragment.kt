@@ -2812,7 +2812,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
     @SuppressLint("FragmentLiveDataObserve")
     fun initMvvM() {
 
-        viewModel.getExpertConnectDetails().observe(this, androidx.lifecycle.Observer {
+        viewModel.getExpertConnectDetails().observe(this) {
             if (it.is_online) {
                 prefs.storeExpertContact(it.contact_number)
             } else {
@@ -2822,7 +2822,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     Toast.LENGTH_LONG
                 ).show()
             }
-        })
+        }
 
         viewModel.cartResult().observe(this, Observer {
             if (it.isNullOrEmpty().not()) {

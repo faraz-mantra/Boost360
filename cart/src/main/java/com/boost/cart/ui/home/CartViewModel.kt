@@ -1036,7 +1036,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                 .observeOnce(lifecycleOwner, Observer {
                     if (it.isSuccess()) {
                         val response = it as? GetAllFeaturesResponse
-                        if (response != null) {
+                        if (response != null && response.Data.isNotEmpty()) {
                             expertConnectDetails.postValue(response.Data[0].expert_connect)
                         }
                     }

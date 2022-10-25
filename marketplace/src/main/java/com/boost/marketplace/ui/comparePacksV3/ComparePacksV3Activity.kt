@@ -643,10 +643,10 @@ class ComparePacksV3Activity :
 
                     binding?.howToUseTitleLayout?.setOnClickListener {
                         if (binding?.packsHowToUseRecycler?.visibility == View.VISIBLE) {
-                            how_to_use_arrow.setImageResource(R.drawable.ic_arrow_down_gray)
+                            how_to_use_arrow.setImageResource(R.drawable.ic_down_arrow_pack_details)
                             binding?.packsHowToUseRecycler?.visibility = View.GONE
                         } else {
-                            how_to_use_arrow.setImageResource(R.drawable.packs_arrow_up)
+                            how_to_use_arrow.setImageResource(R.drawable.ic_up_arrow_with_bg)
                             binding?.packsHowToUseRecycler?.visibility = View.VISIBLE
                         }
                     }
