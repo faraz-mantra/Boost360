@@ -2112,15 +2112,15 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="describe_your_offer">Describe your offer...</string>
     <string name="uh_oh_you_have_no_subscribers">Uh oh, you have no subscribers</string>
     <string name="add_image">Add image</string>
-    <string name="designation" translatable="false">Designation</string>
+    <string name="designation" translatable="false">Designation *</string>
     <string name="designation_aster" translatable="false">Designation *</string>
     <string name="company_title" translatable="false">Company title</string>
     <string name="company_title_aster" translatable="false">Company title *</string>
-    <string name="facebook_profile">Facebook profile</string>
+    <string name="facebook_profile">Facebook profile *</string>
     <string name="enter_facebook_url">Enter Facebook URL</string>
-    <string name="twitter_profile">Twitter profile</string>
+    <string name="twitter_profile">Twitter profile *</string>
     <string name="enter_twitter_url">Enter Twitter URL</string>
-    <string name="skype_profile">Skype profile</string>
+    <string name="skype_profile">Skype profile *</string>
     <string name="enter_skype_url">Enter Skype URL</string>
     <string name="with_the_feature_you_can_showcase_your_customer_reviews_and_highlight_their_experience_on_the_homepage_of_your_website">With the feature, you can showcase your customer reviews and highlight their experience on the homepage of your website.</string>
     <string name="astreak">*</string>
