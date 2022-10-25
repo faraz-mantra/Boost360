@@ -131,6 +131,7 @@ class ConfirmedCustomDomainBottomSheet(val activity: CustomDomainActivity) :
                 }else {
                     if(itemInCartStatus == false) {
                         prefs.storeCartOrderInfo(null)
+                        prefs.storeSelectedDomainName(blockedItem!!)
                         blockedItem?.let { it1 ->
                             viewModel?.addItemToCart1(
                                 singleAddon,

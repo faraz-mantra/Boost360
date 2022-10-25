@@ -56,14 +56,11 @@ import com.boost.marketplace.interfaces.DetailsFragmentListener
 import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 import com.boost.marketplace.ui.details.staff.StaffManagementBottomSheet
-import com.boost.marketplace.ui.feature_details_popup.FeatureDetailsPopup
 import com.boost.marketplace.ui.pack_details.PackDetailsActivity
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
-import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
 import com.boost.marketplace.ui.popup.call_track.FindingNumberLoaderBottomSheet
 import com.boost.marketplace.ui.popup.call_track.RequestCallbackBottomSheet
-import com.boost.marketplace.ui.popup.customdomains.CustomDomainLearnDomainBottomSheet
 import com.boost.marketplace.ui.popup.removeItems.RemovePackageBottomSheet
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.bumptech.glide.Glide
@@ -92,7 +89,6 @@ import kotlinx.android.synthetic.main.activity_feature_details.learn_less_btn
 import kotlinx.android.synthetic.main.activity_feature_details.learn_more_btn
 import kotlinx.android.synthetic.main.activity_feature_details.title_bottom3
 import kotlinx.android.synthetic.main.activity_feature_details.tv_how_to_use_title
-import kotlinx.android.synthetic.main.pack_details_bottom_sheet.*
 import retrofit2.Retrofit
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -1145,7 +1141,7 @@ class FeatureDetailsActivity :
                                 )
                                 add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
                                 add_item_to_cart.text = getString(R.string.added_to_cart)
-                            } else if(claim_button.visibility == VISIBLE){
+                            } else if(second_layout.visibility == VISIBLE){
                                 claim_button.background = ContextCompat.getDrawable(
                                     this,
                                     R.drawable.added_to_cart_grey
@@ -1307,6 +1303,12 @@ class FeatureDetailsActivity :
                 )
                 add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
                 add_item_to_cart.text = getString(R.string.added_to_cart)
+                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                    applicationContext,
+                    R.drawable.grey_button_click_effect
+                )
+                add_item_to_cart_new.setTextColor(getResources().getColor(R.color.tv_color_BB))
+                add_item_to_cart_new.text = getString(R.string.added_to_cart)
                 itemInCartStatus = true
                 makeFlyAnimation(if (singleWidgetKey!!.equals("DOMAINPURCHASE") && !(actionRequired == 0 && featureState == 1)) addon_iconV3 else addon_icon)
                 Glide.with(this).load(addonDetails!!.primary_image)
@@ -1346,8 +1348,20 @@ class FeatureDetailsActivity :
         super.onResume()
         try {
             viewModel.getCartItems()
+            if(second_layout.visibility == VISIBLE) {
+                if(addonDetails!!.feature_code.equals("DOMAINPURCHASE")) {
+                    updateSelectedDomain()
+                }
+            }
         } catch (e: Exception) {
             SentryController.captureException(e)
+        }
+    }
+
+    private fun updateSelectedDomain() {
+        val domainName = prefs.getSelectedDomainName()
+        if(domainName.isNullOrEmpty().not()) {
+            seleced_value_text.text = domainName
         }
     }
 
@@ -1475,7 +1489,7 @@ class FeatureDetailsActivity :
                         R.drawable.cta_button_click_effect
                     )
                     add_item_to_cart.setTextColor(Color.WHITE)
-                } else if(claim_button.visibility == VISIBLE){
+                } else if(second_layout.visibility == VISIBLE){
                     val discount = 100 - addonDetails!!.discount_percent
                     val paymentPrice = Utils.priceCalculatorForYear(
                         (discount * addonDetails!!.price) / 100.0,
