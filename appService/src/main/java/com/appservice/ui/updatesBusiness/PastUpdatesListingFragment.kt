@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -262,7 +263,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
                 item as PastPostItem
                 lifecycleScope.launch {
                     withContext(Dispatchers.IO) {
-                        if (item.imageUri.toString().isNullOrBlank().not()) {
+                        if (item.imageUri!= null && item.imageUri.toString() != "") {
                             val bitmapPastUpdateReuse =
                                 Picasso.get().load(item.imageUri.toString()).get()
                             val saveAsTempFile = bitmapPastUpdateReuse.saveAsTempFile()
@@ -289,7 +290,10 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
                                             )
                                         })
                             )
-
+                        } else {
+                            lifecycleScope.launch(Dispatchers.Main){
+                                Toast.makeText(activity,"Something went wrong, Try again later",Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                 }
