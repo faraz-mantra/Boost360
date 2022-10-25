@@ -165,7 +165,7 @@
                 android:textColor="@color/tv_color_74"
                 android:textFontWeight="400"
                 android:textSize="@dimen/txt_12sp"
-                android:buttonTint="#ffb901"
+                android:buttonTint="@color/themeColor"
                 android:theme="@style/SaveCardCheckBox"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/upi_popup_details"
