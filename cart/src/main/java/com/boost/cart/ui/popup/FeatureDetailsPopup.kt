@@ -110,6 +110,8 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
         view.selectWebsiteIwillDoItLater.text = "Skip & continue to cart"
         view.selectWebsiteIwillDoItLater.setOnClickListener {
             // hideAllLayout()
+            domainName = null
+            prefs.storeSelectedDomainName(null)
             dismiss()
             //  select_domain_layout.visibility = View.VISIBLE
         }

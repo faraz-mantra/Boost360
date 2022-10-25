@@ -128,6 +128,8 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
         view.select_website_layout.visibility = View.VISIBLE
         view.select_website_layout.selectWebsiteIwillDoItLater.text = "Skip & continue to cart"
         view.selectWebsiteIwillDoItLater.setOnClickListener {
+            domainName = null
+            prefs.storeSelectedDomainName(null)
             hideAllLayout()
             addToCart()
             //  select_domain_layout.visibility = View.VISIBLE
