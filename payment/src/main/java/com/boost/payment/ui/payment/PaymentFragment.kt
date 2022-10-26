@@ -267,6 +267,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         }
 
         payment_amount_title.text = "Cart total (" + (activity as PaymentActivity).items  + " items)"
+        prefs.storeFeaturesCountInLastOrder((activity as PaymentActivity).items)
 
         payment_submit.setOnClickListener {
             if (paymentData.length() > 0) {

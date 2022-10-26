@@ -31,8 +31,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:background="?actionBarItemBackground"                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -48,6 +47,7 @@
                         <ImageView
                             android:layout_width="25dp"
                             android:layout_height="25dp"
+                            android:background="?actionBarItemBackground"
                             android:layout_margin="4dp"
                             android:src="@drawable/ic_cart" />
                     </LinearLayout>
@@ -65,20 +65,20 @@
 
                 <LinearLayout
                     android:id="@+id/back"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/_3sdp"
-                    android:foreground="?android:attr/selectableItemBackground"
+                    android:background="?actionBarItemBackground"
                     android:gravity="center"
+                    android:padding="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/mp_nav_icon_background"
+                        android:layout_width="38dp"
+                        android:layout_height="50dp"
+                        android:background="?actionBarItemBackground"
                         android:src="@drawable/arrow_white" />
                 </LinearLayout>
 
@@ -88,6 +88,58 @@
 
         </androidx.appcompat.widget.Toolbar>
 
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_view_packsv3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="gone">
+
+            <!-- Adding 7 rows of placeholders -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place_card" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
         <ScrollView
             android:id="@+id/scrollView"
@@ -96,6 +148,8 @@
             android:layout_above="@id/bottom_layout"
             android:layout_below="@id/toolbar"
             android:clipToPadding="false"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:paddingBottom="80dp">
 
             <RelativeLayout

@@ -105,11 +105,11 @@ class CartPackageAdaptor(
       listener.deleteCartAddonsItem(bundlesList.get(position))
     }
 
-//    if(selectedDomainName.isNotEmpty()){
-//      holder.edge_cases_layout.visibility = View.GONE
-//    }else{
-//      holder.edge_cases_layout.visibility = View.VISIBLE
-//    }
+    if(selectedDomainName.isNotEmpty()){
+      holder.edge_cases_layout.visibility = View.GONE
+    }else{
+      holder.edge_cases_layout.visibility = View.VISIBLE
+    }
 
     holder.edge_cases_layout.setOnClickListener {
       listener1.actionClick(bundlesList.get(position))
@@ -279,7 +279,7 @@ class CartPackageAdaptor(
           }
           holder.addon_amount.text = "Includes "+tempFeatures.size+" addons"
           val linearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-          holder.adapter = NewAddonsAdapter(tempFeatures, listener, bundleItem)
+          holder.adapter = NewAddonsAdapter(tempFeatures, listener, bundleItem, activity)
           holder.ChildRecyclerView.adapter = holder.adapter
           holder.ChildRecyclerView.layoutManager = linearLayoutManager
 //          holder.used_by.setText("Used by "+it.+"+ businesses")

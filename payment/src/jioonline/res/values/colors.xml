@@ -6,4 +6,5 @@
     <color name="colorPrimaryDark1">#EC008C</color>
     <color name="colorPrimaryDarkBlue1">#0400A6</color>
     <color name="colorTransparentPrimary1">#FFEC008C</color>
+    <color name="themeColor">#EC008C</color>
 </resources>

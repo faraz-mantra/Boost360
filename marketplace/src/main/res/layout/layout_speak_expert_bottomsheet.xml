@@ -34,6 +34,12 @@
             android:background="@drawable/curve_top_bg"
             android:padding="24dp">
 
+            <LinearLayout
+                android:id="@+id/primary_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/tv_title"
@@ -63,6 +69,67 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/second_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/primary_layout">
+
+                <ImageView
+                    android:id="@+id/contact_support_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_contact_support"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/contact_support_image"
+                    app:layout_constraintTop_toTopOf="@id/contact_support_image"
+                    app:layout_constraintBottom_toBottomOf="@id/contact_support_image"
+                    android:layout_marginStart="10dp"
+                    android:text="Contact Support"
+                    android:fontFamily="@font/bold"
+                    android:textColor="@color/main_color_gray_dk"
+                    android:textFontWeight="700"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/contact_support_image"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/error_colored_rounded_rect">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Error in buying this feature pack"
+                        android:textColor="@color/red"
+                        android:drawableLeft="@drawable/ic_error_red"
+                        android:drawablePadding="10dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginTop="10dp"
+
+                        android:text="A feature from this pack is already active in your current plan. To know more, contact our support team."/>
+
+                </LinearLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <TextView
                 android:id="@+id/tv_call_expert"
@@ -83,7 +150,7 @@
                 android:textSize="@dimen/txt_16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_need_help_msg" />
+                app:layout_constraintTop_toBottomOf="@id/second_layout" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

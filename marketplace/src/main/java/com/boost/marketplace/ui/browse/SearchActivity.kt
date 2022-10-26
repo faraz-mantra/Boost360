@@ -34,6 +34,7 @@ import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
+import com.boost.marketplace.ui.pack_details.PackDetailsActivity
 import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.popup.removeItems.RemoveFeatureBottomSheet
 import com.framework.utils.RootUtil
@@ -186,7 +187,34 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
             allBundles.clear()
             for(item in it){
                 val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
-                allBundles.add(Bundles(
+                allBundles.add(
+                    Bundles(
+                        item.bundle_id,
+                        temp,
+                        item.min_purchase_months,
+                        item.name,
+                        item.overall_discount_percent,
+                        PrimaryImage(item.primary_image),
+                        item.target_business_usecase,
+                        Gson().fromJson<List<String>>(
+                            item.exclusive_to_categories,
+                            object : TypeToken<List<String>>() {}.type
+                        ),
+                        null, Gson().fromJson<List<HowToActivate>>(
+                            item.how_to_activate,
+                            object : TypeToken<List<HowToActivate>>() {}.type
+                        ), Gson().fromJson<List<Testimonial>>(
+                            item.testimonials,
+                            object : TypeToken<List<Testimonial>>() {}.type
+                        ), Gson().fromJson<List<FrequentlyAskedQuestion>>(
+                            item.frequently_asked_questions,
+                            object : TypeToken<List<FrequentlyAskedQuestion>>() {}.type
+                        ),Gson().fromJson<List<String>>(
+                            item.benefits,
+                            object : TypeToken<List<String>>() {}.type
+                        ),item.desc
+                    )
+                /*Bundles(
                     item.bundle_id,
                     temp,
                     item.min_purchase_months,
@@ -196,7 +224,7 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
                     item.target_business_usecase,
                     Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
                     null,null,null,null,null,item.desc
-                ))
+                )*/)
                 Log.e("loop",Gson().toJson(allBundles))
             }
             updateRecyclerViewItems(null, allBundles)
@@ -286,13 +314,52 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
         event_attributes.put("Package Identifier", item!!._kid)
         item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
         WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, ADDONS_MARKETPLACE, event_attributes)
+        val intent = Intent(this, PackDetailsActivity::class.java)
+        intent.putExtra("bundleData", Gson().toJson(item))
+        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
 
-        val packagePopup = PackagePopUpFragement(this, this)
-        val args = Bundle()
-        args.putString("bundleData", Gson().toJson(item))
-        args.putString("cartList", Gson().toJson(cart_list))
-        packagePopup.arguments = args
-        packagePopup.show(supportFragmentManager,"PACKAGE_POPUP")
+        intent.putExtra("fpid", fpid)
+        intent.putExtra("expCode", experienceCode)
+        intent.putExtra("isDeepLink", isDeepLink)
+        intent.putExtra("deepLinkViewType", deepLinkViewType)
+        intent.putExtra("deepLinkDay", deepLinkDay)
+        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+        intent.putExtra(
+            "accountType",
+            accountType
+        )
+        intent.putStringArrayListExtra(
+            "userPurchsedWidgets",
+            userPurchsedWidgets
+        )
+        if (email != null) {
+            intent.putExtra("email", email)
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com")
+        }
+        if (mobileNo != null) {
+            intent.putExtra("mobileNo", mobileNo)
+        } else {
+            intent.putExtra("mobileNo", "9160004303")
+        }
+        intent.putExtra("profileUrl", profileUrl)
+        startActivity(intent)
+
+//        val event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()
+//        item!!.name?.let { it1 -> event_attributes.put("Package Name", it1) }
+//        item!!.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
+//
+//        event_attributes.put("Discount %", item!!.overall_discount_percent)
+//        event_attributes.put("Package Identifier", item!!._kid)
+//        item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
+//        WebEngageController.trackEvent(FEATURE_PACKS_CLICKED, ADDONS_MARKETPLACE, event_attributes)
+//
+//        val packagePopup = PackagePopUpFragement(this, this)
+//        val args = Bundle()
+//        args.putString("bundleData", Gson().toJson(item))
+//        args.putString("cartList", Gson().toJson(cart_list))
+//        packagePopup.arguments = args
+//        packagePopup.show(supportFragmentManager,"PACKAGE_POPUP")
 
 //        val intent = Intent(applicationContext, ComparePacksActivity::class.java)
 //        intent.putExtra("bundleData", Gson().toJson(item))

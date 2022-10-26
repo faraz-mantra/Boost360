@@ -59,6 +59,7 @@ class CallTrackAddToCartBottomSheet :
     override fun onCreateView() {
         experienceCode = requireArguments().getString("expCode")
         fpid = requireArguments().getString("fpid")
+        itemInCartStatus = requireArguments().getBoolean("itemInCartStatus",false)
         isDeepLink = requireArguments().getBoolean("isDeepLink", false)
         deepLinkViewType = requireArguments().getString("deepLinkViewType") ?: ""
         deepLinkDay = requireArguments().getString("deepLinkDay")?.toIntOrNull() ?: 7
