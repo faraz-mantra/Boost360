@@ -180,7 +180,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
 
       RecyclerViewActionType.PRODUCT_ITEM_INCREASE_COUNT.ordinal -> {
         val productItem = item as? ProductItem ?: return
-        if (productItem.productQuantityAdded < productItem.availableUnits?.toInt()?:0) {
+        if (productItem.availableUnits == -1.0 || productItem.productQuantityAdded < productItem.availableUnits?.toInt()!!){
           productItem.productQuantityAdded = productItem.productQuantityAdded + 1
           finalProductList.firstOrNull { productItem._id.equals(it._id) }?.productQuantityAdded = productItem.productQuantityAdded
           itemsAdapter?.notifyDataSetChanged()
@@ -217,14 +217,14 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         (context as? FragmentContainerOrderActivity)?.onBackPressed()
       } else if (addMore && req != null) {
         createOrderRequest = req
-        finalProductList.forEach { prod ->
-          val addedProduct = createOrderRequest.items?.firstOrNull { it.productOrOfferId.equals(prod._id) }
-          if (addedProduct != null) {
-            totalPrice += addedProduct.getPayablePriceAmount()
-            prod.productQuantityAdded = addedProduct.quantity
-            totalCartItems += addedProduct.quantity
-          } else prod.productQuantityAdded = 0
-        }
+//        finalProductList.forEach { prod ->
+//          val addedProduct = createOrderRequest.items?.firstOrNull { it.productOrOfferId.equals(prod._id) }
+//          if (addedProduct != null) {
+//            totalPrice += addedProduct.getPayablePriceAmount()
+//            prod.productQuantityAdded = addedProduct.quantity
+//            totalCartItems += addedProduct.quantity
+//          } else prod.productQuantityAdded = 0
+//        }
         productList.clear()
         productList.addAll(finalProductList)
         itemsAdapter?.notifyDataSetChanged()

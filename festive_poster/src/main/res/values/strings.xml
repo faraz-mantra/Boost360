@@ -39,7 +39,7 @@
     <string name="poster_pack_footer_desc"><![CDATA[More personalised & sharable greeting posters will be available here as new festival or holiday approach.]]></string>
     <string name="done">Done</string>
     <string name="purchased">Purchased</string>
-    <string name="your_picture">Your picture</string>
+    <string name="your_picture">Your picture*</string>
 
     <string name="app_name">template</string>
     <string name="promo_updates">Promo updates</string>
@@ -64,7 +64,7 @@
     <string name="deleting_draft">Deleting draft?</string>
     <string name="no_stay_here">No stay here</string>
     <string name="yes_delete">Yes, delete</string>
-    <string name="closing_this_page_will_not_save_the_changes_you_ve_made">Closing this page will not save the changes youve made.</string>
+    <string name="closing_this_page_will_not_save_the_changes_you_ve_made">Closing this page will not save the changes you\'ve made.</string>
 
     <string name="business_promotion_is_now_very_easy">Business\npromotion is\nnow very easy.</string>
     <string name="get_access_to_1000_fresh_tailor_made_customisable_posts_to_instantly_promote_your_business_with_your_customers_on_your_business_website_and_social_media"><![CDATA[Get access to 1000+ fresh, tailor made & customisable\nposts to instantly promote your business with your\ncustomers on your business website and social media.]]></string>
