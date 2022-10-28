@@ -2030,10 +2030,10 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="digital_brochures">Digital Brochures</string>
     <string name="digital_brochures_n">Digital brochures</string>
     <string name="looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it_digital_brochures_can_turn_out_to_be_the_real_deal_makers_for_you">Looks like this add-on is not added to your current plan. Add it now to start using it. Digital brochures can turn out to be the real deal makers for you.</string>
-    <string name="brochure_name">Brochure name</string>
-    <string name="basic_info_heading">Basic info</string>
+    <string name="brochure_name">Brochure name*</string>
+    <string name="basic_info_heading">Basic info*</string>
     <string name="enter_description">Enter description</string>
-    <string name="attach_brochure">Attach brochure</string>
+    <string name="attach_brochure">Attach brochure*</string>
     <string name="enter_brochure_url_link">Enter brochure URL link</string>
     <string name="or">--or--</string>
     <string name="upload_file">Upload file</string>
