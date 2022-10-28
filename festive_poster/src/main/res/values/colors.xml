@@ -31,5 +31,5 @@
   <color name="common_text_color">#4a4a4a</color>
   <color name="main_color_gray_dk">#333333</color>
   <color name="tv_color_BB">#BBBBBB</color>
-
+  <color name="themeColor">#ffb900</color>
 </resources>
