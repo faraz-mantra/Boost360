@@ -27,9 +27,11 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.BenifitsPageTransformerFullWidth
 import com.boost.cart.adapter.ZoomOutPageTransformer
@@ -1385,6 +1387,9 @@ class FeatureDetailsActivity :
     }
 
     private fun initializeViewPager() {
+        benefits_viewpager.children.find { it is RecyclerView }?.let {
+            (it as RecyclerView).isNestedScrollingEnabled = false
+        }
         benefits_viewpager.adapter = benefitAdaptor
         benefits_indicator.setViewPager2(benefits_viewpager)
         benefits_viewpager.offscreenPageLimit = 1
