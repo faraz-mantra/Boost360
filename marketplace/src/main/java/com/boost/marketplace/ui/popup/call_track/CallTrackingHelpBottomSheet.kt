@@ -45,6 +45,15 @@ class CallTrackingHelpBottomSheet : DialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        if(arguments != null && arguments!!.containsKey("allowPackageToCart")){
+            second_layout.visibility = View.VISIBLE
+            primary_layout.visibility = View.GONE
+        }else{
+            second_layout.visibility = View.GONE
+            primary_layout.visibility = View.VISIBLE
+        }
+
         back_btn.setOnClickListener {
             dismiss()
         }

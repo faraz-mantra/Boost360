@@ -2,6 +2,7 @@
 <resources>
 
     <color name="colorPrimary1">#EC008C</color>
+    <color name="themeColor">#EC008C</color>
     <color name="colorAccent1">#0400A6</color>
     <color name="colorPrimaryDark1">#EC008C</color>
     <color name="colorPrimaryDarkBlue1">#0400A6</color>

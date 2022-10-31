@@ -33,6 +33,7 @@ class CustomDomainViewModel() : BaseViewModel() {
 
     var updatesResult: MutableLiveData<CustomDomains> = MutableLiveData()
     var updateStatus: MutableLiveData<BlockApi> = MutableLiveData()
+    var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
     var domainBookingStatus: MutableLiveData<Boolean> = MutableLiveData()
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<String> = MutableLiveData()
@@ -67,6 +68,10 @@ class CustomDomainViewModel() : BaseViewModel() {
 
     fun domainBookingStatus(): LiveData<Boolean> {
         return domainBookingStatus
+    }
+
+    fun cartResult(): LiveData<List<CartModel>> {
+        return cartResult
     }
 
     fun GetSuggestedDomains(domainRequest: DomainRequest) {
@@ -219,6 +224,26 @@ class CustomDomainViewModel() : BaseViewModel() {
                     domainBookingStatus.postValue(false)
                 }
             )
+        )
+    }
+
+    fun getCartItems() {
+        updatesLoader.postValue("")
+        compositeDisposable.add(
+            AppDatabase.getInstance(application)!!
+                .cartDao()
+                .getCartItems()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess {
+                    cartResult.postValue(it)
+                    updatesLoader.postValue("")
+                }
+                .doOnError {
+                    updatesError.postValue(it.message)
+                    updatesLoader.postValue("false.toString()")
+                }
+                .subscribe()
         )
     }
 }

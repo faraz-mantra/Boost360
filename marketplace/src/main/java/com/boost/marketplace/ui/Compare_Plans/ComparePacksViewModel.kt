@@ -1,5 +1,6 @@
 package com.boost.marketplace.ui.Compare_Plans
 
+import android.app.Activity
 import android.app.Application
 import android.util.Log
 import android.widget.Toast
@@ -7,8 +8,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.boost.dbcenterapi.data.api_model.CustomDomain.CustomDomains
 import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
+import com.boost.dbcenterapi.data.api_model.Domain.AlreadyPurchasedDomainResponse.PurchasedDomainResponse
 import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
 import com.boost.dbcenterapi.data.api_model.gst.Error
+import com.boost.dbcenterapi.data.api_model.mycurrentPlanV3.MyPlanV3
 import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
@@ -34,6 +37,7 @@ class ComparePacksViewModel: BaseViewModel() {
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
     var NewApiService = Utils.getRetrofit(true).create(NewApiInterface::class.java)
+    var NewApiService1 = Utils.getRetrofit().create(NewApiInterface::class.java)
     var experienceCode: String = "SVC"
     var _fpTag: String = "ABC"
     var allBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
@@ -43,6 +47,8 @@ class ComparePacksViewModel: BaseViewModel() {
     var updatesResult: MutableLiveData<FeaturesModel> = MutableLiveData()
     val compositeDisposable = CompositeDisposable()
     private var callTrackListResponse: MutableLiveData<CallTrackListResponse> = MutableLiveData()
+    var purchasedDomainResult: MutableLiveData<PurchasedDomainResponse> = MutableLiveData()
+    var myplanV3Result: MutableLiveData<MyPlanV3> = MutableLiveData()
 
     fun getSpecificFeature(): LiveData<List<FeaturesModel>> {
         return featureResult
@@ -71,6 +77,13 @@ class ComparePacksViewModel: BaseViewModel() {
         return addToCartResult
     }
 
+    fun PurchasedDomainResponse(): LiveData<PurchasedDomainResponse> {
+        return purchasedDomainResult
+    }
+
+    fun myplanResultV3(): LiveData<MyPlanV3> {
+        return myplanV3Result
+    }
 
     fun getFeatureValues(list: List<String>) {
         CompositeDisposable().add(
@@ -335,5 +348,80 @@ class ComparePacksViewModel: BaseViewModel() {
             )
 
         }
+    }
+
+    fun getAlreadyPurchasedDomain(auth: String, fpTag: String, clientId:String) {
+        updatesLoader.postValue(true)
+        compositeDisposable.add(
+            NewApiService.getAlreadyPurchasedDomain(auth, fpTag, clientId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        purchasedDomainResult.postValue(it)
+                        updatesLoader.postValue(false)
+                    },{
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
+
+    fun addItemToCart1(updatesModel: FeaturesModel, activity: Activity, title: String?) {
+        updatesLoader.postValue(false)
+        val discount = 100 - updatesModel.discount_percent
+        val paymentPrice = ((discount * updatesModel.price) / 100)
+        val mrpPrice = updatesModel.price
+        val cartItem = CartModel(
+            updatesModel.feature_id,
+            updatesModel.boost_widget_key,
+            updatesModel.feature_code,
+            updatesModel.name,
+            updatesModel.description,
+            updatesModel.primary_image,
+            paymentPrice,
+            mrpPrice,
+            updatesModel.discount_percent,
+            1,
+            1,
+            "features",
+            updatesModel.extended_properties,
+            updatesModel.widget_type ?: "",title
+        )
+
+
+        Completable.fromAction {
+            AppDatabase.getInstance(Application())!!.cartDao()
+                .insertToCart(cartItem)
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnComplete {
+                updatesLoader.postValue(false)
+                //add cartitem to firebase
+                DataLoader.updateCartItemsToFirestore(Application())
+            }
+            .doOnError {
+                updatesError.postValue(it.message)
+                updatesLoader.postValue(false)
+            }
+            .subscribe()
+    }
+
+    fun myPlanV3Status(fpid: String,clientId:String){
+        updatesLoader.postValue(true)
+        compositeDisposable.add(
+            NewApiService1.GetMyPlanV3(fpid,clientId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        myplanV3Result.postValue(it)
+//                        updatesLoader.postValue(false)
+                    }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
     }
 }
