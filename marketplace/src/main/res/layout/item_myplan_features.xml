@@ -121,6 +121,7 @@
                 android:layout_marginRight="@dimen/_15ssp"
                 android:src="@drawable/ic_arrow_myplanv3"
                 android:scaleType="fitCenter"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

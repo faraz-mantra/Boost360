@@ -63,6 +63,7 @@ class CallTrackingActivity :
     lateinit var prefs: SharedPrefs
     var numberprice: String? = null
     var pricing: String? = null
+    var itemInCartStatus = false
 
     override fun getLayout(): Int {
         return R.layout.activity_call_tracking
@@ -81,6 +82,7 @@ class CallTrackingActivity :
         super.onCreateView()
         WebEngageController.trackEvent(VIRTUAL_NUMBER_SEARCH_LOADED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
         experienceCode = intent.getStringExtra("expCode")
+        itemInCartStatus = intent.getBooleanExtra("itemInCartStatus",false)
         fpid = intent.getStringExtra("fpid")
         isDeepLink = intent.getBooleanExtra("isDeepLink", false)
         deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
@@ -126,7 +128,7 @@ class CallTrackingActivity :
             val bundle = Bundle()
 
             bundle.putString("price",numberprice)
-
+            bundle.putBoolean("itemInCartStatus",itemInCartStatus)
             bundle.putString("number", blockedNumber)
             bundle.putString("bundleData", Gson().toJson(singleAddon))
             bundle.putDouble(

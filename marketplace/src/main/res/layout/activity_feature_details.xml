@@ -93,8 +93,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="@dimen/_5sdp"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:background="?actionBarItemBackground"                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
@@ -120,7 +119,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="@dimen/_3sdp"
-                            android:foreground="?android:attr/selectableItemBackground"
+                            android:background="?actionBarItemBackground"
                             android:gravity="center"
                             android:padding="10dp"
                             app:layout_constraintBottom_toBottomOf="parent"

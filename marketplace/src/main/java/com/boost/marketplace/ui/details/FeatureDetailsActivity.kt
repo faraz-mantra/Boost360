@@ -56,8 +56,8 @@ import com.boost.marketplace.interfaces.DetailsFragmentListener
 import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 import com.boost.marketplace.ui.details.staff.StaffManagementBottomSheet
+import com.boost.marketplace.ui.pack_details.PackDetailsActivity
 import com.boost.marketplace.ui.popup.ImagePreviewPopUpFragement
-import com.boost.marketplace.ui.popup.PackagePopUpFragement
 import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
 import com.boost.marketplace.ui.popup.call_track.FindingNumberLoaderBottomSheet
 import com.boost.marketplace.ui.popup.call_track.RequestCallbackBottomSheet
@@ -78,6 +78,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_feature_details.*
+import kotlinx.android.synthetic.main.activity_feature_details.benefits_indicator
+import kotlinx.android.synthetic.main.activity_feature_details.benefits_viewpager
+import kotlinx.android.synthetic.main.activity_feature_details.faq_container
+import kotlinx.android.synthetic.main.activity_feature_details.faq_recycler
+import kotlinx.android.synthetic.main.activity_feature_details.how_to_use_arrow
+import kotlinx.android.synthetic.main.activity_feature_details.how_to_use_recycler
+import kotlinx.android.synthetic.main.activity_feature_details.how_to_use_title_layout
+import kotlinx.android.synthetic.main.activity_feature_details.learn_less_btn
+import kotlinx.android.synthetic.main.activity_feature_details.learn_more_btn
+import kotlinx.android.synthetic.main.activity_feature_details.title_bottom3
+import kotlinx.android.synthetic.main.activity_feature_details.tv_how_to_use_title
 import retrofit2.Retrofit
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -439,8 +450,7 @@ class FeatureDetailsActivity :
             {
                 Toasty.info(this, "Coming soon...", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
-            }
-            else {
+            } else {
                 if (packageItem) {
                     val args = Bundle()
                     args.putString("addonName", addonDetails!!.name)
@@ -631,65 +641,87 @@ class FeatureDetailsActivity :
             )
             claim_button.setText(content)
             claim_button.setOnClickListener {
-                if (!itemInCartStatus) {
-                    if (addonDetails!! != null) {
-                        prefs.storeCartOrderInfo(null)
-                        viewModel.addItemToCart1(
-                            addonDetails!!,
-                            this,
-                            seleced_value_text.text.toString()
+                    if(packageItem){
+                        val args = Bundle()
+                        args.putString("addonName", addonDetails!!.name)
+                        args.putBoolean("activty1", false)
+                        removePackageBottomSheet.arguments = args
+                        removePackageBottomSheet.show(
+                            supportFragmentManager,
+                            RemovePackageBottomSheet::class.java.name
                         )
-                        val event_attributes: HashMap<String, Any> = HashMap()
-                        addonDetails!!.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
-                        event_attributes.put("Addon Price", addonDetails!!.price)
-                        event_attributes.put(
-                            "Addon Discounted Price",
-                            getDiscountedPrice(
-                                addonDetails!!.price,
+                    }else {
+                        if(!itemInCartStatus) {
+                            prefs.storeCartOrderInfo(null)
+                            viewModel.addItemToCart1(
+                                addonDetails!!,
+                                this,
+                                seleced_value_text.text.toString()
+                            )
+                            val event_attributes: HashMap<String, Any> = HashMap()
+                            addonDetails!!.name?.let { it1 ->
+                                event_attributes.put(
+                                    "Addon Name",
+                                    it1
+                                )
+                            }
+                            event_attributes.put("Addon Price", addonDetails!!.price)
+                            event_attributes.put(
+                                "Addon Discounted Price",
+                                getDiscountedPrice(
+                                    addonDetails!!.price,
+                                    addonDetails!!.discount_percent
+                                )
+                            )
+                            event_attributes.put(
+                                "Addon Discount %",
                                 addonDetails!!.discount_percent
                             )
-                        )
-                        event_attributes.put("Addon Discount %", addonDetails!!.discount_percent)
-                        event_attributes.put("Addon Validity", 1)
-                        event_attributes.put("Addon Feature Key", addonDetails!!.boost_widget_key)
-                        addonDetails!!.target_business_usecase?.let { it1 ->
+                            event_attributes.put("Addon Validity", 1)
                             event_attributes.put(
-                                "Addon Tag",
-                                it1
+                                "Addon Feature Key",
+                                addonDetails!!.boost_widget_key
                             )
+                            addonDetails!!.target_business_usecase?.let { it1 ->
+                                event_attributes.put(
+                                    "Addon Tag",
+                                    it1
+                                )
+                            }
+                            WebEngageController.trackEvent(
+                                ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
+                                ADDONS_MARKETPLACE,
+                                event_attributes
+                            )
+                            itemInCartStatus = true
+                            viewModel.getCartItems()
                         }
-                        WebEngageController.trackEvent(
-                            ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
-                            ADDONS_MARKETPLACE,
-                            event_attributes
-                        )
-                        itemInCartStatus = true
+                        val pref = this?.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+                        val fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
+                        val intent = Intent(applicationContext, CartActivity::class.java)
+                        intent.putExtra("fpid", fpid)
+                        intent.putExtra("fpTag", fpTag)
+                        intent.putExtra("expCode", experienceCode)
+                        intent.putExtra("isDeepLink", isDeepLink)
+                        intent.putExtra("deepLinkViewType", deepLinkViewType)
+                        intent.putExtra("deepLinkDay", deepLinkDay)
+                        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+                        intent.putExtra("accountType", accountType)
+                        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+                        if (email != null) {
+                            intent.putExtra("email", email)
+                        } else {
+                            intent.putExtra("email", "ria@nowfloats.com")
+                        }
+                        if (mobileNo != null) {
+                            intent.putExtra("mobileNo", mobileNo)
+                        } else {
+                            intent.putExtra("mobileNo", "9160004303")
+                        }
+                        intent.putExtra("profileUrl", profileUrl)
+                        startActivity(intent)
                     }
-                }
-                val pref = this?.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
-                val fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
-                val intent = Intent(applicationContext, CartActivity::class.java)
-                intent.putExtra("fpid", fpid)
-                intent.putExtra("fpTag", fpTag)
-                intent.putExtra("expCode", experienceCode)
-                intent.putExtra("isDeepLink", isDeepLink)
-                intent.putExtra("deepLinkViewType", deepLinkViewType)
-                intent.putExtra("deepLinkDay", deepLinkDay)
-                intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-                intent.putExtra("accountType", accountType)
-                intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
-                if (email != null) {
-                    intent.putExtra("email", email)
-                } else {
-                    intent.putExtra("email", "ria@nowfloats.com")
-                }
-                if (mobileNo != null) {
-                    intent.putExtra("mobileNo", mobileNo)
-                } else {
-                    intent.putExtra("mobileNo", "9160004303")
-                }
-                intent.putExtra("profileUrl", profileUrl)
-                startActivity(intent)
+
             }
             choose_different_value.setText("Pick another Domain")
             choose_different_value.setOnClickListener {
@@ -725,56 +757,66 @@ class FeatureDetailsActivity :
                 )
                 claim_button.setText(content)
                 claim_button.setOnClickListener {
-                    if (selectedNum != null) {
-                        if (!itemInCartStatus) {
-                            if (addonDetails != null) {
-                                prefs.storeCartOrderInfo(null)
-                                viewModel!!.addItemToCart1(addonDetails!!, this, selectedNum)
-                                val event_attributes: HashMap<String, Any> = HashMap()
-                                addonDetails!!.name?.let { it1 ->
+                    if (packageItem) {
+                        val args = Bundle()
+                        args.putString("addonName", addonDetails!!.name)
+                        args.putBoolean("activty1", false)
+                        removePackageBottomSheet.arguments = args
+                        removePackageBottomSheet.show(
+                            supportFragmentManager,
+                            RemovePackageBottomSheet::class.java.name
+                        )
+                    } else {
+                        if (selectedNum != null) {
+                            if (!itemInCartStatus) {
+                                if (addonDetails != null) {
+                                    prefs.storeCartOrderInfo(null)
+                                    viewModel!!.addItemToCart1(addonDetails!!, this, selectedNum)
+                                    val event_attributes: HashMap<String, Any> = HashMap()
+                                    addonDetails!!.name?.let { it1 ->
+                                        event_attributes.put(
+                                            "Addon Name",
+                                            it1
+                                        )
+                                    }
+                                    event_attributes.put("Addon Price", addonDetails!!.price)
                                     event_attributes.put(
-                                        "Addon Name",
-                                        it1
+                                        "Addon Discounted Price",
+                                        getDiscountedPrice(
+                                            addonDetails!!.price,
+                                            addonDetails!!.discount_percent
+                                        )
                                     )
-                                }
-                                event_attributes.put("Addon Price", addonDetails!!.price)
-                                event_attributes.put(
-                                    "Addon Discounted Price",
-                                    getDiscountedPrice(
-                                        addonDetails!!.price,
+                                    event_attributes.put(
+                                        "Addon Discount %",
                                         addonDetails!!.discount_percent
                                     )
-                                )
-                                event_attributes.put(
-                                    "Addon Discount %",
-                                    addonDetails!!.discount_percent
-                                )
-                                event_attributes.put("Addon Validity", 1)
-                                event_attributes.put(
-                                    "Addon Feature Key",
-                                    addonDetails!!.boost_widget_key
-                                )
-                                addonDetails!!.target_business_usecase?.let { it1 ->
+                                    event_attributes.put("Addon Validity", 1)
                                     event_attributes.put(
-                                        "Addon Tag",
-                                        it1
+                                        "Addon Feature Key",
+                                        addonDetails!!.boost_widget_key
                                     )
+                                    addonDetails!!.target_business_usecase?.let { it1 ->
+                                        event_attributes.put(
+                                            "Addon Tag",
+                                            it1
+                                        )
+                                    }
+                                    WebEngageController.trackEvent(
+                                        ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
+                                        ADDONS_MARKETPLACE,
+                                        event_attributes
+                                    )
+                                    itemInCartStatus = true
                                 }
-                                WebEngageController.trackEvent(
-                                    ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
-                                    ADDONS_MARKETPLACE,
-                                    event_attributes
-                                )
-                                itemInCartStatus = true
                             }
+                        } else {
+                            Toasty.error(
+                                this,
+                                "Number not available, please select other",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-
-                    } else {
-                        Toasty.error(
-                            this,
-                            "Number not available, please select other",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
                     val intent = Intent(this, CartActivity::class.java)
                     intent.putExtra("fpid", fpid)
@@ -804,6 +846,7 @@ class FeatureDetailsActivity :
                     val intent = Intent(this, CallTrackingActivity::class.java)
                     intent.putExtra("fpid", fpid)
                     intent.putExtra("bundleData", Gson().toJson(addonDetails))
+                    intent.putExtra("itemInCartStatus",packageItem )
                     intent.putExtra("price", numberprice)
                     intent.putExtra(
                         "AddonDiscountedPrice",
@@ -1098,6 +1141,13 @@ class FeatureDetailsActivity :
                                 )
                                 add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
                                 add_item_to_cart.text = getString(R.string.added_to_cart)
+                            } else if(second_layout.visibility == VISIBLE){
+                                claim_button.background = ContextCompat.getDrawable(
+                                    this,
+                                    R.drawable.added_to_cart_grey
+                                )
+                                claim_button.setTextColor(getResources().getColor(R.color.tv_color_BB))
+                                claim_button.text = getString(R.string.added_to_cart)
                             } else {
                                 add_item_to_cart_new.background = ContextCompat.getDrawable(
                                     this,
@@ -1253,6 +1303,12 @@ class FeatureDetailsActivity :
                 )
                 add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
                 add_item_to_cart.text = getString(R.string.added_to_cart)
+                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                    applicationContext,
+                    R.drawable.grey_button_click_effect
+                )
+                add_item_to_cart_new.setTextColor(getResources().getColor(R.color.tv_color_BB))
+                add_item_to_cart_new.text = getString(R.string.added_to_cart)
                 itemInCartStatus = true
                 makeFlyAnimation(if (singleWidgetKey!!.equals("DOMAINPURCHASE") && !(actionRequired == 0 && featureState == 1)) addon_iconV3 else addon_icon)
                 Glide.with(this).load(addonDetails!!.primary_image)
@@ -1275,6 +1331,7 @@ class FeatureDetailsActivity :
         intent.putExtra("expCode", experienceCode)
         intent.putExtra("fpid", fpid)
         intent.putExtra("bundleData", Gson().toJson(addonDetails))
+        intent.putExtra("itemInCartStatus",packageItem )
         intent.putExtra(
             "AddonDiscountedPrice",
             getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent)
@@ -1291,8 +1348,20 @@ class FeatureDetailsActivity :
         super.onResume()
         try {
             viewModel.getCartItems()
+            if(second_layout.visibility == VISIBLE) {
+                if(addonDetails!!.feature_code.equals("DOMAINPURCHASE")) {
+                    updateSelectedDomain()
+                }
+            }
         } catch (e: Exception) {
             SentryController.captureException(e)
+        }
+    }
+
+    private fun updateSelectedDomain() {
+        val domainName = prefs.getSelectedDomainName()
+        if(domainName.isNullOrEmpty().not()) {
+            seleced_value_text.text = domainName
         }
     }
 
@@ -1420,6 +1489,31 @@ class FeatureDetailsActivity :
                         R.drawable.cta_button_click_effect
                     )
                     add_item_to_cart.setTextColor(Color.WHITE)
+                } else if(second_layout.visibility == VISIBLE){
+                    val discount = 100 - addonDetails!!.discount_percent
+                    val paymentPrice = Utils.priceCalculatorForYear(
+                        (discount * addonDetails!!.price) / 100.0,
+                        addonDetails!!.widget_type ?: "",
+                        this
+                    )
+                    pricing = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                        .format(paymentPrice) + Utils.yearlyOrMonthlyOrEmptyValidity(
+                        addonDetails!!.widget_type ?: "", this
+                    )
+                    numberprice = pricing
+                    val content = SpannableString("Claim the above domain\n@ ${numberprice}")
+                    content.setSpan(
+                        StyleSpan(Typeface.BOLD),
+                        0,
+                        22,
+                        0
+                    )
+                    claim_button.setText(content)
+                    claim_button.background = ContextCompat.getDrawable(
+                        this,
+                        R.drawable.cta_button_click_effect
+                    )
+                    claim_button.setTextColor(getResources().getColor(R.color.white))
                 } else {
                     add_item_to_cart_new.visibility = View.VISIBLE
                     add_item_to_cart_new.background = ContextCompat.getDrawable(
@@ -1644,7 +1738,7 @@ class FeatureDetailsActivity :
 
     override fun onPackageClicked(item: Bundles?) {
 
-        val event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()
+        /*val event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()
         item!!.name?.let { it1 -> event_attributes.put("Package Name", it1) }
         item!!.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
 
@@ -1658,7 +1752,38 @@ class FeatureDetailsActivity :
         args.putString("bundleData", Gson().toJson(item))
         args.putString("cartList", Gson().toJson(cart_list))
         packagePopup.arguments = args
-        packagePopup.show(supportFragmentManager, "PACKAGE_POPUP")
+        packagePopup.show(supportFragmentManager, "PACKAGE_POPUP")*/
+
+        val intent = Intent(this, PackDetailsActivity::class.java)
+        intent.putExtra("bundleData", Gson().toJson(item))
+        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+
+        intent.putExtra("fpid", fpid)
+        intent.putExtra("expCode", experienceCode)
+        intent.putExtra("isDeepLink", isDeepLink)
+        intent.putExtra("deepLinkViewType", deepLinkViewType)
+        intent.putExtra("deepLinkDay", deepLinkDay)
+        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+        intent.putExtra(
+            "accountType",
+            accountType
+        )
+        intent.putStringArrayListExtra(
+            "userPurchsedWidgets",
+            userPurchsedWidgets
+        )
+        if (email != null) {
+            intent.putExtra("email", email)
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com")
+        }
+        if (mobileNo != null) {
+            intent.putExtra("mobileNo", mobileNo)
+        } else {
+            intent.putExtra("mobileNo", "9160004303")
+        }
+        intent.putExtra("profileUrl", profileUrl)
+        startActivity(intent)
     }
 
     override fun itemAddedToCart(status: Boolean) {

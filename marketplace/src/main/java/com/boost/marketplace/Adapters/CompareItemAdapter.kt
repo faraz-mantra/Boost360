@@ -60,6 +60,12 @@ class CompareItemAdapter(
         val initPosition = upgradeList.size
         upgradeList.clear()
         upgradeList.addAll(upgradeModel)
+        val index =
+            upgradeList.indexOf(upgradeList.find { it.boost_widget_key == "FESTIVEPOSTERS" })
+        if (index > 0) {
+            upgradeList.removeAt(index)
+        }
+
         notifyItemRangeInserted(initPosition, upgradeList.size)
     }
 

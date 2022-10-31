@@ -1,6 +1,7 @@
 package com.boost.dbcenterapi.utils
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Application
 import android.util.Log
 import android.widget.Toast
@@ -355,6 +356,10 @@ object DataLoader {
                                     }
 
                                 }
+                            }
+                            if(it.Data[0].expert_connect.is_online){
+                                val prefs = SharedPrefs(Activity())
+                                prefs.storeExpertContact(it.Data[0].expert_connect.contact_number)
                             }
                         },
                         {

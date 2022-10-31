@@ -27,5 +27,9 @@
   <color name="color535966">#535966</color>
   <color name="colorB8C5E5">#B8C5E5</color>
   <color name="colorE9EEFA">#E9EEFA</color>
+  <color name="background_colour">#1d000000</color>
+  <color name="common_text_color">#4a4a4a</color>
+  <color name="main_color_gray_dk">#333333</color>
+  <color name="tv_color_BB">#BBBBBB</color>
 
 </resources>
