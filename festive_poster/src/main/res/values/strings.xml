@@ -166,6 +166,7 @@
     <string name="_18_gst">+18% GST</string>
     <string name="get_this_feature">Get this feature</string>
     <string name="poster_updated_successfully">Poster updated successfully!</string>
+    <string name="poster_greeting_desc_updated">Poster greeting description updated!</string>
     <string name="please_upload_image">Please upload image</string>
     <string name="please_enter_name">Please enter Name</string>
     <string name="please_enter_email">Please enter email</string>

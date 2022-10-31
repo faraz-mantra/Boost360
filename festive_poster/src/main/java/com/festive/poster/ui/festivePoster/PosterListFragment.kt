@@ -232,6 +232,7 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
     sheetBinding.tvUpdateInfo.setOnClickListener {
       dataList?.get(position)?.greeting_message = sheetBinding.etDesc.text.toString()
       adapter?.notifyItemChanged(position)
+      showShortToast(getString(R.string.poster_greeting_desc_updated))
       sheet.dismiss()
     }
     sheet.show()
