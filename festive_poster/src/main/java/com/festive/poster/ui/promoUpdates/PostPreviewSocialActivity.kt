@@ -674,7 +674,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
             )
     }
     fun fetchSubscriberCount(){
-        viewModel.getMerchantSummary(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session?.fpTag).observeOnce(this) {
+        viewModel.getMerchantSummary(clientId, session?.fpTag).observeOnce(this) {
             val response = it as? MerchantSummaryResponse
             val subscriber = response?.Entity?.firstOrNull()?.get("NoOfSubscribers")
             val subTitle = if (subscriber == 0) {
