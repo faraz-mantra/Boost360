@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.text.InputFilter
 import android.util.Base64
 import android.util.Log
 import android.view.Gravity
@@ -33,6 +34,7 @@ import com.appservice.ui.staffs.ui.Constants
 import com.appservice.ui.staffs.widgets.EXPERIENCE_VALUE
 import com.appservice.viewmodel.StaffViewModel
 import com.appservice.ui.staffs.widgets.ExperienceBottomSheet
+import com.appservice.utils.MinMaxFilter
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.changeColorOfSubstring
 import com.framework.extensions.gone
@@ -92,12 +94,8 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     isEdit = (staffDetails != null && staffDetails?.id.isNullOrEmpty().not())
     if (isEdit == true) {
       updatePreviousData()
-      (requireActivity() as StaffFragmentContainerActivity).getToolbar()?.getToolbarTitleTextView()?.gravity = Gravity.START
+      (baseActivity as? StaffFragmentContainerActivity)?.getToolbar()?.getToolbarTitleTextView()?.gravity = Gravity.START
     }
-//    else {
-//      (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor = getColor(R.color.color_primary_dark)
-//      (requireActivity() as StaffFragmentContainerActivity).getToolbar()?.setBackgroundColor(resources.getColor(R.color.color_primary))
-//    }
     if (staffDetails == null) staffDetails = StaffDetailsResult()
   }
 
@@ -148,7 +146,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     experienceSheet.arguments = Bundle().apply { putString(EXPERIENCE_VALUE, yearOfExperience) }
     experienceSheet.onClicked = {
       yearOfExperience = it?.toString() ?: ""
-      staffDetails?.experience = it
+      staffDetails?.experience = it?.toDouble()?:0.0
       staffProfile?.experience = it
       setExperience()
     }
@@ -159,6 +157,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     this.genderArray = arrayOf("Male", "Female", "Please select")
     binding?.spinnerGender?.setHintAdapter(requireContext(), list = genderArray)
     binding?.toggleIsAvailable?.isOn = true
+    binding.cetAge.filters = arrayOf<InputFilter>(MinMaxFilter(1, 99))
   }
 
   override fun onClick(v: View) {
@@ -218,7 +217,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     this.specialization = binding?.etvSpecialization?.text.toString()
     this.serviceListId = ArrayList()
     this.specializationList = ArrayList()
-    this.yearOfExperience = staffDetails?.experience.toString()
+    this.yearOfExperience = staffDetails?.experience?.toInt()?.toString()
     this.staffName = binding?.etvName?.text.toString()
     this.staffAge = binding?.cetAge?.text.toString().toIntOrNull()
     this.staffDescription = binding?.etvStaffDescription?.text.toString()
@@ -240,7 +239,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     } else if (staffAge == null) {
       showLongToast(getString(R.string.please_enter_your_age))
       return false
-    } else if (staffAge == 0 || staffAge ?: 0 >= 100) {
+    } else if (staffAge!! < 18) {
       showLongToast(getString(R.string.please_enter_valid_age))
       return false
     } else if (specialization.isEmpty()) {
@@ -342,7 +341,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 
   private fun openImagePicker() {
     val filterSheet = ImagePickerBottomSheet()
-    filterSheet.isHidePdf(true)
+    filterSheet.isHidePdfOrGif(true)
     filterSheet.onClicked = { openImagePicker(it) }
     filterSheet.show(this@StaffDetailsFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }

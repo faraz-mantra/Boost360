@@ -94,10 +94,10 @@ import com.anachat.chatsdk.internal.database.PreferencesManager;
 import com.appservice.ui.bgImage.BackgroundImageContainerActivityKt;
 import com.appservice.ui.bankaccount.BankAccountFragment;
 import com.appservice.ui.calltracking.VmnCallCardsActivityV2;
+import com.boost.marketplace.ui.home.MarketPlaceActivity;
 import com.boost.presignin.ui.intro.IntroActivity;
 import com.boost.presignup.utils.DynamicLinkParams;
 import com.boost.presignup.utils.FirebaseDynamicLinksManager;
-import com.boost.upgrades.UpgradeActivity;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.dashboard.controller.DashboardFragmentContainerActivityKt;
@@ -1486,7 +1486,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
   }
 
   private void initiateAddonMarketplace(Boolean isOpenCardFragment, String screenType, String buyItemKey) {
-    Intent intent = new Intent(HomeActivity.this, UpgradeActivity.class);
+    Intent intent = new Intent(HomeActivity.this, MarketPlaceActivity.class);
     intent.putExtra("expCode", session.getFP_AppExperienceCode());
     intent.putExtra("fpName", session.getFPName());
     intent.putExtra("fpid", session.getFPID());

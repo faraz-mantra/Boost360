@@ -637,9 +637,9 @@
   <string name="boost_360_file">JioOnline File</string>
 
   <string name="settings_facebook_like_link">https://www.facebook.com/Jio</string>
-  <string name="settings_facebook_page_id"></string>
+  <string name="settings_facebook_page_id">https://www.facebook.com/Jio</string>
   <string name="settings_twitter_url">https://twitter.com/reliancejio</string>
-  <string name="settings_twitter_url_id"></string>
+  <string name="settings_twitter_url_id">https://twitter.com/reliancejio</string>
   <string name="google_form_help_business_boost"></string>
 
   <string name="enable_boost_keyboard">Enable JioOnline keyboard</string>

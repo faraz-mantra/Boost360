@@ -510,8 +510,17 @@
 #-dontwarn com.boost.upgrades.**
 #-keeppackagenames com.boost.upgrades
 #-keep class com.boost.upgrades.** {*;}
--keep class com.boost.upgrades.data.** { <fields>; }
--keep class com.boost.upgrades.datamodule.** { <fields>; }
+#-keep class com.boost.upgrades.data.** { <fields>; }
+#-keep class com.boost.upgrades.datamodule.** { <fields>; }
+
+##------Marketplace---------##
+-dontwarn com.boost.marketplace.**
+-keeppackagenames com.boost.marketplace
+-keep class com.boost.marketplace.** {*;}
+-keep class com.boost.marketplace.data.** { <fields>; }
+
+##------dbcenterapi---------##
+-keep class com.boost.dbcenterapi.data.api_model.** { <fields>; }
 
 ##-----Appsflyer-----###
 -keep class com.appsflyer.** { *; }

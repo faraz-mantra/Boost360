@@ -53,11 +53,11 @@ class ProductViewModel : BaseViewModel() {
 
   fun addUpdateProductImage(
     clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?,
-    currentChunkNumber: Int?, productId: String?, requestBody: RequestBody?
+    currentChunkNumber: Int?, productId: String?,fileName: String?, requestBody: RequestBody?
   ): LiveData<BaseResponse> {
     return WithFloatTwoRepository.addUpdateImageProduct(
       clientId, requestType, requestId, totalChunks,
-      currentChunkNumber, productId, requestBody
+      currentChunkNumber, productId,fileName, requestBody
     ).toLiveData()
   }
 

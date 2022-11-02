@@ -65,6 +65,10 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     arguments?.getString(IntentConstant.CATEGORY_SUGG_UI.name)
   }
 
+  private val subCategoryID by lazy {
+    arguments?.getString(IntentConstant.SUB_CATEGORY_ID.name)
+  }
+
   private val mobilePreview by lazy {
     arguments?.getString(IntentConstant.MOBILE_PREVIEW.name)
   }
@@ -224,6 +228,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     createRequest.whatsAppNumber = if (whatsappConsent == true) phoneNumber else null
     createRequest.whatsAppNotificationOptIn = whatsappConsent
     createRequest.boostXWebsiteUrl = "www.${domain.lowercase()}.nowfloats.com"
+    createRequest.SubCategory = subCategoryID
     return createRequest
   }
 

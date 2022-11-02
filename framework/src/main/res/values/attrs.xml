@@ -60,6 +60,11 @@
     <attr name="srcCompat" format="reference" tools:overide="true" />
   </declare-styleable>
 
+  <declare-styleable name="PercentageConstraintLayout">
+    <attr name="widthDisplayPercent" format="float"/>
+    <attr name="heightDisplayPercent" format="float"/>
+
+  </declare-styleable>
   <!--
      Blur Layout start
   -->

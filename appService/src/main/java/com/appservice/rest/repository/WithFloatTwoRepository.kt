@@ -9,10 +9,13 @@ import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.model.updateBusiness.DeleteBizMessageRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
+import com.appservice.model.updateBusiness.pastupdates.TagListRequest
 import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.WithFloatsApiTwoClient
 import com.appservice.rest.services.WithFloatTwoRemoteData
 import com.framework.base.BaseResponse
+import com.framework.pref.clientId
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.Retrofit
@@ -20,8 +23,8 @@ import retrofit2.http.QueryMap
 
 object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBaseLocalService>() {
 
-  fun getPanGstDetail(fpId: String?,clientId:String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getPanGstDetail(fpId,clientId), TaskCode.GET_PAN_GST_DETAILS)
+  fun getPanGstDetail(fpId: String?, clientId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getPanGstDetail(fpId, clientId), TaskCode.GET_PAN_GST_DETAILS)
   }
 
   fun panGstUpdate(body: PanGstUpdateBody): Observable<BaseResponse> {
@@ -120,18 +123,25 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
 
   fun addUpdateImageProduct(
     clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?,
-    currentChunkNumber: Int?, productId: String?, requestBody: RequestBody?,
+    currentChunkNumber: Int?, productId: String?, fileName: String?, requestBody: RequestBody?,
   ): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.addUpdateImageProduct(
-        clientId, requestType, requestId, totalChunks,
-        currentChunkNumber, productId, requestBody
+        clientId = clientId, requestType = requestType, requestId = requestId, totalChunks = totalChunks,
+        currentChunkNumber = currentChunkNumber, productId = productId, fileName = fileName, requestBody = requestBody
       ), TaskCode.ADD_UPDATE_IMAGE_PRODUCT_SERVICE
     )
   }
 
   fun putBizMessageUpdate(request: PostUpdateTaskRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.putBizMessageUpdate(request), TaskCode.PUT_BIZ_MESSAGE_UPDATE)
+  }
+
+  fun putBizMessageUpdateV2(request: PostUpdateTaskRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.putBizMessageUpdateV2(request),
+      TaskCode.PUT_BIZ_MESSAGE_UPDATEV2
+    )
   }
 
   fun getBizWebMessage(id: String?, clientId: String?): Observable<BaseResponse> {
@@ -151,6 +161,23 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
         clientId, requestType, requestId, totalChunks, currentChunkNumber,
         socialParmeters, bizMessageId, sendToSubscribers, requestBody
       ), TaskCode.PUT_IMAGE_BIZ_UPDATE
+    )
+  }
+
+  fun putBizImageUpdateV2(
+    type: String?,
+    bizMessageId: String?,
+    imageBase64: String?,
+  ): Observable<BaseResponse> {
+    val jsonObject = JsonObject()
+    jsonObject.addProperty("type", type)
+    jsonObject.addProperty("clientId", clientId)
+    jsonObject.addProperty("bizMessageId", bizMessageId)
+    jsonObject.addProperty("imageBody", imageBase64)
+    return makeRemoteRequest(
+      remoteDataSource.putBizImageUpdateV2(
+        jsonObject
+      ), TaskCode.PUT_IMAGE_BIZ_UPDATE_V2
     )
   }
 
@@ -213,5 +240,12 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
 
   fun addUpdatePaymentProfile(request: AddPaymentAcceptProfileRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.addUpdatePaymentProfile(request), TaskCode.ADD_PAYMENT_ACCEPT_PROFILE)
+  }
+
+  fun getPastUpdatesListV6(clientId: String?, fpId: String?, postType: Int?, skipBy: Int?, tagRequest: TagListRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.getPastUpdatesListV6(clientId = clientId, fpId = fpId, postType = postType, skipBy, request = tagRequest),
+      TaskCode.GET_PAST_UPDATES
+    )
   }
 }

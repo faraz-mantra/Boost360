@@ -135,7 +135,7 @@ class FragmentCategoryV2 : AppBaseFragment<FragmentWebsitePagerV2Binding, Dashbo
 
     private fun clickAddActionButton(it: WebsiteActionItem.IconType) {
         when (it) {
-            WebsiteActionItem.IconType.latest_update_tips -> session?.let { baseActivity.startPostUpdate(session) }
+            WebsiteActionItem.IconType.latest_update_tips -> session?.let { baseActivity.startPostUpdate() }
             WebsiteActionItem.IconType.all_images -> baseActivity.startAddImageGallery(session)
             WebsiteActionItem.IconType.testimonials -> baseActivity.startTestimonial(session, true)
             WebsiteActionItem.IconType.custom_page -> baseActivity.startCustomPage(session, true)

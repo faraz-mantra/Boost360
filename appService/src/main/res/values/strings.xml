@@ -3,11 +3,13 @@
   <string name="jpeg_png">JPEG/PNG</string>
   <string name="_800x800px">(800x800px)</string>
   <string name="add_service_image">Add service image</string>
+  <string name="add_service_image_aster">Add service image*</string>
   <string name="error_add_product_image">Please add image of the product</string>
   <string name="save_amp_publish">Save &amp; Publish</string>
   <string name="change">Change</string>
   <string name="a_premium_service_by_boost_for_secure_payment_collection_learn_more_here">A premium service by Boost for secure payment collection (Learn more here)</string>
   <string name="gallery">Gallery</string>
+  <string name="gif_image">Gif Image</string>
   <string name="camera">Camera</string>
   <string name="close">Close</string>
   <string name="choose_an_action">Choose an action</string>
@@ -197,6 +199,7 @@
   <string name="add_a_staff">Add a staff</string>
   <string name="staff_member_name">Staff member Name*</string>
   <string name="select_gender">Select gender*</string>
+  <string name="add_staff_image_aster">Add staff image*</string>
   <string name="add_staff_image">Add staff image</string>
   <string name="write_the_this_staff_specialises_in">Write the this staff specialises in</string>
   <string name="specialization">Specialization*</string>
@@ -295,13 +298,13 @@
   <string name="add_change_warehouse"><u>Add/Change warehouse</u></string>
   <string name="service_delivery_configuration">Service delivery configuration*</string>
   <string name="u_add_session_u"><u>Add session</u></string>
-  <string name="business_hours_timing"><b>Note:</b> Since the clinic business hours are from 9:30 am to 7:30 pm, all your sessions will be between same. </string>
+  <string name="business_hours_timing"><b>Note:</b> Since business hours are from 9:30 am to 7:30 pm, all your sessions will be between same. </string>
   <string name="from">From</string>
   <string name="to">to</string>
   <string name="edit_">Edit</string>
   <string name="apply_same_on_all_days">Apply same on all days</string>
   <string name="dropdown_options_1_1_2_3_4_5_5"><![CDATA[Dropdown options: <1, 1, 2, 3, 4, 5, 5+]]></string>
-  <string name="enter_age">Enter age</string>
+  <string name="enter_age">Enter age from 18 to 99</string>
   <string name="age">Age*</string>
   <string name="full_name">Full name</string>
   <string name="customers_can_only_view_and_enquire_about_this_product">Customers can only view and enquire about this product.</string>
@@ -489,7 +492,7 @@
   <string name="url_https_sravansclinics_com_services">URL: <u>https://sravansclinics.com/<b>services</b></u></string>
   <string name="url_https_sravansclinics_com_products">URL: <u>https://sravansclinics.com/<b>products</b></u></string>
   <string name="default_tax_rate_for_services">Default tax rate for services</string>
-  <string name="what_are_text_rates">What are text rates?</string>
+  <string name="what_are_text_rates">What are tax rates?</string>
   <string name="tax_slabs_are_a_rate_at_which_any_service_is_taxable_determined_by_gst_council_of_india_this_is_used_to_">Tax slabs are a rate at which any service is taxable (determined by GST council of India). This is used to back calculate the final paybale amount while placing an order at the checkout page on your website.</string>
   <string name="how_does_default_rate_work">How does default rate work?</string>
   <string name="this_will_be_used_as_defau">This will be used as default tax rate for any service in your catalog in case you’ve not entered any specific tax% for that product.</string>
@@ -827,7 +830,7 @@
   <string name="fb_enabled">Facebook enabled</string>
   <string name="message_soon">Start talking about your business, now!</string>
   <string name="Message_empty">You can post an offer, news or upload your catalog. \nClick on the + button below to start posting.</string>
-  <string name="add_product_image_n">Add product image</string>
+  <string name="add_product_image_n">Add product image*</string>
   <string name="post_n">Post</string>
   <string name="refreshing_status">Refreshing status...</string>
   <string name="total_money_collected_till_date">Total money collected till date</string>
@@ -973,7 +976,7 @@
   <string name="set_the_default_delivery_fee_inclusive_of_taxes_that_you_want_to_charge_for_all_orders_requiring_home_delivery_please_note_that_the_shipping_charges_will_be_taxed_with_the_rate_of_that_item_which_has_the_highest_rate_of_tax_in_the_order">Set the default delivery fee (inclusive of taxes) that you want to charge for all orders requiring home delivery. Please note that the shipping charges will be taxed with the rate of that item which has the highest rate of tax in the order.</string>
   <string name="flat_charges">Flat charges</string>
   <string name="cart_value_slab_s">Cart value slab(s)</string>
-  <string name="above_delivery_fee_will_be_charged_for_all_home_delivery_orders_irrespective_or_cart_value">Above delivery fee will be charged for all home delivery orders irrespective or cart value.</string>
+  <string name="above_delivery_fee_will_be_charged_for_all_home_delivery_orders_irrespective_or_cart_value">Above delivery fee will be charged for all home delivery orders irrespective of cart value.</string>
   <string name="_50">50</string>
   <string name="enter_upper_limit">Enter upper limit</string>
   <string name="enter_delivery_charges">Enter delivery charges</string>
@@ -1145,10 +1148,34 @@
   <string name="the_total_number_of_clicks_on_your_contact_number_displayed_on_website">The total number of clicks on your contact number displayed on website</string>
   <string name="total_calls">Total Calls</string>
   <string name="missed_calls">Missed Calls</string>
-  <string name="testimonial_update_success">Testimonial update successfully!</string>
-  <string name="testimonial_add_success">Testimonial add successfully!</string>
-  <string name="testimonial_delete_success">Testimonial delete successfully!</string>
+  <string name="create_an_update">Create an update</string>
+  <string name="tell_your_customers_what_s_new">Tell your customers what’s new*</string>
+  <string name="type_in_the_caption_to_create_your_own_hashtags">Type ‘#’ in the caption to create your own hashtags</string>
+  <string name="preview_and_post2">Preview and post</string>
+  <string name="supported_format_jpeg_png_size_square_800_x_800px_minimum">Supported format: JPEG/PNG. Size: Square (800 x 800px minimum)</string>
+  <string name="discarding_the_post">Discarding the post?</string>
+  <string name="closing_this_page_will_not_save_the_changes_you_ve_made_do_you_want_to_save_a_draft_or_discard_this_post">Closing this page will not save the changes you’ve made. Do you want to save a draft or discard this post?</string>
+  <string name="no_save_as_draft">No, save as draft</string>
+  <string name="yes_discard">Yes, discard</string>
+  <string name="edit_image">Edit image</string>
+  <string name="rotate">Rotate</string>
+  <string name="choose_an_option">Choose an option</string>
+  <string name="take_a_photo">Take a photo</string>
+  <string name="choose_from_phone_gallery">Choose from phone gallery</string>
+  <string name="browse_other_images">Browse other images....</string>
+  <string name="tap_to_edit">Tap to Edit</string>
+  <string name="write_about_your_customer_location_recent_updates_timing_etc">Write about your customer, location, recent updates, timing, etc.</string>
+  <string name="add_image_optional">Add image (optional)</string>
+  <string name="image_format_is_not_supported_please_use_jpeg_jpg_or_png">Image format is not supported. Please use JPEG, JPG, or PNG</string>
+  <string name="image_resolution_is_smaller_than_800_x_800_px">Image resolution is smaller than 800 X 800 px</string>
+  <string name="image_file_size_is_bigger_than_2mb">Image file size is bigger than 2MB</string>
+  <string name="describe_what_you_want_to_say_in_the_picture_added_above">Describe what you want to say in the picture added above...</string>
+  <string name="your_post_was_saved_as_draft">Your post was saved as Draft</string>
+  <string name="testimonial_update_success">Testimonial updated successfully!</string>
+  <string name="testimonial_add_success">Testimonial added successfully!</string>
+  <string name="testimonial_delete_success">Testimonial deleted successfully!</string>
   <string name="name_field_can_not_empty">Name field can\'t be empty</string>
+  <string name="name_field_can_not_contain_special_char">Name field can\'t contain special characters</string>
   <string name="company_field_can_not_empty">Company/Occupation field can\'t be empty</string>
   <string name="testimonial_title_field_can_not_empty">Testimonial title field can\'t be empty</string>
   <string name="testimonial_description_field_can_not_empty">Testimonial description field can\'t be empty</string>
@@ -1159,7 +1186,7 @@
   <string name="testimonial_title_n">Testimonial title</string>
   <string name="enter_company_occupation">Enter company/ occupation...</string>
   <string name="company_occupation">Company/ Occupation</string>
-  <string name="customer_name">Customer Name</string>
+  <string name="customer_name">Customer Name*</string>
   <string name="jpg_png_n_800x800px">Jpg/png\n(800x800px)</string>
   <string name="add_customer_image">Add customer image</string>
   <string name="space_start"> *</string>
@@ -1230,6 +1257,21 @@
   <string name="data_updated_successfully">Data updated successfully</string>
   <string name="please_fill_data_in_the_fields_highlighted_in_red">Please fill data in the fields highlighted in red</string>
   <string name="please_fill_valid_dates">Please fill valid dates. End time cannot be equal or before start Time !</string>
+
+  <string name="cat_0_all_updates">All updates</string>
+  <string name="cat_1_promotional_posts">Promotional posts</string>
+  <string name="cat_2_image_text">Images + Text</string>
+  <string name="cat_3_text_only">Text only</string>
+  <string name="posted_on">Posted on</string>
+  <string name="no_posts_available">No posts available!</string>
+  <string name="reuse">Reuse</string>
+  <string name="stats">Stats</string>
+  <string name="post_a_new_update">Post a new update</string>
+  <string name="Posted_Updates">Posted Updates</string>
+  <string name="select_underline"><u>Select</u></string>
+  <string name="edit_underline"><u>Edit</u></string>
+  <string name="your_discarded_post" tools:ignore="ExtraTranslation">You discarded post</string>
+  <string name="this_will_help_you_group_multiple_products_under_this_category">This will help you group multiple products under this category</string>
   <string name="business_address">Business Address</string>
   <string name="business_address_not_added">Business address not added</string>
   <string name="please_add_business_address_to_let_your_customers_find_your_location">Please add business address to let your customers find your location.</string>
@@ -1241,4 +1283,5 @@
   <string name="add_address">Add address</string>
   <string name="use_your_device_location">Use your device location</string>
   <string name="enter_address_manually">Enter address manually</string>
+
 </resources>

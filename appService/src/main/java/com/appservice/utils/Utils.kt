@@ -32,7 +32,6 @@ import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.CLICK
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.UPLOAD_GALLERY_IMAGE
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -118,7 +117,7 @@ fun String.getBitmap(): Bitmap? {
 
 fun File.getMimeType(): String? {
   var mimeType: String? = null
-  val extension: String? = absolutePath?.getExtension()
+  val extension: String? = absolutePath.getExtension()
   if (MimeTypeMap.getSingleton().hasExtension(extension)) {
     mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
   }
@@ -169,9 +168,7 @@ fun changeColorOfSubstring(paramStringInt:Int, color: Int, substring:String, tex
 }
 
 fun openImagePicker(activity: Activity,fragmentManager: FragmentManager) {
-  //ImagePickerUtil.openPicker(this, object : ImagePickerUtil.Listener { override fun onFilePicked(filePath: String) { } })
   val filterSheet = ImagePickerBottomSheet()
-  filterSheet.isHidePdf(true)
   filterSheet.onClicked = { openImagePicker(activity,it) }
   filterSheet.show(fragmentManager, ImagePickerBottomSheet::class.java.name)
 }

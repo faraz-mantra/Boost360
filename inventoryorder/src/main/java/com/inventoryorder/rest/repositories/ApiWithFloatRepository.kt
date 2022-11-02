@@ -17,10 +17,10 @@ object ApiWithFloatRepository : AppBaseRepository<WithFloatDataSource, AppBaseLo
   }
 
   fun getUserSummary(
-    fpTag: String?, clientId: String?, fpIdParent: String?, scope: String?, startDate: String?, endDate: String?
+    fpTag: String?, clientId: String?,startDate: String?, endDate: String?
   ): Observable<BaseResponse> {
     return ApiWithFloatRepository.makeRemoteRequest(
-      remoteDataSource.getUserSummary(fpTag, clientId, fpIdParent, scope, startDate, endDate), TaskCode.GET_USER_SUMMARY
+      remoteDataSource.getUserSummary(fpTag, clientId, session.fPID,"0" ,startDate, endDate), TaskCode.GET_USER_SUMMARY
     )
   }
 

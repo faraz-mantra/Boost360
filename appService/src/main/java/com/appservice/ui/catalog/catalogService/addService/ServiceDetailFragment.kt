@@ -8,7 +8,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
@@ -17,7 +16,6 @@ import com.appservice.databinding.FragmentServiceDetailBinding
 import com.appservice.extension.afterTextChanged
 import com.appservice.model.FileModel
 import com.appservice.model.aptsetting.AppointmentStatusResponse
-import com.appservice.model.serviceProduct.gstProduct.response.GstData
 import com.appservice.model.serviceTiming.AddServiceTimingRequest
 import com.appservice.model.serviceTiming.ServiceTime
 import com.appservice.model.serviceTiming.ServiceTiming
@@ -284,6 +282,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun onPrimaryImageUploaded(it: BaseResponse) {
+    //showProgress()
     uploadSecondaryImages()
   }
 
@@ -295,7 +294,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   // function will be called once service is created
   private fun onServiceCreated(it: BaseResponse) {
-    hideProgress()
+    //hideProgress()
     val res = it as? ServiceV1BaseResponse
     val productId = res?.Result
     if (productId.isNullOrEmpty().not()) {
@@ -308,7 +307,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun onServiceUpdated(it: BaseResponse) {
     WebEngageController.trackEvent(SERVICE_CATALOGUE_UPDATED, ADDED, NO_EVENT_VALUE)
-    hideProgress()
+    //hideProgress()
     uploadPrimaryImage()
   }
 
@@ -323,7 +322,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun uploadPrimaryImage() {
     if (serviceImage != null) {
-      showProgress(getString(R.string.image_uploading))
+      //showProgress(getString(R.string.image_uploading))
       val request = UploadImageRequest.getInstance(0, product?.productId!!, serviceImage!!)
       hitApi(viewModel?.addPrimaryImage(request), R.string.error_service_image)
     } else uploadSecondaryImages()
@@ -332,7 +331,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   private fun uploadSecondaryImages() {
     val images = secondaryImage.filter { it.path.isNullOrEmpty().not() }
     if (images.isNullOrEmpty().not()) {
-      showProgress(getString(R.string.image_uploading))
+      //showProgress(getString(R.string.image_uploading))
       var checkPosition = 0
       images.forEach { fileData ->
         val request = UploadImageRequest.getInstance(1, product?.productId!!, fileData.getFile()!!)
@@ -353,7 +352,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     requestApi?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         isRefresh = true
-        hideProgress()
+        //hideProgress()
         openSuccessBottomSheet()
       } else showError(resources.getString(R.string.service_timing_adding_error))
     }
@@ -439,12 +438,13 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun openImagePicker() {
     val filterSheet = ImagePickerBottomSheet()
-    filterSheet.isHidePdf(true)
+    filterSheet.isHidePdfOrGif(true)
     filterSheet.onClicked = { openImagePicker(it) }
     filterSheet.show(this@ServiceDetailFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
 
   private fun openSuccessBottomSheet() {
+    hideProgress()
     val createdSuccess = CreateServiceSuccessBottomSheet()
     createdSuccess.setData(isEdit)
     createdSuccess.onClicked = { clickSuccessCreate(it) }

@@ -3,7 +3,6 @@ package com.dashboard.controller.ui.dashboard
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.*
 import android.net.Uri
 import android.os.Handler
 import android.view.View
@@ -52,6 +51,7 @@ import com.framework.constants.PremiumCode
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.festivePosterName
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.festivePosterVisibility
 import com.framework.glide.util.glideLoad
@@ -494,7 +494,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       val response1 = it as? OrderSummaryResponse
       if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveTotalOrder(TOTAL_SELLER_SUMMARY)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
-      viewModel?.getUserSummary(session?.fpTag, clientId, session?.fPParentId, scope)?.observeOnce(viewLifecycleOwner) { it1 ->
+      viewModel?.getUserSummary(session?.fpTag, clientId)?.observeOnce(viewLifecycleOwner) { it1 ->
         val response2 = it1 as? UserSummaryResponse
         response2?.getSummary()?.saveData(USER_BUSINESS_SUMMARY)
         setBusinessSummary(getDrScoreData()?.getDrsTotal() ?: 0, response1?.Data?.getTotalOrders() ?: "0", response2?.getSummary())
@@ -525,7 +525,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       val response1 = it as? OrderSummaryResponse
       if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveData(SELLER_BUSINESS_REPORT)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
-      viewModel?.getUserSummary(session?.fpTag, clientId, session?.fPParentId, scope, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner) { it1 ->
+      viewModel?.getUserSummary(session?.fpTag, clientId, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner) { it1 ->
         val response2 = it1 as? UserSummaryResponse
         response2?.getSummary()?.saveTotalMessage(TOTAL_USER_MESSAGE)
         val identifierType = if (session?.iSEnterprise == "true") "MULTI" else "SINGLE"
@@ -554,9 +554,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun apiWebsiteReport(filterDate: FilterDateModel, isLoader: Boolean = false) {
     if (isLoader) showProgress()
-    if (isFirstLoad()) Handler().postDelayed({ baseActivity.runOnUiThread { showSimmer(false) } }, 2000)
+    Handler().postDelayed({ baseActivity.runOnUiThread { showSimmer(false) } }, 2000)
+
     val scope = if (session?.iSEnterprise == "true") "1" else "0"
-    viewModel?.getUserSummary(session?.fpTag, clientId, session?.fPParentId, scope, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner) { it1 ->
+    viewModel?.getUserSummary(session?.fpTag, clientId, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner) { it1 ->
       val response1 = it1 as? UserSummaryResponse
       viewModel?.getSubscriberCount(session?.fpTag, clientId, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner) { it2 ->
         val subscriberCount = (it2.anyResponse as? Double)?.toInt() ?: 0
@@ -780,7 +781,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun openDialogPicker() {
     val filterSheet = ImagePickerBottomSheet()
-    filterSheet.isHidePdf(true)
+    filterSheet.isHidePdfOrGif(true)
     filterSheet.onClicked = { openImagePicker(it) }
     filterSheet.show(this@DashboardFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
@@ -868,7 +869,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun quickActionClick(type: QuickActionItem.QuickActionType) {
     when (type) {
-      QuickActionItem.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(session)
+      QuickActionItem.QuickActionType.POST_NEW_UPDATE ->{
+           baseActivity.startPostUpdate()
+      }
       QuickActionItem.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
       QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startTestimonial(session, true)
       QuickActionItem.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCustomPage(session, true)

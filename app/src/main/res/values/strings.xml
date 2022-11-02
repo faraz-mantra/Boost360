@@ -1295,13 +1295,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     -->
     <string name="business_logo_info_text">A logo is an identity of your business that appears on top of your business website.</string>
     <string name="business_logo_instructions_1" translatable="false">Supported format: .jpeg, .png or .gif\nRecommended dimension: Square (400x400 px)\nMax file size: 500 kb</string>
-    <string name="business_logo_instructions_2" translatable="false">Keep the background white or transparant (in png). For bigger display, remove all padding from the main object in your logo.</string>
+    <string name="business_logo_instructions_2" translatable="false">Keep the background white or transparent (in png). For bigger display, remove all padding from the main object in your logo.</string>
     <string name="image_gallery_info_text" translatable="false">Flaunt your business with beautiful images. Number of images you can upload depends upon the plan you’ve picked.</string>
     <string name="image_gallery_instructions_1" translatable="false">Supported format: .jpeg, .png\nRecommended dimension: Horizontal rectangle, 1200 px (width) x 800 px (height)\nMax file size: 800 kb</string>
     <string name="image_gallery_instructions_2" translatable="false">Number of images you can upload depends upon the Boost plan you’ve picked.</string>
     <string name="featured_image_info_text" translatable="false">It is a key visual to define your business that appears along with the business description or in about section.</string>
     <string name="featured_image_instructions_1" translatable="false">Supported format: .jpeg, .png\nRecommended dimension: Horizontal rectangle, 800 px (width) x 600 px (height)\nMax file size: 800 kb</string>
-    <string name="featured_image_instructions_2" translatable="false">You can upload a key picture which defines your business. (e.g. a detailed logo, picture of front desk of your business. key product or proprieter’s portrait).</string>
+    <string name="featured_image_instructions_2" translatable="false">You can upload a key picture which defines your business. (e.g. a detailed logo, picture of front desk of your business. key product or proprietor’s portrait).</string>
     <string name="favicon_image_info_text" translatable="false">Your site visitor sees it on the edge of their browser tab. Your minimal logo will look good here.</string>
     <string name="favicon_image_instructions_1" translatable="false">Supported format: .jpeg, .png\nRecommended dimension: Square,  Max 100 px x 100 px\nMax file size: 100 kb</string>
     <string name="favicon_image_instructions_2" translatable="false">Your business logo with transparent background (png format) is recommended. Keep it as minimal as possible.</string>
@@ -2064,7 +2064,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="alt_tag_is_nothing_but_a_description_of_this_image_that_helps_search_engines_find_this_image_n_200_characters_max">Alt tag is nothing but a description of this image that helps search engines find this image. \n(200 characters max)</string>
     <string name="address">Address</string>
     <string name="enter_address_n_100_characters_max">Enter address <br />(100 characters max)</string>
-    <string name="distance_from_hotel">Distance from hotel</string>
+    <string name="distance_from_hotel">Distance from hotel (In Kms)</string>
     <string name="enter_distance_in_mt_km">Enter distance in mt/km</string>
     <string name="places_to_look_around">Places to look around</string>
     <string name="looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it_with_this_feature_highlight_what_s_near_your_hotel">Looks like this add-on is not added to your current plan. Add it now to start using it. With this feature Highlight what\'s near your hotel.</string>
@@ -2112,15 +2112,15 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="describe_your_offer">Describe your offer...</string>
     <string name="uh_oh_you_have_no_subscribers">Uh oh, you have no subscribers</string>
     <string name="add_image">Add image</string>
-    <string name="designation" translatable="false">Designation</string>
+    <string name="designation" translatable="false">Designation *</string>
     <string name="designation_aster" translatable="false">Designation *</string>
     <string name="company_title" translatable="false">Company title</string>
     <string name="company_title_aster" translatable="false">Company title *</string>
-    <string name="facebook_profile">Facebook profile</string>
+    <string name="facebook_profile">Facebook profile *</string>
     <string name="enter_facebook_url">Enter Facebook URL</string>
-    <string name="twitter_profile">Twitter profile</string>
+    <string name="twitter_profile">Twitter profile *</string>
     <string name="enter_twitter_url">Enter Twitter URL</string>
-    <string name="skype_profile">Skype profile</string>
+    <string name="skype_profile">Skype profile *</string>
     <string name="enter_skype_url">Enter Skype URL</string>
     <string name="with_the_feature_you_can_showcase_your_customer_reviews_and_highlight_their_experience_on_the_homepage_of_your_website">With the feature, you can showcase your customer reviews and highlight their experience on the homepage of your website.</string>
     <string name="astreak">*</string>

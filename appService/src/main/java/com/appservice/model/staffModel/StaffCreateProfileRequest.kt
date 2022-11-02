@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class StaffCreateProfileRequest(
-  @field:SerializedName("Image", alternate = ["image"])
+  @field:SerializedName("image", alternate = ["Image"])
   var image: StaffImage? = null,
 
   @field:SerializedName("IsAvailable", alternate = ["isAvailable"])

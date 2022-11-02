@@ -13,26 +13,42 @@ import com.caverock.androidsvg.PreserveAspectRatio
 import com.caverock.androidsvg.RenderOptions
 import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SVGParseException
-import com.framework.glide.customsvgloader.SvgRenderCacheUtil.Companion.instance
 import java.lang.ref.WeakReference
 
 class BoostSvgStringLoader(
     var url: String,
-    var model: MutableList<PosterKeyModel>,
+    var model: List<PosterKeyModel>?,
     var resource: CustomPictureDrawable,
     var context: Context,
     view: ImageView?,
-    val isPurchased: Boolean
+    val svgType: SvgRenderCacheUtil.SVG_TYPE
 ) : Runnable {
     var view: WeakReference<ImageView?>
     override fun run() {
-        var svgString = instance.retrieveFromCache(url)
+        val festiveRender = FestivePosterSvgRenderCache.instance
+        val updateStudioRendrer = UpdateStudioSvgRenderCache.instance
+        var svgString = if (svgType==SvgRenderCacheUtil.SVG_TYPE.FESTIVE_POSTER)
+        {
+            festiveRender.retrieveFromCache(url)
+        }else{
+            updateStudioRendrer.retrieveFromCache(url)
+        }
         if (svgString == null || svgString.isEmpty()) {
             svgString = resource.svgModel.convertedString
-            svgString?.let { instance.saveToCache(url, it) }
+            svgString?.let {
+                if (svgType==SvgRenderCacheUtil.SVG_TYPE.FESTIVE_POSTER){
+                    festiveRender.saveToCache(url, it)
+                }else{
+                    updateStudioRendrer.saveToCache(url,it)
+                }
+            }
         }
         if (svgString != null && !svgString.isEmpty()) {
-            svgString = instance.replace(svgString, model, context,isPurchased)
+            svgString =  if (svgType==SvgRenderCacheUtil.SVG_TYPE.FESTIVE_POSTER){
+                festiveRender.replace(svgString,model,context)
+            }else{
+                updateStudioRendrer.replace(svgString,context)
+            }
             setSvg(svgString)
         }
     }

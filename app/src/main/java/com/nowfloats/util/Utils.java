@@ -422,11 +422,11 @@ public class Utils {
     return "com.android.providers.media.documents".equals(uri.getAuthority());
   }
 
-  public static void initiateAddonMarketplace(Context context, UserSessionManager session, boolean isOpenCardFragment, String screenType, String buyItemKey, Boolean isLoadingShow) {
+  public static void initiateAddonMarketplace(Context context, UserSessionManager session, boolean isOpenCardFragment, String screenType, String buyItemKey, String isOpenPackageWithID, Boolean isLoadingShow) {
     try {
 //            if (isLoadingShow) delayProgressShow()
       WebEngageController.trackEvent(ADDON_MARKETPLACE_PAGE_CLICK, CLICK, session.getFpTag());
-      Intent intent = new Intent(context, Class.forName("com.boost.upgrades.UpgradeActivity"));
+      Intent intent = new Intent(context, Class.forName("com.boost.marketplace.ui.home.MarketPlaceActivity"));
       intent.putExtra("expCode", session.getFP_AppExperienceCode());
       intent.putExtra("fpName", session.getFPName());
       intent.putExtra("fpid", session.getFPID());
@@ -447,6 +447,8 @@ public class Utils {
       }
       if (buyItemKey != null /*&& buyItemKey.isNotEmpty()*/)
         intent.putExtra("buyItemKey", buyItemKey);
+      if(isOpenPackageWithID != null)
+        intent.putExtra("isOpenPackageWithID", isOpenPackageWithID);
       intent.putExtra("profileUrl", session.getFPLogo());
       context.startActivity(intent);
 //            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

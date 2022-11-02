@@ -9,6 +9,7 @@ data class ServiceItem(
   var Description: String? = null,
   var DiscountAmount: Double? = null,
   var DiscountedPrice: Double? = null,
+  var gstSlab: Double? = null,
   var Duration: Int? = null,
   var Image: String? = null,
   var Name: String? = null,

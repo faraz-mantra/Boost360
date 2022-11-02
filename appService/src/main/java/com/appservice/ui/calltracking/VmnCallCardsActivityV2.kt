@@ -152,6 +152,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
     }
 
   private fun showTrackedCalls() {
+    
     binding?.parentLayout?.setOnTouchListener { _, _ -> infoCallHide();true }
     binding?.tableLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
       override fun onTabSelected(tab: TabLayout.Tab) {

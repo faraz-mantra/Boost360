@@ -82,8 +82,14 @@ data class DataItemService(
   val tileImage: String? = null,
   var recyclerViewItem: Int = RecyclerViewItemType.SERVICE_ITEM_VIEW.getLayout(),
 ) : AppBaseRecyclerViewItem, Serializable {
+
   override fun getViewType(): Int {
     return recyclerViewItem
+  }
+
+  fun getLoaderItem(): DataItemService {
+    this.recyclerViewItem = RecyclerViewItemType.PAGINATION_LOADER.getLayout()
+    return this
   }
 
 }

@@ -12,8 +12,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-import com.boost.upgrades.UpgradeActivity
+import com.boost.marketplace.ui.home.MarketPlaceActivity
+import com.boost.payment.base_class.BaseFragment
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.views.zero.old.AppFragmentZeroCase
@@ -45,7 +45,7 @@ import retrofit.client.Response
 import retrofit.converter.GsonConverter
 
 
-class BookATableFragment : BaseFragment("BookATableFragment"), BookTableFragmentListener, AppOnZeroCaseClicked {
+class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroCaseClicked {
 
   lateinit var adapter: BookTableAdapter
   var session: UserSessionManager? = null
@@ -280,7 +280,7 @@ class BookATableFragment : BaseFragment("BookATableFragment"), BookTableFragment
     progressDialog.setMessage(status)
     progressDialog.setCancelable(false)
     progressDialog.show()
-    val intent = Intent(requireActivity(), UpgradeActivity::class.java)
+    val intent = Intent(requireActivity(), MarketPlaceActivity::class.java)
     intent.putExtra("expCode", session!!.fP_AppExperienceCode)
     intent.putExtra("fpName", session!!.fpName)
     intent.putExtra("fpid", session!!.fpid)

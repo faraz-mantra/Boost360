@@ -156,8 +156,9 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
       binding?.buttonConfirmOrder -> {
         val currency =
           createOrderRequest.items?.firstOrNull()?.productDetails?.getCurrencyCodeValue() ?: "INR"
+        val paymentMethod = if(paymentStatus == PaymentDetailsN.STATUS.SUCCESS.name) PaymentDetailsN.METHOD.ONLINEPAYMENT.type else PaymentDetailsN.METHOD.COD.type
         val paymentDetails =
-          PaymentDetails(method = PaymentDetailsN.METHOD.COD.type, status = paymentStatus)
+          PaymentDetails(method = paymentMethod, status = paymentStatus)
         val shippingDetails = ShippingDetails(
           shippedBy = ShippingDetails.ShippedBy.SELLER.name,
           deliveryMode = OrderSummaryRequest.DeliveryMode.OFFLINE.name,

@@ -40,6 +40,7 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
   /* Paging */
   private var isLoadingD = false
   private var TOTAL_ELEMENTS = 0
+  private var TOTAL_COUNT = 0
   private var offSet: Int = PaginationScrollListener.PAGE_START
   private var limit: Int = PaginationScrollListener.PAGE_SIZE
   private var isLastPageD = false
@@ -98,6 +99,7 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
 
   private fun setDataTestimonial(result: TestimonialResult?, isFirstLoad: Boolean) {
     val listTestimonial = result?.data as? ArrayList<TestimonialData>
+    TOTAL_COUNT = result?.paging?.totalCount?:0
     if (isFirstLoad) finalList.clear()
     if (listTestimonial.isNullOrEmpty().not()) {
       removeLoader()
@@ -106,7 +108,7 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
       TOTAL_ELEMENTS = finalList.size
       isLastPageD = false
       setAdapterNotify()
-      setToolbarTitle("${resources.getString(if (TOTAL_ELEMENTS > 1) R.string.testimonial_title else R.string.testimonial_)} ${if (TOTAL_ELEMENTS > 0) "(${TOTAL_ELEMENTS})" else ""}")
+      setToolbarTitle("${resources.getString(if (TOTAL_COUNT > 1) R.string.testimonial_title else R.string.testimonial_)} ${if (TOTAL_COUNT > 0) "(${TOTAL_COUNT})" else ""}")
     } else {
       if (isFirstLoad) setEmptyView(View.VISIBLE) else {
         removeLoader()

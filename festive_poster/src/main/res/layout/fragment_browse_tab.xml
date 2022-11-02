@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:visibility="gone"
+                android:gravity="center"
+                android:layout_marginHorizontal="@dimen/size_24"
+                android:layout_marginTop="@dimen/size_24"
+                android:background="@drawable/bg_rounded_e2e2e2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_search_white_fposter"
+                    android:layout_height="wrap_content"/>
+                <com.framework.views.customViews.CustomEditText
+                    android:layout_width="match_parent"
+                    android:layout_margin="4dp"
+                    android:textSize="14sp"
+                    android:hint="@string/type_what_you_re_looking_for"
+                    android:padding="@dimen/size_8"
+                    android:background="@color/white"
+                    android:fontFamily="@font/regular"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_layout"
+                android:layout_margin="@dimen/size_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <GridLayout
+                    android:rowCount="2"
+                    android:columnCount="2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <include
+                        android:layout_marginHorizontal="@dimen/size_12"
+                        android:layout_marginVertical="@dimen/size_8"
+                        android:layout_width="@dimen/size_150"
+                        android:layout_height="@dimen/size_150"
+                        layout="@layout/list_item_shimmer_browse_all_cat"
+                        />
+
+                    <include
+                        android:layout_marginHorizontal="@dimen/size_12"
+                        android:layout_marginVertical="@dimen/size_8"
+                        android:layout_width="@dimen/size_150"
+                        android:layout_height="@dimen/size_150"
+                        layout="@layout/list_item_shimmer_browse_all_cat"
+                        />
+                    <include
+                        android:layout_marginHorizontal="@dimen/size_12"
+                        android:layout_marginVertical="@dimen/size_8"
+                        android:layout_width="@dimen/size_150"
+                        android:layout_height="@dimen/size_150"
+                        layout="@layout/list_item_shimmer_browse_all_cat"
+                        />
+                    <include
+                        android:layout_marginHorizontal="@dimen/size_12"
+                        android:layout_marginVertical="@dimen/size_8"
+                        android:layout_width="@dimen/size_150"
+                        android:layout_height="@dimen/size_150"
+                        layout="@layout/list_item_shimmer_browse_all_cat"
+                        />
+                </GridLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginHorizontal="@dimen/size_16"
+                android:layout_marginVertical="@dimen/size_24"
+                android:id="@+id/rv_cat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </FrameLayout>
+</layout>

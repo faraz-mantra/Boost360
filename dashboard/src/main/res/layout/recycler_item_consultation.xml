@@ -27,7 +27,7 @@
                 style="@style/wrap_wrap"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/size_8"
-                android:fontFamily="@font/open_sans"
+                android:fontFamily="@font/regular"
                 android:text="monday"
                 android:textFontWeight="600"
                 android:textSize="10sp" />
@@ -83,7 +83,7 @@
                 android:layout_marginTop="@dimen/size_8"
                 android:layout_marginBottom="@dimen/size_8"
                 android:alpha="0.8"
-                android:fontFamily="@font/open_sans"
+                android:fontFamily="@font/regular"
                 android:text="@string/apply_same_on_all_days"
                 android:textAlignment="center"
                 android:textColor="@color/black_4a4a4a"

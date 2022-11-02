@@ -147,7 +147,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
   fun startStorePage(buyItemKey: String = "") {
     try {
       showProgress("Loading. Please wait...")
-      val intent = Intent(baseActivity, Class.forName("com.boost.upgrades.UpgradeActivity"))
+      val intent = Intent(baseActivity, Class.forName("com.boost.marketplace.ui.home.MarketPlaceActivity"))
       intent.putExtra("expCode", sessionLocal.fP_AppExperienceCode)
       intent.putExtra("fpName", sessionLocal.fpTag)
       intent.putExtra("fpid", sessionLocal.fPID)

@@ -8,7 +8,7 @@ apply plugin: 'com.google.firebase.crashlytics'
 googleServices { disableVersionCheck = false }
 
 allprojects {
-    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
     tasks.withType(JavaCompile) {
         options.incremental = true
     }
@@ -37,7 +37,6 @@ android {
         }
     }
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
     useLibrary 'org.apache.http.legacy'
     lintOptions {
         abortOnError true
@@ -47,7 +46,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020132
+        versionCode 2020020141
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -69,12 +68,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
+
+        qa {
+            debuggable true
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
     }
 
     flavorDimensions "default"
     productFlavors {
         partone {
-            versionName "6.0.22.8"
+            versionName "6.1.29.4"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
@@ -85,7 +92,7 @@ android {
             buildConfigField "int", "REFERRAL_CAMPAIGN_CODE", '26277'
         }
         jioonline {
-            versionName "1.0.0.1"
+            versionName "1.0.1.3"
             applicationId "com.jio.online"
             dimension "default"
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
@@ -134,8 +141,6 @@ dependencies {
     implementation project(path: ':presignup')
 
     api project(path: ':dashboard')
-
-    implementation project(path: ':upgrades')
 
     implementation('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
         transitive = true
@@ -213,4 +218,6 @@ dependencies {
     implementation "org.koin:koin-androidx-scope:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     implementation "org.koin:koin-androidx-fragment:$koin_version"
+    implementation 'androidx.room:room-runtime:2.3.0'
+    annotationProcessor 'androidx.room:room-compiler:2.3.0'
 }
