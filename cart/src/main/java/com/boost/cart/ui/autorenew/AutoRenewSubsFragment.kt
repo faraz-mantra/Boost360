@@ -11,12 +11,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-import com.boost.upgrades.R
-import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.ui.confirmation.AutoRenewOrderConfirmationFragment
-import com.boost.upgrades.utils.Constants
-import androidx.lifecycle.ViewModelProviders
 import com.boost.cart.R
 import com.boost.cart.CartActivity
 import com.boost.cart.base_class.BaseFragment
