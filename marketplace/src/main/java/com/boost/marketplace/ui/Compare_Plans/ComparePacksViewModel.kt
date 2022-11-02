@@ -324,7 +324,7 @@ class ComparePacksViewModel: BaseViewModel() {
 //        findingNumberLoader.postValue(true)
         if (com.boost.cart.utils.Utils.isConnectedToInternet(getApplicationContext())) {
             CompositeDisposable().add(
-                NewApiService.getCallTrackDetails(fpid, clientId)
+                NewApiService1.getCallTrackDetails(fpid, clientId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(

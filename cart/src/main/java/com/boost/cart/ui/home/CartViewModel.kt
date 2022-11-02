@@ -96,6 +96,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
     var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
     var NewApiService = Utils.getRetrofit(true).create(NewApiInterface::class.java)
+    var NewApiService1 = Utils.getRetrofit(true).create(NewApiInterface::class.java)
     private var callTrackListResponse: MutableLiveData<CallTrackListResponse> = MutableLiveData()
 
     val compositeDisposable = CompositeDisposable()
@@ -1041,6 +1042,39 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         }
                     }
                 })
+        }
+    }
+
+    fun loadNumberList(fpid: String, clientId: String) {
+//        findingNumberLoader.postValue(true)
+        updatesLoader.postValue(true)
+        if (com.boost.cart.utils.Utils.isConnectedToInternet(Application())) {
+            CompositeDisposable().add(
+                NewApiService1.getCallTrackDetails(fpid, clientId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+//                            findingNumberLoader.postValue(false)
+                            var NumberList = it
+                            updatesLoader.postValue(false)
+                            callTrackListResponse.postValue(NumberList)
+                        },
+                        {
+//                            val temp = (it as HttpException).response()!!.errorBody()!!.string()
+//                            val errorBody: Error =
+//                                Gson().fromJson(temp, object : TypeToken<Error>() {}.type)
+                            updatesLoader.postValue(false)
+                            Toasty.error(
+                                getApplication(),
+                                "Error in Loading Numbers!!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    )
+
+            )
+
         }
     }
 }

@@ -267,7 +267,9 @@ class CartPackageAdaptor(
           for(singleFeaturesCode in temp){
             for(singleFeature in upgradeList) {
               if (singleFeaturesCode.feature_code.equals(singleFeature.feature_code!!)) {
-                if(singleFeaturesCode.feature_code.equals("DOMAINPURCHASE") && selectedDomainName.isNotEmpty()){
+                if(singleFeaturesCode.feature_code==("DOMAINPURCHASE") ||singleFeaturesCode.feature_code== "CALLTRACKER"
+                  ||singleFeaturesCode.feature_code== "IVR"
+                  && selectedDomainName.isNotEmpty()){
                   val tempItem = singleFeature
                   tempItem.name = selectedDomainName
                   tempFeatures.add(tempItem)

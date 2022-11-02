@@ -442,10 +442,7 @@ class ComparePacksV3Activity :
             viewModel.loadPackageUpdates()
             viewModel.getAllFeaturesFromDB()
             refreshViewPager = true
-            viewModel.myPlanV3Status(
-                intent.getStringExtra("fpid") ?: "",
-                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
-            )
+
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
@@ -599,6 +596,12 @@ class ComparePacksV3Activity :
                     updatePackagePricingRecycler(listItem)
                     // updateHowToUseRecycler(listItem.steps)
                     this.selectedBundle = listItem.get(0)
+
+
+                    viewModel.myPlanV3Status(
+                        intent.getStringExtra("fpid") ?: "",
+                        "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+                    )
 
                     var bundleMonthlyMRP = 0.0
                     val minMonth: Int =

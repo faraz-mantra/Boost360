@@ -64,6 +64,7 @@ class CallTrackingActivity :
     var numberprice: String? = null
     var pricing: String? = null
     var itemInCartStatus = false
+    var vmnSelectionForCart: Boolean = false
 
     override fun getLayout(): Int {
         return R.layout.activity_call_tracking
@@ -83,6 +84,7 @@ class CallTrackingActivity :
         WebEngageController.trackEvent(VIRTUAL_NUMBER_SEARCH_LOADED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
         experienceCode = intent.getStringExtra("expCode")
         itemInCartStatus = intent.getBooleanExtra("itemInCartStatus",false)
+        vmnSelectionForCart = intent.getBooleanExtra("vmnSelectionForCart", false)
         fpid = intent.getStringExtra("fpid")
         isDeepLink = intent.getBooleanExtra("isDeepLink", false)
         deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
@@ -129,6 +131,7 @@ class CallTrackingActivity :
 
             bundle.putString("price",numberprice)
             bundle.putBoolean("itemInCartStatus",itemInCartStatus)
+            bundle.putBoolean("vmnSelectionForCart", vmnSelectionForCart)
             bundle.putString("number", blockedNumber)
             bundle.putString("bundleData", Gson().toJson(singleAddon))
             bundle.putDouble(

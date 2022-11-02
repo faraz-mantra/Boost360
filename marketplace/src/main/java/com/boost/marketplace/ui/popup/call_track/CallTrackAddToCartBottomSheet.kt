@@ -43,6 +43,7 @@ class CallTrackAddToCartBottomSheet :
     lateinit var progressDialog: ProgressDialog
     lateinit var prefs: SharedPrefs
     var numberPrice: String? = null
+    var vmnSelectionForCart: Boolean = false
 
     override fun getLayout(): Int {
         return R.layout.call_tracking_add_to_cart_popup
@@ -60,6 +61,7 @@ class CallTrackAddToCartBottomSheet :
         experienceCode = requireArguments().getString("expCode")
         fpid = requireArguments().getString("fpid")
         itemInCartStatus = requireArguments().getBoolean("itemInCartStatus",false)
+        vmnSelectionForCart = requireArguments().getBoolean("vmnSelectionForCart", false)
         isDeepLink = requireArguments().getBoolean("isDeepLink", false)
         deepLinkViewType = requireArguments().getString("deepLinkViewType") ?: ""
         deepLinkDay = requireArguments().getString("deepLinkDay")?.toIntOrNull() ?: 7
@@ -88,7 +90,26 @@ class CallTrackAddToCartBottomSheet :
         binding?.backBtn?.setOnClickListener {
             dismiss()
         }
+
+        binding?.tvTitle?.text=blockedItem
+        if(vmnSelectionForCart){
+            binding?.tvCart?.text = "Select above domain"
+        }else {
+//            if (doDomainBooking) {
+//                binding?.tvCart?.text = "Book Domain"
+//            } else {
+//                binding?.tvCart?.text = "Add to cart at $domainPricing"
+//            }
+        }
+
         binding?.tvCart?.setOnClickListener {
+            if(vmnSelectionForCart){
+                prefs.storeSelectedDomainName(blockedItem!!)
+                activity?.finish()
+                dismiss()
+                return@setOnClickListener
+            }
+
             val event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()
             event_attributes.put("Addon Discounted Price", singleAddon.price)
             event_attributes.put("Addon Tag", singleAddon.name.toString())
