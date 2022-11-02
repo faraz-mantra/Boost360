@@ -437,20 +437,23 @@ class FeatureDetailsActivity :
                 WebEngageController.trackEvent(ADD_ON_ACTIVATION_CLICKED, ADDONS_MARKETPLACE, event_attributes)
             }
 
-            if ((actionRequired == 3 || actionRequired == 4) && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
-                        || featureState == 5 || featureState == 6)
-            ) {
-                Toasty.info(this, "Coming soon...", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            } else if (actionRequired == 2 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
-                        || featureState == 5 || featureState == 6)) {
-                goToDomainSelection()
-            } else if (actionRequired == 5 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
-                        || featureState == 5 || featureState == 6))
-            {
-                Toasty.info(this, "Coming soon...", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            } else {
+//            if ((actionRequired == 3 || actionRequired == 4) && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+//                        || featureState == 5 || featureState == 6)
+//            ) {
+//                Toasty.info(this, "Coming soon...", Toast.LENGTH_LONG).show()
+//                return@setOnClickListener
+//            }
+//            else if (actionRequired == 2 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+//                        || featureState == 5 || featureState == 6)) {
+//                goToDomainSelection()
+//            }
+//            else if (actionRequired == 5 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+//                        || featureState == 5 || featureState == 6))
+//            {
+//                Toasty.info(this, "Coming soon...", Toast.LENGTH_LONG).show()
+//                return@setOnClickListener
+//            }
+//            else {
                 if (packageItem) {
                     val args = Bundle()
                     args.putString("addonName", addonDetails!!.name)
@@ -462,16 +465,16 @@ class FeatureDetailsActivity :
                 } else if(addonDetails!!.feature_code.equals("DOMAINPURCHASE")) {
                     getAlreadyPurchasedDomain()
                 } else addItemToCart()
-            }
+          //  }
         }
         learn_more_btn.setOnClickListener {
             if (actionRequired == null && featureState == null) {
                 when {
-//                addonDetails?.boost_widget_key?.equals("IVR")!! || addonDetails?.boost_widget_key?.equals(
-//                    "CALLTRACKER"
-//                )!! -> {
-//                    add_item_to_cart.text = "Buy call tracking"
-//                }
+                addonDetails?.boost_widget_key?.equals("IVR")!! || addonDetails?.boost_widget_key?.equals(
+                    "CALLTRACKER"
+                )!! -> {
+                    add_item_to_cart.text = "Buy call tracking"
+                }
                     addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
                         add_item_to_cart.text = "Choose custom domain"
 
@@ -502,8 +505,9 @@ class FeatureDetailsActivity :
                 when {
                     addonDetails?.boost_widget_key?.equals("IVR")!! || addonDetails?.boost_widget_key?.equals(
                         "CALL TRACKER"
-                    )!! -> {
-                        add_item_to_cart_new.text = "Buy call tracking"
+                    )!! ->
+                    {
+                        add_item_to_cart_new.text = "Add to cart"
                     }
                     addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!! -> {
                         add_item_to_cart_new.text = "Choose custom domain"
@@ -2027,7 +2031,7 @@ class FeatureDetailsActivity :
                 )
                 binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
                 bottom_box_only_btn.visibility = VISIBLE
-                add_item_to_cart_new.setText("Choose Domain")
+                add_item_to_cart_new.setText("Extend Validity")
                 add_item_to_cart_new.background = ContextCompat.getDrawable(
                     applicationContext,
                     R.drawable.cta_button_click_effect
@@ -2063,7 +2067,7 @@ class FeatureDetailsActivity :
                 )
                 binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
                 bottom_box_only_btn.visibility = VISIBLE
-                add_item_to_cart_new.setText("Choose VMN")
+                add_item_to_cart_new.setText("Extend Validity")
                 add_item_to_cart_new.background = ContextCompat.getDrawable(
                     applicationContext,
                     R.drawable.cta_button_click_effect
@@ -2092,7 +2096,7 @@ class FeatureDetailsActivity :
                 )
                 binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
                 bottom_box_only_btn.visibility = VISIBLE
-                add_item_to_cart_new.setText("Choose email")
+                add_item_to_cart_new.setText("Extend Validity")
                 add_item_to_cart_new.background = ContextCompat.getDrawable(
                     applicationContext,
                     R.drawable.cta_button_click_effect
@@ -2121,7 +2125,7 @@ class FeatureDetailsActivity :
                 binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
                 binding?.edgeCaseDesc?.visibility = View.VISIBLE
                 bottom_box_only_btn.visibility = VISIBLE
-                add_item_to_cart_new.setText("Choose VMN")
+                add_item_to_cart_new.setText("Extend Validity")
                 add_item_to_cart_new.background = ContextCompat.getDrawable(
                     applicationContext,
                     R.drawable.cta_button_click_effect
@@ -2590,14 +2594,14 @@ class FeatureDetailsActivity :
                 binding?.edgeCaseDesc?.visibility = View.VISIBLE
                 bottom_box_only_btn.visibility = VISIBLE
                 if (addonDetails!!.feature_code.equals("DOMAINPURCHASE"))
-                    add_item_to_cart_new.setText("Choose Custom Domain")
+                    add_item_to_cart_new.setText("Extend Validity")
                 else if (addonDetails!!.feature_code.equals("IVR") || addonDetails!!.feature_code.equals(
                         "CALLTRACKER"
                     )
                 )
                     add_item_to_cart_new.setText("Buy Call Tracking")
                 else if (addonDetails!!.feature_code!!.contains("EMAILACCOUNTS"))
-                    add_item_to_cart_new.setText("Choose Business Email")
+                    add_item_to_cart_new.setText("Extend Validity")
                 else
                     add_item_to_cart_new.setText("Add To Cart")
                 add_item_to_cart_new.background = ContextCompat.getDrawable(
