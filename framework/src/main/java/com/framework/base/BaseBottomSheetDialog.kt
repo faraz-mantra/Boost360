@@ -14,8 +14,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.framework.R
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
@@ -56,7 +54,7 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     binding?.lifecycleOwner = this
     navigator = Navigator(baseActivity)
     sessionManager = UserSessionManager(baseActivity)
-    viewModel = ViewModelProvider(this).get(getViewModelClass())
+    viewModel = ViewModelProvider(this)[getViewModelClass()]
     return binding?.root
   }
 
