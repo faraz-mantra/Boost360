@@ -21,7 +21,8 @@ import com.framework.utils.*
 import com.framework.views.BlankFragment
 import com.framework.views.customViews.CustomImageView
 import com.framework.views.customViews.CustomTextView
-import com.framework.webengageconstant.Promotional_Update_Browse_All_Click
+import com.framework.webengageconstant.Post_Browse_All_Promotional_Update_Click
+import com.framework.webengageconstant.Promotional_Update_Create_Update_Click
 import com.framework.webengageconstant.Promotional_Update_Home_Loaded
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
@@ -125,10 +126,11 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
               currentPage = 0
             }
             1 -> {
-              WebEngageController.trackEvent(Promotional_Update_Browse_All_Click)
+              WebEngageController.trackEvent(Post_Browse_All_Promotional_Update_Click)
               currentPage = 1
             }
             2 -> {
+              WebEngageController.trackEvent(Promotional_Update_Create_Update_Click)
               launchPostNewUpdate(requireActivity())
             }
           }

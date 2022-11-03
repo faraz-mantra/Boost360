@@ -21,7 +21,6 @@ import com.festive.poster.utils.posterPostClicked
 import com.festive.poster.utils.posterWhatsappShareClicked
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.festive.poster.viewmodels.PromoUpdatesViewModel
-import com.framework.base.BaseActivity
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.pref.Key_Preferences
@@ -31,7 +30,6 @@ import com.framework.rest.NetworkResult
 import com.framework.utils.convertListObjToString
 import com.framework.utils.showToast
 import com.framework.utils.toArrayList
-import com.framework.webengageconstant.Promotional_Update_Browse_All_Click
 import com.framework.webengageconstant.Promotional_Update_View_More_Click
 import com.framework.webengageconstant.Promtoional_Update_View_Updates_Click
 

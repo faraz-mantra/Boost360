@@ -601,7 +601,6 @@ const val Promotional_Update_Social_Accounts_Connect_Click = "Promotional_Update
 const val Promotional_Update_WhatsApp_Share_Click = "Promotional_Update_WhatsApp_Share_Click"
 const val Promotional_Update_Post_Click = "Promotional_Update_Post_Click"
 const val Promotional_Update_Edit_Click = "Promotional_Update_Edit_Click"
-const val Promotional_Update_Browse_All_Click = "Promotional_Update_Browse_All_Click"
 const val Promotional_Update_View_More_Click = "Promotional_Update_View_More_Click"
 const val Promotional_Update_Browse_All_Loaded = "Promotional_Update_Browse_All_Loaded"
 const val Promotional_Update_Category_Click = "Promotional_Update_Category_Click"
