@@ -2051,7 +2051,8 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
-                    Toasty.success(this, "Coming Soon...", Toast.LENGTH_SHORT, true).show();
+                 //   Toasty.success(this, "Coming Soon...", Toast.LENGTH_SHORT, true).show();
+                    Toast.makeText(getApplicationContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
                 }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
@@ -2080,7 +2081,8 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
-                    Toasty.success(this, "Coming Soon...", Toast.LENGTH_SHORT, true).show();
+                  //  Toasty.success(this, "Coming Soon...", Toast.LENGTH_SHORT, true).show();
+                    Toast.makeText(getApplicationContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
                 }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
@@ -2106,7 +2108,8 @@ class FeatureDetailsActivity :
                         || featureState == 5 || featureState == 6)) {
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCaseHyperlink?.setOnClickListener {
-                    Toasty.success(this, "Coming Soon...", Toast.LENGTH_SHORT, true).show();
+                 //   Toasty.success(this, "Coming Soon...", Toast.LENGTH_SHORT, true).show();
+                    Toast.makeText(getApplicationContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
                 }
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
@@ -2677,7 +2680,8 @@ class FeatureDetailsActivity :
                 e.printStackTrace()
             }
         } else {
-            Toasty.success(this, "Coming Soon...", Toast.LENGTH_SHORT, true).show();
+          //  Toasty.success(this, "Coming Soon...", Toast.LENGTH_SHORT, true).show();
+            Toast.makeText(getApplicationContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
         }
     }
 }
