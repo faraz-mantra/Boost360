@@ -295,6 +295,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
       putString(IntentConstant.MOBILE_PREVIEW.name, selectedCategoryLive?.fpExperienceCode?.mobilepreview?.url)
       putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
       putString(IntentConstant.CATEGORY_SUGG_UI.name, selectedCategoryLive?.name ?: "")
+      putString(IntentConstant.SUB_CATEGORY_ID.name, selectedCategoryLive?._kid ?: "")
       putSerializable(IntentConstant.CATEGORY_DATA.name, selectedCategory)
       putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent ?: false)
     }), true)

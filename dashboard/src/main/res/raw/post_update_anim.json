@@ -1,0 +1,480 @@
+{
+  "v": "4.8.0",
+  "meta": {
+    "g": "LottieFiles AE 3.0.1",
+    "a": "",
+    "k": "",
+    "d": "",
+    "tc": ""
+  },
+  "fr": 29.9700012207031,
+  "ip": 0,
+  "op": 179.000007290819,
+  "w": 50,
+  "h": 50,
+  "nm": "Loding Animation",
+  "ddd": 0,
+  "assets": [
+    {
+      "id": "image_0",
+      "w": 28,
+      "h": 28,
+      "u": "",
+      "p": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAACXBIWXMAAAABAAAAAQBPJcTWAAAAJHpUWHRDcmVhdG9yAAAImXNMyU9KVXBMK0ktUnBNS0tNLikGAEF6Bs5qehXFAAABU0lEQVRIie3WsU5CMRSA4b+l7gzuTDKRIMZRk74CvoA8Gr6AvMJNdNbchAkmdgd2yq0DvaRCBc6lMQyepANtc76eQy8X+ONQOZP5iW077woAo4xVw2KZBFfze6uraoyiI0j/0up+jhJYP0yVKVQDyLEd+idWhtF33hV+YtvxXgWwnt15gFb3Q9zigM2Ba2BqlHkEiA8QV6qbVhVhRcC2oYbF0ihjiSqt1xqDO22chtFLtTEOkwErQzXbNjrv3sLWXrzeCExh9ffjJ9YGrBe2791UUUsPYYn4+vWxyIFF63Ubb1KHOQkUYEcrPwqeg61ng/F6NhiLwPMqU8+bIQBDsr0fY+EFEoGbs2bARGAODAQP/ur1wQM47+opMQanVVim5ppgcEKFV0/vt9Kkh+Ks19M/eBHg5tJ4Fig69X+brOFZxB81QKX1aHchF1ZpPcqe96LjGxw2Cv963bMiAAAAAElFTkSuQmCC",
+      "e": 1
+    },
+    {
+      "id": "image_1",
+      "w": 28,
+      "h": 27,
+      "u": "",
+      "p": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAbCAYAAABvCO8sAAAACXBIWXMAAAABAAAAAQBPJcTWAAAAJHpUWHRDcmVhdG9yAAAImXNMyU9KVXBMK0ktUnBNS0tNLikGAEF6Bs5qehXFAAACPUlEQVRIid2WsW4TQRCGv9k7IyEhxQVFupgCo4iC4FCBo5yfADs1EpcnSHgCQklFeAO/QHzhAZCMAlRgmYIipkjShS6RkCLFdzsUtxcCQbk7oUvBX+2MTv+3s7uze3DFEoDptweBsbaPMFcJRTmwxoS125+GBqBSGIAwZ6ztA/hZAsBrjqQKXjJpacYwVQAuU2lgHC11p1vtDQCNgvrpYKl/EgWNyoCqGiE8B4htvC7oU9/GYSXA0+jhghseAyC6AKDoUVEPP+8DjYJ6rNM+SB3lZpaeDtpDYBFARMLpoN0FxrWV9+uX+eVWmJAEII+BZeCuS9ddfMPF91wc5u1nLtDv7Wyr2PsIHeCLS79U1Wdu/B2hg9CJxV+43hvu/xPwJAoagqm7cBZAVQ9FZNblDgEUe5QHA3e1JZOWwsXGP4mChq/xGJjJMwIQkZ7f29n+M3/e/9IK3Yz7wDt+LecPF2cn82sa6xsPb5g3qdxTmp26061H6yLyCvRtbeVDdzpoHwGo2CfXeh/HeT6ZCvehIOk+qmTmMwBlYFCgwkyx8fueJo2a8TZTMC/ESCnYmZJJS7ONrULn/a/8tUiXVDlAmCtQ5WuvOfrt6komrU1gLZekHICr0BoTZokcrSW7rY0zWDouBLPGhOAav4ji3cWuiEYAJrG3AKxn9gBUpeff+Xyh4f+mUr8U8aQ1FFjWtPHJxn5zFBT1KNwWAF5iQ+uZPUlfhrNcGY9Sp1Tmx/sKq6QP8LHCqsyP98t4/P/6CVU/25LHta+1AAAAAElFTkSuQmCC",
+      "e": 1
+    },
+    {
+      "id": "image_2",
+      "w": 35,
+      "h": 33,
+      "u": "",
+      "p": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAhCAYAAABTERJSAAAACXBIWXMAAAABAAAAAQBPJcTWAAAAJHpUWHRDcmVhdG9yAAAImXNMyU9KVXBMK0ktUnBNS0tNLikGAEF6Bs5qehXFAAAEnElEQVRYhdWYPW4bVxDHf/N2N04KQ6xcWnIRGUmjNePOErS6AWn1MXOC8AZencDMCUyn18cFgqwSNgEShQwQGKILUa2LgAQSwOFy36TYt9SSoixZUuFMQ/LtYOY/8/7zsYSPSGTR4aRfbRiVmqIhwjLKqSBdC23/4W8HVzGcvnkcGc0aICGwNrUheuCvHrUvBaP9MLSYNrB2kROFQy+zDfmiO1j4/CSsZKk5ENh8D9aewTZktdstH5o5IIkDMkLZMdhH3uqRGOwjlB1gJLBpPdPV1+HKIiA2NQMHZAR8Z8VseatHYsVsFTaANYtJtB+GCzOT9atdB6RnAhvJg+5w6mQ/qkyYhPZ++pd/N/0eWFM49FePorKxSb+aOCA9k9naouw5wEXQPW/1aApInJGGwEtgZAK7UgYy3ttoC/qsSK9dTr/276Y/AUuqUi84lHPE/giMDDZ692dl6OukKSKJX/95hmdFBoElhW8KDhXX1HDQ4hkg+xuNEpBDILnz1S9/AG0AEVsrdHOyAtCW1W7X17QFfGtVW/PZkQfdIUI847sAU5DNTOxMBGJ1JQ+FneBpJwqedpoAVozTk2mKFVmZe7bibFd0P6rMAyp8lYluygrlOx7vPmkiRPkDovHuk2bxLPj818R9nVadwAwZFenmnwxZIIv4NAOmqJB0dz0WkRecod4UkRcFoPTN48id986c080N2hBARNsO5PJEJ8l4b30w3lsfTPY3amVf58Bozgcyz0QAvvFbrgwPnd4hyk5ggjaAsTYCEJVpdIIOAMRKBBDUO4mzAbAmsCywbJVa2Zee+ZhmJo9CifUkrEg9GQbbnRglcWEnwXYnlnoy1JOwguC4o1OOqeZcUdEiawTbnRhhywU1AnpI1tKTsCKaE1iEqQ0fwAvsgR2bGGHZpibRk3Cmz0wdnvWIJaBXbutqZCiqoLMcCeqdBIjO2XBjxgR2asOHvNS0H9aKDmzHpjvpV2M9thVSA5/YSnZcjW1K0wEZGWyj7NRYGxUt1DVQQLuKJF5gD3hHJfNMZMfECMvAyIitlYM+P5vUHDhl9G2Avg2QeylyLy3UFs6VrP+oDfKMq4hyasTW5m1cOLWBhrwzm/b0Dub+v3/Lp/rD+yauvg5X1HgtFTtUJAEwKjXHoSVg5CqufZGNj0oWZuYicddYe6+SYWh8215UALcGJjuuxgjPr6g+MthonhO3AqY0kQF9RanZLbBYw+1E8xvAZeJfRcmz2lQBlB3v4e/xhaD31lsq0vK+/CfvWRPTAM5N7RuBsaIVAawxSXE22d+oqWoTQJEBkrVQIlGFvKM/x3JuWt8YzLyM9zcaqvqy+C3oJmpqE/HDz+rJIDuuxtexay5XWSCqhbNRaRgueZpdC8SNwAh5h0aoBdudWJFX+U+3jF1TrnVN5BN4CaU13n1S2pH1g3tLWa55TdMKWXNLWC4iV66cWwPjdp0dhVN31BORulsXri0fdE1uw0umgJhu+DOiQiQAZvH+e1MwbWAT4Xl2XJ3pN/PiWW0quvBt4zK5+mz6kH0FKL+c3ToYOPt3wope2FkFHVjx2qXXmf+n/AeW00UGyibFcQAAAABJRU5ErkJggg==",
+      "e": 1
+    }
+  ],
+  "layers": [
+    {
+      "ddd": 0,
+      "ind": 1,
+      "ty": 2,
+      "nm": "Layer 7",
+      "refId": "image_0",
+      "sr": 1,
+      "ks": {
+        "o": {
+          "a": 0,
+          "k": 100,
+          "ix": 11
+        },
+        "r": {
+          "a": 1,
+          "k": [
+            {
+              "i": {
+                "x": [
+                  0.833
+                ],
+                "y": [
+                  0.833
+                ]
+              },
+              "o": {
+                "x": [
+                  0.167
+                ],
+                "y": [
+                  0.167
+                ]
+              },
+              "t": 165,
+              "s": [
+                180
+              ]
+            },
+            {
+              "t": 170.000006924242,
+              "s": [
+                360
+              ]
+            }
+          ],
+          "ix": 10
+        },
+        "p": {
+          "a": 0,
+          "k": [
+            26,
+            24,
+            0
+          ],
+          "ix": 2
+        },
+        "a": {
+          "a": 0,
+          "k": [
+            13.5,
+            13.501,
+            0
+          ],
+          "ix": 1
+        },
+        "s": {
+          "a": 0,
+          "k": [
+            100,
+            100,
+            100
+          ],
+          "ix": 6
+        }
+      },
+      "ao": 0,
+      "ip": 166.000006761319,
+      "op": 859.000034987787,
+      "st": -40.0000016292334,
+      "bm": 0
+    },
+    {
+      "ddd": 0,
+      "ind": 2,
+      "ty": 2,
+      "nm": "Layer 4",
+      "refId": "image_1",
+      "sr": 1,
+      "ks": {
+        "o": {
+          "a": 0,
+          "k": 100,
+          "ix": 11
+        },
+        "r": {
+          "a": 1,
+          "k": [
+            {
+              "i": {
+                "x": [
+                  0.833
+                ],
+                "y": [
+                  0.833
+                ]
+              },
+              "o": {
+                "x": [
+                  0.167
+                ],
+                "y": [
+                  0.167
+                ]
+              },
+              "t": 115,
+              "s": [
+                180
+              ]
+            },
+            {
+              "i": {
+                "x": [
+                  0.833
+                ],
+                "y": [
+                  0.833
+                ]
+              },
+              "o": {
+                "x": [
+                  0.167
+                ],
+                "y": [
+                  0.167
+                ]
+              },
+              "t": 120,
+              "s": [
+                360
+              ]
+            },
+            {
+              "i": {
+                "x": [
+                  0.833
+                ],
+                "y": [
+                  0.833
+                ]
+              },
+              "o": {
+                "x": [
+                  0.167
+                ],
+                "y": [
+                  0.167
+                ]
+              },
+              "t": 165,
+              "s": [
+                360
+              ]
+            },
+            {
+              "t": 175.000007127896,
+              "s": [
+                720
+              ]
+            }
+          ],
+          "ix": 10
+        },
+        "p": {
+          "a": 0,
+          "k": [
+            25,
+            27,
+            0
+          ],
+          "ix": 2
+        },
+        "a": {
+          "a": 0,
+          "k": [
+            14,
+            13.029,
+            0
+          ],
+          "ix": 1
+        },
+        "s": {
+          "a": 0,
+          "k": [
+            100,
+            100,
+            100
+          ],
+          "ix": 6
+        }
+      },
+      "ao": 0,
+      "ip": 116.000004724777,
+      "op": 166.000006761319,
+      "st": 46.0000018736184,
+      "bm": 0
+    },
+    {
+      "ddd": 0,
+      "ind": 3,
+      "ty": 2,
+      "nm": "Layer 3",
+      "refId": "image_2",
+      "sr": 1,
+      "ks": {
+        "o": {
+          "a": 0,
+          "k": 100,
+          "ix": 11
+        },
+        "r": {
+          "a": 1,
+          "k": [
+            {
+              "i": {
+                "x": [
+                  0.833
+                ],
+                "y": [
+                  0.833
+                ]
+              },
+              "o": {
+                "x": [
+                  0.167
+                ],
+                "y": [
+                  0.167
+                ]
+              },
+              "t": 60,
+              "s": [
+                180
+              ]
+            },
+            {
+              "i": {
+                "x": [
+                  0.833
+                ],
+                "y": [
+                  0.833
+                ]
+              },
+              "o": {
+                "x": [
+                  0.167
+                ],
+                "y": [
+                  0.167
+                ]
+              },
+              "t": 65,
+              "s": [
+                360
+              ]
+            },
+            {
+              "i": {
+                "x": [
+                  0.833
+                ],
+                "y": [
+                  0.833
+                ]
+              },
+              "o": {
+                "x": [
+                  0.167
+                ],
+                "y": [
+                  0.167
+                ]
+              },
+              "t": 110,
+              "s": [
+                360
+              ]
+            },
+            {
+              "t": 120.0000048877,
+              "s": [
+                720
+              ]
+            }
+          ],
+          "ix": 10
+        },
+        "p": {
+          "a": 0,
+          "k": [
+            25.043,
+            24.964,
+            0
+          ],
+          "ix": 2
+        },
+        "a": {
+          "a": 0,
+          "k": [
+            17.047,
+            16.385,
+            0
+          ],
+          "ix": 1
+        },
+        "s": {
+          "a": 0,
+          "k": [
+            100,
+            100,
+            100
+          ],
+          "ix": 6
+        }
+      },
+      "ao": 0,
+      "ip": 61.0000024845809,
+      "op": 115.000004684046,
+      "st": 15.0000006109625,
+      "bm": 0
+    },
+    {
+      "ddd": 0,
+      "ind": 4,
+      "ty": 2,
+      "nm": "Layer 2",
+      "refId": "image_0",
+      "sr": 1,
+      "ks": {
+        "o": {
+          "a": 0,
+          "k": 90,
+          "ix": 11
+        },
+        "r": {
+          "a": 1,
+          "k": [
+            {
+              "i": {
+                "x": [
+                  0.833
+                ],
+                "y": [
+                  0.833
+                ]
+              },
+              "o": {
+                "x": [
+                  0.167
+                ],
+                "y": [
+                  0.167
+                ]
+              },
+              "t": 0,
+              "s": [
+                0
+              ]
+            },
+            {
+              "i": {
+                "x": [
+                  0.833
+                ],
+                "y": [
+                  0.833
+                ]
+              },
+              "o": {
+                "x": [
+                  0.167
+                ],
+                "y": [
+                  0.167
+                ]
+              },
+              "t": 55,
+              "s": [
+                0
+              ]
+            },
+            {
+              "t": 65.0000026475043,
+              "s": [
+                360
+              ]
+            }
+          ],
+          "ix": 10
+        },
+        "p": {
+          "a": 0,
+          "k": [
+            26,
+            24,
+            0
+          ],
+          "ix": 2
+        },
+        "a": {
+          "a": 0,
+          "k": [
+            13.5,
+            13.501,
+            0
+          ],
+          "ix": 1
+        },
+        "s": {
+          "a": 0,
+          "k": [
+            100,
+            100,
+            100
+          ],
+          "ix": 6
+        }
+      },
+      "ao": 0,
+      "ip": 0,
+      "op": 61.0000024845809,
+      "st": 0,
+      "bm": 0
+    }
+  ],
+  "markers": []
+}

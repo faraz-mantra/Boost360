@@ -45,9 +45,7 @@ class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePoster
 
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
+
     override fun onCreateView() {
         super.onCreateView()
         session = UserSessionManager(requireActivity())
