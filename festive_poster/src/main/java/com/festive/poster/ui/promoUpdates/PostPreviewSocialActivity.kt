@@ -624,9 +624,9 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     viewModel.getMerchantSummary(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session?.fpTag).observeOnce(this) {
       val response = it as? MerchantSummaryResponse
       val subscriber = response?.Entity?.firstOrNull()?.get("NoOfSubscribers")
-      val subTitle = if (subscriber == 0) {
+      /*val subTitle = if (subscriber == 0) {
         getString(R.string.no_recipients, 0)
-        }
+        }*/
         saveTemplateAction(TemplateSaveActionBody.ActionType.UPDATE_CREATED,
             template)
         posterProgressSheet?.dismiss()
