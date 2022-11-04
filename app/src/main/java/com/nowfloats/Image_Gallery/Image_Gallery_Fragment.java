@@ -321,7 +321,11 @@ public class Image_Gallery_Fragment extends Fragment implements
             instance.getDrScoreData().getMetricdetail().setBoolean_image_uploaded_to_gallery(isAdded);
             instance.updateDocument();
         }
-        imageChangeListener.onImagePicked();
+        if (imageChangeListener != null){
+            imageChangeListener.onImagePicked();
+        } else {
+            Util.toast(getString(R.string.something_went_wrong_try_again), activity);
+        }
     }
 
     @Override

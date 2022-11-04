@@ -44,7 +44,6 @@ import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.EVENT_NAME_UPDATE_PAGE
 import com.framework.webengageconstant.PAGE_VIEW
-import com.framework.webengageconstant.Post_Promotional_Update_Click
 import java.util.*
 
 @Deprecated(" use PastUpdatesLisitngFragment")
