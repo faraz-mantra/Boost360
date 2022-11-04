@@ -25,7 +25,6 @@ import com.framework.pref.getAccessTokenAuth
 import com.framework.utils.DateUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_feature_details.*
 
 
@@ -176,7 +175,7 @@ class MyPlanBottomSheet :
                 e.printStackTrace()
             }
         } else {
-            Toasty.success(requireContext(), "Coming Soon...", Toast.LENGTH_SHORT, true).show();
+            Toast.makeText(requireContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -311,11 +310,11 @@ class MyPlanBottomSheet :
             binding?.btn1?.visibility = View.VISIBLE
             binding?.btn1?.text = "Choose VMN"
             binding?.edgeCaseHyperlink?.setOnClickListener {
-                Toasty.info(requireContext(), "Coming soon...", Toast.LENGTH_LONG, true).show()
+                Toast.makeText(requireContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
             }
             binding?.btn1?.setOnClickListener {
                 //   chooseVMN()
-                Toasty.info(requireContext(), "Coming soon...", Toast.LENGTH_LONG, true).show()
+                Toast.makeText(requireContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
             }
             binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
             binding?.edgeCaseTitle?.setText("Action Required")
@@ -341,11 +340,11 @@ class MyPlanBottomSheet :
             binding?.btn1?.visibility = View.VISIBLE
             binding?.btn1?.text = "Choose Email"
             binding?.edgeCaseHyperlink?.setOnClickListener {
-                Toasty.info(requireContext(), "Coming soon...", Toast.LENGTH_LONG, true).show()
+                Toast.makeText(requireContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
             }
             binding?.btn1?.setOnClickListener {
 //                featuredetails()
-                Toasty.info(requireContext(), "Coming soon...", Toast.LENGTH_LONG, true).show()
+                Toast.makeText(requireContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
             }
             binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
             binding?.edgeCaseTitle?.setText("Action Required")
@@ -370,11 +369,11 @@ class MyPlanBottomSheet :
             binding?.btn1?.visibility = View.VISIBLE
             binding?.btn1?.text = "Choose virtual number/\n" + "Setup IVR"
             binding?.edgeCaseHyperlink?.setOnClickListener {
-                Toasty.info(requireContext(), "Coming soon...", Toast.LENGTH_LONG, true).show()
+                Toast.makeText(requireContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
             }
             binding?.btn1?.setOnClickListener {
 //                featuredetails()
-                Toasty.info(requireContext(), "Coming soon...", Toast.LENGTH_LONG, true).show()
+                Toast.makeText(requireContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
             }
             binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
             binding?.edgeCaseTitle?.setText("Action Required")
