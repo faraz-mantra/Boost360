@@ -26,6 +26,7 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
   private lateinit var sliderRunnable: Runnable
   private var session: UserSessionManager? = null
   private val SLIDING_DUR = 4500L
+  private var countEvent: Int = 0
 
   override fun getLayout(): Int {
     return R.layout.activity_update_studio_intro
@@ -89,17 +90,26 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
         super.onPageSelected(position)
         when (position) {
           0 -> {
-            WebEngageController.trackEvent(Update_studio_intro_1_loaded)
+            if (countEvent < 3) {
+              countEvent++
+              WebEngageController.trackEvent(Update_studio_intro_1_loaded)
+            }
             binding?.btnNext?.visible()
             binding?.btnUpdateStudio?.gone()
           }
           1 -> {
-            WebEngageController.trackEvent(Update_studio_intro_2_loaded)
+            if (countEvent < 3) {
+              countEvent++
+              WebEngageController.trackEvent(Update_studio_intro_2_loaded)
+            }
             binding?.btnNext?.visible()
             binding?.btnUpdateStudio?.gone()
           }
           2 -> {
-            WebEngageController.trackEvent(Update_studio_intro_3_loaded)
+            if (countEvent < 3) {
+              countEvent++
+              WebEngageController.trackEvent(Update_studio_intro_3_loaded)
+            }
             binding?.btnNext?.gone()
             binding?.btnUpdateStudio?.visible()
           }
