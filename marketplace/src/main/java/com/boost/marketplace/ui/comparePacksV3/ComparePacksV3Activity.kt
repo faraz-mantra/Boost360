@@ -703,7 +703,7 @@ class ComparePacksV3Activity :
             tempList.add(item.feature_code)
         }
         for(singleItem in myPlanV3!!.Result){
-            if(tempList.contains(singleItem.FeatureDetails.FeatureKey)){
+            if(tempList.contains(singleItem.FeatureDetails.FeatureKey) && singleItem.FeatureDetails.FeatureState != 7){
                 allowPackageToCart = false
                 break
             }

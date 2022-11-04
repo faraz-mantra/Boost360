@@ -598,7 +598,7 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity, va
             tempList.add(item.feature_code)
         }
         for(singleItem in myPlanV3!!.Result){
-            if(tempList.contains(singleItem.FeatureDetails.FeatureKey)){
+            if(tempList.contains(singleItem.FeatureDetails.FeatureKey) && singleItem.FeatureDetails.FeatureState != 7){
                 allowPackageToCart = false
                 break
             }
