@@ -492,6 +492,7 @@
     <string name="url_https_sravansclinics_com_services">URL: <u>https://sravansclinics.com/<b>services</b></u></string>
     <string name="url_https_sravansclinics_com_products">URL: <u>https://sravansclinics.com/<b>products</b></u></string>
     <string name="default_tax_rate_for_services">Default tax rate for services</string>
+    <string name="default_tax_rate_for_products">Default tax rate for products</string>
     <string name="what_are_text_rates">What are tax rates?</string>
     <string name="tax_slabs_are_a_rate_at_which_any_service_is_taxable_determined_by_gst_council_of_india_this_is_used_to_">Tax slabs are a rate at which any service is taxable (determined by GST council of India). This is used to back calculate the final paybale amount while placing an order at the checkout page on your website.</string>
     <string name="how_does_default_rate_work">How does default rate work?</string>
