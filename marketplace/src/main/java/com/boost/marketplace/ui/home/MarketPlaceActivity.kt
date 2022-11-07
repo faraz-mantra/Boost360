@@ -71,6 +71,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_marketplace.*
+import java.lang.reflect.Field
+import java.lang.reflect.Method
 
 class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPlaceHomeViewModel>(),
     RecyclerStringItemClickListener, CompareBackListener, HomeListener, AddonsListener,VideosListener {
@@ -177,7 +179,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         return MarketPlaceHomeViewModel::class.java
     }
 
-    @SuppressLint("NewApi")
     private fun initView() {
 
         packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList(), this, this)
@@ -213,7 +214,27 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             } else {
                 menuOpts.getItem(1).setTitle(R.string.switch_to_yearly_pricing)
             }
-            popup.setForceShowIcon(true)
+
+            try {
+                val fields: Array<Field> = popup.javaClass.declaredFields
+                for (field in fields) {
+                    if ("mPopup" == field.getName()) {
+                        field.setAccessible(true)
+                        val menuPopupHelper: Any = field.get(popup)
+                        val classPopupHelper = Class.forName(
+                            menuPopupHelper
+                                .javaClass.name
+                        )
+                        val setForceIcons: Method = classPopupHelper.getMethod(
+                            "setForceShowIcon", Boolean::class.javaPrimitiveType
+                        )
+                        setForceIcons.invoke(menuPopupHelper, true)
+                        break
+                    }
+                }
+            } catch (e: NoSuchMethodException) {
+                e.printStackTrace()
+            }
             popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
 
                 when (item!!.itemId) {
@@ -240,7 +261,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                         packageViewPagerAdapter.notifyDataSetChanged()
                     }
                     R.id.offer_coupons -> {
-                        startSpecificActivity(OfferCouponsActivity::class.java)
+                        val intent = Intent(applicationContext, OfferCouponsActivity::class.java)
+                        startActivity(intent)
                     }
                     R.id.help_section -> {
                         val videoshelp = HelpVideosBottomSheet()
@@ -583,11 +605,6 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         }
     }
 
-
-    fun startSpecificActivity(otherActivityClass: Class<*>?) {
-        val intent = Intent(applicationContext, otherActivityClass)
-        startActivity(intent)
-    }
 
     fun startReferralView() {
         try {
