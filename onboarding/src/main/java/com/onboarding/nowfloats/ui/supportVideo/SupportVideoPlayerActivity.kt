@@ -246,7 +246,8 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
       loadNextVideo()
       launchProgressListener()
     } else {
-      finishActivity()
+      showShortToast(getString(R.string.wrong_format_youtube_video_available))
+      finish()
       return
     }
   }

@@ -5,7 +5,9 @@
       "action_item": [
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
@@ -44,7 +46,9 @@
       "action_item": [
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
@@ -83,7 +87,9 @@
       "action_item": [
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
@@ -121,7 +127,9 @@
       "action_item": [
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
@@ -159,7 +167,9 @@
       "action_item": [
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
@@ -193,7 +203,9 @@
       "action_item": [
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
@@ -230,7 +242,9 @@
       "action_item": [
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
@@ -277,7 +291,9 @@
         //        },
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
@@ -311,7 +327,9 @@
       "action_item": [
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
@@ -341,7 +359,9 @@
       "action_item": [
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
@@ -384,7 +404,9 @@
 //        },
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
