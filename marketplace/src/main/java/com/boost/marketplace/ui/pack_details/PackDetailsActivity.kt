@@ -208,7 +208,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         initializePackItemRecycler()
         initView()
         initMvvm()
-        loadData()
+//        loadData()
 
 
         val callExpertString = SpannableString("Have a query? Call an expert")
