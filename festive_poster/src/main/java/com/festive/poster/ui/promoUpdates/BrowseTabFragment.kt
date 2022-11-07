@@ -21,96 +21,91 @@ import com.framework.rest.NetworkResult
 import com.framework.utils.showToast
 import com.framework.utils.toArrayList
 
-class BrowseTabFragment: AppBaseFragment<FragmentBrowseTabBinding, FestivePosterViewModel>(),RecyclerItemClickListener {
+class BrowseTabFragment : AppBaseFragment<FragmentBrowseTabBinding, FestivePosterViewModel>(), RecyclerItemClickListener {
 
-    private var adapter: AppBaseRecyclerViewAdapter<BrowseTabCategory>?=null
-    private var promoUpdatesViewModel: PromoUpdatesViewModel?=null
+  private var adapter: AppBaseRecyclerViewAdapter<BrowseTabCategory>? = null
+  private var promoUpdatesViewModel: PromoUpdatesViewModel? = null
 
-    private var session: UserSessionManager? = null
+  private var session: UserSessionManager? = null
 
-    override fun getLayout(): Int {
-        return R.layout.fragment_browse_tab
+  override fun getLayout(): Int {
+    return R.layout.fragment_browse_tab
+  }
+
+  override fun getViewModelClass(): Class<FestivePosterViewModel> {
+    return FestivePosterViewModel::class.java
+  }
+
+  companion object {
+    fun newInstance(bundle: Bundle = Bundle()): BrowseTabFragment {
+      val fragment = BrowseTabFragment()
+      fragment.arguments = bundle
+      return fragment
     }
 
-    override fun getViewModelClass(): Class<FestivePosterViewModel> {
-        return FestivePosterViewModel::class.java
-    }
-    companion object {
-        fun newInstance(bundle: Bundle = Bundle()): BrowseTabFragment {
-            val fragment = BrowseTabFragment()
-            fragment.arguments = bundle
-            return fragment
+
+  }
+
+
+  override fun onCreateView() {
+    super.onCreateView()
+    session = UserSessionManager(requireActivity())
+    promoUpdatesViewModel = ViewModelProvider(requireActivity()).get(PromoUpdatesViewModel::class.java)
+    fetchDataFromServer()
+
+
+  }
+
+  private fun fetchDataFromServer() {
+    startShimmer()
+    promoUpdatesViewModel?.browseAllLData?.observe(viewLifecycleOwner) {
+      stopShimmer()
+
+      when (it) {
+        is NetworkResult.Loading -> {
+          if (adapter?.isEmpty() == true) startShimmer()
         }
-
-
-    }
-
-
-    override fun onCreateView() {
-        super.onCreateView()
-        session = UserSessionManager(requireActivity())
-        promoUpdatesViewModel = ViewModelProvider(requireActivity()).get(PromoUpdatesViewModel::class.java)
-        fetchDataFromServer()
-
-
-    }
-
-    private fun fetchDataFromServer() {
-        startShimmer()
-       promoUpdatesViewModel?.browseAllLData?.observe(viewLifecycleOwner){
-            stopShimmer()
-
-           when(it){
-               is NetworkResult.Loading->{
-                   if (adapter?.isEmpty() == true)
-                        startShimmer()
-               }
-               is NetworkResult.Success->{
-                   stopShimmer()
-                   val data = it.data?:return@observe
-                   data.let {list->
-                       val uiList = list.asBrowseTabModels().toArrayList()
-                       adapter = AppBaseRecyclerViewAdapter(
-                           requireActivity() as BaseActivity<*, *>,
-                           uiList,
-                           this
-                       )
-                       binding.rvCat.adapter = adapter
-                       binding.rvCat.layoutManager = GridLayoutManager(requireActivity(), 2)
-                   }
-               }
-               is NetworkResult.Error->{
-                   stopShimmer()
-                   showToast(it.msg)
-               }
-           }
-
-
+        is NetworkResult.Success -> {
+          stopShimmer()
+          val data = it.data ?: return@observe
+          data.let { list ->
+            val uiList = list.asBrowseTabModels().toArrayList()
+            adapter = AppBaseRecyclerViewAdapter(
+              requireActivity() as BaseActivity<*, *>, uiList, this
+            )
+            binding.rvCat.adapter = adapter
+            binding.rvCat.layoutManager = GridLayoutManager(requireActivity(), 2)
+          }
         }
-    }
-
-
-    private fun startShimmer() {
-        binding!!.shimmerLayout.visible()
-        binding!!.rvCat.gone()
-        binding!!.shimmerLayout.startShimmer()
-    }
-
-    private fun stopShimmer(){
-        binding!!.shimmerLayout.gone()
-        binding!!.rvCat.visible()
-        binding!!.shimmerLayout.stopShimmer()
-    }
-
-
-
-    override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        when(actionType){
-            RecyclerViewActionType.BROWSE_TAB_POSTER_CAT_CLICKED.ordinal->{
-                item as BrowseTabCategory
-                addFragment(R.id.container,
-                    BrowseAllFragment.newInstance(item.id),true,true)
-            }
+        is NetworkResult.Error -> {
+          stopShimmer()
+          showToast(it.msg)
         }
+      }
+
+
     }
+  }
+
+
+  private fun startShimmer() {
+    binding.shimmerLayout.visible()
+    binding.rvCat.gone()
+    binding.shimmerLayout.startShimmer()
+  }
+
+  private fun stopShimmer() {
+    binding.shimmerLayout.gone()
+    binding.rvCat.visible()
+    binding.shimmerLayout.stopShimmer()
+  }
+
+
+  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+    when (actionType) {
+      RecyclerViewActionType.BROWSE_TAB_POSTER_CAT_CLICKED.ordinal -> {
+        addFragment(R.id.container, BrowseAllFragment.newInstance((item as? BrowseTabCategory)?.id), true, true)
+      }
+    }
+  }
 }
