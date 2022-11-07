@@ -23,6 +23,7 @@ import java.util.List;
 
 import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialUtils.*;
 
+@Deprecated
 public class TestimonialsAdapter extends RecyclerView.Adapter<TestimonialsAdapter.ViewHolder> {
 
     private List<TestimonialData> itemList;

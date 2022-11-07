@@ -25,6 +25,7 @@ import com.framework.pref.clientId
 import com.framework.webengageconstant.*
 import com.framework.webengageconstant.PAYMENT_COLLECTION_SETUP_PAGE_LOAD
 
+@Deprecated("Migrated this class FragmentPaymentCollectionSetupV2")
 class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollectionSetupBinding, AppointmentSettingsViewModel>() {
 
   var isEdit: Boolean = false

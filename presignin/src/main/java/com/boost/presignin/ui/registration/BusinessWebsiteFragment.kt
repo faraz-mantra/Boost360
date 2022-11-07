@@ -30,6 +30,7 @@ import com.framework.extensions.observeOnce
 import com.framework.pref.*
 import com.framework.webengageconstant.*
 import com.invitereferrals.invitereferrals.InviteReferralsApi
+import org.json.JSONObject
 import java.util.*
 
 open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBinding, LoginSignUpViewModel>() {
@@ -55,7 +56,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
   }
 
   override fun onCreateView() {
-    WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_PAGE_LOAD_NEW_UPPERCASE, PAGE_VIEW, NO_EVENT_VALUE)
     fullScreenProgress = FullScreenProgressDialog.newInstance()
     this.session = UserSessionManager(baseActivity)
     floatsRequest = arguments?.getSerializable(CATEGORY_DATA) as? CategoryFloatsRequest
@@ -100,7 +101,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
         setData(baseActivity.getString(R.string.get_boost_360_tnc))
         onClicked = {
           floatsRequest?.webSiteUrl = "$website${getString(R.string.nowfloats_dot_com)}"
-          WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK, CLICK, NO_EVENT_VALUE)
+          WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK_NEW_UPPERCASE, CLICK, NO_EVENT_VALUE)
           apiHitCreateMerchantProfile()
         }
         show(
@@ -199,7 +200,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
       floatsRequest?.requestProfile?.ProfileProperties?.userName,
       email, floatsRequest?.userBusinessMobile, 0, null, null
     )
-    InviteReferralsApi.getInstance(baseActivity).tracking("register", email, 0, null, null)
+    InviteReferralsApi.getInstance(baseActivity).tracking("register", email, 0, null, null,null, JSONObject())
   }
 
   private fun apiHitBusiness(businessProfileResponse: BusinessProfileResponse) {
@@ -210,7 +211,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
     this.responseCreateProfile = response
     val request = getBusinessRequest()
     isSyncCreateFpApi = true
-    viewModel?.putCreateBusinessV6(response.result?.loginId, request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.putCreateBusinessV6(response.result?.loginId, request)?.observeOnce(viewLifecycleOwner) {
       val result = it as? FloatingPointCreateResponse
       if (result?.isSuccess() == true && result.authTokens.isNullOrEmpty().not()) {
         authToken = result.authTokens?.firstOrNull()
@@ -243,7 +244,7 @@ open class BusinessWebsiteFragment : AppBaseFragment<FragmentBusinessWebsiteBind
         showShortToast(if (msg.isNotEmpty()) msg else getString(R.string.error_create_business_fp))
       }
       hideProgress()
-    })
+    }
   }
 
   private fun getBusinessRequest(): BusinessCreateRequest {

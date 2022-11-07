@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.framework.views.customViews.CustomImageView
+      android:layout_width="@dimen/size_40"
+      android:layout_height="@dimen/size_40"
+      android:layout_marginVertical="@dimen/size_30"
+      android:layout_marginStart="@dimen/size_20"
+      android:background="@drawable/ic_camera_frame_up_left"
+      android:elevation="@dimen/size_4"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <com.framework.views.customViews.CustomImageView
+      android:layout_width="@dimen/size_40"
+      android:layout_height="@dimen/size_40"
+      android:layout_marginVertical="@dimen/size_30"
+      android:layout_marginEnd="@dimen/size_20"
+      android:background="@drawable/ic_camera_up_right"
+      android:elevation="@dimen/size_4"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <com.framework.views.customViews.CustomImageView
+      android:layout_width="@dimen/size_40"
+      android:layout_height="@dimen/size_40"
+      android:layout_marginVertical="@dimen/size_30"
+      android:layout_marginStart="@dimen/size_20"
+      android:background="@drawable/ic_camera_down_left"
+      android:elevation="@dimen/size_4"
+      app:layout_constraintBottom_toTopOf="@id/btn_click_photo"
+      app:layout_constraintStart_toStartOf="parent" />
+
+    <com.framework.views.customViews.CustomImageView
+      android:layout_width="@dimen/size_40"
+      android:layout_height="@dimen/size_40"
+      android:layout_marginVertical="@dimen/size_30"
+      android:layout_marginEnd="@dimen/size_20"
+      android:background="@drawable/ic_camera_down_right"
+      android:elevation="@dimen/size_4"
+      app:layout_constraintBottom_toTopOf="@id/btn_click_photo"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.otaliastudios.cameraview.CameraView
+      android:id="@+id/panCardScanCameraView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+        app:cameraMode="picture"
+      android:keepScreenOn="true"
+      />
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/btn_click_photo"
+      android:layout_width="@dimen/size_80"
+      android:layout_height="@dimen/size_80"
+      android:layout_marginBottom="@dimen/size_14"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:srcCompat="@drawable/ic_camera_circle" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

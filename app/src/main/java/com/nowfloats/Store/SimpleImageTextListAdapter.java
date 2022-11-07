@@ -54,7 +54,7 @@ public class SimpleImageTextListAdapter extends RecyclerView.Adapter<SimpleImage
                 || myTextStrings[position].equals("Faculty Management") && !session.getStoreWidgets().contains(FACULTY_MANAGEMENT_FEATURE)
                 /*|| myTextStrings[position].equals("Seasonal Offers") && !Constants.StoreWidgets.contains("OFFERS")*/ //this is free widget
         ) {
-            holder.featureLock.setVisibility(View.VISIBLE);
+//            holder.featureLock.setVisibility(View.VISIBLE);
         } else {
             holder.featureLock.setVisibility(View.GONE);
         }

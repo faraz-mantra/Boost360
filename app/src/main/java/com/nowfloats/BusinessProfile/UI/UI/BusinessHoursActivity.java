@@ -307,34 +307,45 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
 
   private boolean isValidInput() {
     if (switchSun.isChecked()) {
-      if (etSunOpen.getText().toString().equals("00:00") || etSunClose.getText().toString().equals("00:00"))
+      if (etSunOpen.getText().toString().equals("00:00") || etSunClose.getText().toString().equals("00:00")
+              || isStartTimeAndCloseTimeEqual(etSunOpen.getText().toString(), etSunClose.getText().toString()))
         return false;
     }
     if (switchMon.isChecked()) {
-      if (etMonOpen.getText().toString().equals("00:00") || etMonClose.getText().toString().equals("00:00"))
+      if (etMonOpen.getText().toString().equals("00:00") || etMonClose.getText().toString().equals("00:00")
+              || isStartTimeAndCloseTimeEqual(etMonOpen.getText().toString(), etMonClose.getText().toString()))
         return false;
     }
     if (switchTue.isChecked()) {
-      if (etTueOpen.getText().toString().equals("00:00") || etTueClose.getText().toString().equals("00:00"))
+      if (etTueOpen.getText().toString().equals("00:00") || etTueClose.getText().toString().equals("00:00")
+              || isStartTimeAndCloseTimeEqual(etTueOpen.getText().toString(), etTueClose.getText().toString()))
         return false;
     }
     if (switchWed.isChecked()) {
-      if (etWedOpen.getText().toString().equals("00:00") || etWedClose.getText().toString().equals("00:00"))
+      if (etWedOpen.getText().toString().equals("00:00") || etWedClose.getText().toString().equals("00:00")
+              || isStartTimeAndCloseTimeEqual(etWedOpen.getText().toString(), etWedClose.getText().toString()))
         return false;
     }
     if (switchThu.isChecked()) {
-      if (etThuOpen.getText().toString().equals("00:00") || etThuClose.getText().toString().equals("00:00"))
+      if (etThuOpen.getText().toString().equals("00:00") || etThuClose.getText().toString().equals("00:00")
+              || isStartTimeAndCloseTimeEqual(etThuOpen.getText().toString(), etThuClose.getText().toString()))
         return false;
     }
     if (switchFri.isChecked()) {
-      if (etFriOpen.getText().toString().equals("00:00") || etFriClose.getText().toString().equals("00:00"))
+      if (etFriOpen.getText().toString().equals("00:00") || etFriClose.getText().toString().equals("00:00")
+              || isStartTimeAndCloseTimeEqual(etFriOpen.getText().toString(), etFriClose.getText().toString()))
         return false;
     }
     if (switchSat.isChecked()) {
-      if (etSatOpen.getText().toString().equals("00:00") || etSatClose.getText().toString().equals("00:00"))
+      if (etSatOpen.getText().toString().equals("00:00") || etSatClose.getText().toString().equals("00:00")
+              || isStartTimeAndCloseTimeEqual(etSatOpen.getText().toString(), etSatClose.getText().toString()))
         return false;
     }
     return true;
+  }
+
+  private boolean isStartTimeAndCloseTimeEqual(String startTime, String endTime){
+    return startTime.equals(endTime);
   }
 
   private void onBusinessHourAddedOrUpdated(Boolean isAdded) {

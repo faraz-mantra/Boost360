@@ -34,6 +34,8 @@
 
           <com.framework.views.customViews.CustomEditText
             android:id="@+id/edt_desc"
+              android:scrollbarStyle="insideInset"
+              android:overScrollMode="always"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/size_6"

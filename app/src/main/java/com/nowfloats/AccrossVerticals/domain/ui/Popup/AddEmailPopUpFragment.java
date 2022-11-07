@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.thinksity.R;
 
-
+@Deprecated
 public class AddEmailPopUpFragment extends DialogFragment {
 
     TextView saveButton, cancelButton;

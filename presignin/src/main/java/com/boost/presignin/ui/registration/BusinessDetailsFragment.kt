@@ -164,7 +164,7 @@ class BusinessDetailsFragment : AppBaseFragment<FragmentBusinessDetailsBinding, 
       floatsRequest?.requestProfile?.Provider = "EMAIL"
       floatsRequest?.whatsAppFlag = whatsAppNoFlag
       validatePhone()
-      WebEngageController.trackEvent(PS_BUSINESS_PROFILE_CLICK, CLICK, NO_EVENT_VALUE)
+      WebEngageController.trackEvent(PS_BUSINESS_PROFILE_CLICK_NEW_UPPERCASE, CLICK, NO_EVENT_VALUE)
     }
   }
 

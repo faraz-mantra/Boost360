@@ -100,19 +100,20 @@
             app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomTextField
-            android:id="@+id/tv_delivery_person_name"
-            style="@style/EditTextStyle"
-            android:layout_marginStart="@dimen/size_20"
-            android:layout_marginTop="@dimen/size_10"
-            android:layout_marginEnd="@dimen/size_20"
-            android:background="@drawable/bg_rect_edit_txt"
-            android:hint="@string/write_the_delivery_person_name"
-            android:inputType="textCapWords"
-            android:padding="@dimen/size_12"
-            android:singleLine="true"
-            android:textColor="@color/warm_grey_10"
-            android:textColorHint="@color/primary_grey"
-            tools:ignore="UnusedAttribute" />
+              android:id="@+id/tv_delivery_person_name"
+              style="@style/EditTextStyle"
+              android:layout_height="@dimen/size_46"
+              android:layout_marginStart="@dimen/size_20"
+              android:layout_marginTop="@dimen/size_10"
+              android:layout_marginEnd="@dimen/size_20"
+              android:background="@drawable/bg_rect_edit_txt"
+              android:hint="@string/write_the_delivery_person_name"
+              android:inputType="textCapWords"
+              android:padding="@dimen/size_12"
+              android:singleLine="true"
+              android:textColor="@color/warm_grey_10"
+              android:textColorHint="@color/primary_grey"
+              tools:ignore="UnusedAttribute" />
 
           <com.framework.views.customViews.CustomTextView
             style="@style/match_wrap"
@@ -123,20 +124,21 @@
             app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomTextField
-            android:id="@+id/edt_number"
-            style="@style/match_wrap"
-            android:layout_marginStart="@dimen/size_20"
-            android:layout_marginTop="@dimen/size_10"
-            android:layout_marginEnd="@dimen/size_20"
-            android:background="@drawable/bg_rect_edit_txt"
-            android:hint="@string/_91_xxxxx_xxxxx"
-            android:inputType="number"
-            android:maxLength="10"
-            android:padding="@dimen/size_12"
-            android:singleLine="true"
-            android:textColor="@color/warm_grey_10"
-            android:textColorHint="@color/primary_grey"
-            tools:ignore="UnusedAttribute" />
+              android:id="@+id/edt_number"
+              style="@style/match_wrap"
+              android:layout_height="@dimen/size_46"
+              android:layout_marginStart="@dimen/size_20"
+              android:layout_marginTop="@dimen/size_10"
+              android:layout_marginEnd="@dimen/size_20"
+              android:background="@drawable/bg_rect_edit_txt"
+              android:hint="@string/_91_xxxxx_xxxxx"
+              android:inputType="number"
+              android:maxLength="10"
+              android:padding="@dimen/size_12"
+              android:singleLine="true"
+              android:textColor="@color/warm_grey_10"
+              android:textColorHint="@color/primary_grey"
+              tools:ignore="UnusedAttribute" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -13,6 +13,7 @@ import com.thinksity.R;
 
 import java.util.List;
 
+@Deprecated
 public class EmailAdapter extends RecyclerView.Adapter<EmailAdapter.MyViewHolder> {
 
     Context mContext;

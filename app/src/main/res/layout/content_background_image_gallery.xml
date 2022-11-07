@@ -5,7 +5,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   app:layout_behavior="@string/appbar_scrolling_view_behavior"
-  tools:context="com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"
+  tools:context="com.nowfloats.Image_Gallery.BackgroundGalleryImageActivity"
   tools:showIn="@layout/activity_background_image_gallery">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

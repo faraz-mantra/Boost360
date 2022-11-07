@@ -46,10 +46,10 @@ class ProgressDialog : BaseDialogFragment<ProgressDialogBinding, BaseViewModel>(
 
   fun showProgress(manager: FragmentManager) {
     try {
+      hideProgress()
       if (this.isVisible.not()) show(manager, ProgressDialog::class.java.simpleName)
     } catch (e: Exception) {
-      SentryController.captureException(e)
-      Log.e(ProgressDialog::class.java.name, e.localizedMessage)
+      Log.e(ProgressDialog::class.java.name, e.localizedMessage ?: "")
     }
   }
 
@@ -57,9 +57,7 @@ class ProgressDialog : BaseDialogFragment<ProgressDialogBinding, BaseViewModel>(
     try {
       if (isRemoving.not()) dismiss()
     } catch (e: Exception) {
-      SentryController.captureException(e)
-      Log.e(ProgressDialog::class.java.name, e.localizedMessage)
+      Log.e(ProgressDialog::class.java.name, e.localizedMessage ?: "")
     }
   }
-
 }

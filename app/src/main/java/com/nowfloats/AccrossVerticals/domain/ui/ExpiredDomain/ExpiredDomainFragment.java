@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.thinksity.R;
 
-
+@Deprecated
 public class ExpiredDomainFragment extends Fragment {
 
     private ExpiredDomainViewModel mViewModel;

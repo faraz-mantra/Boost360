@@ -1,5 +1,7 @@
 package com.dashboard.utils
 
+import com.framework.pref.UserSessionManager
+
 
 fun getDefaultTrasactionsTaxonomyFromServiceCode(category_code: String?): String? {
   return when (category_code) {
@@ -46,11 +48,6 @@ fun getCustomerTypeFromServiceCode(category_code: String?): String {
     "SVC", "SPA", "SAL", "HOT" -> "Bookings"
     else -> "Orders"
   }
-}
-
-
-fun isRoomBooking(category_code: String): Boolean {
-  return "HOT" == category_code
 }
 
 fun getProductCatalogTaxonomyFromServiceCode(category_code: String?): String? {
@@ -106,24 +103,51 @@ fun getAptType(category_code: String?): String {
   }
 }
 
-fun getRoiSummaryType(category_code: String?): String? {
-  return category_code
-//  return when (category_code) {
-//    "DOC", "HOS" -> "DOC"
-//    "SVC", "SPA", "SAL" -> "SPA"
-//    else -> "MFG"
-//  }
-}
-
-enum class PremiumCode(val value: String) {
-  OUR_TOPPERS("OUR-TOPPERS"), FACULTY("FACULTY"), WILDFIRE_FB_LEAD_ADS(" WILDFIRE_FB_LEAD_ADS"),
-  userPurchsedWidgets("userPurchsedWidgets"), DOMAINPURCHASE("DOMAINPURCHASE"),
-  CALLTRACKER("CALLTRACKER"), MERCHANT_TRAINING("MERCHANT_TRAINING"), CUSTOM_PAYMENTGATEWAY("CUSTOM_PAYMENTGATEWAY"),
-  CUSTOMERSUPPORT("CUSTOMERSUPPORT"), StoreWidgets("StoreWidgets"), BOOSTKEYBOARD("BOOSTKEYBOARD"),
-  BOOKTABLE("BOOKTABLE"), BROCHURE("BROCHURE"), TRIPADVISOR_REVIEWS("TRIPADVISOR-REVIEWS"),
-  PLACES_TO_LOOK_AROUND("PLACES-TO-LOOK-AROUND"), PROJECTTEAM("PROJECTTEAM"), get_fp_details_mode("get_fp_details_mode");
-
-  companion object {
-    fun fromValue(value: String?): PremiumCode? = values().firstOrNull { it.value == value }
+fun getRoiSummaryType(category_code: String?): String {
+  return when (category_code) {
+    "DOC", "HOS" -> "DOC"
+    "SVC", "SPA", "SAL" -> "SPA"
+    else -> "MFG"
   }
 }
+
+fun UserSessionManager.isProduct(): Boolean {
+  return getProductType(this.fP_AppExperienceCode) == "PRODUCTS"
+}
+
+fun UserSessionManager.isService(): Boolean {
+  return getProductType(this.fP_AppExperienceCode) == "SERVICES"
+}
+
+fun UserSessionManager.isHotel(): Boolean {
+  return this.fP_AppExperienceCode.equals("HOT")
+}
+
+fun UserSessionManager.isDocHos(): Boolean {
+  return this.fP_AppExperienceCode.equals("DOC") || this.fP_AppExperienceCode.equals("HOS")
+}
+
+fun UserSessionManager.isRestaurant(): Boolean {
+  return this.fP_AppExperienceCode.equals("CAF")
+}
+
+fun UserSessionManager.isSpa(): Boolean {
+  return this.fP_AppExperienceCode.equals("SPA")
+}
+
+fun UserSessionManager.isSpaSal(): Boolean {
+  return this.fP_AppExperienceCode.equals("SPA") || this.fP_AppExperienceCode.equals("SAL")
+}
+
+fun UserSessionManager.isSpaSalSvc(): Boolean {
+  return this.fP_AppExperienceCode.equals("SPA") || this.fP_AppExperienceCode.equals("SAL") || this.fP_AppExperienceCode.equals("SVC")
+}
+
+fun UserSessionManager.isManufacturing(): Boolean {
+  return this.fP_AppExperienceCode.equals("MFG")
+}
+
+fun UserSessionManager.isEducation(): Boolean {
+  return this.fP_AppExperienceCode.equals("EDU")
+}
+

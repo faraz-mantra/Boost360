@@ -7,40 +7,57 @@
   android:background="@color/primary_color"
   app:theme="@style/CustomToolbarTheme">
 
-  <com.framework.views.customViews.CustomTextView
-    android:id="@+id/titleProduct"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="10dp"
-    android:textColor="@color/white"
-    android:fontFamily="@font/semi_bold"
-    app:textType="HEADING_6"
-    tools:ignore="MissingPrefix" />
+  <androidx.constraintlayout.widget.ConstraintLayout
 
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:gravity="right|center_vertical"
-    android:orientation="horizontal">
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
 
-    <ImageView
-      android:id="@+id/home_view_delete_card"
-      android:layout_width="wrap_content"
-      android:layout_height="fill_parent"
-      android:background="@drawable/button_click_effect"
-      android:padding="12dp"
-      android:src="@drawable/ic_menu_delete" />
+    <com.framework.views.customViews.CustomTextView
+        android:id="@+id/titleProduct"
+        android:layout_width="0dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/semi_bold"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:textType="HEADING_6"
+        tools:ignore="MissingPrefix" />
 
-    <ImageView
-      android:id="@+id/delete_page"
-      android:layout_width="wrap_content"
-      android:layout_height="fill_parent"
-      android:background="@drawable/button_click_effect"
-      android:padding="12dp"
-      android:src="@drawable/ic_menu_delete"
-      android:visibility="gone" />
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:gravity="right|center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-  </LinearLayout>
+      <ImageView
+          android:id="@+id/home_view_delete_card"
+          android:layout_width="wrap_content"
+          android:layout_height="fill_parent"
+          android:background="@drawable/button_click_effect"
+          android:padding="12dp"
+          android:src="@drawable/ic_menu_delete" />
+
+      <ImageView
+          android:id="@+id/delete_page"
+          android:layout_width="wrap_content"
+          android:layout_height="fill_parent"
+          android:background="@drawable/button_click_effect"
+          android:padding="12dp"
+          android:src="@drawable/ic_menu_delete"
+          android:visibility="gone" />
+
+    </LinearLayout>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.appcompat.widget.Toolbar>
 

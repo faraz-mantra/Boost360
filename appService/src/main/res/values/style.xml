@@ -46,6 +46,18 @@
     <item name="editTextStyle">@style/ComposeEditText</item>
   </style>
 
+  <style name="BackgroundImageTheme" parent="BaseTheme">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="editTextStyle">@style/ComposeEditText</item>
+  </style>
+
+  <style name="BackgroundImageTheme.Dark" parent="BackgroundImageTheme">
+    <item name="colorPrimary">@color/black_4a4a4a</item>
+    <item name="colorPrimaryDark">@color/black_4a4a4a</item>
+  </style>
+
   <style name="AddUpdateTheme" parent="UpdateTheme">
     <item name="colorAccent">@color/black_4a4a4a</item>
   </style>

@@ -2,27 +2,27 @@
 <resources>
   <color name="colorAccent">#ffb900</color>
   <color name="colorPrimary">#ffb900</color>
-  <color name="colorPrimaryDark">#d99d00</color>
+  <color name="colorPrimaryDark">#ffb900</color>
   <color name="snow_white">#fbfbfb</color>
-    <color name="grey_light_1_d">#e6e6e6</color>
-    <color name="red_light_1">#EB5757</color>
+  <color name="grey_light_1_d">#e6e6e6</color>
+  <color name="red_light_1">#EB5757</color>
   <color name="accent_30">#4DFFB900</color>
-    <color name="green_more_settings">#01D34F</color>
+  <color name="green_more_settings">#01D34F</color>
   <color name="red_more_settings">#EB5757</color>
-    <color name="gray_eeee">#eeeeee</color>
+  <color name="gray_eeee">#eeeeee</color>
   <color name="color_orange_more">#F2994A</color>
   <color name="green_more">#7ED321</color>
   <color name="gray_white_jio">#5c5c5c</color>
 
   <color name="colorAccent_jio">@color/colorAccent</color>
-    <color name="accent_light_red">@color/red_light_1</color>
+  <color name="accent_light_red">@color/red_light_1</color>
 
 
-    <color name="button_background_white_1a">#1AFFFFFF</color>
+  <color name="button_background_white_1a">#1AFFFFFF</color>
   <color name="ButtonStrokeWhite">@color/white</color>
   <color name="dashboard_high_score_pink">#EC008C</color>
   <color name="website_toolbar_color">@color/black_4a4a4a</color>
-    <color name="website_button_tint">@color/gray_66666</color>
+  <color name="website_button_tint">@color/gray_66666</color>
   <color name="text_color_light_white">@color/white</color>
   <color name="text_color_light_white_gray">@color/white</color>
   <color name="website_desc">@color/pinkish_grey</color>

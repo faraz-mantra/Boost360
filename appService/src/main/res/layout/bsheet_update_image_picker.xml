@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/riv_close_bottomSheet"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/size_15"
+            android:src="@drawable/ic_help_bsheet_close" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottoms_sheet_top20dp_white"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/size_16"
+            android:paddingVertical="@dimen/size_24">
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:fontFamily="@font/semi_bold"
+                android:textSize="18sp"
+                android:text="@string/choose_an_option"
+                android:textColor="@color/black_4a4a4a"
+                 />
+
+
+            <LinearLayout
+                android:id="@+id/layout_take_photo"
+                android:gravity="center"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="wrap_content"
+                    app:tint="@color/black_4a4a4a"
+                    android:src="@drawable/ic_camera_2"
+                    android:layout_height="wrap_content"/>
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_marginStart="16dp"
+                    app:fontFamily="@font/regular_medium"
+                    android:textColor="@color/black_4a4a4a"
+                    android:layout_width="match_parent"
+                    android:text="@string/take_a_photo"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_gallery"
+                android:gravity="center"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="wrap_content"
+                    app:tint="@color/black_4a4a4a"
+                    android:src="@drawable/ic_img_gallery_2"
+                    android:layout_height="wrap_content"/>
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_marginStart="16dp"
+                    app:fontFamily="@font/regular_medium"
+                    android:textColor="@color/black_4a4a4a"
+                    android:layout_width="match_parent"
+                    android:text="@string/choose_from_phone_gallery"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/layout_other"
+                android:gravity="center"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="20dp"
+                    app:tint="@color/black_4a4a4a"
+                    android:src="@drawable/ic_globe_yellow"
+                    android:layout_height="20dp"/>
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_marginStart="16dp"
+                    app:fontFamily="@font/regular_medium"
+                    android:textColor="@color/black_4a4a4a"
+                    android:layout_width="match_parent"
+                    android:text="@string/browse_other_images"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

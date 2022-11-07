@@ -1,0 +1,3 @@
+package com.boost.dbcenterapi.recycleritem
+
+interface AppBaseRecyclerViewItem : BaseRecyclerViewItem

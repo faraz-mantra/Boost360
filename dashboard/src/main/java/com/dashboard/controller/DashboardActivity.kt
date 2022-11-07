@@ -1,14 +1,15 @@
 package com.dashboard.controller
 
 import android.content.Intent
-import android.content.IntentSender
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.StrictMode
 import android.util.Log
 import android.view.View
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -17,6 +18,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.anachat.chatsdk.AnaCore
+import com.appservice.ui.catalog.widgets.ClickType
+import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.boost.dbcenterapi.utils.DataLoader
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.controller.ui.dashboard.DashboardFragment
@@ -28,10 +32,10 @@ import com.dashboard.utils.*
 import com.dashboard.utils.DashboardTabs.Companion.fromUrl
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.analytics.SentryController
+import com.framework.constants.PremiumCode
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.appUpdateType
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.initRemoteConfigData
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.firebaseUtils.caplimit_feature.saveCapData
@@ -41,24 +45,22 @@ import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.getBa
 import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.initDataBadges
 import com.framework.firebaseUtils.firestore.badges.BadgesFirestoreManager.readDrScoreDocument
 import com.framework.firebaseUtils.firestore.badges.BadgesModel
+import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
+import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager.getCartData
+import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager.initDataCart
+import com.framework.glide.util.glideLoad
+import com.framework.imagepicker.ImagePicker
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.KEY_FP_CART_COUNT
 import com.framework.utils.AppsFlyerUtils
 import com.framework.utils.ConversionUtils
+import com.framework.utils.roundToFloat
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
 import com.framework.webengageconstant.DASHBOARD_HOME_PAGE
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PAGE_VIEW
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.play.core.appupdate.AppUpdateInfo
-import com.google.android.play.core.appupdate.AppUpdateManager
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.InstallStateUpdatedListener
-import com.google.android.play.core.install.model.ActivityResult
-import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
@@ -66,9 +68,9 @@ import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.webengage.sdk.android.WebEngage
-import com.zopim.android.sdk.api.ZopimChat
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
+import zendesk.chat.Chat
 import zendesk.core.AnonymousIdentity
 import zendesk.core.Zendesk
 import zendesk.support.Support
@@ -78,13 +80,15 @@ import kotlin.concurrent.schedule
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener {
 
-  private val MY_REQUEST_CODE = 120
+
   private var doubleBackToExitPressedOnce = false
   private var mDeepLinkUrl: String? = null;
   private var mPayload: String? = null
   private var deepLinkUtil: DeepLinkUtil? = null
   private lateinit var mNavController: NavController
   private var session: UserSessionManager? = null
+  private var adapterDrawer: AppBaseRecyclerViewAdapter<DrawerHomeData>? = null
+  private var isSecondaryImage = false
   private lateinit var appUpdateManager: AppUpdateManager
   private lateinit var appUpdateInfoTask: Task<AppUpdateInfo>
   var isLoadShimmer = true
@@ -113,7 +117,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(this)
-    session?.let { deepLinkUtil = DeepLinkUtil(this, it) }
+    session?.let { deepLinkUtil = DeepLinkUtil(this, it, Fragment()) }
     mNavController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
     val graph = mNavController.graph
     graph.addArgument("data", NavArgument.Builder().setDefaultValue("data").build())
@@ -126,50 +130,19 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     intentDataCheckAndDeepLink(intent)
     session?.initializeWebEngageLogin()
     initialize()
+    session?.let { initDataCart(it.fpTag ?: "", it.fPID ?: "", clientId) }
     session?.let { initDataBadges(it.fpTag ?: "", it.fPID ?: "", clientId) }
     session?.let { initData(it.fpTag ?: "", it.fPID ?: "", clientId) }
     initRemoteConfigData(this)
     reloadCapLimitData()
-    checkForUpdate()
   }
 
   private fun bottomNavInitializer() {
-    if (this.packageName.equals(APPLICATION_JIO_ID, true))
-      binding?.viewBottomBar?.navView?.setClickPosition(ArrayList())
     binding?.viewBottomBar?.navView?.setOnItemSelectedListener(this)
   }
 
-  private fun checkForUpdate() {
-    Log.i(TAG, "checkForUpdate: Inside Method")
-    appUpdateManager = AppUpdateManagerFactory.create(this)
-    appUpdateManager.registerListener(appUpdateListener)
-    appUpdateInfoTask = appUpdateManager.appUpdateInfo
-    appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-      Log.i(TAG, "checkForUpdate: ${appUpdateInfo.updateAvailability()} ${appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)}")
-      if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE || appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
-        startUpdate(appUpdateInfo)
-      } else if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
-        popupSnackBarForCompleteUpdate();
-      }
-    }
-  }
 
-  private fun startUpdate(appUpdateInfo: AppUpdateInfo) {
-    try {
-      appUpdateManager.startUpdateFlowForResult(appUpdateInfo, appUpdateType().ordinal, this, MY_REQUEST_CODE)
-    } catch (e: IntentSender.SendIntentException) {
-      e.printStackTrace();
-      SentryController.captureException(e)
-    }
-  }
 
-  private val appUpdateListener: InstallStateUpdatedListener = InstallStateUpdatedListener { state ->
-    when {
-      state.installStatus() == InstallStatus.DOWNLOADED -> popupSnackBarForCompleteUpdate()
-      state.installStatus() == InstallStatus.INSTALLED -> removeInstallStateUpdateListener()
-      else -> showShortToast("InstallStateUpdatedListener: state: ${state.installStatus()}")
-    }
-  }
 
   private fun popupSnackBarForCompleteUpdate() {
     Snackbar.make(findViewById<View>(android.R.id.content).rootView, getString(R.string.download_complete), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.install)) {
@@ -177,9 +150,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     }.setActionTextColor(ContextCompat.getColor(this, R.color.green_light)).show()
   }
 
-  private fun removeInstallStateUpdateListener() {
-    if (this::appUpdateManager.isInitialized) appUpdateManager.unregisterListener(appUpdateListener)
-  }
+//  private fun loadMarketPlaceData() {
+//    Log.e("loadMarketPlaceData", "Initialized")
+//    viewModel.loadMarketPlaceData(application, session?.fP_AppExperienceCode, session?.fpTag)
+//  }
 
   private fun reloadCapLimitData() {
     viewModel.getCapLimitFeatureDetails(session?.fPID ?: "", clientId).observeOnce(this) {
@@ -259,7 +233,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
         if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType, buyItemKey, false)
       } else {
-        if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", "", false)
+        val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(Uri.parse(mDeepLinkUrl?:""))
+          val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
+        if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", buyItemKey?:"", false)
       }
       AppsFlyerUtils.sAttributionData = mapOf()
     }
@@ -274,14 +250,16 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
             binding?.viewBottomBar?.navView?.setActiveItem(value.position)
             onItemSelect(value.position)
           }
+          if (value == DashboardTabs.open_business_card) MutableDataUtils.openBusinessCard(true)
         }
-      }
+      } else if (value == DashboardTabs.open_business_card) MutableDataUtils.openBusinessCard(true)
       true
     } else false
   }
 
   override fun onResume() {
     super.onResume()
+    Log.e(this::class.java.simpleName, "onResume")
     setUserData()
   }
 
@@ -310,6 +288,35 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     } else binding?.viewCartCount?.gone()
   }
 
+  private fun setDrawerHome() {
+    viewModel.getNavDashboardData(this).observeOnce(this) {
+      val response = it as? DrawerHomeDataResponse
+      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+        binding?.drawerView?.rvLeftDrawer?.apply {
+          adapterDrawer = AppBaseRecyclerViewAdapter(this@DashboardActivity, checkLockData(response.data!!), this@DashboardActivity)
+          adapter = adapterDrawer
+        }
+      } else showShortToast(this.getString(R.string.navigation_data_error))
+    }
+  }
+
+  private fun checkLockData(data: ArrayList<DrawerHomeData>): ArrayList<DrawerHomeData> {
+    data.forEach { it1 ->
+      when (it1.navType) {
+        DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING.name -> {
+          it1.title = getDefaultTrasactionsTaxonomyFromServiceCode(session?.fP_AppExperienceCode)
+        }
+        DrawerHomeData.NavType.NAV_CALLS.name -> {
+          it1.isLockShow = (session?.getStoreWidgets()?.firstOrNull { it == PremiumCode.CALLTRACKER.value } == null)
+        }
+        DrawerHomeData.NavType.NAV_BOOST_KEYBOARD.name -> {
+          it1.isLockShow = (session?.getStoreWidgets()?.firstOrNull { it == PremiumCode.BOOSTKEYBOARD.value } == null)
+        }
+      }
+    }
+    return data
+  }
+
   private fun navControllerListener() {
     mNavController.addOnDestinationChangedListener { _, destination, _ -> print("" + destination) }
   }
@@ -330,7 +337,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         toolbarPropertySet(0)
       }
     }
-
   }
 
   private fun checkWelcomeShowScreen(pos: Int) {
@@ -356,16 +362,16 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         disableBadgeNotification(BadgesModel.BadgesType.ENQUIRYBADGE.name)
       }
       3 -> {
-        if (this.packageName.equals(APPLICATION_JIO_ID, true)) {
-          mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
-          toolbarPropertySet(pos)
-          disableBadgeNotification(BadgesModel.BadgesType.MENUBADGE.name)
-        } else {
+//        if (this.packageName.equals(APPLICATION_JIO_ID, true)) {
+//          mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
+//          toolbarPropertySet(pos)
+//          disableBadgeNotification(BadgesModel.BadgesType.MENUBADGE.name)
+//        } else {
           val dataAddOns = welcomeData?.get(2)
           if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let { showWelcomeDialog(it) }
           else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
           disableBadgeNotification(BadgesModel.BadgesType.MARKETPLACEBADGE.name)
-        }
+//        }
       }
       4 -> {
         mNavController.navigate(R.id.more_settings, Bundle(), getNavOptions())
@@ -486,6 +492,68 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     }
   }
 
+  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+    when (actionType) {
+      RecyclerViewActionType.NAV_CLICK_ITEM_CLICK.ordinal -> {
+        val data = item as? DrawerHomeData ?: return
+        DrawerHomeData.NavType.from(data.navType)?.let { navClickEvent(it) }
+      }
+    }
+  }
+
+  private fun navClickEvent(type: DrawerHomeData.NavType) {
+    when (type) {
+      DrawerHomeData.NavType.NAV_HOME -> if ((getFragment(DashboardFragment::class.java) == null)) openDashboard()
+      DrawerHomeData.NavType.NAV_DIGITAL_CHANNEL -> session?.let { this.startDigitalChannel(it) }
+      DrawerHomeData.NavType.NAV_MANAGE_CONTENT -> session?.let { this.startManageContentActivity(it) }
+      DrawerHomeData.NavType.NAV_CALLS -> this.startVmnCallCard(session)
+      DrawerHomeData.NavType.NAV_ENQUIRY -> this.startBusinessEnquiry(session)
+      DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING -> session?.let { this.startManageInventoryActivity(it) }
+      DrawerHomeData.NavType.NAV_NEWS_LETTER_SUB -> this.startSubscriber(session)
+      DrawerHomeData.NavType.NAV_BOOST_KEYBOARD -> session?.let { this.startKeyboardActivity(it) }
+      DrawerHomeData.NavType.NAV_ADD_ONS_MARKET -> session?.let { this.initiateAddonMarketplace(it, false, "", "") }
+      DrawerHomeData.NavType.NAV_SETTING -> session?.let { this.startSettingActivity(it) }
+      DrawerHomeData.NavType.NAV_HELP_SUPPORT -> session?.let { this.startHelpAndSupportActivity(it) }
+      DrawerHomeData.NavType.NAV_ABOUT_BOOST -> session?.let { this.startAboutBoostActivity(it) }
+      DrawerHomeData.NavType.NAV_REFER_FRIEND -> this.startReferralView(session)
+    }
+    if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
+  }
+
+
+  private fun openImagePicker(isSecondaryImage: Boolean) {
+    this.isSecondaryImage = isSecondaryImage
+    val filterSheet = ImagePickerBottomSheet()
+    filterSheet.isHidePdfOrGif(true)
+    filterSheet.onClicked = { clickPickerType(it) }
+    filterSheet.show(supportFragmentManager, ImagePickerBottomSheet::class.java.name)
+  }
+
+  private fun clickPickerType(it: ClickType) {
+    val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
+    ImagePicker.Builder(this)
+      .mode(type)
+      .compressLevel(ImagePicker.ComperesLevel.MEDIUM).directory(ImagePicker.Directory.DEFAULT)
+      .extension(ImagePicker.Extension.PNG).allowMultipleImages(true)
+      .scale(800, 800)
+      .enableDebuggingMode(true).build()
+  }
+
+  private fun uploadSecondaryImage(path: String) {
+    val imageFile = File(path)
+    isSecondaryImage = false
+    showProgress()
+    viewModel.putUploadSecondaryImage(getRequestImageDate(imageFile)).observeOnce(this) {
+      if (it.isSuccess()) {
+        if (it.stringResponse.isNullOrEmpty().not()) {
+          session?.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, it.stringResponse)
+          binding?.drawerView?.bgImage?.let { it1 -> glideLoad(it1, it.stringResponse ?: "", R.drawable.general_services_background_img_d) }
+        }
+      } else showLongToast(it.message())
+      hideProgress()
+    }
+  }
+
   private fun getRequestImageDate(businessImage: File): UploadFileBusinessRequest {
     val responseBody = RequestBody.create("image/png".toMediaTypeOrNull(), businessImage.readBytes())
     val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name } ?: "bg_${UUID.randomUUID()}.png"
@@ -501,7 +569,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       val identity = AnonymousIdentity.Builder().withNameIdentifier(session?.fpTag).withEmailIdentifier(session?.fPEmail).build()
       Zendesk.INSTANCE.setIdentity(identity)
       Support.INSTANCE.init(Zendesk.INSTANCE)
-      ZopimChat.init(com.dashboard.BuildConfig.ZOPIM_ACCOUNT_KEY)
+      Chat.INSTANCE.init(this, com.dashboard.BuildConfig.ZOPIM_ACCOUNT_KEY)
     } catch (e: Exception) {
       SentryController.captureException(e)
     }
@@ -520,7 +588,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onStop() {
     super.onStop()
     BadgesFirestoreManager.listenerBadges = null
-    removeInstallStateUpdateListener()
   }
 
   override fun onStart() {
@@ -528,6 +595,17 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     BadgesFirestoreManager.listenerBadges = {
       dataBadges = getBadgesData()
       setBadgesData(dataBadges)
+    }
+      //get firestore cart items and update in local
+    CartFirestoreManager.listener = {
+      val cartData = getCartData()
+      if(cartData!=null) {
+        val list = ArrayList<String>()
+        for (singleItem in cartData.entries) {
+            list.add(singleItem.key)
+        }
+        DataLoader.addAllItemstoFirebaseCart(application, list)
+      }
     }
   }
 
@@ -559,7 +637,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
           }
         }
       else {
-//        binding?.navView?.removeBadge(0)
+//      binding?.navView?.removeBadge(0)
         binding?.viewBottomBar?.navView?.removeBadge(1)
         binding?.viewBottomBar?.navView?.removeBadge(2)
         binding?.viewBottomBar?.navView?.removeBadge(3)

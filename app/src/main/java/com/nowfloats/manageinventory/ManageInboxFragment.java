@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.appservice.ui.calltracking.VmnCallCardsActivityV2;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
@@ -176,7 +177,7 @@ public class ManageInboxFragment extends Fragment {
 
       tvBusinessCalls.setOnClickListener(v -> {
         if (session.getStoreWidgets().contains("CALLTRACKER")) {
-          Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
+          Intent i = new Intent(getActivity(), VmnCallCardsActivityV2.class);
           startActivity(i);
           getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         } else {

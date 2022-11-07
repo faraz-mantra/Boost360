@@ -199,7 +199,7 @@ class SearchDomainFragment :
                     "${getString(R.string.domain_confirm_msg_2)}"
         )
 
-        sheetBinding.btnConfirm.setOnClickListener {
+   /*     sheetBinding.btnConfirm.setOnClickListener {
             WebEngageController.trackEvent(DOMAIN_SEARCHED_SELECTED_DOMAIN_CLICK, CLICK, NO_EVENT_VALUE)
             startFragmentDomainBookingActivity(
                 activity = baseActivity,
@@ -208,7 +208,7 @@ class SearchDomainFragment :
                 clearTop = false
             )
             bSheet.dismiss()
-        }
+        }*/
         sheetBinding.btnGoBack.setOnClickListener {
             bSheet.dismiss()
         }

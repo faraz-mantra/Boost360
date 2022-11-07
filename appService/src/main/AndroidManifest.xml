@@ -2,8 +2,9 @@
   xmlns:tools="http://schemas.android.com/tools"
   package="com.appservice">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.CAMERA" />
+
   <uses-feature
     android:name="android.hardware.camera"
     android:required="false" />
@@ -40,6 +41,7 @@
       android:windowSoftInputMode="adjustPan" />
 
      <activity android:name=".offers.FragmentOffersContainerActivity" />
+    <activity android:name=".ui.updatesBusiness.UpdateCropImageActivity" />
 
     <activity
       android:name=".ui.testimonial.TestimonialContainerActivity"
@@ -50,6 +52,12 @@
       android:name=".ui.updatesBusiness.UpdateBusinessContainerActivity"
       android:screenOrientation="portrait"
       android:theme="@style/UpdateTheme"
+      android:windowSoftInputMode="adjustResize" />
+
+    <activity
+      android:name=".ui.bgImage.BackgroundImageContainerActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/BackgroundImageTheme"
       android:windowSoftInputMode="adjustResize" />
 
     <activity
@@ -64,9 +72,14 @@
       android:theme="@style/AppTheme.domain"
       android:windowSoftInputMode="adjustPan" />
 
+    <activity
+      android:name="com.appservice.ui.calltracking.VmnCallCardsActivityV2"
+      android:launchMode="singleTask"
+      android:screenOrientation="portrait" />
+
     <meta-data
-        android:name="preloaded_fonts"
-        android:resource="@array/preloaded_fonts" />
+      android:name="preloaded_fonts"
+      android:resource="@array/preloaded_fonts" />
 
     <meta-data
       android:name="preloaded_fonts"

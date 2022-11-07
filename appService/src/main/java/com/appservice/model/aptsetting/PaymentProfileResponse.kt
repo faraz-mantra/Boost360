@@ -128,6 +128,12 @@ data class PaymentConfiguration(
 
   @field:SerializedName("AcceptCodForStorePickup")
   var acceptCodForStorePickup: Boolean? = null,
+
+  @field:SerializedName("AcceptPaymentAfterBooking")
+  var acceptPaymentAfterBooking: Boolean? = null,
+
+  @field:SerializedName("AcceptPaymentDuringBooking")
+  var acceptPaymentDuringBooking: Boolean? = null,
 ) : Serializable
 
 data class TaxDetails(

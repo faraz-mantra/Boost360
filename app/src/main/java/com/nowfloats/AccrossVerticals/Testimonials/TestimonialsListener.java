@@ -1,8 +1,8 @@
 package com.nowfloats.AccrossVerticals.Testimonials;
 
-
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.TestimonialData;
 
+@Deprecated
 public interface TestimonialsListener {
 
     void itemMenuOptionStatus(int pos, boolean status);

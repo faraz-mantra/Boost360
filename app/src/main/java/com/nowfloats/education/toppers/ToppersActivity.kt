@@ -12,7 +12,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.boost.upgrades.UpgradeActivity
 import com.framework.base.BaseActivity
 import com.framework.models.BaseViewModel
 import com.framework.views.zero.old.AppOnZeroCaseClicked

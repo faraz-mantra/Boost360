@@ -1,7 +1,10 @@
 package com.appservice.rest.services
 
 import com.appservice.model.MerchantSummaryResponse
+import com.appservice.model.panGst.PanGstUpdateBody
+import com.appservice.model.VmnCallModel
 import com.appservice.model.aptsetting.*
+import com.appservice.model.panGst.PanGstDetailResponse
 import com.appservice.model.product.ProductItemsResponseItem
 import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.CatalogProductCountResponse
@@ -10,7 +13,11 @@ import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.model.updateBusiness.BusinessUpdateResponse
 import com.appservice.model.updateBusiness.DeleteBizMessageRequest
 import com.appservice.model.updateBusiness.PostUpdateTaskRequest
+import com.appservice.model.updateBusiness.pastupdates.PastUpdatesNewListingResponse
+import com.appservice.model.updateBusiness.pastupdates.TagListRequest
 import com.appservice.rest.EndPoints
+import com.framework.pref.clientId
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -18,6 +25,16 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface WithFloatTwoRemoteData {
+
+  @POST(EndPoints.PAN_GST_UPDATE)
+  fun panGstUpdate(@Body panGstUpdateBody: PanGstUpdateBody): Observable<Response<ResponseBody>>
+
+  @GET(EndPoints.GET_PAN_GST_DETAILS)
+  fun getPanGstDetail(
+    @Path("fpId") fpId: String?,
+    @Query("clientId") clientId: String?
+  ): Observable<Response<PanGstDetailResponse>>
+
 
   @POST(EndPoints.CREATE_SERVICE)
   fun createService(@Body request: CatalogProduct?): Observable<Response<String>>
@@ -74,13 +91,16 @@ interface WithFloatTwoRemoteData {
   @Headers("Accept: application/json", "Content-Type: application/octet-stream")
   @PUT(EndPoints.ADD_IMAGE)
   fun addUpdateImageProduct(
-    @Query("clientId") clientId: String?,
-    @Query("requestType") requestType: String?,
-    @Query("requestId") requestId: String?,
-    @Query("totalChunks") totalChunks: Int?,
-    @Query("currentChunkNumber") currentChunkNumber: Int?,
-    @Query("productId") productId: String?,
-    @Body requestBody: RequestBody?,
+    @Query("clientId") clientId: String? = null,
+    @Query("requestType") requestType: String? = null,
+    @Query("requestId") requestId: String? = null,
+    @Query("totalChunks") totalChunks: Int? = null,
+    @Query("currentChunkNumber") currentChunkNumber: Int? = null,
+    @Query("productId") productId: String? = null,
+    @Query("identifierType") identifierType: String? = "SINGLE",
+    @Query("sharingPlatforms") sharingPlatforms: String? = "",
+    @Query("fileName") fileName: String? = null,
+    @Body requestBody: RequestBody? = null,
   ): Observable<Response<String>>
 
   @GET(EndPoints.GET_FP_DETAILS)
@@ -89,8 +109,14 @@ interface WithFloatTwoRemoteData {
     @QueryMap map: Map<String, String>,
   ): Observable<Response<UserFpDetailsResponse>>
 
+  @GET(EndPoints.BACKGROUND_IMAGE)
+  fun getBackgroundImages(@Query("fpId") fpId: String?, @Query("clientId") clientId: String?): Observable<Response<Array<String>>>
+
   @PUT(EndPoints.PUT_BIZ_MESSAGE)
   fun putBizMessageUpdate(@Body request: PostUpdateTaskRequest?): Observable<Response<Any>>
+
+  @PUT(EndPoints.PUT_BIZ_MESSAGE_V2)
+  fun putBizMessageUpdateV2(@Body request: PostUpdateTaskRequest?): Observable<Response<Any>>
 
   @GET(EndPoints.GET_CATALOG_STATUS)
   fun getCatalogStatus(
@@ -126,6 +152,10 @@ interface WithFloatTwoRemoteData {
     @Body requestBody: RequestBody?,
   ): Observable<Response<String>>
 
+  @POST(EndPoints.PUT_BIZ_IMAGE_V2)
+  fun putBizImageUpdateV2(
+    @Body body: JsonObject
+  ): Observable<Response<String>>
 //  fun getDeliveryDetails(): Observable<Response<ResponseBody>>
 
   //TODO APPOINTMENT
@@ -176,4 +206,28 @@ interface WithFloatTwoRemoteData {
     @Query("fpTag") fpTag: String?
   ): Observable<Response<MerchantSummaryResponse>>
 
+  @PUT(EndPoints.CREATE_BG_IMAGE)
+  fun createBGImage(
+    @Query("fpId") fpTag: String?,
+    @Query("clientId") cId: String? = clientId,
+    @Body body: RequestBody,
+  ): Observable<Response<ResponseBody>>
+
+  @POST(EndPoints.DELETE_BG_IMAGE)
+  fun deleteBackgroundImages(@Body map: HashMap<String, String?>): Observable<Response<ResponseBody>>
+
+  @PUT(EndPoints.POST_PAYMENT_ACCEPT_PROFILE)
+  fun addUpdatePaymentProfile(@Body request: AddPaymentAcceptProfileRequest?): Observable<Response<ResponseBody>>
+
+  @GET("/Wildfire/v1/calls/tracker")
+  fun trackerCalls(@QueryMap data: Map<String, String?>?): Observable<Response<ArrayList<VmnCallModel?>?>>
+
+  @POST(EndPoints.GET_PAST_UPDATES_LIST_V6)
+  fun getPastUpdatesListV6(
+    @Query("clientId") clientId: String?,
+    @Query("fpId") fpId: String?,
+    @Query("postType") postType: Int?,
+    @Query("skipBy") skipBy: Int?,
+    @Body request: TagListRequest
+  ): Observable<Response<PastUpdatesNewListingResponse>>
 }

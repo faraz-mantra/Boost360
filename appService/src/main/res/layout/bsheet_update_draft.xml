@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomImageView
+            android:id="@+id/riv_close_bottomSheet"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/size_15"
+            android:src="@drawable/ic_help_bsheet_close" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/size_4"
+            android:background="@drawable/bottoms_sheet_top20dp_white"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/size_16"
+            android:paddingVertical="@dimen/size_25">
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/discarding_the_post"
+                android:textColor="@color/black_4a4a4a"
+                app:fontFamily="@font/bold"
+                app:textType="HEADING_5" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/tv_subheading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/closing_this_page_will_not_save_the_changes_you_ve_made_do_you_want_to_save_a_draft_or_discard_this_post"
+                android:textColor="@color/black_4a4a4a"
+                app:fontFamily="@font/regular"
+               android:textSize="@dimen/text_12" />
+
+            <com.framework.views.customViews.CustomMaterialButton
+                android:id="@+id/btn_save_draft"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="28dp"
+                android:letterSpacing="0"
+                android:backgroundTint="@color/colorPrimary"
+                android:fontFamily="@font/semi_bold"
+                android:text="@string/no_save_as_draft"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_16"
+                app:cornerRadius="8dp"
+                 />
+
+            <com.framework.views.customViews.CustomMaterialButton
+                android:id="@+id/btn_discard"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:backgroundTint="@color/white"
+                android:layout_marginTop="@dimen/size_12"
+                android:fontFamily="@font/semi_bold"
+                android:text="@string/yes_discard"
+                android:letterSpacing="0"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_16"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/colorPrimary"
+                app:cornerRadius="8dp"
+                app:iconGravity="textStart" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

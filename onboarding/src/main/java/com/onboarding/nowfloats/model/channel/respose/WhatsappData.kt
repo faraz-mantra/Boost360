@@ -15,10 +15,7 @@ data class WhatsappData(
 
   fun getNumberPlus91(): String? {
     return when {
-      active_whatsapp_number?.contains("+91-") == true -> active_whatsapp_number.replace(
-        "+91-",
-        "+91"
-      )
+      active_whatsapp_number?.contains("+91-") == true -> active_whatsapp_number.replace("+91-", "+91")
       active_whatsapp_number?.contains("+91") == false -> "+91$active_whatsapp_number"
       else -> active_whatsapp_number
     }

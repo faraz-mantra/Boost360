@@ -62,6 +62,8 @@ abstract class CrashUtility private constructor() {
          * @return True if the installation was successful, false otherwise.
          */
         fun install(context: Context?): Boolean {
+            val defaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+
             if (context == null) {
                 Timber.e(
                     "install($context): Can't install crash handler with a null Context object, doing nothing!"
@@ -79,8 +81,9 @@ abstract class CrashUtility private constructor() {
                             UncaughtExceptionHandler(
                                 WeakReference(application),
                                 WeakReference(oldHandler),
-                                application.filesDir.absolutePath
-                            )
+                                application.filesDir.absolutePath,
+                                defaultExceptionHandler
+                                )
                         )
                         Timber.i(
                             "install($context): Successfully installed crash handler for this application!"
@@ -345,9 +348,11 @@ abstract class CrashUtility private constructor() {
     class UncaughtExceptionHandler(
         private val application: WeakReference<Application>,
         private val oldHandler: WeakReference<Thread.UncaughtExceptionHandler?>,
-        private val path: String
+        private val path: String,
+        val defaultExceptionHandler: Thread.UncaughtExceptionHandler?
     ) : Thread.UncaughtExceptionHandler {
         override fun uncaughtException(thread: Thread?, throwable: Throwable?) {
+            defaultExceptionHandler?.uncaughtException(thread,throwable)
             Timber.e("Detected application crash, executing custom crash handler.")
             thread ?: return
             throwable ?: return

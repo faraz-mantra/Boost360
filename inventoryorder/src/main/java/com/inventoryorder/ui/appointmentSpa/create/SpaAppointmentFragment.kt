@@ -53,6 +53,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
   private var orderInitiateRequest = OrderInitiateRequest()
   private var appointmentRequestModel = AppointmentRequestModel()
   private var totalPrice = 0.0
+  private var gstSlab = 0.0
   private var discountedPrice = 0.0
   private var currency = ""
   private var shouldReInitiate = false
@@ -254,6 +255,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
     bundle.putDouble(IntentConstant.TOTAL_PRICE.name, totalPrice)
     bundle.putDouble(IntentConstant.DISCOUNTED_PRICE.name, discountedPrice)
+    bundle.putDouble(IntentConstant.GST_SLAB.name, gstSlab)
     bundle.putString(IntentConstant.CURRENCY.name, currency)
     bundle.putSerializable(IntentConstant.SELECTED_SERVICE.name, selectedService)
     startFragmentOrderActivity(FragmentType.REVIEW_SPA_DETAILS, bundle, isResult = true)
@@ -299,6 +301,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
         selectedService = serviceList?.get(pos)
         binding?.editServiceName?.setText(fromHtml("<b><color='#2a2a2a'>${selectedService?.Name}</color></b> <color='#adadad'>(${selectedService?.Currency}${selectedService?.DiscountedPrice} for ${selectedService?.Duration}min)</color>"))
         totalPrice = selectedService?.Price ?: 0.0
+        gstSlab = selectedService?.gstSlab ?: 0.0
         discountedPrice = selectedService?.DiscountedPrice ?: 0.0
         currency = selectedService?.Currency ?: ""
         val bookingSlotsRequest = BookingSlotsRequest(

@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_color">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary1"
+            android:contentInsetStart="0dp"
+            android:contentInsetEnd="0dp"
+            app:contentInsetEnd="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/pad_20dp"
+                        android:fontFamily="@font/bold"
+                        android:lineHeight="24dp"
+                        android:text="Select Virtual Number"
+                        android:textColor="@color/white"
+                        android:textFontWeight="700"
+                        android:textSize="@dimen/txt_16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/addons_back"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/addons_back"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:src="@drawable/arrow_white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <RelativeLayout
+                        android:id="@+id/offer_info_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="1.0">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/help"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:padding="@dimen/_13sdp"
+                                android:src="@drawable/ic_info_offers"
+                                android:visibility="gone"
+                                app:layout_constraintDimensionRatio="1:1"
+                                app:layout_constraintEnd_toEndOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </RelativeLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/btn_select_number"
+            android:layout_below="@id/toolbar"
+            android:background="@color/pack_details_bg_color"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/pad_20dp"
+            android:visibility="visible"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="24dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/et_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <EditText
+                        android:id="@+id/et_call_track"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/call_track_edit_text_bg"
+                        android:drawableStart="@drawable/ic_search_gray"
+                        android:drawablePadding="@dimen/_14dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/regular"
+                        android:hint="Search for a sequence of digits ..."
+                        android:inputType="number"
+                        android:lineHeight="19.07dp"
+                        android:maxLines="1"
+                        android:padding="12dp"
+                        android:textColor="@color/main_color_gray_dk"
+                        android:textColorHint="@color/tv_color_BB"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/txt_14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/ivCross"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/ivCross"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:padding="@dimen/pad_10dp"
+                        android:src="@drawable/ic_cross"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/et_call_track"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/btn_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@drawable/btn_orange_custom_domain"
+                        android:fontFamily="@font/bold"
+                        android:layout_margin="2dp"
+                        android:lineHeight="24dp"
+                        android:paddingStart="30dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="32dp"
+                        android:paddingBottom="8dp"
+                        android:text="Search"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textFontWeight="700"
+                        android:textSize="@dimen/txt_14sp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/regular"
+                    android:lineHeight="16.34dp"
+                    android:text="You can search for a combination of your favourite digits."
+                    android:textColor="@color/main_color_gray_dk"
+                    android:textFontWeight="400"
+                    android:textSize="@dimen/txt_12sp"
+                    app:layout_constraintTop_toBottomOf="@id/et_layout" />
+
+                <TextView
+                    android:id="@+id/tv_available_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/semi_bold"
+                    android:lineHeight="21.79dp"
+                    android:text="Available numbers"
+                    android:textColor="@color/main_color_gray_dk"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/txt_16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+                <TextView
+                    android:id="@+id/tv_search_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/regular"
+                    android:lineHeight="20dp"
+                    android:textColor="@color/common_text_color"
+                    android:textFontWeight="400"
+                    android:textSize="@dimen/txt_14sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_available_no" />
+
+                <TextView
+                    android:id="@+id/tv_other_available_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/regular"
+                    android:lineHeight="20dp"
+                    android:textColor="@color/common_text_color"
+                    android:textFontWeight="400"
+                    android:textSize="@dimen/txt_14sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_available_no" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_list_exact_match"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@color/white"
+                    android:elevation="5dp"
+                    android:visibility="gone"
+                    android:theme="@style/Theme.MaterialComponents"
+                    app:cardCornerRadius="@dimen/pad_10dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_search_result">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_number_list_exact_match"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:itemCount="4"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/layout_number_list" />
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@color/white"
+                    android:elevation="5dp"
+                    android:theme="@style/Theme.MaterialComponents"
+                    app:cardCornerRadius="@dimen/pad_10dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_search_result">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_number_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:itemCount="4"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/layout_number_list" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:id="@+id/tv_search_result_for_related_combination"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/regular"
+                    android:lineHeight="20dp"
+                    android:textColor="@color/common_text_color"
+                    android:textFontWeight="400"
+                    android:textSize="@dimen/txt_14sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card_list_exact_match" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_list_related"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@color/white"
+                    android:elevation="8dp"
+                    android:theme="@style/Theme.MaterialComponents"
+                    android:visibility="gone"
+                    app:cardCornerRadius="@dimen/pad_10dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_search_result_for_related_combination">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_number_list_related"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:itemCount="4"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/layout_number_list" />
+                </com.google.android.material.card.MaterialCardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_view_vmn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
+            android:layout_centerInParent="true"
+            android:layout_above="@id/btn_select_number"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="gone">
+
+            <!-- Adding 7 rows of placeholders -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <include layout="@layout/custom_domain_data_layout_1" />
+
+                <include layout="@layout/custom_domain_data_layout_2" />
+                <include layout="@layout/custom_domain_data_layout_2" />
+                <include layout="@layout/custom_domain_data_layout_2" />
+                <include layout="@layout/custom_domain_data_layout_2" />
+                <include layout="@layout/custom_domain_data_layout_2" />
+                <include layout="@layout/custom_domain_data_layout_2" />
+                <include layout="@layout/custom_domain_data_layout_2" />
+
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+        <Button
+            android:id="@+id/btn_select_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/btn_bg_color_disabled"
+            android:fontFamily="@font/semi_bold"
+            android:lineHeight="24dp"
+            android:paddingTop="13dp"
+            android:paddingBottom="13dp"
+            android:text="Select virtual number"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textFontWeight="600"
+            android:textSize="16sp" />
+
+
+    </RelativeLayout>
+</layout>

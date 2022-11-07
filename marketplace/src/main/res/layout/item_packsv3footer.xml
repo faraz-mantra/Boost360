@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/maincl"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/edit_txt_packsv3"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:layout_margin="6dp">
+
+
+
+<!--    <ImageView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:src="@drawable/ic_checkcircle"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/maincl"-->
+<!--        app:layout_constraintEnd_toEndOf="parent" />-->
+
+
+        <!--    android:foreground="?android:attr/selectableItemBackground"-->
+
+     <androidx.constraintlayout.widget.ConstraintLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintBottom_toBottomOf="parent">
+
+             <TextView
+                 android:id="@+id/footer_pack"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:textFontWeight="400"
+                 android:fontFamily="@font/regular"
+                 android:textColor="@color/colorPrimary1"
+                 android:textSize="12sp"
+                 android:text="Online Basic"
+                 app:layout_constraintTop_toTopOf="parent"
+                 app:layout_constraintStart_toStartOf="parent"/>
+
+             <TextView
+                 android:id="@+id/footer_pack_total"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:textFontWeight="700"
+                 android:fontFamily="@font/bold"
+                 android:textColor="@color/main_color_gray_dk"
+                 android:textSize="14sp"
+                 android:text="₹481/month"
+                 app:layout_constraintTop_toBottomOf="@+id/footer_pack"
+                 app:layout_constraintStart_toStartOf="parent"/>
+
+     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

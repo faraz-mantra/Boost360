@@ -8,6 +8,7 @@ import com.framework.pref.UserSessionManager
 
 const val SUCCESS_FRAGMENT = 101
 
+@Deprecated(message = "Use com.boost.presignin.ui.newOnboarding.NewOnBoardingContainerActivity")
 class RegistrationActivity : FragmentContainerActivity() {
 
   override fun isHideToolbar(): Boolean {

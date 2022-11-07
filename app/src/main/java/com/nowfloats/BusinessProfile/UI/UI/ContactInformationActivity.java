@@ -19,10 +19,11 @@ import android.widget.Toast;
 import androidx.databinding.DataBindingUtil;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.appservice.ui.calltracking.VmnCallCardsActivityV2;
+import com.framework.BuildConfig;
 import com.framework.firebaseUtils.firestore.FirestoreManager;
 import com.github.florent37.viewtooltip.ViewTooltip;
 import com.google.gson.Gson;
-import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
 import com.nowfloats.BusinessProfile.UI.API.Retro_Business_Profile_Interface;
 import com.nowfloats.BusinessProfile.UI.API.UpdatePrimaryNumApi;
 import com.nowfloats.BusinessProfile.UI.Model.ContactInformationUpdateModel;
@@ -146,7 +147,7 @@ public class ContactInformationActivity extends BaseActivity {
 
         binding.tvVmnReport.setOnClickListener(v -> {
 
-            Intent i = new Intent(ContactInformationActivity.this, VmnCallCardsActivity.class);
+            Intent i = new Intent(ContactInformationActivity.this, VmnCallCardsActivityV2.class);
             startActivity(i);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
@@ -560,7 +561,8 @@ public class ContactInformationActivity extends BaseActivity {
         hashMap.put("mobileNumber", number);
         hashMap.put("clientId", Constants.clientId);
 
-        smsApi.sendSms(hashMap, new Callback<Boolean>() {
+        String msgTemplate ="Your one time Boost 360 verification code is [OTP]. The code is valid for 10 minutes, Please DO NOT share this code with anyone.#"+BuildConfig.APP_SIGNATURE_HASH;
+        smsApi.sendSms(hashMap,msgTemplate, new Callback<Boolean>() {
 
             @Override
             public void success(Boolean model, Response response) {

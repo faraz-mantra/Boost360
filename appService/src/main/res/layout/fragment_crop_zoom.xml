@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.0">
+
+
+      <com.theartofdev.edmodo.cropper.CropImageView
+        android:id="@+id/crop_img"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:background="@color/black_66"
+        app:cropAspectRatioX="16"
+        app:cropAspectRatioY="7"
+        app:cropFixAspectRatio="true" />
+
+      <LinearLayout
+        android:id="@+id/layout_seek"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/size_16"
+        android:layout_marginTop="@dimen/size_32"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="@dimen/size_15"
+          android:layout_height="@dimen/size_15"
+          android:src="@drawable/ic_img" />
+
+        <SeekBar
+          android:id="@+id/slider"
+          android:layout_width="@dimen/size_300"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_8"
+          app:thumbColor="@color/colorPrimary"
+          app:thumbRadius="6dp"
+          app:trackColorActive="@color/colorPrimary"
+          app:trackColorInactive="@color/grey" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="@dimen/size_25"
+          android:layout_height="@dimen/size_25"
+          android:layout_marginStart="@dimen/size_8"
+          android:src="@drawable/ic_img" />
+
+      </LinearLayout>
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/tv_slider_sugg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/size_32"
+        android:layout_marginVertical="@dimen/size_16"
+        android:fontFamily="@font/regular"
+        android:text="@string/pull_the_slider_above_to_zoom_in_out_the_image"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/layout_image_mis_config"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="@dimen/size_32"
+      android:layout_marginVertical="@dimen/size_16"
+      app:layout_constraintBottom_toTopOf="@+id/btn_done">
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/customImageView6"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:src="@drawable/ic_info_circle"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_img_desc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/red_EB5757" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/tv_img_desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_6dp"
+        android:fontFamily="@font/regular"
+        android:text="Smaller image selected"
+        android:textColor="@color/red_EB5757"
+        android:textSize="@dimen/size_12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/customImageView6"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/customTextView10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/regular"
+        android:text="@string/please_make_sure_the_image_should_be_in_jpeg_or_png_format_with_minimum_size_of_1600x700_pixels"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_img_desc" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/btn_done"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_42"
+      android:background="@drawable/bg_button_proceed"
+      android:fontFamily="@font/semi_bold"
+      android:gravity="center"
+      android:stateListAnimator="@null"
+      android:layout_marginStart="24dp"
+      android:layout_marginEnd="24dp"
+      android:layout_marginBottom="24dp"
+      android:text="@string/crop_picture"
+      android:textAllCaps="false"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      android:textColor="@color/white"
+      app:textType="HEADING_6" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,9 +1,8 @@
 package com.appservice.model.aptsetting
 
 import android.app.Activity
-import com.appservice.AppServiceApplication
 import com.appservice.constant.Constants
-import com.appservice.ui.aptsetting.ui.getProductType
+import com.appservice.base.getProductType
 import com.framework.base.BaseResponse
 import com.framework.pref.UserSessionManager
 import com.google.gson.annotations.SerializedName

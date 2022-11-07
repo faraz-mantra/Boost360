@@ -32,7 +32,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
-import com.boost.upgrades.UpgradeActivity;
+import com.boost.marketplace.ui.home.MarketPlaceActivity;
 import com.bumptech.glide.Glide;
 import com.framework.analytics.SentryController;
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem;
@@ -89,6 +89,7 @@ import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialUtils.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+@Deprecated
 public class TestimonialsFeedbackActivity extends AppCompatActivity implements TestimonialsFeedbackListener {
 
   private List<String> allTestimonialType = Arrays.asList("testimonials", "testimonial", "guestreviews");
@@ -706,7 +707,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
       APICalls.getTestimonialsList(headerToken, testimonialType, query, 0, 2, new Callback<GetTestimonialData>() {
         @Override
         public void success(GetTestimonialData testimonialModel, Response response) {
-          CapLimitFeatureResponseItem data = filterFeature(getCapData(), CapLimitFeatureResponseItem.FeatureType.TESTIMONIALS);
+          CapLimitFeatureResponseItem data = filterFeature(getCapData(), CapLimitFeatureResponseItem.FeatureKey.TESTIMONIALS);
           if (data != null && testimonialModel.getExtra() != null) {
             PropertiesItem capLimitTestimonial = data.filterProperty(PropertiesItem.KeyType.LIMIT);
             if (testimonialModel.getExtra().getTotalCount() != null && capLimitTestimonial.getValueN() != null && testimonialModel.getExtra().getTotalCount() >= capLimitTestimonial.getValueN()) {
@@ -749,7 +750,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     progressDialog.setMessage(status);
     progressDialog.setCancelable(false);
     progressDialog.show();
-    Intent intent = new Intent(activity, UpgradeActivity.class);
+    Intent intent = new Intent(activity, MarketPlaceActivity.class);
     intent.putExtra("expCode", session.getFP_AppExperienceCode());
     intent.putExtra("fpName", session.getFPName());
     intent.putExtra("fpid", session.getFPID());
@@ -767,7 +768,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
       intent.putExtra("mobileNo", getString(R.string.ria_customer_number));
     }
     intent.putExtra("profileUrl", session.getFPLogo());
-    intent.putExtra("buyItemKey", CapLimitFeatureResponseItem.FeatureType.TESTIMONIALS.name());
+    intent.putExtra("buyItemKey", CapLimitFeatureResponseItem.FeatureKey.TESTIMONIALS.name());
     startActivity(intent);
     new Handler().postDelayed(() -> progressDialog.dismiss(), 1000);
   }

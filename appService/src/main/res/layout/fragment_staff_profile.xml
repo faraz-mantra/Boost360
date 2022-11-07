@@ -185,36 +185,35 @@
           app:fontFamily="@font/semi_bold" />
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_heading_timing"
-          style="@style/TextStaffProfileHeadings"
-          android:layout_below="@id/ll_services"
-          android:layout_marginTop="@dimen/size_16"
-          android:text="@string/staff_timing"
-          android:visibility="visible" />
+            android:id="@+id/ctv_heading_timing"
+            style="@style/TextStaffProfileHeadings"
+            android:layout_below="@id/ll_services"
+            android:layout_marginTop="@dimen/size_16"
+            android:text="@string/staff_timing"
+            android:visibility="visible" />
 
         <LinearLayout
-          android:id="@+id/ll_timing_container"
-
-          style="@style/ll_match_wrap_vertical"
-          android:layout_below="@id/ctv_heading_timing"
-          android:layout_marginTop="@dimen/size_5"
-          android:layout_toStartOf="@+id/ctv_edit_timing"
-          android:tag="com.userexperior.ueSecureView" />
-
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_edit_services"
-          style="@style/StaffProfileEditText"
-          android:layout_below="@id/ctv_experience"
-          android:layout_alignBaseline="@id/ctv_heading_services"
-          app:fontFamily="@font/semi_bold" />
+            android:id="@+id/ll_timing_container"
+            style="@style/ll_match_wrap_vertical"
+            android:layout_below="@id/ctv_heading_timing"
+            android:layout_marginTop="@dimen/size_5"
+            android:layout_toStartOf="@+id/ctv_edit_timing"
+            android:tag="com.userexperior.ueSecureView" />
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/ctv_edit_leaves"
-          style="@style/StaffProfileEditText"
-          android:layout_below="@id/ll_timing_container"
-          android:layout_alignBaseline="@id/ctv_heading_leaves"
-          android:visibility="gone"
-          app:fontFamily="@font/semi_bold" />
+            android:id="@+id/ctv_edit_services"
+            style="@style/StaffProfileEditText"
+            android:layout_below="@id/ctv_experience"
+            android:layout_alignBaseline="@id/ctv_heading_services"
+            app:fontFamily="@font/semi_bold" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/ctv_edit_leaves"
+            style="@style/StaffProfileEditText"
+            android:layout_below="@id/ll_timing_container"
+            android:layout_alignBaseline="@id/ctv_heading_leaves"
+            android:visibility="gone"
+            app:fontFamily="@font/semi_bold" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/ctv_heading_leaves"
@@ -338,7 +337,6 @@
 
       <com.framework.views.roundedimageview.RoundedImageView
         android:id="@+id/civ_staff_profile_img"
-
         android:layout_width="@dimen/size_100"
         android:layout_height="@dimen/size_100"
         android:layout_marginStart="@dimen/size_20"
@@ -349,7 +347,7 @@
         app:riv_corner_radius="@dimen/size_8"
         app:riv_mutate_background="true"
         app:riv_oval="false"
-        tools:srcCompat="@drawable/dummy_staff_img" />
+        app:srcCompat="@drawable/placeholder_image_n" />
 
     </RelativeLayout>
   </androidx.core.widget.NestedScrollView>

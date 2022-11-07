@@ -23,5 +23,5 @@
     android:layout_marginEnd="0dp"
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:srcCompat="@drawable/down_arrow" />
+    app:srcCompat="@drawable/vmn_down_arrow" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,7 +16,6 @@ import com.framework.utils.makeCall
 import com.framework.views.DotProgressBar
 import com.framework.webengageconstant.DIGITAL_CHANNELS
 import com.framework.webengageconstant.WHATS_APP_CONNECTED
-import com.invitereferrals.invitereferrals.InviteReferralsApi
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.constant.PreferenceConstant
@@ -286,7 +285,6 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
   }
 
   private fun apiBusinessComplete(dotProgressBar: DotProgressBar, floatingPointId: String) {
-    binding?.apiRecycler?.post {
       requestFloatsModel?.floatingPointId = floatingPointId
       updateInfo()
       list.clear()
@@ -315,7 +313,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
       )
       binding?.categoryImage?.setTintColor(getColor(R.color.dodger_blue_two))
       apiProcessAdapter?.notify(list)
-    }
+
   }
 
   private fun getRequestPurchasedOrder(
@@ -425,7 +423,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
       binding?.next -> if ((binding?.textBtn?.visibility == View.VISIBLE)) {
         if (binding?.textBtn?.text == resources.getString(R.string.digital_channel)) backToDigitalChannelUpdate() else gotoRegistrationComplete()
       }
-      binding?.supportCustomer -> baseActivity.makeCall(getString(R.string.contact_us_number))
+      binding?.supportCustomer -> makeCall(getString(R.string.contact_us_number))
       binding?.retry -> apiHitBusiness()
     }
   }

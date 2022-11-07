@@ -118,7 +118,7 @@
               android:id="@+id/see_more_less_image"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:src="@drawable/down_arrow" />
+              android:src="@drawable/vmn_down_arrow" />
         </RelativeLayout>
 
         <View

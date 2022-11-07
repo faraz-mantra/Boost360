@@ -12,6 +12,7 @@ import java.io.IOException;
  * Created by Admin on 29-04-2017.
  */
 
+@Deprecated
 public class VmnMediaPlayer {
     private static VmnMediaPlayer vmnMediaPlayer;
     private MediaPlayer mediaPlayer;

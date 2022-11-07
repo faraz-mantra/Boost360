@@ -38,7 +38,10 @@ class WebSiteThemeResetBottomSheet :
       colorsItem?.first { it.defaultColor == true } ?: colorsItem?.first { it.isSelected == true }
     val defaultFont = fontsList?.primary?.first { it?.defaultFont == true }
       ?: fontsList?.primary?.first { it?.isSelected == true }
-    binding?.ccvColor?.setCardBackgroundColor(Color.parseColor(defaultColor?.primary?.ifBlank { defaultColor.secondary }))
+    defaultColor?.primary?.ifBlank { defaultColor.secondary }?.let {
+      binding?.ccvColor?.setCardBackgroundColor(Color.parseColor(it))
+
+    }
     binding?.ctfFontName?.text = defaultFont?.description
   }
 

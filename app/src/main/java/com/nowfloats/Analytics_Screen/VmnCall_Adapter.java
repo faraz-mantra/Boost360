@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 
+@Deprecated
 interface AllowAudioPlay {
     boolean allowAudioPlay();
 
@@ -39,7 +40,7 @@ interface AllowAudioPlay {
 /**
  * Created by Admin on 23-06-2017.
  */
-
+@Deprecated
 public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHolder> {
 
     NotificationManagerCompat notificationManager;

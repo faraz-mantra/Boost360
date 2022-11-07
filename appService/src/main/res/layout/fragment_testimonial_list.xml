@@ -3,9 +3,7 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools">
 
-  <data>
-
-  </data>
+  <data />
 
   <FrameLayout
     android:layout_width="match_parent"
@@ -14,88 +12,48 @@
     <com.framework.views.viewgroups.BaseRecyclerView
       android:id="@+id/rv_testimonial"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      android:layout_height="wrap_content"
+      android:clipToPadding="false"
       android:orientation="vertical"
-      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-      tools:itemCount="6"
+      android:paddingBottom="@dimen/size_70"
+      tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      tools:itemCount="3"
       tools:listitem="@layout/item_testimonial_list" />
 
-<!--    <LinearLayout-->
-<!--      android:id="@+id/empty_layout"-->
-<!--      android:layout_width="match_parent"-->
-<!--      android:layout_height="match_parent"-->
-<!--      android:gravity="center"-->
-<!--      android:visibility="gone"-->
-<!--      tools:visibility="visible">-->
+    <ProgressBar
+      android:id="@+id/progress"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      tools:visibility="visible"
+      android:visibility="gone"
+      android:layout_marginBottom="@dimen/size_30"
+      android:indeterminate="true"
+      android:theme="@style/progressBar" />
 
-<!--      <RelativeLayout-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:padding="@dimen/size_20">-->
+    <FrameLayout
+      android:id="@+id/child_container"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:visibility="gone" />
 
-<!--        <LinearLayout-->
-<!--          android:layout_width="wrap_content"-->
-<!--          android:layout_height="wrap_content"-->
-<!--          android:layout_alignParentTop="true"-->
-<!--          android:layout_centerHorizontal="true"-->
-<!--          android:background="@drawable/circle_feature_bg_new"-->
-<!--          android:elevation="@dimen/size_2"-->
-<!--          android:gravity="center">-->
-
-<!--          <com.framework.views.customViews.CustomImageView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:srcCompat="@drawable/ic_testimonials_feature_new" />-->
-<!--        </LinearLayout>-->
-
-<!--        <LinearLayout-->
-<!--          android:layout_width="match_parent"-->
-<!--          android:layout_height="wrap_content"-->
-<!--          android:layout_marginTop="50dp"-->
-<!--          android:gravity="center"-->
-<!--          android:orientation="vertical"-->
-<!--          android:paddingLeft="@dimen/size_10"-->
-<!--          android:paddingTop="70dp"-->
-<!--          android:paddingRight="@dimen/size_10"-->
-<!--          android:paddingBottom="@dimen/size_20">-->
-
-<!--          <com.framework.views.customViews.CustomTextView-->
-<!--            android:id="@+id/feature_name"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:fontFamily="@font/semi_bold"-->
-<!--            android:text="@string/testimonial_title"-->
-<!--            android:textColor="@color/black_4a4a4a"-->
-<!--            app:textType="HEADING_7" />-->
-
-<!--          <com.framework.views.customViews.CustomTextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="@dimen/size_20"-->
-<!--            android:fontFamily="@font/semi_bold"-->
-<!--            android:gravity="center"-->
-<!--            android:text="With the feature, you can showcase your customer reviews and highlight their experience on the homepage of your website."-->
-<!--            app:textType="BODY_1" />-->
-
-<!--          <com.framework.views.customViews.CustomTextView-->
-<!--            android:id="@+id/add_testimonials"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="@dimen/size_10"-->
-<!--            android:layout_marginTop="@dimen/size_20"-->
-<!--            android:layout_marginEnd="@dimen/size_10"-->
-<!--            android:background="@drawable/orange_button_click_effect_n"-->
-<!--            android:fontFamily="@font/semi_bold"-->
-<!--            android:gravity="center"-->
-<!--            android:paddingTop="@dimen/size_10"-->
-<!--            android:paddingBottom="@dimen/size_10"-->
-<!--            android:text="@string/add_a_testimonial"-->
-<!--            android:textColor="@color/white" />-->
-<!--        </LinearLayout>-->
-
-<!--      </RelativeLayout>-->
-
-<!--    </LinearLayout>-->
-
+    <com.framework.views.fabButton.FloatingActionButton
+      android:id="@+id/add_testimonial"
+      style="@style/wrap_wrap"
+      android:layout_gravity="bottom|end"
+      android:layout_margin="@dimen/size_12"
+      android:backgroundTint="@color/colorAccentLight"
+      android:clickable="true"
+      android:focusable="true"
+      tools:visibility="visible"
+      android:visibility="gone"
+      android:fontFamily="@font/semi_bold"
+      android:gravity="center"
+      android:textColor="@color/white"
+      app:fabIcon="@drawable/ic_add_white"
+      app:fabIconPosition="start"
+      app:fabSize="normal"
+      app:fabType="circle" />
   </FrameLayout>
+
 </layout>

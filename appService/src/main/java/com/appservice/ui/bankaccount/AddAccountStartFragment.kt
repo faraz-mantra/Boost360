@@ -11,12 +11,12 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentAddAccountStartBinding
+import com.framework.constants.SupportVideoType
 import com.framework.models.BaseViewModel
 import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
-import com.onboarding.nowfloats.constant.SupportVideoType
 
 class AddAccountStartFragment : AppBaseFragment<FragmentAddAccountStartBinding, BaseViewModel>(), AppOnZeroCaseClicked {
   private val TAG = "AddAccountStartFragment"

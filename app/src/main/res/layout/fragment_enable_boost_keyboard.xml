@@ -63,6 +63,7 @@
             android:layout_marginStart="@dimen/margin_20"
             android:gravity="center_vertical"
             android:src="@drawable/right_arrow"
+              app:thumbTint="@color/switch_thumb_selector"
             android:text="@string/enable_boost_keyboard"
             android:textColor="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +117,9 @@
             android:layout_marginStart="@dimen/margin_20"
             android:gravity="center_vertical"
             android:src="@drawable/right_arrow"
-            android:text="@string/select_boost_keyboard"
+              app:thumbTint="@color/switch_thumb_selector"
+
+              android:text="@string/select_boost_keyboard"
             android:textColor="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread"
@@ -172,7 +175,9 @@
             android:src="@drawable/right_arrow"
             android:text="@string/allow_access"
             android:textColor="@color/gray"
-            app:layout_constraintEnd_toEndOf="parent"
+              app:thumbTint="@color/switch_thumb_selector"
+
+              app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toEndOf="@+id/textview3"
             tools:ignore="MissingConstraints" />
@@ -223,7 +228,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_20"
             android:gravity="center_vertical"
-            android:src="@drawable/right_arrow"
+              app:thumbTint="@color/switch_thumb_selector"
+
+              android:src="@drawable/right_arrow"
             android:text="@string/microphone_permission"
             android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"

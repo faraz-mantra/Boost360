@@ -23,13 +23,13 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.framework.constants.SupportVideoType;
 import com.framework.views.customViews.CustomToolbar;
 import com.nowfloats.Analytics_Screen.Graph.fragments.UniqueVisitorsFragment;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.onboarding.nowfloats.constant.IntentConstant;
-import com.onboarding.nowfloats.constant.SupportVideoType;
 import com.thinksity.R;
 
 import java.util.ArrayList;

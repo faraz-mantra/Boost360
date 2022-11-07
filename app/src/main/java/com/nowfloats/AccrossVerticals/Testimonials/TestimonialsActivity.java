@@ -22,9 +22,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.boost.upgrades.UpgradeActivity;
+import com.boost.marketplace.ui.home.MarketPlaceActivity;
 import com.dashboard.utils.CodeUtilsKt;
 import com.framework.analytics.SentryController;
+import com.framework.constants.SupportVideoType;
 import com.framework.utils.ContentSharing;
 import com.framework.views.fabButton.FloatingActionButton;
 import com.framework.views.zero.old.AppFragmentZeroCase;
@@ -42,7 +43,6 @@ import com.nowfloats.AccrossVerticals.API.model.GetToken.WebActionsItem;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
-import com.onboarding.nowfloats.constant.SupportVideoType;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityTestimonialsBinding;
 
@@ -59,6 +59,7 @@ import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
+@Deprecated
 public class TestimonialsActivity extends AppCompatActivity implements TestimonialsListener, AppOnZeroCaseClicked {
 
     public static List<String> allTestimonialType = Arrays.asList("testimonials", "testimonial", "guestreviews");
@@ -418,7 +419,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         progressDialog.setMessage(status);
         progressDialog.setCancelable(false);
         progressDialog.show();
-        Intent intent =new Intent(this, UpgradeActivity.class);
+        Intent intent =new Intent(this, MarketPlaceActivity.class);
         intent.putExtra("expCode", session.getFP_AppExperienceCode());
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID());
@@ -449,6 +450,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     }
 }
 
+@Deprecated
 enum TestimonialType{
     TESTIMONIAL_TYPE,TESTIMONIAL_HEADER
 }

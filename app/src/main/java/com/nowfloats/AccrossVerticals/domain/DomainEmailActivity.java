@@ -29,6 +29,7 @@ import retrofit.RetrofitError;
 import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 
+@Deprecated
 public class DomainEmailActivity extends AppCompatActivity {
 
     public UserSessionManager session;

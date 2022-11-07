@@ -71,7 +71,7 @@ class BookATableDetailsFragment : Fragment() {
       }
 
       override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        totalPeople = countList.get(position)
+        totalPeople = countList[position]
       }
 
     }
@@ -90,16 +90,23 @@ class BookATableDetailsFragment : Fragment() {
           .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
         myCalendar.get(Calendar.DAY_OF_MONTH)
       )
-      datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000)
+      datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
       datePickerDialog.show()
     }
 
-    val time = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-      myCalendar.set(Calendar.HOUR_OF_DAY, hour)
-      myCalendar.set(Calendar.MINUTE, minute)
+    val time = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+      val c = Calendar.getInstance()
+      myCalendar[Calendar.HOUR_OF_DAY] = hour
+      myCalendar[Calendar.MINUTE] = minute
 
+      if (myCalendar.timeInMillis >= c.timeInMillis) {
+        //it's after current
+        time_value.setText(SimpleDateFormat("hh:mm aa").format(myCalendar.time))
+      } else {
+        //it's before current'
+        Toast.makeText(context, "Please select valid timings.", Toast.LENGTH_LONG).show()
+      }
 
-      time_value.setText(SimpleDateFormat("hh:mm aa").format(myCalendar.time))
     }
 
     time_value.setOnClickListener {
@@ -124,7 +131,7 @@ class BookATableDetailsFragment : Fragment() {
       }
     }
 
-    ScreenType = arguments!!.getString("ScreenState")!!
+    ScreenType = arguments?.getString("ScreenState")?:""
     if (ScreenType != null && ScreenType.equals("edit")) {
       displayData()
     }
@@ -133,13 +140,13 @@ class BookATableDetailsFragment : Fragment() {
   }
 
   fun displayData() {
-    existingItemData = Gson().fromJson(arguments!!.getString("data"), Data::class.java)
+    existingItemData = Gson().fromJson(arguments?.getString("data"), Data::class.java)
 
-    itemId = existingItemData._id
+    itemId = existingItemData._id?:""
 
     user_name.setText(existingItemData.name)
     contact_number.setText(existingItemData.number)
-    table_count.setSelection(Integer.parseInt(existingItemData.totalPeople))
+    table_count.setSelection(Integer.parseInt(existingItemData.getTotalPeopleN()))
     date_value.setText(existingItemData.date)
     time_value.setText(existingItemData.time)
     message_value.setText(existingItemData.message)
@@ -159,9 +166,9 @@ class BookATableDetailsFragment : Fragment() {
         deleteRecord(itemId)
         return@OnClickListener
       }
-      activity!!.onBackPressed()
+      activity?.onBackPressed()
     })
-    back_button.setOnClickListener { activity!!.onBackPressed() }
+    back_button.setOnClickListener { activity?.onBackPressed() }
   }
 
   fun createNewTeamsAPI() {
@@ -227,6 +234,13 @@ class BookATableDetailsFragment : Fragment() {
         .show()
       return false
     }
+
+    if (totalPeople == "0"){
+      Toast.makeText(requireContext(), "Please select Table for.", Toast.LENGTH_SHORT)
+        .show()
+      return false
+    }
+
 
     return true
   }
