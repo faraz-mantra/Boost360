@@ -649,3 +649,5 @@ const val VIRTUAL_NUMBER_SELECTED = "Virtual Number Selected"
 const val ADD_ON_MANAGE_ACTIVE_FEATURES_CLICKED = "Addon_manage_active_features_clicked"
 const val ADD_ON_GOTO_CART_CLICKED = "Addon_goto_cart_clicked"
 const val ADD_ONS_DETAILED_JOURNEY_CLICKED = "ADDONS_detailed_journey_Clicked"
+
+const val UPDATE_STUDIO_CLICK = "updates"

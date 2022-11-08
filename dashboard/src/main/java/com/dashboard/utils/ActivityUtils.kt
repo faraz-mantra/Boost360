@@ -1166,3 +1166,15 @@ fun AppCompatActivity.startPromotionUpdatesFromDashboard() {
     e.printStackTrace()
   }
 }
+
+fun AppCompatActivity.startUpdateStudio(session: UserSessionManager?) {
+  try {
+    WebEngageController.trackEvent(UPDATE_STUDIO_CLICK, CLICK, TO_BE_ADDED)
+    val webIntent = Intent(this, Class.forName("com.festive.poster.ui.festivePoster.FestivePosterContainerActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+    SentryController.captureException(e)
+  }
+}
