@@ -3,7 +3,6 @@ package com.dashboard.viewmodel
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
 import com.appservice.rest.repository.AzureWebsiteNewRepository
 import com.appservice.rest.repository.WithFloatTwoRepository
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
@@ -29,13 +28,6 @@ import com.onboarding.nowfloats.rest.repositories.UploadImageRepository
 import com.onboarding.nowfloats.rest.repositories.WhatsAppRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
 

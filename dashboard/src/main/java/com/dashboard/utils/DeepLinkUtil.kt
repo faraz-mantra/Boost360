@@ -153,7 +153,7 @@ const val tag_for_partners = ".nowfloats.com"
 const val VISITS_TABLE = 0
 const val VISITORS_TABLE = 1
 
-class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSessionManager, var baseFragment: Fragment?) {
+class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSessionManager) {
   private val TAG = "DeepLinkUtil"
   fun deepLinkPage(url: String, buyItemKey: String, isFromRia: Boolean) {
     Log.i(TAG, "deepLinkPage: " + url)
@@ -180,7 +180,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(facebookpage)) {
           likeUsFacebook(baseActivity, "/reviews/")
         } else if (url.contains(deeplink_update)) {
-          baseActivity.startPostUpdate()
+          baseActivity.startPostUpdate(session)
         } else if (url.contains(deeplink_featuredimage)) {
           baseActivity.startBusinessProfileDetailEdit(session)
         } else if (session.isProduct() && url.contains(addProduct)) {
@@ -288,7 +288,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_analytics_website_visitors)) {
           baseActivity.startSiteViewAnalytic(session, "UNIQUE")
         } else if (url.contains(deeplink_background_images)) {
-          baseFragment!!.startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
+          baseActivity?.startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
         } else if (url.contains(deeplink_favicon)) {
           baseActivity.startFeviconImage(session)
         } else if (session.isProduct() && url.contains(deeplink_order_summary)) {

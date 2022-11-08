@@ -68,7 +68,7 @@ class CustomisationNavFragment : AppBaseFragment<FragmentNavCustomisationBinding
     when (type) {
       ic_diamonds -> baseActivity.startBusinessLogo(session)
       ic_fonts -> baseActivity.startWebsiteTheme(session)
-      ic_background_images -> startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
+      ic_background_images -> baseActivity?.startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
       ic_favicon -> baseActivity.startFeviconImage(session)
       ic_featured_image -> baseActivity.startFeatureLogo(session)
     }

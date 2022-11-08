@@ -150,8 +150,8 @@ fun AppCompatActivity.startAptOrderSummary(session: UserSessionManager?) {
   }
 }
 
-fun Fragment.startBackgroundActivity(session: UserSessionManager?, type: com.appservice.constant.FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
-  val intent = Intent(activity, BackgroundImageContainerActivity::class.java)
+fun AppCompatActivity.startBackgroundActivity(session: UserSessionManager?, type: com.appservice.constant.FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+  val intent = Intent(this, BackgroundImageContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentTypeNew(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -375,11 +375,10 @@ fun AppCompatActivity.startAppActivity(bundle: Bundle = Bundle(), fragmentType: 
   }
 }
 
-fun AppCompatActivity.startPostUpdate(isDashboard: Boolean = false) {
+fun AppCompatActivity.startPostUpdate(session: UserSessionManager?,isDashboard: Boolean = false) {
   try {
-    val session = UserSessionManager(application())
     val type = if (isDashboard) POST_UPDATE_MESSAGE_PAGE_CLICK else Post_Promotional_Update_Click
-    if (featureUpdateStudioSelectedUsers(session.fpTag)) {
+    if (featureUpdateStudioSelectedUsers(session?.fpTag)) {
       startPromotionUpdatesFromDashboard(type)
     } else {
       WebEngageController.trackEvent(type, CLICK, TO_BE_ADDED)

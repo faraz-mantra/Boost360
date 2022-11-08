@@ -51,7 +51,6 @@ import com.framework.constants.PremiumCode
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.festivePosterName
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.festivePosterVisibility
 import com.framework.glide.util.glideLoad
@@ -65,9 +64,6 @@ import com.framework.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_WEBSITE
 import com.framework.utils.*
-import com.framework.utils.DateUtils.getAmountYearDate
-import com.framework.utils.DateUtils.getCurrentDate
-import com.framework.utils.DateUtils.parseDate
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.framework.webengageconstant.*
 import com.inventoryorder.constant.AppConstant
@@ -77,9 +73,6 @@ import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.model.ordersummary.SELLER_BUSINESS_REPORT
 import com.inventoryorder.model.ordersummary.TOTAL_SELLER_SUMMARY
 import com.inventoryorder.model.summary.*
-import com.inventoryorder.model.summary.request.FilterBy
-import com.inventoryorder.model.summary.request.QueryObject
-import com.inventoryorder.model.summary.request.SellerSummaryRequest
 import com.inventoryorder.model.summaryCall.CALL_BUSINESS_REPORT
 import com.inventoryorder.model.summaryCall.CallSummaryResponse
 import com.inventoryorder.rest.response.OrderSummaryResponse
@@ -93,7 +86,6 @@ import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatus
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse.Companion.saveDataConnectedChannel
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelsType
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
-import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.LocalSessionModel
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.VisitingCardSheet
 import com.onboarding.nowfloats.ui.webview.WebViewBottomDialog
 import kotlinx.coroutines.flow.collect
@@ -104,8 +96,8 @@ import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
-const val IS_FIRST_LOAD = "isFirsLoad"
-const val IS_DR_HIGH_DIALOG = "isDrHighDialog"
+//const val IS_FIRST_LOAD = "isFirsLoad"
+//const val IS_DR_HIGH_DIALOG = "isDrHighDialog"
 
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
@@ -147,12 +139,12 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onCreateView() {
     if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(true)
     session = UserSessionManager(baseActivity)
-    session?.let { deepLinkUtil = DeepLinkUtil(baseActivity, it, Fragment()) }
+    session?.let { deepLinkUtil = DeepLinkUtil(baseActivity, it) }
     setOnClickListener(
       binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport, binding?.retryDrScore,
       binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.viewEmptyEnquiries?.btnWhatsappEnquiries,
       binding?.viewEmptyEnquiries?.btnInstagramEnquiries, binding?.viewEmptyEnquiries?.btnTelegramEnquiries, binding?.viewEmptyEnquiries?.btnMessangerEnquiries,
-      binding?.viewEmptyEnquiries?.btnEmailEnquiries, binding?.viewEmptyEnquiries?.btnOtherShareEnquiries, binding?.btnFestive
+      binding?.viewEmptyEnquiries?.btnOtherShareEnquiries, binding?.btnFestive
     )
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion1?.text = "Version $versionName"
@@ -765,10 +757,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = ShareType.MESSENGER)
         else getChannelAccessToken(isEnquiriesShare = true, shareType = ShareType.MESSENGER)
       }
-      binding?.viewEmptyEnquiries?.btnEmailEnquiries -> {
-        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = ShareType.G_MAIL)
-        else getChannelAccessToken(isEnquiriesShare = true, shareType = ShareType.G_MAIL)
-      }
+//      binding?.viewEmptyEnquiries?.btnEmailEnquiries -> {
+//        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = ShareType.G_MAIL)
+//        else getChannelAccessToken(isEnquiriesShare = true, shareType = ShareType.G_MAIL)
+//      }
       binding?.viewEmptyEnquiries?.btnOtherShareEnquiries -> {
         if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = null)
         else getChannelAccessToken(isEnquiriesShare = true, shareType = null)
@@ -869,7 +861,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun quickActionClick(type: QuickActionItem.QuickActionType) {
     when (type) {
-      QuickActionItem.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(true)
+      QuickActionItem.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(session,true)
       QuickActionItem.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
       QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startTestimonial(session, true)
       QuickActionItem.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCustomPage(session, true)
@@ -1152,56 +1144,56 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 }
 
-fun UserSessionManager.getRequestMap(startDate: String, endDate: String): Map<String, String> {
-  val map = HashMap<String, String>()
-  map["batchType"] = VisitsModelResponse.BatchType.yy.name
-  map["startDate"] = if (startDate.isNotEmpty()) startDate else getCurrentDate().parseDate(DateUtils.FORMAT_YYYY_MM_DD) ?: ""
-  map["endDate"] = if (endDate.isNotEmpty()) endDate else getAmountYearDate(-5).parseDate(DateUtils.FORMAT_YYYY_MM_DD) ?: ""
-  map["clientId"] = clientId
-  map["scope"] = if (this.iSEnterprise == "true") "Enterprise" else "Store"
-  return map
-}
-
-fun UserSessionManager?.checkIsPremiumUnlock(value: String?): Boolean {
-  return (this?.getStoreWidgets()?.firstOrNull { it == value } != null)
-}
-
-fun getLocalSession(session: UserSessionManager): LocalSessionModel {
-  var imageUri = session.getFPDetails(GET_FP_DETAILS_LogoUrl)
-  if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) imageUri = BASE_IMAGE_URL + imageUri
-  val city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
-  val country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
-  val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country"
-  return LocalSessionModel(
-    floatingPoint = session.fPID,
-    contactName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME),
-    businessName = session.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME),
-    businessImage = imageUri,
-    location = location,
-    websiteUrl = session.getDomainName(false),
-    businessType = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY),
-    primaryNumber = session.userPrimaryMobile,
-    primaryEmail = session.fPEmail,
-    fpTag = session.fpTag,
-    experienceCode = session.fP_AppExperienceCode
-  )
-}
-
-fun saveFirstLoad() {
-  PreferencesUtils.instance.saveData(IS_FIRST_LOAD, true)
-}
-
-fun isFirstLoad(): Boolean {
-  return PreferencesUtils.instance.getData(IS_FIRST_LOAD, false)
-}
-
-fun getRequestSellerSummary(filterDate: FilterDateModel?): SellerSummaryRequest {
-  if (filterDate?.startDate.isNullOrEmpty()) return SellerSummaryRequest(filterBy = ArrayList())
-  val request = SellerSummaryRequest()
-  val queryObject = arrayListOf(
-    QueryObject(key = QueryObject.keys.CreatedOn.name, value = filterDate?.startDate, queryOperator = QueryObject.Operator.GTE.name),
-    QueryObject(key = QueryObject.keys.CreatedOn.name, value = filterDate?.endDate, queryOperator = QueryObject.Operator.LTE.name)
-  )
-  request.filterBy = arrayListOf(FilterBy(queryConditionType = FilterBy.ConditionType.AND.name, queryObject))
-  return request
-}
+//fun UserSessionManager.getRequestMap(startDate: String, endDate: String): Map<String, String> {
+//  val map = HashMap<String, String>()
+//  map["batchType"] = VisitsModelResponse.BatchType.yy.name
+//  map["startDate"] = if (startDate.isNotEmpty()) startDate else getCurrentDate().parseDate(DateUtils.FORMAT_YYYY_MM_DD) ?: ""
+//  map["endDate"] = if (endDate.isNotEmpty()) endDate else getAmountYearDate(-5).parseDate(DateUtils.FORMAT_YYYY_MM_DD) ?: ""
+//  map["clientId"] = clientId
+//  map["scope"] = if (this.iSEnterprise == "true") "Enterprise" else "Store"
+//  return map
+//}
+//
+//fun UserSessionManager?.checkIsPremiumUnlock(value: String?): Boolean {
+//  return (this?.getStoreWidgets()?.firstOrNull { it == value } != null)
+//}
+//
+//fun getLocalSession(session: UserSessionManager): LocalSessionModel {
+//  var imageUri = session.getFPDetails(GET_FP_DETAILS_LogoUrl)
+//  if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) imageUri = BASE_IMAGE_URL + imageUri
+//  val city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
+//  val country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
+//  val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country"
+//  return LocalSessionModel(
+//    floatingPoint = session.fPID,
+//    contactName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME),
+//    businessName = session.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME),
+//    businessImage = imageUri,
+//    location = location,
+//    websiteUrl = session.getDomainName(false),
+//    businessType = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY),
+//    primaryNumber = session.userPrimaryMobile,
+//    primaryEmail = session.fPEmail,
+//    fpTag = session.fpTag,
+//    experienceCode = session.fP_AppExperienceCode
+//  )
+//}
+//
+//fun saveFirstLoad() {
+//  PreferencesUtils.instance.saveData(IS_FIRST_LOAD, true)
+//}
+//
+//fun isFirstLoad(): Boolean {
+//  return PreferencesUtils.instance.getData(IS_FIRST_LOAD, false)
+//}
+//
+//fun getRequestSellerSummary(filterDate: FilterDateModel?): SellerSummaryRequest {
+//  if (filterDate?.startDate.isNullOrEmpty()) return SellerSummaryRequest(filterBy = ArrayList())
+//  val request = SellerSummaryRequest()
+//  val queryObject = arrayListOf(
+//    QueryObject(key = QueryObject.keys.CreatedOn.name, value = filterDate?.startDate, queryOperator = QueryObject.Operator.GTE.name),
+//    QueryObject(key = QueryObject.keys.CreatedOn.name, value = filterDate?.endDate, queryOperator = QueryObject.Operator.LTE.name)
+//  )
+//  request.filterBy = arrayListOf(FilterBy(queryConditionType = FilterBy.ConditionType.AND.name, queryObject))
+//  return request
+//}

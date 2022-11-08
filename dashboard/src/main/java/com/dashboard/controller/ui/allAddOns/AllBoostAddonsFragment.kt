@@ -74,7 +74,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
 
   private fun getBoostAddOnsData() {
     if (view!=null&&isDetached.not()){
-      viewModel?.getBoostAddOns(baseActivity)?.observeOnce(viewLifecycleOwner, {
+      viewModel?.getBoostAddOns(baseActivity)?.observeOnce(viewLifecycleOwner) {
         val response = it as? ManageAddOnsBusinessResponse
         val dataAction = response?.data?.firstOrNull { it1 ->
           it1.type.equals(
@@ -108,7 +108,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
           } else adapterAddOns?.notify(list)
 
         } else showShortToast(baseActivity.getString(R.string.manage_business_not_found))
-      })
+      }
 
     }
   }
