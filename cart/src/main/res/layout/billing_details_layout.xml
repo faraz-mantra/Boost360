@@ -44,8 +44,6 @@
                 android:fontFamily="@font/regular"
                 android:gravity="bottom"
                 android:imeOptions="actionNext"
-                android:inputType="textCapCharacters"
-                android:textAllCaps="false"
                 android:textColor="@color/common_text_color"
                 android:textColorHint="@color/grey_BBBBBB"
                 android:textFontWeight="400"

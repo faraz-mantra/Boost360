@@ -10,6 +10,7 @@ import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.ui.promoUpdates.edit_post.EditPostActivity
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
+import com.framework.webengageconstant.Browse_All_Promotional_Update_Social_Accounts_Connect_Click
 import com.framework.webengageconstant.Promotional_Update_Edit_Click
 import com.framework.webengageconstant.Promotional_Update_Post_Click
 import com.framework.webengageconstant.Promotional_Update_WhatsApp_Share_Click
@@ -33,7 +34,7 @@ class TemplateForBrowseAllViewHolder(binding: ListItemTemplateForRvBinding):
         }
         SvgUtils.loadImage(model.primarySvgUrl, binding.ivSvg)
         binding.btnShare.setOnClickListener {
-            WebEngageController.trackEvent(Promotional_Update_WhatsApp_Share_Click)
+            WebEngageController.trackEvent(Browse_All_Promotional_Update_Social_Accounts_Connect_Click)
             listener?.onItemClick(position,item, RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal)
         }
 

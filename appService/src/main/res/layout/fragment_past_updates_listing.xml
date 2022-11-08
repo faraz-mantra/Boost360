@@ -48,15 +48,15 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_post_listing"
                 android:layout_width="match_parent"
-                android:layout_above="@+id/btn_post_new_update"
                 android:layout_height="wrap_content"
-                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:itemCount="5"
-                android:layout_marginBottom="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/size_16"
+                android:layout_above="@+id/btn_post_new_update"
                 android:layout_marginHorizontal="@dimen/size_20"
-                tools:listitem="@layout/list_item_past_update"
-                android:orientation="vertical"/>
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:orientation="vertical"
+                tools:itemCount="5"
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/list_item_past_update" />
 
 
             <com.framework.views.customViews.CustomButton

@@ -4,6 +4,8 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,11 +21,11 @@ import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityOfferCouponsBinding
 import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
 import kotlinx.android.synthetic.main.activity_offer_coupons.*
-import kotlin.collections.ArrayList
 
 class OfferCouponsActivity : AppBaseActivity<ActivityOfferCouponsBinding, OfferCouponViewModel>() {
 
     private var couponData = ArrayList<Data>()
+    val adapter = OfferCouponsAdapter(arrayListOf())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,10 +34,11 @@ class OfferCouponsActivity : AppBaseActivity<ActivityOfferCouponsBinding, OfferC
         viewModel = ViewModelProvider(this).get(OfferCouponViewModel::class.java)
         viewModel.setApplicationLifecycle(application, this)
 
+        initializeRecycler()
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val window: Window = this.window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.setStatusBarColor(getResources().getColor(R.color.common_text_color))
+            WindowInsetsControllerCompat(getWindow(), getWindow().decorView).setAppearanceLightStatusBars(false)
+            getWindow().statusBarColor = ResourcesCompat.getColor(resources, R.color.common_text_color, null)
         }
 
         back_button12.setOnClickListener {
@@ -69,14 +72,17 @@ class OfferCouponsActivity : AppBaseActivity<ActivityOfferCouponsBinding, OfferC
                     it[i].data?.let { it1 -> couponData.addAll(it1) }
                 }
                 System.out.println("CouponData" + couponData)
-
-                val recyclerview = findViewById<RecyclerView>(R.id.offer_coupons_rv)
-                recyclerview.layoutManager = LinearLayoutManager(this)
-
-                val adapter = OfferCouponsAdapter(couponData)
-                recyclerview.adapter = adapter
+                adapter.updateData(couponData)
             }
         }
+    }
+
+    fun initializeRecycler(){
+
+        val recyclerview = findViewById<RecyclerView>(R.id.offer_coupons_rv)
+        recyclerview.layoutManager = LinearLayoutManager(this)
+
+        recyclerview.adapter = adapter
     }
 
     override fun getLayout(): Int {
