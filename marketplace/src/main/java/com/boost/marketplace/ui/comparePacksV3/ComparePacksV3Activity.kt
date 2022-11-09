@@ -15,6 +15,8 @@ import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -156,8 +158,8 @@ class ComparePacksV3Activity :
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window: Window = this.window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
+            WindowInsetsControllerCompat(window, window.decorView).setAppearanceLightStatusBars(false)
+            window.statusBarColor = ResourcesCompat.getColor(resources, com.boost.cart.R.color.common_text_color, null)
         }
 
         initMvvm()
@@ -701,7 +703,7 @@ class ComparePacksV3Activity :
             tempList.add(item.feature_code)
         }
         for(singleItem in myPlanV3!!.Result){
-            if(tempList.contains(singleItem.FeatureDetails.FeatureKey)){
+            if(tempList.contains(singleItem.FeatureDetails.FeatureKey) && singleItem.FeatureDetails.FeatureState != 7){
                 allowPackageToCart = false
                 break
             }
