@@ -150,7 +150,7 @@ dependencies {
     kapt 'androidx.room:room-compiler:2.4.1'
 
     //wenengage analytics
-    implementation 'com.webengage:android-sdk:3.+'
+    implementation 'com.webengage:android-sdk:3.21.1'
 
     implementation 'com.google.firebase:firebase-analytics-ktx:18.0.1'
 

@@ -23,13 +23,13 @@
                 android:paddingVertical="8dp"
                 android:weightSum="1"
                 app:layout_constraintTop_toTopOf="parent">
-
+    
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/iv_left_arrow"
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:src="@drawable/ic_left_arrow_grey" />
-
+    
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/vp_social_conn"
                     android:layout_width="0dp"
@@ -40,7 +40,7 @@
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/list_item_social_conn" />
-
+    
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/iv_right_arrow"
                     android:layout_width="10dp"

@@ -843,7 +843,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                     },
                                     {
                                         val temp = (it as HttpException).response()!!.errorBody()!!.string()
-                                        val errorBody: Error = Gson().fromJson(temp, object : TypeToken<com.boost.dbcenterapi.data.api_model.paymentprofile.Error>() {}.type)
+                                        val errorBody: com.boost.dbcenterapi.data.api_model.paymentprofile.Error = Gson().fromJson(temp, object : TypeToken<com.boost.dbcenterapi.data.api_model.paymentprofile.Error>() {}.type)
                                         Toasty.error(getApplication(), errorBody.toString(), Toast.LENGTH_LONG).show()
                                     }
                             )

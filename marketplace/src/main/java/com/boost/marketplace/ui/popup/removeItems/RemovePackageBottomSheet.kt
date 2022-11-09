@@ -44,12 +44,7 @@ class RemovePackageBottomSheet(val listener: DetailsFragmentListener) : DialogFr
         root = inflater.inflate(R.layout.remove_package_bottomsheet, container, false)
 
         activity1 = arguments?.getBoolean("activty1", false) == true
-        if(activity1){
-            prefs = SharedPrefs(activity as CustomDomainActivity)
-        }else {
-            prefs = SharedPrefs(activity as FeatureDetailsActivity)
-        }
-       // prefs = SharedPrefs(activity as FeatureDetailsActivity)
+        prefs = SharedPrefs(requireActivity())
         return root
     }
     override fun onActivityCreated(savedInstanceState: Bundle?) {

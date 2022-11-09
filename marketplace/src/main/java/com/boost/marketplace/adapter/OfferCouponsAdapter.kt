@@ -9,7 +9,7 @@ import com.boost.dbcenterapi.data.api_model.getCouponResponse.Data
 import com.boost.marketplace.R
 import com.boost.marketplace.data.OfferCoupons
 
-class OfferCouponsAdapter(private val mList: List<Data>) : RecyclerView.Adapter<OfferCouponsAdapter.ViewHolder>() {
+class OfferCouponsAdapter(val mList: ArrayList<Data>) : RecyclerView.Adapter<OfferCouponsAdapter.ViewHolder>() {
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OfferCouponsAdapter.ViewHolder {
     val view = LayoutInflater.from(parent.context)
       .inflate(R.layout.item_offer_coupons, parent, false)
@@ -22,7 +22,12 @@ class OfferCouponsAdapter(private val mList: List<Data>) : RecyclerView.Adapter<
     holder.couponCodetextView.text =offerCoupons.code
     holder.cashBacktextView.text =offerCoupons.title
     holder.learnMoretextView.text =offerCoupons.description
+  }
 
+  fun updateData(list: ArrayList<Data>){
+    mList.clear()
+    mList.addAll(list)
+    notifyDataSetChanged()
   }
 
   override fun getItemCount(): Int {

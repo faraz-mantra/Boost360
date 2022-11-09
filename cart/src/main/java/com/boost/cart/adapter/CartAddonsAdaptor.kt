@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
 import com.boost.cart.interfaces.CartFragmentListener
+import com.boost.cart.utils.SharedPrefs
 import com.boost.cart.utils.Utils.priceCalculatorForYear
 import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
@@ -29,6 +30,7 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
 
   private var list = ArrayList<CartModel>()
   private lateinit var context: Context
+  val prefs = SharedPrefs(activity)
 
   init {
     this.list = cardItems as ArrayList<CartModel>
@@ -65,8 +67,13 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
 //      || list.get(position).boost_widget_key!!.contains("IVR")
     ){
 //      holder.desc.visibility = View.GONE
-      holder.title.text = list.get(position).addon_title
-      holder.desc.text=list.get(position).item_name
+      if(prefs.getSelectedDomainName() != null) {
+        holder.title.text = list.get(position).addon_title
+        holder.desc.text = list.get(position).item_name
+      }else{
+        holder.desc.text = list.get(position).description_title
+        holder.title.text = list.get(position).item_name
+      }
     }else {
 //      holder.desc.visibility = View.VISIBLE
       holder.desc.text = list.get(position).description_title
@@ -87,6 +94,10 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
         )
       }
       listener.deleteCartAddonsItem(list.get(position))
+      //remove selected domain
+      if(list.get(position).boost_widget_key!!.contains("DOMAINPURCHASE")) {
+          prefs.storeSelectedDomainName(null)
+        }
     }
 //    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 //    holder.view.visibility = if (list.size - 1 == position) View.GONE else View.VISIBLE

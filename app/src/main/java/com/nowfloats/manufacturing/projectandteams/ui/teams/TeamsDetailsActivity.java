@@ -197,9 +197,9 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
 
         nameValue.setText(existingItemData.getName());
         designationValue.setText(existingItemData.getDesignation());
-        fbValue.setText(existingItemData.getFbURL().getUrl());
-        twitterValue.setText(existingItemData.getTwitterURL().getUrl());
-        skypeValue.setText(existingItemData.getSkypeHandle().getUrl());
+        fbValue.setText(existingItemData.getFbURL()!= null ? existingItemData.getFbURL().getUrl() : "No facebook url found!");
+        twitterValue.setText(existingItemData.getTwitterURL() != null ? existingItemData.getTwitterURL().getUrl() : "No twitter url found!");
+        skypeValue.setText(existingItemData.getSkypeHandle()!= null ? existingItemData.getSkypeHandle().getUrl() : "No skype url found!");
 
         updateTeamProfileImage();
     }

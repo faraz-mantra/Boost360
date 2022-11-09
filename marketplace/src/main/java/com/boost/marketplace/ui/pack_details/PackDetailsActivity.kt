@@ -208,7 +208,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         initializePackItemRecycler()
         initView()
         initMvvm()
-        loadData()
+//        loadData() //removed this due to multiple API call
 
 
         val callExpertString = SpannableString("Have a query? Call an expert")
@@ -1719,7 +1719,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             tempList.add(item.feature_code)
         }
         for(singleItem in myPlanV3!!.Result){
-            if(tempList.contains(singleItem.FeatureDetails.FeatureKey)){
+            if(tempList.contains(singleItem.FeatureDetails.FeatureKey) && singleItem.FeatureDetails.FeatureState != 7){
                 allowPackageToCart = false
                 break
             }

@@ -40,6 +40,10 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
     arguments?.getString(IntentConstant.CATEGORY_SUGG_UI.name)
   }
 
+  private val subCategoryID by lazy {
+    arguments?.getString(IntentConstant.SUB_CATEGORY_ID.name)
+  }
+
   private val mobilePreview by lazy {
     arguments?.getString(IntentConstant.MOBILE_PREVIEW.name)
   }
@@ -79,6 +83,7 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
               putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
               putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
               putString(IntentConstant.CATEGORY_SUGG_UI.name, categoryLiveName)
+              putString(IntentConstant.SUB_CATEGORY_ID.name, subCategoryID)
               putSerializable(IntentConstant.CATEGORY_DATA.name, categoryModel)
               putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent ?: false)
               putString(IntentConstant.EXTRA_BUSINESS_NAME.name, binding?.businessNameInputLayout?.etInput?.text.toString())
