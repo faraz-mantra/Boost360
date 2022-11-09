@@ -235,8 +235,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
             setDataRiaAcademy(data.academyBanners!!)
           }
           if (data?.marketplaceBanners.isNullOrEmpty().not()) {
-            val marketBannerFilter =
-              (data?.marketplaceBanners ?: ArrayList()).marketBannerFilter(session)
+            val marketBannerFilter = (data?.marketplaceBanners ?: ArrayList()).marketBannerFilter(session)
             saveDataMarketPlace(marketBannerFilter)
             setDataMarketBanner(marketBannerFilter)
           }

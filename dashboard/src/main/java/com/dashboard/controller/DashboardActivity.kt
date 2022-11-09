@@ -20,7 +20,7 @@ import com.anachat.chatsdk.AnaCore
 import com.boost.dbcenterapi.utils.DataLoader
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
-import com.dashboard.controller.ui.dashboard.DashboardFragment
+import com.dashboard.controller.ui.dashboard.DashboardFragmentV2
 import com.dashboard.controller.ui.dialog.WelcomeHomeDialog
 import com.dashboard.databinding.ActivityDashboardBinding
 import com.dashboard.model.DisableBadgeNotificationRequest
@@ -266,7 +266,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   private fun setUserData() {
     val cartCount = session?.getIntDetails(KEY_FP_CART_COUNT) ?: 0
-    if ((getFragment(DashboardFragment::class.java) != null) && cartCount > 0) binding?.viewCartCount?.visible() else binding?.viewCartCount?.gone()
+    if ((getFragment(DashboardFragmentV2::class.java) != null) && cartCount > 0) binding?.viewCartCount?.visible() else binding?.viewCartCount?.gone()
     binding?.cartCountTxt?.text = "$cartCount ${if (cartCount > 1) "items" else "item"} waiting in cart"
   }
 
