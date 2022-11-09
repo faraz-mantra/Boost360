@@ -84,12 +84,14 @@ interface NewApiInterface {
 
     //Blocking API
     @Headers("Content-Type: application/json")
-    @GET("https://api2.withfloats.com/discover/v1/floatingPoint/VerifyDomainOrVMNRegisted")
+    @GET("https://api2.withfloats.com/discover/v2/floatingPoint/VerifyDomainOrVMNRegisted")
     fun getItemAvailability(
          @Header("Authorization") auth: String,
          @Query("fpId") floatingPointId: String,
          @Query("clientId") clientId: String,
-         @Query("blockedItem") blockedItem :String
+         @Query("blockedItem") blockedItem :String,
+         @Query("OrderID") OrderID :String,
+         @Query("blockedItemType") blockedItemType :Int,
     ):Observable<BlockApi>
 
     //Edgecases

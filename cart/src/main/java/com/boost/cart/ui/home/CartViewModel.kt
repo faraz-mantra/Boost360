@@ -15,6 +15,7 @@ import com.boost.cart.utils.SingleLiveEvent
 import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.CustomDomain.CustomDomains
 import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
+import com.boost.dbcenterapi.data.api_model.Domain.AlreadyPurchasedDomainResponse.PurchasedDomainResponse
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.ExpertConnect
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.promoBannerFilter
@@ -22,6 +23,7 @@ import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.promoMarketO
 import com.boost.dbcenterapi.data.api_model.GetFloatingPointWebWidgets.response.GetFloatingPointWebWidgetsResponse
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
+import com.boost.dbcenterapi.data.api_model.blockingAPI.BlockApi
 import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
 import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsRequest
 import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsResponse
@@ -98,7 +100,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     var NewApiService = Utils.getRetrofit(true).create(NewApiInterface::class.java)
     var NewApiService1 = Utils.getRetrofit(true).create(NewApiInterface::class.java)
     private var callTrackListResponse: MutableLiveData<CallTrackListResponse> = MutableLiveData()
-
+    var updateDomainStatus: MutableLiveData<BlockApi> = MutableLiveData()
+    var purchasedDomainResult: MutableLiveData<PurchasedDomainResponse> = MutableLiveData()
     val compositeDisposable = CompositeDisposable()
 
     var customerInfoState: MutableLiveData<Boolean> = MutableLiveData()
@@ -310,6 +313,15 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     fun getCallTrackingDetails(): LiveData<CallTrackListResponse> {
         return callTrackListResponse
     }
+
+    fun updateStatus(): LiveData<BlockApi> {
+        return updateDomainStatus
+    }
+
+    fun PurchasedDomainResponse(): LiveData<PurchasedDomainResponse> {
+        return purchasedDomainResult
+    }
+
 
     fun writeStringAsFile(fileContents: String?, fileName: String?) {
         val context: Context = getApplication()
@@ -1076,5 +1088,37 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
             )
 
         }
+    }
+
+    fun domainStatus(auth: String, fpid: String, clientId: String, blockedItem: String,OrderID:String,blockedItemType:Int) {
+        compositeDisposable.add(
+            NewApiService1.getItemAvailability(auth, fpid, clientId, blockedItem,OrderID,blockedItemType)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        updateDomainStatus.postValue(it)
+
+                    }, {
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
+
+    fun getAlreadyPurchasedDomain(auth: String, fpTag: String, clientId:String) {
+        updatesLoader.postValue(true)
+        compositeDisposable.add(
+            NewApiService.getAlreadyPurchasedDomain(auth, fpTag, clientId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        purchasedDomainResult.postValue(it)
+                        updatesLoader.postValue(false)
+                    },{
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
     }
 }

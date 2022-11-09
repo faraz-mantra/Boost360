@@ -273,20 +273,20 @@ class FeatureDetailsViewModel : BaseViewModel() {
             .subscribe()
     }
 
-    fun blockNumberStatus(auth: String, fpid: String, clientId: String, blockedItem: String) {
-        compositeDisposable.add(
-            ApiService.getItemAvailability(auth, fpid, clientId, blockedItem)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        updateStatus.postValue(it)
-                    }, {
-                        updatesLoader.postValue(false)
-                        updatesError.postValue(it.message)
-                    })
-        )
-    }
+//    fun blockNumberStatus(auth: String, fpid: String, clientId: String, blockedItem: String) {
+//        compositeDisposable.add(
+//            ApiService.getItemAvailability(auth, fpid, clientId, blockedItem)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(
+//                    {
+//                        updateStatus.postValue(it)
+//                    }, {
+//                        updatesLoader.postValue(false)
+//                        updatesError.postValue(it.message)
+//                    })
+//        )
+//    }
 
     fun edgecases(fpid: String,clientId:String,featureCode:String) {
         updatesLoader.postValue(true)

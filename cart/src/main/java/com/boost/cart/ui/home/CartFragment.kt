@@ -3,6 +3,7 @@ package com.boost.cart.ui.home
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -212,6 +213,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
     private lateinit var viewModel: CartViewModel
     var createCustomerInfoRequest: Result? = null
     var customerInfoState = false
+    var  domainStatus:Boolean? = null
+    var  purchasedDomainName:Boolean? = false
 
 
     override fun onCreateView(
@@ -304,6 +307,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 
         session = UserSessionManager(requireActivity())
         loadCustomerInfo()
+        loadData1()
         initMvvm1()
         viewModel.getCitiesFromAssetJson(requireActivity())
         viewModel.getStatesFromAssetJson(requireActivity())
@@ -563,8 +567,45 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
             } else {
                 et_email.setBackgroundResource(R.drawable.edittext_selector1)
                 months_validity.setBackgroundResource(R.drawable.et_validity)
-                if (prefs.getCartOrderInfo() != null) {
-                    proceedToPayment(prefs.getCartOrderInfo()!!)
+
+//                var domainContains = false
+//                    for(singleItem in cartList){
+//                        if(singleItem.item_type.equals("bundles")){
+//                            for(i)
+//
+//                        }else{
+//                            if(singleItem.feature_code.equals("DOMAINPURCHASE")){
+//
+//                                domainContains = true
+//                                break
+//                            }
+//                        }
+//                    }
+
+                if (prefs.getSelectedDomainName()!= null && purchasedDomainName==false){
+                    viewModel.domainStatus((activity as? CartActivity)?.getAccessToken() ?: "",
+                        (activity as CartActivity).fpid!!,
+                        (activity as CartActivity).clientid,
+                        prefs.getSelectedDomainName()!!,
+                        prefs.getCartOrderInfo()?.Result?.OrderId!!
+                        ,2)
+                }
+
+                if (prefs.getCartOrderInfo()!= null) {
+                    if (prefs.getSelectedDomainName()!= null && purchasedDomainName==false){
+                        if (domainStatus == false){
+                            proceedToPayment(prefs.getCartOrderInfo()!!)
+                        } else {
+                            Toasty.error(
+                                requireContext(),
+                                "Domain unavailable choose another domain",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } else{
+                        proceedToPayment(prefs.getCartOrderInfo()!!)
+                    }
+
                 } else if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized || ::renewalList.isInitialized) {
                     val renewalItems =
                         cartList.filter { it.item_type == "renewals" } as? List<CartModel>
@@ -1416,6 +1457,15 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 //        }
     }
 
+    private fun loadData1() {
+        val pref = context?.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+        val fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
+        viewModel.getAlreadyPurchasedDomain(
+            (activity as? CartActivity)?.getAccessToken() ?: "",
+            fpTag?:"",
+            "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
+    }
+
     private fun validateAgreement(): Boolean {
         if (cart_business_city_name.text.toString().isEmpty()
             || cart_business_address.text.toString().isEmpty()
@@ -1623,6 +1673,22 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
     }
 
     private fun initMvvm1() {
+
+        viewModel.updateStatus().observe(viewLifecycleOwner, androidx.lifecycle.Observer{
+            domainStatus = it.Result
+        })
+
+        viewModel.PurchasedDomainResponse().observe(viewLifecycleOwner) {
+//            purchasedDomainName = it.domainName
+//            purchasedDomainType = it.domainType
+            if(it.domainName != null && it.domainType != null) {
+                if(!(it.domainName.contains("null") || it.domainType.contains("null"))) {
+                    purchasedDomainName = true
+                  var  purchasedDomainType = it.domainType
+                }
+            }
+        }
+
         viewModel.getCustomerInfoResult().observeOnce(viewLifecycleOwner, Observer {
             createCustomerInfoRequest = it.Result
             if (createCustomerInfoRequest != null) {
