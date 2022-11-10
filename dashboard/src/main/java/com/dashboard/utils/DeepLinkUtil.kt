@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.appservice.constant.FragmentType
 import com.dashboard.R
+import com.framework.pref.APPLICATION_JIO_ID
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.ABOUT_BOOST_FB_LIKE
@@ -329,7 +330,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startOwnersInfo(session)
         } else if (url.contains(deeplink_domain_booking)) {
           baseActivity.startDomainDetail(session)
-        } else if (url.contains(deeplink_festive_poster)) {
+        } else if (url.contains(deeplink_festive_poster) && baseActivity.packageName.equals(APPLICATION_JIO_ID).not()) {
           baseActivity.startFestivePosterActivity(true)
         } else if (url.contains(deeplink_user_merchant_profile)) {
           baseActivity.startUserProfileDetail(session)
