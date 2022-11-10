@@ -213,6 +213,7 @@
               android:drawableStart="@drawable/ic_bank_transparent"
               android:drawablePadding="@dimen/size_8"
               android:gravity="center"
+              android:drawableTint="@color/themeColor"
               android:text="@string/add_a_bank_account"
               android:textColor="@color/colorAccentLight" />
           </FrameLayout>
