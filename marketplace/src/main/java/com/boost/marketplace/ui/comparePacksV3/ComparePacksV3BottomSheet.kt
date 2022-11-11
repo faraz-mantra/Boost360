@@ -162,18 +162,18 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity, va
 
         binding?.buyPack?.setOnClickListener {
 
-            if(!allowPackageToCart){
-                val arg = Bundle()
-                arg.putBoolean("allowPackageToCart", allowPackageToCart)
-                callTrackingHelpBottomSheet.arguments = arg
-                fragmentManager?.let { it1 ->
-                    callTrackingHelpBottomSheet.show(
-                        it1,
-                        CallTrackingHelpBottomSheet::class.java.name
-                    )
-                }
-                return@setOnClickListener
-            }
+//            if(!allowPackageToCart){
+//                val arg = Bundle()
+//                arg.putBoolean("allowPackageToCart", allowPackageToCart)
+//                callTrackingHelpBottomSheet.arguments = arg
+//                fragmentManager?.let { it1 ->
+//                    callTrackingHelpBottomSheet.show(
+//                        it1,
+//                        CallTrackingHelpBottomSheet::class.java.name
+//                    )
+//                }
+//                return@setOnClickListener
+//            }
 
             if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) {                    // show Popup
                 prefs.storeCartOrderInfo(null)
@@ -429,12 +429,12 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity, va
             viewModel?.setCurrentExperienceCode(code, fpTag!!)
         }
         try {
-            fpid?.let {
-                viewModel?.myPlanV3Status(
-                    it,
-                    "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
-                )
-            }
+//            fpid?.let {
+//                viewModel?.myPlanV3Status(
+//                    it,
+//                    "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+//                )
+//            }
             getAlreadyPurchasedDomain()
             viewModel?.getCartItems()
         } catch (e: Exception) {
