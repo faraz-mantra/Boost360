@@ -444,27 +444,34 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity, va
 
     private fun initMvvm() {
 
-        viewModel?.myplanResultV3()?.observe(this, androidx.lifecycle.Observer {
-            allowPackageToCart = true
+//        viewModel?.myplanResultV3()?.observe(this, androidx.lifecycle.Observer {
+//            allowPackageToCart = true
+//            if(it!=null) {
+//                binding?.shimmerViewDomainv3?.visibility=View.GONE
+//                binding?.container1?.visibility=View.VISIBLE
+//                myPlanV3 = it
+//                getAllowPackageToCart(bundleData)
+//            } else{
+//                binding?.shimmerViewDomainv3?.visibility=View.VISIBLE
+//                binding?.container1?.visibility=View.GONE
+//            }
+//        })
+
+        viewModel?.PurchasedDomainResponse()?.observe(this) {
             if(it!=null) {
                 binding?.shimmerViewDomainv3?.visibility=View.GONE
                 binding?.container1?.visibility=View.VISIBLE
-                myPlanV3 = it
-                getAllowPackageToCart(bundleData)
-            } else{
+                purchasedDomainName = it.domainName
+                purchasedDomainType = it.domainType
+                if(it.domainName != null && it.domainType != null) {
+                    if(!(it.domainName.contains("null") || it.domainType.contains("null"))) {
+                        prefs.storeDomainOrderType(1)
+                        prefs.storeSelectedDomainName(it.domainName + it.domainType)
+                    }
+                }
+            }else{
                 binding?.shimmerViewDomainv3?.visibility=View.VISIBLE
                 binding?.container1?.visibility=View.GONE
-            }
-        })
-
-        viewModel?.PurchasedDomainResponse()?.observe(this) {
-            purchasedDomainName = it.domainName
-            purchasedDomainType = it.domainType
-            if(it.domainName != null && it.domainType != null) {
-                if(!(it.domainName.contains("null") || it.domainType.contains("null"))) {
-                    prefs.storeDomainOrderType(1)
-                    prefs.storeSelectedDomainName(it.domainName + it.domainType)
-                }
             }
 
         }
