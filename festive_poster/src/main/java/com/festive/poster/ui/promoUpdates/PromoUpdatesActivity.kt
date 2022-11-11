@@ -12,8 +12,6 @@ import com.festive.poster.viewmodels.PromoUpdatesViewModel
 import com.framework.base.setFragmentType
 import com.framework.pref.UserSessionManager
 import com.framework.utils.setStatusBarColor
-import com.framework.webengageconstant.Post_Promotional_Update_Click
-import com.framework.webengageconstant.Promotional_Update_Home_Loaded
 import com.framework.webengageconstant.Promotional_Update_Posted_Updates_Click
 
 class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoUpdatesViewModel>() {
