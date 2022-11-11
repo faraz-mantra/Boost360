@@ -1090,7 +1090,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    fun domainStatus(auth: String, fpid: String, clientId: String, blockedItem: String,OrderID:String,blockedItemType:Int) {
+    fun domainBlocked(auth: String, fpid: String, clientId: String, blockedItem: String,OrderID:String,blockedItemType:Int) {
         compositeDisposable.add(
             NewApiService1.getItemAvailability(auth, fpid, clientId, blockedItem,OrderID,blockedItemType)
                 .subscribeOn(Schedulers.io())

@@ -84,6 +84,7 @@ import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
+import com.google.common.base.Strings.isNullOrEmpty
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
@@ -213,8 +214,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
     private lateinit var viewModel: CartViewModel
     var createCustomerInfoRequest: Result? = null
     var customerInfoState = false
-    var  domainStatus:Boolean? = null
-    var  purchasedDomainName:Boolean? = false
+    var  domainBlocked:Boolean? = null
+    var  alreadypurchasedDomain:Boolean? = false
 
 
     override fun onCreateView(
@@ -568,45 +569,48 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 et_email.setBackgroundResource(R.drawable.edittext_selector1)
                 months_validity.setBackgroundResource(R.drawable.et_validity)
 
-//                var domainContains = false
-//                    for(singleItem in cartList){
-//                        if(singleItem.item_type.equals("bundles")){
-//                            for(i)
-//
-//                        }else{
-//                            if(singleItem.feature_code.equals("DOMAINPURCHASE")){
-//
-//                                domainContains = true
-//                                break
-//                            }
-//                        }
-//                    }
-
-                if (prefs.getSelectedDomainName()!= null && purchasedDomainName==false){
-                    viewModel.domainStatus((activity as? CartActivity)?.getAccessToken() ?: "",
+                var domainContains = false
+                    for(singleItem in cartList){
+                        if(singleItem.item_type.equals("bundles")){
+                            if (::bundlesList.isInitialized && bundlesList.size > 0) {
+                                for (singleBundle in bundlesList) {
+                                    if (singleBundle.bundle_id.equals(singleItem.item_id)) {
+                                        val includedFeatures = Gson().fromJson<List<IncludedFeature>>(
+                                            singleBundle.included_features,
+                                            object : TypeToken<List<IncludedFeature>>() {}.type
+                                        )
+                                        for (singleIndludedFeature in includedFeatures) {
+                                            for (singleFeature in featuresList) {
+                                                if (singleIndludedFeature.feature_code.equals("DOMAINPURCHASE")) {
+                                                    domainContains = true
+                                                    break
+                                                }
+                                            }
+                                        }
+                                        break
+                                    }
+                                }
+                            }
+                        }else{
+                            if(singleItem.feature_code.equals("DOMAINPURCHASE")){
+                                domainContains = true
+                                break
+                            }
+                        }
+                    }
+                if (prefs.getCartOrderInfo()!= null) {
+                if (!isNullOrEmpty(prefs.getSelectedDomainName())&& alreadypurchasedDomain==false){
+                    viewModel.domainBlocked((activity as? CartActivity)?.getAccessToken() ?: "",
                         (activity as CartActivity).fpid!!,
                         (activity as CartActivity).clientid,
                         prefs.getSelectedDomainName()!!,
                         prefs.getCartOrderInfo()?.Result?.OrderId!!
                         ,2)
-                }
-
-                if (prefs.getCartOrderInfo()!= null) {
-                    if (prefs.getSelectedDomainName()!= null && purchasedDomainName==false){
-                        if (domainStatus == false){
-                            proceedToPayment(prefs.getCartOrderInfo()!!)
-                        } else {
-                            Toasty.error(
-                                requireContext(),
-                                "Domain unavailable choose another domain",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    } else{
+                    }else{
                         proceedToPayment(prefs.getCartOrderInfo()!!)
                     }
-
-                } else if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized || ::renewalList.isInitialized) {
+                }
+                else if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized || ::renewalList.isInitialized) {
                     val renewalItems =
                         cartList.filter { it.item_type == "renewals" } as? List<CartModel>
                     if (renewalItems.isNullOrEmpty().not()) {
@@ -616,7 +620,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                             createPurchaseOrder(null)
                         }
                     }
-                } else {
+                }else {
                     Toasty.error(
                         requireContext(),
                         "Invalid items found in the cart. Please re-launch the Marketplace.",
@@ -624,7 +628,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     ).show()
                 }
             }
-
 
 //            }
 
@@ -1675,16 +1678,29 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
     private fun initMvvm1() {
 
         viewModel.updateStatus().observe(viewLifecycleOwner, androidx.lifecycle.Observer{
-            domainStatus = it.Result
+            domainBlocked = it.Result
+
+            if (prefs.getCartOrderInfo() != null) {
+                if (prefs.getSelectedDomainName() != null && alreadypurchasedDomain == false) {
+                    if (domainBlocked == false) {
+                        proceedToPayment(prefs.getCartOrderInfo()!!)
+                    } else {
+                        Toasty.error(
+                            requireContext(),
+                            "Domain unavailable choose another domain",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else {
+                    proceedToPayment(prefs.getCartOrderInfo()!!)
+                }
+            }
         })
 
         viewModel.PurchasedDomainResponse().observe(viewLifecycleOwner) {
-//            purchasedDomainName = it.domainName
-//            purchasedDomainType = it.domainType
             if(it.domainName != null && it.domainType != null) {
                 if(!(it.domainName.contains("null") || it.domainType.contains("null"))) {
-                    purchasedDomainName = true
-                  var  purchasedDomainType = it.domainType
+                    alreadypurchasedDomain = true
                 }
             }
         }
@@ -3193,7 +3209,19 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     NO_EVENT_LABLE,
                     NO_EVENT_VALUE
                 )
-                proceedToPayment(it)
+             //   proceedToPayment(it)
+                if (!isNullOrEmpty(prefs.getSelectedDomainName())&& alreadypurchasedDomain==false){
+                    viewModel.domainBlocked(
+                        (activity as? CartActivity)?.getAccessToken() ?: "",
+                        (activity as CartActivity).fpid!!,
+                        (activity as CartActivity).clientid,
+                        prefs.getSelectedDomainName()!!,
+                        prefs.getCartOrderInfo()?.Result?.OrderId!!,
+                        2
+                    )
+                } else{
+                    proceedToPayment(it)
+                }
             }
         })
 

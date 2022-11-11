@@ -662,6 +662,7 @@ class FeatureDetailsActivity :
                     }else {
                         if(!itemInCartStatus) {
                             prefs.storeCartOrderInfo(null)
+                            prefs.storeSelectedDomainName(seleced_value_text.text.toString())
                             viewModel.addItemToCart1(
                                 addonDetails!!,
                                 this,
