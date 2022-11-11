@@ -216,6 +216,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
     var customerInfoState = false
     var  domainBlocked:Boolean? = null
     var  alreadypurchasedDomain:Boolean? = false
+    var domainContains = false
 
 
     override fun onCreateView(
@@ -569,37 +570,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 et_email.setBackgroundResource(R.drawable.edittext_selector1)
                 months_validity.setBackgroundResource(R.drawable.et_validity)
 
-                var domainContains = false
-                    for(singleItem in cartList){
-                        if(singleItem.item_type.equals("bundles")){
-                            if (::bundlesList.isInitialized && bundlesList.size > 0) {
-                                for (singleBundle in bundlesList) {
-                                    if (singleBundle.bundle_id.equals(singleItem.item_id)) {
-                                        val includedFeatures = Gson().fromJson<List<IncludedFeature>>(
-                                            singleBundle.included_features,
-                                            object : TypeToken<List<IncludedFeature>>() {}.type
-                                        )
-                                        for (singleIndludedFeature in includedFeatures) {
-                                            for (singleFeature in featuresList) {
-                                                if (singleIndludedFeature.feature_code.equals("DOMAINPURCHASE")) {
-                                                    domainContains = true
-                                                    break
-                                                }
-                                            }
-                                        }
-                                        break
-                                    }
-                                }
-                            }
-                        }else{
-                            if(singleItem.feature_code.equals("DOMAINPURCHASE")){
-                                domainContains = true
-                                break
-                            }
-                        }
-                    }
+                cartContainsDomain()
+
                 if (prefs.getCartOrderInfo()!= null) {
-                if (!isNullOrEmpty(prefs.getSelectedDomainName())&& alreadypurchasedDomain==false){
+                if (!isNullOrEmpty(prefs.getSelectedDomainName())&& alreadypurchasedDomain==false && domainContains == true){
                     viewModel.domainBlocked((activity as? CartActivity)?.getAccessToken() ?: "",
                         (activity as CartActivity).fpid!!,
                         (activity as CartActivity).clientid,
@@ -1458,6 +1432,37 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 //                )
 //            }
 //        }
+    }
+
+    private fun cartContainsDomain() {
+        for(singleItem in cartList){
+            if(singleItem.item_type.equals("bundles")){
+                if (::bundlesList.isInitialized && bundlesList.size > 0) {
+                    for (singleBundle in bundlesList) {
+                        if (singleBundle.bundle_id.equals(singleItem.item_id)) {
+                            val includedFeatures = Gson().fromJson<List<IncludedFeature>>(
+                                singleBundle.included_features,
+                                object : TypeToken<List<IncludedFeature>>() {}.type
+                            )
+                            for (singleIndludedFeature in includedFeatures) {
+                                for (singleFeature in featuresList) {
+                                    if (singleIndludedFeature.feature_code.equals("DOMAINPURCHASE")) {
+                                        domainContains = true
+                                        break
+                                    }
+                                }
+                            }
+                            break
+                        }
+                    }
+                }
+            }else{
+                if(singleItem.feature_code.equals("DOMAINPURCHASE")){
+                    domainContains = true
+                    break
+                }
+            }
+        }
     }
 
     private fun loadData1() {
@@ -3210,7 +3215,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     NO_EVENT_VALUE
                 )
              //   proceedToPayment(it)
-                if (!isNullOrEmpty(prefs.getSelectedDomainName())&& alreadypurchasedDomain==false){
+                if (!isNullOrEmpty(prefs.getSelectedDomainName())&& alreadypurchasedDomain==false && domainContains == true){
                     viewModel.domainBlocked(
                         (activity as? CartActivity)?.getAccessToken() ?: "",
                         (activity as CartActivity).fpid!!,
