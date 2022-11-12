@@ -943,18 +943,26 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 //            }
 //        })
         viewModel.PurchasedDomainResponse().observe(this) {
-            purchasedDomainName = it.domainName
-            purchasedDomainType = it.domainType
+            if(it!=null) {
+                binding?.shimmerViewPacksv3?.visibility=View.GONE
+                binding?.scrollView?.visibility=View.VISIBLE
 
-            if(it.domainName != null && it.domainType != null) {
-                if(!(it.domainName.contains("null") || it.domainType.contains("null"))) {
-                    prefs.storeDomainOrderType(1)
-                    prefs.storeSelectedDomainName(it.domainName + it.domainType)
+                purchasedDomainName = it.domainName
+                purchasedDomainType = it.domainType
+
+                if(it.domainName != null && it.domainType != null) {
+                    if(!(it.domainName.contains("null") || it.domainType.contains("null"))) {
+                        prefs.storeDomainOrderType(1)
+                        prefs.storeSelectedDomainName(it.domainName + it.domainType)
+                    }
                 }
+                //  viewModel.addItemToCart1(singleAddon, this, it.domainName + it.domainType)
+                viewModel.getCartItems()
+            }else{
+                binding?.scrollView?.visibility=View.GONE
+                binding?.shimmerViewPacksv3?.visibility=View.VISIBLE
             }
 
-          //  viewModel.addItemToCart1(singleAddon, this, it.domainName + it.domainType)
-            viewModel.getCartItems()
         }
 
         // viewmodel
@@ -1006,16 +1014,16 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             if (it.contains("Query returned empty"))
                 finish()
         })
-        viewModel.addonsLoader().observe(this, androidx.lifecycle.Observer {
-            if (it) {
-                val status = "Loading. Please wait..."
-                progressDialog.setMessage(status)
-                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
-                progressDialog.show()
-            } else {
-                progressDialog.dismiss()
-            }
-        })
+//        viewModel.addonsLoader().observe(this, androidx.lifecycle.Observer {
+//            if (it) {
+//                val status = "Loading. Please wait..."
+//                progressDialog.setMessage(status)
+//                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
+//                progressDialog.show()
+//            } else {
+//                progressDialog.dismiss()
+//            }
+//        })
         viewModel.cartResult().observe(this, androidx.lifecycle.Observer {
             cartList = it
             itemInCart = false
