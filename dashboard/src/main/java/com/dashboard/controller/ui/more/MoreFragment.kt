@@ -385,5 +385,6 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     super.onResume()
     setHelpfulResources()
     refreshUserDetail()
+    setData()
   }
 }
