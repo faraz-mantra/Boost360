@@ -37,10 +37,10 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
 
   val browseTabFragment = BrowseTabFragment.newInstance()
   var currentPage: Int = 0
+  var isCreateClick: Boolean = false
 
   enum class ToolTipType {
-    FOR_TODAY,
-    CREATE
+    FOR_TODAY, CREATE
   }
 
   override fun getLayout(): Int {
@@ -77,13 +77,11 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
       if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
         //  Collapsed
         binding.tabParent.background = ContextCompat.getDrawable(
-          requireActivity(),
-          R.drawable.white_rect_background
+          requireActivity(), R.drawable.white_rect_background
         )
       } else {
         binding.tabParent.background = ContextCompat.getDrawable(
-          requireActivity(),
-          R.drawable.top_round_corner
+          requireActivity(), R.drawable.top_round_corner
         )
         //Expanded
       }
@@ -126,10 +124,13 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
               currentPage = 0
             }
             1 -> {
-              WebEngageController.trackEvent(Post_Browse_All_Promotional_Update_Click)
+              if (isCreateClick.not()){
+                WebEngageController.trackEvent(Post_Browse_All_Promotional_Update_Click)
+              }
               currentPage = 1
             }
             2 -> {
+              isCreateClick = true
               WebEngageController.trackEvent(Promotional_Update_Create_Update_Click)
               launchPostNewUpdate(requireActivity())
             }
@@ -209,20 +210,9 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
       else -> 0.5F
     }
 
-    val balloon = Balloon.Builder(requireActivity())
-      .setLayout(R.layout.ballon_promo_tabs)
-      .setArrowSize(10)
-      .setArrowColor(ContextCompat.getColor(requireActivity(), R.color.black_4a4a4a))
-      .setArrowOrientation(ArrowOrientation.TOP)
-      .setWidth(BalloonSizeSpec.WRAP)
-      .setHeight(BalloonSizeSpec.WRAP)
-      .setCornerRadius(8F)
-      .setWidthRatio(1F)
-      .setArrowPosition(arrowPos)
-      .setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.black))
-      .setBalloonAnimation(BalloonAnimation.CIRCULAR)
-      .setLifecycleOwner(viewLifecycleOwner)
-      .build()
+    val balloon =
+      Balloon.Builder(requireActivity()).setLayout(R.layout.ballon_promo_tabs).setArrowSize(10).setArrowColor(ContextCompat.getColor(requireActivity(), R.color.black_4a4a4a)).setArrowOrientation(ArrowOrientation.TOP).setWidth(BalloonSizeSpec.WRAP).setHeight(BalloonSizeSpec.WRAP).setCornerRadius(8F)
+        .setWidthRatio(1F).setArrowPosition(arrowPos).setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.black)).setBalloonAnimation(BalloonAnimation.CIRCULAR).setLifecycleOwner(viewLifecycleOwner).build()
     val text = balloon.getContentView().findViewById<CustomTextView>(R.id.tv_msg)
     val close = balloon.getContentView().findViewById<CustomImageView>(R.id.iv_close)
     val icon = balloon.getContentView().findViewById<CustomImageView>(R.id.iv_icon)
@@ -230,8 +220,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
     when (type) {
       ToolTipType.FOR_TODAY -> {
         text.text = spanBoldNdColor(
-          getString(R.string.premium_updates_custom_designed_for_you),
-          R.color.colorPrimary, "Premium updates"
+          getString(R.string.premium_updates_custom_designed_for_you), R.color.colorPrimary, "Premium updates"
         )
         binding.tabLayout.getTabAt(0)!!.view.postDelayed(Runnable {
           balloon.showAlignBottom(
@@ -249,8 +238,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
       ToolTipType.CREATE -> {
         icon.gone()
         text.text = spanBoldNdColor(
-          getString(R.string.free_updates_tap_on_create_to_post_like_before),
-          R.color.green_78AF00, "FREE updates:"
+          getString(R.string.free_updates_tap_on_create_to_post_like_before), R.color.green_78AF00, "FREE updates:"
         )
         binding.tabLayout.getTabAt(2)!!.view.postDelayed(Runnable {
           balloon.showAlignBottom(binding.tabLayout.getTabAt(2)!!.view)
@@ -267,5 +255,6 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
   override fun onResume() {
     super.onResume()
     binding.viewPager.currentItem = currentPage
+    isCreateClick = false
   }
 }

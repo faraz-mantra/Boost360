@@ -88,58 +88,58 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmer_view_packsv3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/toolbar"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:visibility="gone">
+<!--        <com.facebook.shimmer.ShimmerFrameLayout-->
+<!--            android:id="@+id/shimmer_view_packsv3"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/toolbar"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginStart="@dimen/_5sdp"-->
+<!--            android:layout_marginEnd="@dimen/_10sdp"-->
+<!--            android:background="@color/white"-->
+<!--            android:orientation="vertical"-->
+<!--            android:visibility="gone"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/toolbar"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            tools:visibility="gone">-->
 
-            <!-- Adding 7 rows of placeholders -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:layout_marginTop="20dp"
-                android:orientation="vertical">
+<!--            &lt;!&ndash; Adding 7 rows of placeholders &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@color/white"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:orientation="vertical">-->
 
-                <include layout="@layout/data_place2" />
+<!--                <include layout="@layout/data_place2" />-->
 
-                <include layout="@layout/data_place_card" />
+<!--                <include layout="@layout/data_place_card" />-->
 
-                <include layout="@layout/data_place2" />
+<!--                <include layout="@layout/data_place2" />-->
 
-                <include layout="@layout/data_place2" />
+<!--                <include layout="@layout/data_place2" />-->
 
-                <include layout="@layout/data_place2" />
+<!--                <include layout="@layout/data_place2" />-->
 
-                <include layout="@layout/data_place2" />
+<!--                <include layout="@layout/data_place2" />-->
 
-                <include layout="@layout/data_place2" />
+<!--                <include layout="@layout/data_place2" />-->
 
-                <include layout="@layout/data_place2" />
+<!--                <include layout="@layout/data_place2" />-->
 
-                <include layout="@layout/data_place2" />
+<!--                <include layout="@layout/data_place2" />-->
 
-                <include layout="@layout/data_place2" />
+<!--                <include layout="@layout/data_place2" />-->
 
-                <include layout="@layout/data_place2" />
+<!--                <include layout="@layout/data_place2" />-->
 
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
-        </com.facebook.shimmer.ShimmerFrameLayout>
+<!--        </com.facebook.shimmer.ShimmerFrameLayout>-->
 
         <ScrollView
             android:id="@+id/scrollView"
@@ -148,7 +148,7 @@
             android:layout_above="@id/bottom_layout"
             android:layout_below="@id/toolbar"
             android:clipToPadding="false"
-            android:visibility="gone"
+            android:visibility="visible"
             tools:visibility="visible"
             android:paddingBottom="80dp">
 
