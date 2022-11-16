@@ -1,5 +1,6 @@
 package com.festive.poster.viewmodels
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -66,16 +67,15 @@ class UpdateStudioPurchaseViewModel: BaseViewModel() {
     }
 
 
+    @SuppressLint("StringFormatMatches")
     fun convertFeatureResponseToUiItem(appFeaturesResponse: UpgradeGetDataResponse): ArrayList<FeaturePurchaseUiModel> {
         val featurePurchaseList =  getBundlesWhereUpdateStudioPresent(appFeaturesResponse)
 
         updateStudioFeature = getFeatureDetails(Constants.UPDATES_STUDIO_WIDGET_KEY,appFeaturesResponse.Data.firstOrNull()?.features)
 
-        val desc = application().getString(
-            R.string.pay_placeholder_or_placeholder_gst_extra,
-            updateStudioFeature?.price.toString(),
-            ((updateStudioFeature?.price ?: 0.0)*12).toString()
-        )
+        val monthPrice = updateStudioFeature?.price ?: 0.0
+        val yearPrice = monthPrice * 12.0
+        val desc = "Pay ₹$monthPrice/mo or ₹$yearPrice/yr (GST extra)"
 
         featurePurchaseList.add(
             FeaturePurchaseUiModel(
