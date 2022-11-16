@@ -46,7 +46,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020141
+        versionCode 2020020142
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -81,7 +81,7 @@ android {
     flavorDimensions "default"
     productFlavors {
         partone {
-            versionName "6.1.29.5"
+            versionName "6.1.30.1"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'

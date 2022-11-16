@@ -49,7 +49,7 @@
           android:layout_width="@dimen/size_24"
           android:layout_height="@dimen/size_24"
           android:layout_gravity="top|right"
-          android:src="@drawable/ic_checkcircle"
+          android:src="@drawable/ic_circlecheck"
           android:visibility="visible" />
 
         <com.framework.views.customViews.CustomTextView

@@ -208,7 +208,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         initializePackItemRecycler()
         initView()
         initMvvm()
-        loadData()
+//        loadData() //removed this due to multiple API call
 
 
         val callExpertString = SpannableString("Have a query? Call an expert")
@@ -243,17 +243,18 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
         //Add to cart..
         binding?.bottomBoxOnlyBtn?.setOnClickListener {
-            getAllowPackageToCart(bundleData!!)
-            if(!allowPackageToCart){
-                    val arg = Bundle()
-                    arg.putBoolean("allowPackageToCart", allowPackageToCart)
-                    callTrackingHelpBottomSheet.arguments = arg
-                    callTrackingHelpBottomSheet.show(
-                        supportFragmentManager,
-                        CallTrackingHelpBottomSheet::class.java.name
-                    )
-                return@setOnClickListener
-            }
+            //disabling marketplace gaps
+//            getAllowPackageToCart(bundleData!!)
+//            if(!allowPackageToCart){
+//                    val arg = Bundle()
+//                    arg.putBoolean("allowPackageToCart", allowPackageToCart)
+//                    callTrackingHelpBottomSheet.arguments = arg
+//                    callTrackingHelpBottomSheet.show(
+//                        supportFragmentManager,
+//                        CallTrackingHelpBottomSheet::class.java.name
+//                    )
+//                return@setOnClickListener
+//            }
             if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) {
 
                 val dialogCard = FeatureDetailsPopup(this, this, this)
@@ -566,14 +567,14 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         if (!code.equals("null", true)) {
             viewModel?.setCurrentExperienceCode(code, fpTag!!)
         }
-        try {
-            viewModel.myPlanV3Status(
-                intent.getStringExtra("fpid") ?: "",
-                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
-            )
-        } catch (e: Exception) {
-            SentryController.captureException(e)
-        }
+//        try {
+//            viewModel.myPlanV3Status(
+//                intent.getStringExtra("fpid") ?: "",
+//                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+//            )
+//        } catch (e: Exception) {
+//            SentryController.captureException(e)
+//        }
         try {
             viewModel?.getCartItems()
             viewModel?.getAllPackages()
@@ -928,18 +929,19 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         }
         })
 
-        viewModel.myplanResultV3().observe(this, androidx.lifecycle.Observer {
-            allowPackageToCart = true
-            if(it!=null) {
-                binding?.shimmerViewPacksv3?.visibility=View.GONE
-                binding?.scrollView?.visibility=View.VISIBLE
-                myPlanV3 = it
-                getAllowPackageToCart(bundleData!!)
-            } else{
-                binding?.scrollView?.visibility=View.GONE
-                binding?.shimmerViewPacksv3?.visibility=View.VISIBLE
-            }
-        })
+//        viewModel.myplanResultV3().observe(this, androidx.lifecycle.Observer {
+//            allowPackageToCart = true
+//            if(it!=null) {
+//                binding?.shimmerViewPacksv3?.visibility=View.GONE
+//                binding?.scrollView?.visibility=View.VISIBLE
+//                myPlanV3 = it
+//                //disabling marketplace gaps
+//                //getAllowPackageToCart(bundleData!!)
+//            } else{
+//                binding?.scrollView?.visibility=View.GONE
+//                binding?.shimmerViewPacksv3?.visibility=View.VISIBLE
+//            }
+//        })
         viewModel.PurchasedDomainResponse().observe(this) {
             purchasedDomainName = it.domainName
             purchasedDomainType = it.domainType
@@ -1204,17 +1206,18 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 ),
                 null, steps, null, faq, benefits, bundlesModel.desc ?: ""
             )
-            getAllowPackageToCart(bundle)
-            if(!allowPackageToCart){
-                    val arg = Bundle()
-                    arg.putBoolean("allowPackageToCart", allowPackageToCart)
-                    callTrackingHelpBottomSheet.arguments = arg
-                    callTrackingHelpBottomSheet.show(
-                        supportFragmentManager,
-                        CallTrackingHelpBottomSheet::class.java.name
-                    )
-                return@setOnClickListener
-            }
+            //disabling marketplace gaps
+//            getAllowPackageToCart(bundle)
+//            if(!allowPackageToCart){
+//                    val arg = Bundle()
+//                    arg.putBoolean("allowPackageToCart", allowPackageToCart)
+//                    callTrackingHelpBottomSheet.arguments = arg
+//                    callTrackingHelpBottomSheet.show(
+//                        supportFragmentManager,
+//                        CallTrackingHelpBottomSheet::class.java.name
+//                    )
+//                return@setOnClickListener
+//            }
             if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null")?:false) {
                 prefs.storeCartOrderInfo(null)
 
