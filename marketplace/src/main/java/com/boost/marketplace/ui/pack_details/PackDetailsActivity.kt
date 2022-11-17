@@ -288,7 +288,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 }
                 args.putString("profileUrl", profileUrl)
                 dialogCard.arguments = args
-                this.supportFragmentManager.let { dialogCard.show(it, com.boost.cart.ui.popup.FeatureDetailsPopup::class.java.name) }
+                this.supportFragmentManager.let { dialogCard.show(it, FeatureDetailsPopup::class.java.name) }
             }else {
                 if (bundleData != null) {
                     prefs.storeAddedPackageDesc(bundleData!!.desc ?: "")
@@ -1260,7 +1260,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 }
                 args.putString("profileUrl", profileUrl)
                 dialogCard.arguments = args
-                this.supportFragmentManager.let { dialogCard.show(it, com.boost.cart.ui.popup.FeatureDetailsPopup::class.java.name) }
+                this.supportFragmentManager.let { dialogCard.show(it, FeatureDetailsPopup::class.java.name) }
 
             } else {
                 prefs.storeCartOrderInfo(null)
@@ -1687,23 +1687,70 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     }
 
     override fun onPackageClicked(item: Bundles?, image: ImageView?) {
-        viewModel.addItemToCartPackage1(
-            CartModel(
-                bundleData!!._kid,
-                null,
-                null,
-                bundleData!!.name,
-                "",
-                bundleData!!.primary_image!!.url,
-                offeredBundlePrice.toDouble(),
-                originalBundlePrice.toDouble(),
-                bundleData!!.overall_discount_percent,
-                1,
-                if (!prefs.getYearPricing() && bundleData!!.min_purchase_months != null) bundleData!!.min_purchase_months!! else 1,
-                "bundles",
-                null,
-                ""
-            )
+        val itemIds = arrayListOf<String>()
+        for (i in item?.included_features!!) {
+            itemIds.add(i.feature_code)
+        }
+        CompositeDisposable().add(
+            AppDatabase.getInstance(application)!!
+                .featuresDao()
+                .getallFeaturesInList(itemIds)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        var bundleMonthlyMRP = 0.0
+                        val minMonth: Int =
+                            if (item.min_purchase_months != null && item.min_purchase_months!! > 1) item.min_purchase_months!! else 1
+
+                        for (singleItem in it) {
+                            for (items in item.included_features) {
+                                if (singleItem.feature_code == items.feature_code) {
+                                    bundleMonthlyMRP += RootUtil.round(
+                                        singleItem.price - ((singleItem.price * items.feature_price_discount_percent) / 100.0),
+                                        2
+                                    )
+                                }
+                            }
+                        }
+
+                        offeredBundlePrice = (bundleMonthlyMRP * minMonth)
+                        originalBundlePrice = (bundleMonthlyMRP * minMonth)
+
+                        if (item.overall_discount_percent > 0)
+                            offeredBundlePrice = RootUtil.round(
+                                originalBundlePrice - (originalBundlePrice * item.overall_discount_percent / 100),
+                                2
+                            )
+                        else
+                            offeredBundlePrice = originalBundlePrice
+
+                        //clear cartOrderInfo from SharedPref to requestAPI again
+                        prefs.storeCartOrderInfo(null)
+                        viewModel.addItemToCartPackage1(
+                            CartModel(
+                                item._kid,
+                                null,
+                                null,
+                                item.name,
+                                "",
+                                item.primary_image!!.url,
+                                offeredBundlePrice.toDouble(),
+                                originalBundlePrice.toDouble(),
+                                item.overall_discount_percent,
+                                1,
+                                if (item.min_purchase_months != null) item.min_purchase_months!! else 1,
+                                "bundles",
+                                null,
+                                ""
+                            )
+                        )
+                    },
+                    {
+                        it.printStackTrace()
+
+                    }
+                )
         )
         viewModel.getCartItems()
     }
@@ -1711,6 +1758,10 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     override fun featureDetailsPopup(domain: String) {
 //        cartPackageAdaptor.selectedDomain(domain)
         prefs.storeSelectedDomainName(domain)
+    }
+
+    override fun featureDetailsPopup1(vmn: String) {
+        prefs.storeSelectedVMNName(vmn)
     }
 
     private fun getAlreadyPurchasedDomain() {

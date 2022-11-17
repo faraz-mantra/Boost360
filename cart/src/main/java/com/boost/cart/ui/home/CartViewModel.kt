@@ -1060,7 +1060,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     fun loadNumberList(fpid: String, clientId: String) {
 //        findingNumberLoader.postValue(true)
         updatesLoader.postValue(true)
-        if (com.boost.cart.utils.Utils.isConnectedToInternet(Application())) {
+        if (Utils.isConnectedToInternet(Application())) {
             CompositeDisposable().add(
                 NewApiService1.getCallTrackDetails(fpid, clientId)
                     .subscribeOn(Schedulers.io())

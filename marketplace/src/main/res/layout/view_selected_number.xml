@@ -98,7 +98,7 @@
                     android:lineHeight="21.79dp"
                     android:paddingStart="@dimen/_30sdp"
                     android:paddingEnd="@dimen/_30sdp"
-                    android:text="+91 8012-345-673"
+                    tools:text="+91 8012-345-673"
                     android:textColor="#4A4A4A"
                     android:textFontWeight="700"
                     android:textSize="30sp"

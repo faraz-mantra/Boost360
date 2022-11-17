@@ -588,6 +588,10 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity, va
         prefs.storeSelectedDomainName(domain)
     }
 
+    override fun featureDetailsPopup1(vmn: String) {
+        prefs.storeSelectedVMNName(vmn)
+    }
+
     private fun getAlreadyPurchasedDomain() {
         val pref = context?.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
         val fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)

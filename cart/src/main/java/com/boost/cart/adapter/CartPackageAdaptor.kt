@@ -49,6 +49,7 @@ class CartPackageAdaptor(
   private var upgradeList = ArrayList<FeaturesModel>()
   var minMonth = 1
   var selectedDomainName = ""
+  var selectedVMN = ""
 
 
   init {
@@ -102,10 +103,20 @@ class CartPackageAdaptor(
         val prefs = SharedPrefs(activity)
         prefs.storeSelectedDomainName(null)
       }
+      if(selectedVMN.isNotEmpty()){
+        val prefs = SharedPrefs(activity)
+        prefs.storeSelectedVMNName(null)
+      }
       listener.deleteCartAddonsItem(bundlesList.get(position))
     }
 
     if(selectedDomainName.isNotEmpty()){
+      holder.edge_cases_layout.visibility = View.GONE
+    }else{
+      holder.edge_cases_layout.visibility = View.VISIBLE
+    }
+
+    if(selectedVMN.isNotEmpty()){
       holder.edge_cases_layout.visibility = View.GONE
     }else{
       holder.edge_cases_layout.visibility = View.VISIBLE
@@ -223,6 +234,11 @@ class CartPackageAdaptor(
     notifyDataSetChanged()
   }
 
+  fun selectedVmn(VMN: String){
+    this.selectedVMN = VMN
+    notifyDataSetChanged()
+  }
+
   class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val name = itemView.findViewById<TextView>(R.id.package_title)
     val price = itemView.findViewById<TextView>(R.id.package_price)
@@ -267,17 +283,19 @@ class CartPackageAdaptor(
           for(singleFeaturesCode in temp){
             for(singleFeature in upgradeList) {
               if (singleFeaturesCode.feature_code.equals(singleFeature.feature_code!!)) {
-                if(singleFeaturesCode.feature_code==("DOMAINPURCHASE") ||singleFeaturesCode.feature_code== "CALLTRACKER"
-                  ||singleFeaturesCode.feature_code== "IVR"
-                  && selectedDomainName.isNotEmpty()){
+                if(singleFeaturesCode.feature_code.equals("DOMAINPURCHASE") && selectedDomainName.isNotEmpty()){
                   val tempItem = singleFeature
                   tempItem.name = selectedDomainName
                   tempFeatures.add(tempItem)
+                }else if ((singleFeaturesCode.feature_code.equals("IVR")||(singleFeaturesCode.feature_code.equals("CALLTRACKER"))) && selectedVMN.isNotEmpty()) {
+                  val tempItem = singleFeature
+                  tempItem.name = selectedVMN
+                  tempFeatures.add(tempItem)
                 }else {
-                  tempFeatures.add(singleFeature)
+                    tempFeatures.add(singleFeature)
+                  }
                 }
               }
-            }
           }
           holder.addon_amount.text = "Includes "+tempFeatures.size+" addons"
           val linearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)

@@ -211,8 +211,8 @@ class FeatureDetailsActivity :
         shimmer_layout.startShimmer()
 
         if (specialAddons() && !addonStateActivated) {
-//            primary_layout.visibility = GONE
-//            second_layout.visibility = VISIBLE
+            primary_layout.visibility = GONE
+            second_layout.visibility = VISIBLE
             app_bar_layout.background = null
             details_image_bg.visibility = GONE
             val appbar = findViewById<View>(R.id.app_bar_layout) as AppBarLayout
@@ -325,8 +325,8 @@ class FeatureDetailsActivity :
                 seleced_value_text.layoutParams = param
             }
         } else {
-//            primary_layout.visibility = VISIBLE
-//            second_layout.visibility = GONE
+            primary_layout.visibility = VISIBLE
+            second_layout.visibility = GONE
             app_bar_layout.background = ContextCompat.getDrawable(this, R.color.colorPrimary1)
             details_image_bg.visibility = VISIBLE
             val appbar = findViewById<View>(R.id.app_bar_layout) as AppBarLayout
@@ -653,7 +653,6 @@ class FeatureDetailsActivity :
                     if(packageItem){
                         val args = Bundle()
                         args.putString("addonName", addonDetails!!.name)
-                        args.putBoolean("activty1", false)
                         removePackageBottomSheet.arguments = args
                         removePackageBottomSheet.show(
                             supportFragmentManager,
@@ -770,7 +769,6 @@ class FeatureDetailsActivity :
                     if (packageItem) {
                         val args = Bundle()
                         args.putString("addonName", addonDetails!!.name)
-                        args.putBoolean("activty1", false)
                         removePackageBottomSheet.arguments = args
                         removePackageBottomSheet.show(
                             supportFragmentManager,
@@ -781,6 +779,7 @@ class FeatureDetailsActivity :
                             if (!itemInCartStatus) {
                                 if (addonDetails != null) {
                                     prefs.storeCartOrderInfo(null)
+                                    prefs.storeSelectedVMNName(selectedNum)
                                     viewModel!!.addItemToCart1(addonDetails!!, this, selectedNum)
                                     val event_attributes: HashMap<String, Any> = HashMap()
                                     addonDetails!!.name?.let { it1 ->
@@ -827,28 +826,28 @@ class FeatureDetailsActivity :
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
+                        val intent = Intent(this, CartActivity::class.java)
+                        intent.putExtra("fpid", fpid)
+                        intent.putExtra("expCode", experienceCode)
+                        intent.putExtra("isDeepLink", isDeepLink)
+                        intent.putExtra("deepLinkViewType", deepLinkViewType)
+                        intent.putExtra("deepLinkDay", deepLinkDay)
+                        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+                        intent.putExtra("accountType", accountType)
+                        intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+                        if (email != null) {
+                            intent.putExtra("email", email)
+                        } else {
+                            intent.putExtra("email", "ria@nowfloats.com")
+                        }
+                        if (mobileNo != null) {
+                            intent.putExtra("mobileNo", mobileNo)
+                        } else {
+                            intent.putExtra("mobileNo", "9160004303")
+                        }
+                        intent.putExtra("profileUrl", profileUrl)
+                        startActivity(intent)
                     }
-                    val intent = Intent(this, CartActivity::class.java)
-                    intent.putExtra("fpid", fpid)
-                    intent.putExtra("expCode", experienceCode)
-                    intent.putExtra("isDeepLink", isDeepLink)
-                    intent.putExtra("deepLinkViewType", deepLinkViewType)
-                    intent.putExtra("deepLinkDay", deepLinkDay)
-                    intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-                    intent.putExtra("accountType", accountType)
-                    intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
-                    if (email != null) {
-                        intent.putExtra("email", email)
-                    } else {
-                        intent.putExtra("email", "ria@nowfloats.com")
-                    }
-                    if (mobileNo != null) {
-                        intent.putExtra("mobileNo", mobileNo)
-                    } else {
-                        intent.putExtra("mobileNo", "9160004303")
-                    }
-                    intent.putExtra("profileUrl", profileUrl)
-                    startActivity(intent)
                 }
                 choose_different_value.setText("Pick another number")
                 choose_different_value.setOnClickListener {
@@ -1226,9 +1225,9 @@ class FeatureDetailsActivity :
 
     fun specialAddons(): Boolean {
         if (singleWidgetKey.equals("DOMAINPURCHASE")
-//            || singleWidgetKey.equals("IVR")
-//            || singleWidgetKey.equals("CALLTRACKER")
-        //    || singleWidgetKey.equals("STAFFPROFILE")
+            || singleWidgetKey.equals("IVR")
+            || singleWidgetKey.equals("CALLTRACKER")
+            || singleWidgetKey.equals("STAFFPROFILE")
         ) {
             return true
         }
@@ -1514,14 +1513,27 @@ class FeatureDetailsActivity :
                         addonDetails!!.widget_type ?: "", this
                     )
                     numberprice = pricing
-                    val content = SpannableString("Claim the above domain\n@ ${numberprice}")
-                    content.setSpan(
-                        StyleSpan(Typeface.BOLD),
-                        0,
-                        22,
-                        0
-                    )
-                    claim_button.setText(content)
+                    if (addonDetails!!.feature_code.equals("DOMAINPURCHASE")){
+                        val content = SpannableString("Claim the above domain\n@ ${numberprice}")
+                        content.setSpan(
+                            StyleSpan(Typeface.BOLD),
+                            0,
+                            22,
+                            0
+                        )
+                        claim_button.setText(content)
+                    } else if(addonDetails!!.feature_code.equals("CALLTRACKER")
+                        || addonDetails!!.feature_code.equals("IVR")){
+                        val content = SpannableString("Claim the above number\n@ ${numberprice}")
+                        content.setSpan(
+                            StyleSpan(Typeface.BOLD),
+                            0,
+                            22,
+                            0
+                        )
+                        claim_button.setText(content)
+                    }
+
                     claim_button.background = ContextCompat.getDrawable(
                         this,
                         R.drawable.cta_button_click_effect

@@ -65,6 +65,7 @@ class CallTrackingActivity :
     var pricing: String? = null
     var itemInCartStatus = false
     var vmnSelectionForCart: Boolean = false
+    var doVMNBooking = false
 
     override fun getLayout(): Int {
         return R.layout.activity_call_tracking
@@ -85,6 +86,7 @@ class CallTrackingActivity :
         experienceCode = intent.getStringExtra("expCode")
         itemInCartStatus = intent.getBooleanExtra("itemInCartStatus",false)
         vmnSelectionForCart = intent.getBooleanExtra("vmnSelectionForCart", false)
+        doVMNBooking = intent.getBooleanExtra("doVMNBooking", false)
         fpid = intent.getStringExtra("fpid")
         isDeepLink = intent.getBooleanExtra("isDeepLink", false)
         deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
@@ -132,6 +134,7 @@ class CallTrackingActivity :
             bundle.putString("price",numberprice)
             bundle.putBoolean("itemInCartStatus",itemInCartStatus)
             bundle.putBoolean("vmnSelectionForCart", vmnSelectionForCart)
+            bundle.putBoolean("doVMNBooking", doVMNBooking)
             bundle.putString("number", blockedNumber)
             bundle.putString("bundleData", Gson().toJson(singleAddon))
             bundle.putDouble(

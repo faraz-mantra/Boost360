@@ -50,7 +50,7 @@
                 android:fontFamily="@font/bold"
                 android:lineHeight="22dp"
                 android:lineSpacingExtra="6dp"
-                android:text="Custom Domain"
+                android:text="Domain not selected yet"
                 android:textColor="#333333"
                 android:textFontWeight="400"
                 android:textSize="14sp"
@@ -58,30 +58,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/iconPencil"
-                android:layout_width="@dimen/dimen_16dp"
-                android:layout_height="@dimen/dimen_16dp"
-                android:layout_marginStart="8dp"
-                android:src="@drawable/ic_edit_pencil"
-                android:tint="@color/colorAccent1"
-                app:layout_constraintBottom_toBottomOf="@id/tv_title_domain"
-                app:layout_constraintStart_toEndOf="@id/tv_title_domain"
-                app:layout_constraintTop_toTopOf="@id/tv_title_domain" />
 
             <TextView
                 android:id="@+id/tv_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="8dp"
+                android:textFontWeight="700"
+                android:padding="10dp"
                 android:fontFamily="@font/regular"
+                android:drawableStart="@drawable/pencilsimple"
                 android:text="@string/edit_underline"
                 android:textColor="@color/colorAccent1"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/tv_title_domain"
-                app:layout_constraintStart_toEndOf="@id/iconPencil"
+                app:layout_constraintStart_toEndOf="@id/tv_title_domain"
                 app:layout_constraintTop_toTopOf="@id/tv_title_domain" />
 
             <TextView
@@ -99,6 +90,22 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_title_domain" />
+
+            <TextView
+                android:id="@+id/domain_select_red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textFontWeight="700"
+                android:layout_marginEnd="20dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:textSize="14sp"
+                android:fontFamily="@font/bold"
+                android:textColor="@color/not_available_text_color"
+                android:text="@string/select_underline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
@@ -143,7 +150,7 @@
                 android:fontFamily="@font/bold"
                 android:lineHeight="22dp"
                 android:lineSpacingExtra="6dp"
-                android:text="+91 8012-345-673"
+                android:text="VMN not selected yet"
                 android:textColor="#333333"
                 android:textFontWeight="400"
                 android:textSize="14sp"
@@ -151,30 +158,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/iconPencilNumber"
-                android:layout_width="@dimen/dimen_16dp"
-                android:layout_height="@dimen/dimen_16dp"
-                android:layout_marginStart="8dp"
-                android:src="@drawable/ic_edit_pencil"
-                android:tint="@color/colorAccent1"
-                app:layout_constraintBottom_toBottomOf="@id/tv_title_number"
-                app:layout_constraintStart_toEndOf="@id/tv_title_number"
-                app:layout_constraintTop_toTopOf="@id/tv_title_number" />
-
             <TextView
                 android:id="@+id/tv_edit_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="8dp"
+                android:textFontWeight="700"
+                android:padding="10dp"
                 android:fontFamily="@font/regular"
+                android:drawableStart="@drawable/pencilsimple"
                 android:text="@string/edit_underline"
                 android:textColor="@color/colorAccent1"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/tv_title_number"
-                app:layout_constraintStart_toEndOf="@id/iconPencilNumber"
+                app:layout_constraintStart_toEndOf="@id/tv_title_number"
                 app:layout_constraintTop_toTopOf="@id/tv_title_number" />
 
             <TextView
@@ -192,6 +189,22 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_title_number" />
+
+            <TextView
+                android:id="@+id/vmn_select_red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textFontWeight="700"
+                android:layout_marginEnd="20dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:textSize="14sp"
+                android:fontFamily="@font/bold"
+                android:textColor="@color/not_available_text_color"
+                android:text="@string/select_underline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
@@ -218,15 +231,17 @@
         android:layout_marginHorizontal="@dimen/pad_20dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="@dimen/pad_20dp"
-        android:background="@drawable/cta_button_click_effect"
+        android:background="@drawable/cta_white_button_bg"
         android:fontFamily="@font/semi_bold"
         android:gravity="center"
         android:paddingStart="@dimen/_30sdp"
         android:paddingTop="15dp"
         android:paddingEnd="@dimen/_30sdp"
-        android:paddingBottom="15dp"
+        android:paddingBottom="16dp"
         android:text="Continute to cart"
-        android:textColor="@color/white"
+        android:textColor="@color/colorAccent1"
+        android:textFontWeight="700"
+        android:textSize="@dimen/txt_16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/reviewSelectionNumberLayout" />
 

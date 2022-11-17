@@ -41,24 +41,40 @@ class NewAddonsAdapter(
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
 
-        if(upgradeList.get(position).feature_code.equals("DOMAINPURCHASE") && upgradeList.get(position).name!!.contains(".")){
+        if(upgradeList.get(position).feature_code.equals("DOMAINPURCHASE")
+            && upgradeList.get(position).name!!.contains(".")){
             holder.name.setText(upgradeList.get(position).name)
             holder.name.setTypeface(ResourcesCompat.getFont(context, R.font.bold))
             holder.notify.visibility = View.GONE
             val prefs = SharedPrefs(activity)
             if(prefs.getDomainOrderType() == 0)
                 holder.edit.visibility = View.VISIBLE
+            else{
+                holder.edit.visibility = View.GONE
+            }
+        }else if((upgradeList.get(position).feature_code.equals("CALLTRACKER")
+            || upgradeList.get(position).feature_code.equals("IVR"))
+            && upgradeList.get(position).name!!.contains("[0-9]".toRegex())){
+            holder.name.setText(upgradeList.get(position).name)
+            holder.name.setTypeface(ResourcesCompat.getFont(context, R.font.bold))
+            holder.notify.visibility = View.GONE
+            val prefs = SharedPrefs(activity)
+            if(!prefs.getSelectedVMNName().isNullOrEmpty())
+                holder.edit.visibility = View.VISIBLE
             else
                 holder.edit.visibility = View.GONE
-        }else{
-            if(upgradeList.get(position).feature_code.equals("DOMAINPURCHASE")){
-                holder.notify.visibility = View.VISIBLE
-            }else{
-                holder.notify.visibility = View.GONE
-            }
+        }else {
             holder.edit.visibility = View.GONE
             holder.name.setText(upgradeList.get(position).name)
             holder.name.setTypeface(ResourcesCompat.getFont(context, R.font.regular))
+
+            if(upgradeList.get(position).feature_code.equals("DOMAINPURCHASE")){
+                holder.notify.visibility = View.VISIBLE
+            }
+            if(upgradeList.get(position).feature_code.equals("CALLTRACKER")
+                || upgradeList.get(position).feature_code.equals("IVR")){
+                holder.notify.visibility = View.VISIBLE
+            }
         }
 
         Glide.with(context).load(upgradeList.get(position).primary_image).into(holder.image)

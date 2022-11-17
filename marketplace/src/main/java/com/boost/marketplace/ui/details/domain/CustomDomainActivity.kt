@@ -64,6 +64,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
     var allDomainsList: List<Domain>? = null
     var itemInCartStatus = false
     var doDomainBooking = false
+    var domainSelectionForPack = false
      var  result:Boolean? = null
     lateinit var customDomainListAdapter1: CustomDomainListAdapter1
     lateinit var customDomainListAdapter: CustomDomainListAdapter
@@ -91,6 +92,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         experienceCode = intent.getStringExtra("expCode")
         fpid = intent.getStringExtra("fpid")
         doDomainBooking = intent.getBooleanExtra("doDomainBooking", false)
+        domainSelectionForPack = intent.getBooleanExtra("domainSelectionForPack", false)
         isDeepLink = intent.getBooleanExtra("isDeepLink", false)
         itemInCartStatus = intent.getBooleanExtra("itemInCartStatus",false)
         deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
@@ -112,7 +114,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         prefs = SharedPrefs(this)
 
 
-        if(doDomainBooking){
+        if(doDomainBooking || domainSelectionForPack){
             binding?.tvSkipTocart?.visibility = View.GONE
         }else {
             binding?.tvSkipTocart?.visibility = View.VISIBLE

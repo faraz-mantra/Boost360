@@ -217,7 +217,7 @@ class ComparePacksV3Activity :
                 }
                 args.putString("profileUrl", profileUrl)
                 dialogCard.arguments = args
-                this.supportFragmentManager.let { dialogCard.show(it, com.boost.cart.ui.popup.FeatureDetailsPopup::class.java.name) }
+                this.supportFragmentManager.let { dialogCard.show(it, FeatureDetailsPopup::class.java.name) }
             } else {
                 // Move without popup
 
@@ -1117,6 +1117,10 @@ class ComparePacksV3Activity :
 
     override fun featureDetailsPopup(domain: String) {
         prefs.storeSelectedDomainName(domain)
+    }
+
+    override fun featureDetailsPopup1(vmn: String) {
+        prefs.storeSelectedVMNName(vmn)
     }
 
     private fun getAlreadyPurchasedDomain() {

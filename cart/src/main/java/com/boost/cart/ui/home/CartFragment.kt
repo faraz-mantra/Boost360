@@ -256,6 +256,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         if (!prefs.getSelectedDomainName().isNullOrEmpty() && ::cartPackageAdaptor.isInitialized) {
             cartPackageAdaptor.selectedDomain(prefs.getSelectedDomainName()!!)
         }
+        if (!prefs.getSelectedVMNName().isNullOrEmpty() && ::cartPackageAdaptor.isInitialized) {
+            cartPackageAdaptor.selectedVmn(prefs.getSelectedVMNName()!!)
+        }
 //        initMvvM()
     }
 
