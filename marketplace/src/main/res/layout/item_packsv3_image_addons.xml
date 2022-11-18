@@ -16,6 +16,7 @@
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_margin="30dp"
+            tools:visibility="gone"
             android:src="@drawable/ic_pack_tick" />
 
         <ImageView
@@ -23,7 +24,17 @@
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_margin="30dp"
+            tools:visibility="gone"
             android:src="@drawable/ic_nopack" />
+
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:gravity="center"
+            tools:text="100"
+            android:fontFamily="@font/bold"
+            android:textColor="@color/black"/>
     </LinearLayout>
 </layout>
 
