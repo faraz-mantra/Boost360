@@ -116,7 +116,7 @@ class AddonsCategoryAdapter(
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({
-          holder.title.setText(upgradeList.get(position) + " (" + it + ")")
+          holder.title.setText(upgradeList.get(position) + " (" + (if(upgradeList.get(position).equals("Content Management")) it-1 else it) + ")")
         }, {
           it.printStackTrace()
         })
