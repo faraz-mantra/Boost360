@@ -379,7 +379,7 @@ class ComparePacksV3Activity :
             })
             popup.show() //showing popup menu
         }
-        
+
     }
 
     fun removeOtherBundlesAndAddExistingBundle(addonsListInCart: List<String>){
@@ -826,10 +826,20 @@ class ComparePacksV3Activity :
             for (singleFeature in featuresList!!) {
                 if(singleAllList.equals(singleFeature.feature_code)){
                     val temp = ArrayList<AddonsPacksIn>()
-                    for(singleBundle in bundleList){
-                        temp.add(AddonsPacksIn(
-                            singleBundle.name ?: "", false
-                        ))
+                    for (singleBundle in bundleList) {
+                        var count = 1
+                        if (singleFeature.widget_type.equals("UNITS") && singleFeature.extended_properties != null) {
+                            val tempUnits: List<ExtendedProperty> = Gson().fromJson(
+                                singleFeature.extended_properties,
+                                object : TypeToken<List<ExtendedProperty>>() {}.type
+                            )
+                            count = (tempUnits[0].value?:"1").toInt()
+                        }
+                        temp.add(
+                            AddonsPacksIn(
+                                singleBundle.name ?: "", false, count
+                            )
+                        )
                     }
                     addonsListTemp.add(
                         PackageAddonsCompares(
@@ -845,14 +855,15 @@ class ComparePacksV3Activity :
         bundleList.forEachIndexed { index, element ->
             for (singleFeatureCode in element.included_features) {
                 for ((index1, singleCompareFeature) in addonsListTemp.withIndex()) {
-                    if (singleFeatureCode.feature_code.equals(singleCompareFeature.featureCode)){
+                    if (singleFeatureCode.feature_code.equals(singleCompareFeature.featureCode)) {
                         val packAvaiList = addonsListTemp.get(index1).packsAvailableIn
-                            packAvaiList.set(index,
-                                AddonsPacksIn(
-                                    element.name ?: "", true
-                                )
+                        packAvaiList.set(
+                            index,
+                            AddonsPacksIn(
+                                packName = (element.name ?: ""), packageStatus = true, count = packAvaiList[index].count
                             )
-                            addonsListTemp.get(index1).packsAvailableIn = packAvaiList
+                        )
+                        addonsListTemp.get(index1).packsAvailableIn = packAvaiList
                     }
                 }
             }
