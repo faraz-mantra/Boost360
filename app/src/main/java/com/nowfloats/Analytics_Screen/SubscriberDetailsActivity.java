@@ -303,6 +303,7 @@ public class SubscriberDetailsActivity extends AppCompatActivity implements View
 
 
   private void showPopupWindow(View anchor) {
+    //
     View view = LayoutInflater.from(this).inflate(R.layout.popup_window_subscribers_menu, null);
     PopupWindow popupWindow = new PopupWindow(view, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
     LinearLayoutCompat more = popupWindow.getContentView().findViewById(R.id.ll_subscribers);
