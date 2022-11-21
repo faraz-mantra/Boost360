@@ -315,13 +315,13 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   }
 
   private fun addHashTagFunction() {
-    mSpannable = binding?.etUpdate?.text
+    mSpannable = binding.etUpdate.text
 
-    binding?.etUpdate?.addTextChangedListener(object : TextWatcher {
+    binding.etUpdate.addTextChangedListener(object : TextWatcher {
       override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
       override fun onTextChanged(short_text: CharSequence, start: Int, before: Int, count: Int) {
 
-        val text = binding?.etUpdate?.text.toString()
+        val text = binding.etUpdate.text.toString()
         var last_index = 0
         text.trim().split(Regex("\\s+")).forEach {
           Log.i(TAG, "addHashTagFunction: $it")

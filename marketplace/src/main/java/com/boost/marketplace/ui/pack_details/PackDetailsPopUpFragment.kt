@@ -98,6 +98,14 @@ class PackDetailsPopUpFragment : DialogFragment() {
 //            object : TypeToken<List<CartModel>>() {}.type
 //        )
 
+        binding.scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if(scrollY < 50){
+                binding.descContainer.visibility = View.VISIBLE
+            }else{
+                binding.descContainer.visibility = View.GONE
+            }
+        }
+
         howToUseAdapter = HowToUseAdapter(requireActivity(), java.util.ArrayList())
         faqAdapter = FAQAdapter(requireActivity(), java.util.ArrayList())
 //        dialog.behavior.isDraggable = true

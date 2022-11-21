@@ -61,7 +61,8 @@ import java.util.*
 
 class ComparePacksV3Activity :
     AppBaseActivity<ActivityComparePacksv3Binding, ComparePacksViewModel>(), PacksV3listener,
-    PacksV3FooterListener,AddonsListenerV3, CompareListener, AddonsListener, MarketPlacePopupListener {
+    PacksV3FooterListener, AddonsListenerV3, CompareListener, AddonsListener,
+    MarketPlacePopupListener {
 
     private var purchasedDomainType: String? = null
     private var purchasedDomainName: String? = null
@@ -97,7 +98,7 @@ class ComparePacksV3Activity :
     var selectedBundle: Bundles? = null
     var itemInCart = false
     var allowPackageToCart = true
-    var myPlanV3: MyPlanV3? = null
+//    var myPlanV3: MyPlanV3? = null
 
     val sameAddonsInCart = ArrayList<String>()
     val addonsListInCart = ArrayList<String>()
@@ -153,13 +154,16 @@ class ComparePacksV3Activity :
         packsv3Adapter = PacksV3Adapter(ArrayList(), this, this)
         packsv3footerAdapter = PacksV3FooterAdapter(ArrayList(), this, this)
         packsv3pricingAdapter = PacksV3PricingAdapter(ArrayList(), this)
-        packsAddonsAdapter = PacksAddonsV3Adapter(ArrayList(), this,this)
+        packsAddonsAdapter = PacksAddonsV3Adapter(ArrayList(), this, this)
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window: Window = this.window
-            WindowInsetsControllerCompat(window, window.decorView).setAppearanceLightStatusBars(false)
-            window.statusBarColor = ResourcesCompat.getColor(resources, com.boost.cart.R.color.common_text_color, null)
+            WindowInsetsControllerCompat(window, window.decorView).setAppearanceLightStatusBars(
+                false
+            )
+            window.statusBarColor =
+                ResourcesCompat.getColor(resources, com.boost.cart.R.color.common_text_color, null)
         }
 
         initMvvm()
@@ -174,16 +178,16 @@ class ComparePacksV3Activity :
 
         //Add to cart..
         binding?.buyPack?.setOnClickListener {
-            if(!allowPackageToCart){
-                    val arg = Bundle()
-                    arg.putBoolean("allowPackageToCart", allowPackageToCart)
-                    callTrackingHelpBottomSheet.arguments = arg
-                    callTrackingHelpBottomSheet.show(
-                        supportFragmentManager,
-                        CallTrackingHelpBottomSheet::class.java.name
-                    )
-                return@setOnClickListener
-            }
+//            if(!allowPackageToCart){
+//                    val arg = Bundle()
+//                    arg.putBoolean("allowPackageToCart", allowPackageToCart)
+//                    callTrackingHelpBottomSheet.arguments = arg
+//                    callTrackingHelpBottomSheet.show(
+//                        supportFragmentManager,
+//                        CallTrackingHelpBottomSheet::class.java.name
+//                    )
+//                return@setOnClickListener
+//            }
             if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) {
                 // show Popup
                 val dialogCard = FeatureDetailsPopup(this, this, this)
@@ -217,7 +221,12 @@ class ComparePacksV3Activity :
                 }
                 args.putString("profileUrl", profileUrl)
                 dialogCard.arguments = args
-                this.supportFragmentManager.let { dialogCard.show(it, com.boost.cart.ui.popup.FeatureDetailsPopup::class.java.name) }
+                this.supportFragmentManager.let {
+                    dialogCard.show(
+                        it,
+                        com.boost.cart.ui.popup.FeatureDetailsPopup::class.java.name
+                    )
+                }
             } else {
                 // Move without popup
 
@@ -238,7 +247,7 @@ class ComparePacksV3Activity :
                             .subscribe(
                                 {
 
-                                    if(cartList != null) {
+                                    if (cartList != null) {
                                         //same features available in cart
                                         for (singleItem in cartList!!) {
                                             for (singleFeature in it) {
@@ -254,15 +263,25 @@ class ComparePacksV3Activity :
                                         }
                                     }
 
-                                    if(sameAddonsInCart.size > 0){
-                                        val removeFeatureBottomSheet = RemoveFeatureBottomSheet(this, this, null)
+                                    if (sameAddonsInCart.size > 0) {
+                                        val removeFeatureBottomSheet =
+                                            RemoveFeatureBottomSheet(this, this, null)
                                         val args = Bundle()
                                         args.putStringArrayList("addonNames", sameAddonsInCart)
-                                        args.putStringArrayList("addonsListInCart", addonsListInCart)
-                                        args.putString("packageDetails", Gson().toJson(selectedBundle!!))
+                                        args.putStringArrayList(
+                                            "addonsListInCart",
+                                            addonsListInCart
+                                        )
+                                        args.putString(
+                                            "packageDetails",
+                                            Gson().toJson(selectedBundle!!)
+                                        )
                                         removeFeatureBottomSheet.arguments = args
-                                        removeFeatureBottomSheet.show(supportFragmentManager, RemoveFeatureBottomSheet::class.java.name)
-                                    }else {
+                                        removeFeatureBottomSheet.show(
+                                            supportFragmentManager,
+                                            RemoveFeatureBottomSheet::class.java.name
+                                        )
+                                    } else {
                                         var bundleMonthlyMRP = 0.0
                                         val minMonth: Int =
                                             if (!prefs.getYearPricing() && selectedBundle!!.min_purchase_months != null && selectedBundle!!.min_purchase_months!! > 1) selectedBundle!!.min_purchase_months!! else 1
@@ -273,13 +292,14 @@ class ComparePacksV3Activity :
                                                     bundleMonthlyMRP += RootUtil.round(
                                                         singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0),
                                                         2
-                                                    )* minMonth
+                                                    ) * minMonth
                                                 }
                                             }
                                         }
 
                                         if (selectedBundle!!.overall_discount_percent > 0)
-                                            offeredBundlePrice = originalBundlePrice - (originalBundlePrice * selectedBundle!!.overall_discount_percent / 100)
+                                            offeredBundlePrice =
+                                                originalBundlePrice - (originalBundlePrice * selectedBundle!!.overall_discount_percent / 100)
                                         else
                                             offeredBundlePrice = originalBundlePrice
 
@@ -379,12 +399,13 @@ class ComparePacksV3Activity :
             })
             popup.show() //showing popup menu
         }
-        
+
     }
 
-    fun removeOtherBundlesAndAddExistingBundle(addonsListInCart: List<String>){
+    fun removeOtherBundlesAndAddExistingBundle(addonsListInCart: List<String>) {
         Completable.fromAction {
-            AppDatabase.getInstance(Application())!!.cartDao().deleteCartItemsInList(addonsListInCart)
+            AppDatabase.getInstance(Application())!!.cartDao()
+                .deleteCartItemsInList(addonsListInCart)
         }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -422,7 +443,7 @@ class ComparePacksV3Activity :
         //clear previous existing data
         sameAddonsInCart.clear()
         addonsListInCart.clear()
-        if(upgradeList!=null) {
+        if (upgradeList != null) {
             viewModel.getCartItems()
         }
     }
@@ -436,7 +457,9 @@ class ComparePacksV3Activity :
         val pref = this.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
         val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
         val code: String =
-            if (experienceCode.isNullOrEmpty()) UserSessionManager(this).fP_AppExperienceCode!! else UserSessionManager(this).fP_AppExperienceCode!!
+            if (experienceCode.isNullOrEmpty()) UserSessionManager(this).fP_AppExperienceCode!! else UserSessionManager(
+                this
+            ).fP_AppExperienceCode!!
         if (!code.equals("null", true)) {
             viewModel.setCurrentExperienceCode(code, fpTag!!)
         }
@@ -450,29 +473,30 @@ class ComparePacksV3Activity :
     }
 
     private fun initMvvm() {
-        viewModel.myplanResultV3().observe(this, androidx.lifecycle.Observer {
-            if (it != null){
-                binding?.packsData?.visibility=View.VISIBLE
-                binding?.shimmerViewPacksv3?.visibility=View.GONE
-                myPlanV3 = it
-                getAllowPackageToCart()
-            } else{
-                binding?.packsData?.visibility=View.GONE
-                binding?.shimmerViewPacksv3?.visibility=View.VISIBLE
-            }
-        })
+//        viewModel.myplanResultV3().observe(this, androidx.lifecycle.Observer {
+//            if (it != null){
+//                binding?.packsData?.visibility=View.VISIBLE
+//                binding?.shimmerViewPacksv3?.visibility=View.GONE
+//                myPlanV3 = it
+//                //disabling marketplace gaps
+//                //getAllowPackageToCart()
+//            } else{
+//                binding?.packsData?.visibility=View.GONE
+//                binding?.shimmerViewPacksv3?.visibility=View.VISIBLE
+//            }
+//        })
 
         viewModel.PurchasedDomainResponse().observe(this) {
             purchasedDomainName = it.domainName
             purchasedDomainType = it.domainType
-            if(it.domainName != null && it.domainType != null) {
-                if(!(it.domainName.contains("null") || it.domainType.contains("null"))) {
+            if (it.domainName != null && it.domainType != null) {
+                if (!(it.domainName.contains("null") || it.domainType.contains("null"))) {
                     prefs.storeDomainOrderType(1)
                     prefs.storeSelectedDomainName(it.domainName + it.domainType)
                 }
             }
             //  viewModel.addItemToCart1(singleAddon, this, it.domainName + it.domainType)
-         //   viewModel.getCartItems
+            //   viewModel.getCartItems
         }
 
         viewModel.getAllFeatures().observe(this, {
@@ -510,7 +534,7 @@ class ComparePacksV3Activity :
                     var originalText = selectedBundle?.name
                     originalText = originalText?.lowercase(Locale.getDefault())
                     binding?.buyPack?.text = "Buy " + originalText
-                  //  binding?.buyPack?.setText("Buy ${selectedBundle!!.name}".toLowerCase())
+                    //  binding?.buyPack?.setText("Buy ${selectedBundle!!.name}".toLowerCase())
                     binding?.buyPack?.isClickable = true
                 } else {
                     binding?.buyPack?.background = ContextCompat.getDrawable(
@@ -552,6 +576,13 @@ class ComparePacksV3Activity :
         })
 
         viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
+            if (it != null) {
+                binding?.packsData?.visibility = View.VISIBLE
+                binding?.shimmerViewPacksv3?.visibility = View.GONE
+            } else {
+                binding?.packsData?.visibility = View.GONE
+                binding?.shimmerViewPacksv3?.visibility = View.VISIBLE
+            }
             viewModel.getCartItems()
             if (it != null && it.size > 0) {
                 val listItem = arrayListOf<Bundles>()
@@ -569,7 +600,7 @@ class ComparePacksV3Activity :
                         item.how_to_activate,
                         object : TypeToken<List<HowToActivate>>() {}.type
                     )
-                    val benefits = if(item.benefits != null) Gson().fromJson<List<String>>(
+                    val benefits = if (item.benefits != null) Gson().fromJson<List<String>>(
                         item.benefits!!,
                         object : TypeToken<List<String>>() {}.type
                     ) else arrayListOf()
@@ -599,10 +630,10 @@ class ComparePacksV3Activity :
                     this.selectedBundle = listItem.get(0)
 
                     // call myplanV3 after Bundle call
-                    viewModel.myPlanV3Status(
-                        intent.getStringExtra("fpid") ?: "",
-                        "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
-                    )
+//                    viewModel.myPlanV3Status(
+//                        intent.getStringExtra("fpid") ?: "",
+//                        "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+//                    )
 
                     var bundleMonthlyMRP = 0.0
                     val minMonth: Int =
@@ -629,16 +660,16 @@ class ComparePacksV3Activity :
                     else
                         offeredBundlePrice = originalBundlePrice
 
-                    if ( listItem.get(1).frequently_asked_questions != null) {
-                       binding?.faqContainer?.visibility = View.VISIBLE
+                    if (listItem.get(1).frequently_asked_questions != null) {
+                        binding?.faqContainer?.visibility = View.VISIBLE
                         updateFAQRecycler(listItem.get(1).frequently_asked_questions!!)
 //                        faqAdapter.addupdates(faq)
 //                        faqAdapter.notifyDataSetChanged()
                     }
-            //        listItem.get(1).frequently_asked_questions?.let { it1 -> updateFAQRecycler(it1) }
-            //        listItem.get(1).how_to_activate?.let { it1 -> updateHowToUseRecycler(it1) }
+                    //        listItem.get(1).frequently_asked_questions?.let { it1 -> updateFAQRecycler(it1) }
+                    //        listItem.get(1).how_to_activate?.let { it1 -> updateHowToUseRecycler(it1) }
 
-                    if ( listItem.get(1).how_to_activate != null) {
+                    if (listItem.get(1).how_to_activate != null) {
                         binding?.howToUseContainer?.visibility = View.VISIBLE
                         updateHowToUseRecycler(listItem.get(1).how_to_activate!!)
 //                        faqAdapter.addupdates(faq)
@@ -661,7 +692,7 @@ class ComparePacksV3Activity :
         })
 
         viewModel.addedToCartResult().observe(this, Observer {
-            if(it){
+            if (it) {
                 val intent = Intent(
                     applicationContext,
                     CartActivity::class.java
@@ -696,19 +727,19 @@ class ComparePacksV3Activity :
         })
     }
 
-    private fun getAllowPackageToCart() {
-        allowPackageToCart = true
-        val tempList = arrayListOf<String>()
-        for (item in selectedBundle!!.included_features){
-            tempList.add(item.feature_code)
-        }
-        for(singleItem in myPlanV3!!.Result){
-            if(tempList.contains(singleItem.FeatureDetails.FeatureKey) && singleItem.FeatureDetails.FeatureState != 7){
-                allowPackageToCart = false
-                break
-            }
-        }
-    }
+//    private fun getAllowPackageToCart() {
+//        allowPackageToCart = true
+//        val tempList = arrayListOf<String>()
+//        for (item in selectedBundle!!.included_features){
+//            tempList.add(item.feature_code)
+//        }
+//        for(singleItem in myPlanV3!!.Result){
+//            if(tempList.contains(singleItem.FeatureDetails.FeatureKey) && singleItem.FeatureDetails.FeatureState != 7){
+//                allowPackageToCart = false
+//                break
+//            }
+//        }
+//    }
 
     private fun initializeHowToUseRecycler() {
         val gridLayoutManager = GridLayoutManager(applicationContext, 1)
@@ -773,7 +804,7 @@ class ComparePacksV3Activity :
         var originalText = list.get(0).name
         originalText = originalText?.lowercase(Locale.getDefault())
         binding?.buyPack?.text = "Buy " + originalText
-       // binding?.buyPack?.setText("Buy ${list.get(0).name}".toLowerCase())
+        // binding?.buyPack?.setText("Buy ${list.get(0).name}".toLowerCase())
         binding?.buyPack?.isClickable = true
     }
 
@@ -805,22 +836,32 @@ class ComparePacksV3Activity :
         val addonsListTemp = ArrayList<PackageAddonsCompares>()
         val totalList = ArrayList<String>()
         //get total listing for all the packages
-        for(singleBundle in bundleList){
+        for (singleBundle in bundleList) {
             for (singleFeatureCode in singleBundle.included_features) {
-                if(!totalList.contains(singleFeatureCode.feature_code)){
+                if (!totalList.contains(singleFeatureCode.feature_code)) {
                     totalList.add(singleFeatureCode.feature_code)
                 }
             }
         }
         //create skeleton for all addons
-        for(singleAllList in totalList){
+        for (singleAllList in totalList) {
             for (singleFeature in featuresList!!) {
-                if(singleAllList.equals(singleFeature.feature_code)){
+                if (singleAllList.equals(singleFeature.feature_code)) {
                     val temp = ArrayList<AddonsPacksIn>()
-                    for(singleBundle in bundleList){
-                        temp.add(AddonsPacksIn(
-                            singleBundle.name ?: "", false
-                        ))
+                    for (singleBundle in bundleList) {
+                        var count = 1
+                        if (singleFeature.widget_type.equals("UNITS") && singleFeature.extended_properties != null) {
+                            val tempUnits: List<ExtendedProperty> = Gson().fromJson(
+                                singleFeature.extended_properties,
+                                object : TypeToken<List<ExtendedProperty>>() {}.type
+                            )
+                            count = (tempUnits[0].value?:"1").toInt()
+                        }
+                        temp.add(
+                            AddonsPacksIn(
+                                singleBundle.name ?: "", false, count
+                            )
+                        )
                     }
                     addonsListTemp.add(
                         PackageAddonsCompares(
@@ -836,14 +877,15 @@ class ComparePacksV3Activity :
         bundleList.forEachIndexed { index, element ->
             for (singleFeatureCode in element.included_features) {
                 for ((index1, singleCompareFeature) in addonsListTemp.withIndex()) {
-                    if (singleFeatureCode.feature_code.equals(singleCompareFeature.featureCode)){
+                    if (singleFeatureCode.feature_code.equals(singleCompareFeature.featureCode)) {
                         val packAvaiList = addonsListTemp.get(index1).packsAvailableIn
-                            packAvaiList.set(index,
-                                AddonsPacksIn(
-                                    element.name ?: "", true
-                                )
+                        packAvaiList.set(
+                            index,
+                            AddonsPacksIn(
+                                packName = (element.name ?: ""), packageStatus = true, count = packAvaiList[index].count
                             )
-                            addonsListTemp.get(index1).packsAvailableIn = packAvaiList
+                        )
+                        addonsListTemp.get(index1).packsAvailableIn = packAvaiList
                     }
                 }
             }
@@ -897,7 +939,7 @@ class ComparePacksV3Activity :
         }
         args.putString("profileUrl", profileUrl)
         args.putString("fpid", fpid)
-        args.putString("expCode",experienceCode)
+        args.putString("expCode", experienceCode)
         args.putString("bundleData", Gson().toJson(item))
         args.putDouble("price", offeredBundlePrice)
         args.putDouble("price1", originalBundlePrice)
@@ -912,7 +954,8 @@ class ComparePacksV3Activity :
     override fun onSelectedPack(selectedBundle: Bundles, itemList1: List<CartModel>?) {
         itemInCart = false
         this.selectedBundle = selectedBundle
-        getAllowPackageToCart()
+        //disabling marketplace gaps
+        //getAllowPackageToCart()
 
         var bundleMonthlyMRP = 0.0
         val minMonth: Int =
@@ -939,28 +982,28 @@ class ComparePacksV3Activity :
         else
             offeredBundlePrice = originalBundlePrice
 
-       // binding?.buyPack?.text = "Buy" + selectedBundle.name?.toLowerCase()
+        // binding?.buyPack?.text = "Buy" + selectedBundle.name?.toLowerCase()
         var originalText = selectedBundle.name
         originalText = originalText?.lowercase(Locale.getDefault())
         binding?.buyPack?.text = "Buy " + originalText
 //        selectedBundle.how_to_activate?.let { updateHowToUseRecycler(it) }
 //        howToUseAdapter.notifyDataSetChanged()
 
-        if ( selectedBundle.how_to_activate != null) {
+        if (selectedBundle.how_to_activate != null) {
             binding?.howToUseContainer?.visibility = View.VISIBLE
             updateHowToUseRecycler(selectedBundle.how_to_activate!!)
             howToUseAdapter.addupdates(selectedBundle.how_to_activate!!)
             howToUseAdapter.notifyDataSetChanged()
         }
 
-        if ( selectedBundle.frequently_asked_questions != null) {
+        if (selectedBundle.frequently_asked_questions != null) {
             binding?.faqContainer?.visibility = View.VISIBLE
             updateFAQRecycler(selectedBundle.frequently_asked_questions!!)
-                        faqAdapter.addupdates(selectedBundle.frequently_asked_questions!!)
-                        faqAdapter.notifyDataSetChanged()
+            faqAdapter.addupdates(selectedBundle.frequently_asked_questions!!)
+            faqAdapter.notifyDataSetChanged()
         }
-     //   selectedBundle?.frequently_asked_questions?.let { updateFAQRecycler(it) }
-    //    faqAdapter.notifyDataSetChanged()
+        //   selectedBundle?.frequently_asked_questions?.let { updateFAQRecycler(it) }
+        //    faqAdapter.notifyDataSetChanged()
 
         if (cartList?.size!! > 0) {
             if (cartList != null) {
@@ -982,7 +1025,7 @@ class ComparePacksV3Activity :
             var originalText = selectedBundle.name
             originalText = originalText?.lowercase(Locale.getDefault())
             binding?.buyPack?.text = "Buy " + originalText
-          //  binding?.buyPack?.setText("Buy ${selectedBundle!!.name}".toLowerCase())
+            //  binding?.buyPack?.setText("Buy ${selectedBundle!!.name}".toLowerCase())
             binding?.buyPack?.isClickable = true
         } else {
             binding?.buyPack?.background = ContextCompat.getDrawable(
@@ -998,7 +1041,7 @@ class ComparePacksV3Activity :
     }
 
     override fun onPaidAddonsClicked(item: String) {
-        val packagePopup = ComparePacksV3AddonsPopUpFragment( )
+        val packagePopup = ComparePacksV3AddonsPopUpFragment()
         val args = Bundle()
 
         args.putString("fpid", fpid)
@@ -1115,7 +1158,8 @@ class ComparePacksV3Activity :
         val auth = UserSessionManager(this).getAccessTokenAuth()?.barrierToken() ?: ""
         viewModel.getAlreadyPurchasedDomain(
             auth,
-            fpTag?:"",
-            "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
+            fpTag ?: "",
+            "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+        )
     }
 }
