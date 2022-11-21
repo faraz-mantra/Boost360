@@ -65,9 +65,9 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   override fun onCreateView() {
     setOnClickListener(binding?.textAdd, binding?.buttonReviewDetails, binding?.tvPaymentStatus, binding?.textEdit)
     orderInitiateRequest = arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
-    totalPrice = arguments?.getDouble(IntentConstant.TOTAL_PRICE.name) ?: 0.0
-    totalGst = MathUtils.calculateGST(totalPrice, (arguments?.getDouble(IntentConstant.GST_SLAB.name) ?: 0.0).roundToInt())
     discountedPrice = arguments?.getDouble(IntentConstant.DISCOUNTED_PRICE.name) ?: 0.0
+    totalPrice = arguments?.getDouble(IntentConstant.TOTAL_PRICE.name) ?: 0.0
+    totalGst = MathUtils.calculateGST(discountedPrice, (arguments?.getDouble(IntentConstant.GST_SLAB.name) ?: 0.0).roundToInt())
     selectedService = arguments?.getSerializable(IntentConstant.SELECTED_SERVICE.name) as ServiceItem
     prefData = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     // orderInitiateRequest?.sellerID = preferenceData?.fpTag.toString()
@@ -97,7 +97,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     binding?.textGstAmount?.text =
       "${selectedService?.Currency} ${totalGst}"
     // binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${(discountedPrice + calculateGST(discountedPrice))}"
-    binding?.textTotalPayableValue?.text = "${selectedService?.Currency} $discountedPrice"
+    binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${discountedPrice + totalGst}"
 
 
     if (orderInitiateRequest?.buyerDetails?.GSTIN != null && orderInitiateRequest?.buyerDetails?.GSTIN?.isNotEmpty() == true) {

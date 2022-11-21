@@ -200,19 +200,20 @@
           android:textColor="#747474" />
 
         <EditText
-          android:id="@+id/widget_snippet"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/_100sdp"
-          android:layout_marginStart="@dimen/_15sdp"
-          android:layout_marginTop="@dimen/_5sdp"
-          android:layout_marginEnd="@dimen/_15sdp"
-          android:background="@drawable/edittext_bg_elevated"
-          android:elevation="@dimen/_2sdp"
-          android:fontFamily="@font/regular"
-          android:gravity="top"
-          android:hint="@string/paste_your_script_here"
-          android:textColor="#747474"
-          android:textSize="@dimen/_12sdp" />
+            android:id="@+id/widget_snippet"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:background="@drawable/edittext_bg_elevated"
+            android:elevation="@dimen/_2sdp"
+            android:fontFamily="@font/regular"
+            android:gravity="top"
+            android:hint="@string/paste_your_script_here"
+            android:padding="@dimen/pad_8dp"
+            android:textColor="#747474"
+            android:textSize="@dimen/_12sdp" />
 
         <TextView
           android:id="@+id/save_button"
