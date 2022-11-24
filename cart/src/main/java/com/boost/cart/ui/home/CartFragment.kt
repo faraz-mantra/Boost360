@@ -1976,7 +1976,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
             widgetList.add(
                 com.boost.dbcenterapi.data.renewalcart.Widget(
                     it.item_id,
-                    it.boost_widget_key
+                    it.feature_code
                 )
             )
         }
@@ -2157,7 +2157,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     if (outputExtendedPropsRenew.size > 0) outputExtendedPropsRenew else null,
                     1,
                     "MONTHLY",
-                    item.boost_widget_key
+                    item.feature_code
                         ?: "",
                     item.item_id
                 )
@@ -2532,7 +2532,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     if (outputExtendedProps1.size > 0) outputExtendedProps1 else null,
                     1,
                     "MONTHLY",
-                    item.boost_widget_key
+                    item.feature_code
                         ?: "",
                     item.item_id
                 )
@@ -2652,7 +2652,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                             if (outputExtendedProps.size > 0) outputExtendedProps else null,
                             net_quantity,
                             "MONTHLY",
-                            item.boost_widget_key!!,
+                            item.feature_code!!,
                             item.item_id
                         )
                     )
@@ -2733,7 +2733,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                                     if (outputExtendedProps.size > 0) outputExtendedProps else null,
                                                     1,
                                                     "MONTHLY",
-                                                    singleFeature.boost_widget_key,
+                                                    singleFeature.feature_code ?: "",
                                                     singleFeature.feature_id
                                                 )
                                             )
