@@ -624,8 +624,38 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     viewModel.getMerchantSummary(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session?.fpTag).observeOnce(this) {
       val response = it as? MerchantSummaryResponse
       val subscriber = response?.Entity?.firstOrNull()?.get("NoOfSubscribers")
-      val subTitle = if (subscriber == 0) {
+      /*val subTitle = if (subscriber == 0) {
         getString(R.string.no_recipients, 0)
+        }*/
+        saveTemplateAction(TemplateSaveActionBody.ActionType.UPDATE_CREATED,
+            template)
+        posterProgressSheet?.dismiss()
+        if (PreferencesUtils.instance.getData(
+                com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE,
+                true
+            )
+        ) {
+            InAppReviewUtils.showInAppReview(
+                this@PostPreviewSocialActivity,
+                InAppReviewUtils.Events.in_app_review_first_promo_update
+            )
+            PreferencesUtils.instance.saveData(
+                com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE,
+                false
+            )
+        }
+        PostSuccessBottomSheet.newInstance(posterImgPath, captionIntent)
+            .show(
+                supportFragmentManager,
+                PostSuccessBottomSheet::class.java.name
+            )
+    }
+    fun fetchSubscriberCount(){
+        viewModel.getMerchantSummary(clientId, session?.fpTag).observeOnce(this) {
+            val response = it as? MerchantSummaryResponse
+            val subscriber = response?.Entity?.firstOrNull()?.get("NoOfSubscribers")
+            val subTitle = if (subscriber == 0) {
+                getString(R.string.no_recipients, 0)
 
       } else {
         getString(R.string.placeholder_recipients, subscriber)
@@ -646,4 +676,5 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     }
   }
+}
 }
