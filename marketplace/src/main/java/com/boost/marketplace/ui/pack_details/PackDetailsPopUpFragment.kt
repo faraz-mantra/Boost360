@@ -101,7 +101,7 @@ class PackDetailsPopUpFragment : DialogFragment() {
         binding.scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if(scrollY < 50){
                 binding.descContainer.visibility = View.VISIBLE
-            }else{
+            }else if(scrollY > 200) {
                 binding.descContainer.visibility = View.GONE
             }
         }
