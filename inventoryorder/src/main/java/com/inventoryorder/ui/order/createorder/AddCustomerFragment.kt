@@ -208,7 +208,7 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
   }
 
   private fun setCityState(cityDataModel: CityDataModel) {
-    binding?.layoutBillingAddr?.editCity?.setText(cityDataModel.getCityName().capitalizeWords())
-    binding?.layoutBillingAddr?.editState?.setText(cityDataModel.getStateName().capitalizeWords())
+    binding?.layoutBillingAddr?.editCity?.setText(cityDataModel.getOriginalCityName())
+    binding?.layoutBillingAddr?.editState?.setText(cityDataModel.getOriginalStateName())
   }
 }
