@@ -98,4 +98,8 @@ class LoginSignUpViewModel : BaseViewModel() {
   fun getFirebaseToken(): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getFirebaseAuthToken().toLiveData()
   }
+
+  fun getUserLocation(locationUri: String): LiveData<BaseResponse>  {
+    return WithFloatTwoRepository.getUserLocation(locationUri).toLiveData()
+  }
 }

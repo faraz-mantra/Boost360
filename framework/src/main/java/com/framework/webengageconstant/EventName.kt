@@ -651,3 +651,6 @@ const val ADD_ON_GOTO_CART_CLICKED = "Addon_goto_cart_clicked"
 const val ADD_ONS_DETAILED_JOURNEY_CLICKED = "ADDONS_detailed_journey_Clicked"
 
 const val UPDATE_STUDIO_CLICK = "updates"
+const val SETUP_MY_WEBSITE_SCREEN_LOAD = "Setup_my_website_screen_load"
+const val SETUP_MY_WEBSITE_BUTTON_CLICK = "Setup_my_website_button_click"
+const val USER_LOCATION = "User_location_data"
