@@ -15,6 +15,7 @@ import com.boost.dbcenterapi.data.api_model.Edgecase.EdgeCases
 import com.boost.dbcenterapi.data.api_model.blockingAPI.BlockApi
 import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
 import com.boost.dbcenterapi.data.api_model.gst.Error
+import com.boost.dbcenterapi.data.api_model.vmn.PurchasedVmnResponse
 import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
@@ -44,6 +45,7 @@ class FeatureDetailsViewModel : BaseViewModel() {
     var edgecaseResult: MutableLiveData<EdgeCases> = MutableLiveData()
     var customDomainsResult: MutableLiveData<CustomDomains> = MutableLiveData()
     var purchasedDomainResult: MutableLiveData<PurchasedDomainResponse> = MutableLiveData()
+    var purchasedVmnResult: MutableLiveData<PurchasedVmnResponse> = MutableLiveData()
 
     lateinit var application: Application
     lateinit var lifecycleOwner: LifecycleOwner
@@ -90,6 +92,10 @@ class FeatureDetailsViewModel : BaseViewModel() {
 
     fun PurchasedDomainResponse(): LiveData<PurchasedDomainResponse> {
         return purchasedDomainResult
+    }
+
+    fun purchasedVmnResult(): LiveData<PurchasedVmnResponse> {
+        return purchasedVmnResult
     }
 
     fun setApplicationLifecycle(
@@ -226,7 +232,7 @@ class FeatureDetailsViewModel : BaseViewModel() {
             .doOnComplete {
                 updatesLoader.postValue(false)
                 //add cartitem to firebase
-                DataLoader.updateCartItemsToFirestore(application)
+              //  DataLoader.updateCartItemsToFirestore(application)
             }
             .doOnError {
                 updatesError.postValue(it.message)
@@ -315,6 +321,22 @@ class FeatureDetailsViewModel : BaseViewModel() {
                 .subscribe(
                     {
                         purchasedDomainResult.postValue(it)
+                        updatesLoader.postValue(false)
+                    },{
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
+    fun getAlreadyPurchasedVmn(auth: String, fpTag: String, clientId:String) {
+        updatesLoader.postValue(true)
+        compositeDisposable.add(
+            ApiService.getAlreadyPurchasedVmn(auth, fpTag, clientId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        purchasedVmnResult.postValue(it)
                         updatesLoader.postValue(false)
                     },{
                         updatesLoader.postValue(false)

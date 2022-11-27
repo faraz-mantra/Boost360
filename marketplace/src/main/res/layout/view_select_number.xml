@@ -19,6 +19,8 @@
     android:paddingEnd="@dimen/dimen_24dp"
     android:paddingBottom="@dimen/dimen_24dp"
     android:visibility="visible"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintBottom_toBottomOf="parent">
 
     <TextView
@@ -41,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/regular"
         android:gravity="center"
@@ -67,9 +69,12 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 android:src="@drawable/browser_background" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -90,9 +95,11 @@
                     android:paddingEnd="@dimen/_30sdp"
                     android:paddingBottom="@dimen/_10sdp"
                     android:textColor="#4A4A4A"
-                    android:text="+91 8012-345-673"
+                    tools:text="+91 8012-345-673"
                     android:textFontWeight="700"
                     android:textSize="30sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -125,14 +132,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/pad_20dp"
-                    android:layout_marginBottom="@dimen/pad_20dp"
                     android:background="@drawable/cta_button_click_effect"
                     android:fontFamily="@font/semi_bold"
+                    android:lineHeight="24dp"
                     android:gravity="center"
+                    android:textSize="@dimen/txt_16sp"
                     android:paddingStart="@dimen/_30sdp"
-                    android:paddingTop="15dp"
+                    android:paddingTop="12dp"
                     android:paddingEnd="@dimen/_30sdp"
-                    android:paddingBottom="15dp"
+                    android:paddingBottom="12dp"
                     android:text="Select above number"
                     android:textColor="@color/white"
                     app:layout_constraintTop_toBottomOf="@id/tv_explore_text_select_vmn" />
@@ -140,14 +148,17 @@
                 <TextView
                     android:id="@+id/selectVmnIwillDoItLater"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_margin="20dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="0.5"
+                    android:layout_marginHorizontal="@dimen/pad_20dp"
                     android:background="@drawable/cta_button_hollow"
                     android:fontFamily="@font/regular"
+                    android:layout_marginTop="17dp"
                     android:gravity="center"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
+                    android:paddingStart="@dimen/_30sdp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="@dimen/_30sdp"
+                    android:paddingBottom="12dp"
                     android:text="I’ll do it later"
                     android:textColor="@color/colorAccent1"
                     android:textFontWeight="700"

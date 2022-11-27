@@ -253,6 +253,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         super.onResume()
         Log.e("onResume", "onResume of LoginFragment")
         viewModel.updateRenewValue("")
+        initializePackageRecycler()
         if (!prefs.getSelectedDomainName().isNullOrEmpty() && ::cartPackageAdaptor.isInitialized) {
             cartPackageAdaptor.selectedDomain(prefs.getSelectedDomainName()!!)
         }
@@ -4123,12 +4124,28 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         prefs.storeSelectedDomainName(domain)
     }
 
+    override fun featureDetailsPopupvmn(vmn: String) {
+        cartPackageAdaptor.selectedVmn(vmn)
+        prefs.storeSelectedVMNName(vmn)
+    }
+
     override fun editSelectedDomain(bundleItem: CartModel) {
         featureDetailsPopUp(bundleItem)
     }
 
+    override fun editSelectedVmn(bundleItem: CartModel) {
+        featureDetailsPopUp1(bundleItem)
+    }
+
     override fun actionClick(bundleItem: CartModel) {
+        featureDetailsPopUp2(bundleItem)
+    }
+
+    override fun actionClickDomain(bundleItem: CartModel) {
         featureDetailsPopUp(bundleItem)
+
+    }override fun actionClickVmn(bundleItem: CartModel) {
+        featureDetailsPopUp1(bundleItem)
     }
 
     private fun featureDetailsPopUp(cartModel: CartModel) {
@@ -4165,7 +4182,146 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
             (activity as CartActivity).userPurchsedWidgets
         )
         args.putString("bundleData", Gson().toJson(selectedBundle))
+        args.putString("vmn","false")
         args.putString("fpid", (activity as CartActivity).fpid)
+        args.putString("expCode", (activity as CartActivity).experienceCode)
+        args.putBoolean("isDeepLink", (activity as CartActivity).isDeepLink)
+        args.putString("deepLinkViewType", (activity as CartActivity).deepLinkViewType)
+        args.putInt("deepLinkDay", (activity as CartActivity).deepLinkDay)
+        args.putBoolean("isOpenCardFragment", (activity as CartActivity).isOpenCardFragment)
+        args.putString(
+            "accountType",
+            (activity as CartActivity).accountType
+        )
+        args.putStringArrayList(
+            "userPurchsedWidgets",
+            (activity as CartActivity).userPurchsedWidgets
+        )
+        if ((activity as CartActivity).email != null) {
+            args.putString("email", (activity as CartActivity).email)
+        } else {
+            args.putString("email", "ria@nowfloats.com")
+        }
+        if ((activity as CartActivity).mobileNo != null) {
+            args.putString("mobileNo", (activity as CartActivity).mobileNo)
+        } else {
+            args.putString("mobileNo", "9160004303")
+        }
+        args.putString("profileUrl", (activity as CartActivity).profileUrl)
+        dialogCard.arguments = args
+        activity?.supportFragmentManager?.let {
+            dialogCard.show(
+                it,
+                FeatureDetailsPopup::class.java.name
+            )
+        }
+    }
+
+    private fun featureDetailsPopUp1(cartModel: CartModel) {
+        var selectedBundle: Bundles? = null
+        for (item in bundlesList) {
+            if (item.bundle_id == cartModel.item_id) {
+                val temp = Gson().fromJson<List<IncludedFeature>>(
+                    item.included_features,
+                    object : TypeToken<List<IncludedFeature>>() {}.type
+                )
+                selectedBundle = Bundles(
+                    item.bundle_id,
+                    temp,
+                    item.min_purchase_months,
+                    item.name,
+                    item.overall_discount_percent,
+                    PrimaryImage(item.primary_image),
+                    item.target_business_usecase,
+                    Gson().fromJson<List<String>>(
+                        item.exclusive_to_categories,
+                        object : TypeToken<List<String>>() {}.type
+                    ),
+                    null, null, null, null, null, item.desc
+                )
+                break
+            }
+        }
+
+        val dialogCard = FeatureDetailsPopup(this)
+        val args = Bundle()
+        args.putString("expCode", (activity as CartActivity).experienceCode)
+        args.putStringArrayList(
+            "userPurchsedWidgets",
+            (activity as CartActivity).userPurchsedWidgets
+        )
+        args.putString("bundleData", Gson().toJson(selectedBundle))
+        args.putString("vmn","true")
+        args.putString("fpid", (activity as CartActivity).fpid)
+        args.putString("expCode", (activity as CartActivity).experienceCode)
+        args.putBoolean("isDeepLink", (activity as CartActivity).isDeepLink)
+        args.putString("deepLinkViewType", (activity as CartActivity).deepLinkViewType)
+        args.putInt("deepLinkDay", (activity as CartActivity).deepLinkDay)
+        args.putBoolean("isOpenCardFragment", (activity as CartActivity).isOpenCardFragment)
+        args.putString(
+            "accountType",
+            (activity as CartActivity).accountType
+        )
+        args.putStringArrayList(
+            "userPurchsedWidgets",
+            (activity as CartActivity).userPurchsedWidgets
+        )
+        if ((activity as CartActivity).email != null) {
+            args.putString("email", (activity as CartActivity).email)
+        } else {
+            args.putString("email", "ria@nowfloats.com")
+        }
+        if ((activity as CartActivity).mobileNo != null) {
+            args.putString("mobileNo", (activity as CartActivity).mobileNo)
+        } else {
+            args.putString("mobileNo", "9160004303")
+        }
+        args.putString("profileUrl", (activity as CartActivity).profileUrl)
+        dialogCard.arguments = args
+        activity?.supportFragmentManager?.let {
+            dialogCard.show(
+                it,
+                FeatureDetailsPopup::class.java.name
+            )
+        }
+    }
+
+    private fun featureDetailsPopUp2(cartModel: CartModel) {
+        var selectedBundle: Bundles? = null
+        for (item in bundlesList) {
+            if (item.bundle_id == cartModel.item_id) {
+                val temp = Gson().fromJson<List<IncludedFeature>>(
+                    item.included_features,
+                    object : TypeToken<List<IncludedFeature>>() {}.type
+                )
+                selectedBundle = Bundles(
+                    item.bundle_id,
+                    temp,
+                    item.min_purchase_months,
+                    item.name,
+                    item.overall_discount_percent,
+                    PrimaryImage(item.primary_image),
+                    item.target_business_usecase,
+                    Gson().fromJson<List<String>>(
+                        item.exclusive_to_categories,
+                        object : TypeToken<List<String>>() {}.type
+                    ),
+                    null, null, null, null, null, item.desc
+                )
+                break
+            }
+        }
+
+        val dialogCard = FeatureDetailsPopup(this)
+        val args = Bundle()
+        args.putString("expCode", (activity as CartActivity).experienceCode)
+        args.putStringArrayList(
+            "userPurchsedWidgets",
+            (activity as CartActivity).userPurchsedWidgets
+        )
+        args.putString("bundleData", Gson().toJson(selectedBundle))
+        args.putString("fpid", (activity as CartActivity).fpid)
+        args.putString("vmn", "null")
         args.putString("expCode", (activity as CartActivity).experienceCode)
         args.putBoolean("isDeepLink", (activity as CartActivity).isDeepLink)
         args.putString("deepLinkViewType", (activity as CartActivity).deepLinkViewType)

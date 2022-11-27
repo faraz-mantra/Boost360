@@ -91,6 +91,7 @@ import kotlinx.android.synthetic.main.activity_feature_details.learn_less_btn
 import kotlinx.android.synthetic.main.activity_feature_details.learn_more_btn
 import kotlinx.android.synthetic.main.activity_feature_details.title_bottom3
 import kotlinx.android.synthetic.main.activity_feature_details.tv_how_to_use_title
+import kotlinx.android.synthetic.main.view_select_website.*
 import retrofit2.Retrofit
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -154,6 +155,8 @@ class FeatureDetailsActivity :
 
     var numberprice: String? = null
     var pricing: String? = null
+    private var purchasedVmnName: String? = null
+    private var purchasedVmnActive: Boolean? = null
 
     override fun getLayout(): Int {
         return R.layout.activity_feature_details
@@ -466,6 +469,8 @@ class FeatureDetailsActivity :
                     )
                 } else if(addonDetails!!.feature_code.equals("DOMAINPURCHASE")) {
                     getAlreadyPurchasedDomain()
+                } else if(addonDetails!!.feature_code.equals("IVR") || (addonDetails!!.feature_code.equals("CALLTRACKER"))) {
+                    getAlreadyPurchasedVmn()
                 } else addItemToCart()
           //  }
         }
@@ -561,6 +566,16 @@ class FeatureDetailsActivity :
             "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
     }
 
+    private fun getAlreadyPurchasedVmn() {
+        val pref = this.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+        val fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
+        val auth = this.let { UserSessionManager(it).getAccessTokenAuth()?.barrierToken() } ?: ""
+        viewModel.getAlreadyPurchasedVmn(
+            auth,
+            fpTag?:"",
+            "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
+    }
+
     private fun loadNumberList() {
         try {
             viewModel.loadNumberList(
@@ -582,10 +597,23 @@ class FeatureDetailsActivity :
             if(!it.domainName.isNullOrEmpty() && !it.domainType.isNullOrEmpty()) {
                 prefs.storeSelectedDomainName(it.domainName + it.domainType)
             }
+            makeFlyAnimation(addon_icon)
             viewModel.addItemToCart1(addonDetails!!, this,
                 if(!it.domainName.isNullOrEmpty() && !it.domainType.isNullOrEmpty()) (it.domainName + it.domainType) else null)
             viewModel.getCartItems()
         })
+        viewModel.purchasedVmnResult().observe(this) {
+            if(!it.Vmn.isNullOrEmpty()) {
+                prefs.storeSelectedVMNName(it.Vmn)
+                prefs.storeVmnOrderType(1)
+                purchasedVmnName = it.Vmn
+                purchasedVmnActive = true
+            }
+            makeFlyAnimation(addon_icon)
+            viewModel.addItemToCart1(addonDetails!!, this,
+                if(!it.Vmn.isNullOrEmpty()) (it.Vmn) else null)
+            viewModel.getCartItems()
+        }
         viewModel.edgecaseResult().observe(this, androidx.lifecycle.Observer {
             nestedScrollView.visibility = View.VISIBLE
             shimmer_layout.stopShimmer()
@@ -624,12 +652,19 @@ class FeatureDetailsActivity :
         })
 
         viewModel.updateCustomDomainsResultResult().observe(this) {
-            for (singleDomain in it.domains) {
-                if (singleDomain.isAvailable) {
-                    seleced_value_text.text = singleDomain.name
-                    break
+            if (!it.domains.isNullOrEmpty()){
+                for (singleDomain in it.domains) {
+                    if (singleDomain.isAvailable) {
+                        seleced_value_text.text = singleDomain.name
+                        claim_button.isClickable = true
+                        break
+                    }
                 }
-            }
+            }else{
+                claim_button.isClickable = false
+                    Toasty.error(this, "Error in Loading Domain!!", Toast.LENGTH_LONG).show()
+                }
+
             val discount = 100 - addonDetails!!.discount_percent
             val paymentPrice = Utils.priceCalculatorForYear(
                 (discount * addonDetails!!.price) / 100.0,
@@ -1227,7 +1262,7 @@ class FeatureDetailsActivity :
         if (singleWidgetKey.equals("DOMAINPURCHASE")
             || singleWidgetKey.equals("IVR")
             || singleWidgetKey.equals("CALLTRACKER")
-            || singleWidgetKey.equals("STAFFPROFILE")
+           // || singleWidgetKey.equals("STAFFPROFILE")
         ) {
             return true
         }
@@ -1361,6 +1396,9 @@ class FeatureDetailsActivity :
                 if(addonDetails!!.feature_code.equals("DOMAINPURCHASE")) {
                     updateSelectedDomain()
                 }
+                if(addonDetails!!.feature_code.equals("IVR") || (addonDetails!!.feature_code.equals("CALLTRACKER"))) {
+                    updateSelectedVmn()
+                }
             }
         } catch (e: Exception) {
             SentryController.captureException(e)
@@ -1371,6 +1409,13 @@ class FeatureDetailsActivity :
         val domainName = prefs.getSelectedDomainName()
         if(domainName.isNullOrEmpty().not()) {
             seleced_value_text.text = domainName
+        }
+    }
+
+    private fun updateSelectedVmn() {
+        val vmnName = prefs.getSelectedVMNName()
+        if(vmnName.isNullOrEmpty().not()) {
+            seleced_value_text.text = vmnName
         }
     }
 
@@ -2670,13 +2715,20 @@ class FeatureDetailsActivity :
                         "CALLTRACKER"
                     )
                 ) {
-                    WebEngageController.trackEvent(ADD_ON_RENEW_CLICKED, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
+                    bottom_box_only_btn.visibility = VISIBLE
                     add_item_to_cart_new.setText("Renew Call Tracking")
+                        val event_attributes: HashMap<String, Any> = HashMap()
+                        addonDetails?.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
+                        WebEngageController.trackEvent(
+                            ADD_ON_RENEW_CLICKED,
+                            ADDONS_MARKETPLACE,
+                            event_attributes
+                        )
                 }
                 else if (addonDetails!!.feature_code!!.contains("EMAILACCOUNTS"))
                     add_item_to_cart_new.setText("Renew Business Email")
                 else
-                    add_item_to_cart_new.setText("Add To Cart")
+                    add_item_to_cart_new.setText("Renew ${addonDetails!!.name}")
                 add_item_to_cart_new.background = ContextCompat.getDrawable(
                     applicationContext,
                     R.drawable.cta_button_click_effect

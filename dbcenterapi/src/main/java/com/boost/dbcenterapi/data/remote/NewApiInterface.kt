@@ -18,6 +18,7 @@ import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponResp
 import com.boost.dbcenterapi.data.api_model.getCouponResponse.GetCouponResponse
 import com.boost.dbcenterapi.data.api_model.mycurrentPlanV3.MyPlanV3
 import com.boost.dbcenterapi.data.api_model.videos.GetVideos
+import com.boost.dbcenterapi.data.api_model.vmn.PurchasedVmnResponse
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import io.reactivex.Observable
 import retrofit2.http.*
@@ -110,6 +111,15 @@ interface NewApiInterface {
         @Path("fpTag") fpTag: String,
         @Query("clientId") clientId: String
     ): Observable<PurchasedDomainResponse>
+
+    @Headers("Content-Type: application/json")
+    @GET("https://api2.withfloats.com/discover/v1/floatingPoint/vmn-details/{fpTag}")
+    fun getAlreadyPurchasedVmn(
+        @Header("Authorization") auth: String,
+        @Path("fpTag") fpTag: String,
+        @Query("clientId") clientId: String
+    ): Observable<PurchasedVmnResponse>
+
 
     //MyCurrentPlan  Marketplace V3
     @Headers("Content-Type: application/json")

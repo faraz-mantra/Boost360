@@ -14,7 +14,10 @@ import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.MyAddonsListener
 import com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity
 import com.bumptech.glide.Glide
-import com.framework.utils.DateUtils
+import java.lang.Long
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.Int
 
 
 class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
@@ -30,7 +33,7 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
-    val itemView = LayoutInflater.from(parent?.context).inflate(
+    val itemView = LayoutInflater.from(parent.context).inflate(
       R.layout.item_myplan_features, parent, false
     )
     context = itemView.context
@@ -81,7 +84,7 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
 //    }
 
       holder.itemView.setOnClickListener {
-        val item: FeaturesModel = FeaturesModel(
+        val item = FeaturesModel(
           list.get(position).feature_id,
           list.get(position).boost_widget_key,
           list.get(position).name,
@@ -102,6 +105,7 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
           item.expiryDate=list.get(position).expiryDate
           item.activatedDate= list.get(position).activatedDate
           item.featureState=  list.get(position).featureState
+          item.createdon=  list.get(position).createdon
 
         myAddonsListener.onFreeAddonsClicked(item)
       }
@@ -120,6 +124,7 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
 
     var singleTitle = itemView.findViewById<TextView>(R.id.free_addons_name)!!
     var validity2 = itemView.findViewById<TextView>(R.id.validity2)!!
+    var btn1 = itemView.findViewById<TextView>(R.id.btn1)!!
     var image = itemView.findViewById<ImageView>(R.id.single_freeaddon_image)!!
     var mainLayout=itemView.findViewById<ConstraintLayout>(R.id.main_layout)
     var cardViews=itemView.findViewById<LinearLayout>(R.id.cardViews)
@@ -131,16 +136,124 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
 
     fun upgradeListItem(updateModel: FeaturesModel) {
       singleTitle.text = updateModel.name
-      val date: String? =
-        DateUtils.parseDate(updateModel.expiryDate, DateUtils.FORMAT_SERVER_DATE1, DateUtils.FORMAT1_DD_MM_YYYY)
-      validity2.text= "Valid till " + date
+      val dataString = updateModel.expiryDate
+      val date = Date(Long.parseLong(dataString!!.substring(6, dataString.length - 7)))
+      val dateFormat = SimpleDateFormat("dd MMM yyyy")
+      validity2.text= "Valid till " +(dateFormat.format(date))
+
       Glide.with(context).load(updateModel.primary_image).into(image)
-      if (updateModel.featureState == 1) {
-       img1.setImageResource(R.drawable.ic_action_req)
+//      if (updateModel.featureState == 1) {
+//       img1.setImageResource(R.drawable.ic_action_req)
+//      }
+//      else {
+//        img1.setImageResource(R.drawable.ic_action_req)
+//      }
+      val actionRequired = updateModel.actionNeeded
+      val featureState = updateModel.featureState
+      if (featureState != null) {
+        featureEdgeCase(actionRequired!!.toInt(),featureState)
       }
-      else {
-        img1.setImageResource(R.drawable.ic_action_req)
+    }
+    fun featureEdgeCase(actionRequired: Int, featureState: Int) {
+
+      if (actionRequired == 1 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6)
+      ) {
+        img1.setImageResource(R.drawable.vector)
+        btn1.text ="Contact Support"
+
+      } else if (actionRequired == 2 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6)
+      ) {
+        img1.setImageResource(R.drawable.vector)
+        btn1.text = "Choose Domain"
+
+      } else if (actionRequired == 3 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6)
+      ) {
+        btn1.text = "Choose VMN"
+        img1.setImageResource(R.drawable.vector)
+
+      } else if (actionRequired == 4 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6)
+      ) {
+        btn1.text = "Choose Email"
+        img1.setImageResource(R.drawable.vector)
+
+      } else if (actionRequired == 5 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6)) {
+        btn1.text = "Choose virtual number/\n" + "Setup IVR"
+        img1.setImageResource(R.drawable.vector)
+
+      } else if (actionRequired == 6 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6)) {
+        btn1.text = "Add staff"
+        img1.setImageResource(R.drawable.vector)
       }
+
+      else if (actionRequired == 8 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6)) {
+        btn1.text = "Contact support"
+        img1.setImageResource(R.drawable.vector)
+      }
+
+      else if (actionRequired == 9 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6)) {
+        btn1.text = "Contact support"
+        img1.setImageResource(R.drawable.vector)
+      }
+
+      else if (actionRequired == 10 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6)) {
+        btn1.text = "Activate trip advisor rating"
+        img1.setImageResource(R.drawable.vector)
+      }
+
+      else if (actionRequired == 11 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6)) {
+        btn1.text = "Create offers"
+        img1.setImageResource(R.drawable.vector)
+      }
+
+      else if (actionRequired == 12 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6)) {
+        btn1.text = "Add places to look around"
+        img1.setImageResource(R.drawable.vector)
+      }
+
+      else if (actionRequired == 13 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6)) {
+        btn1.text = "Add testimonials"
+                img1.setImageResource(R.drawable.vector)
+      }
+
+      else if (actionRequired == 14 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6)) {
+        btn1.text = "Add upcoming batches"
+        img1.setImageResource(R.drawable.vector)
+      }
+
+      else if (actionRequired == 15 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                || featureState == 5 || featureState == 6)) {
+        btn1.text = "Add project portfolio"
+        img1.setImageResource(R.drawable.vector)
+      }
+
+      else if (actionRequired == 16 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                || featureState == 5 || featureState == 6)) {
+        btn1.text = "Add brochure"
+        img1.setImageResource(R.drawable.vector)
+      }
+
+      else if (actionRequired == 17 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                || featureState == 5 || featureState == 6)) {
+        btn1.text = "Add project & teams"
+        img1.setImageResource(R.drawable.vector)
+      }
+
+      else if (actionRequired == 21 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                || featureState == 5 || featureState == 6)) {
+      btn1.text = "Contact support"
+      img1.setImageResource(R.drawable.vector)
+      }
+
+      else if (actionRequired == 22 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                || featureState == 5 || featureState == 6)) {
+        btn1.text = "Activate boost keyboard"
+      img1.setImageResource(R.drawable.vector)
+      }
+    else if (actionRequired == 0 && (featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6)) {
+      img1.setImageResource(R.drawable.ic_sync_blue)
+        btn1.text = "Syncing information"
+      }
+
     }
   }
 }

@@ -99,6 +99,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
     var NewApiService = Utils.getRetrofit(true).create(NewApiInterface::class.java)
     var NewApiService1 = Utils.getRetrofit(true).create(NewApiInterface::class.java)
+    var NewApiService2 = Utils.getRetrofit(false).create(NewApiInterface::class.java)
     private var callTrackListResponse: MutableLiveData<CallTrackListResponse> = MutableLiveData()
     var updateDomainStatus: MutableLiveData<BlockApi> = MutableLiveData()
     var purchasedDomainResult: MutableLiveData<PurchasedDomainResponse> = MutableLiveData()
@@ -1059,24 +1060,22 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
     fun loadNumberList(fpid: String, clientId: String) {
 //        findingNumberLoader.postValue(true)
-        updatesLoader.postValue(true)
-        if (Utils.isConnectedToInternet(Application())) {
+        if (com.boost.cart.utils.Utils.isConnectedToInternet(getApplication())) {
+            updatesLoader.postValue(true)
             CompositeDisposable().add(
-                NewApiService1.getCallTrackDetails(fpid, clientId)
+                NewApiService2.getCallTrackDetails(fpid, clientId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                         {
-//                            findingNumberLoader.postValue(false)
+                           // findingNumberLoader.postValue(false)
                             var NumberList = it
-                            updatesLoader.postValue(false)
                             callTrackListResponse.postValue(NumberList)
                         },
                         {
 //                            val temp = (it as HttpException).response()!!.errorBody()!!.string()
 //                            val errorBody: Error =
 //                                Gson().fromJson(temp, object : TypeToken<Error>() {}.type)
-                            updatesLoader.postValue(false)
                             Toasty.error(
                                 getApplication(),
                                 "Error in Loading Numbers!!",

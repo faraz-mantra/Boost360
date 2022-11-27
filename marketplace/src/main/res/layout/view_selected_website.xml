@@ -67,7 +67,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="28dp"
+                    android:layout_marginTop="15dp"
                     android:src="@drawable/browser_background" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -125,7 +125,6 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
                         android:src="@drawable/yellow_down_arrow"
                         app:layout_constraintBottom_toBottomOf="@id/tv_explore_select_website1"
                         app:layout_constraintStart_toEndOf="@id/tv_explore_select_website1"

@@ -1,157 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/selectDomainLayout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/selectWebsiteLayout"
+    android:background="#f0f0f0"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_marginTop="16dp"
-    android:background="@drawable/curve_top_white"
-    android:paddingStart="@dimen/dimen_24dp"
-    android:paddingTop="16dp"
-    android:paddingEnd="@dimen/dimen_24dp"
-    android:paddingBottom="@dimen/dimen_24dp"
-    android:visibility="gone"
-    app:layout_constraintTop_toBottomOf="@id/topImageView">
-
-    <TextView
-        android:id="@+id/tv_title_selectDomain"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/bold"
-        android:gravity="center_horizontal"
-        android:lineHeight="26dp"
-        android:text="Select a Call Tracker Number"
-        android:textColor="@color/main_color_gray_dk"
-        android:textFontWeight="700"
-        android:textSize="@dimen/txt_20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_subtitle_select_domain"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="24dp"
-        android:fontFamily="@font/regular"
-        android:lineHeight="22dp"
-        android:lineSpacingExtra="6dp"
-        android:text="Track &amp; manage customer calls (leads) using VMN call recordings."
-        android:textColor="#333333"
-        android:textFontWeight="400"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_selectDomain" />
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/selectDomainLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_subtitle_select_domain">
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/curve_top_white"
+        android:paddingStart="@dimen/dimen_24dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="@dimen/dimen_24dp"
+        android:paddingBottom="@dimen/dimen_24dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <FrameLayout
+        <TextView
+            android:id="@+id/tv_title_selectDomain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/bold"
+            android:gravity="center_horizontal"
+            android:lineHeight="26dp"
+            android:text="Select a Call Tracker Number"
+            android:textColor="@color/main_color_gray_dk"
+            android:textFontWeight="700"
+            android:textSize="@dimen/txt_20sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                android:src="@drawable/browser_background" />
+        <TextView
+            android:id="@+id/tv_subtitle_select_domain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/regular"
+            android:gravity="center"
+            android:lineHeight="26dp"
+            android:lineSpacingExtra="6dp"
+            android:text="Track &amp; manage customer calls (leads)\n using VMN call recordings."
+            android:textColor="#333333"
+            android:textFontWeight="400"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_selectDomain" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_subtitle_select_domain">
+
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/tv_call_expert_select_domain"
-                    android:layout_width="match_parent"
-                    android:layout_height="68dp"
-                    android:layout_marginTop="100dp"
-                    android:background="@drawable/green_border_view"
-                    android:fontFamily="@font/bold"
-                    android:gravity="center"
-                    android:lineHeight="21.79dp"
-                    android:paddingStart="@dimen/_30sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingEnd="@dimen/_30sdp"
-                    android:paddingBottom="@dimen/_10sdp"
-                    android:textColor="#4A4A4A"
-                    android:textFontWeight="700"
-                    android:textSize="@dimen/txt_14sp"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_explore_text_select_domain"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="17dp"
-                    android:layout_marginEnd="24dp"
-                    android:fontFamily="@font/regular"
-                    android:lineHeight="22dp"
-                    android:lineSpacingExtra="6dp"
-                    android:text="Explore from more numbers"
-                    android:textColor="@color/colorAccent1"
-                    android:textFontWeight="400"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_call_expert_select_domain" />
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:src="@drawable/yellow_down_arrow"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_explore_text_select_domain"
-                    app:layout_constraintStart_toEndOf="@id/tv_explore_text_select_domain"
-                    app:layout_constraintTop_toTopOf="@id/tv_explore_text_select_domain" />
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/browser_background" />
 
-                <TextView
-                    android:id="@+id/selectDomainSubmit"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/pad_20dp"
-                    android:layout_marginBottom="@dimen/pad_20dp"
-                    android:background="@drawable/cta_button_click_effect"
-                    android:fontFamily="@font/semi_bold"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/_30sdp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="@dimen/_30sdp"
-                    android:paddingBottom="10dp"
-                    android:text="Select above number"
-                    android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_explore_text_select_domain" />
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/selectDomainIwillDoItLater"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:layout_weight="0.5"
-                    android:background="@drawable/cta_button_hollow"
-                    android:fontFamily="@font/regular"
-                    android:gravity="center"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="I’ll do it later"
-                    android:textColor="@color/colorAccent1"
-                    android:textFontWeight="700"
-                    android:textSize="@dimen/txt_16sp"
-                    app:layout_constraintTop_toBottomOf="@id/selectDomainSubmit" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/tv_call_expert_select_domain"
+                        android:layout_width="match_parent"
+                        android:layout_height="68dp"
+                        android:layout_marginTop="100dp"
+                        android:background="@drawable/green_border_view"
+                        android:fontFamily="@font/bold"
+                        android:gravity="center"
+                        android:lineHeight="21.79dp"
+                        android:paddingStart="@dimen/_30sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_30sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:textColor="#7ED321"
+                        tools:text="+91 8012-345-673"
+                        android:textFontWeight="700"
+                        android:textSize="32sp"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-        </FrameLayout>
+                    <TextView
+                        android:id="@+id/tv_explore_text_select_vmn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:padding="16dp"
+                        android:fontFamily="@font/regular"
+                        android:lineHeight="22dp"
+                        android:lineSpacingExtra="6dp"
+                        android:text="Explore from more numbers"
+                        android:textColor="@color/colorAccent1"
+                        android:textFontWeight="400"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_call_expert_select_domain" />
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_down_arrow"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_explore_text_select_vmn"
+                        app:layout_constraintStart_toEndOf="@id/tv_explore_text_select_vmn"
+                        app:layout_constraintTop_toTopOf="@id/tv_explore_text_select_vmn" />
+
+                    <TextView
+                        android:id="@+id/selectVmnSubmit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/pad_20dp"
+                        android:background="@drawable/cta_button_click_effect"
+                        android:fontFamily="@font/semi_bold"
+                        android:lineHeight="24dp"
+                        android:gravity="center"
+                        android:textSize="@dimen/txt_16sp"
+                        android:paddingStart="@dimen/_30sdp"
+                        android:paddingTop="12dp"
+                        android:paddingEnd="@dimen/_30sdp"
+                        android:paddingBottom="12dp"
+                        android:text="Select above number"
+                        android:textColor="@color/white"
+                        app:layout_constraintTop_toBottomOf="@id/tv_explore_text_select_vmn" />
+
+                    <TextView
+                        android:id="@+id/selectVmnIwillDoItLater"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:layout_marginHorizontal="@dimen/pad_20dp"
+                        android:background="@drawable/cta_button_hollow"
+                        android:fontFamily="@font/regular"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/_30sdp"
+                        android:paddingTop="12dp"
+                        android:paddingEnd="@dimen/_30sdp"
+                        android:paddingBottom="12dp"
+                        android:text="Skip &amp; continue to cart"
+                        android:textColor="@color/colorAccent1"
+                        android:textFontWeight="700"
+                        android:textSize="@dimen/txt_16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/selectVmnSubmit" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </FrameLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,6 +26,10 @@ import com.framework.utils.DateUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_feature_details.*
+import java.lang.Long
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MyPlanBottomSheet :
@@ -73,21 +77,32 @@ class MyPlanBottomSheet :
             binding?.cslayout?.visibility = View.GONE
         }
 
-        val date1: String? =
-            DateUtils.parseDate(
-                singleAddon.activatedDate,
-                DateUtils.FORMAT_SERVER_DATE1,
-                DateUtils.FORMAT1_DD_MM_YYYY
-            )
-        binding?.title3?.text = date1
+//        val date1: String? =
+//            DateUtils.parseDate(
+//                singleAddon.activatedDate,
+//                DateUtils.FORMAT_SERVER_DATE1,
+//                DateUtils.FORMAT1_DD_MM_YYYY
+//            )
+//        binding?.title3?.text = date1
 
-        val date: String? =
-            DateUtils.parseDate(
-                singleAddon.expiryDate,
-                DateUtils.FORMAT_SERVER_DATE1,
-                DateUtils.FORMAT1_DD_MM_YYYY
-            )
-        binding?.title4?.text = date
+        //        val date: String? =
+//            DateUtils.parseDate(
+//                singleAddon.expiryDate,
+//                DateUtils.FORMAT_SERVER_DATE1,
+//                DateUtils.FORMAT1_DD_MM_YYYY
+//            )
+//        binding?.title4?.text = date
+
+        val dataString1 = singleAddon.activatedDate
+        val date1 = Date(Long.parseLong(dataString1!!.substring(6, dataString1.length - 7)))
+        val dateFormat1 = SimpleDateFormat("dd MMM yyyy")
+        binding?.title3?.text= (dateFormat1.format(date1))
+
+        val dataString = singleAddon.expiryDate
+        val date = Date(Long.parseLong(dataString!!.substring(6, dataString.length - 7)))
+        val dateFormat = SimpleDateFormat("dd MMM yyyy")
+        binding?.title4?.text= (dateFormat.format(date))
+
 
         Glide.with(baseActivity).load(singleAddon.primary_image).into(binding!!.addonsIcon)
 
@@ -174,6 +189,7 @@ class MyPlanBottomSheet :
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+            dismiss()
         } else {
             Toast.makeText(requireContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
         }
@@ -194,8 +210,9 @@ class MyPlanBottomSheet :
         intent.putExtra("email", "ria@nowfloats.com")
         intent.putExtra("addonStateActivated", true)
         intent.putExtra("mobileNo", "9160004303")
-        intent.putExtra("itemId", singleAddon.boost_widget_key)
+        intent.putExtra("itemId", singleAddon.feature_code)
         startActivity(intent)
+        dismiss()
     }
 
     private fun chooseDomain() {

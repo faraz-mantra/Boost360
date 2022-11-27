@@ -105,7 +105,10 @@ data class FeaturesModel(
     var activatedDate: String? = null,
 
     @ColumnInfo(name = "featureState")
-    var featureState: Int? = null
+    var featureState: Int? = null,
+
+    @ColumnInfo(name = "actionNeeded")
+    var actionNeeded: String? = null,
 
 ) : Serializable, AppBaseRecyclerViewItem {
 

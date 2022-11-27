@@ -77,6 +77,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 
     private var purchasedDomainType: String? = null
     private var purchasedDomainName: String? = null
+    private var purchasedVmnName: String? = null
+    private var purchasedVmnActive: Boolean? = null
     private var featuresModel: List<FeaturesModel>? = null
     lateinit var singleAddon: FeaturesModel
     private lateinit var needMoreFeatureItem: BundlesModel
@@ -255,11 +257,50 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 //                    )
 //                return@setOnClickListener
 //            }
-            if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) {
+            if ((purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) &&
+                (purchasedVmnName.isNullOrEmpty()) ) {
 
                 val dialogCard = FeatureDetailsPopup(this, this, this)
                 val args = Bundle()
                 args.putString("expCode", experienceCode)
+                args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+                args.putString("bundleData", Gson().toJson(bundleData))
+                args.putString("fpid", fpid)
+                args.putString("vmn", "null")
+                args.putString("expCode", experienceCode)
+                args.putBoolean("isDeepLink", isDeepLink)
+                args.putString("deepLinkViewType", deepLinkViewType)
+                args.putInt("deepLinkDay", deepLinkDay)
+                args.putBoolean("isOpenCardFragment", isOpenCardFragment)
+                args.putString(
+                    "accountType",
+                    accountType
+                )
+                args.putStringArrayList(
+                    "userPurchsedWidgets",
+                    userPurchsedWidgets
+                )
+                if (email != null) {
+                    args.putString("email", email)
+                } else {
+                    args.putString("email", "ria@nowfloats.com")
+                }
+                if (mobileNo != null) {
+                    args.putString("mobileNo", mobileNo)
+                } else {
+                    args.putString("mobileNo", "9160004303")
+                }
+                args.putString("profileUrl", profileUrl)
+                dialogCard.arguments = args
+                this.supportFragmentManager.let { dialogCard.show(it, FeatureDetailsPopup::class.java.name) }
+            }
+            else if((purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) &&
+                (!purchasedVmnName.isNullOrEmpty()) ) {
+
+                val dialogCard = FeatureDetailsPopup(this, this, this)
+                val args = Bundle()
+                args.putString("expCode", experienceCode)
+                args.putString("vmn","false")
                 args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
                 args.putString("bundleData", Gson().toJson(bundleData))
                 args.putString("fpid", fpid)
@@ -289,7 +330,45 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 args.putString("profileUrl", profileUrl)
                 dialogCard.arguments = args
                 this.supportFragmentManager.let { dialogCard.show(it, FeatureDetailsPopup::class.java.name) }
-            }else {
+            }
+            else if((!purchasedDomainType.isNullOrEmpty() || !purchasedDomainName?.contains("null")!! == true) &&
+                (purchasedVmnName.isNullOrEmpty()) ) {
+
+                val dialogCard = FeatureDetailsPopup(this, this, this)
+                val args = Bundle()
+                args.putString("expCode", experienceCode)
+                args.putString("vmn","true")
+                args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+                args.putString("bundleData", Gson().toJson(bundleData))
+                args.putString("fpid", fpid)
+                args.putString("expCode", experienceCode)
+                args.putBoolean("isDeepLink", isDeepLink)
+                args.putString("deepLinkViewType", deepLinkViewType)
+                args.putInt("deepLinkDay", deepLinkDay)
+                args.putBoolean("isOpenCardFragment", isOpenCardFragment)
+                args.putString(
+                    "accountType",
+                    accountType
+                )
+                args.putStringArrayList(
+                    "userPurchsedWidgets",
+                    userPurchsedWidgets
+                )
+                if (email != null) {
+                    args.putString("email", email)
+                } else {
+                    args.putString("email", "ria@nowfloats.com")
+                }
+                if (mobileNo != null) {
+                    args.putString("mobileNo", mobileNo)
+                } else {
+                    args.putString("mobileNo", "9160004303")
+                }
+                args.putString("profileUrl", profileUrl)
+                dialogCard.arguments = args
+                this.supportFragmentManager.let { dialogCard.show(it, FeatureDetailsPopup::class.java.name) }
+            }
+            else {
                 if (bundleData != null) {
                     prefs.storeAddedPackageDesc(bundleData!!.desc ?: "")
 
@@ -579,6 +658,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             viewModel?.getCartItems()
             viewModel?.getAllPackages()
             getAlreadyPurchasedDomain()
+            getAlreadyPurchasedVmn()
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
@@ -942,6 +1022,17 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 //                binding?.shimmerViewPacksv3?.visibility=View.VISIBLE
 //            }
 //        })
+
+        viewModel.purchasedVmnResult().observe(this) {
+            if(!it.Vmn.isNullOrEmpty()) {
+                prefs.storeSelectedVMNName(it.Vmn)
+                prefs.storeVmnOrderType(1)
+                purchasedVmnName = it.Vmn
+                purchasedVmnActive = true
+            }
+            viewModel.getCartItems()
+        }
+
         viewModel.PurchasedDomainResponse().observe(this) {
             if(it!=null) {
                 binding?.shimmerViewPacksv3?.visibility=View.GONE
@@ -956,7 +1047,6 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                         prefs.storeSelectedDomainName(it.domainName + it.domainType)
                     }
                 }
-                //  viewModel.addItemToCart1(singleAddon, this, it.domainName + it.domainType)
                 viewModel.getCartItems()
             }else{
                 binding?.scrollView?.visibility=View.GONE
@@ -1226,7 +1316,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
 //                    )
 //                return@setOnClickListener
 //            }
-            if (purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null")?:false) {
+            if ((purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) &&
+                (purchasedVmnName.isNullOrEmpty()) ) {
                 prefs.storeCartOrderInfo(null)
 
                 val dialogCard = FeatureDetailsPopup(this, this, this)
@@ -1234,6 +1325,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 args.putString("expCode", experienceCode)
                 args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
                 args.putString("bundleData", Gson().toJson(bundle))
+                args.putString("vmn", "null")
                 args.putString("fpid", fpid)
                 args.putString("expCode", experienceCode)
                 args.putBoolean("isDeepLink", isDeepLink)
@@ -1262,7 +1354,83 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 dialogCard.arguments = args
                 this.supportFragmentManager.let { dialogCard.show(it, FeatureDetailsPopup::class.java.name) }
 
-            } else {
+            }
+            else if((purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) &&
+                (!purchasedVmnName.isNullOrEmpty()) ) {
+
+                val dialogCard = FeatureDetailsPopup(this, this, this)
+                val args = Bundle()
+                args.putString("expCode", experienceCode)
+                args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+                args.putString("bundleData", Gson().toJson(bundle))
+                args.putString("vmn", "false")
+                args.putString("fpid", fpid)
+                args.putString("expCode", experienceCode)
+                args.putBoolean("isDeepLink", isDeepLink)
+                args.putString("deepLinkViewType", deepLinkViewType)
+                args.putInt("deepLinkDay", deepLinkDay)
+                args.putBoolean("isOpenCardFragment", isOpenCardFragment)
+                args.putString(
+                    "accountType",
+                    accountType
+                )
+                args.putStringArrayList(
+                    "userPurchsedWidgets",
+                    userPurchsedWidgets
+                )
+                if (email != null) {
+                    args.putString("email", email)
+                } else {
+                    args.putString("email", "ria@nowfloats.com")
+                }
+                if (mobileNo != null) {
+                    args.putString("mobileNo", mobileNo)
+                } else {
+                    args.putString("mobileNo", "9160004303")
+                }
+                args.putString("profileUrl", profileUrl)
+                dialogCard.arguments = args
+                this.supportFragmentManager.let { dialogCard.show(it, FeatureDetailsPopup::class.java.name) }
+
+            }
+            else if((!purchasedDomainType.isNullOrEmpty() || !purchasedDomainName?.contains("null")!! == true) &&
+                (purchasedVmnName.isNullOrEmpty()) ) {
+
+                val dialogCard = FeatureDetailsPopup(this, this, this)
+                val args = Bundle()
+                args.putString("expCode", experienceCode)
+                args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+                args.putString("bundleData", Gson().toJson(bundle))
+                args.putString("vmn", "true")
+                args.putString("fpid", fpid)
+                args.putString("expCode", experienceCode)
+                args.putBoolean("isDeepLink", isDeepLink)
+                args.putString("deepLinkViewType", deepLinkViewType)
+                args.putInt("deepLinkDay", deepLinkDay)
+                args.putBoolean("isOpenCardFragment", isOpenCardFragment)
+                args.putString(
+                    "accountType",
+                    accountType
+                )
+                args.putStringArrayList(
+                    "userPurchsedWidgets",
+                    userPurchsedWidgets
+                )
+                if (email != null) {
+                    args.putString("email", email)
+                } else {
+                    args.putString("email", "ria@nowfloats.com")
+                }
+                if (mobileNo != null) {
+                    args.putString("mobileNo", mobileNo)
+                } else {
+                    args.putString("mobileNo", "9160004303")
+                }
+                args.putString("profileUrl", profileUrl)
+                dialogCard.arguments = args
+                this.supportFragmentManager.let { dialogCard.show(it, FeatureDetailsPopup::class.java.name) }
+            }
+            else {
                 prefs.storeCartOrderInfo(null)
 
                 binding?.needMorePackageImg?.let { it1 -> makeFlyAnimation(it1) }
@@ -1786,5 +1954,15 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 break
             }
         }
+    }
+
+    private fun getAlreadyPurchasedVmn() {
+        val pref = this.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+        val fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
+        val auth = this.let { UserSessionManager(it).getAccessTokenAuth()?.barrierToken() } ?: ""
+        viewModel.getAlreadyPurchasedVmn(
+            auth,
+            fpTag?:"",
+            "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
     }
 }

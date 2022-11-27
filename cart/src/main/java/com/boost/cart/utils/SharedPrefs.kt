@@ -45,6 +45,7 @@ class SharedPrefs(activity: Activity) {
   private val LAST_USED_PAYMENT_MODE = "LAST_USED_PAYMENT_MODE"
   private val CART_VALIDITY_MONTHS = "CART_VALIDITY_MONTHS"
   private val DOMAIN_ORDER_TYPE = "DOMAIN_ORDER_TYPE"
+  private val VMN_ORDER_TYPE = "VMN_ORDER_TYPE"
   private val SELECTED_VMN_NAME = "SELECTED_VMN_NAME"
 
   private var editor: SharedPreferences.Editor? = null
@@ -285,6 +286,15 @@ class SharedPrefs(activity: Activity) {
   fun getDomainOrderType(): Int {
     return pref!!.getInt(DOMAIN_ORDER_TYPE, 0)
   }
+
+  fun storeVmnOrderType(value: Int){
+    editor!!.putInt(VMN_ORDER_TYPE, value).apply()
+  }
+
+  fun getVmnOrderType(): Int {
+    return pref!!.getInt(VMN_ORDER_TYPE, 0)
+  }
+
 
   fun storeSelectedDomainName(value: String?){
     editor!!.putString(SELECTED_DOMAIN_NAME, value).apply()

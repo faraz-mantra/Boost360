@@ -77,31 +77,55 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
         return myplanV3Result
     }
 
+    //new implementation with expiry date
     fun loadPurchasedItems(fpid: String, clientId: String) {
         updatesLoader.postValue(true)
         compositeDisposable.add(
-            ApiService.GetFeatureDetails(fpid, clientId)
+            ApiService.GetMyPlanV3(fpid,clientId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { it1 ->
-                        val list = ArrayList<String>()
-                        for (singleItem in it1) {
-                            list.add(singleItem.featureCode)
+
+                        var inActiveList =
+                            ArrayList<String>()
+                        var activeList =
+                            ArrayList<String>()
+
+                        for (singleItem in it1.Result) {
+                            if (singleItem.ActionNeeded != null && singleItem.FeatureDetails != null) {
+                                if (singleItem.ActionNeeded.ActionNeeded != 0 && singleItem.FeatureDetails.FeatureState != 7) {
+                                    inActiveList.add(singleItem.FeatureDetails.FeatureKey)
+                                }
+                                else if (singleItem.ActionNeeded.ActionNeeded == 0 && (singleItem.FeatureDetails.FeatureState == 3
+                                            || singleItem.FeatureDetails.FeatureState == 4 || singleItem.FeatureDetails.FeatureState == 5
+                                            || singleItem.FeatureDetails.FeatureState == 6) ) {
+                                    inActiveList.add(singleItem.FeatureDetails.FeatureKey)
+                                }else if (singleItem.ActionNeeded.ActionNeeded == 0 && singleItem.FeatureDetails.FeatureState == 1) {
+                                    activeList.add(singleItem.FeatureDetails.FeatureKey)
+                                }
+                            }
                         }
+
+//                        val list = ArrayList<String>()
+//                        for (singleItem in it1) {
+//                            list.add(singleItem.featureCode)
+//                        }
                         compositeDisposable.add(
                             AppDatabase.getInstance(application)!!
                                 .featuresDao()
-                                .getallActiveFeatures1(list)
+                                .getallActiveFeatures1(inActiveList)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .doOnSuccess { it2 ->
                                     val listFeaturesModel = it2.map { it3 ->
-                                        it1.firstOrNull { it.featureCode.equals(it3.feature_code) }
+                                        it1.Result.firstOrNull { it.FeatureDetails.FeatureKey.equals(it3.feature_code) }
                                             .apply {
-                                                it3.expiryDate = this?.expiryDate
-                                                it3.activatedDate = this?.activatedDate
-                                                it3.featureState = this?.featureState
+                                                it3.expiryDate = this?.FeatureDetails?.ExpiryDate
+                                                it3.activatedDate = this?.FeatureDetails?.ActivatedDate
+                                                it3.featureState = this?.FeatureDetails?.FeatureState
+                                                it3.createdon = this?.FeatureDetails?.CreatedDate
+                                                it3.actionNeeded = this?.ActionNeeded?.ActionNeeded.toString()
                                             };it3
                                     }
                                     Completable.fromAction {
@@ -112,15 +136,14 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .doOnComplete {
-
                                             compositeDisposable.add(
                                                 AppDatabase.getInstance(application)!!
                                                     .featuresDao()
-                                                    .getallActivefeatureCount1(list)
+                                                    .getallActiveFeatures1(inActiveList)
                                                     .subscribeOn(Schedulers.io())
                                                     .observeOn(AndroidSchedulers.mainThread())
                                                     .doOnSuccess {
-                                                        activeWidgetCount.postValue(it)
+                                                        inActiveWidgetCount.postValue(it)
                                                     }
                                                     .doOnError {
                                                         updatesError.postValue(it.message)
@@ -128,7 +151,8 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
                                                     }.subscribe()
                                             )
                                             Log.i("insertAllFeatures", "Successfully")
-                                            activePremiumWidgetList.postValue(listFeaturesModel)
+                                        //    activePremiumWidgetList.postValue(listFeaturesModel)
+                                            inActiveWidgetCount.postValue(listFeaturesModel)
                                             updatesLoader.postValue(false)
 
                                         }.doOnError {
@@ -148,16 +172,18 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
                         compositeDisposable.add(
                             AppDatabase.getInstance(application)!!
                                 .featuresDao()
-                                .getallActiveFeatures1(list)
+                                .getallActiveFeatures1(activeList)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .doOnSuccess { it2 ->
                                     val listFeaturesModel = it2.map { it3 ->
-                                        it1.firstOrNull { it.featureCode.equals(it3.feature_code) }
+                                        it1.Result.firstOrNull { it.FeatureDetails.FeatureKey.equals(it3.feature_code) }
                                             .apply {
-                                                it3.expiryDate = this?.expiryDate
-                                                it3.activatedDate = this?.activatedDate
-                                                it3.featureState = this?.featureState
+                                                it3.expiryDate = this?.FeatureDetails?.ExpiryDate
+                                                it3.activatedDate = this?.FeatureDetails?.ActivatedDate
+                                                it3.featureState = this?.FeatureDetails?.FeatureState
+                                                it3.createdon = this?.FeatureDetails?.CreatedDate
+                                                it3.actionNeeded = this?.ActionNeeded?.ActionNeeded.toString()
                                             };it3
                                     }
                                     Completable.fromAction {
@@ -168,15 +194,14 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .doOnComplete {
-
                                             compositeDisposable.add(
                                                 AppDatabase.getInstance(application)!!
                                                     .featuresDao()
-                                                    .getallInActivefeatureCount(list)
+                                                    .getallActiveFeatures1(activeList)
                                                     .subscribeOn(Schedulers.io())
                                                     .observeOn(AndroidSchedulers.mainThread())
                                                     .doOnSuccess {
-                                                        inActiveWidgetCount.postValue(it)
+                                                        activeWidgetCount.postValue(it)
                                                     }
                                                     .doOnError {
                                                         updatesError.postValue(it.message)
@@ -184,7 +209,8 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
                                                     }.subscribe()
                                             )
                                             Log.i("insertAllFeatures", "Successfully")
-                                            activePremiumWidgetList.postValue(listFeaturesModel)
+                                            //activePremiumWidgetList.postValue(listFeaturesModel)
+                                            activeWidgetCount.postValue(listFeaturesModel)
                                             updatesLoader.postValue(false)
 
                                         }.doOnError {
@@ -227,8 +253,8 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
         )
     }
 
+    //old implementation without expiry date
     fun myPlanV3Status(fpid: String,clientId:String){
-
         updatesLoader.postValue(true)
         compositeDisposable.add(
             ApiService.GetMyPlanV3(fpid,clientId)

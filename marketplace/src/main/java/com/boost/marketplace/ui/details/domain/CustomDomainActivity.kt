@@ -308,20 +308,25 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
 
     private fun initMVVM() {
         viewModel.updateResult().observe(this, androidx.lifecycle.Observer {
-            allDomainsList = it.domains
-            updateDomainsRecycler(it.domains)
-            updateFreeAddonsRecycler1(it.domains)
-            val discount = 100 - singleAddon.discount_percent
-            val paymentPrice = Utils.priceCalculatorForYear(
-                (discount*singleAddon.price) / 100.0,
-                singleAddon.widget_type ?: "",
-                this
-            )
-            pricing =  "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                .format(paymentPrice) + Utils.yearlyOrMonthlyOrEmptyValidity(
-                singleAddon.widget_type ?: "",  this
-            )
-            domainPrice=pricing
+            if (it.domains!=null){
+                allDomainsList = it.domains
+                updateDomainsRecycler(it.domains)
+                updateFreeAddonsRecycler1(it.domains)
+                val discount = 100 - singleAddon.discount_percent
+                val paymentPrice = Utils.priceCalculatorForYear(
+                    (discount*singleAddon.price) / 100.0,
+                    singleAddon.widget_type ?: "",
+                    this
+                )
+                pricing =  "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                    .format(paymentPrice) + Utils.yearlyOrMonthlyOrEmptyValidity(
+                    singleAddon.widget_type ?: "",  this
+                )
+                domainPrice=pricing
+            } else{
+                Toasty.error(this, "Error in Loading Available Domains!!", Toast.LENGTH_LONG).show()
+            }
+
 
         })
 

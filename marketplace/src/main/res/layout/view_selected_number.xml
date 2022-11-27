@@ -46,6 +46,8 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/regular"
+        android:lineHeight="22dp"
+        android:lineSpacingExtra="6dp"
         android:text="Track &amp; manage customer calls (leads) \n
          using VMN call recordings."
         android:textColor="#333333"
@@ -69,7 +71,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="15dp"
                 android:src="@drawable/browser_background" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -108,11 +110,11 @@
                     android:id="@+id/tv_explore_select_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="16dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
-                    android:padding="16dp"
                     android:fontFamily="@font/regular"
-                    android:lineHeight="22dp"
+                    android:lineHeight="18dp"
                     android:lineSpacingExtra="6dp"
                     android:text="Explore from more numbers"
                     android:textColor="@color/colorAccent1"
@@ -126,18 +128,16 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
                     android:src="@drawable/yellow_down_arrow"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_empty_select_number"
-                    app:layout_constraintStart_toEndOf="@id/tv_empty_select_number"
-                    app:layout_constraintTop_toTopOf="@id/tv_empty_select_number" />
+                    app:layout_constraintBottom_toBottomOf="@id/tv_explore_select_number"
+                    app:layout_constraintStart_toEndOf="@+id/tv_explore_select_number"
+                    app:layout_constraintTop_toTopOf="@id/tv_explore_select_number" />
 
                 <TextView
                     android:id="@+id/selectWebsiteSubmit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/pad_20dp"
-                    android:layout_marginTop="5dp"
                     android:background="@drawable/disabled_button"
                     android:fontFamily="@font/semi_bold"
                     android:gravity="center"
@@ -158,8 +158,8 @@
                     android:background="@drawable/cta_button_hollow"
                     android:fontFamily="@font/regular"
                     android:gravity="center"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:text="Continue"
                     android:textColor="@color/colorAccent1"
                     android:textFontWeight="700"

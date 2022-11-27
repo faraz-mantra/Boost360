@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.marketplace.R
@@ -105,11 +106,16 @@ class PacksV3PricingAdapter (
 
     inner class ParentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tv_price: TextView
+        val mrpPrice: TextView
 
         init {
             tv_price = itemView
                 .findViewById(
                     R.id.pack_price
+                )
+            mrpPrice = itemView
+                .findViewById(
+                    R.id.mrpPrice
                 )
         }
     }
@@ -158,21 +164,14 @@ class PacksV3PricingAdapter (
                         if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) {
                             holder.tv_price.setText(
                                 "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                                    .format(RootUtil.round(offeredBundlePrice,0) ) + Utils1.yearlyOrMonthlyOrEmptyValidity(
-                                    "",
-                                    activity
-                                )
+                                    .format(RootUtil.round(offeredBundlePrice,0) )
                             )
+                            holder.mrpPrice.setText(Utils.yearlyOrMonthlyOrEmptyValidity("", activity))
                         } else {
                             holder.tv_price.setText(
-                                "₹" +
-                                        NumberFormat.getNumberInstance(Locale.ENGLISH)
-                                            .format(RootUtil.round(offeredBundlePrice,0))
-                                        +  Utils1.yearlyOrMonthlyOrEmptyValidity(
-                                    "",
-                                    activity
-                                )
-                            )
+                                "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                                            .format(RootUtil.round(offeredBundlePrice,0)))
+                            holder.mrpPrice.setText(Utils.yearlyOrMonthlyOrEmptyValidity("", activity))
                         }
                     },
                     {
