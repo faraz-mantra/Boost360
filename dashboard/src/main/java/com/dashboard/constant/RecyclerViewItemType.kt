@@ -42,8 +42,8 @@ enum class RecyclerViewItemType {
       RIA_ACADEMY_ITEM_VIEW -> R.layout.item_ria_academy
       BOOST_PREMIUM_ITEM_VIEW -> R.layout.item_boost_premium
       BOOST_ENQUIRIES_ITEM_VIEW -> R.layout.item_customer_patient_item
-      BOOST_WEBSITE_ITEM_VIEW -> R.layout.item_website_item
-      BOOST_WEBSITE_ITEM_FEATURE_VIEW -> R.layout.website_item_feature
+      BOOST_WEBSITE_ITEM_VIEW -> R.layout.item_website_item_v2
+      BOOST_WEBSITE_ITEM_FEATURE_VIEW -> R.layout.website_item_feature_v2
       ROI_SUMMARY_ITEM_VIEW -> R.layout.item_roi_summary
       GROWTH_STATE_ITEM_VIEW -> R.layout.item_growth_state
       BUSINESS_CONTENT_SETUP_ITEM_VIEW -> R.layout.item_business_content_setup

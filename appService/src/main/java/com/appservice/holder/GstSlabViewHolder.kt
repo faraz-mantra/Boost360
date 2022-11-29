@@ -4,7 +4,7 @@ import androidx.core.content.res.ResourcesCompat
 import com.appservice.R
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.ItemGstSlabBinding
-import com.appservice.model.GstDetailModel
+import com.appservice.model.panGst.GstDetailModel
 import com.appservice.recyclerView.AppBaseRecyclerViewHolder
 import com.appservice.recyclerView.BaseRecyclerViewItem
 

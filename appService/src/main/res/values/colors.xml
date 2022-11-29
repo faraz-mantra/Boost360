@@ -29,5 +29,5 @@
 
   <color name="ButtoncolorAccent">@color/colorAccent</color>
   <color name="biz_msg_txt_color">#3c3c3c</color>
-
+  <color name="themeColor">#ffb900</color>
 </resources>

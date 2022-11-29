@@ -20,9 +20,16 @@ import okhttp3.RequestBody
 
 class ProductViewModel : BaseViewModel() {
 
+
   fun createProduct(request: CatalogProduct?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.createProduct(request).toLiveData()
   }
+
+
+  fun getAppointmentCatalogStatus(floatingPointId: String?, clientId: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getAppointmentCatalogStatus(floatingPointId, clientId).toLiveData()
+  }
+
 
   fun getProductListing(fpTag: String?, clientId: String?, skipBy: Int?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getProductListing(fpTag, clientId, skipBy).toLiveData()
@@ -46,11 +53,11 @@ class ProductViewModel : BaseViewModel() {
 
   fun addUpdateProductImage(
     clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?,
-    currentChunkNumber: Int?, productId: String?, requestBody: RequestBody?
+    currentChunkNumber: Int?, productId: String?,fileName: String?, requestBody: RequestBody?
   ): LiveData<BaseResponse> {
     return WithFloatTwoRepository.addUpdateImageProduct(
       clientId, requestType, requestId, totalChunks,
-      currentChunkNumber, productId, requestBody
+      currentChunkNumber, productId,fileName, requestBody
     ).toLiveData()
   }
 

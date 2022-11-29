@@ -44,6 +44,7 @@ import com.inventoryorder.ui.appointmentSpa.sheetAptSpa.*
 import com.inventoryorder.ui.order.INVOICE_URL
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.squareup.picasso.Picasso
+import java.text.DecimalFormat
 import java.util.*
 
 class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentSpaDetailsBinding>(), RecyclerItemClickListener {
@@ -154,7 +155,7 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
     binding?.ctvAppointmentId?.text = "#${order?.ReferenceNumber}"
     binding?.textDateTime?.text = DateUtils.parseDate(order?.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_3, timeZone = TimeZone.getTimeZone("IST"))
 
-    binding?.textAmount?.text = "${order?.BillingDetails?.CurrencyCode} ${order?.BillingDetails?.GrossAmount}"
+    binding?.textAmount?.text = "${order?.BillingDetails?.CurrencyCode?:"INR"} ${DecimalFormat("##,##,##0").format(order?.BillingDetails?.NetAmount?:0.0)}"
 
     binding?.textServiceName?.text = product?.Name
 

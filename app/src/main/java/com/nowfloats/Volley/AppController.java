@@ -15,6 +15,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.appservice.AppServiceApplication;
+import com.boost.dbcenterapi.DBCenterAPIApplication;
+import com.boost.marketplace.MarketplaceApplication;
 import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignup.locale.LocaleManager;
 import com.dashboard.AppDashboardApplication;
@@ -36,10 +38,17 @@ import com.thinksity.R;
 import com.webengage.sdk.android.WebEngageActivityLifeCycleCallbacks;
 import com.webengage.sdk.android.WebEngageConfig;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.lang.reflect.Method;
 
 import dev.patrickgold.florisboard.ime.core.FlorisApplication;
+import zendesk.chat.Chat;
+import zendesk.core.AnonymousIdentity;
+import zendesk.core.Identity;
+import zendesk.core.Zendesk;
+import zendesk.support.Support;
 
 public class AppController extends BaseApplication/* implements IAviaryClientCredentials*/ {
 
@@ -127,12 +136,18 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
         FlorisApplication.initModule(this);
         FestivePosterApplication.instance = this;
         FestivePosterApplication.initModule(this);
+        //upgrade module changes
+        DBCenterAPIApplication.instance = this;
+        DBCenterAPIApplication.initModule(this);
+        //marketplace module changes
+        MarketplaceApplication.instance = this;
+        MarketplaceApplication.initModule(this);
         initWebEngage();
         UserExperiorController.INSTANCE.startRecording(this);
 
         //Invite Referral
         InviteReferralsApplication.register(this);
-        InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null);
+        InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null,null, new JSONObject());
         //Koin
         KoinBaseApplication.initModule(this);
         //ContextApplication.initSdk(this, this);

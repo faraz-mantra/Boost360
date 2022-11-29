@@ -525,7 +525,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   private fun startApt(markAsShippedRequest: MarkAsShippedRequest) {
     showProgress()
-    viewModel?.markAsShipped(clientId, markAsShippedRequest)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.markAsShipped(clientId, markAsShippedRequest)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         apiGetAptDetails()
         showLongToast(resources.getString(R.string.apt_start_success))
@@ -533,13 +533,12 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         showLongToast(it.message())
         hideProgress()
       }
-    })
+    }
   }
 
   private fun sendReBookingRequestApt() {
     showProgress()
-    viewModel?.sendReBookingReminder(clientId, this.orderItem?._id)
-      ?.observeOnce(viewLifecycleOwner, {
+    viewModel?.sendReBookingReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner) {
         if (it.isSuccess()) {
           apiGetAptDetails()
           showLongToast(resources.getString(R.string.re_booking_reminder))
@@ -547,12 +546,12 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
           showLongToast(it.message())
           hideProgress()
         }
-      })
+      }
   }
 
   private fun sendFeedbackRequestApt(request: FeedbackRequest) {
     showProgress()
-    viewModel?.sendOrderFeedbackRequest(clientId, request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.sendOrderFeedbackRequest(clientId, request)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         apiGetAptDetails()
         showLongToast(resources.getString(R.string.appointment_feedback_requested))
@@ -560,12 +559,12 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         showLongToast(it.message())
         hideProgress()
       }
-    })
+    }
   }
 
   private fun serveCustomer(message: String) {
     showProgress()
-    viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         if (message.isNotEmpty()) {
           updateReason(
@@ -581,13 +580,12 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         showLongToast(it.message())
         hideProgress()
       }
-    })
+    }
   }
 
   private fun apiCancelApt(cancellingEntity: String, reasonText: String) {
     showProgress()
-    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)
-      ?.observeOnce(viewLifecycleOwner, {
+    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)?.observeOnce(viewLifecycleOwner) {
         if (it.isSuccess()) {
           val data = it as? OrderConfirmStatus
           if (reasonText.isNotEmpty()) {
@@ -604,7 +602,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
           showLongToast(it.message())
           hideProgress()
         }
-      })
+      }
   }
 
   private fun updateReason(

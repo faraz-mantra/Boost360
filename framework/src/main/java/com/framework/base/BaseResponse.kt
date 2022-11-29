@@ -21,7 +21,7 @@ open class BaseResponse(
 
   //Deprecate
   fun message(): String {
-   return errorFlowMessage() ?: "Something went wrong!"
+    return errorFlowMessage() ?: "Something went wrong!"
   }
 
   //Deprecate
@@ -49,7 +49,8 @@ open class BaseResponse(
       val jsonResult = if (error?.length() ?: 0 >= 1) error?.get(0) as? JSONObject else null
       return jsonResult?.getStringValue("message") ?: jsonObj.getStringValue("Message") ?: jsonObj.getStringValue("EXCEPTION") ?: messageN()
     } catch (ex: Exception) {
-      messageN()
+      val messageN = messageN()
+      if (messageN.isNullOrEmpty().not()) messageN else null
     }
   }
 

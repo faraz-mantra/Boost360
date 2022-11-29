@@ -26,6 +26,7 @@ import com.appservice.rest.TaskCode
 import com.appservice.ui.catalog.catalogService.listing.TypeSuccess
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.appservice.utils.changeColorOfSubstring
 import com.appservice.utils.getBitmap
 import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
@@ -65,6 +66,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
     sessionLocal = UserSessionManager(requireActivity())
     setOnClickListener(binding?.btnOtherInfo, binding?.clearImage, binding?.imageAddBtn, binding?.ctvChange, binding?.btnChangePicture, binding?.cbAddOffer, binding?.btnSelectServices)
     getBundleData()
+    setupUIColor()
     binding?.toggleServiceApplicableTo?.isOn = true
     binding?.toggleOfferAvailability?.isOn = true
     binding?.toggleServiceApplicableTo?.setOnToggledListener { _, isOn ->
@@ -73,6 +75,13 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
         false -> binding?.llSelectTheService?.visible()
       }
     }
+  }
+
+  private fun setupUIColor() {
+    changeColorOfSubstring(R.string.appointment_offer_title, R.color.black_4a4a4a, "*", binding?.tvOfferTitleVw!!)
+    changeColorOfSubstring(R.string.offer_applicable_to, R.color.black_4a4a4a, "*", binding?.tvOfferApplicableVw!!)
+    changeColorOfSubstring(R.string.discount_amount_inr, R.color.black_4a4a4a, "*", binding?.tvOfferDiscountVw!!)
+    changeColorOfSubstring(R.string.availability_mandatory, R.color.black_4a4a4a, "*", binding?.tvOfferAvailabilityVw!!)
   }
 
   private fun getBundleData() {
@@ -382,7 +391,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
 
   private fun openImagePicker() {
     val filterSheet = ImagePickerBottomSheet()
-    filterSheet.isHidePdf(true)
+    filterSheet.isHidePdfOrGif(true)
     filterSheet.onClicked = { openImagePicker(it) }
     filterSheet.show(this@AddNewOfferFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }

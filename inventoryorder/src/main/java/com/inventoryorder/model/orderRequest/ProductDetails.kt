@@ -27,6 +27,9 @@ data class ProductDetails(
   var imageUri: String? = null,
 ) : Serializable {
 
+
+  var gstSlab=0
+
   fun getActualPrice(): Double {
     return price ?: 0.0
   }

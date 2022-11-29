@@ -10,6 +10,7 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
 
 class EditChangeMobileNumberSheet : BaseBottomSheetDialog<SheetChangeMobileNumberBinding, UserProfileViewModel>() {
@@ -32,6 +33,8 @@ class EditChangeMobileNumberSheet : BaseBottomSheetDialog<SheetChangeMobileNumbe
     mobile = arguments?.getString(IK_MOB)
     binding?.cetPhone?.setText(mobile)
     WebEngageController.trackEvent(USER_MERCHANT_PROFILE_NUMBER_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
+    binding?.cetPhone?.requestFocus()
+    baseActivity.showKeyBoard(binding?.cetPhone)
     setOnClickListener(binding?.btnPublish, binding?.rivCloseBottomSheet)
     binding?.cetPhone?.addTextChangedListener {
       binding?.btnPublish?.isEnabled = (it?.length == 10)

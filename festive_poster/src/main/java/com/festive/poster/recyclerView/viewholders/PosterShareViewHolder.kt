@@ -19,12 +19,12 @@ class PosterShareViewHolder(binding: ListItemPosterShareBinding):
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val model = item as PosterModel
         model.keys.let {
-            val url = model.variants.firstOrNull()?.svgUrl ?: "https://siriablobstorage.blob.core.windows.net/svg-templates/61644f0c503d2a74e5b68963/DurgaPuja03.svg"
+            val url = model.variants?.firstOrNull()?.svgUrl ?: "https://siriablobstorage.blob.core.windows.net/svg-templates/61644f0c503d2a74e5b68963/DurgaPuja03.svg"
 //            binding.ivSvg.loadAndReplace(
 //                model.variants.firstOrNull()?.svgUrl,
 //                it
 //            )
-            SvgUtils.loadImage(url, binding.ivSvgPurchased, model.keys, model.isPurchased)
+            SvgUtils.loadImage(url, binding.ivSvgPurchased, model.keys)
         }
         binding.tvGreetingMsg.text = model.greeting_message
         binding.tvGreetingMsg.setOnClickListener {
@@ -36,7 +36,8 @@ class PosterShareViewHolder(binding: ListItemPosterShareBinding):
         }
         binding.ivOther.setOnClickListener {
             WebEngageController.trackEvent(FESTIVAL_POSTER_SHARE_OTHER,event_value = HashMap())
-            SvgUtils.shareUncompressedSvg(model.variants.firstOrNull()?.svgUrl,model,binding.root.context, "")
+            SvgUtils.shareUncompressedSvg(model.variants?.firstOrNull()?.svgUrl
+                ,model,packageName = "")
         }
 
         binding.ivDownload.setOnClickListener {
@@ -46,12 +47,12 @@ class PosterShareViewHolder(binding: ListItemPosterShareBinding):
 
         binding.ivWhatsapp.setOnClickListener {
             WebEngageController.trackEvent(FESTIVAL_POSTER_SHARE_WHATSAPP,event_value = HashMap())
-            SvgUtils.shareUncompressedSvg(model.variants.firstOrNull()?.svgUrl,model,binding.root.context, PackageNames.WHATSAPP)
+            SvgUtils.shareUncompressedSvg(model.variants?.firstOrNull()?.svgUrl,model, PackageNames.WHATSAPP)
         }
 
         binding.ivInstagram.setOnClickListener {
             WebEngageController.trackEvent(FESTIVAL_POSTER_SHARE_INSTAGRAM,event_value = HashMap())
-            SvgUtils.shareUncompressedSvg(model.variants.firstOrNull()?.svgUrl,model,binding.root.context, PackageNames.INSTAGRAM)
+            SvgUtils.shareUncompressedSvg(model.variants?.firstOrNull()?.svgUrl,model,PackageNames.INSTAGRAM)
         }
 
         super.bind(position, item)

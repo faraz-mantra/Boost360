@@ -11,7 +11,6 @@
 
       <GridView
           android:tag="com.userexperior.ueSecureView"
-
           android:id="@+id/grid"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"

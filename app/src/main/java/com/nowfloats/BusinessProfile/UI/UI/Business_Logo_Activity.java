@@ -34,6 +34,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.framework.analytics.SentryController;
 import com.framework.firebaseUtils.firestore.FirestoreManager;
+import com.framework.imagepicker.BoostImageUtils;
 import com.nowfloats.BusinessProfile.UI.API.Upload_Logo;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.EditImageActivity;
@@ -388,10 +389,13 @@ public class Business_Logo_Activity extends AppCompatActivity {
                     if (picUri != null) {
                         path = Methods.getPath(this, picUri);
                         path = Util.saveBitmap(path, Business_Logo_Activity.this, "ImageFloat" + System.currentTimeMillis());
-                        if (!Util.isNullOrEmpty(path)) {
+                        String isBusinessValidMessage = BoostImageUtils.INSTANCE.isBusinessLogoValid(Business_Logo_Activity.this, new File(path));
+                        if (!Util.isNullOrEmpty(path) && isBusinessValidMessage.equals("")) {
                             editImage();
-                        } else
-                            Methods.showSnackBarNegative(Business_Logo_Activity.this, getResources().getString(R.string.select_image_upload));
+                        } else {
+                            Methods.showSnackBarNegative(Business_Logo_Activity.this,
+                                    (path == null || path.isEmpty()) ? getResources().getString(R.string.select_image_upload) : isBusinessValidMessage);
+                        }
                     }
                 }
             } else if (resultCode == RESULT_OK && requestCode == ACTION_REQUEST_IMAGE_EDIT) {

@@ -47,13 +47,13 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
     if (staffData?.timings.isNullOrEmpty().not()) {
       this.defaultTimings = ArrayList();
       for (item in this.staffData?.timings!!) {
-        if (item?.timeSlots.isNullOrEmpty().not()) {
-          item?.isTurnedOn = true
+        if (item.timeSlots.isNullOrEmpty().not() && (item.timeSlots[0].from == null).not() && (item.timeSlots[0].to == null).not()) {
+          item.isTurnedOn = true
         }
-        if (item?.day?.toLowerCase().equals("monday")) {
-          item?.isAppliedOnAllDaysViewVisible = true;
+        if (item.day?.toLowerCase().equals("monday")) {
+          item.isAppliedOnAllDaysViewVisible = true
         }
-        this.defaultTimings?.add(item);
+        this.defaultTimings.add(item);
       }
     } else {
       this.defaultTimings = AppointmentModel.getDefaultTimings()
@@ -116,7 +116,7 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
       item.isTurnedOn = true
       item.timeSlots = ArrayList()
       for (t in data.timeSlots) {
-        val t1 = TimeSlot();
+        val t1 = TimeSlot()
         t1.to = t.to
         t1.from = t.from
         item.timeSlots.add(t1)
@@ -148,24 +148,26 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
     var i = 0
     this.defaultTimings.forEachIndexed { index, appointmentModel ->
       appointmentModel.timeSlots.forEachIndexed { pos, timeSlot ->
-        if (timeSlot.from == timeSlot.to) {
-          showLongToast(getString(R.string.start_end_can_not_be_same))
-          return false
-        }
-
-        if (convertAndCompareTime(timeSlot.from!!, timeSlot.to!!)) {
-          showLongToast(getString(R.string.endtime_cannot_be_before_starttime))
-          return false
-        }
-
-        if ((pos + 1) < defaultTimings[index].timeSlots.size && defaultTimings[index].timeSlots[pos + 1].from != null) {
-          if (convertAndCompareTime(
-              defaultTimings[index].timeSlots[pos].to ?: "",
-              defaultTimings[index].timeSlots[pos + 1].from ?: ""
-            )
-          ) {
-            showLongToast(getString(R.string.starttime_on_one_slot_cannot_be_before_endtime_of_other_slot))
+        if (timeSlot.from.isNullOrEmpty().not() && timeSlot.to.isNullOrEmpty().not()) {
+          if (timeSlot.from == timeSlot.to) {
+            showLongToast(getString(R.string.start_end_can_not_be_same))
             return false
+          }
+
+          if (convertAndCompareTime(timeSlot.from!!, timeSlot.to!!)) {
+            showLongToast(getString(R.string.endtime_cannot_be_before_starttime))
+            return false
+          }
+
+          if ((pos + 1) < defaultTimings[index].timeSlots.size && defaultTimings[index].timeSlots[pos + 1].from != null) {
+            if (convertAndCompareTime(
+                defaultTimings[index].timeSlots[pos].to ?: "",
+                defaultTimings[index].timeSlots[pos + 1].from ?: ""
+              )
+            ) {
+              showLongToast(getString(R.string.starttime_on_one_slot_cannot_be_before_endtime_of_other_slot))
+              return false
+            }
           }
         }
       }

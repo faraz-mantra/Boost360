@@ -26,9 +26,10 @@
           android:padding="@dimen/size_18">
 
           <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_name"
             style="@style/AppointmentSetting_Text_Heading"
             android:layout_marginStart="@dimen/size_1"
-            android:text="@string/name_of_the_account_holder" />
+            android:text="@string/name_of_the_account_holder_astrick" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/edt_account_name"
@@ -40,10 +41,11 @@
             android:textSize="14sp" />
 
           <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_number"
             style="@style/AppointmentSetting_Text_Heading"
             android:layout_marginStart="@dimen/size_1"
             android:layout_marginTop="@dimen/size_10"
-            android:text="@string/account_number_" />
+            android:text="@string/account_number_aestrick" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/edt_account_number"
@@ -63,7 +65,7 @@
             style="@style/AppointmentSetting_Text_Heading"
             android:layout_marginStart="@dimen/size_1"
             android:layout_marginTop="@dimen/size_10"
-            android:text="@string/confirm_account_number" />
+            android:text="@string/confirm_account_number_astrick" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/edt_confirm_number"
@@ -78,10 +80,11 @@
             android:textSize="14sp" />
 
           <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_bank_name"
             style="@style/AppointmentSetting_Text_Heading"
             android:layout_marginStart="@dimen/size_1"
             android:layout_marginTop="@dimen/size_10"
-            android:text="@string/bank_name" />
+            android:text="@string/bank_name_astrick" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/edt_bank_name"
@@ -110,10 +113,11 @@
             android:textSize="14sp" />
 
           <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_bank_ifsc"
             style="@style/AppointmentSetting_Text_Heading"
             android:layout_marginStart="@dimen/size_1"
             android:layout_marginTop="@dimen/size_10"
-            android:text="@string/bank_ifsc_code" />
+            android:text="@string/bank_ifsc_code_astrick" />
 
           <com.framework.views.customViews.CustomTextView
             android:id="@+id/edt_ifsc"
@@ -133,7 +137,7 @@
             style="@style/AppointmentSetting_Text_Heading"
             android:layout_marginStart="@dimen/size_1"
             android:layout_marginTop="@dimen/size_10"
-            android:text="@string/bank_branch_"
+            android:text="@string/bank_branch_astrick"
             android:visibility="gone" />
 
           <com.framework.views.customViews.CustomTextView

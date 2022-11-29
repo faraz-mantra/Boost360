@@ -19,7 +19,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="10dp"
-      android:text="@string/account_number_"
+      android:text="@string/account_number_n"
       android:textColor="#383838"
       android:textSize="14sp" />
 
@@ -31,7 +31,7 @@
       android:layout_height="wrap_content"
       android:backgroundTint="#383838"
       android:ellipsize="end"
-      android:hint="@string/account_number_"
+      android:hint="@string/account_number_n"
       android:inputType="textNoSuggestions"
       android:scrollHorizontally="true"
       android:singleLine="true"

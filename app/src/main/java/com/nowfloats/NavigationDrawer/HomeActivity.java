@@ -94,10 +94,10 @@ import com.anachat.chatsdk.internal.database.PreferencesManager;
 import com.appservice.ui.bgImage.BackgroundImageContainerActivityKt;
 import com.appservice.ui.bankaccount.BankAccountFragment;
 import com.appservice.ui.calltracking.VmnCallCardsActivityV2;
+import com.boost.marketplace.ui.home.MarketPlaceActivity;
 import com.boost.presignin.ui.intro.IntroActivity;
 import com.boost.presignup.utils.DynamicLinkParams;
 import com.boost.presignup.utils.FirebaseDynamicLinksManager;
-import com.boost.upgrades.UpgradeActivity;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.dashboard.controller.DashboardFragmentContainerActivityKt;
@@ -186,7 +186,6 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
-import com.zopim.android.sdk.api.ZopimChat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -395,7 +394,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
       createView();
     }
     getPricingPlanDetails();
-    initialiseZendeskSupportSdk();
     //WidgetKey.getWidgets(session, this);
   }
 
@@ -787,29 +785,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
   }
 
-  private void initialiseZendeskSupportSdk() {
-    try {
-      Zendesk.INSTANCE.init(HomeActivity.this,
-          "https://boost360.zendesk.com",
-          "684341b544a77a2a73f91bd3bb2bc77141d4fc427decda49",
-          "mobile_sdk_client_6c56562cfec5c64c7857");
 
-//            Identity identity = new AnonymousIdentity();
-
-      Identity identity = new AnonymousIdentity.Builder()
-          .withNameIdentifier(session.getFpTag())
-          .withEmailIdentifier(session.getFPEmail())
-          .build();
-
-      Zendesk.INSTANCE.setIdentity(identity);
-
-      Support.INSTANCE.init(Zendesk.INSTANCE);
-
-      ZopimChat.init("MJwgUJn9SKy2m9ooxsQgJSeTSR5hU3A5");
-    } catch (Exception e) {
-      SentryController.INSTANCE.captureException(e);
-    }
-  }
 
   public void appUpdateAlertDialog(final Activity mContext) {
     MaterialDialog.Builder builder = new MaterialDialog.Builder(new ContextThemeWrapper(mContext, R.style.MaterialAlertDialogTheme))
@@ -1510,7 +1486,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
   }
 
   private void initiateAddonMarketplace(Boolean isOpenCardFragment, String screenType, String buyItemKey) {
-    Intent intent = new Intent(HomeActivity.this, UpgradeActivity.class);
+    Intent intent = new Intent(HomeActivity.this, MarketPlaceActivity.class);
     intent.putExtra("expCode", session.getFP_AppExperienceCode());
     intent.putExtra("fpName", session.getFPName());
     intent.putExtra("fpid", session.getFPID());

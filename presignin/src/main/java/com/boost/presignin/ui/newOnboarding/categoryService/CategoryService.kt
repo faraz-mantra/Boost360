@@ -2,13 +2,16 @@ package com.boost.presignin.ui.newOnboarding.categoryService
 
 import android.app.Service
 import android.content.Intent
+import android.os.Build
 import android.os.IBinder
 import androidx.appcompat.app.AppCompatActivity
 import com.boost.presignin.model.category.ApiCategoryResponse
 import com.boost.presignin.model.category.saveCategoryLiveData
 import com.boost.presignin.rest.repository.BoostKitDevRepository
+import com.framework.analytics.SentryController
 import com.framework.models.toLiveData
 import com.framework.pref.UserSessionManager
+import java.lang.Exception
 
 class CategoryService : Service() {
 
@@ -36,5 +39,9 @@ class CategoryService : Service() {
 }
 
 fun AppCompatActivity.startServiceCategory() {
-  startService(Intent(this, CategoryService::class.java))
+  try {
+    startService(Intent(this, CategoryService::class.java))
+  } catch (e: Exception) {
+    SentryController.captureException(e)
+  }
 }

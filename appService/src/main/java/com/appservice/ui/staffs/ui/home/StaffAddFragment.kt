@@ -32,7 +32,7 @@ class StaffAddFragment : AppBaseFragment<FragmentStaffAddBinding, BaseViewModel>
   }
 
   override fun onCreateView() {
-    binding?.btnAddStaff?.setOnClickListener { startStaffFragmentActivity(requireActivity(), if (isDoctor) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT, Bundle(), clearTop = false, isResult = false, requestCode = Constants.REQUEST_CODE) }
+    binding?.btnAddStaff?.setOnClickListener { startStaffFragmentActivity(requireActivity(), if (isDoctorClinic) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT, Bundle(), clearTop = false, isResult = false, requestCode = Constants.REQUEST_CODE) }
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -44,7 +44,7 @@ class StaffAddFragment : AppBaseFragment<FragmentStaffAddBinding, BaseViewModel>
     return when (item.itemId) {
       R.id.menu_add -> {
         val bundle: Bundle = Bundle.EMPTY
-        startStaffFragmentActivity(requireActivity(), if (isDoctor) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT, bundle, clearTop = false, isResult = false, requestCode = Constants.REQUEST_CODE)
+        startStaffFragmentActivity(requireActivity(), if (isDoctorClinic) FragmentType.DOCTOR_ADD_EDIT_FRAGMENT else FragmentType.STAFF_DETAILS_FRAGMENT, bundle, clearTop = false, isResult = false, requestCode = Constants.REQUEST_CODE)
         true
       }
       else -> super.onOptionsItemSelected(item)

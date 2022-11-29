@@ -26,5 +26,7 @@ data class BusinessCreateRequest(
   var appExperienceCode: String? = null,
   var whatsAppNumber: String? = null,
   var whatsAppNotificationOptIn: Boolean? = null,
-  var boostXWebsiteUrl: String? = null
+  var boostXWebsiteUrl: String? = null,
+  var ExternalSourceId: String? = null,
+  var SubCategory: String? = null
 ) : BaseRequest(), Serializable

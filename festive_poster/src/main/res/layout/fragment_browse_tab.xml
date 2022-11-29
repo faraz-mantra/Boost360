@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+  <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center_horizontal"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_24"
+        android:layout_marginTop="@dimen/size_24"
+        android:background="@drawable/bg_rounded_e2e2e2"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginVertical="8dp"
+          android:layout_marginStart="8dp"
+          android:src="@drawable/ic_search_white_fposter" />
+
+        <com.framework.views.customViews.CustomEditText
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="4dp"
+          android:background="@color/white"
+          android:fontFamily="@font/regular"
+          android:hint="@string/type_what_you_re_looking_for"
+          android:padding="@dimen/size_8"
+          android:textSize="14sp" />
+      </LinearLayout>
+
+      <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/size_24">
+
+        <GridLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:columnCount="2"
+          android:rowCount="2">
+
+          <include
+            layout="@layout/list_item_shimmer_browse_all_cat"
+            android:layout_width="@dimen/size_150"
+            android:layout_height="@dimen/size_150"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginVertical="@dimen/size_8" />
+
+          <include
+            layout="@layout/list_item_shimmer_browse_all_cat"
+            android:layout_width="@dimen/size_150"
+            android:layout_height="@dimen/size_150"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginVertical="@dimen/size_8" />
+
+          <include
+            layout="@layout/list_item_shimmer_browse_all_cat"
+            android:layout_width="@dimen/size_150"
+            android:layout_height="@dimen/size_150"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginVertical="@dimen/size_8" />
+
+          <include
+            layout="@layout/list_item_shimmer_browse_all_cat"
+            android:layout_width="@dimen/size_150"
+            android:layout_height="@dimen/size_150"
+            android:layout_marginHorizontal="@dimen/size_12"
+            android:layout_marginVertical="@dimen/size_8" />
+        </GridLayout>
+      </com.facebook.shimmer.ShimmerFrameLayout>
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_cat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_16"
+        android:layout_marginVertical="@dimen/size_24" />
+    </LinearLayout>
+  </FrameLayout>
+</layout>

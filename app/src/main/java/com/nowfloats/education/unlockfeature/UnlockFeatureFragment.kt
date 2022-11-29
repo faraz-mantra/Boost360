@@ -11,7 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.boost.upgrades.UpgradeActivity
+import com.boost.marketplace.ui.home.MarketPlaceActivity
 import com.nowfloats.Login.UserSessionManager
 import com.nowfloats.education.model.UnlockFeatureModel
 import com.nowfloats.util.Constants
@@ -54,7 +54,7 @@ class UnlockFeatureFragment(
       progressDialog.setMessage(status)
       progressDialog.setCancelable(false)
       progressDialog.show()
-      val intent = Intent(requireActivity(), UpgradeActivity::class.java)
+      val intent = Intent(requireActivity(), MarketPlaceActivity::class.java)
       intent.putExtra("expCode", it.fP_AppExperienceCode)
       intent.putExtra("fpName", it.fpName)
       intent.putExtra("fpid", it.fpid)

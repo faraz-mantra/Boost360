@@ -40,6 +40,8 @@ import com.framework.pref.Key_Preferences.GET_FP_DETAILS_DESCRIPTION
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId2
+import com.framework.utils.changeLayersColor
+import com.framework.utils.fromHtml
 import com.framework.views.customViews.CustomImageView
 import com.framework.webengageconstant.*
 import com.onboarding.nowfloats.model.channel.statusResponse.ChannelAccessStatusResponse.Companion.getConnectedChannel
@@ -78,18 +80,10 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     session = UserSessionManager(requireContext())
     WebEngageController.trackEvent(BUSINESS_PROFILE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(
-      binding?.ctvWhatsThis,
-      binding?.ctvBusinessName,
-      binding?.businessImage,
-      binding?.ctvBusinessCategory,
-      binding?.clBusinessDesc,
-      binding?.imageAddBtn,
-      binding?.btnChangeImage,
-      binding?.btnSavePublish,
-      binding?.openBusinessAddress,
-      binding?.openBusinessChannels,
-      binding?.openBusinessContact,
-      binding?.openBusinessWebsite,
+      binding?.ctvWhatsThis, binding?.ctvBusinessName, binding?.businessImage,
+      binding?.ctvBusinessCategory, binding?.clBusinessDesc, binding?.imageAddBtn,
+      binding?.btnChangeImage, binding?.btnSavePublish, binding?.openBusinessAddress,
+      binding?.openBusinessChannels, binding?.openBusinessContact, binding?.openBusinessWebsite, binding?.viewBusinessTiming
     )
   }
 
@@ -119,33 +113,36 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       binding?.containerBusinessAddress?.visible()
     }
     var str = ""
-    if (session?.fPPrimaryContactNumber.isNullOrEmpty()
-        .not()
-    ) str += "• +91 ${session?.fPPrimaryContactNumber} (VMN)"
+    if (session?.fPPrimaryContactNumber.isNullOrEmpty().not()) str += "• +91 ${session?.fPPrimaryContactNumber} (VMN)"
     if (session?.fPPrimaryContactNumber.isNullOrEmpty()) {
-      if (session?.getStoreWidgets()?.contains("CALLTRACKER") == true) {
-        binding?.ctvActive?.text = getString(R.string.active)
-        binding?.ctvActive?.setTextColor(getColor(R.color.green_27AE60))
-      } else {
-        binding?.ctvActive?.text = getString(R.string.inactive)
-        binding?.ctvActive?.setTextColor(getColor(R.color.red_E39595))
-      }
+      val isActive = (session?.getStoreWidgets()?.contains("CALLTRACKER") == true)
+      binding?.ctvActive?.text = getString(if (isActive) R.string.active else R.string.inactive)
+      binding?.ctvActive?.setTextColor(getColor(if (isActive) R.color.green_27AE60 else R.color.red_E39595))
+      binding?.ellipseContactStatus?.changeLayersColor(if (isActive) R.color.green_light else R.color.red_E39595)
       binding?.ctvActive?.gone()
+      binding?.ellipseContactStatus?.gone()
     } else {
       binding?.ctvActive?.visible()
+      binding?.ellipseContactStatus?.visible()
     }
-    if (session?.userPrimaryMobile.isNullOrEmpty()
-        .not()
-    ) str += "\n• +91 ${session?.userPrimaryMobile}"
-    if ((session?.userProfileEmail ?: session?.fPEmail).isNullOrEmpty()
-        .not()
-    ) str += "\n• ${session?.userProfileEmail ?: session?.fPEmail}"
+    if (session?.userPrimaryMobile.isNullOrEmpty().not()) str += "\n• +91 ${session?.userPrimaryMobile}"
+    if ((session?.userProfileEmail ?: session?.fPEmail).isNullOrEmpty().not()) str += "\n• ${session?.userProfileEmail ?: session?.fPEmail}"
     str += "\n• ${session?.getDomainName() ?: ""}"
     binding?.ctvBusinessContacts?.text = str.trimMargin()
-
+    setTimingData()
     setDataToModel()
     setImageGrayScale()
     setConnectedChannels()
+  }
+
+  private fun setTimingData() {
+    session?.getCurrentTimingsData { isOpen, day, timing ->
+      binding?.ctvOpenTiming?.text = getString(if (isOpen) R.string.active else R.string.inactive)
+      binding?.ctvOpenTiming?.setTextColor(getColor(if (isOpen) R.color.green_27AE60 else R.color.red_E39595))
+      binding?.ellipseTimingStatus?.changeLayersColor(if (isOpen) R.color.green_light else R.color.red_E39595)
+      binding?.ctvHeadingTiming?.setTextColor(getColor(if (timing.isNotEmpty()) R.color.black_4a4a4a else R.color.red_E39595))
+      binding?.ctvHeadingTiming?.text= fromHtml(if (timing.isNotEmpty()) "<b>$day:</b> $timing" else "<b>$day:</b> Closed")
+    }
   }
 
   private fun uploadBusinessLogo(businessLogoImage: File) {
@@ -156,13 +153,13 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     viewModel?.putUploadBusinessLogo(
       clientId2, fpId = FirestoreManager.fpId, reqType = "sequential", reqId = s_uuid, totalChunks = "1",
       currentChunkNumber = "1", file = RequestBody.create("image/png".toMediaTypeOrNull(), businessLogoImage.readBytes())
-    )?.observeOnce(viewLifecycleOwner, {
+    )?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess()) {
         session?.storeFPDetails(GET_FP_DETAILS_LogoUrl, it.parseStringResponse()?.replace("\\", "")?.replace("\"", ""))
-        showSnackBarPositive( getString(R.string.business_image_uploaded))
-      } else showSnackBarNegative( it.message?:getString(R.string.something_went_wrong))
+        showSnackBarPositive(getString(R.string.business_image_uploaded))
+      } else showSnackBarNegative(it.message ?: getString(R.string.something_went_wrong))
       hideProgress()
-    })
+    }
   }
 
   private fun loadImage(imageUri: String) {
@@ -261,11 +258,9 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       binding?.imageAddBtn, binding?.btnChangeImage -> baseActivity.startBusinessLogo(session)// openImagePicker()
       binding?.btnSavePublish -> if (isValid()) updateFpDetails()
       binding?.openBusinessAddress -> {
-        WebEngageController.trackEvent(BUSINESS_ADDRESS_PAGE, CLICK, NO_EVENT_VALUE)
         baseActivity.startBusinessAddress(session)
       }
       binding?.openBusinessChannels -> {
-        WebEngageController.trackEvent(CONNECTED_CHANNELS_PAGE_CLICK, CLICK, NO_EVENT_VALUE)
         baseActivity.startDigitalChannel(session!!)
       }
       binding?.openBusinessContact -> {
@@ -274,7 +269,10 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       }
       binding?.openBusinessWebsite -> {
         WebEngageController.trackEvent(WEB_VIEW_PAGE, CLICK, NO_EVENT_VALUE)
-        openWebViewDialog(session?.rootAliasURI!!, session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)?:"")
+        openWebViewDialog(session?.rootAliasURI!!, session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) ?: "")
+      }
+      binding?.viewBusinessTiming->{
+        baseActivity.startBusinessHours(session)
       }
     }
   }
@@ -314,7 +312,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     }
     businessProfileUpdateRequest = BusinessProfileUpdateRequest(session?.fpTag, clientId2, updateItemList)
     viewModel?.updateBusinessProfile(businessProfileUpdateRequest!!)
-      ?.observeOnce(viewLifecycleOwner, {
+      ?.observeOnce(viewLifecycleOwner) {
         if (it.isSuccess()) {
           binding?.btnSavePublish?.isEnabled = false
           val response = it?.parseStringResponse()
@@ -338,12 +336,12 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
           showShortToast(baseActivity.getString(R.string.error_updating_business))
         }
         hideProgress()
-      })
+      }
   }
 
   private fun openImagePicker() {
     val filterSheet = ImagePickerBottomSheet()
-    filterSheet.isHidePdf(true)
+    filterSheet.isHidePdfOrGif(true)
     filterSheet.onClicked = { openImagePicker(it) }
     filterSheet.show(
       this@BusinessProfileFragment.parentFragmentManager,

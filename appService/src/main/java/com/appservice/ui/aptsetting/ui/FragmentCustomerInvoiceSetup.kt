@@ -80,8 +80,8 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
         val gSTIN = data?.result?.taxDetails?.gSTDetails?.gSTIN
         val businessName = data?.result?.taxDetails?.gSTDetails?.businessName
         if (gSTIN.isNullOrEmpty().not() || businessName.isNullOrEmpty().not()) {
-          setGstData(gSTIN!!)
-          setBusinessName(businessName!!)
+          setGstData(gSTIN?:"")
+          setBusinessName(businessName?:"")
         }
         updatePreviousData()
       }
@@ -254,7 +254,7 @@ class FragmentCustomerInvoiceSetup : AppBaseFragment<FragmentCustomerInvoiceSetu
 
   fun openImagePicker() {
     val filterSheet = ImagePickerBottomSheet()
-    filterSheet.isHidePdf(true)
+    filterSheet.isHidePdfOrGif(true)
     filterSheet.onClicked = { openImagePicker(it) }
     filterSheet.show(parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }

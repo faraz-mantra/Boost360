@@ -74,7 +74,7 @@ public class HelpAndSupportFragment extends Fragment {
 
     private void showProgress() {
         if (dialog == null) {
-            dialog = new ProgressDialog(mContext);
+            dialog = new ProgressDialog(mContext,R.style.AppCompatAlertDialogStyle);
             dialog.setCanceledOnTouchOutside(false);
             dialog.setIndeterminate(true);
             dialog.setMessage(getString(R.string.please_wait));

@@ -49,6 +49,7 @@
         style="@style/BusinessProfileTextField"
         android:digits="0123456789"
         android:drawableEnd="@null"
+        android:singleLine="true"
         android:hint="@string/xxxxxxxxxx"
         android:inputType="phone"
         android:maxLength="10"

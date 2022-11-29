@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.appservice.utils.changeColorOfSubstring
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.databinding.FragmentOwnerInfoBinding
@@ -59,9 +60,14 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
     session = UserSessionManager(baseActivity)
     WebEngageController.trackEvent(OWNER_INFO_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.btnSaveDetails, binding?.clearImage, binding?.btnChangeImage, binding?.imageAddBtn)
+    setupUIColor()
     hitGetOwnersInfo()
   }
 
+  private fun setupUIColor() {
+    changeColorOfSubstring(R.string.owner_s_name, R.color.black_4a4a4a, "*", binding?.tvOwnerNameVw!!)
+    changeColorOfSubstring(R.string.owner_s_designation, R.color.black_4a4a4a, "*", binding?.tvOwnerDesignationVw!!)
+  }
 
   override fun onClick(v: View) {
     super.onClick(v)
@@ -167,7 +173,7 @@ class FragmentOwnerInfo : AppBaseFragment<FragmentOwnerInfoBinding, OwnersViewMo
 
   private fun openImagePicker() {
     val filterSheet = ImagePickerBottomSheet()
-    filterSheet.isHidePdf(true)
+    filterSheet.isHidePdfOrGif(true)
     filterSheet.onClicked = { openImagePicker(it) }
     filterSheet.show(parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }

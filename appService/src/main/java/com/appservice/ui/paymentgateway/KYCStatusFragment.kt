@@ -21,6 +21,7 @@ import com.appservice.model.kycData.PaymentKycDataResponse
 import com.appservice.model.kycData.saveBusinessKycDetail
 import com.appservice.model.paymentKyc.PaymentKycRequest
 import com.appservice.utils.WebEngageController
+import com.appservice.utils.changeColorOfSubstring
 import com.appservice.viewmodel.WebBoostKitViewModel
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
@@ -33,6 +34,7 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.concurrent.schedule
 
+@Deprecated(message = "new screen: com.appservice.ui.ecommerce.FragmentEcommerceSettings")
 class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitViewModel>() {
 
   private var session: SessionData? = null
@@ -55,11 +57,16 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
   override fun onCreateView() {
     super.onCreateView()
     setOnClickListener(binding?.btnKycStatusRefresh)
+    setupUIColor()
     session = arguments?.getSerializable(IntentConstant.SESSION_DATA.name) as? SessionData
     saveKycData = arguments?.getSerializable(IntentConstant.KYC_DETAIL.name) as? PaymentKycRequest
     if (saveKycData == null) getKycDetails()
     else updateUiData()
     initLottieAnimation()
+  }
+
+  private fun setupUIColor() {
+    changeColorOfSubstring(R.string.name_as_mentioned_on_pan_card, R.color.warm_grey, "*", binding?.headingPanName!!)
   }
 
   private fun getKycDetails() {

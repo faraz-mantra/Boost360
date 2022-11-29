@@ -34,6 +34,7 @@ import com.framework.utils.showKeyBoard
 import com.framework.views.blur.setBlur
 import com.framework.webengageconstant.*
 import com.invitereferrals.invitereferrals.InviteReferralsApi
+import org.json.JSONObject
 
 class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Binding, LoginSignUpViewModel>() {
 
@@ -62,6 +63,10 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
 
   private val categoryLiveName by lazy {
     arguments?.getString(IntentConstant.CATEGORY_SUGG_UI.name)
+  }
+
+  private val subCategoryID by lazy {
+    arguments?.getString(IntentConstant.SUB_CATEGORY_ID.name)
   }
 
   private val mobilePreview by lazy {
@@ -223,6 +228,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     createRequest.whatsAppNumber = if (whatsappConsent == true) phoneNumber else null
     createRequest.whatsAppNotificationOptIn = whatsappConsent
     createRequest.boostXWebsiteUrl = "www.${domain.lowercase()}.nowfloats.com"
+    createRequest.SubCategory = subCategoryID
     return createRequest
   }
 
@@ -240,7 +246,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
       categoryFloatsReq?.requestProfile?.ProfileProperties?.userName,
       email, categoryFloatsReq?.userBusinessMobile, 0, null, null
     )
-    InviteReferralsApi.getInstance(baseActivity).tracking("register", email, 0, null, null)
+    InviteReferralsApi.getInstance(baseActivity).tracking("register", email, 0, null, null, null, JSONObject())
   }
 
   private fun apiHitCreateMerchantProfile() {

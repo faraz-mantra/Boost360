@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
@@ -18,6 +19,7 @@ import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.utils.WebEngageController
+import com.appservice.utils.openImagePicker
 import com.appservice.viewmodel.BackgroundImageViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -27,6 +29,7 @@ import com.framework.imagepicker.ImagePicker
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.convertListObjToString
+import com.framework.utils.fetchString
 import com.framework.webengageconstant.*
 
 class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, BackgroundImageViewModel>(), RecyclerItemClickListener {
@@ -67,6 +70,7 @@ class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, 
       if (res.isSuccess()) {
         val response = res.arrayResponse
         listImages = ArrayList()
+        binding?.btnDone?.isVisible=true
         response?.forEach { listImages?.add(ImageData(it as? String, RecyclerViewItemType.BACKGROUND_IMAGE_RV.getLayout())) }
         uiVisibility()
         if (adapterImage == null) {
@@ -117,25 +121,17 @@ class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnDone -> openImagePicker()
+      binding?.btnDone -> {
+        if ((listImages?.size ?: 0) >= 8){
+          showSnackBarNegative(getString(R.string.max_limit_of_8_images_is_reached))
+          return
+        }
+        openImagePicker(requireActivity(), parentFragmentManager)
+      }
     }
   }
 
-  private fun openImagePicker() {
-    //ImagePickerUtil.openPicker(this, object : ImagePickerUtil.Listener { override fun onFilePicked(filePath: String) { } })
-    val filterSheet = ImagePickerBottomSheet()
-    filterSheet.isHidePdf(true)
-    filterSheet.onClicked = { openImagePicker(it) }
-    filterSheet.show(baseActivity.supportFragmentManager, ImagePickerBottomSheet::class.java.name)
-  }
 
-  private fun openImagePicker(it: ClickType) {
-    WebEngageController.trackEvent(UPLOAD_GALLERY_IMAGE, CLICK, NO_EVENT_VALUE)
-    val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
-    ImagePicker.Builder(baseActivity).mode(type).compressLevel(ImagePicker.ComperesLevel.SOFT)
-      .directory(ImagePicker.Directory.DEFAULT).extension(ImagePicker.Extension.PNG)
-      .allowMultipleImages(false).enableDebuggingMode(true).build()
-  }
 
   override fun showProgress(title: String?, cancelable: Boolean?) {
     binding?.pbLoading?.visible()

@@ -10,8 +10,7 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 
-class ItemContentSetupHolder(binding: ItemContentSetupManageBinding) :
-  AppBaseRecyclerViewHolder<ItemContentSetupManageBinding>(binding) {
+class ItemContentSetupHolder(binding: ItemContentSetupManageBinding) : AppBaseRecyclerViewHolder<ItemContentSetupManageBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -30,14 +29,10 @@ class ItemContentSetupHolder(binding: ItemContentSetupManageBinding) :
       binding.imgArrowGif.play()
       getColor(R.color.red_light_1)?.let { binding.txtTitle.setTextColor(it) }
     }
-    binding.view2.visibility =
-      if (itemCount != null && position == (itemCount!! - 1)) View.INVISIBLE else View.VISIBLE
+    binding.view2.visibility = if (itemCount != null && position == (itemCount!! - 1)) View.INVISIBLE else View.VISIBLE
     binding.mainContent.setOnClickListener {
-      if (!data.isUpdate) listener?.onItemClick(
-        position,
-        data,
-        RecyclerViewActionType.DIGITAL_SCORE_READINESS_CLICK.ordinal
-      )
+//      if (!data.isUpdate) listener?.onItemClick(position, data, RecyclerViewActionType.DIGITAL_SCORE_READINESS_CLICK.ordinal)
+      listener?.onItemClick(position, data, RecyclerViewActionType.DIGITAL_SCORE_READINESS_CLICK.ordinal)
     }
   }
 }

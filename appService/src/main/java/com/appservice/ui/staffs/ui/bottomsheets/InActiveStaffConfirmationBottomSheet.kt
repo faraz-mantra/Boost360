@@ -2,7 +2,7 @@ package com.appservice.ui.staffs.ui.bottomsheets
 
 import android.view.View
 import com.appservice.R
-import com.appservice.base.isDoctorProfile
+import com.appservice.base.isDoctorClinicProfile
 import com.appservice.databinding.BottomsheetInactiveStaffConfirmationBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
@@ -14,7 +14,7 @@ class InActiveStaffConfirmationBottomSheet : BaseBottomSheetDialog<BottomsheetIn
   private lateinit var session: UserSessionManager
   private val isDoctor: Boolean
     get() {
-      return isDoctorProfile(session.fP_AppExperienceCode)
+      return isDoctorClinicProfile(session.fP_AppExperienceCode)
     }
   var onClicked: (value: Boolean) -> Unit = { }
   override fun getLayout(): Int {

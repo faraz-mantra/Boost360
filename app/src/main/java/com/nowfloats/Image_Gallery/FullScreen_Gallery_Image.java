@@ -99,27 +99,24 @@ public class FullScreen_Gallery_Image extends AppCompatActivity {
                 currentPos -= 1;
                 int selectedPosition = getItem(-1);
                 viewPager.setCurrentItem(selectedPosition, true);
-                if (viewPager.getCurrentItem() == 0) {
-                    currentTextView.setText("1");
+                /*if (viewPager.getCurrentItem() == 0) {
+                    currentTextView.setText(viewPager.getCurrentItem() + 1);
                 } else {
                     currentTextView.setText(String.valueOf(Integer.parseInt(currentTextView.getText().toString()) - 1));
-                }
+                }*/
             }
         });
 
-        nextImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentPos += 1;
-                Log.d("Image_Gallery_Fragment", "Current POS : " + currentPos);
-                int selectedPosition = getItem(+1);
-                viewPager.setCurrentItem(selectedPosition, true);
-                if (viewPager.getAdapter().getCount() - 1 == viewPager.getCurrentItem()) {
-                    currentTextView.setText(String.valueOf(viewPager.getAdapter().getCount()));
-                } else {
-                    currentTextView.setText(String.valueOf(Integer.parseInt(currentTextView.getText().toString()) + 1));
-                }
-            }
+        nextImageView.setOnClickListener(v -> {
+            currentPos += 1;
+            Log.d("Image_Gallery_Fragment", "Current POS : " + currentPos);
+            int selectedPosition = getItem(+1);
+            viewPager.setCurrentItem(selectedPosition, true);
+            /*if (viewPager.getAdapter().getCount() - 1 == viewPager.getCurrentItem()) {
+                currentTextView.setText(String.valueOf(viewPager.getAdapter().getCount()));
+            } else {
+                currentTextView.setText(String.valueOf(Integer.parseInt(currentTextView.getText().toString()) + 1));
+            }*/
         });
 
 

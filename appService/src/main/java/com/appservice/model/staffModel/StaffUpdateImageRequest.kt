@@ -1,6 +1,5 @@
 package com.appservice.model.staffModel
 
-import com.appservice.model.staffModel.StaffImage
 import com.google.gson.annotations.SerializedName
 
 data class StaffUpdateImageRequest(

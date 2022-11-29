@@ -222,8 +222,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
         dialog.dismiss()
         if (type == 1 || type == 2) {
           ImagePicker.Builder(baseActivity)
-            .mode(takeIf { type == 2 }?.let { ImagePicker.Mode.CAMERA }
-              ?: ImagePicker.Mode.GALLERY)
+            .mode(takeIf { type == 2 }?.let { ImagePicker.Mode.CAMERA } ?: ImagePicker.Mode.GALLERY)
             .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
             .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
             .enableDebuggingMode(true).build()

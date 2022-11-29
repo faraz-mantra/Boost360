@@ -216,7 +216,7 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
 
   private fun getAndSaveFeatureSupportVideos(isProgress: Boolean = false) {
     if (isProgress) showProgress()
-    viewModel.getSupportVideos().observeOnce(this, {
+    viewModel.getSupportVideos().observeOnce(this) {
       val featureVideo = (it as? FeatureSupportVideoResponse)?.data?.firstOrNull()?.featurevideo
       if (it.isSuccess() && featureVideo.isNullOrEmpty().not()) {
         saveSupportVideoData(featureVideo)
@@ -229,7 +229,7 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
         }
       }
       hideProgress()
-    })
+    }
   }
 
   private fun populateData() {
@@ -246,7 +246,8 @@ class SupportVideoPlayerActivity : AppBaseActivity<ActivitySupportVideoPlayerBin
       loadNextVideo()
       launchProgressListener()
     } else {
-      finishActivity()
+      showShortToast(getString(R.string.wrong_format_youtube_video_available))
+      finish()
       return
     }
   }

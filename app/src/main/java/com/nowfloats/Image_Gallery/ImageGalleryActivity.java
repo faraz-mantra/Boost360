@@ -110,14 +110,14 @@ public class ImageGalleryActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i(TAG, "onActivityResult: "+Constants.storeSecondaryImages.size());
+        //Log.i(TAG, "onActivityResult: "+Constants.storeSecondaryImages.size());
         if (requestCode==202){
             handleZerothCase();
         }
     }
 
     private void handleZerothCase(){
-        if (Constants.storeSecondaryImages.isEmpty()){
+        if (Constants.storeSecondaryImages == null || Constants.storeSecondaryImages.isEmpty()){
             binding.btnAdd.setVisibility(View.GONE);
             binding.footer.setVisibility(View.GONE);
         }else {

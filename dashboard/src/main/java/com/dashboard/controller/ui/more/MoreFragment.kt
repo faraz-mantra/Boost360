@@ -8,9 +8,11 @@ import android.view.*
 import android.widget.PopupWindow
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.LinearLayoutCompat
+import com.appservice.constant.FragmentType
 import com.appservice.model.accountDetails.getBankDetail
+import com.appservice.model.aptsetting.AppointmentStatusResponse
 import com.appservice.model.kycData.DataKyc
-import com.appservice.model.kycData.getBusinessKycDetail
+import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.updatesBusiness.showDialog
 import com.boost.presignin.model.other.KYCDetails
 import com.dashboard.R
@@ -33,6 +35,7 @@ import com.framework.models.UserProfileData
 import com.framework.models.UserProfileDataResult
 import com.framework.models.UserProfileDataResult.Companion.getMerchantProfileDetails
 import com.framework.models.UserProfileDataResult.Companion.saveMerchantProfileDetails
+import com.framework.pref.APPLICATION_JIO_ID
 import com.framework.pref.BASE_IMAGE_URL
 import com.framework.pref.Key_Preferences
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_IMAGE_URI
@@ -178,9 +181,9 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
             it
           }
           UsefulLinksItem.IconType.business_kyc.name -> {
-            val dataKyc = getBusinessKycDetail()
+            val dataKyc = AppointmentStatusResponse.getFromPref()
             if (dataKyc != null) {
-              if (dataKyc.isVerified == DataKyc.Verify.YES.name) {
+              if (dataKyc.result?.customerInvoicesSetup?.isPending?.not() == true) {
                 it.actionBtn?.color = "#F2FBE9"
                 it.actionBtn?.textColor = "#7ED321"
                 it.actionBtn?.title = "Verified"
@@ -255,7 +258,11 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
         likeUsFacebook(baseActivity, "")
       }
       rate_us_on_google_play -> {
-        rateGooglePlayStore()
+        if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)) {
+          showShortToast(getString(R.string.coming_soon))
+        }else {
+          rateGooglePlayStore()
+        }
       }
       else -> showShortToast(getString(R.string.coming_soon))
     }
@@ -385,5 +392,6 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
     super.onResume()
     setHelpfulResources()
     refreshUserDetail()
+    setData()
   }
 }

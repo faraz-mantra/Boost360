@@ -30,15 +30,15 @@ public class ReferralTransActivity extends AppCompatActivity {
     String email = "";
     String number = "";
     String username = "";
-    if (!TextUtils.isEmpty(session.getFPEmail())) email = session.getFPEmail();
+    if (session.getFPEmail()!=null&&!TextUtils.isEmpty(session.getFPEmail())) email = session.getFPEmail();
     if (email.isEmpty()) email = session.getUserProfileEmail();
 
-    if (!TextUtils.isEmpty(session.getFPPrimaryContactNumber())) number = session.getFPPrimaryContactNumber();
+    if (session.getFPPrimaryContactNumber()!=null&&!TextUtils.isEmpty(session.getFPPrimaryContactNumber())) number = session.getFPPrimaryContactNumber();
     if (number.isEmpty()) number = session.getUserPrimaryMobile();
     if (number.isEmpty()) number = session.getUserProfileMobile();
     if (!number.isEmpty() && number.length() > 10) number = number.substring(number.length() - 10, number.length());
 
-    if (!TextUtils.isEmpty(session.getUserProfileName())) username = session.getUserProfileName();
+    if (session.getUserProfileName()!=null&&!TextUtils.isEmpty(session.getUserProfileName())) username = session.getUserProfileName();
     if (username.isEmpty()) username = session.getFPName();
 
     if (!email.isEmpty()) {

@@ -60,15 +60,14 @@
 
         </com.framework.views.customViews.CustomCardView>
 
-        <com.framework.views.customViews.CustomTextView
+        <com.framework.views.customViews.AutoFitTextView
           android:id="@+id/business_name"
-          android:layout_width="wrap_content"
-          android:layout_height="0dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_8"
           android:layout_weight="1"
-          android:ellipsize="end"
           android:includeFontPadding="false"
-          android:maxLines="4"
+          android:maxLines="1"
           android:textColor="@color/white"
           app:fontFamily="@font/patua_one_regular"
           app:textType="HEADING_6"

@@ -3,7 +3,6 @@ package com.dashboard.controller.ui.dashboard
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.*
 import android.net.Uri
 import android.os.Handler
 import android.view.View
@@ -13,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.bumptech.glide.Glide
@@ -51,6 +51,7 @@ import com.framework.constants.PremiumCode
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.festivePosterName
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.festivePosterVisibility
 import com.framework.glide.util.glideLoad
@@ -95,6 +96,8 @@ import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.LocalSessionModel
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.VisitingCardSheet
 import com.onboarding.nowfloats.ui.webview.WebViewBottomDialog
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import java.io.File
@@ -144,7 +147,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onCreateView() {
     if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(true)
     session = UserSessionManager(baseActivity)
-    session?.let { deepLinkUtil = DeepLinkUtil(baseActivity, it, Fragment()) }
+    session?.let { deepLinkUtil = DeepLinkUtil(baseActivity, it) }
     setOnClickListener(
       binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport, binding?.retryDrScore,
       binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.viewEmptyEnquiries?.btnWhatsappEnquiries,
@@ -158,6 +161,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     getPremiumBanner()
     getChannelAccessToken()
     displayFestiveButtonView()
+    lifecycleScope.launch {
+      MutableDataUtils.openBusinessCard.collect { if (it) binding?.btnVisitingCard?.performClick() }
+    }
   }
 
   private fun displayFestiveButtonView() {
@@ -488,7 +494,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       val response1 = it as? OrderSummaryResponse
       if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveTotalOrder(TOTAL_SELLER_SUMMARY)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
-      viewModel?.getUserSummary(session?.fpTag, clientId, session?.fPParentId, scope)?.observeOnce(viewLifecycleOwner) { it1 ->
+      viewModel?.getUserSummary(session?.fpTag, clientId)?.observeOnce(viewLifecycleOwner) { it1 ->
         val response2 = it1 as? UserSummaryResponse
         response2?.getSummary()?.saveData(USER_BUSINESS_SUMMARY)
         setBusinessSummary(getDrScoreData()?.getDrsTotal() ?: 0, response1?.Data?.getTotalOrders() ?: "0", response2?.getSummary())
@@ -519,7 +525,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       val response1 = it as? OrderSummaryResponse
       if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveData(SELLER_BUSINESS_REPORT)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
-      viewModel?.getUserSummary(session?.fpTag, clientId, session?.fPParentId, scope, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner) { it1 ->
+      viewModel?.getUserSummary(session?.fpTag, clientId, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner) { it1 ->
         val response2 = it1 as? UserSummaryResponse
         response2?.getSummary()?.saveTotalMessage(TOTAL_USER_MESSAGE)
         val identifierType = if (session?.iSEnterprise == "true") "MULTI" else "SINGLE"
@@ -548,9 +554,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun apiWebsiteReport(filterDate: FilterDateModel, isLoader: Boolean = false) {
     if (isLoader) showProgress()
-    if (isFirstLoad()) Handler().postDelayed({ baseActivity.runOnUiThread { showSimmer(false) } }, 2000)
+    Handler().postDelayed({ baseActivity.runOnUiThread { showSimmer(false) } }, 2000)
+
     val scope = if (session?.iSEnterprise == "true") "1" else "0"
-    viewModel?.getUserSummary(session?.fpTag, clientId, session?.fPParentId, scope, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner) { it1 ->
+    viewModel?.getUserSummary(session?.fpTag, clientId, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner) { it1 ->
       val response1 = it1 as? UserSummaryResponse
       viewModel?.getSubscriberCount(session?.fpTag, clientId, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner) { it2 ->
         val subscriberCount = (it2.anyResponse as? Double)?.toInt() ?: 0
@@ -688,7 +695,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       }
       RecyclerViewActionType.PROMO_BANNER_CLICK.ordinal -> {
         val data = item as? DashboardMarketplaceBanner ?: return
-        WebEngageController.trackEvent(ADD_ON_MARKETPLACE_CARD_CLICK, CLICKED, NO_EVENT_VALUE)
         marketPlaceBannerClick(data)
       }
       RecyclerViewActionType.PROMO_BOOST_ACADEMY_CLICK.ordinal -> {
@@ -768,14 +774,16 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         else getChannelAccessToken(isEnquiriesShare = true, shareType = null)
       }
       binding?.btnFestive -> {
-        baseActivity.startFestivePosterActivity()
+        //baseActivity.startFestivePosterActivity()
+        //enable update studio on demand
+        baseActivity.startPostUpdate()
       }
     }
   }
 
   private fun openDialogPicker() {
     val filterSheet = ImagePickerBottomSheet()
-    filterSheet.isHidePdf(true)
+    filterSheet.isHidePdfOrGif(true)
     filterSheet.onClicked = { openImagePicker(it) }
     filterSheet.show(this@DashboardFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
@@ -863,33 +871,19 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun quickActionClick(type: QuickActionItem.QuickActionType) {
     when (type) {
-      QuickActionItem.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(session)
+      QuickActionItem.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(true)
       QuickActionItem.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
       QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startTestimonial(session, true)
       QuickActionItem.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCustomPage(session, true)
       QuickActionItem.QuickActionType.ADD_STAFF_PROFILE -> baseActivity.startAddStaff(session)
       QuickActionItem.QuickActionType.LIST_SERVICES,
       QuickActionItem.QuickActionType.LIST_PRODUCT,
-      QuickActionItem.QuickActionType.LIST_DRUG_MEDICINE,
-      -> baseActivity.startListServiceProduct(session)
+      QuickActionItem.QuickActionType.LIST_DRUG_MEDICINE, -> baseActivity.startListServiceProduct(session)
       QuickActionItem.QuickActionType.ADD_SERVICE,
       QuickActionItem.QuickActionType.ADD_PRODUCT,
       QuickActionItem.QuickActionType.ADD_COURSE,
       QuickActionItem.QuickActionType.ADD_MENU,
-      QuickActionItem.QuickActionType.ADD_ROOM_TYPE,
-      ->{
-        val weEvent = if (type==QuickActionItem.QuickActionType.ADD_COURSE){
-          DASHBOARD_ADD_COURSE
-        }else if (type==QuickActionItem.QuickActionType.ADD_ROOM_TYPE){
-          DASHBOARD_ADD_ROOM
-        }else{
-          null
-        }
-        weEvent?.let {
-          WebEngageController.trackEvent(weEvent, CLICKED, NO_EVENT_VALUE)
-        }
-        baseActivity.startAddServiceProduct(session)
-      }
+      QuickActionItem.QuickActionType.ADD_ROOM_TYPE, -> baseActivity.startAddServiceProduct(session)
       QuickActionItem.QuickActionType.PLACE_APPOINTMENT -> baseActivity.startBookAppointmentConsult(session, false)
       QuickActionItem.QuickActionType.PLACE_CONSULT -> baseActivity.startBookAppointmentConsult(session, true)
       QuickActionItem.QuickActionType.ADD_PROJECT -> {
@@ -912,12 +906,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       QuickActionItem.QuickActionType.ADD_UPCOMING_BATCH -> baseActivity.startListBatches(session)
       QuickActionItem.QuickActionType.ADD_NEARBY_ATTRACTION -> baseActivity.startNearByView(session)
       QuickActionItem.QuickActionType.ADD_FACULTY_MEMBER -> baseActivity.startFacultyMember(session)
-      QuickActionItem.QuickActionType.PLACE_ORDER_BOOKING ->{
-        WebEngageController.trackEvent(DASHBOARD_ADD_ORDER, CLICKED, NO_EVENT_VALUE)
-        baseActivity.startOrderCreate(session)
-      }
-      QuickActionItem.QuickActionType.ADD_TABLE_BOOKING -> baseActivity.startBookTable(session,true)
-      QuickActionItem.QuickActionType.ADD_STAFF_MEMBER->baseActivity.startAddStaff(session)
+      QuickActionItem.QuickActionType.PLACE_ORDER_BOOKING -> baseActivity.startOrderCreate(session)
+      QuickActionItem.QuickActionType.ADD_TABLE_BOOKING -> baseActivity.startBookTable(session, true)
+      QuickActionItem.QuickActionType.ADD_STAFF_MEMBER -> baseActivity.startAddStaff(session)
 
       QuickActionItem.QuickActionType.POST_STATUS_STORY,
       QuickActionItem.QuickActionType.ADD_SLIDER_BANNER,
@@ -941,17 +932,12 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun clickRoiSummary(type: RoiSummaryData.RoiType) {
     when (type) {
       RoiSummaryData.RoiType.ENQUIRY -> baseActivity.startBusinessEnquiry(session)
-      RoiSummaryData.RoiType.TRACK_CALL ->{
-        WebEngageController.trackEvent(BUSINESS_REPORT_TRACKED_CALLS, CLICKED, NO_EVENT_VALUE)
-        baseActivity.startVmnCallCard(session)
-      }
+      RoiSummaryData.RoiType.TRACK_CALL -> baseActivity.startVmnCallCard(session)
       RoiSummaryData.RoiType.APT_ORDER -> baseActivity.startAptOrderSummary(session)
       RoiSummaryData.RoiType.CONSULTATION -> {
         showShortToast(getString(R.string.video_consultation_analytics_coming_soon))
       }
       RoiSummaryData.RoiType.APT_ORDER_WORTH -> {
-        WebEngageController.trackEvent(BUSINESS_REPORT_ORDER_APPOINTMENT_WORTH, CLICKED, NO_EVENT_VALUE)
-
 //        baseActivity.startRevenueSummary(session)
         showShortToast(getString(R.string.collection_analytics_coming_soon))
       }

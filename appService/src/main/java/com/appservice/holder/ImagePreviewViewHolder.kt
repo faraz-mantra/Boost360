@@ -29,8 +29,7 @@ class ImagePreviewViewHolder(binding: ItemPreviewImageBinding) : AppBaseRecycler
         if (data?.getExt()?.toLowerCase(Locale.ROOT) == "pdf") {
           binding.image.setImageResource(R.drawable.ic_pdf_placholder)
         } else binding.image.setImageBitmap(data?.path?.getBitmap())
-        binding.ctvSize.text =
-          "${data?.getFileName() ?: ""}(${getImageSize(data?.path?.getBitmap())})"
+        binding.ctvSize.text = "${data?.getFileName() ?: ""}(${getImageSize(data?.path?.getBitmap())})"
       }
       data?.getExtUrl()?.toLowerCase(Locale.ROOT).equals("pdf") -> {
         binding.ctvSize.text = "${data?.getFileName()}"
@@ -50,17 +49,15 @@ class ImagePreviewViewHolder(binding: ItemPreviewImageBinding) : AppBaseRecycler
 
               @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
               override fun onResourceReady(resource: Bitmap?, model: Any, target: Target<Bitmap>, dataSource: DataSource, isFirstResource: Boolean): Boolean {
-                if (resource != null) binding.ctvSize.text =
-                  "${data?.getFileName() ?: ""}(${getImageSize(resource)})"
+                if (resource != null) binding.ctvSize.text = "${data?.getFileName() ?: ""}(${getImageSize(resource)})"
                 return false
               }
             }).into(binding.image)
         }
       }
     }
-    binding.cbChange.setOnClickListener {
-      listener?.onItemClick(position, data, RecyclerViewActionType.IMAGE_CHANGE.ordinal)
-    }
+    binding.cbChange.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.IMAGE_CHANGE.ordinal) }
+    binding.crossIcon.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.IMAGE_CLEAR_CLICK.ordinal) }
   }
 
   private fun getImageSize(f: Bitmap?): String {

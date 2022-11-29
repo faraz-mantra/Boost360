@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.boost.upgrades.UpgradeActivity;
+import com.boost.marketplace.ui.home.MarketPlaceActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.thinksity.R;
@@ -86,7 +86,7 @@ public class PurchaseFeaturesPopup extends DialogFragment {
     }
 
     private void initiateBuyFromMarketplace() {
-        Intent intent = new Intent((HomeActivity) getActivity(), UpgradeActivity.class);
+        Intent intent = new Intent((HomeActivity) getActivity(), MarketPlaceActivity.class);
         intent.putExtra("expCode", session.getFP_AppExperienceCode());
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID());
