@@ -63,6 +63,8 @@ class FragmentEcommerceDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigur
         val data = it as? DeliveryDetailsResponse
         binding?.toggleAllowPickup?.isOn = data?.result?.isPickupAllowed ?: true
         binding?.toggleHomeDelivery?.isOn = data?.result?.isHomeDeliveryAllowed ?: true
+        binding.ccbBusinessLocation.isChecked = data?.result?.isBusinessLocationPickupAllowed ?: false
+        binding.ccbWarehouseAddress.isChecked = data?.result?.isWarehousePickupAllowed ?: false
         binding?.etdFlatCharges?.setText((data?.result?.getFlatDeliveryCharge() ?: 0).toString())
       }
 
@@ -130,7 +132,7 @@ class FragmentEcommerceDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigur
 
       }
     }
-    binding?.ccbBusinessLocation?.isChecked = true
+//    binding?.ccbBusinessLocation?.isChecked = true
     binding?.ccbWarehouseAddress?.setOnCheckedChangeListener { buttonView, isChecked ->
       if (isChecked) {
         binding?.containerWareHouseAddress?.visible()
@@ -188,7 +190,7 @@ class FragmentEcommerceDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigur
   private fun updateDeliveryStatus(isPickup: Boolean, isHomePickup: Boolean, flatDeliverCharge: String) {
     viewModel?.setupDelivery(
       DeliverySetup(
-        isPickupAllowed = isPickup, isBusinessLocationPickupAllowed = false, isWarehousePickupAllowed = false,
+        isPickupAllowed = isPickup, isBusinessLocationPickupAllowed = binding.ccbBusinessLocation.isChecked, isWarehousePickupAllowed = binding.ccbWarehouseAddress.isChecked,
         isHomeDeliveryAllowed = isHomePickup, flatDeliveryCharge = flatDeliverCharge, clientId = clientId, floatingPointId = sessionLocal.fPID
       )
     )?.observeOnce(viewLifecycleOwner, {
