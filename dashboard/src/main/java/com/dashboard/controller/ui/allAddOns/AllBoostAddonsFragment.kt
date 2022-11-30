@@ -163,7 +163,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
       addOnsListFilter.forEach { it0 ->
         if (it0.title.equals(LAST_SEEN_TEXT).not())
           it0.manageBusinessList?.forEach {
-            if (it.title?.toLowerCase(Locale.ROOT)?.contains(query) == true) list.add(it)
+            if (it.title?.toLowerCase(Locale.ROOT)?.replace("\n"," ")?.contains(query) ?: false) list.add(it)
           }
       }
       val listAddOns = ArrayList<AllBoostAddOnsData>()
