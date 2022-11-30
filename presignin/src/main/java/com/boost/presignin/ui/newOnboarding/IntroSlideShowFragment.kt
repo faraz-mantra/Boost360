@@ -146,7 +146,9 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
       val setItemPosition = mCurrentPosition + 1
       binding?.viewpagerIntro?.currentItem = setItemPosition
     }else{
-      startActivity(Intent(baseActivity, LoginActivity::class.java))
+      val intent = Intent(baseActivity, NewOnBoardingContainerActivity::class.java)
+      intent.setFragmentType(FragmentType.LOADING_ANIMATION_DASHBOARD_FRAGMENT)
+      startActivity(intent)
     }
   }
 
