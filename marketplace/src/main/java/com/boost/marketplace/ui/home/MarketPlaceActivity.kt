@@ -214,6 +214,9 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             } else {
                 menuOpts.getItem(1).setTitle(R.string.switch_to_yearly_pricing)
             }
+            if (BuildConfig.FLAVOR.equals("jioonline")) {
+                menuOpts.getItem(2).setVisible(false)
+            }
 
             try {
                 val fields: Array<Field> = popup.javaClass.declaredFields

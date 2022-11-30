@@ -29,6 +29,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.boost.cart.BuildConfig
 import com.boost.cart.CartActivity
 import com.boost.cart.R
 import com.boost.cart.adapter.*
@@ -270,6 +271,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         Constants.COMPARE_BACK_VALUE = 1
 //    val list = arrayListOf<Bundles>()
         prefs.storeCompareState(1)
+        if(BuildConfig.FLAVOR.equals("jioonline")){
+            coupon_layout.visibility = GONE
+        }
 //        showpopup()
         loadLastUsedPayData()
         initializePackageRecycler()
