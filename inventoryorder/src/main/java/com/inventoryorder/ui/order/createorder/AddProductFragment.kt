@@ -68,7 +68,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         productList.clear()
         productList.addAll(finalProductList)
         productList = productList.filter {
-          it.getNameValue().startsWith(query) || it.getNameValue().contains(query)
+          it.getNameValue().contains(query)
         } as ArrayList<ProductItem>
         setAdapterOrderList()
       }
