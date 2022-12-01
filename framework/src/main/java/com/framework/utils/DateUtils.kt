@@ -80,6 +80,11 @@ object DateUtils {
       val timeFormat: DateFormat = SimpleDateFormat(format, locale)
       timeZone?.let { timeFormat.timeZone = it }
       timeFormat.parse(this)
+//      val sdf = SimpleDateFormat(format, locale)
+//      val calender = Calendar.getInstance()
+//      calender.set(Calendar.HOUR, sdf.parse(this)!!.hours)
+//      calender.set(Calendar.MINUTE, sdf.parse(this)!!.minutes)
+//      calender.time
     } catch (e: Exception) {
       Log.d("parseDate", e.localizedMessage ?: "")
       null
