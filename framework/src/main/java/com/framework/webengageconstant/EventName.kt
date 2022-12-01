@@ -651,3 +651,8 @@ const val ADD_ON_GOTO_CART_CLICKED = "Addon_goto_cart_clicked"
 const val ADD_ONS_DETAILED_JOURNEY_CLICKED = "ADDONS_detailed_journey_Clicked"
 
 const val UPDATE_STUDIO_CLICK = "updates"
+const val Update_studio_today_tab_click = "Update_studio_today_tab_click"
+const val Update_studio_browse_tab_click = "Update_studio_browse_tab_click"
+const val Update_studio_Create_custom_update_click = "Update_studio_Create_custom_update_click"
+const val Update_studio_Mark_Favourite_click = "Update_studio_Mark_Favourite_click"
+const val Update_studio_Unmark_Favourite_click = "Update_studio_Unmark_Favourite_click"

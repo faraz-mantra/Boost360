@@ -11,6 +11,7 @@ import com.appservice.R
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
 import com.appservice.ui.bgImage.BGImageCropFragment
+import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
@@ -177,5 +178,11 @@ fun isService(category_code: String?): Boolean {
     "SVC", "DOC", "HOS", "SPA", "SAL" -> true
     else -> false
   }
+}
+
+fun Fragment.navigateToUpdateStudio(clearTop: Boolean = false, isResult: Boolean = false) {
+  val intent = Intent(activity, PromoUpdatesActivity::class.java)
+  if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+  startActivity(intent)
 }
 

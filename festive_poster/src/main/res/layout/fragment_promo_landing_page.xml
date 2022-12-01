@@ -99,7 +99,7 @@
             android:textSize="14sp"
             app:tabInlineLabel="true"
             app:tabMinWidth="0dp"
-            app:tabMode="fixed"
+            app:tabMode="scrollable"
             app:tabTextAppearance="@style/TabTextStyle" />
         </RelativeLayout>
 
