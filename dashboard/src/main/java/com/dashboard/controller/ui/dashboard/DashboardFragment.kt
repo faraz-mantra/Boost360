@@ -1107,7 +1107,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         }
       }
       val otherWebsite = session?.getFPDetails(GET_FP_DETAILS_WEBSITE)
-      if (otherWebsite.isNullOrEmpty().not()) urlStringN += "\n⚡ *Other Website: $otherWebsite*"
+      if (otherWebsite.isNullOrEmpty().not()){
+        urlStringN += "\n⚡ *Other Website: $otherWebsite*"
+        connectedChannels.add("website")
+      }
       saveDataConnectedChannel(connectedChannels)
       if (session?.userPrimaryMobile.isNullOrEmpty().not()) urlStringN += "\n\uD83D\uDCDE *Call: ${session?.userPrimaryMobile}*"
       PreferencesUtils.instance.saveData(CHANNEL_SHARE_URL, urlStringN)
