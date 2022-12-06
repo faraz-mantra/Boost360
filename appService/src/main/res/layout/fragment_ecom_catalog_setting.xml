@@ -128,7 +128,7 @@
         <com.framework.views.customViews.CustomTextView
           style="@style/AppointmentSetting_Text_Heading"
           android:layout_marginTop="@dimen/size_30"
-          android:text="@string/default_tax_rate_for_services"
+          android:text="@string/default_tax_rate_for_products"
           android:visibility="visible" />
 
         <com.framework.views.customViews.CustomTextField

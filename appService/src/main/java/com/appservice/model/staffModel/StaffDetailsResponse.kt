@@ -115,6 +115,6 @@ data class StaffDetailsResult(
 
 class AppointmentType {
   companion object {
-    val typeMap = mapOf(1 to "Video consultation", 2 to "In-person consultation", 3 to "In-person & video consultation")
+    val typeMap = mapOf(1 to "Video consultation", 0 to "In-person consultation", 2 to "In-person & video consultation")
   }
 }

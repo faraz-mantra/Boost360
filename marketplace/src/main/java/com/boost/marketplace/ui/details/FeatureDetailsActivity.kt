@@ -27,9 +27,11 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.BenifitsPageTransformerFullWidth
 import com.boost.cart.adapter.ZoomOutPageTransformer
@@ -577,8 +579,11 @@ class FeatureDetailsActivity :
     fun initMvvm() {
         viewModel.PurchasedDomainResponse().observe(this, Observer {
             prefs.storeDomainOrderType(1)
-            prefs.storeSelectedDomainName(it.domainName+it.domainType)
-            viewModel.addItemToCart1(addonDetails!!, this, it.domainName+it.domainType)
+            if(!it.domainName.isNullOrEmpty() && !it.domainType.isNullOrEmpty()) {
+                prefs.storeSelectedDomainName(it.domainName + it.domainType)
+            }
+            viewModel.addItemToCart1(addonDetails!!, this,
+                if(!it.domainName.isNullOrEmpty() && !it.domainType.isNullOrEmpty()) (it.domainName + it.domainType) else null)
             viewModel.getCartItems()
         })
         viewModel.edgecaseResult().observe(this, androidx.lifecycle.Observer {
@@ -657,6 +662,7 @@ class FeatureDetailsActivity :
                     }else {
                         if(!itemInCartStatus) {
                             prefs.storeCartOrderInfo(null)
+                            prefs.storeSelectedDomainName(seleced_value_text.text.toString())
                             viewModel.addItemToCart1(
                                 addonDetails!!,
                                 this,
@@ -1403,6 +1409,9 @@ class FeatureDetailsActivity :
     }
 
     private fun initializeViewPager() {
+        benefits_viewpager.children.find { it is RecyclerView }?.let {
+            (it as RecyclerView).isNestedScrollingEnabled = false
+        }
         benefits_viewpager.adapter = benefitAdaptor
         benefits_indicator.setViewPager2(benefits_viewpager)
         benefits_viewpager.offscreenPageLimit = 1
