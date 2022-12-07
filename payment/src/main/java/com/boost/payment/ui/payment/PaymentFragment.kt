@@ -548,8 +548,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                         nowFormat.format(oneMonthFromNow.time))
                 spannableText.setSpan(
                     StyleSpan(Typeface.BOLD),
-                    15,
-                    15+totalAmount.toString().length,
+                    16,
+                    16+totalAmount.toString().length,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
                 spannableText.setSpan(
@@ -623,8 +623,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                                 nowFormat.format(oneMonthFromNow.time))
                 spannableText.setSpan(
                     StyleSpan(Typeface.BOLD),
-                    43,
-                    43+totalAmount.toString().length,
+                    44,
+                    44+totalAmount.toString().length,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
                 spannableText.setSpan(
