@@ -22,6 +22,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:orientation="horizontal"
@@ -86,25 +87,70 @@
             </RelativeLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <com.framework.views.customViews.CustomCardView
-            android:id="@+id/customCardView"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <WebView
-                android:id="@+id/videoPlayerWebView1"
+            <!-- View that will be hidden when video goes fullscreen -->
+            <RelativeLayout
+                android:id="@+id/nonVideoLayout"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_centerInParent="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/progress_bar" />
+                android:layout_height="wrap_content" >
 
-        </com.framework.views.customViews.CustomCardView>
+                <com.boost.marketplace.ui.videos.VideoEnabledWebView
+                    android:id="@+id/videoPlayerWebView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_centerInParent="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </RelativeLayout>
+
+            <!-- View where the video will be shown when video goes fullscreen -->
+            <RelativeLayout
+                android:id="@+id/videoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <!-- View that will be shown while the fullscreen video loads. For example you could include
+                a "Loading..." message. However, in this particular example this view is actually defined in
+                view_loading_video.xml and inflated programmatically in ExampleActivity.java. The reason for
+                this is to keep the main layout (this file) cleaner. -->
+                <!-- <View
+                    android:id="@+id/videoLoading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="invisible" /> -->
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+<!--        <com.framework.views.customViews.CustomCardView-->
+<!--            android:id="@+id/customCardView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
+
+<!--            <com.boost.marketplace.ui.videos.VideoEnabledWebView-->
+<!--                android:id="@+id/videoPlayerWebView1"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="200dp"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/progress_bar" />-->
+
+<!--        </com.framework.views.customViews.CustomCardView>-->
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/ctvVideoTitle"
