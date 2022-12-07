@@ -1,5 +1,7 @@
 package com.boost.marketplace.ui.videos
 
+//github resourse: https://github.com/cprcrack/VideoEnabledWebView
+
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler

@@ -1,5 +1,7 @@
 package com.boost.marketplace.ui.videos
 
+//github resourse: https://github.com/cprcrack/VideoEnabledWebView
+
 import android.media.MediaPlayer
 import android.view.SurfaceView
 import android.view.View
