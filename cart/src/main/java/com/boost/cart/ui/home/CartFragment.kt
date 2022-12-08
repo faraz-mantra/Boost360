@@ -1633,11 +1633,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 if (createCustomerInfoRequest!!.BusinessDetails != null) {
 //          business_contact_number.setText(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber)
 //          business_email_address.setText(createCustomerInfoRequest!!.BusinessDetails!!.Email)
-                }
-                if (!createCustomerInfoRequest!!.BusinessDetails.Email.isNullOrEmpty()) {
-                    et_email.setText(createCustomerInfoRequest!!.BusinessDetails.Email)
-                    email_value.setText(createCustomerInfoRequest!!.BusinessDetails.Email)
-                    cart_email_missing.visibility = View.GONE
+                    if (!createCustomerInfoRequest!!.BusinessDetails.Email.isNullOrEmpty()) {
+                        et_email.setText(createCustomerInfoRequest!!.BusinessDetails.Email)
+                        email_value.setText(createCustomerInfoRequest!!.BusinessDetails.Email)
+                        cart_email_missing.visibility = View.GONE
+                    }
                 }
                 if (createCustomerInfoRequest!!.AddressDetails != null) {
                     cart_business_city_name.setText(createCustomerInfoRequest!!.AddressDetails!!.State)

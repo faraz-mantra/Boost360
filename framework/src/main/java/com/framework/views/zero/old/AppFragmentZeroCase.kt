@@ -14,8 +14,6 @@ import com.framework.R
 import com.framework.databinding.FragmentZeroCaseBinding
 import com.framework.extensions.gone
 import com.framework.extensions.visible
-import com.framework.views.zero.FragmentZeroCase
-import com.framework.views.zero.ZeroCases
 import com.framework.views.zero.old.AppZeroCases.*
 import java.io.Serializable
 
