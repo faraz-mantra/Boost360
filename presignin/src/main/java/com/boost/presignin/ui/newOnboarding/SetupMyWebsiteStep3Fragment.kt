@@ -257,8 +257,8 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
       viewModel?.createMerchantProfile(request = categoryFloatsReq?.requestProfile)?.observeOnce(viewLifecycleOwner) {
         val businessProfileResponse = it as? BusinessProfileResponse
         if (it.isSuccess() && businessProfileResponse != null && businessProfileResponse.result?.loginId.isNullOrEmpty().not()) {
-          val fpId = businessProfileResponse.result?.fpIds?.get(0)
-          fetchLocationAndSendWEEvent(fpId!!+"-"+phoneNumber)
+          val loginId = businessProfileResponse.result?.loginId
+          fetchLocationAndSendWEEvent(loginId!!+"-"+phoneNumber)
           putCreateBusinessOnBoarding(businessProfileResponse)
         } else {
           hideProgress()
@@ -281,11 +281,12 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
       } else {
         outputString = "$resultString-Location not found!"
       }
-      WebEngageController.trackEvent(
-        USER_LOCATION,
-        USER_LOCATION_LABEL,
-        outputString
-      )
+      session?.userLocationIP = outputString
+//      WebEngageController.trackEvent(
+//        USER_LOCATION,
+//        USER_LOCATION_LABEL,
+//        outputString
+//      )
     }
   }
 

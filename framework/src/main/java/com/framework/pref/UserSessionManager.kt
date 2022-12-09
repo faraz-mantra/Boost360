@@ -81,6 +81,7 @@ class UserSessionManager(var context: Context) {
   private val KEY_FP_SHARE_ENABLE = "fbShareEnabled"
   private val KEY_FP_PAGE_SHARE_ENABLE = "fbPageShareEnabled"
   private val KEY_HAS_USER_LOGGED_IN_ONCE="KEY_HAS_USER_LOGGED_IN_ONCE"
+  private val USER_LOCATION_FROM_IP="userLocationFromIP"
 
 
   fun Context.getPreferenceTwitter(): SharedPreferences {
@@ -810,6 +811,12 @@ class UserSessionManager(var context: Context) {
     get() = pref.getInt(Key_Preferences.CUSTOM_PAGE, 0)
     set(size) {
       editor.putInt(Key_Preferences.CUSTOM_PAGE, size).apply()
+    }
+  var userLocationIP: String?
+    get() = pref.getString(USER_LOCATION_FROM_IP, null)
+    set(userLocationIP) {
+      editor.putString(USER_LOCATION_FROM_IP, userLocationIP)
+      editor.commit()
     }
 
   companion object {
