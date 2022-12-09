@@ -28,6 +28,8 @@ import com.framework.rest.NetworkResult
 import com.framework.utils.showToast
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.Promotional_Update_Category_Click
+import com.framework.webengageconstant.Update_studio_Mark_Favourite_click
+import com.framework.webengageconstant.Update_studio_Unmark_Favourite_click
 
 
 class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, PostUpdatesViewModel>(),
@@ -173,7 +175,13 @@ class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, Post
             }
 
             RecyclerViewActionType.POSTER_LOVE_CLICKED.ordinal->{
-                callFavApi(item as TemplateUi)
+                val template = item as TemplateUi
+                if (template.isFavourite){
+                    WebEngageController.trackEvent(Update_studio_Mark_Favourite_click)
+                }else {
+                    WebEngageController.trackEvent(Update_studio_Unmark_Favourite_click)
+                }
+                callFavApi(template)
             }
         }
 

@@ -142,8 +142,14 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
     val lastPosition: Int? = binding?.viewpagerIntro?.adapter?.itemCount?.minus(1)
     val mCurrentPosition = binding?.viewpagerIntro?.currentItem ?: 0
     val isLast = (mCurrentPosition == lastPosition)
-    val setItemPosition = if (isLast) 0 else mCurrentPosition + 1
-    binding?.viewpagerIntro?.currentItem = setItemPosition
+    if (mCurrentPosition < 3){
+      val setItemPosition = mCurrentPosition + 1
+      binding?.viewpagerIntro?.currentItem = setItemPosition
+    }else{
+      val intent = Intent(baseActivity, NewOnBoardingContainerActivity::class.java)
+      intent.setFragmentType(FragmentType.LOADING_ANIMATION_DASHBOARD_FRAGMENT)
+      startActivity(intent)
+    }
   }
 
 }
