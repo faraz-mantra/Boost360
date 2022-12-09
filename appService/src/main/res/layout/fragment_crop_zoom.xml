@@ -24,8 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="320dp"
         android:background="@color/black_66"
-        app:cropAspectRatioX="16"
-        app:cropAspectRatioY="7"
+        app:cropAspectRatioX="12"
+        app:cropAspectRatioY="5"
         app:cropFixAspectRatio="true" />
 
       <LinearLayout
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginHorizontal="@dimen/size_16"
+        android:layout_marginHorizontal="@dimen/size_26"
         android:layout_marginTop="@dimen/size_32"
         android:gravity="center"
         android:orientation="horizontal">
@@ -45,7 +45,8 @@
 
         <SeekBar
           android:id="@+id/slider"
-          android:layout_width="@dimen/size_300"
+          android:layout_width="0dp"
+          android:layout_weight="1"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_8"
           app:thumbColor="@color/colorPrimary"
@@ -100,7 +101,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_6dp"
         android:fontFamily="@font/regular"
-        android:text="Smaller image selected"
+        android:text="@string/smaller_image_selected"
         android:textColor="@color/red_EB5757"
         android:textSize="@dimen/size_12"
         app:layout_constraintEnd_toEndOf="parent"
