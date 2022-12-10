@@ -277,7 +277,6 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
       if (it.isSuccess()) {
         val locationResponse = it as? LocationResponse
         outputString = resultString + "-" + locationResponse?.geo
-        Toast.makeText(context, locationResponse?.geo, Toast.LENGTH_SHORT).show()
       } else {
         outputString = "$resultString-Location not found!"
       }
