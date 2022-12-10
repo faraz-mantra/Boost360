@@ -27,6 +27,9 @@ object WebEngageController {
     eventValue["Name"] = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME)?:""
     eventValue["Company"] = session.getDomainName()?:""
     eventValue["Business Name"] = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)?:""
+    if(session.userLocationIP != null){
+      eventValue["test1"] = session.userLocationIP!!
+    }
     NFWebEngageController.trackAttribute(eventValue)
   }
 

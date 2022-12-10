@@ -103,4 +103,8 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   override fun getApiClient(): Retrofit {
     return WithFloatsApiTwoClient.shared.retrofit
   }
+
+  fun getUserLocation(locationUrl:String): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getIPInfo(locationUrl), TaskCode.GET_LOCATION)
+  }
 }

@@ -202,10 +202,6 @@ const val BUSINESS_DETAILS = "BUSINESS DETAILS"
 //Domain Booking Mdule
 const val SUCCESSFULLY_ADDED_EXISTING_DOMAIN = "Successfully added existing domain"
 const val DOMAIN_CREATION_SUCCESS = "Domain creation success"
-
-
-
-
-
-
-
+const val SETUP_MY_WEBSITE_LOAD = "Setup my website screen loaded"
+const val SETUP_MY_WEBSITE_BTN_CLICK = "Setup my website button clicked"
+const val USER_LOCATION_LABEL = "User location data"
