@@ -158,6 +158,14 @@ fun Fragment.startBackgroundActivity(session: UserSessionManager?, type: com.app
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
+fun AppCompatActivity.startBackgroundActivity(session: UserSessionManager?, type: com.appservice.constant.FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+  val intent = Intent(this, BackgroundImageContainerActivity::class.java)
+  intent.putExtras(bundle)
+  intent.setFragmentTypeNew(type)
+  if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+  if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
+}
+
 fun AppCompatActivity.startBackgroundImageGallery(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(BACKGROUND_IMAGE_GALLERY_PAGE_CLICK, CLICK, TO_BE_ADDED)
@@ -1141,5 +1149,17 @@ fun AppCompatActivity.startPromotionUpdatesFromDashboard(type: String) {
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startUpdateStudio(session: UserSessionManager?) {
+  try {
+    WebEngageController.trackEvent(UPDATE_STUDIO_CLICK, CLICK, TO_BE_ADDED)
+    val webIntent = Intent(this, Class.forName("com.festive.poster.ui.festivePoster.FestivePosterContainerActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+    SentryController.captureException(e)
   }
 }
