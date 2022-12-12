@@ -6,8 +6,5 @@ package com.nowfloats.CustomPage.Model;
 public class PageDetail {
     public String DisplayName;
     public String HtmlCode;
-    public String IsArchived;
-    public String SetPriorityValue;
-    public String Tag;
-    public String _id;
+    public String PageId;
 }

@@ -126,6 +126,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     binding?.tvPhone?.text =
       orderInitiateRequest?.buyerDetails?.contactDetails?.primaryContactNumber.toString()
     binding?.tvAddress?.text = setUpAddress()
+    onServiceFeeAdded(50.0)
   }
 
   override fun onClick(v: View) {
@@ -174,17 +175,17 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
 
   private fun onServiceFeeAdded(fee: Double) {
     serviceFee = fee
-    binding?.textGstAmount?.text =
+    binding.textGstAmount.text =
       "${selectedService?.Currency} ${totalGst}"
 
     if (fee > 0.0) {
-      binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${discountedPrice + fee}"
-      binding?.textAdd?.text = "${selectedService?.Currency} $fee"
-      binding?.textEdit?.visibility = View.VISIBLE
+      binding.textTotalPayableValue.text = "${selectedService?.Currency} ${discountedPrice + fee}"
+      binding.textAdd.text = "${selectedService?.Currency} $fee"
+      binding.textEdit.visibility = View.VISIBLE
     } else {
-      binding?.textAdd?.text = getString(R.string.add)
-      binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${discountedPrice + fee}"
-      binding?.textEdit?.visibility = View.INVISIBLE
+      binding.textAdd.text = getString(R.string.add)
+      binding.textTotalPayableValue.text = "${selectedService?.Currency} ${discountedPrice + fee}"
+      binding.textEdit.visibility = View.INVISIBLE
     }
   }
 

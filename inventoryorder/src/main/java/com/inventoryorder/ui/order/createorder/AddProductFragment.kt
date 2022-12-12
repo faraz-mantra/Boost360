@@ -149,7 +149,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
 
   private fun setAdapterOrderList() {
     if (itemsAdapter == null) {
-      binding?.productRecycler?.apply {
+      binding.productRecycler.apply {
         itemsAdapter = AppBaseRecyclerViewAdapter(baseActivity, productList, this@AddProductFragment)
         adapter = itemsAdapter
         itemsAdapter?.runLayoutAnimation(this)

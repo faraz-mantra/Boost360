@@ -129,11 +129,7 @@ class UpdateStudioPurchaseViewModel: BaseViewModel() {
     }
 
     fun getFeatureDetails(featureCode: String?, features: List<UpgradeGetDataFeature>?): UpgradeGetDataFeature?{
-        val session = UserSessionManager(application())
-        return features?.find { it.feature_code==featureCode &&
-                (it.exclusive_to_categories?.isEmpty() == true
-                ||it.exclusive_to_categories?.find
-                { cat->cat==session.fP_AppExperienceCode }!=null) }
+        return features?.find { it.feature_code==featureCode }
     }
 
     fun checkUserHavePurchasedAnything(
