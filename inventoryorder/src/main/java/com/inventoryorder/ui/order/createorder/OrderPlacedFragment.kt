@@ -68,7 +68,7 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
       binding?.textPaymentLink?.text = orderItem.PaymentDetails?.methodValue() ?: ""
       binding?.textPaymentStatus?.text = orderItem.PaymentDetails?.statusValue() ?: ""
       binding?.textDeliveryType?.text = orderItem.LogisticsDetails?.DeliveryMode ?: ""
-      binding?.textTotalAmount?.text = "${orderItem.BillingDetails?.getCurrencyCodeValue() ?: "INR"} ${orderItem?.BillingDetails?.GrossAmount ?: 0.0}"
+      binding?.textTotalAmount?.text = "${orderItem.BillingDetails?.getCurrencyCodeValue() ?: "INR"} ${orderItem?.BillingDetails?.AmountPayableToSeller ?: 0.0}"
     }
     if (orderItem.BillingDetails?.InvoiceUrl.isNullOrEmpty().not()) binding?.invoiceView?.visible()
     else binding?.invoiceView?.invisible()
