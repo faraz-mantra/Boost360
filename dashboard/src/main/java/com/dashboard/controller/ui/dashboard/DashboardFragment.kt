@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.appservice.ui.catalog.widgets.ClickType
@@ -51,7 +50,6 @@ import com.framework.constants.PremiumCode
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.festivePosterName
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.festivePosterVisibility
 import com.framework.glide.util.glideLoad
