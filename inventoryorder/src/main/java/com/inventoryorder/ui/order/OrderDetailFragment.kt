@@ -240,7 +240,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
     // shipping details
     val shippingCost = order.BillingDetails?.SellerDeliveryCharges ?: 0.0
-    val salePrice = order.BillingDetails?.GrossAmount ?: 0.0
+    val salePrice = order.BillingDetails?.AmountPayableToSeller ?: 0.0
     val currency = takeIf { order.BillingDetails?.CurrencyCode.isNullOrEmpty().not() }?.let { order.BillingDetails?.CurrencyCode?.trim() } ?: "INR"
 //    order.Items?.forEachIndexed { index, item ->
 //      shippingCost += item.Product?.ShippingCost ?: 0.0
