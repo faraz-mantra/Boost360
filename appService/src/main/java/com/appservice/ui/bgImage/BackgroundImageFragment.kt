@@ -60,7 +60,7 @@ class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, 
     WebEngageController.trackEvent(BACKGROUND_IMAGE_PAGE_LOAD, START_VIEW, sessionLocal.fpTag)
 //    ImagePickerUtil.initLauncher(this)
     sessionLocal = UserSessionManager(baseActivity)
-    setOnClickListener(binding?.btnDone)
+    setOnClickListener(binding.btnDone)
     getBackgroundImages()
   }
 
@@ -70,11 +70,11 @@ class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, 
       if (res.isSuccess()) {
         val response = res.arrayResponse
         listImages = ArrayList()
-        binding?.btnDone?.isVisible=true
+        binding.btnDone.isVisible=true
         response?.forEach { listImages?.add(ImageData(it as? String, RecyclerViewItemType.BACKGROUND_IMAGE_RV.getLayout())) }
         uiVisibility()
         if (adapterImage == null) {
-          binding?.imageList?.apply {
+          binding.imageList.apply {
             adapterImage = AppBaseRecyclerViewAdapter(baseActivity, listImages!!, this@BackgroundImageFragment)
             adapter = adapterImage
           }
@@ -96,11 +96,11 @@ class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, 
 
   private fun uiVisibility() {
     if (listImages.isNullOrEmpty()) {
-      binding?.layoutDefaultImage?.visible()
-      binding?.imageList?.gone()
+      binding.layoutDefaultImage.visible()
+      binding.imageList.gone()
     } else {
-      binding?.layoutDefaultImage?.gone()
-      binding?.imageList?.visible()
+      binding.layoutDefaultImage.gone()
+      binding.imageList.visible()
     }
   }
 
@@ -121,7 +121,7 @@ class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnDone -> {
+      binding.btnDone -> {
         if ((listImages?.size ?: 0) >= 8){
           showSnackBarNegative(getString(R.string.max_limit_of_8_images_is_reached))
           return
@@ -134,11 +134,11 @@ class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, 
 
 
   override fun showProgress(title: String?, cancelable: Boolean?) {
-    binding?.pbLoading?.visible()
+    binding.pbLoading.visible()
   }
 
   override fun hideProgress() {
-    binding?.pbLoading?.gone()
+    binding.pbLoading.gone()
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
