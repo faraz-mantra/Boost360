@@ -526,6 +526,9 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     } else if (toggle && (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value && ((externalUrlName.isNullOrEmpty() || externalUrl.isNullOrEmpty())  || ValidationUtils.isValidWebURL(externalUrl).not()))) {
       showLongToast(resources.getString(R.string.please_enter_valid_url_name))
       return false
+    } else if (!toggle || amount <= 0.0){
+      showLongToast(resources.getString(R.string.product_with_price_zero_cannot_be_listed_for_sale))
+      return false
     }
     product?.ClientId = clientId
     product?.FPTag = sessionLocal.fpTag
