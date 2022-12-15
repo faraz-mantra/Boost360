@@ -32,6 +32,8 @@ import com.framework.utils.showToast
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.Promotional_Update_View_More_Click
 import com.framework.webengageconstant.Promtoional_Update_View_Updates_Click
+import com.framework.webengageconstant.Update_studio_Mark_Favourite_click
+import com.framework.webengageconstant.Update_studio_Unmark_Favourite_click
 
 class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePosterViewModel>(), RecyclerItemClickListener {
 
@@ -184,7 +186,14 @@ class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePos
         (childItem as? TemplateUi)?.let { posterWhatsappShareClicked(it, baseActivity) }
       }
       RecyclerViewActionType.POSTER_LOVE_CLICKED.ordinal -> {
-        (childItem as? TemplateUi)?.let { callFavApi(it) }
+        (childItem as? TemplateUi)?.let {
+          if (it.isFavourite){
+            WebEngageController.trackEvent(Update_studio_Mark_Favourite_click)
+          }else {
+            WebEngageController.trackEvent(Update_studio_Unmark_Favourite_click)
+          }
+          callFavApi(it)
+        }
       }
       RecyclerViewActionType.POSTER_VIEW_MORE_CLICKED.ordinal -> {
         val data = (parentItem as? CategoryUi) ?: return

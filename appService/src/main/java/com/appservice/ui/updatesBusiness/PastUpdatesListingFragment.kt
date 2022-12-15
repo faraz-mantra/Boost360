@@ -24,6 +24,7 @@ import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.PastUpdatesViewModel
+import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
 import com.framework.constants.IntentConstants
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -134,7 +135,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
     super.onClick(v)
     when (v) {
       binding.btnPostNewUpdate -> {
-        startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2)
+       navigateToUpdateStudio()
       }
     }
   }
@@ -195,9 +196,12 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
       if (isFirst.not()) {
         removeLoader()
       }
-      if (list.isNullOrEmpty() && isFirst) {
+      if (list.isEmpty() && isFirst) {
         binding.tvNoPost.visible()
-        pastPostListingAdapter.notifyDataSetChanged()
+        binding.rvPostListing.gone()
+        if (::pastPostListingAdapter.isInitialized) {
+          pastPostListingAdapter.notifyDataSetChanged()
+        }
       } else {
         binding.tvNoPost.gone()
         binding.rvPostListing.visible()
@@ -235,7 +239,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
         else tagArray.add(item.id)
 
         binding.rvFilterSubCategory.postDelayed(
-          Runnable {
+          {
             tagListAdapter.notifyDataSetChanged()
           }, 100
         )
