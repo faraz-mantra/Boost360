@@ -24,7 +24,6 @@ import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.PastUpdatesViewModel
-import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
 import com.framework.constants.IntentConstants
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -87,6 +86,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
   private fun initUI() {
     linearLayoutManager = LinearLayoutManager(requireActivity())
     baseActivity.window.statusBarColor = getColor(R.color.color_4a4a4a_jio_ec008c)
+    pastPostListingAdapter = AppBaseRecyclerViewAdapter(baseActivity, pastPostListing, this)
     showSimmer(true)
     getTemplateViewConfig()
 
