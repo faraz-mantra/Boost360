@@ -152,7 +152,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
         if (imgFile.sizeInMb <= 5) {
           return true
         } else {
-          showLongToast(getString(R.string.image_file_size_is_bigger_than_2mb))
+          showLongToast(getString(R.string.image_file_size_is_bigger_than_5mb))
           return false
         }
       } else {
