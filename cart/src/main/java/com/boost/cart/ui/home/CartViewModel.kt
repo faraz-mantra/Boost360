@@ -37,6 +37,7 @@ import com.boost.dbcenterapi.data.api_model.gst.Error
 import com.boost.dbcenterapi.data.api_model.gst.GSTApiResponse
 import com.boost.dbcenterapi.data.api_model.paymentprofile.GetLastPaymentDetails
 import com.boost.dbcenterapi.data.api_model.stateCode.GetStates
+import com.boost.dbcenterapi.data.api_model.vmn.PurchasedVmnResponse
 import com.boost.dbcenterapi.data.model.coupon.CouponServiceModel
 import com.boost.dbcenterapi.data.remote.ApiInterface
 import com.boost.dbcenterapi.data.remote.NewApiInterface
@@ -102,7 +103,9 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     var NewApiService2 = Utils.getRetrofit(false).create(NewApiInterface::class.java)
     private var callTrackListResponse: MutableLiveData<CallTrackListResponse> = MutableLiveData()
     var updateDomainStatus: MutableLiveData<BlockApi> = MutableLiveData()
+    var updateVmnStatus: MutableLiveData<BlockApi> = MutableLiveData()
     var purchasedDomainResult: MutableLiveData<PurchasedDomainResponse> = MutableLiveData()
+    var purchasedVmnResult: MutableLiveData<PurchasedVmnResponse> = MutableLiveData()
     val compositeDisposable = CompositeDisposable()
 
     var customerInfoState: MutableLiveData<Boolean> = MutableLiveData()
@@ -319,8 +322,24 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         return updateDomainStatus
     }
 
+    fun updateVmnStatus(): LiveData<BlockApi> {
+        return updateVmnStatus
+    }
+
+    fun updateStatus1(): LiveData<BlockApi> {
+        return updateDomainStatus
+    }
+
+    fun updateStatus2(): LiveData<BlockApi> {
+        return updateDomainStatus
+    }
+
     fun PurchasedDomainResponse(): LiveData<PurchasedDomainResponse> {
         return purchasedDomainResult
+    }
+
+    fun purchasedVmnResult(): LiveData<PurchasedVmnResponse> {
+        return purchasedVmnResult
     }
 
 
@@ -1089,15 +1108,18 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    fun domainBlocked(auth: String, fpid: String, clientId: String, blockedItem: String,OrderID:String,blockedItemType:Int) {
+    fun domainVmnBlocked(auth: String, fpid: String, clientId: String, blockedItem: String,OrderID:String,blockedItemType:Int) {
         compositeDisposable.add(
             NewApiService1.getItemAvailability(auth, fpid, clientId, blockedItem,OrderID,blockedItemType)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        updateDomainStatus.postValue(it)
-
+                        if (blockedItemType==2){
+                            updateDomainStatus.postValue(it)
+                        } else{
+                            updateVmnStatus.postValue(it)
+                        }
                     }, {
                         updatesError.postValue(it.message)
                     })
@@ -1113,6 +1135,23 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                 .subscribe(
                     {
                         purchasedDomainResult.postValue(it)
+                        updatesLoader.postValue(false)
+                    },{
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
+
+    fun getAlreadyPurchasedVmn(auth: String, fpTag: String, clientId:String) {
+        updatesLoader.postValue(true)
+        compositeDisposable.add(
+            NewApiService.getAlreadyPurchasedVmn(auth, fpTag, clientId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        purchasedVmnResult.postValue(it)
                         updatesLoader.postValue(false)
                     },{
                         updatesLoader.postValue(false)

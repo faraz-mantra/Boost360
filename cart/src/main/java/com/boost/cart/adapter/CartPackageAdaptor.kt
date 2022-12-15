@@ -88,13 +88,13 @@ class CartPackageAdaptor(
     } else {
       holder.image.setImageResource(R.drawable.rectangle_copy_18)
     }
-
     if (price != MRPPrice) {
       spannableString(holder, MRPPrice, selectedBundle.min_purchase_months)
       holder.orig_cost.visibility = View.VISIBLE
     } else {
       holder.orig_cost.visibility = View.GONE
     }
+
     holder.removePackage.setOnClickListener {
       selectedBundle.item_name?.let { it1 ->
         WebEngageController.trackEvent(
@@ -114,32 +114,7 @@ class CartPackageAdaptor(
       listener.deleteCartAddonsItem(bundlesList.get(position))
     }
 
-    if((!selectedDomainName.isNotEmpty()) && (selectedVMN.isNotEmpty())){
-      holder.edge_cases_layout.visibility = View.VISIBLE
-      holder.edge_cases_desc.text="You need to select a domain name."
-      holder.edge_cases_layout.setOnClickListener {
-        listener1.actionClickDomain(bundlesList.get(position))
-      }
-    }
 
-    if((!selectedVMN.isNotEmpty()) && (selectedDomainName.isNotEmpty())){
-      holder.edge_cases_layout.visibility = View.VISIBLE
-      holder.edge_cases_desc.text="You need to select a call tracking number number."
-      holder.edge_cases_layout.setOnClickListener {
-        listener1.actionClickVmn(bundlesList.get(position))
-      }
-    }
-
-    if((selectedDomainName.isNotEmpty()) && (selectedVMN.isNotEmpty())){
-      holder.edge_cases_layout.visibility = View.GONE
-    }
-
-    if((!selectedDomainName.isNotEmpty()) && (!selectedVMN.isNotEmpty())){
-      holder.edge_cases_layout.visibility = View.VISIBLE
-      holder.edge_cases_layout.setOnClickListener {
-        listener1.actionClick(bundlesList.get(position))
-      }
-    }
 
     val selectnow = SpannableString("Select now.")
 
@@ -158,7 +133,7 @@ class CartPackageAdaptor(
 
     holder.edge_case_desc1.setText(selectnow)
 
-    updateFeatures(bundlesList.get(position), holder)
+    updateFeatures(bundlesList.get(position), holder,position)
 
 //    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 //    if (bundlesList.size - 1 == position) {
@@ -304,7 +279,7 @@ class CartPackageAdaptor(
     holder.orig_cost.text = origCost
   }
 
-  fun updateFeatures(bundleItem: CartModel, holder: upgradeViewHolder) {
+  fun updateFeatures(bundleItem: CartModel, holder: upgradeViewHolder,position: Int) {
     CompositeDisposable().add(
       AppDatabase.getInstance(activity.application)!!
         .bundlesDao()
@@ -312,16 +287,20 @@ class CartPackageAdaptor(
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({
+          var featuresCode = arrayListOf<String>()
           val temp = Gson().fromJson<List<IncludedFeature>>(it.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
           var tempFeatures = ArrayList<FeaturesModel>()
           for(singleFeaturesCode in temp){
+            featuresCode.add(singleFeaturesCode.feature_code)
             for(singleFeature in upgradeList) {
               if (singleFeaturesCode.feature_code.equals(singleFeature.feature_code!!)) {
                 if(singleFeaturesCode.feature_code.equals("DOMAINPURCHASE") && selectedDomainName.isNotEmpty()){
                   val tempItem = singleFeature
                   tempItem.name = selectedDomainName
                   tempFeatures.add(tempItem)
-                }else if ((singleFeaturesCode.feature_code.equals("IVR")||(singleFeaturesCode.feature_code.equals("CALLTRACKER"))) && selectedVMN.isNotEmpty()) {
+                }else if ((singleFeaturesCode.feature_code.equals("CALLTRACKER")
+                         // ||(singleFeaturesCode.feature_code.equals("IVR")))
+                  && selectedVMN.isNotEmpty())) {
                   val tempItem = singleFeature
                   tempItem.name = selectedVMN
                   tempFeatures.add(tempItem)
@@ -329,8 +308,43 @@ class CartPackageAdaptor(
                     tempFeatures.add(singleFeature)
                   }
                 }
-              }
+            }
           }
+          if ((featuresCode.contains("DOMAINPURCHASE") == true
+                    && (featuresCode.contains("CALLTRACKER") == true))
+          ) {
+            if ((selectedDomainName.isNotEmpty()) && (selectedVMN.isNotEmpty())) {
+              holder.edge_cases_layout.visibility = View.GONE
+            } else if ((!selectedDomainName.isNotEmpty()) && (selectedVMN.isNotEmpty())) {
+              holder.edge_cases_layout.visibility = View.VISIBLE
+              holder.edge_cases_desc.text = "You need to select a domain name."
+              holder.edge_cases_layout.setOnClickListener {
+                listener1.actionClickDomain(bundlesList.get(position))
+              }
+            } else if ((!selectedVMN.isNotEmpty()) && (selectedDomainName.isNotEmpty())) {
+              holder.edge_cases_layout.visibility = View.VISIBLE
+              holder.edge_cases_desc.text = "You need to select a call tracking number number."
+              holder.edge_cases_layout.setOnClickListener {
+                listener1.actionClickVmn(bundlesList.get(position))
+              }
+            } else {
+              holder.edge_cases_layout.visibility = View.VISIBLE
+              holder.edge_cases_layout.setOnClickListener {
+                listener1.actionClick(bundlesList.get(position))
+              }
+            }
+          } else {
+            if (selectedDomainName.isNotEmpty()) {
+              holder.edge_cases_layout.visibility = View.GONE
+            } else {
+              holder.edge_cases_layout.visibility = View.VISIBLE
+              holder.edge_cases_desc.text = "You need to select a domain name."
+              holder.edge_cases_layout.setOnClickListener {
+                listener1.actionClickDomain(bundlesList.get(position))
+              }
+            }
+          }
+
           holder.addon_amount.text = "Includes "+tempFeatures.size+" addons"
           val linearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
           holder.adapter = NewAddonsAdapter(tempFeatures, listener, bundleItem, activity)

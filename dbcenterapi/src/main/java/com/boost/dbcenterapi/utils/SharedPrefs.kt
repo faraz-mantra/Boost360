@@ -27,6 +27,7 @@ class SharedPrefs(activity: Activity) {
   private val SELECTED_DOMAIN_NAME = "SELECTED_DOMAIN_NAME"
   private val SELECTED_VMN_NAME = "SELECTED_VMN_NAME"
   private val fp_email = "GET_FP_DETAILS_EMAIL"
+  private val FP_ID = "FP_ID"
 
   private val CART_ORDER_INFO = "CART_ORDER_INFO"
   private val CART_IDS = "CART_IDS"
@@ -71,7 +72,7 @@ class SharedPrefs(activity: Activity) {
     editor!!.putFloat(po_price, price).apply()
   }
 
-  fun storeLatestPurchaseOrderId(order_id: String) {
+  fun storeLatestPurchaseOrderId(order_id: String?) {
     editor!!.putString(po_id, order_id).apply()
   }
 
@@ -317,6 +318,14 @@ class SharedPrefs(activity: Activity) {
 
   fun getSelectedVMNName(): String? {
     return pref!!.getString(SELECTED_VMN_NAME, null)
+  }
+
+  fun storeFpid(value: String?){
+    editor!!.putString(FP_ID, value).apply()
+  }
+
+  fun getFpid(): String? {
+    return pref!!.getString(FP_ID, null)
   }
 
   fun storeUPIId(upiIdList: List<String>) {

@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -88,7 +89,7 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
         val width = ViewGroup.LayoutParams.MATCH_PARENT
         val height = ViewGroup.LayoutParams.MATCH_PARENT
         dialog!!.window!!.setLayout(width, height)
-        dialog!!.window!!.setBackgroundDrawableResource(R.color.fullscreen_color)
+        dialog!!.window!!.setBackgroundDrawableResource(R.color.transparent)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -157,6 +158,13 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
     }
 
     private fun defaultLayout(view: View){
+
+        view.riv_close_bottomSheet.setOnClickListener {
+            prefs.storeSelectedDomainName(null)
+            prefs.storeSelectedVMNName(null)
+            dismiss()
+        }
+
         view.select_website_layout.visibility = View.VISIBLE
         view.selectWebsiteIwillDoItLater.setOnClickListener {
             domainName = null
@@ -167,32 +175,58 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
         }
 
         view.selectWebsiteSubmit.setOnClickListener {
+            view.selectWebsiteSubmit.setBackgroundResource(R.drawable.disabled_button)
+            view.tv_empty_select_website.visibility=View.GONE
+            view.tv_selected_domain.visibility=View.VISIBLE
+            view.selectWebsiteIwillDoItLater.isClickable=false
+            Handler().postDelayed({
+                hideAllLayout()
+                view.select_number_layout.visibility = View.VISIBLE
+                view.topImageView.setImageResource(com.boost.cart.R.drawable.vmn_selection_point)
+                listener.featureDetailsPopup(domainName!!)
+            }, 1000)
+        }
+
+        view.selectedWebsiteContinueButton.setOnClickListener {
             hideAllLayout()
             view.select_number_layout.visibility = View.VISIBLE
-            view.topImageView.setImageResource(R.drawable.vmn_selection_point)
+            view.topImageView.setImageResource(com.boost.cart.R.drawable.vmn_selection_point)
             listener.featureDetailsPopup(domainName!!)
         }
 
-//        view.selectedWebsiteContinueButton.setOnClickListener {
-//            hideAllLayout()
-//            view.select_number_layout.visibility = View.VISIBLE
-//            view.topImageView.setImageResource(R.drawable.vmn_selection_point)
-//        }
-
-//        view.tv_explore_select_website1.setOnClickListener {
-//            exploreDomainOptionsDefault()
-//            view.tv_empty_selected_website.text = domainName
-//            listener.featureDetailsPopup(domainName!!)
-//        }
+        view.tv_explore_select_website1.setOnClickListener {
+            exploreDomainOptionsDefault()
+            view.tv_empty_selected_website.text = domainName
+            listener.featureDetailsPopup(domainName!!)
+        }
 
         view.tv_explore_select_website.setOnClickListener {
             exploreDomainOptionsDefault()
             listener.featureDetailsPopup(domainName!!)
+            Handler().postDelayed({
+                hideAllLayout()
+                view.selected_website_layout.visibility=View.VISIBLE
+            }, 1000)
         }
 
         view.tv_explore_text_select_vmn.setOnClickListener {
             listener.featureDetailsPopupvmn(selectedNum!!)
             exploreVmnOptionsDefault()
+            Handler().postDelayed({
+                hideAllLayout()
+                view.selected_number_layout.visibility=View.VISIBLE
+            }, 1000)
+        }
+
+        view.tv_explore_select_number.setOnClickListener {
+            exploreVmnOptionsDefault()
+        }
+
+        view.selectedNumberContinue.setOnClickListener {
+            hideAllLayout()
+            view.review_selection_layout.visibility = View.VISIBLE
+            view.topImageView.setImageResource(com.boost.cart.R.drawable.review_selection_point)
+            listener.featureDetailsPopup(selectedNum!!)
         }
 
         view.tv_edit.setOnClickListener {
@@ -203,19 +237,19 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
             exploreVmnOptionsDefault()
         }
 
-//        view.tv_explore_select_number.setOnClickListener {
-//            view.tv_empty_select_number.text = selectedNum
-//            listener.featureDetailsPopupvmn(selectedNum!!)
-//            exploreVmnOptionsDefault()
-//        }
-
         view.selectVmnSubmit.setOnClickListener {
-            hideAllLayout()
-            listener.featureDetailsPopupvmn(selectedNum!!)
-            view.review_selection_layout.visibility = View.VISIBLE
-            selectedNames()
-            view.topImageView.setImageResource(R.drawable.review_selection_point)
-            view.tv_title_number.text = selectedNum
+            selectedNum?.let { it1 -> listener.featureDetailsPopupvmn(it1) }
+            view.selectVmnSubmit.setBackgroundResource(R.drawable.disabled_button)
+            view.tv_call_expert_select_domain.visibility=View.GONE
+            view.tv_vmn_selected_txt.visibility=View.VISIBLE
+            view.selectVmnIwillDoItLater.isClickable=false
+            Handler().postDelayed({
+                hideAllLayout()
+                view.review_selection_layout.visibility = View.VISIBLE
+                selectedNames()
+                view.topImageView.setImageResource(com.boost.cart.R.drawable.review_selection_point)
+                view.tv_title_number.text = selectedNum
+            }, 1000)
         }
 
         view.selectVmnIwillDoItLater.setOnClickListener {
@@ -227,13 +261,13 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
             view.topImageView.setImageResource(R.drawable.review_selection_point)
         }
 
-//        view.selectedNumberContinue.setOnClickListener {
-//            hideAllLayout()
-//            listener.featureDetailsPopupvmn(selectedNum!!)
-//            view.review_selection_layout.visibility = View.VISIBLE
-//            selectedNames()
-//            view.topImageView.setImageResource(R.drawable.review_selection_point)
-//        }
+        view.selectedNumberContinue.setOnClickListener {
+            hideAllLayout()
+            listener.featureDetailsPopupvmn(selectedNum!!)
+            view.review_selection_layout.visibility = View.VISIBLE
+            selectedNames()
+            view.topImageView.setImageResource(R.drawable.review_selection_point)
+        }
 
         view.tv_edit_number.setOnClickListener {
             exploreVmnOptionsDefault()
@@ -259,8 +293,11 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
 
     private  fun vmnSelection(view: View){
         view.select_website_layout?.visibility = View.GONE
-        view.topImageView.setImageResource(R.drawable.vmn_selection_point)
+        view.topImageView.visibility=View.GONE
         view.select_number_layout?.visibility = View.VISIBLE
+        view.select_number_layout?.setBackgroundResource(R.color.transparent)
+        view.selectVmnIwillDoItLater.setText("Skip & continue to cart")
+
         view.selectVmnIwillDoItLater.setOnClickListener {
             dismiss()
         }
@@ -268,25 +305,38 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
             exploreVmnOptions()
         }
         view.selectVmnSubmit.setOnClickListener {
-            hideAllLayout()
             prefs.storeSelectedVMNName(selectedNum)
             listener.featureDetailsPopupvmn(selectedNum!!)
-            dismiss()
+            view.selectVmnSubmit.setBackgroundResource(R.drawable.disabled_button)
+            view.tv_call_expert_select_domain.visibility=View.GONE
+            view.tv_vmn_selected_txt.visibility=View.VISIBLE
+            view.selectVmnIwillDoItLater.isClickable=false
+            Handler().postDelayed({
+                dismiss()
+            }, 1000)
         }
     }
 
     private fun domainSelction(view: View) {
+
         view.select_website_layout.visibility = View.VISIBLE
-        view.topImageView.setImageResource(R.drawable.domain_selection_point)
+        view.topImageView.visibility=View.GONE
+        view.select_website_layout.setBackgroundResource(R.color.transparent)
+        view.selectWebsiteIwillDoItLater.setText("Skip & continue to cart")
         view.selectWebsiteIwillDoItLater.setOnClickListener {
             dismiss()
         }
 
         view.selectWebsiteSubmit.setOnClickListener {
-            hideAllLayout()
             prefs.storeSelectedDomainName(domainName)
             listener.featureDetailsPopup(domainName!!)
-            dismiss()
+            view.selectWebsiteSubmit.setBackgroundResource(R.drawable.disabled_button)
+            view.tv_empty_select_website.visibility=View.GONE
+            view.tv_selected_domain.visibility=View.VISIBLE
+            view.selectWebsiteIwillDoItLater.isClickable=false
+            Handler().postDelayed({
+                dismiss()
+            }, 1000)
         }
 
         view.tv_explore_select_website.setOnClickListener {
@@ -451,6 +501,7 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
                     if (singleDomain.isAvailable) {
                         domainName = singleDomain.name
                         tv_empty_select_website.text = singleDomain.name
+                        tv_selected_domain.text = singleDomain.name
                         break
                     }
                 }
@@ -475,6 +526,7 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
                 System.out.println("numberList" + it)
                 selectedNum = it[0]
                 tv_call_expert_select_domain.text = selectedNum
+                tv_vmn_selected_txt.text = selectedNum
                 view?.selectVmnSubmit?.isClickable = true
             }else {
                 view?.selectVmnSubmit?.isClickable = false

@@ -18,7 +18,6 @@ import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.DetailsFragmentListener
-import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
 import com.framework.utils.RootUtil

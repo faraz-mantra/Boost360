@@ -114,7 +114,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         prefs = SharedPrefs(this)
 
 
-        if(doDomainBooking || domainSelectionForPack){
+        if(doDomainBooking || domainSelectionForPack ||domainSelectionForCart){
             binding?.tvSkipTocart?.visibility = View.GONE
         }else {
             binding?.tvSkipTocart?.visibility = View.VISIBLE
@@ -245,6 +245,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             if (!itemInCartStatus) {
                 if (singleAddon != null) {
                     prefs.storeCartOrderInfo(null)
+                    prefs.storeSelectedDomainName(null)
                     viewModel.addItemToCart1(singleAddon, singleAddon.name?:"")
                     val event_attributes: HashMap<String, Any> = HashMap()
                     singleAddon.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
@@ -270,6 +271,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
                     itemInCartStatus = true
                 }
             }
+            finish()
             val intent = Intent(applicationContext, CartActivity::class.java)
             intent.putExtra("fpid", fpid)
             intent.putExtra("fpTag",fpTag)
@@ -334,23 +336,13 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             if (it.length>0) {
                 binding?.scrollView?.visibility = View.GONE
                 binding?.shimmerViewDomain?.visibility = View.VISIBLE
-                showProgress(it,false)
+              //  showProgress(it,false)
             } else {
                 binding?.scrollView?.visibility = View.VISIBLE
                 binding?.shimmerViewDomain?.visibility = View.GONE
-                hideProgress()
+               // hideProgress()
             }
         })
-
-//        viewModel.updateStatus().observe(this, androidx.lifecycle.Observer{
-//            result=it.Result
-////            if (it.Result.equals(false)){
-////                binding?.btnSelectDomain?.setBackgroundResource(R.color.colorAccent1);
-////            }
-////            else{
-////                binding?.btnSelectDomain?.setBackgroundResource(R.color.btn_bg_color_disabled)
-////            }
-//        })
     }
 
     fun initRecyclerView() {

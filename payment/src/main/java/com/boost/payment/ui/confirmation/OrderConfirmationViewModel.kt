@@ -16,6 +16,7 @@ import com.boost.dbcenterapi.utils.Constants.Companion.clientid
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.dbcenterapi.utils.Utils
 import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
 import com.framework.pref.getAccessTokenAuth
 import es.dmoral.toasty.Toasty
 import io.reactivex.Completable
@@ -37,6 +38,7 @@ class OrderConfirmationViewModel : ViewModel() {
               updatesLoader.postValue("Domain Activation Is in Progress")
               val pref = app.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
               val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
+              val fpid = prefs.getFpid()
               val splitStr = prefs.getSelectedDomainName()!!.split(".")?.toCollection(ArrayList())!!
               var domainName = ""
               var domainType = "."
@@ -68,19 +70,22 @@ class OrderConfirmationViewModel : ViewModel() {
                     domainType = domainType + element
                 }
               }
-              val bookingRequest = DomainBookingRequest(
-                domainOrderType,
-                0,
-                clientid,
-                1,
-                domainName,
-                domainType,
-                fpTag!!,
-                validityInYears
-              )
+
+//              val bookingRequest = DomainBookingRequest(
+//                domainOrderType,
+//                0,
+//                clientid,
+//                1,
+//                domainName,
+//                domainType,
+//                fpTag!!,
+//                validityInYears
+//              )
+
               val auth = UserSessionManager(activity.applicationContext).getAccessTokenAuth()?.barrierToken() ?: ""
               CompositeDisposable().add(
-              ApiService.buyDomainBooking(auth, bookingRequest)
+                ApiService.buyDomainBooking1(auth,domainName,2,
+                  clientId,domainType,fpid!!,fpTag!!, prefs.getLatestPurchaseOrderId().toString(),validityInYears)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -107,6 +112,7 @@ class OrderConfirmationViewModel : ViewModel() {
               )
             }
             prefs.storeSelectedDomainName(null) //Clear selected name
+
           Completable.fromAction {
             AppDatabase.getInstance(app)!!.cartDao().emptyCart()
           }

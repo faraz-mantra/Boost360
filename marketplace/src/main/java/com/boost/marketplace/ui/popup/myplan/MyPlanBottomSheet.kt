@@ -250,6 +250,7 @@ class MyPlanBottomSheet :
         )
         intent.putExtra("bundleData", Gson().toJson(singleAddon))
         intent.putExtra("email", "ria@nowfloats.com")
+        intent.putExtra("doVMNBooking", true)
         intent.putExtra("mobileNo", "9160004303")
         intent.putExtra("itemId", singleAddon.boost_widget_key)
         startActivity(intent)
@@ -294,6 +295,7 @@ class MyPlanBottomSheet :
             binding?.edgeCasesLayout?.visibility = View.VISIBLE
             binding?.btn1?.visibility = View.VISIBLE
             binding?.btn1?.text = "Choose Domain"
+            binding?.edgeCaseHyperlink?.setText("Go to activation page.")
             binding?.edgeCaseHyperlink?.setOnClickListener {
                 chooseDomain()
             }
@@ -326,12 +328,12 @@ class MyPlanBottomSheet :
             binding?.edgeCasesLayout?.visibility = View.VISIBLE
             binding?.btn1?.visibility = View.VISIBLE
             binding?.btn1?.text = "Choose VMN"
+            binding?.edgeCaseHyperlink?.setText("Go to activation page.")
             binding?.edgeCaseHyperlink?.setOnClickListener {
-                Toast.makeText(requireContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
+                   chooseVMN()
             }
             binding?.btn1?.setOnClickListener {
-                //   chooseVMN()
-                Toast.makeText(requireContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
+                   chooseVMN()
             }
             binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
             binding?.edgeCaseTitle?.setText("Action Required")

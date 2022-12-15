@@ -120,7 +120,6 @@ interface NewApiInterface {
         @Query("clientId") clientId: String
     ): Observable<PurchasedVmnResponse>
 
-
     //MyCurrentPlan  Marketplace V3
     @Headers("Content-Type: application/json")
     @GET("https://api2.withfloats.com/discover/v1/GetFeatureDetails")
@@ -129,8 +128,34 @@ interface NewApiInterface {
         @Query("clientId") clientId: String
     ): Observable<MyPlanV3>
 
+    //post purchase domain booking without blocking
     @Headers("Content-Type: application/json")
     @PUT("https://plugin.withfloats.com/DomainService/v2/domainWithWebsite/create")
     fun buyDomainBooking(@Header("Authorization") auth: String, @Body domainBookingRequest: DomainBookingRequest): Observable<String>
+
+    //pre purchase domain booking.
+    @Headers("Content-Type: application/json")
+    @GET("https://api2.withfloats.com/discover/v1/floatingPoint/AssignDomainBlocked")
+    fun buyDomainBooking1(
+        @Header("Authorization") auth: String,
+        @Query("blockedItem") blockedItem: String,
+        @Query("blockedItemType") blockedItemType: Int,
+        @Query("clientId") clientId: String,
+        @Query("domainType") domainType: String,
+        @Query("fpId") fpId: String,
+        @Query("fptag") fptag: String,
+        @Query("orderId") orderId: String,
+        @Query("validityInYears") validityInYears: String,
+    ): Observable<String>
+
+// post purchase vmn booking.
+    @Headers("Content-Type: application/json")
+    @GET("https://api2.withfloats.com/Support/v1/calls/AssignCallTrackerInPostPurchase")
+    fun bookVMN(
+        @Header("Authorization") auth: String,
+        @Query("clientId") clientId: String,
+        @Query("fpId") fpId: String,
+        @Query("vmnumber") vmnumber: String
+    ): Observable<Long>
 
 }

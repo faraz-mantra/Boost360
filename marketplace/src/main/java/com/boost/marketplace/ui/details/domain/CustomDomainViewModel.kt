@@ -133,23 +133,6 @@ class CustomDomainViewModel() : BaseViewModel() {
             .subscribe()
     }
 
-//    fun domainStatus(auth: String, fpid: String, clientId: String, blockedItem: String) {
-////        updatesLoader.postValue(true)
-//        compositeDisposable.add(
-//            ApiService.getItemAvailability(auth, fpid, clientId, blockedItem)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(
-//                    {
-//                        updateStatus.postValue(it)
-////                        updatesLoader.postValue(false)
-//                    }, {
-//                        updatesLoader.postValue("")
-//                        updatesError.postValue(it.message)
-//                    })
-//        )
-//    }
-
     fun bookDomainActivation(blockedItem: String, app: Application, activity: Activity) {
 
         updatesLoader.postValue("Domain Activation Is in Progress")

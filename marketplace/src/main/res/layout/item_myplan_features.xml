@@ -41,7 +41,7 @@
                     android:id="@+id/single_freeaddon_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/emails"
+                    android:src="@drawable/emails"
                     android:scaleType="fitCenter" />
 
             </RelativeLayout>
@@ -74,7 +74,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
                         android:fontFamily="@font/semi_bold"
-                        android:text="Active"
+                        android:text="Action Required"
                         android:visibility="visible"
                         android:textColor="#EB5757"
                         android:textSize="12sp" />
@@ -123,7 +123,7 @@
                 android:layout_marginRight="@dimen/_15ssp"
                 android:src="@drawable/ic_arrow_myplanv3"
                 android:scaleType="fitCenter"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

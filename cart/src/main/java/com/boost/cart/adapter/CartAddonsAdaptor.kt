@@ -73,7 +73,9 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
         holder.desc.text = list.get(position).description_title
         holder.title.text = list.get(position).item_name
       }
-    } else if(list.get(position).boost_widget_key!!.contains("CALLTRACKER") || list.get(position).boost_widget_key!!.contains("IVR")) {
+    } else if(list.get(position).boost_widget_key!!.contains("CALLTRACKER")
+    //     || list.get(position).boost_widget_key!!.contains("IVR")
+    ) {
       if(!prefs.getSelectedVMNName().isNullOrEmpty()) {
         holder.title.text = prefs.getSelectedVMNName()
         holder.desc.text = list.get(position).item_name
@@ -104,7 +106,9 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
       if(list.get(position).boost_widget_key!!.contains("DOMAINPURCHASE")) {
           prefs.storeSelectedDomainName(null)
         }
-      if(list.get(position).boost_widget_key!!.contains("CALLTRACKER") || list.get(position).boost_widget_key!!.contains("IVR")) {
+      if(list.get(position).boost_widget_key!!.contains("CALLTRACKER")
+      //  || list.get(position).boost_widget_key!!.contains("IVR")
+      ) {
         prefs.storeSelectedVMNName(null)
       }
     }

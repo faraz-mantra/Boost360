@@ -1,6 +1,7 @@
 package com.boost.marketplace.Adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
@@ -249,9 +251,11 @@ class FreeAddonsAdapter( val activity: MyCurrentPlanActivity,
         btn1.text = "Activate boost keyboard"
       img1.setImageResource(R.drawable.vector)
       }
+
     else if (actionRequired == 0 && (featureState == 3 || featureState == 4 || featureState == 5 || featureState == 6)) {
       img1.setImageResource(R.drawable.ic_sync_blue)
-        btn1.text = "Syncing information"
+        btn1.text = "Processing..."
+        btn1.setTextColor(ContextCompat.getColor(context,R.color.light_blue2))
       }
 
     }

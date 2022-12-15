@@ -263,7 +263,7 @@ class FeatureDetailsActivity :
                 loadNumberList()
                 val param = seleced_value_text.layoutParams as ViewGroup.MarginLayoutParams
                 if (singleWidgetKey!!.equals("CALLTRACKER")) {
-                    selected_value_image.setImageResource(R.drawable.ic_customer_call_tracking)
+                    selected_value_image.setImageResource(R.drawable.ic_customer_call_tracking_ivr)
                     param.setMargins(
                         TypedValue.applyDimension(
                             TypedValue.COMPLEX_UNIT_DIP,
@@ -305,7 +305,7 @@ class FeatureDetailsActivity :
                 }
                 seleced_value_text.layoutParams = param
             } else if (singleWidgetKey!!.contains("EMAILACCOUNTS")) {
-                selected_value_image.setImageResource(R.drawable.ic_customer_call_tracking)
+                selected_value_image.setImageResource(R.drawable.ic_customer_call_tracking_ivr)
                 val param = seleced_value_text.layoutParams as ViewGroup.MarginLayoutParams
                 param.setMargins(
                     TypedValue.applyDimension(
@@ -468,9 +468,12 @@ class FeatureDetailsActivity :
                         RemovePackageBottomSheet::class.java.name
                     )
                 } else if(addonDetails!!.feature_code.equals("DOMAINPURCHASE")) {
-                    getAlreadyPurchasedDomain()
-                } else if(addonDetails!!.feature_code.equals("IVR") || (addonDetails!!.feature_code.equals("CALLTRACKER"))) {
-                    getAlreadyPurchasedVmn()
+                   // getAlreadyPurchasedDomain()
+                    featureEdgeCase()
+                } else if(addonDetails!!.feature_code.equals("CALLTRACKER") //|| (addonDetails!!.feature_code.equals("IVR"))
+                            ) {
+                  //  getAlreadyPurchasedVmn()
+                    featureEdgeCase()
                 } else addItemToCart()
           //  }
         }
@@ -597,11 +600,12 @@ class FeatureDetailsActivity :
             if(!it.domainName.isNullOrEmpty() && !it.domainType.isNullOrEmpty()) {
                 prefs.storeSelectedDomainName(it.domainName + it.domainType)
             }
-            makeFlyAnimation(addon_icon)
+        //    makeFlyAnimation(addon_icon)
             viewModel.addItemToCart1(addonDetails!!, this,
                 if(!it.domainName.isNullOrEmpty() && !it.domainType.isNullOrEmpty()) (it.domainName + it.domainType) else null)
             viewModel.getCartItems()
         })
+
         viewModel.purchasedVmnResult().observe(this) {
             if(!it.Vmn.isNullOrEmpty()) {
                 prefs.storeSelectedVMNName(it.Vmn)
@@ -609,7 +613,7 @@ class FeatureDetailsActivity :
                 purchasedVmnName = it.Vmn
                 purchasedVmnActive = true
             }
-            makeFlyAnimation(addon_icon)
+          //  makeFlyAnimation(addon_icon)
             viewModel.addItemToCart1(addonDetails!!, this,
                 if(!it.Vmn.isNullOrEmpty()) (it.Vmn) else null)
             viewModel.getCartItems()
@@ -887,40 +891,7 @@ class FeatureDetailsActivity :
                 choose_different_value.setText("Pick another number")
                 choose_different_value.setOnClickListener {
 
-                    val intent = Intent(this, CallTrackingActivity::class.java)
-                    intent.putExtra("fpid", fpid)
-                    intent.putExtra("bundleData", Gson().toJson(addonDetails))
-                    intent.putExtra("itemInCartStatus",packageItem )
-                    intent.putExtra("price", numberprice)
-                    intent.putExtra(
-                        "AddonDiscountedPrice",
-                        getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent)
-                    )
-                    intent.putExtra("expCode", experienceCode)
-                    intent.putExtra("isDeepLink", isDeepLink)
-                    intent.putExtra("deepLinkViewType", deepLinkViewType)
-                    intent.putExtra("deepLinkDay", deepLinkDay)
-                    intent.putExtra("isOpenCardFragment", isOpenCardFragment)
-                    intent.putExtra(
-                        "accountType",
-                        accountType
-                    )
-                    intent.putExtra(
-                        "userPurchsedWidgets",
-                        userPurchsedWidgets
-                    )
-                    if (email != null) {
-                        intent.putExtra("email", email)
-                    } else {
-                        intent.putExtra("email", "ria@nowfloats.com")
-                    }
-                    if (mobileNo != null) {
-                        intent.putExtra("mobileNo", mobileNo)
-                    } else {
-                        intent.putExtra("mobileNo", "9160004303")
-                    }
-                    intent.putExtra("profileUrl", profileUrl)
-                    startActivity(intent)
+                   goToVmnSelection()
                 }
 //                bundle.putString("price", numberprice)
 //
@@ -1258,10 +1229,57 @@ class FeatureDetailsActivity :
         })
     }
 
+    private fun goToVmnSelection() {
+        val intent = Intent(this, CallTrackingActivity::class.java)
+        intent.putExtra("fpid", fpid)
+        intent.putExtra("bundleData", Gson().toJson(addonDetails))
+        intent.putExtra("itemInCartStatus",packageItem )
+        if (actionRequired == 3 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6)
+        ) {
+            intent.putExtra("doVMNBooking", true)
+        }
+//        if (actionRequired == 5 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+//                    || featureState == 5 || featureState == 6)
+//        ) {
+//            intent.putExtra("doVmnBooking", true)
+//        }
+        intent.putExtra("price", numberprice)
+        intent.putExtra(
+            "AddonDiscountedPrice",
+            getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent)
+        )
+        intent.putExtra("expCode", experienceCode)
+        intent.putExtra("isDeepLink", isDeepLink)
+        intent.putExtra("deepLinkViewType", deepLinkViewType)
+        intent.putExtra("deepLinkDay", deepLinkDay)
+        intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+        intent.putExtra(
+            "accountType",
+            accountType
+        )
+        intent.putExtra(
+            "userPurchsedWidgets",
+            userPurchsedWidgets
+        )
+        if (email != null) {
+            intent.putExtra("email", email)
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com")
+        }
+        if (mobileNo != null) {
+            intent.putExtra("mobileNo", mobileNo)
+        } else {
+            intent.putExtra("mobileNo", "9160004303")
+        }
+        intent.putExtra("profileUrl", profileUrl)
+        startActivity(intent)
+    }
+
     fun specialAddons(): Boolean {
         if (singleWidgetKey.equals("DOMAINPURCHASE")
-            || singleWidgetKey.equals("IVR")
             || singleWidgetKey.equals("CALLTRACKER")
+           // || singleWidgetKey.equals("IVR")
            // || singleWidgetKey.equals("STAFFPROFILE")
         ) {
             return true
@@ -1400,6 +1418,7 @@ class FeatureDetailsActivity :
                     updateSelectedVmn()
                 }
             }
+            loadData()
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
@@ -2048,7 +2067,8 @@ class FeatureDetailsActivity :
             ) {
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
-                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setText("Something went wrong!")
+                binding?.edgeCaseHyperlink?.setText("Contact support for help.")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
                     val callIntent = Intent(Intent.ACTION_DIAL)
                     callIntent.data = Uri.parse("tel:" + prefs.getExpertContact())
@@ -2066,12 +2086,13 @@ class FeatureDetailsActivity :
                     0,
                     0
                 )
-                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                binding?.edgeCaseDesc?.setText("There is an internal error inside Boost 360. We are working to resolve this issue.")
                 bottom_box_only_btn.visibility = VISIBLE
-                add_item_to_cart_new.setText("Contact Support")
+                add_item_to_cart_new.setText("Extend validity")
+                add_item_to_cart_new.isClickable=false
                 add_item_to_cart_new.background = ContextCompat.getDrawable(
                     applicationContext,
-                    R.drawable.cta_button_click_effect
+                    R.drawable.grey_button_click_effect
                 )
                 add_item_to_cart_new.setTextColor(Color.WHITE)
             } else if (actionRequired == 2 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
@@ -2080,6 +2101,7 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setText("Go to activation page.")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
                     goToDomainSelection()
                 }
@@ -2097,7 +2119,10 @@ class FeatureDetailsActivity :
                 )
                 binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
                 bottom_box_only_btn.visibility = VISIBLE
-                add_item_to_cart_new.setText("Extend Validity")
+                add_item_to_cart_new.setText("Activate custom domain")
+                add_item_to_cart_new.setOnClickListener {
+                    goToDomainSelection()
+                }
                 add_item_to_cart_new.background = ContextCompat.getDrawable(
                     applicationContext,
                     R.drawable.cta_button_click_effect
@@ -2116,9 +2141,9 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setText("Go to activation page.")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
-                 //   Toasty.success(this, "Coming Soon...", Toast.LENGTH_SHORT, true).show();
-                    Toast.makeText(getApplicationContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
+                    goToVmnSelection()
                 }
                 binding?.edgeCaseTitle?.setTextColor(
                     ContextCompat.getColor(
@@ -2134,18 +2159,21 @@ class FeatureDetailsActivity :
                 )
                 binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
                 bottom_box_only_btn.visibility = VISIBLE
-                add_item_to_cart_new.setText("Extend Validity")
+                add_item_to_cart_new.setText("Activate call tracking")
                 add_item_to_cart_new.background = ContextCompat.getDrawable(
                     applicationContext,
                     R.drawable.cta_button_click_effect
                 )
                 add_item_to_cart_new.setTextColor(Color.WHITE)
+                add_item_to_cart_new.setOnClickListener {
+                    goToVmnSelection()
+                }
             } else if (actionRequired == 4 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                         || featureState == 5 || featureState == 6)
             ) {
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
-                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setText("Go to activation page.")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
                   //  Toasty.success(this, "Coming Soon...", Toast.LENGTH_SHORT, true).show();
                     Toast.makeText(getApplicationContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
@@ -2173,8 +2201,9 @@ class FeatureDetailsActivity :
             }  else if (actionRequired == 5 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                         || featureState == 5 || featureState == 6)) {
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCaseHyperlink?.setText("Go to activation page.")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
-                 //   Toasty.success(this, "Coming Soon...", Toast.LENGTH_SHORT, true).show();
+                   // goToVmnSelection()
                     Toast.makeText(getApplicationContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
                 }
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
@@ -2200,11 +2229,16 @@ class FeatureDetailsActivity :
                     R.drawable.cta_button_click_effect
                 )
                 add_item_to_cart_new.setTextColor(Color.WHITE)
+//                add_item_to_cart_new.setOnClickListener {
+//                   // goToVmnSelection()
+//                    Toast.makeText(getApplicationContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
+//                }
             } else if (actionRequired == 6 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                         || featureState == 5 || featureState == 6)) {
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setText("Go to activation page.")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
                     Usefeature()
                 }
@@ -2236,6 +2270,7 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setText("Go to activation page.")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
                     Usefeature()
                 }
@@ -2267,6 +2302,7 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setText("Go to activation page.")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
                     Usefeature()
                 }
@@ -2298,6 +2334,7 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setText("Go to activation page.")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
                     Usefeature()
                 }
@@ -2329,6 +2366,7 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setText("Go to activation page.")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
                     Usefeature()
                 }
@@ -2360,6 +2398,7 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setText("Go to activation page.")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
                     Usefeature()
                 }
@@ -2391,6 +2430,7 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setText("Go to activation page.")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
                     Usefeature()
                 }
@@ -2422,6 +2462,7 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setText("Go to activation page.")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
                     Usefeature()
                 }
@@ -2453,6 +2494,7 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setText("Go to activation page.")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
                     Usefeature()
                 }
@@ -2484,6 +2526,7 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setText("Go to activation page.")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
                     Usefeature()
                 }
@@ -2515,6 +2558,7 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setText("Go to activation page.")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
                     Usefeature()
                 }
@@ -2546,6 +2590,7 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setText("Go to activation page.")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
                     Usefeature()
                 }
@@ -2577,6 +2622,7 @@ class FeatureDetailsActivity :
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
                 binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseHyperlink?.setText("Go to activation page.")
                 binding?.edgeCaseHyperlink?.setOnClickListener {
                     Usefeature()
                 }
@@ -2620,14 +2666,31 @@ class FeatureDetailsActivity :
                     0,
                     0
                 )
-                binding?.edgeCaseDesc?.visibility = View.GONE
-//            binding?.edgeCaseDesc?.setText(
-//                "Feature validity expiring on Aug 23, 2021. You\n" +
-//                        "can extend validity by renewing it for a\n" +
-//                        "longer duration."
-//            )
+                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                val sdf = SimpleDateFormat("MMM dd, yyyy")
+                val expiryDate = ExpiryDate.replace("/Date(", "").replace(")/", "").replace("+0000","")
+                val date = Date(expiryDate.toLong())
+                binding?.edgeCaseDesc?.setText(
+                "Feature validity expiring on ${sdf.format(date)}. You can extend validity by renewing it for a longer duration."
+                )
                 bottom_box_only_btn.visibility = VISIBLE
                 add_item_to_cart_new.setText("Extend Validity")
+                add_item_to_cart_new.setOnClickListener {
+                    if(addonDetails!!.feature_code.equals("DOMAINPURCHASE")) {
+                        getAlreadyPurchasedDomain()
+                    } else if(addonDetails!!.feature_code.equals("CALLTRACKER") //|| (addonDetails!!.feature_code.equals("IVR"))
+                    ) {
+                        getAlreadyPurchasedVmn()
+                    }
+                    else
+                        add_item_to_cart_new.setText("Extend Validity")
+                    add_item_to_cart_new.background = ContextCompat.getDrawable(
+                        applicationContext,
+                        R.drawable.cta_button_click_effect
+                    )
+                    add_item_to_cart_new.setTextColor(Color.WHITE)
+                    addItemToCart()
+                }
                 add_item_to_cart_new.background = ContextCompat.getDrawable(
                     applicationContext,
                     R.drawable.cta_button_click_effect
@@ -2662,27 +2725,27 @@ class FeatureDetailsActivity :
                 )
                 binding?.edgeCaseDesc?.visibility = View.VISIBLE
                 bottom_box_only_btn.visibility = VISIBLE
-                if (addonDetails!!.feature_code.equals("DOMAINPURCHASE"))
-                    add_item_to_cart_new.setText("Extend Validity")
-                else if (addonDetails!!.feature_code.equals("IVR") || addonDetails!!.feature_code.equals(
-                        "CALLTRACKER"
-                    )
-                )
-                    add_item_to_cart_new.setText("Buy Call Tracking")
-                else if (addonDetails!!.feature_code!!.contains("EMAILACCOUNTS"))
-                    add_item_to_cart_new.setText("Extend Validity")
-                else
+//                if (addonDetails!!.feature_code.equals("DOMAINPURCHASE"))
+//                    add_item_to_cart_new.setText("Extend Validity")
+//                else if (addonDetails!!.feature_code.equals("IVR") || addonDetails!!.feature_code.equals(
+//                        "CALLTRACKER"
+//                    )
+//                )
+//                    add_item_to_cart_new.setText("Buy Call Tracking")
+//                else if (addonDetails!!.feature_code!!.contains("EMAILACCOUNTS"))
+//                    add_item_to_cart_new.setText("Extend Validity")
+//                else
                     add_item_to_cart_new.setText("Add To Cart")
-                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                    add_item_to_cart_new.background = ContextCompat.getDrawable(
                     applicationContext,
                     R.drawable.grey_button_click_effect
                 )
-                add_item_to_cart_new.setTextColor(getResources().getColor(R.color.tv_color_BB))
+                add_item_to_cart_new.setTextColor(getResources().getColor(R.color.white))
                 add_item_to_cart_new.isEnabled = false
             } else if (featureState == 7){
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
-
+                binding?.edgeCaseHyperlink?.visibility = View.GONE
                 val sdf = SimpleDateFormat("MMM dd, yyyy")
                 val expiryDate = ExpiryDate.replace("/Date(", "").replace(")/", "").replace("+0000","")
                 val date = Date(expiryDate.toLong())
@@ -2710,13 +2773,14 @@ class FeatureDetailsActivity :
                         ADDONS_MARKETPLACE,
                         event_attributes
                     )
+                    add_item_to_cart_new.setOnClickListener {
+                        getAlreadyPurchasedDomain()
+                    }
                 }
-                else if (addonDetails!!.feature_code.equals("IVR") || addonDetails!!.feature_code.equals(
-                        "CALLTRACKER"
-                    )
+                else if (addonDetails!!.feature_code.equals("CALLTRACKER") //|| addonDetails!!.feature_code.equals("IVR")
                 ) {
                     bottom_box_only_btn.visibility = VISIBLE
-                    add_item_to_cart_new.setText("Renew Call Tracking")
+                    add_item_to_cart_new.setText("Renew ${addonDetails!!.name}")
                         val event_attributes: HashMap<String, Any> = HashMap()
                         addonDetails?.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
                         WebEngageController.trackEvent(
@@ -2724,6 +2788,9 @@ class FeatureDetailsActivity :
                             ADDONS_MARKETPLACE,
                             event_attributes
                         )
+                    add_item_to_cart_new.setOnClickListener {
+                        getAlreadyPurchasedVmn()
+                    }
                 }
                 else if (addonDetails!!.feature_code!!.contains("EMAILACCOUNTS"))
                     add_item_to_cart_new.setText("Renew Business Email")

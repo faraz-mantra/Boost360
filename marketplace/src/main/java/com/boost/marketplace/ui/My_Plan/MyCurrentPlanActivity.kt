@@ -537,17 +537,11 @@ class MyCurrentPlanActivity :
         })
         viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
             if (it) {
-                val status = "Loading. Please wait..."
-                progressDialog.setMessage(status)
-                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
-                progressDialog.show()
-
                     binding?.shimmerViewHistory?.startShimmer()
                     binding?.shimmerViewHistory?.visibility = View.VISIBLE
                     binding?.nestedscroll?.visibility = View.GONE
 
             } else {
-                progressDialog.dismiss()
                 binding?.shimmerViewHistory?.stopShimmer()
                 binding?.shimmerViewHistory?.visibility = View.GONE
                 binding?.nestedscroll?.visibility = View.VISIBLE

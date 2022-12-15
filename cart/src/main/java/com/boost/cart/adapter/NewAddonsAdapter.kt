@@ -57,8 +57,8 @@ class NewAddonsAdapter(
             else{
                 holder.edit.visibility = View.GONE
             }
-        }else if((upgradeList.get(position).feature_code.equals("CALLTRACKER")
-            || upgradeList.get(position).feature_code.equals("IVR"))
+        }else if((upgradeList.get(position).feature_code.equals("CALLTRACKER"))
+           // || upgradeList.get(position).feature_code.equals("IVR"))
             && upgradeList.get(position).name!!.contains("[0-9]".toRegex())){
             holder.name.setText(upgradeList.get(position).name)
             holder.name.setTypeface(ResourcesCompat.getFont(context, R.font.bold))
@@ -67,7 +67,7 @@ class NewAddonsAdapter(
             if(prefs.getVmnOrderType() == 0){
                 holder.edit.visibility = View.VISIBLE
                 holder.edit.setOnClickListener {
-                    listener.editSelectedDomain(bundleItem)
+                    listener.editSelectedVmn(bundleItem)
                 }
             }
             else
@@ -81,7 +81,8 @@ class NewAddonsAdapter(
                 holder.notify.visibility = View.VISIBLE
             }
             if(upgradeList.get(position).feature_code.equals("CALLTRACKER")
-                || upgradeList.get(position).feature_code.equals("IVR")){
+              //  || upgradeList.get(position).feature_code.equals("IVR")
+            ){
                 holder.notify.visibility = View.VISIBLE
             }
         }

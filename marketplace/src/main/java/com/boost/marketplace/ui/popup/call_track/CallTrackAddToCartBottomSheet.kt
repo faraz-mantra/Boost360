@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.boost.cart.CartActivity
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
@@ -52,6 +53,7 @@ class CallTrackAddToCartBottomSheet :
     var numberPrice: String? = null
     var vmnSelectionForCart: Boolean = false
     var doVMNBooking: Boolean = false
+    var result: Long? = null
     lateinit var removePackageBottomSheet: RemovePackageBottomSheet
 
     override fun getLayout(): Int {
@@ -97,7 +99,7 @@ class CallTrackAddToCartBottomSheet :
 
 
 //        loadData()
-//        initMVVM()
+        initMVVM()
         binding?.backBtn?.setOnClickListener {
             dismiss()
         }
@@ -121,7 +123,8 @@ class CallTrackAddToCartBottomSheet :
                 return@setOnClickListener
             }
             if (doVMNBooking) {
-                // viewModel?.bookDomainActivation(blockedItem!!, requireActivity().application, requireActivity())
+                val num =  blockedItem!!.replace("+91 ","0").replace("-","")
+                viewModel!!.bookVMNPostPurchase(getAccessToken(), clientid,fpid.toString(), num,requireActivity())
             } else {
                 if (itemInCartStatus == true) {
                     val args = Bundle()
@@ -231,26 +234,15 @@ class CallTrackAddToCartBottomSheet :
                 }
             }
         }
-//
-//    private fun loadData() {
-//        blockedItem?.let {
-//            fpid?.let { it1 ->
-//                viewModel!!.blockNumberStatus(
-//                    (this).getAccessToken() ?: "", it1,
-//                    "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21", it
-//                )
-//            }
-//        }
-//    }
-//
-//    private fun initMVVM() {
-//        viewModel?.updateStatus()?.observe(this, androidx.lifecycle.Observer {
-//            result = it.Result
-//        })
-//    }
+
 
     }
 
+        private fun initMVVM() {
+            viewModel?.vmnBooking()?.observe(this, Observer {
+                requireActivity().finish()
+            })
+    }
 
     fun getAccessToken(): String {
         return UserSessionManager(requireContext()).getAccessTokenAuth()?.barrierToken() ?: ""

@@ -1,6 +1,8 @@
 package com.boost.marketplace.ui.details.call_track
 
 import android.app.ProgressDialog
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
@@ -12,6 +14,7 @@ import androidx.annotation.NonNull
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.boost.cart.CartActivity
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.dbcenterapi.utils.WebEngageController
@@ -32,6 +35,7 @@ import com.framework.utils.hideKeyBoard
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.util.HashMap
 
 
 class CallTrackingActivity :
@@ -65,7 +69,9 @@ class CallTrackingActivity :
     var pricing: String? = null
     var itemInCartStatus = false
     var vmnSelectionForCart: Boolean = false
+    var vmnSelectionForPack: Boolean = false
     var doVMNBooking = false
+    var fpTag: String? = null
 
     override fun getLayout(): Int {
         return R.layout.activity_call_tracking
@@ -86,6 +92,7 @@ class CallTrackingActivity :
         experienceCode = intent.getStringExtra("expCode")
         itemInCartStatus = intent.getBooleanExtra("itemInCartStatus",false)
         vmnSelectionForCart = intent.getBooleanExtra("vmnSelectionForCart", false)
+        vmnSelectionForPack = intent.getBooleanExtra("vmnSelectionForPack", false)
         doVMNBooking = intent.getBooleanExtra("doVMNBooking", false)
         fpid = intent.getStringExtra("fpid")
         isDeepLink = intent.getBooleanExtra("isDeepLink", false)
@@ -107,14 +114,74 @@ class CallTrackingActivity :
         prefs = SharedPrefs(this)
         viewModel.setApplicationLifecycle(application, this)
 
-
         matchNumberListAdapter = MatchNumberListAdapter(this, ArrayList(), null, this)
         numberListAdapter = NumberListAdapter(this, ArrayList(), null, this)
         exactMatchNumberListAdapter = ExactMatchListAdapter(this, ArrayList(), null, this)
-        progressDialog = ProgressDialog(this)
 
         numberprice = intent.getStringExtra("price")
+        val pref = this.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+            fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
 
+        if(doVMNBooking || vmnSelectionForPack ||vmnSelectionForCart){
+            binding?.tvSkip?.visibility = View.GONE
+        }else {
+            binding?.tvSkip?.visibility = View.VISIBLE
+        }
+
+        binding?.tvSkip?.setOnClickListener {
+            if (!itemInCartStatus) {
+                if (singleAddon != null) {
+                    prefs.storeCartOrderInfo(null)
+                    prefs.storeSelectedVMNName(null)
+                    viewModel.addItemToCart1(singleAddon, this,singleAddon.name?:"")
+                    val event_attributes: HashMap<String, Any> = HashMap()
+                    singleAddon.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
+                    event_attributes.put("Addon Price", singleAddon.price)
+                    event_attributes.put(
+                        "Addon Discounted Price",
+                        getDiscountedPrice(singleAddon.price, singleAddon.discount_percent)
+                    )
+                    event_attributes.put("Addon Discount %", singleAddon.discount_percent)
+                    event_attributes.put("Addon Validity", 1)
+                    event_attributes.put("Addon Feature Key", singleAddon.boost_widget_key)
+                    singleAddon.target_business_usecase?.let { it1 ->
+                        event_attributes.put(
+                            "Addon Tag",
+                            it1
+                        )
+                    }
+                    WebEngageController.trackEvent(
+                        ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
+                        ADDONS_MARKETPLACE,
+                        event_attributes
+                    )
+                    itemInCartStatus = true
+                }
+            }
+            finish()
+            val intent = Intent(applicationContext, CartActivity::class.java)
+            intent.putExtra("fpid", fpid)
+            intent.putExtra("fpTag",fpTag)
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("isDeepLink", isDeepLink)
+            intent.putExtra("deepLinkViewType", deepLinkViewType)
+            intent.putExtra("deepLinkDay", deepLinkDay)
+            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+            intent.putExtra("accountType", accountType)
+            intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+            if (email != null) {
+                intent.putExtra("email", email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                intent.putExtra("mobileNo", mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", profileUrl)
+            startActivity(intent)
+        }
 
         binding?.addonsBack?.setOnClickListener {
             onBackPressed()

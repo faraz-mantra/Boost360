@@ -161,6 +161,8 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         supportActionBar?.setHomeAsUpIndicator(R.drawable.circular_menu_back)
         viewModel.setApplicationLifecycle(application, this)
         initView()
+
+        prefs.storeFpid(fpid)
     }
 
     override fun onNewIntent(intent: Intent?) {

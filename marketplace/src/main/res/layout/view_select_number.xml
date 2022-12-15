@@ -81,6 +81,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/main1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
                 <TextView
                     android:id="@+id/tv_call_expert_select_domain"
                     android:layout_width="match_parent"
@@ -94,13 +99,38 @@
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_30sdp"
                     android:paddingBottom="@dimen/_10sdp"
-                    android:textColor="#4A4A4A"
+                    android:textColor="#7ED321"
                     tools:text="+91 8012-345-673"
                     android:textFontWeight="700"
                     android:textSize="30sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_vmn_selected_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="68dp"
+                    android:layout_marginTop="100dp"
+                    android:background="@drawable/round_corner_grey"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:lineHeight="21.79dp"
+                    android:paddingStart="@dimen/_30sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_30sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:textColor="#4A4A4A"
+                    tools:text="+91 8012-345-673"
+                    android:textFontWeight="700"
+                    android:visibility="gone"
+                    android:textSize="30sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <TextView
                     android:id="@+id/tv_explore_text_select_vmn"
@@ -110,14 +140,14 @@
                     android:fontFamily="@font/regular"
                     android:lineHeight="18dp"
                     android:lineSpacingExtra="6dp"
-                    android:text="Explore from more numbers"
+                    android:text="Find another number"
                     android:textColor="@color/colorAccent1"
                     android:textFontWeight="400"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_call_expert_select_domain" />
+                    app:layout_constraintTop_toBottomOf="@id/main1" />
 
                 <ImageView
                     android:layout_width="wrap_content"
