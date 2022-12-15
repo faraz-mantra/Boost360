@@ -143,6 +143,7 @@
                 <com.framework.views.customViews.CustomImageView
                     android:layout_width="@dimen/size_16"
                     android:layout_height="@dimen/size_16"
+                    android:tint="@color/themeColor"
                     android:src="@drawable/ic_share_yellow"/>
 
                 <com.framework.views.customViews.CustomTextView
