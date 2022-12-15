@@ -75,6 +75,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
   }
 
   override fun onCreateView() {
+    WebEngageController.trackEvent(BUSINESS_CARD_GALLERY_LOADED, PAGE_VIEW, NO_EVENT_VALUE)
     showSimmer(true)
     session = UserSessionManager(baseActivity)
     viewModel?.getMerchantProfile(session?.fPID)?.observeOnce(viewLifecycleOwner) {
@@ -208,8 +209,15 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
       }
       popup.show()
     }
-    binding?.shareWhatsapp?.setOnClickListener { shareCardWhatsApp(shareChannelText, true) }
-    binding?.shareOther?.setOnClickListener { shareCardWhatsApp(shareChannelText, false) }
+    binding?.shareWhatsapp?.setOnClickListener {
+      WebEngageController.trackEvent(BUSINESS_CARD_WHATSAPP_SHARE_CLICK, CLICKED, NO_EVENT_VALUE)
+      shareCardWhatsApp(shareChannelText, true)
+    }
+    binding?.shareOther?.setOnClickListener {
+      WebEngageController.trackEvent(BUSINESS_CARD_OTHERS_SHARE_CLICK, CLICKED, NO_EVENT_VALUE)
+
+      shareCardWhatsApp(shareChannelText, false)
+    }
   }
 
   private fun showSimmer(isSimmer: Boolean) {

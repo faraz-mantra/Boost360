@@ -9,5 +9,5 @@ public class PageDetail {
     public String IsArchived;
     public String SetPriorityValue;
     public String Tag;
-    public String _id;
+    public String PageId;
 }

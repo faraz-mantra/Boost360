@@ -514,7 +514,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     } else if (productDesc.isEmpty()) {
       showLongToast(resources.getString(R.string.enter_product_desc))
       return false
-    } else if (toggle && amount <= 0.0) {
+    } else if (!toggle || amount == 0.0) {
       showLongToast(resources.getString(R.string.enter_valid_price))
       return false
     } else if (toggle && (discount > amount)) {

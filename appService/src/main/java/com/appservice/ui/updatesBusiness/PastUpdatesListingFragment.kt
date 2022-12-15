@@ -196,9 +196,12 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
       if (isFirst.not()) {
         removeLoader()
       }
-      if (list.isNullOrEmpty() && isFirst) {
+      if (list.isEmpty() && isFirst) {
         binding.tvNoPost.visible()
-        pastPostListingAdapter.notifyDataSetChanged()
+        binding.rvPostListing.gone()
+        if (::pastPostListingAdapter.isInitialized) {
+          pastPostListingAdapter.notifyDataSetChanged()
+        }
       } else {
         binding.tvNoPost.gone()
         binding.rvPostListing.visible()
@@ -236,7 +239,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
         else tagArray.add(item.id)
 
         binding.rvFilterSubCategory.postDelayed(
-          Runnable {
+          {
             tagListAdapter.notifyDataSetChanged()
           }, 100
         )

@@ -97,6 +97,8 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(APPOINTMENT_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(CLICKED_ON_APPOINTMENTS, PAGE_VIEW, NO_EVENT_VALUE)
+
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd)
     layoutManager = LinearLayoutManager(baseActivity)

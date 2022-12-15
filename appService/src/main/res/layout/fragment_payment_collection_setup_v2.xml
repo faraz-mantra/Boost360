@@ -179,6 +179,7 @@
                 android:layout_gravity="center"
                 android:drawableStart="@drawable/ic_bank_transparent"
                 android:drawablePadding="@dimen/size_8"
+                app:drawableTint="@color/themeColor"
                 android:gravity="center"
                 android:text="@string/add_a_bank_account"
                 android:textColor="@color/colorAccentLight" />

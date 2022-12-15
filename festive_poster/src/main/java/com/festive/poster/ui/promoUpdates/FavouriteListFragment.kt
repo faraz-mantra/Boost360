@@ -27,6 +27,7 @@ import com.framework.pref.UserSessionManager
 import com.framework.rest.NetworkResult
 import com.framework.utils.showToast
 import com.framework.utils.toArrayList
+import com.framework.webengageconstant.*
 import com.framework.webengageconstant.Promotional_Update_Category_Click
 import com.framework.webengageconstant.Update_studio_Mark_Favourite_click
 import com.framework.webengageconstant.Update_studio_Unmark_Favourite_click
@@ -59,7 +60,7 @@ class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, Post
         val BK_SELECTED_POS = "BK_SELECTED_POS"
 
         fun newInstance(): FavouriteListFragment {
-            val bundle: Bundle = Bundle()
+            val bundle = Bundle()
             val fragment = FavouriteListFragment()
             fragment.arguments = bundle
             return fragment
@@ -71,6 +72,7 @@ class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, Post
 
     override fun onCreateView() {
         super.onCreateView()
+        WebEngageController.trackEvent(FAVOURITE_UPDATES_SCREEN_LOADED, PAGE_VIEW, NO_EVENT_VALUE)
         session = UserSessionManager(requireActivity())
         promoUpdatesViewModel =
             ViewModelProvider(requireActivity()).get(PromoUpdatesViewModel::class.java)
@@ -124,6 +126,7 @@ class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, Post
                             data[DEFAULT_SELECTED_POS].getParentTemplates()
                                 ?.asFavModels())
                     }else{
+                        WebEngageController.trackEvent(PROMOTIONAL_UPDATE_CATEGORY_LOADED, NO_EVENT_LABLE, NO_EVENT_VALUE)
                         setCatgories(data)
                         switchToSelectedItem(selectedPos,
                             data[selectedPos].getParentTemplates()
@@ -160,7 +163,7 @@ class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, Post
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
         when (actionType) {
             RecyclerViewActionType.FAV_CAT_CLICKED.ordinal -> {
-                WebEngageController.trackEvent(Promotional_Update_Category_Click)
+                WebEngageController.trackEvent(PROMOTIONAL_UPDATE_CATEGORY_CLICK, CLICK, CLICKED)
 
                 switchToSelectedItem(position,categoryList[position].templates)
             }
@@ -175,13 +178,9 @@ class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, Post
             }
 
             RecyclerViewActionType.POSTER_LOVE_CLICKED.ordinal->{
-                val template = item as TemplateUi
-                if (template.isFavourite){
-                    WebEngageController.trackEvent(Update_studio_Mark_Favourite_click)
-                }else {
-                    WebEngageController.trackEvent(Update_studio_Unmark_Favourite_click)
-                }
-                callFavApi(template)
+                val templateUi = item as TemplateUi
+                WebEngageController.trackEvent(if(templateUi.isFavourite) UPDATE_STUDIO_UNMARK_FAVOURITE_CLICK else UPDATE_STUDIO_MARK_FAVOURITE_CLICK, CLICK, CLICKED)
+                callFavApi(item as TemplateUi)
             }
         }
 
