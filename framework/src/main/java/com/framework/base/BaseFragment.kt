@@ -25,7 +25,6 @@ import com.framework.analytics.UserExperiorController
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
 import com.framework.utils.hideKeyBoard
-import com.framework.views.zero.FragmentZeroCase
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

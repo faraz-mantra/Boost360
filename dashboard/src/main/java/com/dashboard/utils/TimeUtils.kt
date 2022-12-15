@@ -49,10 +49,12 @@ fun UserSessionManager.getCurrentTimingsData(invokeData: ((isOpen: Boolean, day:
       day = "Saturday"
     }
   }
-  val startTime = this.getFPDetails(key_start_time)?.lowercase(Locale.ROOT)?.lowercase(Locale.ROOT)
-  val endTime = this.getFPDetails(key_end_time)?.lowercase(Locale.ROOT)?.lowercase(Locale.ROOT)
-  val startDateNew: Date? = startTime?.parseDate(DateUtils.FORMAT_HH_MM_A) ?: startTime?.parseDate(DateUtils.FORMAT_HH_MMA)
-  val endDateNew: Date? = endTime?.parseDate(DateUtils.FORMAT_HH_MM_A) ?: endTime?.parseDate(DateUtils.FORMAT_HH_MMA)
+  var startTime = this.getFPDetails(key_start_time)?.lowercase(Locale.ROOT)?.lowercase(Locale.ROOT)
+  var endTime = this.getFPDetails(key_end_time)?.lowercase(Locale.ROOT)?.lowercase(Locale.ROOT)
+  startTime = if(startTime.equals("00")) "" else startTime
+  endTime = if(endTime.equals("00")) "" else endTime
+  val startDateNew: Date? = startTime?.parseDate(DateUtils.FORMAT_HH_MMA)
+  val endDateNew: Date? = endTime?.parseDate(DateUtils.FORMAT_HH_MMA)
   val currentDat: Date? = getCurrentTimeIn24Hour().parseDate(DateUtils.FORMAT_HH_MM)
   val timing = if (startTime.isNullOrEmpty().not() && endTime.isNullOrEmpty().not()) "$startTime - $endTime" else ""
   val isOpen = if (startDateNew != null && endDateNew != null && currentDat != null) isBetweenValidTime(startDateNew, endDateNew, currentDat) else false

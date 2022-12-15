@@ -1,12 +1,7 @@
 package com.framework.utils
 
-import android.app.*
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.PendingIntent
-import android.content.ActivityNotFoundException
-import android.content.ContentValues
-import android.content.Context
+import android.app.*
 import android.content.*
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
@@ -16,25 +11,14 @@ import android.content.pm.PackageManager
 import android.content.res.TypedArray
 import android.graphics.*
 import android.graphics.drawable.Drawable
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.ColorFilter
-import android.graphics.Typeface
-import android.graphics.*
 import android.media.RingtoneManager
 import android.net.Uri
-import android.os.Build
-import android.os.Environment
-import android.os.SystemClock
+import android.os.*
 import android.provider.MediaStore
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.*
 import android.util.Base64
-import android.util.Base64.DEFAULT
-import android.util.Base64.encodeToString
-import android.util.Base64.DEFAULT
-import android.util.Base64.encodeToString
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -74,7 +58,6 @@ import com.framework.constants.PackageNames
 import com.framework.pref.APPLICATION_JIO_ID
 import com.framework.views.customViews.CustomTextView
 import com.google.android.material.snackbar.Snackbar
-import com.google.common.io.ByteStreams.readBytes
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
@@ -410,10 +393,13 @@ suspend fun Bitmap.saveImageToStorage(
         imageOutStream = openOutputStream(uri) ?: return
       }
     } else {
-      val imagePath = Environment.getExternalStoragePublicDirectory(directory).absolutePath
+      val imagePath = Environment.getExternalStorageDirectory().absolutePath
       val image = File(imagePath, filename)
       imageOutStream = FileOutputStream(image)
-      fileUri = Uri.fromFile(image)
+      fileUri = FileProvider.getUriForFile(
+        BaseApplication.instance, BaseApplication.instance.applicationContext
+          .getPackageName().toString() + ".provider", image
+      )
     }
 
 
@@ -444,14 +430,20 @@ suspend fun Bitmap.saveImageToStorage(
           ?.setContentIntent(getFileViewerIntent(fileUri, mimeType).getPendingIntent())
         NotiUtils.notificationManager?.notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
       } else {
-        Toast.makeText(BaseApplication.instance, "Failed To Save Image", Toast.LENGTH_SHORT).show()
+        Log.e("saveImageToStorage >>> ", "Download not completed")
+        Handler(Looper.getMainLooper()).post {
+          Toast.makeText(BaseApplication.instance, "Failed To Save Image", Toast.LENGTH_SHORT).show()
+        }
       }
       NotiUtils.notificationManager?.cancel(noti_id)
     }
 
 
   } catch (e: IOException) {
-    Toast.makeText(BaseApplication.instance, "Failed To Save Image", Toast.LENGTH_SHORT).show()
+    Log.e("saveImageToStorage >>> ", e.toString())
+    Handler(Looper.getMainLooper()).post {
+      Toast.makeText(BaseApplication.instance, "Failed To Save Image", Toast.LENGTH_SHORT).show()
+    }
     NotiUtils.notificationManager?.cancel(noti_id)
     SentryController.captureException(e)
     e.printStackTrace()

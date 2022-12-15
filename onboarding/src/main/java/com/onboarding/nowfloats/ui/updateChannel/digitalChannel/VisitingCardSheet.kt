@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityCompat
@@ -18,6 +19,8 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.firebaseUtils.firestore.FirestoreManager
+import com.framework.pref.BASE_IMAGE_URL
+import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.framework.webengageconstant.*
@@ -74,10 +77,79 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
     return ChannelPlanViewModel::class.java
   }
 
+  override fun onResume() {
+    super.onResume()
+    session?.let {
+      this.localSessionModel = getLocalSession(it)
+      getCardInfo()
+    }
+  }
+
+  fun getLocalSession(session: UserSessionManager): LocalSessionModel {
+    var imageUri = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl)
+    if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) imageUri = BASE_IMAGE_URL + imageUri
+    val city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
+    val country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
+    val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country"
+    return LocalSessionModel(
+      floatingPoint = session.fPID,
+      contactName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME),
+      businessName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME),
+      businessImage = imageUri,
+      location = location,
+      websiteUrl = session.getDomainName(false),
+      businessType = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY),
+      primaryNumber = session.userPrimaryMobile,
+      primaryEmail = session.fPEmail,
+      fpTag = session.fpTag,
+      experienceCode = session.fP_AppExperienceCode
+    )
+  }
+
+
+
   override fun onCreateView() {
     WebEngageController.trackEvent(BUSINESS_CARD_GALLERY_LOADED, PAGE_VIEW, NO_EVENT_VALUE)
     showSimmer(true)
     session = UserSessionManager(baseActivity)
+    childFragmentManager.addOnBackStackChangedListener {
+      val fragments = childFragmentManager.fragments
+      if (fragments.size > 0 && fragments[fragments.size - 1] is VisitingCardSheet ) {
+        Log.e("current screen", ">>>>>>>>>>>")
+      } else {
+        Log.e("not current screen", ">>>>>>>>>>>")
+      }
+      }
+    binding?.backBtn?.setOnClickListener {
+      val popup = PopupMenu(baseActivity, it)
+      popup.menuInflater.inflate(R.menu.popup_menu_card, popup.menu)
+      popup.setOnMenuItemClickListener { menu ->
+        if (menu.itemId == R.id.menu_edit_contact) {
+          try {
+            WebEngageController.trackEvent(MY_BUSINESS_CARD_MENU_CONTACT, CLICK, TO_BE_ADDED)
+            val contactInfo = Intent(
+              baseActivity,
+              Class.forName("com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity")
+            )
+            startActivity(contactInfo)
+            baseActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+          } catch (e: Exception) {
+            e.printStackTrace()
+          }
+        } else if (menu.itemId == R.id.menu_digital_channel) {
+          WebEngageController.trackEvent(MY_BUSINESS_CARD_MENU_DIGITAL_CHANNEL, CLICK, TO_BE_ADDED)
+          baseActivity.startDigitalChannel(getBundle())
+        }
+//        dismiss()
+        true
+      }
+      popup.show()
+    }
+    binding?.shareWhatsapp?.setOnClickListener { shareCardWhatsApp(shareChannelText, true) }
+    binding?.shareOther?.setOnClickListener { shareCardWhatsApp(shareChannelText, false) }
+  }
+
+  fun getCardInfo(){
     viewModel?.getMerchantProfile(session?.fPID)?.observeOnce(viewLifecycleOwner) {
 //        if (it.isSuccess()) {
       val response = it as? MerchantProfileResponse
@@ -215,7 +287,6 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
     }
     binding?.shareOther?.setOnClickListener {
       WebEngageController.trackEvent(BUSINESS_CARD_OTHERS_SHARE_CLICK, CLICKED, NO_EVENT_VALUE)
-
       shareCardWhatsApp(shareChannelText, false)
     }
   }
@@ -378,4 +449,14 @@ data class LocalSessionModel(
   var fpTag: String? = null,
   var experienceCode: String? = null,
 )
+
+
+fun UserSessionManager.getDomainName(isRemoveHttp: Boolean = false): String? {
+  val rootAliasUri = getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?.toLowerCase(Locale.ROOT)
+  val normalUri = "https://${getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.nowfloats.com"
+  return if (rootAliasUri.isNullOrEmpty().not() && rootAliasUri != "null") {
+    return if (isRemoveHttp && rootAliasUri!!.contains("http://")) rootAliasUri.replace("http://", "")
+    else if (isRemoveHttp && rootAliasUri!!.contains("https://")) rootAliasUri.replace("https://", "") else rootAliasUri
+  } else normalUri
+}
 

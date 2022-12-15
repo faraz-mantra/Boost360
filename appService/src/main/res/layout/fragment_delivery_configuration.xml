@@ -329,7 +329,7 @@
               android:drawableStart="@drawable/ic_indian_rupee"
               android:drawablePadding="@dimen/size_15"
               android:hint="@string/_50"
-              android:inputType="number"
+              android:inputType="numberDecimal"
               android:maxEms="3"
               android:padding="@dimen/size_10"
               android:singleLine="true"

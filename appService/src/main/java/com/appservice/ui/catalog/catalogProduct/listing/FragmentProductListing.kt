@@ -301,13 +301,13 @@ class FragmentProductListing : AppBaseFragment<FragmentProductListingBinding, Pr
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
+//    if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
       val isRefresh = data?.getBooleanExtra(IntentConstant.IS_UPDATED.name, false) ?: false
       if (isRefresh) {
         this.skip = PaginationScrollListener.PAGE_START
         getProductListing(isFirst = true, skipBy = skip)
       }
-    }
+//    }
   }
 
   override fun onResume() {
