@@ -679,3 +679,12 @@ const val UPDATE_STUDIO_MARK_FAVOURITE_CLICK = "Update_studio_Mark_Favourite_cli
 const val UPDATE_STUDIO_UNMARK_FAVOURITE_CLICK = "Update_studio_Unmark_Favourite_click"
 const val PROMOTIONAL_UPDATE_CATEGORY_CLICK = "Promotional_Update_Category_Click"
 const val PROMOTIONAL_UPDATE_CATEGORY_LOADED = "Promotional_Update_Category_Loaded"
+const val SETUP_MY_WEBSITE_SCREEN_LOAD = "Setup_my_website_screen_load"
+const val SETUP_MY_WEBSITE_BUTTON_CLICK = "Setup_my_website_button_click"
+const val USER_LOCATION = "User_location_data"
+const val Update_studio_today_tab_click = "Update_studio_today_tab_click"
+const val Update_studio_browse_tab_click = "Update_studio_browse_tab_click"
+const val Update_studio_Create_custom_update_click = "Update_studio_Create_custom_update_click"
+const val Update_studio_Mark_Favourite_click = "Update_studio_Mark_Favourite_click"
+const val Update_studio_Unmark_Favourite_click = "Update_studio_Unmark_Favourite_click"
+

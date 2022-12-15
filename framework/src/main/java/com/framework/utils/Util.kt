@@ -325,8 +325,14 @@ suspend fun Bitmap.shareAsImage(packageName:String?=null,text: String?=null){
         withContext(Dispatchers.Main){
           when(packageName){
             PackageNames.WHATSAPP->{
+              //Toast.makeText(BaseApplication.instance,"Whatsapp is not installed on your device",Toast.LENGTH_LONG).show()
+              shareAsImage(
+                PackageNames.WHATSAPP_BUSINESS,
+                text = text
+              )
+            }
+            PackageNames.WHATSAPP_BUSINESS->{
               Toast.makeText(BaseApplication.instance,"Whatsapp is not installed on your device",Toast.LENGTH_LONG).show()
-
             }
             PackageNames.INSTAGRAM->{
               Toast.makeText(BaseApplication.instance,"Instagram is not installed on your device",Toast.LENGTH_LONG).show()

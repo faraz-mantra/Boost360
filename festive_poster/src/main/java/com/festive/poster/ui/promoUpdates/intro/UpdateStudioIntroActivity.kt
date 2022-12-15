@@ -117,7 +117,7 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
       }
     })
 
-    autoSlide()
+//    autoSlide()
 
   }
 

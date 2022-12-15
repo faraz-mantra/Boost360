@@ -321,9 +321,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 //          baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
           visibleViewHighLow(true)
         } else {
-          if (PreferencesUtils.instance.getData(IS_DR_HIGH_DIALOG, false)
-              .not()
-          ) welcomeDrScoreDialog()
+//          if (PreferencesUtils.instance.getData(IS_DR_HIGH_DIALOG, false)
+//              .not()
+//          ) welcomeDrScoreDialog()
           binding?.highReadinessScoreView?.visible()
           binding?.lowReadinessScoreView?.gone()
           visibleViewHighLow(true)
