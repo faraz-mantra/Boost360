@@ -7,19 +7,24 @@
     <application>
         <activity
             android:name=".ui.pack_details.PackDetailsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.details.call_track.CallTrackingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.comparePacksV3.ComparePacksV3Activity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.details.domain.CustomDomainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.coupons.OfferCouponsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.details.FeatureDetailsActivity"
             android:screenOrientation="portrait" />
@@ -51,8 +56,10 @@
         <activity
             android:name=".ui.webview.WebViewActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.browse.SearchActivity" />
-        <activity android:name=".ui.details.emails.EmailActivity" />
+        <activity android:name=".ui.browse.SearchActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.details.emails.EmailActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
