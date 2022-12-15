@@ -59,7 +59,7 @@ class IntroSlideItemFragment : AppBaseFragment<ItemIntroNewSlidesBinding, BaseVi
     binding?.lottieAnimationIntro?.apply {
       setAnimation(introSlideItem.lottieRawResource)
       repeatCount = if (!introSlideItem.isLottieRepeat) introSlideItem.count else LottieDrawable.INFINITE
-      repeatMode = LottieDrawable.RESTART
+//      repeatMode = LottieDrawable.RESTART
     }
 
     binding?.tvIntroTitle?.text = introSlideItem.title

@@ -121,7 +121,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(this)
-    session?.let { deepLinkUtil = DeepLinkUtil(this, it, Fragment()) }
+    session?.let { deepLinkUtil = DeepLinkUtil(this, it) }
     mNavController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
     val graph = mNavController.graph
     graph.addArgument("data", NavArgument.Builder().setDefaultValue("data").build())

@@ -453,8 +453,8 @@
     <string name="this_staff_is_marked_inactive">This staff is marked inactive.</string>
     <string name="this_doctor_is_marked_inactive">This doctor is marked inactive.</string>
     <string name="mark_as_inactive">Mark as inactive</string>
-    <string name="marking_as_inactive_will_hide">Marking as inactive will hide this profile on the website and will unassign him/her from all present booking which were booked against his availability calendar. Please check with customer inform and realign the bookings accordingly if required.</string>
-    <string name="marking_as_inactive_will_hide_doctor">Marking as inactive will hide this profile on the website and will unassign him/her from all present appointment which were booked against his availability calendar. Please check with customer inform and realign the appointments accordingly if required.</string>
+    <string name="marking_as_inactive_will_hide">Marking as inactive will hide this profile on the website and will unassign him/her from all present booking which were booked against his/her availability calendar. Please check with customer inform and realign the bookings accordingly if required.</string>
+    <string name="marking_as_inactive_will_hide_doctor">Marking as inactive will hide this profile on the website and will unassign him/her from all present appointment which were booked against his/her availability calendar. Please check with customer inform and realign the appointments accordingly if required.</string>
     <string name="do_you_want_to_permanently_delete_this_staff_member">Do you want to permanently delete this staff member?</string>
     <string name="delete_this_doctor">Delete doctor?</string>
     <string name="removing_the_staff_will_remove">Removing the staff will remove all the present booking assigned to the staff. All his bookings needs to be handled separately.</string>
@@ -492,6 +492,7 @@
     <string name="url_https_sravansclinics_com_services">URL: <u>https://sravansclinics.com/<b>services</b></u></string>
     <string name="url_https_sravansclinics_com_products">URL: <u>https://sravansclinics.com/<b>products</b></u></string>
     <string name="default_tax_rate_for_services">Default tax rate for services</string>
+    <string name="default_tax_rate_for_products">Default tax rate for products</string>
     <string name="what_are_text_rates">What are tax rates?</string>
     <string name="tax_slabs_are_a_rate_at_which_any_service_is_taxable_determined_by_gst_council_of_india_this_is_used_to_">Tax slabs are a rate at which any service is taxable (determined by GST council of India). This is used to back calculate the final paybale amount while placing an order at the checkout page on your website.</string>
     <string name="how_does_default_rate_work">How does default rate work?</string>
@@ -983,7 +984,7 @@
     <string name="lower_limit">Lower limit</string>
     <string name="add_another_slab">Add another slab</string>
     <string name="no_lower_limit">No lower limit</string>
-    <string name="warehouse_name_cannot_empty">WareHouse name cannot empty</string>
+    <string name="warehouse_name_cannot_empty">Warehouse name cannot be empty</string>
     <string name="warehouse_address_cannot_empty">WareHouse address can not empty</string>
     <string name="invalid_phone_number">Invalid phone number</string>
     <string name="updating">Updating...</string>
@@ -1095,7 +1096,7 @@
     <string name="pan_name_not_empty">Pan name can\'t empty.</string>
     <string name="pan_name_invalid">Please enter a valid name.</string>
     <string name="invalid_bank_statement_file">Please select valid bank statement file</string>
-    <string name="image_format_size_1600x700_pixels">Image should be in Jpeg or png format with minimum size of 1600x700 pixels.</string>
+    <string name="image_format_size_1600x700_pixels">Image should be in Jpeg or png format with minimum size of 1200 X 525 pixels.</string>
     <string name="smaller_image_selected_331x159px">Smaller image selected (331x159px).</string>
     <string name="upload_picture">Upload picture</string>
     <string name="background_image_title">Custom Background Images</string>
@@ -1111,7 +1112,7 @@
     <string name="select_tax_rate">Select tax rate</string>
     <string name="doctor_list">Doctor List</string>
     <string name="pull_the_slider_above_to_zoom_in_out_the_image">\u2022 Pull the slider above to zoom in/out the image\n\u2022 Use one finger to crop the right area as background image for your website.</string>
-    <string name="please_make_sure_the_image_should_be_in_jpeg_or_png_format_with_minimum_size_of_1600x700_pixels">Please make sure the Image should be in Jpeg or png format with minimum size of 1600x700 pixels.</string>
+    <string name="please_make_sure_the_image_should_be_in_jpeg_or_png_format_with_minimum_size_of_1600x700_pixels">Please make sure the Image should be in Jpeg or png format with minimum size of 1200 X 525 pixels.</string>
     <string name="change_image">Change image</string>
     <string name="smaller_img_detected">Smaller image selected</string>
     <string name="aspect_ration_not_matched">Aspect ration not matched</string>
@@ -1169,6 +1170,7 @@
     <string name="image_format_is_not_supported_please_use_jpeg_jpg_or_png">Image format is not supported. Please use JPEG, JPG, or PNG</string>
     <string name="image_resolution_is_smaller_than_800_x_800_px">Image resolution is smaller than 800 X 800 px</string>
     <string name="image_file_size_is_bigger_than_2mb">Image file size is bigger than 2MB</string>
+  <string name="image_file_size_is_bigger_than_5mb">Image file size is bigger than 5MB</string>
     <string name="describe_what_you_want_to_say_in_the_picture_added_above">Describe what you want to say in the picture added above...</string>
     <string name="your_post_was_saved_as_draft">Your post was saved as Draft</string>
     <string name="testimonial_update_success">Testimonial updated successfully!</string>
@@ -1272,4 +1274,6 @@
     <string name="edit_underline"><u>Edit</u></string>
     <string name="your_discarded_post" tools:ignore="ExtraTranslation">You discarded post</string>
     <string name="this_will_help_you_group_multiple_products_under_this_category">This will help you group multiple products under this category</string>
+    <string name="product_with_price_zero_cannot_be_listed_for_sale">Product with price zero cannot be listed for sale.</string>
+    <string name="smaller_image_selected">Smaller image selected</string>
 </resources>

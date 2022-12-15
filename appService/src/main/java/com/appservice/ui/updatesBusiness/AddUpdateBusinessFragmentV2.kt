@@ -148,14 +148,14 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       val imageWidth: Int = bitMapOption.outWidth
       val imageHeight: Int = bitMapOption.outHeight
 
-      if (imageWidth>=800||imageHeight>=800){
-          if (imgFile.sizeInMb<=2){
-            return true
-          }else{
-            showLongToast(getString(R.string.image_file_size_is_bigger_than_2mb))
-            return false
-          }
-      }else{
+      if (imageWidth >= 800 || imageHeight >= 800) {
+        if (imgFile.sizeInMb <= 5) {
+          return true
+        } else {
+          showLongToast(getString(R.string.image_file_size_is_bigger_than_5mb))
+          return false
+        }
+      } else {
         showLongToast(getString(R.string.image_resolution_is_smaller_than_800_x_800_px))
         return false
       }
@@ -237,7 +237,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
         val textPost = it?.content
         binding!!.etUpdate.setText(
           highlightHashTag(
-            textPost,
+            textPost!!.capitalized(),
             R.color.black_4a4a4a,
             R.font.semi_bold
           )
@@ -315,13 +315,13 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   }
 
   private fun addHashTagFunction() {
-    mSpannable = binding?.etUpdate?.text
+    mSpannable = binding.etUpdate.text
 
-    binding?.etUpdate?.addTextChangedListener(object : TextWatcher {
+    binding.etUpdate.addTextChangedListener(object : TextWatcher {
       override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
       override fun onTextChanged(short_text: CharSequence, start: Int, before: Int, count: Int) {
 
-        val text = binding?.etUpdate?.text.toString()
+        val text = binding.etUpdate.text.toString()
         var last_index = 0
         text.trim().split(Regex("\\s+")).forEach {
           Log.i(TAG, "addHashTagFunction: $it")

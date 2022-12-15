@@ -135,7 +135,7 @@
     <string name="your_brand_templates_for_quick_posting">Your brand templates for quick posting*</string>
     <string name="post_free_updates_using_create_tab">Post FREE updates using ‘Create’ tab</string>
     <string name="you_can_post_on_multiple_platforms_with_a_single_tap">You can post on multiple platforms with a single tap!</string>
-    <string name="this_premium_feature_is_available_in_online_classic_online_advanced_packs"><![CDATA[*This premium feature is available in ‘Online Classic’ & ‘Online Advanced’ packs.]]></string>
+    <string name="this_premium_feature_is_available_in_online_classic_online_advanced_packs"><![CDATA[*This premium feature is available in ‘Online Advanced’ packs.]]></string>
     <string name="you_can_continue_to_post_good_old_updates_using_the_create_tab_on_top">You can continue to post good old updates using the ‘create’ tab on top.</string>
     <string name="explore_update_studio">Explore update studio</string>
     <string name="premium_updates_custom_designed_for_you">Premium updates custom designed for you.</string>
@@ -163,6 +163,7 @@
     <string name="_18_gst">+18% GST</string>
     <string name="get_this_feature">Get this feature</string>
     <string name="poster_updated_successfully">Poster updated successfully!</string>
+    <string name="poster_greeting_desc_updated">Poster greeting description updated!</string>
     <string name="please_upload_image">Please upload image</string>
     <string name="please_enter_name">Please enter Name</string>
     <string name="please_enter_email">Please enter email</string>

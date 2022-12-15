@@ -118,9 +118,10 @@
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/login_username"
       style="@style/psn_subheading_style"
-      android:layout_marginTop="@dimen/_16sdp"
+      android:layout_marginTop="@dimen/_6sdp"
       android:fontFamily="@font/semi_bold"
       android:gravity="center"
+        android:padding="@dimen/_10sdp"
       android:text="@string/login_with_username_or_email"
       android:textColor="@color/colorPrimary"
       app:layout_constraintTop_toBottomOf="@id/next_button"

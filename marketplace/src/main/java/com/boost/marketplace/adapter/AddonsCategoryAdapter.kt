@@ -8,10 +8,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
+import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.home.MarketPlaceActivity
 import com.framework.analytics.SentryController
+import com.framework.utils.toArrayList
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -24,6 +26,7 @@ class AddonsCategoryAdapter(
 ) : RecyclerView.Adapter<AddonsCategoryAdapter.upgradeViewHolder>() {
 
   private var upgradeList = ArrayList<String>()
+  private var featuresList = ArrayList<FeaturesModel>()
   private lateinit var context: Context
 
   init {
@@ -94,10 +97,11 @@ class AddonsCategoryAdapter(
     }
   }
 
-  fun addupdates(upgradeModel: List<String>) {
+  fun addupdates(upgradeModel: List<String>, list: ArrayList<FeaturesModel>) {
     val initPosition = upgradeList.size
     upgradeList.clear()
     upgradeList.addAll(upgradeModel)
+    featuresList = list
     notifyItemRangeInserted(initPosition, upgradeList.size)
   }
 
@@ -116,7 +120,15 @@ class AddonsCategoryAdapter(
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({
-          holder.title.setText(upgradeList.get(position) + " (" + it + ")")
+//          checking if Limited content feature available
+//          if available remove the count
+          var state = false
+          for(singlefeature in featuresList) {
+            if (singlefeature.feature_code!!.equals("LIMITED_CONTENT")){
+              state = true
+            }
+          }
+          holder.title.setText(upgradeList.get(position) + " (" + (if(upgradeList.get(position).equals("Content Management") && state) it-1 else it) + ")")
         }, {
           it.printStackTrace()
         })

@@ -23,4 +23,11 @@ class CityDataModel(
     return state.toLowerCase(Locale.ROOT)
   }
 
+  fun getOriginalCityName(): String {
+    return name.replaceFirstChar{ it.uppercase() }
+  }
+
+  fun getOriginalStateName(): String {
+    return state.replaceFirstChar{ it.uppercase() }
+  }
 }

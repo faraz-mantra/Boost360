@@ -86,6 +86,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
   private fun initUI() {
     linearLayoutManager = LinearLayoutManager(requireActivity())
     baseActivity.window.statusBarColor = getColor(R.color.color_4a4a4a_jio_ec008c)
+    pastPostListingAdapter = AppBaseRecyclerViewAdapter(baseActivity, pastPostListing, this)
     showSimmer(true)
     getTemplateViewConfig()
 
@@ -134,7 +135,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
     super.onClick(v)
     when (v) {
       binding.btnPostNewUpdate -> {
-        startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2)
+       navigateToUpdateStudio()
       }
     }
   }
@@ -195,9 +196,12 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
       if (isFirst.not()) {
         removeLoader()
       }
-      if (list.isNullOrEmpty() && isFirst) {
+      if (list.isEmpty() && isFirst) {
         binding.tvNoPost.visible()
-        pastPostListingAdapter.notifyDataSetChanged()
+        binding.rvPostListing.gone()
+        if (::pastPostListingAdapter.isInitialized) {
+          pastPostListingAdapter.notifyDataSetChanged()
+        }
       } else {
         binding.tvNoPost.gone()
         binding.rvPostListing.visible()
@@ -235,7 +239,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
         else tagArray.add(item.id)
 
         binding.rvFilterSubCategory.postDelayed(
-          Runnable {
+          {
             tagListAdapter.notifyDataSetChanged()
           }, 100
         )

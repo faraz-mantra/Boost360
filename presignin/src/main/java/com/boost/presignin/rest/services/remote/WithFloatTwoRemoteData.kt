@@ -4,6 +4,7 @@ import com.boost.presignin.model.accessToken.AccessTokenRequest
 import com.boost.presignin.model.authToken.AccessTokenResponse
 import com.boost.presignin.model.fpList.FPListResponse
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
+import com.boost.presignin.model.location.LocationResponse
 import com.boost.presignin.model.login.ForgotPassRequest
 import com.boost.presignin.model.login.UserProfileVerificationRequest
 import com.boost.presignin.model.login.VerificationRequestResult
@@ -17,6 +18,7 @@ import com.framework.BuildConfig
 import com.onboarding.nowfloats.model.googleAuth.FirebaseTokenResponse
 import io.reactivex.Observable
 import okhttp3.ResponseBody
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 import java.util.*
@@ -96,4 +98,16 @@ interface WithFloatTwoRemoteData {
   fun getFirebaseToken(
     @Query("clientId") client_id: String?
   ):Observable<Response<FirebaseTokenResponse>>
+
+  @Headers(
+    "authority: api.whatismyip.com",
+    "accept: */*",
+    "accept-language: en-GB,en-US;q=0.9,en;q=0.8",
+    "cache-control: no-cache",
+    "origin: https://www.whatismyip.com",
+    "pragma: no-cache",
+    "referer: https://www.whatismyip.com/"
+  )
+  @GET
+  fun getIPInfo(@Url url:String): Observable<Response<LocationResponse>>
 }

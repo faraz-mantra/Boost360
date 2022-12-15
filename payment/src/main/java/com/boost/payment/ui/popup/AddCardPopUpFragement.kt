@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import com.boost.payment.R
@@ -59,7 +60,7 @@ class AddCardPopUpFragement : DialogFragment() {
     root = inflater.inflate(R.layout.add_cards_popup, container, false)
     val currentYear = Calendar.getInstance().get(Calendar.YEAR)
 
-    customerId = arguments!!.getString("customerId")
+    customerId = requireArguments()!!.getString("customerId")
     //month and year range
     monthList = Utils.monthRange()
     yearList = Utils.yearRange(currentYear, currentYear + 10)
@@ -127,6 +128,23 @@ class AddCardPopUpFragement : DialogFragment() {
         dialog!!.dismiss()
       }
     }
+
+    expiry_mm_yyyy_value.addTextChangedListener(object : TextWatcher{
+      override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+      override fun onTextChanged(p0: CharSequence?, start: Int, removed: Int, added: Int) {
+        if (start == 1 && start+added == 2 && p0?.contains('/') == false) {
+          expiry_mm_yyyy_value.setText(p0.toString() + "/")
+          expiry_mm_yyyy_value.setSelection(expiry_mm_yyyy_value.length())
+        } else if (start == 3 && start-removed == 2 && p0?.contains('/') == true) {
+          expiry_mm_yyyy_value.setText(p0.toString().replace("/", ""))
+          expiry_mm_yyyy_value.setSelection(expiry_mm_yyyy_value.length())
+        }
+      }
+
+      override fun afterTextChanged(s: Editable?) {}
+
+    })
 
     card_number_value.addTextChangedListener(object : TextWatcher {
 
@@ -222,6 +240,17 @@ class AddCardPopUpFragement : DialogFragment() {
       return false
     }
     invalid_cardnumber.visibility = View.GONE
+    if(!expiry_mm_yyyy_value.text.contains("/")
+      || (expiry_mm_yyyy_value.text.split("/").get(0).length != 2
+      && expiry_mm_yyyy_value.text.split("/").get(1).length != 4 )){
+      Toast.makeText(requireContext(), "Invalid Expiry", Toast.LENGTH_LONG).show()
+      expiry_mm_yyyy_value.setBackgroundResource(R.drawable.edittext_border_red_line_bg)
+      expiry_mm_yyyy_value.text.clear()
+      expiry_mm_yyyy_value.requestFocus()
+      return false
+    }else{
+      expiry_mm_yyyy_value.setBackgroundResource(R.drawable.edittext_border_line_bg)
+    }
     if ((requireActivity() as PaymentActivity).razorpay.isValidCardNumber(cardNumber)) {
       invalid_cardnumber.visibility = View.GONE
       return true
