@@ -254,6 +254,7 @@ class MyPlanBottomSheet :
         intent.putExtra("mobileNo", "9160004303")
         intent.putExtra("itemId", singleAddon.boost_widget_key)
         startActivity(intent)
+        dismiss()
     }
 
     fun featureEdgeCase(actionRequired: Int, featureState: Int) {
