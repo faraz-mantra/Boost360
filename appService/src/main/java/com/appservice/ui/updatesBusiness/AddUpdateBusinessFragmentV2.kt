@@ -237,7 +237,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
         val textPost = it?.content
         binding!!.etUpdate.setText(
           highlightHashTag(
-            textPost,
+            textPost!!.capitalized(),
             R.color.black_4a4a4a,
             R.font.semi_bold
           )

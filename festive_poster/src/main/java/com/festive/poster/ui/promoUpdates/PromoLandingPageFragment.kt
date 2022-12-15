@@ -21,9 +21,7 @@ import com.framework.utils.*
 import com.framework.views.BlankFragment
 import com.framework.views.customViews.CustomImageView
 import com.framework.views.customViews.CustomTextView
-import com.framework.webengageconstant.Post_Browse_All_Promotional_Update_Click
-import com.framework.webengageconstant.Promotional_Update_Create_Update_Click
-import com.framework.webengageconstant.Promotional_Update_Home_Loaded
+import com.framework.webengageconstant.*
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -143,6 +141,11 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
     binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
       override fun onTabSelected(tab: TabLayout.Tab?) {
         //  changeTabFont(tab,Typeface.BOLD)
+        when(tab!!.position){
+          0 -> WebEngageController.trackEvent(Update_studio_today_tab_click)
+          1 -> WebEngageController.trackEvent(Update_studio_browse_tab_click)
+          2 -> WebEngageController.trackEvent(Update_studio_Create_custom_update_click)
+        }
         val tabIconColor: Int = ContextCompat.getColor(requireActivity(), R.color.colorPrimary)
         if (tab?.position == 1) {
           tab.icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_circlesfour_active)

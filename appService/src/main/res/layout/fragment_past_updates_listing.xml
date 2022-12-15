@@ -78,13 +78,13 @@
                 android:layout_marginBottom="@dimen/_16sdp"/>
 
             <com.framework.views.customViews.CustomButton
-                android:layout_alignParentBottom="true"
                 android:id="@+id/btn_post_new_update"
                 style="@style/CustomRoundedYellowButton"
                 android:layout_height="42dp"
+                android:layout_alignParentBottom="true"
                 android:layout_marginHorizontal="36dp"
-                android:fontFamily="@font/semi_bold"
                 android:background="@drawable/fab_rounded_square_bg"
+                android:fontFamily="@font/semi_bold"
                 android:stateListAnimator="@null"
                 android:text="@string/post_a_new_update" />
         </RelativeLayout>
