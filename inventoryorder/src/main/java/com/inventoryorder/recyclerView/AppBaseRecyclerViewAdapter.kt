@@ -82,6 +82,13 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     notifyDataSetChanged()
   }
 
+  open fun addFullItemList(addList: ArrayList<T>?) {
+    addList?.let {
+      list.clear()
+      list.addAll(it) }
+    notifyDataSetChanged()
+  }
+
   override fun getItemCount(): Int {
     return if (list.isNotEmpty()) list.size else 0
   }

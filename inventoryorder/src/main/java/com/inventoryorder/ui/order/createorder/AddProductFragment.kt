@@ -154,7 +154,9 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         adapter = itemsAdapter
         itemsAdapter?.runLayoutAnimation(this)
       }
-    } else itemsAdapter?.notifyDataSetChanged()
+    } else {
+        itemsAdapter?.addFullItemList(productList)
+    }
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
