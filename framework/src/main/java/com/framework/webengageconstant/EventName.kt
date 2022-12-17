@@ -688,3 +688,9 @@ const val Update_studio_Create_custom_update_click = "Update_studio_Create_custo
 const val Update_studio_Mark_Favourite_click = "Update_studio_Mark_Favourite_click"
 const val Update_studio_Unmark_Favourite_click = "Update_studio_Unmark_Favourite_click"
 
+const val Update_Create_Page_Load = "UPDATE CREATE PAGE LOAD"
+const val Update_attach_Image_clicked = "Update_attach_Image_clicked"
+const val Added_Photo_In_Update = "ADDED PHOTO IN UPDATE"
+const val Update_Preview_post_click = "Update_Preview_post_click"
+const val Post_An_Update = "POST AN UPDATE"
+
