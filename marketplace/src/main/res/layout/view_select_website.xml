@@ -133,7 +133,7 @@
                     <TextView
                         android:id="@+id/tv_empty_select_website"
                         android:layout_width="match_parent"
-                        android:layout_height="68dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="100dp"
                         android:background="@drawable/green_border_view"
                         android:fontFamily="@font/bold"
@@ -171,6 +171,14 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/tv_explore_select_website_cs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/selectWebsiteSubmit"
+                        app:layout_constraintTop_toBottomOf="@id/main1">
 
 
                     <TextView
@@ -189,17 +197,19 @@
                         android:textSize="12sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toTopOf="@+id/selectWebsiteSubmit"
-                        app:layout_constraintTop_toBottomOf="@id/main1" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/yellow_down_arrow"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_explore_select_website"
-                        app:layout_constraintStart_toEndOf="@id/tv_explore_select_website"
-                        app:layout_constraintTop_toTopOf="@id/tv_explore_select_website" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_explore_select_website"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
                         android:id="@+id/selectWebsiteSubmit"
@@ -220,7 +230,7 @@
                         android:textColor="@color/white"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_explore_select_website" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_explore_select_website_cs" />
 
                     <TextView
                         android:id="@+id/selectWebsiteIwillDoItLater"

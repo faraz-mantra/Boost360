@@ -165,7 +165,7 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
             }, 1000)
         }
 
-        view.tv_explore_select_website.setOnClickListener {
+        view.tv_explore_select_website_cs.setOnClickListener {
             exploreDomainOptions()
             Handler().postDelayed({
                 hideAllLayout()
@@ -173,7 +173,7 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
             }, 1000)
         }
 
-        view.tv_explore_select_website1.setOnClickListener {
+        view.tv_explore_select_website1_cs.setOnClickListener {
             exploreDomainOptions()
         }
 
@@ -208,7 +208,7 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
             view.topImageView.setImageResource(com.boost.cart.R.drawable.review_selection_point)
         }
 
-        view.tv_explore_text_select_vmn.setOnClickListener {
+        view.tv_explore_text_select_vmn_cs.setOnClickListener {
             exploreVmnOptions()
             Handler().postDelayed({
                 hideAllLayout()
@@ -216,7 +216,7 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
             }, 1000)
         }
 
-        view.tv_explore_select_number.setOnClickListener {
+        view.tv_explore_select_number_cs.setOnClickListener {
             exploreVmnOptions()
         }
 
@@ -269,7 +269,7 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
 //            selectedNames()
 //            view.topImageView.setImageResource(R.drawable.review_selection_point)
         }
-        view.tv_explore_text_select_vmn.setOnClickListener {
+        view.tv_explore_text_select_vmn_cs.setOnClickListener {
             exploreVmnOptions()
         }
         view.selectVmnSubmit.setOnClickListener {
@@ -339,7 +339,7 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
             }, 1000)
         }
 
-        view.tv_explore_select_website.setOnClickListener {
+        view.tv_explore_select_website_cs.setOnClickListener {
             exploreDomainOptions()
         }
 
