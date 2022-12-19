@@ -291,7 +291,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
 
 
   private fun setArrayAdapter() {
-    binding?.editServiceName?.apply {
+    binding.editServiceName.apply {
       isCursorVisible = false
       serviceAdapter = CustomArrayAdapter(baseActivity, R.layout.layout_service_item, serviceList!!)
       threshold = 1

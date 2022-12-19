@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import com.appservice.utils.capitalizeUtil
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
@@ -19,6 +20,7 @@ import com.boost.presignin.model.BusinessInfoModel
 import com.boost.presignin.model.authToken.saveAuthTokenData
 import com.boost.presignin.model.business.BusinessCreateRequest
 import com.boost.presignin.model.category.CategoryDataModel
+import com.boost.presignin.model.location.LocationResponse
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
 import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.onboardingRequest.saveCategoryRequest
@@ -30,7 +32,6 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.pref.*
-import com.framework.utils.showKeyBoard
 import com.framework.views.blur.setBlur
 import com.framework.webengageconstant.*
 import com.invitereferrals.invitereferrals.InviteReferralsApi
@@ -256,13 +257,36 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
       viewModel?.createMerchantProfile(request = categoryFloatsReq?.requestProfile)?.observeOnce(viewLifecycleOwner) {
         val businessProfileResponse = it as? BusinessProfileResponse
         if (it.isSuccess() && businessProfileResponse != null && businessProfileResponse.result?.loginId.isNullOrEmpty().not()) {
+          val loginId = businessProfileResponse.result?.loginId
+          fetchLocationAndSendWEEvent(loginId!!+"-"+phoneNumber)
           putCreateBusinessOnBoarding(businessProfileResponse)
         } else {
           hideProgress()
+          fetchLocationAndSendWEEvent(phoneNumber)
           showShortToast(it?.errorFlowMessage() ?: getString(R.string.unable_to_create_profile))
         }
       }
     } else putCreateBusinessOnBoarding(this.responseCreateProfile!!)
+  }
+
+  private fun fetchLocationAndSendWEEvent(resultString: String?) {
+    val locationApiUrl = "https://api.whatismyip.com/wimi.php"
+    viewModel?.getUserLocation(locationApiUrl)?.observeOnce(viewLifecycleOwner) {
+      hideProgress()
+      var outputString=""
+      if (it.isSuccess()) {
+        val locationResponse = it as? LocationResponse
+        outputString = resultString + "-" + locationResponse?.geo
+      } else {
+        outputString = "$resultString-Location not found!"
+      }
+      session?.userLocationIP = outputString
+//      WebEngageController.trackEvent(
+//        USER_LOCATION,
+//        USER_LOCATION_LABEL,
+//        outputString
+//      )
+    }
   }
 
 

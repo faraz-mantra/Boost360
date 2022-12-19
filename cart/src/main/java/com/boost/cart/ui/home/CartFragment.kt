@@ -29,6 +29,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.boost.cart.BuildConfig
 import com.boost.cart.CartActivity
 import com.boost.cart.R
 import com.boost.cart.adapter.*
@@ -270,6 +271,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         Constants.COMPARE_BACK_VALUE = 1
 //    val list = arrayListOf<Bundles>()
         prefs.storeCompareState(1)
+        if(BuildConfig.FLAVOR.equals("jioonline")){
+            coupon_layout.visibility = GONE
+        }
 //        showpopup()
         loadLastUsedPayData()
         initializePackageRecycler()
@@ -1629,11 +1633,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 if (createCustomerInfoRequest!!.BusinessDetails != null) {
 //          business_contact_number.setText(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber)
 //          business_email_address.setText(createCustomerInfoRequest!!.BusinessDetails!!.Email)
-                }
-                if (!createCustomerInfoRequest!!.BusinessDetails.Email.isNullOrEmpty()) {
-                    et_email.setText(createCustomerInfoRequest!!.BusinessDetails.Email)
-                    email_value.setText(createCustomerInfoRequest!!.BusinessDetails.Email)
-                    cart_email_missing.visibility = View.GONE
+                    if (!createCustomerInfoRequest!!.BusinessDetails.Email.isNullOrEmpty()) {
+                        et_email.setText(createCustomerInfoRequest!!.BusinessDetails.Email)
+                        email_value.setText(createCustomerInfoRequest!!.BusinessDetails.Email)
+                        cart_email_missing.visibility = View.GONE
+                    }
                 }
                 if (createCustomerInfoRequest!!.AddressDetails != null) {
                     cart_business_city_name.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
@@ -1976,7 +1980,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
             widgetList.add(
                 com.boost.dbcenterapi.data.renewalcart.Widget(
                     it.item_id,
-                    it.boost_widget_key
+                    it.feature_code
                 )
             )
         }
@@ -2157,7 +2161,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     if (outputExtendedPropsRenew.size > 0) outputExtendedPropsRenew else null,
                     1,
                     "MONTHLY",
-                    item.boost_widget_key
+                    item.feature_code
                         ?: "",
                     item.item_id
                 )
@@ -2532,7 +2536,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     if (outputExtendedProps1.size > 0) outputExtendedProps1 else null,
                     1,
                     "MONTHLY",
-                    item.boost_widget_key
+                    item.feature_code
                         ?: "",
                     item.item_id
                 )
@@ -2652,7 +2656,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                             if (outputExtendedProps.size > 0) outputExtendedProps else null,
                             net_quantity,
                             "MONTHLY",
-                            item.boost_widget_key!!,
+                            item.feature_code!!,
                             item.item_id
                         )
                     )
@@ -2733,7 +2737,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                                     if (outputExtendedProps.size > 0) outputExtendedProps else null,
                                                     1,
                                                     "MONTHLY",
-                                                    singleFeature.boost_widget_key,
+                                                    singleFeature.feature_code ?: "",
                                                     singleFeature.feature_id
                                                 )
                                             )

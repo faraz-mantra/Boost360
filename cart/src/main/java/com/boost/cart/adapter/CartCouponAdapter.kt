@@ -27,7 +27,9 @@ class CartCouponAdapter(val applyCouponListener: ApplyCouponListener)
     override fun onBindViewHolder(holder: CartCouponAdapter.ViewHolder, position: Int) {
         val offerCoupons = mList[position]
         holder.couponCodetextView.text = offerCoupons.code
-        val amount = (total * (offerCoupons.discountPercent!! / 100.0f))
+        //if the discount is greater that 2000 take 2000 as discount
+        //if the discount is lesser than 2000 take discount amount
+        val amount = (total * (offerCoupons.discountPercent!! / 100.0f)).let { if(it<=2000) it else 2000 }
         val df = DecimalFormat()
         df.setMaximumFractionDigits(2)
         holder.cashBacktextView.text = "Max Save: ₹" + df.format(amount)

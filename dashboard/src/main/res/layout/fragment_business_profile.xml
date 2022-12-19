@@ -549,6 +549,15 @@
               android:orientation="horizontal">
 
               <com.framework.views.customViews.CustomImageView
+                  android:id="@+id/civ_website_page"
+                  android:layout_width="@dimen/size_36"
+                  android:layout_height="@dimen/size_36"
+                  android:layout_marginStart="@dimen/size_2"
+                  android:layout_marginEnd="@dimen/size_4"
+                  android:tag="website"
+                  app:srcCompat="@drawable/ic_website_channel_onboarding" />
+
+              <com.framework.views.customViews.CustomImageView
                 android:id="@+id/civ_fb_page"
                 android:layout_width="@dimen/size_36"
                 android:layout_height="@dimen/size_36"
@@ -607,6 +616,15 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="5dp"
               android:orientation="horizontal">
+
+              <com.framework.views.customViews.CustomImageView
+                  android:id="@+id/civ_website_page_disabled"
+                  android:layout_width="@dimen/size_36"
+                  android:layout_height="@dimen/size_36"
+                  android:layout_marginStart="@dimen/size_2"
+                  android:layout_marginEnd="@dimen/size_4"
+                  android:tag="website"
+                  app:srcCompat="@drawable/ic_website_channel_onboarding" />
 
               <com.framework.views.customViews.CustomImageView
                 android:id="@+id/civ_fb_page_disabled"

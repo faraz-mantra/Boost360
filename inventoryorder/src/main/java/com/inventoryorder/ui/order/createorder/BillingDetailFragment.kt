@@ -362,6 +362,9 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
     }
     createOrderRequest.gstCharges =totalGstIncluded
     updateData()
+
+    // Initializing delivery fee with default value.
+    onDeliveryFeeAdded(50.0)
   }
 
   private fun updateData() {

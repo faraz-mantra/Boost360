@@ -163,18 +163,28 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
       addOnsListFilter.forEach { it0 ->
         if (it0.title.equals(LAST_SEEN_TEXT).not())
           it0.manageBusinessList?.forEach {
-            if (it.title?.toLowerCase(Locale.ROOT)?.contains(query) == true) list.add(it)
+            if (it.title?.toLowerCase(Locale.ROOT)?.replace("\n"," ")?.contains(query) ?: false) list.add(it)
           }
       }
       val listAddOns = ArrayList<AllBoostAddOnsData>()
       if (list.isNotEmpty()) listAddOns.add(
         AllBoostAddOnsData(
           title = "Boost Add-ons",
-          manageBusinessList = list
+          manageBusinessList = list,
+          isLastSeen = false,
+          isExpend = true
         )
       )
       adapterAddOns?.notify(listAddOns)
-    } else adapterAddOns?.notify(addOnsListFilter)
+    } else {
+      addOnsListFilter.forEachIndexed { index, allBoostAddOnsData ->
+        val temp = allBoostAddOnsData
+        temp.isLastSeen = false
+        temp.isExpend = true
+        addOnsListFilter.set(index, temp)
+      }
+      adapterAddOns?.notify(addOnsListFilter)
+    }
   }
 
 //  private fun getDomainDetail(isClick: Boolean = false) {

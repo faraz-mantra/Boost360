@@ -6,6 +6,9 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -44,6 +47,7 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
   private var selectedPositionForEdit:Int=-1
 
   private val RC_STORAGE_PERMISSION=200
+  lateinit var permissionLauncher: ActivityResultLauncher<String>
 
   companion object {
     val BK_TAG = "BK_TAG"
@@ -80,6 +84,21 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
     sharedViewModel = ViewModelProvider(requireActivity()).get(FestivePosterSharedViewModel::class.java)
     session = UserSessionManager(requireActivity())
     observeCustomization()
+    permissionLauncher = registerForActivityResult(
+      ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+      if (isGranted) {
+        if (checkSelfPermission(requireContext(),Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
+          permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }else if (checkSelfPermission(requireContext(),Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
+          permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+        } else {
+          downloadSelectedPoster()
+        }
+      } else {
+        permissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+      }
+    }
   }
 
   private fun observeCustomization() {
@@ -189,15 +208,15 @@ class PosterListFragment : AppBaseFragment<FragmentPosterListBinding, FestivePos
 
   private fun checkStoragePermission() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      if (checkSelfPermission(requireContext(),Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
-        requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),RC_STORAGE_PERMISSION)
-      }else{
-        downloadSelectedPoster()
-      }
+      permissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//      if (checkSelfPermission(requireContext(),Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+//        requireActivity().requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),RC_STORAGE_PERMISSION)
+//      }else{
+//        downloadSelectedPoster()
+//      }
     } else {
       downloadSelectedPoster()
     }
-
   }
 
   private fun downloadSelectedPoster() {

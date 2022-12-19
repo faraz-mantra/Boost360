@@ -26,6 +26,8 @@ import com.framework.utils.showToast
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.Promotional_Update_Browse_All_Loaded
 import com.framework.webengageconstant.Promotional_Update_Category_Click
+import com.framework.webengageconstant.Update_studio_Mark_Favourite_click
+import com.framework.webengageconstant.Update_studio_Unmark_Favourite_click
 
 class BrowseAllFragment : AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesViewModel>(), RecyclerItemClickListener {
 
@@ -164,7 +166,14 @@ class BrowseAllFragment : AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesV
       }
 
       RecyclerViewActionType.POSTER_LOVE_CLICKED.ordinal -> {
-        (item as? TemplateUi)?.let { callFavApi(it) }
+        (item as? TemplateUi)?.let {
+          if (it.isFavourite){
+            WebEngageController.trackEvent(Update_studio_Mark_Favourite_click)
+          }else {
+            WebEngageController.trackEvent(Update_studio_Unmark_Favourite_click)
+          }
+          callFavApi(it)
+        }
       }
     }
 

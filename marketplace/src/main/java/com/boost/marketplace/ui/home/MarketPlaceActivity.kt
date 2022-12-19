@@ -61,6 +61,7 @@ import com.framework.pref.getAccessTokenAuth
 import com.framework.utils.DateUtils
 import com.framework.utils.DateUtils.parseDate
 import com.framework.utils.RootUtil
+import com.framework.utils.toArrayList
 import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -213,6 +214,9 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 menuOpts.getItem(1).setTitle(R.string.switch_to_monthly_pricing)
             } else {
                 menuOpts.getItem(1).setTitle(R.string.switch_to_yearly_pricing)
+            }
+            if (BuildConfig.FLAVOR.equals("jioonline")) {
+                menuOpts.getItem(2).setVisible(false)
             }
 
             try {
@@ -1630,7 +1634,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             }
         }
 
-        addonsCategoryAdapter.addupdates(addonsCategoryTypes)
+        addonsCategoryAdapter.addupdates(addonsCategoryTypes, list.toArrayList())
         addons_category_recycler.adapter = addonsCategoryAdapter
         addonsCategoryAdapter.notifyDataSetChanged()
         addons_category_recycler.isFocusable = false

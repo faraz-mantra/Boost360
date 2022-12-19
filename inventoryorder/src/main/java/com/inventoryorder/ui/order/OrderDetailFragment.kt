@@ -211,7 +211,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
-      binding?.tvOrderAmount?.text = "$currency ${DecimalFormat("##,##,##0").format(bill.NetAmount?:0.0)}"
+      binding?.tvOrderAmount?.text = "$currency ${DecimalFormat("##,##,##0").format(bill.AmountPayableToSeller?:0.0)}"
     }
     binding?.orderDate?.text = DateUtils.parseDate(
       order.UpdatedOn,
@@ -240,7 +240,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
     // shipping details
     val shippingCost = order.BillingDetails?.SellerDeliveryCharges ?: 0.0
-    val salePrice = order.BillingDetails?.GrossAmount ?: 0.0
+    val salePrice = order.BillingDetails?.AmountPayableToSeller ?: 0.0
     val currency = takeIf { order.BillingDetails?.CurrencyCode.isNullOrEmpty().not() }?.let { order.BillingDetails?.CurrencyCode?.trim() } ?: "INR"
 //    order.Items?.forEachIndexed { index, item ->
 //      shippingCost += item.Product?.ShippingCost ?: 0.0

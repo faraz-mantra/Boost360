@@ -12,7 +12,7 @@ import com.festive.poster.viewmodels.PromoUpdatesViewModel
 import com.framework.base.setFragmentType
 import com.framework.pref.UserSessionManager
 import com.framework.utils.setStatusBarColor
-import com.framework.webengageconstant.Promotional_Update_Posted_Updates_Click
+import com.framework.webengageconstant.*
 
 class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoUpdatesViewModel>() {
 
@@ -58,6 +58,7 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoU
         onBackPressed()
       }
       binding?.ivLove -> {
+        WebEngageController.trackEvent(UPDATE_STUDIO_VIEW_FAVOURITES_PAGE_CLICK, CLICK, TO_BE_ADDED)
         addFragmentReplace(binding?.container?.id, FavouriteListFragment.newInstance(), true, showAnim = true)
       }
       binding?.ivStore -> {
