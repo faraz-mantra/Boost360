@@ -1835,6 +1835,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
             if(it.domainName != null && it.domainType != null) {
                 if(!(it.domainName.contains("null") || it.domainType.contains("null"))) {
                     alreadypurchasedDomain = true
+                    prefs.storeDomainOrderType(1)
                 }
             }
         }

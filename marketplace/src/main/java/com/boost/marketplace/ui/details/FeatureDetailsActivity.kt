@@ -600,7 +600,7 @@ class FeatureDetailsActivity :
             if(!it.domainName.isNullOrEmpty() && !it.domainType.isNullOrEmpty()) {
                 prefs.storeSelectedDomainName(it.domainName + it.domainType)
             }
-        //    makeFlyAnimation(addon_icon)
+            makeFlyAnimation(addon_icon)
             viewModel.addItemToCart1(addonDetails!!, this,
                 if(!it.domainName.isNullOrEmpty() && !it.domainType.isNullOrEmpty()) (it.domainName + it.domainType) else null)
             viewModel.getCartItems()
@@ -613,11 +613,12 @@ class FeatureDetailsActivity :
                 purchasedVmnName = it.Vmn
                 purchasedVmnActive = true
             }
-          //  makeFlyAnimation(addon_icon)
+            makeFlyAnimation(addon_icon)
             viewModel.addItemToCart1(addonDetails!!, this,
                 if(!it.Vmn.isNullOrEmpty()) (it.Vmn) else null)
             viewModel.getCartItems()
         }
+
         viewModel.edgecaseResult().observe(this, androidx.lifecycle.Observer {
             nestedScrollView.visibility = View.VISIBLE
             shimmer_layout.stopShimmer()
@@ -2677,19 +2678,51 @@ class FeatureDetailsActivity :
                 add_item_to_cart_new.setText("Extend Validity")
                 add_item_to_cart_new.setOnClickListener {
                     if(addonDetails!!.feature_code.equals("DOMAINPURCHASE")) {
-                        getAlreadyPurchasedDomain()
+                        if (packageItem) {
+                            val args = Bundle()
+                            args.putString("addonName", addonDetails!!.name)
+                            removePackageBottomSheet.arguments = args
+                            removePackageBottomSheet.show(
+                                supportFragmentManager,
+                                RemovePackageBottomSheet::class.java.name
+                            )
+                        } else{
+                            getAlreadyPurchasedDomain()
+                        }
                     } else if(addonDetails!!.feature_code.equals("CALLTRACKER") //|| (addonDetails!!.feature_code.equals("IVR"))
                     ) {
-                        getAlreadyPurchasedVmn()
+                        if (packageItem) {
+                            val args = Bundle()
+                            args.putString("addonName", addonDetails!!.name)
+                            removePackageBottomSheet.arguments = args
+                            removePackageBottomSheet.show(
+                                supportFragmentManager,
+                                RemovePackageBottomSheet::class.java.name
+                            )
+                        } else{
+                            getAlreadyPurchasedVmn()
+                        }
                     }
-                    else
+                    else {
                         add_item_to_cart_new.setText("Extend Validity")
-                    add_item_to_cart_new.background = ContextCompat.getDrawable(
-                        applicationContext,
-                        R.drawable.cta_button_click_effect
-                    )
-                    add_item_to_cart_new.setTextColor(Color.WHITE)
-                    addItemToCart()
+                        add_item_to_cart_new.background = ContextCompat.getDrawable(
+                            applicationContext,
+                            R.drawable.cta_button_click_effect
+                        )
+                        add_item_to_cart_new.setTextColor(Color.WHITE)
+                        if (packageItem) {
+                            val args = Bundle()
+                            args.putString("addonName", addonDetails!!.name)
+                            removePackageBottomSheet.arguments = args
+                            removePackageBottomSheet.show(
+                                supportFragmentManager,
+                                RemovePackageBottomSheet::class.java.name
+                            )
+                        } else{
+                            addItemToCart()
+                        }
+                    }
+
                 }
                 add_item_to_cart_new.background = ContextCompat.getDrawable(
                     applicationContext,
@@ -2802,7 +2835,7 @@ class FeatureDetailsActivity :
                 )
                 add_item_to_cart_new.setTextColor(Color.WHITE)
             }
-//                viewModel.getCartItems()
+                viewModel.getCartItems()
         }
     }
 

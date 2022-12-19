@@ -34,7 +34,7 @@ class OrderConfirmationViewModel : ViewModel() {
 
   fun emptyCurrentCartWithDomainActivate(app: Application, domainOrderType: Int = 0, activity: Activity) {
             val prefs = SharedPrefs(activity)
-            if(!prefs.getSelectedDomainName().isNullOrEmpty()){
+            if(!prefs.getSelectedDomainName().isNullOrEmpty() && prefs.getDomainOrderType().equals(0)){
               updatesLoader.postValue("Domain Activation Is in Progress")
               val pref = app.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
               val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
@@ -104,7 +104,7 @@ class OrderConfirmationViewModel : ViewModel() {
                     updatesLoader.postValue("")
                     Toasty.error(
                       activity.applicationContext,
-                      "Payment is successsfull. But Failed to Booked Your Domain. Try after 24 hours in [My Current Plan]",
+                      "Payment is successsfull. But Failed to Book Your Domain. Try after 24 hours in [My Current Plan]",
                       Toast.LENGTH_LONG, true
                     ).show()
                   }
