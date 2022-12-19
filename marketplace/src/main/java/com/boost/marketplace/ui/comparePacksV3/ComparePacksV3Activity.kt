@@ -878,76 +878,7 @@ class ComparePacksV3Activity :
             featuresList = it
         })
 
-        viewModel.cartResult().observe(this, Observer {
-            cartList = it
-            itemInCart = false
-            packageInCartStatus = false
-            if (cartList != null && cartList!!.size > 0) {
-                // packsv3footerAdapter.updateCartItem(cartList!!)
-                if (refreshViewPager) {
-                    refreshViewPager = false
-                    packsv3footerAdapter.updateCartItem(cartList!!)
-                }
 
-                if (cartList?.size!! > 0) {
-                    if (cartList != null) {
-                        for (singleCartItem in cartList!!) {
-                            if (singleCartItem.item_id.equals(selectedBundle!!._kid)) {
-                                itemInCart = true
-                                break
-                            }
-                        }
-                    }
-                }
-                if (!itemInCart) {
-                    binding?.buyPack?.setTextColor(this.resources.getColor(R.color.white))
-                    binding?.buyPack?.background = ContextCompat.getDrawable(
-                        this.applicationContext,
-                        R.drawable.ic_cart_continue_bg
-                    )
-                    var originalText = selectedBundle?.name
-                    originalText = originalText?.lowercase(Locale.getDefault())
-                    binding?.buyPack?.text = "Buy " + originalText
-                  //  binding?.buyPack?.setText("Buy ${selectedBundle!!.name}".toLowerCase())
-                    binding?.buyPack?.isClickable = true
-                } else {
-                    binding?.buyPack?.background = ContextCompat.getDrawable(
-                        this.applicationContext,
-                        R.drawable.ic_packsv3_added_to_cart_bg
-                    )
-                    binding?.buyPack?.setTextColor(
-                        this.getResources().getColor(R.color.tv_color_BB)
-                    )
-                    binding?.buyPack?.setText(this.getString(R.string.added_to_cart))
-                    binding?.buyPack?.isClickable = false
-                }
-
-                cartCount = cartList!!.size
-//                badgeNumber = cartList!!.size
-//                badge121.setText(badgeNumber.toString())
-//                badge121.visibility = View.VISIBLE
-//                Log.v("badgeNumber", " " + badgeNumber)
-            } else {
-                cartCount = 0
-                binding?.buyPack?.setTextColor(this.resources.getColor(R.color.white))
-                binding?.buyPack?.background = ContextCompat.getDrawable(
-                    this.applicationContext,
-                    R.drawable.ic_cart_continue_bg
-                )
-                var originalText = selectedBundle?.name
-                originalText = originalText?.lowercase(Locale.getDefault())
-                binding?.buyPack?.text = "Buy " + originalText
-                //  binding?.buyPack?.setText("Buy ${selectedBundle!!.name}".toLowerCase())
-                binding?.buyPack?.isClickable = true
-                //badgeNumber = 0
-                //   badge121.visibility = View.GONE
-                packageInCartStatus = false
-                if (refreshViewPager) {
-                    refreshViewPager = false
-                    packsv3footerAdapter.updateCartItem(arrayListOf())
-                }
-            }
-        })
 
         viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
             if (it != null){
@@ -1062,6 +993,77 @@ class ComparePacksV3Activity :
                     }
                     upgradeList = listItem
 
+                }
+            }
+        })
+
+        viewModel.cartResult().observe(this, Observer {
+            cartList = it
+            itemInCart = false
+            packageInCartStatus = false
+            if (cartList != null && cartList!!.size > 0) {
+                // packsv3footerAdapter.updateCartItem(cartList!!)
+                if (refreshViewPager) {
+                    refreshViewPager = false
+                    packsv3footerAdapter.updateCartItem(cartList!!)
+                }
+
+                if (cartList?.size!! > 0) {
+                    if (cartList != null) {
+                        for (singleCartItem in cartList!!) {
+                            if (singleCartItem.item_id.equals(selectedBundle?._kid)) {
+                                itemInCart = true
+                                break
+                            }
+                        }
+                    }
+                }
+                if (!itemInCart) {
+                    binding?.buyPack?.setTextColor(this.resources.getColor(R.color.white))
+                    binding?.buyPack?.background = ContextCompat.getDrawable(
+                        this.applicationContext,
+                        R.drawable.ic_cart_continue_bg
+                    )
+                    var originalText = selectedBundle?.name
+                    originalText = originalText?.lowercase(Locale.getDefault())
+                    binding?.buyPack?.text = "Buy " + originalText
+                    //  binding?.buyPack?.setText("Buy ${selectedBundle!!.name}".toLowerCase())
+                    binding?.buyPack?.isClickable = true
+                } else {
+                    binding?.buyPack?.background = ContextCompat.getDrawable(
+                        this.applicationContext,
+                        R.drawable.ic_packsv3_added_to_cart_bg
+                    )
+                    binding?.buyPack?.setTextColor(
+                        this.getResources().getColor(R.color.tv_color_BB)
+                    )
+                    binding?.buyPack?.setText(this.getString(R.string.added_to_cart))
+                    binding?.buyPack?.isClickable = false
+                }
+
+                cartCount = cartList!!.size
+//                badgeNumber = cartList!!.size
+//                badge121.setText(badgeNumber.toString())
+//                badge121.visibility = View.VISIBLE
+//                Log.v("badgeNumber", " " + badgeNumber)
+            } else {
+                cartCount = 0
+                binding?.buyPack?.setTextColor(this.resources.getColor(R.color.white))
+                binding?.buyPack?.background = ContextCompat.getDrawable(
+                    this.applicationContext,
+                    R.drawable.ic_cart_continue_bg
+                )
+                var originalText = selectedBundle?.name
+                originalText = originalText?.lowercase(Locale.getDefault())
+                binding?.buyPack?.text = "Buy " + originalText
+                //  binding?.buyPack?.setText("Buy ${selectedBundle!!.name}".toLowerCase())
+                binding?.buyPack?.isClickable = true
+                //badgeNumber = 0
+                //   badge121.visibility = View.GONE
+                packageInCartStatus = false
+                if (refreshViewPager) {
+                    refreshViewPager = false
+                    packsv3footerAdapter.updateCartItem(arrayListOf())
                 }
             }
         })
