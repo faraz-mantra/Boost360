@@ -92,7 +92,7 @@ android {
             buildConfigField "int", "REFERRAL_CAMPAIGN_CODE", '26277'
         }
         jioonline {
-            versionName "1.0.1.3"
+            versionName "1.0.1.5"
             applicationId "com.jio.online"
             dimension "default"
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
