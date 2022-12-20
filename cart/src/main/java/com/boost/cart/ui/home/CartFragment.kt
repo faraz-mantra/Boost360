@@ -1900,19 +1900,19 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 }
 
 
-                if (createCustomerInfoRequest!!.Name != null) {
-                    // business_name_value.setText(createCustomerInfoRequest!!.Name)
-                }
-
-                if (createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber != null) {
-                    //  business_contact_number.setText(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber)
-                } else {
-//          if (session?.userPrimaryMobile == null || session?.userPrimaryMobile.equals("")) {
+//                if (createCustomerInfoRequest!!.Name != null) {
+//                    // business_name_value.setText(createCustomerInfoRequest!!.Name)
+//                }
 //
-//          } else {
-//            business_contact_number.setText(session?.userPrimaryMobile)
-//          }
-                }
+//                if (createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber != null) {
+//                    //  business_contact_number.setText(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber)
+//                } else {
+////          if (session?.userPrimaryMobile == null || session?.userPrimaryMobile.equals("")) {
+////
+////          } else {
+////            business_contact_number.setText(session?.userPrimaryMobile)
+////          }
+//                }
 
 
 //        if (createCustomerInfoRequest!!.BusinessDetails!!.Email != null) {
