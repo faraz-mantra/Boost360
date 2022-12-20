@@ -878,8 +878,6 @@ class ComparePacksV3Activity :
             featuresList = it
         })
 
-
-
         viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
             if (it != null){
                 binding?.packsData?.visibility=View.VISIBLE
