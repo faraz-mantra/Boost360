@@ -1629,122 +1629,66 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
     private fun initMvvm1() {
         viewModel.getCustomerInfoResult().observeOnce(viewLifecycleOwner, Observer {
             createCustomerInfoRequest = it.Result
-            if (createCustomerInfoRequest != null) {
-                if (createCustomerInfoRequest!!.BusinessDetails != null) {
-//          business_contact_number.setText(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber)
-//          business_email_address.setText(createCustomerInfoRequest!!.BusinessDetails!!.Email)
-                    if (!createCustomerInfoRequest!!.BusinessDetails.Email.isNullOrEmpty()) {
-                        et_email.setText(createCustomerInfoRequest!!.BusinessDetails.Email)
-                        email_value.setText(createCustomerInfoRequest!!.BusinessDetails.Email)
-                        cart_email_missing.visibility = View.GONE
+                createCustomerInfoRequest?.let {
+                    it.BusinessDetails?.let {
+                        it.Email?.let {
+                            et_email.setText(it)
+                            email_value.setText(it)
+                            cart_email_missing.visibility = View.GONE
+                        }
                     }
-                }
-                if (createCustomerInfoRequest!!.AddressDetails != null) {
-                    cart_business_city_name.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
-                    business_supply_place_value.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
-                    cart_business_supply_place_missing.visibility = View.GONE
+                    it.AddressDetails?.let {
+                        it.State?.let {
+                            cart_business_city_name.setText(it)
+                            business_supply_place_value.setText(it)
+                            cart_business_supply_place_missing.visibility = View.GONE
+                            if (it.equals("string")) {
+                                cart_business_city_name.setText(it)
+                                cart_business_city_name1.setText(it)
+                                setStates = it
+                            }
+                        }
+                        it.City?.let {
+                            viewModel.getStateFromCityAssetJson(
+                                requireActivity(),
+                                it
+                            )
+                        }
+                        it.Line1?.let {
+                            cart_business_address.setText(it.toString())
+                            cart_business_address1.setText(it.toString())
+                            cart_business_address_value.setText(it.toString())
+                            cart_business_address_missing.visibility = View.GONE
+                        }
+                        if (it.Line1 == null) {
+                            if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS) == null || session?.getFPDetails(
+                                    Key_Preferences.GET_FP_DETAILS_ADDRESS
+                                ).equals("")
+                            ) {
 
-                    if (createCustomerInfoRequest!!.AddressDetails!!.City != null) {
-                        viewModel.getStateFromCityAssetJson(
-                            requireActivity(),
-                            createCustomerInfoRequest!!.AddressDetails!!.City
-                        )
+                            } else {
+                                cart_business_address1.setText(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS))
+                                cart_business_address.setText(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS))
+                                cart_business_address_value.visibility = View.GONE
+                                cart_business_address_missing.visibility = View.VISIBLE
+                                //  gst_business_address_value.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)
+                            }
+                        }
                     }
-                    if (createCustomerInfoRequest!!.AddressDetails!!.State != null || !createCustomerInfoRequest!!.AddressDetails!!.State.equals(
-                            "string"
-                        )
-                    ) {
-                        cart_business_city_name.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
-                        cart_business_city_name1.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
-                        setStates = createCustomerInfoRequest!!.AddressDetails!!.State
+                    if (it.AddressDetails == null) {
+                        cart_business_supply_place_missing.visibility = View.VISIBLE
+                        business_supply_place_value.visibility = View.GONE
                     }
-                    if (createCustomerInfoRequest!!.AddressDetails.Line1 != null) {
-                        cart_business_address.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
-                        cart_business_address1.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
-                        //  gst_business_address_value.text = createCustomerInfoRequest!!.AddressDetails.Line1.toString()
-                    }
-                } else {
-                    cart_business_supply_place_missing.visibility = View.VISIBLE
-                    business_supply_place_value.visibility = View.GONE
-                }
-                if (createCustomerInfoRequest!!.TaxDetails != null) {
-                    business_gstin_number.setText(createCustomerInfoRequest!!.TaxDetails!!.GSTIN)
-                }
-
-                if (createCustomerInfoRequest!!.TaxDetails?.GSTIN != null /*|| createCustomerInfoRequest!!.TaxDetails?.GSTIN.equals("")*/) {
-                    cart_business_gstin_value.setText(createCustomerInfoRequest!!.TaxDetails.GSTIN)
-                    cart_business_gstin_missing.visibility = View.GONE
-                } else {
-                    cart_business_gstin_value.visibility = View.GONE
-                    cart_business_gstin_missing.visibility = View.VISIBLE
-                }
-
-
-                if (createCustomerInfoRequest!!.Name != null) {
-                    // business_name_value.setText(createCustomerInfoRequest!!.Name)
-                }
-
-                if (createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber != null) {
-                    //  business_contact_number.setText(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber)
-                } else {
-//          if (session?.userPrimaryMobile == null || session?.userPrimaryMobile.equals("")) {
-//
-//          } else {
-//            business_contact_number.setText(session?.userPrimaryMobile)
-//          }
-                }
-
-
-//        if (createCustomerInfoRequest!!.BusinessDetails!!.Email != null) {
-//          business_email_address.setText(createCustomerInfoRequest!!.BusinessDetails!!.Email)
-//        } else {
-//          if (session?.fPEmail == null || session?.fPEmail.equals("")) {
-//
-//          } else {
-//            business_email_address.setText(session?.fPEmail)
-//          }
-//        }
-
-
-//        if (createCustomerInfoRequest!!.Name != null) {
-//          business_name_value.setText(createCustomerInfoRequest!!.Name)
-//          gst_business_name_value.text = createCustomerInfoRequest!!.Name
-//        } else {
-//          if (session?.fPName == null || session?.fPName.equals("")) {
-//
-//          } else {
-//            business_name_value.setText(session?.fPName)
-//            gst_business_name_value.text = session?.fPName
-//          }
-//        }
-
-
-                if (createCustomerInfoRequest!!.AddressDetails != null) {
-
-
-                    if (createCustomerInfoRequest!!.AddressDetails.Line1 != null) {
-                        cart_business_address1.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
-                        cart_business_address_value.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
-                        cart_business_address_missing.visibility = View.GONE
-                        //  business_supply_place_value.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
-                        // gst_business_address_value.text = createCustomerInfoRequest!!.AddressDetails.Line1.toString()
-                    } else {
-                        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS) == null || session?.getFPDetails(
-                                Key_Preferences.GET_FP_DETAILS_ADDRESS
-                            ).equals("")
-                        ) {
-
-                        } else {
-                            cart_business_address1.setText(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS))
-                            cart_business_address.setText(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS))
-                            cart_business_address_value.visibility = View.GONE
-                            cart_business_address_missing.visibility = View.VISIBLE
-                            //  gst_business_address_value.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)
+                    it.TaxDetails?.let {
+                        cart_business_gstin_value.visibility = View.GONE
+                        cart_business_gstin_missing.visibility = View.VISIBLE
+                        it.GSTIN?.let {
+                            business_gstin_number.setText(it)
+                            cart_business_gstin_value.setText(it)
+                            cart_business_gstin_missing.visibility = View.GONE
                         }
                     }
                 }
-
-            }
         })
         viewModel.getCustomerInfoStateResult().observeOnce(this, Observer {
             customerInfoState = it

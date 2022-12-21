@@ -518,7 +518,7 @@ class ComparePacksV3Activity :
                 if (cartList?.size!! > 0) {
                     if (cartList != null) {
                         for (singleCartItem in cartList!!) {
-                            if (singleCartItem.item_id.equals(selectedBundle!!._kid)) {
+                            if (singleCartItem.item_id.equals(selectedBundle?._kid)) {
                                 itemInCart = true
                                 break
                             }
