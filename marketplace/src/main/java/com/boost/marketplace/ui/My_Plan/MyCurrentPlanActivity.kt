@@ -378,7 +378,8 @@ class MyCurrentPlanActivity :
             // old api
             viewModel.loadPurchasedItems(
                 intent.getStringExtra("fpid") ?: "",
-                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
+                this
             )
 //            viewModel.myPlanV3Status(
 //                intent.getStringExtra("fpid") ?: "",
@@ -498,14 +499,9 @@ class MyCurrentPlanActivity :
                 binding?.emptyFeatures?.visibility = View.VISIBLE
             }
 
-            if (totalPaidItemList != null) {
-                if (totalPaidItemList!!.size > 1) {
+            if (totalPaidItemList != null && totalPaidItemList!!.size > 1) {
                     updatePaidAddonsRecycler(totalPaidItemList!!)
-                } else {
-                    updatePaidAddonsRecycler(totalPaidItemList!!)
-                }
             }
-            updatePaidAddonsRecycler(it)
         })
 
 
@@ -533,7 +529,9 @@ class MyCurrentPlanActivity :
                     updateFreeAddonsRecycler(totalFreeItemList!!)
                 }
             }
-            updateFreeAddonsRecycler(totalFreeItemList!!)
+            if (totalFreeItemList != null && totalFreeItemList!!.size > 1) {
+                updateFreeAddonsRecycler(totalFreeItemList!!)
+            }
         })
         viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
             if (it) {

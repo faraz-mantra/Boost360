@@ -1,5 +1,6 @@
 package com.boost.marketplace.ui.My_Plan
 
+import android.app.Activity
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LifecycleOwner
@@ -11,6 +12,7 @@ import com.boost.dbcenterapi.data.api_model.mycurrentPlanV3.MyPlanV3
 import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.dbcenterapi.utils.Utils
 import com.framework.models.BaseViewModel
 import io.reactivex.Completable
@@ -78,10 +80,10 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
     }
 
     //new implementation with expiry date
-    fun loadPurchasedItems(fpid: String, clientId: String) {
+    fun loadPurchasedItems(fpid: String, clientId: String, activity: Activity) {
         updatesLoader.postValue(true)
         compositeDisposable.add(
-            ApiService.GetMyPlanV3(fpid,clientId)
+            ApiService.GetMyPlanV3(fpid, clientId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -96,15 +98,21 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
                             if (singleItem.ActionNeeded != null && singleItem.FeatureDetails != null) {
                                 if (singleItem.ActionNeeded.ActionNeeded != 0 && singleItem.FeatureDetails.FeatureState != 7) {
                                     inActiveList.add(singleItem.FeatureDetails.FeatureKey)
-                                }
-                                else if (singleItem.ActionNeeded.ActionNeeded == 0 && (singleItem.FeatureDetails.FeatureState == 3
+                                } else if (singleItem.ActionNeeded.ActionNeeded == 0 && (singleItem.FeatureDetails.FeatureState == 3
                                             || singleItem.FeatureDetails.FeatureState == 4 || singleItem.FeatureDetails.FeatureState == 5
-                                            || singleItem.FeatureDetails.FeatureState == 6) ) {
+                                            || singleItem.FeatureDetails.FeatureState == 6)
+                                ) {
                                     inActiveList.add(singleItem.FeatureDetails.FeatureKey)
-                                }else if (singleItem.ActionNeeded.ActionNeeded == 0 && singleItem.FeatureDetails.FeatureState == 1) {
+                                } else if (singleItem.ActionNeeded.ActionNeeded == 0 && singleItem.FeatureDetails.FeatureState == 1) {
                                     activeList.add(singleItem.FeatureDetails.FeatureKey)
                                 }
                             }
+                        }
+
+                        val pref = SharedPrefs(activity)
+                        if (pref.getBoostKeyboardActivateState()) {
+                            activeList.add("BOOSTKEYBOARD")
+                            inActiveList.removeIf { it.contains("BOOSTKEYBOARD") }
                         }
 
 //                        val list = ArrayList<String>()
@@ -119,13 +127,20 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .doOnSuccess { it2 ->
                                     val listFeaturesModel = it2.map { it3 ->
-                                        it1.Result.firstOrNull { it.FeatureDetails.FeatureKey.equals(it3.feature_code) }
+                                        it1.Result.firstOrNull {
+                                            it.FeatureDetails.FeatureKey.equals(
+                                                it3.feature_code
+                                            )
+                                        }
                                             .apply {
                                                 it3.expiryDate = this?.FeatureDetails?.ExpiryDate
-                                                it3.activatedDate = this?.FeatureDetails?.ActivatedDate
-                                                it3.featureState = this?.FeatureDetails?.FeatureState
+                                                it3.activatedDate =
+                                                    this?.FeatureDetails?.ActivatedDate
+                                                it3.featureState =
+                                                    this?.FeatureDetails?.FeatureState
                                                 it3.createdon = this?.FeatureDetails?.CreatedDate
-                                                it3.actionNeeded = this?.ActionNeeded?.ActionNeeded.toString()
+                                                it3.actionNeeded =
+                                                    this?.ActionNeeded?.ActionNeeded.toString()
                                             };it3
                                     }
                                     Completable.fromAction {
@@ -151,7 +166,7 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
                                                     }.subscribe()
                                             )
                                             Log.i("insertAllFeatures", "Successfully")
-                                        //    activePremiumWidgetList.postValue(listFeaturesModel)
+                                            //    activePremiumWidgetList.postValue(listFeaturesModel)
                                             inActiveWidgetCount.postValue(listFeaturesModel)
                                             updatesLoader.postValue(false)
 
@@ -177,13 +192,20 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .doOnSuccess { it2 ->
                                     val listFeaturesModel = it2.map { it3 ->
-                                        it1.Result.firstOrNull { it.FeatureDetails.FeatureKey.equals(it3.feature_code) }
+                                        it1.Result.firstOrNull {
+                                            it.FeatureDetails.FeatureKey.equals(
+                                                it3.feature_code
+                                            )
+                                        }
                                             .apply {
                                                 it3.expiryDate = this?.FeatureDetails?.ExpiryDate
-                                                it3.activatedDate = this?.FeatureDetails?.ActivatedDate
-                                                it3.featureState = this?.FeatureDetails?.FeatureState
+                                                it3.activatedDate =
+                                                    this?.FeatureDetails?.ActivatedDate
+                                                it3.featureState =
+                                                    this?.FeatureDetails?.FeatureState
                                                 it3.createdon = this?.FeatureDetails?.CreatedDate
-                                                it3.actionNeeded = this?.ActionNeeded?.ActionNeeded.toString()
+                                                it3.actionNeeded =
+                                                    this?.ActionNeeded?.ActionNeeded.toString()
                                             };it3
                                     }
                                     Completable.fromAction {
@@ -236,10 +258,10 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
         )
     }
 
-    fun edgecases(fpid: String,clientId:String,featureCode:String) {
+    fun edgecases(fpid: String, clientId: String, featureCode: String) {
         updatesLoader.postValue(true)
         compositeDisposable.add(
-            ApiService.getEdgeCases(fpid,clientId,featureCode)
+            ApiService.getEdgeCases(fpid, clientId, featureCode)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -254,10 +276,10 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
     }
 
     //old implementation without expiry date
-    fun myPlanV3Status(fpid: String,clientId:String){
+    fun myPlanV3Status(fpid: String, clientId: String) {
         updatesLoader.postValue(true)
         compositeDisposable.add(
-            ApiService.GetMyPlanV3(fpid,clientId)
+            ApiService.GetMyPlanV3(fpid, clientId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -270,7 +292,6 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
                     })
         )
     }
-
 
 
 }

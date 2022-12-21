@@ -82,6 +82,7 @@ class UserSessionManager(var context: Context) {
   private val KEY_FP_PAGE_SHARE_ENABLE = "fbPageShareEnabled"
   private val KEY_HAS_USER_LOGGED_IN_ONCE="KEY_HAS_USER_LOGGED_IN_ONCE"
   private val USER_LOCATION_FROM_IP="userLocationFromIP"
+  private val BOOST_KEYBOARD_ACTIVATE_STATE="BOOST_KEYBOARD_ACTIVATE_STATE"
 
 
   fun Context.getPreferenceTwitter(): SharedPreferences {
@@ -816,6 +817,12 @@ class UserSessionManager(var context: Context) {
     get() = pref.getString(USER_LOCATION_FROM_IP, null)
     set(userLocationIP) {
       editor.putString(USER_LOCATION_FROM_IP, userLocationIP)
+      editor.commit()
+    }
+  var boostKeyboard: Boolean
+    get() = pref.getBoolean(BOOST_KEYBOARD_ACTIVATE_STATE, false)
+    set(boostKeyboardActivateState) {
+      editor.putBoolean(BOOST_KEYBOARD_ACTIVATE_STATE, boostKeyboardActivateState)
       editor.commit()
     }
 

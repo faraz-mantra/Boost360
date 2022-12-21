@@ -49,6 +49,7 @@ class SharedPrefs(activity: Activity) {
   private val LAST_USED_PAYMENT_MODE = "LAST_USED_PAYMENT_MODE"
   private val CART_VALIDITY_MONTHS = "CART_VALIDITY_MONTHS"
   private val UPI_IDS = "UPI_IDS"
+  private val BOOST_KEYBOARD_ACTIVATE_STATE="BOOST_KEYBOARD_ACTIVATE_STATE"
 
   private var editor: SharedPreferences.Editor? = null
 
@@ -338,4 +339,11 @@ class SharedPrefs(activity: Activity) {
     return if (TextUtils.isEmpty(str)) ArrayList() else Gson().fromJson(str, object : TypeToken<MutableList<String?>?>() {}.type)
   }
 
+  fun storeBoostKeyboardActivateState(value: Boolean){
+    editor!!.putBoolean(BOOST_KEYBOARD_ACTIVATE_STATE, value).apply()
+  }
+
+  fun getBoostKeyboardActivateState(): Boolean {
+    return pref!!.getBoolean(BOOST_KEYBOARD_ACTIVATE_STATE, false)
+  }
 }
