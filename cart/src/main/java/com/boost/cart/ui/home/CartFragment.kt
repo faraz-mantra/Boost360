@@ -281,6 +281,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity()).get(CartViewModel::class.java)
         viewModel.setApplicationLifecycle(this)
+        viewModel.loadPurchasedItems((activity as CartActivity).fpid!!, (activity as CartActivity).clientid)
         shimmer_view_banner.startShimmer()
         showProgress("Please wait...")
         Constants.COMPARE_BACK_VALUE = 1
@@ -3152,15 +3153,29 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
     fun loadData() {
         viewModel.getAllFeatures()
         viewModel.getAllBundles()
-        Handler().postDelayed({
-            viewModel.getCartItems()
-        }, 2000)
+//        Handler().postDelayed({
+//            viewModel.getCartItems()
+//        }, 2000)
 
         viewModel.loadUpdates()
     }
 
     @SuppressLint("FragmentLiveDataObserve")
     fun initMvvM() {
+        viewModel.getValidityMonths().observe(this){
+                if(prefs.getYearPricing()){
+                    var temp = it / 12.0
+                    if(temp > temp.toInt())
+                        temp = temp + 1
+                    default_validity_months = temp.toInt()
+                }else{
+                    default_validity_months = if(prefs.getCartValidityMonths()!!.toInt() > it) prefs.getCartValidityMonths()!!.toInt() else it
+                }
+            prefs.storeCartValidityMonths(default_validity_months.toString())
+            Handler().postDelayed({
+                viewModel.getCartItems()
+            }, 2000)
+        }
 
         viewModel.getExpertConnectDetails().observe(this) {
             if (it.is_online) {
@@ -3260,9 +3275,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     onetime_layout.visibility = View.GONE
                 }
                 Constants.COMPARE_CART_COUNT = bundles.size
-                default_validity_months =
-                    if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!
-                        .toInt() else 1
+                if(!(default_validity_months > 1))
+                    default_validity_months = if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toInt() else 1
                 if (bundles.size > 0) {
                     bundles_in_cart = true
                     for (bundle in bundles) {
@@ -3289,14 +3303,15 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     }
                     if (default_validity_months > 0) {
                         if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
-                            months_validity.setText(
-                                prefs.getCartValidityMonths() + yearOrMonthText(
-                                    default_validity_months,
-                                    requireActivity(),
-                                    false
-                                )
+                            val text: String = default_validity_months.toString() + yearOrMonthText(
+                                default_validity_months,
+                                requireActivity(),
+                                false
                             )
-                            feature_validity.text = prefs.getCartValidityMonths() + yearOrMonthText(
+                            Log.e("before>>>",text)
+                            months_validity.setText(text)
+                            Log.e("after>>>",text)
+                            feature_validity.text = default_validity_months.toString() + yearOrMonthText(
                                 default_validity_months,
                                 requireActivity(),
                                 true
@@ -3319,13 +3334,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     } else {
                         if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
                             months_validity.setText(
-                                prefs.getCartValidityMonths() + yearOrMonthText(
+                                default_validity_months.toString() + yearOrMonthText(
                                     default_validity_months,
                                     requireActivity(),
                                     false
                                 )
                             )
-                            feature_validity.text = prefs.getCartValidityMonths() + yearOrMonthText(
+                            feature_validity.text = default_validity_months.toString() + yearOrMonthText(
                                 default_validity_months,
                                 requireActivity(),
                                 true
@@ -3352,14 +3367,14 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
                         Log.e("getCartValidityMonths", prefs.getCartValidityMonths()!!)
                         months_validity.setText(
-                            prefs.getCartValidityMonths() + yearOrMonthText(
+                            default_validity_months.toString() + yearOrMonthText(
                                 default_validity_months,
                                 requireActivity(),
                                 false
                             )
                         )
                         feature_validity.text =
-                            prefs.getCartValidityMonths().toString() + yearOrMonthText(
+                            default_validity_months.toString() + yearOrMonthText(
                                 default_validity_months,
                                 requireActivity(),
                                 true
