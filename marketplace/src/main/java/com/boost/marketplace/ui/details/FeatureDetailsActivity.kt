@@ -2620,27 +2620,82 @@ class FeatureDetailsActivity :
 
             else if (actionRequired == 22 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                         || featureState == 5 || featureState == 6)) {
-                binding?.edgeCasesLayout?.visibility = View.VISIBLE
-                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
-                binding?.edgeCaseTitle?.setText("Action Required")
-                binding?.edgeCaseHyperlink?.setText("Go to activation page.")
-                binding?.edgeCaseHyperlink?.setOnClickListener {
-                    Usefeature()
-                }
-                binding?.edgeCaseTitle?.setTextColor(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.red
+//                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+//                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+//                binding?.edgeCaseTitle?.setText("Action Required")
+//                binding?.edgeCaseHyperlink?.setText("Go to activation page.")
+//                binding?.edgeCaseHyperlink?.setOnClickListener {
+//                    Usefeature()
+//                }
+//                binding?.edgeCaseTitle?.setTextColor(
+//                    ContextCompat.getColor(
+//                        this,
+//                        R.color.red
+//                    )
+//                )
+//                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+//                    R.drawable.ic_error_red,
+//                    0,
+//                    0,
+//                    0
+//                )
+//                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+//                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+//                bottom_box_only_btn.visibility = VISIBLE
+//                add_item_to_cart_new.setText("Extend Validity")
+//                add_item_to_cart_new.background = ContextCompat.getDrawable(
+//                    applicationContext,
+//                    R.drawable.cta_button_click_effect
+//                )
+//                add_item_to_cart_new.setTextColor(Color.WHITE)
+
+                val pref = SharedPrefs(this)
+                if (pref.getBoostKeyboardActivateState()) {
+                    binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                    binding?.edgeCaseHyperlink?.visibility = View.GONE
+                    binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
+                    binding?.edgeCaseTitle?.setText("Feature is currently active")
+                    binding?.edgeCaseTitle?.setTextColor(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.green
+                        )
                     )
-                )
-                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
-                    R.drawable.ic_error_red,
-                    0,
-                    0,
-                    0
-                )
-                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
-                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                    binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                        R.drawable.ic_checked,
+                        0,
+                        0,
+                        0
+                    )
+                    binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                    val sdf = SimpleDateFormat("MMM dd, yyyy")
+                    val expiryDate = ExpiryDate.replace("/Date(", "").replace(")/", "").replace("+0000","")
+                    val date = Date(expiryDate.toLong())
+                    binding?.edgeCaseDesc?.setText(
+                        "Feature validity expiring on ${sdf.format(date)}. You can extend validity by renewing it for a longer duration."
+                    )
+                } else{
+                    binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                    binding?.edgeCaseHyperlink?.setOnClickListener {
+                        Usefeature()
+                    }
+                    binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                    binding?.edgeCaseTitle?.setText("Action Required")
+                    binding?.edgeCaseTitle?.setTextColor(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.red
+                        )
+                    )
+                    binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                        R.drawable.ic_error_red,
+                        0,
+                        0,
+                        0
+                    )
+                    binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                    binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                }
                 bottom_box_only_btn.visibility = VISIBLE
                 add_item_to_cart_new.setText("Extend Validity")
                 add_item_to_cart_new.background = ContextCompat.getDrawable(

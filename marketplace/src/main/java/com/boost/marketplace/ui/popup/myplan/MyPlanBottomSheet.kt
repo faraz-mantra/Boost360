@@ -777,33 +777,54 @@ class MyPlanBottomSheet :
 
         else if (actionRequired == 22 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                     || featureState == 5 || featureState == 6)) {
-            binding?.edgeCasesLayout?.visibility = View.VISIBLE
-            binding?.btn1?.visibility = View.VISIBLE
-            binding?.btn1?.text = "Activate boost keyboard"
-            binding?.edgeCaseHyperlink?.setOnClickListener {
-                Usefeature()
-            }
-            binding?.btn1?.setOnClickListener {
-                Usefeature()
-            }
-            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
-            binding?.edgeCaseTitle?.setText("Action Required")
-            binding?.edgeCaseTitle?.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.red
-                )
-            )
-            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
-                R.drawable.ic_error_red,
-                0,
-                0,
-                0
-            )
-            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
-            binding?.edgeCaseDesc?.visibility = View.VISIBLE
-        }
 
+            val pref = SharedPrefs(requireActivity())
+            if (pref.getBoostKeyboardActivateState()) {
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCaseHyperlink?.visibility = View.GONE
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
+                binding?.edgeCaseTitle?.setText("Feature is currently active")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.green
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_checked,
+                    0,
+                    0,
+                    0
+                )
+                binding?.btn1?.visibility = View.GONE
+            } else{
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.btn1?.visibility = View.VISIBLE
+                binding?.btn1?.text = "Activate boost keyboard"
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    Usefeature()
+                }
+                binding?.btn1?.setOnClickListener {
+                    Usefeature()
+                }
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.red
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
+                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+            }
+        }
         else if (actionRequired == 0 && featureState == 1) {
             binding?.edgeCasesLayout?.visibility = View.VISIBLE
             binding?.edgeCaseHyperlink?.visibility = View.GONE
