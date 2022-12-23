@@ -35,7 +35,6 @@ class FeaturePacksAdapter(
 ) : RecyclerView.Adapter<FeaturePacksAdapter.upgradeViewHolder>() {
 
   private lateinit var context: Context
-  var addonTitle: String = ""
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
     val itemView = LayoutInflater.from(parent?.context).inflate(
@@ -122,9 +121,9 @@ class FeaturePacksAdapter(
     }
   }
 
-  fun addupdates(upgradeModel: ArrayList<BundlesModel>, title: String) {
-    bundleList = upgradeModel
-    addonTitle = title
+  fun addupdates(upgradeModel: ArrayList<BundlesModel>) {
+    bundleList.clear()
+    bundleList.addAll(upgradeModel)
     notifyDataSetChanged()
   }
 
