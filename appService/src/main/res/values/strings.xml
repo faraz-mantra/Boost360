@@ -985,7 +985,7 @@
     <string name="add_another_slab">Add another slab</string>
     <string name="no_lower_limit">No lower limit</string>
     <string name="warehouse_name_cannot_empty">Warehouse name cannot be empty</string>
-    <string name="warehouse_address_cannot_empty">WareHouse address can not empty</string>
+    <string name="warehouse_address_cannot_empty">Warehouse address can not empty</string>
     <string name="invalid_phone_number">Invalid phone number</string>
     <string name="updating">Updating...</string>
     <string name="for_home_delivery">For home delivery</string>

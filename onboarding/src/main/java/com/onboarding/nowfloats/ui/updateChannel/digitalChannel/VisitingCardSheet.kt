@@ -145,8 +145,14 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
       }
       popup.show()
     }
-    binding?.shareWhatsapp?.setOnClickListener { shareCardWhatsApp(shareChannelText, true) }
-    binding?.shareOther?.setOnClickListener { shareCardWhatsApp(shareChannelText, false) }
+    binding?.shareWhatsapp?.setOnClickListener {
+      WebEngageController.trackEvent(BUSINESS_CARD_WHATSAPP_SHARE_CLICK, CLICK, TO_BE_ADDED)
+      shareCardWhatsApp(shareChannelText, true)
+    }
+    binding?.shareOther?.setOnClickListener {
+      WebEngageController.trackEvent(BUSINESS_CARD_OTHERS_SHARE_CLICK, CLICK, TO_BE_ADDED)
+      shareCardWhatsApp(shareChannelText, false)
+    }
   }
 
   fun getCardInfo(){
