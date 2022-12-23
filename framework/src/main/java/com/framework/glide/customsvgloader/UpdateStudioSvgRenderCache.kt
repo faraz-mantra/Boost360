@@ -20,7 +20,16 @@ class UpdateStudioSvgRenderCache:SvgRenderCacheUtil() {
     val userPhone = session.userPrimaryMobile?:""
     val profileUrl =
         session.getFPDetails(PreferencesKey.GET_FP_DETAILS_LogoUrl.name)
-    val base64 = Glide.with(application()).asBitmap().load(profileUrl).submit().get().toBase64()
+    val base64 = Glide.with(application()).asBitmap().load(if (profileUrl.isNullOrEmpty())"https://cdn.nowfloats.com/nf/v1/favicon.png" else profileUrl).submit().get().toBase64()
+
+
+//    companion object {
+//        var instance=UpdateStudioSvgRenderCache()
+//
+//        suspend fun refresh(){
+//            instance=UpdateStudioSvgRenderCache()
+//        }
+//    }
 
 
     companion object {
@@ -30,6 +39,7 @@ class UpdateStudioSvgRenderCache:SvgRenderCacheUtil() {
             instance=UpdateStudioSvgRenderCache()
         }
     }
+
     fun replace(
         svgString: String?,
         context: Context,

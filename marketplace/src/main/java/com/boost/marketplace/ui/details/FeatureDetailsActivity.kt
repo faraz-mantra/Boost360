@@ -1100,6 +1100,7 @@ class FeatureDetailsActivity :
 
         viewModel.bundleResult().observe(this, Observer {
             if (it != null) {
+                bundlesList.clear()
                 for (singleBundle in it) {
                     if (singleBundle.included_features != null) {
                         val temp = Gson().fromJson<List<IncludedFeature>>(
@@ -1510,7 +1511,7 @@ class FeatureDetailsActivity :
 
     fun addUpdatePacks(list: ArrayList<BundlesModel>) {
         if (list.size > 0) {
-            featurePacksAdapter.addupdates(list, addonDetails?.name ?: "")
+            featurePacksAdapter.addupdates(list)
             pack_recycler.adapter = featurePacksAdapter
             featurePacksAdapter.notifyDataSetChanged()
             pack_container.visibility = View.VISIBLE
