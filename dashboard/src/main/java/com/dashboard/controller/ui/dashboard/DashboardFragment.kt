@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.appservice.ui.catalog.widgets.ClickType
@@ -51,7 +50,6 @@ import com.framework.constants.PremiumCode
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.festivePosterName
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.festivePosterVisibility
 import com.framework.glide.util.glideLoad
@@ -321,9 +319,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 //          baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
           visibleViewHighLow(true)
         } else {
-          if (PreferencesUtils.instance.getData(IS_DR_HIGH_DIALOG, false)
-              .not()
-          ) welcomeDrScoreDialog()
+//          if (PreferencesUtils.instance.getData(IS_DR_HIGH_DIALOG, false)
+//              .not()
+//          ) welcomeDrScoreDialog()
           binding?.highReadinessScoreView?.visible()
           binding?.lowReadinessScoreView?.gone()
           visibleViewHighLow(true)
@@ -774,7 +772,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         else getChannelAccessToken(isEnquiriesShare = true, shareType = null)
       }
       binding?.btnFestive -> {
-        //baseActivity.startFestivePosterActivity()
+//        baseActivity.startFestivePosterActivity()
         //enable update studio on demand
         baseActivity.startPostUpdate()
       }
@@ -1107,7 +1105,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         }
       }
       val otherWebsite = session?.getFPDetails(GET_FP_DETAILS_WEBSITE)
-      if (otherWebsite.isNullOrEmpty().not()) urlStringN += "\n⚡ *Other Website: $otherWebsite*"
+      if (otherWebsite.isNullOrEmpty().not()){
+        urlStringN += "\n⚡ *Other Website: $otherWebsite*"
+        connectedChannels.add("website")
+      }
       saveDataConnectedChannel(connectedChannels)
       if (session?.userPrimaryMobile.isNullOrEmpty().not()) urlStringN += "\n\uD83D\uDCDE *Call: ${session?.userPrimaryMobile}*"
       PreferencesUtils.instance.saveData(CHANNEL_SHARE_URL, urlStringN)

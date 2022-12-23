@@ -1,17 +1,14 @@
 package com.boost.presignin.ui.newOnboarding
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.FragmentType
 import com.boost.presignin.constant.IntentConstant
-import com.boost.presignin.databinding.FragmentSetupMyWebsiteBinding
 import com.boost.presignin.databinding.FragmentWelcomeBinding
 import com.framework.models.BaseViewModel
+import com.framework.webengageconstant.*
+import com.onboarding.nowfloats.utils.WebEngageController
 
 class WelcomeFragment : AppBaseFragment<FragmentWelcomeBinding, BaseViewModel>() {
 
@@ -42,11 +39,21 @@ class WelcomeFragment : AppBaseFragment<FragmentWelcomeBinding, BaseViewModel>()
 
   override fun onCreateView() {
     super.onCreateView()
+    WebEngageController.trackEvent(
+      SETUP_MY_WEBSITE_SCREEN_LOAD,
+      SETUP_MY_WEBSITE_LOAD,
+      NO_EVENT_VALUE
+    )
     setOnClickListeners()
   }
 
   private fun setOnClickListeners() {
     binding?.btnSetUpMyWebsite?.setOnClickListener {
+      WebEngageController.trackEvent(
+        SETUP_MY_WEBSITE_BUTTON_CLICK,
+        SETUP_MY_WEBSITE_BTN_CLICK,
+        CLICKED
+      )
       startFragmentFromNewOnBoardingActivity(
         activity = baseActivity,
         type = FragmentType.SET_UP_MY_WEBSITE_FRAGMENT,

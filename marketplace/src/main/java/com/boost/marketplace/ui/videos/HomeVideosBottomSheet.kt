@@ -1,9 +1,12 @@
 package com.boost.marketplace.ui.videos
 
+import android.content.pm.ActivityInfo
+import android.os.Build
 import android.util.Log
 import android.view.View
-import android.webkit.WebChromeClient
+import android.view.WindowManager
 import android.webkit.WebSettings
+import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
@@ -15,7 +18,6 @@ import com.boost.marketplace.databinding.BottomSheetHomeVideosBinding
 import com.boost.marketplace.interfaces.VideosListener
 import com.boost.marketplace.ui.home.MarketPlaceHomeViewModel
 import com.framework.base.BaseBottomSheetDialog
-import com.onboarding.nowfloats.extensions.getInt
 import kotlinx.android.synthetic.main.bottom_sheet_home_videos.*
 import kotlinx.android.synthetic.main.bottom_sheet_videos.videos_pop_up_recycler_view
 import java.util.regex.Matcher
@@ -31,6 +33,9 @@ class HomeVideosBottomSheet :
     var videoCount : Int = 0
     var position1 : Int = 0
     var size : Int = 0
+    var webView: VideoEnabledWebView? = null
+    var webChromeClient: VideoEnabledWebChromeClient? = null
+    var youtubeList: List<YoutubeVideoModel> = arrayListOf()
 
     override fun getLayout(): Int {
         return R.layout.bottom_sheet_home_videos
@@ -48,22 +53,58 @@ class HomeVideosBottomSheet :
         initView()
         initMvvm()
 
-        videoPlayerWebView1?.settings?.javaScriptEnabled = true
-        videoPlayerWebView1?.settings?.loadWithOverviewMode = true
-        videoPlayerWebView1?.settings?.useWideViewPort = true
-        videoPlayerWebView1?.settings?.allowFileAccess = true
-        videoPlayerWebView1?.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
-        videoPlayerWebView1?.webChromeClient = WebChromeClient()
-        videoPlayerWebView1?.webViewClient = WebViewClient()
-        val webSettings = videoPlayerWebView1?.settings
-        webSettings?.javaScriptCanOpenWindowsAutomatically = true
-        webSettings?.setSupportMultipleWindows(true)
-        webSettings?.cacheMode = WebSettings.LOAD_DEFAULT
-        webSettings?.domStorageEnabled = true
+        val loadingView: View = layoutInflater.inflate(R.layout.view_loading_video, null)
+        webChromeClient = VideoEnabledWebChromeClient(nonVideoLayout, videoLayout, loadingView, webView)
 
-        link = requireArguments().getString("link").toString()
-        binding?.videoCount?.text= "playing $position1 of $size "
-        videoPlayerWebView1.loadUrl("http://www.youtube.com/embed/" + getVideoId(link))
+        webChromeClient!!.setOnToggledFullscreen(object : VideoEnabledWebChromeClient.ToggledFullscreenCallback{
+            override fun toggledFullscreen(fullscreen: Boolean) {
+                // Your code to handle the full-screen change, for example showing and hiding the title bar. Example:
+                // Your code to handle the full-screen change, for example showing and hiding the title bar. Example:
+                if (fullscreen) {
+                    val attrs: WindowManager.LayoutParams = requireActivity().getWindow().getAttributes()
+                    attrs.flags = attrs.flags or WindowManager.LayoutParams.FLAG_FULLSCREEN
+                    attrs.flags = attrs.flags or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                    requireActivity().getWindow().setAttributes(attrs)
+                    if (Build.VERSION.SDK_INT >= 14) {
+                        requireActivity().getWindow().getDecorView()
+                            .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE)
+                    }
+                    header.visibility = View.GONE
+                    requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR)
+                } else {
+                    val attrs: WindowManager.LayoutParams = requireActivity().getWindow().getAttributes()
+                    attrs.flags = attrs.flags and WindowManager.LayoutParams.FLAG_FULLSCREEN.inv()
+                    attrs.flags =
+                        attrs.flags and WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON.inv()
+                    requireActivity().getWindow().setAttributes(attrs)
+                    if (Build.VERSION.SDK_INT >= 14) {
+                        requireActivity().getWindow().getDecorView()
+                            .setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE)
+                    }
+                    header.visibility = View.VISIBLE
+                    requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+                }
+            }
+
+        })
+
+
+//        videoPlayerWebView1?.settings?.javaScriptEnabled = true
+//        videoPlayerWebView1?.settings?.loadWithOverviewMode = true
+//        videoPlayerWebView1?.settings?.useWideViewPort = true
+//        videoPlayerWebView1?.settings?.allowFileAccess = true
+//        videoPlayerWebView1?.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
+//        videoPlayerWebView1?.webChromeClient = WebChromeClient()
+//        videoPlayerWebView1?.webViewClient = WebViewClient()
+//        val webSettings = videoPlayerWebView1?.settings
+//        webSettings?.javaScriptCanOpenWindowsAutomatically = true
+//        webSettings?.setSupportMultipleWindows(true)
+//        webSettings?.cacheMode = WebSettings.LOAD_DEFAULT
+//        webSettings?.domStorageEnabled = true
+//
+//        link = requireArguments().getString("link").toString()
+//        binding?.videoCount?.text= "playing $position1 of $size "
+//        videoPlayerWebView1.loadUrl("http://www.youtube.com/embed/" + getVideoId(link))
     }
 
     private fun initView() {
@@ -84,7 +125,9 @@ class HomeVideosBottomSheet :
     private fun initMvvm() {
         viewModel?.getYoutubeVideoDetails()?.observe(this, androidx.lifecycle.Observer {
             Log.e("getYoutubeVideoDetails", it.toString())
+            youtubeList = it
             updateVideosViewPager(it)
+            onPlayYouTubeVideo(it[0], 0)
         })
     }
 
@@ -109,8 +152,10 @@ class HomeVideosBottomSheet :
         videoPlayerWebView1?.settings?.useWideViewPort = true
         videoPlayerWebView1?.settings?.allowFileAccess = true
         videoPlayerWebView1?.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
-        videoPlayerWebView1?.webChromeClient = WebChromeClient()
-        videoPlayerWebView1?.webViewClient = WebViewClient()
+//        videoPlayerWebView1?.webChromeClient = WebChromeClient()
+        videoPlayerWebView1?.webChromeClient = webChromeClient
+//        videoPlayerWebView1?.webViewClient = WebViewClient()
+        videoPlayerWebView1?.webViewClient = InsideWebViewClient()
         val webSettings = videoPlayerWebView1?.settings
         webSettings?.javaScriptCanOpenWindowsAutomatically = true
         webSettings?.setSupportMultipleWindows(true)
@@ -136,6 +181,13 @@ class HomeVideosBottomSheet :
             videoId = matcher.group(1)
         }
         return videoId
+    }
+
+    private class InsideWebViewClient : WebViewClient() {
+        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+            view.loadUrl(url)
+            return true
+        }
     }
 
 }

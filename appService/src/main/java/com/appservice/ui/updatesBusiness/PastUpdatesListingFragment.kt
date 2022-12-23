@@ -43,7 +43,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
   private var pastPostListing = ArrayList<PastPostItem>()
   private lateinit var categoryDataList: ArrayList<PastCategoriesModel>
   private lateinit var postCategoryAdapter: AppBaseRecyclerViewAdapter<PastCategoriesModel>
-  private lateinit var pastPostListingAdapter: AppBaseRecyclerViewAdapter<PastPostItem>
+  private var pastPostListingAdapter: AppBaseRecyclerViewAdapter<PastPostItem>? = null
   private lateinit var tagListAdapter: AppBaseRecyclerViewAdapter<PastPromotionalCategoryModel>
   var postType: Int = 0
   var isFilterVisible = false
@@ -116,7 +116,9 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
       override fun loadMoreItems() {
         if (!isLastPageD) {
           isLoadingD = true
-          pastPostListingAdapter.addLoadingFooter(PastPostItem().getLoaderItem())
+          if (pastPostListingAdapter!=null){
+            pastPostListingAdapter!!.addLoadingFooter(PastPostItem().getLoaderItem())
+          }
           apiCallPastUpdates(false, pastPostListing.size)
         }
       }
@@ -134,7 +136,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
     super.onClick(v)
     when (v) {
       binding.btnPostNewUpdate -> {
-        startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2)
+       navigateToUpdateStudio()
       }
     }
   }
@@ -195,9 +197,12 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
       if (isFirst.not()) {
         removeLoader()
       }
-      if (list.isNullOrEmpty() && isFirst) {
+      if (list.isEmpty() && isFirst) {
         binding.tvNoPost.visible()
-        pastPostListingAdapter.notifyDataSetChanged()
+        binding.rvPostListing.gone()
+        if (pastPostListingAdapter!=null) {
+          pastPostListingAdapter!!.notifyDataSetChanged()
+        }
       } else {
         binding.tvNoPost.gone()
         binding.rvPostListing.visible()
@@ -235,7 +240,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
         else tagArray.add(item.id)
 
         binding.rvFilterSubCategory.postDelayed(
-          Runnable {
+          {
             tagListAdapter.notifyDataSetChanged()
           }, 100
         )
@@ -343,19 +348,21 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
   private fun removeLoader() {
     if (isLoadingD) {
       isLoadingD = false
-      pastPostListingAdapter.removeLoadingFooter()
+      if (pastPostListingAdapter!=null){
+        pastPostListingAdapter!!.removeLoadingFooter()
+      }
     }
   }
 
   fun notifyList() {
-    if (::pastPostListingAdapter.isInitialized.not()) {
+    if (pastPostListingAdapter == null) {
       pastPostListingAdapter = AppBaseRecyclerViewAdapter(baseActivity, pastPostListing, this)
       binding.rvPostListing.adapter = pastPostListingAdapter
       binding.rvPostListing.layoutManager = linearLayoutManager
-      pastPostListingAdapter.runLayoutAnimation(binding.rvPostListing)
+      pastPostListingAdapter!!.runLayoutAnimation(binding.rvPostListing)
       handlePagination()
     } else {
-      pastPostListingAdapter.notifyDataSetChanged()
+      pastPostListingAdapter!!.notifyDataSetChanged()
     }
 
   }

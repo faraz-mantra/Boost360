@@ -61,7 +61,7 @@ class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewMod
     imagePath = arguments?.getString(BK_IMAGE_PATH)
     setImageOnUi()
     viewListeners()
-    setOnClickListener(binding?.btnDone)
+    setOnClickListener(binding.btnDone)
   }
 
   private fun setImageOnUi() {
@@ -71,16 +71,16 @@ class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewMod
       baseActivity.finish()
       return
     }
-    binding?.cropImg?.setImageBitmap(Utility.rotateImageIfRequired(bitmap!!, imagePath))
+    binding.cropImg.setImageBitmap(Utility.rotateImageIfRequired(bitmap!!, imagePath))
     val options = BitmapFactory.Options()
     options.inScaled = false
-    binding?.cropImg?.setImageBitmap(bitmap)
+    binding.cropImg.setImageBitmap(bitmap)
     checkImageDim()
-    binding?.slider?.progress=0
+    binding.slider.progress =0
   }
 
   private fun checkImageDim() {
-    if (bitmap?.width ?: 0 >= 1600 && bitmap?.height ?: 0 >= 700) {
+    if ((bitmap?.width ?: 0) >= 1500 && (bitmap?.height ?: 0) >= 500) {
       if (checkAspectRatio()) {
         imageSuccessView()
       } else {
@@ -93,33 +93,31 @@ class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewMod
   }
 
   private fun imageErrorView(errorText: SpannableString) {
-    validationStat = false
-    binding?.layoutImageMisConfig?.visible()
-    binding?.tvSliderSugg?.gone()
-    binding?.tvImgDesc?.text = errorText
-    binding?.btnDone?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, R.color.red_E39595)
-    binding?.btnDone?.text = resources.getString(
-      R.string.change_image
-    )
-    binding?.layoutSeek?.gone()
+    validationStat = true
+    binding.layoutImageMisConfig.visible()
+    binding.tvSliderSugg.gone()
+    binding.tvImgDesc.text = errorText
+    binding.btnDone.backgroundTintList = ContextCompat.getColorStateList(baseActivity, R.color.colorPrimary)
+    binding.btnDone.text = resources.getString(R.string.crop_picture)
+//    binding.btnDone.backgroundTintList = ContextCompat.getColorStateList(baseActivity, R.color.red_E39595)
+//    binding.btnDone.text = resources.getString(R.string.change_image)
+//    binding.layoutSeek.gone()
   }
 
   private fun imageSuccessView() {
     validationStat = true
-    binding?.layoutImageMisConfig?.gone()
-    binding?.tvSliderSugg?.visible()
-    binding?.layoutSeek?.visible()
-    binding?.btnDone?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, R.color.colorPrimary)
-    binding?.btnDone?.text = resources.getString(
-      R.string.crop_picture
-    )
+    binding.layoutImageMisConfig.gone()
+    binding.tvSliderSugg.visible()
+//    binding.layoutSeek.visible()
+    binding.btnDone.backgroundTintList = ContextCompat.getColorStateList(baseActivity, R.color.colorPrimary)
+    binding.btnDone.text = resources.getString(R.string.crop_picture)
   }
 
   private fun viewListeners() {
-    binding?.slider?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+    binding.slider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
       override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
         if (p1 != 100) {
-          binding?.cropImg?.setImageBitmap(bitmap?.zoom(p1.toFloat() / 100))
+          binding.cropImg.setImageBitmap(bitmap?.zoom(p1.toFloat() / 100))
         }
       }
 
@@ -136,14 +134,14 @@ class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewMod
     options.inScaled = false
     val bitmap = BitmapFactory.decodeFile(imagePath, options)
     val gcd = gcd(bitmap!!.width, bitmap.height)
-    return (bitmap.width.div(gcd) == 16 && bitmap.height.div(gcd) == 7)
+    return (bitmap.width.div(gcd) == 12 && bitmap.height.div(gcd) == 5)
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnDone -> {
-        val imgFile = binding?.cropImg?.croppedImage?.saveBitmap()
+      binding.btnDone -> {
+        val imgFile = binding.cropImg.croppedImage?.saveBitmap()
         if (imgFile?.exists() == true) {
           if (validationStat){
             startBackgroundActivity(
@@ -181,6 +179,4 @@ class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewMod
       }
     }
   }
-
-
 }

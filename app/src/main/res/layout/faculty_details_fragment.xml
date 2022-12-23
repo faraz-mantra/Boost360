@@ -100,6 +100,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_5sdp"
             android:background="@drawable/edit_text_bg_elevated_education"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
             android:elevation="@dimen/_2sdp"
             android:hint="@string/enter_name"
             android:text="@={facultyData.name}"

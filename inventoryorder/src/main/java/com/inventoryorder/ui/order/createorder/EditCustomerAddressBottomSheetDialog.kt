@@ -59,7 +59,7 @@ class EditCustomerAddressBottomSheetDialog(val address: Address) : BaseBottomShe
   }
 
   private fun setCityState(cityDataModel: CityDataModel) {
-    binding?.layoutAddress?.editCity?.setText(cityDataModel.getCityName())
-    binding?.layoutAddress?.editState?.setText(cityDataModel.getStateName())
+    binding?.layoutAddress?.editCity?.setText(cityDataModel.getCityName().replaceFirstChar{ it.uppercase() })
+    binding?.layoutAddress?.editState?.setText(cityDataModel.getStateName().replaceFirstChar{ it.uppercase() })
   }
 }

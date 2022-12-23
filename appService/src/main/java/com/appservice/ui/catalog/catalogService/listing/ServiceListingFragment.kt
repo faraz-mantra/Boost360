@@ -131,6 +131,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
           isLoadingD = true
           adapterService?.addLoadingFooter(ItemsItem().getLoaderItem())
           offSet += limit
+          //this is getting triggered
           getListServiceFilterApi(offSet = offSet, limit = limit)
         }
       }
@@ -148,6 +149,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     if (isFirst || searchString.isNotEmpty()) showProgress()
     viewModel?.getSearchListings(sessionLocal.fpTag, sessionLocal.fPID, searchString, offSet, limit)?.observeOnce(baseActivity) {
       if (it.isSuccess()) {
+        hideProgress()
         setServiceDataItems((it as? ServiceSearchListingResponse)?.result, searchString.isNotEmpty(), isFirst)
       } else if (isFirst) showShortToast(it.message())
       hideProgress()
@@ -158,7 +160,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   override fun onResume() {
     super.onResume()
     offSet = PAGE_START
-    getListServiceFilterApi(isFirst = true, offSet = offSet, limit = limit)
+    //getListServiceFilterApi(isFirst = true, offSet = offSet, limit = limit)
     var fpDetails = sessionLocal.getFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB)
     if (fpDetails.isNullOrEmpty()) fpDetails = "Services"
     setToolbarTitle("$fpDetails ${if (TOTAL_ELEMENTS > 0) "(${TOTAL_ELEMENTS})" else ""}".capitalizeUtil())
@@ -186,6 +188,8 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
       } else if (isFirstLoad) setEmptyView(View.VISIBLE)
     } else {
       if (listService.isNullOrEmpty().not()) {
+        isLastPageD = true
+        removeLoader()
         list.clear()
         list.addAll(listService!!)
         setAdapterNotify()
@@ -234,6 +238,9 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
       }
 
       override fun onQueryTextChange(newText: String?): Boolean {
+        //reset loader page when text is empty
+        if(newText.isNullOrEmpty() || newText.length <= 2)
+          isLastPageD = false
         startFilter(newText)
         return false
       }

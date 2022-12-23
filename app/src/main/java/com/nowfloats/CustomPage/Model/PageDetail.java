@@ -1,13 +1,17 @@
 package com.nowfloats.CustomPage.Model;
 
+import java.util.List;
+
 /**
  * Created by guru on 27/08/2015.
  */
 public class PageDetail {
     public String DisplayName;
-    public String HtmlCode;
+    public String HtmlCode = null;
+    public String GroupCustomPageId = null;
+    public List<String> Keywords = null;
+    public String PageId;
     public String IsArchived;
     public String SetPriorityValue;
     public String Tag;
-    public String _id;
 }
