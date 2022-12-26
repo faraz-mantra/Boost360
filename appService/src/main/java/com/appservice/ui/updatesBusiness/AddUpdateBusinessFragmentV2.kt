@@ -98,7 +98,6 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(UPDATE,PAGE_VIEW,NULL)
-    WebEngageController.trackEvent(Update_Create_Page_Load,PAGE_VIEW,NULL)
     initUI()
     initStt()
     capLimitCheck()
@@ -118,6 +117,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    WebEngageController.trackEvent(Update_Create_Page_Load,PAGE_VIEW,NULL)
     startForCropImageResult =
       registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -206,7 +206,6 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
 
   private fun loadImage(path: String?) {
-    WebEngageController.trackEvent(Added_Photo_In_Update, PAGE_VIEW,NULL)
     posterImagePath = path
     sessionLocal.storeFPDetails(imagePost,path)
     if (path.isNullOrEmpty()){
@@ -380,7 +379,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     super.onClick(v)
     when(v){
       binding!!.btnAddImage->{
-         WebEngageController.trackEvent(Update_attach_Image_clicked, CLICKED,NULL)
+         WebEngageController.trackEvent(Added_Photo_In_Update, CLICKED,NULL)
          UpdateImagePickerBSheet.newInstance(object :UpdateImagePickerBSheet.Callbacks{
            override fun onImagePicked(path: String) {
              if (path == "higher"){

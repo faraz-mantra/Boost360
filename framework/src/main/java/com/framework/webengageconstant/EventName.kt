@@ -693,4 +693,4 @@ const val Update_attach_Image_clicked = "Update_attach_Image_clicked"
 const val Added_Photo_In_Update = "ADDED PHOTO IN UPDATE"
 const val Update_Preview_post_click = "Update_Preview_post_click"
 const val Post_An_Update = "POST AN UPDATE"
-
+const val Update_Preview_loaded = "Update_Preview_loaded"
