@@ -25,7 +25,7 @@
             android:layout_height="0dp"
             android:layout_weight="0.55"
             android:layout_marginTop="@dimen/size_10"
-            android:src="@drawable/update_studio_intro1"
+            android:src="@drawable/update_studio_intro_2_v2"
              />
 
         <com.framework.views.customViews.CustomTextView

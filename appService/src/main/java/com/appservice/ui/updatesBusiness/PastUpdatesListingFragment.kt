@@ -43,7 +43,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
   private var pastPostListing = ArrayList<PastPostItem>()
   private lateinit var categoryDataList: ArrayList<PastCategoriesModel>
   private lateinit var postCategoryAdapter: AppBaseRecyclerViewAdapter<PastCategoriesModel>
-  private lateinit var pastPostListingAdapter: AppBaseRecyclerViewAdapter<PastPostItem>
+  private var pastPostListingAdapter: AppBaseRecyclerViewAdapter<PastPostItem>? = null
   private lateinit var tagListAdapter: AppBaseRecyclerViewAdapter<PastPromotionalCategoryModel>
   var postType: Int = 0
   var isFilterVisible = false
@@ -86,7 +86,6 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
   private fun initUI() {
     linearLayoutManager = LinearLayoutManager(requireActivity())
     baseActivity.window.statusBarColor = getColor(R.color.color_4a4a4a_jio_ec008c)
-    pastPostListingAdapter = AppBaseRecyclerViewAdapter(baseActivity, pastPostListing, this)
     showSimmer(true)
     getTemplateViewConfig()
 
@@ -117,7 +116,9 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
       override fun loadMoreItems() {
         if (!isLastPageD) {
           isLoadingD = true
-          pastPostListingAdapter.addLoadingFooter(PastPostItem().getLoaderItem())
+          if (pastPostListingAdapter!=null){
+            pastPostListingAdapter!!.addLoadingFooter(PastPostItem().getLoaderItem())
+          }
           apiCallPastUpdates(false, pastPostListing.size)
         }
       }
@@ -199,8 +200,8 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
       if (list.isEmpty() && isFirst) {
         binding.tvNoPost.visible()
         binding.rvPostListing.gone()
-        if (::pastPostListingAdapter.isInitialized) {
-          pastPostListingAdapter.notifyDataSetChanged()
+        if (pastPostListingAdapter!=null) {
+          pastPostListingAdapter!!.notifyDataSetChanged()
         }
       } else {
         binding.tvNoPost.gone()
@@ -347,19 +348,21 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
   private fun removeLoader() {
     if (isLoadingD) {
       isLoadingD = false
-      pastPostListingAdapter.removeLoadingFooter()
+      if (pastPostListingAdapter!=null){
+        pastPostListingAdapter!!.removeLoadingFooter()
+      }
     }
   }
 
   fun notifyList() {
-    if (::pastPostListingAdapter.isInitialized.not()) {
+    if (pastPostListingAdapter == null) {
       pastPostListingAdapter = AppBaseRecyclerViewAdapter(baseActivity, pastPostListing, this)
       binding.rvPostListing.adapter = pastPostListingAdapter
       binding.rvPostListing.layoutManager = linearLayoutManager
-      pastPostListingAdapter.runLayoutAnimation(binding.rvPostListing)
+      pastPostListingAdapter!!.runLayoutAnimation(binding.rvPostListing)
       handlePagination()
     } else {
-      pastPostListingAdapter.notifyDataSetChanged()
+      pastPostListingAdapter!!.notifyDataSetChanged()
     }
 
   }

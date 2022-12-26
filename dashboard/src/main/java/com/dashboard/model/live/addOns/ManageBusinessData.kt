@@ -41,7 +41,7 @@ class ManageBusinessData(
     unlimited_website_bandwidth("unlimited_website_bandwidth", R.drawable.unlimited_website_bandwidth),
     clinic_basic_info("clinic_basic_info", R.drawable.ic_business_info_n),
     clinic_logo("clinic_logo", R.drawable.clinic_logo),
-    featured_image_video("featured_image_video", R.drawable.video_gallery),
+    featured_image_video("featured_image_video", R.drawable.ic_video_gallery),
     business_hours("business_hours", R.drawable.business_hours),
     contact_details("contact_details", R.drawable.contact_details),
     business_kyc_verification("business_kyc_verification", R.drawable.boost_business_kyc_d),

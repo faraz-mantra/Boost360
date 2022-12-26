@@ -7,14 +7,14 @@
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/gradient_33333_4a4a4a"
+        android:background="@color/color_4a4a4a_jio_ec008c"
         app:layoutDescription="@xml/activity_update_studio_intro_xml_constraintlayout3_scene">
 
         <com.framework.views.customViews.CustomImageView
             android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/size_50"
-            android:src="@drawable/ic_update_studio_intro_tagline"
+            android:src="@drawable/ic_update_studio_intro_tagline_v2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +66,7 @@
             android:fontFamily="@font/bold"
             android:stateListAnimator="@null"
             android:text="@string/next"
-            android:textColor="@color/color_ffb900_jio_ec008c"
+            android:textColor="@color/color_ffb900_jio_0400A6"
             android:textSize="@dimen/size_16"
             app:cornerRadius="10dp"
             android:alpha="0"
@@ -74,7 +74,7 @@
             app:layout_constraintEnd_toStartOf="@+id/white_bg"
             app:layout_constraintStart_toEndOf="@+id/white_bg"
             app:layout_constraintTop_toBottomOf="@+id/slider_indicator"
-            app:strokeColor="@color/color_ffb900_jio_ec008c"
+            app:strokeColor="@color/color_ffb900_jio_0400A6"
             app:strokeWidth="1dp" />
 
 
@@ -83,7 +83,7 @@
             style="@style/CustomRoundedYellowButton"
             android:layout_height="55dp"
             android:layout_marginHorizontal="27dp"
-            android:backgroundTint="@color/color_ffb900_jio_ec008c"
+            android:backgroundTint="@color/color_ffb900_jio_0400A6"
             android:fontFamily="@font/bold"
             android:stateListAnimator="@null"
             android:text="@string/explore_update_studio"
