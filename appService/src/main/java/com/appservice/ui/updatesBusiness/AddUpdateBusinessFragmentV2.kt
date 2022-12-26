@@ -170,7 +170,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       val imageWidth: Int = bitMapOption.outWidth
       val imageHeight: Int = bitMapOption.outHeight
 
-      if (imageWidth >= 800 && imageHeight >= 800) {
+      if (imageWidth >= 300 && imageHeight >= 300) {
         if (imgFile.sizeInMb <= 5) {
           return true
         } else {
@@ -178,7 +178,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
           return false
         }
       } else {
-        showLongToast(getString(R.string.image_resolution_is_smaller_than_800_x_800_px))
+        showLongToast(getString(R.string.image_resolution_is_smaller_than_300_x_300_px))
         return false
       }
 
