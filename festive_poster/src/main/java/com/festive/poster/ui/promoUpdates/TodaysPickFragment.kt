@@ -34,6 +34,8 @@ import com.framework.webengageconstant.Promotional_Update_View_More_Click
 import com.framework.webengageconstant.Promtoional_Update_View_Updates_Click
 import com.framework.webengageconstant.Update_studio_Mark_Favourite_click
 import com.framework.webengageconstant.Update_studio_Unmark_Favourite_click
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePosterViewModel>(), RecyclerItemClickListener {
 
@@ -83,6 +85,7 @@ class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePos
           stopShimmer()
           val data = it.data ?: return@observe
           val uiList = data.asTodaysPickModels().toArrayList()
+          Collections.reverse(uiList)
           addViewMoreInEachList(uiList)
           adapter?.setUpUsingDiffUtil(
             uiList
@@ -188,9 +191,9 @@ class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePos
       RecyclerViewActionType.POSTER_LOVE_CLICKED.ordinal -> {
         (childItem as? TemplateUi)?.let {
           if (it.isFavourite){
-            WebEngageController.trackEvent(Update_studio_Mark_Favourite_click)
-          }else {
             WebEngageController.trackEvent(Update_studio_Unmark_Favourite_click)
+          }else {
+            WebEngageController.trackEvent(Update_studio_Mark_Favourite_click)
           }
           callFavApi(it)
         }

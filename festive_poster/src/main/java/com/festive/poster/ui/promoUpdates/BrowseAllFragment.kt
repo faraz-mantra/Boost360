@@ -168,9 +168,9 @@ class BrowseAllFragment : AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesV
       RecyclerViewActionType.POSTER_LOVE_CLICKED.ordinal -> {
         (item as? TemplateUi)?.let {
           if (it.isFavourite){
-            WebEngageController.trackEvent(Update_studio_Mark_Favourite_click)
-          }else {
             WebEngageController.trackEvent(Update_studio_Unmark_Favourite_click)
+          }else {
+            WebEngageController.trackEvent(Update_studio_Mark_Favourite_click)
           }
           callFavApi(it)
         }

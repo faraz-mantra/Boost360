@@ -179,7 +179,7 @@ class FavouriteListFragment : AppBaseFragment<FragmentFavouriteListBinding, Post
 
             RecyclerViewActionType.POSTER_LOVE_CLICKED.ordinal->{
                 val templateUi = item as TemplateUi
-                WebEngageController.trackEvent(if(templateUi.isFavourite) UPDATE_STUDIO_MARK_FAVOURITE_CLICK else UPDATE_STUDIO_UNMARK_FAVOURITE_CLICK, CLICK, CLICKED)
+                WebEngageController.trackEvent(if(templateUi.isFavourite) UPDATE_STUDIO_UNMARK_FAVOURITE_CLICK else UPDATE_STUDIO_MARK_FAVOURITE_CLICK, CLICK, CLICKED)
                 callFavApi(item as TemplateUi)
             }
         }
