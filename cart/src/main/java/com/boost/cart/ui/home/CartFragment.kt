@@ -1563,6 +1563,18 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 business_gstin_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
             }
 
+            if(cart_business_city_name.text.toString().isEmpty()){
+                cart_place_of_supply_cl.setBackgroundResource(R.drawable.et_validity_error)
+                cart_main_scroller.post {
+                    cart_main_scroller.scrollTo(
+                        0,
+                        cart_place_of_supply_cl.getBottom()
+                    )
+                }
+                Toasty.error(requireContext(), "Select State of Supply. Not Selected!!", Toast.LENGTH_LONG).show()
+                return false
+            }
+
 //      if (business_contact_number.text!!.isEmpty()) {
 //        business_contact_number.setBackgroundResource(com.boost.payment.R.drawable.et_validity_error)
 //        Toasty.error(requireContext(), "Please enter Mobile no.", Toast.LENGTH_LONG).show()
@@ -1629,6 +1641,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
             }
 
             return !gstcheck.isChecked && cart_business_address.text.toString().isNotEmpty()
+        }else{
+            cart_place_of_supply_cl.setBackgroundResource(R.drawable.edittext_selector1)
+            cart_business_address.setBackgroundResource(R.drawable.edittext_selector1)
+            business_gstin_number.setBackgroundResource(R.drawable.edittext_selector1)
         }
 
         if (!business_gstin_number.text.toString().isEmpty() && !Utils.isValidGSTIN(
@@ -3169,7 +3185,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                         temp = temp + 1
                     default_validity_months = temp.toInt()
                 }else{
-                    default_validity_months = if(prefs.getCartValidityMonths()!!.toInt() > it) prefs.getCartValidityMonths()!!.toInt() else it
+                    default_validity_months = if(prefs.getCartValidityMonths()!= null && prefs.getCartValidityMonths()!!.toInt() > it) prefs.getCartValidityMonths()!!.toInt() else it
                 }
             prefs.storeCartValidityMonths(default_validity_months.toString())
             Handler().postDelayed({
