@@ -257,10 +257,11 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     FirestoreManager.readDraft {
       if (activity != null && isAdded) {
 
-        val textPost = it?.content
+        var textPost = it?.content
+        textPost = textPost?.replaceFirstChar{ nameFirstChar -> nameFirstChar.uppercase() } ?: ""
         binding!!.etUpdate.setText(
           highlightHashTag(
-            textPost!!.replaceFirstChar{ nameFirstChar -> nameFirstChar.uppercase() },
+            textPost,
             R.color.black_4a4a4a,
             R.font.semi_bold
           )
