@@ -384,7 +384,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
          UpdateImagePickerBSheet.newInstance(object :UpdateImagePickerBSheet.Callbacks{
            override fun onImagePicked(path: String) {
              if (path == "higher"){
-               showShortToast("Image is greater that 5 MB")
+               showShortToast("Image is greater than 5 MB")
              } else {
                UpdateCropImageActivity.launchActivity(path,requireActivity(),startForCropImageResult)
              }
