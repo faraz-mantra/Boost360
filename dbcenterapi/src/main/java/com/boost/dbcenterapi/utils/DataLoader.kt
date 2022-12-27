@@ -3,6 +3,7 @@ package com.boost.dbcenterapi.utils
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.promoMarketOfferFilter
@@ -10,19 +11,27 @@ import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.*
 import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId
+import com.framework.utils.sendNotification
 import com.google.gson.Gson
 import es.dmoral.toasty.Toasty
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 object DataLoader {
+    val NewApiService = Utils.getRetrofit(true).create(NewApiInterface::class.java)
 
-    fun loadMarketPlaceData(application: Application, expCode: String?, fpTag: String?) {
-        val NewApiService = Utils.getRetrofit(true).create(NewApiInterface::class.java)
-
+    fun loadMarketPlaceData(
+        application: Application,
+        userSessionManager: UserSessionManager
+    ) {
         if (Utils.isConnectedToInternet(application)) {
             CompositeDisposable().add(
                 NewApiService.GetAllFeatures()
@@ -36,7 +45,11 @@ object DataLoader {
                                 if (item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) {
                                     var applicableToCurrentExpCode = false
                                     for (code in item.exclusive_to_categories!!) {
-                                        if (code.equals(expCode, true))
+                                        if (code.equals(
+                                                userSessionManager.fP_AppExperienceCode,
+                                                true
+                                            )
+                                        )
                                             applicableToCurrentExpCode = true
                                     }
                                     if (!applicableToCurrentExpCode)
@@ -110,6 +123,11 @@ object DataLoader {
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .doOnComplete {
                                     Log.e("insertAllFeatures", "Successfully")
+                                    checkExpiryAddonsPackages(
+                                        application.applicationContext,
+                                        userSessionManager,
+                                        data
+                                    )
                                 }
                                 .doOnError {
                                     Log.e("insertAllFeatures", "Failed")
@@ -122,7 +140,7 @@ object DataLoader {
                                 if (item.exclusive_for_customers != null && item.exclusive_for_customers!!.size > 0) {
                                     var applicableToCurrentFPTag = false
                                     for (code in item.exclusive_for_customers!!) {
-                                        if (code.equals(fpTag, true)) {
+                                        if (code.equals(userSessionManager.fpTag, true)) {
                                             applicableToCurrentFPTag = true
                                             break
                                         }
@@ -133,7 +151,11 @@ object DataLoader {
                                 if (item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) {
                                     var applicableToCurrentExpCode = false
                                     for (code in item.exclusive_to_categories!!) {
-                                        if (code.equals(expCode, true)) {
+                                        if (code.equals(
+                                                userSessionManager.fP_AppExperienceCode,
+                                                true
+                                            )
+                                        ) {
                                             applicableToCurrentExpCode = true
                                             break
                                         }
@@ -236,7 +258,10 @@ object DataLoader {
                                 //marketplace offers
                                 if (it.Data[0].marketplace_offers != null && it.Data[0].marketplace_offers.size > 0) {
                                     val marketplaceOffersFilter = (it.Data[0].marketplace_offers
-                                        ?: ArrayList()).promoMarketOfferFilter(expCode, fpTag)
+                                        ?: ArrayList()).promoMarketOfferFilter(
+                                        userSessionManager.fP_AppExperienceCode,
+                                        userSessionManager.fpTag
+                                    )
                                     var marketOfferData = arrayListOf<MarketOfferModel>()
                                     for (item in marketplaceOffersFilter) {
                                         marketOfferData.add(
@@ -357,7 +382,7 @@ object DataLoader {
 
                                 }
                             }
-                            if(it.Data[0].expert_connect.is_online){
+                            if (it.Data[0].expert_connect.is_online) {
                                 val prefs = SharedPrefs(Activity())
                                 prefs.storeExpertContact(it.Data[0].expert_connect.contact_number)
                             }
@@ -506,6 +531,67 @@ object DataLoader {
                     }, {
                         it.printStackTrace()
                     })
+        )
+    }
+
+    @SuppressLint("LongLogTag")
+    private fun checkExpiryAddonsPackages(
+        applicationContext: Context,
+        userSessionManager: UserSessionManager,
+        data: ArrayList<FeaturesModel>
+    ) {
+        CompositeDisposable().add(
+            NewApiService.GetFeatureDetails(userSessionManager.fPID!!, clientId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Log.e("checkExpiryAddonsPackages >>", Gson().toJson(it))
+                    val paidList = data.filter { it.price > 0 }.map { it.feature_code }
+                    for (singleitem in it!!) {
+                        if (paidList.contains(singleitem.featureCode)) {
+                            val date1: Date =
+                                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(singleitem.expiryDate!!)
+
+                            val diff: Long = date1.getTime() - Date().getTime()
+                            val seconds = diff / 1000
+                            val minutes = seconds / 60
+                            val hours = minutes / 60
+                            val days = hours / 24
+
+                            if (days.toInt() > 7 && days.toInt() < 6) {
+                                sendNotification(
+                                    applicationContext,
+                                    "Renewal Reminder!",
+                                    "Your add-ons are expiring in 7 days. Few of the features will stop working after expiry.",
+                                    "http://boost.nowfloats.com?viewType=CART_FRAGMENT&buyItemKey=${singleitem.featureKey}"
+                                )
+                            } else if (days.toInt() > 3 && days.toInt() < 2) {
+                                sendNotification(
+                                    applicationContext,
+                                    "Alert! Your Add-ons are expiring in 3 days!",
+                                    "Renew them to ensure you don’t miss out on key features.",
+                                    "http://boost.nowfloats.com?viewType=CART_FRAGMENT&buyItemKey=${singleitem.featureKey}"
+                                )
+                            } else if (days.toInt() > 1 && days.toInt() < 0) {
+                                sendNotification(
+                                    applicationContext,
+                                    "Last Day For Renewal!",
+                                    "Your add-ons are expiring in the next 24 hours! Renew them now.",
+                                    "http://boost.nowfloats.com?viewType=CART_FRAGMENT&buyItemKey=${singleitem.featureKey}"
+                                )
+                            } else if (days.toInt() <= 0) {
+                                sendNotification(
+                                    applicationContext,
+                                    "Your Add-ons have expired! :(",
+                                    "But you can still renew them to keep enjoying the features.",
+                                    "http://boost.nowfloats.com?viewType=CART_FRAGMENT&buyItemKey=${singleitem.featureKey}"
+                                )
+                            }
+                        }
+                    }
+                }, {
+                    it.printStackTrace()
+                })
         )
     }
 
