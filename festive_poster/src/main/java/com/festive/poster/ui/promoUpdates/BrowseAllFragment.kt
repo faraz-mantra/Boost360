@@ -24,10 +24,7 @@ import com.framework.pref.UserSessionManager
 import com.framework.rest.NetworkResult
 import com.framework.utils.showToast
 import com.framework.utils.toArrayList
-import com.framework.webengageconstant.Promotional_Update_Browse_All_Loaded
-import com.framework.webengageconstant.Promotional_Update_Category_Click
-import com.framework.webengageconstant.Update_studio_Mark_Favourite_click
-import com.framework.webengageconstant.Update_studio_Unmark_Favourite_click
+import com.framework.webengageconstant.*
 
 class BrowseAllFragment : AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesViewModel>(), RecyclerItemClickListener {
 
@@ -51,7 +48,7 @@ class BrowseAllFragment : AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesV
   companion object {
     val BK_SELECTED_POS_TAG = "BK_SELECTED_POS"
     fun newInstance(selectedPosTag: String? = null): BrowseAllFragment {
-      val bundle: Bundle = Bundle()
+      val bundle = Bundle()
       bundle.putString(BK_SELECTED_POS_TAG, selectedPosTag)
       val fragment = BrowseAllFragment()
       fragment.arguments = bundle
@@ -140,6 +137,7 @@ class BrowseAllFragment : AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesV
     selectedPos = positon
     selectCategory()
     posterRvAdapter?.setUpUsingDiffUtil(newList)
+    WebEngageController.trackEvent(PROMOTIONAL_UPDATE_CATEGORY_LOADED, NO_EVENT_LABLE, NO_EVENT_VALUE)
   }
 
   private fun selectCategory() {
@@ -155,7 +153,7 @@ class BrowseAllFragment : AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesV
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.BROWSE_ALL_POSTER_CAT_CLICKED.ordinal -> {
-        WebEngageController.trackEvent(Promotional_Update_Category_Click)
+        WebEngageController.trackEvent(PROMOTIONAL_UPDATE_CATEGORY_CLICK, CLICK, CLICKED)
         switchToSelectedItem(position, categoryList[position].templates)
       }
       RecyclerViewActionType.WHATSAPP_SHARE_CLICKED.ordinal -> {
@@ -167,11 +165,7 @@ class BrowseAllFragment : AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesV
 
       RecyclerViewActionType.POSTER_LOVE_CLICKED.ordinal -> {
         (item as? TemplateUi)?.let {
-          if (it.isFavourite){
-            WebEngageController.trackEvent(Update_studio_Mark_Favourite_click)
-          }else {
-            WebEngageController.trackEvent(Update_studio_Unmark_Favourite_click)
-          }
+          WebEngageController.trackEvent(if(it.isFavourite) UPDATE_STUDIO_UNMARK_FAVOURITE_CLICK else UPDATE_STUDIO_MARK_FAVOURITE_CLICK, CLICK, CLICKED)
           callFavApi(it)
         }
       }
