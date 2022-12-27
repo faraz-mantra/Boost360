@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
@@ -420,10 +421,16 @@ public class Business_Logo_Activity extends AppCompatActivity {
     }
 
     public void uploadPrimaryPicture(String path) {
-        uploadButton.setText(getResources().getString(R.string.change));
-        new AlertArchive(Constants.alertInterface, "LOGO", session.getFPID());
-        Upload_Logo upload_logo = new Upload_Logo(Business_Logo_Activity.this, path, session.getFPID(), session, this::imageUpload);
-        upload_logo.execute();
+        try {
+            uploadButton.setText(getResources().getString(R.string.change));
+            new AlertArchive(Constants.alertInterface, "LOGO", session.getFPID());
+            Upload_Logo upload_logo = new Upload_Logo(Business_Logo_Activity.this, path, session.getFPID(), session, this::imageUpload);
+            upload_logo.execute();
+        } catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(this, "Something went wrong. Please try again later", Toast.LENGTH_SHORT).show();
+        }
+
 //        Constants.isImgUploaded = false;
 //        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(Business_Logo_Activity.this, path, false,true,session.getFPID());
 //        upa.execute();

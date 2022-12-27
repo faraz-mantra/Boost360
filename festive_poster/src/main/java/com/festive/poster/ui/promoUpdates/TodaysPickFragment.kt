@@ -31,6 +31,8 @@ import com.framework.utils.convertListObjToString
 import com.framework.utils.showToast
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePosterViewModel>(), RecyclerItemClickListener {
 
@@ -80,6 +82,7 @@ class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePos
           stopShimmer()
           val data = it.data ?: return@observe
           val uiList = data.asTodaysPickModels().toArrayList()
+          Collections.reverse(uiList)
           addViewMoreInEachList(uiList)
           adapter?.setUpUsingDiffUtil(
             uiList
