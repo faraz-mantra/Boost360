@@ -324,7 +324,11 @@ public class Image_Gallery_Fragment extends Fragment implements
         if (imageChangeListener != null){
             imageChangeListener.onImagePicked();
         } else {
-            Toast.makeText(activity, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+            try {
+                Toast.makeText(activity, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 
