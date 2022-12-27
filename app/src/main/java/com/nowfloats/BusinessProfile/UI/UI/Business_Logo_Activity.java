@@ -420,10 +420,15 @@ public class Business_Logo_Activity extends AppCompatActivity {
     }
 
     public void uploadPrimaryPicture(String path) {
-        uploadButton.setText(getResources().getString(R.string.change));
-        new AlertArchive(Constants.alertInterface, "LOGO", session.getFPID());
-        Upload_Logo upload_logo = new Upload_Logo(Business_Logo_Activity.this, path, session.getFPID(), session, this::imageUpload);
-        upload_logo.execute();
+        try {
+            uploadButton.setText(getResources().getString(R.string.change));
+            new AlertArchive(Constants.alertInterface, "LOGO", session.getFPID());
+            Upload_Logo upload_logo = new Upload_Logo(Business_Logo_Activity.this, path, session.getFPID(), session, this::imageUpload);
+            upload_logo.execute();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
 //        Constants.isImgUploaded = false;
 //        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(Business_Logo_Activity.this, path, false,true,session.getFPID());
 //        upa.execute();
