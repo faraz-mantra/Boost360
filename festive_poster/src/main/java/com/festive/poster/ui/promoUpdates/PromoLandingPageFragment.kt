@@ -36,6 +36,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
   val browseTabFragment = BrowseTabFragment.newInstance()
   var currentPage: Int = 0
   var isCreateClick: Boolean = false
+  var isIsTodayTabClicked: Boolean = false
 
   enum class ToolTipType {
     FOR_TODAY, CREATE
@@ -142,10 +143,15 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
       override fun onTabSelected(tab: TabLayout.Tab?) {
         //  changeTabFont(tab,Typeface.BOLD)
         when(tab!!.position){
-          0 -> WebEngageController.trackEvent(Update_studio_today_tab_click)
+          0 -> {
+            if (isIsTodayTabClicked){
+              WebEngageController.trackEvent(Update_studio_today_tab_click)
+            }
+          }
           1 -> WebEngageController.trackEvent(Update_studio_browse_tab_click)
           2 -> WebEngageController.trackEvent(Update_studio_Create_custom_update_click)
         }
+        isIsTodayTabClicked = true
         val tabIconColor: Int = ContextCompat.getColor(requireActivity(), R.color.colorPrimary)
         if (tab?.position == 1) {
           tab.icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_circlesfour_active)
