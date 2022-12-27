@@ -606,7 +606,6 @@ const val Promotional_Update_Browse_All_Loaded = "Promotional_Update_Browse_All_
 const val Promotional_Update_Category_Click = "Promotional_Update_Category_Click"
 
 const val Promtoional_Update_View_Updates_Click = "Promtoional_Update_View_Updates_Click"
-//const val Promotional_Update_Category_Loaded = "Promotional_Update_Category_Loaded" /* feature not added */
 //const val Promotional_Update_Category_Album_View_Click = "Promotional_Update_Category_Album_View_Click" /* feature not added */
 const val Promotional_Update_Preview_Post_Loaded = "Promotional_Update_Preview_Post_Loaded"
 const val Promotional_Update_Edit_Loaded = "Promotional_Update_Edit_Loaded"
@@ -685,8 +684,6 @@ const val USER_LOCATION = "User_location_data"
 const val Update_studio_today_tab_click = "Update_studio_today_tab_click"
 const val Update_studio_browse_tab_click = "Update_studio_browse_tab_click"
 const val Update_studio_Create_custom_update_click = "Update_studio_Create_custom_update_click"
-const val Update_studio_Mark_Favourite_click = "Update_studio_Mark_Favourite_click"
-const val Update_studio_Unmark_Favourite_click = "Update_studio_Unmark_Favourite_click"
 
 const val Update_Create_Page_Load = "UPDATE CREATE PAGE LOAD"
 const val Update_attach_Image_clicked = "Update_attach_Image_clicked"
