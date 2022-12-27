@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
@@ -427,6 +428,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
             upload_logo.execute();
         } catch (Exception e){
             e.printStackTrace();
+            Toast.makeText(this, "Something went wrong. Please try again later", Toast.LENGTH_SHORT).show();
         }
 
 //        Constants.isImgUploaded = false;
