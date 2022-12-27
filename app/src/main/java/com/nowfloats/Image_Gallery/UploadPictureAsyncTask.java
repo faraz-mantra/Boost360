@@ -156,21 +156,25 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
     protected void onPostExecute(String result) {
 //        BoostLog.d("UploadPicAsyncTask","onPostExecute : "+Constants.storeSecondaryImages.size());
 //        Toast.makeText(appContext,"Success  "+result,Toast.LENGTH_SHORT).show();
-        if (!TextUtils.isEmpty(result) && result.equals("true")) {
-            Methods.showSnackBarPositive(appContext, appContext.getString(R.string.image_successfully_apdated));
-            if (appContext != null && !appContext.isFinishing() && pd.isShowing()) {
-                pd.dismiss();
+        try{
+            if (!TextUtils.isEmpty(result) && result.equals("true")) {
+                Methods.showSnackBarPositive(appContext, appContext.getString(R.string.image_successfully_apdated));
+                if (appContext != null && !appContext.isFinishing() && pd.isShowing()) {
+                    pd.dismiss();
+                }
+            } else {
+                Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_upload_image));
+                if (appContext != null && !appContext.isFinishing() && pd.isShowing()) {
+                    pd.dismiss();
+                }
             }
-        } else {
-            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_upload_image));
-            if (appContext != null && !appContext.isFinishing() && pd.isShowing()) {
-                pd.dismiss();
-            }
+            //  BoostLog.d("UploadPictureInterface","uploadInterface : "+uploadInterface);
+            uploadInterface.uploadedPictureListener(path);
+            onPost();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            System.gc();
         }
-        //  BoostLog.d("UploadPictureInterface","uploadInterface : "+uploadInterface);
-        uploadInterface.uploadedPictureListener(path);
-        onPost();
-
     }
 
     public void onPost() {

@@ -328,7 +328,13 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         bundle.putSerializable(IntentConstant.PRODUCT_GST_DETAIL.name, gstProductData)
         startFragmentActivity(FragmentType.PRODUCT_INFORMATION, bundle, isResult = true, requestCode = RC_PRODCUT_INFO)
       }
-      binding.vwSavePublish -> if (isValid()) createUpdateApi()
+      binding.vwSavePublish -> if (isValid()) {
+        try {
+          createUpdateApi()
+        } catch (e: Exception) {
+          e.printStackTrace()
+        }
+      }
     }
   }
 
@@ -346,7 +352,8 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
             WebEngageController.trackEvent(PRODUCT_CATALOGUE_CREATED, ADDED, NO_EVENT_VALUE)
             productIdAdd = productId
             addGstService(productId)
-          } else showError(getString(R.string.product_adding_error_try_again))
+          } else
+            showError(getString(R.string.product_adding_error_try_again))
         }
       }
     } else {
@@ -365,7 +372,10 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         if ((it.isSuccess())) {
           WebEngageController.trackEvent(PRODUCT_CATALOGUE_UPDATED, ADDED, NO_EVENT_VALUE)
           updateGstService(product?.productId)
-        } else showError(getString(R.string.product_updating_error_try_again))
+        } else {
+          hideProgress()
+          showError(getString(R.string.product_updating_error_try_again))
+        }
       }
     }
   }
@@ -398,6 +408,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         uploadImageSingle(productId)
       } else {
         if (isEdit == false) errorType = "addGstService"
+        hideProgress()
         showError(getString(R.string.product_adding_error_try_again))
       }
     })
@@ -413,9 +424,11 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       clientId, requestType = "sequential", requestId = deviceId, totalChunks = 1,
       currentChunkNumber = 1, productId = productId, fileName, requestBody = getRequestServiceImage(productImage)
     )?.observeOnce(viewLifecycleOwner) {
-      if (it.isSuccess()) uploadSecondaryImage(productId)
+      if (it.isSuccess())
+        uploadSecondaryImage(productId)
       else {
         if (isEdit == false) errorType = "uploadImageSingle"
+        hideProgress()
         showError(getString(R.string.product_image_uploading_error))
       }
     }
