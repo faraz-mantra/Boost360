@@ -30,10 +30,9 @@ import com.framework.rest.NetworkResult
 import com.framework.utils.convertListObjToString
 import com.framework.utils.showToast
 import com.framework.utils.toArrayList
-import com.framework.webengageconstant.Promotional_Update_View_More_Click
-import com.framework.webengageconstant.Promtoional_Update_View_Updates_Click
-import com.framework.webengageconstant.Update_studio_Mark_Favourite_click
-import com.framework.webengageconstant.Update_studio_Unmark_Favourite_click
+import com.framework.webengageconstant.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePosterViewModel>(), RecyclerItemClickListener {
 
@@ -83,6 +82,7 @@ class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePos
           stopShimmer()
           val data = it.data ?: return@observe
           val uiList = data.asTodaysPickModels().toArrayList()
+          Collections.reverse(uiList)
           addViewMoreInEachList(uiList)
           adapter?.setUpUsingDiffUtil(
             uiList
@@ -136,7 +136,7 @@ class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePos
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.cardBrowseAllTemplate -> {
+      binding.cardBrowseAllTemplate -> {
         WebEngageController.trackEvent(Promotional_Update_View_More_Click)
         addFragment(R.id.container, BrowseAllFragment.newInstance(), true, true)
       }
@@ -187,11 +187,7 @@ class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePos
       }
       RecyclerViewActionType.POSTER_LOVE_CLICKED.ordinal -> {
         (childItem as? TemplateUi)?.let {
-          if (it.isFavourite){
-            WebEngageController.trackEvent(Update_studio_Mark_Favourite_click)
-          }else {
-            WebEngageController.trackEvent(Update_studio_Unmark_Favourite_click)
-          }
+          WebEngageController.trackEvent(if(it.isFavourite) UPDATE_STUDIO_UNMARK_FAVOURITE_CLICK else UPDATE_STUDIO_MARK_FAVOURITE_CLICK, CLICK, CLICKED)
           callFavApi(it)
         }
       }

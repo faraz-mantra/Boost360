@@ -116,7 +116,9 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
   }
 
   override fun onCreateView() {
-    WebEngageController.trackEvent(Promotional_Update_Preview_Post_Loaded)
+//    WebEngageController.trackEvent(Promotional_Update_Preview_Post_Loaded)
+    WebEngageController.trackEvent(Update_Preview_loaded)
+
     session = UserSessionManager(this)
     captionIntent = intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IntentConstants.IK_CAPTION_KEY)
     initUI()

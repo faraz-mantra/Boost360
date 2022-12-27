@@ -98,7 +98,6 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(UPDATE,PAGE_VIEW,NULL)
-    WebEngageController.trackEvent(Update_Create_Page_Load,PAGE_VIEW,NULL)
     initUI()
     initStt()
     capLimitCheck()
@@ -118,6 +117,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    WebEngageController.trackEvent(Update_Create_Page_Load,PAGE_VIEW,NULL)
     startForCropImageResult =
       registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -170,7 +170,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       val imageWidth: Int = bitMapOption.outWidth
       val imageHeight: Int = bitMapOption.outHeight
 
-      if (imageWidth >= 800 && imageHeight >= 800) {
+      if (imageWidth >= 300 && imageHeight >= 300) {
         if (imgFile.sizeInMb <= 5) {
           return true
         } else {
@@ -178,7 +178,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
           return false
         }
       } else {
-        showLongToast(getString(R.string.image_resolution_is_smaller_than_800_x_800_px))
+        showLongToast(getString(R.string.image_resolution_is_smaller_than_300_x_300_px))
         return false
       }
 
@@ -206,7 +206,6 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
 
   private fun loadImage(path: String?) {
-    WebEngageController.trackEvent(Added_Photo_In_Update, PAGE_VIEW,NULL)
     posterImagePath = path
     sessionLocal.storeFPDetails(imagePost,path)
     if (path.isNullOrEmpty()){
@@ -257,10 +256,11 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     FirestoreManager.readDraft {
       if (activity != null && isAdded) {
 
-        val textPost = it?.content
+        var textPost = it?.content
+        textPost = textPost?.replaceFirstChar{ nameFirstChar -> nameFirstChar.uppercase() } ?: ""
         binding!!.etUpdate.setText(
           highlightHashTag(
-            textPost!!.replaceFirstChar{ nameFirstChar -> nameFirstChar.uppercase() },
+            textPost,
             R.color.black_4a4a4a,
             R.font.semi_bold
           )
@@ -379,11 +379,11 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     super.onClick(v)
     when(v){
       binding!!.btnAddImage->{
-         WebEngageController.trackEvent(Update_attach_Image_clicked, CLICKED,NULL)
+         WebEngageController.trackEvent(Added_Photo_In_Update, CLICKED,NULL)
          UpdateImagePickerBSheet.newInstance(object :UpdateImagePickerBSheet.Callbacks{
            override fun onImagePicked(path: String) {
              if (path == "higher"){
-               showShortToast("Image is greater that 5 MB")
+               showShortToast("Image is greater than 5 MB")
              } else {
                UpdateCropImageActivity.launchActivity(path,requireActivity(),startForCropImageResult)
              }
