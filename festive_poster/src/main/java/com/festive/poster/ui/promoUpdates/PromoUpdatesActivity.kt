@@ -62,7 +62,8 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoU
         addFragmentReplace(binding?.container?.id, FavouriteListFragment.newInstance(), true, showAnim = true)
       }
       binding?.ivStore -> {
-        WebEngageController.trackEvent(Promotional_Update_Posted_Updates_Click)
+//        WebEngageController.trackEvent(Promotional_Update_Posted_Updates_Click)
+        WebEngageController.trackEvent(Update_studio_view_past_updates_click)
         val intent = Intent(this, Class.forName("com.appservice.ui.updatesBusiness.UpdateBusinessContainerActivity"))
         intent.setFragmentType("PAST_UPDATES")
         startActivity(intent)
