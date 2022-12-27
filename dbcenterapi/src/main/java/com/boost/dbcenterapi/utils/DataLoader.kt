@@ -548,7 +548,7 @@ object DataLoader {
                     Log.e("checkExpiryAddonsPackages >>", Gson().toJson(it))
                     val paidList = data.filter { it.price > 0 }.map { it.feature_code }
                     for (singleitem in it!!) {
-                        if (paidList.contains(singleitem.featureCode)) {
+                        if (paidList.contains(singleitem.featureKey)) {
                             val date1: Date =
                                 SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(singleitem.expiryDate!!)
 
