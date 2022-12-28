@@ -323,7 +323,7 @@ class CartPackageAdaptor(
               }
             } else if ((!selectedVMN.isNotEmpty()) && (selectedDomainName.isNotEmpty())) {
               holder.edge_cases_layout.visibility = View.VISIBLE
-              holder.edge_cases_desc.text = "You need to select a call tracking number number."
+              holder.edge_cases_desc.text = "You need to select a call tracking number."
               holder.edge_cases_layout.setOnClickListener {
                 listener1.actionClickVmn(bundlesList.get(position))
               }
