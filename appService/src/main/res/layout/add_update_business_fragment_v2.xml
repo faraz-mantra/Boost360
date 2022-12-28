@@ -279,7 +279,7 @@
                     android:layout_marginEnd="24dp"
                     android:layout_marginBottom="16dp"
                     android:gravity="center"
-                    android:text="@string/supported_format_jpeg_png_size_square_800_x_800px_minimum"
+                    android:text="@string/supported_format_jpeg_png_size_square_300_x_300px_minimum"
                     android:textSize="9dp"
                     app:fontFamily="@font/regular"
                     app:layout_constraintEnd_toEndOf="parent"
