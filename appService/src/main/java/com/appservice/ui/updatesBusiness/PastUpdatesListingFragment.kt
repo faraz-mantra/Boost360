@@ -36,6 +36,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.IOException
 
 class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBinding, PastUpdatesViewModel>(), RecyclerItemClickListener {
 
@@ -272,25 +273,38 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
         lifecycleScope.launch {
           withContext(Dispatchers.IO) {
             if (item.imageUri != null && item.imageUri.toString() != "") {
-              val bitmapPastUpdateReuse = Picasso.get().load(item.imageUri.toString()).get()
-              val saveAsTempFile = bitmapPastUpdateReuse.saveAsTempFile()
-              startActivity(
-                Intent(
-                  requireActivity(), Class.forName(
-                    "com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity"
-                  )
-                ).putExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
-                  putString(
-                    IntentConstants.IK_CAPTION_KEY, item.message.toString()
-                  )
-                  putString(
-                    IntentConstants.IK_POSTER, saveAsTempFile?.path.toString()
-                  )
-                  putString(
-                    IntentConstants.IK_UPDATE_TYPE, IntentConstants.UpdateType.UPDATE_PROMO_POST.name
-                  )
-                })
-              )
+              try {
+                val bitmapPastUpdateReuse = Picasso.get().load(item.imageUri.toString()).get()
+                val saveAsTempFile = bitmapPastUpdateReuse.saveAsTempFile()
+                startActivity(
+                  Intent(
+                    requireActivity(), Class.forName(
+                      "com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity"
+                    )
+                  ).putExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
+                    putString(
+                      IntentConstants.IK_CAPTION_KEY, item.message.toString()
+                    )
+                    putString(
+                      IntentConstants.IK_POSTER, saveAsTempFile?.path.toString()
+                    )
+                    putString(
+                      IntentConstants.IK_UPDATE_TYPE,
+                      IntentConstants.UpdateType.UPDATE_PROMO_POST.name
+                    )
+                  })
+                )
+              } catch (e: Exception){
+                e.printStackTrace()
+                lifecycleScope.launch(Dispatchers.Main) {
+                  Toast.makeText(activity, "Something went wrong, Try again later", Toast.LENGTH_SHORT).show()
+                }
+              } catch (ioe: IOException){
+                ioe.printStackTrace()
+                lifecycleScope.launch(Dispatchers.Main) {
+                  Toast.makeText(activity, "Something went wrong, Try again later", Toast.LENGTH_SHORT).show()
+                }
+              }
             } else {
               lifecycleScope.launch(Dispatchers.Main) {
                 Toast.makeText(activity, "Something went wrong, Try again later", Toast.LENGTH_SHORT).show()
