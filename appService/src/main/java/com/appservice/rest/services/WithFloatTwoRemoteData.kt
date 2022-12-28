@@ -17,6 +17,7 @@ import com.appservice.model.updateBusiness.pastupdates.PastUpdatesNewListingResp
 import com.appservice.model.updateBusiness.pastupdates.TagListRequest
 import com.appservice.rest.EndPoints
 import com.framework.pref.clientId
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody

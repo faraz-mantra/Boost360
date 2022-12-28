@@ -30,30 +30,31 @@
     <activity
       android:name="com.appservice.ui.paymentgateway.PaymentGatewayContainerActivity"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.payment"
-      android:windowSoftInputMode="adjustPan" />
+        android:theme="@style/AppTheme.payment"
+        android:windowSoftInputMode="adjustPan" />
 
     <activity
-      android:name=".ui.staffs.ui.StaffFragmentContainerActivity"
-      android:configChanges="keyboardHidden|orientation|screenSize"
-      android:screenOrientation="portrait"
-      android:theme="@style/AppTheme_staff_home"
-      android:windowSoftInputMode="adjustPan" />
+        android:name=".ui.staffs.ui.StaffFragmentContainerActivity"
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme_staff_home"
+        android:windowSoftInputMode="adjustPan" />
 
     <activity android:name=".offers.FragmentOffersContainerActivity" />
-    <activity android:name=".ui.business_logo.BusinessLogoActivityV2"
-        android:theme="@style/BaseTheme"/>
+    <activity
+        android:name=".ui.business_logo.BusinessLogoActivityV2"
+        android:theme="@style/BusinessLogoV2Theme" />
     <activity android:name=".ui.updatesBusiness.UpdateCropImageActivity" />
 
     <activity
-      android:name=".ui.testimonial.TestimonialContainerActivity"
-      android:screenOrientation="portrait"
-      android:theme="@style/TestimonialTheme"
-      android:windowSoftInputMode="adjustPan" />
+        android:name=".ui.testimonial.TestimonialContainerActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/TestimonialTheme"
+        android:windowSoftInputMode="adjustPan" />
     <activity
-      android:name=".ui.updatesBusiness.UpdateBusinessContainerActivity"
-      android:screenOrientation="portrait"
-      android:theme="@style/UpdateTheme"
+        android:name=".ui.updatesBusiness.UpdateBusinessContainerActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/UpdateTheme"
       android:windowSoftInputMode="adjustResize" />
 
     <activity

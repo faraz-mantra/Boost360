@@ -61,7 +61,7 @@ class BusinessLogoActivityV2 : AppBaseActivity<ActivityBusinessLogoV2Binding, Bu
 
     fun openImagePicker() {
         val filterSheet = ImagePickerBottomSheet()
-        filterSheet.isHidePdf(true)
+        filterSheet.isHidePdf = true
         filterSheet.onClicked = { launchPicker(it) }
         filterSheet.show(supportFragmentManager, ImagePickerBottomSheet::class.java.name)
     }
@@ -91,7 +91,14 @@ class BusinessLogoActivityV2 : AppBaseActivity<ActivityBusinessLogoV2Binding, Bu
             binding?.addLogoButton->{
                 openImagePicker()
             }
+            binding?.createLogoLogtron->{
+                redirectToLogotronWebview()
+            }
         }
+    }
+
+    private fun redirectToLogotronWebview() {
+        // Implement Logotron webview redirection here
     }
 
 
@@ -128,7 +135,7 @@ class BusinessLogoActivityV2 : AppBaseActivity<ActivityBusinessLogoV2Binding, Bu
     }
 
     private fun saveUrlToPath() {
-      path = Glide.with(this).asBitmap().load(iconUrl).submit().get().saveBitmap(this).path
+      path = Glide.with(this).asBitmap().load(iconUrl).submit().get().saveBitmap().path
 
     }
 

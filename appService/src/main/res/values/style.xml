@@ -689,4 +689,10 @@
     <item name="cornerRadius">10dp</item>
   </style>
 
+  <style name="BusinessLogoV2Theme" parent="BaseTheme">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+  </style>
+
 </resources>

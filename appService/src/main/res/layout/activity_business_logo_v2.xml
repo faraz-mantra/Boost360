@@ -98,7 +98,6 @@
 
                             <com.framework.views.customViews.CustomImageView
                                 android:id="@+id/logoimageView"
-
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="fitCenter"
@@ -125,13 +124,13 @@
                         app:cornerRadius="@dimen/size_10" />
 
                     <RelativeLayout
-                        android:background="@drawable/btn_rounded_orange_border"
                         android:id="@+id/create_logo_logtron"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_below="@+id/addLogoButton"
                         android:layout_marginHorizontal="24dp"
-                        android:layout_marginTop="16dp">
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/btn_rounded_orange_border">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
