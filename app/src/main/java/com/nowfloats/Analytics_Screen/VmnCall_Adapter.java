@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 
+@Deprecated
 interface AllowAudioPlay {
     boolean allowAudioPlay();
 

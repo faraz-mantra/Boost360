@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="80dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/packs_image1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="16dp"
+        android:src="@drawable/classic_pack"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/pack_title1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/regular"
+        android:text="Basicasdfasdfadfadfadsfasdfadsfasdf"
+        android:textColor="@color/main_color_gray_dk"
+        android:textFontWeight="600"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="16dp"
+        android:textSize="12sp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/packs_image1" />
+
+<!--    <androidx.appcompat.widget.AppCompatTextView-->
+<!--        android:id="@+id/pack_price1"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="9dp"-->
+<!--        android:fontFamily="@font/regular"-->
+<!--        android:text="₹4810.04"-->
+<!--        android:textColor="@color/main_color_gray_dk"-->
+<!--        android:textFontWeight="600"-->
+<!--        android:textSize="12sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/pack_title1" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/mrpPrice"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="/month"-->
+<!--        android:visibility="gone"-->
+<!--        android:textColor="@color/copy_coupon_text_color"-->
+<!--        android:textFontWeight="400"-->
+<!--        android:textSize="12sp"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/pack_price1"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/pack_price1"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/pack_price1" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

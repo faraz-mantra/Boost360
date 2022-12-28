@@ -8,7 +8,7 @@ data class SpaAppointmentStaff(
   @field:SerializedName("duration")
   val duration: String? = null,
 
-  @field:SerializedName("scheduleDateTime")
+  @field:SerializedName("scheduledDateTime")
   val scheduledDateTime: String? = null,
 
   @field:SerializedName("staffName")

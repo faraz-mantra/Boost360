@@ -2,10 +2,8 @@ package com.appservice.ui.aptsetting.widgets
 
 import com.appservice.R
 import com.appservice.constant.IntentConstant
-import com.appservice.databinding.BottomSheetBankAccountVerifiedBinding
 import com.appservice.databinding.BottomSheetGstSlabBinding
-import com.appservice.model.GstDetailModel
-import com.appservice.model.aptsetting.UserFpDetailsResponse
+import com.appservice.model.panGst.GstDetailModel
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener

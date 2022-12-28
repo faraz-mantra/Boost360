@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
@@ -34,6 +35,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.framework.analytics.SentryController;
 import com.framework.firebaseUtils.firestore.FirestoreManager;
+import com.framework.imagepicker.BoostImageUtils;
 import com.nowfloats.BusinessProfile.UI.API.Upload_Logo;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.EditImageActivity;
@@ -388,10 +390,13 @@ public class Business_Logo_Activity extends AppCompatActivity {
                     if (picUri != null) {
                         path = Methods.getPath(this, picUri);
                         path = Util.saveBitmap(path, Business_Logo_Activity.this, "ImageFloat" + System.currentTimeMillis());
-                        if (!Util.isNullOrEmpty(path)) {
+                        String isBusinessValidMessage = BoostImageUtils.INSTANCE.isBusinessLogoValid(Business_Logo_Activity.this, new File(path));
+                        if (!Util.isNullOrEmpty(path) && isBusinessValidMessage.equals("")) {
                             editImage();
-                        } else
-                            Methods.showSnackBarNegative(Business_Logo_Activity.this, getResources().getString(R.string.select_image_upload));
+                        } else {
+                            Methods.showSnackBarNegative(Business_Logo_Activity.this,
+                                    (path == null || path.isEmpty()) ? getResources().getString(R.string.select_image_upload) : isBusinessValidMessage);
+                        }
                     }
                 }
             } else if (resultCode == RESULT_OK && requestCode == ACTION_REQUEST_IMAGE_EDIT) {
@@ -416,10 +421,16 @@ public class Business_Logo_Activity extends AppCompatActivity {
     }
 
     public void uploadPrimaryPicture(String path) {
-        uploadButton.setText(getResources().getString(R.string.change));
-        new AlertArchive(Constants.alertInterface, "LOGO", session.getFPID());
-        Upload_Logo upload_logo = new Upload_Logo(Business_Logo_Activity.this, path, session.getFPID(), session, this::imageUpload);
-        upload_logo.execute();
+        try {
+            uploadButton.setText(getResources().getString(R.string.change));
+            new AlertArchive(Constants.alertInterface, "LOGO", session.getFPID());
+            Upload_Logo upload_logo = new Upload_Logo(Business_Logo_Activity.this, path, session.getFPID(), session, this::imageUpload);
+            upload_logo.execute();
+        } catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(this, "Something went wrong. Please try again later", Toast.LENGTH_SHORT).show();
+        }
+
 //        Constants.isImgUploaded = false;
 //        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(Business_Logo_Activity.this, path, false,true,session.getFPID());
 //        upa.execute();

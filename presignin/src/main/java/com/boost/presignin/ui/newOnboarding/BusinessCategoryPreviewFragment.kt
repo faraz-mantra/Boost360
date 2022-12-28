@@ -42,6 +42,10 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
     arguments?.getString(IntentConstant.CATEGORY_SUGG_UI.name)
   }
 
+  private val subCategoryID by lazy {
+    arguments?.getString(IntentConstant.SUB_CATEGORY_ID.name)
+  }
+
   private val mobilePreview by lazy {
     arguments?.getString(IntentConstant.MOBILE_PREVIEW.name)
   }
@@ -91,6 +95,7 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
           putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
           putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
           putString(IntentConstant.CATEGORY_SUGG_UI.name, categoryLiveName)
+          putString(IntentConstant.SUB_CATEGORY_ID.name, subCategoryID)
           putSerializable(IntentConstant.CATEGORY_DATA.name, categoryModel)
           putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent?:false)
         }), true)

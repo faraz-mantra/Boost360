@@ -30,7 +30,12 @@ enum class RecyclerViewItemType {
   BACKGROUND_IMAGE_RV,
   BACKGROUND_IMAGE_FULL_SCREEN,
   GST_SLAB_SETTING,
-  VMN_CALL;
+  VMN_CALL,
+  TESTIMONIAL_ITEM,
+  PAST_UPDATE_ITEM,
+  PAST_POST_CATEGORIES,
+  PAST_TAGS,
+  PAST_SOCIAL_ICON_LIST_ITEM;
 
 
   @LayoutRes
@@ -60,9 +65,14 @@ enum class RecyclerViewItemType {
       DOMAIN_NAME_SUGGESTIONS -> R.layout.item_domain_suggestions
       SIMILAR_DOMAIN_SUGGESTIONS -> R.layout.item_similar_domain_suggestions
       BACKGROUND_IMAGE_RV -> R.layout.list_item_background_images
-      BACKGROUND_IMAGE_FULL_SCREEN->R.layout.list_item_bg_image_full_screen
+      BACKGROUND_IMAGE_FULL_SCREEN -> R.layout.list_item_bg_image_full_screen
       GST_SLAB_SETTING -> R.layout.item_gst_slab
-      VMN_CALL->R.layout.single_item_vmn_call_item_v2
+      VMN_CALL -> R.layout.single_item_vmn_call_item_v2
+      TESTIMONIAL_ITEM -> R.layout.item_testimonial_list
+      PAST_UPDATE_ITEM->R.layout.list_item_past_update
+      PAST_POST_CATEGORIES->R.layout.list_item_past_category
+      PAST_TAGS->R.layout.list_item_past_tags
+      PAST_SOCIAL_ICON_LIST_ITEM->R.layout.list_item_social_icon
     }
   }
 }

@@ -31,19 +31,24 @@ import com.framework.base.BaseResponse
 import com.framework.constants.SupportVideoType
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.getDomainName
 import com.framework.utils.ContentSharing.Companion.shareUpdates
+import com.framework.utils.startPromotionUpdates
 import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.EVENT_NAME_UPDATE_PAGE
+import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PAGE_VIEW
+import com.framework.webengageconstant.UPDATE
 import java.util.*
 
+@Deprecated(" use PastUpdatesLisitngFragment")
 class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding, UpdatesViewModel>(), RecyclerItemClickListener,AppOnZeroCaseClicked {
 
   private val STORAGE_CODE = 120
@@ -78,11 +83,12 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(EVENT_NAME_UPDATE_PAGE, PAGE_VIEW, sessionLocal.fpTag)
+    WebEngageController.trackEvent(UPDATE, PAGE_VIEW, NO_EVENT_VALUE)
     showProgress()
     scrollPagingListener()
     listUpdateApi(offSet = offSet)
     binding?.btnAdd?.setOnClickListener {
-      startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, isResult = true)
+      primaryButtonClicked()
     }
     this.zeroCaseFragment = AppRequestZeroCaseBuilder(AppZeroCases.LATEST_NEWS_UPADATES, this, baseActivity).getRequest().build()
     addFragment(containerID = binding?.childContainer?.id, zeroCaseFragment,false)
@@ -264,8 +270,10 @@ class UpdatesBusinessFragment : AppBaseFragment<BusinesUpdateListFragmentBinding
   }
 
   override fun primaryButtonClicked() {
-    startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, isResult = true)
-
+    if (FirebaseRemoteConfigUtil.featureUpdateStudioSelectedUsers(sessionLocal.fpTag)){
+      baseActivity.startPromotionUpdates()
+    } else
+      startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, isResult = true)
   }
 
   override fun secondaryButtonClicked() {

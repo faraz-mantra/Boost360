@@ -41,7 +41,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.boost.upgrades.UpgradeActivity;
+import com.boost.marketplace.ui.home.MarketPlaceActivity;
 import com.framework.analytics.SentryController;
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem;
 import com.framework.firebaseUtils.caplimit_feature.PropertiesItem;
@@ -107,7 +107,6 @@ public class CreateCustomPageActivity extends AppCompatActivity {
   String curName, curHtml, curPageid;
   String imageTagName = "CustomePage";
   boolean isNewDataAdded = false;
-  private String mHtmlFormat = "";
   private Uri picUri;
   private HorizontalScrollView editor;
   private boolean editCheck = false;
@@ -190,19 +189,18 @@ public class CreateCustomPageActivity extends AppCompatActivity {
       try {
         CustomPageInterface pageInterface = Constants.restAdapter.create(CustomPageInterface.class);
         pageInterface.getPageDetail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),
-            getIntent().getStringExtra("pageid"), Constants.clientId, new Callback<List<PageDetail>>() {
+            getIntent().getStringExtra("pageid"), Constants.clientId, new Callback<PageDetail>() {
               @Override
-              public void success(List<PageDetail> pageDetail, Response response) {
+              public void success(PageDetail pageDetail, Response response) {
                 materialProgress.dismiss();
                 //Intent intent = new Intent(CreateCustomPageActivity, CreateCustomPageActivity.class);
-                if (pageDetail.size() > 0) {
-                  curName = pageDetail.get(0).DisplayName;
-                  curHtml = pageDetail.get(0).HtmlCode;
-                  curPageid = pageDetail.get(0)._id;
+                if (pageDetail != null) {
+                  curName = pageDetail.DisplayName;
+                  curHtml = pageDetail.HtmlCode;
+                  curPageid = pageDetail.PageId;
                   titleTxt.setText(curName);
                   title.setText(curName);
                   richText.setHtml(curHtml);
-                  mHtmlFormat = curHtml;
                   editCheck = true;
                   deletePage.setVisibility(View.VISIBLE);
                 } else {
@@ -239,7 +237,6 @@ public class CreateCustomPageActivity extends AppCompatActivity {
       return false;
     });
 
-    richText.setOnTextChangeListener(text -> mHtmlFormat = text);
 
     deletePage.setOnClickListener(v -> {
       String url = Constants.NOW_FLOATS_API_URL + "/Discover/v1/floatingpoint/custompage/delete";
@@ -259,11 +256,11 @@ public class CreateCustomPageActivity extends AppCompatActivity {
           mRiaNodedata = null;
         }
         boolean flag = true;
-        final String name = titleTxt.getText().toString(), html = mHtmlFormat;
-        if (!(titleTxt.getText().toString().trim().length() > 0)) {
+        final String name = titleTxt.getText().toString(), html = richText.getHtml();
+        if (!(name.trim().length() > 0)) {
           flag = false;
           Methods.showSnackBarNegative(activity, getString(R.string.enter_the_title));
-        } else if (!(html.trim().length() > 0)) {
+        } else if (html == null || !(html.trim().length() > 0)) {
           flag = false;
           Methods.showSnackBarNegative(activity, getString(R.string.enter_the_description));
         }
@@ -535,6 +532,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
         CapLimitFeatureResponseItem data = filterFeature(getCapData(), CapLimitFeatureResponseItem.FeatureKey.CUSTOMPAGES);
         if (data != null && pageDetail != null) {
           PropertiesItem capLimitCustomPage = data.filterProperty(PropertiesItem.KeyType.LIMIT);
+          Log.i("test_limit_cap", "Total: " + pageDetail.getTotal() + " capLimit: " + capLimitCustomPage.getValueN());
           if (pageDetail.getTotal() != null && capLimitCustomPage.getValueN() != null && pageDetail.getTotal() >= capLimitCustomPage.getValueN()) {
             hideKeyBoard(activity);
             showAlertCapLimit("Can't add the custom page, please activate your premium Add-ons plan.");
@@ -894,7 +892,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     progressDialog.setMessage(status);
     progressDialog.setCancelable(false);
     progressDialog.show();
-    Intent intent = new Intent(this, UpgradeActivity.class);
+    Intent intent = new Intent(this, MarketPlaceActivity.class);
     intent.putExtra("expCode", session.getFP_AppExperienceCode());
     intent.putExtra("fpName", session.getFPName());
     intent.putExtra("fpid", session.getFPID());

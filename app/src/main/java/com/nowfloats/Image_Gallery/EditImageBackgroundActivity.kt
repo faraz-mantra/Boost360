@@ -7,25 +7,20 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.View
 import android.view.Window
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.dashboard.controller.ui.profile.CropProfileImageFragment
 import com.framework.analytics.SentryController
 import com.framework.imagepicker.Utility
 import com.nowfloats.BusinessProfile.UI.API.Upload_Logo
 import com.nowfloats.Login.UserSessionManager
-import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog
 import com.nowfloats.NotificationCenter.AlertArchive
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util
 import com.nowfloats.util.Constants
@@ -33,7 +28,9 @@ import com.nowfloats.util.Methods
 import com.nowfloats.util.MixPanelController
 import com.theartofdev.edmodo.cropper.CropImageView
 import com.thinksity.R
+import java.lang.Deprecated
 
+@Deprecated
 class EditImageBackgroundActivity : AppCompatActivity() {
     // Instance variables
     private var mAspectRatioX = DEFAULT_ASPECT_RATIO_VALUES

@@ -4,6 +4,7 @@ import com.boost.presignin.model.accessToken.AccessTokenRequest
 import com.boost.presignin.model.authToken.AccessTokenResponse
 import com.boost.presignin.model.fpList.FPListResponse
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
+import com.boost.presignin.model.location.LocationResponse
 import com.boost.presignin.model.login.ForgotPassRequest
 import com.boost.presignin.model.login.UserProfileVerificationRequest
 import com.boost.presignin.model.login.VerificationRequestResult
@@ -13,9 +14,11 @@ import com.boost.presignin.model.userprofile.BusinessProfileResponse
 import com.boost.presignin.model.userprofile.ConnectUserProfileResponse
 import com.boost.presignin.model.userprofile.ResponseMobileIsRegistered
 import com.boost.presignin.rest.EndPoints
+import com.framework.BuildConfig
 import com.onboarding.nowfloats.model.googleAuth.FirebaseTokenResponse
 import io.reactivex.Observable
 import okhttp3.ResponseBody
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 import java.util.*
@@ -54,7 +57,7 @@ interface WithFloatTwoRemoteData {
   @GET(EndPoints.SEND_OTP_INDIA)
   fun sendOtpIndia(
     @Query("mobileNumber") number: Long?,
-    @Query("messageTemplate") messageTemplate: String? = "Your one time Boost 360 verification code is [OTP]. The code is valid for 10 minutes, Please DO NOT share this code with anyone.#${com.boost.presignin.BuildConfig.APP_SIGNATURE_HASH}",
+    @Query("messageTemplate") messageTemplate: String? = "Your one time Boost 360 verification code is [OTP]. The code is valid for 10 minutes, Please DO NOT share this code with anyone.#${BuildConfig.APP_SIGNATURE_HASH}",
     @Query(value = "clientId") clientId: String?
   ): Observable<Response<ResponseBody>>
 
@@ -95,4 +98,16 @@ interface WithFloatTwoRemoteData {
   fun getFirebaseToken(
     @Query("clientId") client_id: String?
   ):Observable<Response<FirebaseTokenResponse>>
+
+  @Headers(
+    "authority: api.whatismyip.com",
+    "accept: */*",
+    "accept-language: en-GB,en-US;q=0.9,en;q=0.8",
+    "cache-control: no-cache",
+    "origin: https://www.whatismyip.com",
+    "pragma: no-cache",
+    "referer: https://www.whatismyip.com/"
+  )
+  @GET
+  fun getIPInfo(@Url url:String): Observable<Response<LocationResponse>>
 }

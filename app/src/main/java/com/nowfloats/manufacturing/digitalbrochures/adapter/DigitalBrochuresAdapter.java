@@ -95,7 +95,11 @@ public class DigitalBrochuresAdapter extends RecyclerView.Adapter<DigitalBrochur
 //                    context.startActivity(intent);
 
         if (data.getUploadpdf() != null) {
-          Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(data.getUploadpdf().getUrl()));
+          String url =data.getUploadpdf().getUrl();
+          if (!url.startsWith("https://") && !url.startsWith("http://")){
+            url = "http://" + url;
+          }
+          Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
           context.startActivity(browserIntent);
         }
       } else {

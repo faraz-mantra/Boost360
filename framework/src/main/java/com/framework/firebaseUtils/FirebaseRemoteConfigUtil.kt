@@ -3,7 +3,8 @@ package com.framework.firebaseUtils
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.framework.R
-import com.framework.utils.InAppReviewUtils
+import com.framework.utils.*
+import com.google.android.play.core.install.model.AppUpdateType
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfig
@@ -17,6 +18,7 @@ const val IN_APP_UPDATE_TYPE_IMMEDIATE = "in_app_update_type_immediate"
 const val K_ADMIN_URL = "k_admin_url"
 const val NEW_ONBOARDING_WITH_UPDATED_CATEGORIES_AND_GUI_ACTIVE = "new_onboarding_with_updated_categories_and_gui_active"
 const val FEATURE_ERROR_HANDLING_ENABLE = "feature_error_handling_enable"
+const val FEATURE_UPDATE_STUDIO_SELECTED_USERS="feature_update_studio_selected_users"
 const val PERMISSION_FACEBOOK = "permissions_facebook"
 
 object FirebaseRemoteConfigUtil {
@@ -68,15 +70,15 @@ object FirebaseRemoteConfigUtil {
 
   fun featureNewOnBoardingFlowEnable(): Boolean {
     Log.d(TAG, "Config feature NEW ONBOARDING enable: ${remoteConfig?.getBoolean(NEW_ONBOARDING_WITH_UPDATED_CATEGORIES_AND_GUI_ACTIVE) ?: false}")
-    return remoteConfig?.getBoolean(NEW_ONBOARDING_WITH_UPDATED_CATEGORIES_AND_GUI_ACTIVE) ?: false
+    return remoteConfig?.getBoolean(NEW_ONBOARDING_WITH_UPDATED_CATEGORIES_AND_GUI_ACTIVE) ?: true
   }
 
-  fun appUpdateType(): UpdateType {
+  fun appUpdateType(): Int {
     Log.d(TAG, "Config in app update type: ${remoteConfig?.getString(IN_APP_UPDATE_TYPE_IMMEDIATE) ?: false}")
     return if (remoteConfig?.getBoolean(IN_APP_UPDATE_TYPE_IMMEDIATE) == true) {
-      UpdateType.IMMEDIATE
+      AppUpdateType.IMMEDIATE
     } else {
-      UpdateType.FLEXIBLE
+      AppUpdateType.FLEXIBLE
     }
   }
 
@@ -89,6 +91,12 @@ object FirebaseRemoteConfigUtil {
     val status = remoteConfig?.getBoolean(event.name)
     return status ?: false
   }
+
+  fun featureUpdateStudioSelectedUsers(fpTag:String?): Boolean {
+    val selectedFps = remoteConfig?.getString(FEATURE_UPDATE_STUDIO_SELECTED_USERS)
+    return true //PreferencesUtils.instance.getData(PreferencesKey.IS_UPDATE_STUDIO_ENABLED.name,false)
+  }
+
 }
 
 enum class UpdateType {

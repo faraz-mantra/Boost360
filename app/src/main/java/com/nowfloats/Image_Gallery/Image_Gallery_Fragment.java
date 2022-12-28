@@ -42,6 +42,7 @@ import androidx.fragment.app.Fragment;
 import com.framework.analytics.SentryController;
 import com.framework.constants.SupportVideoType;
 import com.framework.firebaseUtils.firestore.FirestoreManager;
+import com.framework.utils.FpCategoryUtilsKt;
 import com.framework.views.zero.old.AppFragmentZeroCase;
 import com.framework.views.zero.old.AppOnZeroCaseClicked;
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
@@ -66,7 +67,6 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 @SuppressLint("ValidFragment")
-@Deprecated
 public class Image_Gallery_Fragment extends Fragment implements
         UploadPictureAsyncTask.UploadPictureInterface,
         DeleteGalleryImages.DeleteGalleryInterface,
@@ -257,9 +257,18 @@ public class Image_Gallery_Fragment extends Fragment implements
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        appFragmentZeroCase = new AppRequestZeroCaseBuilder(AppZeroCases.IMAGE_GALLERY, this, getActivity()).getRequest().build();
-        getActivity().getSupportFragmentManager().beginTransaction().add(binding.childContainer.getId(), appFragmentZeroCase).commit();
         initializeControls(view);
+        appFragmentZeroCase = new AppRequestZeroCaseBuilder(getZeroCaseType(), this, getActivity()).getRequest().build();
+        getActivity().getSupportFragmentManager().beginTransaction().add(binding.childContainer.getId(), appFragmentZeroCase).commit();
+
+    }
+
+    private AppZeroCases getZeroCaseType(){
+        if (FpCategoryUtilsKt.isManufacturingProfile(session.getFP_AppExperienceCode())){
+            return AppZeroCases.CLIENT_LOGOS;
+        }else {
+            return AppZeroCases.IMAGE_GALLERY;
+        }
     }
 
     private void initializeControls(View view) {
@@ -312,7 +321,15 @@ public class Image_Gallery_Fragment extends Fragment implements
             instance.getDrScoreData().getMetricdetail().setBoolean_image_uploaded_to_gallery(isAdded);
             instance.updateDocument();
         }
-        imageChangeListener.onImagePicked();
+        if (imageChangeListener != null){
+            imageChangeListener.onImagePicked();
+        } else {
+            try {
+                Toast.makeText(activity, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

@@ -30,124 +30,124 @@
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:gravity="center_horizontal"
-          android:orientation="horizontal">
-
-          <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/size_14"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:gravity="center_horizontal"
+            android:weightSum="1"
+            android:orientation="horizontal">
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_margin="@dimen/size_14"
+              android:layout_weight="0.7"
+              android:orientation="vertical">
 
             <com.framework.views.customViews.CustomCardView
-              android:id="@+id/profile_view"
-              android:layout_width="@dimen/size_54"
-              android:layout_height="@dimen/size_52"
-              app:cardBackgroundColor="@color/placeholder_bg"
-              app:cardCornerRadius="@dimen/size_4"
-              app:cardElevation="@dimen/size_0">
-
-              <com.framework.views.customViews.CustomCardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/size_2"
-                app:cardBackgroundColor="@color/white"
+                android:id="@+id/profile_view"
+                android:layout_width="@dimen/size_54"
+                android:layout_height="@dimen/size_52"
+                app:cardBackgroundColor="@color/placeholder_bg"
                 app:cardCornerRadius="@dimen/size_4"
                 app:cardElevation="@dimen/size_0">
 
-                <com.framework.views.customViews.CustomImageView
-                  android:id="@+id/img_business_logo"
+              <com.framework.views.customViews.CustomCardView
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
-                  android:layout_gravity="center"
-                  android:background="@color/white"
-                  android:scaleType="fitCenter" />
+                  android:layout_margin="@dimen/size_2"
+                  app:cardBackgroundColor="@color/white"
+                  app:cardCornerRadius="@dimen/size_4"
+                  app:cardElevation="@dimen/size_0">
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/img_business_logo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@color/white"
+                    android:scaleType="fitCenter" />
               </com.framework.views.customViews.CustomCardView>
 
             </com.framework.views.customViews.CustomCardView>
 
-            <com.framework.views.customViews.CustomTextView
-              android:id="@+id/business_name"
-              android:layout_width="wrap_content"
-              android:layout_height="0dp"
-              android:layout_marginStart="@dimen/size_1"
-              android:layout_marginTop="@dimen/size_6"
-              android:layout_weight="1"
-              android:ellipsize="end"
-              android:includeFontPadding="false"
-              android:maxLines="2"
-              android:textColor="@color/blue_light"
-              app:fontFamily="@font/patua_one_regular"
-              app:textType="HEADING_6"
-              tools:text="PLASTO INDIA AND POLYMERS" />
+            <com.framework.views.customViews.AutoFitTextView
+                android:id="@+id/business_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_1"
+                android:layout_marginTop="@dimen/size_6"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:textColor="@color/blue_light"
+                app:fontFamily="@font/patua_one_regular"
+                app:textType="HEADING_6"
+                tools:text="PLASTO INDIA AND POLYMERS" />
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/number"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:ellipsize="end"
-              android:maxLines="1"
-              android:textColor="@color/black_light"
-              app:textType="CAPTION"
-              tools:text="0801234567890" />
+                android:id="@+id/number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/black_light"
+                app:textType="CAPTION"
+                tools:text="0801234567890" />
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/email"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/size_4"
-              android:ellipsize="end"
-              android:maxLines="1"
-              android:textColor="@color/black_light"
-              app:autoSizeMaxTextSize="12sp"
-              app:autoSizeMinTextSize="6sp"
-              app:autoSizeStepGranularity="1sp"
-              app:autoSizeTextType="uniform"
-              tools:text="plastoindia@gmail.com" />
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_4"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/black_light"
+                app:autoSizeMaxTextSize="12sp"
+                app:autoSizeMinTextSize="6sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform"
+                tools:text="plastoindia@gmail.com" />
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/website"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/size_4"
-              android:ellipsize="end"
-              android:maxLines="1"
-              android:textColor="@color/black_light"
-              app:autoSizeMaxTextSize="11sp"
-              app:autoSizeMinTextSize="6sp"
-              app:autoSizeStepGranularity="1sp"
-              app:autoSizeTextType="uniform"
-              app:fontFamily="@font/semi_bold"
-              tools:text="https://plastoindiaandpolymers.com" />
+                android:id="@+id/website"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_4"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/black_light"
+                app:autoSizeMaxTextSize="11sp"
+                app:autoSizeMinTextSize="6sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform"
+                app:fontFamily="@font/semi_bold"
+                tools:text="https://plastoindiaandpolymers.com" />
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/size_10"
-            android:orientation="vertical">
-
-            <LinearLayout
-              android:id="@+id/channels"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
+              android:layout_width="0dp"
+              android:layout_weight="0.3"
+              android:layout_height="match_parent"
+              android:layout_margin="@dimen/size_10"
               android:orientation="vertical">
 
+            <LinearLayout
+                android:id="@+id/channels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
               <include
-                android:id="@+id/item_channels_group"
-                layout="@layout/item_card_channel" />
+                  android:id="@+id/item_channels_group"
+                  layout="@layout/item_card_channel" />
             </LinearLayout>
 
             <com.framework.views.customViews.CustomImageView
-              android:id="@+id/img_logo"
-              android:layout_width="@dimen/size_56"
-              android:layout_height="@dimen/size_42"
-              android:layout_gravity="center_horizontal"
-              app:srcCompat="@drawable/ic_business_card_spa_n" />
+                android:id="@+id/img_logo"
+                android:layout_width="@dimen/size_56"
+                android:layout_height="@dimen/size_42"
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@drawable/ic_business_card_spa_n" />
           </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
 

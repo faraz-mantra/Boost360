@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.boost.upgrades.base_class.OnBackPressed;
+import com.boost.payment.base_class.OnBackPressed;
 
 import java.util.Objects;
 

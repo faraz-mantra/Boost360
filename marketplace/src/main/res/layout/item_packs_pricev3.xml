@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="80dp"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/pack_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bold"
+            android:text="₹480000.84"
+            android:textColor="@color/main_color_gray_dk"
+            android:textFontWeight="700"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"  />
+
+        <TextView
+            android:id="@+id/mrpPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/month"
+            android:visibility="gone"
+            android:textColor="@color/copy_coupon_text_color"
+            android:textFontWeight="400"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/pack_price"
+            app:layout_constraintStart_toStartOf="@+id/pack_price"
+            app:layout_constraintTop_toBottomOf="@+id/pack_price" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

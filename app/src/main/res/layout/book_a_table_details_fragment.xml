@@ -28,7 +28,7 @@
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginEnd="@dimen/_15sdp"
-        android:text="Name" />
+        android:text="@string/name" />
 
       <EditText
         android:id="@+id/user_name"
@@ -55,7 +55,7 @@
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
-            android:text="@string/contact_number" />
+            android:text="@string/contact_number_aster" />
 
           <EditText
             android:id="@+id/contact_number"
@@ -124,7 +124,7 @@
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
-            android:text="@string/date_" />
+            android:text="@string/date_aster" />
 
           <EditText
             android:id="@+id/date_value"
@@ -153,7 +153,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
-            android:text="@string/time_" />
+            android:text="@string/time_aster" />
 
           <EditText
             android:id="@+id/time_value"
@@ -195,7 +195,7 @@
         android:layout_marginTop="@dimen/_40sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_20sdp"
-        android:background="@drawable/orange_button_click_effect"
+        android:background="@drawable/cta_button_click_effect"
         android:elevation="@dimen/_2sdp"
         android:fontFamily="@font/semi_bold"
         android:gravity="center"

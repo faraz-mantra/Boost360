@@ -16,13 +16,12 @@ import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
 import com.framework.base.BaseActivity
 import com.framework.views.itemdecoration.LineItemDecoration
-import com.google.android.material.tabs.TabLayoutMediator
 
 class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecyclerViewHolder<ListItemPosterPackBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     val model = item as PosterPackModel
-    binding.tvPosterHeading.text = model.tagsModel.name
+    binding.tvPosterHeading.text = model.tagsModel?.name
     binding.layoutPurchased.isVisible = model.isPurchased
     binding.tvPrice.text = "Pack of ${model.posterList?.size} posters for ₹${model.price.toInt()}"
   //  setupVp(binding.vpPoster)
@@ -34,7 +33,7 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecycler
     } else {
       binding.btnGetPack.setBackgroundColor(getColor(R.color.colorPrimary)!!)
       binding.btnGetPack.setTextColor(getColor(R.color.white)!!)
-      binding.btnGetPack.text = "Get ${model.tagsModel.name} Posters Pack"
+      binding.btnGetPack.text = "Get ${model.tagsModel?.name} Posters Pack"
     }
     binding.btnGetPack.setOnClickListener {
       listener?.onItemClick(position, item, RecyclerViewActionType.GET_POSTER_PACK_CLICK.ordinal)
@@ -49,7 +48,7 @@ class PosterPackViewHolder(binding: ListItemPosterPackBinding) : AppBaseRecycler
 //      binding.vpPoster.offscreenPageLimit = 1
       binding.vpPoster.adapter = adapter
       binding.vpPoster.layoutManager=LinearLayoutManager(binding.root.context,LinearLayoutManager.HORIZONTAL,false)
-      binding.vpPoster.addItemDecoration(LineItemDecoration())
+      binding.vpPoster.addItemDecoration(LineItemDecoration(24,6))
       //TabLayoutMediator(binding.dots, binding.vpPoster) { _, _ -> }.attach()
     }
     super.bind(position, item)

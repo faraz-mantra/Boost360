@@ -1,8 +1,11 @@
 package com.appservice.model.domainBooking
 
 import com.framework.base.BaseResponse
+import com.framework.utils.*
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+
+const val DOMAIN_DETAILS_DATA = "DOMAIN_DETAILS_DATA"
 
 data class DomainDetailsResponse(
 
@@ -45,4 +48,20 @@ data class DomainDetailsResponse(
     @field:SerializedName("NameServers")
     val nameServers: Any? = null
 
-) : BaseResponse(), Serializable
+) : BaseResponse(), Serializable{
+
+    companion object {
+        fun saveDomainDetailsData(domainDetails: DomainDetailsResponse?) {
+            PreferencesUtils.instance.saveData(DOMAIN_DETAILS_DATA, convertObjToString(domainDetails ?: DomainDetailsResponse()) ?: "")
+        }
+
+        fun getDomainDetailsData(): DomainDetailsResponse? {
+            return convertStringToObj(PreferencesUtils.instance.getData(DOMAIN_DETAILS_DATA, "") ?: "")
+        }
+
+        fun isDomainAvailable() : Boolean {
+            val domainDetailsData = getDomainDetailsData()
+            return domainDetailsData?.domainName != null && domainDetailsData.domainName.isNotEmpty()
+        }
+    }
+}

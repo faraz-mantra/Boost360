@@ -1,7 +1,9 @@
 package com.boost.presignin.ui.mobileVerification
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.databinding.ViewDataBinding
 import com.boost.presignin.R
@@ -33,6 +35,7 @@ import kotlin.collections.set
 abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Binding, LoginSignUpViewModel>() {
 
   protected lateinit var session: UserSessionManager
+  protected lateinit var progressDialog: ProgressDialog
 
   protected abstract fun resultLogin(): VerificationRequestResult?
   protected abstract fun authTokenData(): AuthTokenDataItem?
@@ -48,7 +51,7 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
   }
 
   protected fun AuthTokenDataItem.createAccessTokenAuth() {
-    showProgress()
+    initializeProgress()
     WebEngageController.initiateUserLogin(resultLogin()?.loginId)
     WebEngageController.setUserContactAttributes(
       resultLogin()?.profileProperties?.userEmail, resultLogin()?.profileProperties?.userMobile,
@@ -65,18 +68,14 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
     session.storeFPID(this.floatingPointId)
     session.storeFpTag(this.floatingPointTag)
     session.setUserLogin(true)
-    val request = AccessTokenRequest(
-      authToken = this.authenticationToken,
-      clientId = clientId,
-      fpId = this.floatingPointId
-    )
+    val request = AccessTokenRequest(authToken = this.authenticationToken, clientId = clientId, fpId = this.floatingPointId)
     viewModel?.createAccessToken(request)?.observeOnce(viewLifecycleOwner) {
       val result = it as? AccessTokenResponse
       if (it?.isSuccess() == true && result?.result != null) {
         session.saveAccessTokenAuth(result.result!!)
         registerFirebaseToken(this)
       } else {
-        hideProgress()
+        hideProgressN()
         showLongToast(getString(R.string.access_token_create_error))
       }
     }
@@ -114,7 +113,7 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
         startService()
         startDashboard()
       } else {
-        hideProgress()
+        hideProgressN()
         showShortToast(getString(R.string.error_getting_fp_detail))
       }
     }
@@ -134,10 +133,29 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> : AppBaseFragment<Bin
       dashboardIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
       startActivity(dashboardIntent)
       baseActivity.finish()
-      hideProgress()
+      Handler().postDelayed({ hideProgressN() }, 2000)
     } catch (e: Exception) {
-      hideProgress()
+      hideProgressN()
       SentryController.captureException(e)
+      e.printStackTrace()
+    }
+  }
+
+  private fun initializeProgress() {
+    try {
+      progressDialog = ProgressDialog(activity, R.style.AppCompatAlertDialogStyle)
+      progressDialog.setMessage("Loading. Please wait...")
+      progressDialog.setCancelable(false)
+      progressDialog.show()
+    } catch (e: Exception) {
+      e.printStackTrace()
+    }
+  }
+
+  private fun hideProgressN() {
+    try {
+      progressDialog.hide()
+    } catch (e: Exception) {
       e.printStackTrace()
     }
   }

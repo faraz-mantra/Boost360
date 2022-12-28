@@ -85,14 +85,16 @@ public class UploadPlaceNearByImage extends AsyncTask<Void, String, String> {
 
             //https://webaction.api.boostkit.dev/api/v1/placesaround/upload-file?assetFileName=screenshot-assuredpurchase.withfloats.com-2020.07.17-14_38_42.png
             Request request = new Request.Builder()
-                    .url("https://webaction.api.boostkit.dev/api/v1/placesaround/upload-file?assetFileName=screenshot-assuredpurchase.withfloats.com-" + fileName + ".jpg")
+                    .url("https://webaction.api.boostkit.dev/api/v1/placesaround/upload-file?assetFileName=" + fileName + ".jpg")
                     .post(requestBody)
                     .addHeader("Authorization", "59c8add5dd304111404e7f04")
                     .build();
 
             okhttp3.Response response = client.newCall(request).execute();
+            String result =response.body().string();
+
             if (response != null && response.code() == 200) {
-                return Objects.requireNonNull(response.body()).string();
+                return result;
             } else {
                 Methods.showSnackBarNegative(appContext, "Uploading Image Failed");
             }

@@ -1,10 +1,15 @@
 package com.nowfloats.Analytics_Screen;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,9 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +37,7 @@ import com.framework.views.zero.old.AppOnZeroCaseClicked;
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
 import com.framework.views.zero.old.AppZeroCases;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Analytics_Screen.API.SubscriberApis;
 import com.nowfloats.Analytics_Screen.Search_Query_Adapter.SubscribersAdapter;
 import com.nowfloats.Analytics_Screen.model.AddSubscriberModel;
@@ -47,7 +51,10 @@ import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivitySubscribersBinding;
+import com.zendesk.service.ErrorResponse;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -56,16 +63,18 @@ import java.util.regex.Pattern;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
 
 import static com.framework.webengageconstant.EventLabelKt.ADDED;
 import static com.framework.webengageconstant.EventLabelKt.ERROR_SUBSCRIBER;
-import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_ADD_SUBSCRIBER;
 import static com.framework.webengageconstant.EventLabelKt.NEWSLETTER_SUBSCRIPTIONS;
 import static com.framework.webengageconstant.EventNameKt.ADD_SUBSCRIBER;
 import static com.framework.webengageconstant.EventNameKt.ADD_SUBSCRIBER_FAILED;
 import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_NEWSLETTER_SUBSCRIPTIONS;
 import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
 import static com.framework.webengageconstant.EventValueKt.TO_BE_ADDED;
+
+import org.json.JSONObject;
 
 public class SubscribersActivity extends AppCompatActivity implements View.OnClickListener,
     SubscribersAdapter.SubscriberInterfaceMethods, AppOnZeroCaseClicked {
@@ -138,7 +147,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     }
 
     mProgressBar = (ProgressBar) findViewById(R.id.pb_subscriber);
-    progressDialog = new ProgressDialog(this);
+    progressDialog = new ProgressDialog(this, R.style.AppCompatAlertDialogStyle);
     progressDialog.setMessage(getString(R.string.loading));
     mRecyclerView = (RecyclerView) findViewById(R.id.lv_subscribers);
 
@@ -273,9 +282,16 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
       @Override
       public void failure(RetrofitError error) {
         Log.v("ggg", error.getMessage());
+        byte[] responseBytes=((TypedByteArray) error.getResponse().getBody()).getBytes();
+        String statusString = new String(responseBytes);
         mProgressBar.setVisibility(View.GONE);
         progressDialog.dismiss();
-        Methods.showSnackBarNegative(SubscribersActivity.this, getString(R.string.something_went_wrong_try_again));
+        dialog.dismiss();
+        if (statusString.equals("User already subscribed")){
+          Methods.showSnackBarNegative(SubscribersActivity.this, "User already subscribed");
+        }else {
+          Methods.showSnackBarNegative(SubscribersActivity.this, getString(R.string.something_went_wrong_try_again));
+        }
         WebEngageController.trackEvent(ADD_SUBSCRIBER_FAILED, ERROR_SUBSCRIBER, mSessionManager.getFpTag());
       }
     });
@@ -312,31 +328,25 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
   private void subscriberDialog() {
     View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_subscriber, null);
     final CustomEditText email = (CustomEditText) view.findViewById(R.id.edittext);
-    new MaterialDialog.Builder(this)
-        .customView(view, false)
-        .positiveText(getString(R.string.add))
-        .negativeText(getString(R.string.cancel))
-        .negativeColorRes(R.color.black_4a4a4a)
-        .positiveColorRes(R.color.colorAccentLight)
-        .callback(new MaterialDialog.ButtonCallback() {
-          @Override
-          public void onPositive(MaterialDialog dialog) {
-            super.onPositive(dialog);
-            if (!checkIsEmailOrNumber(email.getText().toString().trim())) {
-              Methods.showSnackBarNegative(SubscribersActivity.this, "Add only email Id");
-            } else {
-              addSubscriber(email.getText().toString().trim(), dialog);
-            }
-          }
+    final TextView cancelBtn = (TextView) view.findViewById(R.id.txtCancel);
+    final TextView addBtn = (TextView) view.findViewById(R.id.txtAdd);
 
-          @Override
-          public void onNegative(MaterialDialog dialog) {
-            super.onNegative(dialog);
-            dialog.dismiss();
-          }
-        }).build().show();
+    MaterialDialog subscriberDialog = new MaterialDialog.Builder(this)
+        .customView(view, false)
+        .build();
+
+    addBtn.setOnClickListener(view12 -> {
+      if (!checkIsEmailOrNumber(email.getText().toString().trim())) {
+        Toast.makeText(SubscribersActivity.this,"Add a valid email Id", Toast.LENGTH_SHORT).show();
+      } else {
+        addSubscriber(email.getText().toString().trim(), subscriberDialog);
+      }
+    });
+
+    cancelBtn.setOnClickListener(view1 -> subscriberDialog.dismiss());
+
+    subscriberDialog.show();
   }
-  //method call when view changed from adapter
 
   @Override
   public void onitemSeleted(int pos) {

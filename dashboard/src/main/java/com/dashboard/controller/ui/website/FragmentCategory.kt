@@ -30,6 +30,9 @@ import com.framework.utils.PreferencesUtils
 import com.framework.utils.genericType
 import com.framework.utils.getData
 import com.framework.utils.saveData
+import com.framework.webengageconstant.CLICKED
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.TESTIMONIAL_PAGE
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.ArrayList
@@ -71,7 +74,7 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
   }
 
   private fun getWebsiteData() {
-    viewModel?.getBoostWebsiteItem(baseActivity)?.observeOnce(viewLifecycleOwner, { it0 ->
+    viewModel?.getBoostWebsiteItem(baseActivity)?.observeOnce(viewLifecycleOwner) { it0 ->
       val response = it0 as? WebsiteDataResponse
       Log.i(TAG, "getWebsiteData: error" + Gson().toJson(response?.data))
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
@@ -82,7 +85,7 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
           setAdapterCustomer(if (position == 0) data?.actionItem!!.filter { it.isFeature == false } else data?.actionItem!!.filter { it.isFeature == true })
         }
       } else showShortToast(getString(R.string.something_went_wrong_camel_case))
-    })
+    }
   }
 
 
@@ -91,12 +94,12 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
     Log.i(TAG, "setAdapterCustomer: ")
     val merchantSummary = getMerchantSummaryWebsite()
     setupList(merchantSummary, actionItem)
-    viewModel?.getMerchantSummary(clientId, session?.fpTag)?.observeOnce(viewLifecycleOwner, {
-      Log.i(TAG, "merchantsummary: ")
+    viewModel?.getMerchantSummary(clientId, session?.fpTag)?.observeOnce(viewLifecycleOwner) {
+      Log.i(TAG, "merchantman: ")
       val response = it as? MerchantSummaryResponse
       response?.saveMerchantSummary()
       setupList(response, actionItem)
-    })
+    }
   }
 
   private fun setupList(response: MerchantSummaryResponse?, actionItem: ArrayList<WebsiteActionItem>) {
@@ -135,7 +138,10 @@ class FragmentCategory : AppBaseFragment<FragmentWebsitePagerBinding, DashboardV
       WebsiteActionItem.IconType.latest_update_tips -> session?.let { baseActivity.startUpdateLatestStory(it) }
       WebsiteActionItem.IconType.all_images -> baseActivity.startAllImage(session)
       WebsiteActionItem.IconType.business_profile -> baseActivity.startBusinessProfileDetailEdit(session)
-      WebsiteActionItem.IconType.testimonials -> baseActivity.startTestimonial(session)
+      WebsiteActionItem.IconType.testimonials ->{
+        WebEngageController.trackEvent(TESTIMONIAL_PAGE, CLICKED, NO_EVENT_VALUE)
+        baseActivity.startTestimonial(session)
+      }
       WebsiteActionItem.IconType.custom_page -> baseActivity.startCustomPage(session)
       WebsiteActionItem.IconType.project_teams -> baseActivity.startListProjectAndTeams(session)
       WebsiteActionItem.IconType.unlimited_digital_brochures -> baseActivity.startListDigitalBrochure(session)

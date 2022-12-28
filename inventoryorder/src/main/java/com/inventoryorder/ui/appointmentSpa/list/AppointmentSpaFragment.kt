@@ -22,6 +22,7 @@ import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder
 import com.framework.views.zero.old.AppZeroCases
 import com.framework.webengageconstant.APPOINTMENT_PAGE_LOAD
+import com.framework.webengageconstant.CLICKED_ON_APPOINTMENTS
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PAGE_VIEW
 import com.inventoryorder.R
@@ -99,6 +100,8 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(APPOINTMENT_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(CLICKED_ON_APPOINTMENTS, PAGE_VIEW, NO_EVENT_VALUE)
+
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd)
     layoutManager = LinearLayoutManager(baseActivity)
@@ -727,7 +730,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
         QueryObject.Operator.EQ.name
       )
     )
-    queryList.add(
+    /*queryList.add(
       QueryObject(
         QueryObject.QueryKey.DeliveryMode.value,
         OrderSummaryRequest.DeliveryMode.ONLINE.name,
@@ -740,7 +743,7 @@ class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBind
         QueryObject.QueryValue.NF_VIDEO_CONSULATION.name,
         QueryObject.Operator.NE.name
       )
-    )
+    )*/
     return queryList
   }
 

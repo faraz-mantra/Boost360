@@ -67,7 +67,11 @@ class FilterBottomSheet : BaseBottomSheetDialog<BottomSheetFilterDateBinding, Ba
       binding?.btnReset -> {
         this.filterDateModel = listFilter?.lastOrNull()
         listFilter?.map { it.isSelect = (it.title.equals(this.filterDateModel?.title)) }
-        if (adapterFilter != null) adapterFilter?.notifyDataSetChanged()
+        if (adapterFilter != null){
+          adapterFilter?.notifyDataSetChanged()
+        }
+        onClicked(FilterDateModel("Till date", "", "", isSelect = true))
+        dismiss()
       }
     }
   }

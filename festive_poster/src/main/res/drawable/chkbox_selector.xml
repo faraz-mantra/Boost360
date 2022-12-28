@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/ic_checkbox_chked_fposter" android:state_checked="true"/>
+    <item android:drawable="@drawable/ic_checkbox_unchked_fposter"
+        android:state_checked="false"/>
+
+</selector>

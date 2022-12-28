@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import com.framework.base.BaseFragment
 import com.framework.models.BaseViewModel
+import com.framework.pref.UserSessionManager
 
 abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> : BaseFragment<Binding, ViewModel>() {
 
   private var progressView: ProgressDialog? = null
+  protected lateinit var sessionLocal: UserSessionManager
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    sessionLocal = UserSessionManager(baseActivity)
     progressView = ProgressDialog.newInstance()
     return super.onCreateView(inflater, container, savedInstanceState)
   }

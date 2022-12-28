@@ -6,5 +6,5 @@
     android:width="1dp"
     android:color="@color/colorAccentLight" />
 
-  <corners android:radius="@dimen/size_20" />
+  <corners android:radius="@dimen/size_10" />
 </shape>

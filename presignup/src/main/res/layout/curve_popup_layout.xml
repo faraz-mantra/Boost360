@@ -73,7 +73,7 @@
     <!--                android:drawableStart="@drawable/ic_email_icon"-->
     <!--                android:layout_marginTop="@dimen/_20sdp"-->
     <!--                android:drawablePadding="@dimen/_10sdp"-->
-    <!--                android:fontFamily="@font/open_sans_semibold"-->
+    <!--                android:fontFamily="@font/semi_bold"-->
     <!--                android:paddingStart="@dimen/_20sdp"-->
     <!--                android:paddingEnd="@dimen/_20sdp"-->
     <!--                android:text="Submit" />-->

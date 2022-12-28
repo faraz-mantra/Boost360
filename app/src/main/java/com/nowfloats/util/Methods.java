@@ -79,6 +79,7 @@ import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
+import retrofit.http.Query;
 import retrofit.http.QueryMap;
 
 //import com.squareup.okhttp.OkHttpClient;
@@ -1129,7 +1130,9 @@ public class Methods {
 
     public interface SmsInterface {
         @GET("/discover/v1/floatingpoint/SendOTPIndia")
-        void sendSms(@QueryMap Map hashMap, Callback<Boolean> response);
+        void sendSms(@QueryMap Map hashMap,
+                     @Query("messageTemplate") String msgTemplate,
+                     Callback<Boolean> response);
 
         @GET("/discover/v1/floatingpoint/VerifyOTP")
         void verifySms(@QueryMap Map hashMap, Callback<Boolean> response);

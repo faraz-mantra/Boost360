@@ -2,6 +2,8 @@ package com.onboarding.nowfloats.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Menu
 import android.widget.Toast
 import android.widget.Toast.makeText
@@ -13,8 +15,8 @@ import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
-import com.framework.utils.ConversionUtils
 import com.framework.views.customViews.CustomToolbar
+import com.google.android.material.snackbar.Snackbar
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
 import com.onboarding.nowfloats.constant.FragmentType
@@ -28,11 +30,14 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
 
   private var type: FragmentType? = null
   private var exitToast: Toast? = null
+  private var exitSnackBar: Snackbar? = null
+  private var doubleBackToExitPressedOnce = false
 
   override fun onCreateView() {
     super.onCreateView()
     intent?.extras?.getInt(FRAGMENT_TYPE)?.let { type = FragmentType.values()[it] }
     exitToast = makeText(this, R.string.press_again_exit, Toast.LENGTH_SHORT)
+    exitSnackBar = Snackbar.make(binding?.container?.rootView!!, R.string.press_again_exit, Snackbar.LENGTH_SHORT)
     setFragment()
   }
 
@@ -228,20 +233,36 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
         super.onBackPressed()
       }
       FragmentType.REGISTRATION_BUSINESS_API_CALL -> {
-        if (exitToast?.view?.windowToken != null) {
-          if (registrationBusinessApiFragment?.isDigitalChannel() == false && registrationBusinessApiFragment?.isBackBlock() == false) {
-            registrationBusinessApiFragment?.updateInfo()
-            NavigatorManager.popCurrentScreen(ScreenModel.Screen.REGISTERING)
-            super.onBackPressed()
-          }
-        } else if (registrationBusinessApiFragment?.isBackBlock() == false) exitToast?.show()
+      if (doubleBackToExitPressedOnce) {
+        goBack()
+        }
+        doubleBackToExitPressedOnce = true
+        if (registrationBusinessApiFragment?.isBackBlock() == false) exitToast?.show()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+          doubleBackToExitPressedOnce = false
+        }, 2000)
       }
       FragmentType.REGISTRATION_COMPLETE -> {
-        if (exitToast?.view?.windowToken != null) {
+        if (doubleBackToExitPressedOnce) {
           super.onBackPressed()
-        } else exitToast?.show()
+        }
+        doubleBackToExitPressedOnce = true
+        exitToast?.show()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+          doubleBackToExitPressedOnce = false
+        }, 2000)
       }
       else -> super.onBackPressed()
+    }
+  }
+
+  private fun goBack() {
+    if (registrationBusinessApiFragment?.isDigitalChannel() == false && registrationBusinessApiFragment?.isBackBlock() == false) {
+      registrationBusinessApiFragment?.updateInfo()
+      NavigatorManager.popCurrentScreen(ScreenModel.Screen.REGISTERING)
+      super.onBackPressed()
     }
   }
 

@@ -5,19 +5,14 @@ import android.text.format.DateUtils
 import android.util.Log
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.temporal.ChronoUnit
 import java.util.*
 import java.util.concurrent.TimeUnit
-
-
 
 
 object DateUtils {
 
   const val FORMAT_SERVER_DATE = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+  const val FORMAT_SERVER_DATE1 = "yyyy-MM-dd'T'HH:mm:ss.SS"
   const val FORMAT_SERVER_1_DATE = "yyyy-MM-dd'T'HH:mm:ss'Z'"
   const val FORMAT_SERVER_TO_LOCAL = "dd-MM-yyyy hh:mm a"
   const val FORMAT_SERVER_TO_LOCAL_1 = "dd-MM-yyyy HH:mm"
@@ -25,7 +20,10 @@ object DateUtils {
   const val FORMAT_SERVER_TO_LOCAL_3 = "MMM dd, yyyy 'at' hh:mm a";
   const val FORMAT_SERVER_TO_LOCAL_4 = "hh:mm a 'on' EEE',' dd MMM yyyy";
   const val FORMAT_SERVER_TO_LOCAL_5 = "EEE',' dd MMM yyyy";
+  const val FORMAT_SERVER_TO_LOCAL_6 = "EEE',' dd MMMM"
+  const val FORMAT_SERVER_TO_LOCAL_7 = "dd MMM yyyy, hh:mm a";
   const val FORMAT_DD_MM_YYYY = "dd-MM-yyyy"
+  const val FORMAT1_DD_MM_YYYY = "dd MMM yyyy"
   const val FORMAT_DD_MM_YYYY_N = "dd/MM/yyyy"
   const val FORMAT_DD_MM_YYYY_hh_mm_ss = "dd-MM-yyyy HH:mm:ss"
   const val FORMAT__DD__MM__YYYY = "dd MM yyyy"
@@ -51,6 +49,7 @@ object DateUtils {
     }
     return ""
   }
+
   fun getDate(milliSeconds: Long, dateFormat: String): String {
     val formatter = SimpleDateFormat(dateFormat)
     val calendar = Calendar.getInstance()
@@ -65,7 +64,7 @@ object DateUtils {
       val date = timeFormat.parse(time)
       return SimpleDateFormat(required, locale).format(date)
     } catch (e: Exception) {
-      Log.d("parseDate",e.localizedMessage?:"")
+      Log.d("parseDate", e.localizedMessage ?: "")
     }
     return ""
   }
@@ -81,8 +80,13 @@ object DateUtils {
       val timeFormat: DateFormat = SimpleDateFormat(format, locale)
       timeZone?.let { timeFormat.timeZone = it }
       timeFormat.parse(this)
+//      val sdf = SimpleDateFormat(format, locale)
+//      val calender = Calendar.getInstance()
+//      calender.set(Calendar.HOUR, sdf.parse(this)!!.hours)
+//      calender.set(Calendar.MINUTE, sdf.parse(this)!!.minutes)
+//      calender.time
     } catch (e: Exception) {
-      Log.d("parseDate",e.localizedMessage?:"")
+      Log.d("parseDate", e.localizedMessage ?: "")
       null
     }
   }
@@ -91,8 +95,12 @@ object DateUtils {
     var validTimeFlag = false
     if (endTime <= startTime) {
       if (validateTime <= endTime || validateTime >= startTime) validTimeFlag = true
-    } else if (validateTime <= endTime && validateTime >= startTime) validTimeFlag = true
+    } else if (validateTime in startTime..endTime) validTimeFlag = true
     return validTimeFlag
+  }
+
+  fun isStartEndDatesValid(startTime: Date, endTime: Date): Boolean{
+    return startTime < endTime
   }
 
   fun getCurrentDate(): Date {
@@ -122,6 +130,11 @@ object DateUtils {
     val cal = Calendar.getInstance()
     cal.time = this
     return cal
+  }
+
+  fun getCurrentTimeIn24Hour(): String {
+    val now = Calendar.getInstance()
+    return "${now[Calendar.HOUR_OF_DAY]}:${now[Calendar.MINUTE]}"
   }
 
   fun formatDate(tstSeconds: Long): String {
@@ -168,12 +181,16 @@ object DateUtils {
   }
 
   fun millisecondsToMinutesSeconds(milliSeconds: Long): String? {
-    return String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(milliSeconds).mod(TimeUnit.HOURS.toMinutes(1)),
-      TimeUnit.MILLISECONDS.toSeconds(milliSeconds).mod(TimeUnit.MINUTES.toSeconds(1)))
+    return String.format(
+      "%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(milliSeconds).mod(TimeUnit.HOURS.toMinutes(1)),
+      TimeUnit.MILLISECONDS.toSeconds(milliSeconds).mod(TimeUnit.MINUTES.toSeconds(1))
+    )
   }
 
   fun milliToMinSecFormat(milliSeconds: Long): String? {
-    return String.format("%d min %d sec", TimeUnit.MILLISECONDS.toMinutes(milliSeconds).mod(TimeUnit.HOURS.toMinutes(1)),
-      TimeUnit.MILLISECONDS.toSeconds(milliSeconds).mod(TimeUnit.MINUTES.toSeconds(1)))
+    return String.format(
+      "%d min %d sec", TimeUnit.MILLISECONDS.toMinutes(milliSeconds).mod(TimeUnit.HOURS.toMinutes(1)),
+      TimeUnit.MILLISECONDS.toSeconds(milliSeconds).mod(TimeUnit.MINUTES.toSeconds(1))
+    )
   }
 }

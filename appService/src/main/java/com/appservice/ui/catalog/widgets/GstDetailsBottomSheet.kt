@@ -2,7 +2,7 @@ package com.appservice.ui.catalog.widgets
 
 import com.appservice.R
 import com.appservice.databinding.BottomSheetGstDetailBinding
-import com.appservice.model.GstDetailModel
+import com.appservice.model.panGst.GstDetailModel
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener

@@ -144,11 +144,13 @@ const val LOGIN_SUCCESS = "Login success"
 const val SIGNUP_SUCCESS = "Signup success"
 const val EVENT_LABEL_ADDONS_MARKETPLACE_FULL_CART_LOADED = "ADDONS MARKETPLACE Full Cart Loaded"
 const val EVENT_LABEL_ADDONS_MARKETPLACE_EMPTY_CART_LOADED = "ADDONS MARKETPLACE Empty Cart Loaded"
+const val EVENT_LABEL_ADDONS_MARKETPLACE_VALIDITY_INCREASED = "ADDONS MARKETPLACE Validity Increased"
 const val EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_EXPERT_CALL_CLICKED = "ADD-ONS Waiting Cart Expert Call Click"
 const val EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_CROSS_CLICKED = "ADD-ONS Waiting Cart Cross Click"
 const val EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_EXPERT_REVIEW_CLICKED = "ADD-ONS Waiting Cart Expert Review Click"
 const val Check_Activation_Status = "Check_Activation_Status"
 const val Auto_Renew_Order_Confirmation = "Auto renew order confirmation"
+const val Order_Confirmation = "order confirmation"
 const val SELF_BRANDED_PAYMENT_GATEWAY = "Self Branded Payment Gateway"
 const val FEATURE_KEY = "Feature_Key"
 const val Feature_Details = "Feature details"
@@ -200,10 +202,6 @@ const val BUSINESS_DETAILS = "BUSINESS DETAILS"
 //Domain Booking Mdule
 const val SUCCESSFULLY_ADDED_EXISTING_DOMAIN = "Successfully added existing domain"
 const val DOMAIN_CREATION_SUCCESS = "Domain creation success"
-
-
-
-
-
-
-
+const val SETUP_MY_WEBSITE_LOAD = "Setup my website screen loaded"
+const val SETUP_MY_WEBSITE_BTN_CLICK = "Setup my website button clicked"
+const val USER_LOCATION_LABEL = "User location data"

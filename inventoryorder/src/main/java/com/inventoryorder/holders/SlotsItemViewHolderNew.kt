@@ -20,15 +20,15 @@ class SlotsItemViewHolderNew(binding: ItemTimeSlotAppointmentNewBinding) :
     binding?.textTime?.text ="${splitStr[0]} ${splitStr[1]}"
 
     if (data?.IsAvailable == true) {
-//      if (data?.isSelected) {
-//        binding?.linearRoot?.setBackgroundResource(R.drawable.bg_rect_blue)
-//      } else {
-//        binding?.linearRoot?.setBackgroundResource(R.drawable.bg_rect_edit_txt)
-//      }
+      if (data?.isSelected) {
+        binding?.linearRoot?.setBackgroundResource(R.drawable.bg_rect_blue)
+      } else {
+        binding?.linearRoot?.setBackgroundResource(R.drawable.bg_rect_edit_txt)
+      }
     } else {
-//      binding?.linearRoot?.setBackgroundResource(R.drawable.bg_rect_slotinactive)
+      binding?.linearRoot?.setBackgroundResource(R.drawable.bg_rect_slotinactive)
       binding?.textTime?.setTextColor(getColor(R.color.light_grey_2)!!)
-//      binding?.textAmPm?.setTextColor(getColor(R.color.light_grey_2)!!)
+      binding?.textAmPm?.setTextColor(getColor(R.color.light_grey_2)!!)
     }
 
     binding?.linearRoot?.setOnClickListener {

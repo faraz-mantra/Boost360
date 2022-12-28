@@ -35,7 +35,7 @@ class ServiceModelV1(
   var Duration: Int? = null,
 
   @SerializedName(value = "GstSlab", alternate = ["gstSlab"])
-  var GstSlab: Int? = null,
+  var GstSlab: Int=0,
 
   var availableUnits: Int = 1,
   @SerializedName(value = "tags", alternate = ["Tags"])

@@ -1,8 +1,6 @@
 package com.dashboard.holder
 
 import android.content.res.ColorStateList
-import android.graphics.Color
-import androidx.core.content.res.ResourcesCompat
 import com.dashboard.R
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.constant.RecyclerViewActionType.PRIMARY_FONT_SELECTED

@@ -57,7 +57,7 @@ data class AppointmentModel(
   private fun isDayTurnedOff() {
     this.isTurnedOn = false
     timeSlots.clear()
-
+    timeSlots.add(TimeSlot(null, null))
   }
 
   fun addSession() {

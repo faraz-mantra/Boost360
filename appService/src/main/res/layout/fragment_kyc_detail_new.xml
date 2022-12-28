@@ -38,6 +38,7 @@
           android:orientation="vertical">
 
           <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_name_on_Pan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_30"

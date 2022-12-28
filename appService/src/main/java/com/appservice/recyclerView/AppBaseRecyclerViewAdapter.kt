@@ -21,7 +21,6 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     val inflater = LayoutInflater.from(parent.context)
     val recyclerViewItemType = values().first { it.getLayout() == viewType }
     val binding = getViewDataBinding(inflater, recyclerViewItemType, parent)
-    val a = binding
     return when (recyclerViewItemType) {
       PAGINATION_LOADER -> PagingViewHolder(binding as PaginationLoaderBinding)
       SPECIFICATION_ITEM -> SpecificationViewHolder(binding as RowLayoutAddedSpecsBinding)
@@ -49,7 +48,12 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       BACKGROUND_IMAGE_RV -> BackgroundImageHolder(binding = binding as ListItemBackgroundImagesBinding)
       BACKGROUND_IMAGE_FULL_SCREEN -> BGImageFullScreenHolder(binding = binding as ListItemBgImageFullScreenBinding)
       GST_SLAB_SETTING -> GstSlabViewHolder(binding as ItemGstSlabBinding)
-      VMN_CALL->VmnCallViewHolder(binding as SingleItemVmnCallItemV2Binding)
+      VMN_CALL -> VmnCallViewHolder(binding as SingleItemVmnCallItemV2Binding)
+      TESTIMONIAL_ITEM -> TestimonialViewHolder(binding as ItemTestimonialListBinding)
+      PAST_UPDATE_ITEM->PastUpdateViewHolder(binding as ListItemPastUpdateBinding)
+      PAST_POST_CATEGORIES->PastCategoryViewHolder(binding as ListItemPastCategoryBinding)
+      PAST_TAGS->PastTagsViewHolder(binding as ListItemPastTagsBinding)
+      PAST_SOCIAL_ICON_LIST_ITEM->PastSocialIconViewHolder(binding as ListItemSocialIconBinding)
     }
   }
 

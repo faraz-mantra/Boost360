@@ -11,6 +11,7 @@ import com.appservice.R
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
 import com.appservice.ui.bgImage.BGImageCropFragment
+import com.festive.poster.ui.promoUpdates.PromoUpdatesActivity
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
@@ -31,7 +32,10 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    intent?.extras?.getInt(FRAGMENT_TYPE)?.let { type = FragmentType.values()[it] }
+    intent?.extras?.getString(FRAGMENT_TYPE)?.let { type = FragmentType.fromValue(it) }
+   if (type==null){
+     intent?.extras?.getInt(FRAGMENT_TYPE)?.let { type = FragmentType.values()[it] }
+   }
     super.onCreate(savedInstanceState)
   }
 
@@ -51,19 +55,28 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
     return binding?.appBarLayout?.toolbar
   }
 
+  override fun isHideToolbar(): Boolean {
+    if (type==FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2){
+      return true
+    }
+    return super.isHideToolbar()
+  }
+
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> ContextCompat.getColor(
         this,
         R.color.colorPrimary
       )
+      FragmentType.PAST_UPDATES->ContextCompat.getColor(this,
+        com.framework.R.color.color_4a4a4a_jio_ec008c)
       else -> super.getToolbarBackgroundColor()
     }
   }
 
   override fun getToolbarTitleColor(): Int? {
     return when (type) {
-      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> ContextCompat.getColor(
+      FragmentType.UPDATE_BUSINESS_FRAGMENT, FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT, FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT,FragmentType.PAST_UPDATES -> ContextCompat.getColor(
         this,
         R.color.white
       )
@@ -83,6 +96,7 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.UPDATE_BUSINESS_FRAGMENT -> getLatestUpdatesTaxonomyFromServiceCode(session?.fP_AppExperienceCode)
       FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT -> getString(R.string.post_an_update_n)
       FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> ""
+      FragmentType.PAST_UPDATES->getString(R.string.Posted_Updates)
       else -> super.getToolbarTitle()
     }
   }
@@ -103,8 +117,10 @@ open class UpdateBusinessContainerActivity : AppBaseActivity<ActivityFragmentCon
     return when (type) {
       FragmentType.UPDATE_BUSINESS_FRAGMENT -> UpdatesBusinessFragment.newInstance()
       FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT -> AddUpdateBusinessFragment.newInstance()
+      FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2 -> AddUpdateBusinessFragmentV2.newInstance()
       FragmentType.DETAIL_UPDATE_BUSINESS_FRAGMENT -> DetailUpdateBusinessFragment.newInstance()
-      else -> UpdatesBusinessFragment.newInstance()
+      FragmentType.PAST_UPDATES->PastUpdatesListingFragment.newInstance()
+      else -> AddUpdateBusinessFragmentV2.newInstance()
     }
   }
 
@@ -162,5 +178,11 @@ fun isService(category_code: String?): Boolean {
     "SVC", "DOC", "HOS", "SPA", "SAL" -> true
     else -> false
   }
+}
+
+fun Fragment.navigateToUpdateStudio(clearTop: Boolean = false, isResult: Boolean = false) {
+  val intent = Intent(activity, PromoUpdatesActivity::class.java)
+  if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+  startActivity(intent)
 }
 

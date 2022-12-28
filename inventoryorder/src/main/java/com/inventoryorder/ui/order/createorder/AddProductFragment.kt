@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -68,7 +69,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         productList.clear()
         productList.addAll(finalProductList)
         productList = productList.filter {
-          it.getNameValue().startsWith(query) || it.getNameValue().contains(query)
+          it.getNameValue().contains(query)
         } as ArrayList<ProductItem>
         setAdapterOrderList()
       }
@@ -130,12 +131,13 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         if (finalProductList.isNotEmpty()) {
           productList.clear()
           productList.addAll(finalProductList)
-          binding?.tvNoProducts?.visibility = View.GONE
-          binding?.productRecycler?.visibility = View.VISIBLE
+          binding.tvNoProducts.visibility = View.GONE
+          binding.productRecycler.visibility = View.VISIBLE
           setAdapterOrderList()
         } else {
-          binding?.tvNoProducts?.visibility = View.VISIBLE
-          binding?.productRecycler?.visibility = View.GONE
+          binding.tvNoProducts.visibility = View.VISIBLE
+          binding.productRecycler.visibility = View.GONE
+          Toast.makeText(activity, "Error fetching product list. Please try after sometime.", Toast.LENGTH_LONG).show()
         }
       } else showShortToast(it.message)
     }
@@ -149,7 +151,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
 
   private fun setAdapterOrderList() {
     if (itemsAdapter == null) {
-      binding?.productRecycler?.apply {
+      binding.productRecycler.apply {
         itemsAdapter = AppBaseRecyclerViewAdapter(baseActivity, productList, this@AddProductFragment)
         adapter = itemsAdapter
         itemsAdapter?.runLayoutAnimation(this)
@@ -161,25 +163,35 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
     when (actionType) {
       RecyclerViewActionType.PRODUCT_ITEM_ADD.ordinal -> {
         val productItem = item as? ProductItem ?: return
-        productItem.productQuantityAdded = productItem.productQuantityAdded + 1
-        finalProductList.firstOrNull { productItem._id.equals(it._id) }?.productQuantityAdded = productItem.productQuantityAdded
-        itemsAdapter?.notifyDataSetChanged()
-        totalPrice = totalPrice.plus(productItem.getPayablePrice())
-        binding?.tvItemTotalPrice?.text = "${productItem.getCurrencyCodeValue()} $totalPrice"
-        if (binding?.layoutTotalPricePanel?.visibility == View.GONE) {
-          binding?.layoutTotalPricePanel?.visibility = View.VISIBLE
+        val  units = (productItem.availableUnits ?: 0.0)
+        if ( units> 0||units==-1.0) {
+          productItem.productQuantityAdded = productItem.productQuantityAdded + 1
+          finalProductList.firstOrNull { productItem._id.equals(it._id) }?.productQuantityAdded =
+            productItem.productQuantityAdded
+          itemsAdapter?.notifyDataSetChanged()
+          totalPrice = totalPrice.plus(productItem.getPayablePrice())
+          binding?.tvItemTotalPrice?.text = "${productItem.getCurrencyCodeValue()} $totalPrice"
+          if (binding?.layoutTotalPricePanel?.visibility == View.GONE) {
+            binding?.layoutTotalPricePanel?.visibility = View.VISIBLE
+          }
+          totalCartItems += 1
+        }else{
+          showShortToast(getString(R.string.product_quantity_not_available))
         }
-        totalCartItems += 1
       }
 
       RecyclerViewActionType.PRODUCT_ITEM_INCREASE_COUNT.ordinal -> {
         val productItem = item as? ProductItem ?: return
-        productItem.productQuantityAdded = productItem.productQuantityAdded + 1
-        finalProductList.firstOrNull { productItem._id.equals(it._id) }?.productQuantityAdded = productItem.productQuantityAdded
-        itemsAdapter?.notifyDataSetChanged()
-        totalPrice = finalProductList.map { it.getPayablePWithCount() }.sum()
-        binding?.tvItemTotalPrice?.text = "${productItem.getCurrencyCodeValue()} $totalPrice"
-        totalCartItems += 1
+        if (productItem.availableUnits == -1.0 || productItem.productQuantityAdded < productItem.availableUnits?.toInt()!!){
+          productItem.productQuantityAdded = productItem.productQuantityAdded + 1
+          finalProductList.firstOrNull { productItem._id.equals(it._id) }?.productQuantityAdded = productItem.productQuantityAdded
+          itemsAdapter?.notifyDataSetChanged()
+          totalPrice = finalProductList.map { it.getPayablePWithCount() }.sum()
+          binding?.tvItemTotalPrice?.text = "${productItem.getCurrencyCodeValue()} $totalPrice"
+          totalCartItems += 1
+        } else {
+          showShortToast("${productItem.availableUnits?.toInt()} ${if(productItem.availableUnits?.toInt() == 1) "unit" else "units"} ${getString(R.string.units_available)}")
+        }
       }
 
       RecyclerViewActionType.PRODUCT_ITEM_DECREASE_COUNT.ordinal -> {
@@ -207,14 +219,14 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         (context as? FragmentContainerOrderActivity)?.onBackPressed()
       } else if (addMore && req != null) {
         createOrderRequest = req
-        finalProductList.forEach { prod ->
-          val addedProduct = createOrderRequest.items?.firstOrNull { it.productOrOfferId.equals(prod._id) }
-          if (addedProduct != null) {
-            totalPrice += addedProduct.getPayablePriceAmount()
-            prod.productQuantityAdded = addedProduct.quantity
-            totalCartItems += addedProduct.quantity
-          } else prod.productQuantityAdded = 0
-        }
+//        finalProductList.forEach { prod ->
+//          val addedProduct = createOrderRequest.items?.firstOrNull { it.productOrOfferId.equals(prod._id) }
+//          if (addedProduct != null) {
+//            totalPrice += addedProduct.getPayablePriceAmount()
+//            prod.productQuantityAdded = addedProduct.quantity
+//            totalCartItems += addedProduct.quantity
+//          } else prod.productQuantityAdded = 0
+//        }
         productList.clear()
         productList.addAll(finalProductList)
         itemsAdapter?.notifyDataSetChanged()

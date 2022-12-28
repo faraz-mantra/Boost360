@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.festive.poster.ui.promoUpdates.PromoUpdatesActivity">
+
+
+    <!--
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/layout_social_conn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/social_conn_bg"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:weightSum="1"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/iv_left_arrow"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:src="@drawable/ic_left_arrow_grey" />
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vp_social_conn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="0.96"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/list_item_social_conn" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/iv_right_arrow"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:rotation="180"
+                    android:src="@drawable/ic_left_arrow_grey" />
+            </LinearLayout>
+    -->
+
+    <androidx.viewpager2.widget.ViewPager2
+      android:id="@+id/view_pager"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+    <com.google.android.material.appbar.AppBarLayout
+      android:id="@+id/appbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fitsSystemWindows="true">
+
+      <com.google.android.material.appbar.CollapsingToolbarLayout
+        android:id="@+id/collapsing_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_60"
+        android:fitsSystemWindows="true"
+        app:expandedTitleMarginBottom="60dp"
+        app:expandedTitleMarginEnd="64dp"
+        app:expandedTitleMarginStart="48dp"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+        <androidx.appcompat.widget.Toolbar
+          android:id="@+id/toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="43dp"
+          android:background="@color/colorECEFF4"
+          android:gravity="top"
+          app:layout_collapseMode="pin" />
+
+        <RelativeLayout
+          android:id="@+id/tab_parent"
+          android:layout_width="match_parent"
+          android:layout_height="43dp"
+          android:layout_gravity="bottom"
+          android:background="@drawable/top_round_corner"
+          android:elevation="4dp"
+          android:paddingHorizontal="@dimen/size_22">
+
+          <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            style="@style/TabTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:layout_alignParentTop="true"
+            android:textSize="14sp"
+            app:tabInlineLabel="true"
+            app:tabMinWidth="0dp"
+            app:tabMode="scrollable"
+            app:tabTextAppearance="@style/TabTextStyle" />
+        </RelativeLayout>
+
+
+      </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+  </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

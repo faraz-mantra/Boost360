@@ -79,7 +79,7 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
     WebEngageController.trackEvent(PS_LOGIN_NUMBER_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
     baseActivity.hideKeyBoard()
     showProgress(getString(R.string.sending_otp))
-    viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess() && it.parseResponse()) {
         startFragmentFromNewOnBoardingActivity(
           activity = baseActivity, type = FragmentType.VERIFY_PHONE_FRAGMENT,
@@ -87,7 +87,7 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
         )
       } else showShortToast(if (it.message.isNullOrEmpty().not()) it.message else getString(R.string.otp_not_sent))
       hideProgress()
-    })
+    }
   }
 
 

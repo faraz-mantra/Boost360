@@ -161,8 +161,9 @@ class ContentSharing {
             shareUriWithText(activity, uri, shareText, isWhatsApp, isFb, isLinkedin, isTwitter)
           }
 
-          override fun onBitmapFailed(e: Exception, errorDrawable: Drawable) {
+          override fun onBitmapFailed(e: Exception, errorDrawable: Drawable?) {
             targetMap = null
+            Toast.makeText(activity.applicationContext,"Something went wrong, Try again later",Toast.LENGTH_SHORT).show()
           }
 
           override fun onPrepareLoad(placeHolderDrawable: Drawable?) {

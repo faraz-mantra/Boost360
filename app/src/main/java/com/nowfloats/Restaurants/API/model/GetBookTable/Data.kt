@@ -1,17 +1,22 @@
 package com.nowfloats.Restaurants.API.model.GetBookTable
 
 data class Data(
-  val ActionId: String,
-  val CreatedOn: String,
-  val IsArchived: Boolean,
+  val ActionId: String? = null,
+  val CreatedOn: String? = null,
+  val IsArchived: Boolean? = null,
   val UpdatedOn: String,
-  val UserId: String,
-  val WebsiteId: String,
-  val _id: String,
-  val date: String,
-  val message: String,
-  val name: String,
-  val number: String,
-  val time: String,
-  val totalPeople: String
-)
+  val UserId: String? = null,
+  val WebsiteId: String? = null,
+  val _id: String? = null,
+  val date: String? = null,
+  val message: String? = null,
+  val name: String? = null,
+  val number: String? = null,
+  val time: String? = null,
+  val totalPeople: String? = null
+){
+
+  fun getTotalPeopleN():String{
+    return if (totalPeople.isNullOrEmpty() || totalPeople.equals("null",true)) "0" else totalPeople
+  }
+}

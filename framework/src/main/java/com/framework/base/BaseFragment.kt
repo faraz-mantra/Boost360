@@ -25,17 +25,16 @@ import com.framework.analytics.UserExperiorController
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
 import com.framework.utils.hideKeyBoard
-import com.framework.views.zero.FragmentZeroCase
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel?> : Fragment(), View.OnClickListener {
+abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel> : Fragment(), View.OnClickListener {
 
   protected lateinit var baseActivity: BaseActivity<*, *>
   protected lateinit var root: View
   protected var viewModel: ViewModel? = null
-  protected var binding: Binding? = null
+  protected lateinit var binding: Binding
   protected var navigator: Navigator? = null
   protected var compositeDisposable = CompositeDisposable()
   private var progressDialog: ProgressDialog? = null
@@ -54,9 +53,9 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     setHasOptionsMenu(true)
     binding = DataBindingUtil.inflate(inflater, getLayout(), container, false)
-    binding?.lifecycleOwner = this
+    binding.lifecycleOwner = this
     navigator = Navigator(baseActivity)
-    return binding?.root
+    return binding.root
   }
 
   override fun onPrepareOptionsMenu(menu: Menu) {

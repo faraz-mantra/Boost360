@@ -5,7 +5,9 @@
       "action_item": [
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
@@ -44,7 +46,9 @@
       "action_item": [
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
@@ -83,7 +87,9 @@
       "action_item": [
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
@@ -121,7 +127,9 @@
       "action_item": [
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
@@ -159,7 +167,9 @@
       "action_item": [
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
@@ -193,7 +203,9 @@
       "action_item": [
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
@@ -230,16 +242,18 @@
       "action_item": [
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
           "title": "Post new\nphotos"
         },
-        {
-          "quickActionType": "MAKE_ANNOUNCEMENT",
-          "title": "Make an\nannouncement"
-        },
+//        {
+//          "quickActionType": "MAKE_ANNOUNCEMENT",
+//          "title": "Make an\nannouncement"
+//        },
         {
           "quickActionType": "LIST_TOPPER",
           "title": "List a\ntopper"
@@ -257,10 +271,10 @@
           "quickActionType": "ADD_FACULTY_MEMBER",
           "title": "List a faculty\nmember"
         },
-        {
-          "quickActionType": "ADD_SLIDER_BANNER",
-          "title": "Add slider\nbanner"
-        },
+//        {
+//          "quickActionType": "ADD_SLIDER_BANNER",
+//          "title": "Add slider\nbanner"
+//        },
         {
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
@@ -277,7 +291,9 @@
         //        },
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
@@ -311,7 +327,9 @@
       "action_item": [
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
@@ -341,7 +359,9 @@
       "action_item": [
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",
@@ -377,14 +397,16 @@
     {
       "type": "Pharmacy",
       "action_item": [
-        {
-          "quickActionType": "POST_STATUS_STORY",
-          "title": "Daily\nstatus/story",
-          "isNew": true
-        },
+//        {
+//          "quickActionType": "POST_STATUS_STORY",
+//          "title": "Daily\nstatus/story",
+//          "isNew": true
+//        },
         {
           "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate"
+          "title": "Post today's\nupdate",
+          "isNew": true,
+          "isLotty": false
         },
         {
           "quickActionType": "ADD_PHOTO_GALLERY",

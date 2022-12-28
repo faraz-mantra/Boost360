@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.TestimonialData;
 
+@Deprecated
 public class TestimonialUtils {
 
     public static int isReviewSecondValue(String experienceCode) {

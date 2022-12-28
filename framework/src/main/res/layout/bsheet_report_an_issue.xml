@@ -159,20 +159,23 @@
           app:layout_constraintTop_toBottomOf="@+id/customTextViewdafacasc" />
 
         <com.framework.views.customViews.CustomButton
-          android:id="@+id/btn_done"
-          style="@style/CustomRoundedYellowButton"
-          android:layout_width="0dp"
-          android:layout_height="42dp"
-          android:layout_marginTop="26dp"
-          android:layout_marginBottom="33dp"
-          android:background="@drawable/fab_rounded_square_bg"
-          android:enabled="false"
-          android:stateListAnimator="@null"
-          android:text="@string/submit_report"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="@+id/et_error_desccasc"
-          app:layout_constraintStart_toStartOf="@+id/et_error_desccasc"
-          app:layout_constraintTop_toBottomOf="@+id/et_error_desccasc" />
+            android:id="@+id/btn_done"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginBottom="33dp"
+            android:enabled="false"
+            android:fontFamily="@font/semi_bold"
+            android:letterSpacing="0.0"
+            android:stateListAnimator="@null"
+            android:text="@string/submit_report"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/body_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/et_error_desccasc"
+            app:layout_constraintStart_toStartOf="@+id/et_error_desccasc"
+            app:layout_constraintTop_toBottomOf="@+id/et_error_desccasc" />
 
       </androidx.constraintlayout.widget.ConstraintLayout>
 

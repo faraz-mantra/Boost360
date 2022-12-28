@@ -63,11 +63,12 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
     } else {
       binding?.textOrderIdValue?.text = "#${orderItem.ReferenceNumber}"
       binding?.textName?.text = orderItem.BuyerDetails?.ContactDetails?.FullName ?: ""
-      binding?.textCount?.text = "${NumbersToWords.solution(orderItem.Items?.size ?: 0)} (${orderItem.Items?.size})"
+      val totalQuantity = orderItem.BillingDetails?.ExtraProperties?.get("TotalQuantity")
+      binding?.textCount?.text = "${NumbersToWords.solution(totalQuantity.toString().toFloat().toInt())} (${totalQuantity.toString().toFloat().toInt()})"
       binding?.textPaymentLink?.text = orderItem.PaymentDetails?.methodValue() ?: ""
       binding?.textPaymentStatus?.text = orderItem.PaymentDetails?.statusValue() ?: ""
       binding?.textDeliveryType?.text = orderItem.LogisticsDetails?.DeliveryMode ?: ""
-      binding?.textTotalAmount?.text = "${orderItem.BillingDetails?.getCurrencyCodeValue() ?: "INR"} ${orderItem?.BillingDetails?.GrossAmount ?: 0.0}"
+      binding?.textTotalAmount?.text = "${orderItem.BillingDetails?.getCurrencyCodeValue() ?: "INR"} ${orderItem?.BillingDetails?.AmountPayableToSeller ?: 0.0}"
     }
     if (orderItem.BillingDetails?.InvoiceUrl.isNullOrEmpty().not()) binding?.invoiceView?.visible()
     else binding?.invoiceView?.invisible()

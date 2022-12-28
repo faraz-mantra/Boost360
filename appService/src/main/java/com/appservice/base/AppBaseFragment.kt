@@ -33,9 +33,14 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
     get() {
       return isStaffType(sessionLocal.fP_AppExperienceCode)
     }
+  protected val isDoctorClinic: Boolean
+    get() {
+      return isDoctorClinicProfile(sessionLocal.fP_AppExperienceCode)
+    }
+
   protected val isDoctor: Boolean
     get() {
-      return isDoctorProfile(sessionLocal.fP_AppExperienceCode)
+      return  sessionLocal.fP_AppExperienceCode.equals("DOC", true)
     }
 
   protected val pref: SharedPreferences?
@@ -50,7 +55,6 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
   }
 
   override fun onCreateView() {
-    progressView = ProgressDialog.newInstance()
   }
 
   protected open fun hideProgress() {
@@ -143,7 +147,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
   fun startStorePage(buyItemKey: String = "") {
     try {
       showProgress("Loading. Please wait...")
-      val intent = Intent(baseActivity, Class.forName("com.boost.upgrades.UpgradeActivity"))
+      val intent = Intent(baseActivity, Class.forName("com.boost.marketplace.ui.home.MarketPlaceActivity"))
       intent.putExtra("expCode", sessionLocal.fP_AppExperienceCode)
       intent.putExtra("fpName", sessionLocal.fpTag)
       intent.putExtra("fpid", sessionLocal.fPID)
@@ -170,7 +174,24 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
   }
 }
 
-fun isDoctorProfile(category_code: String?): Boolean {
+fun isDoctorClinicProfile(category_code: String?): Boolean {
   return (category_code.equals("DOC", true) || category_code.equals("HOS", true))
 }
 
+fun getProductType(category_code: String?): String {
+  return when (category_code) {
+    "SVC", "DOC", "HOS", "SPA", "SAL" -> "Services"
+    else -> "Products"
+  }
+}
+
+fun getSingleProductTaxonomyFromServiceCode(category_code: String?): String? {
+  return when (category_code) {
+    "SVC", "DOC", "HOS", "SPA", "SAL" -> "Service"
+    "EDU" -> "Course"
+    "HOT" -> "Room Listing"
+    "RTL", "MFG" -> "Product"
+    "CAF" -> "Food Menu"
+    else -> "Product"
+  }
+}

@@ -25,6 +25,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.framework.analytics.SentryController;
 import com.framework.constants.SupportVideoType;
 import com.framework.firebaseUtils.firestore.FirestoreManager;
+import com.framework.utils.ConversionUtils;
+import com.framework.views.CustomDividerItemDecoration;
+import com.framework.views.VerticalSpaceItemDecoration;
 import com.framework.views.zero.old.AppFragmentZeroCase;
 import com.framework.views.zero.old.AppOnZeroCaseClicked;
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
@@ -106,6 +109,7 @@ public class CustomPageFragment extends Fragment implements AppOnZeroCaseClicked
     final LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
     recyclerView.setLayoutManager(mLinearLayoutManager);
     recyclerView.setItemAnimator(new FadeInUpAnimator());
+    recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(ConversionUtils.INSTANCE.dp2px(0f), true, ConversionUtils.INSTANCE.dp2px(64f)));
     emptylayout = (LinearLayout) view.findViewById(R.id.emptycustompage);
     mainLayout = (FrameLayout) view.findViewById(R.id.mainLayout);
     childContainer = (FrameLayout) view.findViewById(R.id.child_container_custom_page);

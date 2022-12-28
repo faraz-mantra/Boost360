@@ -3,6 +3,7 @@ package com.appservice.holder
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ImageButton
 import androidx.appcompat.widget.AppCompatSpinner
 import com.appservice.R
 import com.appservice.constant.RecyclerViewActionType
@@ -50,6 +51,9 @@ class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) :
     binding.ctvTitleDay.text = "${data.day}"
 
     binding.toggleOnOff.isOn = data.isTurnedOn!!
+    if (data.isTurnedOn == false)
+      data.changeDayTurned(data.isTurnedOn!!)
+
     binding.toggleOnOff.setOnToggledListener { _, isOn ->
       data.changeDayTurned(isOn)
       listener?.onItemClick(position, data, RecyclerViewActionType.TOGGLE_STATE_CHANGED.ordinal)
@@ -90,16 +94,37 @@ class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) :
     if (data.timeSlots.isNullOrEmpty()) {
       binding.llTimeSlot.removeAllViewsInLayout()
     } else {
-      for (item in data.timeSlots) {
-        binding.llTimeSlot.addView(getTimeSlotView(item))
+      for (i in 0 until data.timeSlots.size) {
+        if (i!=0){
+          binding.llTimeSlot.addView(getTimeSlotView(data.timeSlots[i],true, i,data))
+        }else{
+          binding.llTimeSlot.addView(getTimeSlotView(data.timeSlots[i],false, i,data))
+        }
       }
     }
   }
 
-  private fun getTimeSlotView(timeSlot: TimeSlot): View {
+  private fun getTimeSlotView(
+    timeSlot: TimeSlot,
+    cancelState: Boolean,
+    i: Int,
+    data: AppointmentModel
+  ): View {
     val itemView = LayoutInflater.from(binding.llTimeSlot.context).inflate(R.layout.item_ts_staff, null, false);
     val fromSpinner = itemView.findViewById(R.id.spinner_start_timing) as AppCompatSpinner
     val toSpinner = itemView.findViewById(R.id.spinner_end_timing) as AppCompatSpinner
+    val cancelBtn = itemView.findViewById<ImageButton>(R.id.timingCancel)
+    if (cancelState) {
+        cancelBtn.visibility = View.VISIBLE
+        cancelBtn.setOnClickListener {
+          binding.llTimeSlot.removeView(itemView)
+          binding.llTimeSlot.removeAllViewsInLayout()
+          data.timeSlots.removeAt(i)
+          addTimeSlots(data)
+        }
+    }else{
+        cancelBtn.visibility = View.GONE
+    }
     sessionTimingHandler(fromSpinner, timeSlot, toSpinner)
     fromSpinner.setSelection(businessHours.indexOf(element =timeSlot.from))
     toSpinner.setSelection(businessHours.indexOf(element= timeSlot.to))

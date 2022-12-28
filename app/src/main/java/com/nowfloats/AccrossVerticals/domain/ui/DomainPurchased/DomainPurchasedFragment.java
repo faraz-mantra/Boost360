@@ -25,6 +25,7 @@ import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_HAVE_AN_EXI
 import static com.framework.webengageconstant.EventNameKt.DOMAIN_AND_EMAIL;
 import static com.framework.webengageconstant.EventValueKt.NULL;
 
+@Deprecated
 public class DomainPurchasedFragment extends Fragment {
 
     private DomainPurchasedViewModel mViewModel;

@@ -4,7 +4,8 @@ import java.io.Serializable
 
 enum class StatusKyc {
   CUSTOM_PAYMENTGATEWAY,
-  STAFFPROFILE
+  STAFFPROFILE,
+  DOCTORBIO
 }
 
 const val auth_3 = "58ede4d4ee786c1604f6c535"
