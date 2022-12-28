@@ -9,11 +9,13 @@
   <application>
 
     <activity
+        android:exported="false"
       android:name=".ui.imagepicker.ImagePickerActivity"
       android:configChanges="orientation|screenSize"
       android:theme="@style/imagepicker_ImagePickerTheme" />
 
     <activity
+        android:exported="false"
       android:name=".ui.camera.CameraActivty"
       android:screenOrientation="portrait"
       android:theme="@style/imagepicker_CameraTheme" />
