@@ -250,11 +250,29 @@ class FloatingActionButton : AppCompatTextView {
         this@FloatingActionButton.scaleY = scale
       }
       duration = 100
-      addListener(object : AnimatorListenerAdapter() {
-        override fun onAnimationEnd(animation: Animator?) {
-          super.onAnimationEnd(animation)
+//      addListener(object : AnimatorListenerAdapter() {
+//        override fun onAnimationEnd(animation: Animator?) {
+//          super.onAnimationEnd(animation)
+//          visibility = View.INVISIBLE
+//        }
+//      })
+      addListener(object: Animator.AnimatorListener {
+        override fun onAnimationStart(animation: Animator) {
+          TODO("Not yet implemented")
+        }
+
+        override fun onAnimationEnd(animation: Animator) {
           visibility = View.INVISIBLE
         }
+
+        override fun onAnimationCancel(animation: Animator) {
+          TODO("Not yet implemented")
+        }
+
+        override fun onAnimationRepeat(animation: Animator) {
+          TODO("Not yet implemented")
+        }
+
       })
       interpolator = AccelerateDecelerateInterpolator()
     }.start()
@@ -268,11 +286,29 @@ class FloatingActionButton : AppCompatTextView {
         this@FloatingActionButton.scaleY = scale
       }
       duration = 100
-      addListener(object : AnimatorListenerAdapter() {
-        override fun onAnimationStart(animation: Animator?) {
-          super.onAnimationStart(animation)
-          visibility = View.VISIBLE
+//      addListener(object : AnimatorListenerAdapter() {
+//        override fun onAnimationStart(animation: Animator?) {
+//          super.onAnimationStart(animation)
+//          visibility = View.VISIBLE
+//        }
+//      })
+      addListener(object: Animator.AnimatorListener {
+        override fun onAnimationStart(animation: Animator) {
+          TODO("Not yet implemented")
         }
+
+        override fun onAnimationEnd(animation: Animator) {
+          visibility = View.INVISIBLE
+        }
+
+        override fun onAnimationCancel(animation: Animator) {
+          TODO("Not yet implemented")
+        }
+
+        override fun onAnimationRepeat(animation: Animator) {
+          TODO("Not yet implemented")
+        }
+
       })
       interpolator = AccelerateDecelerateInterpolator()
     }.start()

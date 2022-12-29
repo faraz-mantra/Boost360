@@ -404,19 +404,19 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
       binding!!.ivHashtagCross->{
         binding!!.layoutHashtagTip.animate().alpha(0F).setListener(object :Animator.AnimatorListener{
-          override fun onAnimationStart(p0: Animator?) {
+          override fun onAnimationStart(p0: Animator) {
 
           }
 
-          override fun onAnimationEnd(p0: Animator?) {
+          override fun onAnimationEnd(p0: Animator) {
             binding!!.layoutHashtagTip.gone()
 
           }
 
-          override fun onAnimationCancel(p0: Animator?) {
+          override fun onAnimationCancel(p0: Animator) {
           }
 
-          override fun onAnimationRepeat(p0: Animator?) {
+          override fun onAnimationRepeat(p0: Animator) {
           }
 
         })

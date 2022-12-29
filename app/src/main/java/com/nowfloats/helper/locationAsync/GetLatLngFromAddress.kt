@@ -7,7 +7,7 @@ import android.os.AsyncTask
 import com.google.android.gms.maps.model.LatLng
 import java.util.*
 
-class GetLatLngFromAddress(private val contextRef: Context?, val listener: Listener) :
+class GetLatLngFromAddress(private val contextRef: Context, val listener: Listener) :
   AsyncTask<String, Context, LatLng>() {
 
   override fun onPreExecute() {
@@ -15,13 +15,13 @@ class GetLatLngFromAddress(private val contextRef: Context?, val listener: Liste
     contextRef?.let { ProgressUtility.showProgress(it) }
   }
 
-  override fun doInBackground(vararg params: String?): LatLng {
+  override fun doInBackground(vararg params: String): LatLng {
     var latLng = LatLng(0.0, 0.0)
     try {
-      val addresses: List<Address>?
+      val addresses: List<Address>
       val geoCoder = Geocoder(contextRef, Locale.getDefault())
       //get location from lat long if address string is null
-      addresses = geoCoder.getFromLocationName(params[0], 1)
+      addresses = geoCoder.getFromLocationName(params[0], 1)?: arrayListOf()
       if (addresses.isNullOrEmpty().not()) {
         latLng = LatLng(addresses[0].latitude, addresses[0].longitude)
       }
