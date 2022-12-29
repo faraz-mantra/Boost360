@@ -182,7 +182,7 @@ class DashboardFragmentV2 : AppBaseFragment<FragmentDashboardV2Binding, Dashboar
   }
 
   private fun displayFestiveButtonView() {
-    if (festivePosterVisibility().not()) {
+    if (festivePosterVisibility()) {
       binding.profileView.btnFestive.visibility = View.VISIBLE
       binding.profileView.customFestivalTv.text = festivePosterName()?.capitalizeUtil()
     } else binding.profileView.btnFestive.visibility = View.GONE

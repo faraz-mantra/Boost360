@@ -158,14 +158,6 @@ fun AppCompatActivity.startBackgroundActivity(session: UserSessionManager?, type
   if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
-fun AppCompatActivity.startBackgroundActivity(session: UserSessionManager?, type: com.appservice.constant.FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
-  val intent = Intent(this, BackgroundImageContainerActivity::class.java)
-  intent.putExtras(bundle)
-  intent.setFragmentTypeNew(type)
-  if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-  if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
-}
-
 fun AppCompatActivity.startBackgroundImageGallery(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent(BACKGROUND_IMAGE_GALLERY_PAGE_CLICK, CLICK, TO_BE_ADDED)

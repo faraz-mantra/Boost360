@@ -766,7 +766,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.btnFestive -> {
         //baseActivity.startFestivePosterActivity()
         //enable update studio on demand
-        baseActivity.startPostUpdate()
+        baseActivity.startPostUpdate(session)
       }
     }
   }
