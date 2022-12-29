@@ -90,26 +90,17 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
         super.onPageSelected(position)
         when (position) {
           0 -> {
-            if (countEvent < 3) {
-              countEvent++
-              WebEngageController.trackEvent(Update_studio_intro_1_loaded)
-            }
+            WebEngageController.trackEvent(Update_studio_intro_1_loaded)
             binding?.btnNext?.visible()
             binding?.btnUpdateStudio?.gone()
           }
           1 -> {
-            if (countEvent < 3) {
-              countEvent++
-              WebEngageController.trackEvent(Update_studio_intro_2_loaded)
-            }
+            WebEngageController.trackEvent(Update_studio_intro_2_loaded)
             binding?.btnNext?.visible()
             binding?.btnUpdateStudio?.gone()
           }
           2 -> {
-            if (countEvent < 3) {
-              countEvent++
-              WebEngageController.trackEvent(Update_studio_intro_3_loaded)
-            }
+            WebEngageController.trackEvent(Update_studio_intro_3_loaded)
             binding?.btnNext?.gone()
             binding?.btnUpdateStudio?.visible()
           }
