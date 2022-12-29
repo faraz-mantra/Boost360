@@ -28,6 +28,7 @@
         <service
             android:name="dev.patrickgold.florisboard.ime.core.FlorisBoard"
             android:label="@string/boost_360"
+            android:exported="false"
             android:permission="android.permission.BIND_INPUT_METHOD">
             <meta-data
                 android:name="android.view.im"
@@ -40,6 +41,7 @@
 
         <!-- Settings Activity -->
         <activity
+            android:exported="false"
             android:name="dev.patrickgold.florisboard.settings.SettingsMainActivity"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/settings__title"
@@ -53,6 +55,7 @@
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name_k"
             android:launchMode="singleTask"
+            android:exported="false"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:targetActivity="dev.patrickgold.florisboard.setup.SetupActivity">
             <intent-filter>
@@ -63,6 +66,7 @@
 
         <!-- Theme Selector Activity -->
         <activity
+            android:exported="false"
             android:name="dev.patrickgold.florisboard.settings.ThemeManagerActivity"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/settings__title"
@@ -70,6 +74,7 @@
 
         <!-- Theme Editor Activity -->
         <activity
+            android:exported="false"
             android:name="dev.patrickgold.florisboard.settings.ThemeEditorActivity"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/settings__theme_editor__title"
@@ -77,6 +82,7 @@
 
         <!-- About Activity -->
         <activity
+            android:exported="false"
             android:name="dev.patrickgold.florisboard.settings.AboutActivity"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/about__title"
@@ -85,6 +91,7 @@
 
         <!-- Advanced Activity -->
         <activity
+            android:exported="false"
             android:name="dev.patrickgold.florisboard.settings.AdvancedActivity"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/settings__advanced__title"
@@ -93,6 +100,7 @@
 
         <!-- Setup Activity -->
         <activity
+            android:exported="false"
             android:name="dev.patrickgold.florisboard.setup.SetupActivity"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/setup__title"
@@ -101,6 +109,7 @@
 
         <!-- Crash Dialog Activity -->
         <activity
+            android:exported="false"
             android:name="dev.patrickgold.florisboard.crashutility.CrashDialogActivity"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/crash_dialog__title"
