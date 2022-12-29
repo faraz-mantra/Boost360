@@ -183,8 +183,10 @@ class BusinessFeaturesViewModel(context: Context) {
           if (details.isSuccessful) _details.value = details.body() else _details.value = null
         }
       } catch (e: Exception) {
-        _details.value = null
-        Log.e(TAG, "getDetails:  ${e.localizedMessage}")
+        withContext(Dispatchers.Main) {
+          _details.value = null
+          Log.e(TAG, "getDetails:  ${e.localizedMessage}")
+        }
       }
     }
   }
