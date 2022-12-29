@@ -1,7 +1,10 @@
 package com.framework.utils
 
 import android.annotation.SuppressLint
-import android.app.*
+import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.*
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
@@ -460,7 +463,8 @@ fun getFileViewerIntent(uri: Uri?, type: String): Intent {
 fun Intent.getPendingIntent(): PendingIntent? {
   return PendingIntent.getActivity(
     BaseApplication.instance,
-    System.currentTimeMillis().toInt(), this, PendingIntent.FLAG_UPDATE_CURRENT
+    System.currentTimeMillis().toInt(), this,
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE else PendingIntent.FLAG_UPDATE_CURRENT
   )
 }
 
@@ -604,7 +608,8 @@ fun sendNotification(
   intent.putExtra("url", deepLinkUrl)
   intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
   stackBuilder.addNextIntentWithParentStack(intent)
-  val pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+  val pendingIntent = stackBuilder.getPendingIntent(0,
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE else PendingIntent.FLAG_UPDATE_CURRENT)
   val notificationBuilder: NotificationCompat.Builder =
     NotificationCompat.Builder(c, "111")
       .setSmallIcon(R.drawable.app_launcher2)
