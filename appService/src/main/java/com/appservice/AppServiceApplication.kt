@@ -37,7 +37,7 @@ open class AppServiceApplication : BaseApplication() {
       AzureWebsiteNetApiClient.shared.init(EndPoints.AZURE_WEBSITE_NET_URL)
       RiaMemoryWithFloatsApiClient.shared.init(EndPoints.RIA_MEMORY_BASE_URL)
       UsCentralNowFloatsCloudApiClient.shared.init(EndPoints.US_CENTRAL_BASE)
-
+      LogotronBuildMyLogoApiClient.shared.init(EndPoints.ADD_CLIENT_LOGOTRON_BASE_DEMO)
     }
   }
 }

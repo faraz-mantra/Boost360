@@ -1,25 +1,25 @@
 package com.appservice.ui.business_logo
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Intent
-import android.net.Uri
 import android.text.TextUtils
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.appservice.R
 import com.appservice.base.AppBaseActivity
+import com.appservice.constant.URLs
 import com.appservice.databinding.ActivityBusinessLogoV2Binding
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.BusinessLogoViewModel
+import com.boost.dbcenterapi.utils.observeOnce
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.framework.analytics.SentryController
 import com.framework.firebaseUtils.firestore.FirestoreManager
-import com.framework.models.BaseViewModel
 import com.framework.pref.Key_Preferences
 import com.framework.utils.FileUtils
 import com.framework.utils.FileUtils.saveBitmap
@@ -27,10 +27,10 @@ import com.framework.utils.showSnackBarNegative
 import com.framework.utils.spanBold
 import com.framework.webengageconstant.*
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.onboarding.nowfloats.constant.IntentConstant
+import com.onboarding.nowfloats.ui.webview.WebViewActivity
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
-import java.lang.Exception
-import java.net.URL
 
 class BusinessLogoActivityV2 : AppBaseActivity<ActivityBusinessLogoV2Binding, BusinessLogoViewModel>() {
 
@@ -40,7 +40,7 @@ class BusinessLogoActivityV2 : AppBaseActivity<ActivityBusinessLogoV2Binding, Bu
 
     override fun onCreateView() {
         super.onCreateView()
-        setOnClickListener(binding?.logoimageView,binding?.addLogoButton)
+        setOnClickListener(binding?.logoimageView,binding?.addLogoButton,binding?.createLogoLogtron)
         setSupportActionBar(binding?.toolbar)
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -55,7 +55,18 @@ class BusinessLogoActivityV2 : AppBaseActivity<ActivityBusinessLogoV2Binding, Bu
         WebEngageController.trackEvent(EVENT_NAME_BUSINESS_PROFILE, PAGE_VIEW, session.fpTag)
         iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl)
         loadImage()
+        addLogotronClientSignUp()
+    }
 
+    private fun addLogotronClientSignUp() {
+        viewModel.addLogotronClient(
+            email = session.fPEmail,
+            firstName = session.fPName,
+            lastName = "",
+            phoneNumber = session.userPrimaryMobile
+        ).observeOnce(this){
+           Log.i("hguyhjhjThajs", it.isSuccess().toString())
+        }
     }
 
 
@@ -92,13 +103,16 @@ class BusinessLogoActivityV2 : AppBaseActivity<ActivityBusinessLogoV2Binding, Bu
                 openImagePicker()
             }
             binding?.createLogoLogtron->{
-                redirectToLogotronWebview()
+                redirectToLogotronWebView()
             }
         }
     }
 
-    private fun redirectToLogotronWebview() {
-        // Implement Logotron webview redirection here
+    private fun redirectToLogotronWebView() {
+        val intent = Intent(this@BusinessLogoActivityV2, WebViewActivity::class.java)
+       // val logotronUrl = URLs.getLogotronUrl {it + "&brandname=${session.fPName}&keyword=${session.fpTag}"}.toString()
+        intent.putExtra(IntentConstant.DOMAIN_URL.name, URLs.BUILD_MY_LOGO_BY_LOGOTRON_URL_DEMO+ "&brandname=${session.fPName}&keyword=${session.fpTag}")
+        startActivity(intent)
     }
 
 

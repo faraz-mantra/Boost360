@@ -178,5 +178,9 @@ object EndPoints {
   const val US_CENTRAL_BASE="https://us-central1-nowfloats-boost.cloudfunctions.net/"
   const val UPDATE_DRAFT="onpostUpdateDraftApi"
 
+  //Build My Logo
+  const val ADD_CLIENT_LOGOTRON_BASE_DEMO = "http://157.230.188.91/"
+  const val INCLUDES_API = "includes/api.php"
+
 }
 
