@@ -148,13 +148,11 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
   }
 
   private fun setAdapterOrderList() {
-    if (itemsAdapter == null) {
-      binding.productRecycler.apply {
-        itemsAdapter = AppBaseRecyclerViewAdapter(baseActivity, productList, this@AddProductFragment)
-        adapter = itemsAdapter
-        itemsAdapter?.runLayoutAnimation(this)
-      }
-    } else itemsAdapter?.notifyDataSetChanged()
+    binding.productRecycler.apply {
+      itemsAdapter = AppBaseRecyclerViewAdapter(baseActivity, productList, this@AddProductFragment)
+      adapter = itemsAdapter
+      itemsAdapter?.runLayoutAnimation(this)
+    }
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {

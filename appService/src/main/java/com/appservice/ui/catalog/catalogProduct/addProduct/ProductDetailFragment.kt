@@ -199,6 +199,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   private fun getPickUpAddress() {
     showProgress()
     viewModel?.getPickUpAddress(sessionLocal.fPID)?.observeOnce(viewLifecycleOwner) {
+      hideProgress()
       val response = it as? PickUpAddressResponse
       pickUpDataAddress = if ((it.isSuccess()) && response?.data.isNullOrEmpty().not()) response?.data else ArrayList()
       getPaymentGatewayKyc()
@@ -328,7 +329,13 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         bundle.putSerializable(IntentConstant.PRODUCT_GST_DETAIL.name, gstProductData)
         startFragmentActivity(FragmentType.PRODUCT_INFORMATION, bundle, isResult = true, requestCode = RC_PRODCUT_INFO)
       }
-      binding.vwSavePublish -> if (isValid()) createUpdateApi()
+      binding.vwSavePublish -> if (isValid()) {
+        try {
+          createUpdateApi()
+        } catch (e: Exception) {
+          e.printStackTrace()
+        }
+      }
     }
   }
 
@@ -341,6 +348,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         uploadImageSingle(productIdAdd)
       } else {
         viewModel?.createProduct(product)?.observeOnce(viewLifecycleOwner) {
+          hideProgress()
           val productId = it.stringResponse
           if (it.isSuccess() && productId.isNullOrEmpty().not()) {
             WebEngageController.trackEvent(PRODUCT_CATALOGUE_CREATED, ADDED, NO_EVENT_VALUE)
@@ -362,15 +370,20 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         productType = product?.productType, updates = updates
       )
       viewModel?.updateProduct(request)?.observeOnce(viewLifecycleOwner) {
+        hideProgress()
         if ((it.isSuccess())) {
           WebEngageController.trackEvent(PRODUCT_CATALOGUE_UPDATED, ADDED, NO_EVENT_VALUE)
           updateGstService(product?.productId)
-        } else showError(getString(R.string.product_updating_error_try_again))
+        } else {
+          hideProgress()
+          showError(getString(R.string.product_updating_error_try_again))
+        }
       }
     }
   }
 
   private fun updateGstService(productId: String?) {
+    showProgress()
     val gstData = gstProductData ?: GstData()
     val request = ProductUpdateRequest(false, query = String.format("{'product_id':'%s'}", productId))
     val setGST = SetGST(
@@ -380,6 +393,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     )
     request.updateValueSet(UpdateValueU(setGST))
     viewModel?.updateProductGstDetail(request)?.observeOnce(viewLifecycleOwner, Observer {
+      hideProgress()
       if ((it.isSuccess())) {
         uploadImageSingle(productId)
       } else showError(getString(R.string.product_updating_error_try_again))
@@ -394,6 +408,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     )
     val request = ProductGstDetailRequest(actionData, sessionLocal.fPID)
     viewModel?.addProductGstDetail(request)?.observeOnce(viewLifecycleOwner, Observer {
+      hideProgress()
       if (it.isSuccess()) {
         uploadImageSingle(productId)
       } else {
@@ -413,7 +428,9 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       clientId, requestType = "sequential", requestId = deviceId, totalChunks = 1,
       currentChunkNumber = 1, productId = productId, fileName, requestBody = getRequestServiceImage(productImage)
     )?.observeOnce(viewLifecycleOwner) {
-      if (it.isSuccess()) uploadSecondaryImage(productId)
+      hideProgress()
+      if (it.isSuccess())
+        uploadSecondaryImage(productId)
       else {
         if (isEdit == false) errorType = "uploadImageSingle"
         showError(getString(R.string.product_image_uploading_error))
@@ -427,6 +444,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun uploadSecondaryImage(productId: String?) {
+    showProgress()
     val images = secondaryImage.filter { it.path.isNullOrEmpty().not() }
     if (images.isNullOrEmpty().not()) {
       var checkPosition = 0
@@ -436,6 +454,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         val fileNew = secondaryFile?.name ?: "product_${Date().time}.${secondaryFile?.absolutePath?.getExtension() ?: "png"}"
         val filePart = MultipartBody.Part.createFormData("file", fileNew, RequestBody.create("image/*".toMediaTypeOrNull(), secondaryFile!!))
         viewModel?.uploadImageProfile(fileNew, filePart)?.observeOnce(viewLifecycleOwner) {
+          hideProgress()
           checkPosition += 1
           if (it.isSuccess()) {
             val response = getResponse(it.responseBody) ?: ""
