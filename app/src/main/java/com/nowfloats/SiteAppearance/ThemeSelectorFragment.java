@@ -110,7 +110,7 @@ public class ThemeSelectorFragment extends Fragment {
         ((TextView) view.findViewById(R.id.tv_theme_name)).setText(themeNames[pos]);
         ((TextView) view.findViewById(R.id.tv_theme_message)).setText(themeMessages[pos]);
         view.findViewById(R.id.tv_theme_description).setVisibility(View.GONE);
-        Glide.with(this).load(imageIds[pos])
+        Glide.with(requireActivity().getApplicationContext()).load(imageIds[pos])
                 .apply(new RequestOptions()
                         .placeholder(imageIds[1]))
                 .into(imageview);

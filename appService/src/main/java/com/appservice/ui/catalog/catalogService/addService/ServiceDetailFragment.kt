@@ -207,7 +207,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       this.product = ServiceModelV1()
       if (isDoctorClinic.not()){
         showProgress()
-        hitApi(viewModel?.getAppointmentCatalogStatus(fpId,clientId),R.string.unable_to_fetch_default_gst_slab)
+        hitApi(viewModel?.getAppointmentCatalogStatus(fpId?:"",clientId?:""),R.string.unable_to_fetch_default_gst_slab)
       }
     }
   }

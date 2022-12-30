@@ -196,7 +196,7 @@ class BusinessVerificationFragment : AppBaseFragment<FragmentBusinessVerificatio
     BusinessVerificationImagePickerSheet.newInstance {
       binding?.uploadImageView?.gone()
       binding?.imageView?.visible()
-      Glide.with(this).load(it).into(binding?.imagePanCard!!)
+      Glide.with(requireActivity().getApplicationContext()).load(it).into(binding?.imagePanCard!!)
       panImgUri = it
     }.show(parentFragmentManager, BusinessVerificationImagePickerSheet::class.java.name)
   }

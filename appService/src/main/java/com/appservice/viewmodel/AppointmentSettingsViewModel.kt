@@ -66,7 +66,7 @@ class AppointmentSettingsViewModel : BaseViewModel() {
     return WithFloatTwoRepository.addWareHouseAddress(request = request).toLiveData()
   }
 
-  fun getAppointmentCatalogStatus(floatingPointId: String?, clientId: String?): LiveData<BaseResponse> {
+  fun getAppointmentCatalogStatus(floatingPointId: String, clientId: String): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getAppointmentCatalogStatus(floatingPointId, clientId).toLiveData()
   }
 

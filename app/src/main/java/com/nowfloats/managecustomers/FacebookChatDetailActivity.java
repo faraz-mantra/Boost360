@@ -137,7 +137,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         pref.edit().putBoolean("IsNewFacebookMessage", false).apply();
         sendButton.setOnClickListener(this);
         scrollButton.setOnClickListener(this);
-        //Glide.with(this).load(userData.getProfilePic()).into(imgUser);
+        //Glide.with(getApplicationContext()).load(userData.getProfilePic()).into(imgUser);
         Picasso.get()
                 .load(userData.getProfilePic())
                 .resize(200, 0)

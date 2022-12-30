@@ -73,8 +73,10 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoU
 
 
   override fun onBackPressed() {
-    super.onBackPressed()
-    if (getTopFragment() == null) finish()
+    if (getTopFragment() == null)
+      finish()
+    else
+      super.onBackPressed()
   }
 
   private fun observeFragmentStack() {

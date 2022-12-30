@@ -222,8 +222,8 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.getFpDetails(fpId, map), TaskCode.GET_FP_DETAILS_BY_ID)
   }
 
-  fun getAppointmentCatalogStatus(fpId: String?, clientId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getCatalogStatus(fpId!!, clientId), TaskCode.GET_APPOINTMENT_CATALOG_SETUP)
+  fun getAppointmentCatalogStatus(fpId: String, clientId: String): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getCatalogStatus(fpId, clientId), TaskCode.GET_APPOINTMENT_CATALOG_SETUP)
   }
 
   fun updateGstSlab(request: GstSlabRequest): Observable<BaseResponse> {

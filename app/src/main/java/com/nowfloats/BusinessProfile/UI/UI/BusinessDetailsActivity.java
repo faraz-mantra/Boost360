@@ -53,7 +53,7 @@ public class BusinessDetailsActivity extends AppCompatActivity implements View.O
 
         String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" + getString(R.string.google_map_key);
         try {
-            Glide.with(this)
+            Glide.with(getApplicationContext())
                     .load(url)
                     .apply(new RequestOptions()
                             .placeholder(R.drawable.default_product_image)

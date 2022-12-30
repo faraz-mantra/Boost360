@@ -1491,8 +1491,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         needMoreFeatureItem = bundlesModel
         everythingText.text = "Everything in \"" + bundleData?.name + "\" plus"
         needMoreTitle.setText(bundlesModel.name)
-        Glide.with(this).load(bundlesModel.primary_image).into(needMorePackageImg)
-        Glide.with(this).load(bundlesModel.primary_image).into(needMorePackageImg1)
+        Glide.with(getApplicationContext()).load(bundlesModel.primary_image).into(needMorePackageImg)
+        Glide.with(getApplicationContext()).load(bundlesModel.primary_image).into(needMorePackageImg1)
         if (bundlesModel.overall_discount_percent > 0) {
             discount.visibility = View.VISIBLE
             discount.setText(bundlesModel.overall_discount_percent.toString() + "% saving")

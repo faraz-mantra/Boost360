@@ -98,7 +98,7 @@ class APIService : Service() {
 
   private fun hitSelfBrandedKycAPI() {
 
-    com.appservice.rest.repository.WithFloatTwoRepository?.getAppointmentCatalogStatus(userSessionManager?.fPID
+    com.appservice.rest.repository.WithFloatTwoRepository?.getAppointmentCatalogStatus(userSessionManager?.fPID!!
       , clientId).toLiveData().observeForever {
 
       val dataItem = it as? AppointmentStatusResponse
