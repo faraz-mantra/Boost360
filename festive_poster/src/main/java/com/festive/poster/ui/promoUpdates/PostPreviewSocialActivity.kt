@@ -45,9 +45,7 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.getDomainName
 import com.framework.utils.*
-import com.framework.webengageconstant.EVENT_LABEL_NULL
-import com.framework.webengageconstant.Promotional_Update_Preview_Post_Loaded
-import com.framework.webengageconstant.Update_studio_Get_feature_click
+import com.framework.webengageconstant.*
 import com.onboarding.nowfloats.constant.PreferenceConstant
 import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.RequestFloatsModel
@@ -118,7 +116,9 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
   }
 
   override fun onCreateView() {
-    WebEngageController.trackEvent(Promotional_Update_Preview_Post_Loaded)
+//    WebEngageController.trackEvent(Promotional_Update_Preview_Post_Loaded)
+    WebEngageController.trackEvent(Update_Preview_loaded)
+
     session = UserSessionManager(this)
     captionIntent = intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IntentConstants.IK_CAPTION_KEY)
     initUI()
@@ -149,6 +149,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     }
 
     binding?.tvPostUpdate?.setOnClickListener {
+      WebEngageController.trackEvent(Post_An_Update, CLICKED, NULL)
       if (dataloaded) {
         var socialShare = ""
         val checkedItems = uiChBoxChannelList?.filter { it.isChecked == true }

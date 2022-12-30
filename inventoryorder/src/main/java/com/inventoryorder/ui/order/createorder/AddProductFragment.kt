@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -130,12 +131,13 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         if (finalProductList.isNotEmpty()) {
           productList.clear()
           productList.addAll(finalProductList)
-          binding?.tvNoProducts?.visibility = View.GONE
-          binding?.productRecycler?.visibility = View.VISIBLE
+          binding.tvNoProducts.visibility = View.GONE
+          binding.productRecycler.visibility = View.VISIBLE
           setAdapterOrderList()
         } else {
-          binding?.tvNoProducts?.visibility = View.VISIBLE
-          binding?.productRecycler?.visibility = View.GONE
+          binding.tvNoProducts.visibility = View.VISIBLE
+          binding.productRecycler.visibility = View.GONE
+          Toast.makeText(activity, "Error fetching product list. Please try after sometime.", Toast.LENGTH_LONG).show()
         }
       } else showShortToast(it.message)
     }

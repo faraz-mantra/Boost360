@@ -26,12 +26,15 @@
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
+            android:exported="false"
             android:name=".ui.details.FeatureDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".ui.browse.BrowseFeaturesActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".ui.home.MarketPlaceActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -39,26 +42,37 @@
             android:theme="@style/AppTheme.Pre.MarketPlace"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:exported="false"
             android:name=".ui.marketplace_Offers.MarketPlaceOffersActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".ui.My_Plan.MyCurrentPlanActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".ui.Compare_Plans.ComparePacksActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".ui.Invoice.InvoiceActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".ui.History_Orders.HistoryOrdersActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".ui.webview.WebViewActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.browse.SearchActivity"
+        <activity
+            android:exported="false"
+            android:name=".ui.browse.SearchActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.details.emails.EmailActivity"
+
+        <activity
+            android:exported="false"
+            android:name=".ui.details.emails.EmailActivity"
             android:screenOrientation="portrait"/>
     </application>
 

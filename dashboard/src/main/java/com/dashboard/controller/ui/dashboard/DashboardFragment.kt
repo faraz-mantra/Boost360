@@ -772,7 +772,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         else getChannelAccessToken(isEnquiriesShare = true, shareType = null)
       }
       binding?.btnFestive -> {
-//        baseActivity.startFestivePosterActivity()
+        //baseActivity.startFestivePosterActivity()
         //enable update studio on demand
         baseActivity.startPostUpdate()
       }

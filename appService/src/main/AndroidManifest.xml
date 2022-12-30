@@ -16,63 +16,75 @@
     android:requestLegacyExternalStorage="true"
     tools:ignore="UnusedAttribute">
     <activity
+        android:exported="false"
       android:name=".ui.catalog.CatalogServiceContainerActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.cataloge"
       android:windowSoftInputMode="adjustPan" />
 
     <activity
+        android:exported="false"
       android:name="com.appservice.ui.bankaccount.AccountFragmentContainerActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.account"
       android:windowSoftInputMode="adjustPan" />
 
     <activity
+        android:exported="false"
       android:name="com.appservice.ui.paymentgateway.PaymentGatewayContainerActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.payment"
       android:windowSoftInputMode="adjustPan" />
 
     <activity
+        android:exported="false"
       android:name=".ui.staffs.ui.StaffFragmentContainerActivity"
       android:configChanges="keyboardHidden|orientation|screenSize"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme_staff_home"
       android:windowSoftInputMode="adjustPan" />
 
-     <activity android:name=".offers.FragmentOffersContainerActivity" />
-    <activity android:name=".ui.updatesBusiness.UpdateCropImageActivity" />
+     <activity android:name=".offers.FragmentOffersContainerActivity"
+         android:exported="false"/>
+    <activity android:name=".ui.updatesBusiness.UpdateCropImageActivity"
+        android:exported="false"/>
 
     <activity
+        android:exported="false"
       android:name=".ui.testimonial.TestimonialContainerActivity"
       android:screenOrientation="portrait"
       android:theme="@style/TestimonialTheme"
       android:windowSoftInputMode="adjustPan" />
     <activity
+        android:exported="false"
       android:name=".ui.updatesBusiness.UpdateBusinessContainerActivity"
       android:screenOrientation="portrait"
       android:theme="@style/UpdateTheme"
       android:windowSoftInputMode="adjustResize" />
 
     <activity
+        android:exported="false"
       android:name=".ui.bgImage.BackgroundImageContainerActivity"
       android:screenOrientation="portrait"
       android:theme="@style/BackgroundImageTheme"
       android:windowSoftInputMode="adjustResize" />
 
     <activity
+        android:exported="false"
       android:name=".ui.domainbooking.DomainBookingContainerActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.domain"
       android:windowSoftInputMode="adjustResize" />
 
     <activity
+        android:exported="false"
       android:name=".ui.domainbooking.DomainBookingActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.domain"
       android:windowSoftInputMode="adjustPan" />
 
     <activity
+        android:exported="false"
       android:name="com.appservice.ui.calltracking.VmnCallCardsActivityV2"
       android:launchMode="singleTask"
       android:screenOrientation="portrait" />

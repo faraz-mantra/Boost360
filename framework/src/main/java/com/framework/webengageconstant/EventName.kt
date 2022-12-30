@@ -606,7 +606,6 @@ const val Promotional_Update_Browse_All_Loaded = "Promotional_Update_Browse_All_
 const val Promotional_Update_Category_Click = "Promotional_Update_Category_Click"
 
 const val Promtoional_Update_View_Updates_Click = "Promtoional_Update_View_Updates_Click"
-//const val Promotional_Update_Category_Loaded = "Promotional_Update_Category_Loaded" /* feature not added */
 //const val Promotional_Update_Category_Album_View_Click = "Promotional_Update_Category_Album_View_Click" /* feature not added */
 const val Promotional_Update_Preview_Post_Loaded = "Promotional_Update_Preview_Post_Loaded"
 const val Promotional_Update_Edit_Loaded = "Promotional_Update_Edit_Loaded"
@@ -685,6 +684,17 @@ const val USER_LOCATION = "User_location_data"
 const val Update_studio_today_tab_click = "Update_studio_today_tab_click"
 const val Update_studio_browse_tab_click = "Update_studio_browse_tab_click"
 const val Update_studio_Create_custom_update_click = "Update_studio_Create_custom_update_click"
-const val Update_studio_Mark_Favourite_click = "Update_studio_Mark_Favourite_click"
-const val Update_studio_Unmark_Favourite_click = "Update_studio_Unmark_Favourite_click"
 
+const val Update_Create_Page_Load = "UPDATE CREATE PAGE LOAD"
+const val Update_attach_Image_clicked = "Update_attach_Image_clicked"
+const val Added_Photo_In_Update = "ADDED PHOTO IN UPDATE"
+const val Update_Preview_post_click = "Update_Preview_post_click"
+const val Post_An_Update = "POST AN UPDATE"
+const val Update_Preview_loaded = "Update_Preview_loaded"
+const val Update_studio_view_past_updates_click = "Update_studio_view_past_updates_click"
+const val Past_updates_screen_loaded = "Past_updates_screen_loaded"
+const val Past_updates_filter_all_updates_click = "Past_updates_filter_all_updates_click"
+const val Past_updates_filter_template_updates_click = "Past_updates_filter_template_updates_click"
+const val Past_updates_filter_Image_text_updates_click = "Past_updates_filter_Image_text_updates_click"
+const val Past_updates_filter_text_updates_click = "Past_updates_filter_text_updates_click"
+const val Past_updates_filter_clicked = "Past_updates_filter_clicked"

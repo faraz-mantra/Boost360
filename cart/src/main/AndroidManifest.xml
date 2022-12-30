@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application>
         <activity
+            android:exported="false"
             android:name=".CartActivity"
             android:theme="@style/BoostCartScreenStyle"
             android:windowSoftInputMode="adjustResize"
