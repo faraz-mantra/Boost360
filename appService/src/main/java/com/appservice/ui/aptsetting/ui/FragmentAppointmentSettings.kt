@@ -70,7 +70,7 @@ class FragmentAppointmentSettings : AppBaseFragment<FragmentAppointmentSettingsB
 
   private fun getStatusData() {
     if (isFirst) showProgress()
-    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner) {
+    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID!!, clientId)?.observeOnce(viewLifecycleOwner) {
       val dataItem = it as? AppointmentStatusResponse
       if (dataItem?.isSuccess() == true && dataItem.result != null) {
         setUpRecyclerView(dataItem.result!!.getAppointmentTilesArray(isDoctorClinic))

@@ -219,7 +219,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       binding.etUpdate.hint=getString(R.string.describe_what_you_want_to_say_in_the_picture_added_above)
       binding.tvImgReq.gone()
       binding!!.ivImg.visible()
-      Glide.with(this).load(
+      Glide.with(requireActivity().getApplicationContext()).load(
         path
       ).apply(RequestOptions.skipMemoryCacheOf(true))
         .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))

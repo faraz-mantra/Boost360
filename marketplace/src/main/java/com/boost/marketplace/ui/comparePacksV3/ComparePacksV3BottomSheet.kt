@@ -121,7 +121,7 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity, va
         binding?.packageTitle?.text = bundleData.name
 
         binding?.packageProfileImage?.let {
-            Glide.with(this).load(bundleData.primary_image!!.url)
+            Glide.with(requireActivity().getApplicationContext()).load(bundleData.primary_image!!.url)
                 .into(it)
         }
 

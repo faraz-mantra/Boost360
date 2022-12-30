@@ -1029,14 +1029,14 @@ class FeatureDetailsActivity :
                         addonDetails!!.learn_more_link,
                         learnMoreLinkType
                     )
-                Glide.with(this).load(addonDetails!!.primary_image)
+                Glide.with(getApplicationContext()).load(addonDetails!!.primary_image)
                     .into(image1222)
-                Glide.with(this).load(addonDetails!!.primary_image)
+                Glide.with(getApplicationContext()).load(addonDetails!!.primary_image)
                     .into(addon_icon)
-                Glide.with(this).load(addonDetails!!.primary_image)
+                Glide.with(getApplicationContext()).load(addonDetails!!.primary_image)
                     .into(addon_iconV3)
 
-                Glide.with(this).load(addonDetails!!.feature_banner)
+                Glide.with(getApplicationContext()).load(addonDetails!!.feature_banner)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .fitCenter()
                     .into(details_image_bg)
@@ -1375,7 +1375,7 @@ class FeatureDetailsActivity :
                 add_item_to_cart_new.text = getString(R.string.added_to_cart)
                 itemInCartStatus = true
                 makeFlyAnimation(if (singleWidgetKey!!.equals("DOMAINPURCHASE") && !(actionRequired == 0 && featureState == 1)) addon_iconV3 else addon_icon)
-                Glide.with(this).load(addonDetails!!.primary_image)
+                Glide.with(getApplicationContext()).load(addonDetails!!.primary_image)
                     .into(image1222)
 //                    }
 //                }
