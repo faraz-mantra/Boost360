@@ -147,9 +147,11 @@ class FeatureDetailsViewModel : BaseViewModel() {
                             callTrackListResponse.postValue(NumberList)
                         },
                         {
-                            val temp = (it as HttpException).response()!!.errorBody()!!.string()
+                            val temp = (it as HttpException).response()!!.errorBody()
+                            temp?.let {
                             val errorBody: Error =
-                                Gson().fromJson(temp, object : TypeToken<Error>() {}.type)
+                                Gson().fromJson(it.toString(), object : TypeToken<Error>() {}.type)
+                            }
                             Toasty.error(
                                 application,
                                 "Error in Loading Numbers!!",

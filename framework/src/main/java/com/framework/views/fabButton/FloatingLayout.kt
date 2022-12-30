@@ -187,7 +187,6 @@ class FloatingLayout : FrameLayout {
 //            })
             addListener(object: Animator.AnimatorListener {
               override fun onAnimationStart(animation: Animator) {
-                TODO("Not yet implemented")
               }
 
               override fun onAnimationEnd(animation: Animator) {
@@ -195,11 +194,9 @@ class FloatingLayout : FrameLayout {
               }
 
               override fun onAnimationCancel(animation: Animator) {
-                TODO("Not yet implemented")
               }
 
               override fun onAnimationRepeat(animation: Animator) {
-                TODO("Not yet implemented")
               }
 
             })
@@ -218,7 +215,6 @@ class FloatingLayout : FrameLayout {
 //      })
       addListener(object: Animator.AnimatorListener {
         override fun onAnimationStart(animation: Animator) {
-          TODO("Not yet implemented")
         }
 
         override fun onAnimationEnd(animation: Animator) {
@@ -228,11 +224,9 @@ class FloatingLayout : FrameLayout {
         }
 
         override fun onAnimationCancel(animation: Animator) {
-          TODO("Not yet implemented")
         }
 
         override fun onAnimationRepeat(animation: Animator) {
-          TODO("Not yet implemented")
         }
 
       })
@@ -271,19 +265,16 @@ class FloatingLayout : FrameLayout {
 //            })
             addListener(object: Animator.AnimatorListener {
               override fun onAnimationStart(animation: Animator) {
-                TODO("Not yet implemented")
-              }
-
-              override fun onAnimationEnd(animation: Animator) {
                 view.visibility = View.VISIBLE
               }
 
+              override fun onAnimationEnd(animation: Animator) {
+              }
+
               override fun onAnimationCancel(animation: Animator) {
-                TODO("Not yet implemented")
               }
 
               override fun onAnimationRepeat(animation: Animator) {
-                TODO("Not yet implemented")
               }
 
             })
@@ -302,7 +293,6 @@ class FloatingLayout : FrameLayout {
 //      })
       addListener(object: Animator.AnimatorListener {
         override fun onAnimationStart(animation: Animator) {
-          TODO("Not yet implemented")
         }
 
         override fun onAnimationEnd(animation: Animator) {
@@ -312,11 +302,9 @@ class FloatingLayout : FrameLayout {
         }
 
         override fun onAnimationCancel(animation: Animator) {
-          TODO("Not yet implemented")
         }
 
         override fun onAnimationRepeat(animation: Animator) {
-          TODO("Not yet implemented")
         }
 
       })

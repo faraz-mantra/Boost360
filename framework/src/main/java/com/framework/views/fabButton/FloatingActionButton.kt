@@ -258,7 +258,6 @@ class FloatingActionButton : AppCompatTextView {
 //      })
       addListener(object: Animator.AnimatorListener {
         override fun onAnimationStart(animation: Animator) {
-          TODO("Not yet implemented")
         }
 
         override fun onAnimationEnd(animation: Animator) {
@@ -266,11 +265,9 @@ class FloatingActionButton : AppCompatTextView {
         }
 
         override fun onAnimationCancel(animation: Animator) {
-          TODO("Not yet implemented")
         }
 
         override fun onAnimationRepeat(animation: Animator) {
-          TODO("Not yet implemented")
         }
 
       })
@@ -294,19 +291,16 @@ class FloatingActionButton : AppCompatTextView {
 //      })
       addListener(object: Animator.AnimatorListener {
         override fun onAnimationStart(animation: Animator) {
-          TODO("Not yet implemented")
+          visibility = View.VISIBLE
         }
 
         override fun onAnimationEnd(animation: Animator) {
-          visibility = View.INVISIBLE
         }
 
         override fun onAnimationCancel(animation: Animator) {
-          TODO("Not yet implemented")
         }
 
         override fun onAnimationRepeat(animation: Animator) {
-          TODO("Not yet implemented")
         }
 
       })
