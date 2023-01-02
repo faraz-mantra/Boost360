@@ -121,15 +121,15 @@ public class Business_Logo_Activity extends AppCompatActivity {
             String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
             if (iconUrl != null && iconUrl.length() > 0 && !iconUrl.contains("http")) {
                 BoostLog.d("Logo Url:", iconUrl);
-                Glide.with(this).asGif().load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.logo_default_image)).into(logoimageView);
+                Glide.with(getApplicationContext()).asGif().load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.logo_default_image)).into(logoimageView);
                 onBusinessLogoAddedOrUpdated(true);
             } else {
                 if (iconUrl != null && iconUrl.length() > 0) {
                     BoostLog.d("Logo Url:", iconUrl);
-                    Glide.with(this).load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.logo_default_image)).into(logoimageView);
+                    Glide.with(getApplicationContext()).load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.logo_default_image)).into(logoimageView);
                     onBusinessLogoAddedOrUpdated(true);
                 } else {
-                    Glide.with(this).asGif().load(R.drawable.logo_default_image).into(logoimageView);
+                    Glide.with(getApplicationContext()).asGif().load(R.drawable.logo_default_image).into(logoimageView);
                     onBusinessLogoAddedOrUpdated(false);
                     uploadButton.setText(getResources().getString(R.string.add_logo));
                 }

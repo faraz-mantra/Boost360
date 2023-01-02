@@ -135,7 +135,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   fun getDefaultGst() {
-    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner) {
+    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID!!, clientId)?.observeOnce(viewLifecycleOwner) {
       val dataItem = it as? AppointmentStatusResponse
       if (dataItem?.isSuccess() == true && dataItem.result != null) {
         val catalogSetup = dataItem.result?.catalogSetup

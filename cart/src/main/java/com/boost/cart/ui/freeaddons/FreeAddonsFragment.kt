@@ -87,7 +87,7 @@ class FreeAddonsFragment : BaseFragment(), MyAddonsListener {
     initMVVM()
 
 
-//        Glide.with(this).load(R.drawable.back_beau)
+//        Glide.with(getApplicationContext()).load(R.drawable.back_beau)
 //                .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))
 //                .into(back_image)
 

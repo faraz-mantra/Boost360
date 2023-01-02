@@ -64,6 +64,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
     var allDomainsList: List<Domain>? = null
     var itemInCartStatus = false
     var doDomainBooking = false
+    var domainSelectionForPack = false
      var  result:Boolean? = null
     lateinit var customDomainListAdapter1: CustomDomainListAdapter1
     lateinit var customDomainListAdapter: CustomDomainListAdapter
@@ -91,6 +92,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         experienceCode = intent.getStringExtra("expCode")
         fpid = intent.getStringExtra("fpid")
         doDomainBooking = intent.getBooleanExtra("doDomainBooking", false)
+        domainSelectionForPack = intent.getBooleanExtra("domainSelectionForPack", false)
         isDeepLink = intent.getBooleanExtra("isDeepLink", false)
         itemInCartStatus = intent.getBooleanExtra("itemInCartStatus",false)
         deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
@@ -112,7 +114,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
         prefs = SharedPrefs(this)
 
 
-        if(doDomainBooking){
+        if(doDomainBooking || domainSelectionForPack ||domainSelectionForCart){
             binding?.tvSkipTocart?.visibility = View.GONE
         }else {
             binding?.tvSkipTocart?.visibility = View.VISIBLE
@@ -243,6 +245,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             if (!itemInCartStatus) {
                 if (singleAddon != null) {
                     prefs.storeCartOrderInfo(null)
+                    prefs.storeSelectedDomainName(null)
                     viewModel.addItemToCart1(singleAddon, singleAddon.name?:"")
                     val event_attributes: HashMap<String, Any> = HashMap()
                     singleAddon.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
@@ -268,6 +271,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
                     itemInCartStatus = true
                 }
             }
+            finish()
             val intent = Intent(applicationContext, CartActivity::class.java)
             intent.putExtra("fpid", fpid)
             intent.putExtra("fpTag",fpTag)
@@ -306,20 +310,25 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
 
     private fun initMVVM() {
         viewModel.updateResult().observe(this, androidx.lifecycle.Observer {
-            allDomainsList = it.domains
-            updateDomainsRecycler(it.domains)
-            updateFreeAddonsRecycler1(it.domains)
-            val discount = 100 - singleAddon.discount_percent
-            val paymentPrice = Utils.priceCalculatorForYear(
-                (discount*singleAddon.price) / 100.0,
-                singleAddon.widget_type ?: "",
-                this
-            )
-            pricing =  "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                .format(paymentPrice) + Utils.yearlyOrMonthlyOrEmptyValidity(
-                singleAddon.widget_type ?: "",  this
-            )
-            domainPrice=pricing
+            if (it.domains!=null){
+                allDomainsList = it.domains
+                updateDomainsRecycler(it.domains)
+                updateFreeAddonsRecycler1(it.domains)
+                val discount = 100 - singleAddon.discount_percent
+                val paymentPrice = Utils.priceCalculatorForYear(
+                    (discount*singleAddon.price) / 100.0,
+                    singleAddon.widget_type ?: "",
+                    this
+                )
+                pricing =  "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                    .format(paymentPrice) + Utils.yearlyOrMonthlyOrEmptyValidity(
+                    singleAddon.widget_type ?: "",  this
+                )
+                domainPrice=pricing
+            } else{
+                Toasty.error(this, "Error in Loading Available Domains!!", Toast.LENGTH_LONG).show()
+            }
+
 
         })
 
@@ -327,23 +336,13 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
             if (it.length>0) {
                 binding?.scrollView?.visibility = View.GONE
                 binding?.shimmerViewDomain?.visibility = View.VISIBLE
-                showProgress(it,false)
+              //  showProgress(it,false)
             } else {
                 binding?.scrollView?.visibility = View.VISIBLE
                 binding?.shimmerViewDomain?.visibility = View.GONE
-                hideProgress()
+               // hideProgress()
             }
         })
-
-//        viewModel.updateStatus().observe(this, androidx.lifecycle.Observer{
-//            result=it.Result
-////            if (it.Result.equals(false)){
-////                binding?.btnSelectDomain?.setBackgroundResource(R.color.colorAccent1);
-////            }
-////            else{
-////                binding?.btnSelectDomain?.setBackgroundResource(R.color.btn_bg_color_disabled)
-////            }
-//        })
     }
 
     fun initRecyclerView() {

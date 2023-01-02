@@ -66,7 +66,7 @@ public class BusinessAppScreenOneFragment extends Fragment {
 
         //(cardView.getBackground()).setColorFilter(circleColors[position],PorterDuff.Mode.MULTIPLY);
         //circleImage.setImageDrawable(ContextCompat.getDrawable(getContext(),circleImages[position]));
-        Glide.with(this).load(circleImages[position]).into(circleImage);
+        Glide.with(requireActivity().getApplicationContext()).load(circleImages[position]).into(circleImage);
         boldText.setText(boldTextsArray[position]);
         smallText.setText(smallTextsArray[position]);
     }

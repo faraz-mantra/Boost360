@@ -31,11 +31,11 @@ public class ReferralTransActivity extends AppCompatActivity {
     String number = "";
     String username = "";
     if (session.getFPEmail()!=null&&!TextUtils.isEmpty(session.getFPEmail())) email = session.getFPEmail();
-    if (email.isEmpty()) email = session.getUserProfileEmail();
+    if (email.isEmpty()) email = session.getUserProfileEmail() != null ? session.getUserProfileEmail() : "";
 
     if (session.getFPPrimaryContactNumber()!=null&&!TextUtils.isEmpty(session.getFPPrimaryContactNumber())) number = session.getFPPrimaryContactNumber();
-    if (number.isEmpty()) number = session.getUserPrimaryMobile();
-    if (number.isEmpty()) number = session.getUserProfileMobile();
+    if (number.isEmpty()) number = session.getUserPrimaryMobile()!= null ? session.getUserPrimaryMobile():"";
+    if (number.isEmpty()) number = session.getUserProfileMobile()!=null ? session.getUserProfileMobile():"";
     if (!number.isEmpty() && number.length() > 10) number = number.substring(number.length() - 10, number.length());
 
     if (session.getUserProfileName()!=null&&!TextUtils.isEmpty(session.getUserProfileName())) username = session.getUserProfileName();

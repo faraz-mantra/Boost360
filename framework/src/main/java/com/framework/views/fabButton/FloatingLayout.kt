@@ -179,24 +179,56 @@ class FloatingLayout : FrameLayout {
       val viewAnimator =
         ObjectAnimator.ofFloat(view, viewProperty, directionFactor * i * animationSize, 0f)
           .apply {
-            addListener(object : AnimatorListenerAdapter() {
-              override fun onAnimationEnd(animation: Animator?) {
-                super.onAnimationEnd(animation)
+//            addListener(object : AnimatorListenerAdapter() {
+//              override fun onAnimationEnd(animation: Animator?) {
+//                super.onAnimationEnd(animation)
+//                view.visibility = View.GONE
+//              }
+//            })
+            addListener(object: Animator.AnimatorListener {
+              override fun onAnimationStart(animation: Animator) {
+              }
+
+              override fun onAnimationEnd(animation: Animator) {
                 view.visibility = View.GONE
               }
+
+              override fun onAnimationCancel(animation: Animator) {
+              }
+
+              override fun onAnimationRepeat(animation: Animator) {
+              }
+
             })
           }
       animators.add(viewAnimator)
     }
     AnimatorSet().apply {
       duration = fabAnimateDuration.toLong()
-      addListener(object : AnimatorListenerAdapter() {
-        override fun onAnimationEnd(animation: Animator?) {
-          super.onAnimationEnd(animation)
+//      addListener(object : AnimatorListenerAdapter() {
+//        override fun onAnimationEnd(animation: Animator?) {
+//          super.onAnimationEnd(animation)
+//          isAnimating = false
+//          isExpanded = !isExpanded
+//          onMenuExpandedListener?.onMenuCollapsed()
+//        }
+//      })
+      addListener(object: Animator.AnimatorListener {
+        override fun onAnimationStart(animation: Animator) {
+        }
+
+        override fun onAnimationEnd(animation: Animator) {
           isAnimating = false
           isExpanded = !isExpanded
           onMenuExpandedListener?.onMenuCollapsed()
         }
+
+        override fun onAnimationCancel(animation: Animator) {
+        }
+
+        override fun onAnimationRepeat(animation: Animator) {
+        }
+
       })
       playSequentially(animators)
     }.start()
@@ -225,24 +257,56 @@ class FloatingLayout : FrameLayout {
       val viewAnimator =
         ObjectAnimator.ofFloat(view, viewProperty, 0f, directionFactor * i * animationSize)
           .apply {
-            addListener(object : AnimatorListenerAdapter() {
-              override fun onAnimationStart(animation: Animator?) {
-                super.onAnimationStart(animation)
+//            addListener(object : AnimatorListenerAdapter() {
+//              override fun onAnimationStart(animation: Animator?) {
+//                super.onAnimationStart(animation)
+//                view.visibility = View.VISIBLE
+//              }
+//            })
+            addListener(object: Animator.AnimatorListener {
+              override fun onAnimationStart(animation: Animator) {
                 view.visibility = View.VISIBLE
               }
+
+              override fun onAnimationEnd(animation: Animator) {
+              }
+
+              override fun onAnimationCancel(animation: Animator) {
+              }
+
+              override fun onAnimationRepeat(animation: Animator) {
+              }
+
             })
           }
       animators.add(viewAnimator)
     }
     AnimatorSet().apply {
       duration = fabAnimateDuration.toLong()
-      addListener(object : AnimatorListenerAdapter() {
-        override fun onAnimationEnd(animation: Animator?) {
-          super.onAnimationEnd(animation)
+//      addListener(object : AnimatorListenerAdapter() {
+//        override fun onAnimationEnd(animation: Animator?) {
+//          super.onAnimationEnd(animation)
+//          isAnimating = false
+//          isExpanded = !isExpanded
+//          onMenuExpandedListener?.onMenuExpanded()
+//        }
+//      })
+      addListener(object: Animator.AnimatorListener {
+        override fun onAnimationStart(animation: Animator) {
+        }
+
+        override fun onAnimationEnd(animation: Animator) {
           isAnimating = false
           isExpanded = !isExpanded
           onMenuExpandedListener?.onMenuExpanded()
         }
+
+        override fun onAnimationCancel(animation: Animator) {
+        }
+
+        override fun onAnimationRepeat(animation: Animator) {
+        }
+
       })
       playSequentially(animators)
     }.start()

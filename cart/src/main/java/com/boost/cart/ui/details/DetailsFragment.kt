@@ -324,17 +324,17 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
       if (addonDetails != null) {
         val learnMoreLinkType = object : TypeToken<LearnMoreLink>() {}.type
         val learnMoreLink: LearnMoreLink? = if (addonDetails!!.learn_more_link == null) null else Gson().fromJson(addonDetails!!.learn_more_link, learnMoreLinkType)
-        Glide.with(this).load(addonDetails!!.primary_image)
+        Glide.with(requireActivity().getApplicationContext()).load(addonDetails!!.primary_image)
           .into(image1222)
-        Glide.with(this).load(addonDetails!!.primary_image)
+        Glide.with(requireActivity().getApplicationContext()).load(addonDetails!!.primary_image)
           .into(image1222Copy)
 
-        Glide.with(this).load(addonDetails!!.primary_image)
+        Glide.with(requireActivity().getApplicationContext()).load(addonDetails!!.primary_image)
           .fitCenter()
           .into(title_image)
 
 
-        Glide.with(this).load(addonDetails!!.feature_banner)
+        Glide.with(requireActivity().getApplicationContext()).load(addonDetails!!.feature_banner)
           .transition(withCrossFade())
           .fitCenter()
           .into(details_image_bg)
@@ -355,7 +355,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
 //                            imageView.setBackgroundResource(R.drawable.background_image_fade)
 //
 //                            secondary_images_panel?.addView(imageView)
-//                            Glide.with(this).load(img)
+//                            Glide.with(requireActivity().getApplicationContext()).load(img)
 //                                    .fitCenter()
 //                                    .into(imageView)
 //                        }

@@ -1,5 +1,6 @@
 package com.framework.glide.customsvgloader
 
+import android.graphics.drawable.Drawable
 import com.framework.glide.customsvgloader.SingletonExecutor.submit
 import com.framework.glide.customsvgloader.CustomPictureDrawable
 import com.framework.glide.customsvgloader.PosterKeyModel
@@ -82,8 +83,8 @@ class SvgDrawableListener : RequestListener<CustomPictureDrawable?> {
         try {
             svg = SVG.getFromString(s)
             val picture = svg.renderToPicture()
-            val drawable = PictureDrawable(picture)
-            view.setImageDrawable(drawable)
+            val drawable: Drawable? = PictureDrawable(picture)
+            drawable?.let { view.setImageDrawable(it) }
         } catch (e: SVGParseException) {
             e.printStackTrace()
         }

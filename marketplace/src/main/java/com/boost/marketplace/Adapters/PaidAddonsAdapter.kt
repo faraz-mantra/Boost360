@@ -15,6 +15,10 @@ import com.boost.marketplace.interfaces.MyAddonsListener
 import com.boost.marketplace.ui.My_Plan.MyCurrentPlanActivity
 import com.bumptech.glide.Glide
 import com.framework.utils.DateUtils
+import java.lang.Long
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
@@ -121,8 +125,11 @@ class PaidAddonsAdapter( val activity: MyCurrentPlanActivity,
 
     fun upgradeListItem(updateModel: FeaturesModel) {
       upgradeTitle.text = updateModel.name
-      val date: String? =DateUtils.parseDate(updateModel.expiryDate, DateUtils.FORMAT_SERVER_DATE1, DateUtils.FORMAT1_DD_MM_YYYY)
-      validity2.text= "Valid till " + date
+        val dataString = updateModel.expiryDate
+        val date = Date(Long.parseLong(dataString!!.substring(6, dataString.length - 7)))
+        val dateFormat = SimpleDateFormat("dd MMM yyyy")
+      validity2.text= "Valid till " +(dateFormat.format(date))
+
       Glide.with(context).load(updateModel.primary_image).into(image)
       if (updateModel.featureState == 1) {
         img1.setImageResource(R.drawable.ic_active)

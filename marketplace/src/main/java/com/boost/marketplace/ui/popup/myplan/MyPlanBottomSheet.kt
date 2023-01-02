@@ -26,6 +26,10 @@ import com.framework.utils.DateUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_feature_details.*
+import java.lang.Long
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MyPlanBottomSheet :
@@ -73,21 +77,32 @@ class MyPlanBottomSheet :
             binding?.cslayout?.visibility = View.GONE
         }
 
-        val date1: String? =
-            DateUtils.parseDate(
-                singleAddon.activatedDate,
-                DateUtils.FORMAT_SERVER_DATE1,
-                DateUtils.FORMAT1_DD_MM_YYYY
-            )
-        binding?.title3?.text = date1
+//        val date1: String? =
+//            DateUtils.parseDate(
+//                singleAddon.activatedDate,
+//                DateUtils.FORMAT_SERVER_DATE1,
+//                DateUtils.FORMAT1_DD_MM_YYYY
+//            )
+//        binding?.title3?.text = date1
 
-        val date: String? =
-            DateUtils.parseDate(
-                singleAddon.expiryDate,
-                DateUtils.FORMAT_SERVER_DATE1,
-                DateUtils.FORMAT1_DD_MM_YYYY
-            )
-        binding?.title4?.text = date
+        //        val date: String? =
+//            DateUtils.parseDate(
+//                singleAddon.expiryDate,
+//                DateUtils.FORMAT_SERVER_DATE1,
+//                DateUtils.FORMAT1_DD_MM_YYYY
+//            )
+//        binding?.title4?.text = date
+
+        val dataString1 = singleAddon.activatedDate
+        val date1 = Date(Long.parseLong(dataString1!!.substring(6, dataString1.length - 7)))
+        val dateFormat1 = SimpleDateFormat("dd MMM yyyy")
+        binding?.title3?.text= (dateFormat1.format(date1))
+
+        val dataString = singleAddon.expiryDate
+        val date = Date(Long.parseLong(dataString!!.substring(6, dataString.length - 7)))
+        val dateFormat = SimpleDateFormat("dd MMM yyyy")
+        binding?.title4?.text= (dateFormat.format(date))
+
 
         Glide.with(baseActivity).load(singleAddon.primary_image).into(binding!!.addonsIcon)
 
@@ -174,6 +189,7 @@ class MyPlanBottomSheet :
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+            dismiss()
         } else {
             Toast.makeText(requireContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
         }
@@ -194,8 +210,9 @@ class MyPlanBottomSheet :
         intent.putExtra("email", "ria@nowfloats.com")
         intent.putExtra("addonStateActivated", true)
         intent.putExtra("mobileNo", "9160004303")
-        intent.putExtra("itemId", singleAddon.boost_widget_key)
+        intent.putExtra("itemId", singleAddon.feature_code)
         startActivity(intent)
+        dismiss()
     }
 
     private fun chooseDomain() {
@@ -233,9 +250,11 @@ class MyPlanBottomSheet :
         )
         intent.putExtra("bundleData", Gson().toJson(singleAddon))
         intent.putExtra("email", "ria@nowfloats.com")
+        intent.putExtra("doVMNBooking", true)
         intent.putExtra("mobileNo", "9160004303")
         intent.putExtra("itemId", singleAddon.boost_widget_key)
         startActivity(intent)
+        dismiss()
     }
 
     fun featureEdgeCase(actionRequired: Int, featureState: Int) {
@@ -277,6 +296,7 @@ class MyPlanBottomSheet :
             binding?.edgeCasesLayout?.visibility = View.VISIBLE
             binding?.btn1?.visibility = View.VISIBLE
             binding?.btn1?.text = "Choose Domain"
+            binding?.edgeCaseHyperlink?.setText("Go to activation page.")
             binding?.edgeCaseHyperlink?.setOnClickListener {
                 chooseDomain()
             }
@@ -309,12 +329,12 @@ class MyPlanBottomSheet :
             binding?.edgeCasesLayout?.visibility = View.VISIBLE
             binding?.btn1?.visibility = View.VISIBLE
             binding?.btn1?.text = "Choose VMN"
+            binding?.edgeCaseHyperlink?.setText("Go to activation page.")
             binding?.edgeCaseHyperlink?.setOnClickListener {
-                Toast.makeText(requireContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
+                   chooseVMN()
             }
             binding?.btn1?.setOnClickListener {
-                //   chooseVMN()
-                Toast.makeText(requireContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
+                   chooseVMN()
             }
             binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
             binding?.edgeCaseTitle?.setText("Action Required")
@@ -757,33 +777,54 @@ class MyPlanBottomSheet :
 
         else if (actionRequired == 22 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                     || featureState == 5 || featureState == 6)) {
-            binding?.edgeCasesLayout?.visibility = View.VISIBLE
-            binding?.btn1?.visibility = View.VISIBLE
-            binding?.btn1?.text = "Activate boost keyboard"
-            binding?.edgeCaseHyperlink?.setOnClickListener {
-                Usefeature()
-            }
-            binding?.btn1?.setOnClickListener {
-                Usefeature()
-            }
-            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
-            binding?.edgeCaseTitle?.setText("Action Required")
-            binding?.edgeCaseTitle?.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.red
-                )
-            )
-            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
-                R.drawable.ic_error_red,
-                0,
-                0,
-                0
-            )
-            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
-            binding?.edgeCaseDesc?.visibility = View.VISIBLE
-        }
 
+            val pref = SharedPrefs(requireActivity())
+            if (pref.getBoostKeyboardActivateState()) {
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCaseHyperlink?.visibility = View.GONE
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_green_white_bg)
+                binding?.edgeCaseTitle?.setText("Feature is currently active")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.green
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_checked,
+                    0,
+                    0,
+                    0
+                )
+                binding?.btn1?.visibility = View.GONE
+            } else{
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.btn1?.visibility = View.VISIBLE
+                binding?.btn1?.text = "Activate boost keyboard"
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    Usefeature()
+                }
+                binding?.btn1?.setOnClickListener {
+                    Usefeature()
+                }
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.red
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
+                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+            }
+        }
         else if (actionRequired == 0 && featureState == 1) {
             binding?.edgeCasesLayout?.visibility = View.VISIBLE
             binding?.edgeCaseHyperlink?.visibility = View.GONE

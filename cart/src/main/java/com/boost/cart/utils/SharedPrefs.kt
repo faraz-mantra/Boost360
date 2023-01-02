@@ -45,6 +45,8 @@ class SharedPrefs(activity: Activity) {
   private val LAST_USED_PAYMENT_MODE = "LAST_USED_PAYMENT_MODE"
   private val CART_VALIDITY_MONTHS = "CART_VALIDITY_MONTHS"
   private val DOMAIN_ORDER_TYPE = "DOMAIN_ORDER_TYPE"
+  private val VMN_ORDER_TYPE = "VMN_ORDER_TYPE"
+  private val SELECTED_VMN_NAME = "SELECTED_VMN_NAME"
 
   private var editor: SharedPreferences.Editor? = null
 
@@ -68,7 +70,7 @@ class SharedPrefs(activity: Activity) {
     editor!!.putFloat(po_price, price).apply()
   }
 
-  fun storeLatestPurchaseOrderId(order_id: String) {
+  fun storeLatestPurchaseOrderId(order_id: String?) {
     editor!!.putString(po_id, order_id).apply()
   }
 
@@ -285,6 +287,15 @@ class SharedPrefs(activity: Activity) {
     return pref!!.getInt(DOMAIN_ORDER_TYPE, 0)
   }
 
+  fun storeVmnOrderType(value: Int){
+    editor!!.putInt(VMN_ORDER_TYPE, value).apply()
+  }
+
+  fun getVmnOrderType(): Int {
+    return pref!!.getInt(VMN_ORDER_TYPE, 0)
+  }
+
+
   fun storeSelectedDomainName(value: String?){
     editor!!.putString(SELECTED_DOMAIN_NAME, value).apply()
   }
@@ -292,5 +303,14 @@ class SharedPrefs(activity: Activity) {
   fun getSelectedDomainName(): String? {
     return pref!!.getString(SELECTED_DOMAIN_NAME, null)
   }
+
+  fun storeSelectedVMNName(value: String?){
+    editor!!.putString(SELECTED_VMN_NAME, value).apply()
+  }
+
+  fun getSelectedVMNName(): String? {
+    return pref!!.getString(SELECTED_VMN_NAME, null)
+  }
+
 
 }
