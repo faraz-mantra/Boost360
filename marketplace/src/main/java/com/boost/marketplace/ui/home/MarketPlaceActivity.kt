@@ -653,7 +653,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 this.fpTag
             )
             viewModel.loadPurchasedItems(this.fpid!!, this.clientid)
-  //          viewModel.subscriptionType(getAccessToken() ?: "", this.fpid!!,)
+            viewModel.subscriptionType(getAccessToken() ?: "", this.fpid!!,)
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
@@ -1424,11 +1424,12 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 if (BuildConfig.FLAVOR.equals("partone")) {
 
 //                            val domainPurchase = it.find { it.feature_code == "DOMAINPURCHASE" }
-//                            val expired = domainPurchase?.expiryDate
+//                            val expired = it.endDate
 //                            val date2 = expired!!.parseDate(DateUtils.FORMAT_SERVER_DATE1)
 //                            val isExpired1 = date2?.let { it1 -> Utils1.isExpired(it1) }
-//                            if (isExpired1 == true) {
-                            if ((it.subscriptionType.equals("Free")) || (it.subscriptionType.equals("Demo"))) {
+////                            if (isExpired1 == true) {
+                            if ((it.subscriptionType.equals("Expired")) || (it.subscriptionType.equals("Free"))
+                                || (it.subscriptionType.equals("Demo"))){
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                     val window: Window = this.window
                                     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -1465,7 +1466,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
 
 
-            // Enable Dark mode if any 1 of the addons are expired.
+                    // Enable Dark mode if any 1 of the addons are expired.
 
                 //               for (singleItem in it){
 //                    if (singleItem.feature_code == "DOMAINPURCHASE" ){
