@@ -2608,7 +2608,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                     break
                                 }
                             }
-                            if (featureCode.contains("CALLTRACKER")) {
+                            if (featureCode.equals("CALLTRACKER")) {
                                 if (prefs.getSelectedVMNName()
                                         .isNullOrEmpty() && alreadypurchasedVmnName == false
                                 ) {
