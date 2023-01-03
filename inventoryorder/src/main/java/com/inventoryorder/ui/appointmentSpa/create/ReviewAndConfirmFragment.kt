@@ -192,7 +192,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
   private fun createAppointment() {
     showProgress()
     viewModel?.postAppointment(AppConstant.CLIENT_ID_ORDER, orderInitiateRequest)
-      ?.observeOnce(viewLifecycleOwner, {
+      ?.observeOnce(viewLifecycleOwner) {
         if (it.isSuccess()) {
           hideProgress()
           val orderInitiateResponse = (it as? OrderInitiateResponse)
@@ -205,12 +205,12 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
             ) it.message() else getString(R.string.unable_to_create_order)
           )
         }
-      })
+      }
   }
 
   private fun apiConfirmOrder(order: OrderItem?) {
     showProgress()
-    viewModel?.confirmOrder(prefData?.clientId, order?._id)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.confirmOrder(prefData?.clientId, order?._id)?.observeOnce(viewLifecycleOwner) {
       hideProgress()
       if (it.isSuccess()) {
         val bundle = Bundle()
@@ -225,7 +225,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
           ) it.message() else getString(R.string.unable_to_create_order)
         )
       }
-    })
+    }
   }
 
   private fun setUpAddress(): String {
