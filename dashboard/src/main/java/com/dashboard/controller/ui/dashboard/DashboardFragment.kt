@@ -794,7 +794,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as List<String>
       if (mPaths.isNotEmpty()) {
         val businessLogoImage = File(mPaths[0])
-        Glide.with(this).load(businessLogoImage).into(binding?.imgBusinessLogo!!)
+        Glide.with(requireActivity().getApplicationContext()).load(businessLogoImage).into(binding?.imgBusinessLogo!!)
         uploadBusinessLogo(businessLogoImage)
       }
     }

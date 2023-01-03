@@ -1154,7 +1154,7 @@
     <string name="type_in_the_caption_to_create_your_own_hashtags">Type ‘#’ in the caption to create your own hashtags</string>
     <string name="preview_and_post2">Preview and post</string>
     <string name="supported_format_jpeg_png_size_square_800_x_800px_minimum">Supported format: JPEG/PNG. Size: Square (800 x 800px minimum)</string>
-  <string name="supported_format_jpeg_png_size_square_300_x_300px_minimum">Supported format: JPEG/PNG. Size: Square (300 x 300px minimum)</string>
+    <string name="supported_format_jpeg_png_size_square_300_x_300px_minimum">Supported format: JPEG/PNG. Size: Square (300 x 300px minimum)</string>
     <string name="discarding_the_post">Discarding the post?</string>
     <string name="closing_this_page_will_not_save_the_changes_you_ve_made_do_you_want_to_save_a_draft_or_discard_this_post">Closing this page will not save the changes you’ve made. Do you want to save a draft or discard this post?</string>
     <string name="no_save_as_draft">No, save as draft</string>
@@ -1172,7 +1172,7 @@
     <string name="image_resolution_is_smaller_than_800_x_800_px">Image resolution is smaller than 800 X 800 px</string>
     <string name="image_resolution_is_smaller_than_300_x_300_px">Image resolution is smaller than 300 X 300 px</string>
     <string name="image_file_size_is_bigger_than_2mb">Image file size is bigger than 2MB</string>
-  <string name="image_file_size_is_bigger_than_5mb">Image file size is bigger than 5MB</string>
+    <string name="image_file_size_is_bigger_than_5mb">Image file size is bigger than 5MB</string>
     <string name="describe_what_you_want_to_say_in_the_picture_added_above">Describe what you want to say in the picture added above...</string>
     <string name="your_post_was_saved_as_draft">Your post was saved as Draft</string>
     <string name="testimonial_update_success">Testimonial updated successfully!</string>
@@ -1278,4 +1278,8 @@
     <string name="this_will_help_you_group_multiple_products_under_this_category">This will help you group multiple products under this category</string>
     <string name="product_with_price_zero_cannot_be_listed_for_sale">Product with price zero cannot be listed for sale.</string>
     <string name="smaller_image_selected">Smaller image selected</string>
+    <string name="you_need_to_enter_duration_against_each_service_in_the_service_catalogue_so_that_customers_can_select_a_slot_before_going_to_payment_mode_selection">You need to enter duration against each service in the service catalogue so that customers can select a slot before going to payment mode selection.</string>
+    <string name="do_you_want_your_customer_to_book_a_service_without_selecting_a_slot">Do you want your customer to book a service without selecting a slot?</string>
+    <string name="are_your_services_timings_same_as_business_hours">Are your services timings same as business hours?</string>
+    <string name="your_customers_will_be_able_to_book_service_as_per_your_business_timings">Your customers will be able to book service as per your business timings.</string>
 </resources>

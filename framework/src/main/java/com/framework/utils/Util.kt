@@ -1,7 +1,10 @@
 package com.framework.utils
 
 import android.annotation.SuppressLint
-import android.app.*
+import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.*
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
@@ -455,7 +458,8 @@ fun getFileViewerIntent(uri: Uri?, type: String): Intent {
 
 fun Intent.getPendingIntent(): PendingIntent? {
   return PendingIntent.getActivity(
-    BaseApplication.instance, System.currentTimeMillis().toInt(), this, PendingIntent.FLAG_UPDATE_CURRENT
+    BaseApplication.instance, System.currentTimeMillis().toInt(), this,
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE else PendingIntent.FLAG_UPDATE_CURRENT
   )
 }
 
@@ -584,7 +588,10 @@ fun spanBold(fullText: String, vararg boldTextList: String): SpannableString {
 }
 
 fun sendNotification(
-  c: Context, messageTitle: String?, messageBody: String, deepLinkUrl: String
+  c: Context,
+  messageTitle: String?,
+  messageBody: String,
+  deepLinkUrl: String
 ) {
   val intent = Intent("com.dashboard.controller.DashboardActivity")
   val stackBuilder = TaskStackBuilder.create(c)
@@ -592,25 +599,43 @@ fun sendNotification(
   intent.putExtra("url", deepLinkUrl)
   intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
   stackBuilder.addNextIntentWithParentStack(intent)
-  val pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
-  val notificationBuilder: NotificationCompat.Builder = NotificationCompat.Builder(c, "111").setSmallIcon(R.drawable.app_launcher2).setLargeIcon(
-      BitmapFactory.decodeResource(
-        c.resources, R.drawable.app_launcher
+  val pendingIntent = stackBuilder.getPendingIntent(0,
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE else PendingIntent.FLAG_UPDATE_CURRENT)
+  val notificationBuilder: NotificationCompat.Builder =
+    NotificationCompat.Builder(c, "111")
+      .setSmallIcon(R.drawable.app_launcher2)
+      .setLargeIcon(
+        BitmapFactory.decodeResource(
+          c.resources,
+          R.drawable.app_launcher
+        )
       )
-    ).setContentText(messageBody).setAutoCancel(false).setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000)).setColor(ContextCompat.getColor(c, R.color.colorPrimary)).setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+      .setContentText(messageBody)
+      .setAutoCancel(false)
+      .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
+      .setColor(ContextCompat.getColor(c, R.color.colorPrimary))
+      .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
 //        .setContentIntent(pendingIntent)
-    .addAction(R.drawable.app_launcher, "Renew now", pendingIntent).setStyle(NotificationCompat.BigTextStyle().bigText(messageBody)).setPriority(NotificationCompat.PRIORITY_HIGH).setLights(Color.GREEN, 3000, 3000)
-  if (messageTitle != null && messageTitle.isNotEmpty()) notificationBuilder.setContentTitle(messageTitle)
-  else notificationBuilder.setContentTitle(c.resources.getString(R.string.app_name))
+      .addAction(R.drawable.app_launcher, "Renew now", pendingIntent)
+      .setStyle(NotificationCompat.BigTextStyle().bigText(messageBody))
+      .setPriority(NotificationCompat.PRIORITY_HIGH)
+      .setLights(Color.GREEN, 3000, 3000)
+  if (messageTitle != null && messageTitle.isNotEmpty())
+    notificationBuilder.setContentTitle(messageTitle)
+  else
+    notificationBuilder.setContentTitle(c.resources.getString(R.string.app_name))
   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-    val notificationManager = c.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
+    val notificationManager =
+      c.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
     val importance = NotificationManager.IMPORTANCE_HIGH
-    val notificationChannel = NotificationChannel("111", "NOTIFICATION_CHANNEL_NAME", importance)
+    val notificationChannel =
+      NotificationChannel("111", "NOTIFICATION_CHANNEL_NAME", importance)
     notificationChannel.enableLights(true)
     notificationChannel.lightColor = Color.YELLOW
     notificationChannel.enableVibration(true)
     notificationChannel.setShowBadge(false)
-    notificationChannel.vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
+    notificationChannel.vibrationPattern =
+      longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
     assert(notificationManager != null)
     notificationBuilder.setChannelId("111")
     notificationManager!!.createNotificationChannel(notificationChannel)
@@ -639,61 +664,59 @@ fun spanBoldNdColor(fullText: String, @ColorRes color: Int, text: String): Spann
   val spannable = SpannableString(fullText)
   spannable.setSpan(StyleSpan(Typeface.BOLD), fullText.indexOf(text), fullText.indexOf(text) + text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-  spannable.setSpan(
-    ForegroundColorSpan(
-      ContextCompat.getColor(
-        BaseApplication.instance, color
-      )
-    ), fullText.indexOf(text), fullText.indexOf(text) + text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-  )
+  spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(
+    BaseApplication.instance,color
+  )),fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
   return spannable
 }
 
-fun spanClick(fullText: String, function: () -> (Unit), vararg colorTextList: String): SpannableString {
+fun spanClick(fullText:String,function: () -> (Unit),vararg colorTextList:String): SpannableString {
   val spannable = SpannableString(fullText)
-  colorTextList.forEach { text ->
-    spannable.setSpan(object : ClickableSpan() {
+  colorTextList.forEach { text->
+    spannable.setSpan(object :ClickableSpan(){
       override fun onClick(p0: View) {
         function.invoke()
       }
 
-    }, fullText.indexOf(text), fullText.indexOf(text) + text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    },fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
   }
   return spannable
 }
 
 
-fun File.shareAsImage(context: Context, packageName: String?, text: String?) {
-  val uri = FileProvider.getUriForFile(
-    context, "${context.packageName}.provider", //(use your app signature + ".provider" )
-    this
-  )
+fun File.shareAsImage(context:Context,packageName: String?,text: String?){
+  val uri= FileProvider.getUriForFile(
+    context,
+    "${context.packageName}.provider", //(use your app signature + ".provider" )
+    this)
   val intent = Intent(Intent.ACTION_SEND)
   intent.type = "image/*"
   intent.putExtra(Intent.EXTRA_STREAM, uri)
-  intent.putExtra(Intent.EXTRA_TEXT, text)
-  if (packageName != null) {
+  intent.putExtra(Intent.EXTRA_TEXT,text)
+  if (packageName!=null){
     intent.setPackage(packageName)
   }
   context.startActivity(intent)
 }
 
-fun ImageView.loadFromFile(imgFile: String?, cache: Boolean = true) {
+fun ImageView.loadFromFile(imgFile:String?,cache:Boolean=true){
   val builder = Glide.with(this).load(imgFile)
-  if (cache.not()) {
-    builder.apply(RequestOptions.skipMemoryCacheOf(true)).apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(this)
-  } else {
+  if (cache.not()){
+    builder.apply(RequestOptions.skipMemoryCacheOf(true))
+      .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(this)
+  }else{
     builder.into(this)
 
   }
 }
 
-fun ImageView.loadFromUrl(imgUrl: String?, cache: Boolean = true) {
+fun ImageView.loadFromUrl(imgUrl:String?,cache:Boolean=true){
   val builder = Glide.with(this).load(imgUrl)
-  if (cache.not()) {
-    builder.apply(RequestOptions.skipMemoryCacheOf(true)).apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(this)
-  } else {
+  if (cache.not()){
+    builder.apply(RequestOptions.skipMemoryCacheOf(true))
+      .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(this)
+  }else{
     builder.into(this)
 
   }
@@ -702,7 +725,7 @@ fun ImageView.loadFromUrl(imgUrl: String?, cache: Boolean = true) {
 fun String.extractHashTag(): ArrayList<String> {
   val MY_PATTERN = Pattern.compile("#(\\S+)");
   val mat = MY_PATTERN.matcher(this);
-  val strs = ArrayList<String>();
+  val strs= ArrayList<String>();
   while (mat.find()) {
     //System.out.println(mat.group(1));
     strs.add(mat.group(1));
@@ -710,23 +733,23 @@ fun String.extractHashTag(): ArrayList<String> {
   return strs
 }
 
-fun Activity.setStatusBarColor(@ColorRes colorId: Int) {
+fun Activity.setStatusBarColor(@ColorRes colorId: Int){
   val window = window
   window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
 
   window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-  window.statusBarColor = ContextCompat.getColor(this, colorId)
+  window.statusBarColor = ContextCompat.getColor(this,colorId)
   WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = isColorDark(colorId)
 
 
 }
 
-fun Fragment.setStatusBarColor(@ColorRes colorId: Int) {
+fun Fragment.setStatusBarColor(@ColorRes colorId: Int){
   activity?.setStatusBarColor(colorId)
 }
 
 fun isColorDark(@ColorRes colorRes: Int): Boolean {
-  val color = ContextCompat.getColor(BaseApplication.instance, colorRes)
+  val color = ContextCompat.getColor(BaseApplication.instance,colorRes)
   val whiteContrast = ColorUtils.calculateContrast(Color.WHITE, color)
   val blackContrast = ColorUtils.calculateContrast(Color.BLACK, color)
 
@@ -742,7 +765,8 @@ fun TypedArray.use(block: TypedArray.() -> Unit) {
   }
 }
 
-fun Context.getStyledAttributes(@StyleableRes attrs: IntArray, block: TypedArray.() -> Unit) = this.obtainStyledAttributes(attrs).use(block)
+fun Context.getStyledAttributes(@StyleableRes attrs: IntArray, block: TypedArray.() -> Unit) =
+  this.obtainStyledAttributes(attrs).use(block)
 
 fun View.setClickableRipple() {
   val attrs = intArrayOf(R.attr.selectableItemBackground)
@@ -798,7 +822,7 @@ fun fetchString(id: Int): String {
 }
 
 fun fetchColor(id: Int): Int {
-  return ContextCompat.getColor(BaseApplication.instance, id)
+  return ContextCompat.getColor(BaseApplication.instance,id)
 }
 
 fun showSnackBarNegative(context: Activity, msg: String?) {
@@ -810,7 +834,8 @@ fun showSnackBarNegative(context: Activity, msg: String?) {
 
 fun String.capitalized(): String {
   return this.replaceFirstChar {
-    if (it.isLowerCase()) it.titlecase(Locale.getDefault())
+    if (it.isLowerCase())
+      it.titlecase(Locale.getDefault())
     else it.toString()
   }
 }
@@ -819,7 +844,7 @@ fun Uri.toBase64(): String? {
   return try {
     val bytes = BaseApplication.instance.contentResolver.openInputStream(this)?.readBytes()
 
-    Base64.encodeToString(bytes, Base64.DEFAULT)
+    Base64.encodeToString(bytes,Base64.DEFAULT)
   } catch (error: IOException) {
     error.printStackTrace() // This exception always occurs
     null
@@ -827,10 +852,10 @@ fun Uri.toBase64(): String? {
 }
 
 fun isJioBuild(): Boolean {
-  return BaseApplication.instance.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)
+ return BaseApplication.instance.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)
 }
 
-fun application() = BaseApplication.instance
+fun application()=BaseApplication.instance
 
 fun Bitmap.toBase64(): String {
   val byteStream = ByteArrayOutputStream()

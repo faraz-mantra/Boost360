@@ -16,7 +16,7 @@ interface MarketOfferDao {
     @Query("SELECT * FROM MarketOffers WHERE _kid=:id")
     fun getMarketOffersById(id: String): Single<MarketOfferModel>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertToMarketOffers(vararg features: MarketOfferModel?)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -59,7 +59,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
           style="@style/match_wrap"
           android:layout_marginTop="@dimen/size_5"
-          android:background="@drawable/bg_rect_grey_rounded"
+          android:background="@drawable/bg_rect_grey_rounded_10"
           android:orientation="vertical">
 
           <androidx.appcompat.widget.LinearLayoutCompat
@@ -165,6 +165,144 @@
           style="@style/AppointmentCatalogSettingText2"
           android:text="@string/this_will_be_used_as_default_tax_rate_for_any_product_in_your_catalog_in_case_you_ve_not_entered_any_specific_tax_for_that_product"
           android:visibility="visible" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/service_slots_view"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+          <com.framework.views.customViews.CustomTextView
+              style="@style/AppointmentSetting_Text_Heading"
+              android:text="Service slots &amp; timings" />
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+              style="@style/match_wrap"
+              android:layout_marginTop="@dimen/size_8"
+              android:background="@drawable/bg_rect_grey_rounded_10"
+              android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                style="@style/match_wrap"
+                android:background="@drawable/bg_rect_white_rounded_4"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/size_12"
+                android:paddingVertical="@dimen/size_12"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+              <com.framework.views.customViews.CustomTextView
+                  android:layout_width="@dimen/size_0"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:fontFamily="@font/semi_bold"
+                  android:text="@string/do_you_want_your_customer_to_book_a_service_without_selecting_a_slot"
+                  android:textColor="@color/black_4a4a4a"
+                  app:textType="BODY_1" />
+
+              <com.appservice.views.toggle.widget.LabeledSwitch
+                  android:id="@+id/no_service_switch"
+                  android:layout_width="@dimen/size_54"
+                  android:layout_height="@dimen/size_24"
+                  android:layout_marginTop="4dp"
+                  app:colorBorder="@android:color/transparent"
+                  app:colorOff="@color/light_lemon"
+                  app:colorOn="@color/light_green_1"
+                  app:layout_constraintBottom_toBottomOf="parent"
+                  app:layout_constraintRight_toRightOf="parent"
+                  app:layout_constraintTop_toTopOf="parent"
+                  app:textOff="NO"
+                  app:textOn="YES"
+                  android:checked="true"
+                  app:txtColorOff="@color/white"
+                  app:txtColorOn="@color/white" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/size_12"
+                android:paddingVertical="@dimen/size_12"
+                android:text="@string/you_need_to_enter_duration_against_each_service_in_the_service_catalogue_so_that_customers_can_select_a_slot_before_going_to_payment_mode_selection"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:textType="CAPTION" />
+          </androidx.appcompat.widget.LinearLayoutCompat>
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+              style="@style/match_wrap"
+              android:layout_marginTop="@dimen/size_5"
+              android:id="@+id/service_times_view"
+              android:background="@drawable/bg_rect_grey_rounded_10"
+              android:visibility="gone"
+              android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                style="@style/match_wrap"
+                android:background="@drawable/bg_rect_white_rounded_4"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/size_12"
+                android:paddingVertical="@dimen/size_12"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+              <com.framework.views.customViews.CustomTextView
+                  android:layout_width="@dimen/size_0"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:fontFamily="@font/semi_bold"
+                  android:text="@string/are_your_services_timings_same_as_business_hours"
+                  android:textColor="@color/black_4a4a4a"
+                  app:textType="BODY_1" />
+
+              <com.appservice.views.toggle.widget.LabeledSwitch
+                  android:id="@+id/service_timings_switch"
+                  android:layout_width="@dimen/size_54"
+                  android:layout_height="@dimen/size_24"
+                  android:layout_marginTop="4dp"
+                  app:colorBorder="@android:color/transparent"
+                  app:colorOff="@color/light_lemon"
+                  app:colorOn="@color/light_green_1"
+                  app:layout_constraintBottom_toBottomOf="parent"
+                  app:layout_constraintRight_toRightOf="parent"
+                  app:layout_constraintTop_toTopOf="parent"
+                  app:textOff="NO"
+                  app:textOn="YES"
+                  android:checked="true"
+                  app:txtColorOff="@color/white"
+                  app:txtColorOn="@color/white" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/size_12"
+                android:paddingVertical="@dimen/size_12"
+                android:visibility="visible"
+                android:text="@string/your_customers_will_be_able_to_book_service_as_per_your_business_timings"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:textType="CAPTION" />
+          </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <Button
+            android:id="@+id/btn_save_details"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"
+            android:background="@drawable/rounded_button_enabled"
+            android:text="Save details"
+            android:textColor="@android:color/white" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.core.widget.NestedScrollView>

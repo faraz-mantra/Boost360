@@ -23,8 +23,11 @@ class SharedPrefs(activity: Activity) {
   private val po_price = "Last_Purchase_Order_Price"
   private val po_payment_success = "Last_payment_status"
   private val DOMAIN_ORDER_TYPE = "DOMAIN_ORDER_TYPE"
+  private val VMN_ORDER_TYPE = "VMN_ORDER_TYPE"
   private val SELECTED_DOMAIN_NAME = "SELECTED_DOMAIN_NAME"
+  private val SELECTED_VMN_NAME = "SELECTED_VMN_NAME"
   private val fp_email = "GET_FP_DETAILS_EMAIL"
+  private val FP_ID = "FP_ID"
 
   private val CART_ORDER_INFO = "CART_ORDER_INFO"
   private val CART_IDS = "CART_IDS"
@@ -46,6 +49,7 @@ class SharedPrefs(activity: Activity) {
   private val LAST_USED_PAYMENT_MODE = "LAST_USED_PAYMENT_MODE"
   private val CART_VALIDITY_MONTHS = "CART_VALIDITY_MONTHS"
   private val UPI_IDS = "UPI_IDS"
+  private val BOOST_KEYBOARD_ACTIVATE_STATE="BOOST_KEYBOARD_ACTIVATE_STATE"
 
   private var editor: SharedPreferences.Editor? = null
 
@@ -69,7 +73,7 @@ class SharedPrefs(activity: Activity) {
     editor!!.putFloat(po_price, price).apply()
   }
 
-  fun storeLatestPurchaseOrderId(order_id: String) {
+  fun storeLatestPurchaseOrderId(order_id: String?) {
     editor!!.putString(po_id, order_id).apply()
   }
 
@@ -293,12 +297,36 @@ class SharedPrefs(activity: Activity) {
     return pref!!.getInt(DOMAIN_ORDER_TYPE, 0)
   }
 
+  fun storeVmnOrderType(value: Int){
+    editor!!.putInt(VMN_ORDER_TYPE, value).apply()
+  }
+
+  fun getVmnOrderType(): Int {
+    return pref!!.getInt(VMN_ORDER_TYPE, 0)
+  }
+
   fun storeSelectedDomainName(value: String?){
     editor!!.putString(SELECTED_DOMAIN_NAME, value).apply()
   }
 
   fun getSelectedDomainName(): String? {
     return pref!!.getString(SELECTED_DOMAIN_NAME, null)
+  }
+
+  fun storeSelectedVMNName(value: String?){
+    editor!!.putString(SELECTED_VMN_NAME, value).apply()
+  }
+
+  fun getSelectedVMNName(): String? {
+    return pref!!.getString(SELECTED_VMN_NAME, null)
+  }
+
+  fun storeFpid(value: String?){
+    editor!!.putString(FP_ID, value).apply()
+  }
+
+  fun getFpid(): String? {
+    return pref!!.getString(FP_ID, null)
   }
 
   fun storeUPIId(upiIdList: List<String>) {
@@ -311,4 +339,11 @@ class SharedPrefs(activity: Activity) {
     return if (TextUtils.isEmpty(str)) ArrayList() else Gson().fromJson(str, object : TypeToken<MutableList<String?>?>() {}.type)
   }
 
+  fun storeBoostKeyboardActivateState(value: Boolean){
+    editor!!.putBoolean(BOOST_KEYBOARD_ACTIVATE_STATE, value).apply()
+  }
+
+  fun getBoostKeyboardActivateState(): Boolean {
+    return pref!!.getBoolean(BOOST_KEYBOARD_ACTIVATE_STATE, false)
+  }
 }

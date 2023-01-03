@@ -100,8 +100,8 @@ class PackageFragment : BaseFragment() {
         }
 
         if (bundleData!!.primary_image != null && !bundleData!!.primary_image!!.url.isNullOrEmpty()) {
-            Glide.with(this).load(bundleData!!.primary_image!!.url).into(package_profile_image)
-            Glide.with(this).load(bundleData!!.primary_image!!.url).into(package_profile_image_copy)
+            Glide.with(requireActivity().getApplicationContext()).load(bundleData!!.primary_image!!.url).into(package_profile_image)
+            Glide.with(requireActivity().getApplicationContext()).load(bundleData!!.primary_image!!.url).into(package_profile_image_copy)
         } else {
             package_profile_image.setImageResource(R.drawable.rectangle_copy_18)
         }

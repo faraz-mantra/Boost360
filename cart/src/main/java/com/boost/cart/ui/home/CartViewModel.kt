@@ -15,13 +15,12 @@ import com.boost.cart.utils.SingleLiveEvent
 import com.boost.cart.utils.Utils
 import com.boost.dbcenterapi.data.api_model.CustomDomain.CustomDomains
 import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
+import com.boost.dbcenterapi.data.api_model.Domain.AlreadyPurchasedDomainResponse.PurchasedDomainResponse
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.ExpertConnect
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.promoBannerFilter
-import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.promoMarketOfferFilter
-import com.boost.dbcenterapi.data.api_model.GetFloatingPointWebWidgets.response.GetFloatingPointWebWidgetsResponse
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
+import com.boost.dbcenterapi.data.api_model.blockingAPI.BlockApi
 import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
 import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsRequest
 import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsResponse
@@ -35,12 +34,12 @@ import com.boost.dbcenterapi.data.api_model.gst.Error
 import com.boost.dbcenterapi.data.api_model.gst.GSTApiResponse
 import com.boost.dbcenterapi.data.api_model.paymentprofile.GetLastPaymentDetails
 import com.boost.dbcenterapi.data.api_model.stateCode.GetStates
+import com.boost.dbcenterapi.data.api_model.vmn.PurchasedVmnResponse
 import com.boost.dbcenterapi.data.model.coupon.CouponServiceModel
 import com.boost.dbcenterapi.data.remote.ApiInterface
 import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.data.renewalcart.*
 import com.boost.dbcenterapi.data.rest.repository.MarketplaceNewRepository
-import com.boost.dbcenterapi.data.rest.repository.MarketplaceRepository
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.dbcenterapi.utils.DataLoader
@@ -61,6 +60,8 @@ import retrofit2.HttpException
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CartViewModel(application: Application) : BaseViewModel(application) {
 
@@ -68,7 +69,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     var allFeatures: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var customDomainsResult: MutableLiveData<CustomDomains> = MutableLiveData()
     private var couponApiInfo: MutableLiveData<GetCouponResponse> = MutableLiveData()
-    private var recommendedAddonsInfo: MutableLiveData<RecommendedAddonsResponse> = MutableLiveData()
+    private var recommendedAddonsInfo: MutableLiveData<RecommendedAddonsResponse> =
+        MutableLiveData()
     var updatesResult: MutableLiveData<CustomDomains> = MutableLiveData()
     var renewalPurchaseList: MutableLiveData<List<RenewalResult>> = MutableLiveData()
     var allBundles: MutableLiveData<List<BundlesModel>> = MutableLiveData()
@@ -76,7 +78,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
     var _initiatePurchaseOrder: MutableLiveData<CreatePurchaseOrderResponse> = MutableLiveData()
     var _initiatePurchaseAutoRenewOrder: MutableLiveData<CreatePurchaseOrderResponse> =
-            MutableLiveData()
+        MutableLiveData()
     val _initiateAutoRenewOrder: SingleLiveEvent<CreatePurchaseOrderResponse> = SingleLiveEvent()
     private var customerId: MutableLiveData<String> = MutableLiveData()
     private var APIRequestStatus: String? = null
@@ -96,8 +98,13 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
     var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
     var NewApiService = Utils.getRetrofit(true).create(NewApiInterface::class.java)
+    var NewApiService1 = Utils.getRetrofit(true).create(NewApiInterface::class.java)
+    var NewApiService2 = Utils.getRetrofit(false).create(NewApiInterface::class.java)
     private var callTrackListResponse: MutableLiveData<CallTrackListResponse> = MutableLiveData()
-
+    var updateDomainStatus: MutableLiveData<BlockApi> = MutableLiveData()
+    var updateVmnStatus: MutableLiveData<BlockApi> = MutableLiveData()
+    var purchasedDomainResult: MutableLiveData<PurchasedDomainResponse> = MutableLiveData()
+    var purchasedVmnResult: MutableLiveData<PurchasedVmnResponse> = MutableLiveData()
     val compositeDisposable = CompositeDisposable()
 
     var customerInfoState: MutableLiveData<Boolean> = MutableLiveData()
@@ -129,6 +136,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
     private var gstApiInfo: MutableLiveData<GSTApiResponse> = MutableLiveData()
     var addToCartResult: MutableLiveData<Boolean> = MutableLiveData()
+    var validityMonths: MutableLiveData<Int> = MutableLiveData()
 
 
     lateinit var lifecycleOwner: LifecycleOwner
@@ -310,6 +318,31 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         return callTrackListResponse
     }
 
+    fun updateStatus(): LiveData<BlockApi> {
+        return updateDomainStatus
+    }
+
+    fun updateVmnStatus(): LiveData<BlockApi> {
+        return updateVmnStatus
+    }
+
+    fun updateStatus1(): LiveData<BlockApi> {
+        return updateDomainStatus
+    }
+
+    fun updateStatus2(): LiveData<BlockApi> {
+        return updateDomainStatus
+    }
+
+    fun PurchasedDomainResponse(): LiveData<PurchasedDomainResponse> {
+        return purchasedDomainResult
+    }
+
+    fun purchasedVmnResult(): LiveData<PurchasedVmnResponse> {
+        return purchasedVmnResult
+    }
+
+
     fun writeStringAsFile(fileContents: String?, fileName: String?) {
         val context: Context = getApplication()
         try {
@@ -330,25 +363,25 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
             updatesLoader.postValue(true)
             APIRequestStatus = "Order registration in progress..."
             compositeDisposable.add(
-                    ApiService.CreatePurchaseOrder(auth, createPurchaseOrderV2)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    {
-                                        Log.i("InitiatePurchaseOrder>>", it.toString())
-                                        _initiatePurchaseOrder.postValue(it)
-                                        updatesLoader.postValue(false)
-                                    },
-                                    {
-                                        Toasty.error(
-                                            getApplication(),
-                                                "Error occurred while registering your order - " + it.message,
-                                                Toast.LENGTH_LONG
-                                        ).show()
-                                        updatesError.postValue(it.message)
-                                        updatesLoader.postValue(false)
-                                    }
-                            )
+                ApiService.CreatePurchaseOrder(auth, createPurchaseOrderV2)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            Log.i("InitiatePurchaseOrder>>", it.toString())
+                            _initiatePurchaseOrder.postValue(it)
+                            updatesLoader.postValue(false)
+                        },
+                        {
+                            Toasty.error(
+                                getApplication(),
+                                "Error occurred while registering your order - " + it.message,
+                                Toast.LENGTH_LONG
+                            ).show()
+                            updatesError.postValue(it.message)
+                            updatesLoader.postValue(false)
+                        }
+                    )
             )
         }
     }
@@ -359,25 +392,25 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
             updatesLoader.postValue(true)
             APIRequestStatus = "Order registration in progress..."
             compositeDisposable.add(
-                    ApiService.CreatePurchaseAutoRenewOrder(auth, createPurchaseOrderV2)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    {
-                                        Log.i("InitiatePurchaseOrder>>", it.toString())
-                                        _initiateAutoRenewOrder.postValue(it)
-                                        updatesLoader.postValue(false)
-                                    },
-                                    {
-                                        Toasty.error(
-                                            getApplication(),
-                                                "Error occurred while registering your order - " + it.message,
-                                                Toast.LENGTH_LONG
-                                        ).show()
-                                        updatesError.postValue(it.message)
-                                        updatesLoader.postValue(false)
-                                    }
-                            )
+                ApiService.CreatePurchaseAutoRenewOrder(auth, createPurchaseOrderV2)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            Log.i("InitiatePurchaseOrder>>", it.toString())
+                            _initiateAutoRenewOrder.postValue(it)
+                            updatesLoader.postValue(false)
+                        },
+                        {
+                            Toasty.error(
+                                getApplication(),
+                                "Error occurred while registering your order - " + it.message,
+                                Toast.LENGTH_LONG
+                            ).show()
+                            updatesError.postValue(it.message)
+                            updatesLoader.postValue(false)
+                        }
+                    )
             )
         }
     }
@@ -387,27 +420,28 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
             updatesLoader.postValue(true)
             APIRequestStatus = "Please wait..."
             compositeDisposable.add(
-                    ApiService.allPurchasedWidgets(auth,
-                            req.floatingPointId,
-                            req.clientId,
-                            req.widgetStatus,
-                            req.widgetKey,
-                            req.nextWidgetStatus,
-                            req.dateFilter,
-                            req.startDate,
-                            req.endDate
-                    )
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe({
-                                Log.i("renewal purchased >>", it.toString())
-                                val data = it as RenewalPurchasedResponse
-                                renewalPurchaseList.postValue(data.result ?: ArrayList())
+                ApiService.allPurchasedWidgets(
+                    auth,
+                    req.floatingPointId,
+                    req.clientId,
+                    req.widgetStatus,
+                    req.widgetKey,
+                    req.nextWidgetStatus,
+                    req.dateFilter,
+                    req.startDate,
+                    req.endDate
+                )
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        Log.i("renewal purchased >>", it.toString())
+                        val data = it as RenewalPurchasedResponse
+                        renewalPurchaseList.postValue(data.result ?: ArrayList())
 //                                updatesLoader.postValue(false)
-                            }, {
-                                renewalPurchaseList.postValue(ArrayList())
-                                updatesLoader.postValue(false)
-                            })
+                    }, {
+                        renewalPurchaseList.postValue(ArrayList())
+                        updatesLoader.postValue(false)
+                    })
             )
         } else {
             updatesLoader.postValue(false)
@@ -420,24 +454,24 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
             updatesLoader.postValue(true)
             APIRequestStatus = "Order registration in progress..."
             compositeDisposable.add(
-                    ApiService.createCartStateRenewal(auth, request).subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread()).subscribe({
-                                if (it?.result != null && it.result?.cartStateId.isNullOrEmpty().not()) {
-                                    createCartResult.postValue(it.result)
-                                } else {
-                                    updatesError.postValue(
-                                            it.error?.errorList?.iNVALIDPARAMETERS
-                                                    ?: "Error creating cart state"
-                                    )
-                                }
-                                updatesLoader.postValue(false)
-                            }, {
-                                updatesError.postValue(
-                                        it?.localizedMessage
-                                                ?: "Error creating cart state"
-                                )
-                                updatesLoader.postValue(false)
-                            })
+                ApiService.createCartStateRenewal(auth, request).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                        if (it?.result != null && it.result?.cartStateId.isNullOrEmpty().not()) {
+                            createCartResult.postValue(it.result)
+                        } else {
+                            updatesError.postValue(
+                                it.error?.errorList?.iNVALIDPARAMETERS
+                                    ?: "Error creating cart state"
+                            )
+                        }
+                        updatesLoader.postValue(false)
+                    }, {
+                        updatesError.postValue(
+                            it?.localizedMessage
+                                ?: "Error creating cart state"
+                        )
+                        updatesLoader.postValue(false)
+                    })
             )
         } else {
             updatesLoader.postValue(false)
@@ -501,27 +535,27 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         Completable.fromAction {
             AppDatabase.getInstance(getApplication())?.cartDao()?.insertToCart(cartItem)
         }.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete {
-                    Log.d("TAG", "Success")
-                }
-                .doOnError {
-                    Log.e("TAG", "Error", it)
-                }.subscribe()
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnComplete {
+                Log.d("TAG", "Success")
+            }
+            .doOnError {
+                Log.e("TAG", "Error", it)
+            }.subscribe()
     }
 
     fun getCartsByIds(itemIds: List<String>) {
         updatesLoader.postValue(true)
         compositeDisposable.add(
-                AppDatabase.getInstance(getApplication())!!.cartDao().getCartsByIds(itemIds)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnSuccess {
-                            cartResultItems.postValue(it)
-                            updatesLoader.postValue(false)
-                        }.doOnError {
-                            updatesLoader.postValue(false)
-                        }.subscribe()
+            AppDatabase.getInstance(getApplication())!!.cartDao().getCartsByIds(itemIds)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess {
+                    cartResultItems.postValue(it)
+                    updatesLoader.postValue(false)
+                }.doOnError {
+                    updatesLoader.postValue(false)
+                }.subscribe()
         )
     }
 
@@ -529,69 +563,69 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         Completable.fromAction {
             AppDatabase.getInstance(getApplication())?.cartDao()?.updateCart(cartItem)
         }.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete {
-                    Log.d("TAG", "Success")
-                }
-                .doOnError {
-                    Log.e("TAG", "Error", it)
-                }.subscribe()
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnComplete {
+                Log.d("TAG", "Success")
+            }
+            .doOnError {
+                Log.e("TAG", "Error", it)
+            }.subscribe()
     }
 
     fun getCartItems() {
         updatesLoader.postValue(true)
         APIRequestStatus = "Get Cart Details"
         compositeDisposable.add(
-                AppDatabase.getInstance(getApplication())!!
-                        .cartDao()
-                        .getCartItems()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnSuccess {
-                            cartResult.postValue(it)
+            AppDatabase.getInstance(getApplication())!!
+                .cartDao()
+                .getCartItems()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess {
+                    cartResult.postValue(it)
 //                            updatesLoader.postValue(false)
-                        }
-                        .doOnError {
+                }
+                .doOnError {
 //                            updatesError.postValue(it.message)
-                            updatesLoader.postValue(false)
-                        }
-                        .subscribe()
+                    updatesLoader.postValue(false)
+                }
+                .subscribe()
         )
     }
 
     fun getAllFeatures() {
         updatesLoader.postValue(true)
         CompositeDisposable().add(
-                AppDatabase.getInstance(getApplication())!!
-                        .featuresDao()
-                        .getAllFeatures()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            allFeatures.postValue(it)
+            AppDatabase.getInstance(getApplication())!!
+                .featuresDao()
+                .getAllFeatures()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    allFeatures.postValue(it)
 //                            updatesLoader.postValue(false)
-                        }, {
+                }, {
 //                            updatesError.postValue(it.message)
-                            updatesLoader.postValue(false)
-                        })
+                    updatesLoader.postValue(false)
+                })
         )
     }
 
     fun getAllBundles() {
         updatesLoader.postValue(true)
         CompositeDisposable().add(
-                AppDatabase.getInstance(getApplication())!!
-                        .bundlesDao()
-                        .getBundleItems()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            allBundles.postValue(it)
+            AppDatabase.getInstance(getApplication())!!
+                .bundlesDao()
+                .getBundleItems()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    allBundles.postValue(it)
 //                            updatesLoader.postValue(false)
-                        }, {
+                }, {
 //                            updatesError.postValue(it.message)
-                            updatesLoader.postValue(false)
-                        })
+                    updatesLoader.postValue(false)
+                })
         )
     }
 
@@ -601,46 +635,46 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         Completable.fromAction {
             AppDatabase.getInstance(getApplication())!!.cartDao().deleteCartItem(itemID)
         }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete {
-                    compositeDisposable.add(
-                            AppDatabase.getInstance(getApplication())!!.cartDao().getCartItems()
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .doOnSuccess {
-                                        cartResult.postValue(it)
-                                        updatesLoader.postValue(false)
-                                    }
-                                    .doOnError {
-                                        updatesError.postValue(it.message)
-                                        updatesLoader.postValue(false)
-                                    }
-                                    .subscribe()
-                    )
-                    updatesLoader.postValue(false)
-                }
-                .doOnError {
-                    updatesError.postValue(it.message)
-                    updatesLoader.postValue(false)
-                }
-                .subscribe()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnComplete {
+                compositeDisposable.add(
+                    AppDatabase.getInstance(getApplication())!!.cartDao().getCartItems()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSuccess {
+                            cartResult.postValue(it)
+                            updatesLoader.postValue(false)
+                        }
+                        .doOnError {
+                            updatesError.postValue(it.message)
+                            updatesLoader.postValue(false)
+                        }
+                        .subscribe()
+                )
+                updatesLoader.postValue(false)
+            }
+            .doOnError {
+                updatesError.postValue(it.message)
+                updatesLoader.postValue(false)
+            }
+            .subscribe()
     }
 
     fun getAllCoupon() {
         CompositeDisposable().add(
-                AppDatabase.getInstance(getApplication())!!
-                        .couponsDao()
-                        .getCouponItems()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            allCoupons.postValue(it)
-                            updatesLoader.postValue(false)
-                        }, {
-                            updatesError.postValue(it.message)
-                            updatesLoader.postValue(false)
-                        })
+            AppDatabase.getInstance(getApplication())!!
+                .couponsDao()
+                .getCouponItems()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    allCoupons.postValue(it)
+                    updatesLoader.postValue(false)
+                }, {
+                    updatesError.postValue(it.message)
+                    updatesLoader.postValue(false)
+                })
         )
     }
 
@@ -669,30 +703,30 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
             updatesLoader.postValue(true)
             APIRequestStatus = "Retrieving your payment profile..."
             CompositeDisposable().add(
-                    ApiService.getCustomerId(auth, InternalSourceId, clientId)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    {
-                                        Log.i("getCustomerId>>", it.toString())
-                                        updateCustomerInfo.postValue(it)
-                                        customerInfoState.postValue(true)
-                                        updatesLoader.postValue(false)
-                                    },
-                                    {
-                                        Log.e("getCustomerInfo"," >> "+it.message)
-                                        val temp = (it as HttpException).response()!!.errorBody()!!.string()
-                                        val errorBody: CreateCustomerIDResponse = Gson().fromJson(
-                                                temp, object : TypeToken<CreateCustomerIDResponse>() {}.type
-                                        )
-                                        if (errorBody != null && errorBody.Error.ErrorCode.equals("INVALID CUSTOMER") && errorBody.StatusCode == 400) {
-                                            customerInfoState.postValue(false)
-                                        }
-                                        updatesLoader.postValue(false)
+                ApiService.getCustomerId(auth, InternalSourceId, clientId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            Log.i("getCustomerId>>", it.toString())
+                            updateCustomerInfo.postValue(it)
+                            customerInfoState.postValue(true)
+                            updatesLoader.postValue(false)
+                        },
+                        {
+                            Log.e("getCustomerInfo", " >> " + it.message)
+                            val temp = (it as HttpException).response()!!.errorBody()!!.string()
+                            val errorBody: CreateCustomerIDResponse = Gson().fromJson(
+                                temp, object : TypeToken<CreateCustomerIDResponse>() {}.type
+                            )
+                            if (errorBody != null && errorBody.Error.ErrorCode.equals("INVALID CUSTOMER") && errorBody.StatusCode == 400) {
+                                customerInfoState.postValue(false)
+                            }
+                            updatesLoader.postValue(false)
 //                                        if(!it.message.isNullOrEmpty())
 //                                            updatesError.postValue(it.message)
-                                    }
-                            )
+                        }
+                    )
             )
         }
     }
@@ -700,17 +734,17 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     fun createCustomerInfo(auth: String, createCustomerInfoRequest: CreateCustomerInfoRequest) {
         APIRequestStatus = "Creating a new payment profile..."
         CompositeDisposable().add(
-                ApiService.createCustomerId(auth, createCustomerInfoRequest)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                {
-                                    Log.i("CreateCustomerId>>", it.toString())
-                                    customerInfo.postValue(it)
-                                    updatesLoader.postValue(false)
-                                },
-                                {
-                                    Log.e("createCustomerInfo"," >> "+it.message)
+            ApiService.createCustomerId(auth, createCustomerInfoRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        Log.i("CreateCustomerId>>", it.toString())
+                        customerInfo.postValue(it)
+                        updatesLoader.postValue(false)
+                    },
+                    {
+                        Log.e("createCustomerInfo", " >> " + it.message)
 //                                    Toasty.error(
 //                                            getApplication(),
 //                                            "Failed to create new payment profile for your account - " + it.message,
@@ -718,26 +752,26 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 //                                    ).show()
 //                                    if(!it.message.isNullOrEmpty())
 //                                        updatesError.postValue(it.message)
-                                    updatesLoader.postValue(false)
-                                }
-                        )
+                        updatesLoader.postValue(false)
+                    }
+                )
         )
     }
 
     fun updateCustomerInfo(auth: String, createCustomerInfoRequest: CreateCustomerInfoRequest) {
         APIRequestStatus = "Creating a new payment profile..."
         CompositeDisposable().add(
-                ApiService.updateCustomerId(auth, createCustomerInfoRequest)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                {
-                                    Log.i("CreateCustomerId>>", it.toString())
-                                    customerInfo.postValue(it)
-                                    updatesLoader.postValue(false)
-                                },
-                                {
-                                    Log.e("updateCustomerInfo"," >> "+it.message)
+            ApiService.updateCustomerId(auth, createCustomerInfoRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        Log.i("CreateCustomerId>>", it.toString())
+                        customerInfo.postValue(it)
+                        updatesLoader.postValue(false)
+                    },
+                    {
+                        Log.e("updateCustomerInfo", " >> " + it.message)
 //                                    Toasty.error(
 //                                            getApplication(),
 //                                            "Failed to create new payment profile for your account - " + it.message,
@@ -745,9 +779,9 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 //                                    ).show()
 //                                    if(!it.message.isNullOrEmpty())
 //                                        updatesError.postValue(it.message)
-                                    updatesLoader.postValue(false)
-                                }
-                        )
+                        updatesLoader.postValue(false)
+                    }
+                )
         )
     }
 
@@ -797,36 +831,41 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 //            updatesLoader.postValue(true)
 //            APIRequestStatus = "Order registration in progress..."
             compositeDisposable.add(
-                    NewApiService.redeemCoupon(redeemCouponRequest)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    {
-                                        Log.v("getCouponRedeem>>", it.toString())
+                NewApiService.redeemCoupon(redeemCouponRequest)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            Log.v("getCouponRedeem>>", it.toString())
 
-                                        if (it.success) {
-                                            val couponServiceModel = CouponServiceModel(coupon_key, it.discountAmount, it.success, it.message)
-                                            redeemCouponResult.postValue(couponServiceModel)
-                                        } else {
-                                            Toasty.error(
-                                                getApplication(),
-                                                    "Error occurred while applying coupon - " + it.message,
-                                                    Toast.LENGTH_LONG
-                                            ).show()
-                                        }
+                            if (it.success) {
+                                val couponServiceModel = CouponServiceModel(
+                                    coupon_key,
+                                    it.discountAmount,
+                                    it.success,
+                                    it.message
+                                )
+                                redeemCouponResult.postValue(couponServiceModel)
+                            } else {
+                                Toasty.error(
+                                    getApplication(),
+                                    "Error occurred while applying coupon - " + it.message,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
 
 //                                        updatesLoader.postValue(false)
-                                    },
-                                    {
-                                        Toasty.error(
-                                            getApplication(),
-                                                "Error occurred while applying coupon - " + it.message,
-                                                Toast.LENGTH_LONG
-                                        ).show()
-                                        updatesError.postValue(it.message)
-                                        updatesLoader.postValue(false)
-                                    }
-                            )
+                        },
+                        {
+                            Toasty.error(
+                                getApplication(),
+                                "Error occurred while applying coupon - " + it.message,
+                                Toast.LENGTH_LONG
+                            ).show()
+                            updatesError.postValue(it.message)
+                            updatesLoader.postValue(false)
+                        }
+                    )
             )
         }
     }
@@ -834,19 +873,25 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     fun getLastUsedPaymentDetails(auth: String, floatingPointId: String, clientId: String) {
         if (Utils.isConnectedToInternet(getApplication())) {
             CompositeDisposable().add(
-                    ApiService.getLastPaymentDetails(auth, floatingPointId, clientId)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    {
-                                        lastPaymentDetailsInfo.postValue(it)
-                                    },
-                                    {
-                                        val temp = (it as HttpException).response()!!.errorBody()!!.string()
-                                        val errorBody: com.boost.dbcenterapi.data.api_model.paymentprofile.Error = Gson().fromJson(temp, object : TypeToken<com.boost.dbcenterapi.data.api_model.paymentprofile.Error>() {}.type)
-                                        Toasty.error(getApplication(), errorBody.toString(), Toast.LENGTH_LONG).show()
-                                    }
-                            )
+                ApiService.getLastPaymentDetails(auth, floatingPointId, clientId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            lastPaymentDetailsInfo.postValue(it)
+                        },
+                        {
+                            val temp = (it as HttpException).response()!!.errorBody()!!.string()
+                            val errorBody: com.boost.dbcenterapi.data.api_model.paymentprofile.Error =
+                                Gson().fromJson(
+                                    temp,
+                                    object :
+                                        TypeToken<com.boost.dbcenterapi.data.api_model.paymentprofile.Error>() {}.type
+                                )
+                            Toasty.error(getApplication(), errorBody.toString(), Toast.LENGTH_LONG)
+                                .show()
+                        }
+                    )
             )
         }
     }
@@ -854,22 +899,27 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     fun getStatesWithCodes(auth: String, clientId: String, progressBar: ProgressBar) {
         if (com.boost.dbcenterapi.utils.Utils.isConnectedToInternet(getApplication())) {
             CompositeDisposable().add(
-                    ApiService.getStates(auth, clientId)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    {
-                                        Log.i("getStates", it.toString())
-                                        statesInfo.postValue(it)
-                                        progressBar.visibility = View.GONE
-                                    },
-                                    {
-                                        val temp = (it as HttpException).response()!!.errorBody()!!.string()
-                                        val errorBody: Error = Gson().fromJson(temp, object : TypeToken<com.boost.dbcenterapi.data.api_model.stateCode.Error>() {}.type)
-                                        progressBar.visibility = View.GONE
-                                        Toasty.error(getApplication(), errorBody.toString(), Toast.LENGTH_LONG).show()
-                                    }
+                ApiService.getStates(auth, clientId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            Log.i("getStates", it.toString())
+                            statesInfo.postValue(it)
+                            progressBar.visibility = View.GONE
+                        },
+                        {
+                            val temp = (it as HttpException).response()!!.errorBody()!!.string()
+                            val errorBody: Error = Gson().fromJson(
+                                temp,
+                                object :
+                                    TypeToken<com.boost.dbcenterapi.data.api_model.stateCode.Error>() {}.type
                             )
+                            progressBar.visibility = View.GONE
+                            Toasty.error(getApplication(), errorBody.toString(), Toast.LENGTH_LONG)
+                                .show()
+                        }
+                    )
             )
         }
     }
@@ -901,20 +951,24 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     fun getGstApiInfo(auth: String, gstIn: String, clientId: String, progressBar: ProgressBar) {
         if (com.boost.dbcenterapi.utils.Utils.isConnectedToInternet(getApplication())) {
             CompositeDisposable().add(
-                    ApiService.getGSTDetails(auth, gstIn, clientId)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    {
-                                        Log.i("getGstDetails", it.toString())
-                                        gstApiInfo.postValue(it)
-                                    },
-                                    {
-                                        val temp = (it as HttpException).response()!!.errorBody()!!.string()
-                                        progressBar.visibility = View.GONE
-                                        Toasty.error(getApplication(), "Invalid GST Number!!", Toast.LENGTH_LONG).show()
-                                    }
-                            )
+                ApiService.getGSTDetails(auth, gstIn, clientId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            Log.i("getGstDetails", it.toString())
+                            gstApiInfo.postValue(it)
+                        },
+                        {
+                            val temp = (it as HttpException).response()!!.errorBody()!!.string()
+                            progressBar.visibility = View.GONE
+                            Toasty.error(
+                                getApplication(),
+                                "Invalid GST Number!!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    )
             )
         }
     }
@@ -929,23 +983,31 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         return recommendedAddonsInfo
     }
 
+    fun getValidityMonths(): LiveData<Int> {
+        return validityMonths
+    }
+
     fun getCouponRedeem(couponRequest: CouponRequest) {
         if (Utils.isConnectedToInternet(getApplication())) {
             Log.e("request--->", couponRequest.toString())
             CompositeDisposable().add(
                 NewApiService.getOfferCoupons(couponRequest)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    {
-                                        Log.i("getOfferCouponDetails", it.toString())
-                                        var couponResponse = it
-                                        couponApiInfo.postValue(couponResponse)
-                                    },
-                                    {
-                                        Toasty.error(getApplication(), "Error ->" +it.message, Toast.LENGTH_LONG).show()
-                                    }
-                            )
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            Log.i("getOfferCouponDetails", it.toString())
+                            var couponResponse = it
+                            couponApiInfo.postValue(couponResponse)
+                        },
+                        {
+                            Toasty.error(
+                                getApplication(),
+                                "Error ->" + it.message,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    )
             )
 
         }
@@ -956,17 +1018,21 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
             Log.e("request--->", recommendedAddonsRequest.toString())
             CompositeDisposable().add(
                 NewApiService.getRecommendedAddons(recommendedAddonsRequest)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    {
-                                        Log.i("getRecommendedAddons", it.toString())
-                                        recommendedAddonsInfo.postValue(it)
-                                    },
-                                    {
-                                        Toasty.error(getApplication(), "Error ->" +it.message, Toast.LENGTH_LONG).show()
-                                    }
-                            )
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            Log.i("getRecommendedAddons", it.toString())
+                            recommendedAddonsInfo.postValue(it)
+                        },
+                        {
+                            Toasty.error(
+                                getApplication(),
+                                "Error ->" + it.message,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    )
             )
 
         }
@@ -1042,5 +1108,134 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                     }
                 })
         }
+    }
+
+    fun loadNumberList(fpid: String, clientId: String) {
+//        findingNumberLoader.postValue(true)
+        if (com.boost.cart.utils.Utils.isConnectedToInternet(getApplication())) {
+            updatesLoader.postValue(true)
+            CompositeDisposable().add(
+                NewApiService2.getCallTrackDetails(fpid, clientId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            // findingNumberLoader.postValue(false)
+                            var NumberList = it
+                            callTrackListResponse.postValue(NumberList)
+                        },
+                        {
+//                            val temp = (it as HttpException).response()!!.errorBody()!!.string()
+//                            val errorBody: Error =
+//                                Gson().fromJson(temp, object : TypeToken<Error>() {}.type)
+                            Toasty.error(
+                                getApplication(),
+                                "Error in Loading Numbers!!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    )
+
+            )
+
+        }
+    }
+
+    fun domainVmnBlocked(
+        auth: String,
+        fpid: String,
+        clientId: String,
+        blockedItem: String,
+        OrderID: String,
+        blockedItemType: Int
+    ) {
+        compositeDisposable.add(
+            NewApiService1.getItemAvailability(
+                auth,
+                fpid,
+                clientId,
+                blockedItem,
+                OrderID,
+                blockedItemType
+            )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        if (blockedItemType == 2) {
+                            updateDomainStatus.postValue(it)
+                        } else {
+                            updateVmnStatus.postValue(it)
+                        }
+                    }, {
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
+
+    fun getAlreadyPurchasedDomain(auth: String, fpTag: String, clientId: String) {
+        updatesLoader.postValue(true)
+        compositeDisposable.add(
+            NewApiService.getAlreadyPurchasedDomain(auth, fpTag, clientId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        purchasedDomainResult.postValue(it)
+                        updatesLoader.postValue(false)
+                    }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
+
+    fun getAlreadyPurchasedVmn(auth: String, fpTag: String, clientId: String) {
+        updatesLoader.postValue(true)
+        compositeDisposable.add(
+            NewApiService.getAlreadyPurchasedVmn(auth, fpTag, clientId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        purchasedVmnResult.postValue(it)
+                        updatesLoader.postValue(false)
+                    }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
+
+    fun loadPurchasedItems(fpid: String, clientId: String) {
+        updatesLoader.postValue(true)
+        CompositeDisposable().add(
+            NewApiService.GetFeatureDetails(fpid, clientId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { it1 ->
+                        val list = ArrayList<String>()
+                        var numberOfMonths = 1
+                        for (singleItem in it1) {
+                            val activatedDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(singleItem.activatedDate)
+                            val expiredDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(singleItem.expiryDate)
+                            val startCalendar: Calendar = GregorianCalendar()
+                            startCalendar.time = activatedDate
+                            val endCalendar: Calendar = GregorianCalendar()
+                            endCalendar.time = expiredDate
+
+                            val diffYear = endCalendar[Calendar.YEAR] - startCalendar[Calendar.YEAR]
+                            val diffMonth = diffYear * 12 + endCalendar[Calendar.MONTH] - startCalendar[Calendar.MONTH]
+                            if(diffMonth > numberOfMonths && diffMonth < 60)
+                                numberOfMonths = diffMonth
+                        }
+
+                        validityMonths.postValue(numberOfMonths)
+                    }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
     }
 }

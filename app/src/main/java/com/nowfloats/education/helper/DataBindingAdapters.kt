@@ -20,7 +20,8 @@ private val requestOption = RequestOptions().diskCacheStrategy(DiskCacheStrategy
   .encodeFormat(Bitmap.CompressFormat.PNG)
   .format(DecodeFormat.DEFAULT)
 
-@BindingAdapter("android:src")
+//@BindingAdapter("android:src")
+@BindingAdapter("imageUrl")
 fun setImageUrl(view: ImageView, url: String) {
   when (view.id) {
     R.id.faculty_profile_image -> loadProfileImage(view, url)

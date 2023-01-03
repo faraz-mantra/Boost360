@@ -213,6 +213,21 @@ data class UserFpDetailsResponse(
 
   @field:SerializedName("GADomain")
   val gADomain: String? = null,
+
+  @field:SerializedName("NoServiceSlot")
+  var noServiceSlot: Boolean = true,
+
+  @field:SerializedName("SameServiceSlot")
+  var sameServiceSlot: Boolean = true,
+
+  @field:SerializedName("IsBulkBooking")
+  var isBulkBooking: Boolean = true,
+
+  @field:SerializedName("IsCustomCta")
+  var isCustomCta: Boolean = true,
+
+  @field:SerializedName("CustomCta")
+  var customCta: String = "N/A"
 ) : BaseResponse(), Serializable {
 
   fun productCategoryVerb(activity: Activity): String {

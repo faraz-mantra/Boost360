@@ -90,6 +90,7 @@ class MyCurrentPlanActivity :
         return MyCurrentPlanViewModel::class.java
     }
 
+
     override fun onCreateView() {
         super.onCreateView()
         isDeepLink = intent.getBooleanExtra("isDeepLink", false)
@@ -296,6 +297,11 @@ class MyCurrentPlanActivity :
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadData()
+    }
+
     fun updateAllItemBySearchValue(searchValue: String) {
         val freeitemList: java.util.ArrayList<FeaturesModel> = arrayListOf()
         val paiditemList: java.util.ArrayList<FeaturesModel> = arrayListOf()
@@ -370,14 +376,15 @@ class MyCurrentPlanActivity :
     private fun loadData() {
         try {
             // old api
-//            viewModel.loadPurchasedItems(
+            viewModel.loadPurchasedItems(
+                intent.getStringExtra("fpid") ?: "",
+                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
+                this
+            )
+//            viewModel.myPlanV3Status(
 //                intent.getStringExtra("fpid") ?: "",
 //                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
 //            )
-            viewModel.myPlanV3Status(
-                intent.getStringExtra("fpid") ?: "",
-                "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
-            )
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
@@ -389,177 +396,150 @@ class MyCurrentPlanActivity :
 
     @SuppressLint("FragmentLiveDataObserve")
     private fun initMVVM() {
-        viewModel.myplanResultV3().observe(this, androidx.lifecycle.Observer {
-            var inActiveList =
-                ArrayList<String>()
-            var activeList =
-                ArrayList<String>()
+//        viewModel.myplanResultV3().observe(this, androidx.lifecycle.Observer {
+//            var inActiveList =
+//                ArrayList<String>()
+//            var activeList =
+//                ArrayList<String>()
+//
+//            for (singleItem in it.Result) {
+//                if (singleItem.ActionNeeded != null && singleItem.FeatureDetails != null) {
+//                    if (singleItem.ActionNeeded.ActionNeeded != 0 && singleItem.FeatureDetails.FeatureState != 7) {
+//                        inActiveList.add(singleItem.FeatureDetails.FeatureKey)
+//                    }
+//                    else if (singleItem.ActionNeeded.ActionNeeded == 0 && (singleItem.FeatureDetails.FeatureState == 3
+//                                || singleItem.FeatureDetails.FeatureState == 4 || singleItem.FeatureDetails.FeatureState == 5
+//                                || singleItem.FeatureDetails.FeatureState == 6) ) {
+//                        inActiveList.add(singleItem.FeatureDetails.FeatureKey)
+//                    }else if (singleItem.ActionNeeded.ActionNeeded == 0 && singleItem.FeatureDetails.FeatureState == 1) {
+//                        activeList.add(singleItem.FeatureDetails.FeatureKey)
+//                    }
+//                }
+//            }
+//            //Inactive features
+//            compositeDisposable.add(
+//                AppDatabase.getInstance(Application())!!
+//                    .featuresDao()
+//                    .getallActiveFeatures1(inActiveList)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .doOnSuccess {
+//                        if (it != null) {
+//                            if (it.size > 0) {
+//                                binding?.expandableView?.visibility = View.VISIBLE
+//                                updateFreeAddonsRecycler(it)
+//                                totalFreeItemList=it
+//                                binding?.paidTitle?.text = " ${it.size} Inactive features"
+//                            } else {
+//                                binding?.expandableView?.visibility = View.INVISIBLE
+//                                //binding?.nestedscroll?.visibility = View.VISIBLE
+//                                binding?.paidTitle?.text = " No Inactive features"
+//                                binding?.arrowBtn?.visibility = View.GONE
+//                            }
+//                        }
+//                    }
+//                    .doOnError {
+//                        Log.i("insertAllFeatures", "Failed")
+//                    }
+//                    .subscribe())
+//
+//            //Active features
+//            compositeDisposable.add(
+//                AppDatabase.getInstance(Application())!!
+//                    .featuresDao()
+//                    .getallActiveFeatures1(activeList)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .doOnSuccess {
+//                        if (it != null) {
+//                            if (it.size > 0) {
+//                                binding?.expandableView?.visibility = View.VISIBLE
+//                                updatePaidAddonsRecycler(it)
+//                                totalPaidItemList = it
+//                                binding?.paidTitle1?.text = " ${it.size} Active features"
+//                            } else {
+//                                binding?.emptyFeatures?.visibility = View.VISIBLE
+//                                binding?.paidTitle1?.text = "No add-ons active."
+//                            }
+//                        }
+//                    }
+//                    .doOnError {
+//                        Log.i("insertAllFeatures", "Failed")
+//                    }
+//                    .subscribe())
+//
+//        })
 
-            for (singleItem in it.Result) {
-                if (singleItem.ActionNeeded != null && singleItem.FeatureDetails != null) {
-                    if (singleItem.ActionNeeded.ActionNeeded != 0 && singleItem.FeatureDetails.FeatureState != 7) {
-                        inActiveList.add(singleItem.FeatureDetails.FeatureKey)
-                    }
-                    else if (singleItem.ActionNeeded.ActionNeeded == 0 && (singleItem.FeatureDetails.FeatureState == 3
-                                || singleItem.FeatureDetails.FeatureState == 4 || singleItem.FeatureDetails.FeatureState == 5
-                                || singleItem.FeatureDetails.FeatureState == 6) ) {
-                        inActiveList.add(singleItem.FeatureDetails.FeatureKey)
-                    }else if (singleItem.ActionNeeded.ActionNeeded == 0 && singleItem.FeatureDetails.FeatureState == 1) {
-                        activeList.add(singleItem.FeatureDetails.FeatureKey)
-                    }
+        viewModel.activeWidgetCount().observe(this, androidx.lifecycle.Observer {
+            totalPaidItemList = it
+
+//            for (singleItem in it) {
+//                val ans = singleItem.feature_code.toString()
+//                viewModel.edgecases(
+//                    intent.getStringExtra("fpid") ?: "",
+//                    "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21", ans
+//                )
+//            }
+
+         //   totalActivePremiumWidgetCount = totalPaidItemList!!.size
+            val paidItemsCount = totalPaidItemList!!.size
+            if (paidItemsCount != null && paidItemsCount > 0) {
+                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
+                    binding?.shimmerViewHistory?.stopShimmer()
+                    binding?.shimmerViewHistory?.visibility = View.GONE
+                    binding?.nestedscroll?.visibility = View.VISIBLE
                 }
+                binding?.paidTitle1?.text = totalPaidItemList!!.size.toString() + " Active features"
+            } else {
+                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
+                    binding?.shimmerViewHistory?.stopShimmer()
+                    binding?.shimmerViewHistory?.visibility = View.GONE
+                }
+                binding?.paidTitle1?.text = "No add-ons active."
+                binding?.emptyFeatures?.visibility = View.VISIBLE
             }
-            //Inactive features
-            compositeDisposable.add(
-                AppDatabase.getInstance(Application())!!
-                    .featuresDao()
-                    .getallActiveFeatures1(inActiveList)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSuccess {
-                        if (it != null) {
-                            if (it.size > 0) {
-//                                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
-//                                    binding?.shimmerViewHistory?.stopShimmer()
-//                                    binding?.shimmerViewHistory?.visibility = View.GONE
-//                                    binding?.nestedscroll?.visibility = View.VISIBLE
-//                                }
-                                binding?.expandableView?.visibility = View.VISIBLE
-                                updateFreeAddonsRecycler(it)
-                                totalFreeItemList=it
-                                binding?.paidTitle?.text = " ${it.size} Inactive features"
-                            } else {
-//                                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
-//                                    binding?.shimmerViewHistory?.stopShimmer()
-//                                    binding?.shimmerViewHistory?.visibility = View.GONE
-//                                }
-                                binding?.expandableView?.visibility = View.INVISIBLE
-                                //binding?.nestedscroll?.visibility = View.VISIBLE
-                                binding?.paidTitle?.text = " No Inactive features"
-                                binding?.arrowBtn?.visibility = View.GONE
-                            }
-                        }
-                    }
-                    .doOnError {
-                        Log.i("insertAllFeatures", "Failed")
-                    }
-                    .subscribe())
 
-            //Active features
-            compositeDisposable.add(
-                AppDatabase.getInstance(Application())!!
-                    .featuresDao()
-                    .getallActiveFeatures1(activeList)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSuccess {
-                        if (it != null) {
-                            if (it.size > 0) {
-//                                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
-//                                    binding?.shimmerViewHistory?.stopShimmer()
-//                                    binding?.shimmerViewHistory?.visibility = View.GONE
-//                                    binding?.nestedscroll?.visibility = View.VISIBLE
-//                                }
-                                binding?.expandableView?.visibility = View.VISIBLE
-                                updatePaidAddonsRecycler(it)
-                                totalPaidItemList = it
-                                binding?.paidTitle1?.text = " ${it.size} Active features"
-                            } else {
-//                                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
-//                                    binding?.shimmerViewHistory?.stopShimmer()
-//                                    binding?.shimmerViewHistory?.visibility = View.GONE
-//                                }
-                                binding?.emptyFeatures?.visibility = View.VISIBLE
-                                binding?.paidTitle1?.text = "No add-ons active."
-                            }
-                        }
-                    }
-                    .doOnError {
-                        Log.i("insertAllFeatures", "Failed")
-                    }
-                    .subscribe())
-
+            if (totalPaidItemList != null && totalPaidItemList!!.size > 1) {
+                    updatePaidAddonsRecycler(totalPaidItemList!!)
+            }
         })
 
-//        viewModel.activeWidgetCount().observe(this, androidx.lifecycle.Observer {
-//            totalPaidItemList = it
-//
-////            for (singleItem in it) {
-////                val ans = singleItem.feature_code.toString()
-////                viewModel.edgecases(
-////                    intent.getStringExtra("fpid") ?: "",
-////                    "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21", ans
-////                )
-////            }
-//
-//            totalActivePremiumWidgetCount = totalPaidItemList!!.size
-//            val paidItemsCount = totalPaidItemList!!.size
-//            if (paidItemsCount != null && paidItemsCount > 0) {
-//                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
-//                    binding?.shimmerViewHistory?.stopShimmer()
-//                    binding?.shimmerViewHistory?.visibility = View.GONE
-//                    binding?.nestedscroll?.visibility = View.VISIBLE
-//                }
-//                binding?.paidTitle1?.text = totalPaidItemList!!.size.toString() + " Active features"
-//            } else {
-//                if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
-//                    binding?.shimmerViewHistory?.stopShimmer()
-//                    binding?.shimmerViewHistory?.visibility = View.GONE
-//                }
-//                binding?.paidTitle1?.text = "No add-ons active."
-//                binding?.emptyFeatures?.visibility = View.VISIBLE
-//            }
-//
-//            if (totalPaidItemList != null) {
-//                if (totalPaidItemList!!.size > 1) {
-//                    updatePaidAddonsRecycler(totalPaidItemList!!)
-//                } else {
-//                    updatePaidAddonsRecycler(totalPaidItemList!!)
-//                }
-//            }
-//            updatePaidAddonsRecycler(it)
-//        })
-//
-//
-//        viewModel.inActiveWidgetCount().observe(this, androidx.lifecycle.Observer {
-//
-//            totalFreeItemList = it
-//            totalActiveFreeWidgetCount = totalFreeItemList!!.size
-//            binding?.paidTitle?.text = totalActiveFreeWidgetCount.toString() + " Inactive features"
-//
-//            if (totalFreeItemList != null) {
-//                if (totalFreeItemList!!.size > 0) {
-//                    if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
-//                        binding?.shimmerViewHistory?.stopShimmer()
-//                        binding?.shimmerViewHistory?.visibility = View.GONE
-//                        binding?.nestedscroll?.visibility = View.VISIBLE
-//                    }
-//                    updateFreeAddonsRecycler(totalFreeItemList!!)
-//                    binding?.expandableView?.visibility = View.VISIBLE
-//                } else {
-//                    if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
-//                        binding?.shimmerViewHistory?.stopShimmer()
-//                        binding?.shimmerViewHistory?.visibility = View.GONE
-//                    }
-//                    binding?.expandableView?.visibility = View.INVISIBLE
-//                    updateFreeAddonsRecycler(totalFreeItemList!!)
-//                }
-//            }
-//            updateFreeAddonsRecycler(totalFreeItemList!!)
-//        })
+
+        viewModel.inActiveWidgetCount().observe(this, androidx.lifecycle.Observer {
+
+            totalFreeItemList = it
+            totalActiveFreeWidgetCount = totalFreeItemList!!.size
+            binding?.paidTitle?.text = totalActiveFreeWidgetCount.toString() + " Inactive features"
+
+            if (totalFreeItemList != null) {
+                if (totalFreeItemList!!.size > 0) {
+                    if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
+                        binding?.shimmerViewHistory?.stopShimmer()
+                        binding?.shimmerViewHistory?.visibility = View.GONE
+                        binding?.nestedscroll?.visibility = View.VISIBLE
+                    }
+                    updateFreeAddonsRecycler(totalFreeItemList!!)
+                    binding?.expandableView?.visibility = View.VISIBLE
+                } else {
+                    if (binding?.shimmerViewHistory?.isShimmerStarted == true) {
+                        binding?.shimmerViewHistory?.stopShimmer()
+                        binding?.shimmerViewHistory?.visibility = View.GONE
+                    }
+                    binding?.expandableView?.visibility = View.INVISIBLE
+                    updateFreeAddonsRecycler(totalFreeItemList!!)
+                }
+            }
+            if (totalFreeItemList != null && totalFreeItemList!!.size > 1) {
+                updateFreeAddonsRecycler(totalFreeItemList!!)
+            }
+        })
         viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
             if (it) {
-                val status = "Loading. Please wait..."
-                progressDialog.setMessage(status)
-                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
-                progressDialog.show()
-
                     binding?.shimmerViewHistory?.startShimmer()
                     binding?.shimmerViewHistory?.visibility = View.VISIBLE
                     binding?.nestedscroll?.visibility = View.GONE
 
             } else {
-                progressDialog.dismiss()
                 binding?.shimmerViewHistory?.stopShimmer()
                 binding?.shimmerViewHistory?.visibility = View.GONE
                 binding?.nestedscroll?.visibility = View.VISIBLE

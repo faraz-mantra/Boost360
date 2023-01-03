@@ -219,7 +219,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       binding.etUpdate.hint=getString(R.string.describe_what_you_want_to_say_in_the_picture_added_above)
       binding.tvImgReq.gone()
       binding!!.ivImg.visible()
-      Glide.with(this).load(
+      Glide.with(requireActivity().getApplicationContext()).load(
         path
       ).apply(RequestOptions.skipMemoryCacheOf(true))
         .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
@@ -404,19 +404,19 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
       binding!!.ivHashtagCross->{
         binding!!.layoutHashtagTip.animate().alpha(0F).setListener(object :Animator.AnimatorListener{
-          override fun onAnimationStart(p0: Animator?) {
+          override fun onAnimationStart(p0: Animator) {
 
           }
 
-          override fun onAnimationEnd(p0: Animator?) {
+          override fun onAnimationEnd(p0: Animator) {
             binding!!.layoutHashtagTip.gone()
 
           }
 
-          override fun onAnimationCancel(p0: Animator?) {
+          override fun onAnimationCancel(p0: Animator) {
           }
 
-          override fun onAnimationRepeat(p0: Animator?) {
+          override fun onAnimationRepeat(p0: Animator) {
           }
 
         })

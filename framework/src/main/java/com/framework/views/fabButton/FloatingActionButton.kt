@@ -250,11 +250,26 @@ class FloatingActionButton : AppCompatTextView {
         this@FloatingActionButton.scaleY = scale
       }
       duration = 100
-      addListener(object : AnimatorListenerAdapter() {
-        override fun onAnimationEnd(animation: Animator?) {
-          super.onAnimationEnd(animation)
+//      addListener(object : AnimatorListenerAdapter() {
+//        override fun onAnimationEnd(animation: Animator?) {
+//          super.onAnimationEnd(animation)
+//          visibility = View.INVISIBLE
+//        }
+//      })
+      addListener(object: Animator.AnimatorListener {
+        override fun onAnimationStart(animation: Animator) {
+        }
+
+        override fun onAnimationEnd(animation: Animator) {
           visibility = View.INVISIBLE
         }
+
+        override fun onAnimationCancel(animation: Animator) {
+        }
+
+        override fun onAnimationRepeat(animation: Animator) {
+        }
+
       })
       interpolator = AccelerateDecelerateInterpolator()
     }.start()
@@ -268,11 +283,26 @@ class FloatingActionButton : AppCompatTextView {
         this@FloatingActionButton.scaleY = scale
       }
       duration = 100
-      addListener(object : AnimatorListenerAdapter() {
-        override fun onAnimationStart(animation: Animator?) {
-          super.onAnimationStart(animation)
+//      addListener(object : AnimatorListenerAdapter() {
+//        override fun onAnimationStart(animation: Animator?) {
+//          super.onAnimationStart(animation)
+//          visibility = View.VISIBLE
+//        }
+//      })
+      addListener(object: Animator.AnimatorListener {
+        override fun onAnimationStart(animation: Animator) {
           visibility = View.VISIBLE
         }
+
+        override fun onAnimationEnd(animation: Animator) {
+        }
+
+        override fun onAnimationCancel(animation: Animator) {
+        }
+
+        override fun onAnimationRepeat(animation: Animator) {
+        }
+
       })
       interpolator = AccelerateDecelerateInterpolator()
     }.start()

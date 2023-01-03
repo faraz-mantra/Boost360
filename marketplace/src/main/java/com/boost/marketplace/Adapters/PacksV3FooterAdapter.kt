@@ -164,6 +164,7 @@ class PacksV3FooterAdapter(
     inner class ParentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val PackageItemTitle: TextView
         val tv_price: TextView
+        val footer_pack_mode: TextView
         val maincl: View
 
         init {
@@ -174,6 +175,10 @@ class PacksV3FooterAdapter(
             tv_price = itemView
                 .findViewById(
                     R.id.footer_pack_total
+                )
+            footer_pack_mode = itemView
+                .findViewById(
+                    R.id.footer_pack_mode
                 )
             maincl =itemView.findViewById(R.id.maincl)
         }
@@ -223,21 +228,16 @@ class PacksV3FooterAdapter(
                         if (bundles.min_purchase_months != null && bundles.min_purchase_months!! > 1) {
                             holder.tv_price.setText(
                                 "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                                    .format(RootUtil.round(offeredBundlePrice,0)) + Utils.yearlyOrMonthlyOrEmptyValidity(
-                                    "",
-                                    activity
-                                )
+                                    .format(RootUtil.round(offeredBundlePrice,0))
                             )
+                            holder.footer_pack_mode.setText(Utils.yearlyOrMonthlyOrEmptyValidity("", activity))
                         } else {
                             holder.tv_price.setText(
                                 "₹" +
                                         NumberFormat.getNumberInstance(Locale.ENGLISH)
                                             .format(RootUtil.round(offeredBundlePrice,0))
-                                        +  Utils.yearlyOrMonthlyOrEmptyValidity(
-                                    "",
-                                    activity
-                                )
                             )
+                            holder.footer_pack_mode.setText(Utils.yearlyOrMonthlyOrEmptyValidity("", activity))
                         }
                     },
                     {
