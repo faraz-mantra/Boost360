@@ -644,7 +644,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         for (singleItem in cartData.entries) {
             list.add(singleItem.key)
         }
-        DataLoader.addAllItemstoFirebaseCart(application, list)
+        //disable this feature for now
+//        DataLoader.addAllItemstoFirebaseCart(application, list)
       }
     }
   }

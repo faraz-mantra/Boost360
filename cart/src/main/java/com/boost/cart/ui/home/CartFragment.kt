@@ -219,8 +219,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
     var domainAvailable: Boolean? = false
     var vmnAvailable: Boolean? = false
     var vmnBlocked: Boolean? = null
-    var alreadypurchasedDomain: Boolean? = false
-    var alreadypurchasedVmnName: Boolean? = false
+    var alreadypurchasedDomain: Boolean = false
+    var alreadypurchasedVmnName: Boolean = false
     var domainContains = false
     var vmnContains = false
     var domainVMNContains = false
@@ -1449,7 +1449,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 
     private fun blockVMN() {
         if (!prefs.getSelectedVMNName().isNullOrEmpty()
-            && alreadypurchasedVmnName == false
+            && !alreadypurchasedVmnName
         ) {
             val num = prefs.getSelectedVMNName()!!.replace("+91 ", "0").replace("-", "")
 
@@ -1464,7 +1464,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
     }
 
     private fun blockDomain() {
-        if (!prefs.getSelectedDomainName().isNullOrEmpty() && alreadypurchasedDomain == false) {
+        if (!prefs.getSelectedDomainName().isNullOrEmpty() && !alreadypurchasedDomain) {
             viewModel.domainVmnBlocked(
                 (activity as? CartActivity)?.getAccessToken() ?: "",
                 (activity as CartActivity).fpid!!,
@@ -1497,37 +1497,37 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     }
                     if ((featureCode.contains("DOMAINPURCHASE")) && (featureCode.contains("CALLTRACKER"))) {
                         if ((!prefs.getSelectedDomainName()
-                                .isNullOrEmpty() && alreadypurchasedDomain == false)
+                                .isNullOrEmpty() && !alreadypurchasedDomain)
                             && (!prefs.getSelectedVMNName()
-                                .isNullOrEmpty() && alreadypurchasedVmnName == false)
+                                .isNullOrEmpty() && !alreadypurchasedVmnName)
                         ) {
                             domainVMNContains = true
                         } else if (((!prefs.getSelectedVMNName()
-                                .isNullOrEmpty() && alreadypurchasedVmnName == false))
+                                .isNullOrEmpty() && !alreadypurchasedVmnName))
                             && ((prefs.getSelectedDomainName()
-                                .isNullOrEmpty() && alreadypurchasedDomain == false))
+                                .isNullOrEmpty() && !alreadypurchasedDomain))
                         ) {
                             vmnContains = true
                         } else if (((!prefs.getSelectedDomainName()
-                                .isNullOrEmpty() && alreadypurchasedDomain == false))
+                                .isNullOrEmpty() && !alreadypurchasedDomain))
                             && ((prefs.getSelectedVMNName()
-                                .isNullOrEmpty() && alreadypurchasedVmnName == false))
+                                .isNullOrEmpty() && !alreadypurchasedVmnName))
                         ) {
                             domainContains = true
                         } else if ((!prefs.getSelectedDomainName()
-                                .isNullOrEmpty() && alreadypurchasedDomain == false
+                                .isNullOrEmpty() && !alreadypurchasedDomain
                                     && (alreadypurchasedVmnName == true))
                         ) {
                             domainContains = true
                         } else if ((!prefs.getSelectedVMNName()
-                                .isNullOrEmpty() && alreadypurchasedVmnName == false
+                                .isNullOrEmpty() && !alreadypurchasedVmnName
                                     && (alreadypurchasedDomain == true))
                         ) {
                             vmnContains = true
                         }
                     } else if ((featureCode.contains("DOMAINPURCHASE")) && (!featureCode.contains("CALLTRACKER"))) {
                         if (!prefs.getSelectedDomainName()
-                                .isNullOrEmpty() && alreadypurchasedDomain == false
+                                .isNullOrEmpty() && !alreadypurchasedDomain
                         ) {
                             domainContains = true
                         }
@@ -1542,7 +1542,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
             } else {
                 if (singleItem.feature_code.equals("DOMAINPURCHASE")) {
                     if (!prefs.getSelectedDomainName()
-                            .isNullOrEmpty() && alreadypurchasedDomain == false
+                            .isNullOrEmpty() && !alreadypurchasedDomain
                     ) {
                         domainContains = true
                         break
@@ -1550,7 +1550,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 }
                 if (singleItem.feature_code.equals("CALLTRACKER")) {
                     if (!prefs.getSelectedVMNName()
-                            .isNullOrEmpty() && alreadypurchasedVmnName == false
+                            .isNullOrEmpty() && !alreadypurchasedVmnName
                     ) {
                         vmnContains = true
                         break
@@ -1817,7 +1817,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 ////            domainBlocked = it.Result
 //            if (prefs.getCartOrderInfo() != null) {
 //                if (domainContains){
-//                    if (prefs.getSelectedDomainName() != null && alreadypurchasedDomain == false) {
+//                    if (prefs.getSelectedDomainName() != null && !alreadypurchasedDomain) {
 //                        if (domainBlocked == false) {
 //                            proceedToPayment(prefs.getCartOrderInfo()!!)
 //                        } else {
@@ -1831,7 +1831,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 //                        proceedToPayment(prefs.getCartOrderInfo()!!)
 //                    }
 //                } else if (vmnContains){
-//                    if (!prefs.getSelectedVMNName().isNullOrEmpty() && alreadypurchasedVmnName == false) {
+//                    if (!prefs.getSelectedVMNName().isNullOrEmpty() && !alreadypurchasedVmnName) {
 //                        if (domainBlocked == false) {
 //                            proceedToPayment(prefs.getCartOrderInfo()!!)
 //                        } else {
@@ -1846,7 +1846,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 //                    }
 //                }
 //                else if (domainVMNContains){
-//                    if (prefs.getSelectedDomainName() != null && alreadypurchasedDomain == false) {
+//                    if (prefs.getSelectedDomainName() != null && !alreadypurchasedDomain) {
 //                        if (isNullOrEmpty(domainBlocked?.toString())==false){
 //                            if (domainBlocked == false) {
 //                                Toasty.success(
@@ -1863,7 +1863,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 //                            }
 //                        }
 //                    }
-//                    if (!prefs.getSelectedVMNName().isNullOrEmpty() && alreadypurchasedVmnName == false) {
+//                    if (!prefs.getSelectedVMNName().isNullOrEmpty() && !alreadypurchasedVmnName) {
 //                        if (vmnBlocked == false) {
 //                            proceedToPayment(prefs.getCartOrderInfo()!!)
 //                        } else {
@@ -2116,7 +2116,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
     private fun navigationFlow() {
         if (prefs.getCartOrderInfo() != null) {
             if (domainContains) {
-                if (prefs.getSelectedDomainName() != null && alreadypurchasedDomain == false) {
+                if (prefs.getSelectedDomainName() != null && !alreadypurchasedDomain) {
                     if (domainBlocked == false) {
                         proceedToPayment(prefs.getCartOrderInfo()!!)
                     } else {
@@ -2131,7 +2131,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 }
             } else if (vmnContains) {
                 if (!prefs.getSelectedVMNName()
-                        .isNullOrEmpty() && alreadypurchasedVmnName == false
+                        .isNullOrEmpty() && !alreadypurchasedVmnName
                 ) {
                     if (vmnBlocked == false) {
                         proceedToPayment(prefs.getCartOrderInfo()!!)
@@ -2146,7 +2146,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     proceedToPayment(prefs.getCartOrderInfo()!!)
                 }
             } else if (domainVMNContains) {
-                if (prefs.getSelectedDomainName() != null && alreadypurchasedDomain == false) {
+                if (prefs.getSelectedDomainName() != null && !alreadypurchasedDomain) {
                     if (isNullOrEmpty(domainBlocked?.toString()) == false) {
                         if (domainBlocked == false) {
                             Toasty.success(
@@ -2165,7 +2165,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     }
                 }
                 if (!prefs.getSelectedVMNName()
-                        .isNullOrEmpty() && alreadypurchasedVmnName == false
+                        .isNullOrEmpty() && !alreadypurchasedVmnName
                 ) {
                     if (isNullOrEmpty(vmnBlocked?.toString()) == false) {
                         if (vmnBlocked == false) {
@@ -2452,63 +2452,22 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     }
                 }
 
-                for (singleItem in cartList) {
-                    if (singleItem.item_type.equals("bundles")) {
-                        if (::bundlesList.isInitialized && bundlesList.size > 0) {
-                            val featureCode = arrayListOf<String>()
-                            for (singleBundle in bundlesList) {
-                                if (singleBundle.bundle_id.equals(singleItem.item_id)) {
-                                    val includedFeatures = Gson().fromJson<List<IncludedFeature>>(
-                                        singleBundle.included_features,
-                                        object : TypeToken<List<IncludedFeature>>() {}.type
-                                    )
-                                    for (singleIncludedFeature in includedFeatures) {
-                                        featureCode.add(singleIncludedFeature.feature_code)
-                                    }
-                                    break
-                                }
-                            }
-                            if (featureCode.contains("CALLTRACKER")) {
-                                if (prefs.getSelectedVMNName()
-                                        .isNullOrEmpty() && alreadypurchasedVmnName == false
-                                ) {
-                                    //sending value for pre/post purchase of VMN
-                                    if ((prefs.getSelectedVMNName()
-                                            .isNullOrEmpty()) && (alreadypurchasedVmnName == false)
-                                    ) {
-                                        outputExtendedPropsRenew.add(
-                                            Property(
-                                                Key = "allowPostPurchase",
-                                                Value = if (prefs.getSelectedVMNName()
-                                                        .isNullOrEmpty()
-                                                ) "1" else "0"
-                                            )
-                                        )
-                                    }
-                                    break
-                                }
-                            }
-                        }
-                    } else {
-                        if (singleItem.feature_code.equals("CALLTRACKER")) {
-                            if (prefs.getSelectedVMNName()
-                                    .isNullOrEmpty() && alreadypurchasedVmnName == false
-                            ) {
-                                //sending value for pre/post purchase of VMN
-                                if ((prefs.getSelectedVMNName()
-                                        .isNullOrEmpty()) && (alreadypurchasedVmnName == false)
-                                ) {
-                                    outputExtendedPropsRenew.add(
-                                        Property(
-                                            Key = "allowPostPurchase",
-                                            Value = if (prefs.getSelectedVMNName()
-                                                    .isNullOrEmpty()
-                                            ) "1" else "0"
-                                        )
-                                    )
-                                }
-                                break
-                            }
+                if (item.feature_code.equals("CALLTRACKER")) {
+                    if (prefs.getSelectedVMNName()
+                            .isNullOrEmpty() && !alreadypurchasedVmnName
+                    ) {
+                        //sending value for pre/post purchase of VMN
+                        if ((prefs.getSelectedVMNName()
+                                .isNullOrEmpty()) && (!alreadypurchasedVmnName)
+                        ) {
+                            outputExtendedPropsRenew.add(
+                                Property(
+                                    Key = "allowPostPurchase",
+                                    Value = if (prefs.getSelectedVMNName()
+                                            .isNullOrEmpty()
+                                    ) "1" else "0"
+                                )
+                            )
                         }
                     }
                 }
@@ -2592,67 +2551,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     }
                 }
 
-                for (singleItem in cartList) {
-                    if (singleItem.item_type.equals("bundles")) {
-                        if (::bundlesList.isInitialized && bundlesList.size > 0) {
-                            val featureCodeLists = arrayListOf<String>()
-                            for (singleBundle in bundlesList) {
-                                if (singleBundle.bundle_id.equals(singleItem.item_id)) {
-                                    val includedFeatures = Gson().fromJson<List<IncludedFeature>>(
-                                        singleBundle.included_features,
-                                        object : TypeToken<List<IncludedFeature>>() {}.type
-                                    )
-                                    for (singleIncludedFeature in includedFeatures) {
-                                        featureCodeLists.add(singleIncludedFeature.feature_code)
-                                    }
-                                    break
-                                }
-                            }
-                            if (featureCodeLists.equals("CALLTRACKER")) {
-                                if (prefs.getSelectedVMNName()
-                                        .isNullOrEmpty() && alreadypurchasedVmnName == false
-                                ) {
-                                    //sending value for pre/post purchase of VMN
-                                    if ((prefs.getSelectedVMNName()
-                                            .isNullOrEmpty()) && (alreadypurchasedVmnName == false)
-                                    ) {
-                                        outputExtendedProps.add(
-                                            Property(
-                                                Key = "allowPostPurchase",
-                                                Value = if (prefs.getSelectedVMNName()
-                                                        .isNullOrEmpty()
-                                                ) "1" else "0"
-                                            )
-                                        )
-                                    }
-                                    break
-                                }
-                            }
-                        }
-                    } else {
-                        if (singleItem.feature_code.equals("CALLTRACKER")) {
-                            if (prefs.getSelectedVMNName()
-                                    .isNullOrEmpty() && alreadypurchasedVmnName == false
-                            ) {
-                                //sending value for pre/post purchase of VMN
-                                if ((prefs.getSelectedVMNName()
-                                        .isNullOrEmpty()) && (alreadypurchasedVmnName == false)
-                                ) {
-                                    outputExtendedProps.add(
-                                        Property(
-                                            Key = "allowPostPurchase",
-                                            Value = if (prefs.getSelectedVMNName()
-                                                    .isNullOrEmpty()
-                                            ) "1" else "0"
-                                        )
-                                    )
-                                }
-                                break
-                            }
-                        }
-                    }
-                }
-
                 totalValidityDays = 30 * default_validity_months
                 prefs.storeMonthsValidity(totalValidityDays)
                 if (item.item_type.equals("features")) {
@@ -2674,6 +2572,28 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 //                    else{
 //                        net_quantity = 1
 //                    }
+                    val outputExtendedPropsPostPurchase = ArrayList<Property>()
+                    outputExtendedPropsPostPurchase.addAll(outputExtendedProps)
+
+                    if (item.feature_code.equals("CALLTRACKER")) {
+                        if (prefs.getSelectedVMNName()
+                                .isNullOrEmpty() && !alreadypurchasedVmnName
+                        ) {
+                            //sending value for pre/post purchase of VMN
+                            if ((prefs.getSelectedVMNName()
+                                    .isNullOrEmpty()) && (!alreadypurchasedVmnName)
+                            ) {
+                                outputExtendedPropsPostPurchase.add(
+                                    Property(
+                                        Key = "allowPostPurchase",
+                                        Value = if (prefs.getSelectedVMNName()
+                                                .isNullOrEmpty()
+                                        ) "1" else "0"
+                                    )
+                                )
+                            }
+                        }
+                    }
 
 
                     if (!bundles_in_cart && default_validity_months > 1) {
@@ -2718,7 +2638,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                             item.item_name!!,
                             netPrice,
                             mrp_price,
-                            if (outputExtendedProps.size > 0) outputExtendedProps else null,
+                            if (outputExtendedPropsPostPurchase.size > 0) outputExtendedPropsPostPurchase else null,
                             net_quantity,
                             "MONTHLY",
                             item.feature_code!!,
@@ -2728,6 +2648,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 } else if (item.item_type.equals("bundles")) {
                     if (::bundlesList.isInitialized && bundlesList.size > 0) {
                         for (singleBundle in bundlesList) {
+
                             if (singleBundle.bundle_id.equals(item.item_id)) {
                                 val outputBundleProps: ArrayList<Property> = arrayListOf()
                                 outputBundleProps.add(
@@ -2750,6 +2671,29 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                 for (singleIndludedFeature in includedFeatures) {
                                     for (singleFeature in featuresList) {
                                         if (singleIndludedFeature.feature_code.equals(singleFeature.feature_code)) {
+
+                                            val outputExtendedPropsPostPurchase = ArrayList<Property>()
+                                            outputExtendedPropsPostPurchase.addAll(outputExtendedProps)
+
+                                            if (singleIndludedFeature.feature_code.equals("CALLTRACKER")) {
+                                                if (prefs.getSelectedVMNName()
+                                                        .isNullOrEmpty() && !alreadypurchasedVmnName
+                                                ) {
+                                                    //sending value for pre/post purchase of VMN
+                                                    if ((prefs.getSelectedVMNName()
+                                                            .isNullOrEmpty()) && (!alreadypurchasedVmnName)
+                                                    ) {
+                                                        outputExtendedPropsPostPurchase.add(
+                                                            Property(
+                                                                Key = "allowPostPurchase",
+                                                                Value = if (prefs.getSelectedVMNName()
+                                                                        .isNullOrEmpty()
+                                                                ) "1" else "0"
+                                                            )
+                                                        )
+                                                    }
+                                                }
+                                            }
 
                                             val netPrice = RootUtil.round(
                                                 ((singleFeature.price - ((singleFeature.price * singleIndludedFeature.feature_price_discount_percent) / 100.0))),
@@ -2802,7 +2746,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 //                          netPrice.toDouble() * singleBundle.min_purchase_months,
                                                     singleWidgetNetPrice,
                                                     singleFeature.price.toDouble() * singleBundle.min_purchase_months,
-                                                    if (outputExtendedProps.size > 0) outputExtendedProps else null,
+                                                    if (outputExtendedPropsPostPurchase.size > 0) outputExtendedPropsPostPurchase else null,
                                                     1,
                                                     "MONTHLY",
                                                     singleFeature.feature_code!!,
