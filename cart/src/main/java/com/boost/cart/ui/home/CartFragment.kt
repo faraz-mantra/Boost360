@@ -2595,7 +2595,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 for (singleItem in cartList) {
                     if (singleItem.item_type.equals("bundles")) {
                         if (::bundlesList.isInitialized && bundlesList.size > 0) {
-                            val featureCode = arrayListOf<String>()
+                            val featureCodeLists = arrayListOf<String>()
                             for (singleBundle in bundlesList) {
                                 if (singleBundle.bundle_id.equals(singleItem.item_id)) {
                                     val includedFeatures = Gson().fromJson<List<IncludedFeature>>(
@@ -2603,12 +2603,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                         object : TypeToken<List<IncludedFeature>>() {}.type
                                     )
                                     for (singleIncludedFeature in includedFeatures) {
-                                        featureCode.add(singleIncludedFeature.feature_code)
+                                        featureCodeLists.add(singleIncludedFeature.feature_code)
                                     }
                                     break
                                 }
                             }
-                            if (featureCode.equals("CALLTRACKER")) {
+                            if (featureCodeLists.equals("CALLTRACKER")) {
                                 if (prefs.getSelectedVMNName()
                                         .isNullOrEmpty() && alreadypurchasedVmnName == false
                                 ) {
