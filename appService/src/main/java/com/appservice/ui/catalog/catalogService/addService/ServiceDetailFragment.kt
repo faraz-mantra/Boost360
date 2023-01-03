@@ -2,12 +2,20 @@ package com.appservice.ui.catalog.catalogService.addService
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.TextPaint
+import android.text.style.ForegroundColorSpan
+import android.text.style.ImageSpan
+import android.text.style.UnderlineSpan
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
@@ -16,6 +24,11 @@ import com.appservice.databinding.FragmentServiceDetailBinding
 import com.appservice.extension.afterTextChanged
 import com.appservice.model.FileModel
 import com.appservice.model.aptsetting.AppointmentStatusResponse
+import com.appservice.model.aptsetting.UserFpDetailsResponse
+import com.appservice.model.businessmodel.BusinessProfileUpdateRequest
+import com.appservice.model.businessmodel.Update
+import com.appservice.model.serviceProduct.service.ItemsItem
+import com.appservice.model.serviceProduct.service.ServiceSearchListingResponse
 import com.appservice.model.serviceTiming.AddServiceTimingRequest
 import com.appservice.model.serviceTiming.ServiceTime
 import com.appservice.model.serviceTiming.ServiceTiming
@@ -25,8 +38,6 @@ import com.appservice.ui.catalog.catalogService.listing.CreateServiceSuccessBott
 import com.appservice.ui.catalog.catalogService.listing.TypeSuccess
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.*
-import com.appservice.model.serviceProduct.service.ItemsItem
-import com.appservice.model.serviceProduct.service.ServiceSearchListingResponse
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.changeColorOfSubstring
 import com.appservice.utils.getBitmap
@@ -36,15 +47,17 @@ import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.glide.util.glideLoad
-import com.framework.imagepicker.ImagePicker
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
 import com.framework.firebaseUtils.caplimit_feature.PropertiesItem
 import com.framework.firebaseUtils.caplimit_feature.filterFeature
 import com.framework.firebaseUtils.caplimit_feature.getCapData
+import com.framework.glide.util.glideLoad
+import com.framework.imagepicker.ImagePicker
 import com.framework.utils.hideKeyBoard
+import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.android.synthetic.main.add_update_business_fragment.view.*
 import java.io.File
 
 class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, ServiceViewModelV1>() {
@@ -84,16 +97,33 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(SERVICE_CATALOGUE_ADD, ADDED, NO_EVENT_VALUE)
+
     getBundleData()
     setupUIColor()
     setOnClickListener(
-      binding?.selectDeliveryConfig, binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo
+      binding?.selectDeliveryConfig, binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo,binding?.editWeekendScheduleView
     )
     binding?.payServiceView?.visibility = View.GONE
     binding?.toggleService?.setOnToggledListener { _, _ -> initServiceToggle() }
     initServiceToggle()
     listenerEditText()
     capLimitCheck()
+    binding.serviceTimingSwitch.setOnToggledListener { _, isChecked ->
+      sessionLocal.noServiceSlot = isChecked
+      if (isChecked){
+        binding.serviceTimingSwitch.visibility = View.GONE
+        sessionLocal.serviceTiming = !isChecked
+      }else{
+        binding.serviceTimingSwitch.visibility = View.VISIBLE
+      }
+    }
+  }
+
+  override fun onResume() {
+    super.onResume()
+    if (sessionLocal.fP_AppExperienceCode!! == "SVC" || sessionLocal.fP_AppExperienceCode!! == "SAL" || sessionLocal.fP_AppExperienceCode!! == "SPA"){
+      getFPDetails()
+    }
   }
 
   private fun setupUIColor() {
@@ -233,7 +263,18 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         bundle.putSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)
         startFragmentActivity(FragmentType.SERVICE_INFORMATION, bundle, isResult = true, requestCode = RC_SERVICE_INFO)
       }
-      binding?.vwSavePublish -> if (isValid()) createUpdateApi()
+      binding?.vwSavePublish -> if (isValid()) {
+        createUpdateApi()
+      }
+      binding?.editWeekendScheduleView -> {
+        try {
+          val businessHoursIntent = Intent(activity!!.applicationContext, Class.forName("com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity"))
+          startActivity(businessHoursIntent)
+          activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        } catch (e: ClassNotFoundException) {
+          e.printStackTrace()
+        }
+      }
     }
   }
 
@@ -542,5 +583,69 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         baseActivity.finish()
         d.dismiss()
       }.show()
+  }
+
+  private fun getFPDetails() {
+    sessionLocal.fPID?.let { fpid ->
+      val map = HashMap<String, String>()
+      map["clientId"] = com.framework.pref.clientId
+      viewModel?.getFpDetails(fpid,map)?.observeOnce(this) {
+        val response = it as? UserFpDetailsResponse
+        if (it.isSuccess() && response != null) {
+          sessionLocal.noServiceSlot = response.noServiceSlot
+          sessionLocal.serviceTiming = response.sameServiceSlot
+        }
+
+        if (!sessionLocal.noServiceSlot!!){
+          binding.businessTimingsView.visibility = View.VISIBLE
+          binding.serviceTimingSwitch.isOn = sessionLocal.serviceTiming!!
+          if (sessionLocal.serviceTiming!!){
+            showServiceTimingsWindow()
+          } else{
+            binding.timingsView.visibility = View.VISIBLE
+            binding?.editWeekendScheduleView.visibility = View.VISIBLE
+            binding.timingsView.removeAllViews()
+            val texxtView1 = CustomTextView(activity!!.applicationContext)
+            texxtView1.setPadding(0, 8, 0, 4)
+            texxtView1.setCompoundDrawablesWithIntrinsicBounds(R.drawable.circle_bullets, 0, 0, 0);
+            texxtView1.text = "  Mon : "+ response?.timings?.get(1)!!.from +" - "+ response.timings[1].to
+            binding.timingsView.addView(texxtView1)
+
+            val texxtView2 = CustomTextView(activity!!.applicationContext)
+            texxtView2.setPadding(0, 4, 0, 4)
+            texxtView2.setCompoundDrawablesWithIntrinsicBounds(R.drawable.circle_bullets, 0, 0, 0);
+            texxtView2.text = "  Tue : "+ response.timings[2].from +" - "+ response.timings[2].to
+            binding.timingsView.addView(texxtView2)
+
+            val texxtView3 = CustomTextView(activity!!.applicationContext)
+            texxtView3.setPadding(0, 4, 0, 8)
+            texxtView3.setCompoundDrawablesWithIntrinsicBounds(R.drawable.circle_bullets, 0, 0, 0);
+            texxtView3.text = "  Wed : "+ response.timings[3].from +" - "+ response.timings[3].to
+            binding.timingsView.addView(texxtView3)
+          }
+        }
+      }
+    }
+  }
+
+  private fun showServiceTimingsWindow(){
+    binding.serviceTimingDescriptionView.visibility = View.VISIBLE
+    val spannableString =
+      SpannableString("Customers will be able to book this service during business timings mentioned in Business Profile  . In case this service can be book at different intervals within the business timings, use the green switch above to convert it in ‘NO’.")
+    val underlineSpan = UnderlineSpan()
+    val textPaint = TextPaint()
+    underlineSpan.updateDrawState(textPaint)
+    spannableString.setSpan(
+      ForegroundColorSpan(Color.parseColor("#FFB900")),
+      81,
+      97,
+      Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+    );
+    spannableString.setSpan(underlineSpan, 81, 97, 0)
+    val compactDrawable = ContextCompat.getDrawable(activity!!.applicationContext, R.drawable.ic_arrow_top_right_yellow)
+    compactDrawable!!.setBounds(0, 0, 32, 32)
+    val span = ImageSpan(compactDrawable, ImageSpan.ALIGN_BASELINE)
+    spannableString.setSpan(span, 98, 99, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+    binding.serviceTimingDescriptionView.text = spannableString
   }
 }
