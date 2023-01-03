@@ -8,6 +8,7 @@ import com.boost.dbcenterapi.data.api_model.Edgecase.EdgeCases
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
 import com.boost.dbcenterapi.data.api_model.GetFeatureDetails.FeatureDetailsV2Item
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrderV2.GetPurchaseOrderResponseV2
+import com.boost.dbcenterapi.data.api_model.SubscriptionPackType
 import com.boost.dbcenterapi.data.api_model.blockingAPI.BlockApi
 import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
 import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsRequest
@@ -157,5 +158,13 @@ interface NewApiInterface {
         @Query("fpId") fpId: String,
         @Query("vmnumber") vmnumber: String
     ): Observable<Long>
+
+
+    @Headers("Content-Type:application/json")
+    @GET("https://jiw-wf-featureprocessor-api-as-prod.azurewebsites.net/SubscriptionCategory/v1/get-subscription-type-start-end-Date")
+    fun subscriptionType(
+        @Header("Authorization") auth: String,
+        @Query("fpId") fpId: String,
+    ):Observable<SubscriptionPackType>
 
 }
