@@ -144,7 +144,7 @@ class PackDetailsPopUpFragment : DialogFragment() {
         binding.packageTitle.text = features.name
 
         binding?.packageProfileImage?.let {
-            Glide.with(this).load(features.primary_image!!)
+            Glide.with(requireActivity().getApplicationContext()).load(features.primary_image!!)
                 .into(it)
         }
         binding?.learnMoreBtn?.setOnClickListener {

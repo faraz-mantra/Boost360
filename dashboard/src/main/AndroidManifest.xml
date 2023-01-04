@@ -29,9 +29,9 @@
         <category android:name="android.intent.category.BROWSABLE" />
 
         <data
-          android:host="${applicationId}.keyboard.home"
-          android:pathPrefix="/"
-          android:scheme="http" />
+          android:host="boost.nowfloats.com"
+          android:pathPrefix="/deeplink"
+          android:scheme="https" />
 
         <data
           android:host="@string/deep_base_url"
@@ -50,17 +50,20 @@
     </activity>
 
     <activity
+        android:exported="false"
       android:name=".controller.DashboardFragmentContainerActivity"
       android:screenOrientation="portrait"
       android:theme="@style/DashboardTheme"
       android:windowSoftInputMode="adjustPan" />
     <activity
+        android:exported="false"
       android:name=".controller.ui.ownerinfo.OwnersInfoContainerActivity"
       android:screenOrientation="portrait"
       android:theme="@style/DashboardTheme"
       android:windowSoftInputMode="adjustPan" />
 
     <activity
+        android:exported="false"
         android:name=".controller.DeepLinkTransActivity"
         android:screenOrientation="portrait"
         android:theme="@style/Theme_Transparent_DeepLink" />

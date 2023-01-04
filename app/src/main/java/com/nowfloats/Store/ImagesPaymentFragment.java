@@ -301,13 +301,13 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
                 mainImageCv.setVisibility(View.VISIBLE);
                 addAltTv.setVisibility(View.VISIBLE);
                 addMainTv.setVisibility(View.GONE);
-                Glide.with(this).load(bitmap).into(mainChequeImgView);
+                Glide.with(requireActivity().getApplicationContext()).load(bitmap).into(mainChequeImgView);
                 mainImage = imageString;
                 break;
             case 11:
                 altImageCv.setVisibility(View.VISIBLE);
                 addAltTv.setVisibility(View.GONE);
-                Glide.with(this).load(bitmap).into(altChequeImgView);
+                Glide.with(requireActivity().getApplicationContext()).load(bitmap).into(altChequeImgView);
                 altImage = imageString;
                 break;
         }

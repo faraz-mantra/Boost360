@@ -85,7 +85,7 @@ class SharedPrefs(activity: Activity) {
     editor!!.putFloat(po_price, price).apply()
   }
 
-  fun storeLatestPurchaseOrderId(order_id: String) {
+  fun storeLatestPurchaseOrderId(order_id: String?) {
     editor!!.putString(po_id, order_id).apply()
   }
 

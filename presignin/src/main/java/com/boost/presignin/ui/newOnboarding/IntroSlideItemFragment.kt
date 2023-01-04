@@ -75,16 +75,16 @@ class IntroSlideItemFragment : AppBaseFragment<ItemIntroNewSlidesBinding, BaseVi
 
     }
     binding?.lottieAnimationIntro?.addAnimatorListener(object : Animator.AnimatorListener {
-      override fun onAnimationRepeat(animation: Animator?) {
+      override fun onAnimationRepeat(animation: Animator) {
         if (introSlideItem.isLottieRepeat) onNext(position)
       }
 
-      override fun onAnimationEnd(animation: Animator?) {
+      override fun onAnimationEnd(animation: Animator) {
         handler.removeCallbacks(runnable!!)
         if (!introSlideItem.isLottieRepeat) binding?.lottieAnimationIntro?.cancelAnimation()
       }
 
-      override fun onAnimationCancel(animation: Animator?) {
+      override fun onAnimationCancel(animation: Animator) {
         handler.removeCallbacks(runnable!!)
         if (position!=0){
           Handler(Looper.getMainLooper()).postDelayed(Runnable {
@@ -102,7 +102,7 @@ class IntroSlideItemFragment : AppBaseFragment<ItemIntroNewSlidesBinding, BaseVi
 
       }
 
-      override fun onAnimationStart(animation: Animator?) {
+      override fun onAnimationStart(animation: Animator) {
         binding?.tvIntroTitle?.scaleX=1F
         binding?.tvIntroTitle?.scaleY=1F
 

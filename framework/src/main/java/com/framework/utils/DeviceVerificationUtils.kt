@@ -27,6 +27,8 @@ object DeviceVerificationUtils {
 
     private const val TAG = "DeviceVerificationUtils"
     fun isDeviceTrustable(activity: Activity, onComplete:(Boolean)->Unit){
+        //TODO use the value as TRUE when you give the build to testers for LamdaTest
+
         if (BuildConfig.BUILD_TYPE=="qa"||BuildConfig.BUILD_TYPE=="debug"){
             onComplete.invoke(true)
             return

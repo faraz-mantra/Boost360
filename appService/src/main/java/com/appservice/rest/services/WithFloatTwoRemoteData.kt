@@ -4,6 +4,7 @@ import com.appservice.model.MerchantSummaryResponse
 import com.appservice.model.panGst.PanGstUpdateBody
 import com.appservice.model.VmnCallModel
 import com.appservice.model.aptsetting.*
+import com.appservice.model.businessmodel.BusinessProfileUpdateRequest
 import com.appservice.model.panGst.PanGstDetailResponse
 import com.appservice.model.product.ProductItemsResponseItem
 import com.appservice.model.serviceProduct.CatalogProduct
@@ -230,4 +231,7 @@ interface WithFloatTwoRemoteData {
     @Query("skipBy") skipBy: Int?,
     @Body request: TagListRequest
   ): Observable<Response<PastUpdatesNewListingResponse>>
+
+  @POST
+  fun updateBusinessProfile(@Url url:String,@Body profileUpdateRequest: BusinessProfileUpdateRequest): Observable<Response<ResponseBody>>
 }

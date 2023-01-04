@@ -207,7 +207,7 @@ class ComparePacksV3AddonsPopUpFragment : DialogFragment() {
 
             if (it != null) {
 
-                Glide.with(this).load(it.primary_image!!)
+                Glide.with(requireActivity().getApplicationContext()).load(it.primary_image!!)
                     .into(binding.packageProfileImage)
 
                 binding.packageTitle.text = it.name
