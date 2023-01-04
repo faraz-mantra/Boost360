@@ -49,7 +49,7 @@ class PaymentActivity : AppCompatActivity() {
         fpName = intent.getStringExtra("fpName")
         order_id = intent.getStringExtra("order_id")!!
         transaction_id = intent.getStringExtra("transaction_id")!!
-        email = intent.getStringExtra("email")!!
+        email = intent.getStringExtra("email")!!.replace(" ","")
         contact = intent.getStringExtra("contact")!!
         amount = intent.getDoubleExtra("amount",0.0)
         netPrice = intent.getDoubleExtra("netPrice",0.0)
