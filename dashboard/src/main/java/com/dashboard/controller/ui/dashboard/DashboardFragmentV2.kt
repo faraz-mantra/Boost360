@@ -717,7 +717,10 @@ class DashboardFragmentV2 : AppBaseFragment<FragmentDashboardV2Binding, Dashboar
         else getChannelAccessToken(isEnquiriesShare = true, shareType = null)
       }
       binding.profileView.btnFestive -> {
-        baseActivity.startFestivePosterActivity()
+        //TODO activate Post update journey for this as Asked by Product team
+        //baseActivity.startFestivePosterActivity()
+        //enable update studio on demand
+        baseActivity.startPostUpdate(session)
       }
       binding.recommendedTask.btnShowAll -> {
         if ((actionItem?.size ?: 0) > 8) {
