@@ -339,7 +339,8 @@ class CallTrackingActivity :
         viewModel.getCallTrackingDetails().observe(this) {
             if (it != null) {
                 numberList.addAll(it)
-                for (i in 0..19) {
+                val temp =  if (it.size<=19)it.size-1 else 19
+                for (i in 0..temp) {
                     loadMorenumberList.add(numberList[i])
                 }
                 initNumberListAdapter(loadMorenumberList)

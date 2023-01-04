@@ -524,10 +524,14 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
         viewModel.getCallTrackingDetails().observe(this) {
             if (it != null) {
                 System.out.println("numberList" + it)
-                selectedNum = it[0]
-                tv_call_expert_select_domain.text = selectedNum
-                tv_vmn_selected_txt.text = selectedNum
-                view?.selectVmnSubmit?.isClickable = true
+                if (it.size>=1){
+                    selectedNum = it[0]
+                    tv_call_expert_select_domain.text = selectedNum
+                    tv_vmn_selected_txt.text = selectedNum
+                    view?.selectVmnSubmit?.isClickable = true
+                } else{
+                    selectedNum = "No VMN available"
+                }
             }else {
                 view?.selectVmnSubmit?.isClickable = false
                 context?.let { it1 ->
