@@ -115,6 +115,20 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
                             inActiveList.removeIf { it.contains("BOOSTKEYBOARD") }
                         }
 
+                        activeList.removeIf {
+                            it.contains("CUSTOMPAGES") || it.contains("IMAGEGALLERY")
+                                    || it.contains("SITESENSE") || it.contains("CONTACTDETAILS") || it.contains(
+                                "FEATUREDIMAGE"
+                            )
+                                    || it.contains("TIMINGS") || it.contains("TOB") || it.contains("FBLIKEBOX")
+                                    || it.contains("DEFAULTSSL") || it.contains("PRODUCTCATALOGUE") || it.contains(
+                                "PAYMENTGATEWAY"
+                            )
+                                    || it.contains("MEDIAMANAGEMENT") || it.contains("ANALYTICS") || it.contains(
+                                "RIASUPPORTTEAM"
+                            )
+                        }
+
 //                        val list = ArrayList<String>()
 //                        for (singleItem in it1) {
 //                            list.add(singleItem.featureCode)

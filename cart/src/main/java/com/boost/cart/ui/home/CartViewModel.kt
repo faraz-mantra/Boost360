@@ -1050,7 +1050,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                 updatesLoader.postValue(false)
                 //add cartitem to firebase
                 addToCartResult.postValue(true)
-                DataLoader.updateCartItemsToFirestore(Application())
+                //DataLoader.updateCartItemsToFirestore(Application())
             }
             .doOnError {
                 updatesError.postValue(it.message)
