@@ -139,7 +139,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="true"
-                android:drawableEnd="@drawable/ic_arrow_right_7_white_d"
+                android:drawableEnd="@drawable/ic_arrow_white_rounded_v2"
                 android:drawablePadding="-6dp"
                 android:focusable="true"
                 android:gravity="center"
@@ -149,7 +149,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 app:fontFamily="@font/semi_bold"
-                app:textType="BODY_1"
+                app:textType="CAPTION"
                 tools:background="@drawable/ic_round_green_stroke"
                 tools:ignore="RtlSymmetry" />
             </com.framework.views.customViews.CustomCardView>
