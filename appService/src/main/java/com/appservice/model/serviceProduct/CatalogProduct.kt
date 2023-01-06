@@ -95,7 +95,7 @@ class CatalogProduct(
   var keySpecification: KeySpecification? = null,
 
   @SerializedName("isNotForSale")
-  var isNotForSale: Boolean = false,
+  var isNotForSale: Boolean = true,
 
   @SerializedName("otherSpecifications")
   var otherSpecification: ArrayList<KeySpecification>? = null,
