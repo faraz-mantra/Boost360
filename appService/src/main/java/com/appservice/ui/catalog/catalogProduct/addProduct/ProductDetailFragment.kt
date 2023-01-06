@@ -553,6 +553,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     product?.Description = productDesc
     product?.Price = if (toggle) amount else 0.0
     product?.DiscountAmount = if (toggle) discount else 0.0
+    product?.isNotForSale = !toggle
     if (toggle && (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value)) {
       product?.uniquePaymentUrl = UniquePaymentUrlN(url = externalUrl, description = externalUrlName)
     } else product?.uniquePaymentUrl = UniquePaymentUrlN()
