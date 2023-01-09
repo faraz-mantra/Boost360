@@ -179,6 +179,9 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
                 .setFontAttrId(R.attr.fontPath)
                 .build());*/
 //        FacebookSdk.sdkInitialize(getApplicationContext());
+        if (!FacebookSdk.isInitialized()) {
+            FacebookSdk.sdkInitialize(getApplicationContext());
+        }
         registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this));
         //WebEngage.registerPushNotificationCallback(new PushNotificationCallbacksImpl());
         AppEventsLogger.activateApp(instance);
