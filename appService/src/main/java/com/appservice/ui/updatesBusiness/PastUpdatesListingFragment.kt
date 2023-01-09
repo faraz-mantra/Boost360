@@ -162,7 +162,9 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
 
 
   private fun apiCallPastUpdates(isFirst: Boolean, skipBy: Int) {
-
+    if(isFirst) {
+      showSimmer(true)
+    }
     viewModel?.getPastUpdatesListV6(
       clientId = clientId, fpId = sessionLocal.fPID, postType = postType, tagListRequest = TagListRequest(tagArray), skipBy = skipBy
     )?.observeOnce(viewLifecycleOwner) { it ->
@@ -224,7 +226,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.PAST_CATEGORY_CLICKED.ordinal -> {
-        showProgress()
+        //showProgress()
         when (position) {
           0 -> WebEngageController.trackEvent(Past_updates_filter_all_updates_click, CLICK, CLICKED)
           1 -> WebEngageController.trackEvent(Past_updates_filter_template_updates_click,
@@ -248,7 +250,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
         apiCallPastUpdates(true, 0)
       }
       RecyclerViewActionType.PAST_TAG_CLICKED.ordinal -> {
-        showProgress()
+        //showProgress()
         item as PastPromotionalCategoryModel
         if (tagArray.contains(item.id)) tagArray.remove(item.id)
         else tagArray.add(item.id)
