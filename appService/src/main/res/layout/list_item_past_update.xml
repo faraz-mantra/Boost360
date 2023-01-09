@@ -16,6 +16,17 @@
             android:background="@color/white"
             android:layout_height="match_parent">
 
+            <LinearLayout
+                android:id="@+id/mainLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="5dp">
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/icon_card"
                 android:layout_width="@dimen/size_71"
@@ -24,6 +35,7 @@
                 android:visibility="visible"
                 app:cardCornerRadius="@dimen/size_4"
                 android:layout_marginTop="@dimen/size_15"
+                android:layout_marginEnd="@dimen/size_15"
                 app:layout_constraintStart_toEndOf="@+id/guide_start"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0">
@@ -54,11 +66,10 @@
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tv_social_title"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_12"
                 android:ellipsize="end"
-                android:layout_marginTop="@dimen/size_30"
+                android:layout_marginTop="@dimen/size_20"
                 android:fontFamily="@font/regular_medium"
                 android:includeFontPadding="false"
                 android:maxLines="4"
@@ -69,14 +80,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Black friday sale upto 50% discount on our post selected merchandise, only at Smiley Dental Clinic. #dentalcare  #book  #appointmentsBlack friday sale upto 50% discount on our post sBlack friday sale upto 50% discount on our post sBlack friday sale upto 50% discount on our post sBlack friday sale upto 50% discount on our post s" />
 
-            <androidx.constraintlayout.widget.Barrier
-                android:id="@+id/barrier_cards_top_past"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/size_18"
-                app:barrierDirection="bottom"
-                app:constraint_referenced_ids="tv_social_title, icon_card"/>
+            </LinearLayout>
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tv_posted_on"
@@ -88,8 +92,9 @@
                 android:text="@string/posted_on"
                 android:textColor="@color/grey_777777"
                 android:textSize="@dimen/text_10"
-                app:layout_constraintStart_toEndOf="@id/guide_start"
-                app:layout_constraintTop_toBottomOf="@+id/barrier_cards_top_past" />
+                android:layout_marginStart="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mainLayout" />
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tv_posted_date"
@@ -101,7 +106,8 @@
                 android:text="16th June 2021, 3:24 pm"
                 android:textColor="@color/grey_777777"
                 android:textSize="@dimen/text_10"
-                app:layout_constraintStart_toEndOf="@id/guide_start"
+                android:layout_marginStart="15dp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_posted_on" />
 
             <com.framework.views.viewgroups.BaseRecyclerView
@@ -111,9 +117,10 @@
                 android:layout_marginStart="@dimen/size_8"
                 app:reverseLayout="true"
                 android:orientation="horizontal"
+                android:layout_marginEnd="15dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_posted_date"
-                app:layout_constraintEnd_toStartOf="@id/guide_end"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_posted_date"
                 app:layout_constraintTop_toTopOf="@+id/tv_posted_on" />
 
@@ -239,19 +246,6 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide_start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.048" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide_end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.952" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
