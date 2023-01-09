@@ -187,13 +187,12 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
 
         };
 
-        dateOfCompletion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(ProjectDetailsActivity.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
+        dateOfCompletion.setOnClickListener(v -> {
+           DatePickerDialog datePickerDialog =  new DatePickerDialog(ProjectDetailsActivity.this, date, myCalendar
+                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH));
+           datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+           datePickerDialog.show();
         });
 
 
