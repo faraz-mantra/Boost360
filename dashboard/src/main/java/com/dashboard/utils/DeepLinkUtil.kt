@@ -423,9 +423,9 @@ fun AppCompatActivity.startBlog(urlN: String, session: UserSessionManager) {
   try {
     var url = urlN
     url = if (url.isNotEmpty()) {
-      "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)
+      session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?:""
     } else {
-      ("http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT) + tag_for_partners)
+      (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT) + tag_for_partners)
     }
     val uri = Uri.parse(url)
     val intent = Intent(Intent.ACTION_VIEW, uri)
