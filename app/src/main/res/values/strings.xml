@@ -3096,6 +3096,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="enter_review_description">Enter Review Description</string>
     <string name="person_info">Person Info</string>
     <string name="mandatory_fields_cannot_be_kept_empty">Mandatory Fields cannot be kept empty!</string>
+    <string name="feature_coming_soon" translatable="false">This feature is coming soon...</string>
 
     <!--    <string name="ir_actionbarBackground">#ffb900</string>-->
     <!--    <string name="ir_statusBarColor">#ffb900</string>-->

@@ -59,11 +59,13 @@ public class ReferralTransActivity extends AppCompatActivity {
         if (status.equalsIgnoreCase("success")) {
           InviteReferralsApi.getInstance(this).inline_btn(BuildConfig.REFERRAL_CAMPAIGN_CODE);
         } else {
-          Toast.makeText(this, getString(R.string.auth_failed_try_again), Toast.LENGTH_SHORT).show();
+//          Toast.makeText(this, getString(R.string.auth_failed_try_again), Toast.LENGTH_SHORT).show();
+          Toast.makeText(this, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
         }
       } catch (Exception e) {
         e.printStackTrace();
-        Toast.makeText(this, getString(R.string.auth_failed_try_again), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, getString(R.string.auth_failed_try_again), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
       }
     });
   }
