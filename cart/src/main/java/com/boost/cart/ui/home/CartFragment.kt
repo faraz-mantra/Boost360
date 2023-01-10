@@ -1997,12 +1997,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 
         viewModel.getUpdatedCustomerBusinessResult().observeOnce(viewLifecycleOwner, Observer {
             if (it.Result != null) {
-                Toasty.success(
-                    requireContext(),
-                    "Successfully Updated Profile.",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+//                Toasty.success(
+//                    requireContext(),
+//                    "Successfully Updated Profile.",
+//                    Toast.LENGTH_SHORT
+//                )
+//                    .show()
                 val event_attributes: HashMap<String, Any> = HashMap()
                 event_attributes.put("", it.Result.CustomerId)
                 WebEngageController.trackEvent(
@@ -2030,12 +2030,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 
         viewModel.getUpdatedCustomerResult().observeOnce(viewLifecycleOwner, Observer {
             if (it.Result != null) {
-                Toasty.success(
-                    requireContext(),
-                    "Successfully Updated Profile.",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+//                Toasty.success(
+//                    requireContext(),
+//                    "Successfully Updated Profile.",
+//                    Toast.LENGTH_SHORT
+//                )
+//                    .show()
                 loadCustomerInfo()
 //                (activity as PaymentActivity).prefs.storeInitialLoadMarketPlace(false)
             } else {
