@@ -383,6 +383,14 @@ fun AppCompatActivity.startAppActivity(bundle: Bundle = Bundle(), fragmentType: 
   }
 }
 
+fun AppCompatActivity.createAnUpdate() {
+  try {
+    startUpdateFragmentActivity(com.appservice.constant.FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
 fun AppCompatActivity.startPostUpdate(isDashboard: Boolean = false) {
   try {
     val session = UserSessionManager(application())
