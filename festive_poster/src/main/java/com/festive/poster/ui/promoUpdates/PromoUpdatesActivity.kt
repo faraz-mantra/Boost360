@@ -2,6 +2,7 @@ package com.festive.poster.ui.promoUpdates
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import com.festive.poster.R
@@ -17,6 +18,7 @@ import com.framework.webengageconstant.*
 class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoUpdatesViewModel>() {
 
   private var session: UserSessionManager? = null
+  private var promoLandingPageBundle = Bundle()
 
   override fun getLayout(): Int {
     return R.layout.activity_promo_updates
@@ -32,7 +34,7 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoU
     fetchDataFromServer()
     observeFragmentStack()
     setOnClickListener(binding?.ivToolbarBack, binding?.ivStore, binding?.ivLove)
-    addFragmentReplace(binding?.container?.id, PromoLandingPageFragment.newInstance(), true)
+    addFragmentReplace(binding?.container?.id, PromoLandingPageFragment.newInstance(promoLandingPageBundle), true)
   }
 
   private fun fetchDataFromServer() {

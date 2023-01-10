@@ -48,27 +48,40 @@
                         tools:text="Festival" />
 
 
-                    <com.framework.views.customViews.CustomCardView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                    <!--<com.framework.views.customViews.CustomCardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         app:cardBackgroundColor="@color/color_ffb900_op10_jio_ec008c_op10"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="@dimen/size_0"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_cat_title"
                         app:layout_constraintStart_toEndOf="@+id/tv_cat_title"
-                        app:layout_constraintTop_toTopOf="@+id/tv_cat_title">
+                        app:layout_constraintTop_toTopOf="@+id/tv_cat_title">-->
 
                         <com.framework.views.customViews.CustomTextView
                             android:id="@+id/tv_cat_size"
                             style="@style/WhiteRegularSS"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:minHeight="22dp"
+                            android:minWidth="22dp"
+                            android:maxHeight="26dp"
+                            android:maxWidth="26dp"
+                            android:layout_marginStart="8dp"
+                            android:padding="1dp"
+                            android:background="@drawable/circle_light_yellow"
+                            android:textAlignment="gravity"
+                            tools:text="294"
+                            android:gravity="center"
                             android:layout_gravity="center"
-                            android:textColor="@color/color_fcaf17_jio_0400a6" />
+                            android:textColor="@color/color_fcaf17_jio_0400a6"
+                            app:layout_constraintBottom_toBottomOf="@+id/tv_cat_title"
+                            app:layout_constraintStart_toEndOf="@+id/tv_cat_title"
+                            app:layout_constraintTop_toTopOf="@+id/tv_cat_title"/>
 
 
-                    </com.framework.views.customViews.CustomCardView>
+                    <!--</com.framework.views.customViews.CustomCardView>-->
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline4"

@@ -60,21 +60,28 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
     when (v) {
       binding?.vwNext -> onNextTapped()
       binding?.textAddCustomerGstin -> {
-        if (binding?.lytCustomerGstn?.visibility == View.GONE) {
-          binding?.textAddCustomerGstin?.visibility = View.GONE
-          binding?.lytCustomerGstn?.visibility = View.VISIBLE
-        }
+        gstViewVisibility(true)
       }
       binding?.tvRemove -> {
-        binding?.textAddCustomerGstin?.visibility = View.VISIBLE
-        binding?.lytCustomerGstn?.visibility = View.GONE
+        gstViewVisibility()
       }
-      binding?.textGoBack -> (context as? FragmentContainerOrderActivity)?.onBackPressed()
-      binding?.layoutBillingAddr?.editCity -> {
+      binding.textGoBack -> (context as? FragmentContainerOrderActivity)?.onBackPressed()
+      binding.layoutBillingAddr.editCity -> {
         val dialog = CitySearchDialog()
         dialog.onClicked = { setCityState(it) }
         dialog.show(parentFragmentManager, dialog.javaClass.name)
       }
+    }
+  }
+
+  fun gstViewVisibility(isShow : Boolean = false){
+    if (isShow) {
+      binding.textAddCustomerGstin.visibility = View.GONE
+      binding.lytCustomerGstn.visibility = View.VISIBLE
+    } else {
+      binding.editGstin.setText("")
+      binding.textAddCustomerGstin.visibility = View.VISIBLE
+      binding.lytCustomerGstn.visibility = View.GONE
     }
   }
 
@@ -184,31 +191,40 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
   }
 
   private fun setUpData() {
-    binding?.editCustomerName?.setText(
+    binding.editCustomerName.setText(
       createOrderRequest.buyerDetails?.contactDetails?.fullName ?: ""
     )
-    binding?.editCustomerEmail?.setText(
+    binding.editCustomerEmail.setText(
       createOrderRequest.buyerDetails?.contactDetails?.emailId ?: ""
     )
-    binding?.editCustomerPhone?.setText(
+    binding.editCustomerPhone.setText(
       createOrderRequest.buyerDetails?.contactDetails?.primaryContactNumber ?: ""
     )
-    binding?.layoutBillingAddr?.editAddress?.setText(
+    binding.layoutBillingAddr.editAddress.setText(
       createOrderRequest.buyerDetails?.address?.addressLine ?: ""
     )
-    binding?.layoutBillingAddr?.editCity?.setText(
+    binding.layoutBillingAddr.editCity.setText(
       createOrderRequest.buyerDetails?.address?.city ?: ""
     )
-    binding?.layoutBillingAddr?.editState?.setText(
+    binding.layoutBillingAddr.editState.setText(
       createOrderRequest.buyerDetails?.address?.region ?: ""
     )
-    binding?.layoutBillingAddr?.editPin?.setText(
+    binding.layoutBillingAddr.editPin.setText(
       createOrderRequest.buyerDetails?.address?.zipcode ?: ""
     )
+    val gstInNumber = createOrderRequest.buyerDetails?.GSTIN ?: ""
+    if (gstInNumber.isNullOrEmpty().not()){
+      gstViewVisibility(true)
+      binding.editGstin.setText(
+        createOrderRequest.buyerDetails?.GSTIN ?: ""
+      )
+    }else{
+      gstViewVisibility()
+    }
   }
 
   private fun setCityState(cityDataModel: CityDataModel) {
-    binding?.layoutBillingAddr?.editCity?.setText(cityDataModel.getOriginalCityName())
-    binding?.layoutBillingAddr?.editState?.setText(cityDataModel.getOriginalStateName())
+    binding.layoutBillingAddr.editCity.setText(cityDataModel.getOriginalCityName())
+    binding.layoutBillingAddr.editState.setText(cityDataModel.getOriginalStateName())
   }
 }
