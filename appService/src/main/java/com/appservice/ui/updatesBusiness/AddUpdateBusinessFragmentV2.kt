@@ -16,6 +16,7 @@ import android.text.style.StyleSpan
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -28,6 +29,7 @@ import com.appservice.databinding.AddUpdateBusinessFragmentV2Binding
 import com.appservice.model.updateBusiness.BusinessUpdateResponse
 import com.appservice.model.updateBusiness.UpdateFloat
 import com.appservice.recyclerView.PaginationScrollListener
+import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.UpdatesViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -44,6 +46,7 @@ import com.framework.firebaseUtils.caplimit_feature.getCapData
 import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.Key_Preferences.PREF_NAME_TWITTER
 import com.framework.utils.*
+import com.framework.webengageconstant.*
 import com.google.firebase.firestore.ListenerRegistration
 import com.onboarding.nowfloats.bottomsheet.util.runOnUi
 import com.squareup.picasso.Picasso
@@ -94,6 +97,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
   override fun onCreateView() {
     super.onCreateView()
+    WebEngageController.trackEvent(UPDATE,PAGE_VIEW,NULL)
     initUI()
     initStt()
     capLimitCheck()
@@ -113,13 +117,31 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    WebEngageController.trackEvent(Update_Create_Page_Load,PAGE_VIEW,NULL)
     startForCropImageResult =
       registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK) {
           val imgFile =
             File(requireActivity().getExternalFilesDir(null)?.path + File.separator + UPDATE_PIC_FILE_NAME)
-          if (imgFile.exists() && isImageValid(imgFile)) {
-            loadImage(imgFile.path)
+          if (imgFile.exists()) {
+            if (imgFile.extension.equals("JPEG",ignoreCase = true)||
+              imgFile.extension.equals("JPG",ignoreCase = true)||
+              imgFile.extension.equals("PNG",ignoreCase = true)){
+
+              val bitMapOption: BitmapFactory.Options = BitmapFactory.Options()
+              bitMapOption.inJustDecodeBounds = true
+              bitMapOption.inScaled = false
+              BitmapFactory.decodeFile(imgFile.path, bitMapOption)
+              val imageWidth: Int = bitMapOption.outWidth
+              val imageHeight: Int = bitMapOption.outHeight
+
+              if (imageWidth >= 300 && imageHeight >= 300) {
+                loadImage(imgFile.path)
+              } else {
+                Toast.makeText(view.context,"Cropped image is very small",Toast.LENGTH_SHORT).show()
+              }
+            }
+
           } else {
             loadImage(null)
           }
@@ -148,15 +170,15 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       val imageWidth: Int = bitMapOption.outWidth
       val imageHeight: Int = bitMapOption.outHeight
 
-      if (imageWidth>=800||imageHeight>=800){
-          if (imgFile.sizeInMb<=2){
-            return true
-          }else{
-            showLongToast(getString(R.string.image_file_size_is_bigger_than_2mb))
-            return false
-          }
-      }else{
-        showLongToast(getString(R.string.image_resolution_is_smaller_than_800_x_800_px))
+      if (imageWidth >= 300 && imageHeight >= 300) {
+        if (imgFile.sizeInMb <= 5) {
+          return true
+        } else {
+          showLongToast(getString(R.string.image_file_size_is_bigger_than_5mb))
+          return false
+        }
+      } else {
+        showLongToast(getString(R.string.image_resolution_is_smaller_than_300_x_300_px))
         return false
       }
 
@@ -197,7 +219,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       binding.etUpdate.hint=getString(R.string.describe_what_you_want_to_say_in_the_picture_added_above)
       binding.tvImgReq.gone()
       binding!!.ivImg.visible()
-      Glide.with(this).load(
+      Glide.with(requireActivity().getApplicationContext()).load(
         path
       ).apply(RequestOptions.skipMemoryCacheOf(true))
         .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
@@ -234,7 +256,8 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     FirestoreManager.readDraft {
       if (activity != null && isAdded) {
 
-        val textPost = it?.content
+        var textPost = it?.content
+        textPost = textPost?.replaceFirstChar{ nameFirstChar -> nameFirstChar.uppercase() } ?: ""
         binding!!.etUpdate.setText(
           highlightHashTag(
             textPost,
@@ -315,13 +338,13 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   }
 
   private fun addHashTagFunction() {
-    mSpannable = binding?.etUpdate?.text
+    mSpannable = binding.etUpdate.text
 
-    binding?.etUpdate?.addTextChangedListener(object : TextWatcher {
+    binding.etUpdate.addTextChangedListener(object : TextWatcher {
       override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
       override fun onTextChanged(short_text: CharSequence, start: Int, before: Int, count: Int) {
 
-        val text = binding?.etUpdate?.text.toString()
+        val text = binding.etUpdate.text.toString()
         var last_index = 0
         text.trim().split(Regex("\\s+")).forEach {
           Log.i(TAG, "addHashTagFunction: $it")
@@ -356,9 +379,14 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     super.onClick(v)
     when(v){
       binding!!.btnAddImage->{
+         WebEngageController.trackEvent(Added_Photo_In_Update, CLICKED,NULL)
          UpdateImagePickerBSheet.newInstance(object :UpdateImagePickerBSheet.Callbacks{
            override fun onImagePicked(path: String) {
-             UpdateCropImageActivity.launchActivity(path,requireActivity(),startForCropImageResult)
+             if (path == "higher"){
+               showShortToast("Image is greater than 5 MB")
+             } else {
+               UpdateCropImageActivity.launchActivity(path,requireActivity(),startForCropImageResult)
+             }
            }
          }).show(parentFragmentManager,UpdateImagePickerBSheet::class.java.name)
       }
@@ -376,24 +404,25 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
       binding!!.ivHashtagCross->{
         binding!!.layoutHashtagTip.animate().alpha(0F).setListener(object :Animator.AnimatorListener{
-          override fun onAnimationStart(p0: Animator?) {
+          override fun onAnimationStart(p0: Animator) {
 
           }
 
-          override fun onAnimationEnd(p0: Animator?) {
+          override fun onAnimationEnd(p0: Animator) {
             binding!!.layoutHashtagTip.gone()
 
           }
 
-          override fun onAnimationCancel(p0: Animator?) {
+          override fun onAnimationCancel(p0: Animator) {
           }
 
-          override fun onAnimationRepeat(p0: Animator?) {
+          override fun onAnimationRepeat(p0: Animator) {
           }
 
         })
       }
       binding!!.tvPreviewAndPost->{
+        WebEngageController.trackEvent(Update_Preview_post_click, CLICKED,NULL)
         startActivity(Intent(requireActivity(), Class.forName(
           "com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity"))
           .putExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {

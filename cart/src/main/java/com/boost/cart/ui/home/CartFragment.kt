@@ -3,6 +3,7 @@ package com.boost.cart.ui.home
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -29,6 +30,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.boost.cart.BuildConfig
 import com.boost.cart.CartActivity
 import com.boost.cart.R
 import com.boost.cart.adapter.*
@@ -83,6 +85,7 @@ import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.utils.RootUtil
 import com.framework.webengageconstant.*
+import com.google.common.base.Strings.isNullOrEmpty
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
@@ -212,6 +215,15 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
     private lateinit var viewModel: CartViewModel
     var createCustomerInfoRequest: Result? = null
     var customerInfoState = false
+    var domainBlocked: Boolean? = null
+    var domainAvailable: Boolean? = false
+    var vmnAvailable: Boolean? = false
+    var vmnBlocked: Boolean? = null
+    var alreadypurchasedDomain: Boolean = false
+    var alreadypurchasedVmnName: Boolean = false
+    var domainContains = false
+    var vmnContains = false
+    var domainVMNContains = false
 
 
     override fun onCreateView(
@@ -225,8 +237,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         progressDialog = ProgressDialog(requireContext())
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            WindowInsetsControllerCompat(requireActivity().window, requireActivity().window.decorView).setAppearanceLightStatusBars(false)
-            requireActivity().window.statusBarColor = ResourcesCompat.getColor(resources, R.color.common_text_color, null)
+            WindowInsetsControllerCompat(
+                requireActivity().window,
+                requireActivity().window.decorView
+            ).setAppearanceLightStatusBars(false)
+            requireActivity().window.statusBarColor =
+                ResourcesCompat.getColor(resources, R.color.common_text_color, null)
         }
         cartPackageAdaptor =
             CartPackageAdaptor(ArrayList(), this, this, ArrayList(), requireActivity())
@@ -248,8 +264,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         super.onResume()
         Log.e("onResume", "onResume of LoginFragment")
         viewModel.updateRenewValue("")
+        initializePackageRecycler()
         if (!prefs.getSelectedDomainName().isNullOrEmpty() && ::cartPackageAdaptor.isInitialized) {
             cartPackageAdaptor.selectedDomain(prefs.getSelectedDomainName()!!)
+        }
+        if (!prefs.getSelectedVMNName().isNullOrEmpty() && ::cartPackageAdaptor.isInitialized) {
+            cartPackageAdaptor.selectedVmn(prefs.getSelectedVMNName()!!)
         }
 //        initMvvM()
     }
@@ -265,11 +285,18 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity()).get(CartViewModel::class.java)
         viewModel.setApplicationLifecycle(this)
+        viewModel.loadPurchasedItems(
+            (activity as CartActivity).fpid!!,
+            (activity as CartActivity).clientid
+        )
         shimmer_view_banner.startShimmer()
         showProgress("Please wait...")
         Constants.COMPARE_BACK_VALUE = 1
 //    val list = arrayListOf<Bundles>()
         prefs.storeCompareState(1)
+        if (BuildConfig.FLAVOR.equals("jioonline")) {
+            coupon_layout.visibility = GONE
+        }
 //        showpopup()
         loadLastUsedPayData()
         initializePackageRecycler()
@@ -304,6 +331,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 
         session = UserSessionManager(requireActivity())
         loadCustomerInfo()
+        loadData1()
         initMvvm1()
         viewModel.getCitiesFromAssetJson(requireActivity())
         viewModel.getStatesFromAssetJson(requireActivity())
@@ -530,24 +558,14 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 
         cart_continue_submit1.setOnClickListener {
 
-//            if (prefs.getInitialLoadMarketPlace() && proceedCheckoutPopup == false) {
-//
-//                checkoutKycFragment.show(
-//                        (activity as CartActivity).supportFragmentManager,
-//                        CHECKOUT_KYC_FRAGMENT
-//                )
-//            }else{
-            /*       renewPopUpFragment.show(
-                   (activity as CartActivity).supportFragmentManager,
-                   RENEW_POPUP_FRAGEMENT
-           )*/
-
             if (bundles_in_cart && months_validity.text.toString().split(" ").get(0)
                     .toInt() < package_validity_months
             ) {
                 months_validity.setBackgroundResource(R.drawable.et_validity_error)
                 Toasty.error(requireContext(), "Validity is not valid", Toast.LENGTH_SHORT).show()
-            } else if (et_email.text.toString().isEmpty() || !Utils.isValidMail(et_email.text.toString())) {
+            } else if (et_email.text.toString()
+                    .isEmpty() || !Utils.isValidMail(et_email.text.toString())
+            ) {
                 et_email.setBackgroundResource(R.drawable.et_validity_error)
                 if (et_email.text.toString().isEmpty()) {
                     Toasty.error(requireContext(), "Email is Empty", Toast.LENGTH_SHORT).show()
@@ -563,9 +581,23 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
             } else {
                 et_email.setBackgroundResource(R.drawable.edittext_selector1)
                 months_validity.setBackgroundResource(R.drawable.et_validity)
-                if (prefs.getCartOrderInfo() != null) {
-                    proceedToPayment(prefs.getCartOrderInfo()!!)
-                } else if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized || ::renewalList.isInitialized) {
+
+                cartContainsDomainVMN()
+//                if (prefs.getCartOrderInfo()!= null) {
+////                    if (domainContains){
+////                            blockDomain()
+////                    } else if (vmnContains){
+////                            blockVMN()
+////                    } else if (domainVMNContains){
+////                            blockDomain()
+////                            blockVMN()
+////                    } else{
+////                        proceedToPayment(prefs.getCartOrderInfo()!!)
+////                    }
+//                    createPurchaseOrder(null)
+//                }
+//                else
+                if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized || ::renewalList.isInitialized) {
                     val renewalItems =
                         cartList.filter { it.item_type == "renewals" } as? List<CartModel>
                     if (renewalItems.isNullOrEmpty().not()) {
@@ -583,7 +615,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     ).show()
                 }
             }
-
 
 //            }
 
@@ -1416,6 +1447,134 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 //        }
     }
 
+    private fun blockVMN() {
+        if (!prefs.getSelectedVMNName().isNullOrEmpty()
+            && !alreadypurchasedVmnName
+        ) {
+            val num = prefs.getSelectedVMNName()!!.replace("+91 ", "0").replace("-", "")
+
+            viewModel.domainVmnBlocked(
+                (activity as? CartActivity)?.getAccessToken() ?: "",
+                (activity as CartActivity).fpid!!,
+                (activity as CartActivity).clientid,
+                num,
+                prefs.getCartOrderInfo()?.Result?.OrderId!!, 1
+            )
+        }
+    }
+
+    private fun blockDomain() {
+        if (!prefs.getSelectedDomainName().isNullOrEmpty() && !alreadypurchasedDomain) {
+            viewModel.domainVmnBlocked(
+                (activity as? CartActivity)?.getAccessToken() ?: "",
+                (activity as CartActivity).fpid!!,
+                (activity as CartActivity).clientid,
+                prefs.getSelectedDomainName()!!,
+                prefs.getCartOrderInfo()?.Result?.OrderId!!, 2
+            )
+        }
+    }
+
+    private fun cartContainsDomainVMN() {
+        domainVMNContains = false
+        domainContains = false
+        vmnContains = false
+        for (singleItem in cartList) {
+            if (singleItem.item_type.equals("bundles")) {
+                if (::bundlesList.isInitialized && bundlesList.size > 0) {
+                    val featureCode = arrayListOf<String>()
+                    for (singleBundle in bundlesList) {
+                        if (singleBundle.bundle_id.equals(singleItem.item_id)) {
+                            val includedFeatures = Gson().fromJson<List<IncludedFeature>>(
+                                singleBundle.included_features,
+                                object : TypeToken<List<IncludedFeature>>() {}.type
+                            )
+                            for (singleIncludedFeature in includedFeatures) {
+                                featureCode.add(singleIncludedFeature.feature_code)
+                            }
+                            break
+                        }
+                    }
+                    if ((featureCode.contains("DOMAINPURCHASE")) && (featureCode.contains("CALLTRACKER"))) {
+                        if ((!prefs.getSelectedDomainName()
+                                .isNullOrEmpty() && !alreadypurchasedDomain)
+                            && (!prefs.getSelectedVMNName()
+                                .isNullOrEmpty() && !alreadypurchasedVmnName)
+                        ) {
+                            domainVMNContains = true
+                        } else if (((!prefs.getSelectedVMNName()
+                                .isNullOrEmpty() && !alreadypurchasedVmnName))
+                            && ((prefs.getSelectedDomainName()
+                                .isNullOrEmpty() && !alreadypurchasedDomain))
+                        ) {
+                            vmnContains = true
+                        } else if (((!prefs.getSelectedDomainName()
+                                .isNullOrEmpty() && !alreadypurchasedDomain))
+                            && ((prefs.getSelectedVMNName()
+                                .isNullOrEmpty() && !alreadypurchasedVmnName))
+                        ) {
+                            domainContains = true
+                        } else if ((!prefs.getSelectedDomainName()
+                                .isNullOrEmpty() && !alreadypurchasedDomain
+                                    && (alreadypurchasedVmnName == true))
+                        ) {
+                            domainContains = true
+                        } else if ((!prefs.getSelectedVMNName()
+                                .isNullOrEmpty() && !alreadypurchasedVmnName
+                                    && (alreadypurchasedDomain == true))
+                        ) {
+                            vmnContains = true
+                        }
+                    } else if ((featureCode.contains("DOMAINPURCHASE")) && (!featureCode.contains("CALLTRACKER"))) {
+                        if (!prefs.getSelectedDomainName()
+                                .isNullOrEmpty() && !alreadypurchasedDomain
+                        ) {
+                            domainContains = true
+                        }
+                    } else if ((featureCode.contains("CALLTRACKER"))
+                        && (!featureCode.contains("DOMAINPURCHASE"))
+                    ) {
+                        vmnContains = true
+                    } else {
+                        domainVMNContains = false
+                    }
+                }
+            } else {
+                if (singleItem.feature_code.equals("DOMAINPURCHASE")) {
+                    if (!prefs.getSelectedDomainName()
+                            .isNullOrEmpty() && !alreadypurchasedDomain
+                    ) {
+                        domainContains = true
+                        break
+                    }
+                }
+                if (singleItem.feature_code.equals("CALLTRACKER")) {
+                    if (!prefs.getSelectedVMNName()
+                            .isNullOrEmpty() && !alreadypurchasedVmnName
+                    ) {
+                        vmnContains = true
+                        break
+                    }
+                }
+            }
+        }
+    }
+
+    private fun loadData1() {
+        val pref = context?.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+        val fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
+        viewModel.getAlreadyPurchasedDomain(
+            (activity as? CartActivity)?.getAccessToken() ?: "",
+            fpTag ?: "",
+            "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+        )
+        viewModel.getAlreadyPurchasedVmn(
+            (activity as? CartActivity)?.getAccessToken() ?: "",
+            fpTag ?: "",
+            "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+        )
+    }
+
     private fun validateAgreement(): Boolean {
         if (cart_business_city_name.text.toString().isEmpty()
             || cart_business_address.text.toString().isEmpty()
@@ -1435,6 +1594,22 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 return false
             } else {
                 business_gstin_number.setBackgroundResource(R.drawable.rounded_edit_fill_kyc)
+            }
+
+            if (cart_business_city_name.text.toString().isEmpty()) {
+                cart_place_of_supply_cl.setBackgroundResource(R.drawable.et_validity_error)
+                cart_main_scroller.post {
+                    cart_main_scroller.scrollTo(
+                        0,
+                        cart_place_of_supply_cl.getBottom()
+                    )
+                }
+                Toasty.error(
+                    requireContext(),
+                    "Select State of Supply. Not Selected!!",
+                    Toast.LENGTH_LONG
+                ).show()
+                return false
             }
 
 //      if (business_contact_number.text!!.isEmpty()) {
@@ -1503,6 +1678,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
             }
 
             return !gstcheck.isChecked && cart_business_address.text.toString().isNotEmpty()
+        } else {
+            cart_place_of_supply_cl.setBackgroundResource(R.drawable.edittext_selector1)
+            cart_business_address.setBackgroundResource(R.drawable.edittext_selector1)
+            business_gstin_number.setBackgroundResource(R.drawable.edittext_selector1)
         }
 
         if (!business_gstin_number.text.toString().isEmpty() && !Utils.isValidGSTIN(
@@ -1623,108 +1802,138 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
     }
 
     private fun initMvvm1() {
+
+        viewModel.updateStatus().observe(viewLifecycleOwner) {
+            domainBlocked = it.Result
+            navigationFlow()
+        }
+
+        viewModel.updateVmnStatus().observe(viewLifecycleOwner) {
+            vmnBlocked = it.Result
+            navigationFlow()
+        }
+
+//        viewModel.updateStatus().observe(viewLifecycleOwner, androidx.lifecycle.Observer{
+////            domainBlocked = it.Result
+//            if (prefs.getCartOrderInfo() != null) {
+//                if (domainContains){
+//                    if (prefs.getSelectedDomainName() != null && !alreadypurchasedDomain) {
+//                        if (domainBlocked == false) {
+//                            proceedToPayment(prefs.getCartOrderInfo()!!)
+//                        } else {
+//                            Toasty.error(
+//                                requireContext(),
+//                                "Domain unavailable choose another domain",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                        }
+//                    } else {
+//                        proceedToPayment(prefs.getCartOrderInfo()!!)
+//                    }
+//                } else if (vmnContains){
+//                    if (!prefs.getSelectedVMNName().isNullOrEmpty() && !alreadypurchasedVmnName) {
+//                        if (domainBlocked == false) {
+//                            proceedToPayment(prefs.getCartOrderInfo()!!)
+//                        } else {
+//                            Toasty.error(
+//                                requireContext(),
+//                                "VMN unavailable choose another number",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                        }
+//                    } else {
+//                        proceedToPayment(prefs.getCartOrderInfo()!!)
+//                    }
+//                }
+//                else if (domainVMNContains){
+//                    if (prefs.getSelectedDomainName() != null && !alreadypurchasedDomain) {
+//                        if (isNullOrEmpty(domainBlocked?.toString())==false){
+//                            if (domainBlocked == false) {
+//                                Toasty.success(
+//                                    requireContext(),
+//                                    "Domain Blocked",
+//                                    Toast.LENGTH_SHORT
+//                                ).show()
+//                            } else {
+//                                Toasty.error(
+//                                    requireContext(),
+//                                    "Domain unavailable choose another domain",
+//                                    Toast.LENGTH_SHORT
+//                                ).show()
+//                            }
+//                        }
+//                    }
+//                    if (!prefs.getSelectedVMNName().isNullOrEmpty() && !alreadypurchasedVmnName) {
+//                        if (vmnBlocked == false) {
+//                            proceedToPayment(prefs.getCartOrderInfo()!!)
+//                        } else {
+//                            Toasty.error(
+//                                requireContext(),
+//                                "VMN unavailable choose another number",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                        }
+//                    } else {
+//                        if (domainBlocked==false && vmnBlocked==false){
+//                            proceedToPayment(prefs.getCartOrderInfo()!!)
+//                        }
+//                    }
+//                }
+//                else {
+//                    proceedToPayment(prefs.getCartOrderInfo()!!)
+//                }
+//            }
+//        })
+
+        viewModel.PurchasedDomainResponse().observe(viewLifecycleOwner) {
+            if (it.domainName != null && it.domainType != null) {
+                if (!(it.domainName.contains("null") || it.domainType.contains("null"))) {
+                    alreadypurchasedDomain = true
+                    prefs.storeDomainOrderType(1)
+                }
+            }
+        }
+
+        viewModel.purchasedVmnResult().observe(viewLifecycleOwner) {
+            if (!it.Vmn.isNullOrEmpty()) {
+                alreadypurchasedVmnName = true
+            }
+        }
+
         viewModel.getCustomerInfoResult().observeOnce(viewLifecycleOwner, Observer {
             createCustomerInfoRequest = it.Result
-            if (createCustomerInfoRequest != null) {
-                if (createCustomerInfoRequest!!.BusinessDetails != null) {
-//          business_contact_number.setText(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber)
-//          business_email_address.setText(createCustomerInfoRequest!!.BusinessDetails!!.Email)
+            createCustomerInfoRequest?.let {
+                it.BusinessDetails?.let {
+                    it.Email?.let {
+                        et_email.setText(it)
+                        email_value.setText(it)
+                        cart_email_missing.visibility = View.GONE
+                    }
                 }
-                if (!createCustomerInfoRequest!!.BusinessDetails.Email.isNullOrEmpty()) {
-                    et_email.setText(createCustomerInfoRequest!!.BusinessDetails.Email)
-                    email_value.setText(createCustomerInfoRequest!!.BusinessDetails.Email)
-                    cart_email_missing.visibility = View.GONE
-                }
-                if (createCustomerInfoRequest!!.AddressDetails != null) {
-                    cart_business_city_name.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
-                    business_supply_place_value.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
-                    cart_business_supply_place_missing.visibility = View.GONE
-
-                    if (createCustomerInfoRequest!!.AddressDetails!!.City != null) {
+                it.AddressDetails?.let {
+                    it.State?.let {
+                        cart_business_city_name.setText(it)
+                        business_supply_place_value.setText(it)
+                        cart_business_supply_place_missing.visibility = View.GONE
+                        if (it.equals("string")) {
+                            cart_business_city_name.setText(it)
+                            cart_business_city_name1.setText(it)
+                            setStates = it
+                        }
+                    }
+                    it.City?.let {
                         viewModel.getStateFromCityAssetJson(
                             requireActivity(),
-                            createCustomerInfoRequest!!.AddressDetails!!.City
+                            it
                         )
                     }
-                    if (createCustomerInfoRequest!!.AddressDetails!!.State != null || !createCustomerInfoRequest!!.AddressDetails!!.State.equals(
-                            "string"
-                        )
-                    ) {
-                        cart_business_city_name.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
-                        cart_business_city_name1.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
-                        setStates = createCustomerInfoRequest!!.AddressDetails!!.State
-                    }
-                    if (createCustomerInfoRequest!!.AddressDetails.Line1 != null) {
-                        cart_business_address.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
-                        cart_business_address1.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
-                        //  gst_business_address_value.text = createCustomerInfoRequest!!.AddressDetails.Line1.toString()
-                    }
-                } else {
-                    cart_business_supply_place_missing.visibility = View.VISIBLE
-                    business_supply_place_value.visibility = View.GONE
-                }
-                if (createCustomerInfoRequest!!.TaxDetails != null) {
-                    business_gstin_number.setText(createCustomerInfoRequest!!.TaxDetails!!.GSTIN)
-                }
-
-                if (createCustomerInfoRequest!!.TaxDetails?.GSTIN != null /*|| createCustomerInfoRequest!!.TaxDetails?.GSTIN.equals("")*/) {
-                    cart_business_gstin_value.setText(createCustomerInfoRequest!!.TaxDetails.GSTIN)
-                    cart_business_gstin_missing.visibility = View.GONE
-                } else {
-                    cart_business_gstin_value.visibility = View.GONE
-                    cart_business_gstin_missing.visibility = View.VISIBLE
-                }
-
-
-                if (createCustomerInfoRequest!!.Name != null) {
-                    // business_name_value.setText(createCustomerInfoRequest!!.Name)
-                }
-
-                if (createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber != null) {
-                    //  business_contact_number.setText(createCustomerInfoRequest!!.BusinessDetails!!.PhoneNumber)
-                } else {
-//          if (session?.userPrimaryMobile == null || session?.userPrimaryMobile.equals("")) {
-//
-//          } else {
-//            business_contact_number.setText(session?.userPrimaryMobile)
-//          }
-                }
-
-
-//        if (createCustomerInfoRequest!!.BusinessDetails!!.Email != null) {
-//          business_email_address.setText(createCustomerInfoRequest!!.BusinessDetails!!.Email)
-//        } else {
-//          if (session?.fPEmail == null || session?.fPEmail.equals("")) {
-//
-//          } else {
-//            business_email_address.setText(session?.fPEmail)
-//          }
-//        }
-
-
-//        if (createCustomerInfoRequest!!.Name != null) {
-//          business_name_value.setText(createCustomerInfoRequest!!.Name)
-//          gst_business_name_value.text = createCustomerInfoRequest!!.Name
-//        } else {
-//          if (session?.fPName == null || session?.fPName.equals("")) {
-//
-//          } else {
-//            business_name_value.setText(session?.fPName)
-//            gst_business_name_value.text = session?.fPName
-//          }
-//        }
-
-
-                if (createCustomerInfoRequest!!.AddressDetails != null) {
-
-
-                    if (createCustomerInfoRequest!!.AddressDetails.Line1 != null) {
-                        cart_business_address1.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
-                        cart_business_address_value.setText(createCustomerInfoRequest!!.AddressDetails.Line1.toString())
+                    it.Line1?.let {
+                        cart_business_address.setText(it.toString())
+                        cart_business_address1.setText(it.toString())
+                        cart_business_address_value.setText(it.toString())
                         cart_business_address_missing.visibility = View.GONE
-                        //  business_supply_place_value.setText(createCustomerInfoRequest!!.AddressDetails!!.State)
-                        // gst_business_address_value.text = createCustomerInfoRequest!!.AddressDetails.Line1.toString()
-                    } else {
+                    }
+                    if (it.Line1 == null) {
                         if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS) == null || session?.getFPDetails(
                                 Key_Preferences.GET_FP_DETAILS_ADDRESS
                             ).equals("")
@@ -1739,7 +1948,19 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                         }
                     }
                 }
-
+                if (it.AddressDetails == null) {
+                    cart_business_supply_place_missing.visibility = View.VISIBLE
+                    business_supply_place_value.visibility = View.GONE
+                }
+                it.TaxDetails?.let {
+                    cart_business_gstin_value.visibility = View.GONE
+                    cart_business_gstin_missing.visibility = View.VISIBLE
+                    it.GSTIN?.let {
+                        business_gstin_number.setText(it)
+                        cart_business_gstin_value.setText(it)
+                        cart_business_gstin_missing.visibility = View.GONE
+                    }
+                }
             }
         })
         viewModel.getCustomerInfoStateResult().observeOnce(this, Observer {
@@ -1776,8 +1997,12 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 
         viewModel.getUpdatedCustomerBusinessResult().observeOnce(viewLifecycleOwner, Observer {
             if (it.Result != null) {
-                Toasty.success(requireContext(), "Successfully Updated Profile.", Toast.LENGTH_LONG)
-                    .show()
+//                Toasty.success(
+//                    requireContext(),
+//                    "Successfully Updated Profile.",
+//                    Toast.LENGTH_SHORT
+//                )
+//                    .show()
                 val event_attributes: HashMap<String, Any> = HashMap()
                 event_attributes.put("", it.Result.CustomerId)
                 WebEngageController.trackEvent(
@@ -1790,7 +2015,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 Toasty.error(
                     requireContext(),
                     "Something went wrong. Try Later!!",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
                 )
                     .show()
                 WebEngageController.trackEvent(
@@ -1805,15 +2030,19 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 
         viewModel.getUpdatedCustomerResult().observeOnce(viewLifecycleOwner, Observer {
             if (it.Result != null) {
-                Toasty.success(requireContext(), "Successfully Updated Profile.", Toast.LENGTH_LONG)
-                    .show()
+//                Toasty.success(
+//                    requireContext(),
+//                    "Successfully Updated Profile.",
+//                    Toast.LENGTH_SHORT
+//                )
+//                    .show()
                 loadCustomerInfo()
 //                (activity as PaymentActivity).prefs.storeInitialLoadMarketPlace(false)
             } else {
                 Toasty.error(
                     requireContext(),
                     "Something went wrong. Try Later!!",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
                 )
                     .show()
 //                (activity as PaymentActivity).prefs.storeInitialLoadMarketPlace(true)
@@ -1823,7 +2052,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 
         viewModel.getUpdatedResult().observeOnce(viewLifecycleOwner, Observer {
             if (it.Result != null) {
-                Toasty.success(requireContext(), "Successfully Created Profile.", Toast.LENGTH_LONG)
+                Toasty.success(
+                    requireContext(),
+                    "Successfully Created Profile.",
+                    Toast.LENGTH_SHORT
+                )
                     .show()
                 val event_attributes: HashMap<String, Any> = HashMap()
                 event_attributes.put("", it.Result.CustomerId)
@@ -1878,6 +2111,92 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
             }
         })
 
+    }
+
+    private fun navigationFlow() {
+        if (prefs.getCartOrderInfo() != null) {
+            if (domainContains) {
+                if (prefs.getSelectedDomainName() != null && !alreadypurchasedDomain) {
+                    if (domainBlocked == false) {
+                        proceedToPayment(prefs.getCartOrderInfo()!!)
+                    } else {
+                        Toasty.error(
+                            requireContext(),
+                            "Domain unavailable choose another domain",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else {
+                    proceedToPayment(prefs.getCartOrderInfo()!!)
+                }
+            } else if (vmnContains) {
+                if (!prefs.getSelectedVMNName()
+                        .isNullOrEmpty() && !alreadypurchasedVmnName
+                ) {
+                    if (vmnBlocked == false) {
+                        proceedToPayment(prefs.getCartOrderInfo()!!)
+                    } else {
+                        Toasty.error(
+                            requireContext(),
+                            "VMN unavailable choose another number",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else {
+                    proceedToPayment(prefs.getCartOrderInfo()!!)
+                }
+            } else if (domainVMNContains) {
+                if (prefs.getSelectedDomainName() != null && !alreadypurchasedDomain) {
+                    if (isNullOrEmpty(domainBlocked?.toString()) == false) {
+                        if (domainBlocked == false) {
+                            Toasty.success(
+                                requireContext(),
+                                "Domain Blocked",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            domainAvailable = true
+                        } else {
+                            Toasty.error(
+                                requireContext(),
+                                "Domain unavailable choose another domain",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+                if (!prefs.getSelectedVMNName()
+                        .isNullOrEmpty() && !alreadypurchasedVmnName
+                ) {
+                    if (isNullOrEmpty(vmnBlocked?.toString()) == false) {
+                        if (vmnBlocked == false) {
+                            Toasty.success(
+                                requireContext(),
+                                "Vmn Blocked",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            vmnAvailable = true
+                            if (domainAvailable == true && vmnAvailable == true) {
+                                proceedToPayment(prefs.getCartOrderInfo()!!)
+                            }
+                        } else {
+                            Toasty.error(
+                                requireContext(),
+                                "VMN unavailable choose another number",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        domainAvailable = false
+                        vmnAvailable = false
+                    }
+                } else {
+                    proceedToPayment(prefs.getCartOrderInfo()!!)
+                }
+            } else {
+                proceedToPayment(prefs.getCartOrderInfo()!!)
+            }
+            domainBlocked = null
+            vmnBlocked = null
+        }
     }
 
     private fun loadGSTInfo(gstIn: String) {
@@ -1976,7 +2295,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
             widgetList.add(
                 com.boost.dbcenterapi.data.renewalcart.Widget(
                     it.item_id,
-                    it.boost_widget_key
+                    it.feature_code
                 )
             )
         }
@@ -2125,13 +2444,35 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                     )
                                 }
                             }
-
                         }
+
                     } catch (ex: Exception) {
                         SentryController.captureException(ex)
                         ex.printStackTrace()
                     }
                 }
+
+                if (item.feature_code.equals("CALLTRACKER")) {
+                    if (prefs.getSelectedVMNName()
+                            .isNullOrEmpty() && !alreadypurchasedVmnName
+                    ) {
+                        //sending value for pre/post purchase of VMN
+                        if ((prefs.getSelectedVMNName()
+                                .isNullOrEmpty()) && (!alreadypurchasedVmnName)
+                        ) {
+                            outputExtendedPropsRenew.add(
+                                Property(
+                                    Key = "allowPostPurchase",
+                                    Value = if (prefs.getSelectedVMNName()
+                                            .isNullOrEmpty()
+                                    ) "1" else "0"
+                                )
+                            )
+                        }
+                    }
+                }
+
+
                 val widget = Widget(
                     data?.category
                         ?: "",
@@ -2157,7 +2498,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     if (outputExtendedPropsRenew.size > 0) outputExtendedPropsRenew else null,
                     1,
                     "MONTHLY",
-                    item.boost_widget_key
+                    item.feature_code
                         ?: "",
                     item.item_id
                 )
@@ -2191,7 +2532,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                             item.extended_properties,
                             objectType
                         )
-
                         if (extendProps != null) {
                             for (prop in extendProps) {
                                 if (prop.key != null && prop.value != null) {
@@ -2232,6 +2572,28 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 //                    else{
 //                        net_quantity = 1
 //                    }
+                    val outputExtendedPropsPostPurchase = ArrayList<Property>()
+                    outputExtendedPropsPostPurchase.addAll(outputExtendedProps)
+
+                    if (item.feature_code.equals("CALLTRACKER")) {
+                        if (prefs.getSelectedVMNName()
+                                .isNullOrEmpty() && !alreadypurchasedVmnName
+                        ) {
+                            //sending value for pre/post purchase of VMN
+                            if ((prefs.getSelectedVMNName()
+                                    .isNullOrEmpty()) && (!alreadypurchasedVmnName)
+                            ) {
+                                outputExtendedPropsPostPurchase.add(
+                                    Property(
+                                        Key = "allowPostPurchase",
+                                        Value = if (prefs.getSelectedVMNName()
+                                                .isNullOrEmpty()
+                                        ) "1" else "0"
+                                    )
+                                )
+                            }
+                        }
+                    }
 
 
                     if (!bundles_in_cart && default_validity_months > 1) {
@@ -2276,7 +2638,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                             item.item_name!!,
                             netPrice,
                             mrp_price,
-                            if (outputExtendedProps.size > 0) outputExtendedProps else null,
+                            if (outputExtendedPropsPostPurchase.size > 0) outputExtendedPropsPostPurchase else null,
                             net_quantity,
                             "MONTHLY",
                             item.feature_code!!,
@@ -2286,6 +2648,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 } else if (item.item_type.equals("bundles")) {
                     if (::bundlesList.isInitialized && bundlesList.size > 0) {
                         for (singleBundle in bundlesList) {
+
                             if (singleBundle.bundle_id.equals(item.item_id)) {
                                 val outputBundleProps: ArrayList<Property> = arrayListOf()
                                 outputBundleProps.add(
@@ -2308,6 +2671,29 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                 for (singleIndludedFeature in includedFeatures) {
                                     for (singleFeature in featuresList) {
                                         if (singleIndludedFeature.feature_code.equals(singleFeature.feature_code)) {
+
+                                            val outputExtendedPropsPostPurchase = ArrayList<Property>()
+                                            outputExtendedPropsPostPurchase.addAll(outputExtendedProps)
+
+                                            if (singleIndludedFeature.feature_code.equals("CALLTRACKER")) {
+                                                if (prefs.getSelectedVMNName()
+                                                        .isNullOrEmpty() && !alreadypurchasedVmnName
+                                                ) {
+                                                    //sending value for pre/post purchase of VMN
+                                                    if ((prefs.getSelectedVMNName()
+                                                            .isNullOrEmpty()) && (!alreadypurchasedVmnName)
+                                                    ) {
+                                                        outputExtendedPropsPostPurchase.add(
+                                                            Property(
+                                                                Key = "allowPostPurchase",
+                                                                Value = if (prefs.getSelectedVMNName()
+                                                                        .isNullOrEmpty()
+                                                                ) "1" else "0"
+                                                            )
+                                                        )
+                                                    }
+                                                }
+                                            }
 
                                             val netPrice = RootUtil.round(
                                                 ((singleFeature.price - ((singleFeature.price * singleIndludedFeature.feature_price_discount_percent) / 100.0))),
@@ -2360,7 +2746,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 //                          netPrice.toDouble() * singleBundle.min_purchase_months,
                                                     singleWidgetNetPrice,
                                                     singleFeature.price.toDouble() * singleBundle.min_purchase_months,
-                                                    if (outputExtendedProps.size > 0) outputExtendedProps else null,
+                                                    if (outputExtendedPropsPostPurchase.size > 0) outputExtendedPropsPostPurchase else null,
                                                     1,
                                                     "MONTHLY",
                                                     singleFeature.feature_code!!,
@@ -2532,7 +2918,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     if (outputExtendedProps1.size > 0) outputExtendedProps1 else null,
                     1,
                     "MONTHLY",
-                    item.boost_widget_key
+                    item.feature_code
                         ?: "",
                     item.item_id
                 )
@@ -2652,7 +3038,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                             if (outputExtendedProps.size > 0) outputExtendedProps else null,
                             net_quantity,
                             "MONTHLY",
-                            item.boost_widget_key!!,
+                            item.feature_code!!,
                             item.item_id
                         )
                     )
@@ -2733,7 +3119,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                                     if (outputExtendedProps.size > 0) outputExtendedProps else null,
                                                     1,
                                                     "MONTHLY",
-                                                    singleFeature.boost_widget_key,
+                                                    singleFeature.feature_code ?: "",
                                                     singleFeature.feature_id
                                                 )
                                             )
@@ -2803,15 +3189,32 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
     fun loadData() {
         viewModel.getAllFeatures()
         viewModel.getAllBundles()
-        Handler().postDelayed({
-            viewModel.getCartItems()
-        }, 2000)
+//        Handler().postDelayed({
+//            viewModel.getCartItems()
+//        }, 2000)
 
         viewModel.loadUpdates()
     }
 
     @SuppressLint("FragmentLiveDataObserve")
     fun initMvvM() {
+        viewModel.getValidityMonths().observe(this) {
+            if (prefs.getYearPricing()) {
+                var temp = it / 12.0
+                if (temp > temp.toInt())
+                    temp = temp + 1
+                default_validity_months = temp.toInt()
+            } else {
+                default_validity_months =
+                    if (prefs.getCartValidityMonths() != null && prefs.getCartValidityMonths()!!
+                            .toInt() > it
+                    ) prefs.getCartValidityMonths()!!.toInt() else it
+            }
+            prefs.storeCartValidityMonths(default_validity_months.toString())
+            Handler().postDelayed({
+                viewModel.getCartItems()
+            }, 2000)
+        }
 
         viewModel.getExpertConnectDetails().observe(this) {
             if (it.is_online) {
@@ -2911,9 +3314,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     onetime_layout.visibility = View.GONE
                 }
                 Constants.COMPARE_CART_COUNT = bundles.size
-                default_validity_months =
-                    if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!
-                        .toInt() else 1
+                if (!(default_validity_months > 1))
+                    default_validity_months =
+                        if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!
+                            .toInt() else 1
                 if (bundles.size > 0) {
                     bundles_in_cart = true
                     for (bundle in bundles) {
@@ -2940,18 +3344,20 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     }
                     if (default_validity_months > 0) {
                         if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
-                            months_validity.setText(
-                                prefs.getCartValidityMonths() + yearOrMonthText(
-                                    default_validity_months,
-                                    requireActivity(),
-                                    false
-                                )
-                            )
-                            feature_validity.text = prefs.getCartValidityMonths() + yearOrMonthText(
+                            val text: String = default_validity_months.toString() + yearOrMonthText(
                                 default_validity_months,
                                 requireActivity(),
-                                true
+                                false
                             )
+                            Log.e("before>>>", text)
+                            months_validity.setText(text)
+                            Log.e("after>>>", text)
+                            feature_validity.text =
+                                default_validity_months.toString() + yearOrMonthText(
+                                    default_validity_months,
+                                    requireActivity(),
+                                    true
+                                )
                         } else {
                             months_validity.setText(
                                 default_validity_months.toString() + yearOrMonthText(
@@ -2970,17 +3376,18 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     } else {
                         if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
                             months_validity.setText(
-                                prefs.getCartValidityMonths() + yearOrMonthText(
+                                default_validity_months.toString() + yearOrMonthText(
                                     default_validity_months,
                                     requireActivity(),
                                     false
                                 )
                             )
-                            feature_validity.text = prefs.getCartValidityMonths() + yearOrMonthText(
-                                default_validity_months,
-                                requireActivity(),
-                                true
-                            )
+                            feature_validity.text =
+                                default_validity_months.toString() + yearOrMonthText(
+                                    default_validity_months,
+                                    requireActivity(),
+                                    true
+                                )
                         } else {
                             months_validity.setText(
                                 default_validity_months.toString() + yearOrMonthText(
@@ -3003,14 +3410,14 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     if (prefs.getCartValidityMonths().isNullOrEmpty().not()) {
                         Log.e("getCartValidityMonths", prefs.getCartValidityMonths()!!)
                         months_validity.setText(
-                            prefs.getCartValidityMonths() + yearOrMonthText(
+                            default_validity_months.toString() + yearOrMonthText(
                                 default_validity_months,
                                 requireActivity(),
                                 false
                             )
                         )
                         feature_validity.text =
-                            prefs.getCartValidityMonths().toString() + yearOrMonthText(
+                            default_validity_months.toString() + yearOrMonthText(
                                 default_validity_months,
                                 requireActivity(),
                                 true
@@ -3127,7 +3534,29 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     NO_EVENT_LABLE,
                     NO_EVENT_VALUE
                 )
-                proceedToPayment(it)
+                //   proceedToPayment(it)
+//                if (!isNullOrEmpty(prefs.getSelectedDomainName())&& alreadypurchasedDomain==false && domainContains == true){
+//                    viewModel.domainVmnBlocked(
+//                        (activity as? CartActivity)?.getAccessToken() ?: "",
+//                        (activity as CartActivity).fpid!!,
+//                        (activity as CartActivity).clientid,
+//                        prefs.getSelectedDomainName()!!,
+//                        prefs.getCartOrderInfo()?.Result?.OrderId!!,
+//                        2
+//                    )
+//                } else{
+//                    proceedToPayment(it)
+//                }
+                if (domainContains) {
+                    blockDomain()
+                } else if (vmnContains) {
+                    blockVMN()
+                } else if (domainVMNContains) {
+                    blockDomain()
+                    blockVMN()
+                } else {
+                    proceedToPayment(it)
+                }
             }
         })
 
@@ -3486,11 +3915,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 
     @SuppressLint("FragmentLiveDataObserve")
     private fun observeLastPaymentDetails() {
-        viewModel.getLastPayDetails().observe(viewLifecycleOwner, {
+        viewModel.getLastPayDetails().observe(viewLifecycleOwner) {
             if (it != null) {
                 prefs.storeLastUsedPaymentMode(it.result?.lastPaymentMethodDetails?.lastPaymentMethod.toString())
             }
-        })
+        }
     }
 
     fun updatePackage(features: List<CartModel>) {
@@ -3584,8 +4013,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
     }
 
     private fun initializeErrorObserver() {
-        viewModel.updatesError()
-            .observeOnce(Observer { Toasty.error(requireContext(), it, Toast.LENGTH_SHORT).show() })
+        viewModel.updatesError().observe(viewLifecycleOwner) {
+            it?.let {
+                Toasty.error(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     fun showApplyedCouponDetails() {
@@ -4021,12 +4453,30 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         prefs.storeSelectedDomainName(domain)
     }
 
+    override fun featureDetailsPopupvmn(vmn: String) {
+        cartPackageAdaptor.selectedVmn(vmn)
+        prefs.storeSelectedVMNName(vmn)
+    }
+
     override fun editSelectedDomain(bundleItem: CartModel) {
         featureDetailsPopUp(bundleItem)
     }
 
+    override fun editSelectedVmn(bundleItem: CartModel) {
+        featureDetailsPopUp1(bundleItem)
+    }
+
     override fun actionClick(bundleItem: CartModel) {
+        featureDetailsPopUp2(bundleItem)
+    }
+
+    override fun actionClickDomain(bundleItem: CartModel) {
         featureDetailsPopUp(bundleItem)
+
+    }
+
+    override fun actionClickVmn(bundleItem: CartModel) {
+        featureDetailsPopUp1(bundleItem)
     }
 
     private fun featureDetailsPopUp(cartModel: CartModel) {
@@ -4063,7 +4513,146 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
             (activity as CartActivity).userPurchsedWidgets
         )
         args.putString("bundleData", Gson().toJson(selectedBundle))
+        args.putString("vmn", "false")
         args.putString("fpid", (activity as CartActivity).fpid)
+        args.putString("expCode", (activity as CartActivity).experienceCode)
+        args.putBoolean("isDeepLink", (activity as CartActivity).isDeepLink)
+        args.putString("deepLinkViewType", (activity as CartActivity).deepLinkViewType)
+        args.putInt("deepLinkDay", (activity as CartActivity).deepLinkDay)
+        args.putBoolean("isOpenCardFragment", (activity as CartActivity).isOpenCardFragment)
+        args.putString(
+            "accountType",
+            (activity as CartActivity).accountType
+        )
+        args.putStringArrayList(
+            "userPurchsedWidgets",
+            (activity as CartActivity).userPurchsedWidgets
+        )
+        if ((activity as CartActivity).email != null) {
+            args.putString("email", (activity as CartActivity).email)
+        } else {
+            args.putString("email", "ria@nowfloats.com")
+        }
+        if ((activity as CartActivity).mobileNo != null) {
+            args.putString("mobileNo", (activity as CartActivity).mobileNo)
+        } else {
+            args.putString("mobileNo", "9160004303")
+        }
+        args.putString("profileUrl", (activity as CartActivity).profileUrl)
+        dialogCard.arguments = args
+        activity?.supportFragmentManager?.let {
+            dialogCard.show(
+                it,
+                FeatureDetailsPopup::class.java.name
+            )
+        }
+    }
+
+    private fun featureDetailsPopUp1(cartModel: CartModel) {
+        var selectedBundle: Bundles? = null
+        for (item in bundlesList) {
+            if (item.bundle_id == cartModel.item_id) {
+                val temp = Gson().fromJson<List<IncludedFeature>>(
+                    item.included_features,
+                    object : TypeToken<List<IncludedFeature>>() {}.type
+                )
+                selectedBundle = Bundles(
+                    item.bundle_id,
+                    temp,
+                    item.min_purchase_months,
+                    item.name,
+                    item.overall_discount_percent,
+                    PrimaryImage(item.primary_image),
+                    item.target_business_usecase,
+                    Gson().fromJson<List<String>>(
+                        item.exclusive_to_categories,
+                        object : TypeToken<List<String>>() {}.type
+                    ),
+                    null, null, null, null, null, item.desc
+                )
+                break
+            }
+        }
+
+        val dialogCard = FeatureDetailsPopup(this)
+        val args = Bundle()
+        args.putString("expCode", (activity as CartActivity).experienceCode)
+        args.putStringArrayList(
+            "userPurchsedWidgets",
+            (activity as CartActivity).userPurchsedWidgets
+        )
+        args.putString("bundleData", Gson().toJson(selectedBundle))
+        args.putString("vmn", "true")
+        args.putString("fpid", (activity as CartActivity).fpid)
+        args.putString("expCode", (activity as CartActivity).experienceCode)
+        args.putBoolean("isDeepLink", (activity as CartActivity).isDeepLink)
+        args.putString("deepLinkViewType", (activity as CartActivity).deepLinkViewType)
+        args.putInt("deepLinkDay", (activity as CartActivity).deepLinkDay)
+        args.putBoolean("isOpenCardFragment", (activity as CartActivity).isOpenCardFragment)
+        args.putString(
+            "accountType",
+            (activity as CartActivity).accountType
+        )
+        args.putStringArrayList(
+            "userPurchsedWidgets",
+            (activity as CartActivity).userPurchsedWidgets
+        )
+        if ((activity as CartActivity).email != null) {
+            args.putString("email", (activity as CartActivity).email)
+        } else {
+            args.putString("email", "ria@nowfloats.com")
+        }
+        if ((activity as CartActivity).mobileNo != null) {
+            args.putString("mobileNo", (activity as CartActivity).mobileNo)
+        } else {
+            args.putString("mobileNo", "9160004303")
+        }
+        args.putString("profileUrl", (activity as CartActivity).profileUrl)
+        dialogCard.arguments = args
+        activity?.supportFragmentManager?.let {
+            dialogCard.show(
+                it,
+                FeatureDetailsPopup::class.java.name
+            )
+        }
+    }
+
+    private fun featureDetailsPopUp2(cartModel: CartModel) {
+        var selectedBundle: Bundles? = null
+        for (item in bundlesList) {
+            if (item.bundle_id == cartModel.item_id) {
+                val temp = Gson().fromJson<List<IncludedFeature>>(
+                    item.included_features,
+                    object : TypeToken<List<IncludedFeature>>() {}.type
+                )
+                selectedBundle = Bundles(
+                    item.bundle_id,
+                    temp,
+                    item.min_purchase_months,
+                    item.name,
+                    item.overall_discount_percent,
+                    PrimaryImage(item.primary_image),
+                    item.target_business_usecase,
+                    Gson().fromJson<List<String>>(
+                        item.exclusive_to_categories,
+                        object : TypeToken<List<String>>() {}.type
+                    ),
+                    null, null, null, null, null, item.desc
+                )
+                break
+            }
+        }
+
+        val dialogCard = FeatureDetailsPopup(this)
+        val args = Bundle()
+        args.putString("expCode", (activity as CartActivity).experienceCode)
+        args.putStringArrayList(
+            "userPurchsedWidgets",
+            (activity as CartActivity).userPurchsedWidgets
+        )
+        args.putString("bundleData", Gson().toJson(selectedBundle))
+        args.putString("fpid", (activity as CartActivity).fpid)
+        args.putString("vmn", "null")
         args.putString("expCode", (activity as CartActivity).experienceCode)
         args.putBoolean("isDeepLink", (activity as CartActivity).isDeepLink)
         args.putString("deepLinkViewType", (activity as CartActivity).deepLinkViewType)

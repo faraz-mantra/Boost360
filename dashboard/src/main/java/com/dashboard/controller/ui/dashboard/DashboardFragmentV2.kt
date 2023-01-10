@@ -182,7 +182,7 @@ class DashboardFragmentV2 : AppBaseFragment<FragmentDashboardV2Binding, Dashboar
   }
 
   private fun displayFestiveButtonView() {
-    if (festivePosterVisibility().not()) {
+    if (festivePosterVisibility()) {
       binding.profileView.btnFestive.visibility = View.VISIBLE
       binding.profileView.customFestivalTv.text = festivePosterName()?.capitalizeUtil()
     } else binding.profileView.btnFestive.visibility = View.GONE
@@ -717,7 +717,10 @@ class DashboardFragmentV2 : AppBaseFragment<FragmentDashboardV2Binding, Dashboar
         else getChannelAccessToken(isEnquiriesShare = true, shareType = null)
       }
       binding.profileView.btnFestive -> {
-        baseActivity.startFestivePosterActivity()
+        //TODO activate Post update journey for this as Asked by Product team
+        //baseActivity.startFestivePosterActivity()
+        //enable update studio on demand
+        baseActivity.startPostUpdate(session)
       }
       binding.recommendedTask.btnShowAll -> {
         if ((actionItem?.size ?: 0) > 8) {

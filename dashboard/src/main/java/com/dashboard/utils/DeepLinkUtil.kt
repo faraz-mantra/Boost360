@@ -7,7 +7,6 @@ import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.appservice.constant.FragmentType
 import com.dashboard.R
 import com.framework.pref.APPLICATION_JIO_ID
@@ -145,10 +144,12 @@ const val deeplink_add_new_room_type = "add_new_room_type"
 const val deeplink_post_seasonal_offer = "post_seasonal_offer"
 const val deeplink_add_nearby_attraction = "add_nearby_attraction"
 const val deeplink_add_featured_image = "add_featured_image"
+const val deeplink_update_studio = "update_studio"
 
 const val deeplink_user_merchant_profile = "user_merchant_profile"
 const val visit_to_new_website = "Woohoo! We have a new website. Visit it at"
 const val tag_for_partners = ".nowfloats.com"
+
 
 const val VISITS_TABLE = 0
 const val VISITORS_TABLE = 1
@@ -376,6 +377,8 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startNearByView(session, true)
         } else if (url.contains(deeplink_add_featured_image)) {
           baseActivity.startFeatureLogo(session)
+        } else if(url.contains(deeplink_update_studio)){
+          baseActivity.startUpdateStudio(session)
         }
       }
     } catch (e: Exception) {

@@ -5,6 +5,7 @@
 
   <application>
     <activity
+        android:exported="false"
       android:name=".ui.FragmentContainerOrderActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.Order"

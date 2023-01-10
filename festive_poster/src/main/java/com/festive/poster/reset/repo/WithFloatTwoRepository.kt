@@ -11,7 +11,7 @@ import com.festive.poster.reset.services.WithFloatTwoRemoteData
 import com.framework.base.BaseResponse
 import com.framework.pref.clientId
 import com.google.gson.JsonObject
-import com.squareup.okhttp.RequestBody
+import okhttp3.RequestBody
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -89,7 +89,7 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     socialParmeters: String?,
     bizMessageId: String?,
     sendToSubscribers: Boolean?,
-    requestBody: okhttp3.RequestBody?,
+    requestBody: RequestBody?,
   ): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.putBizImageUpdate(

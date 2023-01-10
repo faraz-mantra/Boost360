@@ -11,6 +11,7 @@ import com.festive.poster.models.*
 import com.festive.poster.recyclerView.AppBaseRecyclerViewAdapter
 import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.recyclerView.RecyclerItemClickListener
+import com.festive.poster.utils.WebEngageController
 import com.festive.poster.viewmodels.FestivePosterViewModel
 import com.festive.poster.viewmodels.PromoUpdatesViewModel
 import com.framework.base.BaseActivity
@@ -20,6 +21,9 @@ import com.framework.pref.UserSessionManager
 import com.framework.rest.NetworkResult
 import com.framework.utils.showToast
 import com.framework.utils.toArrayList
+import com.framework.webengageconstant.CLICK
+import com.framework.webengageconstant.CLICKED
+import com.framework.webengageconstant.PROMOTIONAL_UPDATE_CATEGORY_CLICK
 
 class BrowseTabFragment : AppBaseFragment<FragmentBrowseTabBinding, FestivePosterViewModel>(), RecyclerItemClickListener {
 
@@ -104,6 +108,7 @@ class BrowseTabFragment : AppBaseFragment<FragmentBrowseTabBinding, FestivePoste
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.BROWSE_TAB_POSTER_CAT_CLICKED.ordinal -> {
+        WebEngageController.trackEvent(PROMOTIONAL_UPDATE_CATEGORY_CLICK, CLICK, CLICKED)
         addFragment(R.id.container, BrowseAllFragment.newInstance((item as? BrowseTabCategory)?.id), true, true)
       }
     }

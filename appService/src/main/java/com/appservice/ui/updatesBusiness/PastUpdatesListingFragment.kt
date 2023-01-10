@@ -31,19 +31,19 @@ import com.framework.extensions.visible
 import com.framework.pref.clientId
 import com.framework.utils.ContentSharing
 import com.framework.utils.saveAsTempFile
-import com.framework.webengageconstant.POSTED_UPDATE_LIST_PAGE_LOAD
-import com.framework.webengageconstant.Promotional_Update_Posted_Updates_Click
+import com.framework.webengageconstant.*
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.IOException
 
 class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBinding, PastUpdatesViewModel>(), RecyclerItemClickListener {
 
   private var pastPostListing = ArrayList<PastPostItem>()
   private lateinit var categoryDataList: ArrayList<PastCategoriesModel>
   private lateinit var postCategoryAdapter: AppBaseRecyclerViewAdapter<PastCategoriesModel>
-  private lateinit var pastPostListingAdapter: AppBaseRecyclerViewAdapter<PastPostItem>
+  private var pastPostListingAdapter: AppBaseRecyclerViewAdapter<PastPostItem>? = null
   private lateinit var tagListAdapter: AppBaseRecyclerViewAdapter<PastPromotionalCategoryModel>
   var postType: Int = 0
   var isFilterVisible = false
@@ -77,7 +77,8 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
 
   override fun onCreateView() {
     super.onCreateView()
-    WebEngageController.trackEvent(POSTED_UPDATE_LIST_PAGE_LOAD,"","")
+    WebEngageController.trackEvent(Past_updates_screen_loaded,"","")
+    WebEngageController.trackEvent(EVENT_NAME_UPDATE_PAGE,"","")
     initUI()
     setOnClickListener(binding.btnPostNewUpdate)
 
@@ -116,7 +117,9 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
       override fun loadMoreItems() {
         if (!isLastPageD) {
           isLoadingD = true
-          pastPostListingAdapter.addLoadingFooter(PastPostItem().getLoaderItem())
+          if (pastPostListingAdapter!=null){
+            pastPostListingAdapter!!.addLoadingFooter(PastPostItem().getLoaderItem())
+          }
           apiCallPastUpdates(false, pastPostListing.size)
         }
       }
@@ -134,7 +137,8 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
     super.onClick(v)
     when (v) {
       binding.btnPostNewUpdate -> {
-        startUpdateFragmentActivity(FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2)
+       WebEngageController.trackEvent(UPDATE, CLICK, CLICKED)
+       navigateToUpdateStudio()
       }
     }
   }
@@ -195,9 +199,12 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
       if (isFirst.not()) {
         removeLoader()
       }
-      if (list.isNullOrEmpty() && isFirst) {
+      if (list.isEmpty() && isFirst) {
         binding.tvNoPost.visible()
-        pastPostListingAdapter.notifyDataSetChanged()
+        binding.rvPostListing.gone()
+        if (pastPostListingAdapter!=null) {
+          pastPostListingAdapter!!.notifyDataSetChanged()
+        }
       } else {
         binding.tvNoPost.gone()
         binding.rvPostListing.visible()
@@ -218,6 +225,18 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
     when (actionType) {
       RecyclerViewActionType.PAST_CATEGORY_CLICKED.ordinal -> {
         showProgress()
+        when (position) {
+          0 -> WebEngageController.trackEvent(Past_updates_filter_all_updates_click, CLICK, CLICKED)
+          1 -> WebEngageController.trackEvent(Past_updates_filter_template_updates_click,
+            CLICK, CLICKED
+          )
+          2 -> WebEngageController.trackEvent(Past_updates_filter_Image_text_updates_click,
+            CLICK, CLICKED
+          )
+          3 -> WebEngageController.trackEvent(Past_updates_filter_text_updates_click,
+            CLICK, CLICKED
+          )
+        }
         val pastCategoriesModel = item as PastCategoriesModel
 
         categoryDataList.forEach { it.isSelected = false }
@@ -235,7 +254,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
         else tagArray.add(item.id)
 
         binding.rvFilterSubCategory.postDelayed(
-          Runnable {
+          {
             tagListAdapter.notifyDataSetChanged()
           }, 100
         )
@@ -254,25 +273,38 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
         lifecycleScope.launch {
           withContext(Dispatchers.IO) {
             if (item.imageUri != null && item.imageUri.toString() != "") {
-              val bitmapPastUpdateReuse = Picasso.get().load(item.imageUri.toString()).get()
-              val saveAsTempFile = bitmapPastUpdateReuse.saveAsTempFile()
-              startActivity(
-                Intent(
-                  requireActivity(), Class.forName(
-                    "com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity"
-                  )
-                ).putExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
-                  putString(
-                    IntentConstants.IK_CAPTION_KEY, item.message.toString()
-                  )
-                  putString(
-                    IntentConstants.IK_POSTER, saveAsTempFile?.path.toString()
-                  )
-                  putString(
-                    IntentConstants.IK_UPDATE_TYPE, IntentConstants.UpdateType.UPDATE_PROMO_POST.name
-                  )
-                })
-              )
+              try {
+                val bitmapPastUpdateReuse = Picasso.get().load(item.imageUri.toString()).get()
+                val saveAsTempFile = bitmapPastUpdateReuse.saveAsTempFile()
+                startActivity(
+                  Intent(
+                    requireActivity(), Class.forName(
+                      "com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity"
+                    )
+                  ).putExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
+                    putString(
+                      IntentConstants.IK_CAPTION_KEY, item.message.toString()
+                    )
+                    putString(
+                      IntentConstants.IK_POSTER, saveAsTempFile?.path.toString()
+                    )
+                    putString(
+                      IntentConstants.IK_UPDATE_TYPE,
+                      IntentConstants.UpdateType.UPDATE_PROMO_POST.name
+                    )
+                  })
+                )
+              } catch (e: Exception){
+                e.printStackTrace()
+                lifecycleScope.launch(Dispatchers.Main) {
+                  Toast.makeText(activity, "Something went wrong, Try again later", Toast.LENGTH_SHORT).show()
+                }
+              } catch (ioe: IOException){
+                ioe.printStackTrace()
+                lifecycleScope.launch(Dispatchers.Main) {
+                  Toast.makeText(activity, "Something went wrong, Try again later", Toast.LENGTH_SHORT).show()
+                }
+              }
             } else {
               lifecycleScope.launch(Dispatchers.Main) {
                 Toast.makeText(activity, "Something went wrong, Try again later", Toast.LENGTH_SHORT).show()
@@ -309,6 +341,7 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
         return true
       }
       R.id.filter_past -> {
+        WebEngageController.trackEvent(Past_updates_filter_clicked,CLICK, CLICKED)
         if (isFilterVisible) {
           binding.rvFilterCategory.gone()
           item.icon = ContextCompat.getDrawable(baseActivity, R.drawable.ic_filter_hollow_past)
@@ -343,19 +376,21 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
   private fun removeLoader() {
     if (isLoadingD) {
       isLoadingD = false
-      pastPostListingAdapter.removeLoadingFooter()
+      if (pastPostListingAdapter!=null){
+        pastPostListingAdapter!!.removeLoadingFooter()
+      }
     }
   }
 
   fun notifyList() {
-    if (::pastPostListingAdapter.isInitialized.not()) {
+    if (pastPostListingAdapter == null) {
       pastPostListingAdapter = AppBaseRecyclerViewAdapter(baseActivity, pastPostListing, this)
       binding.rvPostListing.adapter = pastPostListingAdapter
       binding.rvPostListing.layoutManager = linearLayoutManager
-      pastPostListingAdapter.runLayoutAnimation(binding.rvPostListing)
+      pastPostListingAdapter!!.runLayoutAnimation(binding.rvPostListing)
       handlePagination()
     } else {
-      pastPostListingAdapter.notifyDataSetChanged()
+      pastPostListingAdapter!!.notifyDataSetChanged()
     }
 
   }

@@ -14,6 +14,7 @@ import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
+import androidx.core.text.clearSpans
 import androidx.lifecycle.lifecycleScope
 import com.festive.poster.R
 import com.festive.poster.base.AppBaseActivity
@@ -151,7 +152,12 @@ class EditPostActivity : AppBaseActivity<ActivityEditPostBinding, FestivePosterV
   private fun initStt() {
     sttUtils = STTUtils(object : STTUtils.Callbacks {
       override fun onDone(text: String?) {
-        binding?.captionLayout?.etInput?.setText(highlightHashTag(text, R.color.black_4a4a4a, R.font.bold))
+        val cutPos = binding?.captionLayout?.etInput?.selectionStart?:0
+        val textValue =
+          binding?.captionLayout?.etInput?.text.toString().substring(0, cutPos) +" "+
+                  text +" "+ binding?.captionLayout?.etInput?.text.toString().substring(cutPos, binding?.captionLayout?.etInput?.text.toString().length)
+        binding?.captionLayout?.etInput?.setText(highlightHashTag(textValue, R.color.black_4a4a4a, R.font.bold))
+        binding?.captionLayout?.etInput?.setSelection(textValue.length)
       }
     })
     sttUtils?.init(this)
@@ -230,12 +236,14 @@ class EditPostActivity : AppBaseActivity<ActivityEditPostBinding, FestivePosterV
       binding?.tvPreviewAndPost -> {
         // saveUpdatePost()
         if (isBusinessLogoUpdated) {
+          showProgress()
           posterModel?.let {
             lifecycleScope.launch {
               withContext(Dispatchers.Default) {
                 val file = SvgUtils.svgToBitmap(it.primarySvgUrl)?.saveAsImageToAppFolder(getExternalFilesDir(null)?.path + File.separator + UPDATE_PIC_FILE_NAME)
                 if (file?.exists() == true) {
                   WebEngageController.trackEvent(Promotional_Update_Preview_Post_Click)
+                  hideProgress()
                   PostPreviewSocialActivity.launchActivity(this@EditPostActivity, binding?.captionLayout?.etInput?.text.toString(), file.path, IntentConstants.UpdateType.UPDATE_PROMO_POST.name, it)
                 }
               }
@@ -267,18 +275,18 @@ class EditPostActivity : AppBaseActivity<ActivityEditPostBinding, FestivePosterV
 
   private fun addHashTagFunction() {
     Log.i(TAG, "addHashTagFunction: " + "hi hello")
-    mSpannable = binding?.captionLayout?.etInput?.text
 
     binding?.captionLayout?.etInput?.addTextChangedListener(object : TextWatcher {
       override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
       override fun onTextChanged(short_text: CharSequence, start: Int, before: Int, count: Int) {
+        mSpannable = binding?.captionLayout?.etInput?.text
         val text = binding?.captionLayout?.etInput?.text.toString()
         var last_index = 0
         text.trim().split(Regex("\\s+")).forEach {
           Log.i(TAG, "addHashTagFunction: $it")
           if (it.isNotEmpty() && it[0] == '#') {
             val boldSpan = StyleSpan(Typeface.BOLD)
-            val foregroundSpan = ForegroundColorSpan(ContextCompat.getColor(this@EditPostActivity, R.color.black))
+            val foregroundSpan = ForegroundColorSpan(ContextCompat.getColor(this@EditPostActivity.baseContext, R.color.black))
             mSpannable?.setSpan(foregroundSpan, text.indexOf(it, startIndex = last_index), text.indexOf(it, startIndex = last_index) + it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             mSpannable?.setSpan(boldSpan, text.indexOf(it, startIndex = last_index), text.indexOf(it, startIndex = last_index) + it.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 

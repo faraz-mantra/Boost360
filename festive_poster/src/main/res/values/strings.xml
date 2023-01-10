@@ -43,7 +43,7 @@
 
     <string name="app_name">template</string>
     <string name="promo_updates">Promo updates</string>
-    <string name="update_studios">Updates studio</string>
+    <string name="update_studios">Boost studio</string>
     <string name="for_today">For today</string>
     <string name="browse">Browse</string>
     <string name="find">Find</string>
@@ -92,10 +92,11 @@
     <string name="or_placeholder_per_year">or ₹%1$s/year</string>
     <string name="get_annual_pack_for_placeholder">Get annual pack for ₹%1$d</string>
     <string name="get_monthly_pack_for_placeholder">Get monthly pack for ₹%1$d</string>
-    <string name="placeholder_percent_off">%1$d% OFF</string>
+    <string name="placeholder_percent_off" formatted="false">%1$d% OFF</string>
     <string name="buy">BUY</string>
     <string name="like">Like</string>
     <string name="comment">Comment</string>
+    <string name="website_address">Website Address</string>
     <string name="type_in_the_caption_to_create_your_own_hashtags">Type ‘#’ in the caption to create your own hashtags</string>
     <string name="post_on">Post on</string>
     <string name="posted_15_mins_ago">Posted 15 mins ago</string>
@@ -135,9 +136,9 @@
     <string name="your_brand_templates_for_quick_posting">Your brand templates for quick posting*</string>
     <string name="post_free_updates_using_create_tab">Post FREE updates using ‘Create’ tab</string>
     <string name="you_can_post_on_multiple_platforms_with_a_single_tap">You can post on multiple platforms with a single tap!</string>
-    <string name="this_premium_feature_is_available_in_online_classic_online_advanced_packs"><![CDATA[*This premium feature is available in ‘Online Classic’ & ‘Online Advanced’ packs.]]></string>
+    <string name="this_premium_feature_is_available_in_online_classic_online_advanced_packs"><![CDATA[*This premium feature is available in ‘Online Advanced’ packs.]]></string>
     <string name="you_can_continue_to_post_good_old_updates_using_the_create_tab_on_top">You can continue to post good old updates using the ‘create’ tab on top.</string>
-    <string name="explore_update_studio">Explore update studio</string>
+    <string name="explore_update_studio">Explore Boost studio</string>
     <string name="premium_updates_custom_designed_for_you">Premium updates custom designed for you.</string>
     <string name="free_updates_tap_on_create_to_post_like_before">FREE updates: tap on ‘Create’ to post like before.</string>
     <string name="promote_using_branded_update_templates">Promote using Branded Update Templates</string>
@@ -153,9 +154,6 @@
     <string name="get_branded_update_templates_5_more_features">Get ‘Branded update templates’ + 5 more features</string>
     <string name="get_branded_update_templates_placeholder_more_features">Get ‘Branded update templates’ + %1$d more features</string>
 
-    <string name="pay_499_or_5988_gst_extra">Pay ₹499/mo or ₹5988/yr (GST extra)</string>
-    <string name="pay_placeholder_or_placeholder_gst_extra">Pay ₹%1$s/mo or ₹%1$s/yr (GST extra)</string>
-
     <string name="view_pack_details">View pack details</string>
     <string name="you_will_be_taken_to_feature_marketplace">You’ll be taken to feature marketplace</string>
     <string name="promote_using_branded_update_templates_bold">Promote using\n<b>Branded Update\nTemplates</b></string>
@@ -166,6 +164,7 @@
     <string name="_18_gst">+18% GST</string>
     <string name="get_this_feature">Get this feature</string>
     <string name="poster_updated_successfully">Poster updated successfully!</string>
+    <string name="poster_greeting_desc_updated">Poster greeting description updated!</string>
     <string name="please_upload_image">Please upload image</string>
     <string name="please_enter_name">Please enter Name</string>
     <string name="please_enter_email">Please enter email</string>

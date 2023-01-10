@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -68,7 +69,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         productList.clear()
         productList.addAll(finalProductList)
         productList = productList.filter {
-          it.getNameValue().startsWith(query) || it.getNameValue().contains(query)
+          it.getNameValue().contains(query)
         } as ArrayList<ProductItem>
         setAdapterOrderList()
       }
@@ -130,12 +131,13 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         if (finalProductList.isNotEmpty()) {
           productList.clear()
           productList.addAll(finalProductList)
-          binding?.tvNoProducts?.visibility = View.GONE
-          binding?.productRecycler?.visibility = View.VISIBLE
+          binding.tvNoProducts.visibility = View.GONE
+          binding.productRecycler.visibility = View.VISIBLE
           setAdapterOrderList()
         } else {
-          binding?.tvNoProducts?.visibility = View.VISIBLE
-          binding?.productRecycler?.visibility = View.GONE
+          binding.tvNoProducts.visibility = View.VISIBLE
+          binding.productRecycler.visibility = View.GONE
+          Toast.makeText(activity, "Error fetching product list. Please try after sometime.", Toast.LENGTH_LONG).show()
         }
       } else showShortToast(it.message)
     }
@@ -149,12 +151,14 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
 
   private fun setAdapterOrderList() {
     if (itemsAdapter == null) {
-      binding?.productRecycler?.apply {
+      binding.productRecycler.apply {
         itemsAdapter = AppBaseRecyclerViewAdapter(baseActivity, productList, this@AddProductFragment)
         adapter = itemsAdapter
         itemsAdapter?.runLayoutAnimation(this)
       }
-    } else itemsAdapter?.notifyDataSetChanged()
+    } else {
+        itemsAdapter?.addFullItemList(productList)
+    }
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {

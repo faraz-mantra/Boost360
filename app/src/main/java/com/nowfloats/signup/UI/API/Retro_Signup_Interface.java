@@ -63,4 +63,5 @@ public interface Retro_Signup_Interface {
 
     @GET("/Support/v5/floatingpoint/getpackages")
     void post_getFPPackageDetails(@QueryMap Map<String, String> map, Callback<PricingPlansModel> callback);
+
 }

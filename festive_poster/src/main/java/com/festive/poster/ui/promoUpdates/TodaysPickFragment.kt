@@ -30,8 +30,9 @@ import com.framework.rest.NetworkResult
 import com.framework.utils.convertListObjToString
 import com.framework.utils.showToast
 import com.framework.utils.toArrayList
-import com.framework.webengageconstant.Promotional_Update_View_More_Click
-import com.framework.webengageconstant.Promtoional_Update_View_Updates_Click
+import com.framework.webengageconstant.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePosterViewModel>(), RecyclerItemClickListener {
 
@@ -81,6 +82,7 @@ class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePos
           stopShimmer()
           val data = it.data ?: return@observe
           val uiList = data.asTodaysPickModels().toArrayList()
+          Collections.reverse(uiList)
           addViewMoreInEachList(uiList)
           adapter?.setUpUsingDiffUtil(
             uiList
@@ -134,7 +136,7 @@ class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePos
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.cardBrowseAllTemplate -> {
+      binding.cardBrowseAllTemplate -> {
         WebEngageController.trackEvent(Promotional_Update_View_More_Click)
         addFragment(R.id.container, BrowseAllFragment.newInstance(), true, true)
       }
@@ -184,7 +186,10 @@ class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePos
         (childItem as? TemplateUi)?.let { posterWhatsappShareClicked(it, baseActivity) }
       }
       RecyclerViewActionType.POSTER_LOVE_CLICKED.ordinal -> {
-        (childItem as? TemplateUi)?.let { callFavApi(it) }
+        (childItem as? TemplateUi)?.let {
+          WebEngageController.trackEvent(if(it.isFavourite) UPDATE_STUDIO_UNMARK_FAVOURITE_CLICK else UPDATE_STUDIO_MARK_FAVOURITE_CLICK, CLICK, CLICKED)
+          callFavApi(it)
+        }
       }
       RecyclerViewActionType.POSTER_VIEW_MORE_CLICKED.ordinal -> {
         val data = (parentItem as? CategoryUi) ?: return
@@ -201,14 +206,19 @@ class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePos
 
   private fun callFavApi(posterModel: TemplateUi) {
     promoUpdatesViewModel?.markAsFav(posterModel.isFavourite.not(), posterModel.id)
-    promoUpdatesViewModel?.favStatus?.observe(viewLifecycleOwner) {
-      when (it) {
-        is NetworkResult.Loading -> {
-          showProgress()
-        }
-        else -> {
+    promoUpdatesViewModel?.favStatus?.observe(viewLifecycleOwner) { it1 ->
+      when (it1) {
+        is NetworkResult.Loading -> showProgress()
+        is NetworkResult.Success -> {
+          adapter?.list?.map { it2 -> it2.getParentTemplates()?.map { if (posterModel.id == it.id) it.isFavourite = it.isFavourite.not() } }
+          adapter?.notifyDataSetChanged()
           hideProgress()
         }
+        is NetworkResult.Error -> {
+          showShortToast(it1.msg ?: getString(R.string.something_went_wrong))
+          hideProgress()
+        }
+        else -> hideProgress()
       }
     }
   }

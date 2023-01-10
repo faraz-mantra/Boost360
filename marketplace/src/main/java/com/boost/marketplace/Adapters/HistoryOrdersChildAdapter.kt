@@ -49,7 +49,7 @@ class HistoryOrdersChildAdapter(itemList: ArrayList<WidgetDetail>?,val dateExpir
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
-        val tempCreatedOnDate = list.get(position).CreatedOn
+        val tempCreatedOnDate = list.get(position).ActivationDate
         val createdOnDate = Date(Long.parseLong(tempCreatedOnDate.substring(6, tempCreatedOnDate.length - 2)))
         val default_validity_months = list.get(position).Expiry.Value
         val calendarDates = Calendar.getInstance()

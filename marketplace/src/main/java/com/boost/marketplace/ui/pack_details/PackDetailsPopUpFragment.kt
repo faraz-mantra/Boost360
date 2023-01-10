@@ -98,6 +98,14 @@ class PackDetailsPopUpFragment : DialogFragment() {
 //            object : TypeToken<List<CartModel>>() {}.type
 //        )
 
+        binding.scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if(scrollY < 50){
+                binding.descContainer.visibility = View.VISIBLE
+            }else if(scrollY > 200) {
+                binding.descContainer.visibility = View.GONE
+            }
+        }
+
         howToUseAdapter = HowToUseAdapter(requireActivity(), java.util.ArrayList())
         faqAdapter = FAQAdapter(requireActivity(), java.util.ArrayList())
 //        dialog.behavior.isDraggable = true
@@ -136,7 +144,7 @@ class PackDetailsPopUpFragment : DialogFragment() {
         binding.packageTitle.text = features.name
 
         binding?.packageProfileImage?.let {
-            Glide.with(this).load(features.primary_image!!)
+            Glide.with(requireActivity().getApplicationContext()).load(features.primary_image!!)
                 .into(it)
         }
         binding?.learnMoreBtn?.setOnClickListener {

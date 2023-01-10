@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.appservice.ui.catalog.widgets.ClickType
@@ -312,9 +311,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 //          baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
           visibleViewHighLow(true)
         } else {
-          if (PreferencesUtils.instance.getData(IS_DR_HIGH_DIALOG, false)
-              .not()
-          ) welcomeDrScoreDialog()
+//          if (PreferencesUtils.instance.getData(IS_DR_HIGH_DIALOG, false)
+//              .not()
+//          ) welcomeDrScoreDialog()
           binding?.highReadinessScoreView?.visible()
           binding?.lowReadinessScoreView?.gone()
           visibleViewHighLow(true)
@@ -765,9 +764,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         else getChannelAccessToken(isEnquiriesShare = true, shareType = null)
       }
       binding?.btnFestive -> {
+        //TODO activate Post update journey for this as Asked by Product team
         //baseActivity.startFestivePosterActivity()
         //enable update studio on demand
-        baseActivity.startPostUpdate(session,true)
+        baseActivity.startPostUpdate(session)
       }
     }
   }
@@ -795,7 +795,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as List<String>
       if (mPaths.isNotEmpty()) {
         val businessLogoImage = File(mPaths[0])
-        Glide.with(this).load(businessLogoImage).into(binding?.imgBusinessLogo!!)
+        Glide.with(requireActivity().getApplicationContext()).load(businessLogoImage).into(binding?.imgBusinessLogo!!)
         uploadBusinessLogo(businessLogoImage)
       }
     }
@@ -1098,7 +1098,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         }
       }
       val otherWebsite = session?.getFPDetails(GET_FP_DETAILS_WEBSITE)
-      if (otherWebsite.isNullOrEmpty().not()) urlStringN += "\n⚡ *Other Website: $otherWebsite*"
+      if (otherWebsite.isNullOrEmpty().not()){
+        urlStringN += "\n⚡ *Other Website: $otherWebsite*"
+        connectedChannels.add("website")
+      }
       saveDataConnectedChannel(connectedChannels)
       if (session?.userPrimaryMobile.isNullOrEmpty().not()) urlStringN += "\n\uD83D\uDCDE *Call: ${session?.userPrimaryMobile}*"
       PreferencesUtils.instance.saveData(CHANNEL_SHARE_URL, urlStringN)

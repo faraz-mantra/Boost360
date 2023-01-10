@@ -21,6 +21,7 @@ import com.nowfloats.Restaurants.API.model.AddBookTable.AddBookTableData
 import com.nowfloats.Restaurants.API.model.DeleteBookTable.DeleteBookTableData
 import com.nowfloats.Restaurants.API.model.GetBookTable.Data
 import com.nowfloats.Restaurants.API.model.UpdateBookTable.UpdateBookTableData
+import com.nowfloats.util.Key_Preferences
 import com.nowfloats.util.Methods
 import com.thinksity.R
 import kotlinx.android.synthetic.main.book_a_table_details_fragment.*
@@ -36,6 +37,9 @@ import java.util.*
 
 class BookATableDetailsFragment : Fragment() {
 
+  private var dayString: String = ""
+  private var isSelectedWorkingDay: Boolean = false
+  private var isSelectedWorkingHour: Boolean = false
   var ScreenType = ""
   var itemId = ""
   val countList = arrayOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
@@ -80,6 +84,16 @@ class BookATableDetailsFragment : Fragment() {
       myCalendar.set(Calendar.YEAR, year)
       myCalendar.set(Calendar.MONTH, monthOfYear)
       myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+      val simpleDateFormat = SimpleDateFormat("EEEE")
+      val date = Date(year, monthOfYear, dayOfMonth - 1)
+      dayString = simpleDateFormat.format(date) //returns true day name for current month only
+
+      isSelectedWorkingDay = checkIfWorkingDay(dayString)
+
+      if (isSelectedWorkingDay.not())
+        Toast.makeText(activity, "Selected day is not working day.", Toast.LENGTH_LONG).show()
+
       updateLabel()
     }
 
@@ -101,7 +115,13 @@ class BookATableDetailsFragment : Fragment() {
 
       if (myCalendar.timeInMillis >= c.timeInMillis) {
         //it's after current
-        time_value.setText(SimpleDateFormat("hh:mm aa").format(myCalendar.time))
+        // hour = 15
+         val string = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME)
+        isSelectedWorkingHour = checkIfTimeIsInWorkingHour(hour, minute)
+        if (isSelectedWorkingHour)
+          time_value.setText(SimpleDateFormat("hh:mm aa").format(myCalendar.time))
+        else
+          Toast.makeText(activity, "Selected time is not working hour.", Toast.LENGTH_LONG).show()
       } else {
         //it's before current'
         Toast.makeText(context, "Please select valid timings.", Toast.LENGTH_LONG).show()
@@ -124,10 +144,14 @@ class BookATableDetailsFragment : Fragment() {
     setHeader()
 
     save_button.setOnClickListener {
-      if (ScreenType != null && ScreenType.equals("edit")) {
-        updateExistingTeamsAPI()
+      if (isSelectedWorkingDay && isSelectedWorkingHour) {
+        if (ScreenType != null && ScreenType.equals("edit")) {
+          updateExistingTeamsAPI()
+        } else {
+          createNewTeamsAPI()
+        }
       } else {
-        createNewTeamsAPI()
+        Toast.makeText(activity, "Selected date or time is not valid", Toast.LENGTH_LONG).show()
       }
     }
 
@@ -135,8 +159,140 @@ class BookATableDetailsFragment : Fragment() {
     if (ScreenType != null && ScreenType.equals("edit")) {
       displayData()
     }
+  }
 
+  private fun checkIfTimeIsInWorkingHour(hour: Int, minute: Int): Boolean {
+    var returnValue = false
+    val pattern = "hh:mma"
+    val patternSelected = "HH:mm"
+    val sdfSelected = SimpleDateFormat(patternSelected)
+    val dateStartTimeSElected = sdfSelected.parse("$hour:$minute")
 
+    try {
+      when(dayString) {
+        "Monday" -> {
+          val startTime = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME)
+          val sdf = SimpleDateFormat(pattern)
+          val dateStartTime = sdf.parse(startTime)
+
+          val endTime = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_END_TIME)
+          val dateEndTime = sdf.parse(endTime)
+
+          returnValue =  !(dateStartTimeSElected!!.before(dateStartTime) || dateStartTimeSElected.after(dateEndTime))
+        }
+
+        "Tuesday" -> {
+          val startTime = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME)
+          val sdf = SimpleDateFormat(pattern)
+          val dateStartTime = sdf.parse(startTime)
+
+          val endTime = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_END_TIME)
+          val dateEndTime = sdf.parse(endTime)
+
+          returnValue =  !(dateStartTimeSElected!!.before(dateStartTime) || dateStartTimeSElected.after(dateEndTime))
+        }
+
+        "Wednesday" -> {
+          val startTime = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME)
+          val sdf = SimpleDateFormat(pattern)
+          val dateStartTime = sdf.parse(startTime)
+
+          val endTime = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_END_TIME)
+          val dateEndTime = sdf.parse(endTime)
+
+          returnValue =  !(dateStartTimeSElected!!.before(dateStartTime) || dateStartTimeSElected.after(dateEndTime))
+        }
+
+        "Thursday" -> {
+          val startTime = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME)
+          val sdf = SimpleDateFormat(pattern)
+          val dateStartTime = sdf.parse(startTime)
+
+          val endTime = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_END_TIME)
+          val dateEndTime = sdf.parse(endTime)
+
+          returnValue =  !(dateStartTimeSElected!!.before(dateStartTime) || dateStartTimeSElected.after(dateEndTime))
+        }
+
+        "Friday" -> {
+          val startTime = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME)
+          val sdf = SimpleDateFormat(pattern)
+          val dateStartTime = sdf.parse(startTime)
+
+          val endTime = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_END_TIME)
+          val dateEndTime = sdf.parse(endTime)
+
+          returnValue =  !(dateStartTimeSElected!!.before(dateStartTime) || dateStartTimeSElected.after(dateEndTime))
+        }
+
+        "Saturday" -> {
+          val startTime = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME)
+          val sdf = SimpleDateFormat(pattern)
+          val dateStartTime = sdf.parse(startTime)
+
+          val endTime = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_END_TIME)
+          val dateEndTime = sdf.parse(endTime)
+
+          returnValue =  !(dateStartTimeSElected!!.before(dateStartTime) || dateStartTimeSElected.after(dateEndTime))
+        }
+
+        "Sunday" -> {
+          val startTime = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME)
+          val sdf = SimpleDateFormat(pattern)
+          val dateStartTime = sdf.parse(startTime)
+
+          val endTime = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME)
+          val dateEndTime = sdf.parse(endTime)
+
+          returnValue =  !(dateStartTimeSElected!!.before(dateStartTime) || dateStartTimeSElected.after(dateEndTime))
+        }
+      }
+    } catch (ex: Exception) {
+      Log.d("Exception", ex.message.toString())
+    }
+
+    return returnValue
+  }
+
+  private fun checkIfWorkingDay(dayOfMonth: String): Boolean {
+    var returnValue = false
+    when(dayOfMonth) {
+      "Monday" -> {
+        val string = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME)
+        returnValue = string.toLowerCase().endsWith("am") || string.endsWith("pm")
+      }
+
+      "Tuesday" -> {
+        val string = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME)
+        returnValue = string.toLowerCase().endsWith("am") || string.endsWith("pm")
+      }
+
+      "Wednesday" -> {
+        val string = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME)
+        returnValue = string.toLowerCase().endsWith("am") || string.endsWith("pm")
+      }
+
+      "Thursday" -> {
+        val string = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME)
+        returnValue = string.toLowerCase().endsWith("am") || string.endsWith("pm")
+      }
+
+      "Friday" -> {
+        val string = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME)
+        returnValue = string.toLowerCase().endsWith("am") || string.endsWith("pm")
+      }
+
+      "Saturday" -> {
+        val string = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME)
+        returnValue = string.toLowerCase().endsWith("am") || string.endsWith("pm")
+      }
+
+      "Sunday" -> {
+        val string = session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME)
+        returnValue = string.toLowerCase().endsWith("am") || string.endsWith("pm")
+      }
+    }
+    return returnValue
   }
 
   fun displayData() {

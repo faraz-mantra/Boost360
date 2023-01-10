@@ -156,8 +156,8 @@ dependencies {
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 
     //Firebase
-    api 'com.google.firebase:firebase-analytics-ktx:19.0.2'
-    api 'com.google.firebase:firebase-config-ktx:21.0.1'
+    api 'com.google.firebase:firebase-analytics-ktx:21.2.0'
+    api 'com.google.firebase:firebase-config-ktx:21.2.0'
 
     api 'com.appsflyer:af-android-sdk:6.0.0'
 
@@ -169,7 +169,7 @@ dependencies {
 
     // Declare the dependency for the Cloud Firestore library
     // When using the BoM, you don't specify versions in Firebase library dependencies
-    api 'com.google.firebase:firebase-firestore-ktx:23.0.4'
+    api 'com.google.firebase:firebase-firestore-ktx:24.4.1'
 
     // Referral Library: invitereferrals
     api 'com.android.installreferrer:installreferrer:2.2'
@@ -179,7 +179,7 @@ dependencies {
     api 'com.webengage:android-sdk:3.19.1'
 
     // sms receiver apis
-    api 'com.google.android.gms:play-services-auth:20.1.0'
+    api 'com.google.android.gms:play-services-auth:20.4.0'
     api 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
 
 //    api 'com.google.android.gms:play-services-ads:20.5.0'

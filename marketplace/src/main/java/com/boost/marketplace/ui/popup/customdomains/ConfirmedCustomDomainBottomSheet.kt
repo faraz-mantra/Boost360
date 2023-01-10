@@ -120,7 +120,6 @@ class ConfirmedCustomDomainBottomSheet(val activity: CustomDomainActivity) :
                 if(itemInCartStatus == true){
                     val args = Bundle()
                     args.putString("addonName", blockedItem!!)
-                    args.putBoolean("activty1", true)
                     removePackageBottomSheet.arguments = args
                     fragmentManager?.let { it1 ->
                         removePackageBottomSheet.show(

@@ -300,7 +300,7 @@ public class CustomerAssistantService extends Service {
     private PendingIntent createPendingIntent() {
         try {
             Intent intent = new Intent(this, Class.forName("com.dashboard.controller.DashboardActivity"));
-            return PendingIntent.getActivity(this, 0, intent, 0);
+            return PendingIntent.getActivity(this, 0, intent, Build.VERSION.SDK_INT>= Build.VERSION_CODES.S? PendingIntent.FLAG_IMMUTABLE : PendingIntent.FLAG_UPDATE_CURRENT);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

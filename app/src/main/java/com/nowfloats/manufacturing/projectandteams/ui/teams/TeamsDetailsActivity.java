@@ -107,39 +107,24 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
 
-        placeImageLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialogToGetImage();
-            }
-        });
+        placeImageLayout.setOnClickListener(v -> showDialogToGetImage());
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        saveButton.setOnClickListener(v -> {
+            if (validateInput()) {
                 if (path != null) {
                     showLoader(getString(R.string.uploading_image_please_wait));
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            uploadImageToServer();
-                        }
-                    }, 200);
+                    new Handler().postDelayed(() -> uploadImageToServer(), 200);
                 } else {
                     uploadDataToServer();
                 }
-
             }
         });
 
-        removePlaceImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                placeImage.setImageDrawable(null);
-                removePlaceImage.setVisibility(View.GONE);
-                uploadedImageURL = "";
-                path = null;
-            }
+        removePlaceImage.setOnClickListener(v -> {
+            placeImage.setImageDrawable(null);
+            removePlaceImage.setVisibility(View.GONE);
+            uploadedImageURL = "";
+            path = null;
         });
 
         //setheader
@@ -570,7 +555,7 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
     private boolean validateInput() {
         if (nameValue.getText().toString().isEmpty() || designationValue.getText().toString().isEmpty() || fbValue.getText().toString().isEmpty()
                 || twitterValue.getText().toString().isEmpty() || skypeValue.getText().toString().isEmpty()) {
-            Toast.makeText(getApplicationContext(), getString(R.string.fields_are_empty), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.mandatory_fields_cannot_be_kept_empty), Toast.LENGTH_LONG).show();
             return false;
         }
 

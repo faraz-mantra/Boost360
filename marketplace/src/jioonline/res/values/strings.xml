@@ -41,4 +41,5 @@
   <string name="learn_more"><u>Learn More</u></string>
   <string name="learn_more_feature_details"><u>Learn more</u></string>
   <string name="show_less"><u>Show less</u></string>
+  <string name="loading_video">Loading video…</string>
 </resources>

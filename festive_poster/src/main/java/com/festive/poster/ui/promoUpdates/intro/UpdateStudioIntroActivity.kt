@@ -67,15 +67,15 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
 
     val data = arrayListOf(
       IntroUpdateStudioItem(
-        getString(R.string.one_update_multiple_platforms), R.drawable.update_studio_intro1, getString(R.string.you_can_post_on_multiple_platforms_with_a_single_tap)
+        getString(R.string.one_update_multiple_platforms), R.drawable.update_studio_intro1_v2, getString(R.string.you_can_post_on_multiple_platforms_with_a_single_tap)
       ),
 
       IntroUpdateStudioItem(
-        getString(R.string.your_brand_templates_for_quick_posting), R.drawable.update_studio_intro2, getString(R.string.this_premium_feature_is_available_in_online_classic_online_advanced_packs)
+        getString(R.string.your_brand_templates_for_quick_posting), R.drawable.update_studio_intro_2_v2, getString(R.string.this_premium_feature_is_available_in_online_classic_online_advanced_packs)
       ),
 
       IntroUpdateStudioItem(
-        getString(R.string.post_free_updates_using_create_tab), R.drawable.update_studio_intro3, getString(R.string.you_can_continue_to_post_good_old_updates_using_the_create_tab_on_top)
+        getString(R.string.post_free_updates_using_create_tab), R.drawable.update_studio_intro3_v2, getString(R.string.you_can_continue_to_post_good_old_updates_using_the_create_tab_on_top)
       ),
     )
 
@@ -117,7 +117,7 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
       }
     })
 
-    autoSlide()
+//    autoSlide()
 
   }
 

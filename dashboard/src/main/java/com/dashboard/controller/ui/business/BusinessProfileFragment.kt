@@ -231,6 +231,7 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
     val matrix = ColorMatrix()
     matrix.setSaturation(0f)
     val filter = ColorMatrixColorFilter(matrix)
+    binding?.civWebsitePageDisabled?.colorFilter = filter
     binding?.civFbPageDisabled?.colorFilter = filter
     binding?.civFbShopDisabled?.colorFilter = filter
     binding?.civWhatsappBusinessDisabled?.colorFilter = filter

@@ -62,6 +62,7 @@
                 android:fontFamily="@font/regular_medium"
                 android:includeFontPadding="false"
                 android:maxLines="4"
+                android:paddingHorizontal="8dp"
                 android:textColor="@color/black_4a4a4a"
                 android:textSize="@dimen/text_11"
                 app:layout_constraintEnd_toStartOf="@+id/guide_end"
@@ -143,6 +144,7 @@
                 <com.framework.views.customViews.CustomImageView
                     android:layout_width="@dimen/size_16"
                     android:layout_height="@dimen/size_16"
+                    android:tint="@color/themeColor"
                     android:src="@drawable/ic_share_yellow"/>
 
                 <com.framework.views.customViews.CustomTextView

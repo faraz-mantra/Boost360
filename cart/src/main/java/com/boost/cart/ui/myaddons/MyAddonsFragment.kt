@@ -96,11 +96,11 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
     val profileURL = (activity as CartActivity).profileUrl
 
     if (profileURL.isNullOrEmpty() || profileURL.length < 2) {
-      Glide.with(this)
+      Glide.with(requireActivity().getApplicationContext())
         .load(R.drawable.group)
         .into(merchant_logo)
     } else {
-      Glide.with(this)
+      Glide.with(requireActivity().getApplicationContext())
         .load(profileURL)
         .into(merchant_logo)
     }
@@ -108,7 +108,7 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
     top_line_view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 
 
-//        Glide.with(this).load(R.drawable.back_beau)
+//        Glide.with(requireActivity().getApplicationContext()).load(R.drawable.back_beau)
 //                .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))
 //                .into(back_image)
 

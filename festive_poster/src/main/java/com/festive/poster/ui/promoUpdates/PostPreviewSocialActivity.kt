@@ -45,9 +45,7 @@ import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.getDomainName
 import com.framework.utils.*
-import com.framework.webengageconstant.EVENT_LABEL_NULL
-import com.framework.webengageconstant.Promotional_Update_Preview_Post_Loaded
-import com.framework.webengageconstant.Update_studio_Get_feature_click
+import com.framework.webengageconstant.*
 import com.onboarding.nowfloats.constant.PreferenceConstant
 import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.RequestFloatsModel
@@ -118,7 +116,9 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
   }
 
   override fun onCreateView() {
-    WebEngageController.trackEvent(Promotional_Update_Preview_Post_Loaded)
+//    WebEngageController.trackEvent(Promotional_Update_Preview_Post_Loaded)
+    WebEngageController.trackEvent(Update_Preview_loaded)
+
     session = UserSessionManager(this)
     captionIntent = intent?.getBundleExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA)?.getString(IntentConstants.IK_CAPTION_KEY)
     initUI()
@@ -149,6 +149,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     }
 
     binding?.tvPostUpdate?.setOnClickListener {
+      WebEngageController.trackEvent(Post_An_Update, CLICKED, NULL)
       if (dataloaded) {
         var socialShare = ""
         val checkedItems = uiChBoxChannelList?.filter { it.isChecked == true }
@@ -621,11 +622,48 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
   }
 
   fun fetchSubscriberCount() {
-    viewModel.getMerchantSummary(session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session?.fpTag).observeOnce(this) {
+    viewModel.getMerchantSummary(clientId, session?.fpTag).observeOnce(this) {
       val response = it as? MerchantSummaryResponse
       val subscriber = response?.Entity?.firstOrNull()?.get("NoOfSubscribers")
       val subTitle = if (subscriber == 0) {
         getString(R.string.no_recipients, 0)
+      } else {
+        getString(R.string.placeholder_recipients, subscriber)
+      }
+        saveTemplateAction(TemplateSaveActionBody.ActionType.UPDATE_CREATED, template)
+        posterProgressSheet?.dismiss()
+
+        if (PreferencesUtils.instance.getData(com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE, true)) {
+            InAppReviewUtils.showInAppReview(this@PostPreviewSocialActivity, InAppReviewUtils.Events.in_app_review_first_promo_update)
+            PreferencesUtils.instance.saveData(com.festive.poster.constant.PreferenceConstant.FIRST_PROMO_UPDATE, false)
+        }
+        /*PostSuccessBottomSheet.newInstance(posterImgPath, captionIntent)
+            .show(
+                supportFragmentManager,
+                PostSuccessBottomSheet::class.java.name
+            )*/
+
+      uiChBoxChannelList?.add(SocialPlatformModel(
+        getString(R.string.email_sub), subTitle, true, true, true, SocialPreviewChannel.EMAIL
+      ).apply {
+        icon = ContextCompat.getDrawable(this@PostPreviewSocialActivity, R.drawable.ic_promo_emailers)
+      })
+
+
+
+      uiPreviewChannelList?.add(SocialPreviewModel(posterImgPath, session?.fPName, captionIntent, true, SocialPreviewChannel.EMAIL))
+      setChannelAdapter()
+      setupPreviewList()
+      dataloaded = true
+    }
+
+
+    fun fetchSubscriberCount(){
+        viewModel.getMerchantSummary(clientId, session?.fpTag).observeOnce(this) {
+            val response = it as? MerchantSummaryResponse
+            val subscriber = response?.Entity?.firstOrNull()?.get("NoOfSubscribers")
+            val subTitle = if (subscriber == 0) {
+                getString(R.string.no_recipients, 0)
 
       } else {
         getString(R.string.placeholder_recipients, subscriber)
@@ -646,4 +684,5 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
 
     }
   }
+}
 }

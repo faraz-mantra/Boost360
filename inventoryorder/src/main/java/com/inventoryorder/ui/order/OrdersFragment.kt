@@ -18,10 +18,6 @@ import com.framework.extensions.visible
 import com.framework.utils.InAppReviewUtils
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.getData
-import com.framework.views.zero.FragmentZeroCase
-import com.framework.views.zero.OnZeroCaseClicked
-import com.framework.views.zero.RequestZeroCaseBuilder
-import com.framework.views.zero.ZeroCases
 import com.framework.views.zero.old.AppFragmentZeroCase
 import com.framework.views.zero.old.AppOnZeroCaseClicked
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder

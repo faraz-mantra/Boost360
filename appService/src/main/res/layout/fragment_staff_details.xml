@@ -92,6 +92,7 @@
               android:hint="@string/full_name"
               android:inputType="textCapWords"
               android:padding="@dimen/size_12"
+              android:saveEnabled="true"
               android:singleLine="true"
               android:textColor="@color/warm_grey_10"
               android:textColorHint="@color/primary_grey"
@@ -153,6 +154,7 @@
                 android:inputType="number"
                 android:maxLength="2"
                 android:padding="@dimen/size_12"
+                android:saveEnabled="true"
                 android:singleLine="true"
                 android:textColor="@color/warm_grey_10"
                 android:textColorHint="@color/primary_grey"
@@ -174,7 +176,7 @@
 
             <com.framework.views.customViews.CustomTextField
               android:id="@+id/etv_specialization"
-
+              android:saveEnabled="true"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_6"
@@ -206,6 +208,7 @@
               android:layout_marginTop="@dimen/size_5"
               android:background="@drawable/bg_rect_edit_txt"
               android:gravity="start"
+              android:saveEnabled="true"
               android:hint="@string/describe_this_staff_in_around_2000_characters_at_max"
               android:inputType="textMultiLine"
               android:padding="@dimen/size_12"
@@ -233,6 +236,7 @@
               android:drawableEnd="@drawable/ic_grey_drop_down"
               android:drawableTint="@color/pinkish_grey"
               android:focusable="false"
+              android:saveEnabled="true"
               android:hint="@string/dropdown_options_1_1_2_3_4_5_5"
               android:padding="@dimen/size_12"
               android:singleLine="true"
@@ -262,6 +266,7 @@
               android:id="@+id/ctv_services_subheading"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:saveEnabled="true"
               android:layout_below="@id/ctv_service_provided_heading"
               android:layout_gravity="center_vertical"
               android:fontFamily="@font/regular"
@@ -271,7 +276,7 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/ctv_services"
-
+              android:saveEnabled="true"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_below="@id/ctv_services_subheading"
@@ -385,6 +390,7 @@
               android:fontFamily="@font/regular"
               android:tag="com.userexperior.ueSecureView"
               android:textColor="@color/blue_4A90E2"
+              android:saveEnabled="true"
               android:textFontWeight="600"
               android:textSize="10sp"
               android:visibility="gone" />

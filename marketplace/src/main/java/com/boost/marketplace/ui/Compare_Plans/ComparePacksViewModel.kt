@@ -12,6 +12,7 @@ import com.boost.dbcenterapi.data.api_model.Domain.AlreadyPurchasedDomainRespons
 import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
 import com.boost.dbcenterapi.data.api_model.gst.Error
 import com.boost.dbcenterapi.data.api_model.mycurrentPlanV3.MyPlanV3
+import com.boost.dbcenterapi.data.api_model.vmn.PurchasedVmnResponse
 import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
@@ -48,6 +49,7 @@ class ComparePacksViewModel: BaseViewModel() {
     val compositeDisposable = CompositeDisposable()
     private var callTrackListResponse: MutableLiveData<CallTrackListResponse> = MutableLiveData()
     var purchasedDomainResult: MutableLiveData<PurchasedDomainResponse> = MutableLiveData()
+    var purchasedVmnResult: MutableLiveData<PurchasedVmnResponse> = MutableLiveData()
     var myplanV3Result: MutableLiveData<MyPlanV3> = MutableLiveData()
 
     fun getSpecificFeature(): LiveData<List<FeaturesModel>> {
@@ -79,6 +81,9 @@ class ComparePacksViewModel: BaseViewModel() {
 
     fun PurchasedDomainResponse(): LiveData<PurchasedDomainResponse> {
         return purchasedDomainResult
+    }
+    fun purchasedVmnResult(): LiveData<PurchasedVmnResponse> {
+        return purchasedVmnResult
     }
 
     fun myplanResultV3(): LiveData<MyPlanV3> {
@@ -289,7 +294,7 @@ class ComparePacksViewModel: BaseViewModel() {
                 updatesLoader.postValue(false)
                 //add cartitem to firebase
                 addToCartResult.postValue(true)
-                DataLoader.updateCartItemsToFirestore(Application())
+                //DataLoader.updateCartItemsToFirestore(Application())
             }
             .doOnError {
                 updatesError.postValue(it.message)
@@ -324,7 +329,7 @@ class ComparePacksViewModel: BaseViewModel() {
 //        findingNumberLoader.postValue(true)
         if (com.boost.cart.utils.Utils.isConnectedToInternet(getApplicationContext())) {
             CompositeDisposable().add(
-                NewApiService.getCallTrackDetails(fpid, clientId)
+                NewApiService1.getCallTrackDetails(fpid, clientId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
@@ -399,7 +404,7 @@ class ComparePacksViewModel: BaseViewModel() {
             .doOnComplete {
                 updatesLoader.postValue(false)
                 //add cartitem to firebase
-                DataLoader.updateCartItemsToFirestore(Application())
+                //DataLoader.updateCartItemsToFirestore(Application())
             }
             .doOnError {
                 updatesError.postValue(it.message)
@@ -419,6 +424,23 @@ class ComparePacksViewModel: BaseViewModel() {
                         myplanV3Result.postValue(it)
 //                        updatesLoader.postValue(false)
                     }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
+
+    fun getAlreadyPurchasedVmn(auth: String, fpTag: String, clientId:String) {
+        updatesLoader.postValue(true)
+        compositeDisposable.add(
+            NewApiService.getAlreadyPurchasedVmn(auth, fpTag, clientId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        purchasedVmnResult.postValue(it)
+                        updatesLoader.postValue(false)
+                    },{
                         updatesLoader.postValue(false)
                         updatesError.postValue(it.message)
                     })
