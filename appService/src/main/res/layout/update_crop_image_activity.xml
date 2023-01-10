@@ -16,7 +16,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.framework.views.customViews.CustomImageView
-            android:id="@+id/customImageView6"
+            android:id="@+id/iv_crop_update_close"
             android:layout_width="@dimen/size_32"
             android:layout_height="@dimen/size_32"
             android:layout_marginStart="@dimen/size_8"
@@ -38,7 +38,7 @@
             android:textSize="17sp"
             app:fontFamily="@font/bold"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
-            app:layout_constraintStart_toEndOf="@+id/customImageView6"
+            app:layout_constraintStart_toEndOf="@+id/iv_crop_update_close"
             app:layout_constraintTop_toTopOf="@+id/toolbar2" />
 
         <com.framework.views.customViews.CustomImageView
