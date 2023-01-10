@@ -90,8 +90,12 @@ class CatalogProduct(
 
   @SerializedName("BuyOnlineLink")
   var buyOnlineLink: Any? = null,
+
   @SerializedName("keySpecification")
   var keySpecification: KeySpecification? = null,
+
+  @SerializedName("isNotForSale")
+  var isNotForSale: Boolean = true,
 
   @SerializedName("otherSpecifications")
   var otherSpecification: ArrayList<KeySpecification>? = null,

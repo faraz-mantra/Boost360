@@ -178,10 +178,13 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
                 .setDefaultFontPath("Roboto-Light.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build());*/
-        FacebookSdk.sdkInitialize(getApplicationContext());
+//        FacebookSdk.sdkInitialize(getApplicationContext());
+        if (!FacebookSdk.isInitialized()) {
+            FacebookSdk.sdkInitialize(getApplicationContext());
+        }
         registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this));
         //WebEngage.registerPushNotificationCallback(new PushNotificationCallbacksImpl());
-        AppEventsLogger.activateApp(this);
+        AppEventsLogger.activateApp(instance);
 
         mInstance = this;
         try {
