@@ -102,8 +102,8 @@ import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
-const val IS_FIRST_LOAD = "isFirsLoad"
-const val IS_DR_HIGH_DIALOG = "isDrHighDialog"
+//const val IS_FIRST_LOAD = "isFirsLoad"
+//const val IS_DR_HIGH_DIALOG = "isDrHighDialog"
 
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
@@ -241,7 +241,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
             setDataRiaAcademy(data.academyBanners!!)
           }
           if (data?.marketplaceBanners.isNullOrEmpty().not()) {
-            val marketBannerFilter = (data?.marketplaceBanners ?: ArrayList()).marketBannerFilter(session)
+            val marketBannerFilter =
+              (data?.marketplaceBanners ?: ArrayList()).marketBannerFilter(session)
             saveDataMarketPlace(marketBannerFilter)
             setDataMarketBanner(marketBannerFilter)
           }
@@ -771,7 +772,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         else getChannelAccessToken(isEnquiriesShare = true, shareType = null)
       }
       binding?.btnFestive -> {
-        //TODO activate Post update journey for this as Asked by Product team
         //baseActivity.startFestivePosterActivity()
         //enable update studio on demand
         baseActivity.startPostUpdate(session)
@@ -869,9 +869,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun quickActionClick(type: QuickActionItem.QuickActionType) {
     when (type) {
-      QuickActionItem.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(session,true)
+//      QuickActionItem.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(true)
       QuickActionItem.QuickActionType.CREATE_NEW_UPDATE -> baseActivity.createAnUpdate()
-      QuickActionItem.QuickActionType.READY_MADE_UPDATES -> baseActivity.startPostUpdate(true)
+      QuickActionItem.QuickActionType.READY_MADE_UPDATES -> baseActivity.startPostUpdate(session,true)
       QuickActionItem.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
       QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startTestimonial(session, true)
       QuickActionItem.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCustomPage(session, true)
@@ -1157,6 +1157,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 }
 
+/*
 fun UserSessionManager.getRequestMap(startDate: String, endDate: String): Map<String, String> {
   val map = HashMap<String, String>()
   map["batchType"] = VisitsModelResponse.BatchType.yy.name
@@ -1209,4 +1210,4 @@ fun getRequestSellerSummary(filterDate: FilterDateModel?): SellerSummaryRequest 
   )
   request.filterBy = arrayListOf(FilterBy(queryConditionType = FilterBy.ConditionType.AND.name, queryObject))
   return request
-}
+}*/
