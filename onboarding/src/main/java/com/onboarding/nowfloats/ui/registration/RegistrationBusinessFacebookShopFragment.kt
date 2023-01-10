@@ -183,7 +183,7 @@ class RegistrationBusinessFacebookShopFragment :
     val pages = response?.data ?: return
 //        if (pages.size > 1) return showShortToast(resources.getString(R.string.select_one_page))
     val page = pages.firstOrNull() ?: return
-    channelAccessToken.userAccessTokenKey = AccessToken.getCurrentAccessToken().token
+    channelAccessToken.userAccessTokenKey = AccessToken.getCurrentAccessToken()?.token
     channelAccessToken.userAccountId = page.id
     channelAccessToken.profilePicture = FacebookGraphManager.getProfilePictureUrl(page.id ?: "")
     channelAccessToken.userAccountName = page.name

@@ -63,19 +63,19 @@
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tv_no_post"
                 android:layout_width="match_parent"
-                android:textColor="@color/black_4a4a4a"
-                android:visibility="visible"
-                android:gravity="center"
-                android:textSize="@dimen/text_16"
-                android:text="@string/no_posts_available"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/btn_post_new_update"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginHorizontal="@dimen/size_20"
                 android:layout_marginTop="@dimen/size_16"
-                android:layout_marginBottom="@dimen/_16sdp"/>
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:gravity="center"
+                android:text="@string/no_posts_available"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="@dimen/text_16"
+                android:visibility="gone" />
 
             <com.framework.views.customViews.CustomButton
                 android:id="@+id/btn_post_new_update"
@@ -93,7 +93,6 @@
         android:id="@+id/shimmer_layout_past"
         layout="@layout/shimmer_layout_past_updates"
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="wrap_content" />
 
 </LinearLayout>

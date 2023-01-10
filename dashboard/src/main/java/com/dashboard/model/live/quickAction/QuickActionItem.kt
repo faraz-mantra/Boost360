@@ -20,7 +20,9 @@ class QuickActionItem(
 
   enum class QuickActionType(var icon: Int, @RawRes var lotty: Int? = null) {
     POST_STATUS_STORY(R.drawable.ic_post_new_story_d),
-    POST_NEW_UPDATE(R.drawable.ic_post_edit_d, R.raw.post_update_anim),
+    CREATE_NEW_UPDATE(R.drawable.ic_createnew_update_d, R.raw.post_update_anim),
+    READY_MADE_UPDATES(R.drawable.ic_readymade_update_d, R.raw.post_update_anim),
+    //POST_NEW_UPDATE(R.drawable.ic_post_edit_d, R.raw.post_update_anim),
     ADD_PHOTO_GALLERY(R.drawable.ic_add_photo_d), PLACE_CONSULT(R.drawable.ic_video_consulation_d),
     PLACE_APPOINTMENT(R.drawable.ic_book_appointment_d), PLACE_ORDER_BOOKING(R.drawable.ic_new_apt_d),
     ADD_TESTIMONIAL(R.drawable.ic_add_testmonial_d),

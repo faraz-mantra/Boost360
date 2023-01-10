@@ -100,7 +100,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
 
     //facebook
-    implementation 'com.facebook.android:facebook-login:5.15.3'
+    implementation 'com.facebook.android:facebook-login:15.2.0'
     implementation 'com.google.firebase:firebase-invites:17.0.0'
     api project(path: ':onboarding')
 }

@@ -29,19 +29,15 @@
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
         <data
-          android:host="boost.nowfloats.com"
-          android:pathPrefix="/deeplink"
-          android:scheme="https" />
-
-        <data
           android:host="@string/deep_base_url"
           android:pathPrefix="/"
-          android:scheme="http" />
+          android:scheme="https" />
 
         <data
           android:host="@string/deep_base_onelink_url"
           android:pathPrefix="/FX0L"
           android:scheme="https" />
+
       </intent-filter>
       <!-- Accept adb data flag -->
       <intent-filter
