@@ -421,7 +421,7 @@
         <item>11:30PM</item>
     </string-array>
     <string name="facebook_app_id">539836972828386</string>
-
+    <string name="facebook_client_token">5791c5117bbee2387770690ebc302551</string>
 
     <string name="home">Home</string>
     <string name="title_activity_create__message_">Post an Update</string>

@@ -184,7 +184,7 @@ class RegistrationBusinessFacebookPageFragment :
     val pages = response?.data ?: return
 //        if (pages.size > 1) return showShortToast(resources.getString(R.string.select_one_page))
     val page = pages.firstOrNull() ?: return
-    Log.d("UserToken", "" + AccessToken.getCurrentAccessToken().token);
+    Log.d("UserToken", "" + AccessToken.getCurrentAccessToken()?.token);
     Log.d("PageToken", "" + page.access_token);
     channelAccessToken.userAccessTokenKey = page.access_token
     channelAccessToken.userAccountId = page.id

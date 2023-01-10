@@ -2,5 +2,6 @@
 <resources>
   <string name="app_name">Boost 360</string>
   <string name="facebook_app_id">539836972828386</string>
+  <string name="facebook_client_token">5791c5117bbee2387770690ebc302551</string>
   <string name="fb_login_protocol_scheme">fb539836972828386</string>
 </resources>
