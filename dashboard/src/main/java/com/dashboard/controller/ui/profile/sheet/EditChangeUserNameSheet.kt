@@ -41,7 +41,7 @@ class EditChangeUserNameSheet(var click: () -> Unit) : BaseBottomSheetDialog<She
     binding?.cetBusinessName?.doAfterTextChanged {
       val length1 = it?.length ?: 0
       binding?.ctvBusinessNameCount?.text = "${length1}/40"
-      binding?.btnPublish?.isEnabled = length1 < 40
+      binding?.btnPublish?.isEnabled = length1 <= 40
     }
   }
 

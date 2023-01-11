@@ -109,7 +109,7 @@ class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumbe
           (baseActivity as? DashboardFragmentContainerActivity)?.onRefresh()
           dismiss()
         } else {
-          val errorMessage = if (it.errorIPMessage() == "Invalid Otp For Mobileno") {
+          val errorMessage = if (it.errorIPMessage()!!.contains("Invalid Otp")) {
             "Invalid Otp For Mobile no"
           } else {
             it.errorIPMessage()
