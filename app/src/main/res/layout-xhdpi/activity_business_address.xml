@@ -128,6 +128,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="bottom"
+                  android:maxLength="6"
                 android:hint="@string/pin_area_code"
                 android:inputType="text"
                 android:textColor="#575757"
