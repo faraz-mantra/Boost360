@@ -257,35 +257,28 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
       viewModel?.createMerchantProfile(request = categoryFloatsReq?.requestProfile)?.observeOnce(viewLifecycleOwner) {
         val businessProfileResponse = it as? BusinessProfileResponse
         if (it.isSuccess() && businessProfileResponse != null && businessProfileResponse.result?.loginId.isNullOrEmpty().not()) {
-          val loginId = businessProfileResponse.result?.loginId
-          fetchLocationAndSendWEEvent(loginId!!+"-"+phoneNumber)
           putCreateBusinessOnBoarding(businessProfileResponse)
         } else {
           hideProgress()
-          fetchLocationAndSendWEEvent(phoneNumber)
           showShortToast(it?.errorFlowMessage() ?: getString(R.string.unable_to_create_profile))
         }
+        fetchLocationAndSendWEEvent()
       }
     } else putCreateBusinessOnBoarding(this.responseCreateProfile!!)
   }
 
-  private fun fetchLocationAndSendWEEvent(resultString: String?) {
+  private fun fetchLocationAndSendWEEvent() {
     val locationApiUrl = "https://api.whatismyip.com/wimi.php"
     viewModel?.getUserLocation(locationApiUrl)?.observeOnce(viewLifecycleOwner) {
       hideProgress()
       var outputString=""
       if (it.isSuccess()) {
         val locationResponse = it as? LocationResponse
-        outputString = resultString + "-" + locationResponse?.geo
+        outputString = locationResponse?.geo.toString()
       } else {
-        outputString = "$resultString-Location not found!"
+        outputString = "Location not found!"
       }
       session?.userLocationIP = outputString
-//      WebEngageController.trackEvent(
-//        USER_LOCATION,
-//        USER_LOCATION_LABEL,
-//        outputString
-//      )
     }
   }
 

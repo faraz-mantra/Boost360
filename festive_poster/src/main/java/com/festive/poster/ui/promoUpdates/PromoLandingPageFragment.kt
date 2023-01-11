@@ -33,7 +33,6 @@ import kotlin.math.abs
 
 class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding, BaseViewModel>() {
 
-  val browseTabFragment = BrowseTabFragment.newInstance()
   var currentPage: Int = 0
   var isCreateClick: Boolean = false
   var isIsTodayTabClicked: Boolean = false
@@ -107,10 +106,15 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
 
          }, 100)
      }*/
+    binding.fabBrowseAll!!.setOnClickListener {
+      addFragment(R.id.container, BrowseCategoriesFragment.newInstance(), true, true)
+    }
   }
 
   private fun setupViewPager() {
-    val fragmentList = arrayListOf(TodaysPickFragment.newInstance(), browseTabFragment, BlankFragment())
+    binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
+    binding.tabLayout.tabMode = TabLayout.MODE_FIXED
+    val fragmentList = arrayListOf(TodaysPickFragment.newInstance(), BlankFragment())
     val viewPagerAdapter = TabAdapter(fragmentList, this)
     binding.viewPager.apply {
       isUserInputEnabled = false
@@ -123,12 +127,6 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
               currentPage = 0
             }
             1 -> {
-              if (isCreateClick.not()){
-                WebEngageController.trackEvent(Post_Browse_All_Promotional_Update_Click)
-              }
-              currentPage = 1
-            }
-            2 -> {
               isCreateClick = true
               WebEngageController.trackEvent(Promotional_Update_Create_Update_Click)
               launchPostNewUpdate(requireActivity())
@@ -137,8 +135,6 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
         }
       })
     }
-
-
     binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
       override fun onTabSelected(tab: TabLayout.Tab?) {
         //  changeTabFont(tab,Typeface.BOLD)
@@ -148,10 +144,8 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
               WebEngageController.trackEvent(Update_studio_today_tab_click)
             }
           }
-          1 -> WebEngageController.trackEvent(Update_studio_browse_tab_click)
-          2 -> WebEngageController.trackEvent(Update_studio_Create_custom_update_click)
+          1 -> WebEngageController.trackEvent(Update_studio_Create_custom_update_click)
         }
-        isIsTodayTabClicked = true
         val tabIconColor: Int = ContextCompat.getColor(requireActivity(), R.color.colorPrimary)
         if (tab?.position == 1) {
           tab.icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_circlesfour_active)
@@ -177,22 +171,20 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
       override fun onTabReselected(tab: TabLayout.Tab?) {
       }
     })
-
     // New way of interaction with TabLayout and page title setting
     TabLayoutMediator(binding.tabLayout, binding.viewPager) { currentTab, currentPosition ->
       currentTab.icon = when (currentPosition) {
         0 -> AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_sundim)
-        1 -> AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_circlesfour_inactive)
-        2 -> AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_pencilsimple)
+        1 -> AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_pencilsimple)
         else -> null
       }
       currentTab.text = when (currentPosition) {
         0 -> getString(R.string.for_today)
-        1 -> getString(R.string.browse)
-        2 -> getString(R.string.Create)
+        1 -> getString(R.string.Create)
         else -> ""
       }
     }.attach()
+
     if (PreferencesUtils.instance.getData(PreferenceConstant.FIRST_LAUNCH_PROMO, true)) {
       //  setupTabBaloons(ToolTipType.FOR_TODAY)
       PreferencesUtils.instance.saveData(PreferenceConstant.FIRST_LAUNCH_PROMO, false)

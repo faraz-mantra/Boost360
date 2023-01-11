@@ -49,7 +49,7 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
     }
 
     override fun onCreateView() {
-        setOnClickListener(binding!!.layoutChangeImage,binding!!.layoutTick,binding!!.layoutRotate,binding!!.ivDelete)
+        setOnClickListener(binding!!.layoutChangeImage,binding!!.layoutTick,binding!!.layoutRotate,binding!!.ivDelete,binding?.ivCropUpdateClose)
 
         path = intent.getStringExtra(IK_IMAGE_PATH)
 
@@ -109,6 +109,10 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
                 File(getExternalFilesDir(null)?.path+File.separator
                         + UPDATE_PIC_FILE_NAME).delete()
                 setResult(Activity.RESULT_OK)
+                finish()
+            }
+
+            binding?.ivCropUpdateClose ->{
                 finish()
             }
 

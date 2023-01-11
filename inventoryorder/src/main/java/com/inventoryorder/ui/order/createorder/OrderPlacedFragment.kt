@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import com.framework.extensions.invisible
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.pref.UserSessionManager
 import com.framework.utils.NumbersToWords
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
@@ -18,9 +19,11 @@ import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.order.INVOICE_URL
 import com.inventoryorder.ui.startFragmentOrderActivity
+import com.inventoryorder.utils.startOrderAptConsultList
 
 class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() {
 
+  private lateinit var session: UserSessionManager
   var shouldReInitiate = false
   var type: String? = null
   var orderId: String? = null
@@ -37,6 +40,7 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
 
   override fun onCreateView() {
     super.onCreateView()
+    session = UserSessionManager(baseActivity)
     type = arguments?.getString(IntentConstant.TYPE_APPOINTMENT.name)
     orderId = arguments?.getString(IntentConstant.ORDER_ID.name)
     getOrderDetails()
@@ -76,11 +80,8 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
 
   fun getBundleData(): Bundle {
     val bundle = Bundle()
-    if (type.equals(
-        AppConstant.TYPE_APPOINTMENT,
-        true
-      )
-    ) bundle.putBoolean(IntentConstant.IS_REFRESH.name, true)
+    if (type.equals(AppConstant.TYPE_APPOINTMENT, true))
+      bundle.putBoolean(IntentConstant.IS_REFRESH.name, true)
     bundle.putBoolean(IntentConstant.SHOULD_RE_INITIATE.name, shouldReInitiate)
     if (!shouldReInitiate) bundle.putBoolean(IntentConstant.SHOULD_FINISH.name, true)
     return bundle
@@ -102,7 +103,11 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
     when (v) {
       binding?.buttonInitiateNewOrder -> {
         shouldReInitiate = true
-        (activity as? FragmentContainerOrderActivity)?.onBackPressed()
+        if (type.equals(AppConstant.TYPE_APPOINTMENT, true)) {
+          baseActivity.startOrderAptConsultList(session, isConsult = false)
+        } else {
+          (activity as? FragmentContainerOrderActivity)?.onBackPressed()
+        }
       }
       binding?.textInvoice -> {
         val bundle = Bundle()

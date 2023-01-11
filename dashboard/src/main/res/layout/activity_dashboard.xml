@@ -7,11 +7,11 @@
 
   </data>
 
-  <androidx.drawerlayout.widget.DrawerLayout
+  <!--<androidx.drawerlayout.widget.DrawerLayout
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:openDrawer="end">
+    tools:openDrawer="end">-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/container"
@@ -106,9 +106,9 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <include
+    <!--<include
       android:id="@+id/drawer_view"
       android:visibility="gone"
       layout="@layout/view_drawer_home" />
-  </androidx.drawerlayout.widget.DrawerLayout>
+  </androidx.drawerlayout.widget.DrawerLayout>-->
 </layout>

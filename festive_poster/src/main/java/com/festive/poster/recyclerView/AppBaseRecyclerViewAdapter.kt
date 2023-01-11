@@ -7,6 +7,7 @@ import com.festive.poster.databinding.*
 import com.festive.poster.recyclerView.viewholders.*
 import com.festive.poster.ui.promoUpdates.holders.*
 import com.framework.base.BaseActivity
+import com.onboarding.nowfloats.databinding.ItemCategoryBinding
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -50,6 +51,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RecyclerViewItemType.FAV_CAT->FavPosterCatViewHolder(binding as  ListItemFavCatBinding)
       RecyclerViewItemType.UPDATE_STUDIO_INTRO_SCREEN_ITEM->IntroScreenUpdateStudioViewHolder(binding as ListItemUpdateStudioIntroBinding)
       RecyclerViewItemType.FEATURE_PURCHASE->UpdateStudioFeaturePurchaseViewHolder(binding as ListItemUpdateStudioFeaturePurchaseBinding)
+      RecyclerViewItemType.BROWSE_ALL_CATEGORIES->UpdateStudioBrowseCategoriesViewHolder(binding as ListItemCategoryBinding)
     }
   }
 

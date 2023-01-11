@@ -104,17 +104,22 @@ class VerifyOtpEmailMobileSheet : BaseBottomSheetDialog<SheetVerifyOtpEmailNumbe
 
     } else {
       WebEngageController.trackEvent(USER_MERCHANT_PROFILE_NUMBER_OTP_VERIFY, CLICK, NO_EVENT_VALUE)
-      viewModel?.updateMobile(emailOrMob, binding?.pinTv?.otp, UserSessionManager(baseActivity).userProfileId)?.observeOnce(viewLifecycleOwner, {
+      viewModel?.updateMobile(emailOrMob, binding?.pinTv?.otp, UserSessionManager(baseActivity).userProfileId)?.observeOnce(viewLifecycleOwner) {
         if (it.isSuccess()) {
           (baseActivity as? DashboardFragmentContainerActivity)?.onRefresh()
           dismiss()
         } else {
-          val errorMessage = it.errorIPMessage()
-          if (errorMessage.isNullOrEmpty().not()) binding?.tvInvalidOtp?.text = errorMessage?.capitalizeUtil()
+          val errorMessage = if (it.errorIPMessage()!!.contains("Invalid Otp")) {
+            "Invalid Otp For Mobile no"
+          } else {
+            it.errorIPMessage()
+          }
+          if (errorMessage.isNullOrEmpty().not()) binding?.tvInvalidOtp?.text =
+            errorMessage?.capitalizeUtil()
           binding?.tvInvalidOtp?.visible()
         }
         binding?.progressBar?.gone()
-      })
+      }
     }
   }
 

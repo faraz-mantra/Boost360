@@ -187,13 +187,12 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
 
         };
 
-        dateOfCompletion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(ProjectDetailsActivity.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
+        dateOfCompletion.setOnClickListener(v -> {
+           DatePickerDialog datePickerDialog =  new DatePickerDialog(ProjectDetailsActivity.this, date, myCalendar
+                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH));
+           datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+           datePickerDialog.show();
         });
 
 
@@ -531,7 +530,8 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Methods.showSnackBarPositive(ProjectDetailsActivity.this, getString(R.string.successfully_added_project_details));
+                        Toast.makeText(ProjectDetailsActivity.this, R.string.successfully_added_project_details, Toast.LENGTH_LONG).show();
+                        //Methods.showSnackBarPositive(ProjectDetailsActivity.this, getString(R.string.successfully_added_project_details));
                         finish();
                     }
 
@@ -576,21 +576,25 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                     hideLoader();
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deleteTeams ->", response.getBody().toString());
-                        Methods.showSnackBarPositive(ProjectDetailsActivity.this, getString(R.string.successfully_deleted_));
-                        finish();
+                        Toast.makeText(ProjectDetailsActivity.this, R.string.successfully_deleted_, Toast.LENGTH_LONG).show();
+                        //Methods.showSnackBarPositive(ProjectDetailsActivity.this, getString(R.string.successfully_deleted_));
                     } else {
-                        Methods.showSnackBarNegative(ProjectDetailsActivity.this, getString(R.string.something_went_wrong));
+                        Toast.makeText(ProjectDetailsActivity.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
+                        //Methods.showSnackBarNegative(ProjectDetailsActivity.this, getString(R.string.something_went_wrong));
                     }
+                    finish();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     hideLoader();
                     if (error.getResponse().getStatus() == 200) {
-                        Methods.showSnackBarPositive(ProjectDetailsActivity.this, getString(R.string.successfully_deleted_));
+                        Toast.makeText(ProjectDetailsActivity.this, R.string.successfully_deleted_, Toast.LENGTH_LONG).show();
+                        //Methods.showSnackBarPositive(ProjectDetailsActivity.this, getString(R.string.successfully_deleted_));
                         finish();
                     } else {
-                        Methods.showSnackBarNegative(ProjectDetailsActivity.this, getString(R.string.something_went_wrong));
+                        Toast.makeText(ProjectDetailsActivity.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
+                        //Methods.showSnackBarNegative(ProjectDetailsActivity.this, getString(R.string.something_went_wrong));
                     }
                 }
             });
@@ -620,7 +624,6 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                     deleteRecord(itemId);
                     return;
                 }
-                finish();
             }
         });
 

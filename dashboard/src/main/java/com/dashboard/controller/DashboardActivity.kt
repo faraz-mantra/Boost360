@@ -133,7 +133,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 //    val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
 //    binding?.drawerView?.txtVersion?.text = "Version $versionName"
 //    binding?.drawerView?.imgBusinessLogo, binding?.drawerView?.backgroundImage, binding?.drawerView?.txtDomainName
-    setOnClickListener(binding?.drawerView?.btnSiteMeter, binding?.viewCartCount)
+    setOnClickListener(/*binding?.drawerView?.btnSiteMeter,*/ binding?.viewCartCount)
     getWelcomeData()
     intentDataCheckAndDeepLink(intent)
     session?.initializeWebEngageLogin()
@@ -280,10 +280,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   fun setPercentageData(score: Int) {
     val isHigh = (score >= 85)
-    binding?.drawerView?.txtPercentage?.text = "$score% "
+    //binding?.drawerView?.txtPercentage?.text = "$score% "
     val percentage = ((100 - score).toDouble() / 100).roundToFloat(2)
-    (binding?.drawerView?.progressBar?.layoutParams as? ConstraintLayout.LayoutParams)?.matchConstraintPercentWidth = percentage
-    binding?.drawerView?.progressBar?.requestLayout()
+    //(binding?.drawerView?.progressBar?.layoutParams as? ConstraintLayout.LayoutParams)?.matchConstraintPercentWidth = percentage
+    //binding?.drawerView?.progressBar?.requestLayout()
   }
 
   private fun setUserData() {
@@ -302,9 +302,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     if (bgImageUri.isNullOrEmpty().not() && bgImageUri!!.contains("http").not()) {
       bgImageUri = BASE_IMAGE_URL + bgImageUri
     }
-    binding?.drawerView?.bgImage?.let {
+    /*binding?.drawerView?.bgImage?.let {
       glideLoad(it, bgImageUri ?: "", R.drawable.general_services_background_img_d)
-    }
+    }*/
   }
 
   private fun cartDataLoad(pos: Int) {
@@ -314,7 +314,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     } else binding?.viewCartCount?.gone()
   }
 
-  private fun setDrawerHome() {
+  /*private fun setDrawerHome() {
     viewModel.getNavDashboardData(this).observeOnce(this) {
       val response = it as? DrawerHomeDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
@@ -324,7 +324,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         }
       } else showShortToast(this.getString(R.string.navigation_data_error))
     }
-  }
+  }*/
 
   private fun checkLockData(data: ArrayList<DrawerHomeData>): ArrayList<DrawerHomeData> {
     data.forEach { it1 ->
@@ -500,7 +500,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onBackPressed() {
     when {
-      (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) -> binding?.drawerLayout?.closeDrawers()
+      //(binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) -> binding?.drawerLayout?.closeDrawers()
       (mNavController.currentDestination?.id == R.id.navigation_dashboard) -> {
         if (!doubleBackToExitPressedOnce) {
           this.doubleBackToExitPressedOnce = true
@@ -515,7 +515,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onClick(v: View?) {
     super.onClick(v)
     when (v) {
-      binding?.drawerView?.btnSiteMeter -> {
+      /*binding?.drawerView?.btnSiteMeter -> {
         startReadinessScoreView(session, 0)
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
@@ -527,7 +527,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         this.startWebViewPageLoad(session, session!!.getDomainName(false))
         if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
       }
-      binding?.drawerView?.backgroundImage -> openImagePicker(true)
+      binding?.drawerView?.backgroundImage -> openImagePicker(true)*/
       binding?.viewCartCount -> session?.let { this.initiateCart(it, true, "", "") }
     }
   }
@@ -557,7 +557,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       DrawerHomeData.NavType.NAV_ABOUT_BOOST -> session?.let { this.startAboutBoostActivity(it) }
       DrawerHomeData.NavType.NAV_REFER_FRIEND -> this.startReferralView(session)
     }
-    if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
+    ///if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
   }
 
 
@@ -587,7 +587,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       if (it.isSuccess()) {
         if (it.stringResponse.isNullOrEmpty().not()) {
           session?.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, it.stringResponse)
-          binding?.drawerView?.bgImage?.let { it1 -> glideLoad(it1, it.stringResponse ?: "", R.drawable.general_services_background_img_d) }
+          //binding?.drawerView?.bgImage?.let { it1 -> glideLoad(it1, it.stringResponse ?: "", R.drawable.general_services_background_img_d) }
         }
       } else showLongToast(it.message())
       hideProgress()

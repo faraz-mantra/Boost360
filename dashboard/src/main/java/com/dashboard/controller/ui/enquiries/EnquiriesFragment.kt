@@ -182,29 +182,28 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
 
   private fun clickActionButton(type: CustomerActionItem.IconType) {
     when (type) {
-      CustomerActionItem.IconType.customer_orders -> baseActivity.startOrderAptConsultList(
-        session,
-        isOrder = true
-      )
+      CustomerActionItem.IconType.customer_orders ->
+        baseActivity.startOrderAptConsultList(session, isOrder = true)
+
       CustomerActionItem.IconType.in_clinic_appointments ->{
         WebEngageController.trackEvent(APPOINTMENT_PAGE, CLICKED, NO_EVENT_VALUE)
-        baseActivity.startOrderAptConsultList(
-          session,
-          isConsult = false
-        )
+        baseActivity.startOrderAptConsultList(session, isConsult = false)
       }
+
       CustomerActionItem.IconType.video_consultations -> {
         WebEngageController.trackEvent(CONSULTATION_PAGE, CLICKED, NO_EVENT_VALUE)
-        baseActivity.startOrderAptConsultList(
-          session,
-          isConsult = true
-        )
+        baseActivity.startOrderAptConsultList(session, isConsult = true)
       }
-      CustomerActionItem.IconType.patient_customer_calls -> baseActivity.startVmnCallCard(session)
-      CustomerActionItem.IconType.patient_customer_messages -> baseActivity.startBusinessEnquiry(
-        session
-      )
-      CustomerActionItem.IconType.newsletter_subscribers -> baseActivity.startSubscriber(session)
+
+      CustomerActionItem.IconType.patient_customer_calls ->
+        baseActivity.startVmnCallCard(session)
+
+      CustomerActionItem.IconType.patient_customer_messages ->
+        baseActivity.startBusinessEnquiry(session)
+
+      CustomerActionItem.IconType.newsletter_subscribers ->
+        baseActivity.startSubscriber(session)
+
     }
   }
 
