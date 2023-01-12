@@ -1,6 +1,7 @@
 package com.appservice.viewmodel
 
 import androidx.lifecycle.LiveData
+import com.appservice.model.businessmodel.BusinessProfileUpdateRequest
 import com.appservice.model.serviceProduct.addProductImage.ProductImageRequest
 import com.appservice.model.serviceProduct.addProductImage.deleteRequest.ProductImageDeleteRequest
 import com.appservice.model.serviceProduct.gstProduct.ProductGstDetailRequest
@@ -120,5 +121,9 @@ class ServiceViewModelV1 : BaseViewModel() {
 
   fun getFpDetails(fpid: String, map: HashMap<String, String>): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getFpDetails(fpid, map).toLiveData()
+  }
+
+  fun updateBusinessDetails(businessProfileUpdateUrl:String, request: BusinessProfileUpdateRequest): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.updateBusinessProfile(businessProfileUpdateUrl,request).toLiveData()
   }
 }
