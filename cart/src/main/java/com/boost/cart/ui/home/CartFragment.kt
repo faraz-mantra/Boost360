@@ -77,7 +77,9 @@ import com.boost.dbcenterapi.upgradeDB.model.CouponsModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.payment.PaymentActivity
 import com.boost.payment.utils.observeOnce
+import com.framework.BaseApplication
 import com.framework.analytics.SentryController
+import com.framework.errorHandling.ErrorOccurredBottomSheet
 import com.framework.extensions.isVisible
 import com.framework.extensions.underlineText
 import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
@@ -4014,10 +4016,20 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 
     private fun initializeErrorObserver() {
         viewModel.updatesError().observe(viewLifecycleOwner) {
-            it?.let {
-                Toasty.error(requireContext(), it, Toast.LENGTH_SHORT).show()
+            if(it.errorCode > 0) {
+                val correlationId = it. correlationId
+                val errorMessage = it. errorMessage
+                BaseApplication.currentActivity()?.supportFragmentManager?.let {
+                    ErrorOccurredBottomSheet(correlationId, errorMessage).show(
+                        childFragmentManager,
+                        ErrorOccurredBottomSheet::class.java.name
+                    )
+                }
+            }else{
+                Toasty.error(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 
     fun showApplyedCouponDetails() {

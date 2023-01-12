@@ -57,6 +57,10 @@ class EditChangeUserNameSheet(var click: () -> Unit) : BaseBottomSheetDialog<She
   }
 
   private fun updateUserNameApi() {
+    if(binding?.cetBusinessName?.text.toString().isNullOrEmpty()){
+      showShortToast("Enter Valid Business Name.")
+      return
+    }
     binding?.progressBar?.visible()
     viewModel?.updateUserName(binding?.cetBusinessName?.text.toString(), UserSessionManager(baseActivity).userProfileId)?.observeOnce(viewLifecycleOwner, {
       binding?.progressBar?.gone()
