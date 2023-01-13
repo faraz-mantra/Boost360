@@ -223,7 +223,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
         text.text = spanBoldNdColor(
           getString(R.string.premium_updates_custom_designed_for_you), R.color.colorPrimary, "Premium updates"
         )
-        binding.tabLayout.getTabAt(0)!!.view.postDelayed(Runnable {
+        binding.tabLayout.getTabAt(0)?.view?.postDelayed(Runnable {
           balloon.showAlignBottom(
             binding.tabLayout.getTabAt(0)!!.view, 0, 0
           )
@@ -241,8 +241,8 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
         text.text = spanBoldNdColor(
           getString(R.string.free_updates_tap_on_create_to_post_like_before), R.color.green_78AF00, "FREE updates:"
         )
-        binding.tabLayout.getTabAt(2)?.view?.postDelayed(Runnable {
-          balloon.showAlignBottom(binding.tabLayout.getTabAt(2)!!.view)
+        binding.tabLayout.getTabAt(1)?.view?.postDelayed(Runnable {
+          balloon.showAlignBottom(binding.tabLayout.getTabAt(1)!!.view)
         }, 500)
 
         close.setOnClickListener {
