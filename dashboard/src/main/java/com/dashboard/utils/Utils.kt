@@ -93,10 +93,9 @@ fun Context.copyClipBoard(selectedText: String): Boolean {
 
 fun String.capitalizeUtil(): String {
   val capBuffer = StringBuffer()
-  val capMatcher: Matcher = Pattern.compile("([a-z])([a-z]*)", Pattern.CASE_INSENSITIVE).matcher(this)
+  val capMatcher = Pattern.compile("([a-z])([a-z]*)", Pattern.CASE_INSENSITIVE).matcher(this)
   while (capMatcher.find()) {
-    capMatcher.appendReplacement(capBuffer, capMatcher.group(1).toUpperCase(Locale.getDefault()) + capMatcher.group(2).toLowerCase(Locale.getDefault())
-    )
+    capMatcher.appendReplacement(capBuffer, capMatcher.group(1).uppercase() + capMatcher.group(2).lowercase())
   }
   return capMatcher.appendTail(capBuffer).toString()
 }

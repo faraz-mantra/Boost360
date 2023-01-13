@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.framework.views.customViews.CustomCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_158"
+        app:cardCornerRadius="@dimen/size_20">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/color_accent_rounded_stroke_rad_20"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_122"
+                android:orientation="vertical">
+
+                <com.framework.views.customViews.CustomCardView
+                    android:id="@+id/card_image"
+                    android:layout_width="@dimen/size_56"
+                    android:layout_height="@dimen/size_56"
+                    android:layout_marginStart="@dimen/size_15"
+                    android:layout_marginTop="@dimen/size_15"
+                    app:cardCornerRadius="@dimen/size_10"
+                    app:cardElevation="@dimen/size_2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="@dimen/size_35"
+                        android:layout_height="@dimen/size_32"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_demo_2" />
+
+                </com.framework.views.customViews.CustomCardView>
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_title_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_14"
+                    android:fontFamily="@font/bold"
+                    android:gravity="start"
+                    android:includeFontPadding="false"
+                    android:lineSpacingMultiplier="0.8"
+                    android:text="Introduce your\nbusiness to your\ncustomers."
+                    android:textAlignment="gravity"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_18"
+                    app:layout_constraintStart_toEndOf="@+id/card_image"
+                    app:layout_constraintTop_toTopOf="@+id/card_image" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_title_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_11"
+                    android:layout_marginEnd="@dimen/size_18"
+                    android:fontFamily="@font/regular"
+                    android:gravity="start"
+                    android:text="Customise everything from the font, theme color, your brand logo, favicon, custom background images etc."
+                    android:textAlignment="gravity"
+                    android:textColor="@color/color_888888"
+                    android:textSize="@dimen/text_10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/card_image"
+                    app:layout_constraintTop_toBottomOf="@+id/card_image" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_36"
+                android:background="@color/colorAccent"
+                android:fontFamily="@font/semi_bold"
+                android:gravity="center"
+                android:text="Complete biz profile"
+                android:textColor="@color/white"
+                app:textType="BODY_3" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.framework.views.customViews.CustomCardView>
+</layout>

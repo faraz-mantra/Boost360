@@ -20,7 +20,6 @@ enum class RecyclerViewItemType {
   BUSINESS_CONTENT_SETUP_ITEM_VIEW,
   ITEMS_CONTENT_SETUP_ITEM_VIEW,
   ALL_BOOST_ADD_ONS_VIEW,
-  HOME_DRAWER_VIEW,
   WEBSITE_COLOR_VIEW,
   WEBSITE_FONT_VIEW,
   RECYCLER_USEFUL_LINKS,
@@ -28,7 +27,27 @@ enum class RecyclerViewItemType {
   BOOST_WEBSITE_ITEM_FEATURE_VIEW,
   RECYCLER_WEBSITE_NAV,
   CONSULTATION_VIEW,
-  FILTER_DATE_VIEW;
+  FILTER_DATE_VIEW,
+
+  //My To Do List Cards View Holders
+  OPTIONAL_TASKS_VIEW,
+  POST_PURCHASE_1_VIEW,
+  POST_PURCHASE_2_VIEW,
+  MY_TODO_LIST_ACTION,
+  READINESS_SCORE_2_VIEW,
+  RENEWAL_1_VIEW,
+  RENEWAL_2_VIEW,
+  RENEWAL_3_VIEW,
+  NEW_SINGLE_FEATURE_VIEW,
+  NEW_MULTIPLE_FEATURE_VIEW,
+  CONTINUE_WHERE_LEFT_VIEW,
+  MISSED_CALL_1_VIEW,
+  MISSED_CALL_2_VIEW,
+  MISSED_CALL_3_VIEW,
+  MISSED_CALL_4_VIEW,
+  ORDER_DETAILS_VIEW,
+  ATTENTION_ORDER_ALERT_VIEW,
+  SMS_EMAIL_ENQUIRY_VIEW;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -49,7 +68,6 @@ enum class RecyclerViewItemType {
       BUSINESS_CONTENT_SETUP_ITEM_VIEW -> R.layout.item_business_content_setup
       ITEMS_CONTENT_SETUP_ITEM_VIEW -> R.layout.item_content_setup_manage
       ALL_BOOST_ADD_ONS_VIEW -> R.layout.item_boost_add_ons
-      HOME_DRAWER_VIEW -> R.layout.item_drawer_view
       FILTER_DATE_VIEW -> R.layout.item_filter_date
       CONSULTATION_VIEW -> R.layout.recycler_item_consultation
       WEBSITE_COLOR_VIEW -> R.layout.recycler_item_colors
@@ -58,6 +76,26 @@ enum class RecyclerViewItemType {
       RECYCLER_ABOUT_APP -> R.layout.recycler_item_about_app
       RECYCLER_WEBSITE_NAV -> R.layout.recycler_item_website_nav
       CHANNEL_STATUS_ITEM_VIEW -> R.layout.item_social_media
+
+      //My To Do List Cards View Holders
+      OPTIONAL_TASKS_VIEW -> R.layout.item_optional_tasks
+      POST_PURCHASE_1_VIEW -> R.layout.item_post_purchase_1
+      POST_PURCHASE_2_VIEW -> R.layout.item_post_purchase_2
+      MY_TODO_LIST_ACTION -> R.layout.item_todo_list_action
+      READINESS_SCORE_2_VIEW -> R.layout.item_readiness_score_2
+      RENEWAL_1_VIEW -> R.layout.item_renewal_1
+      RENEWAL_2_VIEW -> R.layout.item_renewal_2
+      RENEWAL_3_VIEW -> R.layout.item_renewal_3
+      NEW_SINGLE_FEATURE_VIEW -> R.layout.item_new_single_feature
+      NEW_MULTIPLE_FEATURE_VIEW -> R.layout.item_new_multiple_feature
+      CONTINUE_WHERE_LEFT_VIEW -> R.layout.item_continue_where_left
+      MISSED_CALL_1_VIEW -> R.layout.item_missed_call_1
+      MISSED_CALL_2_VIEW -> R.layout.item_missed_call_2
+      MISSED_CALL_3_VIEW -> R.layout.item_missed_call_3
+      MISSED_CALL_4_VIEW -> R.layout.item_missed_call_4
+      ORDER_DETAILS_VIEW -> R.layout.item_order_details_card
+      ATTENTION_ORDER_ALERT_VIEW -> R.layout.item_attention_order_alert
+      SMS_EMAIL_ENQUIRY_VIEW -> R.layout.item_sms_email_enquiry
     }
   }
 }

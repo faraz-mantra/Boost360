@@ -2118,7 +2118,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="company_title_aster" translatable="false">Company title*</string>
     <string name="facebook_profile">Facebook profile *</string>
     <string name="enter_facebook_url">Enter Facebook URL</string>
-    <string name="twitter_profile">Twitter profile *</string>
+    <string name="twitter_profile_asterisk">Twitter profile *</string>
     <string name="enter_twitter_url">Enter Twitter URL</string>
     <string name="skype_profile">Skype profile *</string>
     <string name="enter_skype_url">Enter Skype URL</string>

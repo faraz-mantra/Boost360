@@ -102,8 +102,8 @@ import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
-const val IS_FIRST_LOAD = "isFirsLoad"
-const val IS_DR_HIGH_DIALOG = "isDrHighDialog"
+//const val IS_FIRST_LOAD = "isFirsLoad"
+//const val IS_DR_HIGH_DIALOG = "isDrHighDialog"
 
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
@@ -150,7 +150,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport, binding?.retryDrScore,
       binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.viewEmptyEnquiries?.btnWhatsappEnquiries,
       binding?.viewEmptyEnquiries?.btnInstagramEnquiries, binding?.viewEmptyEnquiries?.btnTelegramEnquiries, binding?.viewEmptyEnquiries?.btnMessangerEnquiries,
-      binding?.viewEmptyEnquiries?.btnEmailEnquiries, binding?.viewEmptyEnquiries?.btnOtherShareEnquiries, binding?.btnFestive
+      binding?.viewEmptyEnquiries?.btnOtherShareEnquiries, binding?.btnFestive
     )
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion1?.text = "Version $versionName"
@@ -763,10 +763,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = ShareType.MESSENGER)
         else getChannelAccessToken(isEnquiriesShare = true, shareType = ShareType.MESSENGER)
       }
-      binding?.viewEmptyEnquiries?.btnEmailEnquiries -> {
-        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = ShareType.G_MAIL)
-        else getChannelAccessToken(isEnquiriesShare = true, shareType = ShareType.G_MAIL)
-      }
+//      binding?.viewEmptyEnquiries?.btnEmailEnquiries -> {
+//        if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = ShareType.G_MAIL)
+//        else getChannelAccessToken(isEnquiriesShare = true, shareType = ShareType.G_MAIL)
+//      }
       binding?.viewEmptyEnquiries?.btnOtherShareEnquiries -> {
         if (messageBusiness.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, shareType = null)
         else getChannelAccessToken(isEnquiriesShare = true, shareType = null)
@@ -774,7 +774,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.btnFestive -> {
         //baseActivity.startFestivePosterActivity()
         //enable update studio on demand
-        baseActivity.startPostUpdate()
+        baseActivity.startPostUpdate(session)
       }
     }
   }
@@ -871,7 +871,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     when (type) {
 //      QuickActionItem.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(true)
       QuickActionItem.QuickActionType.CREATE_NEW_UPDATE -> baseActivity.createAnUpdate()
-      QuickActionItem.QuickActionType.READY_MADE_UPDATES -> baseActivity.startPostUpdate(true)
+      QuickActionItem.QuickActionType.READY_MADE_UPDATES -> baseActivity.startPostUpdate(session,true)
       QuickActionItem.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
       QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startTestimonial(session, true)
       QuickActionItem.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCustomPage(session, true)
@@ -1157,6 +1157,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 }
 
+/*
 fun UserSessionManager.getRequestMap(startDate: String, endDate: String): Map<String, String> {
   val map = HashMap<String, String>()
   map["batchType"] = VisitsModelResponse.BatchType.yy.name
@@ -1209,4 +1210,4 @@ fun getRequestSellerSummary(filterDate: FilterDateModel?): SellerSummaryRequest 
   )
   request.filterBy = arrayListOf(FilterBy(queryConditionType = FilterBy.ConditionType.AND.name, queryObject))
   return request
-}
+}*/
