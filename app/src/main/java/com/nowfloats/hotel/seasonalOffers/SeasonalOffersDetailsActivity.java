@@ -77,6 +77,8 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
   }
 
   private void initView() {
+    Bundle extra = getIntent().getExtras();
+    ScreenType = extra.getString("ScreenState");
 
     offerTitleText = findViewById(R.id.offer_title);
     currentPriceText = findViewById(R.id.current_price);
@@ -140,11 +142,8 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
 
     //setheader
     setHeader();
-
     setEditTextListeners();
 
-    Bundle extra = getIntent().getExtras();
-    ScreenType = extra.getString("ScreenState");
     if (ScreenType != null && ScreenType.equals("edit")) {
       displayData();
     }
@@ -288,6 +287,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
     rightIcon = findViewById(R.id.right_icon);
     title.setText("Offer Details");
     rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
+    rightButton.setVisibility(ScreenType.equals("edit") ? View.VISIBLE : View.INVISIBLE);
     rightButton.setOnClickListener(v -> {
       if (ScreenType != null && ScreenType.equals("edit")) {
         showLoader(getString(R.string.deleting_record_please_wait));
