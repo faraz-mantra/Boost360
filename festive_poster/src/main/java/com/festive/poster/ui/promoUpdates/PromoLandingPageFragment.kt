@@ -138,7 +138,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
     binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
       override fun onTabSelected(tab: TabLayout.Tab?) {
         //  changeTabFont(tab,Typeface.BOLD)
-        when(tab!!.position){
+        when(tab?.position){
           0 -> {
             if (isIsTodayTabClicked){
               WebEngageController.trackEvent(Update_studio_today_tab_click)
@@ -221,9 +221,11 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
     when (type) {
       ToolTipType.FOR_TODAY -> {
         text.text = spanBoldNdColor(
-          getString(R.string.premium_updates_custom_designed_for_you), R.color.colorPrimary, "Premium updates"
+          getString(R.string.premium_updates_custom_designed_for_you),
+          R.color.colorPrimary,
+          "Premium updates"
         )
-        binding.tabLayout.getTabAt(0)?.view?.postDelayed(Runnable {
+        binding.tabLayout.getTabAt(0)?.view?.postDelayed({
           balloon.showAlignBottom(
             binding.tabLayout.getTabAt(0)!!.view, 0, 0
           )
