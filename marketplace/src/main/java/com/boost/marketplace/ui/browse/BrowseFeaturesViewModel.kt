@@ -11,7 +11,10 @@ import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.Utils
+import com.boost.marketplace.R
+import com.framework.BaseApplication
 import com.framework.analytics.SentryController
+import com.framework.errorHandling.ErrorFlowInvokeObject
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,6 +23,7 @@ import io.reactivex.schedulers.Schedulers
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import retrofit2.HttpException
 
 class BrowseFeaturesViewModel: BaseViewModel()  {
 
@@ -94,6 +98,12 @@ class BrowseFeaturesViewModel: BaseViewModel()  {
                 .doOnError {
                     updatesError.postValue(it.message)
                     updatesLoader.postValue(false)
+                    ErrorFlowInvokeObject.errorOccurred(
+                        errorCode = (it as HttpException).code() ?: 0,
+                        errorMessage = it.message() ?: BaseApplication.instance.getString(
+                            R.string.something_went_wrong_please_tell_what_happened),
+                        correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
+                    )
                 }
                 .subscribe()
         )
