@@ -183,7 +183,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_update)) {
           baseActivity.startPostUpdate(session)
         } else if (url.contains(deeplink_featuredimage)) {
-          baseActivity.startBusinessProfileDetailEdit(session)
+          baseActivity.startFeatureLogo(session)
         } else if (session.isProduct() && url.contains(addProduct)) {
           baseActivity.startAddServiceProduct(session)
         } else if (session.isService() && url.contains(addService)) {

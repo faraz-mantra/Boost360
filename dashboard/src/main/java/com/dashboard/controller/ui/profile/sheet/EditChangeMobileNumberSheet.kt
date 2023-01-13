@@ -36,6 +36,11 @@ class EditChangeMobileNumberSheet : BaseBottomSheetDialog<SheetChangeMobileNumbe
     binding?.cetPhone?.requestFocus()
     baseActivity.showKeyBoard(binding?.cetPhone)
     setOnClickListener(binding?.btnPublish, binding?.rivCloseBottomSheet)
+    if(mobile.isNullOrEmpty()){
+      binding?.titleNum?.text="Add mobile number"
+    }else{
+      binding?.titleNum?.text="Changing mobile number"
+    }
     binding?.cetPhone?.addTextChangedListener {
       binding?.btnPublish?.isEnabled = (it?.length == 10)
     }
