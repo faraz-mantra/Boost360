@@ -110,8 +110,8 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       })
 
     setOnClickListener(
-      binding!!.btnAddImage, binding!!.btnEdit, binding!!.ivMic, binding!!.ivHashtagCross,
-      binding!!.tvPreviewAndPost, binding.ivCross
+      binding!!.btnAddImage, binding.btnEdit, binding.ivMic, binding.ivHashtagCross,
+      binding.tvPreviewAndPost, binding.ivCross
     )
   }
 
@@ -193,14 +193,14 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     val featureUpdate = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureKey.LATESTUPDATES)
     val capLimitUpdate = featureUpdate?.filterProperty(PropertiesItem.KeyType.LIMIT)
     if (/*isUpdate.not() && */capLimitUpdate != null) {
-      viewModel?.getMessageUpdates(sessionLocal.getRequestUpdate(PaginationScrollListener.PAGE_START))?.observeOnce(viewLifecycleOwner, {
+      viewModel?.getMessageUpdates(sessionLocal.getRequestUpdate(PaginationScrollListener.PAGE_START))?.observeOnce(viewLifecycleOwner) {
         val data = it as? BusinessUpdateResponse
         if (data?.totalCount != null && capLimitUpdate.getValueN() != null && data.totalCount!! >= capLimitUpdate.getValueN()!!) {
           baseActivity.hideKeyBoard()
           showAlertCapLimit("Can't add the business update, please activate your premium Add-ons plan.",
             CapLimitFeatureResponseItem.FeatureKey.LATESTUPDATES.name)
         }
-      })
+      }
     }
   }
 
@@ -218,27 +218,20 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     }else{
       binding.etUpdate.hint=getString(R.string.describe_what_you_want_to_say_in_the_picture_added_above)
       binding.tvImgReq.gone()
-      binding!!.ivImg.visible()
-      Glide.with(requireActivity().getApplicationContext()).load(
-        path
-      ).apply(RequestOptions.skipMemoryCacheOf(true))
-        .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
-        .into(binding!!.ivImg)
-      binding!!.btnEdit.visible()
-      binding!!.btnAddImage.gone()
+      binding.ivImg.visible()
+      Glide.with(requireActivity().applicationContext).load(path).apply(RequestOptions.skipMemoryCacheOf(true)).apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(binding.ivImg)
+      binding.btnEdit.visible()
+      binding.btnAddImage.gone()
     }
 
   }
 
-  fun openDraftSheet(){
-    if (binding!!.etUpdate.text.toString().isNotEmpty()||posterImagePath!=null){
-            UpdateDraftBSheet.newInstance(binding
-              .etUpdate.text.toString(),posterImagePath).show(parentFragmentManager,UpdateDraftBSheet::class.java.name)
-
-          }else{
-            activity?.finish()
+  fun openDraftSheet() {
+    if (binding.etUpdate.text.toString().isNotEmpty() || posterImagePath!=null){
+      UpdateDraftBSheet.newInstance(binding.etUpdate.text.toString(), posterImagePath).show(parentFragmentManager,UpdateDraftBSheet::class.java.name)
+    }else{
+      baseActivity.finish()
     }
-
   }
 
   override fun onPause() {
@@ -250,15 +243,15 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     binding.etUpdate.requestFocus()
     val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.showSoftInput(binding.etUpdate, InputMethodManager.SHOW_IMPLICIT)
-    binding!!.tvHashtagTip.text = spanColor(getString(R.string.type_in_the_caption_to_create_your_own_hashtags), R.color.blue_4889f8, "#")
+    binding.tvHashtagTip.text = spanColor(getString(R.string.type_in_the_caption_to_create_your_own_hashtags), R.color.blue_4889f8, "#")
 
-    binding!!.btnAddImage.text = spanBold(getString(R.string.add_image_optional), "Add image")
+    binding.btnAddImage.text = spanBold(getString(R.string.add_image_optional), "Add image")
     FirestoreManager.readDraft {
       if (activity != null && isAdded) {
 
         var textPost = it?.content
         textPost = textPost?.replaceFirstChar{ nameFirstChar -> nameFirstChar.uppercase() } ?: ""
-        binding!!.etUpdate.setText(
+        binding.etUpdate.setText(
           highlightHashTag(
             textPost,
             R.color.black_4a4a4a,
@@ -266,7 +259,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
           )
         )
         addHashTagFunction()
-        binding!!.tvCount.text = (textPost?.length ?: 0).toString()
+        binding.tvCount.text = (textPost.length ?: 0).toString()
 
         lifecycleScope.launch {
           withContext(Dispatchers.IO) {
