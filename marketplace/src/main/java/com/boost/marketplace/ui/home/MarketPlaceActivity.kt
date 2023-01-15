@@ -761,14 +761,14 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 )
             }
             if (list.size > 0) {
-                if (shimmer_view_package.isShimmerStarted) {
-                    shimmer_view_package.stopShimmer()
-                    shimmer_view_package.visibility = View.GONE
-                }
-                package_layout.visibility = View.VISIBLE
-                package_layout1.visibility = View.VISIBLE
-                package_compare_layout.visibility = View.VISIBLE
-                package_compare_layout1.visibility = View.VISIBLE
+//                if (shimmer_view_package.isShimmerStarted) {
+//                    shimmer_view_package.stopShimmer()
+//                    shimmer_view_package.visibility = View.GONE
+//                }
+//                package_layout.visibility = View.VISIBLE
+//                package_layout1.visibility = View.VISIBLE
+//                package_compare_layout.visibility = View.VISIBLE
+//                package_compare_layout1.visibility = View.VISIBLE
                 updatePackageViewPager(list)
                 updatePackageViewPager1(list)
             } else {
@@ -1291,12 +1291,12 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
         viewModel.promoBannerAndMarketOfferResult().observe(this, androidx.lifecycle.Observer {
             if (it.size > 0) {
-                if (shimmer_view_banner.isShimmerStarted) {
-                    shimmer_view_banner.stopShimmer()
-                    shimmer_view_banner.visibility = View.GONE
-                }
-                banner_layout.visibility = View.VISIBLE
-                banner_layout1.visibility = View.VISIBLE
+//                if (shimmer_view_banner.isShimmerStarted) {
+//                    shimmer_view_banner.stopShimmer()
+//                    shimmer_view_banner.visibility = View.GONE
+//                }
+//                banner_layout.visibility = View.VISIBLE
+//                banner_layout1.visibility = View.VISIBLE
             } else {
                 if (shimmer_view_banner.isShimmerStarted) {
                     shimmer_view_banner.stopShimmer()
@@ -1312,14 +1312,14 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         viewModel.getPromoBanners().observe(this, androidx.lifecycle.Observer {
             Log.e("getPromoBanners", it.toString())
             if (it.size > 0) {
-                if (shimmer_view_banner.isShimmerStarted) {
-                    shimmer_view_banner.stopShimmer()
-                    shimmer_view_banner.visibility = View.GONE
-                }
+//                if (shimmer_view_banner.isShimmerStarted) {
+//                    shimmer_view_banner.stopShimmer()
+//                    shimmer_view_banner.visibility = View.GONE
+//                }
                 updateBannerViewPager(it)
                 updateBannerViewPager1(it)
-                banner_layout.visibility = View.VISIBLE
-                banner_layout1.visibility = View.VISIBLE
+//                banner_layout.visibility = View.VISIBLE
+//                banner_layout1.visibility = View.VISIBLE
             } else {
                 if (shimmer_view_banner.isShimmerStarted) {
                     shimmer_view_banner.stopShimmer()
@@ -1370,6 +1370,21 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         viewModel.subscriptionTypeResult().observe(this, androidx.lifecycle.Observer {
 
             if (it!=null) {
+                if (shimmer_view_package.isShimmerStarted) {
+                    shimmer_view_package.stopShimmer()
+                    shimmer_view_package.visibility = View.GONE
+                }
+                package_layout.visibility = View.VISIBLE
+                package_layout1.visibility = View.VISIBLE
+                package_compare_layout.visibility = View.VISIBLE
+                package_compare_layout1.visibility = View.VISIBLE
+
+                if (shimmer_view_banner.isShimmerStarted) {
+                    shimmer_view_banner.stopShimmer()
+                    shimmer_view_banner.visibility = View.GONE
+                }
+                banner_layout.visibility = View.VISIBLE
+                banner_layout1.visibility = View.VISIBLE
 
                 //Enable Dark mode if all the addons are expired.
 //                var expiredaddonscount:Int=0
@@ -1528,7 +1543,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     }
 
     fun updateBannerViewPager(list: List<PromoBanners>) {
-        banner_layout.visibility = View.VISIBLE
+     //   banner_layout.visibility = View.VISIBLE
         banner_viewpager.offscreenPageLimit = list.size
         bannerViewPagerAdapter.addupdates(list)
         bannerViewPagerAdapter.notifyDataSetChanged()
@@ -1551,7 +1566,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     }
 
     fun updateBannerViewPager1(list: List<PromoBanners>) {
-        banner_layout1.visibility = View.VISIBLE
+     //   banner_layout1.visibility = View.VISIBLE
         banner_viewpager1.offscreenPageLimit = list.size
         bannerViewPagerAdapter.addupdates(list)
         bannerViewPagerAdapter.notifyDataSetChanged()
@@ -2285,7 +2300,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
 
     private fun initializeBannerViewPager() {
-        banner_layout.visibility = View.VISIBLE
+      //  banner_layout.visibility = View.VISIBLE
         banner_viewpager.adapter = bannerViewPagerAdapter
         banner_viewpager.offscreenPageLimit = 4
         banner_indicator.setViewPager2(banner_viewpager)
@@ -2299,7 +2314,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     }
 
     private fun initializeBannerViewPager1() {
-        banner_layout1.visibility = View.VISIBLE
+     //   banner_layout1.visibility = View.VISIBLE
         banner_viewpager1.adapter = bannerViewPagerAdapter
         banner_viewpager1.offscreenPageLimit = 4
         banner_indicator1.setViewPager2(banner_viewpager1)
