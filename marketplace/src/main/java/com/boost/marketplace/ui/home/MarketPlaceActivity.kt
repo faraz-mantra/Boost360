@@ -1,5 +1,7 @@
 package com.boost.marketplace.ui.home
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
@@ -7,18 +9,19 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.text.Html
 import android.util.Log
-import android.view.MenuItem
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.transition.Slide
+import androidx.transition.Transition
+import androidx.transition.TransitionManager
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.SimplePageTransformer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
@@ -38,7 +41,6 @@ import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.constant.RecyclerViewActionType
 import com.boost.marketplace.databinding.ActivityMarketplaceBinding
-import com.boost.marketplace.infra.utils.Utils1
 import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.interfaces.CompareBackListener
 import com.boost.marketplace.interfaces.HomeListener
@@ -55,11 +57,10 @@ import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
 import com.boost.marketplace.ui.videos.HomeVideosBottomSheet
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.framework.analytics.SentryController
+import com.framework.extensions.isVisible
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
-import com.framework.utils.DateUtils
-import com.framework.utils.DateUtils.parseDate
 import com.framework.utils.RootUtil
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.*
@@ -71,9 +72,15 @@ import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_compare_packs.*
 import kotlinx.android.synthetic.main.activity_marketplace.*
+import kotlinx.android.synthetic.main.activity_marketplace.package_layout
+import kotlinx.android.synthetic.main.activity_marketplace.package_viewpager
+import kotlinx.android.synthetic.main.layout_details_popup.view.*
+import zendesk.support.requestlist.RequestListViewModule_ViewFactory.view
 import java.lang.reflect.Field
 import java.lang.reflect.Method
+
 
 class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPlaceHomeViewModel>(),
     RecyclerStringItemClickListener, CompareBackListener, HomeListener, AddonsListener,VideosListener {
@@ -643,20 +650,22 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         if (!code.equals("null", true)) {
             viewModel.setCurrentExperienceCode(code, fpTag!!)
         }
+        Handler().postDelayed({
+            try {
+                viewModel.subscriptionType(getAccessToken() ?: "", this.fpid!!)
+                viewModel.loadUpdates(
+                    getAccessToken() ?: "",
+                    this.fpid!!,
+                    this.clientid,
+                    this.experienceCode,
+                    this.fpTag
+                )
+                viewModel.loadPurchasedItems(this.fpid!!, this.clientid)
 
-        try {
-            viewModel.loadUpdates(
-                getAccessToken() ?: "",
-                this.fpid!!,
-                this.clientid,
-                this.experienceCode,
-                this.fpTag
-            )
-            viewModel.loadPurchasedItems(this.fpid!!, this.clientid)
-            viewModel.subscriptionType(getAccessToken() ?: "", this.fpid!!,)
-        } catch (e: Exception) {
-            SentryController.captureException(e)
-        }
+            } catch (e: Exception) {
+                SentryController.captureException(e)
+            }
+        }, 2000)
     }
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -1373,18 +1382,29 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 if (shimmer_view_package.isShimmerStarted) {
                     shimmer_view_package.stopShimmer()
                     shimmer_view_package.visibility = View.GONE
+                    shimmer_view_package.setAlpha(0.0f);
+                    shimmer_view_package.animate()
+                        .translationX(shimmer_view_package.getHeight().toFloat())
+                        .alpha(1.0f)
+                        .setListener(null)
                 }
-                package_layout.visibility = View.VISIBLE
-                package_layout1.visibility = View.VISIBLE
-                package_compare_layout.visibility = View.VISIBLE
-                package_compare_layout1.visibility = View.VISIBLE
 
                 if (shimmer_view_banner.isShimmerStarted) {
                     shimmer_view_banner.stopShimmer()
-                    shimmer_view_banner.visibility = View.GONE
+                    shimmer_view_banner.setVisibility(View.GONE);
+                    shimmer_view_banner.setAlpha(0.0f);
+                    shimmer_view_banner.animate()
+                        .translationX(shimmer_view_banner.getHeight().toFloat())
+                        .alpha(1.0f)
+                        .setListener(null)
                 }
-                banner_layout.visibility = View.VISIBLE
-                banner_layout1.visibility = View.VISIBLE
+
+                animationView(package_layout)
+                animationView(package_layout1)
+                animationView(package_compare_layout)
+                animationView(package_compare_layout1)
+                animationView(banner_layout)
+                animationView(banner_layout1)
 
                 //Enable Dark mode if all the addons are expired.
 //                var expiredaddonscount:Int=0
@@ -1515,6 +1535,15 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 footer.visibility = View.GONE
             }
         })
+    }
+
+    private fun animationView(view:View) {
+        view.setVisibility(View.VISIBLE);
+        view.setAlpha(0.0f);
+        view.animate()
+            .translationX(view.getHeight().toFloat())
+            .alpha(1.0f)
+            .setListener(null)
     }
 
     fun updateFeatureDealsViewPager(list: List<FeatureDeals>, cartList: List<CartModel>) {
