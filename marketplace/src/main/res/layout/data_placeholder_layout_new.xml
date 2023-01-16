@@ -2,45 +2,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="10dp"
-    android:layout_marginTop="20dp">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <LinearLayout
-        android:id="@+id/tv_layout"
+        android:id="@+id/layout_thumbnail"
         android:layout_width="wrap_content"
-        android:layout_height="160dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="@dimen/padding_10"
+        android:layout_height="match_parent"
+        android:padding="@dimen/pad_10dp"
         android:orientation="vertical">
 
-        <View
-            android:layout_width="100dp"
-            android:layout_height="@dimen/placeholderTextHeight"
-            android:layout_marginTop="5dp"
-            android:background="@color/background2" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp">
 
         <View
-            android:layout_width="70dp"
-            android:layout_height="@dimen/placeholderTextHeight"
-            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/layout_tv"
             android:background="@color/background2" />
 
-        <View
-            android:layout_width="100dp"
-            android:layout_height="@dimen/placeholderTextHeight"
-            android:layout_marginTop="10dp"
-            android:background="@color/background2" />
+        </androidx.cardview.widget.CardView>
+
     </LinearLayout>
-    <View
-        android:id="@+id/thumbnail"
-        android:layout_width="170dp"
-        android:layout_height="160dp"
-        android:layout_marginStart="16dp"
-        android:layout_toEndOf="@id/tv_layout"
-        android:layout_marginTop="@dimen/padding_10"
-        android:layout_marginEnd="@dimen/activityPadding"
-        android:background="@color/background2" />
+
 </RelativeLayout>
 
