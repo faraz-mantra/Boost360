@@ -51,7 +51,7 @@ class FacultyManagementAdapter(private val eventListener: ItemClickEventListener
           binding.menuOptions.visibility = View.GONE
         }
       }
-      binding.mainLayout.setOnClickListener { eventListener.itemMenuOptionStatus(position, false) }
+    //  binding.mainLayout.setOnClickListener { eventListener.itemMenuOptionStatus(position, false) }
 
       binding.singleItemMenuButton.setOnClickListener {
         if (binding.menuOptions.visibility == View.GONE) {
