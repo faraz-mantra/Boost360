@@ -38,7 +38,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
   var isIsTodayTabClicked: Boolean = false
 
   enum class ToolTipType {
-    FOR_TODAY, CREATE
+    FOR_TODAY, CREATE, READY_MADE, CREATE_NEW
   }
 
   override fun getLayout(): Int {
@@ -66,7 +66,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
     setupViewPager()
     if (PreferencesUtils.instance.getData(PreferencesKey.UPDATE_STUDIO_FIRST_TIME.name, true)) {
       PreferencesUtils.instance.saveData(PreferencesKey.UPDATE_STUDIO_FIRST_TIME.name, false)
-      setupTabBaloons(ToolTipType.FOR_TODAY)
+      setupTabBaloons(ToolTipType.READY_MADE)
     }
   }
 
@@ -107,6 +107,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
          }, 100)
      }*/
     binding.fabBrowseAll!!.setOnClickListener {
+      WebEngageController.trackEvent(PROMOTIONAL_UPDATE_CATEGORY_CLICK)
       addFragment(R.id.container, BrowseCategoriesFragment.newInstance(), true, true)
     }
   }
@@ -179,14 +180,14 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
         else -> null
       }
       currentTab.text = when (currentPosition) {
-        0 -> getString(R.string.for_today)
-        1 -> getString(R.string.Create)
+        0 -> getString(R.string.ready_made)
+        1 -> getString(R.string.create_new)
         else -> ""
       }
     }.attach()
 
     if (PreferencesUtils.instance.getData(PreferenceConstant.FIRST_LAUNCH_PROMO, true)) {
-      //  setupTabBaloons(ToolTipType.FOR_TODAY)
+      //  setupTabBaloons(ToolTipType.READY_MADE)
       PreferencesUtils.instance.saveData(PreferenceConstant.FIRST_LAUNCH_PROMO, false)
     }
 
@@ -202,12 +203,12 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
   }
 
   private fun setupTabBaloons(type: ToolTipType) {
-    val marginLeft = if (type == ToolTipType.FOR_TODAY) 16 else 0
-    val marginRight = if (type == ToolTipType.CREATE) 16 else 0
+    val marginLeft = if (type == ToolTipType.READY_MADE) 16 else 0
+    val marginRight = if (type == ToolTipType.CREATE_NEW) 16 else 0
 
     val arrowPos = when (type) {
-      ToolTipType.FOR_TODAY -> 0.2F
-      ToolTipType.CREATE -> 0.8F
+      ToolTipType.READY_MADE -> 0.2F
+      ToolTipType.CREATE_NEW -> 0.8F
       else -> 0.5F
     }
 
@@ -219,7 +220,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
     val icon = balloon.getContentView().findViewById<CustomImageView>(R.id.iv_icon)
 
     when (type) {
-      ToolTipType.FOR_TODAY -> {
+      ToolTipType.READY_MADE -> {
         text.text = spanBoldNdColor(
           getString(R.string.premium_updates_custom_designed_for_you),
           R.color.colorPrimary,
@@ -231,14 +232,14 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
           )
         }, 500)
         balloon.setOnBalloonDismissListener {
-          setupTabBaloons(ToolTipType.CREATE)
+          setupTabBaloons(ToolTipType.CREATE_NEW)
         }
         close.setOnClickListener {
           balloon.dismiss()
-          setupTabBaloons(ToolTipType.CREATE)
+          setupTabBaloons(ToolTipType.CREATE_NEW)
         }
       }
-      ToolTipType.CREATE -> {
+      ToolTipType.CREATE_NEW -> {
         icon.gone()
         text.text = spanBoldNdColor(
           getString(R.string.free_updates_tap_on_create_to_post_like_before), R.color.green_78AF00, "FREE updates:"
