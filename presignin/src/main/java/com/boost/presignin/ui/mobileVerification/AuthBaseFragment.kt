@@ -179,4 +179,10 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> :
             e.printStackTrace()
         }
     }
+
+    override fun onStop() {
+        super.onStop()
+        if(::progressDialog.isInitialized && progressDialog.isShowing)
+            progressDialog.dismiss()
+    }
 }

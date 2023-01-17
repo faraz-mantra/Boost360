@@ -522,7 +522,8 @@ object DataLoader {
                             .observeOn(AndroidSchedulers.mainThread())
                             .doOnComplete {
                                 Log.d("addAllItemstoCart", "Success")
-                                updateCartItemsToFirestore(application)
+                                //disable items
+//                                updateCartItemsToFirestore(application)
                             }
                             .doOnError {
                                 it.printStackTrace()
@@ -596,28 +597,28 @@ object DataLoader {
     }
 
 
-    @SuppressLint("LongLogTag")
-    fun updateCartItemsToFirestore(application: Application) {
-        CompositeDisposable().add(
-            AppDatabase.getInstance(application)!!
-                .cartDao()
-                .getCartItems()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSuccess {
-                    Log.d("updateCartItemsToFirestore", "Success")
-                    val map: MutableMap<String, Any> = HashMap<String, Any>()
-                    for (i in it) {
-                        map[i.item_id] = i
-                    }
-                    if (map.size > 0) {
-                        CartFirestoreManager.updateDocument(map as HashMap<String, Any>)
-                    }
-                }
-                .doOnError {
-                    Log.e("updateCartItemsToFirestore", "Error", it)
-                }
-                .subscribe()
-        )
-    }
+//    @SuppressLint("LongLogTag")
+//    fun updateCartItemsToFirestore(application: Application) {
+//        CompositeDisposable().add(
+//            AppDatabase.getInstance(application)!!
+//                .cartDao()
+//                .getCartItems()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .doOnSuccess {
+//                    Log.d("updateCartItemsToFirestore", "Success")
+//                    val map: MutableMap<String, Any> = HashMap<String, Any>()
+//                    for (i in it) {
+//                        map[i.item_id] = i
+//                    }
+//                    if (map.size > 0) {
+//                        CartFirestoreManager.updateDocument(map as HashMap<String, Any>)
+//                    }
+//                }
+//                .doOnError {
+//                    Log.e("updateCartItemsToFirestore", "Error", it)
+//                }
+//                .subscribe()
+//        )
+//    }
 }

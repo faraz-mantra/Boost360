@@ -59,7 +59,7 @@ class GrowthStatsData(
         type = GrowthType.NEWSLETTER_SUBSCRIPTION.name
       )
     )
-//    list.add(GrowthStatsData(title = "Search Queries", value = searchCount, icon1 = R.drawable.ic_search_queries_d,type = GrowthType.SEARCH_QUERIES.name))
+    list.add(GrowthStatsData(title = "Search Queries", value = searchCount, icon1 = R.drawable.ic_search_queries_d,type = GrowthType.SEARCH_QUERIES.name))
     return list
   }
 

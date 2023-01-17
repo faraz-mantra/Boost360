@@ -124,7 +124,7 @@ class CustomDomainViewModel() : BaseViewModel() {
             .doOnComplete {
                 updatesLoader.postValue("")
                 //add cartitem to firebase
-                DataLoader.updateCartItemsToFirestore(application)
+//                DataLoader.updateCartItemsToFirestore(application)
             }
             .doOnError {
                 updatesError.postValue(it.message)
