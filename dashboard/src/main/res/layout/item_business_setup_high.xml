@@ -118,7 +118,7 @@
           android:paddingTop="@dimen/size_2"
           android:paddingBottom="@dimen/size_2"
           android:text="@string/_82"
-          android:textColor="@color/light_green_3"
+          android:textColor="@color/black_4f4f4f"
           app:fontFamily="@font/barlow_bold"
           app:textType="BODY_1" />
 
