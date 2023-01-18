@@ -725,7 +725,9 @@ public class Util {
             fos.flush();
             fos.close();
             imgpath = f.getAbsolutePath();
-
+            File file = new File(imgpath);
+            int file_size = Integer.parseInt(String.valueOf(file.length()/1024));
+            Log.i("savedImageSize->", String.valueOf(file_size));
         } catch (Exception e) {
             e.printStackTrace();
         } catch (OutOfMemoryError E) {

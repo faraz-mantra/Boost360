@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -19,6 +20,7 @@ import com.boost.dbcenterapi.utils.Utils
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.nowfloats.Login.UserSessionManager
+import com.nowfloats.NavigationDrawer.EditImageActivity
 import com.nowfloats.education.helper.BaseFragment
 import com.nowfloats.education.helper.Constants.CAMERA_REQUEST_CODE
 import com.nowfloats.education.helper.Constants.GALLERY_REQUEST_CODE
@@ -33,6 +35,7 @@ import com.nowfloats.education.helper.getBitmapFromUri
 import com.nowfloats.education.toppers.ToppersActivity
 import com.nowfloats.education.toppers.model.Data
 import com.nowfloats.education.toppers.model.Topper
+import com.nowfloats.util.FileUtils
 import com.nowfloats.util.Methods
 import com.thinksity.R
 import com.thinksity.databinding.ToppersDetailsBinding
@@ -50,6 +53,7 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
   private lateinit var permissionsHelper: PermissionsHelper
   private var photoURI: Uri? = null
   private lateinit var session: UserSessionManager
+  private val ACTION_REQUEST_IMAGE_EDIT = 3
 
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
@@ -351,22 +355,20 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
     when (requestCode) {
       CAMERA_REQUEST_CODE -> {
         if (resultCode == Activity.RESULT_OK && photoURI != null) {
-          var bitmap = requireActivity().getBitmapFromUri(photoURI)
-          bitmap = viewModel.rotateImageIfRequired(photoURI!!.path, bitmap!!)
-          if (viewModel.topperImageFlag == Topper.PROFILE) {
-            binding.icRemoveTopperProfileImage.visibility = View.VISIBLE
-            setProfileImage(binding.toppersProfileImage, bitmap)
-          }
-
-          if (viewModel.topperImageFlag == Topper.TESTIMONIAL) {
-            binding.icRemoveTopperTestimonialImage.visibility = View.VISIBLE
-            setTestimonialImage(binding.topperTestimonialImage, bitmap)
-          }
+          editImage(photoURI!!.path?:"")
         }
       }
       GALLERY_REQUEST_CODE -> {
         if (resultCode == Activity.RESULT_OK && data?.data != null) {
-          val bitmap = requireActivity().getBitmapFromUri(data.data)
+          val path = FileUtils.getPath(requireContext(), data.data)
+          editImage(path)
+        }
+      }
+      ACTION_REQUEST_IMAGE_EDIT -> {
+        val path = data?.getStringExtra("edit_image") ?: data?.getStringExtra("")
+        if (resultCode == Activity.RESULT_OK && path != null) {
+          var bitmap: Bitmap = BitmapFactory.decodeFile(path)
+          bitmap = viewModel.rotateImageIfRequired(path, bitmap!!)
           if (viewModel.topperImageFlag == Topper.PROFILE) {
             binding.icRemoveTopperProfileImage.visibility = View.VISIBLE
             setProfileImage(binding.toppersProfileImage, bitmap)
@@ -379,6 +381,16 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
         }
       }
     }
+  }
+
+  private fun editImage(path: String) {
+    val `in` = Intent(
+      requireContext(),
+      EditImageActivity::class.java
+    )
+    `in`.putExtra("image", path)
+    `in`.putExtra("isFixedAspectRatio", true)
+    startActivityForResult(`in`, ACTION_REQUEST_IMAGE_EDIT)
   }
 
   private fun setProfileImage(view: ImageView, bitmap: Bitmap?) {
