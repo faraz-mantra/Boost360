@@ -200,9 +200,9 @@
   <string name="order_shipped_via">Order shipped via</string>
   <string name="local_delivery_person">Local delivery person</string>
   <string name="delivery_partner_vendor">Delivery partner/vendor</string>
-  <string name="delivery_person_name">Delivery person name</string>
+  <string name="delivery_person_name">Delivery person name*</string>
   <string name="write_the_delivery_person_name">Write the delivery person name</string>
-  <string name="delivery_person_contact_number">Delivery person contact number</string>
+  <string name="delivery_person_contact_number">Delivery person contact number*</string>
   <string name="please_make_sure_above_details_are_correct_delivery_person_details">Please make sure above details are correct. Boost will send an email and an SMS to the customer on your behalf, informing them of the order being ‘out for delivery’ along with delivery person details.</string>
   <string name="please_make_sure_above_details_are_correct_delivery_person_details_partner">Please make sure above details are correct. Boost will send an email and an SMS to the customer on your behalf, informing them of the order being ‘Shipped’ along with consignment tracking details.</string>
   <string name="notify_customer">Notify customer</string>

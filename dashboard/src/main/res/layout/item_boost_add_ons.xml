@@ -90,7 +90,7 @@
       android:id="@+id/rv_manage_business"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/size_18"
+      android:layout_marginStart="@dimen/size_16"
       android:layout_marginEnd="@dimen/size_8"
       android:layout_marginBottom="@dimen/size_14"
       app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"

@@ -542,7 +542,7 @@ object DataLoader {
         data: ArrayList<FeaturesModel>
     ) {
         CompositeDisposable().add(
-            NewApiService.GetFeatureDetails(userSessionManager.fPID!!, clientId)
+            NewApiService.GetFeatureDetails(userSessionManager.fPID?:"", clientId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

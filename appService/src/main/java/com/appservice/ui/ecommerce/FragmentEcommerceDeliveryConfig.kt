@@ -1,5 +1,7 @@
 package com.appservice.ui.ecommerce
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import com.appservice.R
@@ -47,6 +49,20 @@ class FragmentEcommerceDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigur
     WebEngageController.trackEvent(DELIVERY_SETUP_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setupView()
     getWareHouseAddress()
+
+    binding.etdFlatCharges.addTextChangedListener(object : TextWatcher {
+      override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+      override fun onTextChanged(p0: CharSequence?, start: Int, removed: Int, added: Int) {
+          if (p0?.contains('-') == true) {
+            binding.etdFlatCharges.setText(p0.toString().replace("-", ""))
+            binding.etdFlatCharges.setSelection(binding.etdFlatCharges.length())
+        }
+      }
+
+      override fun afterTextChanged(s: Editable?) {}
+
+    })
     binding?.toggleHomeDelivery?.setOnToggledListener { _, isOn ->
       updateDeliveryStatus(binding?.toggleAllowPickup?.isOn ?: true, isOn, binding?.etdFlatCharges?.text.toString())
     }
