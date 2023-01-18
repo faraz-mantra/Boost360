@@ -270,7 +270,6 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
   private fun fetchLocationAndSendWEEvent() {
     val locationApiUrl = "https://api.whatismyip.com/wimi.php"
     viewModel?.getUserLocation(locationApiUrl)?.observeOnce(viewLifecycleOwner) {
-      hideProgress()
       var outputString=""
       if (it.isSuccess()) {
         val locationResponse = it as? LocationResponse

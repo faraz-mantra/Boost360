@@ -89,12 +89,15 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoU
           binding?.tvToolbarTitle?.text = getString(R.string.update_studios)
         }
         is BrowseAllFragment -> {
-          binding?.tvToolbarTitle?.text = getString(R.string.browse_all)
+          binding?.tvToolbarTitle?.text = getString(R.string.browse)
         }
         is FavouriteListFragment -> {
           binding?.tvToolbarTitle?.text = getString(R.string.favourites)
           binding?.ivLove?.isVisible = false
           binding?.ivStore?.isVisible = false
+        }
+        is BrowseCategoriesFragment -> {
+          binding?.tvToolbarTitle?.text = getString(R.string.browse_all)
         }
       }
     }
