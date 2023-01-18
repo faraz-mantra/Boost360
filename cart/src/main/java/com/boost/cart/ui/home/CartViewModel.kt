@@ -1,11 +1,11 @@
 package com.boost.cart.ui.home
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,6 +20,7 @@ import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.ExpertConnec
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
+import com.boost.dbcenterapi.data.api_model.SomethingWentWrong
 import com.boost.dbcenterapi.data.api_model.blockingAPI.BlockApi
 import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
 import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsRequest
@@ -42,13 +43,15 @@ import com.boost.dbcenterapi.data.renewalcart.*
 import com.boost.dbcenterapi.data.rest.repository.MarketplaceNewRepository
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.*
-import com.boost.dbcenterapi.utils.DataLoader
+import com.framework.BaseApplication
+import com.framework.R
 import com.framework.analytics.SentryController
+import com.framework.errorHandling.ErrorFlowInvokeObject
+import com.framework.errorHandling.ErrorOccurredBottomSheet
 import com.framework.extensions.observeOnce
 import com.framework.models.toLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import es.dmoral.toasty.Toasty
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -63,6 +66,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class CartViewModel(application: Application) : BaseViewModel(application) {
 
     var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
@@ -74,7 +78,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     var updatesResult: MutableLiveData<CustomDomains> = MutableLiveData()
     var renewalPurchaseList: MutableLiveData<List<RenewalResult>> = MutableLiveData()
     var allBundles: MutableLiveData<List<BundlesModel>> = MutableLiveData()
-    var updatesError: MutableLiveData<String> = MutableLiveData()
+    var updatesError: MutableLiveData<SomethingWentWrong> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
     var _initiatePurchaseOrder: MutableLiveData<CreatePurchaseOrderResponse> = MutableLiveData()
     var _initiatePurchaseAutoRenewOrder: MutableLiveData<CreatePurchaseOrderResponse> =
@@ -149,7 +153,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         this.lifecycleOwner = lifecycleOwner
     }
 
-    fun updatesError(): LiveData<String> {
+    fun updatesError(): LiveData<SomethingWentWrong> {
         return updatesError
     }
 
@@ -373,12 +377,13 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                             updatesLoader.postValue(false)
                         },
                         {
-                            Toasty.error(
-                                getApplication(),
-                                "Error occurred while registering your order - " + it.message,
-                                Toast.LENGTH_LONG
-                            ).show()
-                            updatesError.postValue(it.message)
+                            updatesError.postValue(
+                                SomethingWentWrong(
+                                errorCode = (it as HttpException).code() ?: 0,
+                                errorMessage = it.message() ?: BaseApplication.instance.getString(
+                                    R.string.something_went_wrong_please_tell_what_happened),
+                                correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
+                            ))
                             updatesLoader.postValue(false)
                         }
                     )
@@ -402,12 +407,13 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                             updatesLoader.postValue(false)
                         },
                         {
-                            Toasty.error(
-                                getApplication(),
-                                "Error occurred while registering your order - " + it.message,
-                                Toast.LENGTH_LONG
-                            ).show()
-                            updatesError.postValue(it.message)
+                            updatesError.postValue(
+                                SomethingWentWrong(
+                                errorCode = (it as HttpException).code() ?: 0,
+                                errorMessage = it.message() ?: BaseApplication.instance.getString(
+                                    R.string.something_went_wrong_please_tell_what_happened),
+                                correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
+                            ))
                             updatesLoader.postValue(false)
                         }
                     )
@@ -439,13 +445,25 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         renewalPurchaseList.postValue(data.result ?: ArrayList())
 //                                updatesLoader.postValue(false)
                     }, {
+                        updatesError.postValue(
+                            SomethingWentWrong(
+                                errorCode = (it as HttpException).code() ?: 0,
+                                errorMessage = it.message() ?: BaseApplication.instance.getString(
+                                    R.string.something_went_wrong_please_tell_what_happened),
+                                correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
+                            ))
                         renewalPurchaseList.postValue(ArrayList())
                         updatesLoader.postValue(false)
                     })
             )
         } else {
             updatesLoader.postValue(false)
-            Toasty.error(getApplication(), "No Internet Connection.", Toast.LENGTH_LONG).show()
+            updatesError.postValue(
+                SomethingWentWrong(
+                    errorCode = 0,
+                    errorMessage = "No Internet Connection.",
+                    correlationId = ""
+                ))
         }
     }
 
@@ -460,22 +478,33 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                             createCartResult.postValue(it.result)
                         } else {
                             updatesError.postValue(
-                                it.error?.errorList?.iNVALIDPARAMETERS
-                                    ?: "Error creating cart state"
-                            )
+                                SomethingWentWrong(
+                                    errorCode = 0,
+                                    errorMessage = it.error?.errorList?.iNVALIDPARAMETERS
+                                        ?: "Error creating cart state",
+                                    correlationId = ""
+                                ))
                         }
                         updatesLoader.postValue(false)
                     }, {
                         updatesError.postValue(
-                            it?.localizedMessage
-                                ?: "Error creating cart state"
-                        )
+                            SomethingWentWrong(
+                                errorCode = (it as HttpException).code() ?: 0,
+                                errorMessage = it?.localizedMessage
+                                    ?: "Error creating cart state",
+                                correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
+                            ))
                         updatesLoader.postValue(false)
                     })
             )
         } else {
             updatesLoader.postValue(false)
-            Toasty.error(getApplication(), "No Internet Connection.", Toast.LENGTH_LONG).show()
+            updatesError.postValue(
+                SomethingWentWrong(
+                    errorCode = 0,
+                    errorMessage = "No Internet Connection.",
+                    correlationId = ""
+                ))
         }
     }
 
@@ -586,7 +615,6 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 //                            updatesLoader.postValue(false)
                 }
                 .doOnError {
-//                            updatesError.postValue(it.message)
                     updatesLoader.postValue(false)
                 }
                 .subscribe()
@@ -605,7 +633,6 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                     allFeatures.postValue(it)
 //                            updatesLoader.postValue(false)
                 }, {
-//                            updatesError.postValue(it.message)
                     updatesLoader.postValue(false)
                 })
         )
@@ -623,7 +650,6 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                     allBundles.postValue(it)
 //                            updatesLoader.postValue(false)
                 }, {
-//                            updatesError.postValue(it.message)
                     updatesLoader.postValue(false)
                 })
         )
@@ -647,7 +673,13 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                             updatesLoader.postValue(false)
                         }
                         .doOnError {
-                            updatesError.postValue(it.message)
+                            updatesError.postValue(
+                                SomethingWentWrong(
+                                    errorCode = 0,
+                                    errorMessage = it.message ?: BaseApplication.instance.getString(
+                                        R.string.something_went_wrong_please_tell_what_happened),
+                                    correlationId = ""
+                                ))
                             updatesLoader.postValue(false)
                         }
                         .subscribe()
@@ -655,7 +687,13 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                 updatesLoader.postValue(false)
             }
             .doOnError {
-                updatesError.postValue(it.message)
+                updatesError.postValue(
+                    SomethingWentWrong(
+                        errorCode = 0,
+                        errorMessage = it.message ?: BaseApplication.instance.getString(
+                            R.string.something_went_wrong_please_tell_what_happened),
+                        correlationId = ""
+                    ))
                 updatesLoader.postValue(false)
             }
             .subscribe()
@@ -672,7 +710,13 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                     allCoupons.postValue(it)
                     updatesLoader.postValue(false)
                 }, {
-                    updatesError.postValue(it.message)
+                    updatesError.postValue(
+                        SomethingWentWrong(
+                            errorCode = 0,
+                            errorMessage = it.message ?: BaseApplication.instance.getString(
+                                R.string.something_went_wrong_please_tell_what_happened),
+                            correlationId = ""
+                        ))
                     updatesLoader.postValue(false)
                 })
         )
@@ -723,8 +767,6 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                 customerInfoState.postValue(false)
                             }
                             updatesLoader.postValue(false)
-//                                        if(!it.message.isNullOrEmpty())
-//                                            updatesError.postValue(it.message)
                         }
                     )
             )
@@ -847,22 +889,24 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                 )
                                 redeemCouponResult.postValue(couponServiceModel)
                             } else {
-                                Toasty.error(
-                                    getApplication(),
-                                    "Error occurred while applying coupon - " + it.message,
-                                    Toast.LENGTH_LONG
-                                ).show()
+                                updatesError.postValue(
+                                SomethingWentWrong(
+                                    errorCode = 0,
+                                    errorMessage = "Error occurred while applying coupon - " + it.message,
+                                    correlationId = ""
+                                ))
                             }
 
 //                                        updatesLoader.postValue(false)
                         },
                         {
-                            Toasty.error(
-                                getApplication(),
-                                "Error occurred while applying coupon - " + it.message,
-                                Toast.LENGTH_LONG
-                            ).show()
-                            updatesError.postValue(it.message)
+                            updatesError.postValue(
+                                SomethingWentWrong(
+                                errorCode = (it as HttpException).code() ?: 0,
+                                errorMessage = it.message() ?: BaseApplication.instance.getString(
+                                    R.string.something_went_wrong_please_tell_what_happened),
+                                correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
+                            ))
                             updatesLoader.postValue(false)
                         }
                     )
@@ -888,8 +932,13 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                     object :
                                         TypeToken<com.boost.dbcenterapi.data.api_model.paymentprofile.Error>() {}.type
                                 )
-                            Toasty.error(getApplication(), errorBody.toString(), Toast.LENGTH_LONG)
-                                .show()
+                            updatesError.postValue(
+                                SomethingWentWrong(
+                                errorCode = (it as HttpException).code() ?: 0,
+                                errorMessage = errorBody.toString() ?: BaseApplication.instance.getString(
+                                    R.string.something_went_wrong_please_tell_what_happened),
+                                correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
+                            ))
                         }
                     )
             )
@@ -916,8 +965,13 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                     TypeToken<com.boost.dbcenterapi.data.api_model.stateCode.Error>() {}.type
                             )
                             progressBar.visibility = View.GONE
-                            Toasty.error(getApplication(), errorBody.toString(), Toast.LENGTH_LONG)
-                                .show()
+                            updatesError.postValue(
+                                SomethingWentWrong(
+                                errorCode = (it as HttpException).code() ?: 0,
+                                errorMessage = errorBody.toString() ?: BaseApplication.instance.getString(
+                                    R.string.something_went_wrong_please_tell_what_happened),
+                                correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
+                            ))
                         }
                     )
             )
@@ -962,11 +1016,12 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         {
                             val temp = (it as HttpException).response()!!.errorBody()!!.string()
                             progressBar.visibility = View.GONE
-                            Toasty.error(
-                                getApplication(),
-                                "Invalid GST Number!!",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            updatesError.postValue(
+                                SomethingWentWrong(
+                                errorCode = 0,
+                                errorMessage = "Invalid GST Number!!",
+                                correlationId = ""
+                            ))
                         }
                     )
             )
@@ -1001,11 +1056,12 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                             couponApiInfo.postValue(couponResponse)
                         },
                         {
-                            Toasty.error(
-                                getApplication(),
-                                "Error ->" + it.message,
-                                Toast.LENGTH_LONG
-                            ).show()
+                            updatesError.postValue(
+                                SomethingWentWrong(
+                                errorCode = 0,
+                                errorMessage = "Error ->" + it.message,
+                                correlationId = ""
+                            ))
                         }
                     )
             )
@@ -1026,11 +1082,12 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                             recommendedAddonsInfo.postValue(it)
                         },
                         {
-                            Toasty.error(
-                                getApplication(),
-                                "Error ->" + it.message,
-                                Toast.LENGTH_LONG
-                            ).show()
+                            updatesError.postValue(
+                                SomethingWentWrong(
+                                    errorCode = 0,
+                                    errorMessage = "Error ->" + it.message,
+                                    correlationId = ""
+                                ))
                         }
                     )
             )
@@ -1053,7 +1110,13 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                 //DataLoader.updateCartItemsToFirestore(Application())
             }
             .doOnError {
-                updatesError.postValue(it.message)
+                updatesError.postValue(
+                    SomethingWentWrong(
+                        errorCode = 0,
+                        errorMessage = it.message ?: BaseApplication.instance.getString(
+                            R.string.something_went_wrong_please_tell_what_happened),
+                        correlationId = ""
+                    ))
                 addToCartResult.postValue(false)
                 updatesLoader.postValue(false)
             }
@@ -1071,8 +1134,14 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         updatesResult.postValue(it)
                         updatesLoader.postValue(false)
                     }, {
+                        updatesError.postValue(
+                                SomethingWentWrong(
+                            errorCode = (it as HttpException).code() ?: 0,
+                            errorMessage = it.message() ?: BaseApplication.instance.getString(
+                                R.string.something_went_wrong_please_tell_what_happened),
+                            correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
+                        ))
                         updatesLoader.postValue(false)
-                        updatesError.postValue(it.message)
                     })
         )
     }
@@ -1088,8 +1157,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         customDomainsResult.postValue(it)
                         updatesLoader.postValue(false)
                     }, {
+
                         updatesLoader.postValue(false)
-                        updatesError.postValue(it.message)
                     })
         )
     }
@@ -1128,11 +1197,12 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 //                            val temp = (it as HttpException).response()!!.errorBody()!!.string()
 //                            val errorBody: Error =
 //                                Gson().fromJson(temp, object : TypeToken<Error>() {}.type)
-                            Toasty.error(
-                                getApplication(),
-                                "Error in Loading Numbers!!",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            updatesError.postValue(
+                                SomethingWentWrong(
+                                    errorCode = 0,
+                                    errorMessage = "Error in Loading Numbers!!",
+                                    correlationId = ""
+                                ))
                         }
                     )
 
@@ -1168,7 +1238,13 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                             updateVmnStatus.postValue(it)
                         }
                     }, {
-                        updatesError.postValue(it.message)
+                        updatesError.postValue(
+                                SomethingWentWrong(
+                            errorCode = (it as HttpException).code() ?: 0,
+                            errorMessage = it.message() ?: BaseApplication.instance.getString(
+                                R.string.something_went_wrong_please_tell_what_happened),
+                            correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
+                        ))
                     })
         )
     }
@@ -1185,7 +1261,13 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         updatesLoader.postValue(false)
                     }, {
                         updatesLoader.postValue(false)
-                        updatesError.postValue(it.message)
+                        updatesError.postValue(
+                                SomethingWentWrong(
+                            errorCode = (it as HttpException).code() ?: 0,
+                            errorMessage = it.message() ?: BaseApplication.instance.getString(
+                                R.string.something_went_wrong_please_tell_what_happened),
+                            correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
+                        ))
                     })
         )
     }
@@ -1202,7 +1284,13 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         updatesLoader.postValue(false)
                     }, {
                         updatesLoader.postValue(false)
-                        updatesError.postValue(it.message)
+                        updatesError.postValue(
+                                SomethingWentWrong(
+                            errorCode = (it as HttpException).code() ?: 0,
+                            errorMessage = it.message() ?: BaseApplication.instance.getString(
+                                R.string.something_went_wrong_please_tell_what_happened),
+                            correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
+                        ))
                     })
         )
     }
@@ -1234,7 +1322,13 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         validityMonths.postValue(numberOfMonths)
                     }, {
                         updatesLoader.postValue(false)
-                        updatesError.postValue(it.message)
+                        updatesError.postValue(
+                            SomethingWentWrong(
+                                errorCode = 0,
+                                errorMessage = it.message ?: BaseApplication.instance.getString(
+                                    R.string.something_went_wrong_please_tell_what_happened),
+                                correlationId = ""
+                            ))
                     })
         )
     }

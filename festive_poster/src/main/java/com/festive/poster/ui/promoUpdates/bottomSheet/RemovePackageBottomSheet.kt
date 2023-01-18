@@ -148,7 +148,7 @@ class RemovePackageBottomSheet(var addonsListInCart: List<String>? = null, val a
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnComplete {
-                        DataLoader.updateCartItemsToFirestore(requireActivity().application)
+//                        DataLoader.updateCartItemsToFirestore(requireActivity().application)
                     }
                     .doOnError {
                         it.printStackTrace()

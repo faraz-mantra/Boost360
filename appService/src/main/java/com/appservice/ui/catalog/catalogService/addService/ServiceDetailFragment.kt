@@ -22,6 +22,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.text.toSpannable
+import androidx.lifecycle.LiveData
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
@@ -32,6 +33,8 @@ import com.appservice.model.FileModel
 import com.appservice.model.aptsetting.AppointmentStatusResponse
 import com.appservice.model.aptsetting.TimingDetailsModel
 import com.appservice.model.aptsetting.UserFpDetailsResponse
+import com.appservice.model.businessmodel.BusinessProfileUpdateRequest
+import com.appservice.model.businessmodel.Update
 import com.appservice.model.serviceProduct.service.ItemsItem
 import com.appservice.model.serviceProduct.service.ServiceSearchListingResponse
 import com.appservice.model.serviceTiming.AddServiceTimingRequest
@@ -39,6 +42,7 @@ import com.appservice.model.serviceTiming.ServiceTime
 import com.appservice.model.serviceTiming.ServiceTiming
 import com.appservice.model.servicev1.*
 import com.appservice.rest.TaskCode
+import com.appservice.rest.repository.WithFloatTwoRepository
 import com.appservice.ui.catalog.catalogService.listing.CreateServiceSuccessBottomSheet
 import com.appservice.ui.catalog.catalogService.listing.TypeSuccess
 import com.appservice.ui.catalog.setFragmentType
@@ -59,6 +63,7 @@ import com.framework.firebaseUtils.caplimit_feature.filterFeature
 import com.framework.firebaseUtils.caplimit_feature.getCapData
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.models.toLiveData
 import com.framework.utils.fromHtml
 import com.framework.utils.hideKeyBoard
 import com.framework.views.customViews.CustomTextView
@@ -123,7 +128,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         listenerEditText()
         capLimitCheck()
         binding.serviceTimingSwitch.setOnToggledListener { _, isChecked ->
-            sessionLocal.noServiceSlot = isChecked
+            sessionLocal.serviceTiming = isChecked
+            updateBusinessDetails()
             if (isChecked) {
                 sessionLocal.serviceTiming = !isChecked
                 binding.timingsView.visibility = View.GONE
@@ -136,6 +142,21 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
             }
         }
 
+    }
+
+    private fun updateBusinessDetails() {
+        val businessProfileUpdateUrl = "https://api2.withfloats.com/Discover/v1/FloatingPoint/update"
+        val businessProfileUpdateRequest = BusinessProfileUpdateRequest()
+        businessProfileUpdateRequest.clientId = com.framework.pref.clientId
+        businessProfileUpdateRequest.fpTag = sessionLocal.fpTag
+        val updateItemList = arrayListOf<Update>()
+        val stoteToggneInfo = Update()
+        stoteToggneInfo.key="STORETOGGLE";
+        stoteToggneInfo.value="${sessionLocal.noServiceSlot!!}#${sessionLocal.serviceTiming!!}"
+        updateItemList.add(stoteToggneInfo)
+        businessProfileUpdateRequest.updates = updateItemList
+        viewModel?.updateBusinessDetails(businessProfileUpdateUrl,businessProfileUpdateRequest)
+            ?.observeOnce(viewLifecycleOwner) {}
     }
 
     override fun onResume() {
@@ -693,7 +714,6 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
                     } else {
                         binding.timingsView.visibility = View.VISIBLE
                         binding?.editWeekendScheduleView?.visibility = View.VISIBLE
-                        binding.timingsView.removeAllViews()
                     }
                 }
             }
