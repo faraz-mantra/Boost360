@@ -37,17 +37,17 @@
         {
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
-        },
-        {
-          "quickActionType": "ADD_STAFF_PROFILE",
-          "title": "Add a\ndoctor",
-          "isNew": true
         }
       ]
     },
     {
       "type": "HOS",
       "action_item": [
+        {
+          "quickActionType": "ADD_STAFF_PROFILE",
+          "title": "Add a\ndoctor",
+          "isNew": true
+        },
         {
           "quickActionType": "CREATE_NEW_UPDATE",
           "title": "Create new update"
