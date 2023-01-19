@@ -389,15 +389,15 @@ public class Business_Logo_Activity extends AppCompatActivity {
                     Uri picUri = data.getData();
                     if (picUri != null) {
                         path = Methods.getPath(this, picUri);
-                        path = Util.saveBitmap(path, Business_Logo_Activity.this, "ImageFloat" + System.currentTimeMillis());
-                        //String isBusinessValidMessage = BoostImageUtils.INSTANCE.isBusinessLogoValid(Business_Logo_Activity.this, new File(path));
-//                        if (!Util.isNullOrEmpty(path) && isBusinessValidMessage.equals("")) {
-                        if (!Util.isNullOrEmpty(path)) {
+                        if (path.toLowerCase().contains(".png")) {
+                            path = Util.saveBitmap(path, Business_Logo_Activity.this, "ImageFloat" + System.currentTimeMillis());
+                        }
+                        String isBusinessValidMessage = BoostImageUtils.INSTANCE.isBusinessLogoValid(Business_Logo_Activity.this, new File(path));
+                        if (!Util.isNullOrEmpty(path) && isBusinessValidMessage.equals("")) {
                             editImage();
                         } else {
-//                            Methods.showSnackBarNegative(Business_Logo_Activity.this,
-//                                    (path == null || path.isEmpty()) ? getResources().getString(R.string.select_image_upload) : isBusinessValidMessage);
-                            Methods.showSnackBarNegative(Business_Logo_Activity.this, "Image uploading Failed!!.");
+                            Methods.showSnackBarNegative(Business_Logo_Activity.this,
+                                    (path == null || path.isEmpty()) ? getResources().getString(R.string.select_image_upload) : isBusinessValidMessage);
                         }
                     }
                 }

@@ -7,6 +7,7 @@ import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
@@ -751,6 +752,9 @@ public class Util {
         try {
 
             Bitmap bitmap = getBitmap(path, app, mWidth);
+            if(path.toLowerCase().contains(".png")){
+                bitmap.eraseColor(Color.TRANSPARENT);
+            }
             imgpath = saveBitmap(bitmap, app, fname);
 
         } catch (Exception e) {
