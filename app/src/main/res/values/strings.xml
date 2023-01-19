@@ -1294,7 +1294,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="business_logo_info_text">JPEG, .PNG and .GIF file formats are supported. For best experience, square images are recommended. Keep the size below 400KB and dimensions should not be more than 400px (width) and 400px (height).</string>
     -->
     <string name="business_logo_info_text">A logo is an identity of your business that appears on top of your business website.</string>
-    <string name="business_logo_instructions_1" translatable="false">Supported format: .jpeg, .png or .gif\nRecommended dimension: Square (400x400 px)\nMax file size: 500 kb</string>
+    <string name="business_logo_instructions_1" translatable="false">Supported format: .jpeg, .png or .gif\nRecommended dimension greater than: Square (200x200 px)\nMax file size: 5 MB</string>
     <string name="business_logo_instructions_2" translatable="false">Keep the background white or transparent (in png). For bigger display, remove all padding from the main object in your logo.</string>
     <string name="image_gallery_info_text" translatable="false">Flaunt your business with beautiful images. Number of images you can upload depends upon the plan you’ve picked.</string>
     <string name="image_gallery_instructions_1" translatable="false">Supported format: .jpeg, .png\nRecommended dimension: Horizontal rectangle, 1200 px (width) x 800 px (height)\nMax file size: 5 MB</string>

@@ -1,15 +1,10 @@
 package com.nowfloats.Analytics_Screen;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,7 +32,6 @@ import com.framework.views.zero.old.AppOnZeroCaseClicked;
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
 import com.framework.views.zero.old.AppZeroCases;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Analytics_Screen.API.SubscriberApis;
 import com.nowfloats.Analytics_Screen.Search_Query_Adapter.SubscribersAdapter;
 import com.nowfloats.Analytics_Screen.model.AddSubscriberModel;
@@ -51,10 +45,7 @@ import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivitySubscribersBinding;
-import com.zendesk.service.ErrorResponse;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -74,8 +65,6 @@ import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_NEWSLETTER_
 import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
 import static com.framework.webengageconstant.EventValueKt.TO_BE_ADDED;
 
-import org.json.JSONObject;
-
 public class SubscribersActivity extends AppCompatActivity implements View.OnClickListener,
     SubscribersAdapter.SubscriberInterfaceMethods, AppOnZeroCaseClicked {
 
@@ -92,7 +81,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
   private Toolbar toolbar;
   private LinearLayoutManager mLayoutManager;
   private boolean stop;
-  private int itemClicked = -1;
+  private SubscriberModel selectedItem = null;
   private AppFragmentZeroCase appFragmentZeroCase;
   private ActivitySubscribersBinding binding;
   private ProgressDialog progressDialog;
@@ -349,10 +338,10 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
   }
 
   @Override
-  public void onitemSeleted(int pos) {
-    itemClicked = pos;
+  public void onitemSeleted(SubscriberModel item) {
+    selectedItem = item;
     Intent i = new Intent(this, SubscriberDetailsActivity.class);
-    i.putExtra("data", new Gson().toJson(mSubscriberList.get(pos)));
+    i.putExtra("data", new Gson().toJson(selectedItem));
     i.putExtra("fpTag", mSessionManager.getFpTag());
     startActivityForResult(i, SUBSCRIBER_REQUEST_CODE);
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -361,10 +350,9 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (requestCode == SUBSCRIBER_REQUEST_CODE && resultCode == RESULT_OK) {
-      if (itemClicked != -1 && data != null) {
-        mSubscriberList.get(itemClicked).setSubscriptionStatus(data.getStringExtra("STATUS"));
-        mSubscriberAdapter.notifyItemChanged(itemClicked);
-        itemClicked = -1;
+      if (selectedItem !=null && data != null) {
+        selectedItem.setSubscriptionStatus(data.getStringExtra("STATUS"));
+//        mSubscriberAdapter.notifyItemChanged(itemClicked);
       }
     }
     super.onActivityResult(requestCode, resultCode, data);
