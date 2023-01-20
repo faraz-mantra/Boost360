@@ -91,6 +91,7 @@
           android:layout_marginStart="@dimen/_5sdp"
           android:layout_marginTop="@dimen/_5sdp"
           android:layout_marginEnd="@dimen/_5sdp"
+            android:inputType="number"
           android:background="@drawable/edit_text_bg_elevated_education"
           android:elevation="@dimen/_2sdp"
           android:hint="@string/enter_rank"

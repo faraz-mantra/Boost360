@@ -556,12 +556,12 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
                     selectedNum = it[0]
                     tv_call_expert_select_domain.text = selectedNum
                     tv_vmn_selected_txt.text = selectedNum
-                    view?.selectVmnSubmit?.isClickable = true
+                    view?.selectVmnSubmit?.isEnabled = true
                 } else{
                     selectedNum = "No VMN available"
                 }
             } else {
-                view?.selectVmnSubmit?.isClickable = false
+                view?.selectVmnSubmit?.isEnabled = false
                 context?.let { it1 ->
                     Toasty.error(it1, "Error in Loading Available Numbers!!", Toast.LENGTH_LONG).show()
                 }
@@ -759,12 +759,12 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
     }
 
     fun hideAllLayout() {
-        select_number_layout.visibility = View.GONE
-        review_selection_layout.visibility = View.GONE
-        select_website_layout.visibility = View.GONE
-        no_selection_layout.visibility = View.GONE
-        selected_website_layout.visibility = View.GONE
-        selected_number_layout.visibility = View.GONE
+        select_number_layout?.visibility = View.GONE
+        review_selection_layout?.visibility = View.GONE
+        select_website_layout?.visibility = View.GONE
+        no_selection_layout?.visibility = View.GONE
+        selected_website_layout?.visibility = View.GONE
+        selected_number_layout?.visibility = View.GONE
     }
 
 }
