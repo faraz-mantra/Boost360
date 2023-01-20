@@ -2,6 +2,7 @@ package com.framework.imagepicker
 
 import android.app.Activity
 import android.graphics.BitmapFactory
+import android.util.Log
 import com.framework.R
 import com.framework.utils.sizeInKb
 import java.io.File
@@ -24,12 +25,15 @@ object BoostImageUtils {
         val imageWidth: Int = bitMapOption.outWidth
         val imageHeight: Int = bitMapOption.outHeight
 
-        if (imageWidth > 400 || imageHeight > 400) {
-            return activity.getString(R.string.image_file_resolution_cannot_be_bigger_than_400)
+        if (imageWidth < 200 || imageHeight < 200) {
+            return activity.getString(R.string.image_file_resolution_cannot_be_lesser_than_200)
         }
 
-        if ((imgFile.sizeInKb <= 500).not()) {
-            return activity.getString(R.string.image_cannot_be_bigger_that_500_kb)
+        val file_size: Int = (imgFile.length() / 1024).toString().toInt()
+        Log.i("savedImageSize->", file_size.toString())
+
+        if ((imgFile.sizeInKb <= 5000).not()) {
+            return activity.getString(R.string.image_cannot_be_bigger_that_5_mb)
         }
 
         return ""

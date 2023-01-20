@@ -222,7 +222,7 @@
   <string name="install">Install</string>
   <string name="download_complete">Download Complete</string>
   <string name="please_select_correct_image_file_format_for_business_logo">Please select .jpeg, .jpg, .png or .gif files only!</string>
-  <string name="image_file_resolution_cannot_be_bigger_than_400">Image file resolution cannot be bigger than 400*400!</string>
-  <string name="image_cannot_be_bigger_that_500_kb">Image cannot be bigger than 500 KB</string>
+  <string name="image_file_resolution_cannot_be_lesser_than_200">Image file resolution cannot be smaller than 200*200!</string>
+  <string name="image_cannot_be_bigger_that_5_mb">Image cannot be bigger than 5 MB</string>
   <string name="error_description_cannot_be_kept_empty">Error description cannot be kept blank!</string>
 </resources>
