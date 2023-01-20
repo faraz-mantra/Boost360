@@ -437,7 +437,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
     private void editImage() {
         Intent in = new Intent(FeaturedImageActivity.this, EditImageActivity.class);
         in.putExtra("image", path);
-        in.putExtra("isFixedAspectRatio", true);
+        in.putExtra("isFixedAspectRatio", false);
         startActivityForResult(in, ACTION_REQUEST_IMAGE_EDIT);
     }
 
