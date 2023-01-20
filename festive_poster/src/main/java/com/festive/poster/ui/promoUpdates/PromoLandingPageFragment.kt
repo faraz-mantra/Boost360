@@ -149,7 +149,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
         }
         val tabIconColor: Int = ContextCompat.getColor(requireActivity(), R.color.colorPrimary)
         if (tab?.position == 1) {
-          tab.icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_circlesfour_active)
+          tab.icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_create_new_update_active)
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
           tab?.icon?.setColorFilterApiQ(tabIconColor, BlendMode.SRC_IN)
         } else {
@@ -161,7 +161,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
         // changeTabFont(tab,Typeface.NORMAL)
         val tabIconColor: Int = ContextCompat.getColor(requireActivity(), R.color.colorB3B3B3)
         if (tab?.position == 1) {
-          tab.icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_circlesfour_inactive)
+          tab.icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_create_new_update_inactive)
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
           tab?.icon?.setColorFilterApiQ(tabIconColor, BlendMode.SRC_IN)
         } else {
@@ -175,8 +175,8 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
     // New way of interaction with TabLayout and page title setting
     TabLayoutMediator(binding.tabLayout, binding.viewPager) { currentTab, currentPosition ->
       currentTab.icon = when (currentPosition) {
-        0 -> AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_sundim)
-        1 -> AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_pencilsimple)
+        0 -> AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_ready_made_update)
+        1 -> AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_create_new_update_inactive)
         else -> null
       }
       currentTab.text = when (currentPosition) {
