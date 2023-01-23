@@ -167,10 +167,10 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
 
         view.tv_explore_select_website_cs.setOnClickListener {
             exploreDomainOptions()
-            Handler().postDelayed({
-                hideAllLayout()
-                view.selected_website_layout.visibility=View.VISIBLE
-            }, 1000)
+//            Handler().postDelayed({
+//                hideAllLayout()
+//                view.selected_website_layout.visibility=View.VISIBLE
+//            }, 1000)
         }
 
         view.tv_explore_select_website1_cs.setOnClickListener {
@@ -210,10 +210,10 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
 
         view.tv_explore_text_select_vmn_cs.setOnClickListener {
             exploreVmnOptions()
-            Handler().postDelayed({
-                hideAllLayout()
-                view.selected_number_layout.visibility=View.VISIBLE
-            }, 1000)
+//            Handler().postDelayed({
+//                hideAllLayout()
+//                view.selected_number_layout.visibility=View.VISIBLE
+//            }, 1000)
         }
 
         view.tv_explore_select_number_cs.setOnClickListener {

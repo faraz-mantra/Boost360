@@ -69,7 +69,7 @@ class FilterModel(
       OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name
     ),
     CANCEL_CONSULTATIONS(
-      "Cancel consultations",
+      "Cancelled consultations",
       OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name
     ),
 
