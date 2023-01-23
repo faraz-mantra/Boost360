@@ -196,9 +196,6 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
         });
 
 
-        //setheader
-        setHeader();
-
         Bundle extra = getIntent().getExtras();
         ScreenType = extra.getString("ScreenState");
         if (ScreenType != null && ScreenType.equals("edit")) {
@@ -208,6 +205,9 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
             //set default styling
             updateProjectStatusButton("IN PROGRESS");
         }
+
+        //setheader
+        setHeader();
 
         projectButtonStateController();
         setupUIColor();
@@ -615,7 +615,12 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
         rightButton = findViewById(R.id.right_icon_layout);
         rightIcon = findViewById(R.id.right_icon);
         title.setText("Project Details");
-        rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
+        if (ScreenType != null && ScreenType.equals("edit")) {
+            rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
+            rightIcon.setVisibility(View.VISIBLE);
+        }else{
+            rightIcon.setVisibility(View.GONE);
+        }
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
