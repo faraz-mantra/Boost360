@@ -40,12 +40,10 @@
 
         <ImageView
             android:tag="com.userexperior.ueSecureView"
-
             android:id="@+id/topper_row_profile_image"
           android:layout_width="40dp"
           android:layout_height="40dp"
           android:layout_margin="@dimen/_10sdp"
-          android:src="@{facultyManagementData.profileimage.url}"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
           app:srcCompat="@drawable/ic_facebook_menu" />
