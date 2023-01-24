@@ -98,6 +98,13 @@ class BatchesDetailsFragment(private val batchesData: Data?) : BaseFragment(), C
 
     title.text = getString(R.string.batch_details)
     rightIcon.setImageResource(R.drawable.ic_delete_white_outerline)
+
+    if(addUpdateBatch == false) {
+      rightIcon.visibility = View.GONE
+    } else {
+      rightIcon.visibility = View.VISIBLE
+    }
+
     rightButton.setOnClickListener {
       if (addUpdateBatch) {
         showLoader(getString(R.string.deleting_batch))
