@@ -81,7 +81,7 @@
       android:inputType="number"
       android:background="@drawable/edit_text_bg_elevated_education"
       android:elevation="@dimen/_2sdp"
-      android:hint="Days/ Months/ Weekly"
+      android:hint="Course duration in days"
       android:text="@={batchedData.duration}"
       android:textSize="@dimen/_12sdp" />
 
