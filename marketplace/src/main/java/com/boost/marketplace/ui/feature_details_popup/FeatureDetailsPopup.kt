@@ -550,18 +550,20 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
         }
 
         viewModel.getCallTrackingDetails().observe(this) {
-            if (it!= null) {
+            if (!it.isNullOrEmpty()) {
                 System.out.println("numberList" + it)
                 if (it.size>=1){
                     selectedNum = it[0]
                     tv_call_expert_select_domain.text = selectedNum
                     tv_vmn_selected_txt.text = selectedNum
-                    view?.selectVmnSubmit?.isEnabled = true
+                    shimmer_anim_vmn.visibility=View.GONE
+                    selectDomainLayout.visibility=View.VISIBLE
                 } else{
                     selectedNum = "No VMN available"
                 }
             } else {
-                view?.selectVmnSubmit?.isEnabled = false
+                shimmer_anim_vmn.visibility=View.VISIBLE
+                selectDomainLayout.visibility=View.GONE
                 context?.let { it1 ->
                     Toasty.error(it1, "Error in Loading Available Numbers!!", Toast.LENGTH_LONG).show()
                 }
