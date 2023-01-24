@@ -61,9 +61,6 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
     setOnClickListener(binding?.ivWhatsapp, binding?.ivInstagram, binding?.ivOther, binding?.ivClosePostSuccess)
 
     binding!!.ivPosterIcon.loadFromFile(posterImgPath, false)
-    binding?.ivClosePostSuccess?.setOnClickListener {
-      dismiss()
-    }
     binding!!.cardBigAnim.isVisible = posterImgPath == null
     binding!!.cardSmallAnim.isVisible = posterImgPath != null
     binding!!.ivPosterCard.isVisible = posterImgPath != null
