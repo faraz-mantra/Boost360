@@ -160,8 +160,9 @@ fun AppCompatTextView.setIconifiedText(text: String, @DrawableRes iconResId: Int
       }
     }
     if (iconResId != null) {
-      val align = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) DynamicDrawableSpan.ALIGN_CENTER else DynamicDrawableSpan.ALIGN_BASELINE
-      setSpan(ImageSpan(context, iconResId, align), text.length, text.length + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+//      val align = if(text.isEmpty()) DynamicDrawableSpan.ALIGN_BOTTOM else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) DynamicDrawableSpan.ALIGN_CENTER else DynamicDrawableSpan.ALIGN_BASELINE
+      val align = DynamicDrawableSpan.ALIGN_BOTTOM
+      this.setSpan(ImageSpan(context, iconResId, align), text.length, text.length + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
     }
   }.let { setText(it) }
 }
