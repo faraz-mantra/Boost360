@@ -19,7 +19,7 @@ data class BundlesModel(
   var min_purchase_months: Int = 1,
 
   @ColumnInfo(name = "overall_discount_percent")
-  var overall_discount_percent: Int = 0,
+  var overall_discount_percent: Double = 0.0,
 
   @ColumnInfo(name = "primary_image")
   var primary_image: String? = null,

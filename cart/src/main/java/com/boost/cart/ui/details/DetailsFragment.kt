@@ -521,7 +521,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     imagePreviewPopUpFragement.show((activity as CartActivity).supportFragmentManager, IMAGE_PREVIEW_POPUP_FRAGMENT)
   }
 
-  private fun getDiscountedPrice(price: Double, discountPercent: Int): Double {
+  private fun getDiscountedPrice(price: Double, discountPercent: Double): Double {
     return price - ((discountPercent / 100) * price)
   }
 
