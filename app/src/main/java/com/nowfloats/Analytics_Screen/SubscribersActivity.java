@@ -271,8 +271,8 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
       @Override
       public void failure(RetrofitError error) {
         Log.v("ggg", error.getMessage());
-        byte[] responseBytes=((TypedByteArray) error.getResponse().getBody()).getBytes();
-        String statusString = new String(responseBytes);
+        byte[] responseBytes=(TypedByteArray) error.getResponse().getBody() != null ? ((TypedByteArray) error.getResponse().getBody()).getBytes() : null;
+        String statusString = responseBytes != null ? String.valueOf(responseBytes) : "";
         mProgressBar.setVisibility(View.GONE);
         progressDialog.dismiss();
         dialog.dismiss();
