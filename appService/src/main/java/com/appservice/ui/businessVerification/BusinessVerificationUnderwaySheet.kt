@@ -52,8 +52,7 @@ class BusinessVerificationUnderwaySheet : BaseBottomSheetDialog<SheetBusinessVer
 
   override fun onCreateView() {
     setOnClickListener(binding?.btnSubmitSubmit)
-    val spannableString =
-      SpannableString("This process usually takes 1 working day. Once verified we will notify you. If you want to make any change to above account details, please write to ria@nowfloats.com with this screenshot attached.")
+    val spannableString = SpannableString("This process usually takes 1 working day. Once verified we will notify you. If you want to make any change to above account details, please write to ria@nowfloats.com with this screenshot attached.")
     val underlineSpan = UnderlineSpan()
     val textPaint = TextPaint()
     underlineSpan.updateDrawState(textPaint)
