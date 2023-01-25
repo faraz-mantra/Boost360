@@ -1367,17 +1367,28 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         // viewmodel
         viewModel.bundleResult().observe(this) { list ->
             if (list != null) {
-                if(bundleData?.name == "Online Basic" ) {
-                    // show Online Classic
-                    val onlineClassic = list.find { it.name == "Online Classic" }
-                    onlineClassic?.let { it1 -> setupPackItemRecycler(it1) }
-                } else if(bundleData?.name == "Online Classic") {
-                    //show Online Advance
-                    val onlineAdvance = list.find { it.name == "Online Advanced" }
-                    onlineAdvance?.let { it1 -> setupPackItemRecycler(it1) }
-                } else {
-                    // hide the section - Need More Features
-                    layout_need_more.visibility = View.GONE
+//                if(bundleData?.name == "Online Basic" ) {
+//                    // show Online Classic
+//                    val onlineClassic = list.find { it.name == "Online Classic" }
+//                    onlineClassic?.let { it1 -> setupPackItemRecycler(it1) }
+//                } else if(bundleData?.name == "Online Classic") {
+//                    //show Online Advance
+//                    val onlineAdvance = list.find { it.name == "Online Advanced" }
+//                    onlineAdvance?.let { it1 -> setupPackItemRecycler(it1) }
+//                } else {
+//                    // hide the section - Need More Features
+//                    layout_need_more.visibility = View.GONE
+//                }
+
+                for((index,value) in list.withIndex()){
+                    if(bundleData?.name.equals(value.name) && index < list.size-1 ) {
+                        setupPackItemRecycler(list[index+1])
+                        layout_need_more.visibility = View.VISIBLE
+                        break
+                    }else{
+                        // hide the section - Need More Features
+                        layout_need_more.visibility = View.GONE
+                    }
                 }
 
                 // this is for domain & Vmn selection addon details.

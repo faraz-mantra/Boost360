@@ -128,7 +128,15 @@ data class DeliverySetupTile(
 ) : Serializable {
 
   fun getTitle(): Spanned? {
-    return fromHtml(if (this.isPending == true || this.isHomeDeliveryAllowed == false || isPickUpAllowed == false) "<pre> Mode: <span style=\"color: #EB5757;\"><em>not selected</em></span></pre>" else if (isHomeDeliveryAllowed == true && isPickUpAllowed == true) "Mode:<b> Home delivery, Self pickup</b>" else if (isHomeDeliveryAllowed == true) "Mode:<b> Home delivery</b>" else "Mode:<b> Self Pickup</b>")
+    return fromHtml(
+      if (this.isPending == true || (this.isHomeDeliveryAllowed == false && isPickUpAllowed == false))
+        "<pre> Mode: <span style=\"color: #EB5757;\"><em>not selected</em></span></pre>"
+      else if (isHomeDeliveryAllowed == true && isPickUpAllowed == true)
+        "Mode:<b> Home delivery, Self pickup</b>"
+      else if (isHomeDeliveryAllowed == true)
+        "Mode:<b> Home delivery</b>"
+      else
+        "Mode:<b> Self Pickup</b>")
   }
 }
 

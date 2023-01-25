@@ -24,6 +24,8 @@ import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.DELIVERY_SETUP_PAGE_LOAD
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PAGE_VIEW
+import java.util.*
+import kotlin.concurrent.schedule
 
 class FragmentEcommerceDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigurationBinding, AppointmentSettingsViewModel>() {
 
@@ -148,12 +150,26 @@ class FragmentEcommerceDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigur
 
       }
     }
+    Timer().schedule(1000) {
 //    binding?.ccbBusinessLocation?.isChecked = true
-    binding?.ccbWarehouseAddress?.setOnCheckedChangeListener { buttonView, isChecked ->
-      if (isChecked) {
-        binding?.containerWareHouseAddress?.visible()
-        if (wareHouseAddress?.result?.data.isNullOrEmpty())
-          showAddWareHouse()
+      binding?.ccbWarehouseAddress?.setOnCheckedChangeListener { buttonView, isChecked ->
+        if (isChecked) {
+          binding?.containerWareHouseAddress?.visible()
+          if (wareHouseAddress?.result?.data.isNullOrEmpty())
+            showAddWareHouse()
+        }
+        updateDeliveryStatus(
+          binding?.toggleAllowPickup?.isOn,
+          binding?.toggleHomeDelivery?.isOn,
+          binding?.etdFlatCharges?.text.toString()
+        )
+      }
+      binding?.ccbBusinessLocation.setOnCheckedChangeListener { buttonView, isChecked ->
+        updateDeliveryStatus(
+          binding?.toggleAllowPickup?.isOn,
+          binding?.toggleHomeDelivery?.isOn,
+          binding?.etdFlatCharges?.text.toString()
+        )
       }
     }
     setOnClickListener(binding?.btnAddAnotherSlab, binding?.btnFlatCharges, binding?.addWareHouseAddress, binding?.btnSaveCharges)

@@ -167,10 +167,10 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
 
         view.tv_explore_select_website_cs.setOnClickListener {
             exploreDomainOptions()
-            Handler().postDelayed({
-                hideAllLayout()
-                view.selected_website_layout.visibility=View.VISIBLE
-            }, 1000)
+//            Handler().postDelayed({
+//                hideAllLayout()
+//                view.selected_website_layout.visibility=View.VISIBLE
+//            }, 1000)
         }
 
         view.tv_explore_select_website1_cs.setOnClickListener {
@@ -210,10 +210,10 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
 
         view.tv_explore_text_select_vmn_cs.setOnClickListener {
             exploreVmnOptions()
-            Handler().postDelayed({
-                hideAllLayout()
-                view.selected_number_layout.visibility=View.VISIBLE
-            }, 1000)
+//            Handler().postDelayed({
+//                hideAllLayout()
+//                view.selected_number_layout.visibility=View.VISIBLE
+//            }, 1000)
         }
 
         view.tv_explore_select_number_cs.setOnClickListener {
@@ -550,18 +550,20 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
         }
 
         viewModel.getCallTrackingDetails().observe(this) {
-            if (it!= null) {
+            if (!it.isNullOrEmpty()) {
                 System.out.println("numberList" + it)
                 if (it.size>=1){
                     selectedNum = it[0]
                     tv_call_expert_select_domain.text = selectedNum
                     tv_vmn_selected_txt.text = selectedNum
-                    view?.selectVmnSubmit?.isClickable = true
+                    shimmer_anim_vmn.visibility=View.GONE
+                    selectDomainLayout.visibility=View.VISIBLE
                 } else{
                     selectedNum = "No VMN available"
                 }
             } else {
-                view?.selectVmnSubmit?.isClickable = false
+                shimmer_anim_vmn.visibility=View.VISIBLE
+                selectDomainLayout.visibility=View.GONE
                 context?.let { it1 ->
                     Toasty.error(it1, "Error in Loading Available Numbers!!", Toast.LENGTH_LONG).show()
                 }
@@ -759,12 +761,12 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
     }
 
     fun hideAllLayout() {
-        select_number_layout.visibility = View.GONE
-        review_selection_layout.visibility = View.GONE
-        select_website_layout.visibility = View.GONE
-        no_selection_layout.visibility = View.GONE
-        selected_website_layout.visibility = View.GONE
-        selected_number_layout.visibility = View.GONE
+        select_number_layout?.visibility = View.GONE
+        review_selection_layout?.visibility = View.GONE
+        select_website_layout?.visibility = View.GONE
+        no_selection_layout?.visibility = View.GONE
+        selected_website_layout?.visibility = View.GONE
+        selected_number_layout?.visibility = View.GONE
     }
 
 }
