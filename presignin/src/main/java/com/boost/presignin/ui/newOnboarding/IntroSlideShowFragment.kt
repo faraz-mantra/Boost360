@@ -113,7 +113,7 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
           } else {
             startActivity(Intent(baseActivity, LoginActivity::class.java))
           }
-        } else baseActivity.dialogRootError()
+        } else baseActivity.dialogRootError(requireContext())
       }
 
     }

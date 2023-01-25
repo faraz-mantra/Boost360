@@ -63,6 +63,7 @@ import retrofit2.HttpException
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
+import java.net.SocketTimeoutException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -379,11 +380,16 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         {
                             updatesError.postValue(
                                 SomethingWentWrong(
-                                errorCode = (it as HttpException).code() ?: 0,
-                                errorMessage = it.message() ?: BaseApplication.instance.getString(
-                                    R.string.something_went_wrong_please_tell_what_happened),
-                                correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
-                            ))
+                                    errorCode = if (it is HttpException) it.code() ?: 0 else 0,
+                                    errorMessage = if (it is HttpException) it.message()
+                                        ?: BaseApplication.instance.getString(
+                                            R.string.something_went_wrong_please_tell_what_happened
+                                        ) else "",
+                                    correlationId = if (it is HttpException) it.response()!!
+                                        .headers()
+                                        .toMultimap()["x-correlation-id"]?.get(0) ?: "" else ""
+                                )
+                            )
                             updatesLoader.postValue(false)
                         }
                     )
@@ -409,11 +415,16 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         {
                             updatesError.postValue(
                                 SomethingWentWrong(
-                                errorCode = (it as HttpException).code() ?: 0,
-                                errorMessage = it.message() ?: BaseApplication.instance.getString(
-                                    R.string.something_went_wrong_please_tell_what_happened),
-                                correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
-                            ))
+                                    errorCode = if (it is HttpException) it.code() ?: 0 else 0,
+                                    errorMessage = if (it is HttpException) it.message()
+                                        ?: BaseApplication.instance.getString(
+                                            R.string.something_went_wrong_please_tell_what_happened
+                                        ) else "",
+                                    correlationId = if (it is HttpException) it.response()!!
+                                        .headers()
+                                        .toMultimap()["x-correlation-id"]?.get(0) ?: "" else ""
+                                )
+                            )
                             updatesLoader.postValue(false)
                         }
                     )
@@ -447,11 +458,15 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                     }, {
                         updatesError.postValue(
                             SomethingWentWrong(
-                                errorCode = (it as HttpException).code() ?: 0,
-                                errorMessage = it.message() ?: BaseApplication.instance.getString(
-                                    R.string.something_went_wrong_please_tell_what_happened),
-                                correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
-                            ))
+                                errorCode = if (it is HttpException) it.code() ?: 0 else 0,
+                                errorMessage = if (it is HttpException) it.message()
+                                    ?: BaseApplication.instance.getString(
+                                        R.string.something_went_wrong_please_tell_what_happened
+                                    ) else "",
+                                correlationId = if (it is HttpException) it.response()!!.headers()
+                                    .toMultimap()["x-correlation-id"]?.get(0) ?: "" else ""
+                            )
+                        )
                         renewalPurchaseList.postValue(ArrayList())
                         updatesLoader.postValue(false)
                     })
@@ -463,7 +478,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                     errorCode = 0,
                     errorMessage = "No Internet Connection.",
                     correlationId = ""
-                ))
+                )
+            )
         }
     }
 
@@ -483,7 +499,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                     errorMessage = it.error?.errorList?.iNVALIDPARAMETERS
                                         ?: "Error creating cart state",
                                     correlationId = ""
-                                ))
+                                )
+                            )
                         }
                         updatesLoader.postValue(false)
                     }, {
@@ -492,8 +509,10 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                 errorCode = (it as HttpException).code() ?: 0,
                                 errorMessage = it?.localizedMessage
                                     ?: "Error creating cart state",
-                                correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
-                            ))
+                                correlationId = (it as HttpException).response()!!.headers()
+                                    .toMultimap()["x-correlation-id"]?.get(0) ?: ""
+                            )
+                        )
                         updatesLoader.postValue(false)
                     })
             )
@@ -504,7 +523,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                     errorCode = 0,
                     errorMessage = "No Internet Connection.",
                     correlationId = ""
-                ))
+                )
+            )
         }
     }
 
@@ -675,11 +695,16 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         .doOnError {
                             updatesError.postValue(
                                 SomethingWentWrong(
-                                    errorCode = 0,
-                                    errorMessage = it.message ?: BaseApplication.instance.getString(
-                                        R.string.something_went_wrong_please_tell_what_happened),
-                                    correlationId = ""
-                                ))
+                                    errorCode = if (it is HttpException) it.code() ?: 0 else 0,
+                                    errorMessage = if (it is HttpException) it.message()
+                                        ?: BaseApplication.instance.getString(
+                                            R.string.something_went_wrong_please_tell_what_happened
+                                        ) else "",
+                                    correlationId = if (it is HttpException) it.response()!!
+                                        .headers()
+                                        .toMultimap()["x-correlation-id"]?.get(0) ?: "" else ""
+                                )
+                            )
                             updatesLoader.postValue(false)
                         }
                         .subscribe()
@@ -689,11 +714,15 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
             .doOnError {
                 updatesError.postValue(
                     SomethingWentWrong(
-                        errorCode = 0,
-                        errorMessage = it.message ?: BaseApplication.instance.getString(
-                            R.string.something_went_wrong_please_tell_what_happened),
-                        correlationId = ""
-                    ))
+                        errorCode = if(it is HttpException) it.code() ?: 0 else 0 ,
+                        errorMessage = if(it is HttpException) it.message()
+                            ?: BaseApplication.instance.getString(
+                                R.string.something_went_wrong_please_tell_what_happened
+                            ) else "",
+                        correlationId = if(it is HttpException) it.response()!!.headers()
+                            .toMultimap()["x-correlation-id"]?.get(0) ?: "" else ""
+                    )
+                )
                 updatesLoader.postValue(false)
             }
             .subscribe()
@@ -712,11 +741,15 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                 }, {
                     updatesError.postValue(
                         SomethingWentWrong(
-                            errorCode = 0,
-                            errorMessage = it.message ?: BaseApplication.instance.getString(
-                                R.string.something_went_wrong_please_tell_what_happened),
-                            correlationId = ""
-                        ))
+                            errorCode = if(it is HttpException) it.code() ?: 0 else 0 ,
+                            errorMessage = if(it is HttpException) it.message()
+                                ?: BaseApplication.instance.getString(
+                                    R.string.something_went_wrong_please_tell_what_happened
+                                ) else "",
+                            correlationId = if(it is HttpException) it.response()!!.headers()
+                                .toMultimap()["x-correlation-id"]?.get(0) ?: "" else ""
+                        )
+                    )
                     updatesLoader.postValue(false)
                 })
         )
@@ -890,11 +923,12 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                 redeemCouponResult.postValue(couponServiceModel)
                             } else {
                                 updatesError.postValue(
-                                SomethingWentWrong(
-                                    errorCode = 0,
-                                    errorMessage = "Error occurred while applying coupon - " + it.message,
-                                    correlationId = ""
-                                ))
+                                    SomethingWentWrong(
+                                        errorCode = 0,
+                                        errorMessage = "Error occurred while applying coupon - " + it.message,
+                                        correlationId = ""
+                                    )
+                                )
                             }
 
 //                                        updatesLoader.postValue(false)
@@ -902,11 +936,15 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         {
                             updatesError.postValue(
                                 SomethingWentWrong(
-                                errorCode = (it as HttpException).code() ?: 0,
-                                errorMessage = it.message() ?: BaseApplication.instance.getString(
-                                    R.string.something_went_wrong_please_tell_what_happened),
-                                correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
-                            ))
+                                    errorCode = if(it is HttpException) it.code() ?: 0 else 0 ,
+                                    errorMessage = if(it is HttpException) it.message()
+                                        ?: BaseApplication.instance.getString(
+                                            R.string.something_went_wrong_please_tell_what_happened
+                                        ) else "",
+                                    correlationId = if(it is HttpException) it.response()!!.headers()
+                                        .toMultimap()["x-correlation-id"]?.get(0) ?: "" else ""
+                                )
+                            )
                             updatesLoader.postValue(false)
                         }
                     )
@@ -934,11 +972,15 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                 )
                             updatesError.postValue(
                                 SomethingWentWrong(
-                                errorCode = (it as HttpException).code() ?: 0,
-                                errorMessage = errorBody.toString() ?: BaseApplication.instance.getString(
-                                    R.string.something_went_wrong_please_tell_what_happened),
-                                correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
-                            ))
+                                    errorCode = if(it is HttpException) it.code() ?: 0 else 0 ,
+                                    errorMessage = if(it is HttpException) it.message()
+                                        ?: BaseApplication.instance.getString(
+                                            R.string.something_went_wrong_please_tell_what_happened
+                                        ) else "",
+                                    correlationId = if(it is HttpException) it.response()!!.headers()
+                                        .toMultimap()["x-correlation-id"]?.get(0) ?: "" else ""
+                                )
+                            )
                         }
                     )
             )
@@ -967,11 +1009,15 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                             progressBar.visibility = View.GONE
                             updatesError.postValue(
                                 SomethingWentWrong(
-                                errorCode = (it as HttpException).code() ?: 0,
-                                errorMessage = errorBody.toString() ?: BaseApplication.instance.getString(
-                                    R.string.something_went_wrong_please_tell_what_happened),
-                                correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
-                            ))
+                                    errorCode = if(it is HttpException) it.code() ?: 0 else 0 ,
+                                    errorMessage = if(it is HttpException) it.message()
+                                        ?: BaseApplication.instance.getString(
+                                            R.string.something_went_wrong_please_tell_what_happened
+                                        ) else "",
+                                    correlationId = if(it is HttpException) it.response()!!.headers()
+                                        .toMultimap()["x-correlation-id"]?.get(0) ?: "" else ""
+                                )
+                            )
                         }
                     )
             )
@@ -1018,10 +1064,11 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                             progressBar.visibility = View.GONE
                             updatesError.postValue(
                                 SomethingWentWrong(
-                                errorCode = 0,
-                                errorMessage = "Invalid GST Number!!",
-                                correlationId = ""
-                            ))
+                                    errorCode = 0,
+                                    errorMessage = "Invalid GST Number!!",
+                                    correlationId = ""
+                                )
+                            )
                         }
                     )
             )
@@ -1058,10 +1105,11 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         {
                             updatesError.postValue(
                                 SomethingWentWrong(
-                                errorCode = 0,
-                                errorMessage = "Error ->" + it.message,
-                                correlationId = ""
-                            ))
+                                    errorCode = 0,
+                                    errorMessage = "Error ->" + it.message,
+                                    correlationId = ""
+                                )
+                            )
                         }
                     )
             )
@@ -1087,7 +1135,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                     errorCode = 0,
                                     errorMessage = "Error ->" + it.message,
                                     correlationId = ""
-                                ))
+                                )
+                            )
                         }
                     )
             )
@@ -1112,11 +1161,15 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
             .doOnError {
                 updatesError.postValue(
                     SomethingWentWrong(
-                        errorCode = 0,
-                        errorMessage = it.message ?: BaseApplication.instance.getString(
-                            R.string.something_went_wrong_please_tell_what_happened),
-                        correlationId = ""
-                    ))
+                        errorCode = if(it is HttpException) it.code() ?: 0 else 0 ,
+                        errorMessage = if(it is HttpException) it.message()
+                            ?: BaseApplication.instance.getString(
+                                R.string.something_went_wrong_please_tell_what_happened
+                            ) else "",
+                        correlationId = if(it is HttpException) it.response()!!.headers()
+                            .toMultimap()["x-correlation-id"]?.get(0) ?: "" else ""
+                    )
+                )
                 addToCartResult.postValue(false)
                 updatesLoader.postValue(false)
             }
@@ -1135,12 +1188,16 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         updatesLoader.postValue(false)
                     }, {
                         updatesError.postValue(
-                                SomethingWentWrong(
-                            errorCode = (it as HttpException).code() ?: 0,
-                            errorMessage = it.message() ?: BaseApplication.instance.getString(
-                                R.string.something_went_wrong_please_tell_what_happened),
-                            correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
-                        ))
+                            SomethingWentWrong(
+                                errorCode = if(it is HttpException) it.code() ?: 0 else 0 ,
+                                errorMessage = if(it is HttpException) it.message()
+                                    ?: BaseApplication.instance.getString(
+                                        R.string.something_went_wrong_please_tell_what_happened
+                                    ) else "",
+                                correlationId = if(it is HttpException) it.response()!!.headers()
+                                    .toMultimap()["x-correlation-id"]?.get(0) ?: "" else ""
+                            )
+                        )
                         updatesLoader.postValue(false)
                     })
         )
@@ -1202,7 +1259,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                     errorCode = 0,
                                     errorMessage = "Error in Loading Numbers!!",
                                     correlationId = ""
-                                ))
+                                )
+                            )
                         }
                     )
 
@@ -1239,12 +1297,16 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         }
                     }, {
                         updatesError.postValue(
-                                SomethingWentWrong(
-                            errorCode = (it as HttpException).code() ?: 0,
-                            errorMessage = it.message() ?: BaseApplication.instance.getString(
-                                R.string.something_went_wrong_please_tell_what_happened),
-                            correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
-                        ))
+                            SomethingWentWrong(
+                                errorCode = if(it is HttpException) it.code() ?: 0 else 0 ,
+                                errorMessage = if(it is HttpException) it.message()
+                                    ?: BaseApplication.instance.getString(
+                                        R.string.something_went_wrong_please_tell_what_happened
+                                    ) else "",
+                                correlationId = if(it is HttpException) it.response()!!.headers()
+                                    .toMultimap()["x-correlation-id"]?.get(0) ?: "" else ""
+                            )
+                        )
                     })
         )
     }
@@ -1262,12 +1324,16 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                     }, {
                         updatesLoader.postValue(false)
                         updatesError.postValue(
-                                SomethingWentWrong(
-                            errorCode = (it as HttpException).code() ?: 0,
-                            errorMessage = it.message() ?: BaseApplication.instance.getString(
-                                R.string.something_went_wrong_please_tell_what_happened),
-                            correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
-                        ))
+                            SomethingWentWrong(
+                                errorCode = if(it is HttpException) it.code() ?: 0 else 0 ,
+                                errorMessage = if(it is HttpException) it.message()
+                                    ?: BaseApplication.instance.getString(
+                                        R.string.something_went_wrong_please_tell_what_happened
+                                    ) else "",
+                                correlationId = if(it is HttpException) it.response()!!.headers()
+                                    .toMultimap()["x-correlation-id"]?.get(0) ?: "" else ""
+                            )
+                        )
                     })
         )
     }
@@ -1285,12 +1351,16 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                     }, {
                         updatesLoader.postValue(false)
                         updatesError.postValue(
-                                SomethingWentWrong(
-                            errorCode = (it as HttpException).code() ?: 0,
-                            errorMessage = it.message() ?: BaseApplication.instance.getString(
-                                R.string.something_went_wrong_please_tell_what_happened),
-                            correlationId = (it as HttpException).response()!!.headers().toMultimap()["x-correlation-id"]?.get(0) ?: ""
-                        ))
+                            SomethingWentWrong(
+                                errorCode = if(it is HttpException) it.code() ?: 0 else 0 ,
+                                errorMessage = if(it is HttpException) it.message()
+                                    ?: BaseApplication.instance.getString(
+                                        R.string.something_went_wrong_please_tell_what_happened
+                                    ) else "",
+                                correlationId = if(it is HttpException) it.response()!!.headers()
+                                    .toMultimap()["x-correlation-id"]?.get(0) ?: "" else ""
+                            )
+                        )
                     })
         )
     }
@@ -1306,16 +1376,19 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         val list = ArrayList<String>()
                         var numberOfMonths = 1
                         for (singleItem in it1) {
-                            val activatedDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(singleItem.activatedDate)
-                            val expiredDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(singleItem.expiryDate)
+                            val activatedDate =
+                                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(singleItem.activatedDate)
+                            val expiredDate =
+                                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(singleItem.expiryDate)
                             val startCalendar: Calendar = GregorianCalendar()
                             startCalendar.time = activatedDate
                             val endCalendar: Calendar = GregorianCalendar()
                             endCalendar.time = expiredDate
 
                             val diffYear = endCalendar[Calendar.YEAR] - startCalendar[Calendar.YEAR]
-                            val diffMonth = diffYear * 12 + endCalendar[Calendar.MONTH] - startCalendar[Calendar.MONTH]
-                            if(diffMonth > numberOfMonths && diffMonth < 60)
+                            val diffMonth =
+                                diffYear * 12 + endCalendar[Calendar.MONTH] - startCalendar[Calendar.MONTH]
+                            if (diffMonth > numberOfMonths && diffMonth < 60)
                                 numberOfMonths = diffMonth
                         }
 
@@ -1324,11 +1397,15 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                         updatesLoader.postValue(false)
                         updatesError.postValue(
                             SomethingWentWrong(
-                                errorCode = 0,
-                                errorMessage = it.message ?: BaseApplication.instance.getString(
-                                    R.string.something_went_wrong_please_tell_what_happened),
-                                correlationId = ""
-                            ))
+                                errorCode = if(it is HttpException) it.code() ?: 0 else 0 ,
+                                errorMessage = if(it is HttpException) it.message()
+                                    ?: BaseApplication.instance.getString(
+                                        R.string.something_went_wrong_please_tell_what_happened
+                                    ) else "",
+                                correlationId = if(it is HttpException) it.response()!!.headers()
+                                    .toMultimap()["x-correlation-id"]?.get(0) ?: "" else ""
+                            )
+                        )
                     })
         )
     }
