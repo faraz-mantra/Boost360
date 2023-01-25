@@ -964,18 +964,18 @@ class ComparePacksV3Activity :
                     else
                         offeredBundlePrice = originalBundlePrice
 
-                    if ( listItem.get(1).frequently_asked_questions != null) {
+                    if ( listItem.get(0).frequently_asked_questions != null) {
                        binding?.faqContainer?.visibility = View.VISIBLE
-                        updateFAQRecycler(listItem.get(1).frequently_asked_questions!!)
+                        updateFAQRecycler(listItem.get(0).frequently_asked_questions!!)
 //                        faqAdapter.addupdates(faq)
 //                        faqAdapter.notifyDataSetChanged()
                     }
             //        listItem.get(1).frequently_asked_questions?.let { it1 -> updateFAQRecycler(it1) }
             //        listItem.get(1).how_to_activate?.let { it1 -> updateHowToUseRecycler(it1) }
 
-                    if ( listItem.get(1).how_to_activate != null) {
+                    if ( listItem.get(0).how_to_activate != null) {
                         binding?.howToUseContainer?.visibility = View.VISIBLE
-                        updateHowToUseRecycler(listItem.get(1).how_to_activate!!)
+                        updateHowToUseRecycler(listItem.get(0).how_to_activate!!)
 //                        faqAdapter.addupdates(faq)
 //                        faqAdapter.notifyDataSetChanged()
                     }
