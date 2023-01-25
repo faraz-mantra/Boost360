@@ -230,7 +230,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
     }
 
     if (!Patterns.WEB_URL.matcher(documentPdfUrl).matches()) {
-      Toast.makeText(getApplicationContext(), getString(R.string.invalid_link_pdf_document), Toast.LENGTH_LONG).show();
+      Toast.makeText(getApplicationContext(), "Invalid brochure URL link", Toast.LENGTH_LONG).show();
       return false;
     }
 

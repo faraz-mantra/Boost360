@@ -121,6 +121,14 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
     initLiveDataObservables()
   }
 
+  override fun onRequestPermissionsResult(
+    requestCode: Int,
+    permissions: Array<String>,
+    grantResults: IntArray
+  ) {
+    permissionsHelper.onRequestPermissionResult(requestCode, permissions, grantResults)
+  }
+
   private fun addUpdateTopperData() {
     if (!addUpdateTopper) {
       if (validate() && imageValidate()) {
