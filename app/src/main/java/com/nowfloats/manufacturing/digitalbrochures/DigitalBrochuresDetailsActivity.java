@@ -228,16 +228,18 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
       Toast.makeText(getApplicationContext(), getString(R.string.fields_are_empty), Toast.LENGTH_LONG).show();
       return false;
     }
-
-    if (!Patterns.WEB_URL.matcher(documentPdfUrl).matches()) {
-      Toast.makeText(getApplicationContext(), getString(R.string.invalid_link_pdf_document), Toast.LENGTH_LONG).show();
+     if (documentPdfUrl.isEmpty()){
+      Toast.makeText(getApplicationContext(), "Add URL link", Toast.LENGTH_LONG).show();
+      return false;
+    } else if (!Patterns.WEB_URL.matcher(documentPdfUrl).matches()) {
+      Toast.makeText(getApplicationContext(), "Invalid URL link document", Toast.LENGTH_LONG).show();
       return false;
     }
 
-//        if(documentPdfUrl.length() < 7 || !documentPdfUrl.substring(0,7).equals("http://")){
-//            Toast.makeText(getApplicationContext(), "Invalid PDF Link document", Toast.LENGTH_LONG).show();
-//            return false;
-//        }
+//    if(documentPdfUrl.length() < 7 || !documentPdfUrl.substring(0,7).equals("http://")){
+//      Toast.makeText(getApplicationContext(), "Invalid PDF Link document", Toast.LENGTH_LONG).show();
+//      return false;
+//    }
 
     return true;
   }
