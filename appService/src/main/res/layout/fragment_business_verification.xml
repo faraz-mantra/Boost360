@@ -303,7 +303,6 @@
               android:checked="true"
               android:clickable="false"
             android:visibility="gone"
-              tools:visibility="visible"
             app:textType="HEADING_6" />
         </LinearLayout>
       </androidx.constraintlayout.widget.ConstraintLayout>
