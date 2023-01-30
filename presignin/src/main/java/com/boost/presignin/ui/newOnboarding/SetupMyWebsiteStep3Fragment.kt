@@ -229,7 +229,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     createRequest.whatsAppNumber = if (whatsappConsent == true) phoneNumber else null
     createRequest.whatsAppNotificationOptIn = whatsappConsent
     createRequest.boostXWebsiteUrl = "www.${domain.lowercase()}.nowfloats.com"
-    createRequest.SubCategory = subCategoryID
+    createRequest.SubCategory = categoryModel?.subCategoryName
     return createRequest
   }
 

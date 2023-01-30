@@ -8,7 +8,7 @@ object EndPoints {
   //TODO NFX API WITH FLOAT
   const val WITH_FLOATS_BASE = "https://api.withfloats.com/"
   const val PUT_CREATE_BUSINESS_URL = "discover/v5/FloatingPoint/create"
-  const val PUT_CREATE_BUSINESS_V6_URL = "discover/v6/FloatingPoint/create"
+  const val PUT_CREATE_BUSINESS_V6_URL = "discover/v7/FloatingPoint/create"
   const val POST_ACTIVATE_PURCHASED_ORDER = "Payment/v9/floatingpoint/ActivatePurchaseOrder"
 
   const val USER_DETAILS_WITH_FLOAT = "/discover/v9/business/paymentProfile/{fpId}"

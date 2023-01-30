@@ -3,6 +3,7 @@ package com.boost.presignin.ui.newOnboarding
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableStringBuilder
+import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import com.boost.presignin.R
@@ -169,14 +170,17 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
 
   private fun List<ApiCategoryResponseCategory>?.getFinalList(str: Editable?): ArrayList<ApiCategoryResponseCategory> {
     val newFilterList = arrayListOf<ApiCategoryResponseCategory>()
-    this?.forEach { cItem ->
-      cItem.appexperiencecodedetails?.forEach { exp ->
-        val categoryName = categoryList.firstOrNull { it.experience_code == exp.name }?.getCategoryWithoutNewLine()
-        if (categoryName.isNullOrEmpty().not()) {
-          cItem.fpExperienceCode = exp
-          cItem.subCategory = categoryName
-          cItem.searchKeyword = str.toString()
-          newFilterList.add(cItem)
+    for (i in 0 until this?.size!!) {
+      val subCategory = this[i].name!!
+      for (j in 0 until this[i].appexperiencecodedetails!!.size){
+        val categoryResponse = ApiCategoryResponseCategory()
+        val categoryDescription = categoryList.firstOrNull { it.experience_code == this[i].appexperiencecodedetails!![j].name }?.getCategoryWithoutNewLine()
+        if (categoryDescription.isNullOrEmpty().not()) {
+          categoryResponse.fpExperienceCode = this[i].appexperiencecodedetails!![j]
+          categoryResponse.name = subCategory
+          categoryResponse.subCategoryDescription = categoryDescription
+          categoryResponse.searchKeyword = str.toString()
+          newFilterList.add(categoryResponse)
         }
       }
     }
@@ -259,6 +263,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
         baseActivity.hideKeyBoard()
         val dataCategory = categoryList.firstOrNull { it.experience_code == selectedCategoryLive?.fpExperienceCode?.name }
         dataCategory?.let {
+          dataCategory.subCategoryName = selectedCategoryLive!!.name!!
           showCatSuggestionSelected(it)
           setSelectedCat(it)
         }
