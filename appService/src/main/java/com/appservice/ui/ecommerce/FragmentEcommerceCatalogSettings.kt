@@ -69,6 +69,9 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
     binding.serviceTimingsSwitch.setOnToggledListener { _, isChecked ->
       sessionLocal.serviceTiming = isChecked
     }
+    binding.bulkBookingSwitch.setOnToggledListener { _, isChecked ->
+      sessionLocal.bulkBooking = isChecked
+    }
   }
 
   private fun catalogApiGetGstData() {
@@ -96,6 +99,7 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
       if (it.isSuccess() && response != null) {
         sessionLocal.noServiceSlot = response!!.noServiceSlot
         sessionLocal.serviceTiming = response!!.sameServiceSlot
+        sessionLocal.bulkBooking = response!!.isBulkBooking
         binding?.ctvProductVerb?.text = response?.productCategory(baseActivity)?.capitalizeUtil()
         binding?.ctvProductVerbUrl?.text = fromHtml(
           "<pre>URL: <span style=\"color: #4a4a4a;\"><u>${sessionLocal.getDomainName()}<b>/${
@@ -109,8 +113,12 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
         onCatalogSetupAddedOrUpdated(response?.productCategoryVerb.isNullOrEmpty().not())
       }
       if (sessionLocal.fP_AppExperienceCode!! == "SVC" || sessionLocal.fP_AppExperienceCode!! == "SAL" || sessionLocal.fP_AppExperienceCode!! == "SPA"){
+        binding.bulkBookingView.visibility = View.VISIBLE
+        binding.bulkBookingSwitch.isOn = sessionLocal.bulkBooking!!
+
         binding.serviceSlotsView.visibility = View.VISIBLE
         binding.noServiceSwitch.isOn = sessionLocal.noServiceSlot!!
+
         if (!sessionLocal.noServiceSlot!!){
           binding.serviceTimesView.visibility = View.VISIBLE
           binding.serviceTimingsSwitch.isOn = sessionLocal.serviceTiming!!
@@ -146,6 +154,10 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
         businessProfileUpdateRequest.clientId = clientId
         businessProfileUpdateRequest.fpTag = sessionLocal.fpTag
         val updateItemList = arrayListOf<Update>()
+        val bulkBookingInfo = Update()
+        bulkBookingInfo.key="ISBULKBOOKING";
+        bulkBookingInfo.value=sessionLocal.bulkBooking.toString()
+        updateItemList.add(bulkBookingInfo)
         val stoteToggneInfo = Update()
         stoteToggneInfo.key="STORETOGGLE";
         stoteToggneInfo.value="${sessionLocal.noServiceSlot!!}#${sessionLocal.serviceTiming!!}"
