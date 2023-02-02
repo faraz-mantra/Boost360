@@ -118,9 +118,9 @@ class DashboardViewModel : BaseViewModel() {
     return WithFloatRepository.getBoostWebsiteItem(context).toLiveData()
   }
 
-  fun getSellerSummary(clientId: String?, sellerId: String?): LiveData<BaseResponse> {
-    return InventoryOrderRepository.getSellerSummary(clientId, sellerId).toLiveData()
-  }
+//  fun getSellerSummary(clientId: String?, sellerId: String?): LiveData<BaseResponse> {
+//    return InventoryOrderRepository.getSellerSummary(clientId, sellerId).toLiveData()
+//  }
 
   fun getSellerSummaryV2_5(clientId: String?, sellerId: String?, request: SellerSummaryRequest?): LiveData<BaseResponse> {
     return InventoryOrderRepository.getSellerSummaryV2_5(clientId, sellerId, request).toLiveData()

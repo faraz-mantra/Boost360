@@ -64,11 +64,13 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
 import com.webengage.sdk.android.WebEngage
+import io.branch.referral.Branch
 import zendesk.chat.Chat
 import zendesk.core.AnonymousIdentity
 import zendesk.core.Zendesk
 import zendesk.support.Support
 import java.util.*
+import kotlin.concurrent.schedule
 import kotlin.concurrent.schedule
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener {
@@ -199,7 +201,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         if (mDeepLinkUrl != null && mDeepLinkUrl.toString().contains("onelink", true)) {
           isAppFlyerLink()
         } else {
-          if (!checkIsHomeDeepLink()) {
+          if (!checkIsHomeDeepLink() && Uri.parse(data).getQueryParameter("_branch_referrer")?.isEmpty() ?: true) {
             val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(url)
             if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
               val viewType = deepHashMap[DynamicLinkParams.viewType]
@@ -487,6 +489,34 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 //        DataLoader.addAllItemstoFirebaseCart(application, list)
       }
     }
+      Branch.sessionBuilder(this).withCallback { branchUniversalObject, linkProperties, error ->
+        if (error != null) {
+          Log.e("BranchSDK_Tester", "branch init failed. Caused by -" + error.message)
+        } else {
+          Log.e("BranchSDK_Tester", "branch init complete!")
+          mDeepLinkUrl = Uri.parse(linkProperties?.controlParams?.get("\$android_url")).getQueryParameter("url")
+          if (!checkIsHomeDeepLink()) {
+            val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(Uri.parse(mDeepLinkUrl ?: ""))
+            if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
+              val viewType = deepHashMap[DynamicLinkParams.viewType]
+              val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
+              if (deepLinkUtil != null)
+                Timer().schedule(50) {
+                  deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
+                }
+                }
+          }
+          if (branchUniversalObject != null) {
+            Log.e("BranchSDK_Tester", "title " + branchUniversalObject.title)
+            Log.e("BranchSDK_Tester", "CanonicalIdentifier " + branchUniversalObject.canonicalIdentifier)
+            Log.e("BranchSDK_Tester", "metadata " + branchUniversalObject.contentMetadata.convertToJson())
+          }
+          if (linkProperties != null) {
+            Log.e("BranchSDK_Tester", "Channel " + linkProperties.channel)
+            Log.e("BranchSDK_Tester", "control params " + linkProperties.controlParams)
+          }
+        }
+      }.withData(this.intent.data).init()
   }
 
   private fun setBadgesData(dataBadges: ArrayList<BadgesModel>?) {
