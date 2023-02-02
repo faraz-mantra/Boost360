@@ -24,6 +24,7 @@ class CategoryDataModel(
   var isSelected = false
 
   var textChangeRTLAndSVC = false
+  var subCategoryName:String = ""
 
   fun getCategoryWithoutNewLine(): String? {
     return category_Name?.replace("\\n".toRegex(), " ")

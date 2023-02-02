@@ -1,6 +1,10 @@
 package com.dashboard.controller.ui.profile.sheet
 
+import android.content.Context
+import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.widget.doAfterTextChanged
 import com.dashboard.R
 import com.dashboard.databinding.SheetChangeUsernameBinding
@@ -12,6 +16,8 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.*
+import java.util.*
+import kotlin.concurrent.schedule
 
 class EditChangeUserNameSheet(var click: () -> Unit) : BaseBottomSheetDialog<SheetChangeUsernameBinding, UserProfileViewModel>() {
 
@@ -34,7 +40,18 @@ class EditChangeUserNameSheet(var click: () -> Unit) : BaseBottomSheetDialog<She
     WebEngageController.trackEvent(USER_MERCHANT_PROFILE_USERNAME_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
     viewListeners()
     binding?.cetBusinessName?.setText(userName)
+    binding?.cetBusinessName?.requestFocus()
+
     setOnClickListener(binding?.btnPublish, binding?.rivCloseBottomSheet)
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    Timer().schedule(500){
+      binding?.cetBusinessName?.let {
+        showSoftKeyboard(it)
+      }
+    }
   }
 
   private fun viewListeners() {
@@ -69,5 +86,12 @@ class EditChangeUserNameSheet(var click: () -> Unit) : BaseBottomSheetDialog<She
         dismiss()
       } else showShortToast(it.message())
     })
+  }
+
+  fun showSoftKeyboard(view: View) {
+    if (view.requestFocus()) {
+      val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+      imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+    }
   }
 }

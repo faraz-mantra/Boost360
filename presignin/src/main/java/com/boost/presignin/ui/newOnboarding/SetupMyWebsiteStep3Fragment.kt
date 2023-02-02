@@ -27,6 +27,7 @@ import com.boost.presignin.model.onboardingRequest.saveCategoryRequest
 import com.boost.presignin.model.signup.FloatingPointCreateResponse
 import com.boost.presignin.model.userprofile.BusinessProfileResponse
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
+import com.framework.analytics.NFWebEngageController
 import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -104,6 +105,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     setOnClickListeners()
     binding?.addressInputLayout?.etInput?.setText(businessName?.replace("\\s+".toRegex(), "")?.lowercase())
     apiCheckDomain { websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1) }
+    fetchLocationAndSendWEEvent()
   }
 
   private fun apiCheckDomain(onSuccess: () -> Unit) {
@@ -117,6 +119,11 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         } else websiteNameFieldUiVisibility(websiteNameFieldVisibility = 2)
       }
     } else websiteNameFieldUiVisibility(websiteNameFieldVisibility = 2)
+    if(session?.userLocationIP != null){
+      val eventValue = HashMap<String, Any>()
+      eventValue["test1"] = session?.userLocationIP!!
+      NFWebEngageController.trackAttribute(eventValue)
+    }
   }
 
   private fun setOnClickListeners() {
@@ -229,7 +236,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     createRequest.whatsAppNumber = if (whatsappConsent == true) phoneNumber else null
     createRequest.whatsAppNotificationOptIn = whatsappConsent
     createRequest.boostXWebsiteUrl = "www.${domain.lowercase()}.nowfloats.com"
-    createRequest.SubCategory = subCategoryID
+    createRequest.SubCategory = categoryModel?.subCategoryName
     return createRequest
   }
 
@@ -262,7 +269,6 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
           hideProgress()
           showShortToast(it?.errorFlowMessage() ?: getString(R.string.unable_to_create_profile))
         }
-        fetchLocationAndSendWEEvent()
       }
     } else putCreateBusinessOnBoarding(this.responseCreateProfile!!)
   }

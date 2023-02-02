@@ -18,8 +18,7 @@ class UpdateStudioSvgRenderCache:SvgRenderCacheUtil() {
     val session = UserSessionManager(application())
     val userWebsite = session.getDomainName(true)?:""
     val userPhone = session.userPrimaryMobile?:""
-    val profileUrl =
-        session.getFPDetails(PreferencesKey.GET_FP_DETAILS_LogoUrl.name)
+    val profileUrl = session.getFPDetails(PreferencesKey.GET_FP_DETAILS_LogoUrl.name)
     val base64 = Glide.with(application()).asBitmap().load(if (profileUrl.isNullOrEmpty())"https://cdn.nowfloats.com/nf/v1/favicon.png" else profileUrl).submit().get().toBase64()
 
 

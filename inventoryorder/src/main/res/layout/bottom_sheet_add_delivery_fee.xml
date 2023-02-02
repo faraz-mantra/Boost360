@@ -91,7 +91,7 @@
               android:foregroundTint="@color/orange"
               android:gravity="center_vertical"
               android:hint="@string/enter_delivery_fee"
-              android:inputType="number"
+              android:inputType="numberDecimal"
               android:paddingStart="@dimen/size_12"
               android:paddingVertical="@dimen/size_8"
               android:paddingEnd="@dimen/size_12"

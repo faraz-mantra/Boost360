@@ -2,11 +2,19 @@ package com.appservice.ui.aptsetting.ui
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.UnderlineSpan
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.appservice.R
 import com.appservice.model.aptsetting.AddBankAccountRequest
@@ -30,6 +38,20 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
 
   var addBankAccountRequest: AddBankAccountRequest? = null
 
+  val clickableSpan: ClickableSpan = object : ClickableSpan() {
+    override fun onClick(textView: View) {
+      val intent = Intent(Intent.ACTION_SENDTO)
+      intent.data = Uri.parse("mailto:") // only email apps should handle this
+      intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("ria@nowfloats.com"))
+      intent.putExtra(Intent.EXTRA_SUBJECT, "Need help with Boost360")
+      if (intent.resolveActivity(context!!.packageManager) != null) {
+        context!!.startActivity(intent)
+      } else {
+        Toast.makeText(context, "Unable to send email", Toast.LENGTH_SHORT).show()
+      }
+    }
+  }
+
   override fun getLayout(): Int {
     return R.layout.fragment_edit_bank_details
   }
@@ -48,7 +70,20 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
     super.onCreateView()
     setOnClickListener(binding?.submitBtn, binding?.layoutAccountUnderProcess?.verificationBtn)
     setupUIColor()
+    setUpSpannableText()
     getAccountDetails()
+  }
+
+  private fun setUpSpannableText() {
+    val spannableString = SpannableString(getString(R.string.verification_underway_pending_message))
+    val underlineSpan = UnderlineSpan()
+    val textPaint = TextPaint()
+    underlineSpan.updateDrawState(textPaint)
+    spannableString.setSpan(underlineSpan, 194,211, 0)
+    spannableString.setSpan(clickableSpan, 194,211, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    binding.layoutAccountUnderProcess.textDesc.text = spannableString
+    binding.layoutAccountUnderProcess.textDesc.isClickable = true
+    binding.layoutAccountUnderProcess.textDesc.movementMethod = LinkMovementMethod.getInstance()
   }
 
   private fun setupUIColor() {

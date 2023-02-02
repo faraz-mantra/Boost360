@@ -13,7 +13,7 @@ data class Feature(
     val createdon: String,
     val description: String,
     val description_title: String,
-    val discount_percent: Int,
+    val discount_percent: Double,
     val feature_code: String,
     val feature_video_link: FeatureVideoLink,
     val is_premium: Boolean,

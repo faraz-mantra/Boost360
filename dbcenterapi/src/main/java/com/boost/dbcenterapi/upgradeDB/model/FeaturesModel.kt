@@ -51,7 +51,7 @@ data class FeaturesModel(
     var feature_importance: Int = 0,
 
     @ColumnInfo(name = "discount_percent")
-    var discount_percent: Int = 0,
+    var discount_percent: Double = 0.0,
 
     @ColumnInfo(name = "price")
     var price: Double = 0.0,

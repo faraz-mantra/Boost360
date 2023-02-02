@@ -2393,7 +2393,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         return CartModel(
             renewal.widgetId ?: "", renewal.widgetKey ?: "", "",
             renewal.name ?: "", renewal.desc ?: "", renewal.images?.firstOrNull() ?: "",
-            renewal.netPrice ?: 0.0, renewal.price ?: 0.0, (renewal.discount ?: 0.0).toInt(),
+            renewal.netPrice ?: 0.0, renewal.price ?: 0.0, renewal.discount ?: 0.0,
             1, minMonth, "renewals", null
         )
     }
@@ -2525,7 +2525,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 var outputExtendedProps = ArrayList<Property>()
                 var extraPurchaseOrderDetails: ExtraPurchaseOrderDetails? = null
                 var bundleNetPrice = 0.0
-                var bundleDiscount = 0
+                var bundleDiscount = 0.0
 
                 if (item.extended_properties != null && item.extended_properties!!.length > 0) {
                     try {
@@ -2945,7 +2945,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 var outputExtendedProps = ArrayList<Property>()
                 var extraPurchaseOrderDetails: ExtraPurchaseOrderDetails? = null
                 var bundleNetPrice = 0.0
-                var bundleDiscount = 0
+                var bundleDiscount = 0.0
 
                 if (item.extended_properties != null && item.extended_properties!!.length > 0) {
                     try {

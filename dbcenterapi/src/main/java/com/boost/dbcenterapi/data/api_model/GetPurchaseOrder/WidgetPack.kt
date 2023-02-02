@@ -3,7 +3,7 @@ package com.boost.dbcenterapi.data.api_model.GetPurchaseOrder
 data class WidgetPack(
   val CreatedOn: String,
   val Desc: String,
-  val Discount: Int,
+  val Discount: Double,
   val ExpiryDate: String,
   val ExpiryInDays: Int,
   val ExpiryInMths: Int,

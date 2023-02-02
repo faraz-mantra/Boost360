@@ -248,7 +248,7 @@ class CallTrackAddToCartBottomSheet :
         return UserSessionManager(requireContext()).getAccessTokenAuth()?.barrierToken() ?: ""
     }
 
-    fun getDiscountedPrice(price: Double, discountPercent: Int): Double {
+    fun getDiscountedPrice(price: Double, discountPercent: Double): Double {
         return price - ((discountPercent / 100) * price)
     }
 

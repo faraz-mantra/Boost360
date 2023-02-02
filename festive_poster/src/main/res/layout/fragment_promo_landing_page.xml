@@ -90,17 +90,17 @@
           android:elevation="4dp"
           android:paddingHorizontal="@dimen/size_22">
 
-          <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            style="@style/TabTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="41dp"
-            android:layout_alignParentTop="true"
-            android:textSize="14sp"
-            app:tabInlineLabel="true"
-            app:tabMinWidth="0dp"
-            app:tabMode="scrollable"
-            app:tabTextAppearance="@style/TabTextStyle" />
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                style="@style/TabTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_alignParentTop="true"
+                android:textSize="14sp"
+                app:tabInlineLabel="true"
+                app:tabMinWidth="0dp"
+                app:tabMode="scrollable"
+                app:tabTextAppearance="@style/TabTextStyle" />
         </RelativeLayout>
 
 

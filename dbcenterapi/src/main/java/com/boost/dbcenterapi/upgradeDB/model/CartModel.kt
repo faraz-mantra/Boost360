@@ -33,7 +33,7 @@ data class CartModel(
   var MRPPrice: Double = 0.0,
 
   @ColumnInfo(name = "discount")
-  var discount: Int = 0,
+  var discount: Double = 0.0,
 
   @ColumnInfo(name = "quantity")
   var quantity: Int = 1,

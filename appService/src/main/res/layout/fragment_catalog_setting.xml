@@ -173,10 +173,78 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/bulk_booking_view"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+          <com.framework.views.customViews.CustomTextView
+              style="@style/AppointmentSetting_Text_Heading"
+              android:text="Bulk booking using cart" />
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+              style="@style/match_wrap"
+              android:layout_marginTop="@dimen/size_8"
+              android:background="@drawable/bg_rect_grey_rounded_10"
+              android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                style="@style/match_wrap"
+                android:background="@drawable/bg_rect_white_rounded_4"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/size_12"
+                android:paddingVertical="@dimen/size_12"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+              <com.framework.views.customViews.CustomTextView
+                  android:layout_width="@dimen/size_0"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:fontFamily="@font/semi_bold"
+                  android:text="Want customers to buy more than one service in a single booking?"
+                  android:textColor="@color/black_4a4a4a"
+                  app:textType="BODY_1" />
+
+              <com.appservice.views.toggle.widget.LabeledSwitch
+                  android:id="@+id/bulk_booking_switch"
+                  android:layout_width="@dimen/size_54"
+                  android:layout_height="@dimen/size_24"
+                  android:layout_marginTop="4dp"
+                  app:colorBorder="@android:color/transparent"
+                  app:colorOff="@color/light_lemon"
+                  app:colorOn="@color/light_green_1"
+                  app:layout_constraintBottom_toBottomOf="parent"
+                  app:layout_constraintRight_toRightOf="parent"
+                  app:layout_constraintTop_toTopOf="parent"
+                  app:textOff="NO"
+                  app:textOn="YES"
+                  android:checked="true"
+                  app:txtColorOff="@color/white"
+                  app:txtColorOn="@color/white" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/size_12"
+                android:paddingVertical="@dimen/size_12"
+                android:text="If marked yes, a cart icon will be added on your website to add service(s) to it before going to checkout for payment etc."
+                app:layout_constraintTop_toBottomOf="parent"
+                app:textType="CAPTION" />
+          </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/service_slots_view"
             android:layout_marginTop="16dp"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
           <com.framework.views.customViews.CustomTextView
               style="@style/AppointmentSetting_Text_Heading"
@@ -300,7 +368,7 @@
             android:layout_gravity="bottom"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="10dp"
-            android:visibility="visible"
+            android:visibility="gone"
             android:background="@drawable/rounded_button_enabled"
             android:text="Save details"
             android:textColor="@android:color/white" />

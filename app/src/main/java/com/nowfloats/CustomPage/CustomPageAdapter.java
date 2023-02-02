@@ -20,6 +20,7 @@ import com.dashboard.utils.CodeUtilsKt;
 import com.framework.BaseApplication;
 import com.framework.analytics.SentryController;
 import com.framework.utils.ContentSharing;
+import com.framework.views.customViews.CustomTextView;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.CustomPage.Model.CustomPageLink;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
@@ -314,7 +315,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
   public class ViewHolder extends RecyclerView.ViewHolder {
     // each data item is just a string in this case
     ImageView imageView, stencil, share;
-    TextView titleText, dateText;
+    CustomTextView dateText, titleText;
     CardView cardView;
     LinearLayout fullLayout;
 
