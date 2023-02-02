@@ -135,7 +135,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   fun getDefaultGst() {
-    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner) {
+    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID!!, clientId)?.observeOnce(viewLifecycleOwner) {
       val dataItem = it as? AppointmentStatusResponse
       if (dataItem?.isSuccess() == true && dataItem.result != null) {
         val catalogSetup = dataItem.result?.catalogSetup
@@ -346,6 +346,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       } else if (productIdAdd.isNullOrEmpty().not() && errorType == "uploadImageSingle") {
         uploadImageSingle(productIdAdd)
       } else {
+        val item =  product
         viewModel?.createProduct(product)?.observeOnce(viewLifecycleOwner) {
           val productId = it.stringResponse
           if (it.isSuccess() && productId.isNullOrEmpty().not()) {
@@ -527,7 +528,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     } else if (productDesc.isEmpty()) {
       showLongToast(resources.getString(R.string.enter_product_desc))
       return false
-    } else if (!toggle || amount == 0.0) {
+    } else if (toggle && amount == 0.0) {
       showLongToast(resources.getString(R.string.enter_valid_price))
       return false
     } else if (toggle && (discount > amount)) {
@@ -539,10 +540,11 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     } else if (toggle && (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value && ((externalUrlName.isNullOrEmpty() || externalUrl.isNullOrEmpty())  || ValidationUtils.isValidWebURL(externalUrl).not()))) {
       showLongToast(resources.getString(R.string.please_enter_valid_url_name))
       return false
-    } else if (!toggle || amount <= 0.0){
-      showLongToast(resources.getString(R.string.product_with_price_zero_cannot_be_listed_for_sale))
-      return false
     }
+//    else if (!toggle || amount <= 0.0){
+//      showLongToast(resources.getString(R.string.product_with_price_zero_cannot_be_listed_for_sale))
+//      return false
+//    }
     product?.ClientId = clientId
     product?.FPTag = sessionLocal.fpTag
     product?.CurrencyCode = currencyType
@@ -551,6 +553,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     product?.Description = productDesc
     product?.Price = if (toggle) amount else 0.0
     product?.DiscountAmount = if (toggle) discount else 0.0
+    product?.isNotForSale = !toggle
     if (toggle && (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value)) {
       product?.uniquePaymentUrl = UniquePaymentUrlN(url = externalUrl, description = externalUrlName)
     } else product?.uniquePaymentUrl = UniquePaymentUrlN()

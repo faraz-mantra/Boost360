@@ -118,14 +118,6 @@ class PromoUpdatesViewModel: BaseViewModel() {
         }
     }
 
-
-    fun templateSaveAction(action: TemplateSaveActionBody.ActionType,
-                           isFav:Boolean, templateId:String): LiveData<BaseResponse> {
-        return NowFloatsRepository.saveTemplateAction(action,isFav,templateId).toLiveData()
-    }
-
-
-
     private suspend fun getTemplates(isFav:Boolean?=null)=
         suspendCoroutine<List<GetTemplatesResponseTemplate>>{cont->
             NowFloatsRepository.getTemplates(isFav).getResponse {

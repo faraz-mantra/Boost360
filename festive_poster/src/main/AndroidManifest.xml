@@ -5,8 +5,11 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <application android:name=".FestivePosterApplication">
+    <application
+        android:name=".FestivePosterApplication"
+        android:hardwareAccelerated="true">
         <activity
+            android:exported="false"
             android:name=".ui.festivePoster.FestivePosterContainerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/TemplateTheme" />
@@ -16,16 +19,19 @@
             android:screenOrientation="portrait"
             android:theme="@style/TemplateTheme" />
         <activity
+            android:exported="false"
             android:name=".ui.promoUpdates.edit_post.EditPostActivity"
             android:screenOrientation="portrait"
             android:theme="@style/TemplateTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:exported="false"
             android:name=".ui.promoUpdates.PostPreviewSocialActivity"
             android:screenOrientation="portrait"
             android:theme="@style/TemplateTheme"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
+            android:exported="false"
             android:name=".ui.promoUpdates.intro.UpdateStudioIntroActivity"
             android:screenOrientation="portrait"
             android:theme="@style/TemplateTheme"

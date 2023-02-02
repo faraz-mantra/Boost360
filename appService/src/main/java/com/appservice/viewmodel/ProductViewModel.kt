@@ -26,7 +26,7 @@ class ProductViewModel : BaseViewModel() {
   }
 
 
-  fun getAppointmentCatalogStatus(floatingPointId: String?, clientId: String?): LiveData<BaseResponse> {
+  fun getAppointmentCatalogStatus(floatingPointId: String, clientId: String): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getAppointmentCatalogStatus(floatingPointId, clientId).toLiveData()
   }
 

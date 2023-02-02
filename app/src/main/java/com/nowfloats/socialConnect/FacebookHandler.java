@@ -35,7 +35,9 @@ public class FacebookHandler {
 
     public FacebookHandler(FacebookCallbacks callbacks, Context context) {
         facebookCallbacks = callbacks;
-        FacebookSdk.sdkInitialize(context.getApplicationContext());
+        if (!FacebookSdk.isInitialized()) {
+            FacebookSdk.sdkInitialize(context.getApplicationContext());
+        }
         callbackManager = CallbackManager.Factory.create();
     }
 

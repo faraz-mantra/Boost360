@@ -1,7 +1,10 @@
 package com.festive.poster.ui.promoUpdates.bottomSheet
 
+import android.content.ActivityNotFoundException
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
@@ -58,9 +61,6 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
     setOnClickListener(binding?.ivWhatsapp, binding?.ivInstagram, binding?.ivOther, binding?.ivClosePostSuccess)
 
     binding!!.ivPosterIcon.loadFromFile(posterImgPath, false)
-    binding?.ivClosePostSuccess?.setOnClickListener {
-      dismiss()
-    }
     binding!!.cardBigAnim.isVisible = posterImgPath == null
     binding!!.cardSmallAnim.isVisible = posterImgPath != null
     binding!!.ivPosterCard.isVisible = posterImgPath != null
@@ -74,14 +74,16 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
 
       when (v) {
         binding?.ivWhatsapp -> {
-          WebEngageController.trackEvent(Promotional_Updates_WhatsApp_Share_Click)
-          imgFile.shareAsImage(requireActivity(), PackageNames.WHATSAPP, caption)
-
+          if(appInstalledOrNot(PackageNames.WHATSAPP)) {
+            WebEngageController.trackEvent(Promotional_Updates_WhatsApp_Share_Click)
+            imgFile.shareAsImage(requireActivity(), PackageNames.WHATSAPP, caption)
+          }
         }
         binding?.ivInstagram -> {
-          WebEngageController.trackEvent(Promotional_Update_Instagram_Share_Click)
-          imgFile.shareAsImage(requireActivity(), PackageNames.INSTAGRAM, caption)
-
+          if(appInstalledOrNot(PackageNames.INSTAGRAM)) {
+            WebEngageController.trackEvent(Promotional_Update_Instagram_Share_Click)
+            imgFile.shareAsImage(requireActivity(), PackageNames.INSTAGRAM, caption)
+          }
         }
         binding?.ivOther -> {
           WebEngageController.trackEvent(Promotional_Updates_More_Share_Click)
@@ -111,6 +113,26 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
         }
       }
     }
+  }
+
+  private fun appInstalledOrNot(packageName: String): Boolean {
+    val pm: PackageManager = requireActivity().packageManager
+    try {
+      pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
+      return true
+    } catch (e: PackageManager.NameNotFoundException) {
+    }
+    try {
+      startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
+    } catch (e: ActivityNotFoundException) {
+      startActivity(
+        Intent(
+          Intent.ACTION_VIEW,
+          Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+        )
+      )
+    }
+    return false
   }
 
   override fun onDismiss(dialog: DialogInterface) {

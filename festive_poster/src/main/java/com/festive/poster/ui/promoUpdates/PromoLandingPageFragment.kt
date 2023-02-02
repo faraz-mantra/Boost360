@@ -33,13 +33,12 @@ import kotlin.math.abs
 
 class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding, BaseViewModel>() {
 
-  val browseTabFragment = BrowseTabFragment.newInstance()
   var currentPage: Int = 0
   var isCreateClick: Boolean = false
   var isIsTodayTabClicked: Boolean = false
 
   enum class ToolTipType {
-    FOR_TODAY, CREATE
+    FOR_TODAY, CREATE, READY_MADE, CREATE_NEW
   }
 
   override fun getLayout(): Int {
@@ -67,7 +66,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
     setupViewPager()
     if (PreferencesUtils.instance.getData(PreferencesKey.UPDATE_STUDIO_FIRST_TIME.name, true)) {
       PreferencesUtils.instance.saveData(PreferencesKey.UPDATE_STUDIO_FIRST_TIME.name, false)
-      setupTabBaloons(ToolTipType.FOR_TODAY)
+      setupTabBaloons(ToolTipType.READY_MADE)
     }
   }
 
@@ -107,10 +106,16 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
 
          }, 100)
      }*/
+    binding.fabBrowseAll!!.setOnClickListener {
+      WebEngageController.trackEvent(PROMOTIONAL_UPDATE_CATEGORY_CLICK)
+      addFragment(R.id.container, BrowseCategoriesFragment.newInstance(), true, true)
+    }
   }
 
   private fun setupViewPager() {
-    val fragmentList = arrayListOf(TodaysPickFragment.newInstance(), browseTabFragment, BlankFragment())
+    binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
+    binding.tabLayout.tabMode = TabLayout.MODE_FIXED
+    val fragmentList = arrayListOf(TodaysPickFragment.newInstance(), BlankFragment())
     val viewPagerAdapter = TabAdapter(fragmentList, this)
     binding.viewPager.apply {
       isUserInputEnabled = false
@@ -123,12 +128,6 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
               currentPage = 0
             }
             1 -> {
-              if (isCreateClick.not()){
-                WebEngageController.trackEvent(Post_Browse_All_Promotional_Update_Click)
-              }
-              currentPage = 1
-            }
-            2 -> {
               isCreateClick = true
               WebEngageController.trackEvent(Promotional_Update_Create_Update_Click)
               launchPostNewUpdate(requireActivity())
@@ -137,24 +136,20 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
         }
       })
     }
-
-
     binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
       override fun onTabSelected(tab: TabLayout.Tab?) {
         //  changeTabFont(tab,Typeface.BOLD)
-        when(tab!!.position){
+        when(tab?.position){
           0 -> {
             if (isIsTodayTabClicked){
               WebEngageController.trackEvent(Update_studio_today_tab_click)
             }
           }
-          1 -> WebEngageController.trackEvent(Update_studio_browse_tab_click)
-          2 -> WebEngageController.trackEvent(Update_studio_Create_custom_update_click)
+          1 -> WebEngageController.trackEvent(Update_studio_Create_custom_update_click)
         }
-        isIsTodayTabClicked = true
         val tabIconColor: Int = ContextCompat.getColor(requireActivity(), R.color.colorPrimary)
         if (tab?.position == 1) {
-          tab.icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_circlesfour_active)
+          tab.icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_create_new_update_active)
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
           tab?.icon?.setColorFilterApiQ(tabIconColor, BlendMode.SRC_IN)
         } else {
@@ -166,7 +161,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
         // changeTabFont(tab,Typeface.NORMAL)
         val tabIconColor: Int = ContextCompat.getColor(requireActivity(), R.color.colorB3B3B3)
         if (tab?.position == 1) {
-          tab.icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_circlesfour_inactive)
+          tab.icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_create_new_update_inactive)
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
           tab?.icon?.setColorFilterApiQ(tabIconColor, BlendMode.SRC_IN)
         } else {
@@ -177,24 +172,22 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
       override fun onTabReselected(tab: TabLayout.Tab?) {
       }
     })
-
     // New way of interaction with TabLayout and page title setting
     TabLayoutMediator(binding.tabLayout, binding.viewPager) { currentTab, currentPosition ->
       currentTab.icon = when (currentPosition) {
-        0 -> AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_sundim)
-        1 -> AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_circlesfour_inactive)
-        2 -> AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_pencilsimple)
+        0 -> AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_ready_made_update)
+        1 -> AppCompatResources.getDrawable(requireActivity(), R.drawable.ic_create_new_update_inactive)
         else -> null
       }
       currentTab.text = when (currentPosition) {
-        0 -> getString(R.string.for_today)
-        1 -> getString(R.string.browse)
-        2 -> getString(R.string.Create)
+        0 -> getString(R.string.ready_made)
+        1 -> getString(R.string.create_new)
         else -> ""
       }
     }.attach()
+
     if (PreferencesUtils.instance.getData(PreferenceConstant.FIRST_LAUNCH_PROMO, true)) {
-      //  setupTabBaloons(ToolTipType.FOR_TODAY)
+      //  setupTabBaloons(ToolTipType.READY_MADE)
       PreferencesUtils.instance.saveData(PreferenceConstant.FIRST_LAUNCH_PROMO, false)
     }
 
@@ -210,12 +203,12 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
   }
 
   private fun setupTabBaloons(type: ToolTipType) {
-    val marginLeft = if (type == ToolTipType.FOR_TODAY) 16 else 0
-    val marginRight = if (type == ToolTipType.CREATE) 16 else 0
+    val marginLeft = if (type == ToolTipType.READY_MADE) 16 else 0
+    val marginRight = if (type == ToolTipType.CREATE_NEW) 16 else 0
 
     val arrowPos = when (type) {
-      ToolTipType.FOR_TODAY -> 0.2F
-      ToolTipType.CREATE -> 0.8F
+      ToolTipType.READY_MADE -> 0.2F
+      ToolTipType.CREATE_NEW -> 0.8F
       else -> 0.5F
     }
 
@@ -227,30 +220,32 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
     val icon = balloon.getContentView().findViewById<CustomImageView>(R.id.iv_icon)
 
     when (type) {
-      ToolTipType.FOR_TODAY -> {
+      ToolTipType.READY_MADE -> {
         text.text = spanBoldNdColor(
-          getString(R.string.premium_updates_custom_designed_for_you), R.color.colorPrimary, "Premium updates"
+          getString(R.string.premium_updates_custom_designed_for_you),
+          R.color.colorPrimary,
+          "Premium updates"
         )
-        binding.tabLayout.getTabAt(0)!!.view.postDelayed(Runnable {
+        binding.tabLayout.getTabAt(0)?.view?.postDelayed({
           balloon.showAlignBottom(
             binding.tabLayout.getTabAt(0)!!.view, 0, 0
           )
         }, 500)
         balloon.setOnBalloonDismissListener {
-          setupTabBaloons(ToolTipType.CREATE)
+          setupTabBaloons(ToolTipType.CREATE_NEW)
         }
         close.setOnClickListener {
           balloon.dismiss()
-          setupTabBaloons(ToolTipType.CREATE)
+          setupTabBaloons(ToolTipType.CREATE_NEW)
         }
       }
-      ToolTipType.CREATE -> {
+      ToolTipType.CREATE_NEW -> {
         icon.gone()
         text.text = spanBoldNdColor(
           getString(R.string.free_updates_tap_on_create_to_post_like_before), R.color.green_78AF00, "FREE updates:"
         )
-        binding.tabLayout.getTabAt(2)!!.view.postDelayed(Runnable {
-          balloon.showAlignBottom(binding.tabLayout.getTabAt(2)!!.view)
+        binding.tabLayout.getTabAt(1)?.view?.postDelayed(Runnable {
+          balloon.showAlignBottom(binding.tabLayout.getTabAt(1)!!.view)
         }, 500)
 
         close.setOnClickListener {

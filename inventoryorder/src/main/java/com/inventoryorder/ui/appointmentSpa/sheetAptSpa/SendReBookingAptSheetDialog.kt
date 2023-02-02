@@ -48,9 +48,12 @@ class SendReBookingAptSheetDialog :
   override fun onClick(v: View) {
     super.onClick(v)
     dismiss()
-    when (v) {
-      binding?.buttonDone -> onClicked()
+    if(binding?.checkboxSms?.isChecked!! || binding?.checkboxEmail?.isChecked!! ){
+      when (v) {
+        binding?.buttonDone -> onClicked()
+      }
     }
+    showLongToast("Select one option to send reminder.")
   }
 
 }

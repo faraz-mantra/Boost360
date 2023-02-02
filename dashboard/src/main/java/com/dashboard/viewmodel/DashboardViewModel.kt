@@ -3,7 +3,6 @@ package com.dashboard.viewmodel
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
 import com.appservice.rest.repository.AzureWebsiteNewRepository
 import com.appservice.rest.repository.WithFloatTwoRepository
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
@@ -29,13 +28,6 @@ import com.onboarding.nowfloats.rest.repositories.UploadImageRepository
 import com.onboarding.nowfloats.rest.repositories.WhatsAppRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
 
@@ -90,16 +82,8 @@ class DashboardViewModel : BaseViewModel() {
     return ApiTwoWithFloatRepository.getBizFloatMessage(request).toLiveData()
   }
 
-//  fun fpOnboardingUpdate(request: OnBoardingUpdateModel?): LiveData<BaseResponse> {
-//    return KitWebActionRepository.fpOnboardingUpdate(request).toLiveData()
-//  }
-
   fun getNotificationCount(clientId: String?, fpId: String?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getNotificationCount(clientId, fpId).toLiveData()
-  }
-
-  fun getNavDashboardData(context: Context): LiveData<BaseResponse> {
-    return WithFloatRepository.getNavDashboardData(context).toLiveData()
   }
 
   fun getSearchAnalytics(fpTag: String?, startDate: String?, endDate: String?): LiveData<BaseResponse> {
@@ -134,9 +118,9 @@ class DashboardViewModel : BaseViewModel() {
     return WithFloatRepository.getBoostWebsiteItem(context).toLiveData()
   }
 
-  fun getSellerSummary(clientId: String?, sellerId: String?): LiveData<BaseResponse> {
-    return InventoryOrderRepository.getSellerSummary(clientId, sellerId).toLiveData()
-  }
+//  fun getSellerSummary(clientId: String?, sellerId: String?): LiveData<BaseResponse> {
+//    return InventoryOrderRepository.getSellerSummary(clientId, sellerId).toLiveData()
+//  }
 
   fun getSellerSummaryV2_5(clientId: String?, sellerId: String?, request: SellerSummaryRequest?): LiveData<BaseResponse> {
     return InventoryOrderRepository.getSellerSummaryV2_5(clientId, sellerId, request).toLiveData()

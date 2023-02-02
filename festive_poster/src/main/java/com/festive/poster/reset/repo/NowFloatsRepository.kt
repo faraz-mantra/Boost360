@@ -149,8 +149,7 @@ object NowFloatsRepository : AppBaseRepository<NowFloatsRemoteData, AppBaseLocal
     )
   }
 
-  fun saveTemplateAction(action:TemplateSaveActionBody.ActionType,
-  isFav:Boolean,templateId:String): Observable<BaseResponse> {
+  fun saveTemplateAction(action:TemplateSaveActionBody.ActionType, isFav:Boolean,templateId:String): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.templateSaveAction(
         TemplateSaveActionBody(

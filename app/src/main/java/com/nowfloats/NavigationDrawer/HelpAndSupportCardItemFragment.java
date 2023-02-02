@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.boost.marketplace.ui.home.MarketPlaceActivity;
+import com.framework.errorHandling.ErrorOccurredBottomSheet;
 import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.RiaSupportModel;
@@ -32,6 +33,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 import zendesk.chat.Chat;
 import zendesk.chat.ChatEngine;
@@ -200,27 +202,35 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.btn_chat_action:
-        WebEngageController.trackEvent(SUPPORT_CHAT, CHAT_OPTION_IN_ACCOUNT, NULL);
-        if (is_premium_support) {
-          DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-          Date dateobj = new Date();
-          if (sessionManager != null) {
-            ProfileProvider profileProvider = Chat.INSTANCE.providers().profileProvider();
+        try {
+          WebEngageController.trackEvent(SUPPORT_CHAT, CHAT_OPTION_IN_ACCOUNT, NULL);
+          if (is_premium_support) {
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            Date dateobj = new Date();
+            if (sessionManager != null) {
+              ProfileProvider profileProvider = Objects.requireNonNull(Chat.INSTANCE.providers()).profileProvider();
 
-            VisitorInfo visitorInfo = VisitorInfo.builder()
-                .withName(sessionManager.getFPName())
-                .withEmail(sessionManager.getFPEmail())
-                .withPhoneNumber(sessionManager.getFPPrimaryContactNumber())
-               // .note("FPTag: " + sessionManager.getFpTag() + "\n\nUserId: " + sessionManager.getUserProfileId() + "\nUserContact: " + sessionManager.getUserProfileMobile())
-                .build();
-            profileProvider.setVisitorInfo(visitorInfo,null);
-          }
+              VisitorInfo visitorInfo = VisitorInfo.builder()
+                      .withName(sessionManager.getFPName())
+                      .withEmail(sessionManager.getFPEmail())
+                      .withPhoneNumber(sessionManager.getFPPrimaryContactNumber())
+                      // .note("FPTag: " + sessionManager.getFpTag() + "\n\nUserId: " + sessionManager.getUserProfileId() + "\nUserContact: " + sessionManager.getUserProfileMobile())
+                      .build();
+              profileProvider.setVisitorInfo(visitorInfo, null);
+            }
 
-          MessagingActivity.builder()
-                  .withEngines(ChatEngine.engine())
-                  .show(view.getContext());
-        } else
-          showPremiumAddOnDialog();
+            MessagingActivity.builder()
+                    .withEngines(ChatEngine.engine())
+                    .show(view.getContext());
+          } else
+            showPremiumAddOnDialog();
+        } catch (NullPointerException e){
+          e.printStackTrace();
+          new ErrorOccurredBottomSheet("", e.getMessage()).show(
+                  requireActivity().getSupportFragmentManager(),
+                  ErrorOccurredBottomSheet.class.getName()
+                    );
+        }
         break;
       case R.id.tv_person_email:
         WebEngageController.trackEvent(SUPPORT_EMAIL, EMAIL_OPTION_IN_ACCOUNT, NULL);

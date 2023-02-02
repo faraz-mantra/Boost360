@@ -45,6 +45,7 @@
     <string name="promo_updates">Promo updates</string>
     <string name="update_studios">Boost studio</string>
     <string name="for_today">For today</string>
+    <string name="ready_made">Ready-made</string>
     <string name="browse">Browse</string>
     <string name="find">Find</string>
     <string name="create_post">Create Post</string>
@@ -61,6 +62,7 @@
     <string name="header_1">Header 1</string>
     <string name="header_2">Header 2</string>
     <string name="browse_all_templates">Browse all templates</string>
+    <string name="browse_all_designs">Browse from\n1000+ designs</string>
     <string name="deleting_draft">Deleting draft?</string>
     <string name="no_stay_here">No stay here</string>
     <string name="yes_delete">Yes, delete</string>
@@ -92,15 +94,17 @@
     <string name="or_placeholder_per_year">or ₹%1$s/year</string>
     <string name="get_annual_pack_for_placeholder">Get annual pack for ₹%1$d</string>
     <string name="get_monthly_pack_for_placeholder">Get monthly pack for ₹%1$d</string>
-    <string name="placeholder_percent_off">%1$d% OFF</string>
+    <string name="placeholder_percent_off" formatted="false">%1$d% OFF</string>
     <string name="buy">BUY</string>
     <string name="like">Like</string>
     <string name="comment">Comment</string>
+    <string name="website_address">Website Address</string>
     <string name="type_in_the_caption_to_create_your_own_hashtags">Type ‘#’ in the caption to create your own hashtags</string>
     <string name="post_on">Post on</string>
     <string name="posted_15_mins_ago">Posted 15 mins ago</string>
     <string name="ria_customer_mail">ria@nowfloats.com</string>
     <string name="Create">Create</string>
+    <string name="create_new">Create new</string>
     <string name="you_ve_new_email_update_from">You\'ve new email update from</string>
     <string name="explore_the_premium_update_specially_designed_for_you">Explore the premium update specially designed for you.</string>
     <string name="for_regular_free_updates_click_on_create_and_keep_posting_like_always">For regular FREE updates, click on ‘Create’ and keep posting like always.</string>

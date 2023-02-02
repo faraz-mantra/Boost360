@@ -113,7 +113,7 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
           } else {
             startActivity(Intent(baseActivity, LoginActivity::class.java))
           }
-        } else baseActivity.dialogRootError()
+        } else baseActivity.dialogRootError(requireContext())
       }
 
     }
@@ -148,7 +148,7 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
     }else{
       val intent = Intent(baseActivity, NewOnBoardingContainerActivity::class.java)
       intent.setFragmentType(FragmentType.LOADING_ANIMATION_DASHBOARD_FRAGMENT)
-      startActivity(intent)
+      requireActivity().startActivity(intent)
     }
   }
 

@@ -187,18 +187,14 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
 
         };
 
-        dateOfCompletion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(ProjectDetailsActivity.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
+        dateOfCompletion.setOnClickListener(v -> {
+           DatePickerDialog datePickerDialog =  new DatePickerDialog(ProjectDetailsActivity.this, date, myCalendar
+                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH));
+           datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+           datePickerDialog.show();
         });
 
-
-        //setheader
-        setHeader();
 
         Bundle extra = getIntent().getExtras();
         ScreenType = extra.getString("ScreenState");
@@ -209,6 +205,9 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
             //set default styling
             updateProjectStatusButton("IN PROGRESS");
         }
+
+        //setheader
+        setHeader();
 
         projectButtonStateController();
         setupUIColor();
@@ -531,7 +530,8 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Methods.showSnackBarPositive(ProjectDetailsActivity.this, getString(R.string.successfully_added_project_details));
+                        Toast.makeText(ProjectDetailsActivity.this, R.string.successfully_added_project_details, Toast.LENGTH_LONG).show();
+                        //Methods.showSnackBarPositive(ProjectDetailsActivity.this, getString(R.string.successfully_added_project_details));
                         finish();
                     }
 
@@ -576,21 +576,25 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                     hideLoader();
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deleteTeams ->", response.getBody().toString());
-                        Methods.showSnackBarPositive(ProjectDetailsActivity.this, getString(R.string.successfully_deleted_));
-                        finish();
+                        Toast.makeText(ProjectDetailsActivity.this, R.string.successfully_deleted_, Toast.LENGTH_LONG).show();
+                        //Methods.showSnackBarPositive(ProjectDetailsActivity.this, getString(R.string.successfully_deleted_));
                     } else {
-                        Methods.showSnackBarNegative(ProjectDetailsActivity.this, getString(R.string.something_went_wrong));
+                        Toast.makeText(ProjectDetailsActivity.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
+                        //Methods.showSnackBarNegative(ProjectDetailsActivity.this, getString(R.string.something_went_wrong));
                     }
+                    finish();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     hideLoader();
                     if (error.getResponse().getStatus() == 200) {
-                        Methods.showSnackBarPositive(ProjectDetailsActivity.this, getString(R.string.successfully_deleted_));
+                        Toast.makeText(ProjectDetailsActivity.this, R.string.successfully_deleted_, Toast.LENGTH_LONG).show();
+                        //Methods.showSnackBarPositive(ProjectDetailsActivity.this, getString(R.string.successfully_deleted_));
                         finish();
                     } else {
-                        Methods.showSnackBarNegative(ProjectDetailsActivity.this, getString(R.string.something_went_wrong));
+                        Toast.makeText(ProjectDetailsActivity.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
+                        //Methods.showSnackBarNegative(ProjectDetailsActivity.this, getString(R.string.something_went_wrong));
                     }
                 }
             });
@@ -611,7 +615,12 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
         rightButton = findViewById(R.id.right_icon_layout);
         rightIcon = findViewById(R.id.right_icon);
         title.setText("Project Details");
-        rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
+        if (ScreenType != null && ScreenType.equals("edit")) {
+            rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
+            rightIcon.setVisibility(View.VISIBLE);
+        }else{
+            rightIcon.setVisibility(View.GONE);
+        }
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -620,7 +629,6 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                     deleteRecord(itemId);
                     return;
                 }
-                finish();
             }
         });
 

@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.RingtoneManager;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -98,7 +99,8 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
     stackBuilder.addNextIntentWithParentStack(intent);
 
-    PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+    PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,
+            Build.VERSION.SDK_INT>= Build.VERSION_CODES.S? PendingIntent.FLAG_IMMUTABLE : PendingIntent.FLAG_UPDATE_CURRENT);
 
     NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(c, "111")
         .setSmallIcon(R.drawable.app_launcher2)

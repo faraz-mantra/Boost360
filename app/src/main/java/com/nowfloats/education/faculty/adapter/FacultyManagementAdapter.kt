@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.nowfloats.education.faculty.model.Data
 import com.nowfloats.education.helper.ItemClickEventListener
 import com.thinksity.databinding.FacultyManagementBinding
@@ -43,6 +44,9 @@ class FacultyManagementAdapter(private val eventListener: ItemClickEventListener
     fun bindView(facultyManagementData: Data, position: Int) {
       binding.facultyManagementData = facultyManagementData
 
+      Glide.with(itemView.context).load(facultyManagementData.profileimage.url)
+        .into(binding.topperRowProfileImage)
+
       binding.menuOptions.visibility = View.GONE
       if (menuPosition == position) {
         if (menuStatus) {
@@ -51,7 +55,7 @@ class FacultyManagementAdapter(private val eventListener: ItemClickEventListener
           binding.menuOptions.visibility = View.GONE
         }
       }
-      binding.mainLayout.setOnClickListener { eventListener.itemMenuOptionStatus(position, false) }
+    //  binding.mainLayout.setOnClickListener { eventListener.itemMenuOptionStatus(position, false) }
 
       binding.singleItemMenuButton.setOnClickListener {
         if (binding.menuOptions.visibility == View.GONE) {

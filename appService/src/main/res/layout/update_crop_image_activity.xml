@@ -9,23 +9,27 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:background="@color/black_333333"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
         <com.framework.views.customViews.CustomImageView
-            android:id="@+id/customImageView6"
+            android:id="@+id/iv_crop_update_close"
             android:layout_width="@dimen/size_32"
             android:layout_height="@dimen/size_32"
             android:layout_marginStart="@dimen/size_8"
             android:padding="8dp"
             app:tint="@color/white"
             android:src="@drawable/ic_close_black"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
 
         <com.framework.views.customViews.CustomTextView
@@ -37,9 +41,9 @@
             android:textColor="@color/white"
             android:textSize="17sp"
             app:fontFamily="@font/bold"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
-            app:layout_constraintStart_toEndOf="@+id/customImageView6"
-            app:layout_constraintTop_toTopOf="@+id/toolbar2" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_crop_update_close"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.framework.views.customViews.CustomImageView
             android:id="@+id/iv_delete"
@@ -48,28 +52,50 @@
             android:layout_marginEnd="24dp"
             app:tint="@color/white"
             android:src="@drawable/ic_trash_nav"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
-            app:layout_constraintEnd_toEndOf="@+id/toolbar2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
 
+        <LinearLayout
+            android:id="@+id/info"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#F1F1F1"
+            android:padding="15dp"
+            app:layout_constraintTop_toBottomOf="@id/toolbar2"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="2dp"
+                android:src="@drawable/ic_info_black"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Recommended size atleast 600x600px, you may crop or continue without cropping."/>
+        </LinearLayout>
 
         <com.theartofdev.edmodo.cropper.CropImageView
             android:id="@+id/iv_crop"
             android:layout_width="match_parent"
-            android:layout_height="341dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="15dp"
             app:cropShape="rectangle"
             app:layout_constraintVertical_bias="0.37"
-            app:cropFixAspectRatio="true"
+            app:cropFixAspectRatio="false"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+            app:layout_constraintTop_toBottomOf="@+id/info" />
 
 
         <LinearLayout
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="64dp"
+            android:layout_marginBottom="40dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent">

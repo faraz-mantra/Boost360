@@ -236,12 +236,14 @@ class EditPostActivity : AppBaseActivity<ActivityEditPostBinding, FestivePosterV
       binding?.tvPreviewAndPost -> {
         // saveUpdatePost()
         if (isBusinessLogoUpdated) {
+          showProgress()
           posterModel?.let {
             lifecycleScope.launch {
               withContext(Dispatchers.Default) {
                 val file = SvgUtils.svgToBitmap(it.primarySvgUrl)?.saveAsImageToAppFolder(getExternalFilesDir(null)?.path + File.separator + UPDATE_PIC_FILE_NAME)
                 if (file?.exists() == true) {
                   WebEngageController.trackEvent(Promotional_Update_Preview_Post_Click)
+                  hideProgress()
                   PostPreviewSocialActivity.launchActivity(this@EditPostActivity, binding?.captionLayout?.etInput?.text.toString(), file.path, IntentConstants.UpdateType.UPDATE_PROMO_POST.name, it)
                 }
               }

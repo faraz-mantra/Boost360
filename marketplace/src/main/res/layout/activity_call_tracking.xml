@@ -318,6 +318,22 @@
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/layout_number_list" />
                 </com.google.android.material.card.MaterialCardView>
+                <TextView
+                    android:id="@+id/tvSkip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="88dp"
+                    android:drawableEnd="@drawable/ic_arrow_yellow"
+                    android:drawablePadding="@dimen/pad_10dp"
+                    android:fontFamily="@font/semi_bold"
+                    android:text="Skip &amp; add to cart"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorAccent1"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/txt_14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card_list" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
         <com.facebook.shimmer.ShimmerFrameLayout

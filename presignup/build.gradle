@@ -91,8 +91,8 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     //firebase auth
-    implementation 'com.google.firebase:firebase-auth:19.2.0'
-    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.firebase:firebase-auth:21.1.0'
+    implementation 'com.google.android.gms:play-services-auth:20.4.0'
 
     // Retrofit with Moshi Converter
     implementation "com.squareup.retrofit2:converter-moshi:2.5.0"
@@ -100,7 +100,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
 
     //facebook
-    implementation 'com.facebook.android:facebook-login:5.15.3'
+    implementation 'com.facebook.android:facebook-login:15.2.0'
     implementation 'com.google.firebase:firebase-invites:17.0.0'
     api project(path: ':onboarding')
 }

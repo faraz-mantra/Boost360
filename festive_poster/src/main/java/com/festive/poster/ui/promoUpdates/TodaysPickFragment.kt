@@ -34,6 +34,7 @@ import com.framework.webengageconstant.*
 import java.util.*
 import kotlin.collections.ArrayList
 
+
 class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePosterViewModel>(), RecyclerItemClickListener {
 
   private val TAG = "TodaysPickFragment"
@@ -133,15 +134,15 @@ class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePos
     }
   }
 
-  override fun onClick(v: View) {
-    super.onClick(v)
-    when (v) {
-      binding.cardBrowseAllTemplate -> {
-        WebEngageController.trackEvent(Promotional_Update_View_More_Click)
-        addFragment(R.id.container, BrowseAllFragment.newInstance(), true, true)
-      }
-    }
-  }
+//  override fun onClick(v: View) {
+//    super.onClick(v)
+//    when (v) {
+//      binding?.cardBrowseAllTemplate -> {
+//        WebEngageController.trackEvent(Promotional_Update_View_More_Click)
+//        addFragment(R.id.container, BrowseAllFragment.newInstance(), true, true)
+//      }
+//    }
+//  }
 
 
   private fun startShimmer() {
@@ -206,14 +207,19 @@ class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePos
 
   private fun callFavApi(posterModel: TemplateUi) {
     promoUpdatesViewModel?.markAsFav(posterModel.isFavourite.not(), posterModel.id)
-    promoUpdatesViewModel?.favStatus?.observe(viewLifecycleOwner) {
-      when (it) {
-        is NetworkResult.Loading -> {
-          showProgress()
-        }
-        else -> {
+    promoUpdatesViewModel?.favStatus?.observe(viewLifecycleOwner) { it1 ->
+      when (it1) {
+        is NetworkResult.Loading -> showProgress()
+        is NetworkResult.Success -> {
+          adapter?.list?.map { it2 -> it2.getParentTemplates()?.map { if (posterModel.id == it.id) it.isFavourite = it.isFavourite.not() } }
+          adapter?.notifyDataSetChanged()
           hideProgress()
         }
+        is NetworkResult.Error -> {
+          showShortToast(it1.msg ?: getString(R.string.something_went_wrong))
+          hideProgress()
+        }
+        else -> hideProgress()
       }
     }
   }

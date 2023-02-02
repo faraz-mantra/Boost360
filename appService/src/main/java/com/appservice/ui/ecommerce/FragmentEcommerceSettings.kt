@@ -70,7 +70,7 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
 
   private fun getStatusData() {
     if (isFirst) showProgress()
-    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner) {
+    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID?:"", clientId)?.observeOnce(viewLifecycleOwner) {
       val dataItem = it as? AppointmentStatusResponse
       if (dataItem?.isSuccess() == true && dataItem.result != null) {
         setUpRecyclerView(dataItem.result!!.getEcommerceTilesArray())
@@ -93,11 +93,16 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
   }
 
   private fun setUpRecyclerView(tilesArray: ArrayList<AppointmentStatusResponse.TilesModel>) {
-    this.copyList?.addAll(tilesArray)
-    this.finalList?.addAll(tilesArray)
+    if (copyList.isNullOrEmpty()) {
+      this.copyList?.addAll(tilesArray)
+    }
+    if (finalList.isNullOrEmpty()) {
+      this.finalList?.addAll(tilesArray)
+    }
+
     this.adapter = AppBaseRecyclerViewAdapter(baseActivity, tilesArray, this@FragmentEcommerceSettings)
-    binding?.rvTiles?.setHasFixedSize(true)
-    binding?.rvTiles?.adapter = adapter
+    binding.rvTiles.setHasFixedSize(true)
+    binding.rvTiles.adapter = adapter
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -106,7 +111,7 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
   }
 
   private fun clearSearchFocus() {
-    binding?.svSettings?.clearFocus()
+    binding.svSettings.clearFocus()
   }
 
   private fun clickActionButton(data: AppointmentStatusResponse.TilesModel) {

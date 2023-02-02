@@ -304,7 +304,7 @@
     <string name="edit_">Edit</string>
     <string name="apply_same_on_all_days">Apply same on all days</string>
     <string name="dropdown_options_1_1_2_3_4_5_5"><![CDATA[Dropdown options: <1, 1, 2, 3, 4, 5, 5+]]></string>
-    <string name="enter_age">Enter age from 18 to 99</string>
+    <string name="enter_age">Age 18+</string>
     <string name="age">Age*</string>
     <string name="full_name">Full name</string>
     <string name="customers_can_only_view_and_enquire_about_this_product">Customers can only view and enquire about this product.</string>
@@ -549,6 +549,7 @@
     <string name="why_do_we_need_to_add_and_verify_your_bank_account">Why do we need to add and verify your bank account?</string>
     <string name="this_account_is_being_used_to_send_you_money_collected_from_your_customers_who_are_making_payments_on_your_boost_business_website">This account is being used to send you money collected from your customers who are making payments on your Boost Business website.</string>
     <string name="we_re_currently_verifying_your_bank_account_this_process_usually_takes_1_working_day_once_verified_we_will_notify_you_if_you_want_to_make_any_change_to_above_account_details_please_write_to_ria_nowfloats_com_with_this_screenshot_attached">We’re currently verifying your bank account. This process usually takes 1 working day. Once verified we will notify you. If you want to make any change to above account details, please write to <u>ria@nowfloats.com</u> with this screenshot attached.</string>
+  <string name="verification_underway_pending_message">We’re currently verifying your bank account. This process usually takes 1 working day. Once verified we will notify you. If you want to make any change to above account details, please write to ria@nowfloats.com with this screenshot attached.</string>
     <string name="bank_account_verified">Bank account verified</string>
     <string name="confirm_gst_details">Confirm GST details</string>
     <string name="your_gstin_no_arz6887865868_is_registered_with_the_company_name_nowfloats_technologies_pvt_ltd">Your GSTIN no. <b>ARZ6887865868</b> is registered with the company name <b>Nowfloats Technologies Pvt. Ltd.</b></string>
@@ -957,7 +958,7 @@
     <string name="default_delivery_charges_warehouse_addresses">Default delivery charges, Warehouse \naddresses</string>
     <string name="warehouse_address">Warehouse address*</string>
     <string name="contact_number_aestrick">Contact number*</string>
-    <string name="add_warehouse">Add warehouse</string>
+    <string name="add_warehouse">Add Warehouse</string>
     <string name="add_location_of_warehouse_for_users_to_self_pick_orders">Add location of warehouse for users to self pick orders.</string>
     <string name="warehouse_name">Warehouse name*</string>
     <string name="enter_warehouse_name">Enter warehouse name</string>
@@ -1154,7 +1155,7 @@
     <string name="type_in_the_caption_to_create_your_own_hashtags">Type ‘#’ in the caption to create your own hashtags</string>
     <string name="preview_and_post2">Preview and post</string>
     <string name="supported_format_jpeg_png_size_square_800_x_800px_minimum">Supported format: JPEG/PNG. Size: Square (800 x 800px minimum)</string>
-  <string name="supported_format_jpeg_png_size_square_300_x_300px_minimum">Supported format: JPEG/PNG. Size: Square (300 x 300px minimum)</string>
+    <string name="supported_format_jpeg_png_size_square_300_x_300px_minimum">Supported format: JPEG/PNG. Size: Square (300 x 300px minimum)</string>
     <string name="discarding_the_post">Discarding the post?</string>
     <string name="closing_this_page_will_not_save_the_changes_you_ve_made_do_you_want_to_save_a_draft_or_discard_this_post">Closing this page will not save the changes you’ve made. Do you want to save a draft or discard this post?</string>
     <string name="no_save_as_draft">No, save as draft</string>
@@ -1172,12 +1173,12 @@
     <string name="image_resolution_is_smaller_than_800_x_800_px">Image resolution is smaller than 800 X 800 px</string>
     <string name="image_resolution_is_smaller_than_300_x_300_px">Image resolution is smaller than 300 X 300 px</string>
     <string name="image_file_size_is_bigger_than_2mb">Image file size is bigger than 2MB</string>
-  <string name="image_file_size_is_bigger_than_5mb">Image file size is bigger than 5MB</string>
+    <string name="image_file_size_is_bigger_than_5mb">Image file size is bigger than 5MB</string>
     <string name="describe_what_you_want_to_say_in_the_picture_added_above">Describe what you want to say in the picture added above...</string>
     <string name="your_post_was_saved_as_draft">Your post was saved as Draft</string>
-    <string name="testimonial_update_success">Testimonial updated successfully!</string>
-    <string name="testimonial_add_success">Testimonial added successfully!</string>
-    <string name="testimonial_delete_success">Testimonial deleted successfully!</string>
+    <string name="testimonial_update_success">Testimonial updated successfully</string>
+    <string name="testimonial_add_success">Testimonial added successfully</string>
+    <string name="testimonial_delete_success">Testimonial deleted successfully</string>
     <string name="name_field_can_not_empty">Name field can\'t be empty</string>
     <string name="name_field_can_not_contain_special_char">Name field can\'t contain special characters</string>
     <string name="company_field_can_not_empty">Company/Occupation field can\'t be empty</string>
@@ -1278,4 +1279,8 @@
     <string name="this_will_help_you_group_multiple_products_under_this_category">This will help you group multiple products under this category</string>
     <string name="product_with_price_zero_cannot_be_listed_for_sale">Product with price zero cannot be listed for sale.</string>
     <string name="smaller_image_selected">Smaller image selected</string>
+    <string name="you_need_to_enter_duration_against_each_service_in_the_service_catalogue_so_that_customers_can_select_a_slot_before_going_to_payment_mode_selection">You need to enter duration against each service in the service catalogue so that customers can select a slot before going to payment mode selection.</string>
+    <string name="do_you_want_your_customer_to_book_a_service_without_selecting_a_slot">Do you want your customer to book a service without selecting a slot?</string>
+    <string name="are_your_services_timings_same_as_business_hours">Are your services timings same as business hours?</string>
+    <string name="your_customers_will_be_able_to_book_service_as_per_your_business_timings">Your customers will be able to book service as per your business timings.</string>
 </resources>

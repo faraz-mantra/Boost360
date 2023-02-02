@@ -49,10 +49,10 @@ class CustomisationNavFragment : AppBaseFragment<FragmentNavCustomisationBinding
   }
 
   private fun setRecyclerView() {
-    viewModel?.getWebsiteNavData(baseActivity)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getWebsiteNavData(baseActivity)?.observeOnce(viewLifecycleOwner) {
       val data = it as? WebsiteNavModel
-      binding?.rvNavCustomisation?.adapter = AppBaseRecyclerViewAdapter(baseActivity, data?.websiteCustomisation as ArrayList<WebsiteCustomisationItem>, this)
-    })
+      binding.rvNavCustomisation.adapter = AppBaseRecyclerViewAdapter(baseActivity, data?.websiteCustomisation as ArrayList<WebsiteCustomisationItem>, this)
+    }
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -68,7 +68,7 @@ class CustomisationNavFragment : AppBaseFragment<FragmentNavCustomisationBinding
     when (type) {
       ic_diamonds -> baseActivity.startBusinessLogo(session)
       ic_fonts -> baseActivity.startWebsiteTheme(session)
-      ic_background_images -> startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
+      ic_background_images -> baseActivity.startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
       ic_favicon -> baseActivity.startFeviconImage(session)
       ic_featured_image -> baseActivity.startFeatureLogo(session)
     }

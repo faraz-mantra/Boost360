@@ -37,10 +37,6 @@ object WithFloatRepository : AppBaseRepository<WithFloatRemoteData, DashboardLoc
     return makeLocalRequest(DashboardLocalDataSource.getBoostWebsiteItem(context), TaskCode.GET_WEBSITE_ITEM_DATA)
   }
 
-  fun getNavDashboardData(context: Context): Observable<BaseResponse> {
-    return makeLocalRequest(DashboardLocalDataSource.getNavDashboardData(context), TaskCode.GET_NAV_DASHBOARD_DATA)
-  }
-
   fun getMoreSettings(context: Context): Observable<BaseResponse> {
     return makeLocalRequest(DashboardLocalDataSource.getMoreSettings(context), TaskCode.MORE_SETTINGS)
   }

@@ -144,7 +144,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     when (type) {
       WebsiteActionItem.IconType.service_product_catalogue -> baseActivity.startListServiceProduct(session)
       WebsiteActionItem.IconType.latest_update_tips -> session?.let { baseActivity.startUpdateLatestStory(it) }
-      WebsiteActionItem.IconType.all_images -> startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
+      WebsiteActionItem.IconType.all_images -> baseActivity.startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
       WebsiteActionItem.IconType.business_profile -> baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
       WebsiteActionItem.IconType.testimonials -> baseActivity.startTestimonial(session)
       WebsiteActionItem.IconType.custom_page -> baseActivity.startCustomPage(session)

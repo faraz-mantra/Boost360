@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.nowfloats.education.helper.ItemClickEventListener
 import com.nowfloats.education.toppers.model.Data
 import com.thinksity.databinding.ToppersRowBinding
@@ -39,6 +40,8 @@ class TopperAdapter(private val eventListener: ItemClickEventListener) :
     fun bindView(ourTopperResponseData: Data, position: Int) {
       binding.ourTopperResponseData = ourTopperResponseData
 
+      Glide.with(itemView.context).load(ourTopperResponseData.profileimage.url).into(binding.topperRowProfileImage)
+
       binding.menuOptions.visibility = View.GONE
       if (menuPosition == position) {
         if (menuStatus) {
@@ -47,6 +50,7 @@ class TopperAdapter(private val eventListener: ItemClickEventListener) :
           binding.menuOptions.visibility = View.GONE
         }
       }
+
       binding.mainLayout.setOnClickListener { eventListener.itemMenuOptionStatus(position, false) }
       binding.singleItemMenuButton.setOnClickListener {
         if (binding.menuOptions.visibility == View.GONE) {

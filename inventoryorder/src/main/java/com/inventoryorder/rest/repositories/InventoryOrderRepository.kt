@@ -25,17 +25,17 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
     return AppBaseLocalService()
   }
 
-  fun getSellerSummary(clientId: String?, sellerId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(
-      remoteDataSource.getSellerSummary(clientId, sellerId),
-      TaskCode.GET_SELLER_SUMMARY
-    )
-  }
+//  fun getSellerSummary(clientId: String?, sellerId: String?): Observable<BaseResponse> {
+//    return makeRemoteRequest(
+//      remoteDataSource.getSellerSummary(clientId, sellerId),
+//      TaskCode.GET_SELLER_SUMMARY
+//    )
+//  }
 
   fun getSellerSummaryV2_5(
     clientId: String?,
     sellerId: String?,
-    request: SellerSummaryRequest?
+    request: SellerSummaryRequest? = SellerSummaryRequest()
   ): Observable<BaseResponse> {
     return makeRemoteRequest(
       remoteDataSource.getSellerSummaryV2_5(clientId, sellerId, request),

@@ -289,7 +289,7 @@ class ComparePackageViewModel(application: Application) : BaseViewModel(applicat
       .doOnComplete {
         updatesLoader.postValue(false)
         //add cartitem to firebase
-        DataLoader.updateCartItemsToFirestore(Application())
+        //DataLoader.updateCartItemsToFirestore(Application())
       }
       .doOnError {
         updatesError.postValue(it.message)
