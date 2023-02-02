@@ -242,7 +242,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   private fun apiSellerSummary(isFirst: Boolean = true) {
     if (isFirst) showProgressLoad()
-    viewModel?.getSellerSummary(clientId, fpTag)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getSellerSummaryV2_5(clientId, fpTag)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         val response = it as? OrderSummaryResponse
         totalOrders = response?.Data?.TotalOrders ?: 0

@@ -93,11 +93,16 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
   }
 
   private fun setUpRecyclerView(tilesArray: ArrayList<AppointmentStatusResponse.TilesModel>) {
-    this.copyList?.addAll(tilesArray)
-    this.finalList?.addAll(tilesArray)
+    if (copyList.isNullOrEmpty()) {
+      this.copyList?.addAll(tilesArray)
+    }
+    if (finalList.isNullOrEmpty()) {
+      this.finalList?.addAll(tilesArray)
+    }
+
     this.adapter = AppBaseRecyclerViewAdapter(baseActivity, tilesArray, this@FragmentEcommerceSettings)
-    binding?.rvTiles?.setHasFixedSize(true)
-    binding?.rvTiles?.adapter = adapter
+    binding.rvTiles.setHasFixedSize(true)
+    binding.rvTiles.adapter = adapter
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -106,7 +111,7 @@ class FragmentEcommerceSettings : AppBaseFragment<FragmentEcommerceSettingsBindi
   }
 
   private fun clearSearchFocus() {
-    binding?.svSettings?.clearFocus()
+    binding.svSettings.clearFocus()
   }
 
   private fun clickActionButton(data: AppointmentStatusResponse.TilesModel) {

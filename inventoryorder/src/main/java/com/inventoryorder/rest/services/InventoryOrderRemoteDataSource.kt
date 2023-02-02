@@ -20,11 +20,11 @@ import retrofit2.http.*
 
 interface InventoryOrderRemoteDataSource {
 
-  @GET(EndPoints.GET_SELLER_SUMMARY_URL)
-  fun getSellerSummary(
-    @Query("clientId") clientId: String?,
-    @Query("sellerId") sellerId: String?,
-  ): Observable<Response<OrderSummaryResponse>>
+//  @GET(EndPoints.GET_SELLER_SUMMARY_URL)
+//  fun getSellerSummary(
+//    @Query("clientId") clientId: String?,
+//    @Query("sellerId") sellerId: String?,
+//  ): Observable<Response<OrderSummaryResponse>>
 
   @POST(EndPoints.GET_SELLER_SUMMARY_V2_5_URL)
   fun getSellerSummaryV2_5(

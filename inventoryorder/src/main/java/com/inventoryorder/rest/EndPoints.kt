@@ -38,7 +38,7 @@ object EndPoints {
   const val GET_ORDER_DETAIL_2_5 = "api/assuredPurchase/v2.5/GetOrderDetails"
   const val POST_UPDATE_ORDER = "api/assuredPurchase/v2/UpdateOrder"
 
-  const val GET_SELLER_SUMMARY_URL = "api/assuredPurchase/v2/SellerSummary"
+//  const val GET_SELLER_SUMMARY_URL = "api/assuredPurchase/v2/SellerSummary"
   const val GET_SELLER_SUMMARY_V2_5_URL = "api/assuredPurchase/v2.5/SellerSummary"
   const val GET_LIST_ORDER_URL = "api/assuredPurchase/v2/ListOrders"
   const val GET_LIST_ORDER_FILTER_URL = "api/assuredPurchase/v2/ListAllOrders"
