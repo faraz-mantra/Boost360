@@ -14,6 +14,7 @@ import com.dashboard.rest.EndPoints.WITH_FLOATS_BASE
 import com.dashboard.rest.apiClients.*
 import com.framework.BaseApplication
 import com.framework.utils.PreferencesUtils
+import io.branch.referral.Branch
 
 open class AppDashboardApplication : BaseApplication() {
 
@@ -27,6 +28,8 @@ open class AppDashboardApplication : BaseApplication() {
       BaseApplication.initModule(application)
       PreferencesUtils.initSharedPreferences(application)
       apiInitialize()
+      // Branch object initialization
+      Branch.getAutoInstance(application)
     }
 
     @JvmStatic

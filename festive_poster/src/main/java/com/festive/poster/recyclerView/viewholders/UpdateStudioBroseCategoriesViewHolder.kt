@@ -14,8 +14,8 @@ class UpdateStudioBrowseCategoriesViewHolder(binding: ListItemCategoryBinding) :
         val model = item as BrowseAll
         when(position){
             0 -> binding.categoryView.setBackgroundResource(R.drawable.card_festive_ocassions)
-            1 -> binding.categoryView.setBackgroundResource(R.drawable.card_thought_of_theday)
-            2 -> binding.categoryView.setBackgroundResource(R.drawable.card_discount_offers)
+            1 -> binding.categoryView.setBackgroundResource(R.drawable.card_discount_offers)
+            2 -> binding.categoryView.setBackgroundResource(R.drawable.card_thought_of_theday)
         }
 
         binding.title.text = model.title
