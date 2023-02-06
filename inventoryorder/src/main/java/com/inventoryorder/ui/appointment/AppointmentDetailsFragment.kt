@@ -156,7 +156,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     binding?.ctvAppointmentId?.text = "#${order?.ReferenceNumber}"
     binding?.textDateTime?.text = parseDate(order?.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_3, timeZone = TimeZone.getTimeZone("IST"))
 
-    binding?.textAmount?.text = "${order?.BillingDetails?.CurrencyCode?:"INR"} ${DecimalFormat("##,##,##0").format(order?.BillingDetails?.NetAmount?:0.0)}}"
+    binding?.textAmount?.text = "${order?.BillingDetails?.CurrencyCode?:"INR"} ${DecimalFormat("##,##,##0").format(order?.BillingDetails?.NetAmount?:0.0)}"
 
     binding?.textServiceName?.text = product?.Name
     var appointmentDate= order?.firstItemForAptConsult()?.scheduledStartDate()
