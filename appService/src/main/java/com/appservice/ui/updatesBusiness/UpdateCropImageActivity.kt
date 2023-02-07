@@ -22,7 +22,6 @@ import com.framework.utils.saveAsTempFile
 import com.framework.utils.setClickableRipple
 import com.framework.utils.setStatusBarColor
 import com.onboarding.nowfloats.bottomsheet.util.runOnUi
-import com.theartofdev.edmodo.cropper.CropImageView
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -86,13 +85,9 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
 //                    binding!!.ivCrop.setFixedAspectRatio(false)
                 }
             }
-
-
-
-
         }
-
     }
+
     override fun onClick(v: View?) {
         super.onClick(v)
         when(v){
