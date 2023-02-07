@@ -76,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="Recommended size atleast 600x600px, you may crop or continue without cropping."/>
+            android:text="Recommended size atleast 400x400px, you may crop or continue without cropping."/>
         </LinearLayout>
 
         <com.theartofdev.edmodo.cropper.CropImageView
