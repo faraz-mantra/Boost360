@@ -21,7 +21,7 @@ class BusinessContentSetupViewHolder(binding: ItemBusinessContentSetupBinding) :
     super.bind(position, item)
     val data = item as? DrScoreSetupData ?: return
     binding.txtTitle.text = data.type?.title
-    binding.txtDes.text = data.getRemainingPercentage()
+//    binding.txtDes.text = data.getRemainingPercentage()
     if (data.percentage == 100) {
 //      WRAP_CONTENT.setHeight()
       getColor(R.color.light_green_2)?.let { binding.txtDes.setTextColor(it) }
