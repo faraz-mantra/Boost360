@@ -528,11 +528,15 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
                     selectedNum = it[0]
                     tv_call_expert_select_domain.text = selectedNum
                     tv_vmn_selected_txt.text = selectedNum
+                    shimmer_anim_vmn.visibility=View.GONE
+                    selectDomainLayout.visibility=View.VISIBLE
                     view?.selectVmnSubmit?.isClickable = true
                 } else{
                     selectedNum = "No VMN available"
                 }
             }else {
+                shimmer_anim_vmn.visibility=View.VISIBLE
+                selectDomainLayout.visibility=View.GONE
                 view?.selectVmnSubmit?.isClickable = false
                 context?.let { it1 ->
                     Toasty.error(it1, "Error in Loading Available Numbers!!", Toast.LENGTH_LONG).show()
