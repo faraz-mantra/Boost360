@@ -74,7 +74,7 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
                     .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).submit().get()
                 runOnUi {
                     if(bitmap.width <= 400 || bitmap.height <= 400 ){
-                        Toasty.warning(this@UpdateCropImageActivity,"Max Cropping allowed 400px for width/height", Toasty.LENGTH_LONG).show()
+                        Toasty.error(this@UpdateCropImageActivity,"Max Cropping allowed 400px for width/height", Toasty.LENGTH_LONG).show()
                         this@UpdateCropImageActivity.finish()
                         return@runOnUi
                     }
