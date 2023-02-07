@@ -262,6 +262,9 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
           rateGooglePlayStore()
         }
       }
+      caution_notice -> {
+        baseActivity.startMobileSite(session, resources.getString(R.string.settings_caution_notice), ABOUT_BOOST_CAUTION_NOTICE)
+      }
       else -> showShortToast(getString(R.string.coming_soon))
     }
   }

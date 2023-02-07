@@ -195,6 +195,7 @@
   <string name="settings_tou_url">https://www.getboost360.com/tnc/</string>
   <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.biz2.nowfloats</string>
   <string name="settings_privacy_url">https://www.getboost360.com/privacy/</string>
+  <string name="settings_caution_notice">https://www.getboost360.com/caution-notice/</string>
   <string name="unable_to_open_facebook">Unable to open facebook</string>
   <string name="unable_to_open_twitter">Unable to open Twitter</string>
   <string name="super_admin">Super admin</string>
