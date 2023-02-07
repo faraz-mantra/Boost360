@@ -26,6 +26,7 @@
         android:background="@color/black_66"
         app:cropAspectRatioX="12"
         app:cropAspectRatioY="5"
+          app:cropShape="rectangle"
         app:cropFixAspectRatio="true" />
 
       <LinearLayout
