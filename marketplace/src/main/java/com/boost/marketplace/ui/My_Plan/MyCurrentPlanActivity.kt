@@ -499,7 +499,7 @@ class MyCurrentPlanActivity :
                 binding?.emptyFeatures?.visibility = View.VISIBLE
             }
 
-            if (totalPaidItemList != null && totalPaidItemList!!.size > 1) {
+            if (totalPaidItemList != null && totalPaidItemList!!.size > 0) {
                     updatePaidAddonsRecycler(totalPaidItemList!!)
             }
         })
@@ -529,7 +529,7 @@ class MyCurrentPlanActivity :
                     updateFreeAddonsRecycler(totalFreeItemList!!)
                 }
             }
-            if (totalFreeItemList != null && totalFreeItemList!!.size > 1) {
+            if (totalFreeItemList != null && totalFreeItemList!!.size > 0) {
                 updateFreeAddonsRecycler(totalFreeItemList!!)
             }
         })
