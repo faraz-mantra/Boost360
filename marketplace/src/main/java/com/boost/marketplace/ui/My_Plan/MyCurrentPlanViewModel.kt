@@ -126,7 +126,7 @@ class MyCurrentPlanViewModel() : BaseViewModel() {
                             )
                                     || it.contains("MEDIAMANAGEMENT") || it.contains("ANALYTICS") || it.contains(
                                 "RIASUPPORTTEAM"
-                            )
+                            ) || it.contains("LATESTUPDATES")
                         }
 
 //                        val list = ArrayList<String>()
