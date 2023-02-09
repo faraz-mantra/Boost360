@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.boost.dbcenterapi.data.api_model.GetAllWidgets.GetAllWidgets
 import com.boost.cart.utils.Constants.Companion.BASE_URL
+import com.framework.NetworkCertificate.NetworkCertificate
 import com.framework.analytics.SentryController
 import com.framework.rest.TokenAuthenticator
 import com.google.gson.Gson
@@ -48,6 +49,7 @@ object Utils {
       .connectTimeout(2, TimeUnit.MINUTES)
       .writeTimeout(2, TimeUnit.MINUTES)
     httpClient.authenticator(tokenAuthenticator)
+    httpClient.certificatePinner(NetworkCertificate.certificatePinner())
     return httpClient.build()
   }
 

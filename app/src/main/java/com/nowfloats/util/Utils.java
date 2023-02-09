@@ -20,6 +20,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.inputmethod.InputMethodManager;
 
+import com.framework.NetworkCertificate.NetworkCertificate;
 import com.framework.BaseApplication;
 import com.framework.pref.TokenResult;
 import com.framework.pref.TokenResultKt;
@@ -495,6 +496,7 @@ public class Utils {
 
           }
         }).addInterceptor(loggingInterceptor)
+            .certificatePinner(NetworkCertificate.INSTANCE.certificatePinner())
         .build();
     return client;
   }

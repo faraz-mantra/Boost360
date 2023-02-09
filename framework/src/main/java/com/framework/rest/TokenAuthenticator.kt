@@ -2,6 +2,7 @@ package com.framework.rest
 
 import android.util.Log
 import com.framework.BaseApplication
+import com.framework.NetworkCertificate.NetworkCertificate
 import com.framework.pref.*
 import com.framework.rest.tokenCreate.AccessTokenRequest
 import com.framework.rest.tokenCreate.RefreshTokenApi
@@ -50,6 +51,7 @@ class TokenAuthenticator(var isAuthRemove: Boolean) : Authenticator {
   private fun clientApi(): RefreshTokenApi {
     val okHttpClient = OkHttpClient().newBuilder().readTimeout(2, TimeUnit.MINUTES)
       .connectTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES)
+      .certificatePinner(NetworkCertificate.certificatePinner())
       .addInterceptor(HttpLoggingInterceptor().apply { HttpLoggingInterceptor.Level.BODY }).build()
     val retrofit = Retrofit.Builder().baseUrl(EndPoints.WITH_FLOAT_API_TWO).client(okHttpClient)
       .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create())).build()

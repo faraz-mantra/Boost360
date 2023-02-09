@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.boost.dbcenterapi.BuildConfig
+import com.framework.NetworkCertificate.NetworkCertificate
 import com.boost.dbcenterapi.R
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.data.api_model.GetAllWidgets.GetAllWidgets
@@ -53,6 +54,7 @@ object Utils {
       .writeTimeout(2, TimeUnit.MINUTES)
     httpClient.authenticator(tokenAuthenticator)
     httpClient.addInterceptor(getHttpLoggingInterceptor())
+    httpClient.certificatePinner(NetworkCertificate.certificatePinner())
     return httpClient.build()
   }
 
