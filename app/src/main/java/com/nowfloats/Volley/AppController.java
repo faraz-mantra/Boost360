@@ -196,7 +196,6 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
             e.printStackTrace();
         }
 
-
         //TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "open_sans_hebrew_bold.ttf");
     }
 
