@@ -1,7 +1,9 @@
 package com.appservice.ui.ecommerce
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.TextView
 import com.appservice.R
 import com.appservice.model.aptsetting.UserFpDetailsResponse
 import com.appservice.ui.aptsetting.widgets.BottomSheetCatalogDisplayName
@@ -16,6 +18,7 @@ import com.appservice.model.businessmodel.Update
 import com.appservice.ui.aptsetting.widgets.BottomSheetConfirmingChange
 import com.appservice.ui.aptsetting.widgets.BottomSheetGstSlab
 import com.appservice.ui.aptsetting.widgets.BottomSheetSuccessfullyUpdated
+import com.appservice.ui.ecommerce.bottomsheets.BottomSheetCategoryRename
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.capitalizeUtil
 import com.appservice.viewmodel.AppointmentSettingsViewModel
@@ -33,6 +36,7 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
   private var response: UserFpDetailsResponse? = null
   private var catalogSetup: CatalogSetup? = null
   private var gstSlab: Int = 0
+  var catalogueName:TextView? = null
 
   companion object {
     fun newInstance(): FragmentEcommerceCatalogSettings {
@@ -52,7 +56,8 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
     super.onCreateView()
     sessionLocal = UserSessionManager(requireActivity())
     WebEngageController.trackEvent(ECOMMERCE_CATLOG_SETUP_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    setOnClickListener(binding?.ctvChangeServices, binding?.ctvProductVerbUrl, binding?.edtTextSlab, binding?.btnSaveDetails)
+    catalogueName = view?.findViewById(R.id.catalouge_name_label)
+    setOnClickListener(binding?.ctvChangeServices, binding?.ctvProductVerbUrl, binding?.edtTextSlab, binding?.renameView, binding?.btnSaveDetails)
     val data = arguments?.getSerializable(IntentConstant.OBJECT_DATA.name) as? AppointmentStatusResponse.TilesModel
     catalogSetup = data?.tile as? CatalogSetup
     if (catalogSetup != null) setData(catalogSetup) else catalogApiGetGstData()
@@ -72,6 +77,19 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
     binding.bulkBookingSwitch.setOnToggledListener { _, isChecked ->
       sessionLocal.bulkBooking = isChecked
     }
+    binding.catalougeSwitch.setOnToggledListener { _, isChecked ->
+      sessionLocal.isCustomCta = isChecked
+      if (isChecked){
+        binding.catalougeRenameView.visibility = View.VISIBLE
+      }else{
+        binding.catalougeRenameView.visibility = View.GONE
+      }
+    }
+  }
+
+  override fun onResume() {
+    super.onResume()
+    Log.d("FragmentCatagogueEcom","HAHAHAHAHA")
   }
 
   private fun catalogApiGetGstData() {
@@ -100,6 +118,9 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
         sessionLocal.noServiceSlot = response!!.noServiceSlot
         sessionLocal.serviceTiming = response!!.sameServiceSlot
         sessionLocal.bulkBooking = response!!.isBulkBooking
+        sessionLocal.isCustomCta = response!!.isCustomCta
+        sessionLocal.customCta = response!!.customCta
+
         binding?.ctvProductVerb?.text = response?.productCategory(baseActivity)?.capitalizeUtil()
         binding?.ctvProductVerbUrl?.text = fromHtml(
           "<pre>URL: <span style=\"color: #4a4a4a;\"><u>${sessionLocal.getDomainName()}<b>/${
@@ -111,6 +132,17 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
           response?.productCategoryVerb
         )
         onCatalogSetupAddedOrUpdated(response?.productCategoryVerb.isNullOrEmpty().not())
+      }
+      if (sessionLocal.fP_AppExperienceCode!! == "SVC" || sessionLocal.fP_AppExperienceCode!! == "SAL" || sessionLocal.fP_AppExperienceCode!! == "CAF"){
+        binding.catalogueView.visibility = View.VISIBLE
+        binding.catalougeSwitch.isOn = sessionLocal.isCustomCta!!
+
+        if (sessionLocal.isCustomCta!!){
+          binding.catalougeRenameView.visibility = View.VISIBLE
+          binding.catalougeNameLabel.text = sessionLocal.customCta
+        } else {
+          binding.catalougeRenameView.visibility = View.GONE
+        }
       }
       if (sessionLocal.fP_AppExperienceCode!! == "SVC" || sessionLocal.fP_AppExperienceCode!! == "SAL" || sessionLocal.fP_AppExperienceCode!! == "SPA"){
         binding.bulkBookingView.visibility = View.VISIBLE
@@ -175,10 +207,11 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
             activity!!.onBackPressed()
           }
       }
-//      binding.renameView -> {
-//        val bottomSheetCategoryRename = BottomSheetCategoryRename()
-//        bottomSheetCategoryRename.show(parentFragmentManager, BottomSheetAddCartSlab::class.java.name)
-//      }
+      binding.renameView -> {
+        BottomSheetCategoryRename(null,this,2).apply {
+          show(this@FragmentEcommerceCatalogSettings.parentFragmentManager, BottomSheetCategoryRename::class.java.name)
+        }
+      }
     }
   }
 
