@@ -42,7 +42,7 @@ data class BusinessSetupHighData(
     )
     list.add(
       BusinessSetupHighData(
-        title1 = "Website readiness score: ",
+        title1 = "Website Readiness Score: ",
         score = score,
         type = ActiveViewType.IS_PROGRESS.name
       )

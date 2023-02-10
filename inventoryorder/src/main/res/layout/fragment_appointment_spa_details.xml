@@ -1,490 +1,489 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-  <data>
+    <data>
 
-  </data>
+    </data>
 
-  <LinearLayout
-    style="@style/match_match"
-    android:background="@color/grey_f9f9f9"
-    android:orientation="vertical">
+    <LinearLayout
+        style="@style/match_match"
+        android:background="@color/grey_f9f9f9"
+        android:orientation="vertical">
 
-    <ScrollView style="@style/match_wrap">
+        <ScrollView style="@style/match_wrap">
 
-      <LinearLayout
-        android:id="@+id/main_view"
-        style="@style/match_wrap"
-        android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="visible">
+            <LinearLayout
+                android:id="@+id/main_view"
+                style="@style/match_wrap"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-          style="@style/match_wrap"
-          android:background="@color/white"
-          android:padding="@dimen/size_10">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    style="@style/match_wrap"
+                    android:background="@color/white"
+                    android:padding="@dimen/size_10">
 
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_amount"
-            style="@style/HeaderTextStyle"
-            android:fontFamily="@font/semi_bold"
-            android:paddingStart="@dimen/size_4"
-            android:tag="com.userexperior.ueSecureView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="₹11,000 " />
-
-
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_from_booking"
-            style="@style/TextRegularStyle"
-            android:paddingStart="@dimen/size_4"
-            android:paddingEnd="@dimen/size_2"
-            android:text="@string/appointment_id"
-            android:textColor="@color/warm_grey"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_amount" />
-
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/ctv_appointment_id"
-
-            style="@style/TextRegularStyle"
-            android:layout_marginStart="@dimen/size_1"
-            android:layout_marginEnd="@dimen/size_2"
-            android:tag="com.userexperior.ueSecureView"
-            app:layout_constraintBottom_toBottomOf="@id/text_from_booking"
-            app:layout_constraintStart_toEndOf="@id/text_from_booking"
-            app:layout_constraintTop_toTopOf="@id/text_from_booking"
-            tools:text="#GK7C4FM" />
-
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_date_time"
-
-            style="@style/TextRegularStyle"
-            android:tag="com.userexperior.ueSecureView"
-            app:textType="CAPTION"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/text_booking_details"
-            app:layout_constraintTop_toBottomOf="@+id/text_booking_details"
-            tools:text="@string/tools_text_hint_date" />
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_amount"
+                        style="@style/HeaderTextStyle"
+                        android:fontFamily="@font/semi_bold"
+                        android:paddingStart="@dimen/size_4"
+                        android:tag="com.userexperior.ueSecureView"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="₹11,000 " />
 
 
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_booking_details"
-            style="@style/TextBoldStyle"
-            android:layout_marginTop="@dimen/size_10"
-            android:layout_marginEnd="8dp"
-            android:drawableStart="@drawable/ic_appointment_thumbs_up"
-            android:drawablePadding="@dimen/size_5"
-            android:text="@string/confirmed_on"
-            android:textAllCaps="false"
-            android:textSize="10sp"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_from_booking"
+                        style="@style/TextRegularStyle"
+                        android:paddingStart="@dimen/size_4"
+                        android:paddingEnd="@dimen/size_2"
+                        android:text="@string/appointment_id"
+                        android:textColor="@color/warm_grey"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_amount" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-          style="@style/match_wrap"
-          android:layout_marginTop="@dimen/size_8"
-          android:background="@color/white"
-          android:padding="@dimen/size_10">
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_appointment_id"
 
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_appointment_details_heading"
-            style="@style/TextSemiBoldStyle"
-            android:layout_marginStart="@dimen/size_4"
-            android:layout_marginTop="@dimen/size_5"
-            android:drawableStart="@drawable/ic_appointment_black"
-            android:drawablePadding="@dimen/size_12"
-            android:gravity="center_vertical"
-            android:text="@string/appointment_details"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                        style="@style/TextRegularStyle"
+                        android:layout_marginStart="@dimen/size_1"
+                        android:layout_marginEnd="@dimen/size_2"
+                        android:tag="com.userexperior.ueSecureView"
+                        app:layout_constraintBottom_toBottomOf="@id/text_from_booking"
+                        app:layout_constraintStart_toEndOf="@id/text_from_booking"
+                        app:layout_constraintTop_toTopOf="@id/text_from_booking"
+                        tools:text="#GK7C4FM" />
 
-          <com.framework.views.roundedimageview.RoundedImageView
-            android:id="@+id/image_service_provider"
-            android:layout_width="@dimen/size_60"
-            android:layout_height="@dimen/size_60"
-            android:layout_marginStart="@dimen/size_3"
-            android:layout_marginTop="@dimen/size_20"
-            android:scaleType="centerCrop"
-            app:layout_constraintStart_toStartOf="@id/text_appointment_details_heading"
-            app:layout_constraintTop_toBottomOf="@id/text_appointment_details_heading"
-            app:riv_border_color="@color/pinkish_grey"
-            app:riv_border_width="1.5dp"
-            app:riv_corner_radius="@dimen/size_3"
-            app:srcCompat="@drawable/placeholder_image_n" />
-
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_service_name"
-            style="@style/TextSemiBoldStyle"
-            android:layout_width="0dp"
-            android:layout_marginStart="@dimen/size_10"
-            android:tag="com.userexperior.ueSecureView"
-            app:layout_constraintEnd_toStartOf="@id/text_appointment_amount"
-            app:layout_constraintStart_toEndOf="@id/image_service_provider"
-            app:layout_constraintTop_toTopOf="@id/image_service_provider"
-            tools:text="@string/tools_text_simple_massage" />
-
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_appointment_amount"
-            style="@style/TextSemiBoldStyle"
-            android:layout_marginEnd="@dimen/size_5"
-            android:tag="com.userexperior.ueSecureView"
-            app:layout_constraintBottom_toBottomOf="@id/text_service_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/text_service_name"
-            tools:text="@string/tools_text_rs_20000" />
-
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_date"
-            style="@style/TextRegularStyle"
-            android:layout_marginStart="@dimen/size_10"
-            android:layout_marginTop="@dimen/size_2"
-            android:layout_marginEnd="@dimen/size_2"
-            android:tag="com.userexperior.ueSecureView"
-            android:textColor="@color/grey_text_color"
-            app:layout_constraintStart_toEndOf="@id/image_service_provider"
-            app:layout_constraintTop_toBottomOf="@id/text_service_name"
-            tools:text="@string/tools_text_11_00_am_on_mon_12_jan_2020" />
-
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_staff"
-            style="@style/TextRegularStyle"
-            android:layout_marginStart="@dimen/size_10"
-            android:layout_marginTop="@dimen/size_2"
-            android:layout_marginEnd="@dimen/size_2"
-            android:tag="com.userexperior.ueSecureView"
-            android:textColor="@color/grey_text_color"
-            app:layout_constraintStart_toEndOf="@id/image_service_provider"
-            app:layout_constraintTop_toBottomOf="@id/text_date"
-            tools:text="@string/tools_text_staff_sushil_singh" />
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_date_time"
+                        style="@style/TextRegularStyle"
+                        android:layout_marginEnd="8dp"
+                        android:tag="com.userexperior.ueSecureView"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_booking_details"
+                        app:textType="CAPTION"
+                        tools:text="@string/tools_text_hint_date" />
 
 
-          <LinearLayout
-            android:id="@+id/linear_layout_select_location"
-            style="@style/match_wrap"
-            android:layout_marginStart="@dimen/size_4"
-            android:layout_marginTop="@dimen/size_20"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_staff">
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_booking_details"
+                        style="@style/TextBoldStyle"
+                        android:layout_marginTop="@dimen/size_10"
+                        android:layout_marginEnd="8dp"
+                        android:drawableStart="@drawable/ic_appointment_thumbs_up"
+                        android:drawablePadding="@dimen/size_5"
+                        android:text="@string/confirmed_on"
+                        android:textAllCaps="false"
+                        android:textSize="10sp"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_service_location"
-              style="@style/TextNormalStyle"
-              android:layout_width="@dimen/size_0"
-              android:layout_marginTop="@dimen/size_4"
-              android:layout_weight=".7"
-              android:text="@string/service_location"
-              app:layout_constraintStart_toEndOf="@id/image_service_provider"
-              app:layout_constraintTop_toBottomOf="@id/text_date" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:background="@color/white"
+                    android:padding="@dimen/size_10">
 
-            <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_service_location_dropdown"
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_appointment_details_heading"
+                        style="@style/TextSemiBoldStyle"
+                        android:layout_marginStart="@dimen/size_4"
+                        android:layout_marginTop="@dimen/size_5"
+                        android:drawableStart="@drawable/ic_appointment_black"
+                        android:drawablePadding="@dimen/size_12"
+                        android:gravity="center_vertical"
+                        android:text="@string/appointment_details"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-              style="@style/TextBoldStyle"
-              android:layout_width="@dimen/size_0"
-              android:layout_marginTop="@dimen/size_4"
-              android:layout_weight="0.3"
-              android:tag="com.userexperior.ueSecureView"
-              android:textColor="@color/gray_828282"
-              app:layout_constraintStart_toEndOf="@id/image_service_provider"
-              app:layout_constraintTop_toBottomOf="@id/text_date"
-              tools:text="Business" />
-          </LinearLayout>
+                    <com.framework.views.roundedimageview.RoundedImageView
+                        android:id="@+id/image_service_provider"
+                        android:layout_width="@dimen/size_60"
+                        android:layout_height="@dimen/size_60"
+                        android:layout_marginStart="@dimen/size_3"
+                        android:layout_marginTop="@dimen/size_20"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintStart_toStartOf="@id/text_appointment_details_heading"
+                        app:layout_constraintTop_toBottomOf="@id/text_appointment_details_heading"
+                        app:riv_border_color="@color/pinkish_grey"
+                        app:riv_border_width="1.5dp"
+                        app:riv_corner_radius="@dimen/size_3"
+                        app:srcCompat="@drawable/placeholder_image_n" />
 
-          <LinearLayout
-            android:id="@+id/linear_layout_payment_type"
-            style="@style/match_wrap"
-            android:layout_marginStart="@dimen/size_4"
-            android:layout_marginTop="@dimen/size_12"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linear_layout_select_location">
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_service_name"
+                        style="@style/TextSemiBoldStyle"
+                        android:layout_width="0dp"
+                        android:layout_marginStart="@dimen/size_10"
+                        android:tag="com.userexperior.ueSecureView"
+                        app:layout_constraintEnd_toStartOf="@id/text_appointment_amount"
+                        app:layout_constraintStart_toEndOf="@id/image_service_provider"
+                        app:layout_constraintTop_toTopOf="@id/image_service_provider"
+                        tools:text="@string/tools_text_simple_massage" />
 
-            <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_payment_type"
-              style="@style/TextNormalStyle"
-              android:layout_width="@dimen/size_0"
-              android:layout_marginTop="@dimen/size_4"
-              android:layout_weight="0.7"
-              android:text="@string/payment_type"
-              app:layout_constraintStart_toEndOf="@id/image_service_provider"
-              app:layout_constraintTop_toBottomOf="@id/text_date" />
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_appointment_amount"
+                        style="@style/TextSemiBoldStyle"
+                        android:layout_marginEnd="@dimen/size_5"
+                        android:tag="com.userexperior.ueSecureView"
+                        app:layout_constraintBottom_toBottomOf="@id/text_service_name"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/text_service_name"
+                        tools:text="@string/tools_text_rs_20000" />
 
-            <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_payment_type_dropdown"
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_date"
+                        style="@style/TextRegularStyle"
+                        android:layout_marginStart="@dimen/size_10"
+                        android:layout_marginTop="@dimen/size_2"
+                        android:layout_marginEnd="@dimen/size_2"
+                        android:tag="com.userexperior.ueSecureView"
+                        android:textColor="@color/grey_text_color"
+                        app:layout_constraintStart_toEndOf="@id/image_service_provider"
+                        app:layout_constraintTop_toBottomOf="@id/text_service_name"
+                        tools:text="@string/tools_text_11_00_am_on_mon_12_jan_2020" />
 
-              style="@style/TextBoldStyle"
-              android:layout_width="0dp"
-              android:layout_marginTop="@dimen/size_4"
-              android:layout_weight="0.3"
-              android:maxLines="1"
-              android:tag="com.userexperior.ueSecureView"
-              android:textColor="@color/gray_828282"
-              app:layout_constraintStart_toEndOf="@id/image_service_provider"
-              app:layout_constraintTop_toBottomOf="@id/text_date"
-              tools:text="@string/tools_text_cash_on_delivery" />
-          </LinearLayout>
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_staff"
+                        style="@style/TextRegularStyle"
+                        android:layout_marginStart="@dimen/size_10"
+                        android:layout_marginTop="@dimen/size_2"
+                        android:layout_marginEnd="@dimen/size_2"
+                        android:tag="com.userexperior.ueSecureView"
+                        android:textColor="@color/grey_text_color"
+                        app:layout_constraintStart_toEndOf="@id/image_service_provider"
+                        app:layout_constraintTop_toBottomOf="@id/text_date"
+                        tools:text="@string/tools_text_staff_sushil_singh" />
 
-          <LinearLayout
-            android:id="@+id/linear_layout_payment_status"
-            style="@style/match_wrap"
-            android:layout_marginStart="@dimen/size_4"
-            android:layout_marginTop="@dimen/size_12"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linear_layout_payment_type">
 
-            <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_payment_status"
-              style="@style/TextNormalStyle"
-              android:layout_width="@dimen/size_0"
-              android:layout_marginTop="@dimen/size_4"
-              android:layout_weight="0.7"
-              android:text="@string/payment_status"
-              app:layout_constraintStart_toEndOf="@id/image_service_provider"
-              app:layout_constraintTop_toBottomOf="@id/text_date" />
+                    <LinearLayout
+                        android:id="@+id/linear_layout_select_location"
+                        style="@style/match_wrap"
+                        android:layout_marginStart="@dimen/size_4"
+                        android:layout_marginTop="@dimen/size_20"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/text_staff">
 
-            <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_payment_status_dropdown"
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/text_service_location"
+                            style="@style/TextNormalStyle"
+                            android:layout_width="@dimen/size_0"
+                            android:layout_marginTop="@dimen/size_4"
+                            android:layout_weight=".7"
+                            android:text="@string/service_location"
+                            app:layout_constraintStart_toEndOf="@id/image_service_provider"
+                            app:layout_constraintTop_toBottomOf="@id/text_date" />
 
-              style="@style/TextBoldStyle"
-              android:layout_width="@dimen/size_0"
-              android:layout_marginTop="@dimen/size_4"
-              android:layout_weight="0.3"
-              android:tag="com.userexperior.ueSecureView"
-              android:textColor="@color/gray_828282"
-              app:layout_constraintStart_toEndOf="@id/image_service_provider"
-              app:layout_constraintTop_toBottomOf="@id/text_date"
-              tools:text="Pending" />
-          </LinearLayout>
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/text_service_location_dropdown"
 
-          <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/lyt_statusBtn"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_44"
-            android:layout_marginStart="@dimen/size_4"
-            android:layout_marginTop="@dimen/size_30"
-            android:layout_marginEnd="@dimen/size_5"
-            android:layout_marginBottom="@dimen/size_20"
-            android:background="@drawable/ic_initiated_order_btn_bkg"
-            android:clickable="true"
-            android:focusable="true"
+                            style="@style/TextBoldStyle"
+                            android:layout_width="@dimen/size_0"
+                            android:layout_marginTop="@dimen/size_4"
+                            android:layout_weight="0.3"
+                            android:tag="com.userexperior.ueSecureView"
+                            android:textColor="@color/gray_828282"
+                            app:layout_constraintStart_toEndOf="@id/image_service_provider"
+                            app:layout_constraintTop_toBottomOf="@id/text_date"
+                            tools:text="Business" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear_layout_payment_type"
+                        style="@style/match_wrap"
+                        android:layout_marginStart="@dimen/size_4"
+                        android:layout_marginTop="@dimen/size_12"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/linear_layout_select_location">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/text_payment_type"
+                            style="@style/TextNormalStyle"
+                            android:layout_width="@dimen/size_0"
+                            android:layout_marginTop="@dimen/size_4"
+                            android:layout_weight="0.7"
+                            android:text="@string/payment_type"
+                            app:layout_constraintStart_toEndOf="@id/image_service_provider"
+                            app:layout_constraintTop_toBottomOf="@id/text_date" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/text_payment_type_dropdown"
+
+                            style="@style/TextBoldStyle"
+                            android:layout_width="0dp"
+                            android:layout_marginTop="@dimen/size_4"
+                            android:layout_weight="0.3"
+                            android:maxLines="1"
+                            android:tag="com.userexperior.ueSecureView"
+                            android:textColor="@color/gray_828282"
+                            app:layout_constraintStart_toEndOf="@id/image_service_provider"
+                            app:layout_constraintTop_toBottomOf="@id/text_date"
+                            tools:text="@string/tools_text_cash_on_delivery" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear_layout_payment_status"
+                        style="@style/match_wrap"
+                        android:layout_marginStart="@dimen/size_4"
+                        android:layout_marginTop="@dimen/size_12"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/linear_layout_payment_type">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/text_payment_status"
+                            style="@style/TextNormalStyle"
+                            android:layout_width="@dimen/size_0"
+                            android:layout_marginTop="@dimen/size_4"
+                            android:layout_weight="0.7"
+                            android:text="@string/payment_status"
+                            app:layout_constraintStart_toEndOf="@id/image_service_provider"
+                            app:layout_constraintTop_toBottomOf="@id/text_date" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/text_payment_status_dropdown"
+
+                            style="@style/TextBoldStyle"
+                            android:layout_width="@dimen/size_0"
+                            android:layout_marginTop="@dimen/size_4"
+                            android:layout_weight="0.3"
+                            android:tag="com.userexperior.ueSecureView"
+                            android:textColor="@color/gray_828282"
+                            app:layout_constraintStart_toEndOf="@id/image_service_provider"
+                            app:layout_constraintTop_toBottomOf="@id/text_date"
+                            tools:text="Pending" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/lyt_statusBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_44"
+                        android:layout_marginStart="@dimen/size_4"
+                        android:layout_marginTop="@dimen/size_30"
+                        android:layout_marginEnd="@dimen/size_5"
+                        android:layout_marginBottom="@dimen/size_20"
+                        android:background="@drawable/ic_initiated_order_btn_bkg"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/linear_layout_payment_status">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/tv_dropdown_order_status"
+                            style="@style/match_match"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/semi_bold"
+                            android:gravity="center"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            app:textType="HEADING_6"
+                            tools:text="Confirm appointment" />
+
+                        <View
+                            android:id="@+id/divider"
+                            android:layout_width="@dimen/size_1"
+                            android:layout_height="match_parent"
+                            android:background="@color/white" />
+
+                        <com.framework.views.customViews.CustomImageView
+                            android:id="@+id/iv_dropdown"
+                            style="@style/wrap_match"
+                            android:paddingStart="@dimen/size_14"
+                            android:paddingEnd="@dimen/size_14"
+                            app:srcCompat="@drawable/ic_arrow_down_white" />
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    style="@style/match_wrap"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:background="@color/white"
+                    android:padding="@dimen/size_15">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:id="@+id/image_person"
+                        android:layout_width="@dimen/size_18"
+                        android:layout_height="@dimen/size_18"
+                        android:layout_marginTop="@dimen/size_4"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_customer" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_customer_details"
+                        style="@style/TextBoldStyle"
+                        android:paddingStart="@dimen/size_10"
+                        android:text="@string/customer_info"
+                        app:layout_constraintStart_toEndOf="@id/image_person"
+                        app:layout_constraintTop_toTopOf="@id/image_person" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_customer_name"
+
+                        style="@style/TextBoldStyle"
+                        android:layout_marginStart="@dimen/size_28"
+                        android:layout_marginTop="@dimen/size_16"
+                        android:tag="com.userexperior.ueSecureView"
+                        app:layout_constraintStart_toStartOf="@id/image_person"
+                        app:layout_constraintTop_toBottomOf="@id/image_person"
+                        tools:text="Mr, Sanghmitra Sharma" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_customer_phone"
+
+                        style="@style/TextRegularStyle"
+                        android:layout_marginTop="@dimen/size_5"
+                        android:tag="com.userexperior.ueSecureView"
+                        android:textColor="@color/grey_dark_2"
+                        app:layout_constraintStart_toStartOf="@id/text_customer_name"
+                        app:layout_constraintTop_toBottomOf="@id/text_customer_name"
+                        tools:text="@string/tools_text_phone_hint" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_customer_email"
+
+                        style="@style/TextRegularStyle"
+                        android:layout_marginTop="@dimen/size_5"
+                        android:tag="com.userexperior.ueSecureView"
+                        android:textColor="@color/grey_dark_2"
+                        app:layout_constraintStart_toStartOf="@id/text_customer_phone"
+                        app:layout_constraintTop_toBottomOf="@id/text_customer_phone"
+                        tools:text="@string/tools_text_email" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/ctv_gstin"
+
+                        style="@style/TextRegularStyle"
+                        android:layout_marginTop="@dimen/size_5"
+                        android:tag="com.userexperior.ueSecureView"
+                        android:textColor="@color/grey_dark_2"
+                        app:layout_constraintStart_toStartOf="@id/text_customer_email"
+                        app:layout_constraintTop_toBottomOf="@id/text_customer_email"
+                        tools:text="GSTIN: fsfassa" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_email"
+                        style="@style/TextBoldStyle"
+                        android:layout_marginTop="@dimen/size_20"
+                        android:drawableStart="@drawable/ic_email"
+                        android:drawablePadding="@dimen/size_6"
+                        android:drawableTint="@color/colorAccentLight"
+                        android:paddingEnd="@dimen/size_20"
+                        android:text="@string/appointment_send_email"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorAccentLight"
+                        app:layout_constraintStart_toStartOf="@id/ctv_gstin"
+                        app:layout_constraintTop_toBottomOf="@id/ctv_gstin"
+                        app:tint="@color/colorAccentLight" />
+
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_phone"
+                        style="@style/TextBoldStyle"
+                        android:layout_marginTop="@dimen/size_20"
+                        android:layout_marginEnd="@dimen/size_2"
+                        android:drawableStart="@drawable/ic_phone"
+                        android:drawablePadding="@dimen/size_6"
+                        android:drawableTint="@color/colorAccentLight"
+                        android:text="@string/call_n"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorAccentLight"
+                        app:layout_constraintStart_toEndOf="@id/text_email"
+                        app:layout_constraintTop_toBottomOf="@id/ctv_gstin"
+                        app:tint="@color/colorAccentLight"
+                        tools:ignore="RtlSymmetry" />
+
+                    <androidx.constraintlayout.widget.Group
+                        android:id="@+id/group_customer_address"
+                        style="@style/wrap_wrap"
+                        app:constraint_referenced_ids="divider2, image_location_pointer, linear_layout_address" />
+
+                    <View
+                        android:id="@+id/divider2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="@dimen/size_22"
+                        android:background="@color/grey_dark_2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/text_phone" />
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:id="@+id/image_location_pointer"
+                        android:layout_width="@dimen/size_20"
+                        android:layout_height="@dimen/size_20"
+                        android:layout_marginTop="@dimen/size_22"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/divider2"
+                        app:srcCompat="@drawable/ic_location"
+                        app:tint="@color/black" />
+
+                    <LinearLayout
+                        android:id="@+id/linear_layout_address"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_20"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="@id/divider2"
+                        app:layout_constraintStart_toEndOf="@id/image_location_pointer"
+                        app:layout_constraintTop_toBottomOf="@id/divider2">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/text_addr"
+                            style="@style/TextBoldStyle"
+                            android:layout_marginStart="@dimen/size_1"
+                            android:layout_marginEnd="@dimen/size_2"
+                            android:paddingStart="@dimen/size_10"
+                            android:text="@string/customer_address" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/text_addr_value"
+                            style="@style/TextRegularStyle"
+                            android:layout_marginStart="@dimen/size_1"
+                            android:layout_marginTop="@dimen/size_6"
+                            android:layout_marginEnd="@dimen/size_5"
+                            android:ellipsize="none"
+                            android:paddingStart="@dimen/size_10"
+                            android:singleLine="false"
+                            android:tag="com.userexperior.ueSecureView"
+                            android:textColor="@color/grey_dark_2"
+                            tools:text="24/10 City Center, B-Zone, Kolkata, \nWest Bengal - 100023" />
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/error"
+            style="@style/match_match"
             android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linear_layout_payment_status">
-
-            <com.framework.views.customViews.CustomTextView
-              android:id="@+id/tv_dropdown_order_status"
-              style="@style/match_match"
-              android:layout_gravity="center"
-              android:layout_weight="1"
-              android:fontFamily="@font/semi_bold"
-              android:gravity="center"
-              android:textAllCaps="false"
-              android:textColor="@color/white"
-              app:textType="HEADING_6"
-              tools:text="Confirm appointment" />
-
-            <View
-              android:id="@+id/divider"
-              android:layout_width="@dimen/size_1"
-              android:layout_height="match_parent"
-              android:background="@color/white" />
-
-            <com.framework.views.customViews.CustomImageView
-              android:id="@+id/iv_dropdown"
-              style="@style/wrap_match"
-              android:paddingStart="@dimen/size_14"
-              android:paddingEnd="@dimen/size_14"
-              app:srcCompat="@drawable/ic_arrow_down_white" />
-
-
-          </androidx.appcompat.widget.LinearLayoutCompat>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-          style="@style/match_wrap"
-          android:layout_marginTop="@dimen/size_10"
-          android:background="@color/white"
-          android:padding="@dimen/size_15">
-
-          <com.framework.views.customViews.CustomImageView
-            android:id="@+id/image_person"
-            android:layout_width="@dimen/size_18"
-            android:layout_height="@dimen/size_18"
-            android:layout_marginTop="@dimen/size_4"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_customer" />
-
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_customer_details"
-            style="@style/TextBoldStyle"
-            android:paddingStart="@dimen/size_10"
-            android:text="@string/customer_info"
-            app:layout_constraintStart_toEndOf="@id/image_person"
-            app:layout_constraintTop_toTopOf="@id/image_person" />
-
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_customer_name"
-
-            style="@style/TextBoldStyle"
-            android:layout_marginStart="@dimen/size_28"
-            android:layout_marginTop="@dimen/size_16"
-            android:tag="com.userexperior.ueSecureView"
-            app:layout_constraintStart_toStartOf="@id/image_person"
-            app:layout_constraintTop_toBottomOf="@id/image_person"
-            tools:text="Mr, Sanghmitra Sharma" />
-
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_customer_phone"
-
-            style="@style/TextRegularStyle"
-            android:layout_marginTop="@dimen/size_5"
-            android:tag="com.userexperior.ueSecureView"
-            android:textColor="@color/grey_dark_2"
-            app:layout_constraintStart_toStartOf="@id/text_customer_name"
-            app:layout_constraintTop_toBottomOf="@id/text_customer_name"
-            tools:text="@string/tools_text_phone_hint" />
-
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_customer_email"
-
-            style="@style/TextRegularStyle"
-            android:layout_marginTop="@dimen/size_5"
-            android:tag="com.userexperior.ueSecureView"
-            android:textColor="@color/grey_dark_2"
-            app:layout_constraintStart_toStartOf="@id/text_customer_phone"
-            app:layout_constraintTop_toBottomOf="@id/text_customer_phone"
-            tools:text="@string/tools_text_email" />
-
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/ctv_gstin"
-
-            style="@style/TextRegularStyle"
-            android:layout_marginTop="@dimen/size_5"
-            android:tag="com.userexperior.ueSecureView"
-            android:textColor="@color/grey_dark_2"
-            app:layout_constraintStart_toStartOf="@id/text_customer_email"
-            app:layout_constraintTop_toBottomOf="@id/text_customer_email"
-            tools:text="GSTIN: fsfassa" />
-
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_email"
-            style="@style/TextBoldStyle"
-            android:layout_marginTop="@dimen/size_20"
-            android:drawableStart="@drawable/ic_email"
-            android:drawablePadding="@dimen/size_6"
-            android:paddingEnd="@dimen/size_20"
-            android:drawableTint="@color/colorAccentLight"
-            android:text="@string/appointment_send_email"
-            android:textAllCaps="false"
-            android:textColor="@color/colorAccentLight"
-            app:layout_constraintStart_toStartOf="@id/ctv_gstin"
-            app:layout_constraintTop_toBottomOf="@id/ctv_gstin"
-            app:tint="@color/colorAccentLight" />
-
-
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/text_phone"
-            style="@style/TextBoldStyle"
-            android:layout_marginTop="@dimen/size_20"
-            android:layout_marginEnd="@dimen/size_2"
-            android:drawableStart="@drawable/ic_phone"
-            android:drawablePadding="@dimen/size_6"
-            android:text="@string/call_n"
-            android:textAllCaps="false"
-            android:drawableTint="@color/colorAccentLight"
-            android:textColor="@color/colorAccentLight"
-            app:layout_constraintStart_toEndOf="@id/text_email"
-            app:layout_constraintTop_toBottomOf="@id/ctv_gstin"
-            app:tint="@color/colorAccentLight"
-            tools:ignore="RtlSymmetry" />
-
-          <androidx.constraintlayout.widget.Group
-            android:id="@+id/group_customer_address"
-            style="@style/wrap_wrap"
-            app:constraint_referenced_ids="divider2, image_location_pointer, linear_layout_address" />
-
-          <View
-            android:id="@+id/divider2"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="@dimen/size_22"
-            android:background="@color/grey_dark_2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_phone" />
-
-          <com.framework.views.customViews.CustomImageView
-            android:id="@+id/image_location_pointer"
-            android:layout_width="@dimen/size_20"
-            android:layout_height="@dimen/size_20"
-            android:layout_marginTop="@dimen/size_22"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider2"
-            app:srcCompat="@drawable/ic_location"
-            app:tint="@color/black" />
-
-          <LinearLayout
-            android:id="@+id/linear_layout_address"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_20"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="@id/divider2"
-            app:layout_constraintStart_toEndOf="@id/image_location_pointer"
-            app:layout_constraintTop_toBottomOf="@id/divider2">
-
-            <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_addr"
-              style="@style/TextBoldStyle"
-              android:layout_marginStart="@dimen/size_1"
-              android:layout_marginEnd="@dimen/size_2"
-              android:paddingStart="@dimen/size_10"
-              android:text="@string/customer_address" />
-
-            <com.framework.views.customViews.CustomTextView
-              android:id="@+id/text_addr_value"
-              style="@style/TextRegularStyle"
-              android:layout_marginStart="@dimen/size_1"
-              android:layout_marginTop="@dimen/size_6"
-              android:layout_marginEnd="@dimen/size_5"
-              android:ellipsize="none"
-              android:paddingStart="@dimen/size_10"
-              android:singleLine="false"
-              android:tag="com.userexperior.ueSecureView"
-              android:textColor="@color/grey_dark_2"
-              tools:text="24/10 City Center, B-Zone, Kolkata, \nWest Bengal - 100023" />
-          </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-      </LinearLayout>
-    </ScrollView>
-
-    <com.framework.views.customViews.CustomTextView
-      android:id="@+id/error"
-      style="@style/match_match"
-      android:gravity="center"
-      android:textColor="@color/scarlet_40"
-      android:visibility="visible"
-      app:fontFamily="@font/bold"
-      app:textType="BODY_1"
-      tools:text="Error"
-      tools:visibility="gone" />
-  </LinearLayout>
+            android:textColor="@color/scarlet_40"
+            android:visibility="visible"
+            app:fontFamily="@font/bold"
+            app:textType="BODY_1"
+            tools:text="Error"
+            tools:visibility="gone" />
+    </LinearLayout>
 </layout>

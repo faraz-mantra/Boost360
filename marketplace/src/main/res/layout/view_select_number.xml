@@ -1,19 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/selectWebsiteLayout"
+    android:background="#f0f0f0"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/shimmer_anim_vmn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="visible"
+        android:background="@drawable/curve_top_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_view_domainv3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <include layout="@layout/data_place_domain" />
+
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/selectDomainLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:layout_marginTop="16dp"
     android:background="@drawable/curve_top_white"
     android:paddingStart="@dimen/dimen_24dp"
     android:paddingTop="16dp"
     android:paddingEnd="@dimen/dimen_24dp"
     android:paddingBottom="@dimen/dimen_24dp"
     android:visibility="gone"
-    app:layout_constraintTop_toBottomOf="@id/topImageView">
+    tools:visibility="visible"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent">
 
     <TextView
         android:id="@+id/tv_title_selectDomain"
@@ -32,15 +85,16 @@
 
     <TextView
         android:id="@+id/tv_subtitle_select_domain"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/regular"
+        android:gravity="center"
         android:lineHeight="22dp"
         android:lineSpacingExtra="6dp"
-        android:text="Track &amp; manage customer calls (leads) using VMN call recordings."
+        android:text="Track &amp; manage customer calls (leads)\n using VMN call recordings."
         android:textColor="#333333"
         android:textFontWeight="400"
         android:textSize="12sp"
@@ -60,19 +114,28 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 android:src="@drawable/browser_background" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/main1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
+
                 <TextView
                     android:id="@+id/tv_call_expert_select_domain"
                     android:layout_width="match_parent"
-                    android:layout_height="68dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="100dp"
                     android:background="@drawable/green_border_view"
                     android:fontFamily="@font/bold"
@@ -82,76 +145,118 @@
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_30sdp"
                     android:paddingBottom="@dimen/_10sdp"
-                    android:textColor="#4A4A4A"
+                    android:textColor="#7ED321"
+                    tools:text="+91 8012-345-673"
                     android:textFontWeight="700"
-                    android:textSize="@dimen/txt_14sp"
+                    android:textSize="30sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_explore_text_select_domain"
+                    android:id="@+id/tv_vmn_selected_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="68dp"
+                    android:layout_marginTop="100dp"
+                    android:background="@drawable/round_corner_grey"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:lineHeight="21.79dp"
+                    android:paddingStart="@dimen/_30sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_30sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:textColor="#4A4A4A"
+                    tools:text="+91 8012-345-673"
+                    android:textFontWeight="700"
+                    android:visibility="gone"
+                    android:textSize="30sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/tv_explore_text_select_vmn_cs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="17dp"
-                    android:layout_marginEnd="24dp"
-                    android:fontFamily="@font/regular"
-                    android:lineHeight="22dp"
-                    android:lineSpacingExtra="6dp"
-                    android:text="Explore from more numbers"
-                    android:textColor="@color/colorAccent1"
-                    android:textFontWeight="400"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_call_expert_select_domain" />
+                    app:layout_constraintTop_toBottomOf="@id/main1">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:src="@drawable/yellow_down_arrow"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_explore_text_select_domain"
-                    app:layout_constraintStart_toEndOf="@id/tv_explore_text_select_domain"
-                    app:layout_constraintTop_toTopOf="@id/tv_explore_text_select_domain" />
+                    <TextView
+                        android:id="@+id/tv_explore_text_select_vmn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:fontFamily="@font/regular"
+                        android:lineHeight="18dp"
+                        android:lineSpacingExtra="6dp"
+                        android:text="Find another number"
+                        android:textColor="@color/colorAccent1"
+                        android:textFontWeight="400"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/yellow_down_arrow"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_explore_text_select_vmn" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
                 <TextView
-                    android:id="@+id/selectDomainSubmit"
+                    android:id="@+id/selectVmnSubmit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/pad_20dp"
-                    android:layout_marginBottom="@dimen/pad_20dp"
                     android:background="@drawable/cta_button_click_effect"
                     android:fontFamily="@font/semi_bold"
+                    android:lineHeight="24dp"
                     android:gravity="center"
+                    android:textSize="@dimen/txt_16sp"
                     android:paddingStart="@dimen/_30sdp"
-                    android:paddingTop="10dp"
+                    android:paddingTop="12dp"
                     android:paddingEnd="@dimen/_30sdp"
-                    android:paddingBottom="10dp"
+                    android:paddingBottom="12dp"
                     android:text="Select above number"
                     android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_explore_text_select_domain" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_explore_text_select_vmn_cs" />
 
                 <TextView
-                    android:id="@+id/selectDomainIwillDoItLater"
+                    android:id="@+id/selectVmnIwillDoItLater"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
                     android:layout_weight="0.5"
+                    android:layout_marginHorizontal="@dimen/pad_20dp"
                     android:background="@drawable/cta_button_hollow"
                     android:fontFamily="@font/regular"
+                    android:layout_marginTop="17dp"
                     android:gravity="center"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
+                    android:paddingStart="@dimen/_30sdp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="@dimen/_30sdp"
+                    android:paddingBottom="12dp"
                     android:text="I’ll do it later"
                     android:textColor="@color/colorAccent1"
                     android:textFontWeight="700"
                     android:textSize="@dimen/txt_16sp"
-                    app:layout_constraintTop_toBottomOf="@id/selectDomainSubmit" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/selectVmnSubmit" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

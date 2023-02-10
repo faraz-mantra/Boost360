@@ -8,6 +8,7 @@ import com.boost.dbcenterapi.data.api_model.Edgecase.EdgeCases
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
 import com.boost.dbcenterapi.data.api_model.GetFeatureDetails.FeatureDetailsV2Item
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrderV2.GetPurchaseOrderResponseV2
+import com.boost.dbcenterapi.data.api_model.SubscriptionPackType
 import com.boost.dbcenterapi.data.api_model.blockingAPI.BlockApi
 import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
 import com.boost.dbcenterapi.data.api_model.cart.RecommendedAddonsRequest
@@ -18,6 +19,7 @@ import com.boost.dbcenterapi.data.api_model.couponSystem.redeem.RedeemCouponResp
 import com.boost.dbcenterapi.data.api_model.getCouponResponse.GetCouponResponse
 import com.boost.dbcenterapi.data.api_model.mycurrentPlanV3.MyPlanV3
 import com.boost.dbcenterapi.data.api_model.videos.GetVideos
+import com.boost.dbcenterapi.data.api_model.vmn.PurchasedVmnResponse
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import io.reactivex.Observable
 import retrofit2.http.*
@@ -84,12 +86,14 @@ interface NewApiInterface {
 
     //Blocking API
     @Headers("Content-Type: application/json")
-    @GET("https://api2.withfloats.com/discover/v1/floatingPoint/VerifyDomainOrVMNRegisted")
+    @GET("https://api2.withfloats.com/discover/v2/floatingPoint/VerifyDomainOrVMNRegisted")
     fun getItemAvailability(
          @Header("Authorization") auth: String,
          @Query("fpId") floatingPointId: String,
          @Query("clientId") clientId: String,
-         @Query("blockedItem") blockedItem :String
+         @Query("blockedItem") blockedItem :String,
+         @Query("OrderID") OrderID :String,
+         @Query("blockedItemType") blockedItemType :Int,
     ):Observable<BlockApi>
 
     //Edgecases
@@ -109,6 +113,14 @@ interface NewApiInterface {
         @Query("clientId") clientId: String
     ): Observable<PurchasedDomainResponse>
 
+    @Headers("Content-Type: application/json")
+    @GET("https://api2.withfloats.com/discover/v1/floatingPoint/vmn-details/{fpTag}")
+    fun getAlreadyPurchasedVmn(
+        @Header("Authorization") auth: String,
+        @Path("fpTag") fpTag: String,
+        @Query("clientId") clientId: String
+    ): Observable<PurchasedVmnResponse>
+
     //MyCurrentPlan  Marketplace V3
     @Headers("Content-Type: application/json")
     @GET("https://api2.withfloats.com/discover/v1/GetFeatureDetails")
@@ -117,8 +129,42 @@ interface NewApiInterface {
         @Query("clientId") clientId: String
     ): Observable<MyPlanV3>
 
+    //post purchase domain booking without blocking
     @Headers("Content-Type: application/json")
     @PUT("https://plugin.withfloats.com/DomainService/v2/domainWithWebsite/create")
     fun buyDomainBooking(@Header("Authorization") auth: String, @Body domainBookingRequest: DomainBookingRequest): Observable<String>
+
+    //pre purchase domain booking.
+    @Headers("Content-Type: application/json")
+    @GET("https://api2.withfloats.com/discover/v1/floatingPoint/AssignDomainBlocked")
+    fun buyDomainBooking1(
+        @Header("Authorization") auth: String,
+        @Query("blockedItem") blockedItem: String,
+        @Query("blockedItemType") blockedItemType: Int,
+        @Query("clientId") clientId: String,
+        @Query("domainType") domainType: String,
+        @Query("fpId") fpId: String,
+        @Query("fptag") fptag: String,
+        @Query("orderId") orderId: String,
+        @Query("validityInYears") validityInYears: String,
+    ): Observable<String>
+
+// post purchase vmn booking.
+    @Headers("Content-Type: application/json")
+    @GET("https://api2.withfloats.com/Support/v1/calls/AssignCallTrackerInPostPurchase")
+    fun bookVMN(
+        @Header("Authorization") auth: String,
+        @Query("clientId") clientId: String,
+        @Query("fpId") fpId: String,
+        @Query("vmnumber") vmnumber: String
+    ): Observable<Long>
+
+
+    @Headers("Content-Type:application/json")
+    @GET("https://jiw-wf-featureprocessor-api-as-prod.azurewebsites.net/SubscriptionCategory/v1/get-subscription-type-start-end-Date")
+    fun subscriptionType(
+        @Header("Authorization") auth: String,
+        @Query("fpId") fpId: String,
+    ):Observable<SubscriptionPackType>
 
 }

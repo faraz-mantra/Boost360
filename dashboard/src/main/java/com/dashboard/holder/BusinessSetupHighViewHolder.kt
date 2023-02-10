@@ -22,7 +22,7 @@ class BusinessSetupHighViewHolder(binding: ItemBusinessSetupHighBinding) : AppBa
       BusinessSetupHighData.ActiveViewType.IS_BUSINESS_UPDATE.name -> {
         binding.viewReadinessScore.gone()
         binding.viewBusinessCount.visible()
-        binding.txtTitle1.text = data.title1
+        binding.txtTitle1.text = data.title1?:""
         binding.viewVisitor.setData(listener, position, data.siteVisitor)
         binding.viewBooking.setData(listener, position, data.booking)
         binding.viewEnquiry.setData(listener, position, data.enquiry)
@@ -30,9 +30,9 @@ class BusinessSetupHighViewHolder(binding: ItemBusinessSetupHighBinding) : AppBa
       BusinessSetupHighData.ActiveViewType.IS_PROGRESS.name -> {
           binding.viewReadinessScore.visible()
           binding.viewBusinessCount.gone()
-          binding.txtTitle3.text = data.title1
-          binding.txtPercentage.text = "${data.score}%"
-          binding.tvImproveScore.apply { if (data.score == 100) gone() else visible() }
+          binding.txtTitle3.text = data.title1?:""
+          binding.txtPercentage.text = "${data.score?:0}%"
+          binding.tvImproveScore.apply { if (data.score?:0 == 100) gone() else visible() }
           val isHigh = (data.score ?: 0 >= 85)
 //        binding.txtPercentage.setTextColor(ContextCompat.getColor(activity!!, if (isHigh) R.color.light_green_3 else R.color.accent_dark))
 //        binding.progressBar.progressDrawable = ContextCompat.getDrawable(activity!!, if (isHigh) R.drawable.ic_progress_bar_high_grey else R.drawable.progress_bar_horizontal)

@@ -5,7 +5,7 @@ data class Widget(
   val ConsumptionConstraint: ConsumptionConstraint,
   val DependentWidget: String?,
   val Desc: String?,
-  val Discount: Int,
+  val Discount: Double,
   val Expiry: Expiry,
   val Images: List<String>,
   val IsCancellable: Boolean,

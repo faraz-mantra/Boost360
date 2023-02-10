@@ -108,7 +108,7 @@
           android:layout_marginTop="@dimen/size_16"
           android:layout_marginEnd="@dimen/size_20"
           android:drawablePadding="@dimen/size_10"
-          android:text="@string/contact_number" />
+          android:text="@string/contact_number_aestrick" />
 
         <com.framework.views.customViews.PrefixEditText
           android:id="@+id/pet_contact_no"

@@ -392,5 +392,8 @@
     <color name="colorAccent1Negative">@color/colorPrimaryDark1</color>
     <color name="color_1919">#191919</color>
     <color name="green_accent">#F2FBE9</color>
+    <color name="red_light_1">#EC008C</color>
+    <color name="grey_light_1_d">#e6e6e6</color>
+    <color name="colorAccent_jio">@color/colorAccent</color>
 
 </resources>

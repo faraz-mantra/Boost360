@@ -2,14 +2,18 @@ package com.boost.cart.adapter
 
 import android.app.Activity
 import android.content.Context
+import android.text.Spannable
 import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.text.style.StrikethroughSpan
+import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.R
@@ -49,6 +53,7 @@ class CartPackageAdaptor(
   private var upgradeList = ArrayList<FeaturesModel>()
   var minMonth = 1
   var selectedDomainName = ""
+  var selectedVMN = ""
 
 
   init {
@@ -83,13 +88,13 @@ class CartPackageAdaptor(
     } else {
       holder.image.setImageResource(R.drawable.rectangle_copy_18)
     }
-
     if (price != MRPPrice) {
       spannableString(holder, MRPPrice, selectedBundle.min_purchase_months)
       holder.orig_cost.visibility = View.VISIBLE
     } else {
       holder.orig_cost.visibility = View.GONE
     }
+
     holder.removePackage.setOnClickListener {
       selectedBundle.item_name?.let { it1 ->
         WebEngageController.trackEvent(
@@ -102,20 +107,33 @@ class CartPackageAdaptor(
         val prefs = SharedPrefs(activity)
         prefs.storeSelectedDomainName(null)
       }
+      if(selectedVMN.isNotEmpty()){
+        val prefs = SharedPrefs(activity)
+        prefs.storeSelectedVMNName(null)
+      }
       listener.deleteCartAddonsItem(bundlesList.get(position))
     }
 
-    if(selectedDomainName.isNotEmpty()){
-      holder.edge_cases_layout.visibility = View.GONE
-    }else{
-      holder.edge_cases_layout.visibility = View.VISIBLE
-    }
 
-    holder.edge_cases_layout.setOnClickListener {
-      listener1.actionClick(bundlesList.get(position))
-    }
 
-    updateFeatures(bundlesList.get(position), holder)
+    val selectnow = SpannableString("Select now.")
+
+    selectnow.setSpan(
+      UnderlineSpan(),
+      0,
+      selectnow.length,
+      0
+    )
+    selectnow.setSpan(
+      ForegroundColorSpan(ContextCompat.getColor(context, R.color.colorAccent)),
+      0,
+      selectnow.length,
+      Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+    );
+
+    holder.edge_case_desc1.setText(selectnow)
+
+    updateFeatures(bundlesList.get(position), holder,position)
 
 //    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 //    if (bundlesList.size - 1 == position) {
@@ -223,6 +241,11 @@ class CartPackageAdaptor(
     notifyDataSetChanged()
   }
 
+  fun selectedVmn(VMN: String){
+    this.selectedVMN = VMN
+    notifyDataSetChanged()
+  }
+
   class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val name = itemView.findViewById<TextView>(R.id.package_title)
     val price = itemView.findViewById<TextView>(R.id.package_price)
@@ -235,6 +258,8 @@ class CartPackageAdaptor(
     val ChildRecyclerView = itemView.findViewById<RecyclerView>(R.id.child_recyclerview)
     val addon_amount = itemView.findViewById<TextView>(R.id.tv_Addons)
     val edge_cases_layout = itemView.findViewById<ConstraintLayout>(R.id.edge_cases_layout)
+    val edge_cases_desc = itemView.findViewById<TextView>(R.id.edge_case_desc)
+    val edge_case_desc1 = itemView.findViewById<TextView>(R.id.edge_case_desc1)
     var adapter:NewAddonsAdapter? = null
     //   var view = itemView.findViewById<View>(R.id.cart_single_package_bottom_view)!!
   }
@@ -254,7 +279,7 @@ class CartPackageAdaptor(
     holder.orig_cost.text = origCost
   }
 
-  fun updateFeatures(bundleItem: CartModel, holder: upgradeViewHolder) {
+  fun updateFeatures(bundleItem: CartModel, holder: upgradeViewHolder,position: Int) {
     CompositeDisposable().add(
       AppDatabase.getInstance(activity.application)!!
         .bundlesDao()
@@ -262,21 +287,64 @@ class CartPackageAdaptor(
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({
+          var featuresCode = arrayListOf<String>()
           val temp = Gson().fromJson<List<IncludedFeature>>(it.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
           var tempFeatures = ArrayList<FeaturesModel>()
           for(singleFeaturesCode in temp){
+            featuresCode.add(singleFeaturesCode.feature_code)
             for(singleFeature in upgradeList) {
               if (singleFeaturesCode.feature_code.equals(singleFeature.feature_code!!)) {
                 if(singleFeaturesCode.feature_code.equals("DOMAINPURCHASE") && selectedDomainName.isNotEmpty()){
                   val tempItem = singleFeature
                   tempItem.name = selectedDomainName
                   tempFeatures.add(tempItem)
+                }else if ((singleFeaturesCode.feature_code.equals("CALLTRACKER")
+                         // ||(singleFeaturesCode.feature_code.equals("IVR")))
+                  && selectedVMN.isNotEmpty())) {
+                  val tempItem = singleFeature
+                  tempItem.name = selectedVMN
+                  tempFeatures.add(tempItem)
                 }else {
-                  tempFeatures.add(singleFeature)
+                    tempFeatures.add(singleFeature)
+                  }
                 }
+            }
+          }
+          if ((featuresCode.contains("DOMAINPURCHASE") == true
+                    && (featuresCode.contains("CALLTRACKER") == true))
+          ) {
+            if ((selectedDomainName.isNotEmpty()) && (selectedVMN.isNotEmpty())) {
+              holder.edge_cases_layout.visibility = View.GONE
+            } else if ((!selectedDomainName.isNotEmpty()) && (selectedVMN.isNotEmpty())) {
+              holder.edge_cases_layout.visibility = View.VISIBLE
+              holder.edge_cases_desc.text = "You need to select a domain name."
+              holder.edge_cases_layout.setOnClickListener {
+                listener1.actionClickDomain(bundlesList.get(position))
+              }
+            } else if ((!selectedVMN.isNotEmpty()) && (selectedDomainName.isNotEmpty())) {
+              holder.edge_cases_layout.visibility = View.VISIBLE
+              holder.edge_cases_desc.text = "You need to select a call tracking number."
+              holder.edge_cases_layout.setOnClickListener {
+                listener1.actionClickVmn(bundlesList.get(position))
+              }
+            } else {
+              holder.edge_cases_layout.visibility = View.VISIBLE
+              holder.edge_cases_layout.setOnClickListener {
+                listener1.actionClick(bundlesList.get(position))
+              }
+            }
+          } else {
+            if (selectedDomainName.isNotEmpty()) {
+              holder.edge_cases_layout.visibility = View.GONE
+            } else {
+              holder.edge_cases_layout.visibility = View.VISIBLE
+              holder.edge_cases_desc.text = "You need to select a domain name."
+              holder.edge_cases_layout.setOnClickListener {
+                listener1.actionClickDomain(bundlesList.get(position))
               }
             }
           }
+
           holder.addon_amount.text = "Includes "+tempFeatures.size+" addons"
           val linearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
           holder.adapter = NewAddonsAdapter(tempFeatures, listener, bundleItem, activity)

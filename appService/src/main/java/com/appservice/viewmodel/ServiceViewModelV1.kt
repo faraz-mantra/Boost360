@@ -1,6 +1,7 @@
 package com.appservice.viewmodel
 
 import androidx.lifecycle.LiveData
+import com.appservice.model.businessmodel.BusinessProfileUpdateRequest
 import com.appservice.model.serviceProduct.addProductImage.ProductImageRequest
 import com.appservice.model.serviceProduct.addProductImage.deleteRequest.ProductImageDeleteRequest
 import com.appservice.model.serviceProduct.gstProduct.ProductGstDetailRequest
@@ -107,7 +108,7 @@ class ServiceViewModelV1 : BaseViewModel() {
     return StaffNowFloatsRepository.getServiceTiming(request).toLiveData()
   }
 
-  fun getAppointmentCatalogStatus(floatingPointId: String?, clientId: String?): LiveData<BaseResponse> {
+  fun getAppointmentCatalogStatus(floatingPointId: String, clientId: String): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getAppointmentCatalogStatus(floatingPointId, clientId).toLiveData()
   }
 //  fun addProductDetails(request:ProductDimensionRequest): LiveData<BaseResponse> {
@@ -116,5 +117,13 @@ class ServiceViewModelV1 : BaseViewModel() {
 
   fun getSearchListings(fpTag: String?, fpId: String?, searchString: String? = "", offset: Int? = 0, limit: Int? = 0): LiveData<BaseResponse> {
     return NowfloatsApiRepository.getServiceSearchListing(fpTag, fpId, searchString, offset, limit).toLiveData()
+  }
+
+  fun getFpDetails(fpid: String, map: HashMap<String, String>): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getFpDetails(fpid, map).toLiveData()
+  }
+
+  fun updateBusinessDetails(businessProfileUpdateUrl:String, request: BusinessProfileUpdateRequest): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.updateBusinessProfile(businessProfileUpdateUrl,request).toLiveData()
   }
 }

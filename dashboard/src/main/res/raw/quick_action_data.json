@@ -4,8 +4,12 @@
       "type": "DOC",
       "action_item": [
         {
-          "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate",
+          "quickActionType": "CREATE_NEW_UPDATE",
+          "title": "Create new update"
+        },
+        {
+          "quickActionType": "READY_MADE_UPDATES",
+          "title": "Ready-made updates",
           "isNew": true,
           "isLotty": false
         },
@@ -33,11 +37,6 @@
         {
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
-        },
-        {
-          "quickActionType": "ADD_STAFF_PROFILE",
-          "title": "Add a\ndoctor",
-          "isNew": true
         }
       ]
     },
@@ -45,8 +44,12 @@
       "type": "HOS",
       "action_item": [
         {
-          "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate",
+          "quickActionType": "CREATE_NEW_UPDATE",
+          "title": "Create new update"
+        },
+        {
+          "quickActionType": "READY_MADE_UPDATES",
+          "title": "Ready-made updates",
           "isNew": true,
           "isLotty": false
         },
@@ -86,8 +89,12 @@
       "type": "SPA",
       "action_item": [
         {
-          "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate",
+          "quickActionType": "CREATE_NEW_UPDATE",
+          "title": "Create new update"
+        },
+        {
+          "quickActionType": "READY_MADE_UPDATES",
+          "title": "Ready-made updates",
           "isNew": true,
           "isLotty": false
         },
@@ -126,8 +133,12 @@
       "type": "SAL",
       "action_item": [
         {
-          "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate",
+          "quickActionType": "CREATE_NEW_UPDATE",
+          "title": "Create new update"
+        },
+        {
+          "quickActionType": "READY_MADE_UPDATES",
+          "title": "Ready-made updates",
           "isNew": true,
           "isLotty": false
         },
@@ -166,8 +177,12 @@
       "type": "CAF",
       "action_item": [
         {
-          "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate",
+          "quickActionType": "CREATE_NEW_UPDATE",
+          "title": "Create new update"
+        },
+        {
+          "quickActionType": "READY_MADE_UPDATES",
+          "title": "Ready-made updates",
           "isNew": true,
           "isLotty": false
         },
@@ -202,8 +217,12 @@
       "type": "MFG",
       "action_item": [
         {
-          "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate",
+          "quickActionType": "CREATE_NEW_UPDATE",
+          "title": "Create new update"
+        },
+        {
+          "quickActionType": "READY_MADE_UPDATES",
+          "title": "Ready-made updates",
           "isNew": true,
           "isLotty": false
         },
@@ -241,8 +260,12 @@
       "type": "EDU",
       "action_item": [
         {
-          "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate",
+          "quickActionType": "CREATE_NEW_UPDATE",
+          "title": "Create new update"
+        },
+        {
+          "quickActionType": "READY_MADE_UPDATES",
+          "title": "Ready-made updates",
           "isNew": true,
           "isLotty": false
         },
@@ -250,10 +273,10 @@
           "quickActionType": "ADD_PHOTO_GALLERY",
           "title": "Post new\nphotos"
         },
-//        {
-//          "quickActionType": "MAKE_ANNOUNCEMENT",
-//          "title": "Make an\nannouncement"
-//        },
+        //        {
+        //          "quickActionType": "MAKE_ANNOUNCEMENT",
+        //          "title": "Make an\nannouncement"
+        //        },
         {
           "quickActionType": "LIST_TOPPER",
           "title": "List a\ntopper"
@@ -271,10 +294,10 @@
           "quickActionType": "ADD_FACULTY_MEMBER",
           "title": "List a faculty\nmember"
         },
-//        {
-//          "quickActionType": "ADD_SLIDER_BANNER",
-//          "title": "Add slider\nbanner"
-//        },
+        //        {
+        //          "quickActionType": "ADD_SLIDER_BANNER",
+        //          "title": "Add slider\nbanner"
+        //        },
         {
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
@@ -290,8 +313,12 @@
         //          "isNew": true
         //        },
         {
-          "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate",
+          "quickActionType": "CREATE_NEW_UPDATE",
+          "title": "Create new update"
+        },
+        {
+          "quickActionType": "READY_MADE_UPDATES",
+          "title": "Ready-made updates",
           "isNew": true,
           "isLotty": false
         },
@@ -326,8 +353,12 @@
       "type": "RTL",
       "action_item": [
         {
-          "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate",
+          "quickActionType": "CREATE_NEW_UPDATE",
+          "title": "Create new update"
+        },
+        {
+          "quickActionType": "READY_MADE_UPDATES",
+          "title": "Ready-made updates",
           "isNew": true,
           "isLotty": false
         },
@@ -358,8 +389,12 @@
       "type": "SVC",
       "action_item": [
         {
-          "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate",
+          "quickActionType": "CREATE_NEW_UPDATE",
+          "title": "Create new update"
+        },
+        {
+          "quickActionType": "READY_MADE_UPDATES",
+          "title": "Ready-made updates",
           "isNew": true,
           "isLotty": false
         },
@@ -397,14 +432,18 @@
     {
       "type": "Pharmacy",
       "action_item": [
-//        {
-//          "quickActionType": "POST_STATUS_STORY",
-//          "title": "Daily\nstatus/story",
-//          "isNew": true
-//        },
+        //        {
+        //          "quickActionType": "POST_STATUS_STORY",
+        //          "title": "Daily\nstatus/story",
+        //          "isNew": true
+        //        },
         {
-          "quickActionType": "POST_NEW_UPDATE",
-          "title": "Post today's\nupdate",
+          "quickActionType": "CREATE_NEW_UPDATE",
+          "title": "Create new update"
+        },
+        {
+          "quickActionType": "READY_MADE_UPDATES",
+          "title": "Ready-made updates",
           "isNew": true,
           "isLotty": false
         },

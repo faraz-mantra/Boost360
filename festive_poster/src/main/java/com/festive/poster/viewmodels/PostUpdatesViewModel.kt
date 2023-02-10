@@ -16,7 +16,7 @@ import com.onboarding.nowfloats.rest.repositories.CategoryRepository
 import com.onboarding.nowfloats.rest.repositories.ChannelRepository
 import com.onboarding.nowfloats.rest.repositories.WhatsAppRepository
 import com.onboarding.nowfloats.viewmodel.category.getJsonRequest
-import com.squareup.okhttp.RequestBody
+import okhttp3.RequestBody
 
 class PostUpdatesViewModel : BaseViewModel() {
 
@@ -83,7 +83,7 @@ class PostUpdatesViewModel : BaseViewModel() {
     socialParmeters: String?,
     bizMessageId: String?,
     sendToSubscribers: Boolean?,
-    requestBody: okhttp3.RequestBody?,
+    requestBody: RequestBody?,
   ): LiveData<BaseResponse> {
     return WithFloatTwoRepository.putBizImageUpdate(
       clientId, requestType, requestId, totalChunks,

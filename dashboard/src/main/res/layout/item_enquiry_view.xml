@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/my_enquiries_view"
+      android:background="@drawable/ic_bg_dark_white_round"
+      android:orientation="vertical">
+
+      <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/size_18"
+        android:layout_marginTop="@dimen/size_18"
+        android:layout_marginEnd="@dimen/size_18"
+        android:orientation="horizontal">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="start"
+          android:includeFontPadding="false"
+          android:text="@string/customer_enquiries"
+          android:textColor="@color/black_4a4a4a"
+          app:fontFamily="@font/bold"
+          app:textType="BODY_1" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/filter_business_report"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="end"
+          android:background="?attr/selectableItemBackground"
+          android:clickable="true"
+          android:drawableEnd="@drawable/ic_arrow_down_d"
+          android:drawablePadding="@dimen/size_6"
+          android:focusable="true"
+          android:gravity="center_vertical"
+          android:includeFontPadding="false"
+          android:padding="@dimen/size_4"
+          android:text="@string/till_date"
+          android:textColor="@color/black_4a4a4a"
+          app:textType="CAPTION" />
+
+      </FrameLayout>
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_18"
+        android:layout_marginEnd="@dimen/size_18"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="@string/perform_online_business"
+        android:textColor="@color/warm_grey"
+        app:textType="CAPTION" />
+
+      <com.framework.views.viewgroups.BaseRecyclerView
+        android:id="@+id/rv_roi_summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_8"
+        android:layout_marginTop="@dimen/size_12"
+        android:layout_marginEnd="@dimen/size_8"
+        android:layout_marginBottom="@dimen/size_8"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        tools:itemCount="6"
+        tools:listitem="@layout/item_roi_summary" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <include
+      android:id="@+id/view_empty_enquiries"
+      layout="@layout/item_empty_enquiries"
+      android:visibility="gone"/>
+  </FrameLayout>
+
+</layout>

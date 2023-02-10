@@ -46,7 +46,7 @@ public class ImageViewFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ImageView image = (ImageView) view.findViewById(R.id.screenshot);
         if (isAdded()) {
-            Glide.with(this).load(url).into(image);
+            Glide.with(requireActivity().getApplicationContext()).load(url).into(image);
         }
 
     }

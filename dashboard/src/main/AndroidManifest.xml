@@ -20,29 +20,45 @@
       android:screenOrientation="portrait"
       android:theme="@style/DashboardTheme"
       android:windowSoftInputMode="adjustPan">
+
+      <!-- Accept chrome links -->
       <intent-filter
         android:autoVerify="true"
         android:label="@string/app_name">
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data
-          android:host="${applicationId}.keyboard.home"
-          android:pathPrefix="/"
-          android:scheme="http" />
-
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
         <data
           android:host="@string/deep_base_url"
           android:pathPrefix="/"
-          android:scheme="http" />
+          android:scheme="https" />
 
         <data
           android:host="@string/deep_base_onelink_url"
           android:pathPrefix="/FX0L"
           android:scheme="https" />
+
       </intent-filter>
+      <!-- Accept adb data flag -->
+      <intent-filter
+        android:autoVerify="true"
+        android:label="@string/app_name">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data
+          android:host="${applicationId}.keyboard.home"
+          android:scheme="http" />
+
+        <data
+          android:host="@string/deep_base_url"
+          android:scheme="http" />
+
+        <data
+          android:host="@string/deep_base_onelink_url"
+          android:scheme="https" />
+      </intent-filter>
+
       <intent-filter>
         <action android:name="com.dashboard.controller.DashboardActivity" />
         <category android:name="android.intent.category.DEFAULT" />
@@ -67,6 +83,10 @@
         android:name=".controller.DeepLinkTransActivity"
         android:screenOrientation="portrait"
         android:theme="@style/Theme_Transparent_DeepLink" />
+
+    <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_on3ugm9rkBzKPiplaX9zNgmbqqptv8vz" />
+    <meta-data android:name="io.branch.sdk.TestMode" android:value="false" />     <!-- Set to true to use Branch_Test_Key (useful when simulating installs and/or switching between debug and production flavors) -->
+
 
   </application>
 </manifest>

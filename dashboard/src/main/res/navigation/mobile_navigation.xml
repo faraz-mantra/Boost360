@@ -4,11 +4,17 @@
   xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@+id/navigation_dashboard">
 
+<!--  <fragment-->
+<!--    android:id="@+id/navigation_dashboard"-->
+<!--    android:name="com.dashboard.controller.ui.dashboard.DashboardFragment"-->
+<!--    android:label="@string/dashboard"-->
+<!--    tools:layout="@layout/fragment_dashboard" />-->
+
   <fragment
     android:id="@+id/navigation_dashboard"
-    android:name="com.dashboard.controller.ui.dashboard.DashboardFragment"
+    android:name="com.dashboard.controller.ui.dashboard.DashboardFragmentV2"
     android:label="@string/dashboard"
-    tools:layout="@layout/fragment_dashboard" />
+    tools:layout="@layout/fragment_dashboard_v2" />
 
   <fragment
     android:id="@+id/navigation_website"

@@ -1,7 +1,10 @@
 package com.framework.utils
 
 import android.annotation.SuppressLint
-import android.app.*
+import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.*
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
@@ -111,6 +114,7 @@ fun AppCompatEditText.onRightDrawableClicked(onClicked: (view: AppCompatEditText
     hasConsumed
   }
 }
+
 fun Activity.hideKeyBoard() {
   val view = this.currentFocus
   if (view != null) {
@@ -156,8 +160,9 @@ fun AppCompatTextView.setIconifiedText(text: String, @DrawableRes iconResId: Int
       }
     }
     if (iconResId != null) {
-      val align = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) DynamicDrawableSpan.ALIGN_CENTER else DynamicDrawableSpan.ALIGN_BASELINE
-      setSpan(ImageSpan(context, iconResId, align), text.length, text.length + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+//      val align = if(text.isEmpty()) DynamicDrawableSpan.ALIGN_BOTTOM else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) DynamicDrawableSpan.ALIGN_CENTER else DynamicDrawableSpan.ALIGN_BASELINE
+      val align = DynamicDrawableSpan.ALIGN_BOTTOM
+      this.setSpan(ImageSpan(context, iconResId, align), text.length, text.length + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
     }
   }.let { setText(it) }
 }
@@ -269,8 +274,7 @@ fun <T> List<T>.toArrayList(): ArrayList<T> {
 }
 
 fun View.toBitmap(): Bitmap? {
-  val returnedBitmap =
-    Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+  val returnedBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
   val canvas = Canvas(returnedBitmap)
   val bgDrawable = background
   bgDrawable?.draw(canvas)
@@ -386,9 +390,7 @@ suspend fun Bitmap.saveImageToStorage(
       }
 
       BaseApplication.instance.contentResolver.run {
-        val uri =
-          BaseApplication.instance.contentResolver.insert(mediaContentUri, values)
-            ?: return
+        val uri = BaseApplication.instance.contentResolver.insert(mediaContentUri, values) ?: return
         fileUri = uri
         imageOutStream = openOutputStream(uri) ?: return
       }
@@ -425,9 +427,7 @@ suspend fun Bitmap.saveImageToStorage(
     if (showNoti) {
       if (progress >= 100) {
         Log.i(TAG, "saveImageToStorage: success")
-        notificationBuilder?.setContentTitle("Image Downloaded")
-          ?.setProgress(0, 0, false)
-          ?.setContentIntent(getFileViewerIntent(fileUri, mimeType).getPendingIntent())
+        notificationBuilder?.setContentTitle("Image Downloaded")?.setProgress(0, 0, false)?.setContentIntent(getFileViewerIntent(fileUri, mimeType).getPendingIntent())
         NotiUtils.notificationManager?.notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
       } else {
         Log.e("saveImageToStorage >>> ", "Download not completed")
@@ -459,8 +459,8 @@ fun getFileViewerIntent(uri: Uri?, type: String): Intent {
 
 fun Intent.getPendingIntent(): PendingIntent? {
   return PendingIntent.getActivity(
-    BaseApplication.instance,
-    System.currentTimeMillis().toInt(), this, PendingIntent.FLAG_UPDATE_CURRENT
+    BaseApplication.instance, System.currentTimeMillis().toInt(), this,
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE else PendingIntent.FLAG_UPDATE_CURRENT
   )
 }
 
@@ -549,9 +549,6 @@ fun highlightHashTag(text: String?,@ColorRes colorId: Int,@FontRes fontId:Int): 
 }
 
 
-
-
-
 inline fun <reified T> convertJsonToObj(json: String?) = Gson().fromJson<T>(json, object : TypeToken<T>() {}.type)
 
 fun Bitmap.zoom(percent: Float): Bitmap? {
@@ -577,8 +574,7 @@ fun gcd(num1: Int, num2: Int): Int {
   var i = 1
   while (i <= num1 && i <= num2) {
     // Checks if i is factor of both integers
-    if (num1 % i == 0 && num2 % i == 0)
-      gcd = i
+    if (num1 % i == 0 && num2 % i == 0) gcd = i
     ++i
   }
   return gcd
@@ -604,7 +600,8 @@ fun sendNotification(
   intent.putExtra("url", deepLinkUrl)
   intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
   stackBuilder.addNextIntentWithParentStack(intent)
-  val pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+  val pendingIntent = stackBuilder.getPendingIntent(0,
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE else PendingIntent.FLAG_UPDATE_CURRENT)
   val notificationBuilder: NotificationCompat.Builder =
     NotificationCompat.Builder(c, "111")
       .setSmallIcon(R.drawable.app_launcher2)
@@ -650,19 +647,23 @@ fun sendNotification(
   }
 }
 
-fun spanColor(fullText:String,@ColorRes color: Int,vararg colorTextList:String): SpannableString {
+fun spanColor(fullText: String, @ColorRes color: Int, vararg colorTextList: String): SpannableString {
   val spannable = SpannableString(fullText)
-  colorTextList.forEach { text->
-    spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(
-      BaseApplication.instance,color
-    )),fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+  colorTextList.forEach { text ->
+    spannable.setSpan(
+      ForegroundColorSpan(
+        ContextCompat.getColor(
+          BaseApplication.instance, color
+        )
+      ), fullText.indexOf(text), fullText.indexOf(text) + text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+    )
   }
   return spannable
 }
 
-fun spanBoldNdColor(fullText:String,@ColorRes color: Int,text:String): SpannableString {
+fun spanBoldNdColor(fullText: String, @ColorRes color: Int, text: String): SpannableString {
   val spannable = SpannableString(fullText)
-  spannable.setSpan(StyleSpan(Typeface.BOLD),fullText.indexOf(text),fullText.indexOf(text)+text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+  spannable.setSpan(StyleSpan(Typeface.BOLD), fullText.indexOf(text), fullText.indexOf(text) + text.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
   spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(
     BaseApplication.instance,color
@@ -824,6 +825,7 @@ fun fetchString(id: Int): String {
 fun fetchColor(id: Int): Int {
   return ContextCompat.getColor(BaseApplication.instance,id)
 }
+
 fun showSnackBarNegative(context: Activity, msg: String?) {
   val snackBar = Snackbar.make(context.findViewById(android.R.id.content), msg ?: "", Snackbar.LENGTH_INDEFINITE)
   snackBar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color))

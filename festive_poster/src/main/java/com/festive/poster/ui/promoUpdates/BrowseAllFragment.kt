@@ -90,7 +90,6 @@ class BrowseAllFragment : AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesV
         is NetworkResult.Success -> {
           hideProgress()
           val data = it.data ?: return@observe
-
           findDefaultSelectedPos(data)
           if (categoryList.isEmpty()) {
             setCatgories(data)
@@ -166,25 +165,27 @@ class BrowseAllFragment : AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesV
       RecyclerViewActionType.POSTER_LOVE_CLICKED.ordinal -> {
         (item as? TemplateUi)?.let {
           WebEngageController.trackEvent(if(it.isFavourite) UPDATE_STUDIO_UNMARK_FAVOURITE_CLICK else UPDATE_STUDIO_MARK_FAVOURITE_CLICK, CLICK, CLICKED)
-          callFavApi(it)
+          callFavApi(position,it)
         }
       }
     }
-
-
   }
 
-
-  private fun callFavApi(posterModel: TemplateUi) {
+  private fun callFavApi(position: Int, posterModel: TemplateUi) {
     promoUpdatesViewModel?.markAsFav(posterModel.isFavourite.not(), posterModel.id)
-    promoUpdatesViewModel?.favStatus?.observe(viewLifecycleOwner) {
-      when (it) {
-        is NetworkResult.Loading -> {
-          showProgress()
-        }
-        else -> {
+    promoUpdatesViewModel?.favStatus?.observe(viewLifecycleOwner) { it1 ->
+      when (it1) {
+        is NetworkResult.Loading -> showProgress()
+        is NetworkResult.Success -> {
+          posterRvAdapter?.list?.map { if (posterModel.id == it.id) it.isFavourite = it.isFavourite.not() }
+          posterRvAdapter?.notifyItemChanged(position)
           hideProgress()
         }
+        is NetworkResult.Error -> {
+          showShortToast(it1.msg ?: getString(R.string.something_went_wrong))
+          hideProgress()
+        }
+        else -> hideProgress()
       }
     }
 

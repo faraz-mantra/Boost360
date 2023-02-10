@@ -239,7 +239,7 @@ class SelectNumberBottomSheet :
         return UserSessionManager(requireContext()).getAccessTokenAuth()?.barrierToken() ?: ""
     }
 
-    private fun getDiscountedPrice(price: Double, discountPercent: Int): Double {
+    private fun getDiscountedPrice(price: Double, discountPercent: Double): Double {
         return price - ((discountPercent / 100) * price)
     }
 }

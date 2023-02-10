@@ -8,9 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.widget.RemoteViews
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-
 import com.framework.BaseApplication
 import com.framework.R
 
@@ -66,7 +64,8 @@ object NotiUtils {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             resultIntent = PendingIntent.getActivity(
                 BaseApplication.instance,
-                System.currentTimeMillis().toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT
+                System.currentTimeMillis().toInt(), intent,
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE else PendingIntent.FLAG_UPDATE_CURRENT
             )
         }
 

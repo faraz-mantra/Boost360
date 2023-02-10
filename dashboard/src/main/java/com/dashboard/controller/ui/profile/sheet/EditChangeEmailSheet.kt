@@ -13,6 +13,8 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
+import java.util.*
+import kotlin.concurrent.schedule
 
 class EditChangeEmailSheet : BaseBottomSheetDialog<SheetChangeEmailBinding, UserProfileViewModel>() {
 
@@ -35,7 +37,9 @@ class EditChangeEmailSheet : BaseBottomSheetDialog<SheetChangeEmailBinding, User
     WebEngageController.trackEvent(USER_MERCHANT_PROFILE_EMAIL_PAGE, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.cetEmail?.setText(email)
     binding?.cetEmail?.requestFocus()
-    baseActivity.showKeyBoard(binding?.cetEmail)
+    Timer().schedule(500){
+      baseActivity.showKeyBoard(binding?.cetEmail)
+    }
     setOnClickListener(binding?.btnPublish, binding?.rivCloseBottomSheet)
     viewListeners()
   }

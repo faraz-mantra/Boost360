@@ -150,10 +150,14 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
   }
 
   private fun setAdapterOrderList() {
-    binding.productRecycler.apply {
-      itemsAdapter = AppBaseRecyclerViewAdapter(baseActivity, productList, this@AddProductFragment)
-      adapter = itemsAdapter
-      itemsAdapter?.runLayoutAnimation(this)
+    if (itemsAdapter == null) {
+      binding.productRecycler.apply {
+        itemsAdapter = AppBaseRecyclerViewAdapter(baseActivity, productList, this@AddProductFragment)
+        adapter = itemsAdapter
+        itemsAdapter?.runLayoutAnimation(this)
+      }
+    } else {
+        itemsAdapter?.addFullItemList(productList)
     }
   }
 

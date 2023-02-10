@@ -109,18 +109,19 @@ class SplashActivity : AppCompatActivity() {
   private fun initLottieAnimation() {
     animation_view.setAnimation(R.raw.boost_lottie2)
     animation_view.addAnimatorListener(object : Animator.AnimatorListener {
-      override fun onAnimationRepeat(animation: Animator?) {
+
+      override fun onAnimationStart(animation: Animator) {
       }
 
-      override fun onAnimationEnd(animation: Animator?) {
+      override fun onAnimationEnd(animation: Animator) {
         animation_view?.cancelAnimation()
         checkForUpdate()
       }
 
-      override fun onAnimationCancel(animation: Animator?) {
+      override fun onAnimationCancel(animation: Animator) {
       }
 
-      override fun onAnimationStart(animation: Animator?) {
+      override fun onAnimationRepeat(animation: Animator) {
       }
 
     })

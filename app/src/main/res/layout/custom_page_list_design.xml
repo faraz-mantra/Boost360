@@ -78,14 +78,16 @@
                   android:orientation="vertical"
                   android:padding="15dp">
 
-                  <com.nowfloats.CustomWidget.roboto_lt_45_505050
-                    android:id="@+id/page_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="4"
-                    android:text="@string/large_text"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                  <com.framework.views.customViews.CustomTextView
+                      android:id="@+id/page_name"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:ellipsize="end"
+                      card_view:fontFamily="@font/roboto_light"
+                      android:maxLines="1"
+                      android:text="@string/large_text"
+                      android:textColor="@color/black"
+                      android:textSize="16sp" />
 
 
                   <!-- <com.nowfloats.CustomWidget.roboto_md_36__565656
@@ -146,7 +148,7 @@
                   <!--                                                card_view:layout_constraintTop_toTopOf="parent" />-->
 
 
-                  <com.nowfloats.CustomWidget.roboto_lt_10_8c8c8c
+                  <!--<com.nowfloats.CustomWidget.roboto_lt_10_8c8c8c
                     android:id="@+id/page_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -156,7 +158,20 @@
                     android:paddingStart="15dp"
                     android:text="@string/medium_text"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp" />-->
+
+                  <com.framework.views.customViews.CustomTextView
+                      android:id="@+id/page_date"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_alignParentStart="true"
+                      android:layout_centerVertical="true"
+                      android:layout_marginStart="0dp"
+                      android:paddingStart="15dp"
+                      android:text="@string/medium_text"
+                      android:textColor="#64000000"
+                      android:textSize="10sp"
+                      card_view:fontFamily="@font/roboto_light" />
 
                 </RelativeLayout>
 

@@ -45,6 +45,12 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
         }
         holder.mLinearLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
         holder.emailTextView.setText(mSubscriberList.get(position).getUserMobile());
+        holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((SubscriberInterfaceMethods) mContext).onitemSeleted(mSubscriberList.get(position));
+            }
+        });
         try {
             int status = Integer.parseInt(mSubscriberList.get(position).getSubscriptionStatus());
             if (Constants.SubscriberStatus.SUBSCRIBED.value == status) {
@@ -67,10 +73,10 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
     }
 
     public interface SubscriberInterfaceMethods {
-        void onitemSeleted(int data);
+        void onitemSeleted(SubscriberModel data);
     }
 
-    class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class MyHolder extends RecyclerView.ViewHolder {
 
         ImageView arrowImage;
         TextView emailTextView, statusTextView;
@@ -84,16 +90,6 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
             emailTextView = (TextView) itemView.findViewById(R.id.subscriber_text);
             statusTextView = (TextView) itemView.findViewById(R.id.subscriber_status);
             view = itemView.findViewById(R.id.divider);
-            mLinearLayout.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.item_layout:
-                    ((SubscriberInterfaceMethods) mContext).onitemSeleted(getAdapterPosition());
-                    break;
-            }
         }
     }
 

@@ -2,6 +2,8 @@ package com.appservice.ui.updatesBusiness
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Rect
+import android.view.MotionEvent
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.lifecycleScope
@@ -20,11 +22,13 @@ import com.framework.utils.saveAsTempFile
 import com.framework.utils.setClickableRipple
 import com.framework.utils.setStatusBarColor
 import com.onboarding.nowfloats.bottomsheet.util.runOnUi
-import com.theartofdev.edmodo.cropper.CropImageView
+import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.util.*
+import kotlin.concurrent.schedule
 import kotlin.math.absoluteValue
 
 class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,BaseViewModel>() {
@@ -49,7 +53,7 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
     }
 
     override fun onCreateView() {
-        setOnClickListener(binding!!.layoutChangeImage,binding!!.layoutTick,binding!!.layoutRotate,binding!!.ivDelete)
+        setOnClickListener(binding!!.layoutChangeImage,binding!!.layoutTick,binding!!.layoutRotate,binding!!.ivDelete,binding?.ivCropUpdateClose)
 
         path = intent.getStringExtra(IK_IMAGE_PATH)
 
@@ -69,17 +73,21 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
                 ).apply(RequestOptions.skipMemoryCacheOf(true))
                     .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).submit().get()
                 runOnUi {
+                    if(bitmap.width <= 400 || bitmap.height <= 400 ){
+                        Toasty.error(this@UpdateCropImageActivity,"Max Cropping allowed 400px for width/height", Toasty.LENGTH_LONG).show()
+                        this@UpdateCropImageActivity.finish()
+                        return@runOnUi
+                    }
                     binding!!.ivCrop.setImageBitmap(bitmap)
-
+                    binding!!.ivCrop.setMinCropResultSize(400,400)
+                    binding!!.ivCrop.setCropRect(Rect(400, 400, 600, 600))
+//                    binding!!.ivCrop.setAspectRatio(600,600)
+//                    binding!!.ivCrop.setFixedAspectRatio(false)
                 }
             }
-
-
-
-
         }
-
     }
+
     override fun onClick(v: View?) {
         super.onClick(v)
         when(v){
@@ -109,6 +117,10 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
                 File(getExternalFilesDir(null)?.path+File.separator
                         + UPDATE_PIC_FILE_NAME).delete()
                 setResult(Activity.RESULT_OK)
+                finish()
+            }
+
+            binding?.ivCropUpdateClose ->{
                 finish()
             }
 

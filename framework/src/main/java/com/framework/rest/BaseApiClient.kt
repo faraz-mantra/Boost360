@@ -1,5 +1,6 @@
 package com.framework.rest
 
+import com.framework.NetworkCertificate.NetworkCertificate
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -27,7 +28,10 @@ open class BaseApiClient protected constructor(isAuthRemove: Boolean = false) {
     httpClient.readTimeout(2, TimeUnit.MINUTES)
       .connectTimeout(2, TimeUnit.MINUTES)
       .writeTimeout(2, TimeUnit.MINUTES)
-    httpClient.addInterceptor(authInterceptor).addInterceptor(logging).authenticator(tokenAuthenticator)
+      .addInterceptor(authInterceptor)
+      .addInterceptor(logging)
+      .authenticator(tokenAuthenticator)
+      .certificatePinner(NetworkCertificate.certificatePinner())
 
     gson = GsonBuilder().setLenient().create()
   }

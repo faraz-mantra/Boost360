@@ -4,6 +4,7 @@ import com.appservice.base.rest.AppBaseLocalService
 import com.appservice.base.rest.AppBaseRepository
 import com.appservice.model.panGst.PanGstUpdateBody
 import com.appservice.model.aptsetting.*
+import com.appservice.model.businessmodel.BusinessProfileUpdateRequest
 import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
@@ -222,8 +223,8 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.getFpDetails(fpId, map), TaskCode.GET_FP_DETAILS_BY_ID)
   }
 
-  fun getAppointmentCatalogStatus(fpId: String?, clientId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getCatalogStatus(fpId!!, clientId), TaskCode.GET_APPOINTMENT_CATALOG_SETUP)
+  fun getAppointmentCatalogStatus(fpId: String, clientId: String): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getCatalogStatus(fpId, clientId), TaskCode.GET_APPOINTMENT_CATALOG_SETUP)
   }
 
   fun updateGstSlab(request: GstSlabRequest): Observable<BaseResponse> {
@@ -246,6 +247,13 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(
       remoteDataSource.getPastUpdatesListV6(clientId = clientId, fpId = fpId, postType = postType, skipBy, request = tagRequest),
       TaskCode.GET_PAST_UPDATES
+    )
+  }
+
+  fun updateBusinessProfile(businessProfileUpdateUrl : String,profileUpdateRequest: BusinessProfileUpdateRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(
+      remoteDataSource.updateBusinessProfile(businessProfileUpdateUrl,profileUpdateRequest = profileUpdateRequest),
+      TaskCode.UPDATE_BUSINESS_PROFILE
     )
   }
 }

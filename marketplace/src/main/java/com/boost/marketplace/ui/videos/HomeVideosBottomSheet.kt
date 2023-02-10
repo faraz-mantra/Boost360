@@ -5,6 +5,7 @@ import android.os.Build
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -32,6 +33,7 @@ class HomeVideosBottomSheet :
     lateinit var videosListAdapter: VideosListAdapter
     var videoCount : Int = 0
     var position1 : Int = 0
+    var pos : Int? = null
     var size : Int = 0
     var webView: VideoEnabledWebView? = null
     var webChromeClient: VideoEnabledWebChromeClient? = null
@@ -127,7 +129,7 @@ class HomeVideosBottomSheet :
             Log.e("getYoutubeVideoDetails", it.toString())
             youtubeList = it
             updateVideosViewPager(it)
-            onPlayYouTubeVideo(it[0], 0)
+            onPlayYouTubeVideo(it[pos!!], pos!!)
         })
     }
 
@@ -138,6 +140,7 @@ class HomeVideosBottomSheet :
 
     private fun getBundle() {
         this.videoItem = requireArguments().getString("title") ?: ""
+        pos = requireArguments().getInt("position")
         position1 = requireArguments().getInt("position")+1
         size = requireArguments().getInt("size")
         link = ((requireArguments().getString("link"))).toString()

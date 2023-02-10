@@ -13,8 +13,8 @@ class CategorySuggestionViewHolder(binding: ListItemCategorySuggestionBinding) :
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val data = item as? ApiCategoryResponseCategory ?: return
-    binding.tvSubCat.text = "in " + data.subCategory
     binding.tvCat.text = makeSectionOfTextBold(data.name ?: "", data.searchKeyword ?: "",font = R.font.regular_medium)
+    binding.tvSubCat.text = "in " + data.subCategoryDescription
     binding.root.setOnClickListener { onItemClick(position, item) }
   }
 

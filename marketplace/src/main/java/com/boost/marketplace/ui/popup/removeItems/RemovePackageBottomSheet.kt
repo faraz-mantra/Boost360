@@ -26,7 +26,7 @@ import java.util.*
 class RemovePackageBottomSheet(val listener: DetailsFragmentListener) : DialogFragment() {
     lateinit var root: View
     lateinit var prefs: SharedPrefs
-    var activity1 = false
+
 
     override fun onStart() {
         super.onStart()
@@ -42,8 +42,6 @@ class RemovePackageBottomSheet(val listener: DetailsFragmentListener) : DialogFr
         savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.remove_package_bottomsheet, container, false)
-
-        activity1 = arguments?.getBoolean("activty1", false) == true
         prefs = SharedPrefs(requireActivity())
         return root
     }

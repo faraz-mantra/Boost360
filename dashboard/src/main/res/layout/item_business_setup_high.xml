@@ -40,7 +40,7 @@
           app:autoSizeMinTextSize="12sp"
           app:autoSizeStepGranularity="1sp"
           app:autoSizeTextType="uniform"
-          app:fontFamily="@font/semi_bold" />
+          app:fontFamily="@font/bold" />
 
         <com.framework.views.customViews.CustomImageView
           android:layout_width="wrap_content"
@@ -103,6 +103,7 @@
           android:id="@+id/txt_title3"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:fontFamily="@font/bold"
           android:paddingTop="@dimen/size_2"
           android:paddingBottom="@dimen/size_2"
           android:text="@string/your_site_health_heading"
@@ -117,8 +118,8 @@
           android:paddingTop="@dimen/size_2"
           android:paddingBottom="@dimen/size_2"
           android:text="@string/_82"
-          android:textColor="@color/light_green_3"
-          app:fontFamily="@font/barlow_semi_bold"
+          android:textColor="@color/black_4f4f4f"
+          app:fontFamily="@font/barlow_bold"
           app:textType="BODY_1" />
 
         <com.framework.views.customViews.CustomTextView
@@ -132,8 +133,8 @@
             android:text="@string/improve"
             android:textAllCaps="false"
             android:textColor="@color/colorAccentLight"
-            app:fontFamily="@font/semi_bold"
-            app:textType="CAPTION" />
+            app:fontFamily="@font/bold"
+            app:textType="BODY_1" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
       <!--      <ProgressBar-->

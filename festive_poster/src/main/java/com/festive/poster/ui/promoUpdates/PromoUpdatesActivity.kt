@@ -2,6 +2,7 @@ package com.festive.poster.ui.promoUpdates
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import com.festive.poster.R
@@ -17,6 +18,7 @@ import com.framework.webengageconstant.*
 class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoUpdatesViewModel>() {
 
   private var session: UserSessionManager? = null
+  private var promoLandingPageBundle = Bundle()
 
   override fun getLayout(): Int {
     return R.layout.activity_promo_updates
@@ -32,7 +34,7 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoU
     fetchDataFromServer()
     observeFragmentStack()
     setOnClickListener(binding?.ivToolbarBack, binding?.ivStore, binding?.ivLove)
-    addFragmentReplace(binding?.container?.id, PromoLandingPageFragment.newInstance(), true)
+    addFragmentReplace(binding?.container?.id, PromoLandingPageFragment.newInstance(promoLandingPageBundle), true)
   }
 
   private fun fetchDataFromServer() {
@@ -74,7 +76,8 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoU
 
   override fun onBackPressed() {
     super.onBackPressed()
-    if (getTopFragment() == null) finish()
+    if (getTopFragment() == null)
+      finish()
   }
 
   private fun observeFragmentStack() {
@@ -86,12 +89,15 @@ class PromoUpdatesActivity : AppBaseActivity<ActivityPromoUpdatesBinding, PromoU
           binding?.tvToolbarTitle?.text = getString(R.string.update_studios)
         }
         is BrowseAllFragment -> {
-          binding?.tvToolbarTitle?.text = getString(R.string.browse_all)
+          binding?.tvToolbarTitle?.text = getString(R.string.browse)
         }
         is FavouriteListFragment -> {
           binding?.tvToolbarTitle?.text = getString(R.string.favourites)
           binding?.ivLove?.isVisible = false
           binding?.ivStore?.isVisible = false
+        }
+        is BrowseCategoriesFragment -> {
+          binding?.tvToolbarTitle?.text = getString(R.string.browse_all)
         }
       }
     }

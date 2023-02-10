@@ -18,7 +18,6 @@ import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.DetailsFragmentListener
-import com.boost.marketplace.ui.details.FeatureDetailsActivity
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
 import com.framework.utils.RootUtil
@@ -36,7 +35,6 @@ class FeaturePacksAdapter(
 ) : RecyclerView.Adapter<FeaturePacksAdapter.upgradeViewHolder>() {
 
   private lateinit var context: Context
-  var addonTitle: String = ""
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
     val itemView = LayoutInflater.from(parent?.context).inflate(
@@ -123,9 +121,9 @@ class FeaturePacksAdapter(
     }
   }
 
-  fun addupdates(upgradeModel: ArrayList<BundlesModel>, title: String) {
-    bundleList = upgradeModel
-    addonTitle = title
+  fun addupdates(upgradeModel: ArrayList<BundlesModel>) {
+    bundleList.clear()
+    bundleList.addAll(upgradeModel)
     notifyDataSetChanged()
   }
 

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical"
+      android:layout_marginStart="@dimen/size_18"
+      android:layout_marginTop="@dimen/size_6"
+      android:layout_marginEnd="@dimen/size_18"
+      android:orientation="horizontal">
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:includeFontPadding="false"
+        android:text="@string/online_growth_stats"
+        android:textColor="@color/black_4a4a4a"
+        app:fontFamily="@font/bold"
+        app:textType="BODY_1" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/filter_website_report"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:drawableEnd="@drawable/ic_arrow_down_d"
+        android:drawablePadding="@dimen/size_6"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:padding="@dimen/size_4"
+        android:text="@string/till_date"
+        android:textColor="@color/black_4a4a4a"
+        app:textType="CAPTION" />
+
+
+    </FrameLayout>
+
+    <com.framework.views.customViews.CustomTextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_18"
+      android:layout_marginEnd="@dimen/size_18"
+      android:ellipsize="end"
+      android:maxLines="2"
+      android:text="@string/website_report_description"
+      android:textColor="@color/warm_grey"
+      app:textType="CAPTION" />
+
+    <com.framework.views.viewgroups.BaseRecyclerView
+      android:id="@+id/rv_growth_state"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/size_16"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      tools:itemCount="4"
+      tools:listitem="@layout/item_growth_state" />
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

@@ -15,6 +15,7 @@ import com.boost.dbcenterapi.data.api_model.Edgecase.EdgeCases
 import com.boost.dbcenterapi.data.api_model.blockingAPI.BlockApi
 import com.boost.dbcenterapi.data.api_model.call_track.CallTrackListResponse
 import com.boost.dbcenterapi.data.api_model.gst.Error
+import com.boost.dbcenterapi.data.api_model.vmn.PurchasedVmnResponse
 import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
@@ -44,6 +45,8 @@ class FeatureDetailsViewModel : BaseViewModel() {
     var edgecaseResult: MutableLiveData<EdgeCases> = MutableLiveData()
     var customDomainsResult: MutableLiveData<CustomDomains> = MutableLiveData()
     var purchasedDomainResult: MutableLiveData<PurchasedDomainResponse> = MutableLiveData()
+    var purchasedVmnResult: MutableLiveData<PurchasedVmnResponse> = MutableLiveData()
+    var vmnBookingStatus: MutableLiveData<Boolean> = MutableLiveData()
 
     lateinit var application: Application
     lateinit var lifecycleOwner: LifecycleOwner
@@ -92,6 +95,14 @@ class FeatureDetailsViewModel : BaseViewModel() {
         return purchasedDomainResult
     }
 
+    fun purchasedVmnResult(): LiveData<PurchasedVmnResponse> {
+        return purchasedVmnResult
+    }
+
+    fun vmnBooking(): LiveData<Boolean> {
+        return vmnBookingStatus
+    }
+
     fun setApplicationLifecycle(
         application: Application,
         lifecycleOwner: LifecycleOwner
@@ -106,7 +117,7 @@ class FeatureDetailsViewModel : BaseViewModel() {
 
     fun GetSuggestedDomains(domainRequest: DomainRequest) {
         updatesLoader.postValue(true)
-        compositeDisposable.add(
+        CompositeDisposable().add(
             ApiService.getDomains(domainRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -136,9 +147,11 @@ class FeatureDetailsViewModel : BaseViewModel() {
                             callTrackListResponse.postValue(NumberList)
                         },
                         {
-                            val temp = (it as HttpException).response()!!.errorBody()!!.string()
+                            val temp = (it as HttpException).response()!!.errorBody()
+                            temp?.let {
                             val errorBody: Error =
-                                Gson().fromJson(temp, object : TypeToken<Error>() {}.type)
+                                Gson().fromJson(it.toString(), object : TypeToken<Error>() {}.type)
+                            }
                             Toasty.error(
                                 application,
                                 "Error in Loading Numbers!!",
@@ -154,7 +167,7 @@ class FeatureDetailsViewModel : BaseViewModel() {
 
     fun loadAddonsFromDB(boostKey: String) {
         updatesLoader.postValue(true)
-        compositeDisposable.add(
+        CompositeDisposable().add(
             AppDatabase.getInstance(application)!!
                 .featuresDao()
                 .getFeaturesItemByFeatureCode(boostKey)
@@ -226,7 +239,7 @@ class FeatureDetailsViewModel : BaseViewModel() {
             .doOnComplete {
                 updatesLoader.postValue(false)
                 //add cartitem to firebase
-                DataLoader.updateCartItemsToFirestore(application)
+              //  DataLoader.updateCartItemsToFirestore(application)
             }
             .doOnError {
                 updatesError.postValue(it.message)
@@ -237,7 +250,7 @@ class FeatureDetailsViewModel : BaseViewModel() {
 
     fun getCartItems() {
         updatesLoader.postValue(false)
-        compositeDisposable.add(
+        CompositeDisposable().add(
             AppDatabase.getInstance(application)!!
                 .cartDao()
                 .getCartItems()
@@ -273,24 +286,24 @@ class FeatureDetailsViewModel : BaseViewModel() {
             .subscribe()
     }
 
-    fun blockNumberStatus(auth: String, fpid: String, clientId: String, blockedItem: String) {
-        compositeDisposable.add(
-            ApiService.getItemAvailability(auth, fpid, clientId, blockedItem)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        updateStatus.postValue(it)
-                    }, {
-                        updatesLoader.postValue(false)
-                        updatesError.postValue(it.message)
-                    })
-        )
-    }
+//    fun blockNumberStatus(auth: String, fpid: String, clientId: String, blockedItem: String) {
+//        compositeDisposable.add(
+//            ApiService.getItemAvailability(auth, fpid, clientId, blockedItem)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(
+//                    {
+//                        updateStatus.postValue(it)
+//                    }, {
+//                        updatesLoader.postValue(false)
+//                        updatesError.postValue(it.message)
+//                    })
+//        )
+//    }
 
     fun edgecases(fpid: String,clientId:String,featureCode:String) {
         updatesLoader.postValue(true)
-        compositeDisposable.add(
+        CompositeDisposable().add(
             ApiService.getEdgeCases(fpid,clientId,featureCode)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -308,7 +321,7 @@ class FeatureDetailsViewModel : BaseViewModel() {
 
     fun getAlreadyPurchasedDomain(auth: String, fpTag: String, clientId:String) {
         updatesLoader.postValue(true)
-        compositeDisposable.add(
+        CompositeDisposable().add(
             ApiService.getAlreadyPurchasedDomain(auth, fpTag, clientId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -322,4 +335,38 @@ class FeatureDetailsViewModel : BaseViewModel() {
                     })
         )
     }
+    fun getAlreadyPurchasedVmn(auth: String, fpTag: String, clientId:String) {
+        updatesLoader.postValue(true)
+        CompositeDisposable().add(
+            ApiService.getAlreadyPurchasedVmn(auth, fpTag, clientId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        purchasedVmnResult.postValue(it)
+                        updatesLoader.postValue(false)
+                    },{
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
+
+    fun bookVMNPostPurchase(auth: String,clientId:String,fpid:String,vmnumber:String,activity: Activity){
+        CompositeDisposable().add(
+            ApiService.bookVMN(auth,clientId,fpid,vmnumber)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        Log.i("buyVmnBooking", "Success >>>" + it)
+                        Toasty.success(activity.applicationContext,"Successfully Booked Your Number",Toast.LENGTH_LONG).show()
+                        vmnBookingStatus.postValue(true)
+                    }, {
+                        Log.i("buyVmnBooking", "Failure >>>$it")
+                        Toasty.error(activity.applicationContext,"Failed to Book Your Number.Try after sometime or contact support",Toast.LENGTH_LONG).show()
+                        vmnBookingStatus.postValue(false)
+                    }
+        )
+        )}
 }

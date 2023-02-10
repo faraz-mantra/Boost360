@@ -181,7 +181,7 @@
               android:paddingTop="5dp"
               android:paddingEnd="5dp"
               android:paddingBottom="5dp"
-              android:text="You need to select a domain name. Select now."
+              android:text="You need to select a domain name &amp; call tracking number."
               android:textColor="#4A4A4A"
               android:textFontWeight="600"
               android:textSize="12sp"
@@ -189,6 +189,23 @@
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toBottomOf="@id/edge_case_title" />
 
+          <TextView
+              android:id="@+id/edge_case_desc1"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/regular"
+              android:lineHeight="19dp"
+              android:paddingStart="22dp"
+              android:paddingTop="5dp"
+              android:paddingEnd="5dp"
+              android:paddingBottom="5dp"
+              android:text="Select now"
+              android:textColor="#4A4A4A"
+              android:textFontWeight="600"
+              android:textSize="12sp"
+              android:visibility="visible"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@id/edge_case_desc" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

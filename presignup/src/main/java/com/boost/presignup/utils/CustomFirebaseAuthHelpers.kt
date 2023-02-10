@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import com.framework.NetworkCertificate.NetworkCertificate
 import com.boost.presignup.datamodel.Apis
 import com.boost.presignup.datamodel.userprofile.*
 import com.facebook.*
@@ -66,7 +67,9 @@ class CustomFirebaseAuthHelpers constructor(
       .build()
     retrofit = Retrofit.Builder()
       .baseUrl("https://api2.withfloats.com")
-      .client(OkHttpClient.Builder().addInterceptor(ServiceInterceptor(false)).build())
+      .client(OkHttpClient.Builder()
+        .addInterceptor(ServiceInterceptor(false))
+        .certificatePinner(NetworkCertificate.certificatePinner()).build())
       .addConverterFactory(GsonConverterFactory.create())
       .build()
     this.currentActivity = activity

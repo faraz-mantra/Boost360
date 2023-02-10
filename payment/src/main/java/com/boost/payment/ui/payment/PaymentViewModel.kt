@@ -249,7 +249,7 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
       }
 
       override fun onError(e: String?) {
-        Log.e("onError :", e!!)
+        e?.let {Log.e("onError :", it)  }
       }
 
     })

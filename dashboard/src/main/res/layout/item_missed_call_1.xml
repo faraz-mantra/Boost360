@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.framework.views.customViews.CustomCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_158"
+        app:cardCornerRadius="@dimen/size_20">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_122"
+                android:orientation="vertical">
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/customImageView12"
+                    android:layout_width="@dimen/size_24"
+                    android:layout_height="@dimen/size_24"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/size_18"
+                    android:src="@drawable/ic_missed_call"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_missed_call"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_missed_call"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/semi_bold"
+                    android:gravity="start"
+                    android:layout_marginStart="@dimen/size_4"
+                    android:text="Missed call"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/red_DE3C3C"
+                    android:textSize="@dimen/text_16"
+                    app:layout_constraintBottom_toBottomOf="@+id/customImageView12"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/customImageView12"
+                    app:layout_constraintTop_toTopOf="@+id/customImageView12" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_title_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:fontFamily="@font/bold"
+                    android:text="+91-9834XXXX45"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="@dimen/text_28"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/customImageView12" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_title_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:gravity="center"
+                    android:text="on 3 Jul 2020, 3:45 pm IST"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="@dimen/text_12"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_title_2"
+                    app:layout_constraintStart_toStartOf="@+id/tv_title_2"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title_2" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="@dimen/size_22"
+                    android:layout_height="@dimen/size_22"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:layout_marginEnd="@dimen/size_11"
+                    android:src="@drawable/ic_close_grey_card"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_36"
+                android:background="@color/green_7ED321"
+                android:gravity="center">
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/green_7ED321"
+                    android:fontFamily="@font/semi_bold"
+                    android:gravity="center"
+                    android:text="Call this customer"
+                    android:textColor="@color/white"
+                    app:textType="BODY_3" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="@dimen/size_14"
+                    android:layout_height="@dimen/size_14"
+                    android:layout_marginStart="@dimen/size_4"
+                    android:tint="@color/white"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_arrow_purple"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.framework.views.customViews.CustomCardView>
+</layout>

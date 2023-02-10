@@ -11,13 +11,12 @@ import com.dashboard.controller.ui.more.holder.AboutViewHolder
 import com.dashboard.controller.ui.more.holder.UsefulLinksHolder
 import com.dashboard.databinding.*
 import com.dashboard.holder.*
+import com.dashboard.holder.v2.*
 import com.framework.base.BaseActivity
 import java.util.*
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
-  activity: BaseActivity<*, *>,
-  list: ArrayList<T>,
-  itemClickListener: RecyclerItemClickListener? = null
+  activity: BaseActivity<*, *>, list: ArrayList<T>, itemClickListener: RecyclerItemClickListener? = null
 ) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
 
   override fun getViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder<*> {
@@ -39,7 +38,6 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       BUSINESS_CONTENT_SETUP_ITEM_VIEW -> BusinessContentSetupViewHolder(binding as ItemBusinessContentSetupBinding)
       ITEMS_CONTENT_SETUP_ITEM_VIEW -> ItemContentSetupHolder(binding as ItemContentSetupManageBinding)
       ALL_BOOST_ADD_ONS_VIEW -> BoostAddOnsViewHolder(binding as ItemBoostAddOnsBinding)
-      HOME_DRAWER_VIEW -> HomeDrawerViewHolder(binding as ItemDrawerViewBinding)
       BOOST_ENQUIRIES_ITEM_VIEW -> EnquiriesItemViewHolder(binding as ItemCustomerPatientItemBinding)
       BOOST_WEBSITE_ITEM_VIEW -> WebsiteItemViewHolder(binding as ItemWebsiteItemV2Binding)
       FILTER_DATE_VIEW -> DateFilterViewHolder(binding as ItemFilterDateBinding)
@@ -48,8 +46,29 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       RECYCLER_USEFUL_LINKS -> UsefulLinksHolder(binding as RecyclerItemUsefulLinksBinding)
       RECYCLER_ABOUT_APP -> AboutViewHolder(binding as RecyclerItemAboutAppBinding)
       BOOST_WEBSITE_ITEM_FEATURE_VIEW -> WebsiteItemFeatureViewHolder(binding  as WebsiteItemFeatureV2Binding)
+//      BOOST_WEBSITE_ITEM_FEATURE_VIEW -> WebsiteItemFeatureViewHolder(binding as WebsiteItemFeatureBinding)
       RECYCLER_WEBSITE_NAV -> WebsiteNavHolder(binding = binding as RecyclerItemWebsiteNavBinding)
       CONSULTATION_VIEW -> ConsultationViewHolder(binding as RecyclerItemConsultationBinding)
+
+      //My To Do List Cards View Holders
+      OPTIONAL_TASKS_VIEW -> OptionalTasksViewHolder(binding as ItemOptionalTasksBinding)
+      POST_PURCHASE_1_VIEW -> PostPurchase1ViewHolder(binding as ItemPostPurchase1Binding)
+      POST_PURCHASE_2_VIEW -> PostPurchase2ViewHolder(binding as ItemPostPurchase2Binding)
+      MY_TODO_LIST_ACTION -> MyToDoActionItemViewHolder(binding as ItemTodoListActionBinding)
+      READINESS_SCORE_2_VIEW -> ReadinessScore2ViewHolder(binding as ItemReadinessScore2Binding)
+      RENEWAL_1_VIEW -> Renewal1ViewHolder(binding as ItemRenewal1Binding)
+      RENEWAL_2_VIEW -> Renewal2ViewHolder(binding as ItemRenewal2Binding)
+      RENEWAL_3_VIEW -> Renewal3ViewHolder(binding as ItemRenewal3Binding)
+      NEW_SINGLE_FEATURE_VIEW -> NewSingleFeatureViewHolder(binding as ItemNewSingleFeatureBinding)
+      NEW_MULTIPLE_FEATURE_VIEW -> NewMultipleFeatureViewHolder(binding as ItemNewMultipleFeatureBinding)
+      CONTINUE_WHERE_LEFT_VIEW -> ContinueWhereLeftViewHolder(binding as ItemContinueWhereLeftBinding)
+      MISSED_CALL_1_VIEW -> MissedCall1ViewHolder(binding as ItemMissedCall1Binding)
+      MISSED_CALL_2_VIEW -> MissedCall2ViewHolder(binding as ItemMissedCall2Binding)
+      MISSED_CALL_3_VIEW -> MissedCall3ViewHolder(binding as ItemMissedCall3Binding)
+      MISSED_CALL_4_VIEW -> MissedCall4ViewHolder(binding as ItemMissedCall4Binding)
+      ORDER_DETAILS_VIEW -> OrderDetailsViewHolder(binding as ItemOrderDetailsCardBinding)
+      ATTENTION_ORDER_ALERT_VIEW -> AttentionOrderViewHolder(binding as ItemAttentionOrderAlertBinding)
+      SMS_EMAIL_ENQUIRY_VIEW -> SMSEmailEnquiryViewHolder(binding as ItemSmsEmailEnquiryBinding)
     }
   }
 

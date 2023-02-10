@@ -70,7 +70,7 @@
               android:completionThreshold="0"
               android:gravity="center_vertical"
               android:hint="@string/select_service"
-              android:inputType="textNoSuggestions"
+              android:inputType="textVisiblePassword"
               android:singleLine="true"
               android:textCursorDrawable="@drawable/cursor_drawable"
               app:drawableEndCompat="@drawable/ic_arrow_down_orange"

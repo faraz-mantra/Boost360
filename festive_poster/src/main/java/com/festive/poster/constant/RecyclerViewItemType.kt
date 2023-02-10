@@ -30,7 +30,8 @@ enum class RecyclerViewItemType {
   VIEW_MORE_POSTER,
   FAV_CAT,
   UPDATE_STUDIO_INTRO_SCREEN_ITEM,
-  FEATURE_PURCHASE;
+  FEATURE_PURCHASE,
+  BROWSE_ALL_CATEGORIES;
 
 
   @LayoutRes
@@ -63,6 +64,7 @@ enum class RecyclerViewItemType {
       FAV_CAT->R.layout.list_item_fav_cat
       UPDATE_STUDIO_INTRO_SCREEN_ITEM->R.layout.list_item_update_studio_intro
       FEATURE_PURCHASE->R.layout.list_item_update_studio_feature_purchase
+      BROWSE_ALL_CATEGORIES->R.layout.list_item_category
     }
   }
 }
