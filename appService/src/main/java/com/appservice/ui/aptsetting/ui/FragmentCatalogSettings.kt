@@ -76,14 +76,14 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
     binding.bulkBookingSwitch.setOnToggledListener { _, isChecked ->
       sessionLocal.bulkBooking = isChecked
     }
-    binding.catalougeSwitch.setOnToggledListener { _, isChecked ->
-      sessionLocal.isCustomCta = isChecked
-      if (isChecked){
-        binding.catalougeRenameView.visibility = View.VISIBLE
-      }else{
-        binding.catalougeRenameView.visibility = View.GONE
-      }
-    }
+//    binding.catalougeSwitch.setOnToggledListener { _, isChecked ->
+//      sessionLocal.isCustomCta = isChecked
+//      if (isChecked){
+//        binding.catalougeRenameView.visibility = View.VISIBLE
+//      }else{
+//        binding.catalougeRenameView.visibility = View.GONE
+//      }
+//    }
   }
 
   override fun onResume() {
@@ -117,25 +117,25 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
         sessionLocal.noServiceSlot = response!!.noServiceSlot
         sessionLocal.serviceTiming = response!!.sameServiceSlot
         sessionLocal.bulkBooking = response!!.isBulkBooking
-        sessionLocal.isCustomCta = response!!.isCustomCta
-        sessionLocal.customCta = response!!.customCta
+//        sessionLocal.isCustomCta = response!!.isCustomCta
+//        sessionLocal.customCta = response!!.customCta
 
         binding?.ctvService?.text = response?.productCategory(baseActivity)?.capitalizeUtil()
         binding?.ctvWebsiteUrl?.text = fromHtml("<pre>URL: <span style=\"color: #4a4a4a;\"><u>${sessionLocal.getDomainName()}<b>/${response?.productCategoryVerb(baseActivity)}</b></u></span></pre>")
         sessionLocal.storeFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB, response?.productCategoryVerb)
         onCatalogSetupAddedOrUpdated(response?.productCategoryVerb.isNullOrEmpty().not())
       }
-      if (sessionLocal.fP_AppExperienceCode!! == "SVC" || sessionLocal.fP_AppExperienceCode!! == "SAL" || sessionLocal.fP_AppExperienceCode!! == "CAF"){
-        binding.catalogueView.visibility = View.VISIBLE
-        binding.catalougeSwitch.isOn = sessionLocal.isCustomCta!!
-
-        if (sessionLocal.isCustomCta!!){
-          binding.catalougeRenameView.visibility = View.VISIBLE
-          binding.catalougeNameLabel.text = sessionLocal.customCta
-        } else {
-          binding.catalougeRenameView.visibility = View.GONE
-        }
-      }
+//      if (sessionLocal.fP_AppExperienceCode!! == "SVC" || sessionLocal.fP_AppExperienceCode!! == "SAL" || sessionLocal.fP_AppExperienceCode!! == "CAF"){
+//        binding.catalogueView.visibility = View.VISIBLE
+//        binding.catalougeSwitch.isOn = sessionLocal.isCustomCta!!
+//
+//        if (sessionLocal.isCustomCta!!){
+//          binding.catalougeRenameView.visibility = View.VISIBLE
+//          binding.catalougeNameLabel.text = sessionLocal.customCta
+//        } else {
+//          binding.catalougeRenameView.visibility = View.GONE
+//        }
+//      }
       if (sessionLocal.fP_AppExperienceCode!! == "SVC" || sessionLocal.fP_AppExperienceCode!! == "SAL" || sessionLocal.fP_AppExperienceCode!! == "SPA"){
         binding.bulkBookingView.visibility = View.VISIBLE
         binding.bulkBookingSwitch.isOn = sessionLocal.bulkBooking!!
@@ -184,7 +184,7 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
         updateItemList.add(bulkBookingInfo)
         val stoteToggneInfo = Update()
         stoteToggneInfo.key="STORETOGGLE";
-        stoteToggneInfo.value="${sessionLocal.noServiceSlot!!}#${sessionLocal.serviceTiming!!}"
+        stoteToggneInfo.value="${sessionLocal.noServiceSlot.toString()}#${sessionLocal.serviceTiming.toString()}"
         updateItemList.add(stoteToggneInfo)
         businessProfileUpdateRequest.updates = updateItemList
         showProgress()
@@ -199,11 +199,11 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
             activity!!.onBackPressed()
           }
       }
-      binding.renameView -> {
-        BottomSheetCategoryRename(this,null,1).apply {
-          show(this@FragmentCatalogSettings.parentFragmentManager, BottomSheetCategoryRename::class.java.name)
-        }
-      }
+//      binding.renameView -> {
+//        BottomSheetCategoryRename(this,null,1).apply {
+//          show(this@FragmentCatalogSettings.parentFragmentManager, BottomSheetCategoryRename::class.java.name)
+//        }
+//      }
     }
   }
 
