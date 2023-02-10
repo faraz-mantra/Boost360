@@ -11,11 +11,11 @@ object NetworkCertificate {
             val pinList = Gson().fromJson(jsonString, NetworkCertificateModule::class.java)
             val pinner = CertificatePinner.Builder()
             for(singlePin in pinList) {
-                pinner.add(singlePin.domain,"sha256/"+singlePin.pin)
+                if(!singlePin.domain.isNullOrEmpty() && singlePin.pin.isNullOrEmpty())
+                    pinner.add(singlePin.domain,"sha256/"+singlePin.pin)
             }
             return pinner.build()
         }
         return CertificatePinner.Builder().build()
     }
-
 }
