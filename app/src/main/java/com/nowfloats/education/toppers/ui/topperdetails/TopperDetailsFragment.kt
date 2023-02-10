@@ -73,6 +73,7 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
         binding.toppersData = topperData
         binding.addUpdateTopperButton.text = UPDATE
         addUpdateTopper = true
+        Glide.with(this).load(topperData.profileimage.url).into(binding.toppersProfileImage)
         viewModel.setProfileImagePath(null)
         viewModel.setTestimonialImagePath(null)
       }

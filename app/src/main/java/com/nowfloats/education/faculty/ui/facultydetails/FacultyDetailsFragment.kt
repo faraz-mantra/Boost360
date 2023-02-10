@@ -70,6 +70,7 @@ class FacultyDetailsFragment(private val facultyData: Data?) : BaseFragment(),
         binding.addUpdateFaculty.text = UPDATE
         addUpdateFaculty = true
         viewModel.setFilePath("")
+        Glide.with(this).load(facultyData.profileimage.url).into(binding.facultyProfileImage)
       }
       else -> {
         binding.facultyData = Data()
