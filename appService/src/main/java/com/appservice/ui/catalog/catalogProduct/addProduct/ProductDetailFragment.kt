@@ -353,8 +353,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
             WebEngageController.trackEvent(PRODUCT_CATALOGUE_CREATED, ADDED, NO_EVENT_VALUE)
             productIdAdd = productId
             addGstService(productId)
-          } else
-            showError(getString(R.string.product_adding_error_try_again))
+          } else showError(getString(R.string.product_adding_error_try_again))
         }
       }
     } else {

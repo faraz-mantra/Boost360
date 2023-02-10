@@ -119,6 +119,7 @@ class TopperDetailsFragment(private val topperData: Data?, private val isEditing
     }
 
     initLiveDataObservables()
+    permissionsHelper.askPermission(this)
   }
 
   override fun onRequestPermissionsResult(
