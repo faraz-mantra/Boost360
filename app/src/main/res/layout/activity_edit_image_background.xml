@@ -38,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:layout_marginTop="8dp"
+            app:cropShape="rectangle"
             app:cropScaleType="fitCenter" />
 
         <LinearLayout

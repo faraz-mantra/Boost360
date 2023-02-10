@@ -77,7 +77,7 @@ class FragmentPaymentCollectionSetup : AppBaseFragment<FragmentPaymentCollection
     hitApi(liveData = viewModel?.setupDelivery(
         DeliverySetup(
           isPickupAllowed = false, isBusinessLocationPickupAllowed = binding?.toggleCod?.isOn,
-          isWarehousePickupAllowed = false, isHomeDeliveryAllowed = false, flatDeliveryCharge = "0",
+          isWarehousePickupAllowed = false, isHomeDeliveryAllowed = false, flatDeliveryCharge = 0,
           clientId = clientId, sessionLocal.fPID
         )
       ), errorStringId = R.string.error_getting_delivery_details
