@@ -88,7 +88,7 @@ class FragmentEcommercePaymentCollectionSetup : AppBaseFragment<FragmentEcommerc
   private fun updateHomeStoreStatus(isHome: Boolean? = binding?.toggleHome?.isOn, isStore: Boolean? = binding?.toggleCod?.isOn) {
     showProgress()
     hitApi(
-      liveData = viewModel?.setupDelivery(DeliverySetup(isPickupAllowed = isStore, isBusinessLocationPickupAllowed = false, isWarehousePickupAllowed = false, isHomeDeliveryAllowed = isHome, flatDeliveryCharge = 0, clientId = clientId, floatingPointId = sessionLocal.fPID)),
+      liveData = viewModel?.setupDelivery(DeliverySetup(isPickupAllowed = isStore, isBusinessLocationPickupAllowed = false, isWarehousePickupAllowed = false, isHomeDeliveryAllowed = isHome, flatDeliveryCharge = 0.0, clientId = clientId, floatingPointId = sessionLocal.fPID)),
       errorStringId = R.string.error_getting_delivery_details
     )
   }

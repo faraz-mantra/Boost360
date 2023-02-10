@@ -176,11 +176,11 @@ class FragmentEcommerceDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigur
 
   }
 
-  fun getflatCharges(): Int{
+  fun getflatCharges(): Double {
     return if(binding?.etdFlatCharges?.text.toString().isNotEmpty()){
-      binding?.etdFlatCharges?.text.toString().toInt()
+      binding?.etdFlatCharges?.text.toString().toDouble()
     }else{
-      0
+      0.0
     }
   }
 
@@ -227,7 +227,7 @@ class FragmentEcommerceDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigur
     bottomSheetAddCartSlab.show(parentFragmentManager, BottomSheetAddCartSlab::class.java.name)
   }
 
-  private fun updateDeliveryStatus(isPickup: Boolean, isHomePickup: Boolean, flatDeliverCharge: Int) {
+  private fun updateDeliveryStatus(isPickup: Boolean, isHomePickup: Boolean, flatDeliverCharge: Double) {
     viewModel?.setupDelivery(
       DeliverySetup(
         isPickupAllowed = isPickup, isBusinessLocationPickupAllowed = binding.ccbBusinessLocation.isChecked, isWarehousePickupAllowed = binding.ccbWarehouseAddress.isChecked,

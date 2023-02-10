@@ -18,7 +18,7 @@ data class DeliverySetup(
 	var isHomeDeliveryAllowed: Boolean? = null,
 
 	@field:SerializedName("FlatDeliveryCharge")
-	var flatDeliveryCharge: Int = 0,
+	var flatDeliveryCharge: Double = 0.0,
 
 	@field:SerializedName("ClientId")
 	var clientId: String? = null,
