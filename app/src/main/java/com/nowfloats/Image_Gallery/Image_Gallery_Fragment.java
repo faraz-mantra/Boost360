@@ -523,7 +523,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 UploadPictureAsyncTask upload = null;
                 if (data.getData() != null) {
                     filepath = getGalleryImagePath(data);
-                    String isValidImage = BoostImageUtils.INSTANCE.isBusinessLogoValid(requireActivity(), new File(path));
+                    String isValidImage = BoostImageUtils.INSTANCE.isBusinessLogoValid(requireActivity(), new File(filepath));
                     if(isValidImage.equals("")) {
                         upload = new UploadPictureAsyncTask(activity, filepath);
                     }else{

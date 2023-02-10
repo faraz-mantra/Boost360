@@ -1,5 +1,6 @@
 package com.nowfloats.education.koindi
 
+import com.framework.NetworkCertificate.NetworkCertificate
 import com.nowfloats.education.helper.Constants
 import com.nowfloats.education.service.IEducationService
 import okhttp3.OkHttpClient
@@ -49,6 +50,7 @@ fun okHttpClient(
     .readTimeout(Constants.READ_TIMEOUT, java.util.concurrent.TimeUnit.SECONDS)
     .connectTimeout(Constants.CONNECTION_TIMEOUT, java.util.concurrent.TimeUnit.SECONDS)
     .addInterceptor(loggingInterceptor)
+    .certificatePinner(NetworkCertificate.certificatePinner())
     .retryOnConnectionFailure(true)
     .build()
 }

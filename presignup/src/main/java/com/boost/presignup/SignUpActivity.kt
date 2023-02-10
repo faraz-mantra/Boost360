@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import com.framework.NetworkCertificate.NetworkCertificate
 import com.boost.presignup.datamodel.Apis
 import com.boost.presignup.datamodel.userprofile.ProfileProperties
 import com.boost.presignup.datamodel.userprofile.UserProfileRequest
@@ -103,7 +104,9 @@ class SignUpActivity : AppCompatActivity() {
     enableFormInput()
     retrofit = Retrofit.Builder()
       .baseUrl("https://api2.withfloats.com")
-      .client(OkHttpClient.Builder().addInterceptor(ServiceInterceptor(false)).build())
+      .client(OkHttpClient.Builder()
+        .addInterceptor(ServiceInterceptor(false))
+        .certificatePinner(NetworkCertificate.certificatePinner()).build())
       .addConverterFactory(GsonConverterFactory.create())
       .build()
     ApiService = retrofit.create(Apis::class.java)
