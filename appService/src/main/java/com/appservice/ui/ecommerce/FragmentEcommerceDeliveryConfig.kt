@@ -66,10 +66,10 @@ class FragmentEcommerceDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigur
 
     })
     binding?.toggleHomeDelivery?.setOnToggledListener { _, isOn ->
-      updateDeliveryStatus(binding?.toggleAllowPickup?.isOn ?: true, isOn, binding?.etdFlatCharges?.text.toString())
+      updateDeliveryStatus(binding?.toggleAllowPickup?.isOn ?: true, isOn, getflatCharges())
     }
     binding?.toggleAllowPickup?.setOnToggledListener { _, isOn ->
-      updateDeliveryStatus(isOn, binding?.toggleHomeDelivery?.isOn ?: true, binding?.etdFlatCharges?.text.toString())
+      updateDeliveryStatus(isOn, binding?.toggleHomeDelivery?.isOn ?: true, getflatCharges())
     }
   }
 
@@ -161,19 +161,27 @@ class FragmentEcommerceDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigur
         updateDeliveryStatus(
           binding?.toggleAllowPickup?.isOn,
           binding?.toggleHomeDelivery?.isOn,
-          binding?.etdFlatCharges?.text.toString()
+          getflatCharges()
         )
       }
       binding?.ccbBusinessLocation.setOnCheckedChangeListener { buttonView, isChecked ->
         updateDeliveryStatus(
           binding?.toggleAllowPickup?.isOn,
           binding?.toggleHomeDelivery?.isOn,
-          binding?.etdFlatCharges?.text.toString()
+          getflatCharges()
         )
       }
     }
     setOnClickListener(binding?.btnAddAnotherSlab, binding?.btnFlatCharges, binding?.addWareHouseAddress, binding?.btnSaveCharges)
 
+  }
+
+  fun getflatCharges(): Int{
+    return if(binding?.etdFlatCharges?.text.toString().isNotEmpty()){
+      binding?.etdFlatCharges?.text.toString().toInt()
+    }else{
+      0
+    }
   }
 
   private fun showAddWareHouse() {
@@ -208,7 +216,7 @@ class FragmentEcommerceDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigur
         showAddWareHouse()
       }
       binding?.btnSaveCharges -> {
-        updateDeliveryStatus(binding?.toggleAllowPickup?.isOn ?: true, binding?.toggleHomeDelivery?.isOn ?: true, binding?.etdFlatCharges?.text.toString())
+        updateDeliveryStatus(binding?.toggleAllowPickup?.isOn ?: true, binding?.toggleHomeDelivery?.isOn ?: true, getflatCharges())
       }
 
     }
@@ -219,7 +227,7 @@ class FragmentEcommerceDeliveryConfig : AppBaseFragment<FragmentDeliveryConfigur
     bottomSheetAddCartSlab.show(parentFragmentManager, BottomSheetAddCartSlab::class.java.name)
   }
 
-  private fun updateDeliveryStatus(isPickup: Boolean, isHomePickup: Boolean, flatDeliverCharge: String) {
+  private fun updateDeliveryStatus(isPickup: Boolean, isHomePickup: Boolean, flatDeliverCharge: Int) {
     viewModel?.setupDelivery(
       DeliverySetup(
         isPickupAllowed = isPickup, isBusinessLocationPickupAllowed = binding.ccbBusinessLocation.isChecked, isWarehousePickupAllowed = binding.ccbWarehouseAddress.isChecked,
