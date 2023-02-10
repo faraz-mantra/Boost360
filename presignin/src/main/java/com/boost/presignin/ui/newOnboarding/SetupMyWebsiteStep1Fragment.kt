@@ -247,6 +247,27 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
       RecyclerViewActionType.CATEGORY_ITEM_CLICKED.ordinal -> {
         WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_SELECTION_MAIN_LOAD, CLICK, NO_EVENT_VALUE)
         val dataCategory = (item as? CategoryDataModel) ?: return
+        if(dataCategory.experience_code == "EDU"){
+          dataCategory.subCategoryName = "Education Center"
+        } else if(dataCategory.experience_code == "CAF"){
+          dataCategory.subCategoryName = "Cafe"
+        } else if(dataCategory.experience_code == "RTL"){
+          dataCategory.subCategoryName = "Store"
+        } else if(dataCategory.experience_code == "SVC"){
+          dataCategory.subCategoryName = "SERVICE CENTER"
+        } else if(dataCategory.experience_code == "DOC"){
+          dataCategory.subCategoryName = "Doctor"
+        } else if(dataCategory.experience_code == "HOS"){
+          dataCategory.subCategoryName = "Hospital"
+        } else if(dataCategory.experience_code == "MFG"){
+          dataCategory.subCategoryName = "Manufacturer"
+        } else if(dataCategory.experience_code == "HOT"){
+          dataCategory.subCategoryName = "Hotel"
+        } else if(dataCategory.experience_code == "SAL"){
+          dataCategory.subCategoryName = "Hair Salon"
+        } else if(dataCategory.experience_code == "SPA"){
+          dataCategory.subCategoryName = "Spa"
+        }
         if (binding?.includeNoSearchResultFound?.root?.visibility == View.VISIBLE) {
           categoryNoDataList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
           noCatListAdapter?.notifyDataSetChanged()
