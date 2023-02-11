@@ -80,7 +80,7 @@ class SearchViewModel: BaseViewModel()  {
         compositeDisposable.add(
             AppDatabase.getInstance(application)!!
                 .featuresDao()
-                .getAllFeatures()
+                .getFeaturesItems(true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess {
