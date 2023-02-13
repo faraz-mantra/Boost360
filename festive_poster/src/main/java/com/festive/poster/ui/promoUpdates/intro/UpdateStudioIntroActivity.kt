@@ -75,7 +75,7 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
       ),
 
       IntroUpdateStudioItem(
-        getString(R.string.post_free_updates_using_create_tab), R.drawable.update_studio_intro3_v2, getString(R.string.you_can_continue_to_post_good_old_updates_using_the_create_tab_on_top)
+        getString(R.string.post_free_updates_using_create_tab), R.drawable.update_into3, getString(R.string.you_can_continue_to_post_good_old_updates_using_the_create_tab_on_top)
       ),
     )
 
