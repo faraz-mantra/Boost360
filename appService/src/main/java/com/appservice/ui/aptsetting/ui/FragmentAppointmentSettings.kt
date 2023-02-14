@@ -49,18 +49,18 @@ class FragmentAppointmentSettings : AppBaseFragment<FragmentAppointmentSettingsB
     super.onCreateView()
     sessionLocal = UserSessionManager(requireActivity())
     WebEngageController.trackEvent(APPOINTMENT_SETTING_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    clearSearchFocus()
-    binding?.svSettings?.setOnQueryTextListener(object : SearchView.OnQueryTextListener, androidx.appcompat.widget.SearchView.OnQueryTextListener {
-      override fun onQueryTextSubmit(query: String?): Boolean {
-        return false
-      }
-
-      override fun onQueryTextChange(newText: String?): Boolean {
-        filterList(newText)
-        return false
-      }
-
-    })
+//    clearSearchFocus()
+//    binding?.svSettings?.setOnQueryTextListener(object : SearchView.OnQueryTextListener, androidx.appcompat.widget.SearchView.OnQueryTextListener {
+//      override fun onQueryTextSubmit(query: String?): Boolean {
+//        return false
+//      }
+//
+//      override fun onQueryTextChange(newText: String?): Boolean {
+//        filterList(newText)
+//        return false
+//      }
+//
+//    })
   }
 
   override fun onResume() {
@@ -80,20 +80,20 @@ class FragmentAppointmentSettings : AppBaseFragment<FragmentAppointmentSettingsB
     }
   }
 
-  private fun filterList(newText: String?) {
-    filteredList?.clear()
-    if (newText?.isNotEmpty() == true) {
-      copyList?.forEach {
-        if (it.title?.toLowerCase(Locale.ROOT)?.contains(newText.toLowerCase(Locale.ROOT)) == true) {
-          filteredList?.add(it)
-        }
-      }
-      adapter?.updateList(filteredList ?: arrayListOf())
-    } else {
-      adapter?.updateList(finalList ?: arrayListOf())
-
-    }
-  }
+//  private fun filterList(newText: String?) {
+//    filteredList?.clear()
+//    if (newText?.isNotEmpty() == true) {
+//      copyList?.forEach {
+//        if (it.title?.toLowerCase(Locale.ROOT)?.contains(newText.toLowerCase(Locale.ROOT)) == true) {
+//          filteredList?.add(it)
+//        }
+//      }
+//      adapter?.updateList(filteredList ?: arrayListOf())
+//    } else {
+//      adapter?.updateList(finalList ?: arrayListOf())
+//
+//    }
+//  }
 
   private fun setUpRecyclerView(tilesArray: ArrayList<AppointmentStatusResponse.TilesModel>) {
     this.copyList?.addAll(tilesArray)
@@ -108,9 +108,9 @@ class FragmentAppointmentSettings : AppBaseFragment<FragmentAppointmentSettingsB
     data?.let { clickActionButton(it) }
   }
 
-  private fun clearSearchFocus() {
-    binding?.svSettings?.clearFocus()
-  }
+//  private fun clearSearchFocus() {
+//    binding?.svSettings?.clearFocus()
+//  }
 
 
   private fun clickActionButton(data: AppointmentStatusResponse.TilesModel) {
