@@ -552,7 +552,7 @@ class DashboardFragmentV2 : AppBaseFragment<FragmentDashboardV2Binding, Dashboar
 
     binding.profileView.imgBusinessLogo.let {
       if (imageLogoUri.isNullOrEmpty().not()) {
-        baseActivity.glideLoad(mImageView = it, url = imageLogoUri!!, placeholder = R.drawable.gradient_white, isLoadBitmap = true)
+        baseActivity.glideLoad(mImageView = it, url = imageLogoUri!!, placeholder = R.drawable.gradient_white, isLoadBitmap = !imageLogoUri!!.contains(".gif"))
       } else it.setImageResource(R.drawable.ic_add_logo_d)
     }
   }

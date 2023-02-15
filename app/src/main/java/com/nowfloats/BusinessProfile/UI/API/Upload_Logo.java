@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.util.Log;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.framework.analytics.SentryController;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.Login.UserSessionManager;
@@ -12,17 +15,29 @@ import com.nowfloats.NavigationDrawer.RoundCorners_image;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.FileUtils;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.UUID;
+
+import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 /**
  * Created by NowFloatsDev on 29/05/2015.
@@ -79,9 +94,13 @@ public class Upload_Logo extends AsyncTask<Void, String, String> {
                     listener.onSuccess(true);
                     Methods.showSnackBarPositive(appContext, appContext.getString(R.string.logo_updated_successfully));
                     Constants.LOGOUPLOADED = true;
-                    Bitmap bmp = Methods.decodeSampledBitmap(path, 720, 720);
-                    bmp = RoundCorners_image.getRoundedCornerBitmap(bmp, 15);
-                    Business_Logo_Activity.logoimageView.setImageBitmap(bmp);
+                    if(path.toLowerCase().contains(".gif")){
+                        Glide.with(appContext).asGif().load(path).apply(new RequestOptions().placeholder(R.drawable.logo_default_image)).into(Business_Logo_Activity.logoimageView);
+                    }else {
+                        Bitmap bmp = Methods.decodeSampledBitmap(path, 720, 720);
+//                        bmp = RoundCorners_image.getRoundedCornerBitmap(bmp, 15);
+                        Business_Logo_Activity.logoimageView.setImageBitmap(bmp);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     SentryController.INSTANCE.captureException(e);
@@ -108,7 +127,7 @@ public class Upload_Logo extends AsyncTask<Void, String, String> {
     public void uploadImage(String imagePath) {
         try {
             UUID uuid;
-
+            String minType = FileUtils.getExtension(imagePath);
             uuid = UUID.randomUUID();
             String s_uuid = uuid.toString();
             s_uuid = s_uuid.replace("-", "");
@@ -119,10 +138,13 @@ public class Upload_Logo extends AsyncTask<Void, String, String> {
                     Constants.clientId +
                     "&fpId=" + fpID +
                     "&reqType=sequential&reqtId=" +
-                    s_uuid + "&";
+                    s_uuid + "&fileName=ImageFloat" + System.currentTimeMillis()+minType+"&";
 
             String temp = uri + "totalChunks=1&currentChunkNumber=1";
-            sendDataToServer(temp, Methods.compressToByte(imagePath, appContext));
+//            if(imagePath.contains(".gif"))
+//                sendGifToServer(temp, imagePath);
+//            else
+                sendDataToServer(temp, Methods.compressToByte(imagePath, appContext));
         } catch (Exception e) {
             SentryController.INSTANCE.captureException(e);
             Methods.showSnackBarNegative(appContext, e.getMessage());
@@ -131,6 +153,38 @@ public class Upload_Logo extends AsyncTask<Void, String, String> {
         }
 
 
+    }
+
+    public void sendGifToServer(String url, String ImagePath){
+        OkHttpClient client = new OkHttpClient();
+        okhttp3.RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("fileName", ImagePath, okhttp3.RequestBody.create(MediaType.parse("multipart/form-data"), new File(ImagePath)))
+                .build();
+
+        Request request = new Request.Builder().url(url)
+                .put(body)
+                .addHeader("Connection", "Keep-Alive")
+                .addHeader("Authorization", Utils.getAuthToken())
+                .addHeader("Content-Type", Constants.BG_SERVICE_CONTENT_TYPE_OCTET_STREAM)
+                .build();
+
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("GIF upload", e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+
+                if (response != null) {
+                    if(response.code() == 200 || response.code() == 202){
+                        isUploadingSuccess = true;
+                    }
+                }
+            }
+        });
     }
 
 
@@ -224,6 +278,7 @@ public class Upload_Logo extends AsyncTask<Void, String, String> {
             }
         }
     }
+
 
     public interface Listener {
         void onSuccess(Boolean isSuccess);
