@@ -1,6 +1,7 @@
 package com.appservice.ui.updatesBusiness
 
 import android.animation.Animator
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -11,11 +12,14 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Spannable
 import android.text.TextWatcher
+import android.text.method.ScrollingMovementMethod
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Scroller
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
@@ -330,6 +334,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     sttUtils?.init(this)
   }
 
+  @SuppressLint("ClickableViewAccessibility")
   private fun addHashTagFunction() {
     mSpannable = binding.etUpdate.text
 
@@ -363,6 +368,23 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
         toggleContinue()
       }
     })
+
+    binding.etUpdate.setOnTouchListener { v, event ->
+      v?.let {
+        if(it.id==binding.etUpdate.id){
+          it.parent.requestDisallowInterceptTouchEvent(true)
+          event?.let {
+            when(it.action and MotionEvent.ACTION_MASK){
+              MotionEvent.ACTION_UP -> {
+                v.parent.requestDisallowInterceptTouchEvent(false)
+              }
+              else -> {}
+            }
+          }
+        }
+      }
+      false
+    }
 
   }
 
