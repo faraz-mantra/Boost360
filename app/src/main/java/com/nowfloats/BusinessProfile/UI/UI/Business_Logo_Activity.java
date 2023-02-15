@@ -391,6 +391,8 @@ public class Business_Logo_Activity extends AppCompatActivity {
                         path = Methods.getPath(this, picUri);
                         if (path.toLowerCase().contains(".png")) {
                             path = Util.saveBitmap(path, Business_Logo_Activity.this, "ImageFloat" + System.currentTimeMillis());
+                        } else if (path.toLowerCase().contains(".gif")) {
+
                         }
                         String isBusinessValidMessage = BoostImageUtils.INSTANCE.isBusinessLogoValid(Business_Logo_Activity.this, new File(path));
                         if (!Util.isNullOrEmpty(path) && isBusinessValidMessage.equals("")) {

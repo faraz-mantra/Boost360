@@ -4311,9 +4311,19 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         intent.putExtra("cartItems", cartList.size)
         intent.putExtra("discountText", total)
         intent.putExtra("transaction_id", result.Result.TransactionId)
-        intent.putExtra("email", (activity as CartActivity).email)
         intent.putExtra("currency", "INR")
-        intent.putExtra("contact", (activity as CartActivity).mobileNo)
+//        intent.putExtra("email", (activity as CartActivity).email)
+//        intent.putExtra("contact", (activity as CartActivity).mobileNo)
+        if (!(activity as CartActivity).email.isNullOrEmpty()) {
+            intent.putExtra("email", (activity as CartActivity).email)
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com")
+        }
+        if (!(activity as CartActivity).mobileNo.isNullOrEmpty()) {
+            intent.putExtra("contact", (activity as CartActivity).mobileNo)
+        } else {
+            intent.putExtra("contact", "9160004303")
+        }
         startActivity(intent)
     }
 
