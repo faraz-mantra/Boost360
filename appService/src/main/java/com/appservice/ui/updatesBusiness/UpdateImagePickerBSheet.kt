@@ -17,6 +17,7 @@ import com.framework.models.BaseViewModel
 import com.framework.utils.FileUtils
 import com.framework.utils.sizeInMb
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.io.IOException
 import java.io.InputStream
 
@@ -84,12 +85,19 @@ class UpdateImagePickerBSheet:BaseBottomSheetDialog<BsheetUpdateImagePickerBindi
                 if (resultCode == Activity.RESULT_OK) {
                     //Image Uri will not be null for RESULT_OK
                     val fileUri = data?.data!!
-                    val file = FileUtils.saveFile(fileUri,requireActivity().getExternalFilesDir(null)?.path,
-                        UPDATE_PIC_FILE_NAME)
+//                    val file = FileUtils.saveFile(fileUri,requireActivity().getExternalFilesDir(null)?.path,
+//                        UPDATE_PIC_FILE_NAME)
+                    val file = File(com.appservice.utils.FileUtils(requireActivity()).getPath(fileUri))
 
                     if (file?.exists() == true){
                         if (file.sizeInMb <= 5){
-                            callbacks?.onImagePicked(file.path)
+                            if (file.extension.equals("JPEG",ignoreCase = true)||
+                                file.extension.equals("JPG",ignoreCase = true)||
+                                file.extension.equals("PNG",ignoreCase = true)) {
+                                callbacks?.onImagePicked(file.path)
+                            }else{
+                                callbacks?.onImagePicked("invalidFile")
+                            }
                         } else {
                             callbacks?.onImagePicked("higher")
                         }

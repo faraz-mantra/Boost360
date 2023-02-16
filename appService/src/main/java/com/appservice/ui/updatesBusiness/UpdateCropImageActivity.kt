@@ -73,16 +73,17 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
                 ).apply(RequestOptions.skipMemoryCacheOf(true))
                     .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).submit().get()
                 runOnUi {
-                    if(bitmap.width <= 400 || bitmap.height <= 400 ){
-                        Toasty.error(this@UpdateCropImageActivity,"Max Cropping allowed 400px for width/height", Toasty.LENGTH_LONG).show()
-                        this@UpdateCropImageActivity.finish()
-                        return@runOnUi
-                    }
-                    binding!!.ivCrop.setImageBitmap(bitmap)
-                    binding!!.ivCrop.setMinCropResultSize(400,400)
-                    binding!!.ivCrop.setCropRect(Rect(400, 400, 600, 600))
+                    if(bitmap.width <= 200 || bitmap.height <= 200 ){
+                        binding!!.ivCrop.setImageBitmap(bitmap)
+                        binding!!.ivCrop.setAspectRatio(bitmap.width+50,bitmap.height+50)
+                        binding!!.ivCrop.setFixedAspectRatio(false)
+                    }else {
+                        binding!!.ivCrop.setImageBitmap(bitmap)
+                        binding!!.ivCrop.setMinCropResultSize(400, 400)
+                        binding!!.ivCrop.setCropRect(Rect(400, 400, 600, 600))
 //                    binding!!.ivCrop.setAspectRatio(600,600)
 //                    binding!!.ivCrop.setFixedAspectRatio(false)
+                    }
                 }
             }
         }
@@ -107,11 +108,16 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
             }
 
             binding!!.layoutTick->{
-                binding!!.ivCrop.croppedImage.saveAsImageToAppFolder(getExternalFilesDir(null)?.path+File.separator
-                + UPDATE_PIC_FILE_NAME)
-                setResult(Activity.RESULT_OK)
-
-                finish()
+                if(binding!!.ivCrop.croppedImage.width < 1 && binding!!.ivCrop.croppedImage.height < 1){
+                    Toasty.error(this@UpdateCropImageActivity,"Invalid Image Cropping", Toasty.LENGTH_LONG).show()
+                }else {
+                    binding!!.ivCrop.croppedImage.saveAsImageToAppFolder(
+                        getExternalFilesDir(null)?.path + File.separator
+                                + UPDATE_PIC_FILE_NAME
+                    )
+                    setResult(Activity.RESULT_OK)
+                    finish()
+                }
             }
             binding!!.ivDelete->{
                 File(getExternalFilesDir(null)?.path+File.separator
