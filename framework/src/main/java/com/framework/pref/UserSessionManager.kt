@@ -87,6 +87,7 @@ class UserSessionManager(var context: Context) {
   private val SERVICE_TIMING="serviceTiming"
   private val BULK_BOOKING ="bulkBooking"
   private val IS_CUSTOM_CTA ="isCta"
+  private val CUSTOM_CTA ="customCta"
 
 
   fun Context.getPreferenceTwitter(): SharedPreferences {
@@ -854,9 +855,9 @@ class UserSessionManager(var context: Context) {
       editor.commit()
     }
   var customCta: String?
-    get() = pref.getString(SERVICE_TIMING, "N/A")
+    get() = pref.getString(CUSTOM_CTA, "N/A")
     set(customCta) {
-      editor.putString(SERVICE_TIMING, customCta!!)
+      editor.putString(CUSTOM_CTA, customCta!!)
       editor.commit()
     }
 

@@ -138,6 +138,7 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
         } else {
           binding.catalougeRenameView.visibility = View.GONE
         }
+        binding.btnSaveDetails.visibility = View.VISIBLE
       }
       if (sessionLocal.fP_AppExperienceCode!! == "SVC" || sessionLocal.fP_AppExperienceCode!! == "SAL" || sessionLocal.fP_AppExperienceCode!! == "SPA"){
         binding.bulkBookingView.visibility = View.VISIBLE
@@ -187,9 +188,13 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
         updateItemList.add(bulkBookingInfo)
         val storeToggleInfo = Update()
         storeToggleInfo.key="STORETOGGLE";
-        val value = sessionLocal.noServiceSlot.toString()+"#"+sessionLocal.serviceTiming.toString()
+        val value ="${sessionLocal.noServiceSlot.toString()}#${sessionLocal.serviceTiming.toString()}"
         storeToggleInfo.value=value
         updateItemList.add(storeToggleInfo)
+        val ctaInfo = Update()
+        ctaInfo.key = "CTATOGGLE";
+        ctaInfo.value = "${sessionLocal.isCustomCta.toString()}#${sessionLocal.customCta}"
+        updateItemList.add(ctaInfo)
         businessProfileUpdateRequest.updates = updateItemList
         showProgress()
         viewModel?.updateBusinessDetails(businessProfileUpdateUrl,businessProfileUpdateRequest)
