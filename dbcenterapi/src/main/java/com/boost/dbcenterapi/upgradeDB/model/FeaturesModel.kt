@@ -110,6 +110,9 @@ data class FeaturesModel(
     @ColumnInfo(name = "actionNeeded")
     var actionNeeded: String? = null,
 
+    @ColumnInfo(name = "exclusive_To_clientIds")
+    var exclusive_To_clientIds: String? = null,
+
 ) : Serializable, AppBaseRecyclerViewItem {
 
     override fun getViewType(): Int {

@@ -272,7 +272,7 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                                     if (item.how_to_use_steps != null && item.how_to_use_steps!!.size > 0) Gson().toJson(
                                         item.how_to_use_steps
                                     ) else null,
-                                    item.how_to_use_title
+                                    item.how_to_use_title,null
                                 )
                             )
                         }
@@ -383,6 +383,7 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                                         item.benefits
                                     ) else null,
                                     item.desc,
+                                    null
                                 )
                             )
                         }

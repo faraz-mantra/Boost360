@@ -38,5 +38,6 @@ data class Feature(
     val widget_type: String?,
     val frequently_asked_questions: FrequentlyAskedQuestions?,
     val how_to_use_steps: List<HowToUseStep>?,
-    val how_to_use_title: String?
+    val how_to_use_title: String?,
+    val exclusive_To_clientIds:List<String>? =null
 )
