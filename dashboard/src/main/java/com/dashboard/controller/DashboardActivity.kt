@@ -494,15 +494,17 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
           Log.e("BranchSDK_Tester", "branch init failed. Caused by -" + error.message)
         } else {
           Log.e("BranchSDK_Tester", "branch init complete!")
-          mDeepLinkUrl = Uri.parse(linkProperties?.controlParams?.get("\$android_url")).getQueryParameter("url")
+          mDeepLinkUrl = Uri.parse(linkProperties?.controlParams?.get("\$android_url").toString().split("url=")[1]).toString()
           if (!checkIsHomeDeepLink()) {
             val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(Uri.parse(mDeepLinkUrl ?: ""))
             if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
               val viewType = deepHashMap[DynamicLinkParams.viewType]
               val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
               if (deepLinkUtil != null)
-                Timer().schedule(50) {
-                  deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
+                Timer().schedule(100) {
+                  this@DashboardActivity.runOnUiThread(){
+                    deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
+                  }
                 }
                 }
           }
