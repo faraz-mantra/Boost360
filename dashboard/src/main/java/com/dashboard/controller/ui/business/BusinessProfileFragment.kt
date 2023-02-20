@@ -270,7 +270,8 @@ class BusinessProfileFragment : AppBaseFragment<FragmentBusinessProfileBinding, 
       }
       binding?.openBusinessWebsite -> {
         WebEngageController.trackEvent(WEB_VIEW_PAGE, CLICK, NO_EVENT_VALUE)
-        openWebViewDialog(session?.rootAliasURI!!, session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) ?: "")
+        session?.rootAliasURI?.toHttpsPrefix()
+          ?.let { openWebViewDialog(it, session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) ?: "") }
       }
       binding?.viewBusinessTiming->{
         baseActivity.startBusinessHours(session)
