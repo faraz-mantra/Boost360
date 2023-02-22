@@ -4,8 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
-import android.graphics.ImageDecoder
-import android.graphics.drawable.AnimatedImageDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.Log
@@ -130,7 +128,15 @@ fun Activity.glideLoad(mImageView: CustomImageView, url: String, placeholder: In
         override fun onLoadCleared(placeholder: Drawable?) {
         }
       })
-    } else glideImage.into(mImageView)
+    } else {
+      if(url.contains(".gif")) {
+        Glide.with(getApplicationContext()).asGif().load(url)
+          .apply(RequestOptions().placeholder(placeholder))
+          .into(mImageView)
+      }else{
+        glideImage.into(mImageView)
+      }
+    }
   } catch (e: Exception) {
     Log.e("GlideUtil", "Error: ${e.localizedMessage}")
   }

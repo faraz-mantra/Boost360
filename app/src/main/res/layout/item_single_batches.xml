@@ -87,10 +87,10 @@
 
             <TextView
                 android:tag="com.userexperior.ueSecureView"
+                android:id="@+id/duration_in_days"
 
                 android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text='@{batchesResponseData.duration!=null &amp;&amp;batchesResponseData.duration!= "" ? batchesResponseData.duration : "-"}'
               android:textSize="@dimen/txt_12sp"
               tools:text="15 Days" />
           </LinearLayout>

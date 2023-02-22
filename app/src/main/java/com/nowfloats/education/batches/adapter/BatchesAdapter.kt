@@ -48,6 +48,12 @@ class BatchesAdapter(private val eventListener: ItemClickEventListener) :
           binding.menuOptions.visibility = View.GONE
         }
       }
+      if (batchesResponseData.duration.contains("months")||batchesResponseData.duration.contains("Years")){
+        binding.durationInDays.text=batchesResponseData.duration
+      } else{
+        binding.durationInDays.text=batchesResponseData.duration+" Days"
+      }
+
       binding.mainLayout.setOnClickListener { eventListener.itemMenuOptionStatus(position, false) }
 
       binding.singleItemMenuButton.setOnClickListener {

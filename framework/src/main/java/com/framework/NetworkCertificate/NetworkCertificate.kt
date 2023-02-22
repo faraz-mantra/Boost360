@@ -7,7 +7,7 @@ import okhttp3.CertificatePinner
 object NetworkCertificate {
      fun certificatePinner(): CertificatePinner{
         val jsonString = FirebaseRemoteConfig.getInstance().getString("network_security_config")
-        if(jsonString.isNotEmpty()){
+        if(jsonString.isNotEmpty() && jsonString.equals("{}").not()){
             val pinList = Gson().fromJson(jsonString, NetworkCertificateModule::class.java)
             val pinner = CertificatePinner.Builder()
             for(singlePin in pinList) {

@@ -57,10 +57,16 @@ import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.thinksity.R;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -616,15 +622,12 @@ public class Methods {
                 .negativeColorRes(R.color.light_gray)
                 .negativeText(appContext.getString(R.string.cancel))
                 .positiveText(appContext.getString(R.string.take_me_there))
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent();
-                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        Uri uri = Uri.fromParts("package", appContext.getPackageName(), null);
-                        intent.setData(uri);
-                        appContext.startActivity(intent);
-                    }
+                .onPositive((dialog, which) -> {
+                    Intent intent = new Intent();
+                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri = Uri.fromParts("package", appContext.getPackageName(), null);
+                    intent.setData(uri);
+                    appContext.startActivity(intent);
                 })
                 .build().show();
     }
@@ -832,14 +835,31 @@ public class Methods {
             SentryController.INSTANCE.captureException(e1);
             e1.printStackTrace();
         }
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        Bitmap bmp = Util.getBitmap(path, act);
-        if ((f.length() / 1024) > 1024) {
-            bmp.compress(Bitmap.CompressFormat.JPEG, 80, bos);
-        } else {
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] bytes = new byte[(int) f.length()];
+            FileInputStream fis = null;
+            if (path.contains(".gif")) {
+                fis = new FileInputStream(f);
+                //read file into bytes[]
+                fis.read(bytes);
+            } else {
+                Bitmap bmp = Util.getBitmap(path, act);
+                if ((f.length() / 1024) > 1024) {
+                    bmp.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+                } else {
+                    bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                }
+            }
+            if (fis != null) {
+                fis.close();
+            }
+            bos.close();
+            return path.contains(".gif") ? bytes : bos.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new byte[1024];
         }
-        return bos.toByteArray();
     }
 
     public static String getCurrentTime() {
@@ -1140,28 +1160,27 @@ public class Methods {
 
     public interface SmsApi {
 
-        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
+        @Headers({"X-Authy-API-Key: gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5"})
         @POST("/protected/json/phones/verification/start")
         void sendSms(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
 
-        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
+        @Headers("X-Authy-API-Key: gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5")
         @GET("/protected/json/phones/verification/check")
         void verifySmsCode(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
 
-        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
+        @Headers("X-Authy-API-Key: gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5")
         @GET("/plugin/api/Service/VerifyPhoneNumberAndSendOTP")
         void verifyPhoneNumberAndSendOTP(@QueryMap Map hashMap, Callback<VerifyPhoneNumberAndSendOTP> response);
 
-
-        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
+        @Headers("X-Authy-API-Key: gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5")
         @GET("/plugin/api/Service/VerifyOTP")
         void verifyOTPCode(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
 
-        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
+        @Headers("X-Authy-API-Key: gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5")
         @GET("/plugin/api/Service/ResendOTP")
         void reSendOTP(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
 
-        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
+        @Headers("X-Authy-API-Key: gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5")
         @GET("/plugin/api/Service/ResendOTPOverCall")
         void resendOTPOverCall(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
     }

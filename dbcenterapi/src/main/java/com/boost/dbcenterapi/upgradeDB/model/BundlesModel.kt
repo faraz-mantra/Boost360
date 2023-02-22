@@ -47,4 +47,7 @@ data class BundlesModel(
 
   @ColumnInfo(name = "desc")
   var desc: String? = null,
+
+  @ColumnInfo(name = "exclusive_To_clientIds")
+  var exclusive_To_clientIds: String? = null,
 )
