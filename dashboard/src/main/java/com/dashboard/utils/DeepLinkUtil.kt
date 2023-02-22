@@ -70,6 +70,8 @@ const val deeplink_setings = "settings"
 const val deeplink_socailsharing = "social"
 const val deeplink_profile = "profile"
 const val deeplink_contact = "contact"
+const val deeplink_service_list = "service_list"
+const val deeplink_room_booking = "room_booking"
 const val deeplink_bizaddress = "address"
 const val deeplink_bizhours = "hours"
 const val deeplink_bizlogo = "logo"
@@ -234,6 +236,10 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startBusinessProfileDetailEdit(session)
         } else if (url.contains(deeplink_contact)) {
           baseActivity.startBusinessInfoEmail(session)
+        } else if (url.contains(deeplink_service_list)) {
+          baseActivity.startListServiceProduct(session)
+        } else if (url.contains(deeplink_room_booking)) {
+          baseActivity.startBookTable(session)
         } else if (url.contains(deeplink_bizaddress)) {
           baseActivity.startBusinessAddress(session)
         } else if (url.contains(deeplink_bizhours)) {
