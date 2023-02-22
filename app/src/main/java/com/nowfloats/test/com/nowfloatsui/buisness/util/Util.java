@@ -752,9 +752,6 @@ public class Util {
         try {
 
             Bitmap bitmap = getBitmap(path, app, mWidth);
-            if(path.toLowerCase().contains(".png")){
-                bitmap.eraseColor(Color.TRANSPARENT);
-            }
             imgpath = saveBitmap(bitmap, app, fname);
 
         } catch (Exception e) {

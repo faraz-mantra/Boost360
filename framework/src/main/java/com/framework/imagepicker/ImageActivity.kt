@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.checkSelfPermission
 import androidx.core.content.FileProvider
 import com.framework.R
+import com.framework.utils.sizeInMb
 import java.io.File
 import java.io.IOException
 import java.io.Serializable
@@ -164,7 +165,14 @@ open class ImageActivity : AppCompatActivity() {
     try {
       val selectedImage = data?.data
       val selectedImagePath = selectedImage?.let { FileProcessing.getPath(this, it) }
-      CompressImageTask(selectedImagePath, mImgConfig, this@ImageActivity).execute()
+      val file = File(selectedImagePath)
+      if (file.sizeInMb <= 5){
+        CompressImageTask(selectedImagePath, mImgConfig, this@ImageActivity).execute()
+      }else{
+        Toast.makeText(applicationContext,"File size is higher than 5MB",Toast.LENGTH_SHORT).show()
+        val pathList: List<String> = emptyList()
+        finishActivity(pathList)
+      }
     } catch (ex: Exception) {
       ex.printStackTrace()
     }

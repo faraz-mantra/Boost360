@@ -86,11 +86,6 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
     }
   }
 
-  override fun onResume() {
-    super.onResume()
-    Log.d("FragmentCatagogue","HAHAHAHAHA")
-  }
-
   private fun catalogApiGetGstData() {
     viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID!!, clientId)?.observeOnce(viewLifecycleOwner) {
       val dataItem = it as? AppointmentStatusResponse
@@ -135,6 +130,7 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
         } else {
           binding.catalougeRenameView.visibility = View.GONE
         }
+        binding.btnSaveDetails.visibility = View.VISIBLE
       }
       if (sessionLocal.fP_AppExperienceCode!! == "SVC" || sessionLocal.fP_AppExperienceCode!! == "SAL" || sessionLocal.fP_AppExperienceCode!! == "SPA"){
         binding.bulkBookingView.visibility = View.VISIBLE
@@ -182,10 +178,15 @@ class FragmentCatalogSettings : AppBaseFragment<FragmentCatalogSettingBinding, A
         bulkBookingInfo.key="ISBULKBOOKING";
         bulkBookingInfo.value=sessionLocal.bulkBooking.toString()
         updateItemList.add(bulkBookingInfo)
-        val stoteToggneInfo = Update()
-        stoteToggneInfo.key="STORETOGGLE";
-        stoteToggneInfo.value="${sessionLocal.noServiceSlot!!}#${sessionLocal.serviceTiming!!}"
-        updateItemList.add(stoteToggneInfo)
+        val storeToggleInfo = Update()
+        storeToggleInfo.key="STORETOGGLE";
+        val value ="${sessionLocal.noServiceSlot.toString()}#${sessionLocal.serviceTiming.toString()}"
+        storeToggleInfo.value=value
+        updateItemList.add(storeToggleInfo)
+        val ctaInfo = Update()
+        ctaInfo.key = "CTATOGGLE";
+        ctaInfo.value = "${sessionLocal.isCustomCta.toString()}#${sessionLocal.customCta}"
+        updateItemList.add(ctaInfo)
         businessProfileUpdateRequest.updates = updateItemList
         showProgress()
         viewModel?.updateBusinessDetails(businessProfileUpdateUrl,businessProfileUpdateRequest)

@@ -134,7 +134,7 @@
             android:id="@+id/catalogue_view"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
           <com.framework.views.customViews.CustomTextView
               style="@style/AppointmentSetting_Text_Heading"

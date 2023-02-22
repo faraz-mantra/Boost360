@@ -147,10 +147,15 @@ class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, 
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as? List<String>
       if (mPaths.isNullOrEmpty().not()) {
         WebEngageController.trackEvent(GALLERY_IMAGE_ADDED, ADDED, sessionLocal.fpTag)
+
         startBackgroundActivity(
           FragmentType.BACKGROUND_IMAGE_CROP_FRAGMENT,
-          Bundle().apply { putString(BGImageCropFragment.BK_IMAGE_PATH, mPaths!![0]) }, isResult = true
+          Bundle().apply {
+            putString(BGImageCropFragment.BK_IMAGE_PATH, mPaths!![0])
+            putBoolean("CropCheck",true)
+          }, isResult = true
         )
+
       }
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
       if (data?.getBooleanExtra(IntentConstant.IS_UPDATED.name, false) == true) {

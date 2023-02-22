@@ -64,25 +64,37 @@ class BottomSheetCategoryRename(
             businessProfileUpdateRequest.clientId = clientId
             businessProfileUpdateRequest.fpTag = sessionLocal.fpTag
             val updateItemList = arrayListOf<Update>()
-            val bulkBookingInfo = Update()
-            bulkBookingInfo.key = "CTATOGGLE";
-            bulkBookingInfo.value = "${true}#${binding?.catRename?.text}"
-            updateItemList.add(bulkBookingInfo)
+            val ctaInfo = Update()
+            ctaInfo.key = "CTATOGGLE";
+            ctaInfo.value = "${true}#${binding?.catRename?.text}"
+            updateItemList.add(ctaInfo)
             businessProfileUpdateRequest.updates = updateItemList
             binding?.progressBar?.visibility = View.VISIBLE
-            viewModel?.updateBusinessDetails(businessProfileUpdateUrl, businessProfileUpdateRequest)
+            viewModel?.updateBusinessDetails(
+                businessProfileUpdateUrl,
+                businessProfileUpdateRequest
+            )
                 ?.observeOnce(viewLifecycleOwner) {
                     if (it.isSuccess()) {
-                        if (flag==1){
-                            fragmentCatalogSettings?.catalogueName?.text = binding?.catRename?.text
-                        }else{
-                            fragmentEcommerceCatalogSettings?.catalogueName?.text = binding?.catRename?.text
+                        sessionLocal.customCta = binding?.catRename?.text.toString()
+                        if (flag == 1) {
+                            fragmentCatalogSettings?.catalogueName?.text =
+                                binding?.catRename?.text
+                        } else {
+                            fragmentEcommerceCatalogSettings?.catalogueName?.text =
+                                binding?.catRename?.text
                         }
                         BottomSheetButtonNameSuccessfullyUpdated().apply {
-                            if (flag==1){
-                                show(fragmentCatalogSettings!!.parentFragmentManager, BottomSheetButtonNameSuccessfullyUpdated::class.java.name)
-                            }else{
-                                show(fragmentEcommerceCatalogSettings!!.parentFragmentManager, BottomSheetButtonNameSuccessfullyUpdated::class.java.name)
+                            if (flag == 1) {
+                                show(
+                                    fragmentCatalogSettings!!.parentFragmentManager,
+                                    BottomSheetButtonNameSuccessfullyUpdated::class.java.name
+                                )
+                            } else {
+                                show(
+                                    fragmentEcommerceCatalogSettings!!.parentFragmentManager,
+                                    BottomSheetButtonNameSuccessfullyUpdated::class.java.name
+                                )
                             }
                         }
                     } else {
@@ -102,7 +114,8 @@ class BottomSheetCategoryRename(
                 val textRemaining = 18 - s.toString().length
 
                 binding?.btnPublish?.isEnabled = textRemaining < 18
-                binding?.textCount?.text = textRemaining.toString().replaceFirstChar { it.uppercase() }
+                binding?.textCount?.text =
+                    textRemaining.toString().replaceFirstChar { it.uppercase() }
 
                 val m: Matcher = pattern.matcher(s.toString())
                 if (m.matches()) {

@@ -304,7 +304,7 @@
     <string name="edit_">Edit</string>
     <string name="apply_same_on_all_days">Apply same on all days</string>
     <string name="dropdown_options_1_1_2_3_4_5_5"><![CDATA[Dropdown options: <1, 1, 2, 3, 4, 5, 5+]]></string>
-    <string name="enter_age">Age 18+</string>
+    <string name="enter_age">Age (>17 years)</string>
     <string name="age">Age*</string>
     <string name="full_name">Full name</string>
     <string name="customers_can_only_view_and_enquire_about_this_product">Customers can only view and enquire about this product.</string>
@@ -1121,7 +1121,7 @@
     <string name="the_image_has_been_saved_in_the_background_image_gallery">The image has been saved in the\nbackground image gallery.</string>
     <string name="of">of</string>
     <string name="upload_image_n">Upload image</string>
-    <string name="max_file_size_800kb_max_8_images">Max file size: 800kb (max 8 images)</string>
+    <string name="max_file_size_800kb_max_8_images">Max file size: 5MB (max 8 images)</string>
     <string name="no_custom_background_nimage_added_yet">No custom background\nimage added yet</string>
     <string name="image_brand_website_desc">These images can bring a brand feel to your website. Since these stay in the backdrop of your website, please avoid high contrast picture with face and text written in it.</string>
 
@@ -1154,8 +1154,8 @@
     <string name="tell_your_customers_what_s_new">Tell your customers what’s new*</string>
     <string name="type_in_the_caption_to_create_your_own_hashtags">Type ‘#’ in the caption to create your own hashtags</string>
     <string name="preview_and_post2">Preview and post</string>
-    <string name="supported_format_jpeg_png_size_square_800_x_800px_minimum">Supported format: JPEG/PNG. Size: Square (800 x 800px minimum)</string>
-    <string name="supported_format_jpeg_png_size_square_400_x_400px_minimum">Supported format: JPEG/PNG. Size: Square (400 x 400px minimum)</string>
+    <string name="supported_format_jpeg_png_size_square_800_x_800px_minimum">Supported format: JPEG/PNG. Size: 5Mb Max. Square (800 x 800px minimum)</string>
+    <string name="supported_format_jpeg_png_size_square_400_x_400px_minimum">Supported format: JPEG/PNG. Size: 5Mb Max. Square (400 x 400px minimum)</string>
     <string name="discarding_the_post">Discarding the post?</string>
     <string name="closing_this_page_will_not_save_the_changes_you_ve_made_do_you_want_to_save_a_draft_or_discard_this_post">Closing this page will not save the changes you’ve made. Do you want to save a draft or discard this post?</string>
     <string name="no_save_as_draft">No, save as draft</string>
@@ -1171,7 +1171,7 @@
     <string name="add_image_optional">Add image (optional)</string>
     <string name="image_format_is_not_supported_please_use_jpeg_jpg_or_png">Image format is not supported. Please use JPEG, JPG, or PNG</string>
     <string name="image_resolution_is_smaller_than_800_x_800_px">Image resolution is smaller than 800 X 800 px</string>
-    <string name="image_resolution_is_smaller_than_300_x_300_px">Image resolution is smaller than 300 X 300 px</string>
+    <string name="image_resolution_is_smaller_than_400_x_400_px">Image resolution is smaller than 400 X 400 px</string>
     <string name="image_file_size_is_bigger_than_2mb">Image file size is bigger than 2MB</string>
     <string name="image_file_size_is_bigger_than_5mb">Image file size is bigger than 5MB</string>
     <string name="describe_what_you_want_to_say_in_the_picture_added_above">Describe what you want to say in the picture added above...</string>

@@ -634,7 +634,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
       val subTitle = if (subscriber == 0) {
         getString(R.string.no_recipients, 0)
       } else {
-        getString(R.string.placeholder_recipients, subscriber)
+        val subscriberCount = subscriber ?: 0
+        getString(R.string.placeholder_recipients, subscriberCount)
       }
         saveTemplateAction(TemplateSaveActionBody.ActionType.UPDATE_CREATED, template)
         posterProgressSheet?.dismiss()
