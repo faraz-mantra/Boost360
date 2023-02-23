@@ -53,6 +53,8 @@ class BottomSheetCategoryRename(
         this.fpDetails =
             arguments?.getSerializable(IntentConstant.CATALOG_DATA.name) as? UserFpDetailsResponse
 
+        binding?.catRename?.setText(sessionLocal.customCta)
+
         binding?.rivCloseBottomSheet?.setOnClickListener {
             this.dismiss()
         }
