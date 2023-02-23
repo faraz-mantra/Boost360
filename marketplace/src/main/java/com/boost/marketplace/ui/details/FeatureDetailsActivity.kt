@@ -131,6 +131,7 @@ class FeatureDetailsActivity :
     var originalBundlePrice = 0.0
     var actionRequired: Int? = null
     var featureState: Int? = null
+    var featureCode: String? = null
     var ExpiryDate: String = ""
 
     var deepLinkViewType: String = ""
@@ -627,6 +628,7 @@ class FeatureDetailsActivity :
                 actionRequired = it.Result.ActionNeeded.ActionNeeded
                 featureState = it.Result.FeatureDetails.FeatureState
                 ExpiryDate = it.Result.FeatureDetails.ExpiryDate
+                featureCode= it.Result.FeatureDetails.FeatureKey
                 primary_layout.visibility = View.VISIBLE
                 second_layout.visibility = View.GONE
                 app_bar_layout.background = ContextCompat.getDrawable(this, R.color.colorPrimary1)
@@ -2137,7 +2139,7 @@ class FeatureDetailsActivity :
                     ADDONS_MARKETPLACE,
                     event_attributes
                 )
-            } else if (actionRequired == 3 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+            } else if ((actionRequired == 3 && featureCode=="CALLTRACKER") && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                         || featureState == 5 || featureState == 6)
             ) {
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
@@ -2170,7 +2172,43 @@ class FeatureDetailsActivity :
                 add_item_to_cart_new.setOnClickListener {
                     goToVmnSelection()
                 }
-            } else if (actionRequired == 4 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+            } else if ((actionRequired == 3 && featureCode=="IVR")  && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                        || featureState == 5 || featureState == 6)) {
+                binding?.edgeCasesLayout?.visibility = View.VISIBLE
+                binding?.edgeCaseHyperlink?.setText("Go to activation page.")
+                binding?.edgeCaseHyperlink?.setOnClickListener {
+                    // goToVmnSelection()
+                    Toast.makeText(getApplicationContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
+                }
+                binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+                binding?.edgeCaseTitle?.setText("Action Required")
+                binding?.edgeCaseTitle?.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.red
+                    )
+                )
+                binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_error_red,
+                    0,
+                    0,
+                    0
+                )
+                binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+                binding?.edgeCaseDesc?.visibility = View.VISIBLE
+                bottom_box_only_btn.visibility = VISIBLE
+                add_item_to_cart_new.setText("Extend Validity")
+                add_item_to_cart_new.background = ContextCompat.getDrawable(
+                    applicationContext,
+                    R.drawable.cta_button_click_effect
+                )
+                add_item_to_cart_new.setTextColor(Color.WHITE)
+//                add_item_to_cart_new.setOnClickListener {
+//                   // goToVmnSelection()
+//                    Toast.makeText(getApplicationContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
+//                }
+            }
+            else if (actionRequired == 4 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                         || featureState == 5 || featureState == 6)
             ) {
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
@@ -2235,7 +2273,8 @@ class FeatureDetailsActivity :
 //                   // goToVmnSelection()
 //                    Toast.makeText(getApplicationContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
 //                }
-            } else if (actionRequired == 6 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+            }
+            else if (actionRequired == 6 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                         || featureState == 5 || featureState == 6)) {
                 binding?.edgeCasesLayout?.visibility = View.VISIBLE
                 binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
