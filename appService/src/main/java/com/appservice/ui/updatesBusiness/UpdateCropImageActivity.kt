@@ -79,7 +79,7 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
                         binding!!.ivCrop.setFixedAspectRatio(false)
                     }else {
                         binding!!.ivCrop.setImageBitmap(bitmap)
-                        binding!!.ivCrop.setMinCropResultSize(400, 400)
+                        binding!!.ivCrop.setMinCropResultSize(200, 200)
                         binding!!.ivCrop.setCropRect(Rect(400, 400, 600, 600))
 //                    binding!!.ivCrop.setAspectRatio(600,600)
 //                    binding!!.ivCrop.setFixedAspectRatio(false)
