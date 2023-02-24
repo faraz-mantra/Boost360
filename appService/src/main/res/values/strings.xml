@@ -1151,6 +1151,7 @@
     <string name="total_calls">Total Calls</string>
     <string name="missed_calls">Missed Calls</string>
     <string name="create_an_update">Create an update</string>
+    <string name="select_image_upload">Please select an image to upload</string>
     <string name="tell_your_customers_what_s_new">Tell your customers what’s new*</string>
     <string name="type_in_the_caption_to_create_your_own_hashtags">Type ‘#’ in the caption to create your own hashtags</string>
     <string name="preview_and_post2">Preview and post</string>

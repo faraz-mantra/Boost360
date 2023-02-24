@@ -13,6 +13,7 @@ import com.appservice.R
 import com.appservice.databinding.BsheetUpdateImagePickerBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.constants.UPDATE_PIC_FILE_NAME
+import com.framework.imagepicker.FileProcessing.getPath
 import com.framework.models.BaseViewModel
 import com.framework.utils.FileUtils
 import com.framework.utils.sizeInMb
@@ -85,11 +86,8 @@ class UpdateImagePickerBSheet:BaseBottomSheetDialog<BsheetUpdateImagePickerBindi
                 if (resultCode == Activity.RESULT_OK) {
                     //Image Uri will not be null for RESULT_OK
                     val fileUri = data?.data!!
-//                    val file = FileUtils.saveFile(fileUri,requireActivity().getExternalFilesDir(null)?.path,
-//                        UPDATE_PIC_FILE_NAME)
-                    val file = File(com.appservice.utils.FileUtils(requireActivity()).getPath(fileUri))
-
-                    if (file?.exists() == true){
+                    val file = File(getPath(requireContext(), fileUri)?:"")
+                    if (file.path.isNullOrEmpty().not() && file?.exists() == true){
                         if (file.sizeInMb <= 5){
                             if (file.extension.equals("JPEG",ignoreCase = true)||
                                 file.extension.equals("JPG",ignoreCase = true)||
@@ -101,6 +99,8 @@ class UpdateImagePickerBSheet:BaseBottomSheetDialog<BsheetUpdateImagePickerBindi
                         } else {
                             callbacks?.onImagePicked("higher")
                         }
+                    }else {
+                        showShortToast(requireContext().getString(R.string.select_image_upload))
                     }
                     dismiss()
                 }

@@ -53,6 +53,8 @@ class BottomSheetCategoryRename(
         this.fpDetails =
             arguments?.getSerializable(IntentConstant.CATALOG_DATA.name) as? UserFpDetailsResponse
 
+        binding?.catRename?.setText(sessionLocal.customCta)
+
         binding?.rivCloseBottomSheet?.setOnClickListener {
             this.dismiss()
         }
@@ -66,7 +68,7 @@ class BottomSheetCategoryRename(
             val updateItemList = arrayListOf<Update>()
             val ctaInfo = Update()
             ctaInfo.key = "CTATOGGLE";
-            ctaInfo.value = "${true}#${binding?.catRename?.text}"
+            ctaInfo.value = "${true}#${binding?.catRename?.text.toString().uppercase()}"
             updateItemList.add(ctaInfo)
             businessProfileUpdateRequest.updates = updateItemList
             binding?.progressBar?.visibility = View.VISIBLE
