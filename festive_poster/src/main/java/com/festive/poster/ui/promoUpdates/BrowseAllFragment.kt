@@ -112,8 +112,13 @@ class BrowseAllFragment : AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesV
     selectedPos = if (argTag == null) {
       DEFAULT_SELECTED_POS
     } else {
-      data.indexOfFirst { it.id == argTag }
+      argTag.toString().toInt()
     }
+    /*selectedPos = if (argTag == null) {
+      DEFAULT_SELECTED_POS
+    } else {
+      data.indexOfFirst { it.id == argTag }
+    }*/
   }
 
   override fun onResume() {
