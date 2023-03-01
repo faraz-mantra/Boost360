@@ -65,12 +65,12 @@ android {
     flavorDimensions "default"
     productFlavors {
         partone {
-            versionName "6.1.37.1"
+            versionName "6.1.37.3"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
-            buildConfigField "String", "google_map_key", '"AIzaSyD0l00r6ZNhSv6Bxc7c-Ymu1ej6aSZayhk"'
+            buildConfigField "String", "google_map_key", '"AIzaSyB94ChvnYBv6REXPATdt4ud5dAlTL7jlic"'
             resValue "string", "webengage_license_code", '~10a5cad2d'
             resValue "string", "referrals_bid", '31445'
             resValue "string", "referrals_bid_e", '355BCB8D72414FBD784338ADC28FCA09'

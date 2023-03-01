@@ -141,7 +141,7 @@ class UpdateImagePickerBSheet:BaseBottomSheetDialog<BsheetUpdateImagePickerBindi
                     //Image Uri will not be null for RESULT_OK
                     val fileUri = data?.data!!
                     val file = File(getPath(requireContext(), fileUri)?:"")
-                    if (file.path.isNullOrEmpty().not() && file?.exists()){
+                    if (file.path.isNullOrEmpty().not() && file?.exists() == true){
                         if (file.sizeInMb <= 5){
                             if (file.extension.equals("JPEG",ignoreCase = true)||
                                 file.extension.equals("JPG",ignoreCase = true)||

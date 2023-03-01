@@ -3,24 +3,21 @@ package com.appservice.ui.updatesBusiness
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Rect
-import android.view.MotionEvent
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.lifecycleScope
 import com.appservice.R
 import com.appservice.base.AppBaseActivity
-import com.appservice.databinding.BsheetUpdateDraftBinding
 import com.appservice.databinding.UpdateCropImageActivityBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.framework.base.BaseBottomSheetDialog
 import com.framework.constants.UPDATE_PIC_FILE_NAME
+import com.framework.imagepicker.BoostImageUtils.isImageGalleryValid
 import com.framework.models.BaseViewModel
 import com.framework.utils.saveAsImageToAppFolder
-import com.framework.utils.saveAsTempFile
-import com.framework.utils.setClickableRipple
 import com.framework.utils.setStatusBarColor
+import com.framework.utils.showSnackBarNegative
 import com.onboarding.nowfloats.bottomsheet.util.runOnUi
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +25,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.*
-import kotlin.concurrent.schedule
 import kotlin.math.absoluteValue
 
 class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,BaseViewModel>() {
@@ -79,7 +75,7 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
                         binding!!.ivCrop.setFixedAspectRatio(false)
                     }else {
                         binding!!.ivCrop.setImageBitmap(bitmap)
-                        binding!!.ivCrop.setMinCropResultSize(400, 400)
+                        binding!!.ivCrop.setMinCropResultSize(200, 200)
                         binding!!.ivCrop.setCropRect(Rect(400, 400, 600, 600))
 //                    binding!!.ivCrop.setAspectRatio(600,600)
 //                    binding!!.ivCrop.setFixedAspectRatio(false)
@@ -95,8 +91,16 @@ class UpdateCropImageActivity:AppBaseActivity<UpdateCropImageActivityBinding,Bas
             binding!!.layoutChangeImage->{
                 UpdateImagePickerBSheet.newInstance(object :UpdateImagePickerBSheet.Callbacks{
                     override fun onImagePicked(path: String) {
-                        this@UpdateCropImageActivity.path = path
-                        showImageInUi()
+                        val isBusinessValidMessage = isImageGalleryValid(this@UpdateCropImageActivity, File(path))
+                        if (path.isNullOrEmpty().not() && isBusinessValidMessage == "") {
+                            this@UpdateCropImageActivity.path = path
+                            showImageInUi()
+                        }else{
+                            showSnackBarNegative(
+                                this@UpdateCropImageActivity,
+                                if (path == null || path.isEmpty()) resources.getString(R.string.select_image_upload) else isBusinessValidMessage
+                            )
+                        }
                     }
                 }).show(supportFragmentManager,UpdateImagePickerBSheet::class.java.name)
             }

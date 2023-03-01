@@ -128,7 +128,7 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
         )
         onCatalogSetupAddedOrUpdated(response?.productCategoryVerb.isNullOrEmpty().not())
       }
-      if (sessionLocal.fP_AppExperienceCode!! == "SVC" || sessionLocal.fP_AppExperienceCode!! == "SAL" || sessionLocal.fP_AppExperienceCode!! == "CAF"){
+      if (sessionLocal.fP_AppExperienceCode!! == "SVC" || sessionLocal.fP_AppExperienceCode!! == "SPA" || sessionLocal.fP_AppExperienceCode!! == "CAF"){
         binding.catalogueView.visibility = View.VISIBLE
         binding.catalougeSwitch.isOn = sessionLocal.isCustomCta!!
 
