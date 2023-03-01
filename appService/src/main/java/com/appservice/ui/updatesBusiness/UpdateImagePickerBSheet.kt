@@ -1,18 +1,24 @@
 package com.appservice.ui.updatesBusiness
 
+import android.Manifest
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import com.appservice.R
 import com.appservice.databinding.BsheetUpdateImagePickerBinding
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.constants.UPDATE_PIC_FILE_NAME
+import com.framework.imagepicker.FileProcessing.getPath
 import com.framework.models.BaseViewModel
 import com.framework.utils.FileUtils
 import com.framework.utils.sizeInMb
@@ -26,6 +32,33 @@ class UpdateImagePickerBSheet:BaseBottomSheetDialog<BsheetUpdateImagePickerBindi
 
     private var startForGalleryImageResult: ActivityResultLauncher<Intent>?=null
     private var startForCameraImageResult: ActivityResultLauncher<Intent>?=null
+
+    private val gallery_req_id = 0
+
+    val pickMedia = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        if (uri != null) {
+            val file = File(getPath(requireContext(), uri) ?: "")
+            if (file.path.isNullOrEmpty().not() && file?.exists() == true) {
+                if (file.sizeInMb <= 5) {
+                    if (file.extension.equals("JPEG", ignoreCase = true) ||
+                        file.extension.equals("JPG", ignoreCase = true) ||
+                        file.extension.equals("PNG", ignoreCase = true)
+                    ) {
+                        callbacks?.onImagePicked(file.path)
+                    } else {
+                        callbacks?.onImagePicked("invalidFile")
+                    }
+                } else {
+                    callbacks?.onImagePicked("higher")
+                }
+            }
+            dismiss()
+        } else {
+            dismiss()
+        }
+    }
 
     companion object{
         fun newInstance(callbacks: Callbacks): UpdateImagePickerBSheet {
@@ -55,10 +88,32 @@ class UpdateImagePickerBSheet:BaseBottomSheetDialog<BsheetUpdateImagePickerBindi
         super.onClick(v)
         when(v){
             binding!!.layoutGallery->{
-                com.github.dhaval2404.imagepicker.ImagePicker.with(this).galleryOnly()
-                    .createIntent {
-                        startForGalleryImageResult?.launch(it)
-                    }
+                if (ActivityCompat.checkSelfPermission(
+                        activity!!.applicationContext,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    ActivityCompat.requestPermissions(
+                        activity!!,
+                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                        gallery_req_id
+                    )
+                    dismiss()
+                } else {
+                    com.github.dhaval2404.imagepicker.ImagePicker.with(this).galleryOnly()
+                        .createIntent {
+                            startForGalleryImageResult?.launch(it)
+                        }
+
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//                        choosePhotoFromGallery()
+//                    } else {
+//                        com.github.dhaval2404.imagepicker.ImagePicker.with(this).galleryOnly()
+//                            .createIntent {
+//                                startForGalleryImageResult?.launch(it)
+//                            }
+//                    }
+                }
             }
             binding!!.layoutTakePhoto->{
                 com.github.dhaval2404.imagepicker.ImagePicker.with(this).cameraOnly()
@@ -85,11 +140,8 @@ class UpdateImagePickerBSheet:BaseBottomSheetDialog<BsheetUpdateImagePickerBindi
                 if (resultCode == Activity.RESULT_OK) {
                     //Image Uri will not be null for RESULT_OK
                     val fileUri = data?.data!!
-//                    val file = FileUtils.saveFile(fileUri,requireActivity().getExternalFilesDir(null)?.path,
-//                        UPDATE_PIC_FILE_NAME)
-                    val file = File(com.appservice.utils.FileUtils(requireActivity()).getPath(fileUri))
-
-                    if (file?.exists() == true){
+                    val file = File(getPath(requireContext(), fileUri)?:"")
+                    if (file.path.isNullOrEmpty().not() && file?.exists()){
                         if (file.sizeInMb <= 5){
                             if (file.extension.equals("JPEG",ignoreCase = true)||
                                 file.extension.equals("JPG",ignoreCase = true)||
@@ -127,4 +179,10 @@ class UpdateImagePickerBSheet:BaseBottomSheetDialog<BsheetUpdateImagePickerBindi
                 }
             }
     }
+
+    fun choosePhotoFromGallery() = pickMedia.launch(
+        PickVisualMediaRequest(
+            ActivityResultContracts.PickVisualMedia.ImageOnly
+        )
+    )
 }
