@@ -19,7 +19,8 @@ data class Bundles(
   val frequently_asked_questions: List<FrequentlyAskedQuestion>?,
   val benefits: List<String>?,
   val desc: String?,
-  val exclusive_To_clientIds:List<String>? =null
+  val exclusive_To_clientIds:List<String>? =null,
+  val Long_desc:String? =null
 ):Serializable,AppBaseRecyclerViewItem {
 
   var recyclerViewItem =  RecyclerViewItemType.PACKS.ordinal
