@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.util.Log
 import java.io.*
 
 /**
@@ -43,10 +44,36 @@ object FileProcessing {
         // TODO handle non-primary volumes
       } else if (isDownloadsDocument(uri)) {
         val id = DocumentsContract.getDocumentId(uri)
-        val contentUri = ContentUris.withAppendedId(
-          Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id)
+        var result = id.filter { it.isDigit() }
+        val contentUriPrefixesToTry = arrayOf(
+          "content://downloads/public_downloads",
+          "content://downloads/my_downloads",
+          "content://downloads/all_downloads"
         )
-        return getDataColumn(context, contentUri, null, null)
+
+        for (contentUriPrefix in contentUriPrefixesToTry) {
+          val contentUri =
+            ContentUris.withAppendedId(Uri.parse(contentUriPrefix), java.lang.Long.valueOf(result))
+          try {
+            val path = getDataColumn(context, contentUri, null, null)
+            if (path != null) {
+              return path
+            }
+          } catch (e: java.lang.Exception) {
+            Log.d("", "")
+          }
+        }
+
+        // path could not be retrieved using ContentResolver, therefore copy file to accessible cache using streams
+        val fileName: String = ImageUtils.getFileName(context, uri)
+        val cacheDir: File = ImageUtils.getDocumentCacheDir(context)
+        val file: File? = ImageUtils.generateFileName(fileName, cacheDir)
+        var destinationPath: String? = null
+        if (file != null) {
+          destinationPath = file.absolutePath
+          ImageUtils.saveFileFromUri(context, uri, destinationPath)
+        }
+        return destinationPath
       } else if (isMediaDocument(uri)) {
         val docId = DocumentsContract.getDocumentId(uri)
         val split = docId.split(":").toTypedArray()
