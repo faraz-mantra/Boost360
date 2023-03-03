@@ -80,19 +80,19 @@ class MobileFragment : AppBaseFragment<FragmentMobileBinding, LoginSignUpViewMod
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
     backButton?.setOnClickListener { goBack() }
 
-    binding?.nextButton?.setOnClickListener {
+    binding.nextButton.setOnClickListener {
       WebEngageController.trackEvent(PS_LOGIN_NUMBER_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
       baseActivity.hideKeyBoard()
       sendOtp(binding?.phoneEt?.text.toString())
     }
-    binding?.loginUsername?.setOnClickListener {
+    binding.loginUsername.setOnClickListener {
       WebEngageController.trackEvent(PS_LOGIN_USERNAME_CLICK, CLICK_LOGIN_USERNAME, NO_EVENT_VALUE)
       navigator?.startActivity(LoginActivity::class.java)
     }
     binding?.helpTv?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     binding?.helpTv?.text = getString(R.string.need_help_u)
     val constraint = binding?.root as? ConstraintLayout
-    binding?.phoneEt?.setOnFocusChangeListener { v, hasFocus ->
+    binding.phoneEt.setOnFocusChangeListener { v, hasFocus ->
       if (hasFocus) {
         binding?.divider?.setBackgroundColor(getColor(R.color.black_4a4a4a))
       } else {

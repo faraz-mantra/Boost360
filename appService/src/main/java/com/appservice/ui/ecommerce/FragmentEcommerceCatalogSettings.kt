@@ -131,10 +131,10 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
       if (sessionLocal.fP_AppExperienceCode!! == "SVC" || sessionLocal.fP_AppExperienceCode!! == "SPA" || sessionLocal.fP_AppExperienceCode!! == "CAF"){
         binding.catalogueView.visibility = View.VISIBLE
         binding.catalougeSwitch.isOn = sessionLocal.isCustomCta!!
+        binding.catalougeNameLabel.text = sessionLocal.customCta
 
         if (sessionLocal.isCustomCta!!){
           binding.catalougeRenameView.visibility = View.VISIBLE
-          binding.catalougeNameLabel.text = sessionLocal.customCta
         } else {
           binding.catalougeRenameView.visibility = View.GONE
         }
