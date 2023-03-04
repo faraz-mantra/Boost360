@@ -50,4 +50,7 @@ data class BundlesModel(
 
   @ColumnInfo(name = "exclusive_To_clientIds")
   var exclusive_To_clientIds: String? = null,
+
+  @ColumnInfo(name = "Long_desc")
+  var Long_desc:String? =null
 )

@@ -65,6 +65,7 @@
                     style="@style/Appointment_Text_Field"
                     android:hint="Enter the button name"
                     android:maxLength="18"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
                     android:maxLines="1"
                     android:paddingEnd="@dimen/size_30"
                     tools:ignore="RtlSymmetry" />

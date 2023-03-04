@@ -685,7 +685,8 @@ class DashboardFragmentV2 : AppBaseFragment<FragmentDashboardV2Binding, Dashboar
       binding.growthStats.filterWebsiteReport -> bottomSheetFilter(WEBSITE_REPORT, websiteFilter)
       binding.profileView.btnNotofication -> session?.let { baseActivity.startNotification(it) }
       binding.profileView.btnBusinessLogo -> baseActivity.startBusinessLogo(session)//openDialogPicker()
-      binding.drView.btnShowDigitalScore -> baseActivity.startReadinessScoreView(session, 0)
+      binding.drView.btnShowDigitalScore ->
+        baseActivity.startReadinessScoreView(session, 0)
       binding.profileView.btnVisitingCard -> {
         if (messageBusiness.isNotEmpty() || _connectedChannels.isNotEmpty()) businessWebsiteDetailMessage(messageBusiness, isBusinessCardShare = true)
         else getChannelAccessToken(true)
