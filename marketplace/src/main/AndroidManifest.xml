@@ -6,6 +6,10 @@
 
     <application>
         <activity
+            android:name=".ui.details.dictate_services.DictateServicesActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".ui.pack_details.PackDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>

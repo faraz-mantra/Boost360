@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary1"
+            android:contentInsetStart="0dp"
+            android:contentInsetEnd="0dp"
+            app:contentInsetEnd="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_collapseMode="parallax"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="700"
+                        android:fontFamily="@font/semi_bold"
+                        android:text="Dictate Preferences"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/addons_back"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/addons_back"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="?actionBarItemBackground"
+                        android:src="@drawable/arrow_white"
+                        android:padding="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_view_history"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            tools:visibility="gone">
+
+            <!-- Adding 7 rows of placeholders -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+                <include layout="@layout/data_place2" />
+
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedscroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            android:visibility="visible"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/all_addons_view_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+
+                    <ImageView
+                        android:id="@+id/info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_info_circle_dictate"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="16dp"
+                        android:paddingLeft="20dp"
+                        android:text="Below information helps our team research, plan &amp; post updates on your behalf. You can modify these preferences once in every month from ‘My Current Plan > Dictate: Assisted Content Creation’."
+                        app:layout_constraintStart_toEndOf="@+id/info"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="16dp"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="@font/regular"
+                    android:lineHeight="16.34dp"
+                    android:text="Where are your target customers*"
+                    android:textColor="#888888"
+                    android:textFontWeight="600"
+                    android:textSize="12sp" />
+
+                <FrameLayout
+                    android:id="@+id/layout_customers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp">
+
+                    <TextView
+                        android:id="@+id/et_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:hint="Please select target locations"
+                        android:background="@drawable/edittext_selector1"
+                        android:focusable="true"
+                        android:drawableEnd="@drawable/ic_dropdwn_orange_new"
+                        android:focusableInTouchMode="true"
+                        android:fontFamily="@font/regular"
+                        android:gravity="bottom"
+                        android:textColor="@color/common_text_color"
+                        android:textColorHint="@color/grey_BBBBBB"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/txt_14sp" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_keywords"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="16dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/regular"
+                    android:lineHeight="16.34dp"
+                    android:text="What keywords do you want to target?*"
+                    android:textColor="#888888"
+                    android:textFontWeight="600"
+                    android:textSize="12sp" />
+
+                <FrameLayout
+                    android:id="@+id/layout_keywords"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_keywords"
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:hint="Add between 3-10 keywords separated by commas"
+                        android:background="@drawable/edittext_selector1"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:fontFamily="@font/regular"
+                        android:gravity="start"
+                        android:textColor="@color/common_text_color"
+                        android:textColorHint="@color/grey_BBBBBB"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/txt_14sp" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="16dp"
+                    android:fontFamily="@font/regular"
+                    android:layout_marginTop="20dp"
+                    android:lineHeight="16.34dp"
+                    android:text="Preferred word count for content"
+                    android:textColor="#888888"
+                    android:textFontWeight="600"
+                    android:textSize="12sp" />
+
+                <FrameLayout
+                    android:id="@+id/layout_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp">
+
+                    <TextView
+                        android:id="@+id/et_count"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:hint="Select content length"
+                        android:background="@drawable/edittext_selector1"
+                        android:focusable="true"
+                        android:drawableEnd="@drawable/ic_dropdwn_orange_new"
+                        android:focusableInTouchMode="true"
+                        android:fontFamily="@font/regular"
+                        android:gravity="bottom"
+                        android:textColor="@color/common_text_color"
+                        android:textColorHint="@color/grey_BBBBBB"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/txt_14sp" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_hashtag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:lineSpacingExtra="16dp"
+                    android:fontFamily="@font/regular"
+                    android:lineHeight="16.34dp"
+                    android:text="Include hash tags in the generated content?"
+                    android:textColor="#888888"
+                    android:textFontWeight="600"
+                    android:textSize="12sp" />
+
+                <FrameLayout
+                    android:id="@+id/layout_hashtag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp">
+
+                    <TextView
+                        android:id="@+id/et_hashtag"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:hint="Select your answer"
+                        android:background="@drawable/edittext_selector1"
+                        android:focusable="true"
+                        android:drawableEnd="@drawable/ic_dropdwn_orange_new"
+                        android:focusableInTouchMode="true"
+                        android:fontFamily="@font/regular"
+                        android:gravity="bottom"
+                        android:textColor="@color/common_text_color"
+                        android:textColorHint="@color/grey_BBBBBB"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/txt_14sp" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="16dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/regular"
+                    android:lineHeight="16.34dp"
+                    android:text="Include your phone, email, QR, etc. in updates?"
+                    android:textColor="#888888"
+                    android:textFontWeight="600"
+                    android:textSize="12sp" />
+
+                <FrameLayout
+                    android:id="@+id/layout_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp">
+
+                    <TextView
+                        android:id="@+id/et_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:hint="Select your answer"
+                        android:background="@drawable/edittext_selector1"
+                        android:focusable="true"
+                        android:drawableEnd="@drawable/ic_dropdwn_orange_new"
+                        android:focusableInTouchMode="true"
+                        android:fontFamily="@font/regular"
+                        android:gravity="bottom"
+                        android:textColor="@color/common_text_color"
+                        android:textColorHint="@color/grey_BBBBBB"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/txt_14sp" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="16dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/regular"
+                    android:lineHeight="16.34dp"
+                    android:text="Agree to use your logo on images created?"
+                    android:textColor="#888888"
+                    android:textFontWeight="600"
+                    android:textSize="12sp" />
+
+                <FrameLayout
+                    android:id="@+id/layout_logo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp">
+
+                    <TextView
+                        android:id="@+id/et_logo"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:hint="Select your answer"
+                        android:background="@drawable/edittext_selector1"
+                        android:focusable="true"
+                        android:drawableEnd="@drawable/ic_dropdwn_orange_new"
+                        android:focusableInTouchMode="true"
+                        android:fontFamily="@font/regular"
+                        android:gravity="bottom"
+                        android:textColor="@color/common_text_color"
+                        android:textColorHint="@color/grey_BBBBBB"
+                        android:textFontWeight="400"
+                        android:textSize="@dimen/txt_14sp" />
+                </FrameLayout>
+
+                <Button
+                    android:id="@+id/main_btn1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="44dp"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:background="@drawable/grey_button_click_effect"
+                    android:fontFamily="@font/bold"
+                    android:textSize="@dimen/_12sdp"
+                    android:text="Done"
+                    android:textAllCaps="false"
+                    android:textColor="@color/tv_color_BB"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+
+            </LinearLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

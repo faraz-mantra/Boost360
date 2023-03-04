@@ -51,6 +51,7 @@ import com.boost.marketplace.ui.browse.BrowseFeaturesActivity
 import com.boost.marketplace.ui.comparePacksV3.ComparePacksV3Activity
 import com.boost.marketplace.ui.coupons.OfferCouponsActivity
 import com.boost.marketplace.ui.details.FeatureDetailsActivity
+import com.boost.marketplace.ui.details.dictate_services.DictateServicesActivity
 import com.boost.marketplace.ui.marketplace_Offers.MarketPlaceOffersActivity
 import com.boost.marketplace.ui.pack_details.PackDetailsActivity
 import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
@@ -214,6 +215,11 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         shimmer_view_recomm_addons.startShimmer()
         shimmer_view_addon_category.startShimmer()
         WebEngageController.trackEvent(ADDONS_MARKETPLACE_HOME, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
+
+        welcome_txt.setOnClickListener {
+            val intent = Intent(this, DictateServicesActivity::class.java)
+            startActivity(intent)
+        }
 
         imageViewOption1.setOnClickListener {
             val popup = PopupMenu(this, imageViewOption1)
