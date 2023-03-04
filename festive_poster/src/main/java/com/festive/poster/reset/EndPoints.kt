@@ -3,8 +3,8 @@ package com.festive.poster.reset
 object EndPoints {
 
 
-    const val NOW_FLOATS_BASE = "https://api.nowfloats.com/"
-    const val WITH_FLOATS_TWO_BASE = "https://api2.withfloats.com/"
+    const val NOW_FLOATS_BASE = "https://jiw-nowfloats-api-as-staging.azurewebsites.net/"
+    const val WITH_FLOATS_TWO_BASE = "https://stage-appgw.withfloats.com/"
     const val AZURE_WEBSITE_NET_URL = "https://jiw-wf-featureprocessor-api-as-prod.azurewebsites.net/"
 
 

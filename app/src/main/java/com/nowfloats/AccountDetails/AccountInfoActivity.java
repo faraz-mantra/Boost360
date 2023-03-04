@@ -148,8 +148,8 @@ public class AccountInfoActivity extends AppCompatActivity {
     }
 
     public interface AccInfoInterface {
-        //https://api.withfloats.com/Discover/v1/FloatingPoint/GetPaidWidgetDetailsForFP?clientId={clientId}&fpId={fpId}
-        // https://api.withfloats.com/Discover/v1/FloatingPoint/GetPaidWidgetDetailsForFP?
+        //https://stage-appgw.withfloats.com/Discover/v1/FloatingPoint/GetPaidWidgetDetailsForFP?clientId={clientId}&fpId={fpId}
+        // https://stage-appgw.withfloats.com//Discover/v1/FloatingPoint/GetPaidWidgetDetailsForFP?
         // clientId=""&fpId=""
         @GET("/Discover/v1/FloatingPoint/GetPaidWidgetDetailsForFP")
         public void getAccDetails(@QueryMap Map<String, String> map, Callback<ArrayList<AccountDetailModel>> callback);

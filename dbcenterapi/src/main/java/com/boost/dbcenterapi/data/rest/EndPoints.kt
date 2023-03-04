@@ -10,7 +10,7 @@ object EndPoints {
 
   //WithFloats APIs
 
-  const val WITHFLOATS_BASE_URL ="https://api.withfloats.com/"
+  const val WITHFLOATS_BASE_URL ="https://stage-appgw.withfloats.com/"
   const val GET_FLOATING_POINT_WEB_WIDGET = "discover/v9/floatingPoint/FloatingPointWebWidgets/{floatingPointId}"
 
 

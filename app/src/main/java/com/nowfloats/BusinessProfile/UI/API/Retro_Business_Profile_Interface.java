@@ -17,7 +17,7 @@ import retrofit.http.POST;
 public interface Retro_Business_Profile_Interface {
 
 
-    //https://api.withfloats.com/Discover/v1/floatingpoint/update/
+    //https://stage-appgw.withfloats.com/Discover/v1/floatingpoint/update/
 
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     @POST("/Discover/v1/floatingpoint/update/")

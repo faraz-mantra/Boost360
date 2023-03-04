@@ -7,13 +7,13 @@ object EndPoints {
   const val FP_DETAILS_BY_ID = "Home/GetFloatingPointDetailsById"
 
   //TODO NFX API WITH FLOAT
-  const val WITH_FLOATS_BASE = "https://api.withfloats.com/"
+  const val WITH_FLOATS_BASE = "https://stage-appgw.withfloats.com/"
   const val USER_ACCOUNT_DETAIL = "discover/v9/business/paymentProfile/{fpId}"
   const val CREATE_PAYMENT = "discover/v9/business/paymentProfile/create"
   const val UPDATE_PAYMENT = "discover/v9/business/paymentProfile/bankDetails/update/{fpId}"
 
   //TODO STAFF API WITH FLOAT
-  const val STAFF_BASE_URL = "https://api.nowfloats.com/"
+  const val STAFF_BASE_URL = "https://jiw-nowfloats-api-as-staging.azurewebsites.net/"
   const val CREATE_STAFF_PROFILE = "Staff/v1/Create"
   const val FETCH_STAFF_SERVICES = "product/v13/GetServiceListings"
   const val GET_STAFF_LISTING = "staff/v1/GetStaffListing"
@@ -45,7 +45,7 @@ object EndPoints {
   const val POST_GET_TOP_OFFERS = "offers/v1/GetTopOffers"
 
   //TODO API.NOWFLOATS.COM FLOAT
-  const val API_NOWFLOATS_COM_BASE = "https://api.nowfloats.com/"
+  const val API_NOWFLOATS_COM_BASE = "https://jiw-nowfloats-api-as-staging.azurewebsites.net/"
   const val CREATE_SERVICE_V1 = "service/v1/create"
   const val UPDATE_SERVICE_V1 = "service/v1/update"
   const val DELETE_SERVICE_V1 = "service/v1/delete"
@@ -66,7 +66,7 @@ object EndPoints {
   const val DELETE_IMAGE_TESTIMONIAL = "Testimonial/v1/DeleteImage"
 
   //TODO NFX API 2 WITH FLOAT
-  const val WITH_FLOATS_TWO_BASE = "https://api2.withfloats.com/"
+  const val WITH_FLOATS_TWO_BASE = "https://stage-appgw.withfloats.com/"
   const val BACKGROUND_IMAGE = "discover/v1/floatingpoint/getBackgroundImages"
   const val CREATE_SERVICE = "Product/v1/Create"
   const val UPDATE_SERVICE = "Product/v1/Update"
@@ -126,7 +126,7 @@ object EndPoints {
   const val RAZOR_IFSC_DETAIL = "{ifsc}"
 
   //TODO NFX API 2 WITH FLOAT
-  const val WEB_ACTION_BOOST_KIT_BASE = "https://webaction.api.boostkit.dev/"
+  const val WEB_ACTION_BOOST_KIT_BASE = "https://jiw-webaction-api-as-staging.azurewebsites.net/"
   const val GET_ALL_KYC_DATA = "api/v1/List"
   const val GET_DATA_KYC = "api/v1/kycdoc/get-data"
   const val ADD_DATA_KYC = "api/v1/kycdoc/add-data"
@@ -134,7 +134,7 @@ object EndPoints {
   const val UPLOAD_FILE = "api/v1/ourdoctors/upload-file"
 
   //TODO Assured with float NFX APIs
-  const val ASSURED_WITH_FLOATS_BASE_URL = "https://assuredpurchase.withfloats.com/"
+  const val ASSURED_WITH_FLOATS_BASE_URL = "https://jiw-ap-api-as-staging.azurewebsites.net/"
   const val PICK_UP_ADDRESS = "api/Seller/PickupAddressList"
   const val GET_PRODUCT_INFORMATION_FETCH = "api/Seller/InformationFetch"
 

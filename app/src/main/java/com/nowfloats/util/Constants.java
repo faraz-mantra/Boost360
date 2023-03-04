@@ -69,11 +69,11 @@ public class Constants {
     public static final String[] FACEBOOK_PUBLISH_PERMISSIONS = Specific.FACEBOOK_PUBLISH_PERMISSIONS;
     //public final static String NOW_FLOATS_API_URL		=	"http://api.nowfloatsdev.com";
     //public final static String NOW_FLOATS_API_URL		=	"http://api.nowfloatsdev.com";
-    public final static String WEB_ACTION_BOOST_KIT_API_URL = "https://webaction.api.boostkit.dev";
-    public final static String NOW_FLOATS_API_URL = "https://api2.withfloats.com";
+    public final static String WEB_ACTION_BOOST_KIT_API_URL = "https://jiw-webaction-api-as-staging.azurewebsites.net";
+    public final static String NOW_FLOATS_API_URL = "https://stage-appgw.withfloats.com";
     public final static String NOW_FLOATS_API_URL_SALESMAN = "http://52.66.59.196";
-    public final static String WITH_FLOATS_API_URL = "https://api.withfloats.com/";
-    public final static String NOW_FLOATS_API_URL_V2 = "https://api2.withfloats.com";
+    public final static String WITH_FLOATS_API_URL = "https://stage-appgw.withfloats.com/";
+    public final static String NOW_FLOATS_API_URL_V2 = "https://stage-appgw.withfloats.com";
     public final static String TEST_API_URL = "http://api.nowfloatsdev.com";
     public final static String CREATE_MESSAGE_URL = "http://api.nowfloatsdev.com/akash";
     public final static String BASE_IMAGE_URL = "https://content.withfloats.com";
@@ -85,7 +85,7 @@ public class Constants {
     public final static String SUGGESTIONS_TEXT_API_URL = "http://boosttest.nowfloatsdev.com";
     //public final static String WA_BASE_URL = "https://webactions.kitsune.tools/api/v1/";
     public final static String WA_BASE_URL = "https://kit-webaction-api.withfloats.com/api/v1/";
-    public final static String AP_BASE_URL = "https://assuredpurchase.withfloats.com/api/AssuredPurchase/";
+    public final static String AP_BASE_URL = "https://jiw-ap-api-as-staging.azurewebsites.net/api/AssuredPurchase/";
     public final static String AP_BOOST_BASE_URL = "https://boost.nowfloats.com/AssuredPurchase";
     public final static String BOOST_NOWFLOATS_BASE_URL = "https://boost.nowfloats.com/Home";
     public final static String ANA_CHAT_API_URL = /*"http://chat-dev.nowfloatsdev.com";//*/"https://gateway.api.ana.chat";
@@ -176,11 +176,11 @@ public class Constants {
     /**
      * Dev Adapter
      */
-    public static final RestAdapter restAdapterDev = new RestAdapter.Builder().setEndpoint(/*"http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com/"*/ "https://api2.withfloats.com/")/*.setClient(getClient())*/
+    public static final RestAdapter restAdapterDev = new RestAdapter.Builder().setEndpoint(/*"http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com/"*/ "https://stage-appgw.withfloats.com/")/*.setClient(getClient())*/
             .setRequestInterceptor(Utils.getAuthRequestInterceptor())
             .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static final RestAdapter restAdapterDev1 = new RestAdapter.Builder()
-            .setEndpoint(/*"http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com"*/ "https://api2.withfloats.com")/*.setClient(getClient())*/
+            .setEndpoint(/*"http://ec2-13-233-87-208.ap-south-1.compute.amazonaws.com"*/ "https://stage-appgw.withfloats.com")/*.setClient(getClient())*/
             .setLogLevel(RestAdapter.LogLevel.FULL)
             .setRequestInterceptor(Utils.getAuthRequestInterceptor())
             .setLog(new AndroidLog("ggg")).build();
@@ -199,10 +199,10 @@ public class Constants {
     public static String clientId = Specific.clientId2;
     public static String GMBClientId = "534180772998-29dvjja8u2lnaklmrdnne776i2gosi4c.apps.googleusercontent.com";
     public static String GMBCallbackUrl = "https://mybusiness.googleapis.com/v4/accounts";
-    public static String NFXUpdateAcessToken = "https://nfx.withfloats.com/dataexchange/v1/updateAccessTokens";
-    public static String NFXProcessUrl = "https://nfx.withfloats.com/dataexchange/v1/process";
+    public static String NFXUpdateAcessToken = "https://jiw-dx-api-as-staging.azurewebsites.net/dataexchange/v1/updateAccessTokens";
+    public static String NFXProcessUrl = "https://jiw-dx-api-as-staging.azurewebsites.net/dataexchange/v1/process";
     public static String GMBScope = "https://www.googleapis.com/auth/plus.business.manage";
-    public static String NFXgetAcessToken = "https://nfx.withfloats.com/dataexchange/v1/getAccessTokens";
+    public static String NFXgetAcessToken = "https://jiw-dx-api-as-staging.azurewebsites.net/dataexchange/v1/getAccessTokens";
     public static String GMBgetLocationUrl = "https://mybusiness.googleapis.com/v4/accounts/";
     public static String LogTag = "android23235616";
     public static String UPLOAD_TO_S3_ENDPOINT = "https://6psfkele8l.execute-api.ap-south-1.amazonaws.com";
@@ -226,9 +226,9 @@ public class Constants {
     public static Activity app = null;
     public static Activity home = null;
     public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
-    //http://api.withfloats.com/Discover/v3/FloatingPoint/create
+    //http://stage-appgw.withfloats.com/Discover/v3/FloatingPoint/create
     public static String NFX_DEV_NOWFLOATS = "http://nfx.nowfloatsdev.com";
-    public static String NFX_WITH_NOWFLOATS = "https://nfx.withfloats.com";
+    public static String NFX_WITH_NOWFLOATS = "https://jiw-dx-api-as-staging.azurewebsites.net";
     //public static String NFX_WITH_NOWFLOATS="http://nfx.nowfloatsdev.com";
     public static String createStoreV3 = NOW_FLOATS_API_URL + "/Discover/v3/FloatingPoint/create";
     public static String createStoreV2 = NOW_FLOATS_API_URL + "/Discover/v2/FloatingPoint/create";
@@ -467,7 +467,7 @@ public class Constants {
      * Dev URL
      */
     //public static String DEV_ASSURED_PURCHASE_URL = "http://ec2-13-232-212-139.ap-south-1.compute.amazonaws.com";
-    public static String DEV_ASSURED_PURCHASE_URL = "https://assuredpurchase.withfloats.com";
+    public static String DEV_ASSURED_PURCHASE_URL = "https://jiw-ap-api-as-staging.azurewebsites.net";
     public static final RestAdapter assuredPurchaseRestAdapterDev = new RestAdapter.Builder().setEndpoint(DEV_ASSURED_PURCHASE_URL)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
 
     public Constants(Activity app) {

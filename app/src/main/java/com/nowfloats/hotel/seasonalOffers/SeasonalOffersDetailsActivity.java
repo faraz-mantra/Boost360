@@ -412,7 +412,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
         request.setActionData(actionData);
 
         HotelAPIInterfaces APICalls = new RestAdapter.Builder()
-            .setEndpoint("https://webaction.api.boostkit.dev")
+            .setEndpoint("https://jiw-webaction-api-as-staging.azurewebsites.net")
             .setLogLevel(RestAdapter.LogLevel.FULL)
             .setLog(new AndroidLog("ggg"))
             .build()
@@ -539,7 +539,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
         requestBody.setUpdateValue("{$set :" + new Gson().toJson(actionData) + "}");
 
         HotelAPIInterfaces APICalls = new RestAdapter.Builder()
-            .setEndpoint("https://webaction.api.boostkit.dev")
+            .setEndpoint("https://jiw-webaction-api-as-staging.azurewebsites.net")
             .setLogLevel(RestAdapter.LogLevel.FULL)
             .setLog(new AndroidLog("ggg"))
             .build()
@@ -585,7 +585,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
       requestBody.setMulti(true);
 
       HotelAPIInterfaces APICalls = new RestAdapter.Builder()
-          .setEndpoint("https://webaction.api.boostkit.dev")
+          .setEndpoint("https://jiw-webaction-api-as-staging.azurewebsites.net")
           .setLogLevel(RestAdapter.LogLevel.FULL)
           .setLog(new AndroidLog("ggg"))
           .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))

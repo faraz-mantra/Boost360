@@ -185,7 +185,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
             JSONObject query = new JSONObject();
             query.put("WebsiteId", session.getFpTag());
             APIInterfaces APICalls = new RestAdapter.Builder()
-                    .setEndpoint("https://webaction.api.boostkit.dev")
+                    .setEndpoint("https://jiw-webaction-api-as-staging.azurewebsites.net")
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .setLog(new AndroidLog("ggg"))
                     .build()
@@ -253,7 +253,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
             requestBody.setMulti(true);
 
             APIInterfaces APICalls = new RestAdapter.Builder()
-                    .setEndpoint("https://webaction.api.boostkit.dev")
+                    .setEndpoint("https://jiw-webaction-api-as-staging.azurewebsites.net")
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .setLog(new AndroidLog("ggg"))
                     .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))

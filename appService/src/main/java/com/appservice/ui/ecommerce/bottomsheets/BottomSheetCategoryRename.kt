@@ -67,7 +67,7 @@ class BottomSheetCategoryRename(
 
         binding?.btnPublish?.setOnClickListener {
             val businessProfileUpdateUrl =
-                "https://api2.withfloats.com/Discover/v1/FloatingPoint/update"
+                "https://stage-appgw.withfloats.com/Discover/v1/FloatingPoint/update"
             val businessProfileUpdateRequest = BusinessProfileUpdateRequest()
             businessProfileUpdateRequest.clientId = clientId
             businessProfileUpdateRequest.fpTag = sessionLocal.fpTag

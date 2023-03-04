@@ -131,7 +131,7 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
             JSONObject query = new JSONObject();
             query.put("WebsiteId", session.getFpTag());
             HotelAPIInterfaces APICalls = new RestAdapter.Builder()
-                    .setEndpoint("https://webaction.api.boostkit.dev")
+                    .setEndpoint("https://jiw-webaction-api-as-staging.azurewebsites.net")
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .setLog(new AndroidLog("ggg"))
                     .build()
@@ -230,7 +230,7 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
             requestBody.setMulti(true);
 
             HotelAPIInterfaces APICalls = new RestAdapter.Builder()
-                    .setEndpoint("https://webaction.api.boostkit.dev")
+                    .setEndpoint("https://jiw-webaction-api-as-staging.azurewebsites.net")
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .setLog(new AndroidLog("ggg"))
                     .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))

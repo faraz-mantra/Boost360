@@ -3,7 +3,7 @@ package com.dashboard.rest
 object EndPoints {
 
   //TODO NFX API WITH FLOAT
-  const val WITH_FLOATS_BASE = "https://api.withfloats.com/"
+  const val WITH_FLOATS_BASE = "https://stage-appgw.withfloats.com/"
   const val USER_ACCOUNT_DETAIL = "discover/v9/business/paymentProfile/{fpId}"
   const val CREATE_PAYMENT = "discover/v9/business/paymentProfile/create"
   const val UPDATE_PAYMENT = "discover/v9/business/paymentProfile/bankDetails/update/{fpId}"
@@ -22,7 +22,7 @@ object EndPoints {
   const val DOMAIN_DETAIL = "DomainService/v3/GetDomainDetailsForFloatingPoint/{fpTag}"
 
   //TODO NFX API WITH FLOAT
-  const val WITH_FLOATS_TWO_BASE = "https://api2.withfloats.com/"
+  const val WITH_FLOATS_TWO_BASE = "https://stage-appgw.withfloats.com/"
   const val CREATE_BUSINESS_LOGO = "Discover/v1/floatingPoint/createLogoImage/"
   //FIREBASE TOKEN
   const val GET_FIREBASE_TOKEN = "discover/v1/FloatingPoint/GetFirebaseAuthToken"
@@ -30,14 +30,14 @@ object EndPoints {
 
 
   //TODO NOWFLOAT API
-  const val NOW_FLOATS_BASE = "https://api.nowfloats.com/"
+  const val NOW_FLOATS_BASE = "https://jiw-nowfloats-api-as-staging.azurewebsites.net/"
   const val WEBSITE_THEME_GET = "/Discover/v1/floatingPoint/getThemeCustomization"
   const val WEBSITE_THEME_UPDATE = "/Discover/v1/floatingPoint/updateThemeCustomization"
 
   //TODO FP UPADTE API
   const val FLOATING_POINT_UPDATE = "Discover/v1/FloatingPoint/update/"
   //TODO WEBACTION API
-  const val WEB_ACTION_API_BASE = "https://webaction.api.boostkit.dev/api/v1/"
+  const val WEB_ACTION_API_BASE = "https://jiw-webaction-api-as-staging.azurewebsites.net/api/v1/"
   const val OWNER_INFO_DATA = "about_us/get-data"
   const val OWNER_INFO_ADD_DATA = "about_us/add-data"
   const val OWNER_INFO_UPDATE_DATA = "about_us/update-data"

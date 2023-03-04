@@ -4,28 +4,28 @@
   <base-config cleartextTrafficPermitted="true" />
 
   <domain-config cleartextTrafficPermitted="false">
-    <domain includeSubdomains="true">api.withfloats.com</domain>
+    <domain includeSubdomains="true">stage-appgw.withfloats.com</domain>
     <pin-set>
       <pin digest="SHA-256">DRvqwTGU0gk+PEtxpNvDq7m7m/rlV+ki8v4NmGUaqu4=</pin>
       <pin digest="SHA-256">RQeZkB42znUfsDIIFWIRiYEcKl7nHwNFwWCrnMMJbVc=</pin>
     </pin-set>
   </domain-config>
+<!--  <domain-config cleartextTrafficPermitted="false">-->
+<!--    <domain includeSubdomains="true">stage-appgw.withfloats.com</domain>-->
+<!--    <pin-set>-->
+<!--      <pin digest="SHA-256">DRvqwTGU0gk+PEtxpNvDq7m7m/rlV+ki8v4NmGUaqu4=</pin>-->
+<!--      <pin digest="SHA-256">RQeZkB42znUfsDIIFWIRiYEcKl7nHwNFwWCrnMMJbVc=</pin>-->
+<!--    </pin-set>-->
+<!--  </domain-config>-->
   <domain-config cleartextTrafficPermitted="false">
-    <domain includeSubdomains="true">api2.withfloats.com</domain>
-    <pin-set>
-      <pin digest="SHA-256">DRvqwTGU0gk+PEtxpNvDq7m7m/rlV+ki8v4NmGUaqu4=</pin>
-      <pin digest="SHA-256">RQeZkB42znUfsDIIFWIRiYEcKl7nHwNFwWCrnMMJbVc=</pin>
-    </pin-set>
-  </domain-config>
-  <domain-config cleartextTrafficPermitted="false">
-    <domain includeSubdomains="true">webaction.api.boostkit.dev</domain>
+    <domain includeSubdomains="true">jiw-webaction-api-as-staging.azurewebsites.net</domain>
     <pin-set>
       <pin digest="SHA-256">8mom5kXVQl+p2G7caWhjrPd6bwcMBLWeiTo+5mJKjsM=</pin>
       <pin digest="SHA-256">zv60Ex2lV1j/DxD/XKmx03Pt651+V6UH8oXqkXO2IKE=</pin>
     </pin-set>
   </domain-config>
   <domain-config cleartextTrafficPermitted="false">
-    <domain includeSubdomains="true">assuredpurchase.withfloats.com</domain>
+    <domain includeSubdomains="true">jiw-ap-api-as-staging.azurewebsites.net</domain>
     <pin-set>
       <pin digest="SHA-256">JZIPsgdbCvFWdJKk9FGvmXWFAu0PRh8IT9fB6il3p/w=</pin>
       <pin digest="SHA-256">JSMzqOOrtyOT1kmau6zKhgT676hGgczD5VMdRMyJZFA=</pin>
@@ -68,7 +68,7 @@
     </pin-set>
   </domain-config>
   <domain-config cleartextTrafficPermitted="false">
-    <domain includeSubdomains="true">nfx.withfloats.com</domain>
+    <domain includeSubdomains="true">jiw-dx-api-as-staging.azurewebsites.net</domain>
     <pin-set>
       <pin digest="SHA-256">DRvqwTGU0gk+PEtxpNvDq7m7m/rlV+ki8v4NmGUaqu4=</pin>
       <pin digest="SHA-256">RQeZkB42znUfsDIIFWIRiYEcKl7nHwNFwWCrnMMJbVc=</pin>

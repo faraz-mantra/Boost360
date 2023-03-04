@@ -88,9 +88,9 @@ public class UploadProfileImage extends AsyncTask<Void, String, String> {
                     .addFormDataPart("file", fileName, RequestBody.create(MediaType.parse("image/*"), buf))
                     .build();
 
-            //https://webaction.api.boostkit.dev/api/v1/placesaround/upload-file?assetFileName=screenshot-assuredpurchase.withfloats.com-2020.07.17-14_38_42.png
+            //https://jiw-webaction-api-as-staging.azurewebsites.net/api/v1/placesaround/upload-file?assetFileName=screenshot-assuredpurchase.withfloats.com-2020.07.17-14_38_42.png
             Request request = new Request.Builder()
-                    .url("https://webaction.api.boostkit.dev/api/v1/placesaround/upload-file?assetFileName=screenshot-assuredpurchase.withfloats.com-" + fileName + ".jpg")
+                    .url("https://jiw-webaction-api-as-staging.azurewebsites.net/api/v1/placesaround/upload-file?assetFileName=screenshot-assuredpurchase.withfloats.com-" + fileName + ".jpg")
                     .post(requestBody)
                     .addHeader("Authorization", "59c8add5dd304111404e7f04")
                     .build();

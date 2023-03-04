@@ -28,7 +28,7 @@ class Constants {
 //        val RAZORPAY_KEY: String = "rzp_test_OlLpIGwhA7bATX"
 //        val RAZORPAY_SECREAT: String = "wMa4K0UW4dPXD4ZJrkVg64mX"
 
-        const val BASE_URL = "https://api.withfloats.com/"
+        const val BASE_URL = "https://stage-appgw.withfloats.com/"
         var SPLASH_FRAGMENT: String = SplashFragment::class.java.getName()
         var DETAILS_FRAGMENT: String = DetailsFragment::class.java.getName()
         var CART_FRAGMENT: String = CartFragment::class.java.getName()

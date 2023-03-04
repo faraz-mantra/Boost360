@@ -177,7 +177,7 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
         }
       }
       binding.btnSaveDetails -> {
-        val businessProfileUpdateUrl = "https://api2.withfloats.com/Discover/v1/FloatingPoint/update"
+        val businessProfileUpdateUrl = "https://stage-appgw.withfloats.com/Discover/v1/FloatingPoint/update"
         val businessProfileUpdateRequest = BusinessProfileUpdateRequest()
         businessProfileUpdateRequest.clientId = clientId
         businessProfileUpdateRequest.fpTag = sessionLocal.fpTag

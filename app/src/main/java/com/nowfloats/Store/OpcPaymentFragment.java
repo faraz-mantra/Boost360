@@ -398,7 +398,7 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
                             case "INSTAMOJO":
 //                                i.putExtra(com.romeo.mylibrary.Constants.PAYMENT_REQUEST_IDENTIFIER, paymentTokenResult.getResult().getPaymentRequestId());
 //                                i.putExtra(com.romeo.mylibrary.Constants.ACCESS_TOKEN_IDENTIFIER, paymentTokenResult.getResult().getAccessToken());
-//                                i.putExtra(com.romeo.mylibrary.Constants.WEB_HOOK_IDENTIFIER, "https://api.withfloats.com/Payment/v1/floatingpoint/instaMojoWebHook?clientId=" + Constants.clientId);//change this later
+//                                i.putExtra(com.romeo.mylibrary.Constants.WEB_HOOK_IDENTIFIER, "https://stage-appgw.withfloats.com/Payment/v1/floatingpoint/instaMojoWebHook?clientId=" + Constants.clientId);//change this later
 
                                 startActivityForResult(i, OPC_REQUEST_CODE);
 //                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

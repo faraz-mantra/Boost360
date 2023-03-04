@@ -4,7 +4,7 @@ class Constants {
   companion object {
     //        const val BASE_URL = "https://5df0c0789df6fb00142bd1c8.mockapi.io/"
 //        const val BASE_URL = "http://www.mocky.io/v2/"
-    const val BASE_URL = "https://api.withfloats.com/"
+    const val BASE_URL = "https://stage-appgw.withfloats.com/"
     const val USER_PREFERENCES = "SHARED_PREFERENCES"
     const val ALERT_YES = 1
     const val ALERT_NO = 2

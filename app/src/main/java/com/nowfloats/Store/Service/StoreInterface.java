@@ -37,13 +37,13 @@ import retrofit.http.QueryMap;
 /**
  * Created by guru on 29-04-2015.
  */
-/*https://api.withfloats.com/Support/v1/
+/*https://stage-appgw.withfloats.com/Support/v1/
             GetFloatingPointPackages?
             identifier=DB96EA35A6E44C0F8FB4A6BAA94DB017C0DFBE6F9944B14AA6C3C48641B3D70&
             clientId=DB96EA35A6E44C0F8FB4A6BAA94DB017C0DFBE6F9944B14AA6C3C48641B3D70*/
 //?identifier=DB96EA35A6E44C0F8FB4A6BAA94DB017C0DFBE6F9944B14AA6C3C48641B3D70&clientId=DB96EA35A6E44C0F8FB4A6BAA94DB017C0DFBE6F9944B14AA6C3C48641B3D70
 public interface StoreInterface {
-    //https://api.withfloats.com/Support/v1/floatingpoint/getpackages?
+    //https://stage-appgw.withfloats.com/Support/v1/floatingpoint/getpackages?
     // identifier={IDENTIFIER}&clientId={CLIENTID}&fpId={FPID}&country={COUNTRY}
     ///Support/v1/floatingpoint/getpackages?identifier=524304ad4ec0a40d1c9a93f3&clientId=217FF5B9CE214CDDAC4985C853AE7F75AAFA11AF2C4B47CB877BCA26EC217E6D
 //    @GET("/Support/v1/GetFloatingPointPackages")

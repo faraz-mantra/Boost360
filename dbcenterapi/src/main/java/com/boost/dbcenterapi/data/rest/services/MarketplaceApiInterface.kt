@@ -48,11 +48,11 @@ interface MarketplaceApiInterface {
 //    fun CreatePurchaseOrder(@Body createPurchaseOrderRequest: CreatePurchaseOrderRequest): Observable<Response<CreatePurchaseOrderResponse>>
 
   @Headers("Content-Type: application/json")
-  @POST("http://api2.withfloats.com/Payment/v10/floatingpoint/CreatePurchaseOrder")
+  @POST("http://stage-appgw.withfloats.com/Payment/v10/floatingpoint/CreatePurchaseOrder")
   fun CreatePurchaseOrder(@Header("Authorization") auth: String, @Body createPurchaseOrderV2: CreatePurchaseOrderV2): Observable<Response<CreatePurchaseOrderResponse>>
 
   @Headers("Content-Type: application/json")
-  @POST("http://api2.withfloats.com/Payment/v11/floatingpoint/CreatePurchaseOrder")
+  @POST("http://stage-appgw.withfloats.com/Payment/v11/floatingpoint/CreatePurchaseOrder")
   fun CreatePurchaseAutoRenewOrder(@Header("Authorization") auth: String, @Body createPurchaseOrderV2: CreatePurchaseOrderV2): Observable<Response<CreatePurchaseOrderResponse>>
 
   @Headers("Content-Type: application/json")
@@ -70,7 +70,7 @@ interface MarketplaceApiInterface {
   ): Observable<Response<RazorpayTokenResponse>>
 
   @Headers("Content-Type: application/json")
-  @GET("https://api.withfloats.com/Payment/v10/floatingpoint/PurchaseOrders")
+  @GET("https://stage-appgw.withfloats.com/Payment/v10/floatingpoint/PurchaseOrders")
   fun getPurchasedOrdersV2(
     @Header("Authorization") auth: String,
     @Query("FloatingPointId") floatingPointId: String
@@ -78,7 +78,7 @@ interface MarketplaceApiInterface {
   ): Observable<Response<GetPurchaseOrderResponseV2>>
 
   @Headers("Content-Type: application/json")
-  @GET("https://api.withfloats.com/Payment/v10/floatingpoint/PurchaseOrders/{floatingPointId}")
+  @GET("https://stage-appgw.withfloats.com/Payment/v10/floatingpoint/PurchaseOrders/{floatingPointId}")
   fun getPurchasedOrders(
     @Header("Authorization") auth: String,
     @Path("floatingPointId") floatingPointId: String,
@@ -86,7 +86,7 @@ interface MarketplaceApiInterface {
   ): Observable<Response<GetPurchaseOrderResponse>>
 
   @Headers("Content-Type: application/json")
-  @POST("https://api2.withfloats.com/Internal/v1/PushEmailToQueue/{clientId}")
+  @POST("https://stage-appgw.withfloats.com/Internal/v1/PushEmailToQueue/{clientId}")
   fun createPaymentThroughEmail(
     @Header("Authorization") auth: String,
     @Path("clientId") clientId: String,
@@ -94,7 +94,7 @@ interface MarketplaceApiInterface {
   ): Observable<Response<String?>>
 
   @Headers("Content-Type: application/json")
-  @POST("https://api.withfloats.com/discover/v1/FloatingPoint/SendEmailWithPriority/")
+  @POST("https://stage-appgw.withfloats.com/discover/v1/FloatingPoint/SendEmailWithPriority/")
   fun createPaymentThroughEmailPriority(@Header("Authorization") auth: String, @Body data: PaymentPriorityEmailRequestBody): Observable<Response<String?>>
 
   @Headers("Content-Type: application/json")
@@ -123,7 +123,7 @@ interface MarketplaceApiInterface {
 //  fun redeemCoupon(@Body redeemCouponRequest: RedeemCouponRequest): Observable<Response<RedeemCouponResponse>>
 
   @Headers("Content-Type: application/json")
-  @GET("https://api2.withfloats.com/api/v1/Business/GetGSTINInformation")
+  @GET("https://stage-appgw.withfloats.com/api/v1/Business/GetGSTINInformation")
   fun getGSTDetails(
     @Header("Authorization") auth: String,
     @Query("gstin") gstIN: String?,
@@ -131,14 +131,14 @@ interface MarketplaceApiInterface {
   ): Observable<Response<GSTApiResponse>>
 
   @Headers("Content-Type: application/json")
-  @GET("https://api2.withfloats.com/api/v1/Business/GetStateCode")
+  @GET("https://stage-appgw.withfloats.com/api/v1/Business/GetStateCode")
   fun getStates(
     @Header("Authorization") auth: String,
     @Query("clientId") clientId: String?
   ): Observable<Response<GetStates>>
 
   @Headers("Content-Type: application/json")
-  @GET("https://api.withfloats.com/discover/v9/business/paymentProfile/{floatingPointId}")
+  @GET("https://stage-appgw.withfloats.com/discover/v9/business/paymentProfile/{floatingPointId}")
   fun getLastPaymentDetails(
     @Header("Authorization") auth: String,
     @Path("floatingPointId") floatingPointId: String?,

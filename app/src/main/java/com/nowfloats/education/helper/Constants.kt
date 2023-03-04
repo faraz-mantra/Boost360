@@ -14,7 +14,7 @@ import java.util.*
 
 object Constants {
 
-  const val EDUCATION_API_BASE_URL = "https://webaction.api.boostkit.dev/api/v1/"
+  const val EDUCATION_API_BASE_URL = "https://jiw-webaction-api-as-staging.azurewebsites.net/api/v1/"
   const val UPLOAD_OUR_FACULTY_IMAGE_URL = "our_faculty/upload-file?assetFileName="
   const val UPLOAD_OUR_TOPPER_IMAGE_URL = "our_toppers/upload-file?assetFileName="
   const val CONNECTION_TIMEOUT: Long = 60

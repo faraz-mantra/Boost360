@@ -79,7 +79,7 @@ public class DeleteBackgroundImageAsyncTask extends AsyncTask<Void, String, Stri
                 obj.put("ExistingBackgroundImageUri", backgroundimgid);
                 //obj.put("identifierType", "SINGLE");
                 String serveruri = Constants.DelBackImg + "/" + "?ClientId=" + Constants.clientId + "&ExistingBackgroundImageUri=" + backgroundimgid + "&FpId=" + session.getFPID() + "&identifierType=SINGLE";
-                //https://api.withfloats.com/discover/v1/floatingpoint/backgroundImage/delete/?ClientId=Constants.clientId&ExistingBackgroundImageUri=backgroundimgid&FpId=Constants.Store_id&&identifierType=SINGLE"
+                //https://stage-appgw.withfloats.com/discover/v1/floatingpoint/backgroundImage/delete/?ClientId=Constants.clientId&ExistingBackgroundImageUri=backgroundimgid&FpId=Constants.Store_id&&identifierType=SINGLE"
                 // add header
                 HttpPost httpPost = new HttpPost(serveruri);
                 StringEntity entity = new StringEntity(obj.toString(), HTTP.UTF_8);

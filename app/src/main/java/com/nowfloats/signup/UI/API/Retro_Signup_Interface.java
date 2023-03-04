@@ -38,7 +38,7 @@ public interface Retro_Signup_Interface {
     void post_verifyUniqueNumber(@Body HashMap<String, String> map, Callback<Boolean> callback);
 
 
-    //https://api.withfloats.com/Discover/v3/FloatingPoint/create
+    //https://stage-appgw.withfloats.com/Discover/v3/FloatingPoint/create
 
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     @PUT("/Discover/v5/FloatingPoint/create")

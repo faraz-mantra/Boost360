@@ -170,7 +170,7 @@ public class TripAdvisorActivity extends AppCompatActivity {
             JSONObject query = new JSONObject();
             query.put("WebsiteId", session.getFpTag());
             HotelAPIInterfaces APICalls = new RestAdapter.Builder()
-                    .setEndpoint("https://webaction.api.boostkit.dev")
+                    .setEndpoint("https://jiw-webaction-api-as-staging.azurewebsites.net")
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .setLog(new AndroidLog("ggg"))
                     .build()
@@ -214,7 +214,7 @@ public class TripAdvisorActivity extends AppCompatActivity {
             requestBody.setActionData(actionData);
 
             HotelAPIInterfaces APICalls = new RestAdapter.Builder()
-                    .setEndpoint("https://webaction.api.boostkit.dev")
+                    .setEndpoint("https://jiw-webaction-api-as-staging.azurewebsites.net")
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .setLog(new AndroidLog("ggg"))
                     .build()
@@ -259,7 +259,7 @@ public class TripAdvisorActivity extends AppCompatActivity {
             requestBody.setUpdateValue("{$set :" + new Gson().toJson(actionData) + "}");
 
             HotelAPIInterfaces APICalls = new RestAdapter.Builder()
-                    .setEndpoint("https://webaction.api.boostkit.dev")
+                    .setEndpoint("https://jiw-webaction-api-as-staging.azurewebsites.net")
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .setLog(new AndroidLog("ggg"))
                     .build()

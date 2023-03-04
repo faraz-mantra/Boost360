@@ -6,7 +6,7 @@ object EndPoints {
   const val GET_CATEGORIES="language/v1/categories/get-data"
 
   //TODO NFX API WITH FLOAT
-  const val WITH_FLOATS_BASE = "https://api.withfloats.com/"
+  const val WITH_FLOATS_BASE = "https://stage-appgw.withfloats.com/"
   const val PUT_CREATE_BUSINESS_URL = "discover/v5/FloatingPoint/create"
   const val PUT_CREATE_BUSINESS_V6_URL = "discover/v7/FloatingPoint/create"
   const val POST_ACTIVATE_PURCHASED_ORDER = "Payment/v9/floatingpoint/ActivatePurchaseOrder"
@@ -16,7 +16,7 @@ object EndPoints {
   const val VERIFY_EMAIL = "/discover/v1/floatingPoint/verifyEmail"
 
   //TODO NFX API WITH FLOAT TWO
-  const val WITH_FLOATS_TWO_BASE = "https://api2.withfloats.com/"
+  const val WITH_FLOATS_TWO_BASE = "https://stage-appgw.withfloats.com/"
   const val CREATE_MERCHANT_PROFILE = "/user/v9/floatingPoint/CreateMerchantProfile"
   const val VERIFY_LOGIN = "/discover/v1/floatingPoint/verifyLogin"
   const val CHANGE_PASSWORD = "/discover/v1/floatingpoint/changePassword"
@@ -38,10 +38,10 @@ object EndPoints {
   const val GET_FIREBASE_TOKEN = "discover/v1/FloatingPoint/GetFirebaseAuthToken"
 
   //todo NFX API
-  var NFX_WITH_NOWFLOATS: String = "https://nfx.withfloats.com"
+  var NFX_WITH_NOWFLOATS: String = "https://jiw-dx-api-as-staging.azurewebsites.net"
 
   //todo webaction boost kit api url
-  const val WEB_ACTION_BOOST_KIT_API_URL = "https://webaction.api.boostkit.dev"
+  const val WEB_ACTION_BOOST_KIT_API_URL = "https://jiw-webaction-api-as-staging.azurewebsites.net"
   const val GET_DATA = "/api/v1/kycdoc/get-data"
 
   const val RIA_WITH_FLOATS_BASE = "https://ria.withfloats.com"

@@ -2,10 +2,10 @@ package com.inventoryorder.rest
 
 object EndPoints {
 
-  const val WITH_FLOATS_BASE_URL = "https://assuredpurchase.withfloats.com/"
+  const val WITH_FLOATS_BASE_URL = "https://jiw-ap-api-as-staging.azurewebsites.net/"
 
   // API 2 with float
-  const val BOOST_API2_WITH_FLOAT = "https://api2.withfloats.com"
+  const val BOOST_API2_WITH_FLOAT = "https://stage-appgw.withfloats.com"
   const val GET_LIST_INVENTORY_SYNC = "product/v1/GetListingsWithInventorySync"
   const val SEND_SMS = "discover/v1/floatingpoint/CreateSMSHighPriorityIndia"
   const val GET_BIZ_FLOATS_MESSAGE = "/Discover/v1/floatingPoint/bizFloats"
@@ -13,7 +13,7 @@ object EndPoints {
   const val GET_SERVICE_LISTING = "product/v13/GetAllServiceListings"
 
   // API with float
-  const val BOOST_API_WITH_FLOAT = "https://api.withfloats.com"
+  const val BOOST_API_WITH_FLOAT = "https://stage-appgw.withfloats.com"
   const val GET_USER_SUMMARY_FILTER = "/Dashboard/v1/{fpTag}/summary"
   const val GET_USER_MESSAGE_COUNT_FILTER = "/discover/v2/floatingPoint/usermessagescount/{fpId}"
   const val GET_MAP_ADDRESS_DETAILS_FILTER = "/Dashboard/v1/{fpTag}/totaladdressviewdetails"
@@ -28,7 +28,7 @@ object EndPoints {
   const val GET_STAFF_LISTING = "staff/v1/GetStaffListing"
 
   // NFX APIs
-  const val ASSURED_PURCHASE_BASE_URL = "https://assuredpurchase.withfloats.com/"
+  const val ASSURED_PURCHASE_BASE_URL = "https://jiw-ap-api-as-staging.azurewebsites.net/"
 
   @Deprecated("Use v2.5")
   const val POST_INITIATE_ORDER = "api/assuredPurchase/v2/InitiateOrder"
@@ -61,14 +61,14 @@ object EndPoints {
 
 
   // Boost Kit APIs
-  const val WEB_ACTION_BOOST_KIT_BASE_URL = "https://webaction.api.boostkit.dev/"
+  const val WEB_ACTION_BOOST_KIT_BASE_URL = "https://jiw-webaction-api-as-staging.azurewebsites.net/"
   const val WEEKLY_SCHEDULE_DOCTOR = "api/v1/weeklyschedule/get-data"
   const val ALL_APT_DOCTOR = "api/v1/appointment/get-data"
   const val ADD_APT_CONSULT_DATA = "api/v1/appointment/add-data"
   const val UPDATE_APT_CONSULT_DATA = "api/v1/appointment/update-data"
 
   //Now FLoats Api
-  const val API_NOW_FLOATS = "https://api.nowfloats.com/"
+  const val API_NOW_FLOATS = "https://jiw-nowfloats-api-as-staging.azurewebsites.net/"
   const val GET_SEARCH_LISTING = "Service/v1/GetSearchListings"
   const val GET_BOOKING_SLOTS = "Staff/v1/GetBookingSlots"
   const val GET_BOOKING_SLOTS_STAFF = "Staff/v1/GetBookingSlotsForStaff/{staffId}"

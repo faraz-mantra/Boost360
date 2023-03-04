@@ -66,7 +66,7 @@ interface NewApiInterface {
 
     // MyHistoryOrders V2
     @Headers("Content-Type: application/json")
-    @GET("https://api.withfloats.com/Payment/v10/floatingpoint/PurchaseOrders")
+    @GET("https://stage-appgw.withfloats.com/Payment/v10/floatingpoint/PurchaseOrders")
     fun getPurchasedOrdersV2(
         @Header("Authorization") auth: String,
         @Query("FloatingPointId") floatingPointId: String
@@ -78,7 +78,7 @@ interface NewApiInterface {
     fun getDomains(@Body domainRequest: DomainRequest):Observable<CustomDomains>
 
     @Headers("Content-Type: application/json")
-    @GET("https://api2.withfloats.com/discover/v2/GetVMN")
+    @GET("https://stage-appgw.withfloats.com/discover/v2/GetVMN")
     fun getCallTrackDetails(
         @Query("fpId") floatingPointId: String,
         @Query("clientId") clientId: String
@@ -86,7 +86,7 @@ interface NewApiInterface {
 
     //Blocking API
     @Headers("Content-Type: application/json")
-    @GET("https://api2.withfloats.com/discover/v2/floatingPoint/VerifyDomainOrVMNRegisted")
+    @GET("https://stage-appgw.withfloats.com/discover/v2/floatingPoint/VerifyDomainOrVMNRegisted")
     fun getItemAvailability(
          @Header("Authorization") auth: String,
          @Query("fpId") floatingPointId: String,
@@ -98,7 +98,7 @@ interface NewApiInterface {
 
     //Edgecases
     @Headers("Content-Type: application/json")
-    @GET("https://api2.withfloats.com/discover/v1/GetFeatureDetailForEdgeCases?")
+    @GET("https://stage-appgw.withfloats.com/discover/v1/GetFeatureDetailForEdgeCases?")
     fun getEdgeCases(
         @Query("fpId") floatingPointId: String,
         @Query("clientId") clientId: String,
@@ -114,7 +114,7 @@ interface NewApiInterface {
     ): Observable<PurchasedDomainResponse>
 
     @Headers("Content-Type: application/json")
-    @GET("https://api2.withfloats.com/discover/v1/floatingPoint/vmn-details/{fpTag}")
+    @GET("https://stage-appgw.withfloats.com/discover/v1/floatingPoint/vmn-details/{fpTag}")
     fun getAlreadyPurchasedVmn(
         @Header("Authorization") auth: String,
         @Path("fpTag") fpTag: String,
@@ -123,7 +123,7 @@ interface NewApiInterface {
 
     //MyCurrentPlan  Marketplace V3
     @Headers("Content-Type: application/json")
-    @GET("https://api2.withfloats.com/discover/v1/GetFeatureDetails")
+    @GET("https://stage-appgw.withfloats.com/discover/v1/GetFeatureDetails")
     fun GetMyPlanV3(
         @Query("fpId") floatingPointId: String,
         @Query("clientId") clientId: String
@@ -136,7 +136,7 @@ interface NewApiInterface {
 
     //pre purchase domain booking.
     @Headers("Content-Type: application/json")
-    @GET("https://api2.withfloats.com/discover/v1/floatingPoint/AssignDomainBlocked")
+    @GET("https://stage-appgw.withfloats.com/discover/v1/floatingPoint/AssignDomainBlocked")
     fun buyDomainBooking1(
         @Header("Authorization") auth: String,
         @Query("blockedItem") blockedItem: String,
@@ -151,7 +151,7 @@ interface NewApiInterface {
 
 // post purchase vmn booking.
     @Headers("Content-Type: application/json")
-    @GET("https://api2.withfloats.com/Support/v1/calls/AssignCallTrackerInPostPurchase")
+    @GET("https://stage-appgw.withfloats.com/Support/v1/calls/AssignCallTrackerInPostPurchase")
     fun bookVMN(
         @Header("Authorization") auth: String,
         @Query("clientId") clientId: String,

@@ -145,7 +145,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     }
 
     private fun updateBusinessDetails() {
-        val businessProfileUpdateUrl = "https://api2.withfloats.com/Discover/v1/FloatingPoint/update"
+        val businessProfileUpdateUrl = "https://stage-appgw.withfloats.com/Discover/v1/FloatingPoint/update"
         val businessProfileUpdateRequest = BusinessProfileUpdateRequest()
         businessProfileUpdateRequest.clientId = com.framework.pref.clientId
         businessProfileUpdateRequest.fpTag = sessionLocal.fpTag

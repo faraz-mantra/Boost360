@@ -115,6 +115,6 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
 }
 
 
-const val DATA_EXCHANGE_URL = "https://nfx.withfloats.com/dataexchange"
+const val DATA_EXCHANGE_URL = "https://jiw-dx-api-as-staging.azurewebsites.net/dataexchange"
 
 

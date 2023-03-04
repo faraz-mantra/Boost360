@@ -161,7 +161,7 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
       val query = JSONObject()
       query.put("WebsiteId", session!!.getFpTag())
       val APICalls = RestAdapter.Builder()
-        .setEndpoint("https://webaction.api.boostkit.dev")
+        .setEndpoint("https://jiw-webaction-api-as-staging.azurewebsites.net")
         .setLogLevel(RestAdapter.LogLevel.FULL)
         .setLog(AndroidLog("ggg"))
         .build()
@@ -230,7 +230,7 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener, AppOnZeroC
       )
 
       val APICalls = RestAdapter.Builder()
-        .setEndpoint("https://webaction.api.boostkit.dev")
+        .setEndpoint("https://jiw-webaction-api-as-staging.azurewebsites.net")
         .setLogLevel(RestAdapter.LogLevel.FULL)
         .setLog(AndroidLog("ggg"))
         .setConverter(GsonConverter(GsonBuilder().setLenient().create()))

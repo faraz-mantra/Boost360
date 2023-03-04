@@ -49,11 +49,11 @@ interface ApiInterface {
 //    fun CreatePurchaseOrder(@Body createPurchaseOrderRequest: CreatePurchaseOrderRequest): Observable<CreatePurchaseOrderResponse>
 
   @Headers("Content-Type: application/json")
-  @POST("https://api2.withfloats.com/Payment/v10/floatingpoint/CreatePurchaseOrder")
+  @POST("https://stage-appgw.withfloats.com/Payment/v10/floatingpoint/CreatePurchaseOrder")
   fun CreatePurchaseOrder(@Header("Authorization") auth: String, @Body createPurchaseOrderV2: CreatePurchaseOrderV2): Observable<CreatePurchaseOrderResponse>
 
   @Headers("Content-Type: application/json")
-  @POST("https://api2.withfloats.com/Payment/v11/floatingpoint/CreatePurchaseOrder")
+  @POST("https://stage-appgw.withfloats.com/Payment/v11/floatingpoint/CreatePurchaseOrder")
   fun CreatePurchaseAutoRenewOrder(@Header("Authorization") auth: String, @Body createPurchaseOrderV2: CreatePurchaseOrderV2): Observable<CreatePurchaseOrderResponse>
 
   @Headers("Content-Type: application/json")
@@ -72,7 +72,7 @@ interface ApiInterface {
   ): Observable<RazorpayTokenResponse>
 
   @Headers("Content-Type: application/json")
-  @GET("https://api.withfloats.com/Payment/v10/floatingpoint/PurchaseOrders/{floatingPointId}")
+  @GET("https://stage-appgw.withfloats.com/Payment/v10/floatingpoint/PurchaseOrders/{floatingPointId}")
   fun getPurchasedOrders(
     @Header("Authorization") auth: String,
     @Path("floatingPointId") floatingPointId: String,
@@ -80,7 +80,7 @@ interface ApiInterface {
   ): Observable<GetPurchaseOrderResponse>
 
   @Headers("Content-Type: application/json")
-  @POST("https://api2.withfloats.com/Internal/v1/PushEmailToQueue/{clientId}")
+  @POST("https://stage-appgw.withfloats.com/Internal/v1/PushEmailToQueue/{clientId}")
   fun createPaymentThroughEmail(
     @Header("Authorization") auth: String,
     @Path("clientId") clientId: String,
@@ -88,7 +88,7 @@ interface ApiInterface {
   ): Observable<String?>
 
   @Headers("Content-Type: application/json")
-  @POST("https://api.withfloats.com/discover/v1/FloatingPoint/SendEmailWithPriority/")
+  @POST("https://stage-appgw.withfloats.com/discover/v1/FloatingPoint/SendEmailWithPriority/")
   fun createPaymentThroughEmailPriority(@Header("Authorization") auth: String, @Body data: PaymentPriorityEmailRequestBody): Observable<String?>
 
   @Headers("Content-Type: application/json")
@@ -117,7 +117,7 @@ interface ApiInterface {
 //  fun redeemCoupon(@Body redeemCouponRequest: RedeemCouponRequest): Observable<RedeemCouponResponse>
 
   @Headers("Content-Type: application/json")
-  @GET("https://api2.withfloats.com/api/v1/Business/GetGSTINInformation")
+  @GET("https://stage-appgw.withfloats.com/api/v1/Business/GetGSTINInformation")
   fun getGSTDetails(
     @Header("Authorization") auth: String,
     @Query("gstin") gstIN: String?,
@@ -125,14 +125,14 @@ interface ApiInterface {
   ): Observable<GSTApiResponse>
 
   @Headers("Content-Type: application/json")
-  @GET("https://api2.withfloats.com/api/v1/Business/GetStateCode")
+  @GET("https://stage-appgw.withfloats.com/api/v1/Business/GetStateCode")
   fun getStates(
     @Header("Authorization") auth: String,
     @Query("clientId") clientId: String?
   ): Observable<GetStates>
 
   @Headers("Content-Type: application/json")
-  @GET("https://api.withfloats.com/discover/v9/business/paymentProfile/{floatingPointId}")
+  @GET("https://stage-appgw.withfloats.com/discover/v9/business/paymentProfile/{floatingPointId}")
   fun getLastPaymentDetails(
     @Header("Authorization") auth: String,
     @Path("floatingPointId") floatingPointId: String?,
@@ -140,7 +140,7 @@ interface ApiInterface {
   ):Observable<GetLastPaymentDetails>
 
   @Headers("Content-Type: application/json")
-  @GET("https://api.withfloats.com/payment/v1/floatingpoint/paymentLink")
+  @GET("https://stage-appgw.withfloats.com/payment/v1/floatingpoint/paymentLink")
   fun GetPaymentLink(
     @Header("Authorization") auth: String,
     @Query("fpId") floatingPointId: String,
@@ -149,7 +149,7 @@ interface ApiInterface {
   ):Observable<PaymentLink>
 
   @Headers("Content-Type: application/json")
-  @POST("https://api.withfloats.com/payment/v1/floatingpoint/markOrderForAutoRenewal")
+  @POST("https://stage-appgw.withfloats.com/payment/v1/floatingpoint/markOrderForAutoRenewal")
   fun MarkOrderForAutoRenewal(
     @Header("Authorization") auth: String,
     @Body request: OrderAutoRenewRequest

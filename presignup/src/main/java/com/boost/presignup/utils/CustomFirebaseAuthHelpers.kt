@@ -66,7 +66,7 @@ class CustomFirebaseAuthHelpers constructor(
       .requestEmail()
       .build()
     retrofit = Retrofit.Builder()
-      .baseUrl("https://api2.withfloats.com")
+      .baseUrl("https://stage-appgw.withfloats.com")
       .client(OkHttpClient.Builder()
         .addInterceptor(ServiceInterceptor(false))
         .certificatePinner(NetworkCertificate.certificatePinner()).build())

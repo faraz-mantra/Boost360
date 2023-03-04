@@ -271,7 +271,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         request.setActionData(actionData);
         Log.v("addTest", " " + session.getFpTag());
         APIInterfaces APICalls = new RestAdapter.Builder()
-            .setEndpoint("https://webaction.api.boostkit.dev")
+            .setEndpoint("https://jiw-webaction-api-as-staging.azurewebsites.net")
             .setLogLevel(RestAdapter.LogLevel.FULL)
             .setLog(new AndroidLog("ggg"))
             .build()
@@ -375,7 +375,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         requestBody.setQuery("{_id:'" + existingItemData.getId() + "'}");
         requestBody.setUpdateValue("{$set :" + new Gson().toJson(actionData) + "}");
         APIInterfaces APICalls = new RestAdapter.Builder()
-            .setEndpoint("https://webaction.api.boostkit.dev")
+            .setEndpoint("https://jiw-webaction-api-as-staging.azurewebsites.net")
             .setLogLevel(RestAdapter.LogLevel.FULL)
             .setLog(new AndroidLog("ggg"))
             .build()
@@ -560,7 +560,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
       requestBody.setUpdateValue("{$set : {IsArchived: true }}");
       requestBody.setMulti(true);
       APIInterfaces APICalls = new RestAdapter.Builder()
-          .setEndpoint("https://webaction.api.boostkit.dev")
+          .setEndpoint("https://jiw-webaction-api-as-staging.azurewebsites.net")
           .setLogLevel(RestAdapter.LogLevel.FULL)
           .setLog(new AndroidLog("ggg"))
           .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
@@ -701,7 +701,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     try {
       JSONObject query = new JSONObject();
       query.put("WebsiteId", session.getFpTag());
-      APIInterfaces APICalls = new RestAdapter.Builder().setEndpoint("https://webaction.api.boostkit.dev")
+      APIInterfaces APICalls = new RestAdapter.Builder().setEndpoint("https://jiw-webaction-api-as-staging.azurewebsites.net")
           .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build()
           .create(APIInterfaces.class);
       APICalls.getTestimonialsList(headerToken, testimonialType, query, 0, 2, new Callback<GetTestimonialData>() {
