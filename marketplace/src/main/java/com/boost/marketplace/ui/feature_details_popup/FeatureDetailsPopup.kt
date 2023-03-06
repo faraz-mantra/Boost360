@@ -39,6 +39,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.layout_details_popup.*
 import kotlinx.android.synthetic.main.layout_details_popup.view.*
+import kotlinx.android.synthetic.main.view_dictate_layout.view.*
 import kotlinx.android.synthetic.main.view_review_selection.*
 import kotlinx.android.synthetic.main.view_review_selection.view.*
 import kotlinx.android.synthetic.main.view_select_number.*
@@ -77,6 +78,7 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
     var offeredBundlePrice = 0.0
     var originalBundlePrice = 0.0
     var vmn: String? = null
+    var domainDictate: String? = null
     lateinit var singleAddon: FeaturesModel
     lateinit var viewModel: ComparePacksViewModel
     var cartList: List<CartModel>? = null
@@ -121,18 +123,26 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
             requireArguments().getStringArrayList("userPurchsedWidgets") ?: ArrayList()
         val jsonString = requireArguments().getString("bundleData")
         vmn = requireArguments().getString("vmn",null)
+        domainDictate = requireArguments().getString("domainDictate",null)
         bundleData = Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type)
 
         loadData()
         initView()
         initMvvm()
 
-        if (vmn!!.equals("true")){
-            vmnSelection(view)
-        }else if(vmn!!.equals("false")){
-            domainSelction(view)
-        }else if (vmn!!.equals("null")){
-            defaultLayout(view)
+        if (domainDictate?.equals("null") == true){
+            domainDictate(view)
+        } else if (domainDictate?.equals("true") == true){
+            dictateSelection(view)
+        }
+        else{
+            if (vmn!!.equals("true")){
+                vmnSelection(view)
+            }else if(vmn!!.equals("false")){
+                domainSelction(view)
+            }else if (vmn!!.equals("null")){
+                defaultLayout(view)
+            }
         }
 
         view.riv_close_bottomSheet.setOnClickListener {
@@ -142,7 +152,63 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
         return view
     }
 
+    private fun dictateSelection(view: View) {
+        view.step_count_dictate1.visibility=View.GONE
+        view.select_website_layout.visibility = View.GONE
+        view.topImageView.visibility=View.GONE
+        view.dictate_layout.visibility = View.VISIBLE
+        view.select_website_layout.setBackgroundResource(R.color.transparent)
+
+        view.selectDictateSubmit.setOnClickListener {
+            dictatePreferences()
+           // dismiss()
+        }
+
+    }
+
+    private fun domainDictate(view: View) {
+        view.select_website_layout.visibility = View.VISIBLE
+        view.step_count.text="Step 1 of 2"
+        view.topImageView.visibility=View.GONE
+        view.select_website_layout.setBackgroundResource(R.color.transparent)
+        view.selectWebsiteIwillDoItLater.setText("I’ll do it later")
+
+        view.selectWebsiteIwillDoItLater.setOnClickListener {
+            domainName = null
+            prefs.storeSelectedDomainName(null)
+           // addToCart()
+            hideAllLayout()
+            view.dictate_layout.visibility = View.VISIBLE
+            view.step_count_dictate1.text="Step 2 of 2"
+        }
+
+        view.selectWebsiteSubmit.setOnClickListener {
+            listener.featureDetailsPopup(domainName!!)
+            view.selectWebsiteSubmit.setBackgroundResource(R.drawable.disabled_button)
+            view.tv_empty_select_website.visibility=View.GONE
+            view.tv_selected_domain.visibility=View.VISIBLE
+            view.selectWebsiteIwillDoItLater.isClickable=false
+            Handler().postDelayed({
+               // addToCart()
+                hideAllLayout()
+                view.dictate_layout.visibility = View.VISIBLE
+                view.step_count_dictate1.text="Step 2 of 2"
+            }, 1000)
+        }
+
+        view.selectDictateSubmit.setOnClickListener {
+            dictatePreferences()
+        }
+
+        view.tv_explore_select_website_cs.setOnClickListener {
+            exploreDomainOptions()
+        }
+    }
+
     private fun defaultLayout(view: View){
+        view.step_count.text="Step 1 of 2"
+        view.step_count_vmn.text="Step 2 of 2"
+        view.selectVmnIwillDoItLater.setText("Skip & continue to cart")
         view.select_website_layout.visibility = View.VISIBLE
         view.selectWebsiteIwillDoItLater.setOnClickListener {
             domainName = null
@@ -191,21 +257,23 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
             view.tv_vmn_selected_txt.visibility=View.VISIBLE
             view.selectVmnIwillDoItLater.isClickable=false
             Handler().postDelayed({
-                hideAllLayout()
-                view.review_selection_layout.visibility = View.VISIBLE
-                selectedNames()
-                view.topImageView.setImageResource(com.boost.cart.R.drawable.review_selection_point)
-                view.tv_title_number.text = selectedNum
+//                hideAllLayout()
+//                view.review_selection_layout.visibility = View.VISIBLE
+//                selectedNames()
+//                view.topImageView.setImageResource(com.boost.cart.R.drawable.review_selection_point)
+//                view.tv_title_number.text = selectedNum
+                    addToCart()
             }, 1000)
         }
 
         view.selectVmnIwillDoItLater.setOnClickListener {
             selectedNum = null
             prefs.storeSelectedVMNName(null)
-            hideAllLayout()
-            view.review_selection_layout.visibility = View.VISIBLE
-            selectedNames()
-            view.topImageView.setImageResource(com.boost.cart.R.drawable.review_selection_point)
+//            hideAllLayout()
+//            view.review_selection_layout.visibility = View.VISIBLE
+//            selectedNames()
+//            view.topImageView.setImageResource(com.boost.cart.R.drawable.review_selection_point)
+            addToCart()
         }
 
         view.tv_explore_text_select_vmn_cs.setOnClickListener {
@@ -221,11 +289,12 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
         }
 
         view.selectedNumberContinue.setOnClickListener {
-            hideAllLayout()
-            view.review_selection_layout.visibility = View.VISIBLE
-            view.topImageView.setImageResource(com.boost.cart.R.drawable.review_selection_point)
-            selectedNames()
+//            hideAllLayout()
+//            view.review_selection_layout.visibility = View.VISIBLE
+//            view.topImageView.setImageResource(com.boost.cart.R.drawable.review_selection_point)
+//            selectedNames()
             listener.featureDetailsPopup1(selectedNum!!)
+            addToCart()
         }
 
         view.tv_edit_number.setOnClickListener {
@@ -256,6 +325,7 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
     }
 
     private  fun vmnSelection(view: View){
+        view.step_count_vmn.visibility=View.GONE
         view.select_website_layout?.visibility = View.GONE
         view.topImageView.visibility=View.GONE
         view.select_number_layout?.visibility = View.VISIBLE
@@ -310,6 +380,7 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
     }
 
     private fun domainSelction(view: View) {
+        view.step_count.visibility=View.GONE
         view.select_website_layout.visibility = View.VISIBLE
         view.topImageView.visibility=View.GONE
         view.select_website_layout.setBackgroundResource(R.color.transparent)
@@ -474,6 +545,7 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
             selectedNames()
             selectedNum = prefs.getSelectedVMNName()
             tv_call_expert_select_domain.text = prefs.getSelectedVMNName()
+            tv_vmn_selected_txt.text = prefs.getSelectedVMNName()
             tv_empty_select_number.text = prefs.getSelectedVMNName()
             tv_title_number.text = prefs.getSelectedVMNName()
         }
@@ -752,6 +824,24 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
             intent.putExtra("fpid", fpid)
             intent.putExtra("bundleData", Gson().toJson(singleAddon))
             intent.putExtra("vmnSelectionForCart", true)
+            intent.putExtra("vmnSelectionForPack", true)
+            startActivity(intent)
+            //  dismiss()
+        } catch (e: ClassNotFoundException) {
+            e.printStackTrace()
+        }
+    }
+
+    fun dictatePreferences() {
+        try {
+            val intent = Intent(
+                activity,
+                Class.forName("com.boost.marketplace.ui.details.dictate_services.DictateServicesActivity")
+            )
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("fpid", fpid)
+            intent.putExtra("bundleData", Gson().toJson(singleAddon))
+          //  intent.putExtra("vmnSelectionForCart", true)
             intent.putExtra("vmnSelectionForPack", true)
             startActivity(intent)
             //  dismiss()

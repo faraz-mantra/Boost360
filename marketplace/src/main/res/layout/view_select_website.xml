@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/selectWebsiteLayout"
-    android:background="#f0f0f0"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+    <!--    android:background="#f0f0f0"-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/shimmer_anim"
@@ -69,13 +69,27 @@
         app:layout_constraintTop_toBottomOf="@id/topImageView"
         tools:ignore="NotSibling">
 
+
+        <TextView
+            android:id="@+id/step_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Step 1 of 3"
+            android:fontFamily="@font/semi_bold"
+            android:textFontWeight="700"
+            android:textSize="16sp"
+            android:textColor="#747474"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tv_title_select_website"/>
+
         <TextView
             android:id="@+id/tv_title_select_website"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/bold"
             android:gravity="center_horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:lineHeight="26dp"
             android:text="Select your website address"
             android:textColor="@color/main_color_gray_dk"
@@ -83,7 +97,7 @@
             android:textSize="@dimen/txt_20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/step_count" />
 
         <TextView
             android:id="@+id/tv_subtitle_select_website"
@@ -124,52 +138,52 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/main1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/tv_empty_select_website"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/main1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="100dp"
-                        android:background="@drawable/green_border_view"
-                        android:fontFamily="@font/bold"
-                        android:gravity="center"
-                        android:text=""
-                        android:lineHeight="21.79dp"
-                        android:paddingStart="@dimen/_10sdp"
-                        android:paddingTop="@dimen/_10sdp"
-                        android:paddingEnd="@dimen/_10sdp"
-                        android:paddingBottom="@dimen/_10sdp"
-                        android:textColor="#7ED321"
-                        android:textFontWeight="700"
-                        android:textSize="30sp"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/tv_selected_domain"
-                        android:layout_width="match_parent"
-                        android:layout_height="68dp"
-                        android:layout_marginTop="100dp"
-                        android:background="@drawable/round_corner_grey"
-                        android:fontFamily="@font/bold"
-                        android:gravity="center"
-                        android:text=""
-                        android:visibility="gone"
-                        android:lineHeight="21.79dp"
-                        android:paddingStart="@dimen/_10sdp"
-                        android:paddingTop="@dimen/_10sdp"
-                        android:paddingEnd="@dimen/_10sdp"
-                        android:paddingBottom="@dimen/_10sdp"
-                        android:textColor="#4A4A4A"
-                        android:textFontWeight="700"
-                        android:textSize="30sp"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        <TextView
+                            android:id="@+id/tv_empty_select_website"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="100dp"
+                            android:background="@drawable/green_border_view"
+                            android:fontFamily="@font/bold"
+                            android:gravity="center"
+                            android:text=""
+                            android:lineHeight="21.79dp"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_10sdp"
+                            android:textColor="#7ED321"
+                            android:textFontWeight="700"
+                            android:textSize="30sp"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/tv_selected_domain"
+                            android:layout_width="match_parent"
+                            android:layout_height="68dp"
+                            android:layout_marginTop="100dp"
+                            android:background="@drawable/round_corner_grey"
+                            android:fontFamily="@font/bold"
+                            android:gravity="center"
+                            android:text=""
+                            android:visibility="gone"
+                            android:lineHeight="21.79dp"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_10sdp"
+                            android:textColor="#4A4A4A"
+                            android:textFontWeight="700"
+                            android:textSize="30sp"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/tv_explore_select_website_cs"
@@ -181,33 +195,33 @@
                         app:layout_constraintTop_toBottomOf="@id/main1">
 
 
-                    <TextView
-                        android:id="@+id/tv_explore_select_website"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginEnd="24dp"
-                        android:fontFamily="@font/regular"
-                        android:lineHeight="18dp"
-                        android:lineSpacingExtra="6dp"
-                        android:text="Explore domain options"
-                        android:textColor="@color/colorAccent1"
-                        android:textFontWeight="400"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        <TextView
+                            android:id="@+id/tv_explore_select_website"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="16dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:fontFamily="@font/regular"
+                            android:lineHeight="18dp"
+                            android:lineSpacingExtra="6dp"
+                            android:text="Explore domain options"
+                            android:textColor="@color/colorAccent1"
+                            android:textFontWeight="400"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/yellow_down_arrow"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/tv_explore_select_website"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/yellow_down_arrow"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/tv_explore_select_website"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

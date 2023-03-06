@@ -91,6 +91,8 @@ class DictateServicesActivity :
 
         dialog.radio_button1?.setOnClickListener {
             dialog.hide_layut.visibility=View.GONE
+            dialog.btn1.isEnabled=true
+            dialog.btn1.isClickable=true
             dialog.img1.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
             dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             dialog.img3.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
@@ -100,6 +102,8 @@ class DictateServicesActivity :
 
         dialog.radio_button2?.setOnClickListener {
             dialog.hide_layut.visibility=View.GONE
+            dialog.btn1.isEnabled=true
+            dialog.btn1.isClickable=true
             dialog.img1.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
             dialog.img3.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
@@ -109,6 +113,8 @@ class DictateServicesActivity :
 
         dialog.radio_button3?.setOnClickListener {
             dialog.hide_layut.visibility=View.GONE
+            dialog.btn1.isEnabled=true
+            dialog.btn1.isClickable=true
             dialog.img1.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             dialog.img3.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
@@ -118,6 +124,8 @@ class DictateServicesActivity :
 
         dialog.radio_button4?.setOnClickListener {
             dialog.hide_layut.visibility=View.VISIBLE
+            dialog.btn1.isEnabled=true
+            dialog.btn1.isClickable=true
             dialog.img1.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             dialog.img3.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)

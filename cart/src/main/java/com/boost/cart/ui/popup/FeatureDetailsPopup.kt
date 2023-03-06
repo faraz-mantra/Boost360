@@ -159,6 +159,10 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
 
     private fun defaultLayout(view: View){
 
+        view.step_count.text="Step 1 of 2"
+        view.step_count_vmn.text="Step 2 of 2"
+        view.selectVmnIwillDoItLater.setText("Skip & continue to cart")
+
         view.riv_close_bottomSheet.setOnClickListener {
             prefs.storeSelectedDomainName(null)
             prefs.storeSelectedVMNName(null)
@@ -244,21 +248,18 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
             view.tv_vmn_selected_txt.visibility=View.VISIBLE
             view.selectVmnIwillDoItLater.isClickable=false
             Handler().postDelayed({
-                hideAllLayout()
-                view.review_selection_layout.visibility = View.VISIBLE
-                selectedNames()
-                view.topImageView.setImageResource(com.boost.cart.R.drawable.review_selection_point)
-                view.tv_title_number.text = selectedNum
+                addToCart()
             }, 1000)
         }
 
         view.selectVmnIwillDoItLater.setOnClickListener {
             selectedNum = null
             prefs.storeSelectedVMNName(null)
-            hideAllLayout()
-            view.review_selection_layout.visibility = View.VISIBLE
-            selectedNames()
-            view.topImageView.setImageResource(R.drawable.review_selection_point)
+//            hideAllLayout()
+//            view.review_selection_layout.visibility = View.VISIBLE
+//            selectedNames()
+//            view.topImageView.setImageResource(R.drawable.review_selection_point)
+            addToCart()
         }
 
         view.selectedNumberContinue.setOnClickListener {
@@ -292,6 +293,7 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
     }
 
     private  fun vmnSelection(view: View){
+        view.step_count_vmn.visibility=View.GONE
         view.select_website_layout?.visibility = View.GONE
         view.topImageView.visibility=View.GONE
         view.select_number_layout?.visibility = View.VISIBLE
@@ -319,6 +321,7 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
 
     private fun domainSelction(view: View) {
 
+        view.step_count.visibility=View.GONE
         view.select_website_layout.visibility = View.VISIBLE
         view.topImageView.visibility=View.GONE
         view.select_website_layout.setBackgroundResource(R.color.transparent)

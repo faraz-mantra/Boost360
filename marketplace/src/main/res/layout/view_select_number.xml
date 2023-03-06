@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/selectWebsiteLayout"
-    android:background="#f0f0f0"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+<!--    android:background="#f0f0f0"-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/shimmer_anim_vmn"
@@ -69,11 +69,26 @@
     app:layout_constraintBottom_toBottomOf="parent">
 
     <TextView
+        android:id="@+id/step_count_vmn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Step 2 of 3"
+        android:fontFamily="@font/semi_bold"
+        android:textFontWeight="700"
+        android:textSize="16sp"
+        android:textColor="#747474"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_title_selectDomain"/>
+
+
+    <TextView
         android:id="@+id/tv_title_selectDomain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/bold"
         android:gravity="center_horizontal"
+        android:layout_marginTop="15dp"
         android:lineHeight="26dp"
         android:text="Select a Call Tracker Number"
         android:textColor="@color/main_color_gray_dk"
@@ -81,7 +96,7 @@
         android:textSize="@dimen/txt_20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/step_count_vmn" />
 
     <TextView
         android:id="@+id/tv_subtitle_select_domain"

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/selectWebsiteLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <!--    android:background="#f0f0f0"-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/curve_top_white"
+        android:paddingStart="@dimen/dimen_24dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="@dimen/dimen_24dp"
+        android:paddingBottom="@dimen/dimen_24dp"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/step_count_dictate1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/semi_bold"
+            android:text="Step 3 of 3"
+            android:textColor="#747474"
+            android:textFontWeight="700"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_title_select_dictate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title_select_dictate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/bold"
+            android:gravity="start"
+            android:lineHeight="28dp"
+            android:text="Dictate Content Preference"
+            android:textColor="@color/colorPrimary1"
+            android:textFontWeight="700"
+            android:textSize="@dimen/txt_20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/step_count_dictate1" />
+
+        <TextView
+            android:id="@+id/tv_subtitle_dictate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/bold"
+            android:gravity="start"
+            android:lineHeight="22dp"
+            android:lineSpacingExtra="6dp"
+            android:text="What is dictate?"
+            android:textColor="#888888"
+            android:textFontWeight="400"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_select_dictate" />
+
+        <TextView
+            android:id="@+id/answr_dictate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingRight="6dp"
+            android:text="It is the easiest way to build content on your website, which will get you maximum traffic and business leads. It offers to post great content updates for your business website 2-3 times a week."
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_subtitle_dictate" />
+
+
+        <TextView
+            android:id="@+id/tv_sub_question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/bold"
+            android:gravity="start"
+            android:lineHeight="22dp"
+            android:lineSpacingExtra="6dp"
+            android:text="Why my preference is important?"
+            android:textColor="#888888"
+            android:textFontWeight="400"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/answr_dictate" />
+
+        <TextView
+            android:id="@+id/sub_answr_dictate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingRight="6dp"
+            android:text="In order to use updates to your maximum benefit, we need a few details about how and where you want to promote your business."
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_sub_question" />
+
+
+        <TextView
+            android:id="@+id/selectDictateSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="30dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@drawable/cta_button_click_effect"
+            android:fontFamily="@font/regular"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:text="Select Dictate content preferences"
+            android:textColor="@color/white"
+            android:textFontWeight="700"
+            android:textSize="@dimen/txt_16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sub_answr_dictate" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

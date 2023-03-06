@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/curve_top_grey"
                 android:src="@drawable/domain_selection_point"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:paddingTop="25dp"
                 android:paddingBottom="20dp"
                 android:layout_marginTop="15dp"
@@ -69,6 +69,11 @@
             <include
                 android:id="@+id/selected_number_layout"
                 layout="@layout/view_selected_number"
+                android:visibility="gone" />
+
+            <include
+                android:id="@+id/dictate_layout"
+                layout="@layout/view_dictate_layout"
                 android:visibility="gone" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
