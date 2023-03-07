@@ -212,27 +212,64 @@
                     android:textFontWeight="600"
                     android:textSize="12sp" />
 
-                <FrameLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_keywords"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_selector1"
                     android:layout_marginTop="6dp">
 
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_keywords"
+                        <EditText
+                            android:id="@+id/edt_product_tag"
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:background="@drawable/edittext_selector1"
+                            android:hint="Type a keyword and press ‘Add’"
+                            android:textSize="14sp"
+                            android:inputType="textCapWords"
+                            android:maxEms="3"
+                            android:singleLine="true"
+                            android:textColor="@color/warm_grey_10"
+                            android:textColorHint="@color/primary_grey"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/btn_add_tag"
+                            android:layout_width="@dimen/size_80"
+                            android:layout_height="44dp"
+                            android:layout_gravity="end"
+                            android:background="@drawable/shape_blue_stroke_rect_title_bkg"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:text="@string/add"
+                            android:textColor="@color/ButtoncolorAccent"
+                            app:fontFamily="@font/semi_bold"
+                            app:textAllCaps="false"
+                            app:textType="BODY_1"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toTopOf="@+id/chipsTags"/>
+
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipsTags"
                         android:layout_width="match_parent"
-                        android:layout_height="75dp"
-                        android:hint="Add between 3-10 keywords separated by commas"
-                        android:background="@drawable/edittext_selector1"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:fontFamily="@font/regular"
-                        android:gravity="start"
-                        android:textColor="@color/common_text_color"
-                        android:textColorHint="@color/grey_BBBBBB"
-                        android:textFontWeight="400"
-                        android:textSize="@dimen/txt_14sp" />
-                </FrameLayout>
+                        android:layout_height="wrap_content"
+                        app:chipSpacing="8dp"
+                        android:theme="@style/AppTheme.Pre.MarketPlace"
+                        android:layout_gravity="bottom"
+                        app:singleSelection="false"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btn_add_tag"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                    </com.google.android.material.chip.ChipGroup>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <TextView
                     android:id="@+id/tv_count"

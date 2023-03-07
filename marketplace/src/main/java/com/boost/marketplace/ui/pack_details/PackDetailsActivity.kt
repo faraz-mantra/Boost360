@@ -83,7 +83,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     lateinit var singleAddon: FeaturesModel
     private lateinit var needMoreFeatureItem: BundlesModel
     private var includedFeaturesInPack: List<FeaturesModel>? = null
-    var experienceCode: String? = null
+
     var screenType: String? = null
     var fpName: String? = null
     var itemInCart = false
@@ -94,11 +94,14 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
     var mobileNo: String? = null
     var profileUrl: String? = null
     var accountType: String? = null
+
     var isDeepLink: Boolean = false
+    var experienceCode: String? = null
     var isOpenCardFragment: Boolean = false
     var deepLinkViewType: String = ""
     var deepLinkDay: Int = 7
     var userPurchsedWidgets = ArrayList<String>()
+
     private var widgetFeatureCode: String? = null
     var isOpenHomeFragment: Boolean = false
     var isOpenAddOnsFragment: Boolean = false

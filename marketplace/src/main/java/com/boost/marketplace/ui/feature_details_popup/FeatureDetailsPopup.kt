@@ -840,11 +840,12 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
             )
             intent.putExtra("expCode", experienceCode)
             intent.putExtra("fpid", fpid)
-            intent.putExtra("bundleData", Gson().toJson(singleAddon))
+           // intent.putExtra("bundleData", Gson().toJson(singleAddon))
+            intent.putExtra("bundleData", Gson().toJson(bundleData))
           //  intent.putExtra("vmnSelectionForCart", true)
-            intent.putExtra("vmnSelectionForPack", true)
+            intent.putExtra("dictateSelectionForPack", true)
             startActivity(intent)
-            //  dismiss()
+              dismiss()
         } catch (e: ClassNotFoundException) {
             e.printStackTrace()
         }
