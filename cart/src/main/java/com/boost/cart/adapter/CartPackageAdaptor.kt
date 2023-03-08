@@ -54,6 +54,7 @@ class CartPackageAdaptor(
   var minMonth = 1
   var selectedDomainName = ""
   var selectedVMN = ""
+  var selectedDictatePrefs = ""
 
 
   init {
@@ -111,6 +112,12 @@ class CartPackageAdaptor(
         val prefs = SharedPrefs(activity)
         prefs.storeSelectedVMNName(null)
       }
+      if(selectedDictatePrefs.isNotEmpty()){
+        val prefs = SharedPrefs(activity)
+        prefs.storeSelectedDictatePrefs(null)
+      }
+
+
       listener.deleteCartAddonsItem(bundlesList.get(position))
     }
 
@@ -245,6 +252,10 @@ class CartPackageAdaptor(
     this.selectedVMN = VMN
     notifyDataSetChanged()
   }
+  fun selectedDictate(Dictate: String){
+    this.selectedDictatePrefs = Dictate
+    notifyDataSetChanged()
+  }
 
   class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val name = itemView.findViewById<TextView>(R.id.package_title)
@@ -333,7 +344,34 @@ class CartPackageAdaptor(
                 listener1.actionClick(bundlesList.get(position))
               }
             }
-          } else {
+          } else if ((featuresCode.contains("DOMAINPURCHASE") == true
+                    && (featuresCode.contains("DICTATE") == true))
+          ) {
+            if ((selectedDomainName.isNotEmpty()) && (selectedDictatePrefs.isNotEmpty())
+            ) {
+              holder.edge_cases_layout.visibility = View.GONE
+            } else if ((!selectedDomainName.isNotEmpty()) && (selectedDictatePrefs.isNotEmpty())
+               ) {
+              holder.edge_cases_layout.visibility = View.VISIBLE
+              holder.edge_cases_desc.text = "You need to select a domain name."
+              holder.edge_cases_layout.setOnClickListener {
+                listener1.actionClickDomain(bundlesList.get(position))
+              }
+            } else if ((!selectedDictatePrefs.isNotEmpty()) && (selectedDomainName.isNotEmpty())) {
+              holder.edge_cases_layout.visibility = View.VISIBLE
+              holder.edge_cases_desc.text = "Select Dictate Preferences "
+              holder.edge_cases_layout.setOnClickListener {
+               // listener1.actionClickVmn(bundlesList.get(position))
+              }
+            } else {
+              holder.edge_cases_layout.visibility = View.VISIBLE
+              holder.edge_cases_desc.text = "You need to select a domain name & Dictate: Preferences"
+              holder.edge_cases_layout.setOnClickListener {
+               // listener1.actionClick(bundlesList.get(position))
+              }
+            }
+          }
+          else {
             if (selectedDomainName.isNotEmpty()) {
               holder.edge_cases_layout.visibility = View.GONE
             } else {

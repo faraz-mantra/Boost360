@@ -41,6 +41,7 @@ class NewAddonsAdapter(
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
+        val prefs = SharedPrefs(activity)
 
         if(upgradeList.get(position).feature_code.equals("DOMAINPURCHASE")
             && upgradeList.get(position).name!!.contains(".")){
@@ -72,7 +73,25 @@ class NewAddonsAdapter(
             }
             else
                 holder.edit.visibility = View.GONE
-        }else {
+        } else if((upgradeList.get(position).feature_code.equals("DICTATE"))
+            // || upgradeList.get(position).feature_code.equals("IVR"))
+            && (!prefs.getSelectedDictatePrefs().isNullOrEmpty() )
+        ){
+            holder.name.setText(upgradeList.get(position).name)
+            holder.name.setTypeface(ResourcesCompat.getFont(context, R.font.regular))
+            holder.notify.visibility = View.GONE
+            val prefs = SharedPrefs(activity)
+            if(prefs.getSelectedDictatePrefs().equals("Mandatory")){
+                holder.edit.visibility = View.VISIBLE
+                holder.edit.setOnClickListener {
+                    listener.editSelectedVmn(bundleItem)
+                }
+            }
+            else
+                holder.edit.visibility = View.GONE
+        }
+
+        else {
             holder.edit.visibility = View.GONE
             holder.name.setText(upgradeList.get(position).name)
             holder.name.setTypeface(ResourcesCompat.getFont(context, R.font.regular))
@@ -82,6 +101,11 @@ class NewAddonsAdapter(
             }
             if(upgradeList.get(position).feature_code.equals("CALLTRACKER")
               //  || upgradeList.get(position).feature_code.equals("IVR")
+            ){
+                holder.notify.visibility = View.VISIBLE
+            }
+            if(upgradeList.get(position).feature_code.equals("DICTATE")
+            //  || upgradeList.get(position).feature_code.equals("IVR")
             ){
                 holder.notify.visibility = View.VISIBLE
             }

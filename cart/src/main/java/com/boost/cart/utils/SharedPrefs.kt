@@ -47,6 +47,7 @@ class SharedPrefs(activity: Activity) {
   private val DOMAIN_ORDER_TYPE = "DOMAIN_ORDER_TYPE"
   private val VMN_ORDER_TYPE = "VMN_ORDER_TYPE"
   private val SELECTED_VMN_NAME = "SELECTED_VMN_NAME"
+  private val SelectedDictatePrefs = "SelectedDictatePrefs"
 
   private var editor: SharedPreferences.Editor? = null
 
@@ -306,6 +307,13 @@ class SharedPrefs(activity: Activity) {
 
   fun storeSelectedVMNName(value: String?){
     editor!!.putString(SELECTED_VMN_NAME, value).apply()
+  }
+  fun storeSelectedDictatePrefs(value: String?){
+      editor!!.putString(SelectedDictatePrefs, value).apply()
+  }
+
+  fun getSelectedDictatePrefs(): String? {
+    return pref!!.getString(SelectedDictatePrefs, null)
   }
 
   fun getSelectedVMNName(): String? {

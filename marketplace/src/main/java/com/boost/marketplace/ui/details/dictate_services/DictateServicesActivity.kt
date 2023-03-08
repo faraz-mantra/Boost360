@@ -124,7 +124,7 @@ class DictateServicesActivity :
         widgetFeatureCode = intent.getStringExtra("buyItemKey")
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: java.util.ArrayList()
         viewModel = ViewModelProviders.of(this).get(ComparePacksViewModel::class.java)
-        prefs = SharedPrefs(this)
+        prefs =SharedPrefs(this)
         bundleData = Gson().fromJson<Bundles>(
             intent.getStringExtra("bundleData"),
             object : TypeToken<Bundles>() {}.type
@@ -197,11 +197,13 @@ class DictateServicesActivity :
             dialog.hide_layut.visibility=View.GONE
             dialog.btn1.isEnabled=true
             dialog.btn1.isClickable=true
+            prefs.storeSelectedDictatePrefs("Mandatory")
             dialog.img1.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
             dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             dialog.img3.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             dialog.img4.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
-            doneButton(dialog)
+            var Values = "Mandatory"
+            doneButton(dialog,Values)
         }
 
         dialog.radio_button2?.setOnClickListener {
@@ -212,7 +214,8 @@ class DictateServicesActivity :
             dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
             dialog.img3.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             dialog.img4.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
-            doneButton(dialog)
+            var Values = "Mandatory"
+            doneButton(dialog,Values)
         }
 
         dialog.radio_button3?.setOnClickListener {
@@ -223,7 +226,8 @@ class DictateServicesActivity :
             dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             dialog.img3.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
             dialog.img4.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
-            doneButton(dialog)
+            var Values = "Mandatory"
+            doneButton(dialog,Values)
         }
 
         dialog.radio_button4?.setOnClickListener {
@@ -234,7 +238,8 @@ class DictateServicesActivity :
             dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             dialog.img3.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             dialog.img4.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
-            doneButton(dialog)
+            var Values = "Mandatory"
+            doneButton(dialog,Values)
         }
 
     }
@@ -251,14 +256,16 @@ class DictateServicesActivity :
             dialog.btn1.isClickable=true
             dialog.img1.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
             dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
-            doneButton(dialog)
+            var Values = "optional"
+            doneButton(dialog,Values)
         }
         dialog.radio_button6.setOnClickListener {
             dialog.btn1.isEnabled=true
             dialog.btn1.isClickable=true
             dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
             dialog.img1.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
-            doneButton(dialog)
+            var Values = "optional"
+            doneButton(dialog,Values)
         }
     }
 
@@ -275,19 +282,22 @@ class DictateServicesActivity :
             dialog.btn1.isClickable=true
             dialog.img1.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
             dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
-            doneButton(dialog)
+            var Values = "optional"
+            doneButton(dialog,Values)
         }
         dialog.radio_button8.setOnClickListener {
             dialog.btn1.isEnabled=true
             dialog.btn1.isClickable=true
             dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
             dialog.img1.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
-            doneButton(dialog)
+            var Values = "optional"
+            doneButton(dialog,Values)
         }
     }
 
-    private fun doneButton(dialog: Dialog) {
+    private fun doneButton(dialog: Dialog,value:String) {
         dialog.btn1?.setOnClickListener {
+            prefs.storeSelectedDictatePrefs(value)
             dialog.btn1.background = ContextCompat.getDrawable(
                 applicationContext,
                 com.boost.marketplace.R.drawable.grey_button_click_effect)
