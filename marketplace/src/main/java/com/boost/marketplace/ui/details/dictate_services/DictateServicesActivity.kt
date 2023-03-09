@@ -317,8 +317,18 @@ class DictateServicesActivity :
     private fun serviceTagsSet() {
         binding?.chipsTags?.removeAllViews()
         tagList.forEach { tag ->
-            val mChip: Chip = this.layoutInflater.inflate(com.boost.marketplace.R.layout.items_chip, binding?.chipsTags, false) as Chip
-            mChip.text = tag
+
+              val mChip: Chip = this.layoutInflater.inflate(com.boost.marketplace.R.layout.items_chip, binding?.chipsTags, false) as Chip
+              mChip.text = tag
+            mChip.isClickable=true
+            mChip.isCheckable=false
+
+//            val chip = Chip(this)
+//            chip.text = tag
+//            chip.isClickable = true
+//            chip.isCheckable = false
+//            binding?.chipsTags?.addView(chip)
+
             mChip.setOnCloseIconClickListener {
                 binding?.chipsTags?.removeView(mChip)
                 tagList.remove(tag)

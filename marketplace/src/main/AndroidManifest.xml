@@ -8,7 +8,8 @@
         <activity
             android:name=".ui.details.dictate_services.DictateServicesActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar.Bridge" />
         <activity
             android:name=".ui.pack_details.PackDetailsActivity"
             android:exported="false"
