@@ -33,16 +33,13 @@ import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.feature_details_bottomsheet.no_selection_layout
-import kotlinx.android.synthetic.main.feature_details_bottomsheet.review_selection_layout
-import kotlinx.android.synthetic.main.feature_details_bottomsheet.select_website_layout
-import kotlinx.android.synthetic.main.feature_details_bottomsheet.selected_number_layout
-import kotlinx.android.synthetic.main.feature_details_bottomsheet.selected_website_layout
-import kotlinx.android.synthetic.main.feature_details_bottomsheet.view.riv_close_bottomSheet
-import kotlinx.android.synthetic.main.feature_details_bottomsheet.view.select_website_layout
-import kotlinx.android.synthetic.main.feature_details_bottomsheet.view.selected_website_layout
+
 import kotlinx.android.synthetic.main.feature_details_popup.*
 import kotlinx.android.synthetic.main.feature_details_popup.view.*
+import kotlinx.android.synthetic.main.feature_details_popup.view.review_selection_layout
+import kotlinx.android.synthetic.main.feature_details_popup.view.selected_number_layout
+import kotlinx.android.synthetic.main.feature_details_popup.view.topImageView
+import kotlinx.android.synthetic.main.view_dictate_layout.view.*
 import kotlinx.android.synthetic.main.view_review_selection.*
 import kotlinx.android.synthetic.main.view_review_selection.view.*
 import kotlinx.android.synthetic.main.view_select_number.*
@@ -83,6 +80,7 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
     lateinit var singleAddon: FeaturesModel
     lateinit var viewModel: CartViewModel
     private var selectedNum: String? = null
+    var domainDictate: String? = null
 
     override fun onStart() {
         super.onStart()
@@ -120,6 +118,7 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
 
         val jsonString = requireArguments().getString("bundleData")
         bundleData = Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type)
+        domainDictate = requireArguments().getString("domainDictate",null)
 
         loadData()
         initMvvm()
@@ -128,13 +127,18 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
             dismiss()
         }
 
-        if (vmn!!.equals("true")){
-            vmnSelection(view)
-        }else if(vmn!!.equals("false")){
-            domainSelction(view)
-        }else if (vmn!!.equals("null")){
-            defaultLayout(view)
-        }
+         if (domainDictate?.equals("true") == true){
+            dictateSelection(view)
+        } else{
+             if (vmn!!.equals("true")){
+                 vmnSelection(view)
+             }else if(vmn!!.equals("false")){
+                 domainSelction(view)
+             }else if (vmn!!.equals("null")){
+                 defaultLayout(view)
+             }
+         }
+
         return view
     }
 
@@ -155,6 +159,20 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
             tv_empty_select_number.text = prefs.getSelectedVMNName()
             tv_title_number.text = prefs.getSelectedVMNName()
         }
+    }
+
+    private fun dictateSelection(view: View) {
+        view.step_count.visibility=View.GONE
+        view.select_website_layout.visibility = View.GONE
+        view.topImageView.visibility=View.GONE
+        view.dictate_layout.visibility = View.VISIBLE
+        view.select_website_layout.setBackgroundResource(R.color.transparent)
+
+        view.selectDictateSubmit.setOnClickListener {
+            dictatePreferences()
+            // dismiss()
+        }
+
     }
 
     private fun defaultLayout(view: View){
@@ -698,6 +716,25 @@ class FeatureDetailsPopup(val listener: CartFragmentListener) : DialogFragment()
             view?.continueToCart?.updateLayoutParams<ConstraintLayout.LayoutParams> {
                 topToBottom = reviewSelectionDomainLayout.id
             }
+        }
+    }
+
+    fun dictatePreferences() {
+        try {
+            val intent = Intent(
+                activity,
+                Class.forName("com.boost.marketplace.ui.details.dictate_services.DictateServicesActivity")
+            )
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("fpid", fpid)
+            // intent.putExtra("bundleData", Gson().toJson(singleAddon))
+            intent.putExtra("bundleData", Gson().toJson(bundleData))
+            intent.putExtra("dictateSelectionForCart", true)
+            intent.putExtra("dictateSelectionForPack", false)
+            startActivity(intent)
+            dismiss()
+        } catch (e: ClassNotFoundException) {
+            e.printStackTrace()
         }
     }
 

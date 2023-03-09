@@ -81,6 +81,7 @@ class DictateServicesActivity :
     private var widgetFeatureCode: String? = null
     var accountType: String? = null
     var dictateSelectionForPack = false
+    var dictateSelectionForCart = false
 
 
     override fun getLayout(): Int {
@@ -130,6 +131,7 @@ class DictateServicesActivity :
             object : TypeToken<Bundles>() {}.type
         )
         dictateSelectionForPack = intent.getBooleanExtra("dictateSelectionForPack", false)
+        dictateSelectionForCart = intent.getBooleanExtra("dictateSelectionForCart", false)
 
         loadData()
         initMvvm()
@@ -163,7 +165,10 @@ class DictateServicesActivity :
         binding?.mainBtn1?.setOnClickListener {
             if (dictateSelectionForPack){
                 addToCart()
-            }else{
+            } else if(dictateSelectionForCart){
+                finish()
+            }
+            else{
                 val dialogCard = SuccessPreferencesBottomSheet()
                 val args = Bundle()
                 dialogCard.arguments = args

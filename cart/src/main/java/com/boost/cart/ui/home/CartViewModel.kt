@@ -963,13 +963,13 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                             lastPaymentDetailsInfo.postValue(it)
                         },
                         {
-                            val temp = (it as HttpException).response()!!.errorBody()!!.string()
-                            val errorBody: com.boost.dbcenterapi.data.api_model.paymentprofile.Error =
-                                Gson().fromJson(
-                                    temp,
-                                    object :
-                                        TypeToken<com.boost.dbcenterapi.data.api_model.paymentprofile.Error>() {}.type
-                                )
+//                            val temp = (it as HttpException).response()!!.errorBody()!!.string()
+//                            val errorBody: com.boost.dbcenterapi.data.api_model.paymentprofile.Error =
+//                                Gson().fromJson(
+//                                    temp,
+//                                    object :
+//                                        TypeToken<com.boost.dbcenterapi.data.api_model.paymentprofile.Error>() {}.type
+//                                )
                             updatesError.postValue(
                                 SomethingWentWrong(
                                     errorCode = if(it is HttpException) it.code() ?: 0 else 0 ,

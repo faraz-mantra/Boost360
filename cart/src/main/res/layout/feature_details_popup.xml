@@ -70,6 +70,11 @@
                 android:id="@+id/selected_number_layout"
                 layout="@layout/view_selected_number"
                 android:visibility="gone" />
+
+            <include
+                android:id="@+id/dictate_layout"
+                layout="@layout/view_dictate_layout"
+                android:visibility="gone" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 

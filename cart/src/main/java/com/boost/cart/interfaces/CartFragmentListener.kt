@@ -11,4 +11,5 @@ interface CartFragmentListener {
   fun featureDetailsPopupvmn(vmn: String)
   fun editSelectedDomain(bundleItem: CartModel)
   fun editSelectedVmn(bundleItem: CartModel)
+  fun editSelectedPreferences(bundleItem: CartModel)
 }

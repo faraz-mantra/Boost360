@@ -34,6 +34,9 @@
     <string name="view_details">View details</string>
   <string name="enter_coupon_code">Enter coupon code</string>
     <string name="action_required"><u>Go to activation page.</u></string>
+    <string name="Edit"><u>Edit</u></string>
+    <string name="Select"><u>Select</u></string>
+
 
 
 </resources>

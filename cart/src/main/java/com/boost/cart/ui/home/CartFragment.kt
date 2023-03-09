@@ -4490,6 +4490,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
     override fun editSelectedVmn(bundleItem: CartModel) {
         featureDetailsPopUp1(bundleItem)
     }
+    override fun editSelectedPreferences(bundleItem: CartModel) {
+        featureDetailsPopUp3(bundleItem)
+    }
 
     override fun actionClick(bundleItem: CartModel) {
         featureDetailsPopUp2(bundleItem)
@@ -4711,4 +4714,45 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         }
     }
 
+    private fun featureDetailsPopUp3(cartModel: CartModel) {
+        var selectedBundle: Bundles? = null
+        for (item in bundlesList) {
+            if (item.bundle_id == cartModel.item_id) {
+                val temp = Gson().fromJson<List<IncludedFeature>>(
+                    item.included_features,
+                    object : TypeToken<List<IncludedFeature>>() {}.type
+                )
+                selectedBundle = Bundles(
+                    item.bundle_id,
+                    temp,
+                    item.min_purchase_months,
+                    item.name,
+                    item.overall_discount_percent,
+                    PrimaryImage(item.primary_image),
+                    item.target_business_usecase,
+                    Gson().fromJson<List<String>>(
+                        item.exclusive_to_categories,
+                        object : TypeToken<List<String>>() {}.type
+                    ),
+                    null, null, null, null, null, item.desc
+                )
+                break
+            }
+        }
+        try {
+            val intent = Intent(
+                activity,
+                Class.forName("com.boost.marketplace.ui.details.dictate_services.DictateServicesActivity")
+            )
+            intent.putExtra("expCode",  (activity as CartActivity).experienceCode)
+            intent.putExtra("fpid",  (activity as CartActivity).fpid)
+            // intent.putExtra("bundleData", Gson().toJson(singleAddon))
+            intent.putExtra("bundleData", Gson().toJson(selectedBundle))
+            intent.putExtra("dictateSelectionForCart", true)
+            intent.putExtra("dictateSelectionForPack", false)
+            startActivity(intent)
+        } catch (e: ClassNotFoundException) {
+            e.printStackTrace()
+        }
+    }
 }

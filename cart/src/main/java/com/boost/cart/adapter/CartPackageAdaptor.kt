@@ -307,13 +307,13 @@ class CartPackageAdaptor(
               if (singleFeaturesCode.feature_code.equals(singleFeature.feature_code!!)) {
                 if(singleFeaturesCode.feature_code.equals("DOMAINPURCHASE") && selectedDomainName.isNotEmpty()){
                   val tempItem = singleFeature
-                  tempItem.name = selectedDomainName
+                //  tempItem.name = selectedDomainName
                   tempFeatures.add(tempItem)
                 }else if ((singleFeaturesCode.feature_code.equals("CALLTRACKER")
                          // ||(singleFeaturesCode.feature_code.equals("IVR")))
                   && selectedVMN.isNotEmpty())) {
                   val tempItem = singleFeature
-                  tempItem.name = selectedVMN
+                //  tempItem.name = selectedVMN
                   tempFeatures.add(tempItem)
                 }else {
                     tempFeatures.add(singleFeature)
@@ -321,67 +321,67 @@ class CartPackageAdaptor(
                 }
             }
           }
-          if ((featuresCode.contains("DOMAINPURCHASE") == true
-                    && (featuresCode.contains("CALLTRACKER") == true))
-          ) {
-            if ((selectedDomainName.isNotEmpty()) && (selectedVMN.isNotEmpty())) {
-              holder.edge_cases_layout.visibility = View.GONE
-            } else if ((!selectedDomainName.isNotEmpty()) && (selectedVMN.isNotEmpty())) {
-              holder.edge_cases_layout.visibility = View.VISIBLE
-              holder.edge_cases_desc.text = "You need to select a domain name."
-              holder.edge_cases_layout.setOnClickListener {
-                listener1.actionClickDomain(bundlesList.get(position))
-              }
-            } else if ((!selectedVMN.isNotEmpty()) && (selectedDomainName.isNotEmpty())) {
-              holder.edge_cases_layout.visibility = View.VISIBLE
-              holder.edge_cases_desc.text = "You need to select a call tracking number."
-              holder.edge_cases_layout.setOnClickListener {
-                listener1.actionClickVmn(bundlesList.get(position))
-              }
-            } else {
-              holder.edge_cases_layout.visibility = View.VISIBLE
-              holder.edge_cases_layout.setOnClickListener {
-                listener1.actionClick(bundlesList.get(position))
-              }
-            }
-          } else if ((featuresCode.contains("DOMAINPURCHASE") == true
-                    && (featuresCode.contains("DICTATE") == true))
-          ) {
-            if ((selectedDomainName.isNotEmpty()) && (selectedDictatePrefs.isNotEmpty())
-            ) {
-              holder.edge_cases_layout.visibility = View.GONE
-            } else if ((!selectedDomainName.isNotEmpty()) && (selectedDictatePrefs.isNotEmpty())
-               ) {
-              holder.edge_cases_layout.visibility = View.VISIBLE
-              holder.edge_cases_desc.text = "You need to select a domain name."
-              holder.edge_cases_layout.setOnClickListener {
-                listener1.actionClickDomain(bundlesList.get(position))
-              }
-            } else if ((!selectedDictatePrefs.isNotEmpty()) && (selectedDomainName.isNotEmpty())) {
-              holder.edge_cases_layout.visibility = View.VISIBLE
-              holder.edge_cases_desc.text = "Select Dictate Preferences "
-              holder.edge_cases_layout.setOnClickListener {
-               // listener1.actionClickVmn(bundlesList.get(position))
-              }
-            } else {
-              holder.edge_cases_layout.visibility = View.VISIBLE
-              holder.edge_cases_desc.text = "You need to select a domain name & Dictate: Preferences"
-              holder.edge_cases_layout.setOnClickListener {
-               // listener1.actionClick(bundlesList.get(position))
-              }
-            }
-          }
-          else {
-            if (selectedDomainName.isNotEmpty()) {
-              holder.edge_cases_layout.visibility = View.GONE
-            } else {
-              holder.edge_cases_layout.visibility = View.VISIBLE
-              holder.edge_cases_desc.text = "You need to select a domain name."
-              holder.edge_cases_layout.setOnClickListener {
-                listener1.actionClickDomain(bundlesList.get(position))
-              }
-            }
-          }
+//          if ((featuresCode.contains("DOMAINPURCHASE") == true
+//                    && (featuresCode.contains("CALLTRACKER") == true))
+//          ) {
+//            if ((selectedDomainName.isNotEmpty()) && (selectedVMN.isNotEmpty())) {
+//              holder.edge_cases_layout.visibility = View.GONE
+//            } else if ((!selectedDomainName.isNotEmpty()) && (selectedVMN.isNotEmpty())) {
+//              holder.edge_cases_layout.visibility = View.VISIBLE
+//              holder.edge_cases_desc.text = "You need to select a domain name."
+//              holder.edge_cases_layout.setOnClickListener {
+//                listener1.actionClickDomain(bundlesList.get(position))
+//              }
+//            } else if ((!selectedVMN.isNotEmpty()) && (selectedDomainName.isNotEmpty())) {
+//              holder.edge_cases_layout.visibility = View.VISIBLE
+//              holder.edge_cases_desc.text = "You need to select a call tracking number."
+//              holder.edge_cases_layout.setOnClickListener {
+//                listener1.actionClickVmn(bundlesList.get(position))
+//              }
+//            } else {
+//              holder.edge_cases_layout.visibility = View.VISIBLE
+//              holder.edge_cases_layout.setOnClickListener {
+//                listener1.actionClick(bundlesList.get(position))
+//              }
+//            }
+//          } else if ((featuresCode.contains("DOMAINPURCHASE") == true
+//                    && (featuresCode.contains("DICTATE") == true))
+//          ) {
+//            if ((selectedDomainName.isNotEmpty()) && (selectedDictatePrefs.isNotEmpty())
+//            ) {
+//              holder.edge_cases_layout.visibility = View.GONE
+//            } else if ((!selectedDomainName.isNotEmpty()) && (selectedDictatePrefs.isNotEmpty())
+//               ) {
+//              holder.edge_cases_layout.visibility = View.VISIBLE
+//              holder.edge_cases_desc.text = "You need to select a domain name."
+//              holder.edge_cases_layout.setOnClickListener {
+//                listener1.actionClickDomain(bundlesList.get(position))
+//              }
+//            } else if ((!selectedDictatePrefs.isNotEmpty()) && (selectedDomainName.isNotEmpty())) {
+//              holder.edge_cases_layout.visibility = View.VISIBLE
+//              holder.edge_cases_desc.text = "Select Dictate Preferences "
+//              holder.edge_cases_layout.setOnClickListener {
+//               // listener1.actionClickVmn(bundlesList.get(position))
+//              }
+//            } else {
+//              holder.edge_cases_layout.visibility = View.VISIBLE
+//              holder.edge_cases_desc.text = "You need to select a domain name & Dictate: Preferences"
+//              holder.edge_cases_layout.setOnClickListener {
+//               // listener1.actionClick(bundlesList.get(position))
+//              }
+//            }
+//          }
+//          else {
+//            if (selectedDomainName.isNotEmpty()) {
+//              holder.edge_cases_layout.visibility = View.GONE
+//            } else {
+//              holder.edge_cases_layout.visibility = View.VISIBLE
+//              holder.edge_cases_desc.text = "You need to select a domain name."
+//              holder.edge_cases_layout.setOnClickListener {
+//                listener1.actionClickDomain(bundlesList.get(position))
+//              }
+//            }
+//          }
 
           holder.addon_amount.text = "Includes "+tempFeatures.size+" addons"
           val linearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
@@ -390,7 +390,7 @@ class CartPackageAdaptor(
           holder.ChildRecyclerView.layoutManager = linearLayoutManager
 //          holder.used_by.setText("Used by "+it.+"+ businesses")
         }, {
-//                            updatesError.postValue(it.message)
+//             updatesError.postValue(it.message)
         })
     )
   }
