@@ -78,4 +78,10 @@
     <key>in_app_review_first_purchase</key>
     <value>true</value>
   </entry>
+
+  <entry>
+    <key>feature_new_onboarding_android</key>
+    <value>true</value>
+  </entry>
+
 </defaultsMap><!-- END xml_defaults -->

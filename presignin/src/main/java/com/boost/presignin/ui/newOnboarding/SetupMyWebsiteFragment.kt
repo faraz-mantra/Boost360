@@ -38,6 +38,7 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
   private var responseCreateProfile: BusinessProfileResponse? = null
   var categoryFloatsReq: CategoryFloatsRequest? = null
   var createProfileReq: CreateProfileRequest? = null
+  var callIconItem: MenuItem? = null
 
   private val phoneNumber by lazy {
     arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
@@ -102,15 +103,22 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.menu_help_setup_my_website, menu)
-    val menuItem = menu.findItem(R.id.help_new)
-    menuItem.actionView?.setOnClickListener {
-      menu.performIdentifierAction(menuItem.itemId, 0)
-    }
+//    val menuItem = menu.findItem(R.id.help_new)
+//    menuItem.actionView?.setOnClickListener {
+//      menu.performIdentifierAction(menuItem.itemId, 0)
+//    }
+    callIconItem=menu.findItem(R.id.call_btn)
+    callIconItem?.actionView?.setOnClickListener { menu.performIdentifierAction(callIconItem!!.itemId, 0) }
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
-      R.id.help_new -> {
+//      R.id.help_new -> {
+//        WebEngageController.trackEvent(PS_LOGIN_OTP_NEED_HELP_CLICK, CLICK, NO_EVENT_VALUE)
+//        NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
+//        return true
+//      }
+      R.id.call_btn -> {
         WebEngageController.trackEvent(PS_LOGIN_OTP_NEED_HELP_CLICK, CLICK, NO_EVENT_VALUE)
         NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
         return true

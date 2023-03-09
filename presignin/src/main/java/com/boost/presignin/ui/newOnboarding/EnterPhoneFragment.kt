@@ -18,8 +18,10 @@ import com.boost.presignin.ui.newOnboarding.bottomSheet.NeedHelpBottomSheet
 import com.boost.presignin.ui.newOnboarding.categoryService.startServiceCategory
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.analytics.SentryController
+import com.framework.base.BaseActivity
 import com.framework.extensions.afterTextChanged
 import com.framework.extensions.observeOnce
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.pref.clientId
 import com.framework.utils.fromHtml
 import com.framework.utils.hideKeyBoard
@@ -33,6 +35,8 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
 
   private val TAG = "EnterPhoneFragment"
   private val NUMBER_PICKER_RC = 100
+  var callIconItem: MenuItem? = null
+  var helpTextItem: MenuItem? = null
 
   companion object {
     @JvmStatic
@@ -54,7 +58,7 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
   override fun onCreateView() {
     baseActivity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
     setOnListeners()
-    initUI()
+//    initUI()
     requestPhonePicker()
     WebEngageController.trackEvent(PS_LOGIN_NUMBER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.tvRequestOtp, binding?.tvLoginWithEmail)
@@ -116,45 +120,62 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
   }
 
 
-  private fun initUI() {
-    initTncString()
-  }
+//  private fun initUI() {
+//    initTncString()
+//  }
 
   private fun setOnListeners() {
-    binding?.phoneEt?.afterTextChanged { binding?.tvRequestOtp?.isEnabled = it.isPhoneValid() }
+    binding?.phoneEt?.afterTextChanged {
+      helpTextItem?.isVisible = it.length == 10
+      binding?.tvRequestOtp?.isEnabled = it.isPhoneValid()
+    }
   }
 
-  private fun initTncString() {
-    binding?.acceptTncPhone?.text = fromHtml("${getString(R.string.enter_phone_t_n_c)} <b><u><font color=#ffb900>Terms of Use</font></u></b> and <b><u><font color=#ffb900>Privacy Policy</font></u></b>")
-    binding?.acceptTncPhone?.makeLinks(
-      Pair("Terms of Use", View.OnClickListener {
-        WebEngageController.trackEvent(BOOST_360_TERMS_CLICK, CLICKED, NO_EVENT_VALUE)
-        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.terms_of_use))
-      }),
-      Pair("Privacy Policy", View.OnClickListener {
-        WebEngageController.trackEvent(BOOST_360_CONDITIONS_CLICK, CLICKED, NO_EVENT_VALUE)
-        openTNCDialog("https://www.getboost360.com/privacy?src=android&stage=presignup", resources.getString(R.string.privacy_policy))
-      })
-    )
-  }
+//  private fun initTncString() {
+//    binding?.acceptTncPhone?.text = fromHtml("${getString(R.string.enter_phone_t_n_c)} <b><u><font color=#ffb900>Terms of Use</font></u></b> and <b><u><font color=#ffb900>Privacy Policy</font></u></b>")
+//    binding?.acceptTncPhone?.makeLinks(
+//      Pair("Terms of Use", View.OnClickListener {
+//        WebEngageController.trackEvent(BOOST_360_TERMS_CLICK, CLICKED, NO_EVENT_VALUE)
+//        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.terms_of_use))
+//      }),
+//      Pair("Privacy Policy", View.OnClickListener {
+//        WebEngageController.trackEvent(BOOST_360_CONDITIONS_CLICK, CLICKED, NO_EVENT_VALUE)
+//        openTNCDialog("https://www.getboost360.com/privacy?src=android&stage=presignup", resources.getString(R.string.privacy_policy))
+//      })
+//    )
+//  }
 
-  private fun openTNCDialog(url: String, title: String) {
-    val webViewDialog = WebViewDialog()
-    webViewDialog.setData(isAcceptDeclineShow = false, url, title, isNewFlow = true)
-    webViewDialog.onClickType = {}
-    webViewDialog.show(requireActivity().supportFragmentManager, title)
-  }
+//  private fun openTNCDialog(url: String, title: String) {
+//    val webViewDialog = WebViewDialog()
+//    webViewDialog.setData(isAcceptDeclineShow = false, url, title, isNewFlow = true)
+//    webViewDialog.onClickType = {}
+//    webViewDialog.show(requireActivity().supportFragmentManager, title)
+//  }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.menu_help_setup_my_website, menu)
-    val menuItem: MenuItem? = menu.findItem(R.id.help_new)
-    menuItem?.actionView?.setOnClickListener { menu.performIdentifierAction(menuItem.itemId, 0) }
+//    val menuItem: MenuItem? = menu.findItem(R.id.help_new)
+//    menuItem?.actionView?.setOnClickListener { menu.performIdentifierAction(menuItem.itemId, 0) }
+    callIconItem=menu.findItem(R.id.call_btn)
+    helpTextItem=menu.findItem(R.id.help_btn)
+    callIconItem?.actionView?.setOnClickListener { menu.performIdentifierAction(callIconItem!!.itemId, 0) }
+    helpTextItem?.actionView?.setOnClickListener { menu.performIdentifierAction(helpTextItem!!.itemId, 0) }
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
-      R.id.help_new -> {
+//      R.id.help_new -> {
+//        WebEngageController.trackEvent(PS_LOGIN_OTP_NEED_HELP_CLICK, CLICK, NO_EVENT_VALUE)
+//        NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
+//        return true
+//      }
+      R.id.call_btn -> {
+        WebEngageController.trackEvent(PS_LOGIN_OTP_NEED_HELP_CLICK, CLICK, NO_EVENT_VALUE)
+        NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
+        return true
+      }
+      R.id.help_btn -> {
         WebEngageController.trackEvent(PS_LOGIN_OTP_NEED_HELP_CLICK, CLICK, NO_EVENT_VALUE)
         NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
         return true

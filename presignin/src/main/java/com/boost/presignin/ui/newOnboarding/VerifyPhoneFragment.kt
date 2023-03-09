@@ -1,5 +1,6 @@
 package com.boost.presignin.ui.newOnboarding
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextPaint
@@ -10,6 +11,7 @@ import com.boost.presignin.R
 import com.boost.presignin.constant.FragmentType
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentVerifyPhoneBinding
+import com.boost.presignin.dialog.WebViewDialog
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.authToken.AuthTokenDataItem
 import com.boost.presignin.model.login.VerificationRequestResult
@@ -23,11 +25,14 @@ import com.framework.base.FRAGMENT_TYPE
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.clientId2
 import com.framework.smsVerification.SMSReceiver
 import com.framework.smsVerification.SmsManager
+import com.framework.utils.fromHtml
+import com.framework.utils.makeLinks
 import com.framework.webengageconstant.*
 
 class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSReceiver.OTPReceiveListener {
@@ -37,6 +42,8 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
   private var loginId: String? = null
   private var isCounterRunning = false
   private var isSuccessApi = false
+  var callIconItem: MenuItem? = null
+  var helpTextItem: MenuItem? = null
 
   private val phoneNumber by lazy {
     arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
@@ -73,6 +80,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
     binding?.tvPhoneNumber?.text = "+91 ${phoneNumber.toString()}"
     Handler().postDelayed({ onCodeSent() }, 500)
     SmsManager.initManager(baseActivity, this)
+    initTncString()
   }
 
   override fun onClick(v: View) {
@@ -124,15 +132,30 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.menu_help_setup_my_website, menu)
-    val menuItem = menu.findItem(R.id.help_new)
-    menuItem.actionView?.setOnClickListener {
-      menu.performIdentifierAction(menuItem.itemId, 0)
-    }
+//    val menuItem = menu.findItem(R.id.help_new)
+//    menuItem.actionView?.setOnClickListener {
+//      menu.performIdentifierAction(menuItem.itemId, 0)
+//    }
+    callIconItem=menu.findItem(R.id.call_btn)
+    helpTextItem=menu.findItem(R.id.help_btn)
+    helpTextItem?.isVisible=true
+    callIconItem?.actionView?.setOnClickListener { menu.performIdentifierAction(callIconItem!!.itemId, 0) }
+    helpTextItem?.actionView?.setOnClickListener { menu.performIdentifierAction(helpTextItem!!.itemId, 0) }
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
-      R.id.help_new -> {
+//      R.id.help_new -> {
+//        WebEngageController.trackEvent(PS_LOGIN_OTP_NEED_HELP_CLICK, CLICK, NO_EVENT_VALUE)
+//        NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
+//        return true
+//      }
+      R.id.call_btn -> {
+        WebEngageController.trackEvent(PS_LOGIN_OTP_NEED_HELP_CLICK, CLICK, NO_EVENT_VALUE)
+        NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
+        return true
+      }
+      R.id.help_btn -> {
         WebEngageController.trackEvent(PS_LOGIN_OTP_NEED_HELP_CLICK, CLICK, NO_EVENT_VALUE)
         NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
         return true
@@ -225,6 +248,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
 
   private fun showBusinessWhatsapp() {
     isSuccessApi = true
+    binding?.acceptTncPhone.visibility = View.VISIBLE
     binding?.linearWhatsApp?.visible()
   }
 
@@ -249,16 +273,50 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
   }
 
   private fun moveToWelcomeScreen(enteredPhone: String?) {
-    startFragmentFromNewOnBoardingActivity(
-      activity = baseActivity, type = FragmentType.WELCOME_FRAGMENT,
-      bundle = Bundle().apply {
-        putString(IntentConstant.EXTRA_PHONE_NUMBER.name, enteredPhone)
-        putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, binding?.chkWhatsapp?.isChecked ?: false)
-      }
-    )
+    val doNewFlowEnabled = FirebaseRemoteConfigUtil.doNewOnBoardingJourneyEnabled()
+    if (doNewFlowEnabled!!){
+      startFragmentFromNewOnBoardingActivity(
+        activity = baseActivity,
+        type = FragmentType.SET_UP_MY_WEBSITE_FRAGMENT,
+        bundle = Bundle().apply {
+          putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+          putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, binding?.chkWhatsapp?.isChecked ?: false)
+        }
+      )
+
+    } else {
+      startFragmentFromNewOnBoardingActivity(
+        activity = baseActivity, type = FragmentType.WELCOME_FRAGMENT,
+        bundle = Bundle().apply {
+          putString(IntentConstant.EXTRA_PHONE_NUMBER.name, enteredPhone)
+          putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, binding?.chkWhatsapp?.isChecked ?: false)
+        }
+      )
+    }
   }
 
   override fun onOTPReceived(otp: String?) {
     binding?.pinOtpVerify?.post { binding?.pinOtpVerify?.setOTP(otp ?: "") }
+  }
+
+  private fun initTncString() {
+    binding?.acceptTncPhone?.text = fromHtml("${getString(R.string.enter_phone_t_n_c)} <b><u><font color=#ffb900>Terms of Use</font></u></b> and <b><u><font color=#ffb900>Privacy Policy</font></u></b>")
+    binding?.acceptTncPhone?.makeLinks(
+      Pair("Terms of Use", View.OnClickListener {
+        WebEngageController.trackEvent(BOOST_360_TERMS_CLICK, CLICKED, NO_EVENT_VALUE)
+        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.terms_of_use))
+      }),
+      Pair("Privacy Policy", View.OnClickListener {
+        WebEngageController.trackEvent(BOOST_360_CONDITIONS_CLICK, CLICKED, NO_EVENT_VALUE)
+        openTNCDialog("https://www.getboost360.com/privacy?src=android&stage=presignup", resources.getString(R.string.privacy_policy))
+      })
+    )
+  }
+
+  private fun openTNCDialog(url: String, title: String) {
+    val webViewDialog = WebViewDialog()
+    webViewDialog.setData(isAcceptDeclineShow = false, url, title, isNewFlow = true)
+    webViewDialog.onClickType = {}
+    webViewDialog.show(requireActivity().supportFragmentManager, title)
   }
 }

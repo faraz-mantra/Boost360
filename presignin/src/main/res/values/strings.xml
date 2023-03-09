@@ -207,6 +207,7 @@
   <string name="use_your_phone_number_to_login">You can use your phone number to login or sign up to Boost 360</string>
   <string name="_91_plus">+91</string>
   <string name="an_sms_with_a_4_digit_otp_was_sent_to">An SMS with a 4-digit OTP was sent to</string>
+  <string name="enter_4_digit_otp_shared">Enter the 4-digit OTP shared via SMS</string>
   <string name="get_otp_on_call">Get OTP on call</string>
   <string name="mobile">Mobile</string>
   <string name="desktop">Desktop</string>

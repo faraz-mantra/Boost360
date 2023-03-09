@@ -20,6 +20,7 @@ const val NEW_ONBOARDING_WITH_UPDATED_CATEGORIES_AND_GUI_ACTIVE = "new_onboardin
 const val FEATURE_ERROR_HANDLING_ENABLE = "feature_error_handling_enable"
 const val FEATURE_UPDATE_STUDIO_SELECTED_USERS="feature_update_studio_selected_users"
 const val PERMISSION_FACEBOOK = "permissions_facebook"
+const val ONBOARDING_JOURNEY = "feature_new_onboarding_android"
 
 object FirebaseRemoteConfigUtil {
 
@@ -95,6 +96,9 @@ object FirebaseRemoteConfigUtil {
   fun featureUpdateStudioSelectedUsers(fpTag:String?): Boolean {
     val selectedFps = remoteConfig?.getString(FEATURE_UPDATE_STUDIO_SELECTED_USERS)
     return true //PreferencesUtils.instance.getData(PreferencesKey.IS_UPDATE_STUDIO_ENABLED.name,false)
+  }
+  fun doNewOnBoardingJourneyEnabled(): Boolean? {
+    return remoteConfig?.getBoolean(ONBOARDING_JOURNEY)
   }
 
 }
