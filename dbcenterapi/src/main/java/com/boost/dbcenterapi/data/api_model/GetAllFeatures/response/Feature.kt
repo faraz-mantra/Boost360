@@ -39,5 +39,6 @@ data class Feature(
     val frequently_asked_questions: FrequentlyAskedQuestions?,
     val how_to_use_steps: List<HowToUseStep>?,
     val how_to_use_title: String?,
-    val exclusive_To_clientIds:List<String>? =null
+    val exclusive_To_clientIds:List<String>? =null,
+    val Long_desc:String? =null
 )
