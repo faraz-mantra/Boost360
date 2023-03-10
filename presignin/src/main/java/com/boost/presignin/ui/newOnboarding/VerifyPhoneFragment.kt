@@ -249,6 +249,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
   }
 
   private fun moveToWelcomeScreen(enteredPhone: String?) {
+    WebEngageController.trackEvent(PS_VERIFY_OTP_VERIFY, TYPE, NUMBER)
     startFragmentFromNewOnBoardingActivity(
       activity = baseActivity, type = FragmentType.WELCOME_FRAGMENT,
       bundle = Bundle().apply {
