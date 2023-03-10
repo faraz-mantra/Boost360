@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ImageView
+import android.widget.TextView
 import com.appservice.base.AppBaseFragment
 import com.boost.presignin.R
 import com.boost.presignin.constant.FragmentType
@@ -35,8 +37,9 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
 
   private val TAG = "EnterPhoneFragment"
   private val NUMBER_PICKER_RC = 100
-  var callIconItem: MenuItem? = null
-  var helpTextItem: MenuItem? = null
+  var callIconItem: ImageView? = null
+  var helpTextItem: TextView? = null
+  var menuItem: MenuItem? = null
 
   companion object {
     @JvmStatic
@@ -58,7 +61,6 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
   override fun onCreateView() {
     baseActivity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
     setOnListeners()
-//    initUI()
     requestPhonePicker()
     WebEngageController.trackEvent(PS_LOGIN_NUMBER_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListener(binding?.tvRequestOtp, binding?.tvLoginWithEmail)
@@ -80,18 +82,22 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
 
 
   private fun sendOtp(phoneNumber: String?) {
-    WebEngageController.trackEvent(PS_LOGIN_NUMBER_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
-    baseActivity.hideKeyBoard()
-    showProgress(getString(R.string.sending_otp))
-    viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner) {
-      if (it.isSuccess() && it.parseResponse()) {
-        startFragmentFromNewOnBoardingActivity(
-          activity = baseActivity, type = FragmentType.VERIFY_PHONE_FRAGMENT,
-          bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }
-        )
-      } else showShortToast(if (it.message.isNullOrEmpty().not()) it.message else getString(R.string.otp_not_sent))
-      hideProgress()
-    }
+    startFragmentFromNewOnBoardingActivity(
+      activity = baseActivity, type = FragmentType.VERIFY_PHONE_FRAGMENT,
+      bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }
+    )
+//    WebEngageController.trackEvent(PS_LOGIN_NUMBER_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
+//    baseActivity.hideKeyBoard()
+//    showProgress(getString(R.string.sending_otp))
+//    viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner) {
+//      if (it.isSuccess() && it.parseResponse()) {
+//        startFragmentFromNewOnBoardingActivity(
+//          activity = baseActivity, type = FragmentType.VERIFY_PHONE_FRAGMENT,
+//          bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }
+//        )
+//      } else showShortToast(if (it.message.isNullOrEmpty().not()) it.message else getString(R.string.otp_not_sent))
+//      hideProgress()
+//    }
   }
 
 
@@ -119,63 +125,32 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
     }
   }
 
-
-//  private fun initUI() {
-//    initTncString()
-//  }
-
   private fun setOnListeners() {
-    binding?.phoneEt?.afterTextChanged {
-      helpTextItem?.isVisible = it.length == 10
-      binding?.tvRequestOtp?.isEnabled = it.isPhoneValid()
+    binding.phoneEt.afterTextChanged {
+      if (it.length == 10){
+        callIconItem?.setPadding(0,0,0,0)
+        helpTextItem?.visibility = View.VISIBLE
+      }else{
+        callIconItem?.setPadding(0,0,66,0)
+        helpTextItem?.visibility = View.GONE
+      }
+      binding.tvRequestOtp.isEnabled = it.isPhoneValid()
     }
   }
-
-//  private fun initTncString() {
-//    binding?.acceptTncPhone?.text = fromHtml("${getString(R.string.enter_phone_t_n_c)} <b><u><font color=#ffb900>Terms of Use</font></u></b> and <b><u><font color=#ffb900>Privacy Policy</font></u></b>")
-//    binding?.acceptTncPhone?.makeLinks(
-//      Pair("Terms of Use", View.OnClickListener {
-//        WebEngageController.trackEvent(BOOST_360_TERMS_CLICK, CLICKED, NO_EVENT_VALUE)
-//        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.terms_of_use))
-//      }),
-//      Pair("Privacy Policy", View.OnClickListener {
-//        WebEngageController.trackEvent(BOOST_360_CONDITIONS_CLICK, CLICKED, NO_EVENT_VALUE)
-//        openTNCDialog("https://www.getboost360.com/privacy?src=android&stage=presignup", resources.getString(R.string.privacy_policy))
-//      })
-//    )
-//  }
-
-//  private fun openTNCDialog(url: String, title: String) {
-//    val webViewDialog = WebViewDialog()
-//    webViewDialog.setData(isAcceptDeclineShow = false, url, title, isNewFlow = true)
-//    webViewDialog.onClickType = {}
-//    webViewDialog.show(requireActivity().supportFragmentManager, title)
-//  }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.menu_help_setup_my_website, menu)
-//    val menuItem: MenuItem? = menu.findItem(R.id.help_new)
-//    menuItem?.actionView?.setOnClickListener { menu.performIdentifierAction(menuItem.itemId, 0) }
-    callIconItem=menu.findItem(R.id.call_btn)
-    helpTextItem=menu.findItem(R.id.help_btn)
-    callIconItem?.actionView?.setOnClickListener { menu.performIdentifierAction(callIconItem!!.itemId, 0) }
-    helpTextItem?.actionView?.setOnClickListener { menu.performIdentifierAction(helpTextItem!!.itemId, 0) }
+    menuItem = menu.findItem(R.id.help_new)
+    callIconItem = menuItem?.actionView?.findViewById(R.id.helpCall) as ImageView
+    helpTextItem = menuItem?.actionView?.findViewById(R.id.helpLabel) as TextView
+    helpTextItem?.visibility = View.GONE
+    menuItem?.actionView?.setOnClickListener { menu.performIdentifierAction(menuItem!!.itemId, 0) }
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
-//      R.id.help_new -> {
-//        WebEngageController.trackEvent(PS_LOGIN_OTP_NEED_HELP_CLICK, CLICK, NO_EVENT_VALUE)
-//        NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
-//        return true
-//      }
-      R.id.call_btn -> {
-        WebEngageController.trackEvent(PS_LOGIN_OTP_NEED_HELP_CLICK, CLICK, NO_EVENT_VALUE)
-        NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
-        return true
-      }
-      R.id.help_btn -> {
+      R.id.help_new -> {
         WebEngageController.trackEvent(PS_LOGIN_OTP_NEED_HELP_CLICK, CLICK, NO_EVENT_VALUE)
         NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
         return true

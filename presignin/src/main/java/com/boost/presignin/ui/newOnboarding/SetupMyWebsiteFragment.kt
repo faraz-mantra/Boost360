@@ -1,10 +1,8 @@
 package com.boost.presignin.ui.newOnboarding
 
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import android.view.*
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.boost.presignin.R
@@ -17,6 +15,7 @@ import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.userprofile.BusinessProfileResponse
 import com.boost.presignin.ui.newOnboarding.bottomSheet.NeedHelpBottomSheet
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.pref.UserSessionManager
 import com.framework.webengageconstant.CLICK
 import com.framework.webengageconstant.NO_EVENT_VALUE
@@ -39,6 +38,7 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
   var categoryFloatsReq: CategoryFloatsRequest? = null
   var createProfileReq: CreateProfileRequest? = null
   var callIconItem: MenuItem? = null
+  var doNewFlowEnabled:Boolean? = null
 
   private val phoneNumber by lazy {
     arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
@@ -59,11 +59,24 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
   override fun onCreateView() {
     super.onCreateView()
     this.session = UserSessionManager(baseActivity)
-    addFragment(R.id.inner_container, SetupMyWebsiteStep1Fragment.newInstance(Bundle().apply {
-      putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
-      putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent == true)
-    }), true)
-
+    doNewFlowEnabled = FirebaseRemoteConfigUtil.doNewOnBoardingJourneyEnabled()
+    if (doNewFlowEnabled!!){
+       addFragment(R.id.inner_container, SetupMyWebsiteStep2Fragment.newInstance(Bundle().apply {
+        putString(IntentConstant.DESKTOP_PREVIEW.name, null)
+        putString(IntentConstant.MOBILE_PREVIEW.name, null)
+        putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+        putString(IntentConstant.CATEGORY_SUGG_UI.name, null)
+        putString(IntentConstant.SUB_CATEGORY_ID.name, null)
+        putSerializable(IntentConstant.CATEGORY_DATA.name, null)
+        putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent!!)
+      }), true)
+    }
+    else{
+      addFragment(R.id.inner_container, SetupMyWebsiteStep1Fragment.newInstance(Bundle().apply {
+        putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+        putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent == true)
+      }), true)
+    }
     parentFragmentManager.addOnBackStackChangedListener {
       if (getTopFragment() != null) {
         setUpStepUI(getTopFragment()!!)
@@ -74,27 +87,53 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
   }
 
   private fun setUpStepUI(fragment: Fragment) {
-    when (fragment) {
-      is SetupMyWebsiteStep1Fragment -> {
-        binding?.ivStep1Setup?.setImageResource(R.drawable.ic_tick_circle_green_hollow)
-        binding?.view1?.background = ContextCompat.getDrawable(requireContext(), R.color.gray_33727D82)
-        binding?.ivStep2Setup?.setImageResource(R.drawable.ic_tick_circle_gray_hollow)
-        binding?.view2?.background = ContextCompat.getDrawable(requireContext(), R.color.gray_33727D82)
-        binding?.ivStep3Setup?.setImageResource(R.drawable.ic_tick_circle_gray_hollow)
+    if (doNewFlowEnabled!!){
+      when (fragment) {
+        is SetupMyWebsiteStep2Fragment -> {
+          binding?.ivStep1Setup?.setImageResource(R.drawable.ic_tick_circle_green_hollow)
+          binding?.view1?.background = ContextCompat.getDrawable(requireContext(), R.color.gray_33727D82)
+          binding?.ivStep2Setup?.setImageResource(R.drawable.ic_tick_circle_gray_hollow)
+          binding?.view2?.background = ContextCompat.getDrawable(requireContext(), R.color.gray_33727D82)
+          binding?.ivStep3Setup?.setImageResource(R.drawable.ic_tick_circle_gray_hollow)
+        }
+        is SetupMyWebsiteStep3Fragment -> {
+          binding?.ivStep1Setup?.setImageResource(R.drawable.ic_tick_circle_green_solid_filled)
+          binding?.view1?.background = ContextCompat.getDrawable(requireContext(), R.color.green_7ED321)
+          binding?.ivStep2Setup?.setImageResource(R.drawable.ic_tick_circle_green_hollow)
+          binding?.view2?.background = ContextCompat.getDrawable(requireContext(), R.color.gray_33727D82)
+          binding?.ivStep3Setup?.setImageResource(R.drawable.ic_tick_circle_gray_hollow)
+        }
+        is SetupMyWebsiteStep1Fragment -> {
+          binding?.ivStep1Setup?.setImageResource(R.drawable.ic_tick_circle_green_solid_filled)
+          binding?.view1?.background = ContextCompat.getDrawable(requireContext(), R.color.green_7ED321)
+          binding?.ivStep2Setup?.setImageResource(R.drawable.ic_tick_circle_green_solid_filled)
+          binding?.view2?.background = ContextCompat.getDrawable(requireContext(), R.color.green_7ED321)
+          binding?.ivStep3Setup?.setImageResource(R.drawable.ic_tick_circle_green_hollow)
+        }
       }
-      is SetupMyWebsiteStep2Fragment -> {
-        binding?.ivStep1Setup?.setImageResource(R.drawable.ic_tick_circle_green_solid_filled)
-        binding?.view1?.background = ContextCompat.getDrawable(requireContext(), R.color.green_7ED321)
-        binding?.ivStep2Setup?.setImageResource(R.drawable.ic_tick_circle_green_hollow)
-        binding?.view2?.background = ContextCompat.getDrawable(requireContext(), R.color.gray_33727D82)
-        binding?.ivStep3Setup?.setImageResource(R.drawable.ic_tick_circle_gray_hollow)
-      }
-      is SetupMyWebsiteStep3Fragment -> {
-        binding?.ivStep1Setup?.setImageResource(R.drawable.ic_tick_circle_green_solid_filled)
-        binding?.view1?.background = ContextCompat.getDrawable(requireContext(), R.color.green_7ED321)
-        binding?.ivStep2Setup?.setImageResource(R.drawable.ic_tick_circle_green_solid_filled)
-        binding?.view2?.background = ContextCompat.getDrawable(requireContext(), R.color.green_7ED321)
-        binding?.ivStep3Setup?.setImageResource(R.drawable.ic_tick_circle_green_hollow)
+    }else{
+      when (fragment) {
+        is SetupMyWebsiteStep1Fragment -> {
+          binding?.ivStep1Setup?.setImageResource(R.drawable.ic_tick_circle_green_hollow)
+          binding?.view1?.background = ContextCompat.getDrawable(requireContext(), R.color.gray_33727D82)
+          binding?.ivStep2Setup?.setImageResource(R.drawable.ic_tick_circle_gray_hollow)
+          binding?.view2?.background = ContextCompat.getDrawable(requireContext(), R.color.gray_33727D82)
+          binding?.ivStep3Setup?.setImageResource(R.drawable.ic_tick_circle_gray_hollow)
+        }
+        is SetupMyWebsiteStep2Fragment -> {
+          binding?.ivStep1Setup?.setImageResource(R.drawable.ic_tick_circle_green_solid_filled)
+          binding?.view1?.background = ContextCompat.getDrawable(requireContext(), R.color.green_7ED321)
+          binding?.ivStep2Setup?.setImageResource(R.drawable.ic_tick_circle_green_hollow)
+          binding?.view2?.background = ContextCompat.getDrawable(requireContext(), R.color.gray_33727D82)
+          binding?.ivStep3Setup?.setImageResource(R.drawable.ic_tick_circle_gray_hollow)
+        }
+        is SetupMyWebsiteStep3Fragment -> {
+          binding?.ivStep1Setup?.setImageResource(R.drawable.ic_tick_circle_green_solid_filled)
+          binding?.view1?.background = ContextCompat.getDrawable(requireContext(), R.color.green_7ED321)
+          binding?.ivStep2Setup?.setImageResource(R.drawable.ic_tick_circle_green_solid_filled)
+          binding?.view2?.background = ContextCompat.getDrawable(requireContext(), R.color.green_7ED321)
+          binding?.ivStep3Setup?.setImageResource(R.drawable.ic_tick_circle_green_hollow)
+        }
       }
     }
   }
@@ -103,29 +142,32 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.menu_help_setup_my_website, menu)
-//    val menuItem = menu.findItem(R.id.help_new)
-//    menuItem.actionView?.setOnClickListener {
-//      menu.performIdentifierAction(menuItem.itemId, 0)
-//    }
-    callIconItem=menu.findItem(R.id.call_btn)
-    callIconItem?.actionView?.setOnClickListener { menu.performIdentifierAction(callIconItem!!.itemId, 0) }
+    val menuItem = menu.findItem(R.id.help_new)
+    val callIconItem = menuItem?.actionView?.findViewById(R.id.helpCall) as ImageView
+    callIconItem.setPadding(0,0,0,0)
+    menuItem.actionView?.setOnClickListener {
+      menu.performIdentifierAction(menuItem.itemId, 0)
+    }
+    val menuItemMore = menu.findItem(R.id.more_options)
+    menuItemMore.isVisible = true
+    val menuItemAnotherLogin = menu.findItem(R.id.action_another_login)
+    menuItemAnotherLogin.actionView?.setOnClickListener {
+      menu.performIdentifierAction(menuItem.itemId, 0)
+    }
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
-//      R.id.help_new -> {
-//        WebEngageController.trackEvent(PS_LOGIN_OTP_NEED_HELP_CLICK, CLICK, NO_EVENT_VALUE)
-//        NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
-//        return true
-//      }
-      R.id.call_btn -> {
+      R.id.help_new -> {
         WebEngageController.trackEvent(PS_LOGIN_OTP_NEED_HELP_CLICK, CLICK, NO_EVENT_VALUE)
         NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
+        return true
+      }
+      R.id.action_another_login -> {
+        activity?.onBackPressed()
         return true
       }
       else -> super.onOptionsItemSelected(item)
     }
   }
-
-
 }

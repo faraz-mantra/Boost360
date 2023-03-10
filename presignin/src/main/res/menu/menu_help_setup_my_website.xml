@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <item
-        android:id="@+id/call_btn"
-        android:icon="@drawable/ic_call"
-        app:showAsAction="ifRoom"
-        android:title="" />
+        android:id="@+id/help_new"
+        android:title=""
+        app:actionLayout="@layout/layout_help_section_new"
+        app:showAsAction="always" />
     <item
-        android:id="@+id/help_btn"
-        android:title="@string/help"
+        android:id="@+id/more_options"
+        android:icon="@drawable/ic_more_vert"
+        app:showAsAction="always"
         android:visible="false"
-        app:showAsAction="ifRoom" />
-    <!--    <item-->
-    <!--        android:id="@+id/help_new"-->
-    <!--        android:title=""-->
-    <!--        app:actionLayout="@layout/layout_help_section"-->
-    <!--        app:showAsAction="always" />-->
+        tools:ignore="MenuTitle">
+        <menu>
+            <item
+                android:id="@+id/action_another_login"
+                android:icon="@drawable/ic_another_login"
+                android:title="@string/login_with_other_number"
+                app:showAsAction="ifRoom" />
+        </menu>
+    </item>
 </menu>

@@ -6,6 +6,7 @@ import android.os.Handler
 import android.text.TextPaint
 import android.text.style.ClickableSpan
 import android.view.*
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.boost.presignin.R
 import com.boost.presignin.constant.FragmentType
@@ -132,30 +133,17 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.menu_help_setup_my_website, menu)
-//    val menuItem = menu.findItem(R.id.help_new)
-//    menuItem.actionView?.setOnClickListener {
-//      menu.performIdentifierAction(menuItem.itemId, 0)
-//    }
-    callIconItem=menu.findItem(R.id.call_btn)
-    helpTextItem=menu.findItem(R.id.help_btn)
-    helpTextItem?.isVisible=true
-    callIconItem?.actionView?.setOnClickListener { menu.performIdentifierAction(callIconItem!!.itemId, 0) }
-    helpTextItem?.actionView?.setOnClickListener { menu.performIdentifierAction(helpTextItem!!.itemId, 0) }
+    val menuItem = menu.findItem(R.id.help_new)
+    val callIconItem = menuItem?.actionView?.findViewById(R.id.helpCall) as ImageView
+    callIconItem.setPadding(0,0,0,0)
+    menuItem.actionView?.setOnClickListener {
+      menu.performIdentifierAction(menuItem.itemId, 0)
+    }
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
-//      R.id.help_new -> {
-//        WebEngageController.trackEvent(PS_LOGIN_OTP_NEED_HELP_CLICK, CLICK, NO_EVENT_VALUE)
-//        NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
-//        return true
-//      }
-      R.id.call_btn -> {
-        WebEngageController.trackEvent(PS_LOGIN_OTP_NEED_HELP_CLICK, CLICK, NO_EVENT_VALUE)
-        NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
-        return true
-      }
-      R.id.help_btn -> {
+      R.id.help_new -> {
         WebEngageController.trackEvent(PS_LOGIN_OTP_NEED_HELP_CLICK, CLICK, NO_EVENT_VALUE)
         NeedHelpBottomSheet().show(parentFragmentManager, NeedHelpBottomSheet::class.java.name)
         return true
@@ -165,7 +153,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
   }
 
   private fun onCodeSent() {
-    binding?.tvResendOtpIn?.setTextColor(getColor(R.color.gray_DADADA))
+    binding?.tvResendOtpIn?.setTextColor(getColor(R.color.colorAccent))
     countDown = object : com.boost.presignin.timer.CountDownTimer(30 * 1000, 1000) {
       override fun onTick(p0: Long) {
         binding?.tvResendOtpIn?.isEnabled = false
@@ -190,7 +178,6 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
         }
         val resendString = getString(R.string.psn_resend_hint)
         binding?.tvResendOtpIn?.text = resendString
-        binding?.tvResendOtpIn?.setTextColor(getColor(R.color.colorAccent))
       }
     }
     startOperation()
@@ -222,34 +209,36 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
   }
 
   fun verify() {
-    if (isSuccessApi) {
-      if (this.resultLogin != null) apiWhatsappOptin() else moveToWelcomeScreen(phoneNumber)
-    } else {
-      showProgress(getString(R.string.verify_otp))
-      WebEngageController.trackEvent(PS_VERIFY_OTP_VERIFY, OTP_VERIFY_CLICK, NO_EVENT_VALUE)
-      val otp = binding?.pinOtpVerify?.otp
-      viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId)?.observeOnce(viewLifecycleOwner) {
-        hideProgress()
-        this.resultLogin = null
-        if (it.isSuccess()) {
-          val result = it as? VerifyOtpResponse
-          binding?.tvResendOtpIn?.gone()
-          if (result?.Result?.authTokens.isNullOrEmpty().not() && result?.Result?.authTokens?.size!! >= 1) {
-            this.resultLogin = result.Result
-            loginId = resultLogin?.loginId
-            if (binding?.linearWhatsApp?.visibility == View.VISIBLE) apiWhatsappOptin() else showBusinessWhatsapp()
-          } else {
-            if (binding?.linearWhatsApp?.visibility == View.VISIBLE) moveToWelcomeScreen(phoneNumber) else showBusinessWhatsapp()
-          }
-        } else showLongToast(getString(R.string.wrong_otp_tv))
-      }
-    }
+    showBusinessWhatsapp()
+//    if (isSuccessApi) {
+//      if (this.resultLogin != null) apiWhatsappOptin() else moveToWelcomeScreen(phoneNumber)
+//    } else {
+//      showProgress(getString(R.string.verify_otp))
+//      WebEngageController.trackEvent(PS_VERIFY_OTP_VERIFY, OTP_VERIFY_CLICK, NO_EVENT_VALUE)
+//      val otp = binding?.pinOtpVerify?.otp
+//      viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId)?.observeOnce(viewLifecycleOwner) {
+//        hideProgress()
+//        this.resultLogin = null
+//        if (it.isSuccess()) {
+//          val result = it as? VerifyOtpResponse
+//          binding?.tvResendOtpIn?.gone()
+//          if (result?.Result?.authTokens.isNullOrEmpty().not() && result?.Result?.authTokens?.size!! >= 1) {
+//            this.resultLogin = result.Result
+//            loginId = resultLogin?.loginId
+//            if (binding?.linearWhatsApp?.visibility == View.VISIBLE) apiWhatsappOptin() else showBusinessWhatsapp()
+//          } else {
+//            if (binding?.linearWhatsApp?.visibility == View.VISIBLE) moveToWelcomeScreen(phoneNumber) else showBusinessWhatsapp()
+//          }
+//        } else showLongToast(getString(R.string.wrong_otp_tv))
+//      }
+//    }
   }
 
   private fun showBusinessWhatsapp() {
     isSuccessApi = true
     binding?.acceptTncPhone.visibility = View.VISIBLE
     binding?.linearWhatsApp?.visible()
+    moveToWelcomeScreen(phoneNumber)
   }
 
   private fun apiWhatsappOptin() {
@@ -283,7 +272,6 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
           putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, binding?.chkWhatsapp?.isChecked ?: false)
         }
       )
-
     } else {
       startFragmentFromNewOnBoardingActivity(
         activity = baseActivity, type = FragmentType.WELCOME_FRAGMENT,

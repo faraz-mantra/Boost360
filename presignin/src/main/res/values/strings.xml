@@ -227,4 +227,5 @@
   <string name="website_name_format_invalid_toast">Website name should contain only alphabets &amp; digits only. No special characters and symbols allowed!</string>
   <string name="business_name_format_invalid_toast">Business name should contain only alphabets &amp; digits only. No special characters and symbols allowed!</string>
   <string name="did_you_mean">Did you mean:</string>
+    <string name="login_with_other_number">Login with other number</string>
 </resources>
