@@ -32,6 +32,7 @@ import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.pref.*
 import com.framework.views.blur.setBlur
 import com.framework.webengageconstant.*
@@ -53,7 +54,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
   private var responseCreateProfile: BusinessProfileResponse? = null
   var categoryFloatsReq: CategoryFloatsRequest? = null
   var createProfileReq: CreateProfileRequest? = null
-
+  var doNewFlowEnabled:Boolean? = null
 
   private val phoneNumber by lazy {
     arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
@@ -100,11 +101,16 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_PAGE_LOAD_NEW_UPPERCASE, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.includeMobileView?.blurView?.setBlur(baseActivity, 1F)
     session = UserSessionManager(baseActivity)
+    doNewFlowEnabled = FirebaseRemoteConfigUtil.doNewOnBoardingJourneyEnabled()
     binding?.includeMobileView?.tvCategoryName?.text = categoryModel?.getCategoryWithoutNewLine() ?: ""
     binding?.includeMobileView?.tvTitle?.text = businessName?.capitalizeUtil()
     setOnClickListeners()
     binding?.addressInputLayout?.etInput?.setText(businessName?.replace("\\s+".toRegex(), "")?.lowercase())
-    apiCheckDomain { websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1) }
+    if (doNewFlowEnabled!!){
+      apiCheckDomain { websiteNameFieldUiVisibility(websiteNameFieldVisibility = 3) }
+    } else {
+      apiCheckDomain { websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1) }
+    }
     fetchLocationAndSendWEEvent()
   }
 
@@ -119,21 +125,21 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         } else websiteNameFieldUiVisibility(websiteNameFieldVisibility = 2)
       }
     } else websiteNameFieldUiVisibility(websiteNameFieldVisibility = 2)
-    if(session?.userLocationIP != null){
-      val eventValue = HashMap<String, Any>()
-      eventValue["test1"] = session?.userLocationIP!!
-      NFWebEngageController.trackAttribute(eventValue)
-    }
   }
 
   private fun setOnClickListeners() {
     binding?.tvNextStep3?.setOnClickListener {
-      if (binding?.addressInputLayout?.etInput?.text?.trim().toString().validateLetters()) {
-        if (binding?.tvNextStep3?.text == getString(R.string.launch_my_website)) {
-          WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK_NEW_UPPERCASE, CLICK, NO_EVENT_VALUE)
-        }
-        apiCheckDomain { apiHitCreateMerchantProfile() }
-      } else showShortToast(getString(R.string.website_name_format_invalid_toast))
+      if (doNewFlowEnabled!!){
+
+      }else{
+        if (binding?.addressInputLayout?.etInput?.text?.trim().toString().validateLetters()) {
+          if (binding?.tvNextStep3?.text == getString(R.string.launch_my_website)) {
+            WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK_NEW_UPPERCASE, CLICK, NO_EVENT_VALUE)
+          }
+          apiCheckDomain { apiHitCreateMerchantProfile() }
+        } else showShortToast(getString(R.string.website_name_format_invalid_toast))
+      }
+      sendLocationData()
     }
 
     binding?.addressInputLayout?.etInput?.afterTextChanged {
@@ -163,6 +169,14 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
 //      websiteNameFieldUiVisibility()
 //      baseActivity.showKeyBoard(binding?.addressInputLayout?.etInput)
       baseActivity.onNavPressed()
+    }
+  }
+
+  private fun sendLocationData() {
+    if (session?.userLocationIP != null) {
+      val eventValue = HashMap<String, Any>()
+      eventValue["test1"] = session?.userLocationIP!!
+      NFWebEngageController.trackAttribute(eventValue)
     }
   }
 
@@ -323,6 +337,21 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         binding?.tvNameNotAvailableError?.visible()
         binding?.linearSecureWrapper?.gone()
         binding?.tvNextStep3?.text = getString(R.string.launch_my_website)
+        binding?.addressInputLayout?.etInput?.apply {
+          layoutParams?.width = ViewGroup.LayoutParams.WRAP_CONTENT
+          isEnabled = false
+        }
+      }
+      3 -> {
+        binding?.addressInputLayout?.tvWebsiteExtension?.visible()
+        binding?.addressInputLayout?.ivStatus?.visible()
+        binding?.addressInputLayout?.ivIcon?.visible()
+        binding?.addressInputLayout?.ivStatus?.setImageResource(R.drawable.ic_tick_red_error)
+        binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_red_stroke_et)
+        binding?.tvNextStep3?.isEnabled = false
+        binding?.tvNameNotAvailableError?.visible()
+        binding?.linearSecureWrapper?.gone()
+        binding?.tvNextStep3?.text = getString(R.string.next)
         binding?.addressInputLayout?.etInput?.apply {
           layoutParams?.width = ViewGroup.LayoutParams.WRAP_CONTENT
           isEnabled = false
