@@ -182,24 +182,68 @@
                app:layout_constraintEnd_toEndOf="parent"
                app:layout_constraintStart_toStartOf="parent">
 
-               <androidx.appcompat.widget.AppCompatEditText
-                   android:id="@+id/et_keywords"
+               <androidx.constraintlayout.widget.ConstraintLayout
+                   android:id="@+id/layout_keywords1"
                    android:layout_width="match_parent"
-                   android:layout_height="75dp"
-                   android:layout_marginTop="10dp"
-                   android:hint="Enter prefer location "
-                   android:background="@drawable/edittext_selector1"
-                   android:focusable="true"
-                   android:focusableInTouchMode="true"
-                   android:fontFamily="@font/regular"
-                   android:gravity="start"
-                   android:textColor="@color/common_text_color"
-                   android:textColorHint="@color/grey_BBBBBB"
-                   android:textFontWeight="400"
-                   android:textSize="@dimen/txt_14sp"
-                   app:layout_constraintEnd_toEndOf="parent"
+                   android:layout_height="wrap_content"
+                   android:background="@drawable/edittext_selector2"
+                   app:layout_constraintTop_toTopOf="parent"
                    app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toTopOf="parent"/>
+                   android:layout_marginTop="6dp">
+
+                   <EditText
+                       android:id="@+id/edt_places_tag"
+                       android:layout_width="match_parent"
+                       android:layout_height="44dp"
+                       android:background="@drawable/dictate_edittext"
+                       android:hint="@string/edittext_hint"
+                       android:textSize="12sp"
+                       android:inputType="textCapWords"
+                       android:maxEms="3"
+                       android:singleLine="true"
+                       android:textColor="@color/warm_grey_10"
+                       android:textColorHint="@color/primary_grey"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toTopOf="parent"/>
+
+                   <TextView
+                       android:id="@+id/btn_add_tag1"
+                       android:layout_width="@dimen/size_80"
+                       android:layout_height="44dp"
+                       android:layout_gravity="end"
+                       android:background="@drawable/cta_button_hollow"
+                       android:clickable="true"
+                       android:gravity="center"
+                       android:text="@string/add"
+                       android:textColor="@color/ButtoncolorAccent"
+                       app:fontFamily="@font/semi_bold"
+                       app:textAllCaps="false"
+                       app:textType="BODY_1"
+                       app:layout_constraintTop_toTopOf="parent"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintBottom_toTopOf="@+id/chipsPlaces"/>
+
+
+                   <com.google.android.material.chip.ChipGroup
+                       android:id="@+id/chipsPlaces"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_margin="10dp"
+                       app:chipSpacing="8dp"
+                       android:visibility="gone"
+                       style="@style/Widget.MaterialComponents.ChipGroup"
+                       android:layout_gravity="bottom"
+                       app:singleSelection="false"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintTop_toBottomOf="@+id/btn_add_tag1"
+                       app:layout_constraintStart_toStartOf="parent">
+
+                   </com.google.android.material.chip.ChipGroup>
+
+
+               </androidx.constraintlayout.widget.ConstraintLayout>
 
            </androidx.constraintlayout.widget.ConstraintLayout>
 

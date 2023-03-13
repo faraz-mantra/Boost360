@@ -8,37 +8,35 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProviders
 import com.boost.cart.CartActivity
 import com.boost.cart.R
-import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
-import com.boost.dbcenterapi.utils.Constants
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityDictateServicesBinding
 import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
-import com.boost.marketplace.ui.details.domain.CustomDomainViewModel
 import com.boost.marketplace.ui.popup.dictate.SuccessPreferencesBottomSheet
 import com.boost.marketplace.ui.popup.removeItems.RemoveFeatureBottomSheet
 import com.framework.analytics.SentryController
-import com.framework.pref.clientId
 import com.framework.utils.RootUtil
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import es.dmoral.toasty.Toasty
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -57,6 +55,7 @@ class DictateServicesActivity :
 {
 
     private var tagList = ArrayList<String>()
+    private var tagList1 = ArrayList<String>()
     var bundleData: Bundles? = null
     val sameAddonsInCart = java.util.ArrayList<String>()
     val addonsListInCart = java.util.ArrayList<String>()
@@ -198,6 +197,36 @@ class DictateServicesActivity :
         dialog.window!!.setBackgroundDrawableResource(R.color.transparent)
         dialog.show()
 
+        dialog.btn_add_tag1.setOnClickListener {
+            val txtTag = dialog.edt_places_tag?.text.toString()
+            if (txtTag.isNotEmpty()) {
+                tagList1.add(txtTag)
+                dialog.chipsPlaces?.removeAllViews()
+
+                tagList1.forEach { tag ->
+
+                    val mChip: Chip = this.layoutInflater.inflate(com.boost.marketplace.R.layout.items_chip, binding?.chipsTags, false) as Chip
+                    mChip.text = tag
+                    mChip.isClickable=true
+                    mChip.isCheckable=false
+                    if (tagList1.size>0){
+                        dialog.chipsPlaces?.visibility=View.VISIBLE
+                    }else{
+                        dialog.chipsPlaces?.visibility=View.GONE
+                    }
+
+                    mChip.setOnCloseIconClickListener {
+                        dialog.chipsPlaces?.removeView(mChip)
+                        tagList1.remove(tag)
+                    }
+                    dialog.chipsPlaces?.addView(mChip)
+                }
+                dialog.edt_places_tag?.setText("")
+            }
+        }
+
+
+
         dialog.radio_button1?.setOnClickListener {
             dialog.hide_layut.visibility=View.GONE
             dialog.btn1.isEnabled=true
@@ -247,6 +276,10 @@ class DictateServicesActivity :
             doneButton(dialog,Values)
         }
 
+    }
+
+    private fun serviceTagsSet1() {
+        TODO("Not yet implemented")
     }
 
     fun dialogCount(){
@@ -316,18 +349,19 @@ class DictateServicesActivity :
 
     private fun serviceTagsSet() {
         binding?.chipsTags?.removeAllViews()
+
         tagList.forEach { tag ->
 
               val mChip: Chip = this.layoutInflater.inflate(com.boost.marketplace.R.layout.items_chip, binding?.chipsTags, false) as Chip
               mChip.text = tag
             mChip.isClickable=true
             mChip.isCheckable=false
-
-//            val chip = Chip(this)
-//            chip.text = tag
-//            chip.isClickable = true
-//            chip.isCheckable = false
-//            binding?.chipsTags?.addView(chip)
+            if (tagList.size>0){
+                binding?.chipsTags?.visibility=View.VISIBLE
+            }else{
+                binding?.chipsTags?.visibility=View.GONE
+                binding?.chipsTags?.layout(0,0,0,0)
+            }
 
             mChip.setOnCloseIconClickListener {
                 binding?.chipsTags?.removeView(mChip)
