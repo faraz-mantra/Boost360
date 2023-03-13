@@ -27,6 +27,7 @@ import com.framework.webengageconstant.*
 import android.widget.Toast
 
 import android.view.View.OnFocusChangeListener
+import com.facebook.login.Login
 import com.framework.pref.APPLICATION_JIO_ID
 
 class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
@@ -63,6 +64,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(PS_LOGIN_USERNAME_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(LOGIN_INITIATED, TYPE, USER_NAME)
     binding?.usernameEt?.onTextChanged { onDataChanged() }
     binding?.passEt?.onTextChanged { onDataChanged() }
     setOnClickListener(binding?.forgotTv, binding?.loginBt, binding?.loginWithNumberBtn, binding?.helpTv)
@@ -88,6 +90,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
       }
       binding?.loginBt -> {
         WebEngageController.trackEvent(PS_LOGIN_FORGOT_PASSWORD_CLICK, CLICK, NO_EVENT_VALUE)
+        WebEngageController.trackEvent(LOGIN_COMPLETED, TYPE, USER_NAME)
         loginApiVerify(
           binding?.usernameEt?.text?.toString()?.trim(),
           binding?.passEt?.text?.toString()?.trim()
@@ -109,6 +112,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
       hideProgress()
       val response = it as? VerificationRequestResult
       if (response?.isSuccess() == true && response.loginId.isNullOrEmpty().not() && response.authTokens.isNullOrEmpty().not()) {
+        WebEngageController.trackEvent(LOGIN_COMPLETED, TYPE, USER_NAME)
         storeUserDetail(response)
       } else {
         showShortToast(getString(R.string.ensure_that_the_entered_username_and_password_))

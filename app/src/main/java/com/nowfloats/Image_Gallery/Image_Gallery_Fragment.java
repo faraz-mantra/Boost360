@@ -665,6 +665,7 @@ public class Image_Gallery_Fragment extends Fragment implements
     }
 
     public void addImage() {
+        WebEngageController.trackEvent(MixPanelController.IMAGE_GALLERY_INITIATED,"","");
         selectImage();
     }
 

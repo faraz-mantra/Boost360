@@ -66,16 +66,16 @@
           app:layout_constraintTop_toTopOf="parent">
 
           <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_post_preview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:clipToPadding="false"
-            android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/size_16"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="6"
-            tools:listitem="@layout/social_preview_fb" />
+              android:id="@+id/rv_post_preview"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerHorizontal="true"
+              android:clipToPadding="false"
+              android:orientation="horizontal"
+              android:paddingHorizontal="@dimen/size_16"
+              app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+              tools:itemCount="6"
+              tools:listitem="@layout/social_preview_fb" />
 
           <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmer_previews"

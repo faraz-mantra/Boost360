@@ -77,10 +77,12 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
 
   private fun sendOtp(phoneNumber: String?) {
     WebEngageController.trackEvent(PS_LOGIN_NUMBER_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
+    WebEngageController.trackEvent(LOGIN_VERIFICATION, TYPE, NUMBER)
     baseActivity.hideKeyBoard()
     showProgress(getString(R.string.sending_otp))
     viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner) {
       if (it.isSuccess() && it.parseResponse()) {
+        WebEngageController.trackEvent(LOGIN_VERIFICATION, TYPE, NUMBER)
         startFragmentFromNewOnBoardingActivity(
           activity = baseActivity, type = FragmentType.VERIFY_PHONE_FRAGMENT,
           bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }
