@@ -523,12 +523,12 @@ public class Image_Gallery_Fragment extends Fragment implements
                 UploadPictureAsyncTask upload = null;
                 if (data.getData() != null) {
                     filepath = getGalleryImagePath(data);
-                    String isValidImage = BoostImageUtils.INSTANCE.isBusinessLogoValid(requireActivity(), new File(filepath));
+                    String isValidImage = BoostImageUtils.INSTANCE.isImageGalleryValid(requireActivity(), new File(filepath));
                     if(isValidImage.equals("")) {
                         upload = new UploadPictureAsyncTask(activity, filepath);
                     }else{
                         Methods.showSnackBarNegative(requireActivity(),
-                                (path == null || path.isEmpty()) ? getResources().getString(R.string.select_image_upload) : isValidImage);
+                                (filepath == null || filepath.isEmpty()) ? getResources().getString(R.string.select_image_upload) : isValidImage);
                     }
                 } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && data.getClipData() != null) {
                     ArrayList<String> filePaths = getGalleryImagesMultiple(data);

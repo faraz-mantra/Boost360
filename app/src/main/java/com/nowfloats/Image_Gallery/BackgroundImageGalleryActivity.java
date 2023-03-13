@@ -40,8 +40,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.framework.analytics.SentryController;
+import com.framework.imagepicker.BoostImageUtils;
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
 import com.nowfloats.BusinessProfile.UI.API.UploadFaviconImage;
+import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.NotificationCenter.AlertArchive;
@@ -375,7 +377,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
                     CameraBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                     imageUrl = Methods.getRealPathFromURI(this, imageUri);
                     path = imageUrl;
-                    path = Util.saveBitmap(path, BackgroundImageGalleryActivity.this, "ImageFloat" + System.currentTimeMillis());
+//                    path = Util.saveBitmap(path, BackgroundImageGalleryActivity.this, "ImageFloat" + System.currentTimeMillis());
                 } catch (Exception e) {
                     SentryController.INSTANCE.captureException(e);
                     e.printStackTrace();
@@ -390,7 +392,6 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
                     editImage();
                 } else
                     Methods.showSnackBarNegative(BackgroundImageGalleryActivity.this, getResources().getString(R.string.select_image_upload));
-
             }
 
 
@@ -398,8 +399,11 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
                 Uri picUri = data.getData();
                 if (picUri != null) {
                     path = Methods.getPath(this, picUri);
-                    path = Util.saveBitmap(path, BackgroundImageGalleryActivity.this, "ImageFloat" + System.currentTimeMillis());
-                    if (!Util.isNullOrEmpty(path)) {
+                    if (path.toLowerCase().contains(".png")) {
+                        path = Util.saveBitmap(path, BackgroundImageGalleryActivity.this, "ImageFloat" + System.currentTimeMillis());
+                    }
+                    String isBusinessValidMessage = BoostImageUtils.INSTANCE.isImageGalleryValid(BackgroundImageGalleryActivity.this, new File(path));
+                    if (!Util.isNullOrEmpty(path) && isBusinessValidMessage.equals("")) {
                         editImage();
                     } else
                         Methods.showSnackBarNegative(BackgroundImageGalleryActivity.this, getResources().getString(R.string.select_image_upload));

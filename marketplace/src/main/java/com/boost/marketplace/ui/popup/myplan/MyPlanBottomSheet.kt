@@ -40,6 +40,7 @@ class MyPlanBottomSheet :
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
     var fpid: String? = null
     lateinit var prefs: SharedPrefs
+    lateinit var featureCode:String
 
     override fun getLayout(): Int {
         return R.layout.bottom_sheet_myplan
@@ -138,7 +139,9 @@ class MyPlanBottomSheet :
             if (it.Result.FeatureDetails != null && it.Result.ActionNeeded.ActionNeeded != null) {
                 val actionRequired = it.Result.ActionNeeded.ActionNeeded
                 val featureState = it.Result.FeatureDetails.FeatureState
-                featureEdgeCase(actionRequired, featureState)
+                featureCode= it.Result.FeatureDetails.FeatureKey
+
+                featureEdgeCase(actionRequired, featureState,featureCode)
             }
 
         })
@@ -257,7 +260,7 @@ class MyPlanBottomSheet :
         dismiss()
     }
 
-    fun featureEdgeCase(actionRequired: Int, featureState: Int) {
+    fun featureEdgeCase(actionRequired: Int, featureState: Int,featureCode:String) {
 
         if (actionRequired == 1 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                     || featureState == 5 || featureState == 6)
@@ -323,7 +326,7 @@ class MyPlanBottomSheet :
                         "activate this feature.."
             )
 
-        } else if (actionRequired == 3 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+        } else if ((actionRequired == 3 && featureCode=="CALLTRACKER")  && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                     || featureState == 5 || featureState == 6)
         ) {
             binding?.edgeCasesLayout?.visibility = View.VISIBLE
@@ -353,7 +356,39 @@ class MyPlanBottomSheet :
             binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
             binding?.edgeCaseDesc?.visibility = View.VISIBLE
 
-        } else if (actionRequired == 4 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+        } else if ((actionRequired == 3 && featureCode=="IVR")  && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+                    || featureState == 5 || featureState == 6)
+        ) {
+            binding?.edgeCasesLayout?.visibility = View.VISIBLE
+            binding?.btn1?.visibility = View.VISIBLE
+            binding?.btn1?.text = "Choose virtual number/\n" + "Setup IVR"
+            binding?.edgeCaseHyperlink?.setOnClickListener {
+                Toast.makeText(requireContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
+            }
+            binding?.btn1?.setOnClickListener {
+//                featuredetails()
+                Toast.makeText(requireContext(), "Coming Soon...", Toast.LENGTH_LONG).show()
+            }
+            binding?.edgeCasesLayout?.setBackgroundResource(R.drawable.rounded_border_red_white_bg)
+            binding?.edgeCaseTitle?.setText("Action Required")
+            binding?.edgeCaseTitle?.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.red
+                )
+            )
+            binding?.edgeCaseTitle?.setCompoundDrawablesWithIntrinsicBounds(
+                R.drawable.ic_error_red,
+                0,
+                0,
+                0
+            )
+            binding?.edgeCaseDesc?.setText("You need to take action to activate this feature.")
+            binding?.edgeCaseDesc?.visibility = View.VISIBLE
+
+        }
+
+        else if (actionRequired == 4 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
                     || featureState == 5 || featureState == 6)
         ) {
             binding?.edgeCasesLayout?.visibility = View.VISIBLE

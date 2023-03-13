@@ -141,16 +141,20 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
               val imageWidth: Int = bitMapOption.outWidth
               val imageHeight: Int = bitMapOption.outHeight
 
-              if (imageWidth >= 400 && imageHeight >= 400) {
+              if (imageWidth > 600 && imageHeight > 600) {
                 loadImage(imgFile.path)
-              } else {
+              } else if((imageWidth in 400..600) && (imageHeight in 400..600)) {
+                // Greater than 400 and less than 600
                 loadImage(imgFile.path)
-                  LowResolutionBSheet(
-                    imgFile.path,
-                    this@AddUpdateBusinessFragmentV2,
-                    startForCropImageResult
-                  )
-                    .show(childFragmentManager, LowResolutionBSheet::class.java.name)
+                LowResolutionBSheet(
+                  imgFile.path,
+                  this@AddUpdateBusinessFragmentV2,
+                  startForCropImageResult
+                )
+                  .show(childFragmentManager, LowResolutionBSheet::class.java.name)
+              }else {
+                // Show Toast message
+                showLongToast(getString(R.string.image_resolution_is_smaller_than_400_x_400_px))
               }
             }
 
@@ -464,33 +468,29 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   }
 
   public fun chooseOption() {
-    UpdateImagePickerBSheet.newInstance(object :UpdateImagePickerBSheet.Callbacks{
+    UpdateImagePickerBSheet.newInstance(object : UpdateImagePickerBSheet.Callbacks {
       override fun onImagePicked(path: String) {
-        if (path == "higher"){
+        if (path == "higher") {
           showShortToast("Image is greater than 5 MB")
-        }else if (path == "invalidFile"){
+        } else if (path == "invalidFile") {
           showShortToast("Invalid Image type!!")
         } else {
           val bmOptions = BitmapFactory.Options()
           val bitmap: Bitmap = BitmapFactory.decodeFile(path, bmOptions)
-          if(bitmap.width<400 || bitmap.height<400){
-            LowResolutionBSheet(path,
-              this@AddUpdateBusinessFragmentV2,
-              startForCropImageResult)
-              .show(childFragmentManager, LowResolutionBSheet::class.java.name)
-          }else {
+          if (bitmap.width >= 400 && bitmap.height >= 400) {
             UpdateCropImageActivity.launchActivity(
               path,
               requireActivity(),
               startForCropImageResult
             )
+          } else {
+            // Show Toast message
+            showLongToast(getString(R.string.image_resolution_is_smaller_than_400_x_400_px))
           }
         }
       }
-    }).show(parentFragmentManager,UpdateImagePickerBSheet::class.java.name)
+    }).show(parentFragmentManager, UpdateImagePickerBSheet::class.java.name)
   }
-
-
 }
 
 

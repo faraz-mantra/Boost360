@@ -16,9 +16,12 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import kotlinx.android.synthetic.main.bottom_sheet_category_rename.view.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
+
+@Suppress("NAME_SHADOWING")
 class BottomSheetCategoryRename(
     fragmentCatalogSettings: FragmentCatalogSettings?,
     fragmentEcommerceCatalogSettings: FragmentEcommerceCatalogSettings?,
@@ -53,6 +56,11 @@ class BottomSheetCategoryRename(
         this.fpDetails =
             arguments?.getSerializable(IntentConstant.CATALOG_DATA.name) as? UserFpDetailsResponse
 
+        val textRemaining = 18 - sessionLocal.customCta?.length!!
+        binding?.catRename?.setText(sessionLocal.customCta)
+        binding?.textCount?.text = textRemaining.toString()
+        binding?.btnPublish?.isEnabled = textRemaining < 18
+
         binding?.rivCloseBottomSheet?.setOnClickListener {
             this.dismiss()
         }
@@ -66,7 +74,7 @@ class BottomSheetCategoryRename(
             val updateItemList = arrayListOf<Update>()
             val ctaInfo = Update()
             ctaInfo.key = "CTATOGGLE";
-            ctaInfo.value = "${true}#${binding?.catRename?.text}"
+            ctaInfo.value = "${true}#${binding?.catRename?.text.toString().uppercase()}"
             updateItemList.add(ctaInfo)
             businessProfileUpdateRequest.updates = updateItemList
             binding?.progressBar?.visibility = View.VISIBLE
@@ -105,31 +113,60 @@ class BottomSheetCategoryRename(
                 }
         }
 
+        binding?.catRename?.addTextChangedListener(object : TextViewListener() {
+            override fun onTextChanged(
+                outputString: String?
+            ) {
+                startUpdates()
+                binding?.catRename?.setText(outputString)
+                val pos: Int? = outputString?.length
+                binding?.catRename?.setSelection(pos!!)
 
-        binding?.catRename?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val textRemaining = 18 - s.toString().length
+                val textRemaining = 18 - pos!!
 
                 binding?.btnPublish?.isEnabled = textRemaining < 18
-                binding?.textCount?.text =
-                    textRemaining.toString().replaceFirstChar { it.uppercase() }
+                binding?.textCount?.text = textRemaining.toString()
 
-                val m: Matcher = pattern.matcher(s.toString())
+                val m: Matcher = pattern.matcher(outputString.toString())
                 if (m.matches()) {
                     binding?.alertView?.visibility = View.GONE
                 } else {
                     binding?.alertView?.visibility = View.VISIBLE
                 }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
+                endUpdates()
             }
 
         })
 
+    }
+
+    internal abstract class TextViewListener : TextWatcher {
+
+        private var outputString: String? = null
+        private var ignore = false
+        override fun beforeTextChanged(sequence: CharSequence, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(sequence: CharSequence, start: Int, before: Int, count: Int) {
+            outputString = sequence.toString().replaceFirstChar { it.uppercase() }
+        }
+
+        override fun afterTextChanged(sequence: Editable) {
+            if (ignore) return
+            onTextChanged(outputString)
+        }
+
+        protected abstract fun onTextChanged(
+            outputString: String?
+        )
+
+        protected fun startUpdates() {
+            ignore = true
+        }
+
+        protected fun endUpdates() {
+            ignore = false
+        }
     }
 
 }

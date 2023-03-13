@@ -170,17 +170,19 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
 
   private fun List<ApiCategoryResponseCategory>?.getFinalList(str: Editable?): ArrayList<ApiCategoryResponseCategory> {
     val newFilterList = arrayListOf<ApiCategoryResponseCategory>()
-    for (i in 0 until this?.size!!) {
-      val subCategory = this[i].name!!
-      for (j in 0 until this[i].appexperiencecodedetails!!.size){
-        val categoryResponse = ApiCategoryResponseCategory()
-        val categoryDescription = categoryList.firstOrNull { it.experience_code == this[i].appexperiencecodedetails!![j].name }?.getCategoryWithoutNewLine()
-        if (categoryDescription.isNullOrEmpty().not()) {
-          categoryResponse.fpExperienceCode = this[i].appexperiencecodedetails!![j]
-          categoryResponse.name = subCategory
-          categoryResponse.subCategoryDescription = categoryDescription
-          categoryResponse.searchKeyword = str.toString()
-          newFilterList.add(categoryResponse)
+    if (this!=null && this.isNotEmpty()){
+      for (i in 0 until this.size) {
+        val subCategory = this[i].name!!
+        for (j in 0 until this[i].appexperiencecodedetails!!.size){
+          val categoryResponse = ApiCategoryResponseCategory()
+          val categoryDescription = categoryList.firstOrNull { it.experience_code == this[i].appexperiencecodedetails!![j].name }?.getCategoryWithoutNewLine()
+          if (categoryDescription.isNullOrEmpty().not()) {
+            categoryResponse.fpExperienceCode = this[i].appexperiencecodedetails!![j]
+            categoryResponse.name = subCategory
+            categoryResponse.subCategoryDescription = categoryDescription
+            categoryResponse.searchKeyword = str.toString()
+            newFilterList.add(categoryResponse)
+          }
         }
       }
     }
