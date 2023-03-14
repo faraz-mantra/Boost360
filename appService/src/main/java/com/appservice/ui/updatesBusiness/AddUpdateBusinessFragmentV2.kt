@@ -439,6 +439,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       }
       binding!!.tvPreviewAndPost->{
         WebEngageController.trackEvent(Update_Preview_post_click, CLICKED,NULL)
+        WebEngageController.trackEvent(Custom_update_initiated, CLICKED,NULL)
         startActivity(Intent(requireActivity(), Class.forName(
           "com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity"))
           .putExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {

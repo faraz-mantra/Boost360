@@ -16,12 +16,17 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import com.appservice.R
 import com.appservice.databinding.BsheetUpdateImagePickerBinding
+import com.appservice.utils.WebEngageController
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.constants.UPDATE_PIC_FILE_NAME
 import com.framework.imagepicker.FileProcessing.getPath
 import com.framework.models.BaseViewModel
 import com.framework.utils.FileUtils
 import com.framework.utils.sizeInMb
+import com.framework.webengageconstant.Added_Photo_In_Update
+import com.framework.webengageconstant.CLICKED
+import com.framework.webengageconstant.Gallery_image_added
+import com.framework.webengageconstant.NULL
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
@@ -88,6 +93,7 @@ class UpdateImagePickerBSheet:BaseBottomSheetDialog<BsheetUpdateImagePickerBindi
         super.onClick(v)
         when(v){
             binding!!.layoutGallery->{
+                WebEngageController.trackEvent(Gallery_image_added, CLICKED, NULL)
                 if (ActivityCompat.checkSelfPermission(
                         activity!!.applicationContext,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE

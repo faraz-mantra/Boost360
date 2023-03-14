@@ -514,6 +514,9 @@ const val ECOMMERCE_SETTING_PAGE_LOAD = "E-commerce setting page load"
 const val ECOMMERCE_CATLOG_SETUP_PAGE_LOAD = "E-commerce catalog setup page load"
 const val CATLOG_SETUP_CHANGE_PRODUCT = "Catalog setup product change click"
 const val DELIVERY_SETUP_PAGE_LOAD = "Delivery setup page laod"
+const val SIGNUP_INITIATED = "signup_initiated"
+const val SIGNUP_VERIFICATION = "signup_verification"
+const val SIGNUP_VERIFIED = "signup_verified"
 
 const val SHARE_FESTIVE_POSTER_CLICK = "Share_festive_poster_click"
 const val SHARE_FESTIVE_POSTER_BANNER = "Share_festive_poster_banner"
@@ -625,6 +628,7 @@ const val Promotional_Update_Create_Update_Click = "Promotional_Update_Create_Up
 const val Post_Browse_All_Promotional_Update_Click = "Post_Browse_All_Promotional_Update_Click"
 const val Browse_All_Promotional_Update_Social_Accounts_Connect_Click = "Browse_All_Promotional_Update_Social_Accounts_Connect_Click"
 const val POSTED_UPDATE_LIST_PAGE_LOAD = "Promotional_Update_Posted_Updates_Page_Load"
+const val STUDIO_UPDATE_PROMOTED = "studio_update_promoted"
 
 const val Update_studio_intro_1_loaded = "Update_studio_intro_1_loaded"
 const val Update_studio_intro_1_next_click = "Update_studio_intro_1_next_click"
@@ -699,3 +703,5 @@ const val Past_updates_filter_template_updates_click = "Past_updates_filter_temp
 const val Past_updates_filter_Image_text_updates_click = "Past_updates_filter_Image_text_updates_click"
 const val Past_updates_filter_text_updates_click = "Past_updates_filter_text_updates_click"
 const val Past_updates_filter_clicked = "Past_updates_filter_clicked"
+const val Custom_update_initiated = "custom_update_initiated"
+const val Gallery_image_added = "gallery_image_added"

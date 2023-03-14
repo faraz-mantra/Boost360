@@ -71,6 +71,7 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
     super.onClick(v)
     when (v) {
       binding?.tvRequestOtp -> {
+        WebEngageController.trackEvent(SIGNUP_INITIATED, NEXT_CLICK, NO_EVENT_VALUE)
         sendOtp(binding?.phoneEt?.text.toString())
       }
       binding?.tvLoginWithEmail -> {

@@ -117,6 +117,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
       }
 
       override fun onOTPComplete(otp: String) {
+        WebEngageController.trackEvent(SIGNUP_VERIFICATION, NEXT_CLICK, NO_EVENT_VALUE)
         verify()
       }
     }
@@ -225,6 +226,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
 //          if (result?.Result?.authTokens.isNullOrEmpty().not() && result?.Result?.authTokens?.size!! >= 1) {
 //            this.resultLogin = result.Result
 //            loginId = resultLogin?.loginId
+//            WebEngageController.trackEvent(SIGNUP_VERIFIED, NEXT_CLICK, NO_EVENT_VALUE)
 //            if (binding?.linearWhatsApp?.visibility == View.VISIBLE) apiWhatsappOptin() else showBusinessWhatsapp()
 //          } else {
 //            if (binding?.linearWhatsApp?.visibility == View.VISIBLE) moveToWelcomeScreen(phoneNumber) else showBusinessWhatsapp()

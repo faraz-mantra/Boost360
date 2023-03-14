@@ -58,8 +58,33 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
   private val phoneNumber by lazy {
     arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
   }
+
   private val whatsappConsent by lazy {
     arguments?.getBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name)
+  }
+
+  private val categoryLiveName by lazy {
+    arguments?.getString(IntentConstant.CATEGORY_SUGG_UI.name)
+  }
+
+  private val subCategoryID by lazy {
+    arguments?.getString(IntentConstant.SUB_CATEGORY_ID.name)
+  }
+
+  private val mobilePreview by lazy {
+    arguments?.getString(IntentConstant.MOBILE_PREVIEW.name)
+  }
+
+  private val desktopPreview by lazy {
+    arguments?.getString(IntentConstant.DESKTOP_PREVIEW.name)
+  }
+
+  private val categoryModel by lazy {
+    arguments?.getSerializable(IntentConstant.CATEGORY_DATA.name) as? CategoryDataModel
+  }
+
+  private val businessName by lazy {
+    arguments?.getString(IntentConstant.EXTRA_BUSINESS_NAME.name)
   }
 
 

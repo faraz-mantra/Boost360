@@ -18,10 +18,7 @@ import com.framework.models.BaseViewModel
 import com.framework.utils.IntentUtils
 import com.framework.utils.loadFromFile
 import com.framework.utils.shareAsImage
-import com.framework.webengageconstant.Promotional_Update_Instagram_Share_Click
-import com.framework.webengageconstant.Promotional_Updates_More_Share_Click
-import com.framework.webengageconstant.Promotional_Updates_Post_Success_Loaded
-import com.framework.webengageconstant.Promotional_Updates_WhatsApp_Share_Click
+import com.framework.webengageconstant.*
 import java.io.File
 
 class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, BaseViewModel>() {
@@ -91,6 +88,7 @@ class PostSuccessBottomSheet : BaseBottomSheetDialog<BsheetPostSuccessBinding, B
         }
 
         binding?.ivClosePostSuccess -> {
+          WebEngageController.trackEvent(STUDIO_UPDATE_PROMOTED)
           dismiss()
         }
       }

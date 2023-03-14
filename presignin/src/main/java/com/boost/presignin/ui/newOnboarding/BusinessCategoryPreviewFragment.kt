@@ -1,6 +1,8 @@
 package com.boost.presignin.ui.newOnboarding
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
@@ -10,8 +12,11 @@ import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.category.CategoryDataModel
 import com.boost.presignin.viewmodel.CategoryVideoModel
 import com.framework.extensions.gone
+import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.glide.util.glideLoad
+import com.framework.pref.clientId2
 import com.framework.utils.makeSectionOfTextBold
 import com.framework.webengageconstant.*
 import com.framework.webengageconstant.PS_LOGIN_OTP_RESENT_CLICK
@@ -19,6 +24,7 @@ import com.framework.webengageconstant.PS_LOGIN_OTP_RESENT_CLICK
 class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPreviewBinding, CategoryVideoModel>() {
 
   private val TAG = "BusinessCategoryPreview"
+  var doNewFlowEnabled:Boolean? = null
 
   companion object {
     @JvmStatic
@@ -68,13 +74,18 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
 
   override fun onCreateView() {
     super.onCreateView()
+    doNewFlowEnabled = FirebaseRemoteConfigUtil.doNewOnBoardingJourneyEnabled()
     setOnClickListener(binding?.tvNextStep, binding?.layoutMobile, binding?.layoutDesktop, binding?.autocompleteSearchCategory)
     setupUi()
-
-
   }
 
+  @SuppressLint("SetTextI18n")
   private fun setupUi() {
+    if (doNewFlowEnabled!!){
+     binding.tvNextStep.text = "Launch my website"
+    } else {
+      binding.tvNextStep.text = "Next"
+    }
     if (categoryLiveName.isNullOrEmpty().not()) {
       val totalString = categoryLiveName + " in " + categoryModel?.getCategoryWithoutNewLine()
       binding?.autocompleteSearchCategory?.text = makeSectionOfTextBold(totalString, categoryLiveName ?: "", font = R.font.semi_bold)
@@ -90,15 +101,19 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
     when (v) {
       binding?.tvNextStep -> {
         WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
-        addFragment(R.id.inner_container, SetupMyWebsiteStep2Fragment.newInstance(Bundle().apply {
-          putString(IntentConstant.DESKTOP_PREVIEW.name, desktopPreview)
-          putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
-          putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
-          putString(IntentConstant.CATEGORY_SUGG_UI.name, categoryLiveName)
-          putString(IntentConstant.SUB_CATEGORY_ID.name, subCategoryID)
-          putSerializable(IntentConstant.CATEGORY_DATA.name, categoryModel)
-          putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent?:false)
-        }), true)
+        if (doNewFlowEnabled!!){
+
+        } else {
+          addFragment(R.id.inner_container, SetupMyWebsiteStep2Fragment.newInstance(Bundle().apply {
+            putString(IntentConstant.DESKTOP_PREVIEW.name, desktopPreview)
+            putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
+            putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+            putString(IntentConstant.CATEGORY_SUGG_UI.name, categoryLiveName)
+            putString(IntentConstant.SUB_CATEGORY_ID.name, subCategoryID)
+            putSerializable(IntentConstant.CATEGORY_DATA.name, categoryModel)
+            putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent?:false)
+          }), true)
+        }
       }
       binding?.layoutMobile -> {
         WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_PREVIEW_MOBILE_CLICK, CLICK, NO_EVENT_VALUE)

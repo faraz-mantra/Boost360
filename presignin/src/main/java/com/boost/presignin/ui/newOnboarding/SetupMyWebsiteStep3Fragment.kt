@@ -130,7 +130,19 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
   private fun setOnClickListeners() {
     binding?.tvNextStep3?.setOnClickListener {
       if (doNewFlowEnabled!!){
-
+        addFragment(
+          R.id.inner_container, SetupMyWebsiteStep1Fragment.newInstance(
+            Bundle().apply {
+              putString(IntentConstant.DESKTOP_PREVIEW.name, desktopPreview)
+              putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
+              putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+              putString(IntentConstant.CATEGORY_SUGG_UI.name, categoryLiveName)
+              putString(IntentConstant.SUB_CATEGORY_ID.name, subCategoryID)
+              putSerializable(IntentConstant.CATEGORY_DATA.name, categoryModel)
+              putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent ?: false)
+              putString(IntentConstant.EXTRA_BUSINESS_NAME.name, businessName)
+            }), true
+        )
       }else{
         if (binding?.addressInputLayout?.etInput?.text?.trim().toString().validateLetters()) {
           if (binding?.tvNextStep3?.text == getString(R.string.launch_my_website)) {
@@ -346,11 +358,11 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         binding?.addressInputLayout?.tvWebsiteExtension?.visible()
         binding?.addressInputLayout?.ivStatus?.visible()
         binding?.addressInputLayout?.ivIcon?.visible()
-        binding?.addressInputLayout?.ivStatus?.setImageResource(R.drawable.ic_tick_red_error)
-        binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_red_stroke_et)
-        binding?.tvNextStep3?.isEnabled = false
-        binding?.tvNameNotAvailableError?.visible()
-        binding?.linearSecureWrapper?.gone()
+        binding?.addressInputLayout?.ivStatus?.setImageResource(R.drawable.ic_domain_tick)
+        binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_green_stroke_et)
+        binding?.tvNextStep3?.isEnabled = true
+        binding?.tvNameNotAvailableError?.gone()
+        binding?.linearSecureWrapper?.visible()
         binding?.tvNextStep3?.text = getString(R.string.next)
         binding?.addressInputLayout?.etInput?.apply {
           layoutParams?.width = ViewGroup.LayoutParams.WRAP_CONTENT
