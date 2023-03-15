@@ -126,4 +126,16 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
     binding?.businessNameInputLayout?.etInput?.run { baseActivity.showKeyBoard(this) }
   }
 
+  fun areNumbersMoreThanFour(businessName:String):Boolean{
+    var number = 0
+    for (element in businessName){
+      number = if (element.isDigit()){
+        number + 1
+      }else{
+        0
+      }
+    }
+    return number > 4
+  }
+
 }

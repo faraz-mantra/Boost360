@@ -7,12 +7,13 @@ import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.appservice.base.AppBaseFragment
 import com.boost.presignin.R
 import com.boost.presignin.constant.FragmentType
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentEnterPhoneBinding
-import com.boost.presignin.dialog.WebViewDialog
 import com.boost.presignin.extensions.isPhoneValid
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.ui.login.LoginActivity
@@ -20,18 +21,12 @@ import com.boost.presignin.ui.newOnboarding.bottomSheet.NeedHelpBottomSheet
 import com.boost.presignin.ui.newOnboarding.categoryService.startServiceCategory
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.analytics.SentryController
-import com.framework.base.BaseActivity
 import com.framework.extensions.afterTextChanged
-import com.framework.extensions.observeOnce
-import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
-import com.framework.pref.clientId
-import com.framework.utils.fromHtml
-import com.framework.utils.hideKeyBoard
-import com.framework.utils.makeLinks
 import com.framework.webengageconstant.*
 import com.google.android.gms.auth.api.credentials.Credential
 import com.google.android.gms.auth.api.credentials.Credentials
 import com.google.android.gms.auth.api.credentials.HintRequest
+import java.util.*
 
 class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignUpViewModel>() {
 

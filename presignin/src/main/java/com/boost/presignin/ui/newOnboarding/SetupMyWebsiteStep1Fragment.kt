@@ -87,7 +87,6 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     arguments?.getString(IntentConstant.EXTRA_BUSINESS_NAME.name)
   }
 
-
   override fun getLayout(): Int {
     return R.layout.layout_set_up_my_website_step_1
   }
@@ -351,6 +350,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
       putString(IntentConstant.SUB_CATEGORY_ID.name, selectedCategoryLive?._kid ?: "")
       putSerializable(IntentConstant.CATEGORY_DATA.name, selectedCategory)
       putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent ?: false)
+      putString(IntentConstant.EXTRA_BUSINESS_NAME.name, businessName)
     }), true)
   }
 

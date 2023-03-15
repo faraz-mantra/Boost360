@@ -171,7 +171,7 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
         if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true).not()) {
           startFragmentFromNewOnBoardingActivity(
             activity = baseActivity, type = FragmentType.ENTER_PHONE_FRAGMENT,
-            bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, "") }, clearTop = false
+            bundle = Bundle().apply { putBoolean("deleteFragment", true) }, clearTop = true
           )
         } else {
           startActivity(Intent(baseActivity, LoginActivity::class.java))

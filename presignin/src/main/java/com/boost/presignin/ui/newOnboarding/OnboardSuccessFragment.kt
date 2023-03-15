@@ -27,6 +27,7 @@ import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.analytics.SentryController
 import com.framework.analytics.UserExperiorController
 import com.framework.extensions.observeOnce
+import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.glide.util.glideLoad
 import com.framework.models.BaseViewModel
 import com.framework.pref.UserSessionManager
@@ -46,6 +47,7 @@ class OnboardSuccessFragment : AppBaseFragment<FragmentLoaderAnimationBinding, L
   private var floatsRequest: CategoryFloatsRequest? = null
   private var authToken: AuthTokenDataItem? = null
   private var session: UserSessionManager? = null
+  var doNewFlowEnabled:Boolean? = null
 
   companion object {
     @JvmStatic
@@ -72,8 +74,16 @@ class OnboardSuccessFragment : AppBaseFragment<FragmentLoaderAnimationBinding, L
     super.onCreateView()
     WebEngageController.trackEvent(PS_REGISTRATION_SUCCESS_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     session = UserSessionManager(baseActivity)
+    doNewFlowEnabled = FirebaseRemoteConfigUtil.doNewOnBoardingJourneyEnabled()
     floatsRequest = session?.getCategoryRequest()
     authToken = session?.getAuthTokenData()
+
+    if (doNewFlowEnabled!!){
+      binding?.tvLaunchDashboard.text = "Go to your business dashboard"
+    } else {
+      binding?.tvLaunchDashboard.text = "Finish setup"
+    }
+
     setOnClickListeners()
     if (floatsRequest != null || authToken != null) {
       binding?.tvTitle?.text = "Congratulations ${if(businessName.isNullOrBlank()) floatsRequest?.categoryDataModel?.getCategoryWithoutNewLine() else businessName}!"

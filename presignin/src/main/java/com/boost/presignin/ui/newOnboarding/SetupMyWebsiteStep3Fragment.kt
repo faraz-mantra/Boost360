@@ -141,6 +141,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
               putSerializable(IntentConstant.CATEGORY_DATA.name, categoryModel)
               putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent ?: false)
               putString(IntentConstant.EXTRA_BUSINESS_NAME.name, businessName)
+              putString(IntentConstant.BUSINESS_DOMAIN.name,binding?.addressInputLayout?.etInput?.text?.toString() ?: "")
             }), true
         )
       }else{
@@ -363,7 +364,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         binding?.tvNextStep3?.isEnabled = true
         binding?.tvNameNotAvailableError?.gone()
         binding?.linearSecureWrapper?.visible()
-        binding?.tvNextStep3?.text = getString(R.string.next)
+        binding?.tvNextStep3?.text = "Continue to business category"
         binding?.addressInputLayout?.etInput?.apply {
           layoutParams?.width = ViewGroup.LayoutParams.WRAP_CONTENT
           isEnabled = false

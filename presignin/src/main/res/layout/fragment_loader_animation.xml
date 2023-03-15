@@ -99,7 +99,6 @@
       android:id="@+id/tv_launch_dashboard"
       style="@style/yellow_squared_button"
       android:enabled="true"
-      android:text="@string/finish_setup"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
