@@ -57,6 +57,7 @@ class DictateServicesActivity :
     private var tagList = ArrayList<String>()
     private var tagList1 = ArrayList<String>()
     var bundleData: Bundles? = null
+    var singleAddon: FeaturesModel? = null
     val sameAddonsInCart = java.util.ArrayList<String>()
     val addonsListInCart = java.util.ArrayList<String>()
     lateinit var prefs: SharedPrefs
@@ -125,6 +126,10 @@ class DictateServicesActivity :
         userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets") ?: java.util.ArrayList()
         viewModel = ViewModelProviders.of(this).get(ComparePacksViewModel::class.java)
         prefs =SharedPrefs(this)
+        singleAddon = Gson().fromJson<FeaturesModel>(
+            intent.getStringExtra("addonData"),
+            object : TypeToken<FeaturesModel>() {}.type
+        )
         bundleData = Gson().fromJson<Bundles>(
             intent.getStringExtra("bundleData"),
             object : TypeToken<Bundles>() {}.type

@@ -83,7 +83,17 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
         holder.desc.text = list.get(position).description_title
         holder.title.text = list.get(position).item_name
       }
-    }else {
+    }else if(list.get(position).boost_widget_key!!.contains("DICTATE")
+    ) {
+      if(!prefs.getSelectedDictatePrefs().isNullOrEmpty()) {
+        holder.title.text = list.get(position).item_name
+        holder.desc.text = "Preferences added"
+      }else{
+        holder.desc.text = "Your preferences are pending and you can edit or add them later in My Current Plan"
+        holder.title.text = list.get(position).item_name
+      }
+    }
+    else {
       holder.desc.text = list.get(position).description_title
       holder.title.text = list.get(position).item_name
     }

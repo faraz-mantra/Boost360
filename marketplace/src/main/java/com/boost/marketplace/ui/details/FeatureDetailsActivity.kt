@@ -56,6 +56,7 @@ import com.boost.marketplace.interfaces.AddonsListener
 import com.boost.marketplace.interfaces.CompareListener
 import com.boost.marketplace.interfaces.DetailsFragmentListener
 import com.boost.marketplace.ui.details.call_track.CallTrackingActivity
+import com.boost.marketplace.ui.details.dictate_services.DictateServicesActivity
 import com.boost.marketplace.ui.details.domain.CustomDomainActivity
 import com.boost.marketplace.ui.details.staff.StaffManagementBottomSheet
 import com.boost.marketplace.ui.pack_details.PackDetailsActivity
@@ -1314,73 +1315,77 @@ class FeatureDetailsActivity :
 //                        )
 //                    }
 //                    else -> {
-                makeFlyAnimation(if (singleWidgetKey!!.equals("DOMAINPURCHASE") && !(actionRequired == 0 && featureState == 1)) addon_iconV3 else addon_icon)
-                prefs.storeCartOrderInfo(null)
-                viewModel.addItemToCart1(addonDetails!!, this, null)
-                val event_attributes: HashMap<String, Any> = HashMap()
-                addonDetails!!.name?.let { it1 ->
+                if (addonDetails != null && addonDetails?.boost_widget_key?.equals("DICTATE")!!) {
+                    goToDictate()
+                } else{
+                    makeFlyAnimation(if (singleWidgetKey!!.equals("DOMAINPURCHASE") && !(actionRequired == 0 && featureState == 1)) addon_iconV3 else addon_icon)
+                    prefs.storeCartOrderInfo(null)
+                    viewModel.addItemToCart1(addonDetails!!, this, null)
+                    val event_attributes: HashMap<String, Any> = HashMap()
+                    addonDetails!!.name?.let { it1 ->
+                        event_attributes.put(
+                            "Addon Name",
+                            it1
+                        )
+                    }
+                    event_attributes.put("Addon Price", addonDetails!!.price)
                     event_attributes.put(
-                        "Addon Name",
-                        it1
+                        "Addon Discounted Price",
+                        getDiscountedPrice(
+                            addonDetails!!.price,
+                            addonDetails!!.discount_percent
+                        )
                     )
-                }
-                event_attributes.put("Addon Price", addonDetails!!.price)
-                event_attributes.put(
-                    "Addon Discounted Price",
-                    getDiscountedPrice(
-                        addonDetails!!.price,
+                    event_attributes.put(
+                        "Addon Discount %",
                         addonDetails!!.discount_percent
                     )
-                )
-                event_attributes.put(
-                    "Addon Discount %",
-                    addonDetails!!.discount_percent
-                )
-                event_attributes.put("Addon Validity", 1)
-                event_attributes.put(
-                    "Addon Feature Key",
-                    addonDetails!!.boost_widget_key
-                )
-                addonDetails!!.target_business_usecase?.let { it1 ->
+                    event_attributes.put("Addon Validity", 1)
                     event_attributes.put(
-                        "Addon Tag",
-                        it1
+                        "Addon Feature Key",
+                        addonDetails!!.boost_widget_key
                     )
-                }
-                WebEngageController.trackEvent(
-                    ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
-                    ADDONS_MARKETPLACE,
-                    event_attributes
-                )
-                if (addonDetails!!.feature_code == "CUSTOM_PAYMENTGATEWAY")
+                    addonDetails!!.target_business_usecase?.let { it1 ->
+                        event_attributes.put(
+                            "Addon Tag",
+                            it1
+                        )
+                    }
                     WebEngageController.trackEvent(
-                        SELF_BRANDED_PAYMENT_GATEWAY_REQUESTED,
-                        SELF_BRANDED_PAYMENT_GATEWAY,
-                        NO_EVENT_VALUE
+                        ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
+                        ADDONS_MARKETPLACE,
+                        event_attributes
                     )
-                badgeNumber = badgeNumber + 1
+                    if (addonDetails!!.feature_code == "CUSTOM_PAYMENTGATEWAY")
+                        WebEngageController.trackEvent(
+                            SELF_BRANDED_PAYMENT_GATEWAY_REQUESTED,
+                            SELF_BRANDED_PAYMENT_GATEWAY,
+                            NO_EVENT_VALUE
+                        )
+                    badgeNumber = badgeNumber + 1
 
-                Constants.CART_VALUE = badgeNumber
+                    Constants.CART_VALUE = badgeNumber
 
 
-                add_item_to_cart.background = ContextCompat.getDrawable(
-                    applicationContext,
-                    R.drawable.grey_button_click_effect
-                )
-                add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
-                add_item_to_cart.text = getString(R.string.added_to_cart)
-                add_item_to_cart_new.background = ContextCompat.getDrawable(
-                    applicationContext,
-                    R.drawable.grey_button_click_effect
-                )
-                add_item_to_cart_new.setTextColor(getResources().getColor(R.color.tv_color_BB))
-                add_item_to_cart_new.text = getString(R.string.added_to_cart)
-                itemInCartStatus = true
-                makeFlyAnimation(if (singleWidgetKey!!.equals("DOMAINPURCHASE") && !(actionRequired == 0 && featureState == 1)) addon_iconV3 else addon_icon)
-                Glide.with(getApplicationContext()).load(addonDetails!!.primary_image)
-                    .into(image1222)
+                    add_item_to_cart.background = ContextCompat.getDrawable(
+                        applicationContext,
+                        R.drawable.grey_button_click_effect
+                    )
+                    add_item_to_cart.setTextColor(getResources().getColor(R.color.tv_color_BB))
+                    add_item_to_cart.text = getString(R.string.added_to_cart)
+                    add_item_to_cart_new.background = ContextCompat.getDrawable(
+                        applicationContext,
+                        R.drawable.grey_button_click_effect
+                    )
+                    add_item_to_cart_new.setTextColor(getResources().getColor(R.color.tv_color_BB))
+                    add_item_to_cart_new.text = getString(R.string.added_to_cart)
+                    itemInCartStatus = true
+                    makeFlyAnimation(if (singleWidgetKey!!.equals("DOMAINPURCHASE") && !(actionRequired == 0 && featureState == 1)) addon_iconV3 else addon_icon)
+                    Glide.with(getApplicationContext()).load(addonDetails!!.primary_image)
+                        .into(image1222)
 //                    }
 //                }
+                }
             }
         } else {
             if (addonDetails != null && addonDetails?.boost_widget_key?.equals("DOMAINPURCHASE")!!) {
@@ -1407,6 +1412,28 @@ class FeatureDetailsActivity :
         ) {
             intent.putExtra("doDomainBooking", true)
         }
+        startActivity(intent)
+    }
+
+    fun goToDictate() {
+        val intent = Intent(
+            applicationContext,
+            DictateServicesActivity::class.java
+        )
+        intent.putExtra("expCode", experienceCode)
+        intent.putExtra("fpid", fpid)
+        intent.putExtra("addonData", Gson().toJson(addonDetails))
+        intent.putExtra("dictateSelectionForPack", true)
+     //   intent.putExtra("itemInCartStatus",packageItem )
+        intent.putExtra(
+            "AddonDiscountedPrice",
+            getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent)
+        )
+//        if (actionRequired == 2 && (featureState == 1 || featureState == 2 || featureState == 3 || featureState == 4
+//                    || featureState == 5 || featureState == 6)
+//        ) {
+//            intent.putExtra("doDomainBooking", true)
+//        }
         startActivity(intent)
     }
 
