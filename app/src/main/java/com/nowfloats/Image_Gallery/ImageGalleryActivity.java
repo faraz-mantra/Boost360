@@ -19,7 +19,6 @@ import android.view.View;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
-import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityImageGalleryBinding;
 
@@ -44,7 +43,6 @@ public class ImageGalleryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_image_gallery);
         Log.i(TAG, "onCreate: ");
-        WebEngageController.trackEvent(MixPanelController.IMAGE_GALLERY_EXPLORED,"","");
         MixPanelController.track(MixPanelController.IMAGE_GALLERY, null);
         if (Constants.storeSecondaryImages==null||Constants.storeSecondaryImages.isEmpty()){
             binding.btnAdd.setVisibility(View.GONE);
@@ -84,10 +82,7 @@ public class ImageGalleryActivity extends AppCompatActivity {
                 image_gallery_fragment.addImage();
             }
         }
-        binding.btnAdd.setOnClickListener(view ->
-
-                image_gallery_fragment.addImage()
-        );
+        binding.btnAdd.setOnClickListener(view -> image_gallery_fragment.addImage());
     }
 
     @Override

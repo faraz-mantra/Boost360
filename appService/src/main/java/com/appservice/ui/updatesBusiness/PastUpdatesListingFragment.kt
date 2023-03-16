@@ -78,7 +78,6 @@ class PastUpdatesListingFragment : AppBaseFragment<FragmentPastUpdatesListingBin
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(Past_updates_screen_loaded,"","")
-    WebEngageController.trackEvent(POSTED_UPDATE_EXPLORED,"","")
     WebEngageController.trackEvent(EVENT_NAME_UPDATE_PAGE,"","")
     initUI()
     setOnClickListener(binding.btnPostNewUpdate)

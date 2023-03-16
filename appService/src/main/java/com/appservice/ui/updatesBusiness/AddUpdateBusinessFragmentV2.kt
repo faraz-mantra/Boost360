@@ -37,7 +37,6 @@ import com.appservice.viewmodel.UpdatesViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.festive.poster.models.promoModele.SocialPreviewChannel
 import com.framework.constants.IntentConstants
 import com.framework.constants.UPDATE_PIC_FILE_NAME
 import com.framework.extensions.gone
@@ -60,7 +59,6 @@ import kotlinx.coroutines.withContext
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 import java.io.File
-import java.util.HashMap
 
 
 class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2Binding, UpdatesViewModel>() {
@@ -103,7 +101,6 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(UPDATE,PAGE_VIEW,NULL)
-    WebEngageController.trackEvent(CUSTOM_UPDATE_INITIATED,PAGE_VIEW,NULL)
     initUI()
     initStt()
     capLimitCheck()
@@ -442,12 +439,6 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       }
       binding!!.tvPreviewAndPost->{
         WebEngageController.trackEvent(Update_Preview_post_click, CLICKED,NULL)
-        val hashMap = HashMap<String, Any>()
-        hashMap.put("source", "posted_updates")
-        com.festive.poster.utils.WebEngageController.trackEvent(
-          event_name = UPDATE_STUDIO_INITIATED,
-          event_value = hashMap
-        )
         startActivity(Intent(requireActivity(), Class.forName(
           "com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity"))
           .putExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {

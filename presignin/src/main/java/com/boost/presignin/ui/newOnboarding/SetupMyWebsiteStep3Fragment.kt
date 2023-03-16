@@ -131,7 +131,6 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
       if (binding?.addressInputLayout?.etInput?.text?.trim().toString().validateLetters()) {
         if (binding?.tvNextStep3?.text == getString(R.string.launch_my_website)) {
           WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK_NEW_UPPERCASE, CLICK, NO_EVENT_VALUE)
-          WebEngageController.trackEvent(SIGNUP_COMPLETED, CLICK, NO_EVENT_VALUE)
         }
         apiCheckDomain { apiHitCreateMerchantProfile() }
       } else showShortToast(getString(R.string.website_name_format_invalid_toast))

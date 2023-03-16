@@ -25,7 +25,6 @@ import com.framework.rest.NetworkResult
 import com.framework.utils.showToast
 import com.framework.utils.toArrayList
 import com.framework.webengageconstant.*
-import java.util.HashMap
 
 class BrowseAllFragment : AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesViewModel>(), RecyclerItemClickListener {
 
@@ -60,13 +59,6 @@ class BrowseAllFragment : AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesV
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(Promotional_Update_Browse_All_Loaded)
-    val hashMap = HashMap<String, Any>()
-    hashMap.put("type", "browse")
-    hashMap.put("category", "festivals/discounts/thoughts")
-    WebEngageController.trackEvent(
-      event_name = STUDIO_UPDATE_BROWSED,
-      event_value = hashMap
-    )
     argTag = arguments?.getString(BK_SELECTED_POS_TAG)
     promoUpdatesViewModel = ViewModelProvider(requireActivity()).get(PromoUpdatesViewModel::class.java)
     initUi()

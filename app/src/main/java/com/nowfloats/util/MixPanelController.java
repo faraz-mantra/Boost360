@@ -46,8 +46,6 @@ public class MixPanelController {
     public static final String VMN_CALL_TRACKER = "VmnCallTracker";
     public static final String VMN_CALL_TRACKER_LOGS = "VmnCallTrackerLogs";
     public static final String IMAGE_GALLERY = "ImageGallery";
-    public static final String IMAGE_GALLERY_EXPLORED = "gallery_image_explored";
-    public static final String IMAGE_GALLERY_INITIATED = "gallery_image_initiated";
     public static final String MANAGE_INVENTORY = "ManageInventory";
     public static final String FACEBOOK_REVIEW = "FacebookReview";
     public static final String PRIMARY_NUMBER_CHANGE = "PrimaryNumberChanged";
