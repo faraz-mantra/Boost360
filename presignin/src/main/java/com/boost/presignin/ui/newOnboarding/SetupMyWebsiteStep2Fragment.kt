@@ -8,7 +8,6 @@ import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.LayoutSetUpMyWebsiteStep2Binding
-import com.boost.presignin.extensions.validateLetters
 import com.boost.presignin.model.category.CategoryDataModel
 import com.framework.extensions.afterTextChanged
 import com.framework.models.BaseViewModel
@@ -16,6 +15,8 @@ import com.framework.utils.fromHtml
 import com.framework.utils.showKeyBoard
 import com.framework.views.blur.setBlur
 import com.framework.webengageconstant.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Binding, BaseViewModel>() {
 
@@ -74,22 +75,40 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
 
   private fun setOnClickListeners() {
     binding?.tvNextStep2?.setOnClickListener {
-      if (binding?.businessNameInputLayout?.etInput?.text.toString().validateLetters()) {
-        WebEngageController.trackEvent(PS_BUSINESS_PROFILE_CLICK_NEW_UPPERCASE, CLICK, NO_EVENT_VALUE)
-        addFragment(
-          R.id.inner_container, SetupMyWebsiteStep3Fragment.newInstance(
-            Bundle().apply {
-              putString(IntentConstant.DESKTOP_PREVIEW.name, desktopPreview)
-              putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
-              putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
-              putString(IntentConstant.CATEGORY_SUGG_UI.name, categoryLiveName)
-              putString(IntentConstant.SUB_CATEGORY_ID.name, subCategoryID)
-              putSerializable(IntentConstant.CATEGORY_DATA.name, categoryModel)
-              putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent ?: false)
-              putString(IntentConstant.EXTRA_BUSINESS_NAME.name, binding?.businessNameInputLayout?.etInput?.text.toString())
-            }), true
-        )
-      } else showShortToast(getString(R.string.business_name_format_invalid_toast))
+      val bName = binding?.businessNameInputLayout?.etInput?.text.toString()
+      if (validateBusinessName(bName)) {
+        if (checkForConsecutiveDigits(bName)) {
+          if (checkForConsecutiveSpecialCharacters(bName)) {
+            WebEngageController.trackEvent(
+              PS_BUSINESS_PROFILE_CLICK_NEW_UPPERCASE,
+              CLICK,
+              NO_EVENT_VALUE
+            )
+            addFragment(
+              R.id.inner_container, SetupMyWebsiteStep3Fragment.newInstance(
+                Bundle().apply {
+                  putString(IntentConstant.DESKTOP_PREVIEW.name, desktopPreview)
+                  putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
+                  putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+                  putString(IntentConstant.CATEGORY_SUGG_UI.name, categoryLiveName)
+                  putString(IntentConstant.SUB_CATEGORY_ID.name, subCategoryID)
+                  putSerializable(IntentConstant.CATEGORY_DATA.name, categoryModel)
+                  putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent ?: false)
+                  putString(
+                    IntentConstant.EXTRA_BUSINESS_NAME.name,
+                    binding?.businessNameInputLayout?.etInput?.text.toString()
+                  )
+                }), true
+            )
+          } else {
+            showShortToast(getString(R.string.businessname_special_characters_invalid_toast))
+          }
+        } else {
+          showShortToast(getString(R.string.businessname_digits_invalid_toast))
+        }
+      } else {
+        showShortToast(getString(R.string.businessname_format_invalid_toast))
+      }
     }
 
     binding?.businessNameInputLayout?.etInput?.afterTextChanged {
@@ -121,21 +140,44 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
 //    }
   }
 
+
+
   override fun onResume() {
     super.onResume()
     binding?.businessNameInputLayout?.etInput?.run { baseActivity.showKeyBoard(this) }
   }
 
-  fun areNumbersMoreThanFour(businessName:String):Boolean{
-    var number = 0
-    for (element in businessName){
-      number = if (element.isDigit()){
-        number + 1
-      }else{
-        0
+  private fun validateBusinessName(bName: String): Boolean {
+    val regex= "^[a-zA-Z0-9*@,.:;#\\-&\\s]*$"
+    val p: Pattern = Pattern.compile(regex)
+    val m: Matcher = p.matcher(bName)
+    return m.matches()
+  }
+
+  private fun checkForConsecutiveDigits(bName: String): Boolean {
+    val digitsArray = bName.replace("[a-zA-Z*@,.:;#\\-&]".toRegex(), " ").replace("\\s+".toRegex(), " ").split(" ")
+
+    var result = true
+    for (element in digitsArray) {
+      if (!element.matches("[0-9]{0,4}".toRegex())){
+        result = false;
+        break
       }
     }
-    return number > 4
+    return result
+  }
+
+  private fun checkForConsecutiveSpecialCharacters(bName: String): Boolean {
+    val specialCharArray = bName.replace("[a-zA-Z0-9]".toRegex(), " ").replace("\\s+".toRegex(), " ").split(" ")
+
+    var result = true
+    for (element in specialCharArray) {
+      if (!element.matches("[*@,.:;#\\-&]{0,3}".toRegex())) {
+        result = false;
+        break
+      }
+    }
+    return result
   }
 
 }
