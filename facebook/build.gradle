@@ -27,9 +27,23 @@ android {
     flavorDimensions "default"
     productFlavors {
         partone {
+            //Boost 360
+            dimension "default"
+        }
+        healthgro {
+            //healthcare
+            dimension "default"
+        }
+        ardhim {
+            //manufacturing
+            dimension "default"
+        }
+        checkkinn {
+            //hotels
             dimension "default"
         }
         jioonline {
+            //JioOnline
             dimension "default"
         }
     }

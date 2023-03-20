@@ -28,6 +28,7 @@ import android.widget.Toast
 
 import android.view.View.OnFocusChangeListener
 import com.framework.pref.APPLICATION_JIO_ID
+import com.framework.BuildConfig
 
 class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
@@ -109,6 +110,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
       hideProgress()
       val response = it as? VerificationRequestResult
       if (response?.isSuccess() == true && response.loginId.isNullOrEmpty().not() && response.authTokens.isNullOrEmpty().not()) {
+//        if(BuildConfig.FLAVOR.equals("boosthealth"))
         storeUserDetail(response)
       } else {
         showShortToast(getString(R.string.ensure_that_the_entered_username_and_password_))

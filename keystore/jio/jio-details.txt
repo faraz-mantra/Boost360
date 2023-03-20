@@ -1,0 +1,9 @@
+keyAlias -> jiomanage
+keyPassword -> JioOnlineManage2023
+storePassword -> JioOnlineManage2023
+First and last name -> jio online
+Orginizational Unit -> IT
+Orginization -> jio
+City or locality -> Hyderabad
+State or Province -> Telangana
+Country code -> 91

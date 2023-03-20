@@ -7,6 +7,5 @@ object SmartlookController {
 
   fun setupAndStartRecording() {
     Smartlook.setupAndStartRecording(BuildConfig.SMARTLOOK_API_KEY);
-
   }
 }

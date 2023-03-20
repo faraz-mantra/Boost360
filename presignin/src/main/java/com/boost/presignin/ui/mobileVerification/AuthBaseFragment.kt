@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import androidx.databinding.ViewDataBinding
+import com.boost.presignin.BuildConfig
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.helper.ProcessFPDetails
@@ -124,17 +125,44 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> :
         viewModel?.getFpDetails(this.floatingPointId ?: "", map)?.observeOnce(viewLifecycleOwner) {
             val response = it as? UserFpDetailsResponse
             if (it.isSuccess() && response != null) {
-                ProcessFPDetails(session).storeFPDetails(response)
-                SentryController.setUser(UserSessionManager(baseActivity))
-                UserExperiorController.setUserAttr(UserSessionManager(baseActivity))
-                FirestoreManager.initData(session.fpTag ?: "", session.fPID ?: "", clientId)
-                startService()
-                startDashboard()
+                if(validappExperienceCode(response.appExperienceCode)) {
+                    ProcessFPDetails(session).storeFPDetails(response)
+                    SentryController.setUser(UserSessionManager(baseActivity))
+                    UserExperiorController.setUserAttr(UserSessionManager(baseActivity))
+                    FirestoreManager.initData(session.fpTag ?: "", session.fPID ?: "", clientId)
+                    startService()
+                    startDashboard()
+                } else {
+                    hideProgressN()
+                    var warningText = ""
+                    if(response.appExperienceCode.equals("HOT"))
+                        warningText = "This Credentails can be used in Boost Hotels"
+                    else if(response.appExperienceCode.equals("DOC") || response.appExperienceCode.equals("HOS"))
+                        warningText = "This Credentails can be used in Boost HealthCare"
+                    else if(response.appExperienceCode.equals("MFG"))
+                        warningText = "This Credentails can be used in Boost Manufacturing"
+                    else
+                        warningText = "This Credentails can be used in Boost360"
+                    showLongToast(warningText)
+                }
             } else {
                 hideProgressN()
                 showShortToast(getString(R.string.error_getting_fp_detail))
             }
         }
+    }
+
+    private fun validappExperienceCode(appExperienceCode: String?): Boolean {
+        if(BuildConfig.FLAVOR.equals("ardhim") && appExperienceCode!!.equals("MFG")){
+            return true
+        } else if(BuildConfig.FLAVOR.equals("healthgro") && (appExperienceCode!!.equals("DOC") || appExperienceCode!!.equals("HOS"))){
+            return true
+        } else if(BuildConfig.FLAVOR.equals("checkkinn") && appExperienceCode!!.equals("HOT")){
+            return true
+        } else if(BuildConfig.FLAVOR.equals("partone") || BuildConfig.FLAVOR.equals("jioonline")){
+            return true
+        }
+        return false
     }
 
     private fun startService() {
