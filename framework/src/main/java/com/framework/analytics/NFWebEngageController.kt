@@ -3,11 +3,13 @@ package com.framework.analytics
 import android.app.Activity
 import android.util.Log
 import com.appsflyer.AppsFlyerLib
+import com.clevertap.android.sdk.CleverTapAPI
 import com.framework.BaseApplication
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.webengage.sdk.android.Analytics
 import com.webengage.sdk.android.User
 import com.webengage.sdk.android.WebEngage
+
 
 object NFWebEngageController {
 
@@ -16,7 +18,7 @@ object NFWebEngageController {
   get() {
     return if (weAnalytics.activity!=null) weAnalytics.activity.get() else BaseApplication.currentActivity()
   }
-  private var weUser: User = WebEngage.get().user()
+  var weUser = HashMap<String, String>()
   private var isUserLoggedIn = false
   private val TAG = "NFController"
 
@@ -24,7 +26,7 @@ object NFWebEngageController {
   fun trackAttribute(event_value: HashMap<String, Any>) {
     if (event_value.isNullOrEmpty().not()) {
       for ((key, value) in event_value.entries) {
-        weUser.setAttribute(key, value.toString())
+        weUser.put(key, value.toString())
         FirebaseAnalyticsUtilsHelper.setUserProperty(key, value.toString())
       }
       AppsFlyerLib.getInstance().setAdditionalData(event_value)
@@ -33,14 +35,15 @@ object NFWebEngageController {
 
   fun trackEvent(event_name: String, event_label: String, event_value: String? = NO_EVENT_VALUE) {
     val trackEvent: MutableMap<String, Any> = HashMap()
+    val cleverTapInstance = CleverTapAPI.getDefaultInstance(WebEngage.getApplicationContext())
     trackEvent["event_name"] = event_name
     trackEvent["fptag/event_value"] = event_value?:""
     trackEvent["event_label"] = event_label
     if (event_label == "rev") {
       trackEvent["revenue"] = event_value?:""
     }
-    weAnalytics.track(event_name, trackEvent)
-    weAnalytics.screenNavigated(event_name)
+    cleverTapInstance?.pushEvent(event_name, trackEvent)
+    cleverTapInstance?.recordScreen(event_name)
     //Firebase Analytics Event...
     FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, event_value?:"")
     UserExperiorController.trackEvent(event_name, HashMap(trackEvent))
@@ -53,9 +56,10 @@ object NFWebEngageController {
   }
 
   fun trackEvent(event_name: String, event_label: String, event_value: HashMap<String, Any>) {
+    val cleverTapInstance = CleverTapAPI.getDefaultInstance(WebEngage.getApplicationContext())
     if (event_value.size > 0) {
-      weAnalytics.track(event_name, event_value)
-      weAnalytics.screenNavigated(event_name)
+      cleverTapInstance?.pushEvent(event_name, event_value)
+      cleverTapInstance?.recordScreen(event_name)
       UserExperiorController.trackEvent(event_name, event_value)
 
       //Firebase Analytics Event...
@@ -68,19 +72,19 @@ object NFWebEngageController {
         e.printStackTrace()
       }
     } else {
-      weAnalytics.track(event_name)
-      weAnalytics.screenNavigated(event_name)
+      cleverTapInstance?.pushEvent(event_name, event_value)
+      cleverTapInstance?.recordScreen(event_name)
       UserExperiorController.trackEvent(event_name)
-
     }
   }
 
   fun trackEventLoad(event_name: String, event_label: String, event_value: HashMap<String, Any>, value: String) {
+    val cleverTapInstance = CleverTapAPI.getDefaultInstance(WebEngage.getApplicationContext())
     if (event_value.size > 0) {
       event_value["event_name"] = event_name
       event_value["event_label"] = event_label
-      weAnalytics.track(event_name, event_value)
-      weAnalytics.screenNavigated(event_name)
+      cleverTapInstance?.pushEvent(event_name, event_value)
+      cleverTapInstance?.recordScreen(event_name)
       UserExperiorController.trackEvent(event_name, event_value)
 
       //Firebase Analytics Event...
@@ -93,17 +97,16 @@ object NFWebEngageController {
         e.printStackTrace()
       }
     } else {
-      weAnalytics.track(event_name)
-      weAnalytics.screenNavigated(event_name)
+      cleverTapInstance?.pushEvent(event_name, event_value)
+      cleverTapInstance?.recordScreen(event_name)
       UserExperiorController.trackEvent(event_name)
-
     }
   }
 
   fun setUserContactAttributes(email: String?, mobile: String?, name: String?, clientId: String? = "") {
     if (isUserLoggedIn) {
       if (!email.isNullOrEmpty()) {
-        weUser.setEmail(email)
+        weUser.put("Email",email)
 
         //Firebase Analytics User Property.
         FirebaseAnalyticsUtilsHelper.setUserProperty("emailId", email)
@@ -117,20 +120,20 @@ object NFWebEngageController {
 
       if (!mobile.isNullOrEmpty()) {
         val plusMobile=getNumberPlus91(mobile)
-        weUser.setPhoneNumber(plusMobile)
+        weUser.put("PhoneNumber",plusMobile)
         //Firebase Analytics User Property.
         FirebaseAnalyticsUtilsHelper.setUserProperty("mobile", plusMobile)
         params["mobile"] = plusMobile
       }
       if (!name.isNullOrEmpty()) {
-        weUser.setFirstName(name)
+        weUser.put("FirstName",name)
 
         //Firebase Analytics User Property.
         FirebaseAnalyticsUtilsHelper.setUserProperty("name", name)
         params["name"] = name
       }
       if (!clientId.isNullOrEmpty()) {
-        weUser.setAttribute("clientId", clientId)
+        weUser.put("clientId", clientId)
 
         //Firebase Analytics User Property.
         FirebaseAnalyticsUtilsHelper.setUserProperty("clientId", clientId)
@@ -138,15 +141,15 @@ object NFWebEngageController {
       }
       if (params.isNotEmpty())
         AppsFlyerLib.getInstance().setAdditionalData(params)
-
     }
   }
 
 
   fun initiateUserLogin(userId: String?) {
+    val cleverTapInstance = CleverTapAPI.getDefaultInstance(WebEngage.getApplicationContext())
     if (userId != null && !userId.isNullOrEmpty()) {
       Log.d(TAG, "Initiating User login$userId")
-      weUser.login(userId)
+      cleverTapInstance?.onUserLogin(weUser as Map<String, Any>?);
 
       //Firebase Analytics User Session Event.
       FirebaseAnalyticsUtilsHelper.identifyUser(userId)
@@ -165,8 +168,8 @@ object NFWebEngageController {
     try {
       if (!userCategory.isNullOrEmpty()) {
         val version = activity?.packageManager?.getPackageInfo(activity?.packageName?:"", 0)?.versionName
-        weUser.setAttribute("Category", userCategory)
-        weUser.setAttribute("Version", version ?: "")
+        weUser.put("Category", userCategory)
+        weUser.put("Version", version ?: "")
 
         //Firebase Analytics User Property.
         FirebaseAnalyticsUtilsHelper.apply {
@@ -189,7 +192,7 @@ object NFWebEngageController {
     try {
       if (fpTag == null) return;
       Log.d(TAG, "Setting FP Tag$fpTag")
-      weUser.setAttribute("fpTag", fpTag)
+      weUser.put("fpTag", fpTag)
       UserExperiorController.setFpTag(fpTag)
 
       //Firebase Analytics User Property.
@@ -206,7 +209,6 @@ object NFWebEngageController {
 
   fun logout() {
     Log.d(TAG, "Loggind user out from analytics")
-    weUser.logout()
     UserExperiorController.logout()
 
     //Reset Firebase Analytics User Session Event.
