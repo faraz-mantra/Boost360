@@ -129,5 +129,7 @@
   <color name="red_button">@color/colorAccentLight</color>
   <color name="colorAccentLightDark">@color/colorAccentLight</color>
 
+  <color name="color_FF9900">#EC008C</color>
+
   <!--  red type color-->
 </resources>

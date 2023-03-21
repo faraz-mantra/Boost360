@@ -42,11 +42,13 @@ import androidx.fragment.app.Fragment;
 import com.framework.analytics.SentryController;
 import com.framework.constants.SupportVideoType;
 import com.framework.firebaseUtils.firestore.FirestoreManager;
+import com.framework.imagepicker.BoostImageUtils;
 import com.framework.utils.FpCategoryUtilsKt;
 import com.framework.views.zero.old.AppFragmentZeroCase;
 import com.framework.views.zero.old.AppOnZeroCaseClicked;
 import com.framework.views.zero.old.AppRequestZeroCaseBuilder;
 import com.framework.views.zero.old.AppZeroCases;
+import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.Login.GetGalleryImagesAsyncTask_Interface;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.RoundCorners_image;
@@ -56,11 +58,13 @@ import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentImageGalleryBinding;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -519,9 +523,30 @@ public class Image_Gallery_Fragment extends Fragment implements
                 UploadPictureAsyncTask upload = null;
                 if (data.getData() != null) {
                     filepath = getGalleryImagePath(data);
-                    upload = new UploadPictureAsyncTask(activity, filepath);
+                    String isValidImage = BoostImageUtils.INSTANCE.isImageGalleryValid(requireActivity(), new File(filepath));
+                    if(isValidImage.equals("")) {
+                        upload = new UploadPictureAsyncTask(activity, filepath);
+                    }else{
+                        Methods.showSnackBarNegative(requireActivity(),
+                                (filepath == null || filepath.isEmpty()) ? getResources().getString(R.string.select_image_upload) : isValidImage);
+                    }
                 } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && data.getClipData() != null) {
-                    upload = new UploadPictureAsyncTask(activity, getGalleryImagesMultiple(data));
+                    ArrayList<String> filePaths = getGalleryImagesMultiple(data);
+                    if(filePaths.size() > 0){
+                        String isValidImage = "";
+                        for (String path : filePaths){
+                            isValidImage = BoostImageUtils.INSTANCE.isBusinessLogoValid(requireActivity(), new File(path));
+                            if(!isValidImage.equals("")){
+                                break;
+                            }
+                        }
+                        if(isValidImage.equals("")){
+                            upload = new UploadPictureAsyncTask(activity, getGalleryImagesMultiple(data));
+                        }else{
+                            Methods.showSnackBarNegative(requireActivity(),
+                                    (path == null || path.isEmpty()) ? getResources().getString(R.string.select_image_upload) : isValidImage);
+                        }
+                    }
                 }
                 upload.setOnUploadListener(Image_Gallery_Fragment.this);
                 upload.execute();

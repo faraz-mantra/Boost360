@@ -27,20 +27,20 @@ class SplashFragment : Fragment() {
 
 //        root.animation_view.setAnimation(R.raw.splash_globe)
     root.animation_view.addAnimatorListener(object : Animator.AnimatorListener {
-      override fun onAnimationRepeat(animation: Animator?) {
+      override fun onAnimationRepeat(animation: Animator) {
         Log.d("onAnimationRepeat", "")
       }
 
-      override fun onAnimationEnd(animation: Animator?) {
+      override fun onAnimationEnd(animation: Animator) {
         Log.d("onAnimationEnd", "")
 //                findNavController().navigate(R.id.action_splashFragment_to_videoPlayerFragment)
       }
 
-      override fun onAnimationCancel(animation: Animator?) {
+      override fun onAnimationCancel(animation: Animator) {
         Log.d("onAnimationCancel", "")
       }
 
-      override fun onAnimationStart(animation: Animator?) {
+      override fun onAnimationStart(animation: Animator) {
         Log.d("onAnimationStart", "")
       }
 

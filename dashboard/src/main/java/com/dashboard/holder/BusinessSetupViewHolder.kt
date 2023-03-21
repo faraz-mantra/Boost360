@@ -9,14 +9,13 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 
-class BusinessSetupViewHolder(binding: ItemBusinessManagementBinding) :
-  AppBaseRecyclerViewHolder<ItemBusinessManagementBinding>(binding) {
+class BusinessSetupViewHolder(binding: ItemBusinessManagementBinding) : AppBaseRecyclerViewHolder<ItemBusinessManagementBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val data = item as? DrScoreSetupData ?: return
     binding.txtTitle.text = data.type?.title
-    binding.txtDes.text = data.getRemainingPercentage()
+//    binding.txtDes.text = data.getRemainingPercentage()
     if (data.percentage == 100) {
       getColor(R.color.light_green_2)?.let { binding.txtDes.setTextColor(it) }
       binding.viewBtn.gone()
@@ -36,18 +35,10 @@ class BusinessSetupViewHolder(binding: ItemBusinessManagementBinding) :
       data.type?.icon?.let { binding.imgIcon.setImageResource(it) }
     }
     binding.mainContent.setOnClickListener {
-      listener?.onItemClick(
-        position,
-        data,
-        RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal
-      )
+      listener?.onItemClick(position, data, RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal)
     }
     binding.btnAddItemStart.setOnClickListener {
-      listener?.onItemClick(
-        position,
-        data,
-        RecyclerViewActionType.BUSINESS_SETUP_ADD_ITEM_START.ordinal
-      )
+      listener?.onItemClick(position, data, RecyclerViewActionType.BUSINESS_SETUP_ADD_ITEM_START.ordinal)
     }
   }
 

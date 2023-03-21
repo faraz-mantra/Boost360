@@ -184,6 +184,7 @@ public class UploadProfileAsyncTask extends AsyncTask<Void, String, String> {
                         break;
                     case "TIMINGS":
                         if (this.listenerRepose != null) this.listenerRepose.success(true);
+
                         break;
                     case "CONTACTS":
 

@@ -124,30 +124,13 @@ class CustomDomainViewModel() : BaseViewModel() {
             .doOnComplete {
                 updatesLoader.postValue("")
                 //add cartitem to firebase
-                DataLoader.updateCartItemsToFirestore(application)
+//                DataLoader.updateCartItemsToFirestore(application)
             }
             .doOnError {
                 updatesError.postValue(it.message)
                 updatesLoader.postValue("")
             }
             .subscribe()
-    }
-
-    fun domainStatus(auth: String, fpid: String, clientId: String, blockedItem: String) {
-//        updatesLoader.postValue(true)
-        compositeDisposable.add(
-            ApiService.getItemAvailability(auth, fpid, clientId, blockedItem)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        updateStatus.postValue(it)
-//                        updatesLoader.postValue(false)
-                    }, {
-                        updatesLoader.postValue("")
-                        updatesError.postValue(it.message)
-                    })
-        )
     }
 
     fun bookDomainActivation(blockedItem: String, app: Application, activity: Activity) {

@@ -8,24 +8,25 @@
 
   <androidx.coordinatorlayout.widget.CoordinatorLayout style="@style/match_match">
 
-    <LinearLayout
+    <FrameLayout
       style="@style/match_match"
-      android:orientation="vertical"
       app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-      <ProgressBar
-        android:id="@+id/progress_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_3"
-        android:indeterminate="true"
-        android:scaleY="4"
-        android:theme="@style/ActiveTheme" />
 
       <WebView
         android:id="@+id/webview"
+        android:layout_below="@+id/progress_bar"
         style="@style/match_match" />
-    </LinearLayout>
+
+      <ProgressBar
+          android:id="@+id/progress_bar"
+          style="?android:attr/progressBarStyleHorizontal"
+          android:layout_width="match_parent"
+          android:layout_height="10dp"
+          android:indeterminate="true"
+          android:scaleY="4"
+          android:layout_centerHorizontal="true"
+          android:theme="@style/ActiveTheme" />
+    </FrameLayout>
 
 
     <com.framework.views.fabButton.FloatingActionButton

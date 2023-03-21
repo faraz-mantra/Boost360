@@ -7,6 +7,7 @@ import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
@@ -725,7 +726,9 @@ public class Util {
             fos.flush();
             fos.close();
             imgpath = f.getAbsolutePath();
-
+            File file = new File(imgpath);
+            int file_size = Integer.parseInt(String.valueOf(file.length()/1024));
+            Log.i("savedImageSize->", String.valueOf(file_size));
         } catch (Exception e) {
             e.printStackTrace();
         } catch (OutOfMemoryError E) {

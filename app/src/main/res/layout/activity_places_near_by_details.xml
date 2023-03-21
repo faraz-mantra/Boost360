@@ -154,7 +154,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/edittext_bg_elevated"
         android:elevation="@dimen/_2sdp"
-        android:inputType="numberDecimal"
+        android:maxLength="6"
+        android:inputType="number"
         android:hint="@string/enter_distance_in_mt_km"
         android:singleLine="true" />
 

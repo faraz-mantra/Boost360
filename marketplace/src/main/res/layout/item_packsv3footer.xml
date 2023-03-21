@@ -9,7 +9,7 @@
     android:background="@drawable/edit_txt_packsv3"
     android:orientation="vertical"
     android:padding="12dp"
-    android:layout_margin="6dp">
+    android:layout_margin="10dp">
 
 
 
@@ -51,9 +51,22 @@
                  android:fontFamily="@font/bold"
                  android:textColor="@color/main_color_gray_dk"
                  android:textSize="14sp"
-                 android:text="₹481/month"
+                 android:text="₹481"
                  app:layout_constraintTop_toBottomOf="@+id/footer_pack"
                  app:layout_constraintStart_toStartOf="parent"/>
+
+         <TextView
+             android:id="@+id/footer_pack_mode"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textFontWeight="400"
+             android:fontFamily="@font/regular"
+             android:textColor="@color/copy_coupon_text_color"
+             android:textSize="12sp"
+             android:text="/month"
+             app:layout_constraintTop_toTopOf="@+id/footer_pack_total"
+             app:layout_constraintBottom_toBottomOf="@+id/footer_pack_total"
+             app:layout_constraintStart_toEndOf="@+id/footer_pack_total"/>
 
      </androidx.constraintlayout.widget.ConstraintLayout>
 

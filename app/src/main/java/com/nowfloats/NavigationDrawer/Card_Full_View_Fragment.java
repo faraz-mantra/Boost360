@@ -392,7 +392,7 @@ public class Card_Full_View_Fragment extends Fragment {
         } else {
             imageView.setVisibility(View.VISIBLE);
             baseName = imageUri;
-            Glide.with(this).load(baseName).into(imageView);
+            Glide.with(requireActivity().getApplicationContext()).load(baseName).into(imageView);
 //                        imageLoader.displayImage(baseName,imageView,options);
         }
     }

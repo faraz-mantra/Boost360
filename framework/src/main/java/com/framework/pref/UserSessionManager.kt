@@ -82,6 +82,12 @@ class UserSessionManager(var context: Context) {
   private val KEY_FP_PAGE_SHARE_ENABLE = "fbPageShareEnabled"
   private val KEY_HAS_USER_LOGGED_IN_ONCE="KEY_HAS_USER_LOGGED_IN_ONCE"
   private val USER_LOCATION_FROM_IP="userLocationFromIP"
+  private val BOOST_KEYBOARD_ACTIVATE_STATE="BOOST_KEYBOARD_ACTIVATE_STATE"
+  private val NO_SERVICE_SLOT="noServiceSlot"
+  private val SERVICE_TIMING="serviceTiming"
+  private val BULK_BOOKING ="bulkBooking"
+  private val IS_CUSTOM_CTA ="isCta"
+  private val CUSTOM_CTA ="customCta"
 
 
   fun Context.getPreferenceTwitter(): SharedPreferences {
@@ -816,6 +822,42 @@ class UserSessionManager(var context: Context) {
     get() = pref.getString(USER_LOCATION_FROM_IP, null)
     set(userLocationIP) {
       editor.putString(USER_LOCATION_FROM_IP, userLocationIP)
+      editor.commit()
+    }
+  var boostKeyboard: Boolean
+    get() = pref.getBoolean(BOOST_KEYBOARD_ACTIVATE_STATE, false)
+    set(boostKeyboardActivateState) {
+      editor.putBoolean(BOOST_KEYBOARD_ACTIVATE_STATE, boostKeyboardActivateState)
+      editor.commit()
+    }
+  var noServiceSlot: Boolean?
+    get() = pref.getBoolean(NO_SERVICE_SLOT, false)
+    set(noServiceSlot) {
+      editor.putBoolean(NO_SERVICE_SLOT, noServiceSlot!!)
+      editor.commit()
+    }
+  var serviceTiming: Boolean?
+    get() = pref.getBoolean(SERVICE_TIMING, true)
+    set(serviceTiming) {
+      editor.putBoolean(SERVICE_TIMING, serviceTiming!!)
+      editor.commit()
+    }
+  var bulkBooking: Boolean?
+    get() = pref.getBoolean(BULK_BOOKING, true)
+    set(bulkBooking) {
+      editor.putBoolean(BULK_BOOKING, bulkBooking!!)
+      editor.commit()
+    }
+  var isCustomCta: Boolean?
+    get() = pref.getBoolean(IS_CUSTOM_CTA, false)
+    set(isCustomCta) {
+      editor.putBoolean(IS_CUSTOM_CTA, isCustomCta!!)
+      editor.commit()
+    }
+  var customCta: String?
+    get() = pref.getString(CUSTOM_CTA, "N/A")
+    set(customCta) {
+      editor.putString(CUSTOM_CTA, customCta!!)
       editor.commit()
     }
 

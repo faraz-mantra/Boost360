@@ -383,11 +383,18 @@ fun AppCompatActivity.startAppActivity(bundle: Bundle = Bundle(), fragmentType: 
   }
 }
 
-fun AppCompatActivity.startPostUpdate(isDashboard: Boolean = false) {
+fun AppCompatActivity.createAnUpdate() {
   try {
-    val session = UserSessionManager(application())
+    startUpdateFragmentActivity(com.appservice.constant.FragmentType.ADD_UPDATE_BUSINESS_FRAGMENT_V2)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startPostUpdate(session: UserSessionManager?,isDashboard: Boolean = false) {
+  try {
     val type = if (isDashboard) POST_UPDATE_MESSAGE_PAGE_CLICK else Post_Promotional_Update_Click
-    if (featureUpdateStudioSelectedUsers(session.fpTag)) {
+    if (featureUpdateStudioSelectedUsers(session?.fpTag)) {
       startPromotionUpdatesFromDashboard(type)
     } else {
       WebEngageController.trackEvent(type, CLICK, TO_BE_ADDED)

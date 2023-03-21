@@ -35,6 +35,7 @@ class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewMod
   private var imagePath: String? = null
   private var bitmap: Bitmap? = null
   private var validationStat = false
+  private var cropCheck = false
 
   companion object {
     @JvmStatic
@@ -59,6 +60,7 @@ class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewMod
     super.onCreateView()
     WebEngageController.trackEvent(BACKGROUND_IMAGE_CROP_LOAD, START_VIEW, sessionLocal.fpTag)
     imagePath = arguments?.getString(BK_IMAGE_PATH)
+    cropCheck = arguments?.getBoolean("CropCheck",false)!!
     setImageOnUi()
     viewListeners()
     setOnClickListener(binding.btnDone)
@@ -144,11 +146,27 @@ class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewMod
         val imgFile = binding.cropImg.croppedImage?.saveBitmap()
         if (imgFile?.exists() == true) {
           if (validationStat){
-            startBackgroundActivity(
-              FragmentType.BACKGROUND_IMAGE_PREVIEW,
-              Bundle().apply { putString(BGImagePreviewFragment.BK_IMAGE_PATH, imgFile.absolutePath) },
-              isResult = true
-            )
+            if (cropCheck){
+              var imageCropCheckStatus = false
+              if (binding.cropImg.croppedImage.width>=1200&&binding.cropImg.croppedImage.height>=525){
+                imageCropCheckStatus=true
+              }
+              if (imageCropCheckStatus){
+                startBackgroundActivity(
+                  FragmentType.BACKGROUND_IMAGE_PREVIEW,
+                  Bundle().apply { putString(BGImagePreviewFragment.BK_IMAGE_PATH, imgFile.absolutePath) },
+                  isResult = true
+                )
+              }else{
+                showLongToast("Cropped image resolution is lesser than the required!")
+              }
+            }else{
+              startBackgroundActivity(
+                FragmentType.BACKGROUND_IMAGE_PREVIEW,
+                Bundle().apply { putString(BGImagePreviewFragment.BK_IMAGE_PATH, imgFile.absolutePath) },
+                isResult = true
+              )
+            }
           }else{
             openImagePicker(requireActivity(),parentFragmentManager)
           }

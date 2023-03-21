@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,8 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.framework.pref.UserSessionManager;
+import com.google.android.material.chip.ChipGroup;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.Volley.AppController;
 import com.nowfloats.util.EventKeysWL;
@@ -65,6 +68,13 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
         storageSwitchTv.setOnTouchListener(this);
         keyboardSwitchTv.setOnTouchListener(this);
         microphoneSwitchTv.setOnTouchListener(this);
+        keyboardSwitchTv.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                UserSessionManager session = new UserSessionManager(requireContext());
+                session.setBoostKeyboard(isChecked);
+            }
+        });
         return view;
     }
 

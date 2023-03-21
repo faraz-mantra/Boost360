@@ -34,7 +34,9 @@ import com.festive.poster.utils.WebEngageController
 import com.festive.poster.utils.isPromoWidgetActive
 import com.festive.poster.utils.saveTemplateAction
 import com.festive.poster.viewmodels.PostUpdatesViewModel
+import com.framework.BaseApplication
 import com.framework.constants.IntentConstants
+import com.framework.errorHandling.ErrorFlowInvokeObject
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -590,7 +592,11 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
           showSuccessSheet()
         }
       } else {
-        showLongToast(getString(R.string.something_went_wrong))
+        ErrorFlowInvokeObject.errorOccurred(
+          errorCode = it.status ?: 0,
+          errorMessage = it.errorFlowMessage() ?: BaseApplication.instance.getString(com.framework.R.string.something_went_wrong_please_tell_what_happened),
+          correlationId = ""
+        )
       }
 
 
@@ -628,7 +634,8 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
       val subTitle = if (subscriber == 0) {
         getString(R.string.no_recipients, 0)
       } else {
-        getString(R.string.placeholder_recipients, subscriber)
+        val subscriberCount = subscriber ?: 0
+        getString(R.string.placeholder_recipients, subscriberCount)
       }
         saveTemplateAction(TemplateSaveActionBody.ActionType.UPDATE_CREATED, template)
         posterProgressSheet?.dismiss()

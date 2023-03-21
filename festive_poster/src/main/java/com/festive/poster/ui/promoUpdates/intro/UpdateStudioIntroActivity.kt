@@ -75,7 +75,7 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
       ),
 
       IntroUpdateStudioItem(
-        getString(R.string.post_free_updates_using_create_tab), R.drawable.update_studio_intro3_v2, getString(R.string.you_can_continue_to_post_good_old_updates_using_the_create_tab_on_top)
+        getString(R.string.post_free_updates_using_create_tab), R.drawable.update_into3, getString(R.string.you_can_continue_to_post_good_old_updates_using_the_create_tab_on_top)
       ),
     )
 
@@ -90,26 +90,17 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
         super.onPageSelected(position)
         when (position) {
           0 -> {
-            if (countEvent < 3) {
-              countEvent++
-              WebEngageController.trackEvent(Update_studio_intro_1_loaded)
-            }
+            WebEngageController.trackEvent(Update_studio_intro_1_loaded)
             binding?.btnNext?.visible()
             binding?.btnUpdateStudio?.gone()
           }
           1 -> {
-            if (countEvent < 3) {
-              countEvent++
-              WebEngageController.trackEvent(Update_studio_intro_2_loaded)
-            }
+            WebEngageController.trackEvent(Update_studio_intro_2_loaded)
             binding?.btnNext?.visible()
             binding?.btnUpdateStudio?.gone()
           }
           2 -> {
-            if (countEvent < 3) {
-              countEvent++
-              WebEngageController.trackEvent(Update_studio_intro_3_loaded)
-            }
+            WebEngageController.trackEvent(Update_studio_intro_3_loaded)
             binding?.btnNext?.gone()
             binding?.btnUpdateStudio?.visible()
           }

@@ -1,7 +1,9 @@
 package com.appservice.ui.ecommerce
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.TextView
 import com.appservice.R
 import com.appservice.model.aptsetting.UserFpDetailsResponse
 import com.appservice.ui.aptsetting.widgets.BottomSheetCatalogDisplayName
@@ -11,9 +13,12 @@ import com.appservice.databinding.FragmentEcomCatalogSettingBinding
 import com.appservice.model.aptsetting.AppointmentStatusResponse
 import com.appservice.model.aptsetting.CatalogSetup
 import com.appservice.model.aptsetting.GstSlabRequest
+import com.appservice.model.businessmodel.BusinessProfileUpdateRequest
+import com.appservice.model.businessmodel.Update
 import com.appservice.ui.aptsetting.widgets.BottomSheetConfirmingChange
 import com.appservice.ui.aptsetting.widgets.BottomSheetGstSlab
 import com.appservice.ui.aptsetting.widgets.BottomSheetSuccessfullyUpdated
+import com.appservice.ui.ecommerce.bottomsheets.BottomSheetCategoryRename
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.capitalizeUtil
 import com.appservice.viewmodel.AppointmentSettingsViewModel
@@ -31,6 +36,7 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
   private var response: UserFpDetailsResponse? = null
   private var catalogSetup: CatalogSetup? = null
   private var gstSlab: Int = 0
+  var catalogueName:TextView? = null
 
   companion object {
     fun newInstance(): FragmentEcommerceCatalogSettings {
@@ -50,15 +56,39 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
     super.onCreateView()
     sessionLocal = UserSessionManager(requireActivity())
     WebEngageController.trackEvent(ECOMMERCE_CATLOG_SETUP_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    setOnClickListener(binding?.ctvChangeServices, binding?.ctvProductVerbUrl, binding?.edtTextSlab)
+    catalogueName = view?.findViewById(R.id.catalouge_name_label)
+    setOnClickListener(binding?.ctvChangeServices, binding?.ctvProductVerbUrl, binding?.edtTextSlab, binding?.renameView, binding?.btnSaveDetails)
     val data = arguments?.getSerializable(IntentConstant.OBJECT_DATA.name) as? AppointmentStatusResponse.TilesModel
     catalogSetup = data?.tile as? CatalogSetup
     if (catalogSetup != null) setData(catalogSetup) else catalogApiGetGstData()
     getFpDetails()
+    binding.noServiceSwitch.setOnToggledListener { _, isChecked ->
+      sessionLocal.noServiceSlot = isChecked
+      if (isChecked){
+        binding.serviceTimesView.visibility = View.GONE
+        sessionLocal.serviceTiming = !isChecked
+      }else{
+        binding.serviceTimesView.visibility = View.VISIBLE
+      }
+    }
+    binding.serviceTimingsSwitch.setOnToggledListener { _, isChecked ->
+      sessionLocal.serviceTiming = isChecked
+    }
+    binding.bulkBookingSwitch.setOnToggledListener { _, isChecked ->
+      sessionLocal.bulkBooking = isChecked
+    }
+    binding.catalougeSwitch.setOnToggledListener { _, isChecked ->
+      sessionLocal.isCustomCta = isChecked
+      if (isChecked){
+        binding.catalougeRenameView.visibility = View.VISIBLE
+      }else{
+        binding.catalougeRenameView.visibility = View.GONE
+      }
+    }
   }
 
   private fun catalogApiGetGstData() {
-    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID, clientId)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getAppointmentCatalogStatus(sessionLocal.fPID?:"", clientId)?.observeOnce(viewLifecycleOwner, {
       val dataItem = it as? AppointmentStatusResponse
       if (dataItem?.isSuccess() == true && dataItem.result != null) {
         catalogSetup = dataItem.result?.catalogSetup
@@ -76,16 +106,56 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
     showProgress()
     val map = HashMap<String, String>()
     map["clientId"] = clientId
-    viewModel?.getFpDetails(sessionLocal.fPID ?: "", map)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getFpDetails(sessionLocal.fPID ?: "", map)?.observeOnce(viewLifecycleOwner) {
       hideProgress()
       this.response = it as? UserFpDetailsResponse
       if (it.isSuccess() && response != null) {
+        sessionLocal.noServiceSlot = response!!.noServiceSlot
+        sessionLocal.serviceTiming = response!!.sameServiceSlot
+        sessionLocal.bulkBooking = response!!.isBulkBooking
+        sessionLocal.isCustomCta = response!!.isCustomCta
+        sessionLocal.customCta = response!!.customCta
+
         binding?.ctvProductVerb?.text = response?.productCategory(baseActivity)?.capitalizeUtil()
-        binding?.ctvProductVerbUrl?.text = fromHtml("<pre>URL: <span style=\"color: #4a4a4a;\"><u>${sessionLocal.getDomainName()}<b>/${response?.productCategoryVerb(baseActivity)}</b></u></span></pre>")
-        sessionLocal.storeFPDetails(Key_Preferences.PRODUCT_CATEGORY_VERB, response?.productCategoryVerb)
+        binding?.ctvProductVerbUrl?.text = fromHtml(
+          "<pre>URL: <span style=\"color: #4a4a4a;\"><u>${sessionLocal.getDomainName()}<b>/${
+            response?.productCategoryVerb(baseActivity)
+          }</b></u></span></pre>"
+        )
+        sessionLocal.storeFPDetails(
+          Key_Preferences.PRODUCT_CATEGORY_VERB,
+          response?.productCategoryVerb
+        )
         onCatalogSetupAddedOrUpdated(response?.productCategoryVerb.isNullOrEmpty().not())
       }
-    })
+      if (sessionLocal.fP_AppExperienceCode!! == "SVC" || sessionLocal.fP_AppExperienceCode!! == "SPA" || sessionLocal.fP_AppExperienceCode!! == "CAF"){
+        binding.catalogueView.visibility = View.VISIBLE
+        binding.catalougeSwitch.isOn = sessionLocal.isCustomCta!!
+        binding.catalougeNameLabel.text = sessionLocal.customCta
+
+        if (sessionLocal.isCustomCta!!){
+          binding.catalougeRenameView.visibility = View.VISIBLE
+        } else {
+          binding.catalougeRenameView.visibility = View.GONE
+        }
+        binding.btnSaveDetails.visibility = View.VISIBLE
+      }
+      if (sessionLocal.fP_AppExperienceCode!! == "SVC" || sessionLocal.fP_AppExperienceCode!! == "SAL" || sessionLocal.fP_AppExperienceCode!! == "SPA"){
+        binding.bulkBookingView.visibility = View.VISIBLE
+        binding.bulkBookingSwitch.isOn = sessionLocal.bulkBooking!!
+
+        binding.serviceSlotsView.visibility = View.VISIBLE
+        binding.noServiceSwitch.isOn = sessionLocal.noServiceSlot!!
+
+        if (!sessionLocal.noServiceSlot!!){
+          binding.serviceTimesView.visibility = View.VISIBLE
+          binding.serviceTimingsSwitch.isOn = sessionLocal.serviceTiming!!
+        } else {
+          binding.serviceTimesView.visibility = View.GONE
+        }
+        binding.btnSaveDetails.visibility = View.VISIBLE
+      }
+    }
   }
 
   override fun onClick(v: View) {
@@ -104,6 +174,43 @@ class FragmentEcommerceCatalogSettings : AppBaseFragment<FragmentEcomCatalogSett
             updateGstData()
           }
           show(this@FragmentEcommerceCatalogSettings.parentFragmentManager, BottomSheetGstSlab::class.java.name)
+        }
+      }
+      binding.btnSaveDetails -> {
+        val businessProfileUpdateUrl = "https://api2.withfloats.com/Discover/v1/FloatingPoint/update"
+        val businessProfileUpdateRequest = BusinessProfileUpdateRequest()
+        businessProfileUpdateRequest.clientId = clientId
+        businessProfileUpdateRequest.fpTag = sessionLocal.fpTag
+        val updateItemList = arrayListOf<Update>()
+        val bulkBookingInfo = Update()
+        bulkBookingInfo.key="ISBULKBOOKING";
+        bulkBookingInfo.value=sessionLocal.bulkBooking.toString()
+        updateItemList.add(bulkBookingInfo)
+        val storeToggleInfo = Update()
+        storeToggleInfo.key="STORETOGGLE";
+        val value ="${sessionLocal.noServiceSlot.toString()}#${sessionLocal.serviceTiming.toString()}"
+        storeToggleInfo.value=value
+        updateItemList.add(storeToggleInfo)
+        val ctaInfo = Update()
+        ctaInfo.key = "CTATOGGLE";
+        ctaInfo.value = "${sessionLocal.isCustomCta.toString()}#${sessionLocal.customCta}"
+        updateItemList.add(ctaInfo)
+        businessProfileUpdateRequest.updates = updateItemList
+        showProgress()
+        viewModel?.updateBusinessDetails(businessProfileUpdateUrl,businessProfileUpdateRequest)
+          ?.observeOnce(viewLifecycleOwner) {
+            if (it.isSuccess()) {
+              showShortToast("Successfully updated the catalogue information")
+            } else {
+              showShortToast("Error while updating the catalogue information")
+            }
+            hideProgress()
+            activity!!.onBackPressed()
+          }
+      }
+      binding.renameView -> {
+        BottomSheetCategoryRename(null,this,2).apply {
+          show(this@FragmentEcommerceCatalogSettings.parentFragmentManager, BottomSheetCategoryRename::class.java.name)
         }
       }
     }

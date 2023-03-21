@@ -44,7 +44,8 @@ data class AboutAppSectionItem(
     rate_us_on_google_play(R.drawable.rate_us_on_google_play),
     terms_of_usages(R.drawable.terms_of_usages),
     privacy_policy(R.drawable.privacy_policy),
-    help_us_make_boost_better(R.drawable.help_us_make_boost_better);
+    help_us_make_boost_better(R.drawable.help_us_make_boost_better),
+    caution_notice(R.drawable.ic_caution_notice);
 
     companion object {
       fun fromName(name: String?): IconType? =

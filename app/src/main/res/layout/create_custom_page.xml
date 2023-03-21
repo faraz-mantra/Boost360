@@ -54,7 +54,7 @@
         android:layout_marginTop="17dp"
         android:hint="@string/custom_page_details"
         android:textColorHint="@color/hintTextColor"
-        android:textSize="13sp" />
+        android:textSize="7sp" />
 
     </LinearLayout>
 

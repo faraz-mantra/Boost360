@@ -129,7 +129,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
         timeText.setText(Methods.getFormattedDate(mSuggestionDO.getDate(), "dd MMM, hh:mm a"));
         callBtn.setText(mSuggestionDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER) ? "CALL" : "MAIL");
         if (!TextUtils.isEmpty(mSuggestionDO.getLogoUrl()) && mSuggestionDO.getLogoUrl().contains("http")) {
-            Glide.with(this)
+            Glide.with(getApplicationContext())
                     .load(mSuggestionDO.getLogoUrl())
                     .into(sourceImg);
         } else {

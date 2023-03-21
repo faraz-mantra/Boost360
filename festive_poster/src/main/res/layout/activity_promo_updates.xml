@@ -18,10 +18,11 @@
 
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/iv_toolbar_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="17.95dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+          android:padding="20dp"
         android:src="@drawable/ic_toolbar_back"
+          app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +34,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/size_18"
-        android:layout_marginStart="26dp"
         android:text="@string/update_studios"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/iv_store"
@@ -43,8 +43,10 @@
 
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/iv_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          app:layout_constraintDimensionRatio="1:1"
+          android:padding="20dp"
         android:src="@drawable/ic_help_white"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,32 +56,31 @@
 
       <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="18dp"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_search"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+          app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/iv_search"
-        app:layout_constraintTop_toTopOf="@+id/iv_search">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.framework.views.customViews.CustomImageView
           android:id="@+id/iv_love"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:src="@drawable/ic_love"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+            android:padding="19dp"
+          android:src="@drawable/ic_like_heart"/>
 
 
       </androidx.constraintlayout.widget.ConstraintLayout>
 
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/iv_store"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="18dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:src="@drawable/ic_laptop_nav"
         android:visibility="visible"
+          android:padding="20dp"
+          app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
         app:layout_constraintTop_toTopOf="parent" />

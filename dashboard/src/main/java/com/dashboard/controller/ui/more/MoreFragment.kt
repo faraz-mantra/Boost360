@@ -6,13 +6,11 @@ import android.content.Intent
 import android.net.Uri
 import android.view.*
 import android.widget.PopupWindow
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.LinearLayoutCompat
-import com.appservice.constant.FragmentType
 import com.appservice.model.accountDetails.getBankDetail
 import com.appservice.model.aptsetting.AppointmentStatusResponse
-import com.appservice.model.kycData.DataKyc
-import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.updatesBusiness.showDialog
 import com.boost.presignin.model.other.KYCDetails
 import com.dashboard.R
@@ -224,8 +222,8 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
       UsefulLinksItem.IconType.my_bank_acccount -> baseActivity.startMyBankAccount(session!!)
       UsefulLinksItem.IconType.refer_and_earn ->{
         WebEngageController.trackEvent(REFER_AND_EARN, CLICKED, NO_EVENT_VALUE)
-
-        baseActivity.startReferralView(session!!)
+        Toast.makeText(activity!!.applicationContext, getString(R.string.feature_coming_soon), Toast.LENGTH_SHORT).show()
+//        baseActivity.startReferralView(session!!)
       }
       UsefulLinksItem.IconType.ria_digital_assistant ->{
         WebEngageController.trackEvent(HELP_SUPPORT_PAGE, CLICKED, NO_EVENT_VALUE)
@@ -263,6 +261,9 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
         }else {
           rateGooglePlayStore()
         }
+      }
+      caution_notice -> {
+        baseActivity.startMobileSite(session, resources.getString(R.string.settings_caution_notice), ABOUT_BOOST_CAUTION_NOTICE)
       }
       else -> showShortToast(getString(R.string.coming_soon))
     }

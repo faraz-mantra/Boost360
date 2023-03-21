@@ -41,6 +41,7 @@ data class ApiCategoryResponseCategory(
   var fpExperienceCode: Appexperiencecodedetail? = null
   var searchKeyword: String? = ""
   var subCategory: String? = ""
+  var subCategoryDescription: String? = ""
 
   fun getNameLower(): String {
     return (name ?: "").lowercase()

@@ -258,12 +258,11 @@ public class SubscriberDetailsActivity extends AppCompatActivity implements View
 
   private void sendMail() {
     try {
-      Intent email = new Intent(Intent.ACTION_SEND);
-      email.addCategory(Intent.CATEGORY_DEFAULT);
-      email.setData(Uri.parse("mailto:"));
-      email.setType("message/rfc822");
-      email.putExtra(Intent.EXTRA_EMAIL, new String[]{mSubscriberData.getUserMobile()});
-      startActivity(Intent.createChooser(email, "Email by:"));
+      Intent intent = new Intent(Intent.ACTION_SEND);
+      intent.putExtra(Intent.EXTRA_EMAIL, new String[]{mSubscriberData.getUserMobile()} );
+      intent.setType("message/rfc822");
+      intent.setPackage("com.google.android.gm");
+      startActivity(intent);
     } catch (Exception e) {
       e.printStackTrace();
     }

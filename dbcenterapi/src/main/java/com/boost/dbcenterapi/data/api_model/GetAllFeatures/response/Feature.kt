@@ -13,7 +13,7 @@ data class Feature(
     val createdon: String,
     val description: String,
     val description_title: String,
-    val discount_percent: Int,
+    val discount_percent: Double,
     val feature_code: String,
     val feature_video_link: FeatureVideoLink,
     val is_premium: Boolean,
@@ -38,5 +38,7 @@ data class Feature(
     val widget_type: String?,
     val frequently_asked_questions: FrequentlyAskedQuestions?,
     val how_to_use_steps: List<HowToUseStep>?,
-    val how_to_use_title: String?
+    val how_to_use_title: String?,
+    val exclusive_To_clientIds:List<String>? =null,
+    val Long_desc:String? =null
 )

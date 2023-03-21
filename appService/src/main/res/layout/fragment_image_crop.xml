@@ -11,7 +11,8 @@
     <com.theartofdev.edmodo.cropper.CropImageView
       android:id="@+id/cropImageView"
       android:layout_width="match_parent"
-      android:layout_height="match_parent" />
+      android:layout_height="match_parent"
+        app:cropShape="rectangle"/>
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/btn_crop_done"

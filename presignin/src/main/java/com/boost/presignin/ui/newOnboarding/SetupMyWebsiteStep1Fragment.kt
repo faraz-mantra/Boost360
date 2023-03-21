@@ -3,6 +3,7 @@ package com.boost.presignin.ui.newOnboarding
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableStringBuilder
+import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import com.boost.presignin.R
@@ -169,14 +170,19 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
 
   private fun List<ApiCategoryResponseCategory>?.getFinalList(str: Editable?): ArrayList<ApiCategoryResponseCategory> {
     val newFilterList = arrayListOf<ApiCategoryResponseCategory>()
-    this?.forEach { cItem ->
-      cItem.appexperiencecodedetails?.forEach { exp ->
-        val categoryName = categoryList.firstOrNull { it.experience_code == exp.name }?.getCategoryWithoutNewLine()
-        if (categoryName.isNullOrEmpty().not()) {
-          cItem.fpExperienceCode = exp
-          cItem.subCategory = categoryName
-          cItem.searchKeyword = str.toString()
-          newFilterList.add(cItem)
+    if (this!=null && this.isNotEmpty()){
+      for (i in 0 until this.size) {
+        val subCategory = this[i].name!!
+        for (j in 0 until this[i].appexperiencecodedetails!!.size){
+          val categoryResponse = ApiCategoryResponseCategory()
+          val categoryDescription = categoryList.firstOrNull { it.experience_code == this[i].appexperiencecodedetails!![j].name }?.getCategoryWithoutNewLine()
+          if (categoryDescription.isNullOrEmpty().not()) {
+            categoryResponse.fpExperienceCode = this[i].appexperiencecodedetails!![j]
+            categoryResponse.name = subCategory
+            categoryResponse.subCategoryDescription = categoryDescription
+            categoryResponse.searchKeyword = str.toString()
+            newFilterList.add(categoryResponse)
+          }
         }
       }
     }
@@ -243,6 +249,27 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
       RecyclerViewActionType.CATEGORY_ITEM_CLICKED.ordinal -> {
         WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_SELECTION_MAIN_LOAD, CLICK, NO_EVENT_VALUE)
         val dataCategory = (item as? CategoryDataModel) ?: return
+        if(dataCategory.experience_code == "EDU"){
+          dataCategory.subCategoryName = "Education Center"
+        } else if(dataCategory.experience_code == "CAF"){
+          dataCategory.subCategoryName = "Cafe"
+        } else if(dataCategory.experience_code == "RTL"){
+          dataCategory.subCategoryName = "Store"
+        } else if(dataCategory.experience_code == "SVC"){
+          dataCategory.subCategoryName = "SERVICE CENTER"
+        } else if(dataCategory.experience_code == "DOC"){
+          dataCategory.subCategoryName = "Doctor"
+        } else if(dataCategory.experience_code == "HOS"){
+          dataCategory.subCategoryName = "Hospital"
+        } else if(dataCategory.experience_code == "MFG"){
+          dataCategory.subCategoryName = "Manufacturer"
+        } else if(dataCategory.experience_code == "HOT"){
+          dataCategory.subCategoryName = "Hotel"
+        } else if(dataCategory.experience_code == "SAL"){
+          dataCategory.subCategoryName = "Hair Salon"
+        } else if(dataCategory.experience_code == "SPA"){
+          dataCategory.subCategoryName = "Spa"
+        }
         if (binding?.includeNoSearchResultFound?.root?.visibility == View.VISIBLE) {
           categoryNoDataList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
           noCatListAdapter?.notifyDataSetChanged()
@@ -259,6 +286,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
         baseActivity.hideKeyBoard()
         val dataCategory = categoryList.firstOrNull { it.experience_code == selectedCategoryLive?.fpExperienceCode?.name }
         dataCategory?.let {
+          dataCategory.subCategoryName = selectedCategoryLive!!.name!!
           showCatSuggestionSelected(it)
           setSelectedCat(it)
         }

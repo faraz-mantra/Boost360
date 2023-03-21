@@ -299,7 +299,10 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
     }
 
     new UploadProfileAsyncTask(BusinessHoursActivity.this, dayData, profilesattr, isSuccess -> {
-      if (isSuccess) saveButton.setVisibility(View.GONE);
+      if (isSuccess) {
+        getFPDetails(session.getFPID(), Constants.clientId, bus);
+        saveButton.setVisibility(View.GONE);
+      }
     }).execute();
     session.setBusinessHours(openAtleastOneDayFlag);
     onBusinessHourAddedOrUpdated(openAtleastOneDayFlag);
@@ -491,6 +494,13 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
       etSatOpen.setText(openTime);
       etSunClose.setText(closeTime);
       etSunOpen.setText(openTime);
+      switchSun.setChecked(true);
+      switchMon.setChecked(true);
+      switchTue.setChecked(true);
+      switchWed.setChecked(true);
+      switchThu.setChecked(true);
+      switchFri.setChecked(true);
+      switchSat.setChecked(true);
     } else {
       switch (currentId) {
         case 0:

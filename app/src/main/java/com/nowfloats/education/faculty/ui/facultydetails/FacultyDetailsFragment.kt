@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer
 import com.boost.dbcenterapi.utils.Utils
 import com.appservice.utils.changeColorOfSubstring
 import com.bumptech.glide.Glide
+import com.framework.utils.ValidationUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.nowfloats.Login.UserSessionManager
 import com.nowfloats.education.faculty.FacultyActivity
@@ -69,6 +70,7 @@ class FacultyDetailsFragment(private val facultyData: Data?) : BaseFragment(),
         binding.addUpdateFaculty.text = UPDATE
         addUpdateFaculty = true
         viewModel.setFilePath("")
+        Glide.with(this).load(facultyData.profileimage.url).into(binding.facultyProfileImage)
       }
       else -> {
         binding.facultyData = Data()
@@ -212,6 +214,11 @@ class FacultyDetailsFragment(private val facultyData: Data?) : BaseFragment(),
     when {
       binding.facultyName.text.isNullOrBlank() -> {
         binding.facultyName.error = getString(R.string.enter_valid_name)
+        binding.facultyName.requestFocus()
+        return false
+      }
+      ValidationUtils.isValidName(binding.facultyName.text.toString()).not() -> {
+        binding.facultyName.error = getString(R.string.name_field_can_not_contain_special_char)
         binding.facultyName.requestFocus()
         return false
       }

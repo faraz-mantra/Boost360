@@ -35,6 +35,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.framework.analytics.SentryController;
 import com.framework.firebaseUtils.firestore.FirestoreManager;
+import com.framework.glide.util.ImageService;
 import com.framework.imagepicker.BoostImageUtils;
 import com.nowfloats.BusinessProfile.UI.API.Upload_Logo;
 import com.nowfloats.Login.UserSessionManager;
@@ -61,6 +62,8 @@ import static com.framework.webengageconstant.EventLabelKt.UPDATED_BUINSESS_LOGO
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_LOGO_ADDED;
 import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_BUSINESS_PROFILE;
 import static com.framework.webengageconstant.EventNameKt.UPLOAD_LOGO;
+
+import kotlin.Unit;
 
 public class Business_Logo_Activity extends AppCompatActivity {
 
@@ -121,15 +124,18 @@ public class Business_Logo_Activity extends AppCompatActivity {
             String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
             if (iconUrl != null && iconUrl.length() > 0 && !iconUrl.contains("http")) {
                 BoostLog.d("Logo Url:", iconUrl);
-                Glide.with(this).asGif().load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.logo_default_image)).into(logoimageView);
+                Glide.with(getApplicationContext()).asGif().load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.logo_default_image)).into(logoimageView);
                 onBusinessLogoAddedOrUpdated(true);
             } else {
                 if (iconUrl != null && iconUrl.length() > 0) {
                     BoostLog.d("Logo Url:", iconUrl);
-                    Glide.with(this).load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.logo_default_image)).into(logoimageView);
+                    if(iconUrl.contains(".gif")) {
+                        Glide.with(getApplicationContext()).asGif().load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.logo_default_image)).into(logoimageView);
+                    }else
+                        Glide.with(getApplicationContext()).load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.logo_default_image)).into(logoimageView);
                     onBusinessLogoAddedOrUpdated(true);
                 } else {
-                    Glide.with(this).asGif().load(R.drawable.logo_default_image).into(logoimageView);
+                    Glide.with(getApplicationContext()).asGif().load(R.drawable.logo_default_image).into(logoimageView);
                     onBusinessLogoAddedOrUpdated(false);
                     uploadButton.setText(getResources().getString(R.string.add_logo));
                 }
@@ -389,10 +395,17 @@ public class Business_Logo_Activity extends AppCompatActivity {
                     Uri picUri = data.getData();
                     if (picUri != null) {
                         path = Methods.getPath(this, picUri);
-                        path = Util.saveBitmap(path, Business_Logo_Activity.this, "ImageFloat" + System.currentTimeMillis());
+                        if (path.toLowerCase().contains(".png")) {
+                            path = Util.saveBitmap(path, Business_Logo_Activity.this, "ImageFloat" + System.currentTimeMillis());
+                        }
                         String isBusinessValidMessage = BoostImageUtils.INSTANCE.isBusinessLogoValid(Business_Logo_Activity.this, new File(path));
                         if (!Util.isNullOrEmpty(path) && isBusinessValidMessage.equals("")) {
-                            editImage();
+                            if(path.toLowerCase().contains(".gif")){
+                                Glide.with(getApplicationContext()).asGif().load(path).apply(new RequestOptions().placeholder(R.drawable.logo_default_image)).into(logoimageView);
+                                uploadPrimaryPicture(path);
+                            }else {
+                                editImage();
+                            }
                         } else {
                             Methods.showSnackBarNegative(Business_Logo_Activity.this,
                                     (path == null || path.isEmpty()) ? getResources().getString(R.string.select_image_upload) : isBusinessValidMessage);

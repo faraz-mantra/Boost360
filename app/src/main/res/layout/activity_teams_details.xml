@@ -121,7 +121,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:text="@string/twitter_profile" />
+        android:text="@string/twitter_profile_asterisk" />
 
 
       <EditText

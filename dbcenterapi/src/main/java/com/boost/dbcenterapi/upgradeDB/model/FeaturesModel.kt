@@ -51,7 +51,7 @@ data class FeaturesModel(
     var feature_importance: Int = 0,
 
     @ColumnInfo(name = "discount_percent")
-    var discount_percent: Int = 0,
+    var discount_percent: Double = 0.0,
 
     @ColumnInfo(name = "price")
     var price: Double = 0.0,
@@ -105,7 +105,16 @@ data class FeaturesModel(
     var activatedDate: String? = null,
 
     @ColumnInfo(name = "featureState")
-    var featureState: Int? = null
+    var featureState: Int? = null,
+
+    @ColumnInfo(name = "actionNeeded")
+    var actionNeeded: String? = null,
+
+    @ColumnInfo(name = "exclusive_To_clientIds")
+    var exclusive_To_clientIds: String? = null,
+
+    @ColumnInfo(name = "Long_desc")
+    var Long_desc:String? =null
 
 ) : Serializable, AppBaseRecyclerViewItem {
 

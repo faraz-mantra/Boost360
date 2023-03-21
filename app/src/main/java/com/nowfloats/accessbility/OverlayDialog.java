@@ -37,7 +37,7 @@ public class OverlayDialog extends AppCompatActivity {
         TextView screenOverlay = (TextView) view.findViewById(R.id.overlay_title);
         screenOverlay.setVisibility(View.GONE);
         try {
-            Glide.with(this).asGif().load(R.drawable.overlay_gif).into(image);
+            Glide.with(getApplicationContext()).asGif().load(R.drawable.overlay_gif).into(image);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -29,19 +29,19 @@ class IntroSlidesViewHolder constructor(binding: ItemIntroNewSlidesBinding) : Ap
     }
     binding.tvIntroTitle.text = model.title
     binding.lottieAnimationIntro.addAnimatorListener(object : Animator.AnimatorListener {
-      override fun onAnimationRepeat(animation: Animator?) {
+      override fun onAnimationRepeat(animation: Animator) {
         onItemClick(position, item)
       }
 
-      override fun onAnimationEnd(animation: Animator?) {
+      override fun onAnimationEnd(animation: Animator) {
         if (!model.isLottieRepeat) binding.lottieAnimationIntro.cancelAnimation()
         onItemClick(position, item)
       }
 
-      override fun onAnimationCancel(animation: Animator?) {
+      override fun onAnimationCancel(animation: Animator) {
       }
 
-      override fun onAnimationStart(animation: Animator?) {
+      override fun onAnimationStart(animation: Animator) {
       }
 
     })

@@ -120,7 +120,6 @@ class ConfirmedCustomDomainBottomSheet(val activity: CustomDomainActivity) :
                 if(itemInCartStatus == true){
                     val args = Bundle()
                     args.putString("addonName", blockedItem!!)
-                    args.putBoolean("activty1", true)
                     removePackageBottomSheet.arguments = args
                     fragmentManager?.let { it1 ->
                         removePackageBottomSheet.show(
@@ -322,7 +321,7 @@ class ConfirmedCustomDomainBottomSheet(val activity: CustomDomainActivity) :
         return UserSessionManager(requireContext()).getAccessTokenAuth()?.barrierToken() ?: ""
     }
 
-    private fun getDiscountedPrice(price: Double, discountPercent: Int): Double {
+    private fun getDiscountedPrice(price: Double, discountPercent: Double): Double {
         return price - ((discountPercent / 100) * price)
     }
 

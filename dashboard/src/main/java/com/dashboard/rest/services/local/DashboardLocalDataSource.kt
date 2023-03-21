@@ -9,7 +9,6 @@ import com.dashboard.model.live.addOns.ManageAddOnsBusinessResponse
 import com.dashboard.model.live.addOns.ManageBusinessDataResponse
 import com.dashboard.model.live.customerItem.BoostCustomerItemResponse
 import com.dashboard.model.live.drScore.DrScoreUiDataResponse
-import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
 import com.dashboard.model.live.quickAction.QuickActionResponse
 import com.dashboard.model.live.shareUser.ShareUserDetailResponse
 import com.dashboard.model.live.websiteItem.WebsiteDataResponse
@@ -39,9 +38,6 @@ object DashboardLocalDataSource : AppBaseLocalService() {
     return fromJsonRes(context, R.raw.boost_website_item_new, WebsiteDataResponse::class.java)
   }
 
-  fun getNavDashboardData(context: Context): Observable<BaseResponse> {
-    return fromJsonRes(context, R.raw.nav_dashboard_data, DrawerHomeDataResponse::class.java)
-  }
   fun getMoreSettings(context: Context): Observable<BaseResponse> {
     return fromJsonRes(context, R.raw.more_settings, MoreSettingsResponse::class.java)
   }

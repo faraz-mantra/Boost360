@@ -61,7 +61,7 @@ class CompareItemAdapter(
         upgradeList.clear()
         upgradeList.addAll(upgradeModel)
         val index =
-            upgradeList.indexOf(upgradeList.find { it.boost_widget_key == "FESTIVEPOSTERS" })
+            upgradeList.indexOf(upgradeList.find { it.boost_widget_key == "FESTIVEPOSTERS" ||it.boost_widget_key == "MY_BIZ_APP" || it.boost_widget_key =="MERCHANT_TRAINING"})
         if (index > 0) {
             upgradeList.removeAt(index)
         }

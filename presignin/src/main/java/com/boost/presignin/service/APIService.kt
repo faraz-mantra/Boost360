@@ -9,19 +9,15 @@ import android.os.IBinder
 import android.util.Log
 import com.appservice.model.accountDetails.saveBanKDetail
 import com.appservice.model.domainBooking.DomainDetailsResponse
-import com.appservice.model.kycData.saveBusinessKycDetail
 import com.appservice.rest.repository.AzureWebsiteNewRepository
 import com.appservice.rest.repository.BoostPluginWithFloatsRepository
 import com.boost.dbcenterapi.utils.DataLoader
 import com.appservice.model.aptsetting.AppointmentStatusResponse
 import com.boost.presignin.model.other.AccountDetailsResponse
-import com.boost.presignin.model.other.PaymentKycDataResponse
-import com.boost.presignin.rest.repository.WebActionBoostKitRepository
 import com.boost.presignin.rest.repository.WithFloatRepository
 import com.boost.presignin.rest.repository.WithFloatTwoRepository
 import com.framework.analytics.SentryController
 import com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItem
-import com.framework.extensions.observeOnce
 import com.framework.models.toLiveData
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
@@ -72,10 +68,8 @@ class APIService : Service() {
       //Migrate Upgrade DB
       DataLoader.loadMarketPlaceData(
           application,
-          userSessionManager?.fP_AppExperienceCode,
-          userSessionManager?.fpTag
+          userSessionManager!!
       )
-      checkExpiryAddonsPackages()
       getAndSaveDomainDetails()
   }
 
@@ -87,59 +81,6 @@ class APIService : Service() {
             }
             checkAllApiComplete()
         }
-    }
-
-    @SuppressLint("LongLogTag")
-    private fun checkExpiryAddonsPackages() {
-        AzureWebsiteNewRepository.getFeatureDetails(userSessionManager?.fPID, clientId).toLiveData()
-            .observeForever {
-                if (!it.isSuccess() || it == null) {
-                    return@observeForever
-                }
-                val data = it.arrayResponse as? Array<CapLimitFeatureResponseItem>
-                Log.e("checkExpiryAddonsPackages >>", Gson().toJson(data))
-
-                for (singleitem in data!!) {
-                    val date1: Date =
-                        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(singleitem.expiryDate!!)
-
-                    val diff: Long = date1.getTime() - Date().getTime()
-                    val seconds = diff / 1000
-                    val minutes = seconds / 60
-                    val hours = minutes / 60
-                    val days = hours / 24
-
-                    if (days.toInt() > 7 && days.toInt() < 6) {
-                        sendNotification(
-                            applicationContext,
-                            "Renewal Reminder!",
-                            "Your add-ons are expiring in 7 days. Few of the features will stop working after expiry.",
-                            "http://boost.nowfloats.com?viewType=CART_FRAGMENT&buyItemKey=${singleitem.featureKey}"
-                        )
-                    } else if (days.toInt() > 3 && days.toInt() < 2) {
-                        sendNotification(
-                            applicationContext,
-                            "Alert! Your Add-ons are expiring in 3 days!",
-                            "Renew them to ensure you don’t miss out on key features.",
-                            "http://boost.nowfloats.com?viewType=CART_FRAGMENT&buyItemKey=${singleitem.featureKey}"
-                        )
-                    } else if (days.toInt() > 1 && days.toInt() < 0) {
-                        sendNotification(
-                            applicationContext,
-                            "Last Day For Renewal!",
-                            "Your add-ons are expiring in the next 24 hours! Renew them now.",
-                            "http://boost.nowfloats.com?viewType=CART_FRAGMENT&buyItemKey=${singleitem.featureKey}"
-                        )
-                    } else if (days.toInt() <= 0) {
-                        sendNotification(
-                            applicationContext,
-                            "Your Add-ons have expired! :(",
-                            "But you can still renew them to keep enjoying the features.",
-                            "http://boost.nowfloats.com?viewType=CART_FRAGMENT&buyItemKey=${singleitem.featureKey}"
-                        )
-                    }
-                }
-            }
     }
 
   private fun checkUserAccountDetails() {
@@ -157,7 +98,7 @@ class APIService : Service() {
 
   private fun hitSelfBrandedKycAPI() {
 
-    com.appservice.rest.repository.WithFloatTwoRepository?.getAppointmentCatalogStatus(userSessionManager?.fPID
+    com.appservice.rest.repository.WithFloatTwoRepository?.getAppointmentCatalogStatus(userSessionManager?.fPID?:""
       , clientId).toLiveData().observeForever {
 
       val dataItem = it as? AppointmentStatusResponse

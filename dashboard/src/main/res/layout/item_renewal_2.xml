@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.framework.views.customViews.CustomCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_158"
+        app:cardCornerRadius="@dimen/size_20">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_122"
+                android:background="@color/black_4a4a4a"
+                android:orientation="vertical">
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_title_1"
+                    android:layout_width="@dimen/size_98"
+                    android:layout_height="@dimen/size_20"
+                    android:layout_marginStart="@dimen/size_16"
+                    android:background="@drawable/ic_demo_6"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="Final reminder"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_11"
+                    app:layout_constraintStart_toEndOf="@+id/icon_1"
+                    app:layout_constraintTop_toTopOf="@+id/icon_1" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_title_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bold"
+                    android:gravity="start"
+                    android:layout_marginTop="@dimen/size_4"
+                    android:includeFontPadding="false"
+                    android:lineSpacingMultiplier="0.8"
+                    android:text="Your pack will\nexpire tomorrow."
+                    android:textAlignment="gravity"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_19"
+                    app:layout_constraintStart_toStartOf="@+id/tv_title_1"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title_1" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_title_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:layout_marginTop="@dimen/size_4"
+                    android:gravity="start"
+                    android:includeFontPadding="false"
+                    android:lineSpacingMultiplier="0.8"
+                    android:text="Post expiry, website may not funtion as usual."
+                    android:textAlignment="gravity"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_12"
+                    app:layout_constraintStart_toStartOf="@+id/icon_1"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title_2" />
+
+                <com.framework.views.customViews.CustomCardView
+                    android:id="@+id/icon_1"
+                    android:layout_width="@dimen/size_66"
+                    android:layout_height="@dimen/size_66"
+                    android:layout_marginTop="@dimen/size_18"
+                    android:layout_marginStart="@dimen/size_21"
+                    app:cardCornerRadius="@dimen/size_11"
+                    app:cardElevation="@dimen/size_2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="@dimen/size_48"
+                        android:layout_height="@dimen/size_48"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_demo_5" />
+
+                </com.framework.views.customViews.CustomCardView>
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/customImageView11"
+                    android:layout_width="@dimen/size_22"
+                    android:layout_height="@dimen/size_22"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:layout_marginEnd="@dimen/size_11"
+                    android:src="@drawable/ic_close_white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_36"
+                android:background="@color/white"
+                android:gravity="center">
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:fontFamily="@font/semi_bold"
+                    android:gravity="center"
+                    android:text="Extend validity"
+                    android:textColor="@color/red_DE3C3C"
+                    app:textType="BODY_3" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="@dimen/size_14"
+                    android:layout_height="@dimen/size_14"
+                    android:layout_marginStart="@dimen/size_4"
+                    android:tint="@color/red_DE3C3C"
+                    android:src="@drawable/ic_arrow_purple"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.framework.views.customViews.CustomCardView>
+</layout>

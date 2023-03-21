@@ -91,6 +91,10 @@ fun getProductType(category_code: String?): String {
   }
 }
 
+fun isDoctor(category_code: String?): Boolean {
+  return getAptType(category_code) == "DOC_HOS"
+}
+
 fun getAptType(category_code: String?): String {
   return when (category_code) {
     "SPA", "SAL", "SVC" -> "SPA_SAL_SVC"
@@ -146,4 +150,10 @@ fun UserSessionManager.isManufacturing(): Boolean {
 fun UserSessionManager.isEducation(): Boolean {
   return this.fP_AppExperienceCode.equals("EDU")
 }
+
+fun String.toHttpsPrefix(): String? = if (isNotEmpty() && !startsWith("https://") && !startsWith("http://")) {
+  "https://$this"
+} else if (startsWith("http://")) {
+  replace("http://", "https://")
+} else this
 

@@ -19,8 +19,8 @@ class AboutViewHolder(binding: RecyclerItemAboutAppBinding) :AppBaseRecyclerView
     val data = item as? AboutAppSectionItem
     if (data?.view_type_2!=null){ binding.ctvViewType2.visible()
       binding.recyclerItemAbout.gone()
-    }
-      else{ binding.ctvViewType2.gone()
+    } else{
+      binding.ctvViewType2.gone()
       binding.recyclerItemAbout.visible()
       binding.ctvHeading.text = data?.title
       binding.ctvSubtitle.text = data?.subtitle

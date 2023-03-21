@@ -351,7 +351,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
     val item: MenuItem = menu.findItem(R.id.menu_item_share)
-    item.actionView.findViewById<CustomButton>(R.id.button_share).setOnClickListener {
+    item.actionView?.findViewById<CustomButton>(R.id.button_share)?.setOnClickListener {
       showLongToast(getString(R.string.coming_soon))
     }
   }

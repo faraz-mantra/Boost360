@@ -160,7 +160,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/size_24"
             android:layout_marginTop="@dimen/size_20"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
           <!--Enable visible this when search results found-->
           <LinearLayout

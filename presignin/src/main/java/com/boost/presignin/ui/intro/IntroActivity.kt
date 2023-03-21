@@ -1,6 +1,7 @@
 package com.boost.presignin.ui.intro
 
 import android.app.Activity
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
@@ -108,7 +109,7 @@ class IntroActivity : AppBaseActivity<ActivityIntroBinding, BaseViewModel>() {
         }else{
           startActivity(Intent(this@IntroActivity, LoginActivity::class.java))
         }
-      } else this.dialogRootError()
+      } else this.dialogRootError(this)
     }
   }
 
@@ -128,8 +129,8 @@ class IntroActivity : AppBaseActivity<ActivityIntroBinding, BaseViewModel>() {
   }
 }
 
-fun Activity.dialogRootError() {
-  AlertDialog.Builder(ContextThemeWrapper(this, R.style.CustomAlertDialogTheme))
+fun Activity.dialogRootError(context: Context) {
+  AlertDialog.Builder(ContextThemeWrapper(context, R.style.CustomAlertDialogTheme))
     .setCancelable(false)
     .setTitle(getString(R.string.boost_divice_title))
     .setMessage(getString(R.string.sorry_boost_security_check_desc))

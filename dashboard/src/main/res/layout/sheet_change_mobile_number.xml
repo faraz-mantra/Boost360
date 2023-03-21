@@ -27,6 +27,7 @@
       android:padding="@dimen/size_20">
 
       <com.framework.views.customViews.CustomTextView
+          android:id="@+id/title_num"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/changing_mobile_number"

@@ -47,7 +47,6 @@ import com.nowfloats.hotel.API.model.UpdatePlacesAround.UpdatePlacesAroundReques
 import com.nowfloats.hotel.Interfaces.PlaceNearByDetailsListener;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.DecimalDigitsInputFilter;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
@@ -106,8 +105,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
 
-        placeDistance.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(2)});
-
+        placeDistance.setFilters(new InputFilter[] {new InputFilter.LengthFilter(5)});
         placeImageLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

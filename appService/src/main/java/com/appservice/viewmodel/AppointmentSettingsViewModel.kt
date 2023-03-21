@@ -2,6 +2,7 @@ package com.appservice.viewmodel
 
 import androidx.lifecycle.LiveData
 import com.appservice.model.aptsetting.*
+import com.appservice.model.businessmodel.BusinessProfileUpdateRequest
 import com.appservice.model.generalApt.UpdateRequestGeneralApt
 import com.appservice.rest.repository.BoostNowFloatsRepository
 import com.appservice.rest.repository.NowfloatsApiRepository
@@ -66,7 +67,7 @@ class AppointmentSettingsViewModel : BaseViewModel() {
     return WithFloatTwoRepository.addWareHouseAddress(request = request).toLiveData()
   }
 
-  fun getAppointmentCatalogStatus(floatingPointId: String?, clientId: String?): LiveData<BaseResponse> {
+  fun getAppointmentCatalogStatus(floatingPointId: String, clientId: String): LiveData<BaseResponse> {
     return WithFloatTwoRepository.getAppointmentCatalogStatus(floatingPointId, clientId).toLiveData()
   }
 
@@ -84,5 +85,9 @@ class AppointmentSettingsViewModel : BaseViewModel() {
 
   fun getGeneralService(fpId: String?, fpTag: String?): LiveData<BaseResponse> {
     return StaffNowFloatsRepository.getGeneralService(fpId, fpTag).toLiveData()
+  }
+
+  fun updateBusinessDetails(businessProfileUpdateUrl:String, request: BusinessProfileUpdateRequest): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.updateBusinessProfile(businessProfileUpdateUrl,request).toLiveData()
   }
 }

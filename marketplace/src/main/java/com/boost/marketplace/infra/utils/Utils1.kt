@@ -12,6 +12,7 @@ import android.widget.Toast
 import com.boost.cart.utils.Constants
 import com.boost.cart.utils.SharedPrefs
 import com.boost.cart.utils.Utils
+import com.framework.NetworkCertificate.NetworkCertificate
 import com.boost.dbcenterapi.data.api_model.GetAllWidgets.GetAllWidgets
 import com.framework.analytics.SentryController
 import com.framework.rest.TokenAuthenticator
@@ -51,7 +52,8 @@ object Utils1 {
         httpClient.readTimeout(2, TimeUnit.MINUTES)
             .connectTimeout(2, TimeUnit.MINUTES)
             .writeTimeout(2, TimeUnit.MINUTES)
-        httpClient.authenticator(tokenAuthenticator)
+            .authenticator(tokenAuthenticator)
+            .certificatePinner(NetworkCertificate.certificatePinner())
         return httpClient.build()
     }
 

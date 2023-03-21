@@ -76,6 +76,8 @@ class EditImageActivity : AppCompatActivity() {
             false
           )
         )
+
+
       } catch (error: OutOfMemoryError) {
         error.printStackTrace()
         System.gc()
@@ -106,7 +108,18 @@ class EditImageActivity : AppCompatActivity() {
     rotateButton.setOnClickListener { cropImageView!!.rotateImage(ROTATE_NINETY_DEGREES) }
 
     // Sets initial aspect ratio to 10/10, for demonstration purposes
-    cropImageView!!.setAspectRatio(DEFAULT_ASPECT_RATIO_VALUES, DEFAULT_ASPECT_RATIO_VALUES)
+//    cropImageView!!.setAspectRatio(DEFAULT_ASPECT_RATIO_VALUES, DEFAULT_ASPECT_RATIO_VALUES)
+    val bitmap = Util.getBitmap(
+        intent.getStringExtra("image"),
+        this@EditImageActivity)
+    if(bitmap.width < 200 || bitmap.height < 200){
+      cropImageView!!.setAspectRatio(bitmap.width+50,bitmap.height+50)
+      cropImageView!!.setFixedAspectRatio(false)
+      cropImageView!!.setMinCropResultSize(200, 200)
+    }else {
+      cropImageView!!.setMinCropResultSize(200, 200)
+      cropImageView!!.setCropRect(Rect(0, 0, 1000, 1000))
+    }
     val cropButton = findViewById<View>(R.id.Button_crop) as Button
     cropButton.setOnClickListener {
       try {

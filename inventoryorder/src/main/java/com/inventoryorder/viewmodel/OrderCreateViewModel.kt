@@ -23,8 +23,8 @@ import retrofit2.http.Body
 
 class OrderCreateViewModel : BaseViewModel() {
 
-  fun getSellerSummary(clientId: String?, sellerId: String?): LiveData<BaseResponse> {
-    return InventoryOrderRepository.getSellerSummary(clientId, sellerId).toLiveData()
+  fun getSellerSummaryV2_5(clientId: String?, sellerId: String?): LiveData<BaseResponse> {
+    return InventoryOrderRepository.getSellerSummaryV2_5(clientId, sellerId).toLiveData()
   }
 
   fun getProductItems(fpTag: String?, clientId: String?, skipBy: Int?): LiveData<BaseResponse> {

@@ -20,7 +20,7 @@ interface FacebookLoginHelper {
     LoginManager.getInstance().registerCallback(
       callbackManager,
       object : FacebookCallback<LoginResult> {
-        override fun onSuccess(result: LoginResult?) {
+        override fun onSuccess(result: LoginResult) {
           onFacebookLoginSuccess(result)
         }
 
@@ -28,7 +28,7 @@ interface FacebookLoginHelper {
           onFacebookLoginCancel()
         }
 
-        override fun onError(error: FacebookException?) {
+        override fun onError(error: FacebookException) {
           onFacebookLoginError(error)
         }
 

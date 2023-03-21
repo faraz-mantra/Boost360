@@ -40,7 +40,7 @@
                     android:id="@+id/single_paidaddon_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/emails"
+                    android:src="@drawable/emails"
                     android:scaleType="fitCenter" />
 
             </RelativeLayout>
@@ -96,8 +96,8 @@
                     android:id="@+id/paid_addons_activate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    tools:visibility="gone">
+                    android:visibility="visible"
+                    tools:visibility="visible">
 
                     <TextView
                         android:id="@+id/validity2"

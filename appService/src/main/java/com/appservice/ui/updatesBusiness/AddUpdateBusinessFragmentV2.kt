@@ -1,10 +1,12 @@
 package com.appservice.ui.updatesBusiness
 
 import android.animation.Animator
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.os.Bundle
@@ -14,6 +16,7 @@ import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -110,8 +113,8 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       })
 
     setOnClickListener(
-      binding!!.btnAddImage, binding!!.btnEdit, binding!!.ivMic, binding!!.ivHashtagCross,
-      binding!!.tvPreviewAndPost, binding.ivCross
+      binding!!.btnAddImage, binding.btnEdit, binding.ivMic, binding.ivHashtagCross,
+      binding.tvPreviewAndPost, binding.ivCross
     )
   }
 
@@ -135,10 +138,20 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
               val imageWidth: Int = bitMapOption.outWidth
               val imageHeight: Int = bitMapOption.outHeight
 
-              if (imageWidth >= 300 && imageHeight >= 300) {
+              if (imageWidth > 600 && imageHeight > 600) {
                 loadImage(imgFile.path)
-              } else {
-                Toast.makeText(view.context,"Cropped image is very small",Toast.LENGTH_SHORT).show()
+              } else if((imageWidth in 400..600) && (imageHeight in 400..600)) {
+                // Greater than 400 and less than 600
+                loadImage(imgFile.path)
+                LowResolutionBSheet(
+                  imgFile.path,
+                  this@AddUpdateBusinessFragmentV2,
+                  startForCropImageResult
+                )
+                  .show(childFragmentManager, LowResolutionBSheet::class.java.name)
+              }else {
+                // Show Toast message
+                showLongToast(getString(R.string.image_resolution_is_smaller_than_400_x_400_px))
               }
             }
 
@@ -170,7 +183,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       val imageWidth: Int = bitMapOption.outWidth
       val imageHeight: Int = bitMapOption.outHeight
 
-      if (imageWidth >= 300 && imageHeight >= 300) {
+      if (imageWidth >= 400 && imageHeight >= 400) {
         if (imgFile.sizeInMb <= 5) {
           return true
         } else {
@@ -178,7 +191,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
           return false
         }
       } else {
-        showLongToast(getString(R.string.image_resolution_is_smaller_than_300_x_300_px))
+        showLongToast(getString(R.string.image_resolution_is_smaller_than_400_x_400_px))
         return false
       }
 
@@ -193,14 +206,14 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     val featureUpdate = getCapData().filterFeature(CapLimitFeatureResponseItem.FeatureKey.LATESTUPDATES)
     val capLimitUpdate = featureUpdate?.filterProperty(PropertiesItem.KeyType.LIMIT)
     if (/*isUpdate.not() && */capLimitUpdate != null) {
-      viewModel?.getMessageUpdates(sessionLocal.getRequestUpdate(PaginationScrollListener.PAGE_START))?.observeOnce(viewLifecycleOwner, {
+      viewModel?.getMessageUpdates(sessionLocal.getRequestUpdate(PaginationScrollListener.PAGE_START))?.observeOnce(viewLifecycleOwner) {
         val data = it as? BusinessUpdateResponse
         if (data?.totalCount != null && capLimitUpdate.getValueN() != null && data.totalCount!! >= capLimitUpdate.getValueN()!!) {
           baseActivity.hideKeyBoard()
           showAlertCapLimit("Can't add the business update, please activate your premium Add-ons plan.",
             CapLimitFeatureResponseItem.FeatureKey.LATESTUPDATES.name)
         }
-      })
+      }
     }
   }
 
@@ -218,27 +231,20 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     }else{
       binding.etUpdate.hint=getString(R.string.describe_what_you_want_to_say_in_the_picture_added_above)
       binding.tvImgReq.gone()
-      binding!!.ivImg.visible()
-      Glide.with(this).load(
-        path
-      ).apply(RequestOptions.skipMemoryCacheOf(true))
-        .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
-        .into(binding!!.ivImg)
-      binding!!.btnEdit.visible()
-      binding!!.btnAddImage.gone()
+      binding.ivImg.visible()
+      Glide.with(requireActivity().applicationContext).load(path).apply(RequestOptions.skipMemoryCacheOf(true)).apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)).into(binding.ivImg)
+      binding.btnEdit.visible()
+      binding.btnAddImage.gone()
     }
 
   }
 
-  fun openDraftSheet(){
-    if (binding!!.etUpdate.text.toString().isNotEmpty()||posterImagePath!=null){
-            UpdateDraftBSheet.newInstance(binding
-              .etUpdate.text.toString(),posterImagePath).show(parentFragmentManager,UpdateDraftBSheet::class.java.name)
-
-          }else{
-            activity?.finish()
+  fun openDraftSheet() {
+    if (binding.etUpdate.text.toString().isNotEmpty() || posterImagePath!=null){
+      UpdateDraftBSheet.newInstance(binding.etUpdate.text.toString(), posterImagePath).show(parentFragmentManager,UpdateDraftBSheet::class.java.name)
+    }else{
+      baseActivity.finish()
     }
-
   }
 
   override fun onPause() {
@@ -250,15 +256,15 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     binding.etUpdate.requestFocus()
     val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.showSoftInput(binding.etUpdate, InputMethodManager.SHOW_IMPLICIT)
-    binding!!.tvHashtagTip.text = spanColor(getString(R.string.type_in_the_caption_to_create_your_own_hashtags), R.color.blue_4889f8, "#")
+    binding.tvHashtagTip.text = spanColor(getString(R.string.type_in_the_caption_to_create_your_own_hashtags), R.color.blue_4889f8, "#")
 
-    binding!!.btnAddImage.text = spanBold(getString(R.string.add_image_optional), "Add image")
+    binding.btnAddImage.text = spanBold(getString(R.string.add_image_optional), "Add image")
     FirestoreManager.readDraft {
       if (activity != null && isAdded) {
 
         var textPost = it?.content
         textPost = textPost?.replaceFirstChar{ nameFirstChar -> nameFirstChar.uppercase() } ?: ""
-        binding!!.etUpdate.setText(
+        binding.etUpdate.setText(
           highlightHashTag(
             textPost,
             R.color.black_4a4a4a,
@@ -266,7 +272,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
           )
         )
         addHashTagFunction()
-        binding!!.tvCount.text = (textPost?.length ?: 0).toString()
+        binding.tvCount.text = (textPost.length ?: 0).toString()
 
         lifecycleScope.launch {
           withContext(Dispatchers.IO) {
@@ -337,6 +343,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     sttUtils?.init(this)
   }
 
+  @SuppressLint("ClickableViewAccessibility")
   private fun addHashTagFunction() {
     mSpannable = binding.etUpdate.text
 
@@ -371,6 +378,23 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       }
     })
 
+    binding.etUpdate.setOnTouchListener { v, event ->
+      v?.let {
+        if(it.id==binding.etUpdate.id){
+          it.parent.requestDisallowInterceptTouchEvent(true)
+          event?.let {
+            when(it.action and MotionEvent.ACTION_MASK){
+              MotionEvent.ACTION_UP -> {
+                v.parent.requestDisallowInterceptTouchEvent(false)
+              }
+              else -> {}
+            }
+          }
+        }
+      }
+      false
+    }
+
   }
 
 
@@ -380,15 +404,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     when(v){
       binding!!.btnAddImage->{
          WebEngageController.trackEvent(Added_Photo_In_Update, CLICKED,NULL)
-         UpdateImagePickerBSheet.newInstance(object :UpdateImagePickerBSheet.Callbacks{
-           override fun onImagePicked(path: String) {
-             if (path == "higher"){
-               showShortToast("Image is greater than 5 MB")
-             } else {
-               UpdateCropImageActivity.launchActivity(path,requireActivity(),startForCropImageResult)
-             }
-           }
-         }).show(parentFragmentManager,UpdateImagePickerBSheet::class.java.name)
+         chooseOption()
       }
       binding!!.btnEdit->{
         UpdateCropImageActivity.launchActivity(
@@ -404,19 +420,19 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
       binding!!.ivHashtagCross->{
         binding!!.layoutHashtagTip.animate().alpha(0F).setListener(object :Animator.AnimatorListener{
-          override fun onAnimationStart(p0: Animator?) {
+          override fun onAnimationStart(p0: Animator) {
 
           }
 
-          override fun onAnimationEnd(p0: Animator?) {
+          override fun onAnimationEnd(p0: Animator) {
             binding!!.layoutHashtagTip.gone()
 
           }
 
-          override fun onAnimationCancel(p0: Animator?) {
+          override fun onAnimationCancel(p0: Animator) {
           }
 
-          override fun onAnimationRepeat(p0: Animator?) {
+          override fun onAnimationRepeat(p0: Animator) {
           }
 
         })
@@ -442,11 +458,30 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     }
   }
 
-
-
-
-
-
+  public fun chooseOption() {
+    UpdateImagePickerBSheet.newInstance(object : UpdateImagePickerBSheet.Callbacks {
+      override fun onImagePicked(path: String) {
+        if (path == "higher") {
+          showShortToast("Image is greater than 5 MB")
+        } else if (path == "invalidFile") {
+          showShortToast("Invalid Image type!!")
+        } else {
+          val bmOptions = BitmapFactory.Options()
+          val bitmap: Bitmap = BitmapFactory.decodeFile(path, bmOptions)
+          if (bitmap.width >= 400 && bitmap.height >= 400) {
+            UpdateCropImageActivity.launchActivity(
+              path,
+              requireActivity(),
+              startForCropImageResult
+            )
+          } else {
+            // Show Toast message
+            showLongToast(getString(R.string.image_resolution_is_smaller_than_400_x_400_px))
+          }
+        }
+      }
+    }).show(parentFragmentManager, UpdateImagePickerBSheet::class.java.name)
+  }
 }
 
 

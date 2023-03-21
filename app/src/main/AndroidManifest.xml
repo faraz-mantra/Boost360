@@ -47,7 +47,6 @@
         android:icon="@drawable/app_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
         android:theme="@style/AppTheme"
         tools:ignore="UnusedAttribute"
@@ -69,74 +68,91 @@
         </receiver>
 
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Restaurants.BookATable.BookATableActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.manufacturing.webview.WebViewActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.hotel.seasonalOffers.SeasonalOffersDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.hotel.seasonalOffers.SeasonalOffersActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.hotel.tripadvisor.TripAdvisorActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.manufacturing.projectandteams.ui.home.ProjectAndTermsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.education.batches.BatchesActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.education.toppers.ToppersActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.education.faculty.FacultyActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.AccrossVerticals.domain.DomainEmailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.AccrossVerticals.Testimonials.TestimonialsFeedbackActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.nowfloats.marketplace.BoostMarketPlaceActivity" />
 
         <meta-data
             android:name="com.webengage.sdk.android.environment"
             android:value="us" />
 
         <activity
+            android:exported="false"
             android:name="com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Image_Gallery.ImageViewerActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.ProductGallery.PickupAddressActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.ProductGallery.ManageProductActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.ProductGallery.ProductCatalogActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -147,6 +163,7 @@
             android:required="false" />
 
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Analytics_Screen.VmnNumberRequestActivity"
             android:screenOrientation="portrait" />
 
@@ -159,8 +176,10 @@
         <meta-data
             android:name="com.webengage.sdk.android.location_tracking"
             android:value="true" /> <!-- Set false if location tracking is not required -->
-        <service android:name="com.webengage.sdk.android.ExecutorService" />
-        <service android:name="com.webengage.sdk.android.EventLogService" />
+        <service android:name="com.webengage.sdk.android.ExecutorService"
+            android:exported="false"/>
+        <service android:name="com.webengage.sdk.android.EventLogService"
+            android:exported="false"/>
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -198,20 +217,25 @@
         </receiver>
 
         <activity
+            android:exported="false"
             android:name="com.nowfloats.managecustomers.FacebookChatActivity"
             android:screenOrientation="portrait" />
 
         <activity
+            android:exported="false"
             android:name="com.nowfloats.BusinessProfile.UI.UI.BusinessDetailsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.managecustomers.FacebookChatDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Store.FlavourFivePlansActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
@@ -219,12 +243,14 @@
             android:name="com.facebook.CustomTabActivity"
             android:exported="true" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.signup.UI.UI.PreSignUpActivityRia"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Analytics_Screen.SocialAnalytics"
             android:label="Social Analytics"
             android:launchMode="singleTop"
@@ -234,21 +260,25 @@
                 android:value="com.nowfloats.Analytics_Screen.SocialAnalytics" />
         </activity>
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Analytics_Screen.OrderSummaryActivity"
             android:label="Order Analytics"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Analytics_Screen.OrderAnalyticsActivity"
             android:label="Order Analytics"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Analytics_Screen.RevenueSummaryActivity"
             android:label="Order Analytics"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.signup.UI.UI.WebSiteAddressActivity"
             android:clearTaskOnLaunch="true"
             android:label="@string/title_activity_web_site_address"
@@ -258,15 +288,18 @@
                 android:value="com.nowfloats.signup.UI.UI.PreSignUpActivity" />
         </activity>
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Analytics_Screen.SearchQueriesActivity"
             android:label=""
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Analytics_Screen.SubscriberDetailsActivity"
             android:label=""
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.WildFireAdAnalyticsActivity"
             android:label=""
             android:screenOrientation="portrait">
@@ -275,6 +308,7 @@
                 android:value="com.nowfloats.NavigationDrawer.WildFireAdAnalyticsActivity" />
         </activity>
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
@@ -286,51 +320,61 @@
             android:stopWithTask="false" />
 
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.HomeActivity"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity"
             android:label="@string/title_activity_business__address_"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity"
             android:label="@string/title_activity_contact__info_"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
+            android:exported="false"
             android:name="com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity"
             android:label="@string/title_activity_business__logo_"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"
             android:label="@string/title_activity_background_image_gallery"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.BusinessProfile.UI.UI.FeaturedImageActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.ImageMenuActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity"
             android:label="@string/title_activity_social__sharing_"
             android:screenOrientation="portrait" />
@@ -343,50 +387,61 @@
             android:value="@string/google_map_key" />
 
         <activity
+            android:exported="false"
             android:name="com.nowfloats.BusinessProfile.UI.API.NewMapViewDialogBusinessAddress"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Dialog" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Login.Login_MainActivity"
             android:label="@string/title_activity_login__main"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.PreSignUp.PreSignUp_MainActivity"
             android:label="@string/title_activity_pre_sign_up__main"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.signup.UI.UI.PreSignUpActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.BusinessProfile.UI.UI.QuikrGuidelinesActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.businessApps.BusinessAppsDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.businessApps.BusinessAppTipsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Image_Gallery.FullScreen_Gallery_Image"
             android:label="Gallery Image"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Image_Gallery.FullScreenImage"
             android:label="Gallery Image"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.Card_Full_View_MainActivity"
             android:label="@string/title_activity_card__full__view__main"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.Create_Message_Activity"
             android:label="@string/title_activity_create__message_"
             android:screenOrientation="portrait">
@@ -395,6 +450,7 @@
                 android:value="com.nowfloats.NavigationDrawer.HomeActivity" />
         </activity>
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Login.ForgotPassword"
             android:screenOrientation="portrait" />
 
@@ -445,6 +501,7 @@
         <!--    </activity>-->
 
         <activity
+            android:exported="false"
             android:name="com.boost.presignin.ui.LoaderActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
@@ -459,6 +516,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash"
+            android:exported="true"
             tools:replace="android:theme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -471,10 +529,12 @@
             </intent-filter>
         </activity>
         <activity
+            android:exported="false"
             android:name="com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity"
             android:label="@string/title_activity_edit__profile_"
             android:launchMode="singleTask"
@@ -485,6 +545,10 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"
             android:windowSoftInputMode="stateHidden" />
+
+        <meta-data android:name="com.facebook.sdk.ClientToken"
+            android:value="@string/facebook_client_token"/>
+
         <meta-data
             android:name="com.mixpanel.android.MPConfig.ResourcePackageName"
             android:value="@string/package_name" />
@@ -499,61 +563,79 @@
             android:value="5d7cbd43b4b1467966daba64e56d7b36" />
 
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.Mobile_Site_Activity"
             android:label="@string/title_activity_mobile__site_"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Store.DomainLookup"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.ProductGallery.Product_Detail_Activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.ProductGallery.Product_Detail_Activity_V45"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.EditImageActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.AccountDetails.AccountInfoActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.CustomPage.CreateCustomPageActivity"
             android:launchMode="singleTask"
             android:process=":createcustompageprocessboost"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.SocialSharingActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.AccountInfoActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.Boost360ExtensionsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Business_Enquiries.BusinessEnqUpdateDetails"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQMainAcivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQ_QandA_Activity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.darsh.multipleimageselect.activities.AlbumSelectActivity"
+            android:exported="false"
             android:theme="@style/MultipleImageSelectTheme">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.darsh.multipleimageselect.activities.ImageSelectActivity"
+            android:exported="false" />
 
         <service
             android:name="com.nowfloats.RiaFCM.RiaFirebaseMessagingService"
@@ -565,22 +647,27 @@
         </service>
 
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Analytics_Screen.SubscribersActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeSubscribe" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Analytics_Screen.ShowVmnCallActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.customerassistant.ThirdPartyQueriesActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.customerassistant.ThirdPartySuggestionDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Analytics_Screen.VmnCallCardsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
@@ -590,54 +677,68 @@
             android:authorities="${applicationId}.boost.provider" /> <!-- <provider -->
         <!-- android:name="com.nowfloats.riachatsdk.database.ChatContentProvider" -->
         <!-- android:authorities="${applicationId}.riachatsdk.provider" /> -->
-        <service android:name="com.nowfloats.ProductGallery.Service.MultipleImageUploadService" />
+        <service android:name="com.nowfloats.ProductGallery.Service.MultipleImageUploadService"
+            android:exported="false"/>
 
         <activity
+            android:exported="false"
             android:name="com.nowfloats.SiteAppearance.SiteAppearanceActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.AccrossVerticals.domain.DomainDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.ProductGallery.ProductGalleryActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.CustomPage.CustomPageActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Image_Gallery.ImageGalleryActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.CreateOffersActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.OffersFullScreenActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.sellerprofile.SellerProfileActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.PreSignUp.KitsunePreSignUpActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Store.ProductCheckoutActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.RiaWebViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Analytics_Screen.SearchRankingActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.managenotification.CallerInfoDialog"
             android:autoRemoveFromRecents="true"
             android:configChanges="mcc|mnc|locale|keyboard|keyboardHidden|screenLayout|fontScale|uiMode|orientation|screenSize|layoutDirection"
@@ -647,109 +748,138 @@
             android:theme="@style/Theme.AppCompat.Light.Dialog"
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.signup.UI.UI.RiaChatInitActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.manageinventory.SellerAnalyticsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.manageinventory.PaymentSettingsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.manageinventory.OrderListActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.manageinventory.OrderDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Store.NewPricingPlansActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.FacebookWildFireActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.GoogleWildFireActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.Mobile_Load_Html_Activity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.WildFireAdsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Store.YourPurchasedPlansActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Store.TopUpPlansActivity"
             android:launchMode="singleTask" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.on_boarding.OnBoardingActivity"
             android:launchMode="singleTop"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Store.PaymentOptionsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.Store.ProductCheckout_v2Activity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.enablekeyboard.BoostKeyboardActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.ProductGallery.MultipleProductImageActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.hotel.placesnearby.PlacesNearByActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.hotel.placesnearby.PlacesNearByDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.manufacturing.projectandteams.ui.project.ProjectDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.manufacturing.projectandteams.ui.teams.TeamsDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.manufacturing.projectandteams.ui.teams.TeamsActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.manufacturing.projectandteams.ui.project.ProjectActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name="com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresDetailsActivity"
             android:screenOrientation="portrait" />
 
         <activity
+            android:exported="false"
             android:name="com.nowfloats.helper.AppFragmentContainerActivity"
             android:screenOrientation="portrait" />
 
         <activity
+            android:exported="false"
             android:name="com.nowfloats.helper.ReferralTransActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent.AppCompact" />
 
         <activity
+            android:exported="false"
             android:name="com.nowfloats.helper.LogoutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent.AppCompact" />
@@ -764,11 +894,17 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
+        <provider android:authorities="com.facebook.app.FacebookContentProvider539836972828386"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true" />
+
         <activity
+            android:exported="false"
             android:name="zendesk.support.guide.HelpCenterActivity"
             android:theme="@style/ZendeskSdkTheme.Light" />
 
         <activity
+            android:exported="false"
             android:name="zendesk.support.requestlist.RequestListActivity"
             android:theme="@style/ZendeskSdkTheme.Light" />
     </application>

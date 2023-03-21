@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.framework.views.customViews.CustomCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_158"
+        app:cardCornerRadius="@dimen/size_20">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:background="@drawable/red_gradient"
+                android:layout_height="@dimen/size_122"
+                android:orientation="vertical">
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_title_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bold"
+                    android:gravity="start"
+                    android:includeFontPadding="false"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:lineSpacingMultiplier="0.8"
+                    android:text="5+ features"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_26"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_title_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:gravity="start"
+                    android:includeFontPadding="false"
+                    android:lineSpacingMultiplier="0.8"
+                    android:text="are waiting to be activated."
+                    android:textAlignment="gravity"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_14"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_title_2"
+                    app:layout_constraintStart_toStartOf="@+id/tv_title_2"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title_2" />
+
+                <com.framework.views.customViews.CustomCardView
+                    android:id="@+id/icon_1"
+                    android:layout_width="@dimen/size_36"
+                    android:layout_height="@dimen/size_36"
+                    app:cardCornerRadius="@dimen/size_7"
+                    android:alpha="0.5"
+                    app:cardElevation="@dimen/size_2"
+                    android:layout_marginEnd="@dimen/size_10"
+                    app:layout_constraintBottom_toBottomOf="@+id/icon_2"
+                    app:layout_constraintEnd_toStartOf="@+id/icon_2"
+                    app:layout_constraintTop_toTopOf="@+id/icon_2">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="@dimen/size_22"
+                        android:layout_height="@dimen/size_22"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_demo_4" />
+
+                </com.framework.views.customViews.CustomCardView>
+
+                <com.framework.views.customViews.CustomCardView
+                    android:id="@+id/icon_2"
+                    android:layout_width="@dimen/size_36"
+                    android:layout_height="@dimen/size_36"
+                    app:cardCornerRadius="@dimen/size_7"
+                    android:alpha="0.80"
+                    android:layout_marginEnd="@dimen/size_10"
+                    app:cardElevation="@dimen/size_2"
+                    app:layout_constraintBottom_toBottomOf="@+id/icon_3"
+                    app:layout_constraintEnd_toStartOf="@+id/icon_3"
+                    app:layout_constraintTop_toTopOf="@+id/icon_3">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="@dimen/size_22"
+                        android:layout_height="@dimen/size_22"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_demo_4" />
+
+                </com.framework.views.customViews.CustomCardView>
+
+                <com.framework.views.customViews.CustomCardView
+                    android:id="@+id/icon_3"
+                    android:layout_width="@dimen/size_36"
+                    android:layout_height="@dimen/size_36"
+                    app:cardCornerRadius="@dimen/size_7"
+                    app:cardElevation="@dimen/size_2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_title_3"
+                    app:layout_constraintStart_toStartOf="@+id/tv_title_3"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title_3">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="@dimen/size_22"
+                        android:layout_height="@dimen/size_22"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_demo_4" />
+
+                </com.framework.views.customViews.CustomCardView>
+
+                <com.framework.views.customViews.CustomCardView
+                    android:id="@+id/icon_4"
+                    android:layout_width="@dimen/size_36"
+                    android:layout_height="@dimen/size_36"
+                    app:cardCornerRadius="@dimen/size_7"
+                    app:cardElevation="@dimen/size_2"
+                    android:alpha="0.80"
+                    android:layout_marginStart="@dimen/size_10"
+                    app:layout_constraintBottom_toBottomOf="@+id/icon_3"
+                    app:layout_constraintStart_toEndOf="@+id/icon_3"
+                    app:layout_constraintTop_toTopOf="@+id/icon_3">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="@dimen/size_22"
+                        android:layout_height="@dimen/size_22"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_demo_4" />
+
+                </com.framework.views.customViews.CustomCardView>
+
+                <com.framework.views.customViews.CustomCardView
+                    android:id="@+id/icon_5"
+                    android:layout_width="@dimen/size_36"
+                    android:layout_height="@dimen/size_36"
+                    app:cardCornerRadius="@dimen/size_7"
+                    android:alpha="0.5"
+                    android:layout_marginStart="@dimen/size_10"
+                    app:cardElevation="@dimen/size_2"
+                    app:layout_constraintBottom_toBottomOf="@+id/icon_4"
+                    app:layout_constraintStart_toEndOf="@+id/icon_4"
+                    app:layout_constraintTop_toTopOf="@+id/icon_4">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="@dimen/size_22"
+                        android:layout_height="@dimen/size_22"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_demo_4" />
+
+                </com.framework.views.customViews.CustomCardView>
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/customImageView11"
+                    android:layout_width="@dimen/size_22"
+                    android:layout_height="@dimen/size_22"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:layout_marginEnd="@dimen/size_11"
+                    android:src="@drawable/ic_close_white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_36"
+                android:background="@color/white"
+                android:gravity="center">
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:fontFamily="@font/semi_bold"
+                    android:gravity="center"
+                    android:text="View features"
+                    android:textColor="@color/red_DE3C3C"
+                    app:textType="BODY_3" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="@dimen/size_14"
+                    android:layout_height="@dimen/size_14"
+                    android:layout_marginStart="@dimen/size_4"
+                    android:tint="@color/red_DE3C3C"
+                    android:src="@drawable/ic_arrow_purple"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.framework.views.customViews.CustomCardView>
+</layout>

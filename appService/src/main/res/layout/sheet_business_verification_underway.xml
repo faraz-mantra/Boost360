@@ -47,11 +47,11 @@
         app:textType="HEADING_7" />
 
       <com.framework.views.customViews.CustomTextView
+        android:id="@+id/process_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_4"
         android:gravity="center"
-        android:text="This process usually takes 1 working day. Once verified we will notify you. If you want to make any change to above account details, please write to ria@nowfloats.com with this screenshot attached."
         android:textColor="@color/gray_828282"
         app:textType="CAPTION" />
 

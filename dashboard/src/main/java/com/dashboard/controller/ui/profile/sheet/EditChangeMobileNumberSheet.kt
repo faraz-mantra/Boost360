@@ -1,6 +1,8 @@
 package com.dashboard.controller.ui.profile.sheet
 
+import android.content.Context
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.addTextChangedListener
 import com.dashboard.R
 import com.dashboard.databinding.SheetChangeMobileNumberBinding
@@ -12,6 +14,8 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
+import java.util.*
+import kotlin.concurrent.schedule
 
 class EditChangeMobileNumberSheet : BaseBottomSheetDialog<SheetChangeMobileNumberBinding, UserProfileViewModel>() {
 
@@ -36,8 +40,19 @@ class EditChangeMobileNumberSheet : BaseBottomSheetDialog<SheetChangeMobileNumbe
     binding?.cetPhone?.requestFocus()
     baseActivity.showKeyBoard(binding?.cetPhone)
     setOnClickListener(binding?.btnPublish, binding?.rivCloseBottomSheet)
+    if(mobile.isNullOrEmpty()){
+      binding?.titleNum?.text="Add mobile number"
+    }else{
+      binding?.titleNum?.text="Changing mobile number"
+    }
     binding?.cetPhone?.addTextChangedListener {
       binding?.btnPublish?.isEnabled = (it?.length == 10)
+    }
+    binding?.cetPhone?.requestFocus()
+    Timer().schedule(500){
+      binding?.cetPhone?.let {
+        showSoftKeyboard(it)
+      }
     }
   }
 
@@ -58,6 +73,13 @@ class EditChangeMobileNumberSheet : BaseBottomSheetDialog<SheetChangeMobileNumbe
         })
       }
       binding?.rivCloseBottomSheet -> dismiss()
+    }
+  }
+
+  fun showSoftKeyboard(view: View) {
+    if (view.requestFocus()) {
+      val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+      imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
     }
   }
 

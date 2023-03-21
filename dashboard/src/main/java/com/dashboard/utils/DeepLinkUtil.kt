@@ -34,6 +34,7 @@ const val latest_updates ="Latest_Updates"
 const val featured_image ="Featured_Image"
 const val doctor_profile ="Doctor_Profile"
 const val trip_advisor ="Trip_Advisor"
+const val trip_advisor_rating ="trip_advisor_rating"
 const val nearby_places ="Nearby_Places"
 const val business_kyc ="Business_Kyc"
 const val facebook_chat = "facebookchat"
@@ -70,6 +71,8 @@ const val deeplink_setings = "settings"
 const val deeplink_socailsharing = "social"
 const val deeplink_profile = "profile"
 const val deeplink_contact = "contact"
+const val deeplink_service_list = "service_list"
+const val deeplink_room_booking = "room_booking"
 const val deeplink_bizaddress = "address"
 const val deeplink_bizhours = "hours"
 const val deeplink_bizlogo = "logo"
@@ -100,6 +103,7 @@ const val deeplink_digital_channels = "digital_channels"
 const val deeplink_call_tracker_add_on = "call_tracker_add_on"
 const val deeplink_service_catalogue = "service_catalogue"
 const val deeplink_product_catalogue = "product_catalogue"
+const val deeplink_product_catalog = "product_catalog"
 const val deeplink_ecommerce_setting = "e_commerce_setting"
 const val deeplink_appointment_setting = "appointment_setting"
 const val deeplink_all_custom_pages = "all_custom_pages"
@@ -142,6 +146,7 @@ const val deeplink_book_video_consultation = "book_video_consultation"
 const val deeplink_add_doctor = "add_doctor"
 const val deeplink_add_new_room_type = "add_new_room_type"
 const val deeplink_post_seasonal_offer = "post_seasonal_offer"
+const val deeplink_offer_list = "offer_list"
 const val deeplink_add_nearby_attraction = "add_nearby_attraction"
 const val deeplink_add_featured_image = "add_featured_image"
 const val deeplink_update_studio = "update_studio"
@@ -181,9 +186,9 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(facebookpage)) {
           likeUsFacebook(baseActivity, "/reviews/")
         } else if (url.contains(deeplink_update)) {
-          baseActivity.startPostUpdate()
+          baseActivity.startPostUpdate(session)
         } else if (url.contains(deeplink_featuredimage)) {
-          baseActivity.startBusinessProfileDetailEdit(session)
+          baseActivity.startFeatureLogo(session)
         } else if (session.isProduct() && url.contains(addProduct)) {
           baseActivity.startAddServiceProduct(session)
         } else if (session.isService() && url.contains(addService)) {
@@ -234,6 +239,10 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startBusinessProfileDetailEdit(session)
         } else if (url.contains(deeplink_contact)) {
           baseActivity.startBusinessInfoEmail(session)
+        } else if (url.contains(deeplink_service_list)) {
+          baseActivity.startListServiceProduct(session)
+        } else if (url.contains(deeplink_room_booking)) {
+          baseActivity.startBookTable(session)
         } else if (url.contains(deeplink_bizaddress)) {
           baseActivity.startBusinessAddress(session)
         } else if (url.contains(deeplink_bizhours)) {
@@ -276,7 +285,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startVmnCallCard(session)
         } else if (session.isService() && url.contains(deeplink_service_catalogue)) {
           baseActivity.startListServiceProduct(session)
-        } else if (session.isProduct() && url.contains(deeplink_product_catalogue)) {
+        } else if (session.isProduct() && (url.contains(deeplink_product_catalogue) || url.contains(deeplink_product_catalog))) {
           baseActivity.startListServiceProduct(session)
         } else if (session.isProduct() && url.contains(deeplink_ecommerce_setting)) {
           baseActivity.startEcommerceAppointmentSetting(session)
@@ -289,7 +298,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_analytics_website_visitors)) {
           baseActivity.startSiteViewAnalytic(session, "UNIQUE")
         } else if (url.contains(deeplink_background_images)) {
-          baseActivity.startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
+          baseActivity?.startBackgroundActivity(session, FragmentType.BACKGROUND_IMAGE_FRAGMENT)
         } else if (url.contains(deeplink_favicon)) {
           baseActivity.startFeviconImage(session)
         } else if (session.isProduct() && url.contains(deeplink_order_summary)) {
@@ -355,7 +364,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startFeatureLogo(session)
         }else if (url.contains(doctor_profile)) {
           baseActivity.startListDoctors(session)
-        }else if (url.contains(trip_advisor)) {
+        }else if (url.contains(trip_advisor) || url.contains(trip_advisor_rating)) {
           baseActivity.startListTripAdvisor(session)
         }else if (url.contains(nearby_places)) {
           baseActivity.startNearByView(session)
@@ -371,7 +380,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startTestimonial(session, true)
         } else if (session.isDocHos() && url.contains(deeplink_add_doctor)) {
           baseActivity.startAddStaff(session)
-        } else if (session.isHotel() && url.contains(deeplink_post_seasonal_offer)) {
+        } else if (session.isHotel() && (url.contains(deeplink_post_seasonal_offer) || url.contains(deeplink_offer_list))) {
           baseActivity.startAddSeasonalOffer(session)
         } else if (session.isHotel() && url.contains(deeplink_add_nearby_attraction)) {
           baseActivity.startNearByView(session, true)
@@ -423,9 +432,9 @@ fun AppCompatActivity.startBlog(urlN: String, session: UserSessionManager) {
   try {
     var url = urlN
     url = if (url.isNotEmpty()) {
-      "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)
+      session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?:""
     } else {
-      ("http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT) + tag_for_partners)
+      (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT) + tag_for_partners)
     }
     val uri = Uri.parse(url)
     val intent = Intent(Intent.ACTION_VIEW, uri)

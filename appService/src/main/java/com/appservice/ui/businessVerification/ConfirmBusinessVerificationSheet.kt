@@ -54,7 +54,7 @@ class ConfirmBusinessVerificationSheet : BaseBottomSheetDialog<SheetConfirmBusin
   private fun initUi() {
     if (imgUri == null) {
       apply { baseActivity.glideLoad(binding?.ivPanCardImage!!, resultData?.panDetails?.imageLink ?: "", R.drawable.placeholder_image_n) }
-    } else Glide.with(this).load(imgUri).into(binding?.ivPanCardImage!!)
+    } else Glide.with(requireActivity().getApplicationContext()).load(imgUri).into(binding?.ivPanCardImage!!)
     binding?.headingPanName?.text = panName
     binding?.headingPanNumber?.text = pan
     if (gst.isNullOrEmpty()) {

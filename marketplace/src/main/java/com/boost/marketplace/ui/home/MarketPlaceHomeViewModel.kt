@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
 import com.boost.dbcenterapi.data.api_model.GetFloatingPointWebWidgets.response.GetFloatingPointWebWidgetsResponse
+import com.boost.dbcenterapi.data.api_model.SubscriptionPackType
 import com.boost.dbcenterapi.data.remote.NewApiInterface
 import com.boost.dbcenterapi.data.rest.repository.MarketplaceNewRepository
 import com.boost.dbcenterapi.data.rest.repository.MarketplaceRepository
@@ -55,6 +56,7 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
     var bundleExistsBool: MutableLiveData<Boolean> = MutableLiveData()
     var activePremiumWidgetList: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var activePremiumWidgetList1: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
+    var subscriptionTypeResult: MutableLiveData<SubscriptionPackType> = MutableLiveData()
     var NewApiService =
         com.boost.cart.utils.Utils.getRetrofit(true).create(NewApiInterface::class.java)
     var ApiService = Utils.getRetrofit().create(NewApiInterface::class.java)
@@ -165,6 +167,10 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
         return activePremiumWidgetList1
     }
 
+    fun subscriptionTypeResult(): LiveData<SubscriptionPackType> {
+        return subscriptionTypeResult
+    }
+
     fun getCategoriesFromAssetJson(context: Context, expCode: String?) {
         val data: String? = Utils.getAssetJsonData(context)
         try {
@@ -266,7 +272,7 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                                     if (item.how_to_use_steps != null && item.how_to_use_steps!!.size > 0) Gson().toJson(
                                         item.how_to_use_steps
                                     ) else null,
-                                    item.how_to_use_title
+                                    item.how_to_use_title,null
                                 )
                             )
                         }
@@ -377,6 +383,7 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                                         item.benefits
                                     ) else null,
                                     item.desc,
+                                    null
                                 )
                             )
                         }
@@ -1234,4 +1241,21 @@ fun loadPurchasedItems(fpid: String, clientId: String) {
                 })
     )
 }
+
+    fun subscriptionType(auth: String, fpid:String) {
+        updatesLoader.postValue(true)
+        CompositeDisposable().add(
+            NewApiService.subscriptionType(auth, fpid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        subscriptionTypeResult.postValue(it)
+                        updatesLoader.postValue(false)
+                    },{
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
 }
