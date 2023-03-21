@@ -99,7 +99,6 @@ import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
 import static com.framework.webengageconstant.EventNameKt.ADDED_PHOTO_IN_UPDATE;
 import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_UPDATE_CREATE;
 import static com.framework.webengageconstant.EventNameKt.FB_PAGE_SHARING_ACTIVATED;
-import static com.framework.webengageconstant.EventNameKt.POST_AN_UPDATE;
 import static com.framework.webengageconstant.EventNameKt.POST_AN_UPDATE_CANCLED;
 import static com.framework.webengageconstant.EventNameKt.SUBSCRIBER_SHARING_ACTIVATED;
 import static com.framework.webengageconstant.EventNameKt.TWITTER_SHARING_ACTIVATED;
@@ -209,7 +208,6 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
         post.setText(getString(R.string.post_in_capital));
 
         post.setOnClickListener(v -> {
-            WebEngageController.trackEvent(POST_AN_UPDATE, EVENT_LABEL_NULL, session.getFpTag());
             String businessMessage = msg.getText().toString();
 
             if (TextUtils.isEmpty((businessMessage))) {
