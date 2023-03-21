@@ -838,6 +838,7 @@ class ComparePacksV3Activity :
                         prefs.storeCartValidityMonths("1")
                         packsv3pricingAdapter.notifyDataSetChanged()
                         packsv3footerAdapter.notifyDataSetChanged()
+                        packsAddonsAdapter.notifyDataSetChanged()
                     }
                     R.id.help_section -> {
 //                        val videoshelp = HelpVideosBottomSheet()
@@ -1379,12 +1380,11 @@ class ComparePacksV3Activity :
             for (singleFeature in bundles.included_features) {
                 for (item in featuresList!!) {
                     if (singleFeature.feature_code == item.feature_code) {
-                        bundleMonthlyMRP += priceCalculatorForYear(
+                        bundleMonthlyMRP +=
                             RootUtil.round(
                                 item.price - ((item.price * singleFeature.feature_price_discount_percent) / 100.0),
                                 2
-                            ) * minMonth, "", this
-                        )
+                            ) * minMonth
                     }
                 }
             }
@@ -1398,12 +1398,12 @@ class ComparePacksV3Activity :
                 )
             else
                 offeredBundlePrice = originalBundlePrice
-            val bundlePrice = if (prefs.getYearPricing())
-                "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                    .format(offeredBundlePrice.toInt()) + "/year"
-            else "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                .format(offeredBundlePrice.toInt()) + "/month"
-            tempBundlePrice.add(AddonsPacksIn(bundlePrice, true, -1))
+//            val bundlePrice = if (prefs.getYearPricing())
+//                "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+//                    .format(offeredBundlePrice.toInt()) + "/year"
+//            else "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+//                .format(offeredBundlePrice.toInt()) + "/month"
+            tempBundlePrice.add(AddonsPacksIn(offeredBundlePrice.toString(), true, -1))
         }
         addonsList.add(PackageAddonsCompares(tempBundlePrice, "", "Bundle price"))
 
