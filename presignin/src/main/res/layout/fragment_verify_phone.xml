@@ -129,7 +129,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:buttonTint="@color/colorPrimary"
-          android:checked="false"
+          android:checked="true"
           android:fontFamily="@font/regular"
           android:text="@string/send_me_business_updates_via"
           android:textColor="@color/black_2A2A2A"

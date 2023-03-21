@@ -1,12 +1,13 @@
 package com.boost.presignin.ui.newOnboarding
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextPaint
 import android.text.style.ClickableSpan
 import android.view.*
 import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.boost.presignin.R
 import com.boost.presignin.constant.FragmentType
@@ -16,25 +17,23 @@ import com.boost.presignin.dialog.WebViewDialog
 import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.authToken.AuthTokenDataItem
 import com.boost.presignin.model.login.VerificationRequestResult
-import com.boost.presignin.model.login.VerifyOtpResponse
 import com.boost.presignin.ui.mobileVerification.AuthBaseFragment
 import com.boost.presignin.ui.mobileVerification.FP_LIST_FRAGMENT
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.boost.presignin.ui.newOnboarding.bottomSheet.NeedHelpBottomSheet
 import com.boost.presignin.views.otptextview.OTPListener
 import com.framework.base.FRAGMENT_TYPE
-import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
-import com.framework.pref.clientId2
 import com.framework.smsVerification.SMSReceiver
 import com.framework.smsVerification.SmsManager
 import com.framework.utils.fromHtml
 import com.framework.utils.makeLinks
 import com.framework.webengageconstant.*
+
 
 class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSReceiver.OTPReceiveListener {
 
@@ -45,6 +44,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
   private var isSuccessApi = false
   var callIconItem: MenuItem? = null
   var helpTextItem: MenuItem? = null
+  private var resendCount = 0
 
   private val phoneNumber by lazy {
     arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
@@ -82,6 +82,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
     Handler().postDelayed({ onCodeSent() }, 500)
     SmsManager.initManager(baseActivity, this)
     initTncString()
+
   }
 
   override fun onClick(v: View) {
@@ -89,13 +90,47 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
     when (v) {
       binding?.tvVerifyOtp -> verify()
       binding?.tvResendOtpIn -> {
-        WebEngageController.trackEvent(PS_LOGIN_OTP_RESENT_CLICK, CLICK, NO_EVENT_VALUE)
-        binding?.pinOtpVerify?.setOTP("")
-        sendOtp(phoneNumber)
+        resendCount++
+        val remainingCount = 5 - resendCount
+        if (resendCount < 6) {
+          if (remainingCount == 0) {
+            showExhaustToast(v, "This was your last attempt to request OTP via SMS.")
+          } else {
+            showShortToast("You can resend the OTP $remainingCount times!")
+          }
+          WebEngageController.trackEvent(PS_LOGIN_OTP_RESENT_CLICK, CLICK, NO_EVENT_VALUE)
+          binding?.pinOtpVerify?.setOTP("")
+          sendOtp(phoneNumber)
+        } else {
+          showExhaustToast(
+            v,
+            "You have exceeded the number of limits. Please try again with new session"
+          )
+        }
       }
       binding?.tvPhoneNumber -> baseActivity.finish()
-      binding?.tvGetOtpOnCall -> WebEngageController.trackEvent(PS_LOGIN_OTP_ON_CALL_CLICK, CLICK, NO_EVENT_VALUE)
+      binding?.tvGetOtpOnCall -> WebEngageController.trackEvent(
+        PS_LOGIN_OTP_ON_CALL_CLICK,
+        CLICK,
+        NO_EVENT_VALUE
+      )
     }
+  }
+
+  private fun showExhaustToast(v: View, label: String) {
+    val inflater = layoutInflater
+    val layout: View = inflater.inflate(
+      R.layout.verify_phone_custom_toast,
+      v.findViewById(R.layout.verify_phone_custom_toast) as ViewGroup?
+    )
+    val textLabel = layout.findViewById<TextView>(R.id.veryToastTv)
+    textLabel.text = label
+    val toast = Toast(v.context)
+    toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0)
+    toast.setGravity(Gravity.BOTTOM, 0, 200)
+    toast.duration = Toast.LENGTH_LONG
+    toast.view = layout
+    toast.show()
   }
 
   override fun onResume() {
@@ -155,7 +190,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
 
   private fun onCodeSent() {
     binding?.tvResendOtpIn?.setTextColor(getColor(R.color.colorAccent))
-    countDown = object : com.boost.presignin.timer.CountDownTimer(30 * 1000, 1000) {
+    countDown = object : com.boost.presignin.timer.CountDownTimer(60 * 1000, 1000) {
       override fun onTick(p0: Long) {
         binding?.tvResendOtpIn?.isEnabled = false
         val resendIn = getString(R.string.psn_resend_in);
