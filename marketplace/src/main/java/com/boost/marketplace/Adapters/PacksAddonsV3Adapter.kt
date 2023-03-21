@@ -36,14 +36,19 @@ class PacksAddonsV3Adapter(
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
-        holder.name.setText(upgradeList.get(position).title)
-        val adapter = PacksAddonsV3ImageAdapter(upgradeList.get(position).packsAvailableIn, activity)
+        if(position==0)
+            holder.name.setText("Click on each pack icon for details")
+        else if(position==1)
+            holder.name.setText("Pack price*")
+        else
+            holder.name.setText(upgradeList.get(position).title)
+        val adapter = PacksAddonsV3ImageAdapter(upgradeList.get(position).packsAvailableIn, myAddonsListener, activity)
         holder.recyclerView.adapter = adapter
+        myAddonsListener.onAllRecyclerView(holder.recyclerView, position == upgradeList.size-1)
         if(position == upgradeList.size-1){
             holder.dummyLine.visibility = View.GONE
         }
         holder.name.setOnClickListener {
-
             myAddonsListener.onPaidAddonsClicked(upgradeList.get(position).featureCode)
         }
     }
