@@ -1121,7 +1121,6 @@ public class Analytics_Fragment extends Fragment {
          * If not new pricing plan
          */
         if (!WidgetKey.isNewPricingPlan) {
-            WebEngageController.trackEvent(SUBSCRIBERS, EVENT_LABEL_NULL, session.getFpTag());
             openSubscriberActivity();
         } else {
             String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_SUBSCRIPTION, WidgetKey.WIDGET_PROPERTY_SUBSCRIPTION);
@@ -1129,7 +1128,6 @@ public class Analytics_Fragment extends Fragment {
             if (value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue())) {
                 Toast.makeText(getContext(), getString(R.string.message_feature_not_available), Toast.LENGTH_LONG).show();
             } else {
-                WebEngageController.trackEvent(SUBSCRIBERS, EVENT_LABEL_NULL, session.getFpTag());
                 openSubscriberActivity();
             }
         }

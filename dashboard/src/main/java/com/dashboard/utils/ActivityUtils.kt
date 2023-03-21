@@ -477,8 +477,6 @@ fun AppCompatActivity.startProductGallery(session: UserSessionManager?) {
 }
 
 fun AppCompatActivity.startTestimonial(session: UserSessionManager?, isAdd: Boolean = false) {
-  val text = if (isAdd) ADD_TESTIMONIAL_PAGE else TESTIMONIAL_PAGE
-  WebEngageController.trackEvent(text, CLICK, TO_BE_ADDED)
 //    val webIntent = Intent(this, Class.forName("com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity"))
 //    webIntent.putExtra("IS_ADD", isAdd)
 //    startActivity(webIntent)
