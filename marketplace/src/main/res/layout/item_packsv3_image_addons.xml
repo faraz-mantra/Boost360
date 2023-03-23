@@ -73,7 +73,7 @@
             android:layout_height="80dp"
             android:gravity="center"
             tools:text="100"
-            tools:visibility="visiblity"
+            tools:visibility="visible"
             android:visibility="gone"
             android:fontFamily="@font/bold"
             android:textColor="@color/black"/>

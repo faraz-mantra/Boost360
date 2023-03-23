@@ -41,7 +41,7 @@
                     android:textFontWeight="400"
                     android:padding="16dp"
                     android:text="Customer \nTestimonials"
-                    android:textColor="@color/colorPrimary1"
+                    android:textColor="@color/common_text_color"
                     android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -49,7 +49,7 @@
 
                 <View
                     android:id="@+id/dummy_view1"
-                    android:layout_width="1dp"
+                    android:layout_width="0.91dp"
                     android:layout_height="0dp"
                     android:background="#73BBBBBB"
                     app:layout_constraintTop_toTopOf="@id/main_layout1"
