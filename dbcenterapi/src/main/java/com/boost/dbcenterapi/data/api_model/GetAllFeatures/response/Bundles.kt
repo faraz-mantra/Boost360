@@ -14,12 +14,12 @@ data class Bundles(
   val target_business_usecase: String?,
   val exclusive_to_categories: List<String>?,
   val exclusive_for_customers: List<String>?,
+  val exclusive_to_clientids: List<String>?,
   val how_to_activate: List<HowToActivate>?,
   val testimonials: List<Testimonial>?,
   val frequently_asked_questions: List<FrequentlyAskedQuestion>?,
   val benefits: List<String>?,
   val desc: String?,
-  val exclusive_To_clientIds:List<String>? =null,
   val Long_desc:String? =null
 ):Serializable,AppBaseRecyclerViewItem {
 

@@ -10,7 +10,6 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
-import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -24,21 +23,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.CartActivity
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
-import com.boost.dbcenterapi.data.api_model.mycurrentPlanV3.MyPlanV3
 import com.boost.dbcenterapi.data.api_model.packageAddonsCompares.AddonsPacksIn
 import com.boost.dbcenterapi.data.api_model.packageAddonsCompares.PackageAddonsCompares
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
-import com.boost.dbcenterapi.utils.Constants
 import com.boost.dbcenterapi.utils.SharedPrefs
-import com.boost.dbcenterapi.utils.Utils
 import com.boost.dbcenterapi.utils.WebEngageController
 import com.boost.marketplace.Adapters.*
 import com.boost.marketplace.R
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityComparePacksv3Binding
-import com.boost.marketplace.infra.utils.Utils1.priceCalculatorForYear
 import com.boost.marketplace.interfaces.*
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
 import com.boost.marketplace.ui.feature_details_popup.FeatureDetailsPopup
@@ -58,7 +53,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_feature_details.*
-import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -921,7 +915,7 @@ class ComparePacksV3Activity :
             viewModel.setCurrentExperienceCode(code, fpTag!!)
         }
         try {
-            viewModel.loadPackageUpdates()
+            viewModel.loadPackageUpdates(UserSessionManager(this).sourceClientId)
             viewModel.getAllFeaturesFromDB()
             refreshViewPager = true
         } catch (e: Exception) {
@@ -1013,7 +1007,7 @@ class ComparePacksV3Activity :
                                 item.exclusive_to_categories,
                                 object : TypeToken<List<String>>() {}.type
                             ),
-                            null, steps, null, faq, benefits, item.desc ?: ""
+                            null, null, steps, null, faq, benefits, item.desc ?: ""
                         )
                     )
                 }
