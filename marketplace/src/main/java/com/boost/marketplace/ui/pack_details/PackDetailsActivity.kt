@@ -921,7 +921,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 item.exclusive_to_categories,
                 object : TypeToken<List<String>>() {}.type
             ),
-            null, Gson().fromJson<List<HowToActivate>>(
+            null, null, Gson().fromJson<List<HowToActivate>>(
                 item.how_to_activate,
                 object : TypeToken<List<HowToActivate>>() {}.type
             ), Gson().fromJson<List<Testimonial>>(
@@ -1622,7 +1622,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                     bundlesModel.exclusive_to_categories,
                     object : TypeToken<List<String>>() {}.type
                 ),
-                null, steps, null, faq, benefits, bundlesModel.desc ?: ""
+                null, null, steps, null, faq, benefits, bundlesModel.desc ?: ""
             )
             //disabling marketplace gaps
 //            getAllowPackageToCart(bundle)
@@ -1790,7 +1790,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                             bundlesModel.exclusive_to_categories,
                             object : TypeToken<List<String>>() {}.type
                         ),
-                        null, steps, null, faq, benefits, bundlesModel.desc ?: ""
+                        null,null, steps, null, faq, benefits, bundlesModel.desc ?: ""
                     )
 
 
@@ -1981,7 +1981,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                             bundlesModel.exclusive_to_categories,
                             object : TypeToken<List<String>>() {}.type
                         ),
-                        null, steps, null, faq, benefits, bundlesModel.desc ?: ""
+                        null, null,steps, null, faq, benefits, bundlesModel.desc ?: ""
                     )
 
 
@@ -2170,7 +2170,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                             bundlesModel.exclusive_to_categories,
                             object : TypeToken<List<String>>() {}.type
                         ),
-                        null, steps, null, faq, benefits, bundlesModel.desc ?: ""
+                        null, null,steps, null, faq, benefits, bundlesModel.desc ?: ""
                     )
 
 
