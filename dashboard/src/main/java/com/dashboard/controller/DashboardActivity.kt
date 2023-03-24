@@ -28,6 +28,7 @@ import com.dashboard.model.live.welcomeData.*
 import com.dashboard.utils.*
 import com.dashboard.utils.DashboardTabs.Companion.fromUrl
 import com.dashboard.viewmodel.DashboardViewModel
+import com.framework.analytics.CleverTapController
 import com.framework.analytics.SentryController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -156,9 +157,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun UserSessionManager.initializeWebEngageLogin() {
-    WebEngageController.setUserContactInfoProperties(this)
-    WebEngageController.setUserContactInfoProperties(this)
     WebEngageController.setFPTag(this.fpTag)
+    WebEngageController.setFpId(this.fPID)
+    WebEngageController.setUserContactInfoProperties(this)
     WebEngageController.trackAttribute(this)
   }
 
