@@ -240,4 +240,6 @@ dependencies {
     implementation "org.koin:koin-androidx-fragment:$koin_version"
     implementation 'androidx.room:room-runtime:2.3.0'
     annotationProcessor 'androidx.room:room-compiler:2.3.0'
+
+    implementation 'com.clevertap.android:clevertap-android-sdk:4.7.4'
 }
