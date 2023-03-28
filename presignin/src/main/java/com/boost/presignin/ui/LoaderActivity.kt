@@ -108,6 +108,7 @@ class LoaderActivity : AppBaseActivity<ActivityLoaderBinding, LoginSignUpViewMod
       val response = it1 as? UserFpDetailsResponse
       if (it1.isSuccess() && response != null) {
         ProcessFPDetails(session).storeFPDetails(response)
+        session.storeSourceClientId(response.applicationId)
         setFPDetailsToSentry(session)
         setFPDetailsToUserExperior(session)
         FirestoreManager.initData(session.fpTag ?: "", session.fPID ?: "", clientId)
