@@ -21,6 +21,7 @@ import com.onboarding.nowfloats.model.googleAuth.FirebaseTokenResponse
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import org.json.JSONObject
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 import java.util.*
@@ -111,7 +112,7 @@ interface WithFloatTwoRemoteData {
   @POST(EndPoints.STORE_ONBOARDING_DATA)
   fun storeOnBoardingData(
     @Body onBoardingData: OnBoardingInfo
-  ): Observable<Response<Unit>>
+  ): Observable<Response<String?>>
 
   @Headers(
     "authority: api.whatismyip.com",

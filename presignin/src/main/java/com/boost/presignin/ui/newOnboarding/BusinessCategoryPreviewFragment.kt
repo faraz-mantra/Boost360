@@ -425,27 +425,26 @@ class BusinessCategoryPreviewFragment :
     override fun onPause() {
         super.onPause()
         val onBoardingParameters = Data()
-        onBoardingParameters.desktopPreview=desktopPreview!!
-        onBoardingParameters.mobilePreview=mobilePreview!!
-        onBoardingParameters.phoneNumber=phoneNumber!!
-        onBoardingParameters.categoryLiveName=categoryLiveName!!
-        onBoardingParameters.subCategoryID=subCategoryID!!
-        onBoardingParameters.selectedCategory= categoryModel.toString()
-        onBoardingParameters.whatsappConsent=whatsappConsent!!
-        onBoardingParameters.businessName=businessName!!
-        onBoardingParameters.domainName=businessDomain!!
-        onBoardingParameters.screen="Four"
-        val onBoardingData = OnBoardingInfo(phoneNumber!!, onBoardingParameters, session?.fPEmail!!,
-            clientId2)
-//        val gson = Gson()
-//        val jsonString = gson.toJson(onBoardingData)
-//        val jsonRequest = JSONObject(jsonString)
+        onBoardingParameters.desktopPreview = desktopPreview!!
+        onBoardingParameters.mobilePreview = mobilePreview!!
+        onBoardingParameters.phoneNumber = phoneNumber!!
+        onBoardingParameters.categoryLiveName = categoryLiveName!!
+        onBoardingParameters.subCategoryID = subCategoryID!!
+        onBoardingParameters.selectedCategory = categoryModel.toString()
+        onBoardingParameters.whatsappConsent = whatsappConsent!!
+        onBoardingParameters.businessName = businessName!!
+        onBoardingParameters.domainName = businessDomain!!
+        onBoardingParameters.screen = "Four"
+        val onBoardingData = OnBoardingInfo(
+            phoneNumber!!, onBoardingParameters, session?.fPEmail!!,
+            clientId2
+        )
         viewModel?.storeNewOnBoardingData(onBoardingData)
             ?.observeOnce(viewLifecycleOwner) {
                 if (it.isSuccess()) {
-                    Log.d("KAKAKAKAKAKAKAKAK", "KAKAKAKAKAKAKAKAK")
-                }else{
-                    Log.d("KAKAKAKAKAKAKAKAK", "FAILED")
+                    Log.d("KAKAKAKAKAKAKAKAK", "Success")
+                } else {
+                    Log.d("KAKAKAKAKAKAKAKAK", "Failure")
                 }
             }
     }

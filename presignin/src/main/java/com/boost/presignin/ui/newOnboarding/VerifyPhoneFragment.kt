@@ -276,7 +276,6 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
     isSuccessApi = true
     binding?.acceptTncPhone.visibility = View.VISIBLE
     binding?.linearWhatsApp?.visible()
-    moveToWelcomeScreen(phoneNumber)
   }
 
   private fun apiWhatsappOptin() {
