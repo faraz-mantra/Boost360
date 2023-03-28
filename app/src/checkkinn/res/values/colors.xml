@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <color name="primaryColor">#ffb900</color>
+  <color name="primaryColor">#5F2892</color>
   <color name="greenDark">#458b00</color>
   <color name="product_delete_btn">#ff3f3f</color>
 
@@ -20,7 +20,7 @@
   <color name="title_popup">#212121</color>
   <color name="gray">#565656</color>
   <color name="light_gray">#a1a1a1</color>
-  <color name="top_bar_color">#ffb900</color>
+  <color name="top_bar_color">#5F2892</color>
   <color name="background_grey">#f0f0f0</color>
   <color name="background_grey_onclick">#d0d0d0</color>
   <color name="white">#ffffff</color>
@@ -30,7 +30,7 @@
   <color name="grey">#a4a4a4</color>
   <color name="transparent">#00ffffff</color>
   <color name="light_black">#505050</color>
-  <color name="home_yellow">#FFB900</color>
+  <color name="home_yellow">#5F2892</color>
 
   <color name="pencil_shade">#aaaaaa</color>
   <color name="biz_msg_txt_color">#3c3c3c</color>
