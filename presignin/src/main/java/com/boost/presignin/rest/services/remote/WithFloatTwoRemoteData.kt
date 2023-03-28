@@ -9,16 +9,18 @@ import com.boost.presignin.model.login.ForgotPassRequest
 import com.boost.presignin.model.login.UserProfileVerificationRequest
 import com.boost.presignin.model.login.VerificationRequestResult
 import com.boost.presignin.model.login.VerifyOtpResponse
+import com.boost.presignin.model.onBoardingInfo.OnBoardingInfo
 import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.userprofile.BusinessProfileResponse
 import com.boost.presignin.model.userprofile.ConnectUserProfileResponse
 import com.boost.presignin.model.userprofile.ResponseMobileIsRegistered
 import com.boost.presignin.rest.EndPoints
 import com.framework.BuildConfig
+import com.google.gson.JsonObject
 import com.onboarding.nowfloats.model.googleAuth.FirebaseTokenResponse
 import io.reactivex.Observable
 import okhttp3.ResponseBody
-import retrofit2.Call
+import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.http.*
 import java.util.*
@@ -98,6 +100,18 @@ interface WithFloatTwoRemoteData {
   fun getFirebaseToken(
     @Query("clientId") client_id: String?
   ):Observable<Response<FirebaseTokenResponse>>
+
+  @GET(EndPoints.GET_STORED_DATA)
+  fun getOnBoardingData(
+    @Query("mobilenumber") mobileNumber: String?,
+    @Query("clientId") client_id: String?
+  ): Observable<Response<OnBoardingInfo>>
+
+  @Headers("Content-Type: application/json-patch+json")
+  @POST(EndPoints.STORE_ONBOARDING_DATA)
+  fun storeOnBoardingData(
+    @Body onBoardingData: OnBoardingInfo
+  ): Observable<Response<Unit>>
 
   @Headers(
     "authority: api.whatismyip.com",

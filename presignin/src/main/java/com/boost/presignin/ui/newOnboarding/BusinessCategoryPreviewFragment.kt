@@ -20,6 +20,8 @@ import com.boost.presignin.model.BusinessInfoModel
 import com.boost.presignin.model.authToken.saveAuthTokenData
 import com.boost.presignin.model.business.BusinessCreateRequest
 import com.boost.presignin.model.category.CategoryDataModel
+import com.boost.presignin.model.onBoardingInfo.Data
+import com.boost.presignin.model.onBoardingInfo.OnBoardingInfo
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
 import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.onboardingRequest.saveCategoryRequest
@@ -418,5 +420,33 @@ class BusinessCategoryPreviewFragment :
             job!!.cancel()
             super.onDestroyView()
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val onBoardingParameters = Data()
+        onBoardingParameters.desktopPreview=desktopPreview!!
+        onBoardingParameters.mobilePreview=mobilePreview!!
+        onBoardingParameters.phoneNumber=phoneNumber!!
+        onBoardingParameters.categoryLiveName=categoryLiveName!!
+        onBoardingParameters.subCategoryID=subCategoryID!!
+        onBoardingParameters.selectedCategory= categoryModel.toString()
+        onBoardingParameters.whatsappConsent=whatsappConsent!!
+        onBoardingParameters.businessName=businessName!!
+        onBoardingParameters.domainName=businessDomain!!
+        onBoardingParameters.screen="Four"
+        val onBoardingData = OnBoardingInfo(phoneNumber!!, onBoardingParameters, session?.fPEmail!!,
+            clientId2)
+//        val gson = Gson()
+//        val jsonString = gson.toJson(onBoardingData)
+//        val jsonRequest = JSONObject(jsonString)
+        viewModel?.storeNewOnBoardingData(onBoardingData)
+            ?.observeOnce(viewLifecycleOwner) {
+                if (it.isSuccess()) {
+                    Log.d("KAKAKAKAKAKAKAKAK", "KAKAKAKAKAKAKAKAK")
+                }else{
+                    Log.d("KAKAKAKAKAKAKAKAK", "FAILED")
+                }
+            }
     }
 }

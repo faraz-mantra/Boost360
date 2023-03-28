@@ -21,6 +21,8 @@ import com.boost.presignin.model.authToken.saveAuthTokenData
 import com.boost.presignin.model.business.BusinessCreateRequest
 import com.boost.presignin.model.category.CategoryDataModel
 import com.boost.presignin.model.location.LocationResponse
+import com.boost.presignin.model.onBoardingInfo.Data
+import com.boost.presignin.model.onBoardingInfo.OnBoardingInfo
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
 import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.onboardingRequest.saveCategoryRequest
@@ -107,8 +109,10 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     setOnClickListeners()
     binding?.addressInputLayout?.etInput?.setText(businessName?.replace("\\s+".toRegex(), "")?.lowercase())
     if (doNewFlowEnabled!!){
+      binding?.tvNextStep3?.text = "Next"
       apiCheckDomain { websiteNameFieldUiVisibility(websiteNameFieldVisibility = 3) }
     } else {
+      binding?.tvNextStep3?.text = "Launch my website"
       apiCheckDomain { websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1) }
     }
     fetchLocationAndSendWEEvent()
@@ -178,10 +182,15 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         if (hasFocus) binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_dark_stroke_et_onboard)
       }
 
-    binding?.addressInputLayout?.ivIcon?.setOnClickListener {
+    binding.addressInputLayout.ivIcon.setOnClickListener {
 //      websiteNameFieldUiVisibility()
 //      baseActivity.showKeyBoard(binding?.addressInputLayout?.etInput)
-      baseActivity.onNavPressed()
+      if (doNewFlowEnabled!!){
+         val abc=getTopFragment()
+         Toast.makeText(context,abc?.tag,Toast.LENGTH_SHORT).show()
+      }else{
+        baseActivity.onNavPressed()
+      }
     }
   }
 
@@ -384,5 +393,30 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         }
       }
     }
+  }
+
+  override fun onPause() {
+    super.onPause()
+    val onBoardingParameters = Data()
+    onBoardingParameters.desktopPreview=desktopPreview!!
+    onBoardingParameters.mobilePreview=mobilePreview!!
+    onBoardingParameters.phoneNumber=phoneNumber!!
+    onBoardingParameters.categoryLiveName=categoryLiveName!!
+    onBoardingParameters.subCategoryID=subCategoryID!!
+    onBoardingParameters.selectedCategory= categoryModel.toString()
+    onBoardingParameters.whatsappConsent=whatsappConsent!!
+    onBoardingParameters.businessName=businessName!!
+    onBoardingParameters.domainName=""
+    onBoardingParameters.screen="Two"
+    val onBoardingData = OnBoardingInfo(phoneNumber!!, onBoardingParameters, session?.fPEmail!!,
+      clientId2)
+    viewModel?.storeNewOnBoardingData(onBoardingData)
+      ?.observeOnce(viewLifecycleOwner) {
+        if (it.isSuccess()) {
+          Log.d("KAKAKAKAKAKAKAKAK", "KAKAKAKAKAKAKAKAK")
+        }else{
+          Log.d("KAKAKAKAKAKAKAKAK", "FAILED")
+        }
+      }
   }
 }

@@ -1,6 +1,7 @@
 package com.boost.presignin.ui.newOnboarding
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.capitalizeUtil
@@ -9,8 +10,13 @@ import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.LayoutSetUpMyWebsiteStep2Binding
 import com.boost.presignin.model.category.CategoryDataModel
+import com.boost.presignin.model.onBoardingInfo.Data
+import com.boost.presignin.model.onBoardingInfo.OnBoardingInfo
+import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.afterTextChanged
-import com.framework.models.BaseViewModel
+import com.framework.extensions.observeOnce
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId2
 import com.framework.utils.fromHtml
 import com.framework.utils.showKeyBoard
 import com.framework.views.blur.setBlur
@@ -18,8 +24,8 @@ import com.framework.webengageconstant.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Binding, BaseViewModel>() {
-
+class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Binding, LoginSignUpViewModel>() {
+  private var session: UserSessionManager? = null
   companion object {
     @JvmStatic
     fun newInstance(bundle: Bundle? = null): SetupMyWebsiteStep2Fragment {
@@ -61,20 +67,21 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
     return R.layout.layout_set_up_my_website_step_2
   }
 
-  override fun getViewModelClass(): Class<BaseViewModel> {
-    return BaseViewModel::class.java
+  override fun getViewModelClass(): Class<LoginSignUpViewModel> {
+    return LoginSignUpViewModel::class.java
   }
 
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(PS_BUSINESS_PROFILE_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
+    session = UserSessionManager(baseActivity)
     binding?.includeMobileView?.blurView?.setBlur(baseActivity, 1F)
     binding?.includeMobileView?.tvCategoryName?.text = categoryModel?.getCategoryWithoutNewLine() ?: ""
     setOnClickListeners()
   }
 
   private fun setOnClickListeners() {
-    binding?.tvNextStep2?.setOnClickListener {
+    binding?.tvNextStep2.setOnClickListener {
       val bName = binding?.businessNameInputLayout?.etInput?.text.toString()
       if (validateBusinessName(bName)) {
         if (checkForConsecutiveDigits(bName)) {
@@ -180,4 +187,31 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
     return result
   }
 
+  override fun onPause() {
+    super.onPause()
+    val onBoardingParameters = Data()
+    onBoardingParameters.desktopPreview=desktopPreview!!
+    onBoardingParameters.mobilePreview=mobilePreview!!
+    onBoardingParameters.phoneNumber=phoneNumber!!
+    onBoardingParameters.categoryLiveName=categoryLiveName!!
+    onBoardingParameters.subCategoryID=subCategoryID!!
+    onBoardingParameters.selectedCategory= categoryModel.toString()
+    onBoardingParameters.whatsappConsent=whatsappConsent!!
+    onBoardingParameters.businessName=binding?.businessNameInputLayout?.etInput?.text.toString()
+    onBoardingParameters.domainName=""
+    onBoardingParameters.screen="One"
+    val onBoardingData = OnBoardingInfo(phoneNumber!!, onBoardingParameters, session?.fPEmail!!,
+      clientId2)
+//    val gson = Gson()
+//    val jsonString = gson.toJson(onBoardingData)
+//    val jsonRequest = JSONObject(jsonString)
+    viewModel?.storeNewOnBoardingData(onBoardingData)
+      ?.observeOnce(viewLifecycleOwner) {
+        if (it.isSuccess()) {
+          Log.d("KAKAKAKAKAKAKAKAK", "KAKAKAKAKAKAKAKAK")
+        }else{
+          Log.d("KAKAKAKAKAKAKAKAK", "FAILED")
+        }
+      }
+  }
 }

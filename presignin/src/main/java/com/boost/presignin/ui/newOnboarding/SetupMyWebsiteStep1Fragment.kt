@@ -16,6 +16,8 @@ import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.category.ApiCategoryResponseCategory
 import com.boost.presignin.model.category.CategoryDataModel
 import com.boost.presignin.model.category.getCategoryLiveData
+import com.boost.presignin.model.onBoardingInfo.Data
+import com.boost.presignin.model.onBoardingInfo.OnBoardingInfo
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
 import com.boost.presignin.recyclerView.RecyclerItemClickListener
@@ -25,6 +27,8 @@ import com.boost.presignin.viewmodel.CategoryVideoModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId2
 import com.framework.utils.hideKeyBoard
 import com.framework.utils.onDone
 import com.framework.utils.onRightDrawableClicked
@@ -54,6 +58,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
   private var categoryNoDataList: ArrayList<CategoryDataModel> = arrayListOf()
   private var selectedCategory: CategoryDataModel? = null
   private var selectedCategoryLive: ApiCategoryResponseCategory? = null
+  private var session: UserSessionManager? = null
 
   private val phoneNumber by lazy {
     arguments?.getString(IntentConstant.EXTRA_PHONE_NUMBER.name)
@@ -87,6 +92,10 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     arguments?.getString(IntentConstant.EXTRA_BUSINESS_NAME.name)
   }
 
+  private val domainName by lazy {
+    arguments?.getString(IntentConstant.BUSINESS_DOMAIN.name)
+  }
+
   override fun getLayout(): Int {
     return R.layout.layout_set_up_my_website_step_1
   }
@@ -97,6 +106,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
 
   override fun onCreateView() {
     super.onCreateView()
+    session = UserSessionManager(baseActivity)
     WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_SELECTION_SCREEN_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListeners()
     initialize()
@@ -351,11 +361,38 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
       putSerializable(IntentConstant.CATEGORY_DATA.name, selectedCategory)
       putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent ?: false)
       putString(IntentConstant.EXTRA_BUSINESS_NAME.name, businessName)
+      putString(IntentConstant.BUSINESS_DOMAIN.name,domainName)
     }), true)
   }
 
   fun setSelectedCat(category: CategoryDataModel) {
     selectedCategory = category
     binding?.tvNextStep1?.isEnabled = true
+  }
+
+  override fun onPause() {
+    super.onPause()
+    val onBoardingParameters = Data()
+    onBoardingParameters.desktopPreview=desktopPreview!!
+    onBoardingParameters.mobilePreview=mobilePreview!!
+    onBoardingParameters.phoneNumber=phoneNumber!!
+    onBoardingParameters.categoryLiveName=categoryLiveName!!
+    onBoardingParameters.subCategoryID=subCategoryID!!
+    onBoardingParameters.selectedCategory= categoryModel.toString()
+    onBoardingParameters.whatsappConsent=whatsappConsent!!
+    onBoardingParameters.businessName=businessName!!
+    onBoardingParameters.domainName=domainName!!
+    onBoardingParameters.screen="Three"
+    val onBoardingData = OnBoardingInfo(phoneNumber!!, onBoardingParameters, session?.fPEmail!!,
+      clientId2
+    )
+    viewModel?.storeNewOnBoardingData(onBoardingData)
+      ?.observeOnce(viewLifecycleOwner) {
+        if (it.isSuccess()) {
+          Log.d("KAKAKAKAKAKAKAKAK", "KAKAKAKAKAKAKAKAK")
+        }else{
+          Log.d("KAKAKAKAKAKAKAKAK", "FAILED")
+        }
+      }
   }
 }

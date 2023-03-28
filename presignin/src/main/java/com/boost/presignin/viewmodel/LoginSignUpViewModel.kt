@@ -8,6 +8,7 @@ import com.boost.presignin.model.activatepurchase.ActivatePurchasedOrderRequest
 import com.boost.presignin.model.business.BusinessCreateRequest
 import com.boost.presignin.model.login.ForgotPassRequest
 import com.boost.presignin.model.login.UserProfileVerificationRequest
+import com.boost.presignin.model.onBoardingInfo.OnBoardingInfo
 import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.verification.RequestValidateEmail
 import com.boost.presignin.model.verification.RequestValidatePhone
@@ -15,7 +16,6 @@ import com.boost.presignin.rest.repository.*
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
-import io.reactivex.Observable
 
 class LoginSignUpViewModel : BaseViewModel() {
 
@@ -102,4 +102,13 @@ class LoginSignUpViewModel : BaseViewModel() {
   fun getUserLocation(locationUri: String): LiveData<BaseResponse>  {
     return WithFloatTwoRepository.getUserLocation(locationUri).toLiveData()
   }
+
+  fun getNewOnBoardingData(phoneNumber: String, clientId:String): LiveData<BaseResponse>  {
+    return WithFloatTwoRepository.getOnBoardingData(phoneNumber,clientId).toLiveData()
+  }
+
+  fun storeNewOnBoardingData(onBoardingData: OnBoardingInfo): LiveData<BaseResponse>  {
+    return WithFloatTwoRepository.storeNewOnBoardingData(onBoardingData).toLiveData()
+  }
+
 }

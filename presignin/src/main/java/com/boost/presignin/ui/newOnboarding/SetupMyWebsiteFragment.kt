@@ -2,7 +2,9 @@ package com.boost.presignin.ui.newOnboarding
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -12,15 +14,18 @@ import com.boost.presignin.constant.FragmentType
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.FragmentSetupMyWebsiteBinding
 import com.boost.presignin.helper.WebEngageController
+import com.boost.presignin.model.onBoardingInfo.OnBoardingInfo
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
 import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.userprofile.BusinessProfileResponse
 import com.boost.presignin.ui.login.LoginActivity
 import com.boost.presignin.ui.newOnboarding.bottomSheet.NeedHelpBottomSheet
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
+import com.framework.extensions.observeOnce
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil
 import com.framework.pref.APPLICATION_JIO_ID
 import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId2
 import com.framework.webengageconstant.CLICK
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PS_LOGIN_OTP_NEED_HELP_CLICK
@@ -65,15 +70,96 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
     this.session = UserSessionManager(baseActivity)
     doNewFlowEnabled = FirebaseRemoteConfigUtil.doNewOnBoardingJourneyEnabled()
     if (doNewFlowEnabled!!){
-       addFragment(R.id.inner_container, SetupMyWebsiteStep2Fragment.newInstance(Bundle().apply {
-        putString(IntentConstant.DESKTOP_PREVIEW.name, null)
-        putString(IntentConstant.MOBILE_PREVIEW.name, null)
-        putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
-        putString(IntentConstant.CATEGORY_SUGG_UI.name, null)
-        putString(IntentConstant.SUB_CATEGORY_ID.name, null)
-        putSerializable(IntentConstant.CATEGORY_DATA.name, null)
-        putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent!!)
-      }), true)
+      showProgress()
+      viewModel?.getNewOnBoardingData(phoneNumber!!, clientId2)
+        ?.observeOnce(viewLifecycleOwner) {
+          if (it.isSuccess()) {
+            hideProgress()
+            val onBoardingDataResponse = it as? OnBoardingInfo
+            if (onBoardingDataResponse?.data?.screen == null) {
+              addFragment(
+                R.id.inner_container,
+                SetupMyWebsiteStep2Fragment.newInstance(Bundle().apply {
+                  putString(IntentConstant.DESKTOP_PREVIEW.name, null)
+                  putString(IntentConstant.MOBILE_PREVIEW.name, null)
+                  putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+                  putString(IntentConstant.CATEGORY_SUGG_UI.name, null)
+                  putString(IntentConstant.SUB_CATEGORY_ID.name, null)
+                  putSerializable(IntentConstant.CATEGORY_DATA.name, null)
+                  putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent!!)
+                }),
+                true
+              )
+            }  else if (onBoardingDataResponse.data.screen == "One") {
+              addFragment(
+                R.id.inner_container,
+                SetupMyWebsiteStep2Fragment.newInstance(Bundle().apply {
+                  putString(IntentConstant.DESKTOP_PREVIEW.name, null)
+                  putString(IntentConstant.MOBILE_PREVIEW.name, null)
+                  putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+                  putString(IntentConstant.CATEGORY_SUGG_UI.name, null)
+                  putString(IntentConstant.SUB_CATEGORY_ID.name, null)
+                  putSerializable(IntentConstant.CATEGORY_DATA.name, null)
+                  putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent!!)
+                }),
+                true
+              )
+            }else if (onBoardingDataResponse.data.screen == "Two") {
+              addFragment(
+                R.id.inner_container, SetupMyWebsiteStep3Fragment.newInstance(
+                  Bundle().apply {
+                    putString(IntentConstant.DESKTOP_PREVIEW.name, null)
+                    putString(IntentConstant.MOBILE_PREVIEW.name, null)
+                    putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+                    putString(IntentConstant.CATEGORY_SUGG_UI.name, null)
+                    putString(IntentConstant.SUB_CATEGORY_ID.name, null)
+                    putSerializable(IntentConstant.CATEGORY_DATA.name, null)
+                    putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent ?: false)
+                    putString(IntentConstant.EXTRA_BUSINESS_NAME.name,onBoardingDataResponse.data.businessName)
+                  }), true
+              )
+            }else if (onBoardingDataResponse.data.screen == "Three"){
+              addFragment(
+                R.id.inner_container, SetupMyWebsiteStep1Fragment.newInstance(
+                  Bundle().apply {
+                    putString(IntentConstant.DESKTOP_PREVIEW.name, null)
+                    putString(IntentConstant.MOBILE_PREVIEW.name, null)
+                    putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+                    putString(IntentConstant.CATEGORY_SUGG_UI.name, null)
+                    putString(IntentConstant.SUB_CATEGORY_ID.name, null)
+                    putSerializable(IntentConstant.CATEGORY_DATA.name, null)
+                    putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent ?: false)
+                    putString(IntentConstant.EXTRA_BUSINESS_NAME.name, onBoardingDataResponse.data.businessName)
+                    putString(IntentConstant.BUSINESS_DOMAIN.name,onBoardingDataResponse.data.domainName)
+                  }), true
+              )
+            }else if (onBoardingDataResponse.data.screen == "Four"){
+              addFragment(R.id.inner_container, BusinessCategoryPreviewFragment.newInstance(Bundle().apply {
+                putString(IntentConstant.DESKTOP_PREVIEW.name, onBoardingDataResponse.data.desktopPreview)
+                putString(IntentConstant.MOBILE_PREVIEW.name, onBoardingDataResponse.data.mobilePreview)
+                putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+                putString(IntentConstant.CATEGORY_SUGG_UI.name, onBoardingDataResponse.data.categoryLiveName)
+                putString(IntentConstant.SUB_CATEGORY_ID.name, onBoardingDataResponse.data.subCategoryID)
+                putSerializable(IntentConstant.CATEGORY_DATA.name, onBoardingDataResponse.data.selectedCategory)
+                putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent ?: false)
+                putString(IntentConstant.EXTRA_BUSINESS_NAME.name, onBoardingDataResponse.data.businessName)
+                putString(IntentConstant.BUSINESS_DOMAIN.name,onBoardingDataResponse.data.domainName)
+              }), true)
+            }
+          } else {
+            hideProgress()
+            addFragment(R.id.inner_container, SetupMyWebsiteStep2Fragment.newInstance(Bundle().apply {
+              putString(IntentConstant.DESKTOP_PREVIEW.name, null)
+              putString(IntentConstant.MOBILE_PREVIEW.name, null)
+              putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+              putString(IntentConstant.CATEGORY_SUGG_UI.name, null)
+              putString(IntentConstant.SUB_CATEGORY_ID.name, null)
+              putSerializable(IntentConstant.CATEGORY_DATA.name, null)
+              putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent!!)
+            }), true)
+          }
+        }
+
     }
     else{
       addFragment(R.id.inner_container, SetupMyWebsiteStep1Fragment.newInstance(Bundle().apply {

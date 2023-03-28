@@ -9,11 +9,10 @@ import com.boost.presignin.rest.TaskCode
 import com.boost.presignin.rest.apiClients.WithFloatsApiTwoClient
 import com.boost.presignin.rest.services.remote.WithFloatTwoRemoteData
 import com.boost.presignin.model.login.UserProfileVerificationRequest
+import com.boost.presignin.model.onBoardingInfo.OnBoardingInfo
 import com.framework.base.BaseResponse
 import com.framework.pref.clientId
 import io.reactivex.Observable
-import okhttp3.ResponseBody
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.http.Body
 import java.util.HashMap
@@ -106,5 +105,13 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
 
   fun getUserLocation(locationUrl:String): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getIPInfo(locationUrl), TaskCode.GET_LOCATION)
+  }
+
+  fun getOnBoardingData(phoneNumber: String, clientId: String): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getOnBoardingData(phoneNumber,clientId), TaskCode.GET_ONBOARDING_DATA)
+  }
+
+  fun storeNewOnBoardingData(onBoardingData: OnBoardingInfo): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.storeOnBoardingData(onBoardingData), TaskCode.STORE_ONBOARDING_DATA)
   }
 }
