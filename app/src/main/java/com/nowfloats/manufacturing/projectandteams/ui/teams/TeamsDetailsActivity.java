@@ -566,7 +566,9 @@ public class TeamsDetailsActivity extends AppCompatActivity implements TeamsDeta
     @Override
     public void uploadImageURL(String url) {
         uploadedImageURL = url;
-        uploadDataToServer();
+        if (url != null) {
+            uploadDataToServer();
+        }
     }
 
     private void uploadDataToServer() {
