@@ -52,7 +52,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020153
+        versionCode 2020020154
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -65,7 +65,7 @@ android {
     flavorDimensions "default"
     productFlavors {
         partone {
-            versionName "6.1.37.6"
+            versionName "6.1.38.2"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
@@ -240,4 +240,6 @@ dependencies {
     implementation "org.koin:koin-androidx-fragment:$koin_version"
     implementation 'androidx.room:room-runtime:2.3.0'
     annotationProcessor 'androidx.room:room-compiler:2.3.0'
+
+    implementation 'com.clevertap.android:clevertap-android-sdk:4.7.4'
 }
