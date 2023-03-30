@@ -141,13 +141,14 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
               if (imageWidth >= 400 && imageHeight >= 400) {
                 loadImage(imgFile.path)
               } else {
+                // Greater than 400 and less than 600
                 loadImage(imgFile.path)
-                  LowResolutionBSheet(
-                    imgFile.path,
-                    this@AddUpdateBusinessFragmentV2,
-                    startForCropImageResult
-                  )
-                    .show(childFragmentManager, LowResolutionBSheet::class.java.name)
+                LowResolutionBSheet(
+                  imgFile.path,
+                  this@AddUpdateBusinessFragmentV2,
+                  startForCropImageResult
+                )
+                  .show(childFragmentManager, LowResolutionBSheet::class.java.name)
               }
             }
 
@@ -455,33 +456,33 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   }
 
   public fun chooseOption() {
-    UpdateImagePickerBSheet.newInstance(object :UpdateImagePickerBSheet.Callbacks{
+    UpdateImagePickerBSheet.newInstance(object : UpdateImagePickerBSheet.Callbacks {
       override fun onImagePicked(path: String) {
-        if (path == "higher"){
+        if (path == "higher") {
           showShortToast("Image is greater than 5 MB")
-        }else if (path == "invalidFile"){
+        } else if (path == "invalidFile") {
           showShortToast("Invalid Image type!!")
         } else {
           val bmOptions = BitmapFactory.Options()
           val bitmap: Bitmap = BitmapFactory.decodeFile(path, bmOptions)
-          if(bitmap.width<400 || bitmap.height<400){
-            LowResolutionBSheet(path,
-              this@AddUpdateBusinessFragmentV2,
-              startForCropImageResult)
-              .show(childFragmentManager, LowResolutionBSheet::class.java.name)
-          }else {
+          if (bitmap.width >= 400 && bitmap.height >= 400) {
             UpdateCropImageActivity.launchActivity(
               path,
               requireActivity(),
               startForCropImageResult
             )
+          } else {
+            loadImage(path)
+            LowResolutionBSheet(
+              path,
+              this@AddUpdateBusinessFragmentV2,
+              startForCropImageResult
+            ).show(childFragmentManager, LowResolutionBSheet::class.java.name)
           }
         }
       }
-    }).show(parentFragmentManager,UpdateImagePickerBSheet::class.java.name)
+    }).show(parentFragmentManager, UpdateImagePickerBSheet::class.java.name)
   }
-
-
 }
 
 
