@@ -191,15 +191,6 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     }
 
     binding?.ivCloseEditing?.setOnClickListener {
-      val hashMap = HashMap<String, Any>()
-      var socialShare = ""
-      if (uiChBoxChannelList?.find { it.channelType == SocialPreviewChannel.FACEBOOK }?.isChecked == true) socialShare += "FACEBOOK_PAGE."
-      hashMap.put("length", captionIntent?.length.toString())
-      hashMap.put(socialShare, "yes")
-      WebEngageController.trackEvent(
-        event_name = CUSTOM_UPDATE_CREATED,
-        event_value = hashMap
-      )
       onBackPressed()
     }
 
@@ -575,25 +566,6 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
     val parentId = if (session?.iSEnterprise == "true") session?.fPParentId else null
     val sendToSubscribe = uiChBoxChannelList?.find { it.channelType == SocialPreviewChannel.EMAIL }?.isChecked
     val isPicMes = posterImgPath != null
-
-    val hashMap = HashMap<String, Any>()
-    if (isPicMes) {
-      hashMap.put("image", "yes")
-    } else {
-      hashMap.put("image", "no")
-    }
-
-    hashMap.put("length", captionIntent?.length.toString())
-    if (sendToSubscribe == true) hashMap.put("subscriber", "yes") else hashMap.put(
-      "subscriber",
-      "no"
-    )
-    hashMap.put(socialShare, "yes")
-    WebEngageController.trackEvent(
-      event_name = CUSTOM_UPDATE_CREATED,
-      event_value = hashMap
-    )
-
     val request = PostUpdateTaskRequest(
       clientId, captionIntent, isPicMes, merchantId, parentId, sendToSubscribe, socialShare, updateType, tags = if (template == null) null else arrayListOf(template?.categoryId)
     )
