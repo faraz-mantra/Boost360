@@ -46,7 +46,10 @@ class PacksAddonsV3Adapter(
         }
         else
         holder.name.setText(upgradeList.get(position).title)
-        holder.name.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        if (position <=1){
+            holder.name.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        }
+      //  holder.name.paintFlags = Paint.UNDERLINE_TEXT_FLAG
         val adapter = PacksAddonsV3ImageAdapter(upgradeList.get(position).packsAvailableIn, myAddonsListener, activity)
         holder.recyclerView.adapter = adapter
         myAddonsListener.onAllRecyclerView(holder.recyclerView, position == upgradeList.size-1)
@@ -54,7 +57,9 @@ class PacksAddonsV3Adapter(
             holder.dummyLine.visibility = View.GONE
         }
         holder.name.setOnClickListener {
-            myAddonsListener.onPaidAddonsClicked(upgradeList.get(position).featureCode)
+            if (!upgradeList.get(position).featureCode.isNullOrEmpty()){
+                myAddonsListener.onPaidAddonsClicked(upgradeList.get(position).featureCode)
+            }
         }
     }
 
