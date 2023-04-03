@@ -2603,15 +2603,15 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                         totalValidityDays =
                             monthCalculatorForAddons(validity_days, item.widget_type)
                         Log.v("totalValidityDays", " " + totalValidityDays)
-                        netPrice = netPrice * default_validity_months
-                        net_quantity =
-                            monthCalculatorForAddons(default_validity_months, item.widget_type)
-                        mrp_price = mrp_price * default_validity_months
+                    //    netPrice = netPrice * default_validity_months
+//                        net_quantity =
+//                            monthCalculatorForAddons(default_validity_months, item.widget_type)
+//                        mrp_price = mrp_price * default_validity_months
                     }
 
                     //adding widget netprice to featureNetprice to get GrandTotal In netPrice.
                     featureNetPrice += priceCalculatorForYear(
-                        netPrice,
+                        netPrice*default_validity_months,
                         item.widget_type,
                         requireActivity()
                     )
@@ -2641,7 +2641,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                             netPrice,
                             mrp_price,
                             if (outputExtendedPropsPostPurchase.size > 0) outputExtendedPropsPostPurchase else null,
-                            net_quantity,
+                            1,
                             "MONTHLY",
                             item.feature_code!!,
                             item.item_id
@@ -2747,7 +2747,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                                     singleFeature.name!!,
 //                          netPrice.toDouble() * singleBundle.min_purchase_months,
                                                     singleWidgetNetPrice,
-                                                    singleFeature.price.toDouble() * singleBundle.min_purchase_months,
+                                                    singleFeature.price.toDouble(),
                                                     if (outputExtendedPropsPostPurchase.size > 0) outputExtendedPropsPostPurchase else null,
                                                     1,
                                                     "MONTHLY",
