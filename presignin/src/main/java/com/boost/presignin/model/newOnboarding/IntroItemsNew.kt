@@ -15,7 +15,8 @@ class IntroItemNew(
   @RawRes val lottieRawResource: Int = R.raw.new_lottie_merchants_1,
   val isLottieRepeat: Boolean = false,
   val count: Int = 0,
-  @ColorRes val slideBackgroundColor: Int = R.color.white_F4F8FA
+  @ColorRes val slideBackgroundColor: Int = R.color.white_F4F8FA,
+  val sliderImage: Int? = null
 ) : Serializable, AppBaseRecyclerViewItem {
 
   fun getData(c: Context): ArrayList<IntroItemNew> {
@@ -25,7 +26,8 @@ class IntroItemNew(
         imageResource = null,
         lottieRawResource = R.raw.new_lottie_merchants_1,
         isLottieRepeat = false,
-        slideBackgroundColor = R.color.white_F5F8FD
+        slideBackgroundColor = R.color.white_F5F8FD,
+        sliderImage = R.drawable.intro_slide1
       ),
       IntroItemNew(
         title = c.getString(R.string.new_into_2_title),
@@ -33,20 +35,23 @@ class IntroItemNew(
         lottieRawResource = R.raw.new_lottie_marketing_2,
         isLottieRepeat = false,
         slideBackgroundColor = R.color.white_F5F8FD,
+        sliderImage = R.drawable.intro_slide2
       ),
       IntroItemNew(
         title = c.getString(R.string.new_into_3_title),
         imageResource = null,
         lottieRawResource = R.raw.new_lottie_selling_products_3,
         isLottieRepeat = true,
-        slideBackgroundColor = R.color.white_F5F8FD
+        slideBackgroundColor = R.color.white_F5F8FD,
+        sliderImage = R.drawable.intro_slide3
       ),
       IntroItemNew(
         title = c.getString(R.string.new_into_4_title),
         imageResource = null,
         lottieRawResource = R.raw.lottie_intro_4_collect,
         isLottieRepeat = true,
-        slideBackgroundColor = R.color.white_F5F8FD
+        slideBackgroundColor = R.color.white_F5F8FD,
+        sliderImage = R.drawable.intro_slide4
       ),
     )
   }
