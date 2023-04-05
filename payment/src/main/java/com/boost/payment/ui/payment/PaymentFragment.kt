@@ -1660,6 +1660,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         payment_total_value.setText(
                 "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
         )
+        pay_btn.setText(
+                "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
+        )
     }
 
     private fun loadCustomerInfo() {
