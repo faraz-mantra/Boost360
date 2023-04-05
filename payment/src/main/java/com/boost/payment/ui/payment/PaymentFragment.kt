@@ -1661,7 +1661,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
         )
         pay_btn.setText(
-                "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
+                "PAY ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)+" now"
         )
     }
 
