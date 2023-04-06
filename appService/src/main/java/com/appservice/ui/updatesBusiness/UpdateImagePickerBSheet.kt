@@ -32,6 +32,7 @@ class UpdateImagePickerBSheet:BaseBottomSheetDialog<BsheetUpdateImagePickerBindi
 
     private var startForGalleryImageResult: ActivityResultLauncher<Intent>?=null
     private var startForCameraImageResult: ActivityResultLauncher<Intent>?=null
+    private var requestPermission: ActivityResultLauncher<String>?=null
 
     private val gallery_req_id = 0
 
@@ -89,30 +90,16 @@ class UpdateImagePickerBSheet:BaseBottomSheetDialog<BsheetUpdateImagePickerBindi
         when(v){
             binding!!.layoutGallery->{
                 if (ActivityCompat.checkSelfPermission(
-                        activity!!.applicationContext,
+                        requireActivity().applicationContext,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
                     ) != PackageManager.PERMISSION_GRANTED
                 ) {
-                    ActivityCompat.requestPermissions(
-                        activity!!,
-                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                        gallery_req_id
-                    )
-                    dismiss()
+                    requestPermission!!.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 } else {
                     com.github.dhaval2404.imagepicker.ImagePicker.with(this).galleryOnly()
                         .createIntent {
                             startForGalleryImageResult?.launch(it)
                         }
-
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-//                        choosePhotoFromGallery()
-//                    } else {
-//                        com.github.dhaval2404.imagepicker.ImagePicker.with(this).galleryOnly()
-//                            .createIntent {
-//                                startForGalleryImageResult?.launch(it)
-//                            }
-//                    }
                 }
             }
             binding!!.layoutTakePhoto->{
@@ -131,6 +118,14 @@ class UpdateImagePickerBSheet:BaseBottomSheetDialog<BsheetUpdateImagePickerBindi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requestPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                com.github.dhaval2404.imagepicker.ImagePicker.with(this).galleryOnly()
+                    .createIntent {
+                        startForGalleryImageResult?.launch(it)
+                    }
+            }
+        }
         startForGalleryImageResult =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                     result: ActivityResult ->

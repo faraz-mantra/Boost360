@@ -8,7 +8,6 @@ import android.os.Build
 import android.util.Log
 import android.view.View
 import android.view.Window
-import android.view.WindowManager
 import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -194,7 +193,7 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
         try {
             refreshViewPager = true
             viewModel.getCartItems()
-            viewModel.loadPackageUpdates()
+            viewModel.loadPackageUpdates(UserSessionManager(this).sourceClientId)
         } catch (e: Exception) {
             SentryController.captureException(e)
         }
@@ -279,7 +278,7 @@ class ComparePacksActivity : AppBaseActivity<ActivityComparePacksBinding, Compar
                                 item.exclusive_to_categories,
                                 object : TypeToken<List<String>>() {}.type
                             ),
-                            null, Gson().fromJson<List<HowToActivate>>(
+                            null, null, Gson().fromJson<List<HowToActivate>>(
                                 item.how_to_activate,
                                 object : TypeToken<List<HowToActivate>>() {}.type
                             ), Gson().fromJson<List<Testimonial>>(

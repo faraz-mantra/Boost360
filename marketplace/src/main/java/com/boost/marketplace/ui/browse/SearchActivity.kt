@@ -202,7 +202,7 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
                             item.exclusive_to_categories,
                             object : TypeToken<List<String>>() {}.type
                         ),
-                        null, Gson().fromJson<List<HowToActivate>>(
+                        null, null, Gson().fromJson<List<HowToActivate>>(
                             item.how_to_activate,
                             object : TypeToken<List<HowToActivate>>() {}.type
                         ), Gson().fromJson<List<Testimonial>>(

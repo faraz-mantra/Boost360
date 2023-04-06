@@ -921,7 +921,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 item.exclusive_to_categories,
                 object : TypeToken<List<String>>() {}.type
             ),
-            null, Gson().fromJson<List<HowToActivate>>(
+            null, null, Gson().fromJson<List<HowToActivate>>(
                 item.how_to_activate,
                 object : TypeToken<List<HowToActivate>>() {}.type
             ), Gson().fromJson<List<Testimonial>>(
@@ -1204,6 +1204,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                             } else {
                                 offeredBundlePrice = originalBundlePrice
                                 binding?.containerBlack?.visibility = GONE
+                                tv_saving.visibility=View.GONE
 
                             }
 
@@ -1258,7 +1259,8 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                                     binding?.mrpPrice?.visibility = View.VISIBLE
                                 } else {
                                     binding?.includedBlack?.tvPrice?.visibility = GONE
-                                    binding?.price?.visibility = GONE
+                                    binding?.price?.visibility = View.VISIBLE
+                                    binding?.mrpPrice?.visibility = View.GONE
                                 }
                             }
 
@@ -1622,7 +1624,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                     bundlesModel.exclusive_to_categories,
                     object : TypeToken<List<String>>() {}.type
                 ),
-                null, steps, null, faq, benefits, bundlesModel.desc ?: ""
+                null, null, steps, null, faq, benefits, bundlesModel.desc ?: ""
             )
             //disabling marketplace gaps
 //            getAllowPackageToCart(bundle)
@@ -1790,7 +1792,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                             bundlesModel.exclusive_to_categories,
                             object : TypeToken<List<String>>() {}.type
                         ),
-                        null, steps, null, faq, benefits, bundlesModel.desc ?: ""
+                        null,null, steps, null, faq, benefits, bundlesModel.desc ?: ""
                     )
 
 
@@ -1981,7 +1983,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                             bundlesModel.exclusive_to_categories,
                             object : TypeToken<List<String>>() {}.type
                         ),
-                        null, steps, null, faq, benefits, bundlesModel.desc ?: ""
+                        null, null,steps, null, faq, benefits, bundlesModel.desc ?: ""
                     )
 
 
@@ -2170,7 +2172,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                             bundlesModel.exclusive_to_categories,
                             object : TypeToken<List<String>>() {}.type
                         ),
-                        null, steps, null, faq, benefits, bundlesModel.desc ?: ""
+                        null, null,steps, null, faq, benefits, bundlesModel.desc ?: ""
                     )
 
 
