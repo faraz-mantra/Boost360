@@ -2407,9 +2407,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         Log.v("createPurchaseOrder1", " " + "createPurchaseOrder");
         var couponCode: String? = null
         var couponDiscountPercentage = 0.0
+        var couponDiscountPercent = 0.0
         if (validCouponCode != null) {
             couponCode = validCouponCode!!.coupon_key
             couponDiscountPercentage = validCouponCode!!.discount_percent.toDouble()
+            couponDiscountPercent = validCouponCode!!.discount_percent.toDouble()
         }
         if (couponServiceModel != null) {
             couponCode = couponServiceModel!!.coupon_key
@@ -2481,7 +2483,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     ConsumptionConstraint("DAYS", 30),
                     "",
                     item.description_title,
-                    item.discount,
+                    couponDiscountPercent,
                     Expiry(
                         "MONTHS",
                         Utils.expiryCalculator(
@@ -2625,7 +2627,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                             ),
                             "",
                             item.description_title,
-                            item.discount,
+                            couponDiscountPercent,
                             Expiry(
                                 "MONTHS",
                                 Utils.expiryCalculator(
@@ -2732,7 +2734,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                                     ),
                                                     "",
                                                     singleFeature.description_title,
-                                                    singleIndludedFeature.feature_price_discount_percent,
+                                                    couponDiscountPercent,
                                                     Expiry(
                                                         "MONTHS",
                                                         Utils.expiryCalculator(
