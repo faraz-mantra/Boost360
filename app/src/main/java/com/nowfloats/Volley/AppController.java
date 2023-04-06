@@ -147,7 +147,7 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
         MarketplaceApplication.instance = this;
         MarketplaceApplication.initModule(this);
         initWebEngage();
-        initCleverTap();
+//        initCleverTap();
         UserExperiorController.INSTANCE.startRecording(this);
 
         //Invite Referral
@@ -217,12 +217,12 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
         registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this, webEngageConfig));
     }
 
-    void initCleverTap() {
-        //Set Debug level for CleverTap
-        CleverTapAPI.setDebugLevel(VERBOSE);
-
-        clevertapDefaultInstance = CleverTapAPI.getDefaultInstance(getApplicationContext());
-    }
+//    void initCleverTap() {
+//        //Set Debug level for CleverTap
+//        CleverTapAPI.setDebugLevel(VERBOSE);
+//
+//        clevertapDefaultInstance = CleverTapAPI.getDefaultInstance(getApplicationContext());
+//    }
 
     @SuppressWarnings({"unused"})
     public enum LogLevel {
