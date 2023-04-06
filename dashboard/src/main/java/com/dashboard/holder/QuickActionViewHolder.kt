@@ -9,6 +9,8 @@ import com.dashboard.databinding.ItemQuickActionBinding
 import com.dashboard.model.live.quickAction.QuickActionItem
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
 import com.dashboard.recyclerView.BaseRecyclerViewItem
+import com.dashboard.utils.addButtonClickActionTypeByUser
+import com.dashboard.utils.checkIfButtonClickedByUserInPast
 
 class QuickActionViewHolder(binding: ItemQuickActionBinding) : AppBaseRecyclerViewHolder<ItemQuickActionBinding>(binding) {
 
@@ -16,7 +18,10 @@ class QuickActionViewHolder(binding: ItemQuickActionBinding) : AppBaseRecyclerVi
     super.bind(position, item)
     val data = item as? QuickActionItem ?: return
     binding.txtTitle.text = data.title
-    binding.isNew.visibility = if (data.isNew) View.VISIBLE else View.INVISIBLE
+
+    // Show/Hide of New Tag on Quick Actions, will disappear after one click
+    binding.isNew.visibility = if (data.isNew && checkIfButtonClickedByUserInPast(data.quickActionType).not()) View.VISIBLE else View.INVISIBLE
+
     val type = QuickActionItem.QuickActionType.from(data.quickActionType)
     type?.icon?.let {
       if (data.isLotty && type.lotty != null) {
@@ -30,6 +35,9 @@ class QuickActionViewHolder(binding: ItemQuickActionBinding) : AppBaseRecyclerVi
       } else binding.imgIcon.setImageResource(it)
     }
     binding.mainContent.setOnClickListener {
+      //start Show/Hide of New Tag on Quick Actions, will disappear after one click
+      addButtonClickActionTypeByUser(data.quickActionType)
+      // end
       listener?.onItemClick(position, data, RecyclerViewActionType.QUICK_ACTION_ITEM_CLICK.ordinal)
     }
   }

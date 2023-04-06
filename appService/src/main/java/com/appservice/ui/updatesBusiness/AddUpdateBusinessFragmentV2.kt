@@ -138,9 +138,9 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
               val imageWidth: Int = bitMapOption.outWidth
               val imageHeight: Int = bitMapOption.outHeight
 
-              if (imageWidth > 600 && imageHeight > 600) {
+              if (imageWidth >= 400 && imageHeight >= 400) {
                 loadImage(imgFile.path)
-              } else if((imageWidth in 400..600) && (imageHeight in 400..600)) {
+              } else {
                 // Greater than 400 and less than 600
                 loadImage(imgFile.path)
                 LowResolutionBSheet(
@@ -149,9 +149,6 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
                   startForCropImageResult
                 )
                   .show(childFragmentManager, LowResolutionBSheet::class.java.name)
-              }else {
-                // Show Toast message
-                showLongToast(getString(R.string.image_resolution_is_smaller_than_400_x_400_px))
               }
             }
 
@@ -475,8 +472,12 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
               startForCropImageResult
             )
           } else {
-            // Show Toast message
-            showLongToast(getString(R.string.image_resolution_is_smaller_than_400_x_400_px))
+            loadImage(path)
+            LowResolutionBSheet(
+              path,
+              this@AddUpdateBusinessFragmentV2,
+              startForCropImageResult
+            ).show(childFragmentManager, LowResolutionBSheet::class.java.name)
           }
         }
       }

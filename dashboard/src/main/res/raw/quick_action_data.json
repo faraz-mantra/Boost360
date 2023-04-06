@@ -24,7 +24,7 @@
         {
           "quickActionType": "PLACE_CONSULT",
           "title": "Book a video\nconsultation",
-          "isNew": true
+          "isNew": false
         },
         {
           "quickActionType": "ADD_TESTIMONIAL",
@@ -64,7 +64,7 @@
         {
           "quickActionType": "PLACE_CONSULT",
           "title": "Book a video\nconsultation",
-          "isNew": true
+          "isNew": false
         },
         {
           "quickActionType": "ADD_TESTIMONIAL",
@@ -81,7 +81,7 @@
         {
           "quickActionType": "ADD_STAFF_PROFILE",
           "title": "Add a\ndoctor",
-          "isNew": true
+          "isNew": false
         }
       ]
     },
@@ -125,7 +125,7 @@
         {
           "quickActionType": "ADD_STAFF_PROFILE",
           "title": "Add a\nstaff",
-          "isNew": true
+          "isNew": false
         }
       ]
     },
@@ -169,7 +169,7 @@
         {
           "quickActionType": "ADD_STAFF_PROFILE",
           "title": "Add a\nstaff",
-          "isNew": true
+          "isNew": false
         }
       ]
     },
@@ -193,7 +193,7 @@
         {
           "quickActionType": "PLACE_ORDER_BOOKING",
           "title": "Add an\norder",
-          "isNew": true
+          "isNew": false
         },
         {
           "quickActionType": "ADD_TABLE_BOOKING",
@@ -288,7 +288,7 @@
         {
           "quickActionType": "ADD_UPCOMING_BATCH",
           "title": "Add an upcoming\nbatch",
-          "isNew": true
+          "isNew": false
         },
         {
           "quickActionType": "ADD_FACULTY_MEMBER",
@@ -337,7 +337,7 @@
         {
           "quickActionType": "ADD_TESTIMONIAL",
           "title": "Add guest\ntestimonials",
-          "isNew": true
+          "isNew": false
         },
         {
           "quickActionType": "ADD_NEARBY_ATTRACTION",
@@ -369,7 +369,7 @@
         {
           "quickActionType": "PLACE_ORDER_BOOKING",
           "title": "Add an\norder",
-          "isNew": true
+          "isNew": false
         },
         {
           "quickActionType": "ADD_PRODUCT",
@@ -425,7 +425,7 @@
         {
           "quickActionType": "ADD_STAFF_PROFILE",
           "title": "Add a\nstaff",
-          "isNew": true
+          "isNew": false
         }
       ]
     },

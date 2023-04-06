@@ -3,11 +3,13 @@ package com.framework.analytics
 import android.app.Activity
 import android.util.Log
 import com.appsflyer.AppsFlyerLib
+import com.clevertap.android.sdk.CleverTapAPI
 import com.framework.BaseApplication
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.webengage.sdk.android.Analytics
 import com.webengage.sdk.android.User
 import com.webengage.sdk.android.WebEngage
+
 
 object NFWebEngageController {
 
@@ -41,6 +43,7 @@ object NFWebEngageController {
     }
     weAnalytics.track(event_name, trackEvent)
     weAnalytics.screenNavigated(event_name)
+    CleverTapController.trackEventCleverTap(event_name, event_label, event_value)
     //Firebase Analytics Event...
     FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, event_value?:"")
     UserExperiorController.trackEvent(event_name, HashMap(trackEvent))
@@ -60,7 +63,7 @@ object NFWebEngageController {
 
       //Firebase Analytics Event...
       FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, "")
-
+      CleverTapController.trackEventCleverTap(event_name, event_label, event_value)
       //AppsFlyerEvent...
       try {
         AppsFlyerLib.getInstance().logEvent(activity?.applicationContext, event_name, event_value.toMap())
@@ -71,7 +74,7 @@ object NFWebEngageController {
       weAnalytics.track(event_name)
       weAnalytics.screenNavigated(event_name)
       UserExperiorController.trackEvent(event_name)
-
+      CleverTapController.trackEventCleverTap(event_name, event_label, event_value)
     }
   }
 
@@ -85,7 +88,7 @@ object NFWebEngageController {
 
       //Firebase Analytics Event...
       FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, "")
-
+      CleverTapController.trackEventLoadCleverTap(event_name, event_label, event_value, value)
       //AppsFlyerEvent...
       try {
         AppsFlyerLib.getInstance().logEvent(activity?.applicationContext, event_name, event_value.toMap())
@@ -96,11 +99,12 @@ object NFWebEngageController {
       weAnalytics.track(event_name)
       weAnalytics.screenNavigated(event_name)
       UserExperiorController.trackEvent(event_name)
-
+      CleverTapController.trackEventLoadCleverTap(event_name, event_label, event_value, value)
     }
   }
 
   fun setUserContactAttributes(email: String?, mobile: String?, name: String?, clientId: String? = "") {
+    CleverTapController.setUserContactAttributesCleverTap(email, mobile, name, clientId)
     if (isUserLoggedIn) {
       if (!email.isNullOrEmpty()) {
         weUser.setEmail(email)
@@ -157,11 +161,12 @@ object NFWebEngageController {
       }
       AppsFlyerLib.getInstance().setCustomerUserId(userId)
       isUserLoggedIn = true
-
     }
+    CleverTapController.initiateUserLoginCleverTap(userId)
   }
 
   fun setCategory(userCategory: String?) {
+    CleverTapController.setCategoryCleverTap(userCategory)
     try {
       if (!userCategory.isNullOrEmpty()) {
         val version = activity?.packageManager?.getPackageInfo(activity?.packageName?:"", 0)?.versionName
@@ -185,7 +190,12 @@ object NFWebEngageController {
     }
   }
 
+  fun setFpId(fpId: String) {
+    CleverTapController.setFPIdCleverTap(fpId)
+  }
+
   fun setFPTag(fpTag: String?) {
+    CleverTapController.setFPTagCleverTap(fpTag)
     try {
       if (fpTag == null) return;
       Log.d(TAG, "Setting FP Tag$fpTag")
@@ -205,6 +215,7 @@ object NFWebEngageController {
   }
 
   fun logout() {
+    CleverTapController.logout()
     Log.d(TAG, "Loggind user out from analytics")
     weUser.logout()
     UserExperiorController.logout()
