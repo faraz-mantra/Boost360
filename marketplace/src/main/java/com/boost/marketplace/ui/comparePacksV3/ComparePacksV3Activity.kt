@@ -37,6 +37,7 @@ import com.boost.marketplace.databinding.ActivityComparePacksv3Binding
 import com.boost.marketplace.interfaces.*
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
 import com.boost.marketplace.ui.feature_details_popup.FeatureDetailsPopup
+import com.boost.marketplace.ui.popup.ComparePacksLottieLoaderBottomSheet
 import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
 import com.boost.marketplace.ui.popup.call_track.RequestCallbackBottomSheet
 import com.boost.marketplace.ui.popup.removeItems.RemoveFeatureBottomSheet
@@ -114,6 +115,8 @@ class ComparePacksV3Activity :
     lateinit var packsAddonsAdapter: PacksAddonsV3Adapter
     private var purchasedVmnName: String? = null
     private var purchasedVmnActive: Boolean? = null
+
+    val dialogCard = ComparePacksLottieLoaderBottomSheet()
 
     companion object {
         fun newInstance() = ComparePacksV3Activity()
@@ -969,6 +972,12 @@ class ComparePacksV3Activity :
             if (it != null) {
                 binding?.packsData?.visibility = View.VISIBLE
                 binding?.shimmerViewPacksv3?.visibility = View.GONE
+                this.supportFragmentManager.let {
+                    dialogCard.show(
+                        it,
+                        ComparePacksLottieLoaderBottomSheet::class.java.name
+                    )
+                }
             } else {
                 binding?.packsData?.visibility = View.GONE
                 binding?.shimmerViewPacksv3?.visibility = View.VISIBLE

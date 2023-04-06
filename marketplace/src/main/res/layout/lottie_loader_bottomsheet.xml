@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/upi_popup_outer_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#1d000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lotty_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                app:lottie_repeatCount="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:lottie_rawRes="@raw/swipe_left_lotie" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="Swipe left for more plans"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/regular"
+            android:textFontWeight="600"
+            app:layout_constraintTop_toBottomOf="@+id/lotty_progress"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

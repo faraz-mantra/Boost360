@@ -296,13 +296,13 @@ class CartPackageAdaptor(
               if (singleFeaturesCode.feature_code.equals(singleFeature.feature_code!!)) {
                 if(singleFeaturesCode.feature_code.equals("DOMAINPURCHASE") && selectedDomainName.isNotEmpty()){
                   val tempItem = singleFeature
-                  tempItem.name = selectedDomainName
+                  tempItem.description_title = selectedDomainName
                   tempFeatures.add(tempItem)
                 }else if ((singleFeaturesCode.feature_code.equals("CALLTRACKER")
                          // ||(singleFeaturesCode.feature_code.equals("IVR")))
                   && selectedVMN.isNotEmpty())) {
                   val tempItem = singleFeature
-                  tempItem.name = selectedVMN
+                  tempItem.description = selectedVMN
                   tempFeatures.add(tempItem)
                 }else {
                     tempFeatures.add(singleFeature)
