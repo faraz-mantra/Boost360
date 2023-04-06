@@ -118,7 +118,7 @@ object CleverTapController {
 
             if (!mobile.isNullOrEmpty()) {
                 val plusMobile=getNumberPlus91(mobile)
-                weUser.put("Phone",plusMobile)
+                weUser.put("PhoneNumber",plusMobile)
                 //Firebase Analytics User Property.
                 FirebaseAnalyticsUtilsHelper.setUserProperty("mobile", plusMobile)
                 params["mobile"] = plusMobile

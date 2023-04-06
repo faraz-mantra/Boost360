@@ -69,6 +69,7 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> :
         session.storeISEnterprise(resultLogin()?.isEnterprise.toString() + "")
         session.storeIsThinksity((resultLogin()?.sourceClientId != null && resultLogin()?.sourceClientId == clientIdThinksity).toString() + "")
         session.storeFPID(this.floatingPointId)
+//        session.storeSourceClientId(resultLogin()?.sourceClientId)
         session.storeFpTag(this.floatingPointTag)
         session.setUserLogin(true)
         val request = AccessTokenRequest(
@@ -124,6 +125,7 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> :
         viewModel?.getFpDetails(this.floatingPointId ?: "", map)?.observeOnce(viewLifecycleOwner) {
             val response = it as? UserFpDetailsResponse
             if (it.isSuccess() && response != null) {
+                session.storeSourceClientId(response.applicationId)
                 ProcessFPDetails(session).storeFPDetails(response)
                 SentryController.setUser(UserSessionManager(baseActivity))
                 UserExperiorController.setUserAttr(UserSessionManager(baseActivity))

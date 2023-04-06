@@ -44,13 +44,9 @@ class OrderConfirmationViewModel : ViewModel() {
               var domainType = "."
               var validityInYears = "1"
               var months: Double = 0.0
-              if (prefs.getYearPricing()) {
-                //do the yearly calculation here
-                months = (if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toDouble() else 1.toDouble() * 12).toDouble()
-              } else {
-                months = if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toDouble() else 1.toDouble()
-              }
-              val tempMonth: Double = months / 12.0
+
+              months = if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toDouble() else 1.toDouble()
+              val tempMonth: Double = if (prefs.getYearPricing())   months  else  months / 12.0
               if(tempMonth.toInt() < tempMonth){ //example 1 < 1.2
                 validityInYears = (tempMonth.toInt()+1).toString()
               }else{
