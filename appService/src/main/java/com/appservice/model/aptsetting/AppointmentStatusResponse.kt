@@ -274,16 +274,16 @@ data class CustomerInvoicesSetup(
   fun getGstinTextStatus(): String {
     return when (getGSTDeclarationComplete()) {
       StatusSetting.PENDING -> "Verification pending"
-      StatusSetting.FAILED -> getGstin()
-      StatusSetting.VERIFIED -> "<font color='#${getColorString()}'>Verification failed</font>"
+      StatusSetting.FAILED -> "<font color='#${getColorString()}'>Verification failed</font>"
+      StatusSetting.VERIFIED -> getGstin()
     }
   }
 
   fun getPanNumberStatus(): String {
     return when (getPANVerificationStatus()) {
       StatusSetting.PENDING -> "Verification pending"
-      StatusSetting.FAILED -> getPanNumber()
-      StatusSetting.VERIFIED -> "<font color='#${getColorString()}'>Verification failed</font>"
+      StatusSetting.FAILED -> "<font color='#${getColorString()}'>Verification failed</font>"
+      StatusSetting.VERIFIED -> getPanNumber()
     }
   }
 
