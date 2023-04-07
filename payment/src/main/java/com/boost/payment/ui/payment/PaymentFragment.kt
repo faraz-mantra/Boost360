@@ -128,7 +128,6 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
         lastUsedPaymentMethod = prefs.getLastUsedPaymentMode()
 
-
 //        //this is a offer created from admin dashboard.
 //        cartCheckoutData.put("offer_id", arguments!!.getString("offer_F5hUaalR9tpSzn"))
 
@@ -168,6 +167,12 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 //        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         viewModel = ViewModelProviders.of(requireActivity()).get(PaymentViewModel::class.java)
+
+        if(totalAmount <= 5000 && !prefs.getYearPricing() &&
+            (prefs.getCartValidityMonths() != null && prefs.getCartValidityMonths()!!.toInt() <= 6))
+            auto_renew_layout.visibility = VISIBLE
+        else
+            auto_renew_layout.visibility = GONE
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window: Window = requireActivity().window
@@ -1605,6 +1610,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         payThroughRazorPay()
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
 //        requireActivity().viewModelStore.clear()
@@ -1716,5 +1722,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     override fun walletSelected(data: String) {
 //        ("Not yet implemented")
     }
+
+
 
 }
