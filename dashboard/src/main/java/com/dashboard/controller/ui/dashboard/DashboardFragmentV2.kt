@@ -183,10 +183,10 @@ class DashboardFragmentV2 : AppBaseFragment<FragmentDashboardV2Binding, Dashboar
   }
 
   private fun displayFestiveButtonView() {
-    binding.profileView.lottieNewFestival.visibility = if(checkIfButtonClickedByUserInPast(READY_MADE_UPDATES)) View.GONE else View.VISIBLE
     if (festivePosterVisibility()) {
       binding.profileView.btnFestive.visibility = View.VISIBLE
       binding.profileView.customFestivalTv.text = festivePosterName()?.capitalizeUtil()
+      binding.profileView.lottieNewFestival.visibility = View.VISIBLE
     } else binding.profileView.btnFestive.visibility = View.GONE
   }
 
@@ -724,7 +724,7 @@ class DashboardFragmentV2 : AppBaseFragment<FragmentDashboardV2Binding, Dashboar
         //TODO activate Post update journey for this as Asked by Product team
         //baseActivity.startFestivePosterActivity()
         //enable update studio on demand
-        addButtonClickActionTypeByUser(READY_MADE_UPDATES)
+        //addButtonClickActionTypeByUser(READY_MADE_UPDATES)
         baseActivity.startPostUpdate(session)
       }
       binding.recommendedTask.btnShowAll -> {

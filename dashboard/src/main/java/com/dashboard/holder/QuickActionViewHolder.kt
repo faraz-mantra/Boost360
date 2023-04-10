@@ -5,6 +5,7 @@ import com.airbnb.lottie.LottieCompositionFactory
 import com.airbnb.lottie.LottieDrawable
 import com.dashboard.R
 import com.dashboard.constant.RecyclerViewActionType
+import com.dashboard.controller.ui.dashboard.READY_MADE_UPDATES
 import com.dashboard.databinding.ItemQuickActionBinding
 import com.dashboard.model.live.quickAction.QuickActionItem
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
@@ -36,7 +37,9 @@ class QuickActionViewHolder(binding: ItemQuickActionBinding) : AppBaseRecyclerVi
     }
     binding.mainContent.setOnClickListener {
       //start Show/Hide of New Tag on Quick Actions, will disappear after one click
-      addButtonClickActionTypeByUser(data.quickActionType)
+      if ((data.quickActionType == READY_MADE_UPDATES).not()) {
+        addButtonClickActionTypeByUser(data.quickActionType)
+      }
       // end
       listener?.onItemClick(position, data, RecyclerViewActionType.QUICK_ACTION_ITEM_CLICK.ordinal)
     }
