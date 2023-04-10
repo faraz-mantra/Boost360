@@ -1424,7 +1424,7 @@ class FeatureDetailsActivity :
         intent.putExtra("fpid", fpid)
         intent.putExtra("addonData", Gson().toJson(addonDetails))
         intent.putExtra("dictateSelectionForPack", true)
-     //   intent.putExtra("itemInCartStatus",packageItem )
+        intent.putExtra("itemInCartStatus",packageItem )
         intent.putExtra(
             "AddonDiscountedPrice",
             getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent)

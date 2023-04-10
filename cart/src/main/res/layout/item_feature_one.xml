@@ -64,7 +64,7 @@
                 android:id="@+id/desc"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
+                android:maxLines="3"
                 android:text="Custom Domain with HTTPS Security"
                 android:textColor="@color/copy_coupon_text_color"
                 android:textFontWeight="400"

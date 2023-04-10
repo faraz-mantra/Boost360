@@ -24,6 +24,7 @@ import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.SharedPrefs
+import com.boost.dbcenterapi.utils.WebEngageController
 import com.boost.marketplace.base.AppBaseActivity
 import com.boost.marketplace.databinding.ActivityDictateServicesBinding
 import com.boost.marketplace.interfaces.AddonsListener
@@ -33,6 +34,8 @@ import com.boost.marketplace.ui.popup.dictate.SuccessPreferencesBottomSheet
 import com.boost.marketplace.ui.popup.removeItems.RemoveFeatureBottomSheet
 import com.framework.analytics.SentryController
 import com.framework.utils.RootUtil
+import com.framework.webengageconstant.ADDONS_MARKETPLACE
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.gson.Gson
@@ -82,6 +85,7 @@ class DictateServicesActivity :
     var accountType: String? = null
     var dictateSelectionForPack = false
     var dictateSelectionForCart = false
+    var itemInCartStatus = false
 
 
     override fun getLayout(): Int {
@@ -100,6 +104,7 @@ class DictateServicesActivity :
             window.statusBarColor = ResourcesCompat.getColor(resources, com.boost.cart.R.color.common_text_color, null)
         }
 
+        itemInCartStatus = intent.getBooleanExtra("itemInCartStatus",false)
         isDeepLink = intent.getBooleanExtra("isDeepLink", false)
         deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
         deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
@@ -510,7 +515,74 @@ class DictateServicesActivity :
                         }
                     )
             )
-        }
+        } else {
+            if(itemInCartStatus == false) {
+                prefs.storeCartOrderInfo(null)
+                singleAddon?.let { viewModel?.addItemToCart1(it,this,null) }
+                val event_attributes: HashMap<String, Any> = HashMap()
+                singleAddon!!.name?.let { it1 ->
+                    event_attributes.put(
+                        "Addon Name",
+                        it1
+                    )
+                }
+                event_attributes.put("Addon Price", singleAddon!!.price)
+                event_attributes.put(
+                    "Addon Discounted Price",
+                    getDiscountedPrice(
+                        singleAddon!!.price,
+                        singleAddon!!.discount_percent
+                    )
+                )
+                event_attributes.put(
+                    "Addon Discount %",
+                    singleAddon!!.discount_percent
+                )
+                event_attributes.put("Addon Validity", 1)
+                event_attributes.put(
+                    "Addon Feature Key",
+                    singleAddon!!.boost_widget_key
+                )
+                singleAddon!!.target_business_usecase?.let { it1 ->
+                    event_attributes.put(
+                        "Addon Tag",
+                        it1
+                    )
+                }
+                WebEngageController.trackEvent(
+                    ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART,
+                    ADDONS_MARKETPLACE,
+                    event_attributes
+                )
+                itemInCartStatus = true
+                viewModel?.getCartItems()
+            }
+
+            val pref = this?.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+            val fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
+            val intent = Intent(this, CartActivity::class.java)
+            intent.putExtra("fpid", fpid)
+            intent.putExtra("fpTag", fpTag)
+            intent.putExtra("expCode", experienceCode)
+            intent.putExtra("isDeepLink", isDeepLink)
+            intent.putExtra("deepLinkViewType", deepLinkViewType)
+            intent.putExtra("deepLinkDay", deepLinkDay)
+            intent.putExtra("isOpenCardFragment", isOpenCardFragment)
+            intent.putExtra("accountType", accountType)
+            intent.putStringArrayListExtra("userPurchsedWidgets", userPurchsedWidgets)
+            if (email != null) {
+                intent.putExtra("email", email)
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com")
+            }
+            if (mobileNo != null) {
+                intent.putExtra("mobileNo", mobileNo)
+            } else {
+                intent.putExtra("mobileNo", "9160004303")
+            }
+            intent.putExtra("profileUrl", profileUrl)
+            startActivity(intent)
+            }
     }
 
     override fun onAddonsClicked(item: FeaturesModel) {
@@ -518,6 +590,10 @@ class DictateServicesActivity :
 
     override fun onRefreshCart() {
         viewModel.getCartItems()
+    }
+
+    private fun getDiscountedPrice(price: Double, discountPercent: Double): Double {
+        return price - ((discountPercent / 100) * price)
     }
 
     override fun onPackageClicked(item: Bundles?, image: ImageView?) {

@@ -2,6 +2,7 @@ package com.boost.cart.adapter
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
@@ -87,9 +88,11 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
     ) {
       if(!prefs.getSelectedDictatePrefs().isNullOrEmpty()) {
         holder.title.text = list.get(position).item_name
-        holder.desc.text = "Preferences added"
+        holder.desc.text = "Your preferences are sussesfully submitted "
+        holder.desc.setTextColor(Color.parseColor("#7ED321"))
       }else{
         holder.desc.text = "Your preferences are pending and you can edit or add them later in My Current Plan"
+        holder.desc.setTextColor(Color.parseColor("#EB5757"))
         holder.title.text = list.get(position).item_name
       }
     }
@@ -120,6 +123,10 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
       //  || list.get(position).boost_widget_key!!.contains("IVR")
       ) {
         prefs.storeSelectedVMNName(null)
+      }
+      if(list.get(position).boost_widget_key!!.contains("DICTATE")
+      ) {
+        prefs.storeSelectedDictatePrefs(null)
       }
     }
 //    holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)

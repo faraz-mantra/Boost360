@@ -129,6 +129,7 @@ class FeaturePacksAdapter(
 
   class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     var title = itemView.findViewById<TextView>(R.id.title)
+    var features_list = itemView.findViewById<TextView>(R.id.features_list)
     var mrpPrice = itemView.findViewById<TextView>(R.id.mrpPrice)
     var price = itemView.findViewById<TextView>(R.id.price)
     var discount = itemView.findViewById<TextView>(R.id.discount)
@@ -187,6 +188,7 @@ class FeaturePacksAdapter(
             val mrpPriceString = SpannableString("₹" + RootUtil.round(originalBundlePrice,2) + yearlyOrMonthlyOrEmptyValidity("",activity))
             mrpPriceString.setSpan(StrikethroughSpan(), 0, mrpPriceString.length, 0)
             holder.mrpPrice.setText(mrpPriceString)
+            holder.features_list.text=it.get(1).name + ( " +" + (it.size - 1)) +" " + "more"
           },
           {
             it.printStackTrace()
