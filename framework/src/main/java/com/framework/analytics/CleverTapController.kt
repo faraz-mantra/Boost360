@@ -209,6 +209,7 @@ object CleverTapController {
         Log.d(TAG, "Loggind user out from analytics")
         UserExperiorController.logout()
 
+        weUser.clear()
         //Reset Firebase Analytics User Session Event.
         FirebaseAnalyticsUtilsHelper.resetIdentifyUser()
 

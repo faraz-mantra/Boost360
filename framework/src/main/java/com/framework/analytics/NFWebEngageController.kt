@@ -215,6 +215,7 @@ object NFWebEngageController {
   }
 
   fun logout() {
+    CleverTapController.logout()
     Log.d(TAG, "Loggind user out from analytics")
     weUser.logout()
     UserExperiorController.logout()
