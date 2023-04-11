@@ -30,6 +30,8 @@ import com.google.android.gms.auth.api.credentials.Credential
 import com.google.android.gms.auth.api.credentials.Credentials
 import com.google.android.gms.auth.api.credentials.HintRequest
 import com.boost.presignin.BuildConfig
+import com.boost.presignin.R.*
+import com.framework.views.customViews.CustomTextView
 
 class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignUpViewModel>() {
 
@@ -156,6 +158,10 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
     super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.menu_help_setup_my_website, menu)
     val menuItem: MenuItem? = menu.findItem(R.id.help_new)
+    val menuLabel = menuItem?.actionView?.findViewById<CustomTextView>(R.id.help_label)
+    if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
+      menuLabel?.setTextColor(getColor(color.colorPrimary))
+    }
     menuItem?.actionView?.setOnClickListener { menu.performIdentifierAction(menuItem.itemId, 0) }
   }
 

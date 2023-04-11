@@ -28,6 +28,12 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import kotlinx.android.synthetic.main.activity_splash.*
+import com.boost.presignup.BuildConfig
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.util.Timer
+import kotlin.concurrent.schedule
 
 class SplashActivity : AppCompatActivity() {
 
@@ -103,7 +109,15 @@ class SplashActivity : AppCompatActivity() {
         e.printStackTrace()
       }
     } else
-      initLottieAnimation()
+      if (BuildConfig.FLAVOR.equals("partone") || BuildConfig.FLAVOR.equals("jioonline")) {
+        animation_view.visibility = View.VISIBLE
+        initLottieAnimation()
+      }else{
+        splash_view.visibility = View.VISIBLE
+        Timer("SplashWait", false).schedule(1000) {
+          checkForUpdate()
+        }
+      }
   }
 
   private fun initLottieAnimation() {
