@@ -149,7 +149,9 @@
             android:paddingHorizontal="@dimen/size_16"
             android:scrollHorizontally="true"
             android:singleLine="true"
+            android:maxLength="50"
             android:textColor="@color/black"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&amp; "
             android:textColorHint="@color/gray_B3B3B3"
             android:textSize="@dimen/text_14" />
 
