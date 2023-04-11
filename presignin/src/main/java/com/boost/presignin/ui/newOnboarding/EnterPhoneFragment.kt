@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.core.content.ContextCompat
 import com.appservice.base.AppBaseFragment
 import com.boost.presignin.R
 import com.boost.presignin.constant.FragmentType
@@ -28,6 +29,7 @@ import com.framework.webengageconstant.*
 import com.google.android.gms.auth.api.credentials.Credential
 import com.google.android.gms.auth.api.credentials.Credentials
 import com.google.android.gms.auth.api.credentials.HintRequest
+import com.boost.presignin.BuildConfig
 
 class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignUpViewModel>() {
 
@@ -117,7 +119,12 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
 
 
   private fun initUI() {
-    initTncString()
+    if (BuildConfig.FLAVOR.equals("partone") || BuildConfig.FLAVOR.equals("jioonline")) {
+      initTncString()
+    }else{
+      binding.tvLoginWithEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+      binding.tvRequestOtp.backgroundTintList= ContextCompat.getColorStateList(context!!, R.color.buttonTint)
+    }
   }
 
   private fun setOnListeners() {
@@ -125,8 +132,8 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
   }
 
   private fun initTncString() {
-    binding?.acceptTncPhone?.text = fromHtml("${getString(R.string.enter_phone_t_n_c)} <b><u><font color=#ffb900>Terms of Use</font></u></b> and <b><u><font color=#ffb900>Privacy Policy</font></u></b>")
-    binding?.acceptTncPhone?.makeLinks(
+    binding.acceptTncPhone.text = fromHtml("${getString(R.string.enter_phone_t_n_c)} <b><u><font color=#ffb900>Terms of Use</font></u></b> and <b><u><font color=#ffb900>Privacy Policy</font></u></b>")
+    binding.acceptTncPhone.makeLinks(
       Pair("Terms of Use", View.OnClickListener {
         WebEngageController.trackEvent(BOOST_360_TERMS_CLICK, CLICKED, NO_EVENT_VALUE)
         openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.terms_of_use))

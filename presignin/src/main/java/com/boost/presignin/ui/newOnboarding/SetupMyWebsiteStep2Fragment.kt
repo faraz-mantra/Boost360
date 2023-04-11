@@ -2,8 +2,10 @@ package com.boost.presignin.ui.newOnboarding
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.capitalizeUtil
+import com.boost.presignin.BuildConfig
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
@@ -69,6 +71,9 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
     WebEngageController.trackEvent(PS_BUSINESS_PROFILE_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.includeMobileView?.blurView?.setBlur(baseActivity, 1F)
     binding?.includeMobileView?.tvCategoryName?.text = categoryModel?.getCategoryWithoutNewLine() ?: ""
+    if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
+      binding.tvNextStep2.backgroundTintList= ContextCompat.getColorStateList(context!!, R.color.buttonTint)
+    }
     setOnClickListeners()
   }
 

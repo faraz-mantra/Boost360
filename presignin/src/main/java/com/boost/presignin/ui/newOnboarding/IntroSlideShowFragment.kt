@@ -8,6 +8,7 @@ import android.util.Base64
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
+import com.boost.presignin.BuildConfig
 import com.boost.presignin.R
 import com.boost.presignin.adapter.IntroNewAdapter
 import com.boost.presignin.base.AppBaseFragment
@@ -66,10 +67,13 @@ class IntroSlideShowFragment : AppBaseFragment<FragmentIntroSlideShowBinding, Ba
 
   private fun initUI() {
     introItems = IntroItemNew().getData(baseActivity)
-    binding?.viewpagerIntro?.apply {
+    binding.viewpagerIntro.apply {
       adapter = IntroNewAdapter(childFragmentManager, lifecycle, introItems) { setNextPage(it) }
       orientation = ViewPager2.ORIENTATION_HORIZONTAL
-      binding?.introIndicatorNew?.setViewPager2(this)
+      if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
+        binding.introIndicatorNew.selectedDotColor = getColor(R.color.buttonTint)
+      }
+      binding.introIndicatorNew.setViewPager2(this)
       this.offscreenPageLimit = 1
       this.registerOnPageChangeCallback(object : CircularViewPagerHandler(this) {
         override fun onPageSelected(position: Int) {

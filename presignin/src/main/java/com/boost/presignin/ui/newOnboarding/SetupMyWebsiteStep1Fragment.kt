@@ -5,7 +5,9 @@ import android.text.Editable
 import android.text.SpannableStringBuilder
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import com.boost.presignin.BuildConfig
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
@@ -113,6 +115,10 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
       it.setText("")
       it.clearFocus()
       uiChangeSearchCategory(false)
+    }
+
+    if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
+      binding.tvNextStep1.backgroundTintList= ContextCompat.getColorStateList(context!!, R.color.buttonTint)
     }
   }
 

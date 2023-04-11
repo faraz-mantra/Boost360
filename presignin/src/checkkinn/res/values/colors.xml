@@ -2,4 +2,5 @@
 <resources>
     <color name="colorAccent">#FF8427</color>
     <color name="colorPrimary">#FF8427</color>
+    <color name="buttonTint">#FF8427</color>
 </resources>

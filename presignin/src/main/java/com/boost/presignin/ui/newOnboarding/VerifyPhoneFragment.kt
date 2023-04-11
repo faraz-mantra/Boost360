@@ -6,6 +6,7 @@ import android.text.TextPaint
 import android.text.style.ClickableSpan
 import android.view.*
 import androidx.core.content.ContextCompat
+import com.boost.presignin.BuildConfig
 import com.boost.presignin.R
 import com.boost.presignin.constant.FragmentType
 import com.boost.presignin.constant.IntentConstant
@@ -73,6 +74,10 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
     binding?.tvPhoneNumber?.text = "+91 ${phoneNumber.toString()}"
     Handler().postDelayed({ onCodeSent() }, 500)
     SmsManager.initManager(baseActivity, this)
+    if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
+      binding.tvVerifyOtp.backgroundTintList= ContextCompat.getColorStateList(context!!, R.color.buttonTint)
+      binding.chkWhatsapp.buttonTintList = ContextCompat.getColorStateList(context!!, R.color.buttonTint)
+    }
   }
 
   override fun onClick(v: View) {
