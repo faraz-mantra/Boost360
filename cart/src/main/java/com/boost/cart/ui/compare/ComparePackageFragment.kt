@@ -55,7 +55,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
 
     lateinit var root: View
 
-//    lateinit var packageAdaptor: CompareAdapter
+    //    lateinit var packageAdaptor: CompareAdapter
 //    lateinit var packageAdaptor: ParentItemAdapter
     lateinit var packageAdaptor: ParentCompareItemAdapter
 
@@ -71,18 +71,19 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
 
     var packageInCartStatus = false
     lateinit var prefs: SharedPrefs
-    var featuresHashMap:MutableMap<String?, FeaturesModel> = HashMap<String?, FeaturesModel>()
+    var featuresHashMap: MutableMap<String?, FeaturesModel> = HashMap<String?, FeaturesModel>()
     lateinit var upgradeList: ArrayList<Bundles>
     lateinit var progressDialog: ProgressDialog
 
     private lateinit var viewModel: ComparePackageViewModel
+
     companion object {
         fun newInstance() = ComparePackageFragment()
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.compare_all_packages_new, container, false)
 
@@ -95,10 +96,15 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
 //        packageAdaptor = CompareAdapter((activity as CartActivity), ArrayList(), Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type))
 //        packageAdaptor = ParentItemAdapter(ArrayList(), (activity as CartActivity))
         val layoutManager = LinearLayoutManager(
-                context)
+            context
+        )
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        packageAdaptor = ParentCompareItemAdapter(ArrayList(),(activity as CartActivity),this)
-        WebEngageController.trackEvent(ADDONS_MARKETPLACE_COMPARE_PACKAGE_LOADED, PAGE_VIEW, NO_EVENT_VALUE)
+        packageAdaptor = ParentCompareItemAdapter(ArrayList(), (activity as CartActivity), this)
+        WebEngageController.trackEvent(
+            ADDONS_MARKETPLACE_COMPARE_PACKAGE_LOADED,
+            PAGE_VIEW,
+            NO_EVENT_VALUE
+        )
         prefs = SharedPrefs(activity as CartActivity)
         progressDialog = ProgressDialog(requireContext())
         return root
@@ -110,27 +116,31 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
 //        initializeBannerViewPager()
         loadData()
         initMvvm()
-        (activity as CartActivity)setBackListener(this)
+        (activity as CartActivity) setBackListener (this)
         package_viewpager.setPageTransformer(SimplePageTransformer())
 
         val itemDecoration = HorizontalMarginItemDecoration(
-                requireContext(),
-                R.dimen.viewpager_current_item_horizontal_margin
+            requireContext(),
+            R.dimen.viewpager_current_item_horizontal_margin
         )
         package_viewpager.addItemDecoration(itemDecoration)
         shimmer_view_compare.startShimmer()
-        if(requireArguments().containsKey("showCartIcon")){
+        if (requireArguments().containsKey("showCartIcon")) {
             package_cart_icon.visibility = View.INVISIBLE
         }
 
-        val ss = SpannableString("If you don’t upgrade to any of the premium plans listed above, you will be moved to our Free forever base plan. View features available in the Free plan here.")
+        val ss =
+            SpannableString("If you don’t upgrade to any of the premium plans listed above, you will be moved to our Free forever base plan. View features available in the Free plan here.")
         val clickableSpan: ClickableSpan = object : ClickableSpan() {
             override fun onClick(textView: View) {
                 val args = Bundle()
-                args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+                args.putStringArrayList(
+                    "userPurchsedWidgets",
+                    arguments?.getStringArrayList("userPurchsedWidgets")
+                )
                 (activity as CartActivity).addFragmentHome(
-                        FreeAddonsFragment.newInstance(),
-                        Constants.FREEADDONS_FRAGMENT,args
+                    FreeAddonsFragment.newInstance(),
+                    Constants.FREEADDONS_FRAGMENT, args
                 )
             }
 
@@ -151,8 +161,8 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
 
         package_cart_icon.setOnClickListener {
             (activity as CartActivity).addFragment(
-                    CartFragment.newInstance(),
-                    CART_FRAGMENT
+                CartFragment.newInstance(),
+                CART_FRAGMENT
             )
 //            Constants.COMPARE_BACK_VALUE = 1
         }
@@ -167,16 +177,16 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
         if (!code.equals("null", true)) {
             viewModel.setCurrentExperienceCode(code, fpTag!!)
         }
-    /*    if(bundleData!!.included_features != null) {
-            val itemIds = arrayListOf<String>()
-            for (item in bundleData!!.included_features) {
-                itemIds.add(item.feature_code)
-            }
-            viewModel.loadUpdates(itemIds)
-        } else {
-            //TODO: Load the widget_keys associated with Bundle from db
-            viewModel.getAssociatedWidgetKeys(bundleData!!._kid)
-        }*/
+        /*    if(bundleData!!.included_features != null) {
+                val itemIds = arrayListOf<String>()
+                for (item in bundleData!!.included_features) {
+                    itemIds.add(item.feature_code)
+                }
+                viewModel.loadUpdates(itemIds)
+            } else {
+                //TODO: Load the widget_keys associated with Bundle from db
+                viewModel.getAssociatedWidgetKeys(bundleData!!._kid)
+            }*/
 
         viewModel.loadPackageUpdates()
         viewModel.getCartItems()
@@ -192,19 +202,19 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
             packageInCartStatus = false
             if (cartList != null && cartList!!.size > 0) {
 //                if (bundleData != null) {
-                  /*  for (item in it) {
-                        if (item.item_id.equals(bundleData!!._kid)) {
-                            packageInCartStatus = true
+                /*  for (item in it) {
+                      if (item.item_id.equals(bundleData!!._kid)) {
+                          packageInCartStatus = true
 
-                            break
-                        }
-                    }*/
+                          break
+                      }
+                  }*/
 //                Constants.COMPARE_CART_COUNT = cartList!!.size
                 cartCount = cartList!!.size
-                    badgeNumber = cartList!!.size
-                    badge121.setText(badgeNumber.toString())
-                    badge121.visibility = View.VISIBLE
-                Log.v("badgeNumber", " "+ badgeNumber)
+                badgeNumber = cartList!!.size
+                badge121.setText(badgeNumber.toString())
+                badge121.visibility = View.VISIBLE
+                Log.v("badgeNumber", " " + badgeNumber)
 //                }
             } else {
 //                Constants.COMPARE_CART_COUNT = 0
@@ -212,7 +222,6 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
                 badgeNumber = 0
                 badge121.visibility = View.GONE
                 packageInCartStatus = false
-
 
 
             }
@@ -250,14 +259,14 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
         })
 
         viewModel.getSpecificFeature().observe(this, Observer {
-            if(it != null){
-                for(items in it){
+            if (it != null) {
+                for (items in it) {
 //                    Log.v("featuresHashMap", " "+ items)
                     featuresHashMap.put(items.target_business_usecase, items)
                 }
 
                 featureCount++
-                if(shimmer_view_compare.isShimmerStarted) {
+                if (shimmer_view_compare.isShimmerStarted) {
                     shimmer_view_compare.stopShimmer()
                     shimmer_view_compare.visibility = View.GONE
                 }
@@ -266,15 +275,15 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
             }
             val obj = JSONObject(featuresHashMap as Map<*, *>)
 //            val array = JSONArray(obj.toString())
-            Log.v("featuresHashMap", " "+ obj)
+            Log.v("featuresHashMap", " " + obj)
 //            Log.v("featuresHashMap", " "+ featureCount)
-            if(featuresHashMap.size == 0){
+            if (featuresHashMap.size == 0) {
 
             }
         })
 
         viewModel.getBundleWidgetKeys().observe(this, Observer {
-            if(it != null){
+            if (it != null) {
                 val itemIds = arrayListOf<String>()
                 for (item in it) {
                     itemIds.add(item)
@@ -288,12 +297,20 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
         viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
             val list = arrayListOf<Bundles>()
             for (item in it) {
-                val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                val temp = Gson().fromJson<List<IncludedFeature>>(
+                    item.included_features,
+                    object : TypeToken<List<IncludedFeature>>() {}.type
+                )
                 val benefits = Gson().fromJson<List<String>>(
                     item.benefits!!,
                     object : TypeToken<List<String>>() {}.type
                 )
-                list.add(Bundles(
+                val exclusiveToClientIds = Gson().fromJson<List<String>>(
+                    item.exclusive_To_clientIds!!,
+                    object : TypeToken<List<String>>() {}.type
+                )
+                list.add(
+                    Bundles(
                         item.bundle_id,
                         temp,
                         item.min_purchase_months,
@@ -301,21 +318,27 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
                         item.overall_discount_percent,
                         PrimaryImage(item.primary_image),
                         item.target_business_usecase,
-                        Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                        Gson().fromJson<List<String>>(
+                            item.exclusive_to_categories,
+                            object : TypeToken<List<String>>() {}.type
+                        ),
                         null,
-                    null, null ,null,null,item.desc))
+                        exclusiveToClientIds,
+                        null, null, null, null, item.desc
+                    )
+                )
             }
             if (list.size > 0) {
 
-                for(items in list){
-                    Log.v("getkeyWidget"," "+ items.name +" "+items.included_features.size)
+                for (items in list) {
+                    Log.v("getkeyWidget", " " + items.name + " " + items.included_features.size)
                     val itemIds = arrayListOf<String>()
-                    for (item in  items!!.included_features) {
+                    for (item in items!!.included_features) {
 
                         itemIds.add(item.feature_code)
 //                        viewModel.getFeatureValues(item.feature_code)
                     }
-                    Log.v("getkeyWidget123"," "+ itemIds.size)
+                    Log.v("getkeyWidget123", " " + itemIds.size)
                     viewModel.getFeatureValues(itemIds)
 //                    viewModel.loadUpdates(itemIds)
 //                    viewModel.getAssociatedWidgetKeys(items._kid)
@@ -356,7 +379,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
                 badgeNumber = cartList!!.size
                 badge121.setText(badgeNumber.toString())
                 badge121.visibility = View.VISIBLE
-                Log.v("badgeNumber", " "+ badgeNumber)
+                Log.v("badgeNumber", " " + badgeNumber)
 //                }
             } else {
                 badgeNumber = 0
@@ -364,12 +387,14 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
                 packageInCartStatus = false
 
 
-
             }
 //            viewModel.getCartItems()
-            Log.v("COMPARE_BACK_VALUE"," "+ Constants.COMPARE_BACK_VALUE + " cartCount: "+  cartCount +
-                    " COMPARE_CART_COUNT: "+Constants.COMPARE_CART_COUNT + " CART_VALUE: "+ Constants.CART_VALUE)
-            if(Constants.COMPARE_BACK_VALUE == 1 /*&& cartCount != Constants.COMPARE_CART_COUNT*/){
+            Log.v(
+                "COMPARE_BACK_VALUE",
+                " " + Constants.COMPARE_BACK_VALUE + " cartCount: " + cartCount +
+                        " COMPARE_CART_COUNT: " + Constants.COMPARE_CART_COUNT + " CART_VALUE: " + Constants.CART_VALUE
+            )
+            if (Constants.COMPARE_BACK_VALUE == 1 /*&& cartCount != Constants.COMPARE_CART_COUNT*/) {
 //                Constants.COMPARE_BACK_VALUE = 0
                 if (viewModel.allBundleResult.value != null) {
 
@@ -378,13 +403,17 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
                     if (list.size > 0) {
                         val listItem = arrayListOf<Bundles>()
                         for (item in list) {
-                            Log.v("allBundleResultValue"," "+ item.name)
-                            val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                            Log.v("allBundleResultValue", " " + item.name)
+                            val temp = Gson().fromJson<List<IncludedFeature>>(
+                                item.included_features,
+                                object : TypeToken<List<IncludedFeature>>() {}.type
+                            )
                             val benefits = Gson().fromJson<List<String>>(
                                 item.benefits!!,
                                 object : TypeToken<List<String>>() {}.type
                             )
-                            listItem.add(Bundles(
+                            listItem.add(
+                                Bundles(
                                     item.bundle_id,
                                     temp,
                                     item.min_purchase_months,
@@ -392,10 +421,14 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
                                     item.overall_discount_percent,
                                     PrimaryImage(item.primary_image),
                                     item.target_business_usecase,
-                                    Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                                null,
-                                null, null ,null,benefits,item.desc
-                            ))
+                                    Gson().fromJson<List<String>>(
+                                        item.exclusive_to_categories,
+                                        object : TypeToken<List<String>>() {}.type
+                                    ),
+                                    null,
+                                    null, null, null,null, benefits, item.desc
+                                )
+                            )
                         }
                         if (list.size > 0) {
                             updatePackageViewPager(listItem)
@@ -403,7 +436,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
 //                        packageAdaptor.notifyDataSetChanged()
                         }
                     }
-                }else{
+                } else {
                     viewModel.loadPackageUpdates()
                 }
                 viewModel.getCartItemsBack()
@@ -414,7 +447,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
     }
 
     override fun onBackPressed() {
-        Log.v("onBackPressed", " "+ Constants.COMPARE_BACK_VALUE)
+        Log.v("onBackPressed", " " + Constants.COMPARE_BACK_VALUE)
         /*if (::viewModel.isInitialized) {
 //            viewModel.getCartItems()
             viewModel.getCartItemsBack()
@@ -422,13 +455,12 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
     }
 
 
-
     fun updatePackageViewPager(list: List<Bundles>) {
 
         initializeFreeAddonsRecyclerView()
 //        initializePackageViewPager()
 //        package_viewpager.offscreenPageLimit = list.size
-        Log.v("updatePackageViewPager"," "+ list.size)
+        Log.v("updatePackageViewPager", " " + list.size)
         packageAdaptor.addupdates(list)
         packageAdaptor.notifyDataSetChanged()
         //show dot indicator only when the (list.size > 2)
@@ -441,14 +473,15 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
     }
 
 
-
     fun initializeFreeAddonsRecyclerView() {
 
         val layoutManager = LinearLayoutManager(
-                context)
+            context
+        )
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
 //        layoutManager.isMeasurementCacheEnabled = false
-        val parentItemAdapter = ParentCompareItemAdapter(upgradeList,(activity as CartActivity),this)
+        val parentItemAdapter =
+            ParentCompareItemAdapter(upgradeList, (activity as CartActivity), this)
 //        package_viewpager.adapter = parentItemAdapter
         package_viewpager.adapter = packageAdaptor
         package_viewpager.offscreenPageLimit = 2
@@ -482,80 +515,109 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
 
     }
 
-    override fun onPackageClicked(item: Bundles?,imageView: ImageView) {
+    override fun onPackageClicked(item: Bundles?, imageView: ImageView) {
         if (!packageInCartStatus) {
             if (item != null) {
-              prefs.storeAddedPackageDesc(item.desc!!)
+                prefs.storeAddedPackageDesc(item.desc!!)
 
                 val itemIds = arrayListOf<String>()
-                for(i in item.included_features){
+                for (i in item.included_features) {
                     itemIds.add(i.feature_code)
                 }
                 makeFlyAnimation(imageView)
 
                 CompositeDisposable().add(
-                        AppDatabase.getInstance(requireActivity().application)!!
-                                .featuresDao()
-                                .getallFeaturesInList(itemIds)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(
-                                        {
+                    AppDatabase.getInstance(requireActivity().application)!!
+                        .featuresDao()
+                        .getallFeaturesInList(itemIds)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                            {
 //                                            featuresList = it
-                                            var bundleMonthlyMRP = 0.0
-                                            val minMonth:Int = if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
+                                var bundleMonthlyMRP = 0.0
+                                val minMonth: Int =
+                                    if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
 
-                                            for (singleItem in it) {
-                                                for (item in item!!.included_features) {
-                                                    if (singleItem.feature_code == item.feature_code) {
-                                                        bundleMonthlyMRP += RootUtil.round((singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),2)
-                                                    }
-                                                }
-                                            }
-
-                                            offeredBundlePrice = (bundleMonthlyMRP * minMonth)
-                                            originalBundlePrice = (bundleMonthlyMRP * minMonth)
-
-                                            if(item!!.overall_discount_percent > 0)
-                                                offeredBundlePrice = RootUtil.round(originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent/100),2)
-                                            else
-                                                offeredBundlePrice = originalBundlePrice
-
-                                            //clear cartOrderInfo from SharedPref to requestAPI again
-                                            prefs.storeCartOrderInfo(null)
-                                            viewModel.addItemToCartPackage1(CartModel(
-                                                    item!!._kid,
-                                                    null,
-                                                    null,
-                                                    item!!.name,
-                                                    "",
-                                                    item!!.primary_image!!.url,
-                                                    offeredBundlePrice,
-                                                    originalBundlePrice,
-                                                    item!!.overall_discount_percent,
-                                                    1,
-                                                    if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
-                                                    "bundles",
-                                                    null
-                                            ))
-                                            val event_attributes: java.util.HashMap<String, Any> = java.util.HashMap()
-                                            item!!.name?.let { it1 -> event_attributes.put("Package Name", it1) }
-                                            item!!.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
-                                            event_attributes.put("Package Price", originalBundlePrice)
-                                            event_attributes.put("Discounted Price", offeredBundlePrice)
-                                            event_attributes.put("Discount %", item!!.overall_discount_percent)
-                                            item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
-                                            WebEngageController.trackEvent(ADDONS_MARKETPLACE_COMPARE_PACKAGE_ADDED_TO_CART, ADDONS_MARKETPLACE, event_attributes)
-                                            badgeNumber = badgeNumber + 1
-                                            Log.v("badgeNumber321", " "+ badgeNumber)
-                                            Constants.CART_VALUE = badgeNumber
-//                                            viewModel.getCartItems()
-                                        },
-                                        {
-                                            it.printStackTrace()
-
+                                for (singleItem in it) {
+                                    for (item in item!!.included_features) {
+                                        if (singleItem.feature_code == item.feature_code) {
+                                            bundleMonthlyMRP += RootUtil.round(
+                                                (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)),
+                                                2
+                                            )
                                         }
+                                    }
+                                }
+
+                                offeredBundlePrice = (bundleMonthlyMRP * minMonth)
+                                originalBundlePrice = (bundleMonthlyMRP * minMonth)
+
+                                if (item!!.overall_discount_percent > 0)
+                                    offeredBundlePrice = RootUtil.round(
+                                        originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100),
+                                        2
+                                    )
+                                else
+                                    offeredBundlePrice = originalBundlePrice
+
+                                //clear cartOrderInfo from SharedPref to requestAPI again
+                                prefs.storeCartOrderInfo(null)
+                                viewModel.addItemToCartPackage1(
+                                    CartModel(
+                                        item!!._kid,
+                                        null,
+                                        null,
+                                        item!!.name,
+                                        "",
+                                        item!!.primary_image!!.url,
+                                        offeredBundlePrice,
+                                        originalBundlePrice,
+                                        item!!.overall_discount_percent,
+                                        1,
+                                        if (item!!.min_purchase_months != null) item!!.min_purchase_months!! else 1,
+                                        "bundles",
+                                        null
+                                    )
                                 )
+                                val event_attributes: java.util.HashMap<String, Any> =
+                                    java.util.HashMap()
+                                item!!.name?.let { it1 ->
+                                    event_attributes.put(
+                                        "Package Name",
+                                        it1
+                                    )
+                                }
+                                item!!.target_business_usecase?.let { it1 ->
+                                    event_attributes.put(
+                                        "Package Tag",
+                                        it1
+                                    )
+                                }
+                                event_attributes.put("Package Price", originalBundlePrice)
+                                event_attributes.put("Discounted Price", offeredBundlePrice)
+                                event_attributes.put("Discount %", item!!.overall_discount_percent)
+                                item!!.min_purchase_months?.let { it1 ->
+                                    event_attributes.put(
+                                        "Validity",
+                                        it1
+                                    )
+                                }
+                                WebEngageController.trackEvent(
+                                    ADDONS_MARKETPLACE_COMPARE_PACKAGE_ADDED_TO_CART,
+                                    ADDONS_MARKETPLACE,
+                                    event_attributes
+                                )
+                                badgeNumber = badgeNumber + 1
+                                Log.v("badgeNumber321", " " + badgeNumber)
+                                Constants.CART_VALUE = badgeNumber
+//                                            viewModel.getCartItems()
+                            },
+                            {
+                                it.printStackTrace()
+
+                            }
+                        )
                 )
 
 
@@ -572,16 +634,18 @@ class ComparePackageFragment : BaseFragment(), CompareListener, CompareBackListe
     }
 
     override fun backComparePress() {
-     if(prefs.getCompareState() == 1){
-         prefs.storeCompareState(0)
-         viewModel.loadPackageUpdates()
-     }
+        if (prefs.getCompareState() == 1) {
+            prefs.storeCompareState(0)
+            viewModel.loadPackageUpdates()
+        }
     }
 
     private fun makeFlyAnimation(targetView: ImageView) {
 
-        CircleAnimationUtil().attachActivity(activity).setTargetView(targetView).setMoveDuration(600)
-            .setDestView(package_cart_icon).setAnimationListener(object : Animator.AnimatorListener {
+        CircleAnimationUtil().attachActivity(activity).setTargetView(targetView)
+            .setMoveDuration(600)
+            .setDestView(package_cart_icon)
+            .setAnimationListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animation: Animator) {}
                 override fun onAnimationEnd(animation: Animator) {
                     viewModel.getCartItems()

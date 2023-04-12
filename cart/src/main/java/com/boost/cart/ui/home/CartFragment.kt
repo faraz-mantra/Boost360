@@ -2407,9 +2407,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         Log.v("createPurchaseOrder1", " " + "createPurchaseOrder");
         var couponCode: String? = null
         var couponDiscountPercentage = 0.0
+        var couponDiscountPercent = 0.0
         if (validCouponCode != null) {
             couponCode = validCouponCode!!.coupon_key
             couponDiscountPercentage = validCouponCode!!.discount_percent.toDouble()
+            couponDiscountPercent = validCouponCode!!.discount_percent.toDouble()
         }
         if (couponServiceModel != null) {
             couponCode = couponServiceModel!!.coupon_key
@@ -2481,7 +2483,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     ConsumptionConstraint("DAYS", 30),
                     "",
                     item.description_title,
-                    item.discount,
+                    couponDiscountPercent,
                     Expiry(
                         "MONTHS",
                         Utils.expiryCalculator(
@@ -2603,15 +2605,15 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                         totalValidityDays =
                             monthCalculatorForAddons(validity_days, item.widget_type)
                         Log.v("totalValidityDays", " " + totalValidityDays)
-                        netPrice = netPrice * default_validity_months
-                        net_quantity =
-                            monthCalculatorForAddons(default_validity_months, item.widget_type)
-                        mrp_price = mrp_price * default_validity_months
+                    //    netPrice = netPrice * default_validity_months
+//                        net_quantity =
+//                            monthCalculatorForAddons(default_validity_months, item.widget_type)
+//                        mrp_price = mrp_price * default_validity_months
                     }
 
                     //adding widget netprice to featureNetprice to get GrandTotal In netPrice.
                     featureNetPrice += priceCalculatorForYear(
-                        netPrice,
+                        netPrice*default_validity_months,
                         item.widget_type,
                         requireActivity()
                     )
@@ -2625,7 +2627,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                             ),
                             "",
                             item.description_title,
-                            item.discount,
+                            couponDiscountPercent,
                             Expiry(
                                 "MONTHS",
                                 Utils.expiryCalculator(
@@ -2641,7 +2643,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                             netPrice,
                             mrp_price,
                             if (outputExtendedPropsPostPurchase.size > 0) outputExtendedPropsPostPurchase else null,
-                            net_quantity,
+                            1,
                             "MONTHLY",
                             item.feature_code!!,
                             item.item_id
@@ -2732,7 +2734,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                                     ),
                                                     "",
                                                     singleFeature.description_title,
-                                                    singleIndludedFeature.feature_price_discount_percent,
+                                                    couponDiscountPercent,
                                                     Expiry(
                                                         "MONTHS",
                                                         Utils.expiryCalculator(
@@ -2747,7 +2749,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                                     singleFeature.name!!,
 //                          netPrice.toDouble() * singleBundle.min_purchase_months,
                                                     singleWidgetNetPrice,
-                                                    singleFeature.price.toDouble() * singleBundle.min_purchase_months,
+                                                    singleFeature.price.toDouble(),
                                                     if (outputExtendedPropsPostPurchase.size > 0) outputExtendedPropsPostPurchase else null,
                                                     1,
                                                     "MONTHLY",
@@ -4214,7 +4216,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                         item.exclusive_to_categories,
                         object : TypeToken<List<String>>() {}.type
                     ),
-                    null, null, null, null, null, item.desc
+                    null, null, null, null, null, null, item.desc
                 )
                 break
             }
@@ -4521,7 +4523,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                         item.exclusive_to_categories,
                         object : TypeToken<List<String>>() {}.type
                     ),
-                    null, null, null, null, null, item.desc
+                    null, null, null, null, null, null, item.desc
                 )
                 break
             }
@@ -4590,7 +4592,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                         item.exclusive_to_categories,
                         object : TypeToken<List<String>>() {}.type
                     ),
-                    null, null, null, null, null, item.desc
+                    null, null, null, null, null, null, item.desc
                 )
                 break
             }
@@ -4659,7 +4661,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                         item.exclusive_to_categories,
                         object : TypeToken<List<String>>() {}.type
                     ),
-                    null, null, null, null, null, item.desc
+                    null, null, null,null, null, null, item.desc
                 )
                 break
             }

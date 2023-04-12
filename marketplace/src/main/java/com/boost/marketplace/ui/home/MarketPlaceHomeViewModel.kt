@@ -208,7 +208,19 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                         Log.e("GetAllFeatures", response.toString())
                         var data = arrayListOf<FeaturesModel>()
                         for (item in response!!.Data[0].features) {
-                            if (item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) {
+
+                            var applicableToClientId = false
+                            if ((item.exclusive_to_clientids != null && item.exclusive_to_clientids!!.size > 0)) {
+                                for (singleClientId in item.exclusive_to_clientids!!) {
+                                    if (singleClientId.equals(clientId, true)) {
+                                        applicableToClientId = true
+                                        break
+                                    }
+                                }
+                                if (!applicableToClientId)
+                                    continue
+                            }
+                            if ((item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) && !applicableToClientId) {
                                 var applicableToCurrentExpCode = false
                                 for (code in item.exclusive_to_categories!!) {
                                     if (code.equals(experienceCode, true))
@@ -272,7 +284,7 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                                     if (item.how_to_use_steps != null && item.how_to_use_steps!!.size > 0) Gson().toJson(
                                         item.how_to_use_steps
                                     ) else null,
-                                    item.how_to_use_title,null
+                                    item.how_to_use_title, null
                                 )
                             )
                         }
@@ -338,28 +350,41 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                         val tempBundles = getBundlesFromJsonFile(application.applicationContext)
                         for (item in response.Data[0].bundles) {
                             //  for (item in tempBundles) {
-                            if (item.exclusive_for_customers != null && item.exclusive_for_customers!!.size > 0) {
-                                var applicableToCurrentFPTag = false
-                                for (code in item.exclusive_for_customers!!) {
-                                    if (code.equals(_fpTag, true)) {
-                                        applicableToCurrentFPTag = true
+                            var applicableToClientId = false
+                            if ((item.exclusive_to_clientids != null && item.exclusive_to_clientids!!.size > 0)) {
+                                for (singleClientId in item.exclusive_to_clientids!!) {
+                                    if (singleClientId.equals(clientId, true)) {
+                                        applicableToClientId = true
                                         break
                                     }
                                 }
-                                if (!applicableToCurrentFPTag)
+                                if (!applicableToClientId)
                                     continue
                             }
-                            if (item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) {
-                                var applicableToCurrentExpCode = false
-                                for (code in item.exclusive_to_categories!!) {
-                                    if (code.equals(experienceCode, true)) {
-                                        applicableToCurrentExpCode = true
-                                        break
+                                if ((item.exclusive_for_customers != null && item.exclusive_for_customers!!.size > 0) && !applicableToClientId) {
+                                    var applicableToCurrentFPTag = false
+                                    for (code in item.exclusive_for_customers!!) {
+                                        if (code.equals(_fpTag, true)) {
+                                            applicableToCurrentFPTag = true
+                                            break
+                                        }
                                     }
+                                    if (!applicableToCurrentFPTag)
+                                        continue
                                 }
-                                if (!applicableToCurrentExpCode)
-                                    continue
-                            }
+
+
+                                if ((item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) && !applicableToClientId) {
+                                    var applicableToCurrentExpCode = false
+                                    for (code in item.exclusive_to_categories!!) {
+                                        if (code.equals(experienceCode, true)) {
+                                            applicableToCurrentExpCode = true
+                                            break
+                                        }
+                                    }
+                                    if (!applicableToCurrentExpCode)
+                                        continue
+                                }
                             bundles.add(
                                 BundlesModel(
                                     item._kid,
@@ -973,276 +998,275 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                         updatesLoader.postValue(false)
                     }
                     .subscribe())
-    } catch (e: Exception)
-    {
-        SentryController.captureException(e)
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+        }
+
+
     }
 
-
-}
-
-fun addItemToCartPackage1(cartItem: CartModel) {
-    updatesLoader.postValue(false)
-    Completable.fromAction {
-        AppDatabase.getInstance(application)!!.cartDao()
-            .insertToCart(cartItem)
-    }
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnComplete {
-            updatesLoader.postValue(false)
+    fun addItemToCartPackage1(cartItem: CartModel) {
+        updatesLoader.postValue(false)
+        Completable.fromAction {
+            AppDatabase.getInstance(application)!!.cartDao()
+                .insertToCart(cartItem)
         }
-        .doOnError {
-            updatesError.postValue(it.message)
-            updatesLoader.postValue(false)
-        }
-        .subscribe()
-}
-
-fun addItemToCartPackage(cartItem: CartModel) {
-    Log.v(
-        "addItemToCartPackage",
-        " " + cartItem.boost_widget_key + " " + cartItem.boost_widget_key
-    )
-    updatesLoader.postValue(false)
-
-
-    Completable.fromAction {
-        AppDatabase.getInstance(application)!!.cartDao().emptyCart()
-    }
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnError {
-            //in case of error
-        }
-        .doOnComplete {
-            Completable.fromAction {
-                AppDatabase.getInstance(application)!!.cartDao()
-                    .insertToCart(cartItem)
-            }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete {
-                    getCartItems()
-                    updatesLoader.postValue(false)
-                }
-                .doOnError {
-                    updatesError.postValue(it.message)
-                    updatesLoader.postValue(false)
-                }
-                .subscribe()
-        }
-        .subscribe()
-}
-
-fun checkBundlePackExists(kid: String) {
-    CompositeDisposable().add(
-        AppDatabase.getInstance(application)!!
-            .cartDao()
-            .checkCartBundleExist(kid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                if (it == 0) {
-                    bundleExistsBool.postValue(false)
-                } else {
-                    bundleExistsBool.postValue(true)
-                }
-            }, {
-//                            Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
-            })
-    )
-}
-
-fun emptyCouponTable() {
-    Completable.fromAction {
-        AppDatabase.getInstance(application)!!
-            .couponsDao()
-            .emptyCoupons()
+            .doOnComplete {
+                updatesLoader.postValue(false)
+            }
+            .doOnError {
+                updatesError.postValue(it.message)
+                updatesLoader.postValue(false)
+            }
+            .subscribe()
     }
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnComplete {
-            Log.i("emptyCouponTable", "Successfull")
-        }.doOnError {
-            Log.i("emptyCouponTable", "Failure")
-        }
-        .subscribe()
-}
 
-fun GetHelp() {
-    if (Utils.isConnectedToInternet(application)) {
-        CompositeDisposable().add(
-            NewApiService.GetHelp()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        if (it.Data[0].marketplacecustomervideos != null && it.Data[0].marketplacecustomervideos.size > 0) {
-                            val videoGallery = arrayListOf<YoutubeVideoModel>()
-                            for (singleVideoDetails in it.Data[0].marketplacecustomervideos) {
-                                videoGallery.add(
-                                    YoutubeVideoModel(
-                                        singleVideoDetails._kid,
-                                        singleVideoDetails.videodescription,
-                                        singleVideoDetails.videodurationseconds.toString(),
-                                        singleVideoDetails.videotitle,
-                                        singleVideoDetails.videourl.url,
-                                        singleVideoDetails.thumbnailimage.url
-                                    )
-                                )
-                            }
-
-                            Completable.fromAction {
-                                AppDatabase.getInstance(application)!!
-                                    .youtubeVideoDao()
-                                    .insertAllYoutubeVideos(videoGallery)
-                            }
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .doOnComplete {
-                                    Log.i("insertAllYoutubeVideos", "Successfully")
-                                    allVideoDetails.postValue(videoGallery)
-                                    updatesLoader.postValue(false)
-                                }
-                                .doOnError {
-                                    Log.i("insertAllYoutubeVideos", "failed")
-                                    updatesError.postValue(it.message)
-                                    updatesLoader.postValue(false)
-                                }
-                                .subscribe()
-                        }
-                    },
-                    {
-                        Log.e("GetAllVideos", "error" + it.message)
-                        updatesLoader.postValue(false)
-                    })
+    fun addItemToCartPackage(cartItem: CartModel) {
+        Log.v(
+            "addItemToCartPackage",
+            " " + cartItem.boost_widget_key + " " + cartItem.boost_widget_key
         )
-    } else {
+        updatesLoader.postValue(false)
+
+
+        Completable.fromAction {
+            AppDatabase.getInstance(application)!!.cartDao().emptyCart()
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError {
+                //in case of error
+            }
+            .doOnComplete {
+                Completable.fromAction {
+                    AppDatabase.getInstance(application)!!.cartDao()
+                        .insertToCart(cartItem)
+                }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnComplete {
+                        getCartItems()
+                        updatesLoader.postValue(false)
+                    }
+                    .doOnError {
+                        updatesError.postValue(it.message)
+                        updatesLoader.postValue(false)
+                    }
+                    .subscribe()
+            }
+            .subscribe()
+    }
+
+    fun checkBundlePackExists(kid: String) {
         CompositeDisposable().add(
             AppDatabase.getInstance(application)!!
-                .youtubeVideoDao()
-                .getYoutubeVideoItems()
+                .cartDao()
+                .checkCartBundleExist(kid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSuccess {
-                    allVideoDetails.postValue(it)
-                    updatesLoader.postValue(false)
-                }
-                .doOnError {
-                    updatesError.postValue(it.message)
-                    updatesLoader.postValue(false)
-                }
-                .subscribe()
+                .subscribe({
+                    if (it == 0) {
+                        bundleExistsBool.postValue(false)
+                    } else {
+                        bundleExistsBool.postValue(true)
+                    }
+                }, {
+//                            Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
+                })
         )
     }
-}
 
-//for enabling dark mode based on expired addons
-fun loadPurchasedItems1(fpid: String, clientId: String) {
-    updatesLoader.postValue(true)
-    CompositeDisposable().add(
-        ApiService.GetFeatureDetails(fpid, clientId)
+    fun emptyCouponTable() {
+        Completable.fromAction {
+            AppDatabase.getInstance(application)!!
+                .couponsDao()
+                .emptyCoupons()
+        }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { it1 ->
-                    val list = ArrayList<String>()
-                    for (singleItem in it1) {
-                        list.add(singleItem.featureCode)
-                    }
-                    CompositeDisposable().add(
-                        AppDatabase.getInstance(application)!!
-                            .featuresDao()
-                            .getallActiveFeatures1(list)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doOnSuccess { it2 ->
-                                val listFeaturesModel = it2.map { it3 ->
-                                    it1.firstOrNull { it.featureCode.equals(it3.feature_code) }
-                                        .apply {
-                                            it3.expiryDate = this?.expiryDate
-                                            it3.activatedDate = this?.activatedDate
-                                            it3.featureState = this?.featureState
-                                        };it3
+            .doOnComplete {
+                Log.i("emptyCouponTable", "Successfull")
+            }.doOnError {
+                Log.i("emptyCouponTable", "Failure")
+            }
+            .subscribe()
+    }
+
+    fun GetHelp() {
+        if (Utils.isConnectedToInternet(application)) {
+            CompositeDisposable().add(
+                NewApiService.GetHelp()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            if (it.Data[0].marketplacecustomervideos != null && it.Data[0].marketplacecustomervideos.size > 0) {
+                                val videoGallery = arrayListOf<YoutubeVideoModel>()
+                                for (singleVideoDetails in it.Data[0].marketplacecustomervideos) {
+                                    videoGallery.add(
+                                        YoutubeVideoModel(
+                                            singleVideoDetails._kid,
+                                            singleVideoDetails.videodescription,
+                                            singleVideoDetails.videodurationseconds.toString(),
+                                            singleVideoDetails.videotitle,
+                                            singleVideoDetails.videourl.url,
+                                            singleVideoDetails.thumbnailimage.url
+                                        )
+                                    )
                                 }
+
                                 Completable.fromAction {
                                     AppDatabase.getInstance(application)!!
-                                        .featuresDao()
-                                        .insertAllFeatures(listFeaturesModel)
+                                        .youtubeVideoDao()
+                                        .insertAllYoutubeVideos(videoGallery)
                                 }
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .doOnComplete {
-                                        Log.i("insertAllFeatures", "Successfully")
-                                        activePremiumWidgetList1.postValue(listFeaturesModel)
+                                        Log.i("insertAllYoutubeVideos", "Successfully")
+                                        allVideoDetails.postValue(videoGallery)
                                         updatesLoader.postValue(false)
-
-                                    }.doOnError {
+                                    }
+                                    .doOnError {
+                                        Log.i("insertAllYoutubeVideos", "failed")
                                         updatesError.postValue(it.message)
                                         updatesLoader.postValue(false)
                                     }
                                     .subscribe()
-
                             }
-                            .doOnError {
-                                updatesError.postValue(it.message)
-                                updatesLoader.postValue(false)
-                            }
-                            .subscribe()
-                    )
-                }, {
-                    updatesLoader.postValue(false)
-                    updatesError.postValue(it.message)
-                })
-    )
-}
-
-//for displaying referall section based on paid user.
-fun loadPurchasedItems(fpid: String, clientId: String) {
-    updatesLoader.postValue(true)
-    CompositeDisposable().add(
-        NewApiService.GetFeatureDetails(fpid, clientId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { it1 ->
-                    val list = ArrayList<String>()
-                    for (singleItem in it1) {
-                        list.add(singleItem.featureCode)
+                        },
+                        {
+                            Log.e("GetAllVideos", "error" + it.message)
+                            updatesLoader.postValue(false)
+                        })
+            )
+        } else {
+            CompositeDisposable().add(
+                AppDatabase.getInstance(application)!!
+                    .youtubeVideoDao()
+                    .getYoutubeVideoItems()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSuccess {
+                        allVideoDetails.postValue(it)
+                        updatesLoader.postValue(false)
                     }
-                    CompositeDisposable().add(
-                        AppDatabase.getInstance(application)!!
-                            .featuresDao()
-                            .getallActiveFeatures(list, true)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doOnSuccess { it2 ->
-                                val listFeaturesModel = it2.map { it3 ->
-                                    it1.firstOrNull { it.featureCode.equals(it3.feature_code) }
-                                        .apply {
-                                            it3.expiryDate = this?.expiryDate
-                                            it3.activatedDate = this?.activatedDate
-                                            it3.featureState = this?.featureState
-                                        };it3
-                                }
-                                activePremiumWidgetList.postValue(listFeaturesModel)
-                                updatesLoader.postValue(false)
-                            }
-                            .doOnError {
-                                updatesError.postValue(it.message)
-                                updatesLoader.postValue(false)
-                            }
-                            .subscribe()
-                    )
-                }, {
-                    updatesLoader.postValue(false)
-                    updatesError.postValue(it.message)
-                })
-    )
-}
+                    .doOnError {
+                        updatesError.postValue(it.message)
+                        updatesLoader.postValue(false)
+                    }
+                    .subscribe()
+            )
+        }
+    }
 
-    fun subscriptionType(auth: String, fpid:String) {
+    //for enabling dark mode based on expired addons
+    fun loadPurchasedItems1(fpid: String, clientId: String) {
+        updatesLoader.postValue(true)
+        CompositeDisposable().add(
+            ApiService.GetFeatureDetails(fpid, clientId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { it1 ->
+                        val list = ArrayList<String>()
+                        for (singleItem in it1) {
+                            list.add(singleItem.featureCode)
+                        }
+                        CompositeDisposable().add(
+                            AppDatabase.getInstance(application)!!
+                                .featuresDao()
+                                .getallActiveFeatures1(list)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .doOnSuccess { it2 ->
+                                    val listFeaturesModel = it2.map { it3 ->
+                                        it1.firstOrNull { it.featureCode.equals(it3.feature_code) }
+                                            .apply {
+                                                it3.expiryDate = this?.expiryDate
+                                                it3.activatedDate = this?.activatedDate
+                                                it3.featureState = this?.featureState
+                                            };it3
+                                    }
+                                    Completable.fromAction {
+                                        AppDatabase.getInstance(application)!!
+                                            .featuresDao()
+                                            .insertAllFeatures(listFeaturesModel)
+                                    }
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .doOnComplete {
+                                            Log.i("insertAllFeatures", "Successfully")
+                                            activePremiumWidgetList1.postValue(listFeaturesModel)
+                                            updatesLoader.postValue(false)
+
+                                        }.doOnError {
+                                            updatesError.postValue(it.message)
+                                            updatesLoader.postValue(false)
+                                        }
+                                        .subscribe()
+
+                                }
+                                .doOnError {
+                                    updatesError.postValue(it.message)
+                                    updatesLoader.postValue(false)
+                                }
+                                .subscribe()
+                        )
+                    }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
+
+    //for displaying referall section based on paid user.
+    fun loadPurchasedItems(fpid: String, clientId: String) {
+        updatesLoader.postValue(true)
+        CompositeDisposable().add(
+            NewApiService.GetFeatureDetails(fpid, clientId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { it1 ->
+                        val list = ArrayList<String>()
+                        for (singleItem in it1) {
+                            list.add(singleItem.featureCode)
+                        }
+                        CompositeDisposable().add(
+                            AppDatabase.getInstance(application)!!
+                                .featuresDao()
+                                .getallActiveFeatures(list, true)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .doOnSuccess { it2 ->
+                                    val listFeaturesModel = it2.map { it3 ->
+                                        it1.firstOrNull { it.featureCode.equals(it3.feature_code) }
+                                            .apply {
+                                                it3.expiryDate = this?.expiryDate
+                                                it3.activatedDate = this?.activatedDate
+                                                it3.featureState = this?.featureState
+                                            };it3
+                                    }
+                                    activePremiumWidgetList.postValue(listFeaturesModel)
+                                    updatesLoader.postValue(false)
+                                }
+                                .doOnError {
+                                    updatesError.postValue(it.message)
+                                    updatesLoader.postValue(false)
+                                }
+                                .subscribe()
+                        )
+                    }, {
+                        updatesLoader.postValue(false)
+                        updatesError.postValue(it.message)
+                    })
+        )
+    }
+
+    fun subscriptionType(auth: String, fpid: String) {
         updatesLoader.postValue(true)
         CompositeDisposable().add(
             NewApiService.subscriptionType(auth, fpid)
@@ -1252,7 +1276,7 @@ fun loadPurchasedItems(fpid: String, clientId: String) {
                     {
                         subscriptionTypeResult.postValue(it)
                         updatesLoader.postValue(false)
-                    },{
+                    }, {
                         updatesLoader.postValue(false)
                         updatesError.postValue(it.message)
                     })

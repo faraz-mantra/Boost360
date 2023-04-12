@@ -5,7 +5,12 @@ import com.dashboard.R
 import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.recyclerView.AppBaseRecyclerViewItem
 import com.framework.base.BaseResponse
+import com.framework.models.USER_MERCHANT_DETAIL
+import com.framework.models.UserProfileDataResult
+import com.framework.utils.*
 import java.io.Serializable
+
+const val LIST_OF_CLICKED_ITEMS = "LIST_OF_CLICKED_ITEMS"
 
 class QuickActionItem(
   var title: String? = null,
@@ -44,6 +49,17 @@ class QuickActionItem(
 
     companion object {
       fun from(name: String): QuickActionType? = values().firstOrNull { it.name == name }
+    }
+  }
+
+  companion object {
+    fun saveListOfClickedItems(itemsClicked: List<String> = listOf()) {
+      val distinct = itemsClicked.toList().toSet().toList()
+      PreferencesUtils.instance.saveData(LIST_OF_CLICKED_ITEMS, convertListObjToString(distinct) ?: "")
+    }
+
+    fun getListOfClickedItems(): List<String>? {
+      return convertStringToList(PreferencesUtils.instance.getData(LIST_OF_CLICKED_ITEMS, "") ?: "")
     }
   }
 }
