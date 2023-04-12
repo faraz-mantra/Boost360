@@ -51,6 +51,7 @@ class SharedPrefs(activity: Activity) {
   private val UPI_IDS = "UPI_IDS"
   private val BOOST_KEYBOARD_ACTIVATE_STATE="BOOST_KEYBOARD_ACTIVATE_STATE"
   private val SelectedDictatePrefs = "SelectedDictatePrefs"
+  private val SelectedDictateKeywordsPrefs = "SelectedDictateKeywordsPrefs"
 
   private var editor: SharedPreferences.Editor? = null
 
@@ -352,6 +353,16 @@ class SharedPrefs(activity: Activity) {
     if (value != null) {
       editor!!.putString(SelectedDictatePrefs, value).apply()
     }
+  }
+
+  fun storeSelectedDictateKeywordsPrefs(value: String?){
+    if (value != null) {
+      editor!!.putString(SelectedDictateKeywordsPrefs, value).apply()
+    }
+  }
+
+  fun getSelectedDictateKeywordsPrefs(): String? {
+    return pref!!.getString(SelectedDictateKeywordsPrefs, null)
   }
 
   fun getSelectedDictatePrefs(): String? {

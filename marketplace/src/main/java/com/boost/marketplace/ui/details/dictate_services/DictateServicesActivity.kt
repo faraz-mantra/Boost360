@@ -4,15 +4,15 @@ import android.app.Application
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -23,6 +23,7 @@ import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
+import com.boost.dbcenterapi.utils.KeyboardUtils.onGlobalLayout
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.dbcenterapi.utils.WebEngageController
 import com.boost.marketplace.base.AppBaseActivity
@@ -37,13 +38,13 @@ import com.framework.utils.RootUtil
 import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.framework.webengageconstant.ADDONS_MARKETPLACE_FEATURE_ADDED_TO_CART
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_feature_details.*
 import kotlinx.android.synthetic.main.layout_acceptance.*
 import kotlinx.android.synthetic.main.layout_target_customers.*
 import kotlinx.android.synthetic.main.layout_target_customers.btn1
@@ -52,6 +53,7 @@ import kotlinx.android.synthetic.main.layout_target_customers.img2
 import kotlinx.android.synthetic.main.layout_word_count.*
 import kotlinx.android.synthetic.main.view_select_number.*
 import kotlinx.android.synthetic.main.view_select_website.*
+
 
 class DictateServicesActivity :
     AppBaseActivity<ActivityDictateServicesBinding, ComparePacksViewModel>(),CompareListener, AddonsListener
@@ -164,11 +166,11 @@ class DictateServicesActivity :
         }
 
         binding?.layoutAddress?.setOnClickListener {
-            dialogAcceptance()
+            dialogAcceptance2()
         }
 
         binding?.layoutLogo?.setOnClickListener {
-            dialogAcceptance()
+            dialogAcceptance3()
         }
 
         binding?.mainBtn1?.setOnClickListener {
@@ -197,6 +199,51 @@ class DictateServicesActivity :
             }
         }
 
+        loadData1()
+    }
+
+    fun ViewGroup.addViewObserver(function: () -> Unit) {
+        val view = this
+        view.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                view.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                function.invoke()
+            }
+        })
+    }
+
+    //this has to be checked half implemented for cta to be enabled aftr filling mandatory fields. this is pending.
+    private fun loadData1() {
+        if ((!prefs.getSelectedDictatePrefs().isNullOrEmpty()) && (!prefs.getSelectedDictateKeywordsPrefs().isNullOrEmpty())){
+            binding!!.mainBtn1.background = ContextCompat.getDrawable(
+                applicationContext,
+                com.boost.marketplace.R.drawable.orange_button_click_effect
+            )
+            binding!!.mainBtn1.setTextColor(getResources().getColor(com.boost.marketplace.R.color.primaryDark))
+        }
+    }
+
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        if (ev.action == MotionEvent.ACTION_DOWN) {
+            val v = currentFocus
+            if (v is EditText) {
+                val edit = v
+                val outR = Rect()
+                edit.getGlobalVisibleRect(outR)
+                val isKeyboardOpen: Boolean = !outR.contains(ev.rawX.toInt(), ev.rawY.toInt())
+                print("Is Keyboard? $isKeyboardOpen")
+                if (isKeyboardOpen) {
+                    print("Entro al IF")
+                    edit.clearFocus()
+                    val imm: InputMethodManager =
+                        this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(edit.windowToken, 0)
+                }
+                edit.isCursorVisible = !isKeyboardOpen
+            }
+        }
+        return super.dispatchTouchEvent(ev)
     }
 
     fun dialogCustomers(){
@@ -232,6 +279,7 @@ class DictateServicesActivity :
                     dialog.chipsPlaces?.addView(mChip)
                 }
                 dialog.edt_places_tag?.setText("")
+
             }
         }
 
@@ -247,7 +295,9 @@ class DictateServicesActivity :
             dialog.img3.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             dialog.img4.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             var Values = "Mandatory"
-            doneButton(dialog,Values)
+            val text="In my city only "
+            val radio = "radio1"
+            doneButton(dialog,Values,text,radio)
         }
 
         dialog.radio_button2?.setOnClickListener {
@@ -259,7 +309,9 @@ class DictateServicesActivity :
             dialog.img3.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             dialog.img4.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             var Values = "Mandatory"
-            doneButton(dialog,Values)
+            val text="In my state only "
+            val radio = "radio2"
+            doneButton(dialog,Values,text,radio)
         }
 
         dialog.radio_button3?.setOnClickListener {
@@ -271,7 +323,9 @@ class DictateServicesActivity :
             dialog.img3.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
             dialog.img4.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             var Values = "Mandatory"
-            doneButton(dialog,Values)
+            val text="PAN India "
+            val radio = "radio3"
+            doneButton(dialog,Values,text,radio)
         }
 
         dialog.radio_button4?.setOnClickListener {
@@ -283,7 +337,10 @@ class DictateServicesActivity :
             dialog.img3.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             dialog.img4.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
             var Values = "Mandatory"
-            doneButton(dialog,Values)
+            val num = tagList1.toString().replace("[", "").replace("]", "")
+            val text=num
+            val radio = "radio4"
+            doneButton(dialog,Values,text,radio)
         }
 
     }
@@ -305,7 +362,9 @@ class DictateServicesActivity :
             dialog.img1.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
             dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             var Values = "optional"
-            doneButton(dialog,Values)
+            val text="100 - 240 characters "
+            val radio = "radio5"
+            doneButton(dialog,Values,text,radio)
         }
         dialog.radio_button6.setOnClickListener {
             dialog.btn1.isEnabled=true
@@ -313,7 +372,9 @@ class DictateServicesActivity :
             dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
             dialog.img1.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             var Values = "optional"
-            doneButton(dialog,Values)
+            val text="240 - 500 characters "
+            val radio = "radio6"
+            doneButton(dialog,Values,text,radio)
         }
     }
 
@@ -331,7 +392,9 @@ class DictateServicesActivity :
             dialog.img1.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
             dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             var Values = "optional"
-            doneButton(dialog,Values)
+            val text="Yes "
+            val radio = "radio7"
+            doneButton(dialog,Values,text,radio)
         }
         dialog.radio_button8.setOnClickListener {
             dialog.btn1.isEnabled=true
@@ -339,13 +402,89 @@ class DictateServicesActivity :
             dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
             dialog.img1.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
             var Values = "optional"
-            doneButton(dialog,Values)
+            val text="No "
+            val radio = "radio8"
+            doneButton(dialog,Values,text,radio)
         }
     }
 
-    private fun doneButton(dialog: Dialog,value:String) {
+    private fun dialogAcceptance2() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+        dialog.setContentView(com.boost.marketplace.R.layout.layout_acceptance)
+        dialog.window!!.setBackgroundDrawableResource(R.color.transparent)
+        dialog.show()
+
+        dialog.radio_button7.setOnClickListener {
+            dialog.btn1.isEnabled=true
+            dialog.btn1.isClickable=true
+            dialog.img1.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
+            dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
+            var Values = "optional"
+            val text="Yes "
+            val radio = "radio9"
+            doneButton(dialog,Values,text,radio)
+        }
+        dialog.radio_button8.setOnClickListener {
+            dialog.btn1.isEnabled=true
+            dialog.btn1.isClickable=true
+            dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
+            dialog.img1.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
+            var Values = "optional"
+            val text="No "
+            val radio = "radio10"
+            doneButton(dialog,Values,text,radio)
+        }
+    }
+
+    private fun dialogAcceptance3() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+        dialog.setContentView(com.boost.marketplace.R.layout.layout_acceptance)
+        dialog.window!!.setBackgroundDrawableResource(R.color.transparent)
+        dialog.show()
+
+        dialog.radio_button7.setOnClickListener {
+            dialog.btn1.isEnabled=true
+            dialog.btn1.isClickable=true
+            dialog.img1.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
+            dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
+            var Values = "optional"
+            val text="Yes "
+            val radio = "radio11"
+            doneButton(dialog,Values,text,radio)
+        }
+        dialog.radio_button8.setOnClickListener {
+            dialog.btn1.isEnabled=true
+            dialog.btn1.isClickable=true
+            dialog.img2.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_orange)
+            dialog.img1.setImageResource(com.boost.marketplace.R.drawable.ic_radio_buttons_grey)
+            var Values = "optional"
+            val text="No "
+            val radio = "radio12"
+            doneButton(dialog,Values,text,radio)
+        }
+    }
+
+    private fun doneButton(dialog: Dialog,value:String,text:String,radio:String) {
         dialog.btn1?.setOnClickListener {
             prefs.storeSelectedDictatePrefs(value)
+            if (radio.equals("radio5")||radio.equals("radio6")){
+                binding?.etCount?.text=text
+            } else if (radio.equals("radio1")||radio.equals("radio2")||radio.equals("radio3")){
+                binding?.etEmail?.text=text
+            } else if(radio.equals("radio4")){
+                val num = tagList1.toString().replace("[", "").replace("]", "")
+                binding?.etEmail?.text=num
+            } else if (radio.equals("radio7")||radio.equals("radio8")){
+                binding?.etHashtag?.text=text
+            } else if (radio.equals("radio9")||radio.equals("radio10")){
+                binding?.etAddress?.text=text
+            }else if (radio.equals("radio11")||radio.equals("radio12")){
+                binding?.etLogo?.text=text
+            }
             dialog.btn1.background = ContextCompat.getDrawable(
                 applicationContext,
                 com.boost.marketplace.R.drawable.grey_button_click_effect)
@@ -354,6 +493,7 @@ class DictateServicesActivity :
             Handler().postDelayed({
                 dialog.dismiss()
             }, 600)
+            loadData1()
         }
     }
 
@@ -368,6 +508,7 @@ class DictateServicesActivity :
             mChip.isCheckable=false
             if (tagList.size>0){
                 binding?.chipsTags?.visibility=View.VISIBLE
+                prefs.storeSelectedDictateKeywordsPrefs("mandatory")
             }else{
                 binding?.chipsTags?.visibility=View.GONE
                 binding?.chipsTags?.layout(0,0,0,0)
