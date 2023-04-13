@@ -6,11 +6,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.boost.cart.utils.WebEngageController
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PromoBanners
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.HomeListener
 import com.boost.marketplace.ui.home.MarketPlaceActivity
 import com.bumptech.glide.Glide
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_CART
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_CART_PROMO_BANNER_CLICKED
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.PAGE_VIEW
 import java.util.*
 
 class BannerViewPagerAdapter(
@@ -35,12 +40,13 @@ class BannerViewPagerAdapter(
   }
 
   override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
-    Glide.with(context).load(list.get(position).image?.url ?: "")
+    Glide.with(context).load(list[position].image?.url ?: "")
       .into(holder.primaryImage)
     holder.itemView.setOnClickListener {
-      homeListener.onPromoBannerClicked(list.get(position))
+      WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART_PROMO_BANNER_CLICKED, PAGE_VIEW, NO_EVENT_VALUE)
+      homeListener.onPromoBannerClicked(list[position])
     }
-    holder.title.setText(list.get(position).title)
+    holder.title.text = list[position].title
 //        checkBannerDetails(position)
   }
 

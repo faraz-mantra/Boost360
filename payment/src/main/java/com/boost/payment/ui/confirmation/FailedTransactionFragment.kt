@@ -17,10 +17,7 @@ import com.boost.payment.utils.WebEngageController
 import com.framework.analytics.SentryController
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
-import com.framework.webengageconstant.ADDONS_MARKETPLACE_FAILED_PAYMENT_TRANSACTION_LOADED
-import com.framework.webengageconstant.FAILED_PAYMENT_TRANSACTION
-import com.framework.webengageconstant.MARKETPLACE_FALIURE_TRY_AGAIN_CLICK
-import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.*
 import kotlinx.android.synthetic.main.payment_failure_v3.*
 
 class FailedTransactionFragment : BaseFragment() {
@@ -47,7 +44,7 @@ class FailedTransactionFragment : BaseFragment() {
     ): View? {
 
        // root = inflater.inflate(R.layout.payment_failure_v3, container, false)
-
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_PAYMENT_FAILED, PAGE_VIEW, NO_EVENT_VALUE)
         session = UserSessionManager(activity as PaymentActivity)
         prefs = SharedPrefs(activity as PaymentActivity)
         razorPayWebView = RazorPayWebView.newInstance()

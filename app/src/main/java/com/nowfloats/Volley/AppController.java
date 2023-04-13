@@ -220,7 +220,6 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
     void initCleverTap() {
         //Set Debug level for CleverTap
         CleverTapAPI.setDebugLevel(VERBOSE);
-
         clevertapDefaultInstance = CleverTapAPI.getDefaultInstance(getApplicationContext());
     }
 

@@ -17,7 +17,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.anachat.chatsdk.AnaCore
-import com.boost.dbcenterapi.utils.DataLoader
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.controller.ui.dashboard.DashboardFragmentV2
@@ -28,7 +27,6 @@ import com.dashboard.model.live.welcomeData.*
 import com.dashboard.utils.*
 import com.dashboard.utils.DashboardTabs.Companion.fromUrl
 import com.dashboard.viewmodel.DashboardViewModel
-import com.framework.analytics.CleverTapController
 import com.framework.analytics.SentryController
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -45,7 +43,6 @@ import com.framework.firebaseUtils.firestore.badges.BadgesModel
 import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
 import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager.getCartData
 import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager.initDataCart
-import com.framework.imagepicker.ImagePicker
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.KEY_FP_CART_COUNT
 import com.framework.utils.AppsFlyerUtils
@@ -59,7 +56,6 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
-import com.google.android.play.core.install.model.ActivityResult
 import com.google.android.play.core.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
 import com.inventoryorder.utils.DynamicLinkParams
@@ -71,7 +67,6 @@ import zendesk.core.AnonymousIdentity
 import zendesk.core.Zendesk
 import zendesk.support.Support
 import java.util.*
-import kotlin.concurrent.schedule
 import kotlin.concurrent.schedule
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener {
@@ -111,6 +106,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(this)
+
+
     session?.let { deepLinkUtil = DeepLinkUtil(this, it) }
     mNavController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
     val graph = mNavController.graph
