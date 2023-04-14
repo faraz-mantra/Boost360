@@ -42,6 +42,7 @@ import com.boost.dbcenterapi.utils.HorizontalMarginItemDecoration
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.dbcenterapi.utils.Utils.isExpertAvailable
 import com.boost.dbcenterapi.utils.WebEngageController
+import com.boost.marketplace.BuildConfig
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
@@ -211,9 +212,24 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         initView()
         initMvvm()
 //        loadData() //removed this due to multiple API call
-
-
         val callExpertString = SpannableString("Have a query? Call an expert")
+
+        if (BuildConfig.FLAVOR.equals("healthgro")){
+            callExpertString.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent1)),
+                callExpertString.length - 14,
+                callExpertString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        } else{
+            callExpertString.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.started_button_start)),
+                callExpertString.length - 14,
+                callExpertString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
 
         callExpertString.setSpan(
             UnderlineSpan(),
@@ -221,12 +237,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             callExpertString.length,
             0
         )
-        callExpertString.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(this, R.color.started_button_start)),
-            callExpertString.length - 14,
-            callExpertString.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+
 
         binding?.queryText?.text = callExpertString
         query_text.setOnClickListener {

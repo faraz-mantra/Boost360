@@ -46,6 +46,7 @@ import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.*
 import com.boost.dbcenterapi.utils.Constants.Companion.clientid
+import com.boost.marketplace.BuildConfig
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
@@ -353,12 +354,22 @@ class FeatureDetailsActivity :
             termsString.length,
             0
         )
-        termsString.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(this, R.color.started_button_start)),
-            termsString.length - 8,
-            termsString.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+        if (BuildConfig.FLAVOR.equals("healthgro")){
+            termsString.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent1)),
+                termsString.length - 8,
+                termsString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        } else{
+            termsString.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.started_button_start)),
+                termsString.length - 8,
+                termsString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
         terms.text = termsString
 
         val callExpertString = SpannableString("Have a query? Call an expert")
@@ -369,12 +380,22 @@ class FeatureDetailsActivity :
             callExpertString.length,
             0
         )
-        callExpertString.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(this, R.color.started_button_start)),
-            callExpertString.length - 14,
-            callExpertString.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        );
+        if (BuildConfig.FLAVOR.equals("healthgro")){
+            callExpertString.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent1)),
+                callExpertString.length - 14,
+                callExpertString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+        } else{
+            callExpertString.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.started_button_start)),
+                callExpertString.length - 14,
+                callExpertString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+        }
+
 
         query_text.setText(callExpertString)
         query_text.setOnClickListener {
