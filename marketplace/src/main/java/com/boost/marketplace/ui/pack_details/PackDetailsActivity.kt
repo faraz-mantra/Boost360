@@ -221,7 +221,15 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
                 callExpertString.length,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
-        } else{
+        } else if(BuildConfig.FLAVOR.equals("ardhim")) {
+            callExpertString.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent1)),
+                callExpertString.length - 14,
+                callExpertString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+        else{
             callExpertString.setSpan(
                 ForegroundColorSpan(ContextCompat.getColor(this, R.color.started_button_start)),
                 callExpertString.length - 14,

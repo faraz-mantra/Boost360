@@ -56,6 +56,8 @@ class FeaturePacksAdapter(
     Glide.with(context).load(bundleList.get(position).primary_image).into(holder.image)
     if (BuildConfig.FLAVOR.equals("healthgro")){
       holder.view_packs_arrow.setImageResource(R.drawable.ic_my_cuurent_plan_arrow)
+    } else if (BuildConfig.FLAVOR.equals("ardhim")){
+      holder.view_packs_arrow.setImageResource(R.drawable.ic_my_cuurent_plan_arrow)
     }
     if (bundleList.get(position).overall_discount_percent > 0) {
       holder.discount.visibility = View.VISIBLE

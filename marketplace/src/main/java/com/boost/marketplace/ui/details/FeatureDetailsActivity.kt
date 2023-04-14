@@ -361,7 +361,15 @@ class FeatureDetailsActivity :
                 termsString.length,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
-        } else{
+        } else if(BuildConfig.FLAVOR.equals("ardhim")) {
+            termsString.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent1)),
+                termsString.length - 8,
+                termsString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+        else{
             termsString.setSpan(
                 ForegroundColorSpan(ContextCompat.getColor(this, R.color.started_button_start)),
                 termsString.length - 8,
@@ -387,7 +395,15 @@ class FeatureDetailsActivity :
                 callExpertString.length,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             );
-        } else{
+        } else if(BuildConfig.FLAVOR.equals("ardhim")) {
+            callExpertString.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent1)),
+                callExpertString.length - 14,
+                callExpertString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+        else{
             callExpertString.setSpan(
                 ForegroundColorSpan(ContextCompat.getColor(this, R.color.started_button_start)),
                 callExpertString.length - 14,
