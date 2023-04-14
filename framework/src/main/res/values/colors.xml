@@ -3,6 +3,7 @@
   <color name="colorAccent">#ffb900</color>
   <color name="colorPrimary">#ffb900</color>
   <color name="colorAccentLight">#ffb900</color>
+  <color name="dr_score_summary">#ffb900</color>
   <color name="colorRedBgImg">#E39595</color>
 
   <color name="primary_4a4a4a_jio">@color/black_4a4a4a</color>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccent">#409F94</color>
+    <color name="colorPrimary">#409F94</color>
+    <color name="colorPrimaryDark">#001D85</color>
+    <color name="colorAccentLight">#001D85</color>
+    <color name="dr_score_summary">#409F94</color>
+    <color name="dashboard_business_url">#ffffff</color>
+    <color name="dr_improve_arrow">#001D85</color>
+    <color name="colorAccent_jio">#409F94</color>
+</resources>
