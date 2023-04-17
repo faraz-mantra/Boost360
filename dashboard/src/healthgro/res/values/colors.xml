@@ -8,4 +8,7 @@
     <color name="dashboard_business_url">#ffffff</color>
     <color name="dr_improve_arrow">#001D85</color>
     <color name="colorAccent_jio">#409F94</color>
+    <color name="website_toolbar_color">@color/green_409F94</color>
+    <color name="website_tab_text_color">#409F94</color>
+    <color name="website_button_tint">#32C4C4C4</color>
 </resources>

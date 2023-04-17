@@ -138,14 +138,14 @@
                                     android:layout_marginTop="@dimen/size_2"
                                     android:drawableStart="@drawable/ic_website_accent_d"
                                     android:drawablePadding="@dimen/size_4"
-                                    android:drawableTint="@color/colorAccentLight"
+                                    android:drawableTint="@color/website_tab_url_color"
                                     android:ellipsize="end"
                                     android:gravity="center_vertical"
                                     android:includeFontPadding="false"
                                     android:maxLines="1"
                                     android:tag="com.userexperior.ueSecureView"
                                     android:textAlignment="gravity"
-                                    android:textColor="@color/colorAccentLight"
+                                    android:textColor="@color/website_tab_url_color"
                                     android:textSize="@dimen/text_12"
                                     app:autoSizeMaxTextSize="16sp"
                                     app:autoSizeMinTextSize="8sp"
@@ -292,12 +292,13 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawableStart="@drawable/ic_clock_white"
+                        app:drawableTint="@color/website_tab_text_color"
                         android:drawablePadding="@dimen/size_8"
                         android:fontFamily="@font/semi_bold"
                         android:gravity="center_vertical"
                         android:maxLines="2"
                         android:text="@string/business_timings"
-                        android:textColor="@color/text_color_light_white"
+                        android:textColor="@color/website_tab_text_color"
                         android:textSize="@dimen/text_13"
                         tools:targetApi="p" />
 
@@ -352,12 +353,13 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawableStart="@drawable/ic_palette_white"
+                        app:drawableTint="@color/website_tab_text_color"
                         android:drawablePadding="@dimen/size_8"
                         android:fontFamily="@font/semi_bold"
                         android:gravity="center_vertical"
                         android:maxLines="2"
                         android:text="@string/website_customisation"
-                        android:textColor="@color/text_color_light_white"
+                        android:textColor="@color/website_tab_text_color"
                         android:textSize="@dimen/text_13"
                         tools:targetApi="p" />
 
@@ -368,7 +370,7 @@
                         android:layout_marginEnd="-30dp"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
-                        app:lottie_rawRes="@raw/new_badge" />
+                        app:lottie_rawRes="@raw/yellow_new_lotty" />
 
                     <com.framework.views.customViews.CustomImageView
                         android:layout_width="wrap_content"

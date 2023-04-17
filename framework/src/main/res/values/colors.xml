@@ -84,6 +84,7 @@
   <color name="boost_jio_website_card_color">@color/transparent</color>
   <color name="boost_jio_website_arrow_color">@color/white</color>
   <color name="green_light">#00C42D</color>
+  <color name="website_tab_url_color">#ffb900</color>
 
 
 </resources>

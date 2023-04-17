@@ -29,4 +29,5 @@
   <color name="open_website_background">@color/gray_828282</color>
   <color name="text_dark">@color/black_4a4a4a</color>
   <color name="dr_improve_arrow">#ffb900</color>
+  <color name="website_tab_text_color">@color/white</color>
 </resources>
