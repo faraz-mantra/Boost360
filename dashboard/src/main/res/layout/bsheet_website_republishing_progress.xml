@@ -40,7 +40,7 @@
                 android:layout_marginBottom="@dimen/size_31"
                 android:layout_marginHorizontal="@dimen/size_52"
                 app:indeterminateAnimationType="disjoint"
-                app:indicatorColor="@color/colorPrimary"/>
+                app:indicatorColor="@color/republish_progress_color"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.cardview.widget.CardView>

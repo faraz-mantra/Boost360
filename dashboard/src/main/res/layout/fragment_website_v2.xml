@@ -370,7 +370,7 @@
                         android:layout_marginEnd="-30dp"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
-                        app:lottie_rawRes="@raw/yellow_new_lotty" />
+                        app:lottie_rawRes="@raw/new_badge" />
 
                     <com.framework.views.customViews.CustomImageView
                         android:layout_width="wrap_content"

@@ -85,6 +85,7 @@
   <color name="boost_jio_website_arrow_color">@color/white</color>
   <color name="green_light">#00C42D</color>
   <color name="website_tab_url_color">#ffb900</color>
-
+  <color name="dash_bottom_nav_panel_active">#ffb900</color>
+  <color name="republish_progress_color">#ffb900</color>
 
 </resources>

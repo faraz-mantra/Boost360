@@ -409,7 +409,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       4 -> showToolbar(getString(R.string.more))
       else -> {
         if (packageName.equals(APPLICATION_JIO_ID, ignoreCase = true).not()) {
-          changeTheme(R.color.colorPrimary, R.color.colorPrimary)
+          changeTheme(R.color.dashboard_status_bar_color, R.color.dashboard_status_bar_color)
         }
         getToolbar()?.apply { visibility = View.GONE }
       }
@@ -417,7 +417,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun showToolbar(title: String) {
-    changeTheme(R.color.black_4a4a4a_jio, R.color.black_4a4a4a_jio)
+    changeTheme(R.color.dashboard_status_bar_color, R.color.dashboard_status_bar_color)
     getToolbar()?.apply {
       visibility = View.VISIBLE
       supportActionBar?.setDisplayHomeAsUpEnabled(false)

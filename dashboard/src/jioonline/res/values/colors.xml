@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="dr_improve_arrow">#0400A6</color>
+    <color name="dashboard_status_bar_color">#EC008C</color>
 </resources>

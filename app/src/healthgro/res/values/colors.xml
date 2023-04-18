@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+  <color name="colorAccent">#001D85</color>
   <color name="primaryColor">#001D85</color>
   <color name="greenDark">#458b00</color>
   <color name="product_delete_btn">#ff3f3f</color>
@@ -65,6 +66,8 @@
   <color name="primary_color_dark">@color/primaryColorDark</color>
 
   <color name="success_green">#6DCA07</color>
+  <color name="black_4a4a4a_jio">#001D85</color>
+  <color name="website_custom_toolbar_color">#409F94</color>
 
 
 </resources>
