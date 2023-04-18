@@ -6,6 +6,7 @@ import android.text.TextPaint
 import android.text.style.ClickableSpan
 import android.view.*
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LiveData
 import com.boost.presignin.BuildConfig
 import com.boost.presignin.R
 import com.boost.presignin.constant.FragmentType
@@ -20,6 +21,7 @@ import com.boost.presignin.ui.mobileVerification.FP_LIST_FRAGMENT
 import com.boost.presignin.ui.mobileVerification.MobileVerificationActivity
 import com.boost.presignin.ui.newOnboarding.bottomSheet.NeedHelpBottomSheet
 import com.boost.presignin.views.otptextview.OTPListener
+import com.framework.base.BaseResponse
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -30,6 +32,8 @@ import com.framework.pref.clientId2
 import com.framework.smsVerification.SMSReceiver
 import com.framework.smsVerification.SmsManager
 import com.framework.webengageconstant.*
+import java.util.*
+import kotlin.concurrent.schedule
 
 class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSReceiver.OTPReceiveListener {
 
@@ -210,7 +214,13 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
       showProgress(getString(R.string.verify_otp))
       WebEngageController.trackEvent(PS_VERIFY_OTP_VERIFY, OTP_VERIFY_CLICK, NO_EVENT_VALUE)
       val otp = binding?.pinOtpVerify?.otp
-      viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId)?.observeOnce(viewLifecycleOwner) {
+      var verifyOtp:LiveData<BaseResponse>? = null
+      if (BuildConfig.FLAVOR.equals("partone") || BuildConfig.FLAVOR.equals("jioonline")) {
+        verifyOtp = viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId)
+      }else{
+        verifyOtp = viewModel?.verifyLoginOtpVertical(number = phoneNumber, otp, clientId)
+      }
+      verifyOtp?.observeOnce(viewLifecycleOwner) {
         hideProgress()
         this.resultLogin = null
         if (it.isSuccess()) {

@@ -27,8 +27,10 @@ import com.framework.webengageconstant.*
 import android.widget.Toast
 
 import android.view.View.OnFocusChangeListener
+import androidx.lifecycle.LiveData
+import com.boost.presignin.BuildConfig
 import com.framework.pref.APPLICATION_JIO_ID
-import com.framework.BuildConfig
+import com.framework.base.BaseResponse
 
 class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
@@ -106,7 +108,15 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
   private fun loginApiVerify(userName: String?, password: String?) {
     showProgress()
-    viewModel?.verifyUserProfile(UserProfileVerificationRequest(loginKey = userName, loginSecret = password, clientId = clientId))?.observeOnce(viewLifecycleOwner) {
+
+    var verifyUsernamePassword: LiveData<BaseResponse>? = null
+    if (BuildConfig.FLAVOR.equals("partone") || BuildConfig.FLAVOR.equals("jioonline")) {
+      verifyUsernamePassword = viewModel?.verifyUserProfile(UserProfileVerificationRequest(loginKey = userName, loginSecret = password, clientId = clientId))
+    }else{
+      verifyUsernamePassword = viewModel?.verifyUserProfileVertical(UserProfileVerificationRequest(loginKey = userName, loginSecret = password, clientId = clientId))
+    }
+
+    verifyUsernamePassword?.observeOnce(viewLifecycleOwner) {
       hideProgress()
       val response = it as? VerificationRequestResult
       if (response?.isSuccess() == true && response.loginId.isNullOrEmpty().not() && response.authTokens.isNullOrEmpty().not()) {

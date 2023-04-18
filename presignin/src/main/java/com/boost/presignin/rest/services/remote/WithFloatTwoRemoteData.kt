@@ -110,4 +110,15 @@ interface WithFloatTwoRemoteData {
   )
   @GET
   fun getIPInfo(@Url url:String): Observable<Response<LocationResponse>>
+
+  @GET(EndPoints.VERTICAL_VERIFY_LOGIN_OTP)
+  fun verifyLoginOtpVertical(
+    @Query("mobileNumber") number: String?, @Query("otp") otp: String?,
+    @Query(value = "clientId") clientId: String?,
+  ): Observable<Response<VerifyOtpResponse>>
+
+  @Headers("Content-Type: application/json")
+  @POST(EndPoints.VERTICAL_VERIFY_LOGIN)
+  fun verifyUserProfileVertical(@Body userProfileVerificationRequest: UserProfileVerificationRequest): Observable<Response<VerificationRequestResult>>
+
 }

@@ -102,4 +102,12 @@ class LoginSignUpViewModel : BaseViewModel() {
   fun getUserLocation(locationUri: String): LiveData<BaseResponse>  {
     return WithFloatTwoRepository.getUserLocation(locationUri).toLiveData()
   }
+
+  fun verifyLoginOtpVertical(number: String?, otp: String?, clientId: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.verifyLoginOtpVertical(number, otp, clientId).toLiveData()
+  }
+
+  fun verifyUserProfileVertical(request: UserProfileVerificationRequest): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.verifyUserProfileVertical(request).toLiveData()
+  }
 }

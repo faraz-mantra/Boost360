@@ -23,6 +23,8 @@ data class AuthTokenDataItem(
   var logoUrl: String? = null,
   @SerializedName("Name")
   var name: String? = null,
+  @SerializedName("AppExperienceCode")
+  var appExperienceCode: String? = null,
   @SerializedName("RootAliasUri")
   var rootAliasUri: String? = null,
   var isItemSelected: Boolean? = false,

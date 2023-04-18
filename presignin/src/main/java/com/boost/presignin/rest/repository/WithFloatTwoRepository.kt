@@ -107,4 +107,12 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
   fun getUserLocation(locationUrl:String): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getIPInfo(locationUrl), TaskCode.GET_LOCATION)
   }
+
+  fun verifyLoginOtpVertical(number: String?, otp: String?, clientId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.verifyLoginOtpVertical(number, otp, clientId = clientId), TaskCode.VERIFY_LOGIN_OTP)
+  }
+
+  fun verifyUserProfileVertical(request: UserProfileVerificationRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.verifyUserProfileVertical(request), TaskCode.VERIFY_USER_PROFILE)
+  }
 }

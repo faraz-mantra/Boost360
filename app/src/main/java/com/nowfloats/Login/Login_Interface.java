@@ -36,4 +36,8 @@ public interface Login_Interface {
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     @POST("/Discover/v1/floatingpoint/notification/registerChannel")
     public void post_RegisterRia(@Body HashMap<String, String> map, Callback<String> callback);
+
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    @POST("/Discover/v1/floatingPoint/verifyLogin")
+    public void verticalAuthenticationProcess(@Body HashMap<String, String> map, Callback<Login_Data_Model> callback);
 }
