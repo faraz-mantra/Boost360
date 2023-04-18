@@ -566,6 +566,13 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 val oneMonthFormat = SimpleDateFormat("dd MMM yy")
                 oneMonthFormat.setTimeZone(oneMonthFromNow.getTimeZone())
 
+                val validityMonths = if(!prefs.getValidityMonths().isNullOrEmpty()) {
+                    if(prefs.getYearPricing())
+                        prefs.getValidityMonths()!!.toDouble() / 12
+                    else
+                        prefs.getValidityMonths()!!.toDouble()
+                } else 0.0
+
                 if(prefs.getAutoRenewSubscriptionID().isNullOrEmpty()) {
                     viewModel.markOrderForAutoRenewal(
                         (activity as? PaymentActivity)?.getAccessToken() ?: "",
@@ -573,7 +580,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                             true,
                             (activity as PaymentActivity).clientid,
                             (activity as PaymentActivity).fpid!!,
-                            requireArguments().getString("transaction_id")!!
+                            requireArguments().getString("transaction_id")!!,
+                            if(prefs.getYearPricing()) "year" else "month",
+                            if(validityMonths > validityMonths.toInt()) validityMonths.toInt() + 1 else validityMonths.toInt()
                         )
                     )
                 }else{
