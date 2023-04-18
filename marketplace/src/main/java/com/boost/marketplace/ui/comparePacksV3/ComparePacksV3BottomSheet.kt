@@ -131,11 +131,11 @@ class ComparePacksV3BottomSheet(val activityListener: ComparePacksV3Activity, va
                 2
             )
             binding?.packDiscountTv?.visibility = View.VISIBLE
-            binding?.packDiscountTv?.setText( bundleData.overall_discount_percent.toString() + "% SAVING") //= "${bundleData.overall_discount_percent}" +" % SAVING"
+            binding?.packDiscountTv?.setText( bundleData.overall_discount_percent.toString() + " % SAVING") //= "${bundleData.overall_discount_percent}" +" % SAVING"
 
         } else {
             offeredBundlePrice = originalBundlePrice
-            binding?.packDiscountTv?.visibility = View.VISIBLE
+            binding?.packDiscountTv?.visibility = View.GONE
         }
 
         var originalText = bundleData.name

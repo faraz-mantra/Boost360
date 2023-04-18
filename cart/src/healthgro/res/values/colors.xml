@@ -5,6 +5,7 @@
     <color name="colorPrimaryDark1">#0F000000</color>
     <color name="colorAccent1">#001D85</color>
     <color name="colorToolbar">#61C3B8</color>
+    <color name="colorFill">#E6E8F3</color>
     <color name="colorTransparentPrimary1">#FF4A4A4A</color>
     <color name="themeColor">#001D85</color>
     <color name="primary">#FFFFFF</color>
