@@ -12,8 +12,6 @@ import com.boost.presignin.model.login.UserProfileVerificationRequest
 import com.framework.base.BaseResponse
 import com.framework.pref.clientId
 import io.reactivex.Observable
-import okhttp3.ResponseBody
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.http.Body
 import java.util.HashMap
@@ -114,5 +112,9 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
 
   fun verifyUserProfileVertical(request: UserProfileVerificationRequest): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.verifyUserProfileVertical(request), TaskCode.VERIFY_USER_PROFILE)
+  }
+
+  fun getVerticalCategories(appExperienceCode: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getVerticalCategories(appExperienceCode), TaskCode.GET_VERTICAL_CATEGORIES)
   }
 }

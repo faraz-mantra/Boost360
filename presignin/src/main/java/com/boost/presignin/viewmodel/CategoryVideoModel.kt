@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import com.boost.presignin.rest.repository.BoostKitDevRepository
 import com.boost.presignin.rest.repository.CategoryRepository
+import com.boost.presignin.rest.repository.WithFloatTwoRepository
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
@@ -19,5 +20,9 @@ class CategoryVideoModel : BaseViewModel() {
 
   fun getCategoriesFromApi(): LiveData<BaseResponse>{
       return BoostKitDevRepository.getCategories().toLiveData()
+  }
+
+  fun getVerticalCategories(fpAppexperiencecode: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getVerticalCategories(fpAppexperiencecode).toLiveData()
   }
 }

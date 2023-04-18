@@ -13,6 +13,7 @@ import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.userprofile.BusinessProfileResponse
 import com.boost.presignin.model.userprofile.ConnectUserProfileResponse
 import com.boost.presignin.model.userprofile.ResponseMobileIsRegistered
+import com.boost.presignin.model.vertical_categories.Categories
 import com.boost.presignin.rest.EndPoints
 import com.framework.BuildConfig
 import com.onboarding.nowfloats.model.googleAuth.FirebaseTokenResponse
@@ -121,4 +122,8 @@ interface WithFloatTwoRemoteData {
   @POST(EndPoints.VERTICAL_VERIFY_LOGIN)
   fun verifyUserProfileVertical(@Body userProfileVerificationRequest: UserProfileVerificationRequest): Observable<Response<VerificationRequestResult>>
 
+  @GET(EndPoints.GET_VERTICAL_CATEGORIES)
+  fun getVerticalCategories(
+    @Path("appExperienceCode") appECode: String?
+  ): Observable<Response<Categories>>
 }

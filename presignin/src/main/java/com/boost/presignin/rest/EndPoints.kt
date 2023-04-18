@@ -38,6 +38,7 @@ object EndPoints {
   const val REGISTER_CHANNEL = "/Discover/v1/floatingpoint/notification/registerChannel"
   //FIREBASE TOKEN
   const val GET_FIREBASE_TOKEN = "discover/v1/FloatingPoint/GetFirebaseAuthToken"
+  const val GET_VERTICAL_CATEGORIES = "/kitsune/v1/GetKitsuneSubCategory/{appExperienceCode}"
 
   //todo NFX API
   var NFX_WITH_NOWFLOATS: String = "https://nfx.withfloats.com"

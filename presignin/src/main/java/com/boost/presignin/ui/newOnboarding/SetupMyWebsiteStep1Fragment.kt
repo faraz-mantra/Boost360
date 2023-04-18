@@ -3,7 +3,6 @@ package com.boost.presignin.ui.newOnboarding
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableStringBuilder
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -18,6 +17,8 @@ import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.category.ApiCategoryResponseCategory
 import com.boost.presignin.model.category.CategoryDataModel
 import com.boost.presignin.model.category.getCategoryLiveData
+import com.boost.presignin.model.vertical_categories.Categories
+import com.boost.presignin.model.vertical_categories.CategoriesItem
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
 import com.boost.presignin.recyclerView.RecyclerItemClickListener
@@ -27,6 +28,7 @@ import com.boost.presignin.viewmodel.CategoryVideoModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.pref.UserSessionManager
 import com.framework.utils.hideKeyBoard
 import com.framework.utils.onDone
 import com.framework.utils.onRightDrawableClicked
@@ -46,6 +48,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
 
   private var noCatListAdapter: AppBaseRecyclerViewAdapter<CategoryDataModel>? = null
   private var adapterCategoryLocal: AppBaseRecyclerViewAdapter<CategoryDataModel>? = null
+  protected lateinit var session: UserSessionManager
 
   private val categoryListLive: List<ApiCategoryResponseCategory>?
     get() {
@@ -75,10 +78,17 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
 
   override fun onCreateView() {
     super.onCreateView()
+    this.session = UserSessionManager(baseActivity)
     WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_SELECTION_SCREEN_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListeners()
+
     initialize()
-    loadLocalCategoryData()
+
+    if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
+      binding.tvNextStep1.backgroundTintList= ContextCompat.getColorStateList(context!!, R.color.buttonTint)
+    }else{
+      loadLocalCategoryData()
+    }
   }
 
   private fun loadLocalCategoryData() {
@@ -115,10 +125,6 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
       it.setText("")
       it.clearFocus()
       uiChangeSearchCategory(false)
-    }
-
-    if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
-      binding.tvNextStep1.backgroundTintList= ContextCompat.getColorStateList(context!!, R.color.buttonTint)
     }
   }
 
