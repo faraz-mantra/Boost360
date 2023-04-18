@@ -257,7 +257,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         cartCouponAdapter = CartCouponAdapter(this)
         prefs = SharedPrefs(activity as CartActivity)
         WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART, PAGE_VIEW, NO_EVENT_VALUE)
-
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART_REVIEW_CLICK, PAGE_VIEW, NO_EVENT_VALUE)
         return root
     }
 
@@ -955,6 +955,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         }
 
         cart_spk_to_expert.setOnClickListener {
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART_EXPERT_CALL_CLICK, PAGE_VIEW, NO_EVENT_VALUE)
             speakToExpert(prefs.getExpertContact())
         }
 //    enter_gst_number.setOnClickListener {

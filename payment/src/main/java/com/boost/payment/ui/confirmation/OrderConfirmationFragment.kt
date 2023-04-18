@@ -58,11 +58,11 @@ class OrderConfirmationFragment : BaseFragment() {
 //        event_attributes.put("couponIds", Utils.filterQuotes(prefs.getCouponIds().toString()))
 //        event_attributes.put("validity",prefs.getValidityMonths().toString())
 //
-//        WebEngageController.trackEvent(
-//          EVENT_NAME_ADDONS_MARKETPLACE_ORDER_CONFIRM,
-//          PAGE_VIEW,
-//          event_attributes
-//        )
+        WebEngageController.trackEvent(
+          EVENT_NAME_ADDONS_MARKETPLACE_ORDER_CONFIRM,
+          PAGE_VIEW,
+          NO_EVENT_VALUE
+        )
 //      } catch (e: Exception) {
 //      }
 //    }

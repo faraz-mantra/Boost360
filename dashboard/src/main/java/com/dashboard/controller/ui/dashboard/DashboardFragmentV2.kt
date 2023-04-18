@@ -645,6 +645,7 @@ class DashboardFragmentV2 : AppBaseFragment<FragmentDashboardV2Binding, Dashboar
         actionChannelClick(data)
       }
       RecyclerViewActionType.PROMO_BANNER_CLICK.ordinal -> {
+        WebEngageController.trackEvent(GET_FESTIVAL_POSTER_PACK_CLICK, NO_EVENT_VALUE)
         val data = item as? DashboardMarketplaceBanner ?: return
         marketPlaceBannerClick(data)
       }
