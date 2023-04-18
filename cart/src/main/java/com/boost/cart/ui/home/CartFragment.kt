@@ -257,7 +257,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         cartCouponAdapter = CartCouponAdapter(this)
         prefs = SharedPrefs(activity as CartActivity)
         WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART, PAGE_VIEW, NO_EVENT_VALUE)
-
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART_REVIEW_CLICK, PAGE_VIEW, NO_EVENT_VALUE)
         return root
     }
 
@@ -956,6 +956,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         }
 
         cart_spk_to_expert.setOnClickListener {
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART_EXPERT_CALL_CLICK, PAGE_VIEW, NO_EVENT_VALUE)
             speakToExpert(prefs.getExpertContact())
         }
 //    enter_gst_number.setOnClickListener {
@@ -2408,9 +2409,11 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         Log.v("createPurchaseOrder1", " " + "createPurchaseOrder");
         var couponCode: String? = null
         var couponDiscountPercentage = 0.0
+        var couponDiscountPercent = 0.0
         if (validCouponCode != null) {
             couponCode = validCouponCode!!.coupon_key
             couponDiscountPercentage = validCouponCode!!.discount_percent.toDouble()
+            couponDiscountPercent = validCouponCode!!.discount_percent.toDouble()
         }
         if (couponServiceModel != null) {
             couponCode = couponServiceModel!!.coupon_key
@@ -2482,7 +2485,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     ConsumptionConstraint("DAYS", 30),
                     "",
                     item.description_title,
-                    item.discount,
+                    couponDiscountPercent,
                     Expiry(
                         "MONTHS",
                         Utils.expiryCalculator(
@@ -2626,7 +2629,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                             ),
                             "",
                             item.description_title,
-                            item.discount,
+                            couponDiscountPercent,
                             Expiry(
                                 "MONTHS",
                                 Utils.expiryCalculator(
@@ -2733,7 +2736,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                                     ),
                                                     "",
                                                     singleFeature.description_title,
-                                                    singleIndludedFeature.feature_price_discount_percent,
+                                                    couponDiscountPercent,
                                                     Expiry(
                                                         "MONTHS",
                                                         Utils.expiryCalculator(

@@ -163,7 +163,7 @@ fun NestedScrollView.scrollToTopBottom(image: CustomImageView) {
 }
 
 //start Show/Hide of New Tag on Quick Actions, will disappear after one click
-fun checkIfButtonClickedByUserInPast(actionType : String) : Boolean{
+fun checkIfButtonClickedByUserInPast(actionType : String) : Boolean {
   val isClicked: Boolean
   val listOfClickedItems = QuickActionItem.getListOfClickedItems()
   isClicked = if(listOfClickedItems.isNullOrEmpty()) false

@@ -35,6 +35,7 @@ data class Feature(
     val total_installs: String,
     val extended_properties: List<ExtendedProperty>?,
     val exclusive_to_categories: List<String>?,
+    val exclusive_to_clientids: List<String>?,
     val widget_type: String?,
     val frequently_asked_questions: FrequentlyAskedQuestions?,
     val how_to_use_steps: List<HowToUseStep>?,

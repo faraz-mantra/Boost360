@@ -25,6 +25,7 @@ import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentEditBankDetailsBinding
 import com.appservice.rest.TaskCode
 import com.appservice.ui.catalog.startFragmentActivity
+import com.appservice.utils.WebEngageController
 import com.appservice.utils.changeColorOfSubstring
 import com.appservice.viewmodel.AppointmentSettingsViewModel
 import com.framework.base.BaseResponse
@@ -33,6 +34,9 @@ import com.framework.extensions.visible
 import com.framework.firebaseUtils.firestore.FirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
+import com.framework.webengageconstant.ADD_UPDATE_BANK_ACCOUNT
+import com.framework.webengageconstant.CLICK
+import com.framework.webengageconstant.NO_EVENT_VALUE
 
 class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, AppointmentSettingsViewModel>() {
 
@@ -140,6 +144,7 @@ class FragmentEditBankDetails : AppBaseFragment<FragmentEditBankDetailsBinding, 
 
   private fun addBankAccount() {
     showProgress()
+    WebEngageController.trackEvent(ADD_UPDATE_BANK_ACCOUNT, CLICK, NO_EVENT_VALUE)
     hitApi(viewModel?.addBankAccount(sessionLocal.fPID, clientId = clientId, addBankAccountRequest!!), R.string.error_adding_bank_account)
 
   }
