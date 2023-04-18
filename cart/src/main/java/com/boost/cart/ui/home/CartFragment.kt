@@ -244,7 +244,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 requireActivity().window.decorView
             ).setAppearanceLightStatusBars(false)
             requireActivity().window.statusBarColor =
-                ResourcesCompat.getColor(resources, R.color.common_text_color, null)
+                ResourcesCompat.getColor(resources, R.color.colorToolbar, null)
         }
         cartPackageAdaptor =
             CartPackageAdaptor(ArrayList(), this, this, ArrayList(), requireActivity())

@@ -123,7 +123,7 @@ class MyCurrentPlanActivity :
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window: Window = this.window
             WindowInsetsControllerCompat(window, window.decorView).setAppearanceLightStatusBars(false)
-            window.statusBarColor = ResourcesCompat.getColor(resources, com.boost.cart.R.color.common_text_color, null)
+            window.statusBarColor = ResourcesCompat.getColor(resources, com.boost.cart.R.color.colorToolbar, null)
         }
         loadData()
         initMVVM()

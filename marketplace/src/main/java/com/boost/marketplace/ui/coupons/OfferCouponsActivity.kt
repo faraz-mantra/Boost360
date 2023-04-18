@@ -38,7 +38,7 @@ class OfferCouponsActivity : AppBaseActivity<ActivityOfferCouponsBinding, OfferC
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             WindowInsetsControllerCompat(getWindow(), getWindow().decorView).setAppearanceLightStatusBars(false)
-            getWindow().statusBarColor = ResourcesCompat.getColor(resources, R.color.common_text_color, null)
+            getWindow().statusBarColor = ResourcesCompat.getColor(resources, R.color.colorToolbar, null)
         }
 
         back_button12.setOnClickListener {

@@ -3,7 +3,7 @@
 
     <solid android:color="@color/white" />
     <stroke
-        android:color="@color/colorAccent"
+        android:color="@color/colorAccent1"
         android:width="@dimen/pad_1dp"
         />
 

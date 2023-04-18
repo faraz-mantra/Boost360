@@ -1,10 +1,14 @@
 package com.boost.marketplace.ui.webview
 
 import android.graphics.Bitmap
+import android.os.Build
 import android.view.View
+import android.view.Window
 import android.webkit.*
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.boost.marketplace.R
 import com.framework.extensions.gone
 import com.framework.extensions.visible
@@ -38,6 +42,12 @@ class WebViewActivity : AppBaseActivity<ActivityWebsiteViewBinding, WebViewViewM
     webSettings?.setSupportMultipleWindows(true)
     webSettings?.cacheMode = WebSettings.LOAD_DEFAULT
     webSettings?.domStorageEnabled = true
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      val window: Window = this.window
+      WindowInsetsControllerCompat(window, window.decorView).setAppearanceLightStatusBars(false)
+      window.statusBarColor = ResourcesCompat.getColor(resources, com.boost.cart.R.color.colorToolbar, null)
+    }
 
     link = intent.getStringExtra("link") ?: ""
 

@@ -198,7 +198,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window: Window = this.window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = resources.getColor(com.boost.cart.R.color.common_text_color)
+            window.statusBarColor = resources.getColor(com.boost.cart.R.color.colorToolbar)
         }
 
         initializeViewPager()

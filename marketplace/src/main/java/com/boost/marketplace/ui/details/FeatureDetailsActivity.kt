@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -23,10 +24,13 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.children
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -197,6 +201,12 @@ class FeatureDetailsActivity :
         viewModel.setApplicationLifecycle(application, this)
         staffManagementBottomSheet = StaffManagementBottomSheet(this)
         removePackageBottomSheet = RemovePackageBottomSheet(this)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window = this.window
+            WindowInsetsControllerCompat(window, window.decorView).setAppearanceLightStatusBars(false)
+            window.statusBarColor = ResourcesCompat.getColor(resources, com.boost.cart.R.color.colorToolbar, null)
+        }
 
         initView()
     }
