@@ -16,6 +16,7 @@ import com.boost.cart.utils.Utils.yearlyOrMonthlyOrEmptyValidity
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.upgradeDB.model.BundlesModel
+import com.boost.marketplace.BuildConfig
 import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.DetailsFragmentListener
 import com.bumptech.glide.Glide
@@ -26,6 +27,7 @@ import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_marketplace.*
 
 
 class FeaturePacksAdapter(
@@ -52,6 +54,11 @@ class FeaturePacksAdapter(
   override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
     holder.title.setText(bundleList.get(position).name)
     Glide.with(context).load(bundleList.get(position).primary_image).into(holder.image)
+    if (BuildConfig.FLAVOR.equals("healthgro")){
+      holder.view_packs_arrow.setImageResource(R.drawable.ic_my_cuurent_plan_arrow)
+    } else if (BuildConfig.FLAVOR.equals("ardhim")){
+      holder.view_packs_arrow.setImageResource(R.drawable.ic_my_cuurent_plan_arrow)
+    }
     if (bundleList.get(position).overall_discount_percent > 0) {
       holder.discount.visibility = View.VISIBLE
       holder.discount.setText(bundleList.get(position).overall_discount_percent.toString() + "% saving")
@@ -134,6 +141,7 @@ class FeaturePacksAdapter(
     var discount = itemView.findViewById<TextView>(R.id.discount)
     var viewPacks = itemView.findViewById<TextView>(R.id.view_packs)
     var image = itemView.findViewById<ImageView>(R.id.package_img)
+    var view_packs_arrow = itemView.findViewById<ImageView>(R.id.view_packs_arrow)
   }
 
   fun getPackageInfoFromDB(holder: upgradeViewHolder, bundles: BundlesModel) {

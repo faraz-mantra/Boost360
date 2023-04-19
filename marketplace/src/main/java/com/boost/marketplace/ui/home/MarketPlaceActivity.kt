@@ -1389,7 +1389,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
         viewModel.subscriptionTypeResult().observe(this, androidx.lifecycle.Observer {
 
-            if (it!=null) {
+            if (it != null) {
                 if (shimmer_view_package.isShimmerStarted) {
                     shimmer_view_package.stopShimmer()
                     shimmer_view_package.visibility = View.GONE
@@ -1474,47 +1474,47 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                            val date2 = expired!!.parseDate(DateUtils.FORMAT_SERVER_DATE1)
 //                            val isExpired1 = date2?.let { it1 -> Utils1.isExpired(it1) }
 ////                            if (isExpired1 == true) {
-                            if ((it.subscriptionType.equals("Expired")) || (it.subscriptionType.equals("Free"))
-                                || (it.subscriptionType.equals("Demo"))){
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    val window: Window = this.window
-                                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                                    window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
-                                }
-                                back_icon.setBackgroundResource(R.drawable.circular_arrow_back)
-                                menu_icon.setImageResource(R.drawable.circular_menu_option)
-                                cart_icon.setImageResource(R.drawable.circular_cart48)
-                                welcome_txt.visibility = View.GONE
-                                welcome_txt1.visibility = View.VISIBLE
-                                screen_title.visibility = View.GONE
-                                screen_title1.visibility = View.VISIBLE
-                                expiry_layout.setBackgroundResource(R.drawable.curve_black_bg)
-                                layout_main.setBackgroundResource(R.color.primaryDark)
-                                banner_rl_layout.visibility = View.GONE
-                                explore_layout.visibility = View.GONE
-                                banner_rl_layout1.visibility = View.VISIBLE
-                                mp_package_rl_layout.visibility = View.GONE
-                                mp_package_rl_layout1.visibility = View.VISIBLE
-                                banner_rl_layout1.setBackgroundResource(R.drawable.curve_white_bg)
-                            } else {
-                                expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
-                                welcome_txt.visibility = View.VISIBLE
-                                welcome_txt1.visibility = View.GONE
-                                screen_title.visibility = View.VISIBLE
-                                screen_title1.visibility = View.GONE
-                                banner_rl_layout.visibility = View.VISIBLE
-                                package_compare_layout1.visibility = View.GONE
-                                explore_layout.visibility = View.VISIBLE
-                                banner_rl_layout1.visibility = View.GONE
-                                mp_package_rl_layout.visibility = View.VISIBLE
-                                mp_package_rl_layout1.visibility = View.GONE
-                            }
-
+                    if ((it.subscriptionType.equals("Expired")) || (it.subscriptionType.equals("Free"))
+                        || (it.subscriptionType.equals("Demo"))
+                    ) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            val window: Window = this.window
+                            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                            window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
+                        }
+                        back_icon.setBackgroundResource(R.drawable.circular_arrow_back)
+                        menu_icon.setImageResource(R.drawable.circular_menu_option)
+                        cart_icon.setImageResource(R.drawable.circular_menu_cart)
+                        welcome_txt.visibility = View.GONE
+                        welcome_txt1.visibility = View.VISIBLE
+                        screen_title.visibility = View.GONE
+                        screen_title1.visibility = View.VISIBLE
+                        expiry_layout.setBackgroundResource(R.drawable.curve_black_bg)
+                        layout_main.setBackgroundResource(R.color.primaryDark)
+                        banner_rl_layout.visibility = View.GONE
+                        explore_layout.visibility = View.GONE
+                        banner_rl_layout1.visibility = View.VISIBLE
+                        mp_package_rl_layout.visibility = View.GONE
+                        mp_package_rl_layout1.visibility = View.VISIBLE
+                        banner_rl_layout1.setBackgroundResource(R.drawable.curve_white_bg)
+                    } else {
+                        expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
+                        welcome_txt.visibility = View.VISIBLE
+                        welcome_txt1.visibility = View.GONE
+                        screen_title.visibility = View.VISIBLE
+                        screen_title1.visibility = View.GONE
+                        banner_rl_layout.visibility = View.VISIBLE
+                        package_compare_layout1.visibility = View.GONE
+                        explore_layout.visibility = View.VISIBLE
+                        banner_rl_layout1.visibility = View.GONE
+                        mp_package_rl_layout.visibility = View.VISIBLE
+                        mp_package_rl_layout1.visibility = View.GONE
+                    }
 
 
                     // Enable Dark mode if any 1 of the addons are expired.
 
-                //               for (singleItem in it){
+                    //               for (singleItem in it){
 //                    if (singleItem.feature_code == "DOMAINPURCHASE" ){
 //                        val date2 = expired!!.parseDate(DateUtils.FORMAT_SERVER_DATE1)
 //                        val isExpired1 = date2?.let { it1 -> Utils1.isExpired(it1) }
@@ -1540,10 +1540,163 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                    bottom_box.visibility = View.VISIBLE
 //                    footer.visibility = View.VISIBLE
                 }
-            }
-            else {
-                bottom_box.visibility = View.GONE
-                footer.visibility = View.GONE
+                //}
+//            else {
+//                bottom_box.visibility = View.GONE
+//                footer.visibility = View.GONE
+//            }
+                else if (BuildConfig.FLAVOR.equals("ardhim")) {
+
+//                            val domainPurchase = it.find { it.feature_code == "DOMAINPURCHASE" }
+//                            val expired = it.endDate
+//                            val date2 = expired!!.parseDate(DateUtils.FORMAT_SERVER_DATE1)
+//                            val isExpired1 = date2?.let { it1 -> Utils1.isExpired(it1) }
+////                            if (isExpired1 == true) {
+                    if ((it.subscriptionType.equals("Expired")) || (it.subscriptionType.equals("Free"))
+                        || (it.subscriptionType.equals("Demo"))
+                    ) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            val window: Window = this.window
+                            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                            window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
+                        }
+                        back_icon.setBackgroundResource(R.drawable.circular_arrow_back)
+                        menu_icon.setImageResource(R.drawable.circular_menu_option)
+                        cart_icon.setImageResource(R.drawable.circular_menu_cart)
+                        welcome_txt.visibility = View.GONE
+                        welcome_txt1.visibility = View.VISIBLE
+                        welcome_txt1.text = "Welcome to Healthgro"
+                        screen_title.visibility = View.GONE
+                        screen_title1.visibility = View.VISIBLE
+                        expiry_layout.setBackgroundResource(R.drawable.curve_black_bg)
+                        layout_main.setBackgroundResource(R.color.primaryDark)
+                        banner_rl_layout.visibility = View.GONE
+                        explore_layout.visibility = View.GONE
+                        banner_rl_layout1.visibility = View.VISIBLE
+                        mp_package_rl_layout.visibility = View.GONE
+                        mp_package_rl_layout1.visibility = View.VISIBLE
+                        banner_rl_layout1.setBackgroundResource(R.drawable.curve_white_bg)
+                    } else {
+                        expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
+                        welcome_txt.visibility = View.VISIBLE
+                        welcome_txt1.visibility = View.GONE
+                        screen_title.visibility = View.VISIBLE
+                        screen_title1.visibility = View.GONE
+                        banner_rl_layout.visibility = View.VISIBLE
+                        package_compare_layout1.visibility = View.GONE
+                        explore_layout.visibility = View.VISIBLE
+                        banner_rl_layout1.visibility = View.GONE
+                        mp_package_rl_layout.visibility = View.VISIBLE
+                        mp_package_rl_layout1.visibility = View.GONE
+                    }
+
+
+                    // Enable Dark mode if any 1 of the addons are expired.
+
+                    //               for (singleItem in it){
+//                    if (singleItem.feature_code == "DOMAINPURCHASE" ){
+//                        val date2 = expired!!.parseDate(DateUtils.FORMAT_SERVER_DATE1)
+//                        val isExpired1 = date2?.let { it1 -> Utils1.isExpired(it1) }
+////                        if (isExpired1 == true)
+////                            view_my_current_plan.visibility=View.GONE
+////                        else
+////                            view_my_current_plan.visibility=View.VISIBLE
+//
+//                        when (isExpired1) {
+//                            isExpired1 == true-> {
+//                                expiry_layout.setBackgroundResource(R.drawable.curve_black_bg)
+//                            }
+//                            else -> {
+//                                expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
+//                            }
+//                        }
+//                        break
+//                    }
+//                    else{
+//                        expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
+//                    }
+
+//                    bottom_box.visibility = View.VISIBLE
+//                    footer.visibility = View.VISIBLE
+                }
+
+                else if (BuildConfig.FLAVOR.equals("healthgro")) {
+
+//                            val domainPurchase = it.find { it.feature_code == "DOMAINPURCHASE" }
+//                            val expired = it.endDate
+//                            val date2 = expired!!.parseDate(DateUtils.FORMAT_SERVER_DATE1)
+//                            val isExpired1 = date2?.let { it1 -> Utils1.isExpired(it1) }
+////                            if (isExpired1 == true) {
+                    if ((it.subscriptionType.equals("Expired")) || (it.subscriptionType.equals("Free"))
+                        || (it.subscriptionType.equals("Demo"))
+                    ) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            val window: Window = this.window
+                            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                            window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
+                        }
+                        back_icon.setBackgroundResource(R.drawable.circular_arrow_back)
+                        menu_icon.setImageResource(R.drawable.circular_menu_option)
+                        cart_icon.setImageResource(R.drawable.circular_menu_cart)
+                        welcome_txt.visibility = View.GONE
+                        welcome_txt1.visibility = View.VISIBLE
+                        welcome_txt1.text = "Welcome to Healthgro"
+                        screen_title.visibility = View.GONE
+                        screen_title1.visibility = View.VISIBLE
+                        expiry_layout.setBackgroundResource(R.drawable.curve_black_bg)
+                        layout_main.setBackgroundResource(R.color.primaryDark)
+                        banner_rl_layout.visibility = View.GONE
+                        explore_layout.visibility = View.GONE
+                        banner_rl_layout1.visibility = View.VISIBLE
+                        mp_package_rl_layout.visibility = View.GONE
+                        mp_package_rl_layout1.visibility = View.VISIBLE
+                        banner_rl_layout1.setBackgroundResource(R.drawable.curve_white_bg)
+                    } else {
+                        expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
+                        welcome_txt.visibility = View.VISIBLE
+                        welcome_txt1.visibility = View.GONE
+                        screen_title.visibility = View.VISIBLE
+                        screen_title1.visibility = View.GONE
+                        banner_rl_layout.visibility = View.VISIBLE
+                        package_compare_layout1.visibility = View.GONE
+                        explore_layout.visibility = View.VISIBLE
+                        banner_rl_layout1.visibility = View.GONE
+                        mp_package_rl_layout.visibility = View.VISIBLE
+                        mp_package_rl_layout1.visibility = View.GONE
+                    }
+
+
+                    // Enable Dark mode if any 1 of the addons are expired.
+
+                    //               for (singleItem in it){
+//                    if (singleItem.feature_code == "DOMAINPURCHASE" ){
+//                        val date2 = expired!!.parseDate(DateUtils.FORMAT_SERVER_DATE1)
+//                        val isExpired1 = date2?.let { it1 -> Utils1.isExpired(it1) }
+////                        if (isExpired1 == true)
+////                            view_my_current_plan.visibility=View.GONE
+////                        else
+////                            view_my_current_plan.visibility=View.VISIBLE
+//
+//                        when (isExpired1) {
+//                            isExpired1 == true-> {
+//                                expiry_layout.setBackgroundResource(R.drawable.curve_black_bg)
+//                            }
+//                            else -> {
+//                                expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
+//                            }
+//                        }
+//                        break
+//                    }
+//                    else{
+//                        expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
+//                    }
+
+//                    bottom_box.visibility = View.VISIBLE
+//                    footer.visibility = View.VISIBLE
+                } else {
+                    bottom_box.visibility = View.GONE
+                    footer.visibility = View.GONE
+                }
             }
         })
     }

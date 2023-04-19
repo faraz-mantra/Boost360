@@ -3,6 +3,7 @@ package com.boost.marketplace.ui.details.call_track
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
@@ -10,7 +11,10 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.Window
 import androidx.annotation.NonNull
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -117,6 +121,12 @@ class CallTrackingActivity :
         matchNumberListAdapter = MatchNumberListAdapter(this, ArrayList(), null, this)
         numberListAdapter = NumberListAdapter(this, ArrayList(), null, this)
         exactMatchNumberListAdapter = ExactMatchListAdapter(this, ArrayList(), null, this)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window = this.window
+            WindowInsetsControllerCompat(window, window.decorView).setAppearanceLightStatusBars(false)
+            window.statusBarColor = ResourcesCompat.getColor(resources, com.boost.cart.R.color.colorToolbar, null)
+        }
 
         numberprice = intent.getStringExtra("price")
         val pref = this.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)

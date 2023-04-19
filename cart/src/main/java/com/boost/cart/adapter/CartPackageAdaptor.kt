@@ -125,7 +125,7 @@ class CartPackageAdaptor(
       0
     )
     selectnow.setSpan(
-      ForegroundColorSpan(ContextCompat.getColor(context, R.color.colorAccent)),
+      ForegroundColorSpan(ContextCompat.getColor(context, R.color.not_available_text_color)),
       0,
       selectnow.length,
       Spannable.SPAN_EXCLUSIVE_EXCLUSIVE

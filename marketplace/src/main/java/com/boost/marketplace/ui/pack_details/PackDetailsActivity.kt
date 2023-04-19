@@ -42,6 +42,7 @@ import com.boost.dbcenterapi.utils.HorizontalMarginItemDecoration
 import com.boost.dbcenterapi.utils.SharedPrefs
 import com.boost.dbcenterapi.utils.Utils.isExpertAvailable
 import com.boost.dbcenterapi.utils.WebEngageController
+import com.boost.marketplace.BuildConfig
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
@@ -197,7 +198,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window: Window = this.window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = resources.getColor(com.boost.cart.R.color.common_text_color)
+            window.statusBarColor = resources.getColor(com.boost.cart.R.color.colorToolbar)
         }
 
         initializeViewPager()
@@ -211,9 +212,32 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
         initView()
         initMvvm()
 //        loadData() //removed this due to multiple API call
-
-
         val callExpertString = SpannableString("Have a query? Call an expert")
+
+        if (BuildConfig.FLAVOR.equals("healthgro")){
+            callExpertString.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent1)),
+                callExpertString.length - 14,
+                callExpertString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        } else if(BuildConfig.FLAVOR.equals("ardhim")) {
+            callExpertString.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent1)),
+                callExpertString.length - 14,
+                callExpertString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+        else{
+            callExpertString.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.started_button_start)),
+                callExpertString.length - 14,
+                callExpertString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
 
         callExpertString.setSpan(
             UnderlineSpan(),
@@ -221,12 +245,7 @@ class PackDetailsActivity : AppBaseActivity<ActivityPackDetailsBinding, CompareP
             callExpertString.length,
             0
         )
-        callExpertString.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(this, R.color.started_button_start)),
-            callExpertString.length - 14,
-            callExpertString.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+
 
         binding?.queryText?.text = callExpertString
         query_text.setOnClickListener {

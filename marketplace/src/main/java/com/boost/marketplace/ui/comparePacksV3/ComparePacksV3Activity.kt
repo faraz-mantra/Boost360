@@ -166,7 +166,7 @@ class ComparePacksV3Activity :
                 false
             )
             window.statusBarColor =
-                ResourcesCompat.getColor(resources, com.boost.cart.R.color.common_text_color, null)
+                ResourcesCompat.getColor(resources, com.boost.cart.R.color.colorToolbar, null)
         }
 
         initMvvm()

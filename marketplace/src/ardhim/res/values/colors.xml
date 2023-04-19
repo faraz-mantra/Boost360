@@ -3,11 +3,14 @@
 
     <color name="colorPrimary1">#4A4A4A</color>
     <color name="colorPrimaryDark1">#0F000000</color>
-    <color name="colorAccent1">#F5991E</color>
+    <color name="colorAccent1">#012F6B</color>
     <color name="themeColor">#F5991E</color>
     <color name="colorAccent2">#FFF8E5</color>
     <color name="colorTransparentPrimary1">#FF4A4A4A</color>
-
+    <color name="colorFill">#E6EAF0</color>
+    <color name="colorToolbar">#F5991E</color>
+    <color name="colorAccent4">#F5991E</color>
+    <color name="shimmer_bg_color_healthgro">#F7AD4B</color>
 
     <color name="primary">#FFFFFF</color>
     <color name="primaryDark">#FFFFFF</color>

@@ -119,7 +119,7 @@
                             android:layout_height="60dp"
                             android:layout_marginTop="48dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_boost_logo_arrow" />
+                            android:src="@drawable/ic_ardhim_logo" />
 
                         <TextView
                             android:id="@+id/welcome_txt"
@@ -128,7 +128,7 @@
                             android:layout_gravity="center"
                             android:layout_marginTop="10dp"
                             android:fontFamily="@font/regular"
-                            android:text="@string/welcome_to_boost_360"
+                            android:text="@string/welcome_to_Ardhim"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
 
@@ -174,13 +174,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:padding="20dp"
-                            android:fontFamily="@font/regular"
+                            android:background="@drawable/added_to_cart_grey"
+                            android:padding="2dp"
+                            android:layout_marginTop="15dp"
+                            android:fontFamily="@font/bold"
                             android:drawableEnd="@drawable/ic_my_cuurent_plan_arrow"
                             android:drawablePadding="10dp"
                             android:includeFontPadding="false"
                             android:text="@string/my_current_plan"
-                            android:textColor="@color/yellow"
+                            android:textColor="@color/colorAccent1"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
@@ -262,7 +264,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="10dp"
-                                    app:dotsColor="@color/yellow"
+                                    app:dotsColor="@color/color_primary"
                                     app:dotsCornerRadius="8dp"
                                     app:dotsSize="6dp"
                                     app:dotsSpacing="4dp"
@@ -271,7 +273,7 @@
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/banner_viewpager"
                                     app:progressMode="false"
-                                    app:selectedDotColor="@color/color_primary" />
+                                    app:selectedDotColor="@color/colorAccent1" />
 
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -288,7 +290,7 @@
                                 android:id="@+id/package_layout1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
+                                android:layout_marginTop="25dp"
                                 android:layout_marginBottom="10dp"
                                 android:clickable="true"
                                 android:focusable="true"
@@ -335,7 +337,7 @@
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/package_viewpager1"
                                     app:progressMode="false"
-                                    app:selectedDotColor="#F5991E" />
+                                    app:selectedDotColor="#001D85" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
                             <LinearLayout
                                 android:id="@+id/package_compare_layout1"
@@ -500,60 +502,60 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/yellow"
+                    android:background="@color/colorAccent4"
                     android:layout_below="@+id/layout_main">
 
 
-                <RelativeLayout
-                    android:id="@+id/banner_rl_layout1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:layout_below="@+id/header">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/banner_layout1"
+                    <RelativeLayout
+                        android:id="@+id/banner_rl_layout1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="10dp"
-                        android:clickable="true"
-                        android:focusable="true"
                         android:visibility="gone"
-                        tools:ignore="TouchTargetSizeCheck"
-                        tools:visibility="visible">
+                        android:layout_below="@+id/header">
 
-                        <androidx.viewpager2.widget.ViewPager2
-                            android:id="@+id/banner_viewpager1"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/banner_layout1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:clipChildren="false"
-                            android:clipToPadding="false"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:listitem="@layout/item_promo_banner" />
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="10dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:visibility="gone"
+                            tools:ignore="TouchTargetSizeCheck"
+                            tools:visibility="visible">
 
-                        <com.framework.views.dotsindicator.DotsIndicator
-                            android:id="@+id/banner_indicator1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="10dp"
-                            app:dotsColor="@color/yellow"
-                            app:dotsCornerRadius="8dp"
-                            app:dotsSize="6dp"
-                            app:dotsSpacing="4dp"
-                            app:dotsWidthFactor="2.5"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/banner_viewpager1"
-                            app:progressMode="false"
-                            app:selectedDotColor="@color/color_primary" />
+                            <androidx.viewpager2.widget.ViewPager2
+                                android:id="@+id/banner_viewpager1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:clipChildren="false"
+                                android:clipToPadding="false"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:listitem="@layout/item_promo_banner" />
+
+                            <com.framework.views.dotsindicator.DotsIndicator
+                                android:id="@+id/banner_indicator1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="10dp"
+                                app:dotsColor="@color/yellow"
+                                app:dotsCornerRadius="8dp"
+                                app:dotsSize="6dp"
+                                app:dotsSpacing="4dp"
+                                app:dotsWidthFactor="2.5"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/banner_viewpager1"
+                                app:progressMode="false"
+                                app:selectedDotColor="@color/color_primary" />
 
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </RelativeLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </RelativeLayout>
                 </LinearLayout>
                 <RelativeLayout
                     android:id="@+id/mp_package_rl_layout"
@@ -646,7 +648,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
-                            app:dotsColor="@color/gray_light"
+                            app:dotsColor="@color/tv_color_BB"
                             app:dotsCornerRadius="8dp"
                             app:dotsSize="6dp"
                             app:dotsSpacing="4dp"
@@ -655,18 +657,18 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/package_viewpager"
                             app:progressMode="false"
-                            app:selectedDotColor="#F5991E" />
+                            app:selectedDotColor="@color/primaryDark" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </RelativeLayout>
-                    <LinearLayout
-                        android:id="@+id/explore_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/yellow"
-                        android:orientation="vertical"
-                        android:visibility="visible"
-                        tools:visibility="visible"
-                        android:layout_below="@+id/package_layout">
+                <LinearLayout
+                    android:id="@+id/explore_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorAccent4"
+                    android:orientation="vertical"
+                    android:visibility="visible"
+                    tools:visibility="visible"
+                    android:layout_below="@+id/package_layout">
 
 
                     <LinearLayout
@@ -686,14 +688,14 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    </LinearLayout>
+                </LinearLayout>
 
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/yellow"
+                    android:background="@color/colorAccent4"
                     android:orientation="vertical">
 
 
@@ -725,21 +727,24 @@
                         android:id="@+id/mp_home_recommended_addons_rl_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
->
+                        android:drawableStart="@drawable/healthcare_top_feature_bg"
+                        >
 
                         <com.facebook.shimmer.ShimmerFrameLayout
                             android:id="@+id/shimmer_view_recomm_addons"
                             android:layout_width="match_parent"
                             android:layout_height="250dp"
                             android:layout_gravity="center"
-                            android:layout_margin="@dimen/_10sdp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
                             android:background="@drawable/shimmer_bg"
                             android:orientation="vertical"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            tools:visibility="visible"
-                            >
+                            tools:visibility="visible">
 
                             <!-- Adding 7 rows of placeholders -->
                             <LinearLayout
@@ -778,6 +783,8 @@
                             android:layout_marginTop="16dp"
                             android:layout_marginBottom="10dp"
                             android:orientation="vertical"
+                            android:drawableStart="@drawable/healthcare_top_feature_bg"
+
                             android:paddingTop="10dp">
 
 
@@ -1134,7 +1141,7 @@
                                 android:paddingEnd="@dimen/_10sdp"
                                 android:text="Call Now"
                                 android:textAllCaps="true"
-                                android:textColor="@color/yellow"
+                                android:textColor="@color/colorAccent1"
                                 android:textSize="11sp"
                                 android:textStyle="bold" />
 
@@ -1260,7 +1267,7 @@
                             android:paddingEnd="30dp"
                             android:paddingBottom="10dp"
                             android:text="@string/view_referral_items"
-                            android:textColor="@color/yellow"
+                            android:textColor="@color/colorAccent1"
                             android:textFontWeight="700"
                             android:textSize="13sp"
                             android:textStyle="bold"
@@ -1327,7 +1334,7 @@
                             android:paddingEnd="30dp"
                             android:paddingBottom="10dp"
                             android:text="@string/give_feedback"
-                            android:textColor="@color/yellowBorder"
+                            android:textColor="@color/colorAccent1"
                             android:textFontWeight="700"
                             android:textSize="14sp"
                             android:textStyle="bold" />

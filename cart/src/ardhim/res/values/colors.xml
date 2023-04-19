@@ -3,7 +3,8 @@
 
     <color name="colorPrimary1">#4A4A4A</color>
     <color name="colorPrimaryDark1">#0F000000</color>
-    <color name="colorAccent1">#F5991E</color>
+    <color name="colorAccent1">#012F6B</color>
+    <color name="colorFill">#E6EAF0</color>
     <color name="colorTransparentPrimary1">#FF4A4A4A</color>
     <color name="themeColor">#F5991E</color>
     <color name="primary">#FFFFFF</color>

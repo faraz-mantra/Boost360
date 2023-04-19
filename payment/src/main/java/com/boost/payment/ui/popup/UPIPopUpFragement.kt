@@ -128,7 +128,7 @@ class UPIPopUpFragement : DialogFragment() {
             upi_popup_value.text.toString(),
             NO_EVENT_VALUE
           )
-          Toasty.warning(requireContext(), "Invalid UPI Id. Please try again.", Toast.LENGTH_LONG)
+          Toasty.error(requireContext(), "Invalid UPI Id. Please try again.", Toast.LENGTH_LONG)
             .show()
           invalid_UPI.visibility = View.VISIBLE
         }
