@@ -12,4 +12,5 @@
     <color name="website_tab_text_color">#409F94</color>
     <color name="website_button_tint">#32C4C4C4</color>
     <color name="dashboard_status_bar_color">#409F94</color>
+    <color name="dash_fragment_toolbar_color">#409F94</color>
 </resources>

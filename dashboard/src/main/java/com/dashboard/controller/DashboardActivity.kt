@@ -417,7 +417,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun showToolbar(title: String) {
-    changeTheme(R.color.dashboard_status_bar_color, R.color.dashboard_status_bar_color)
+    changeTheme(R.color.dash_fragment_toolbar_color, R.color.dash_fragment_toolbar_color)
     getToolbar()?.apply {
       visibility = View.VISIBLE
       supportActionBar?.setDisplayHomeAsUpEnabled(false)
