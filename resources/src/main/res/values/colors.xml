@@ -224,5 +224,6 @@
   <color name="purple_BB6BD9">#BB6BD9</color>
   <color name="green_92C7A1">#92C7A1</color>
   <color name="blue_56CCF2">#56CCF2</color>
+  <color name="website_custom_toolbar_color">@color/black_4a4a4a</color>
 
 </resources>

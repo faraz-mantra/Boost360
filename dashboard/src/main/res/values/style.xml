@@ -25,6 +25,12 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
+  <style name="WebsiteCustomizationTheme" parent="DashboardTheme">
+    <item name="colorPrimary">@color/website_toolbar_color</item>
+    <item name="colorPrimaryDark">@color/website_toolbar_color</item>
+    <item name="colorAccent">@color/colorAccent</item>
+  </style>
+
   <style name="BusinessProfileTheme" parent="DashboardThemeNew">
     <item name="bottomSheetDialogTheme">@style/BottomDialog</item>
   </style>

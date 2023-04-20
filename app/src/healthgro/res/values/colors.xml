@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <color name="primaryColor">#001D85</color>
+  <color name="colorAccent">#001D85</color>
+  <color name="primaryColor">#409F94</color>
+  <color name="colorPrimary">#409F94</color>
+  <color name="colorPrimaryDark">#409F94</color>
+  <color name="colorAccentLight">#001D85</color>
+  <color name="primaryColorDark">#409F94</color>
+
   <color name="greenDark">#458b00</color>
   <color name="product_delete_btn">#ff3f3f</color>
 
-  <color name="primaryColorDark">#409F94</color>
   <color name="accentColor">#615b5b</color>
 
   <color name="percentage_text_color">#c5c5c5</color>
@@ -65,6 +70,8 @@
   <color name="primary_color_dark">@color/primaryColorDark</color>
 
   <color name="success_green">#6DCA07</color>
-
+  <color name="black_4a4a4a_jio">#001D85</color>
+  <color name="website_custom_toolbar_color">#409F94</color>
+  <color name="themeColor">#409F94</color>
 
 </resources>

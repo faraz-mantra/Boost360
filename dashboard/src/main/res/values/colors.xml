@@ -14,7 +14,7 @@
   <color name="green_more">#7ED321</color>
   <color name="gray_white_jio">#5c5c5c</color>
 
-  <color name="colorAccent_jio">@color/colorAccent</color>
+  <color name="colorAccent_jio">#ffb900</color>
   <color name="accent_light_red">@color/red_light_1</color>
 
 
@@ -28,4 +28,8 @@
   <color name="website_desc">@color/pinkish_grey</color>
   <color name="open_website_background">@color/gray_828282</color>
   <color name="text_dark">@color/black_4a4a4a</color>
+  <color name="dr_improve_arrow">#ffb900</color>
+  <color name="website_tab_text_color">@color/white</color>
+  <color name="dashboard_status_bar_color">#ffb900</color>
+  <color name="dash_fragment_toolbar_color">@color/black_4a4a4a</color>
 </resources>
