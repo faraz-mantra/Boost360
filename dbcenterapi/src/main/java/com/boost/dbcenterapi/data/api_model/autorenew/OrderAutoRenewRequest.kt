@@ -6,5 +6,5 @@ data class OrderAutoRenewRequest(
     val floatingPointId: String,
     val orderId: String,
     val period: String, // year/month
-    val interval: Int // 3  or 1 (year)
+    val interval: Int // 3  or 1 (year
 )
