@@ -2,12 +2,15 @@ package com.boost.presignin.holder
 
 import android.view.View
 import androidx.core.view.isInvisible
+import com.boost.presignin.BuildConfig
 import com.boost.presignin.R
 import com.boost.presignin.constant.RecyclerViewActionType
 import com.boost.presignin.databinding.ItemWebsiteCategoriesBinding
 import com.boost.presignin.model.category.CategoryDataModel
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewHolder
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
+import com.bumptech.glide.Glide
+import com.framework.glide.GlideApp
 
 class CategoryOv2RecyclerViewHolder constructor(binding: ItemWebsiteCategoriesBinding) : AppBaseRecyclerViewHolder<ItemWebsiteCategoriesBinding>(binding) {
 
@@ -39,13 +42,19 @@ class CategoryOv2RecyclerViewHolder constructor(binding: ItemWebsiteCategoriesBi
 
   private fun setViews(model: CategoryDataModel?) {
     val activity = this.activity ?: return
-    binding.tvCategoryTitle.text = if (model?.textChangeRTLAndSVC == false) model.getCategoryWithoutNewLine() else model?.getCategoryName()
+    if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
+      binding.tvCategoryTitle.text = model?.category_Name
+      binding.tvCategoryExamples.visibility = View.VISIBLE
+      Glide.with(activity).load(model?.icon).into(binding.ivCatImg)
+    }else{
+      binding.tvCategoryTitle.text = if (model?.textChangeRTLAndSVC == false) model.getCategoryWithoutNewLine() else model?.getCategoryName()
+      val drawable = model?.getImage(activity) ?: return
+      binding.ivCatImg.setImageDrawable(drawable)
+      binding.ivCatImg.setTintColor(getColor(R.color.black_4a4a4a)!!)
+    }
     binding.tvCategoryExamples.text = model?.category_descriptor
-    val drawable = model?.getImage(activity) ?: return
-    binding.ivCatImg.setImageDrawable(drawable)
-    binding.ivCatImg.setTintColor(getColor(R.color.black_4a4a4a)!!)
     setClickListeners(binding.layoutSuggestDomainSelect, binding.radioAsBusinessWebsite)
-    setCardSelection(model.isSelected)
+    setCardSelection(model!!.isSelected)
   }
 
 }

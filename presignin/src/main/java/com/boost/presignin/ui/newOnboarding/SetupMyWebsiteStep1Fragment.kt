@@ -17,7 +17,6 @@ import com.boost.presignin.helper.WebEngageController
 import com.boost.presignin.model.category.ApiCategoryResponseCategory
 import com.boost.presignin.model.category.CategoryDataModel
 import com.boost.presignin.model.category.getCategoryLiveData
-import com.boost.presignin.model.vertical_categories.Categories
 import com.boost.presignin.model.vertical_categories.CategoriesItem
 import com.boost.presignin.recyclerView.AppBaseRecyclerViewAdapter
 import com.boost.presignin.recyclerView.BaseRecyclerViewItem
@@ -81,14 +80,13 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     this.session = UserSessionManager(baseActivity)
     WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_SELECTION_SCREEN_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListeners()
-
     initialize()
-
-    if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
-      binding.tvNextStep1.backgroundTintList= ContextCompat.getColorStateList(context!!, R.color.buttonTint)
-    }else{
-      loadLocalCategoryData()
-    }
+    loadLocalVerticalCategoryData()
+//    if (BuildConfig.FLAVOR.equals("partone") || BuildConfig.FLAVOR.equals("jioonline")) {
+//      loadLocalCategoryData()
+//    } else {
+//      loadLocalVerticalCategoryData()
+//    }
   }
 
   private fun loadLocalCategoryData() {
@@ -103,6 +101,34 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     }
   }
 
+  private fun loadLocalVerticalCategoryData() {
+    adapterLocalCategory()
+    viewModel?.getVerticalCategories("HOT")?.observeOnce(viewLifecycleOwner) { it0 ->
+      val response = it0.anyResponse as? List<CategoriesItem>
+      if (it0.isSuccess() && response.isNullOrEmpty().not()) {
+        val mainCategories = response?.filter { it -> it.info != null }
+        val categoryListTemp = ArrayList<CategoryDataModel>()
+        mainCategories?.forEach { it ->
+          val categoryItem = CategoryDataModel(
+            experience_code = it.appexperiencecodes[0],
+            webTemplateId = it.websiteid,
+            category_key = null,
+            category_Name = it.name,
+            category_descriptor = "",
+            icon = it.info.icon,
+            sections = null,
+          )
+          categoryListTemp.add(categoryItem)
+        }
+        categoryList = ArrayList(categoryListTemp.map {
+          it.recyclerViewItem = RecyclerViewItemType.CATEGORY_ITEM_OV2.getLayout();it
+        })
+        categoryNoDataList =
+          ArrayList(categoryList.filter { (it.experience_code == "RTL" || it.experience_code == "SVC") })
+        adapterCategoryLocal?.notify(categoryList)
+      }
+    }
+  }
   private fun adapterLocalCategory() {
     adapterCategoryLocal = AppBaseRecyclerViewAdapter(baseActivity, ArrayList(), this)
     binding?.rvCategories?.adapter = adapterCategoryLocal
@@ -125,6 +151,10 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
       it.setText("")
       it.clearFocus()
       uiChangeSearchCategory(false)
+    }
+
+    if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
+      binding.tvNextStep1.backgroundTintList= ContextCompat.getColorStateList(context!!, R.color.buttonTint)
     }
   }
 
@@ -261,36 +291,50 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
       RecyclerViewActionType.CATEGORY_ITEM_CLICKED.ordinal -> {
         WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_SELECTION_MAIN_LOAD, CLICK, NO_EVENT_VALUE)
         val dataCategory = (item as? CategoryDataModel) ?: return
-        if(dataCategory.experience_code == "EDU"){
-          dataCategory.subCategoryName = "Education Center"
-        } else if(dataCategory.experience_code == "CAF"){
-          dataCategory.subCategoryName = "Cafe"
-        } else if(dataCategory.experience_code == "RTL"){
-          dataCategory.subCategoryName = "Store"
-        } else if(dataCategory.experience_code == "SVC"){
-          dataCategory.subCategoryName = "SERVICE CENTER"
-        } else if(dataCategory.experience_code == "DOC"){
-          dataCategory.subCategoryName = "Doctor"
-        } else if(dataCategory.experience_code == "HOS"){
-          dataCategory.subCategoryName = "Hospital"
-        } else if(dataCategory.experience_code == "MFG"){
-          dataCategory.subCategoryName = "Manufacturer"
-        } else if(dataCategory.experience_code == "HOT"){
-          dataCategory.subCategoryName = "Hotel"
-        } else if(dataCategory.experience_code == "SAL"){
-          dataCategory.subCategoryName = "Hair Salon"
-        } else if(dataCategory.experience_code == "SPA"){
-          dataCategory.subCategoryName = "Spa"
+        if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
+          dataCategory.subCategoryName = selectedCategoryLive?.name.toString()
+          binding.tvNextStep1.backgroundTintList= ContextCompat.getColorStateList(context!!, R.color.buttonTint)
+          if (binding?.includeNoSearchResultFound?.root?.visibility == View.VISIBLE) {
+            categoryNoDataList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
+            noCatListAdapter?.notifyDataSetChanged()
+          } else {
+            categoryList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
+            adapterCategoryLocal?.notifyDataSetChanged()
+          }
+          selectedCategoryLive = null
+          setSelectedCat(dataCategory)
+        }else{
+          if(dataCategory.experience_code == "EDU"){
+            dataCategory.subCategoryName = "Education Center"
+          } else if(dataCategory.experience_code == "CAF"){
+            dataCategory.subCategoryName = "Cafe"
+          } else if(dataCategory.experience_code == "RTL"){
+            dataCategory.subCategoryName = "Store"
+          } else if(dataCategory.experience_code == "SVC"){
+            dataCategory.subCategoryName = "SERVICE CENTER"
+          } else if(dataCategory.experience_code == "DOC"){
+            dataCategory.subCategoryName = "Doctor"
+          } else if(dataCategory.experience_code == "HOS"){
+            dataCategory.subCategoryName = "Hospital"
+          } else if(dataCategory.experience_code == "MFG"){
+            dataCategory.subCategoryName = "Manufacturer"
+          } else if(dataCategory.experience_code == "HOT"){
+            dataCategory.subCategoryName = "Hotel"
+          } else if(dataCategory.experience_code == "SAL"){
+            dataCategory.subCategoryName = "Hair Salon"
+          } else if(dataCategory.experience_code == "SPA"){
+            dataCategory.subCategoryName = "Spa"
+          }
+          if (binding?.includeNoSearchResultFound?.root?.visibility == View.VISIBLE) {
+            categoryNoDataList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
+            noCatListAdapter?.notifyDataSetChanged()
+          } else {
+            categoryList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
+            adapterCategoryLocal?.notifyDataSetChanged()
+          }
+          selectedCategoryLive = null
+          setSelectedCat(dataCategory)
         }
-        if (binding?.includeNoSearchResultFound?.root?.visibility == View.VISIBLE) {
-          categoryNoDataList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
-          noCatListAdapter?.notifyDataSetChanged()
-        } else {
-          categoryList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
-          adapterCategoryLocal?.notifyDataSetChanged()
-        }
-        selectedCategoryLive = null
-        setSelectedCat(dataCategory)
       }
       RecyclerViewActionType.CATEGORY_SUGGESTION_CLICKED.ordinal -> {
         WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_SELECTION_LIST_LOAD, CLICK, NO_EVENT_VALUE)

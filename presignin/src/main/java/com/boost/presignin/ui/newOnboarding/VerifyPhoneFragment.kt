@@ -31,6 +31,7 @@ import com.framework.pref.clientId
 import com.framework.pref.clientId2
 import com.framework.smsVerification.SMSReceiver
 import com.framework.smsVerification.SmsManager
+import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.*
 import java.util.*
 import kotlin.concurrent.schedule
@@ -134,6 +135,10 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
     super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.menu_help_setup_my_website, menu)
     val menuItem = menu.findItem(R.id.help_new)
+    val menuLabel = menuItem?.actionView?.findViewById<CustomTextView>(R.id.help_label)
+    if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
+      menuLabel?.setTextColor(ContextCompat.getColorStateList(context!!, R.color.buttonTint))
+    }
     menuItem.actionView?.setOnClickListener {
       menu.performIdentifierAction(menuItem.itemId, 0)
     }
@@ -176,7 +181,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
         }
         val resendString = getString(R.string.psn_resend_hint)
         binding?.tvResendOtpIn?.text = resendString
-        binding?.tvResendOtpIn?.setTextColor(getColor(R.color.colorAccent))
+        binding.tvResendOtpIn.setTextColor(getColor(R.color.colorAccent))
       }
     }
     startOperation()

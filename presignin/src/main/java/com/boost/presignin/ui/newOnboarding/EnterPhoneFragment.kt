@@ -84,6 +84,7 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
       activity = baseActivity, type = FragmentType.VERIFY_PHONE_FRAGMENT,
       bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }
     )
+
 //    WebEngageController.trackEvent(PS_LOGIN_NUMBER_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
 //    baseActivity.hideKeyBoard()
 //    showProgress(getString(R.string.sending_otp))
@@ -164,7 +165,7 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
     val menuItem: MenuItem? = menu.findItem(R.id.help_new)
     val menuLabel = menuItem?.actionView?.findViewById<CustomTextView>(R.id.help_label)
     if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
-      menuLabel?.setTextColor(getColor(color.colorPrimary))
+      menuLabel?.setTextColor(ContextCompat.getColorStateList(context!!, R.color.buttonTint))
     }
     menuItem?.actionView?.setOnClickListener { menu.performIdentifierAction(menuItem.itemId, 0) }
   }

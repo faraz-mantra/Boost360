@@ -79,6 +79,7 @@
             app:layout_constraintStart_toEndOf="@+id/iv_cat_img"
             app:layout_constraintTop_toBottomOf="@+id/tv_category_title"
             android:textSize="@dimen/text_12"
+            android:visibility="visible"
             tools:text="Ex: Kirana Store, Boutique, Stationery and others from retail sector" />
 
       </androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,6 +32,24 @@ android {
         }
     }
 
+    sourceSets {
+        healthgro {
+            res {
+                srcDirs 'src/healthgro/res'
+            }
+        }
+        ardhim {
+            res {
+                srcDirs 'src/ardhim/res'
+            }
+        }
+        checkkinn {
+            res {
+                srcDirs 'src/checkkinn/res'
+            }
+        }
+    }
+
     flavorDimensions "default"
     productFlavors {
         partone {

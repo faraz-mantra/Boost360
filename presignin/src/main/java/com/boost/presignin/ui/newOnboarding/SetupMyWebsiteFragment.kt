@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.boost.presignin.BuildConfig
 import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
@@ -18,6 +19,7 @@ import com.boost.presignin.model.userprofile.BusinessProfileResponse
 import com.boost.presignin.ui.newOnboarding.bottomSheet.NeedHelpBottomSheet
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.pref.UserSessionManager
+import com.framework.views.customViews.CustomTextView
 import com.framework.webengageconstant.CLICK
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.framework.webengageconstant.PS_LOGIN_OTP_NEED_HELP_CLICK
@@ -103,6 +105,10 @@ class SetupMyWebsiteFragment : AppBaseFragment<FragmentSetupMyWebsiteBinding, Lo
     super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.menu_help_setup_my_website, menu)
     val menuItem = menu.findItem(R.id.help_new)
+    val menuLabel = menuItem?.actionView?.findViewById<CustomTextView>(R.id.help_label)
+    if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
+      menuLabel?.setTextColor(ContextCompat.getColorStateList(context!!, R.color.buttonTint))
+    }
     menuItem.actionView?.setOnClickListener {
       menu.performIdentifierAction(menuItem.itemId, 0)
     }

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="themeColor">#5F2892</color>
+    <color name="colorPrimary">#5F2892</color>
 </resources>
