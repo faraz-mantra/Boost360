@@ -2,6 +2,7 @@ package com.boost.payment.ui.payment
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Typeface
@@ -99,6 +100,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     var months:Int = 0
     val WebViewFragment = WebViewFragment()
 //    var subscriptionID = ""
+    lateinit var progressDialog: ProgressDialog
 
 
     companion object {
@@ -112,7 +114,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         root = inflater.inflate(R.layout.payments_fragment, container, false)
         auto_renew_title =  root.findViewById(R.id.auto_renew_title)
 
-
+        progressDialog = ProgressDialog(requireContext())
 
         totalAmount = requireArguments().getDouble("amount")
         months = requireArguments().getInt("monthValue")
@@ -150,11 +152,13 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     private fun updateAutoRenewState() {
         if (autoRenewState) {
             //for auto renew sent subscription_id
+            Log.e("updateAutoRenewState","for auto renew sent subscription_id "+prefs.getAutoRenewSubscriptionID())
 //            cartCheckoutData.put("subscription_id", subscriptionID)
             cartCheckoutData.put("subscription_id", prefs.getAutoRenewSubscriptionID())
 //      cartCheckoutData.put("subscription_id", "sub_Io6LDbGj1FT515")
             if (cartCheckoutData.has("order_id")) cartCheckoutData.remove("order_id")
         } else {
+            Log.e("updateAutoRenewState","for single payment sent order_id "+requireArguments().getString("order_id"))
             cartCheckoutData.put("order_id", requireArguments().getString("order_id"))
 //      cartCheckoutData.put("order_id", "order_Io6NLckFM8ny8Z")
             if (cartCheckoutData.has("subscription_id")) cartCheckoutData.remove("subscription_id")
@@ -539,8 +543,6 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 updateAutoRenewState()
             } else {
                 autoRenewState = true
-                footer_auto_pay_layout.visibility = VISIBLE
-                footer_payment_layout.visibility = GONE
                 feature_validity.text = "Renewal period"
                 validity_months.setText(
                     "Every "+prefs.getValidityMonths() + Utils.yearOrMonthText(prefs.getValidityMonths()!!.toInt(), requireActivity(), true)
@@ -574,6 +576,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 } else 0.0
 
                 if(prefs.getAutoRenewSubscriptionID().isNullOrEmpty()) {
+                    footer_auto_pay_layout.visibility = GONE
+                    footer_payment_layout.visibility = GONE
                     viewModel.markOrderForAutoRenewal(
                         (activity as? PaymentActivity)?.getAccessToken() ?: "",
                         OrderAutoRenewRequest(
@@ -586,6 +590,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                         )
                     )
                 }else{
+                    footer_auto_pay_layout.visibility = VISIBLE
+                    footer_payment_layout.visibility = GONE
                     updateAutoRenewState()
                 }
 
@@ -809,8 +815,18 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         viewModel.orderForAutoRenewalResult().observe(viewLifecycleOwner, Observer {
             //auto renew switch API call for payment
 //            subscriptionID = it.Result.SubscriptionId
+            footer_auto_pay_layout.visibility = VISIBLE
+            footer_payment_layout.visibility = GONE
             prefs.storeAutoRenewSubscriptionID(it.Result.SubscriptionId)
             updateAutoRenewState()
+        })
+
+        viewModel.getLoaderStatus().observe(this, Observer {
+            if (it) {
+                showProgress("Loading Please wait...")
+            } else {
+                hideProgress()
+            }
         })
 
         viewModel.updateLink().observe(viewLifecycleOwner,  Observer {
@@ -1730,6 +1746,29 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
     override fun walletSelected(data: String) {
 //        ("Not yet implemented")
+    }
+
+    private fun showProgress(message: String = "Please wait...") {
+        try {
+            if (!progressDialog.isShowing) {
+                progressDialog.setMessage(message)
+                progressDialog.setCancelable(false)
+                progressDialog.show()
+            }
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+            e.printStackTrace()
+        }
+    }
+
+    private fun hideProgress() {
+        try {
+//      if (progressDialog.isShowing) progressDialog.hide()
+            if (progressDialog.isShowing) progressDialog.cancel()
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+            e.printStackTrace()
+        }
     }
 
 
