@@ -30,7 +30,9 @@ class UsefulLinksHolder(binding: RecyclerItemUsefulLinksBinding) : AppBaseRecycl
     }
     val iconType = data?.icon?.let { UsefulLinksItem.IconType.fromName(it) }
     iconType?.let { binding.rivIcon.setImageResource(iconType.icon) }
-    binding.root.setOnClickListener { listener?.onItemClick(position, item, RecyclerViewActionType.USEFUL_LINKS_CLICK.ordinal) }
+    binding.root.setOnClickListener {
+      listener?.onItemClick(position, item, RecyclerViewActionType.USEFUL_LINKS_CLICK.ordinal)
+    }
 
   }
 }

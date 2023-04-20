@@ -11,7 +11,7 @@
   <color name="primaryColor">#ffb900</color>
   <color name="primaryColorDark">#F9A825</color>
   <color name="tabOnclickColor">#FFE5A0</color>
-
+  <color name="themeColor">#ffb900</color>
   <color name="screen_bg">#f6f6f6</color>
   <color name="card_gray">#808080</color>
   <color name="greenDark">#458b00</color>
