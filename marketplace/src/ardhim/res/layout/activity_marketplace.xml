@@ -264,7 +264,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="10dp"
-                                    app:dotsColor="@color/color_primary"
+                                    app:dotsColor="@color/tv_color_BB"
                                     app:dotsCornerRadius="8dp"
                                     app:dotsSize="6dp"
                                     app:dotsSpacing="4dp"
@@ -328,7 +328,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="10dp"
-                                    app:dotsColor="@color/gray_light"
+                                    app:dotsColor="@color/tv_color_BB"
                                     app:dotsCornerRadius="8dp"
                                     app:dotsSize="6dp"
                                     app:dotsSpacing="4dp"
@@ -337,7 +337,7 @@
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/package_viewpager1"
                                     app:progressMode="false"
-                                    app:selectedDotColor="#001D85" />
+                                    app:selectedDotColor="@color/primary" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
                             <LinearLayout
                                 android:id="@+id/package_compare_layout1"
@@ -542,7 +542,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="10dp"
-                                app:dotsColor="@color/yellow"
+                                app:dotsColor="@color/tv_color_BB"
                                 app:dotsCornerRadius="8dp"
                                 app:dotsSize="6dp"
                                 app:dotsSpacing="4dp"
@@ -551,7 +551,7 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/banner_viewpager1"
                                 app:progressMode="false"
-                                app:selectedDotColor="@color/color_primary" />
+                                app:selectedDotColor="@color/primary" />
 
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -657,7 +657,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/package_viewpager"
                             app:progressMode="false"
-                            app:selectedDotColor="@color/primaryDark" />
+                            app:selectedDotColor="@color/primary" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </RelativeLayout>
                 <LinearLayout
