@@ -14,16 +14,11 @@ import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.AddonsListenerV3
 
 class PacksAddonsV3Adapter(
-    cryptoCurrencies: List<PackageAddonsCompares>?,
+    var upgradeList: List<PackageAddonsCompares>,
     val activity: Activity,var myAddonsListener: AddonsListenerV3
 ) : RecyclerView.Adapter<PacksAddonsV3Adapter.upgradeViewHolder>() {
 
-    private var upgradeList = ArrayList<PackageAddonsCompares>()
     private lateinit var context: Context
-
-    init {
-        this.upgradeList = cryptoCurrencies as ArrayList<PackageAddonsCompares>
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
         val itemView = LayoutInflater.from(parent?.context).inflate(
@@ -64,10 +59,8 @@ class PacksAddonsV3Adapter(
     }
 
     fun addupdates(upgradeModel: List<PackageAddonsCompares>) {
-        val initPosition = upgradeList.size
-        upgradeList.clear()
-        upgradeList.addAll(upgradeModel)
-        notifyItemRangeInserted(initPosition, upgradeList.size)
+        upgradeList = upgradeModel
+        notifyDataSetChanged()
     }
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
