@@ -173,7 +173,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         viewModel = ViewModelProviders.of(requireActivity()).get(PaymentViewModel::class.java)
 
         if(totalAmount <= 5000 && !prefs.getYearPricing() &&
-            (prefs.getCartValidityMonths() != null && prefs.getCartValidityMonths()!!.toInt() <= 6))
+            (prefs.getCartValidityMonths() != null && prefs.getCartValidityMonths()!!.toInt() == 1))
             auto_renew_layout.visibility = VISIBLE
         else
             auto_renew_layout.visibility = GONE
