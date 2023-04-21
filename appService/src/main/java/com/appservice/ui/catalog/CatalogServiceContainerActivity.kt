@@ -38,7 +38,6 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     return com.framework.R.layout.activity_fragment_container
   }
 
-
   override fun getViewModelClass(): Class<BaseViewModel> {
     return BaseViewModel::class.java
   }
