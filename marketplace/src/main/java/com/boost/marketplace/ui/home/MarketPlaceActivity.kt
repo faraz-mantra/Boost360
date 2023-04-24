@@ -656,7 +656,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 viewModel.loadUpdates(
                     getAccessToken() ?: "",
                     this.fpid!!,
-                    this.clientid,
+                    UserSessionManager(this).sourceClientId!!,
                     this.experienceCode,
                     this.fpTag
                 )
@@ -709,6 +709,12 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         })
 
         viewModel.getAllAvailableFeatures().observe(this, androidx.lifecycle.Observer {
+            WebEngageController.trackEvent(
+                ADDONS_MARKETPLACE_CART_ALL_FEATURE_LOADED,
+                PAGE_VIEW,
+                NO_EVENT_VALUE
+            )
+
             all_recommended_addons.visibility = View.VISIBLE
             updateRecycler(it)
             updateAddonCategoryRecycler(it)
@@ -733,7 +739,12 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             }
         })
 
-        viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
+        viewModel.getAllBundles().observe(this) {
+            WebEngageController.trackEvent(
+                ADDONS_MARKETPLACE_CART_PACKAGE_BUNDLE_LOADED,
+                PAGE_VIEW,
+                NO_EVENT_VALUE
+            )
             val list = arrayListOf<Bundles>()
             for (item in it) {
                 val temp = Gson().fromJson<List<IncludedFeature>>(
@@ -753,7 +764,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                             item.exclusive_to_categories,
                             object : TypeToken<List<String>>() {}.type
                         ),
-                        null, Gson().fromJson<List<HowToActivate>>(
+                        null, null, Gson().fromJson<List<HowToActivate>>(
                             item.how_to_activate,
                             object : TypeToken<List<HowToActivate>>() {}.type
                         ), Gson().fromJson<List<Testimonial>>(
@@ -762,10 +773,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                         ), Gson().fromJson<List<FrequentlyAskedQuestion>>(
                             item.frequently_asked_questions,
                             object : TypeToken<List<FrequentlyAskedQuestion>>() {}.type
-                        ),Gson().fromJson<List<String>>(
+                        ), Gson().fromJson<List<String>>(
                             item.benefits,
                             object : TypeToken<List<String>>() {}.type
-                        ),item.desc
+                        ), item.desc
                     )
                 )
             }
@@ -791,14 +802,14 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 package_compare_layout1.visibility = View.GONE
             }
             //go to particular package screen
-            if(isOpenPackageWithID!=null){
-                for(singleBundle in list){
-                    if(singleBundle._kid.equals(isOpenPackageWithID)){
+            if (isOpenPackageWithID != null) {
+                for (singleBundle in list) {
+                    if (singleBundle._kid.equals(isOpenPackageWithID)) {
                         onPackageClicked(singleBundle)
                     }
                 }
             }
-        })
+        }
 
         viewModel.getBackAllBundles().observe(this, androidx.lifecycle.Observer {
             val list = arrayListOf<Bundles>()
@@ -820,7 +831,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                             item.exclusive_to_categories,
                             object : TypeToken<List<String>>() {}.type
                         ),
-                        null, null,null,null,null,item.desc
+                        null, null,null,null,null, null, item.desc
                     )
                 )
             }
@@ -1242,7 +1253,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                         item.exclusive_to_categories,
                                         object : TypeToken<List<String>>() {}.type
                                     ),
-                                    null, null,null,null,null,item.desc
+                                    null, null,null,null,null, null,item.desc
                                 )
                             )
                         }
@@ -1378,7 +1389,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 
         viewModel.subscriptionTypeResult().observe(this, androidx.lifecycle.Observer {
 
-            if (it!=null) {
+            if (it != null) {
                 if (shimmer_view_package.isShimmerStarted) {
                     shimmer_view_package.stopShimmer()
                     shimmer_view_package.visibility = View.GONE
@@ -1463,47 +1474,47 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                            val date2 = expired!!.parseDate(DateUtils.FORMAT_SERVER_DATE1)
 //                            val isExpired1 = date2?.let { it1 -> Utils1.isExpired(it1) }
 ////                            if (isExpired1 == true) {
-                            if ((it.subscriptionType.equals("Expired")) || (it.subscriptionType.equals("Free"))
-                                || (it.subscriptionType.equals("Demo"))){
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    val window: Window = this.window
-                                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                                    window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
-                                }
-                                back_icon.setBackgroundResource(R.drawable.circular_arrow_back)
-                                menu_icon.setImageResource(R.drawable.circular_menu_option)
-                                cart_icon.setImageResource(R.drawable.circular_cart48)
-                                welcome_txt.visibility = View.GONE
-                                welcome_txt1.visibility = View.VISIBLE
-                                screen_title.visibility = View.GONE
-                                screen_title1.visibility = View.VISIBLE
-                                expiry_layout.setBackgroundResource(R.drawable.curve_black_bg)
-                                layout_main.setBackgroundResource(R.color.primaryDark)
-                                banner_rl_layout.visibility = View.GONE
-                                explore_layout.visibility = View.GONE
-                                banner_rl_layout1.visibility = View.VISIBLE
-                                mp_package_rl_layout.visibility = View.GONE
-                                mp_package_rl_layout1.visibility = View.VISIBLE
-                                banner_rl_layout1.setBackgroundResource(R.drawable.curve_white_bg)
-                            } else {
-                                expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
-                                welcome_txt.visibility = View.VISIBLE
-                                welcome_txt1.visibility = View.GONE
-                                screen_title.visibility = View.VISIBLE
-                                screen_title1.visibility = View.GONE
-                                banner_rl_layout.visibility = View.VISIBLE
-                                package_compare_layout1.visibility = View.GONE
-                                explore_layout.visibility = View.VISIBLE
-                                banner_rl_layout1.visibility = View.GONE
-                                mp_package_rl_layout.visibility = View.VISIBLE
-                                mp_package_rl_layout1.visibility = View.GONE
-                            }
-
+                    if ((it.subscriptionType.equals("Expired")) || (it.subscriptionType.equals("Free"))
+                        || (it.subscriptionType.equals("Demo"))
+                    ) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            val window: Window = this.window
+                            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                            window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
+                        }
+                        back_icon.setBackgroundResource(R.drawable.circular_arrow_back)
+                        menu_icon.setImageResource(R.drawable.circular_menu_option)
+                        cart_icon.setImageResource(R.drawable.circular_menu_cart)
+                        welcome_txt.visibility = View.GONE
+                        welcome_txt1.visibility = View.VISIBLE
+                        screen_title.visibility = View.GONE
+                        screen_title1.visibility = View.VISIBLE
+                        expiry_layout.setBackgroundResource(R.drawable.curve_black_bg)
+                        layout_main.setBackgroundResource(R.color.primaryDark)
+                        banner_rl_layout.visibility = View.GONE
+                        explore_layout.visibility = View.GONE
+                        banner_rl_layout1.visibility = View.VISIBLE
+                        mp_package_rl_layout.visibility = View.GONE
+                        mp_package_rl_layout1.visibility = View.VISIBLE
+                        banner_rl_layout1.setBackgroundResource(R.drawable.curve_white_bg)
+                    } else {
+                        expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
+                        welcome_txt.visibility = View.VISIBLE
+                        welcome_txt1.visibility = View.GONE
+                        screen_title.visibility = View.VISIBLE
+                        screen_title1.visibility = View.GONE
+                        banner_rl_layout.visibility = View.VISIBLE
+                        package_compare_layout1.visibility = View.GONE
+                        explore_layout.visibility = View.VISIBLE
+                        banner_rl_layout1.visibility = View.GONE
+                        mp_package_rl_layout.visibility = View.VISIBLE
+                        mp_package_rl_layout1.visibility = View.GONE
+                    }
 
 
                     // Enable Dark mode if any 1 of the addons are expired.
 
-                //               for (singleItem in it){
+                    //               for (singleItem in it){
 //                    if (singleItem.feature_code == "DOMAINPURCHASE" ){
 //                        val date2 = expired!!.parseDate(DateUtils.FORMAT_SERVER_DATE1)
 //                        val isExpired1 = date2?.let { it1 -> Utils1.isExpired(it1) }
@@ -1529,10 +1540,163 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                    bottom_box.visibility = View.VISIBLE
 //                    footer.visibility = View.VISIBLE
                 }
-            }
-            else {
-                bottom_box.visibility = View.GONE
-                footer.visibility = View.GONE
+                //}
+//            else {
+//                bottom_box.visibility = View.GONE
+//                footer.visibility = View.GONE
+//            }
+                else if (BuildConfig.FLAVOR.equals("ardhim")) {
+
+//                            val domainPurchase = it.find { it.feature_code == "DOMAINPURCHASE" }
+//                            val expired = it.endDate
+//                            val date2 = expired!!.parseDate(DateUtils.FORMAT_SERVER_DATE1)
+//                            val isExpired1 = date2?.let { it1 -> Utils1.isExpired(it1) }
+////                            if (isExpired1 == true) {
+                    if ((it.subscriptionType.equals("Expired")) || (it.subscriptionType.equals("Free"))
+                        || (it.subscriptionType.equals("Demo"))
+                    ) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            val window: Window = this.window
+                            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                            window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
+                        }
+                        back_icon.setBackgroundResource(R.drawable.circular_arrow_back)
+                        menu_icon.setImageResource(R.drawable.circular_menu_option)
+                        cart_icon.setImageResource(R.drawable.circular_menu_cart)
+                        welcome_txt.visibility = View.GONE
+                        welcome_txt1.visibility = View.VISIBLE
+                        welcome_txt1.text = "Welcome to Healthgro"
+                        screen_title.visibility = View.GONE
+                        screen_title1.visibility = View.VISIBLE
+                        expiry_layout.setBackgroundResource(R.drawable.curve_black_bg)
+                        layout_main.setBackgroundResource(R.color.primaryDark)
+                        banner_rl_layout.visibility = View.GONE
+                        explore_layout.visibility = View.GONE
+                        banner_rl_layout1.visibility = View.VISIBLE
+                        mp_package_rl_layout.visibility = View.GONE
+                        mp_package_rl_layout1.visibility = View.VISIBLE
+                        banner_rl_layout1.setBackgroundResource(R.drawable.curve_white_bg)
+                    } else {
+                        expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
+                        welcome_txt.visibility = View.VISIBLE
+                        welcome_txt1.visibility = View.GONE
+                        screen_title.visibility = View.VISIBLE
+                        screen_title1.visibility = View.GONE
+                        banner_rl_layout.visibility = View.VISIBLE
+                        package_compare_layout1.visibility = View.GONE
+                        explore_layout.visibility = View.VISIBLE
+                        banner_rl_layout1.visibility = View.GONE
+                        mp_package_rl_layout.visibility = View.VISIBLE
+                        mp_package_rl_layout1.visibility = View.GONE
+                    }
+
+
+                    // Enable Dark mode if any 1 of the addons are expired.
+
+                    //               for (singleItem in it){
+//                    if (singleItem.feature_code == "DOMAINPURCHASE" ){
+//                        val date2 = expired!!.parseDate(DateUtils.FORMAT_SERVER_DATE1)
+//                        val isExpired1 = date2?.let { it1 -> Utils1.isExpired(it1) }
+////                        if (isExpired1 == true)
+////                            view_my_current_plan.visibility=View.GONE
+////                        else
+////                            view_my_current_plan.visibility=View.VISIBLE
+//
+//                        when (isExpired1) {
+//                            isExpired1 == true-> {
+//                                expiry_layout.setBackgroundResource(R.drawable.curve_black_bg)
+//                            }
+//                            else -> {
+//                                expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
+//                            }
+//                        }
+//                        break
+//                    }
+//                    else{
+//                        expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
+//                    }
+
+//                    bottom_box.visibility = View.VISIBLE
+//                    footer.visibility = View.VISIBLE
+                }
+
+                else if (BuildConfig.FLAVOR.equals("healthgro")) {
+
+//                            val domainPurchase = it.find { it.feature_code == "DOMAINPURCHASE" }
+//                            val expired = it.endDate
+//                            val date2 = expired!!.parseDate(DateUtils.FORMAT_SERVER_DATE1)
+//                            val isExpired1 = date2?.let { it1 -> Utils1.isExpired(it1) }
+////                            if (isExpired1 == true) {
+                    if ((it.subscriptionType.equals("Expired")) || (it.subscriptionType.equals("Free"))
+                        || (it.subscriptionType.equals("Demo"))
+                    ) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            val window: Window = this.window
+                            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                            window.setStatusBarColor(getResources().getColor(com.boost.cart.R.color.common_text_color))
+                        }
+                        back_icon.setBackgroundResource(R.drawable.circular_arrow_back)
+                        menu_icon.setImageResource(R.drawable.circular_menu_option)
+                        cart_icon.setImageResource(R.drawable.circular_menu_cart)
+                        welcome_txt.visibility = View.GONE
+                        welcome_txt1.visibility = View.VISIBLE
+                        welcome_txt1.text = "Welcome to Healthgro"
+                        screen_title.visibility = View.GONE
+                        screen_title1.visibility = View.VISIBLE
+                        expiry_layout.setBackgroundResource(R.drawable.curve_black_bg)
+                        layout_main.setBackgroundResource(R.color.primaryDark)
+                        banner_rl_layout.visibility = View.GONE
+                        explore_layout.visibility = View.GONE
+                        banner_rl_layout1.visibility = View.VISIBLE
+                        mp_package_rl_layout.visibility = View.GONE
+                        mp_package_rl_layout1.visibility = View.VISIBLE
+                        banner_rl_layout1.setBackgroundResource(R.drawable.curve_white_bg)
+                    } else {
+                        expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
+                        welcome_txt.visibility = View.VISIBLE
+                        welcome_txt1.visibility = View.GONE
+                        screen_title.visibility = View.VISIBLE
+                        screen_title1.visibility = View.GONE
+                        banner_rl_layout.visibility = View.VISIBLE
+                        package_compare_layout1.visibility = View.GONE
+                        explore_layout.visibility = View.VISIBLE
+                        banner_rl_layout1.visibility = View.GONE
+                        mp_package_rl_layout.visibility = View.VISIBLE
+                        mp_package_rl_layout1.visibility = View.GONE
+                    }
+
+
+                    // Enable Dark mode if any 1 of the addons are expired.
+
+                    //               for (singleItem in it){
+//                    if (singleItem.feature_code == "DOMAINPURCHASE" ){
+//                        val date2 = expired!!.parseDate(DateUtils.FORMAT_SERVER_DATE1)
+//                        val isExpired1 = date2?.let { it1 -> Utils1.isExpired(it1) }
+////                        if (isExpired1 == true)
+////                            view_my_current_plan.visibility=View.GONE
+////                        else
+////                            view_my_current_plan.visibility=View.VISIBLE
+//
+//                        when (isExpired1) {
+//                            isExpired1 == true-> {
+//                                expiry_layout.setBackgroundResource(R.drawable.curve_black_bg)
+//                            }
+//                            else -> {
+//                                expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
+//                            }
+//                        }
+//                        break
+//                    }
+//                    else{
+//                        expiry_layout.setBackgroundResource(R.drawable.curve_gray_bg)
+//                    }
+
+//                    bottom_box.visibility = View.VISIBLE
+//                    footer.visibility = View.VISIBLE
+                } else {
+                    bottom_box.visibility = View.GONE
+                    footer.visibility = View.GONE
+                }
             }
         })
     }
@@ -1975,7 +2139,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                                 TypeToken<List<String>>() {}.type
                                                         ),
                                                         null,
-                                                        null, null,null,null,item.desc
+                                                        null, null,null,null, null,item.desc
                                                     )
                                                     val intent = Intent(
                                                         this,
@@ -2050,7 +2214,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                             TypeToken<List<String>>() {}.type
                                                     ),
                                                     null,
-                                                    null, null,null,null,item.desc
+                                                    null, null,null,null, null, item.desc
                                                 )
                                                 val intent = Intent(
                                                     this,
@@ -2561,7 +2725,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                 object : TypeToken<List<String>>() {}.type
                                             ),
                                             null,
-                                            null, null,null,null,item.desc
+                                            null, null,null,null, null, item.desc
                                         )
                                         val intent = Intent(this, ComparePacksV3Activity::class.java)
                                         intent.putExtra("bundleData", Gson().toJson(selectedBundle))
@@ -2646,7 +2810,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                 object : TypeToken<List<String>>() {}.type
                                             ),
                                             null,
-                                            null, null,null,null,item.desc
+                                            null, null, null,null,null,item.desc
                                         )
                                         val intent = Intent(this, ComparePacksV3Activity::class.java)
                                         intent.putExtra("bundleData", Gson().toJson(selectedBundle))

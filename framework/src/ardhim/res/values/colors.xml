@@ -83,6 +83,7 @@
   <color name="boost_jio_website_card_color">@color/transparent</color>
   <color name="boost_jio_website_arrow_color">@color/white</color>
   <color name="green_light">#00C42D</color>
-
+  <color name="green_409F94">#409F94</color>
+  <color name="dash_bottom_nav_panel_active">#F5991E</color>
 
 </resources>

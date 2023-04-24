@@ -11,7 +11,7 @@
   <color name="primaryColor">#ffb900</color>
   <color name="primaryColorDark">#F9A825</color>
   <color name="tabOnclickColor">#FFE5A0</color>
-
+  <color name="themeColor">#ffb900</color>
   <color name="screen_bg">#f6f6f6</color>
   <color name="card_gray">#808080</color>
   <color name="greenDark">#458b00</color>
@@ -129,4 +129,7 @@
   <color name="ir_statusBarColor">@color/primaryColorDark</color>
   <color name="ir_actionbarBackground">@color/primaryColor</color>
   <color name="gray_40">#66212121</color>
+  <color name="website_custom_toolbar_color">@color/black_4a4a4a</color>
+
+
 </resources>

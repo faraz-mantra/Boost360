@@ -2,11 +2,15 @@ package com.boost.payment.ui.confirmation
 
 import android.app.ProgressDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProviders
 import com.boost.payment.PaymentActivity
 import com.boost.payment.R
@@ -58,11 +62,11 @@ class OrderConfirmationFragment : BaseFragment() {
 //        event_attributes.put("couponIds", Utils.filterQuotes(prefs.getCouponIds().toString()))
 //        event_attributes.put("validity",prefs.getValidityMonths().toString())
 //
-//        WebEngageController.trackEvent(
-//          EVENT_NAME_ADDONS_MARKETPLACE_ORDER_CONFIRM,
-//          PAGE_VIEW,
-//          event_attributes
-//        )
+        WebEngageController.trackEvent(
+          EVENT_NAME_ADDONS_MARKETPLACE_ORDER_CONFIRM,
+          PAGE_VIEW,
+          NO_EVENT_VALUE
+        )
 //      } catch (e: Exception) {
 //      }
 //    }
@@ -80,6 +84,12 @@ class OrderConfirmationFragment : BaseFragment() {
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      val window: Window = getActivity()!!.getWindow()
+      WindowInsetsControllerCompat(window, window.decorView).setAppearanceLightStatusBars(false)
+      window.statusBarColor = ResourcesCompat.getColor(resources, R.color.colorToolbar, null)
+    }
 
     initMvvm()
     progressDialog = ProgressDialog(requireContext())

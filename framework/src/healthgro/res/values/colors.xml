@@ -80,9 +80,11 @@
   <color name="color_f4f4f4">#F4F4F4</color>
   <color name="color_ffffff">#FFFFFF</color>
   <color name="color_f2f2f2">#f2f2f2</color>
-  <color name="boost_jio_website_card_color">@color/transparent</color>
+  <color name="boost_jio_website_card_color">@color/white</color>
   <color name="boost_jio_website_arrow_color">@color/white</color>
   <color name="green_light">#00C42D</color>
-
-
+  <color name="green_409F94">#409F94</color>
+  <color name="website_tab_url_color">@color/white</color>
+  <color name="dash_bottom_nav_panel_active">#001D85</color>
+  <color name="republish_progress_color">#001D85</color>
 </resources>

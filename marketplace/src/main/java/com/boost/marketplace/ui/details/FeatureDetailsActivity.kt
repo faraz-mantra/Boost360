@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -23,10 +24,13 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.children
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -46,6 +50,7 @@ import com.boost.dbcenterapi.upgradeDB.model.CartModel
 import com.boost.dbcenterapi.upgradeDB.model.FeaturesModel
 import com.boost.dbcenterapi.utils.*
 import com.boost.dbcenterapi.utils.Constants.Companion.clientid
+import com.boost.marketplace.BuildConfig
 import com.boost.marketplace.R
 import com.boost.marketplace.adapter.*
 import com.boost.marketplace.base.AppBaseActivity
@@ -196,6 +201,12 @@ class FeatureDetailsActivity :
         viewModel.setApplicationLifecycle(application, this)
         staffManagementBottomSheet = StaffManagementBottomSheet(this)
         removePackageBottomSheet = RemovePackageBottomSheet(this)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window = this.window
+            WindowInsetsControllerCompat(window, window.decorView).setAppearanceLightStatusBars(false)
+            window.statusBarColor = ResourcesCompat.getColor(resources, com.boost.cart.R.color.colorToolbar, null)
+        }
 
         initView()
     }
@@ -353,12 +364,30 @@ class FeatureDetailsActivity :
             termsString.length,
             0
         )
-        termsString.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(this, R.color.started_button_start)),
-            termsString.length - 8,
-            termsString.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+        if (BuildConfig.FLAVOR.equals("healthgro")){
+            termsString.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent1)),
+                termsString.length - 8,
+                termsString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        } else if(BuildConfig.FLAVOR.equals("ardhim")) {
+            termsString.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent1)),
+                termsString.length - 8,
+                termsString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+        else{
+            termsString.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.started_button_start)),
+                termsString.length - 8,
+                termsString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
         terms.text = termsString
 
         val callExpertString = SpannableString("Have a query? Call an expert")
@@ -369,12 +398,30 @@ class FeatureDetailsActivity :
             callExpertString.length,
             0
         )
-        callExpertString.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(this, R.color.started_button_start)),
-            callExpertString.length - 14,
-            callExpertString.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        );
+        if (BuildConfig.FLAVOR.equals("healthgro")){
+            callExpertString.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent1)),
+                callExpertString.length - 14,
+                callExpertString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+        } else if(BuildConfig.FLAVOR.equals("ardhim")) {
+            callExpertString.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent1)),
+                callExpertString.length - 14,
+                callExpertString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+        else{
+            callExpertString.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this, R.color.started_button_start)),
+                callExpertString.length - 14,
+                callExpertString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+        }
+
 
         query_text.setText(callExpertString)
         query_text.setOnClickListener {

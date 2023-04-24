@@ -67,10 +67,10 @@ android {
         checkReleaseBuilds false
     }
     defaultConfig {
-        applicationId 'com.biz2.nowfloats'
+//        applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020152
+        versionCode 2020020156
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -84,7 +84,7 @@ android {
     productFlavors {
         partone {
             //Boost 360
-            versionName "6.1.37.6"
+            versionName "6.1.40.1"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
@@ -305,4 +305,6 @@ dependencies {
     implementation "org.koin:koin-androidx-fragment:$koin_version"
     implementation 'androidx.room:room-runtime:2.3.0'
     annotationProcessor 'androidx.room:room-compiler:2.3.0'
+
+    implementation 'com.clevertap.android:clevertap-android-sdk:4.7.4'
 }

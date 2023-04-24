@@ -29,6 +29,7 @@ import com.boost.presignin.model.onboardingRequest.saveCategoryRequest
 import com.boost.presignin.model.signup.FloatingPointCreateResponse
 import com.boost.presignin.model.userprofile.BusinessProfileResponse
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
+import com.framework.analytics.CleverTapController
 import com.framework.analytics.NFWebEngageController
 import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
@@ -128,6 +129,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
       val eventValue = HashMap<String, Any>()
       eventValue["test1"] = session?.userLocationIP!!
       NFWebEngageController.trackAttribute(eventValue)
+      CleverTapController.trackAttributeCleverTap(eventValue)
     }
   }
 

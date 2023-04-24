@@ -133,7 +133,7 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window: Window = this.window
             WindowInsetsControllerCompat(window, window.decorView).setAppearanceLightStatusBars(false)
-            window.statusBarColor = ResourcesCompat.getColor(resources, com.boost.cart.R.color.common_text_color, null)
+            window.statusBarColor = ResourcesCompat.getColor(resources, com.boost.cart.R.color.colorToolbar, null)
         }
 
         viewModel.setApplicationLifecycle(application, this)
@@ -202,7 +202,7 @@ class SearchActivity : AppBaseActivity<ActivitySearchBinding, SearchViewModel>()
                             item.exclusive_to_categories,
                             object : TypeToken<List<String>>() {}.type
                         ),
-                        null, Gson().fromJson<List<HowToActivate>>(
+                        null, null, Gson().fromJson<List<HowToActivate>>(
                             item.how_to_activate,
                             object : TypeToken<List<HowToActivate>>() {}.type
                         ), Gson().fromJson<List<Testimonial>>(

@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
+import com.dashboard.model.live.quickAction.QuickActionItem
 import com.framework.glide.util.loadGifGlide
 import com.framework.views.customViews.CustomImageView
 import java.io.File
@@ -159,6 +160,23 @@ fun NestedScrollView.scrollToTopBottom(image: CustomImageView) {
     smoothScrollTo(0, getChildAt(0).height, 1000)
     image.rotation = -90F
   }
+}
+
+//start Show/Hide of New Tag on Quick Actions, will disappear after one click
+fun checkIfButtonClickedByUserInPast(actionType : String) : Boolean {
+  val isClicked: Boolean
+  val listOfClickedItems = QuickActionItem.getListOfClickedItems()
+  isClicked = if(listOfClickedItems.isNullOrEmpty()) false
+  else listOfClickedItems.contains(actionType)
+
+  return isClicked
+}
+
+//start Show/Hide of New Tag on Quick Actions, will disappear after one click
+fun addButtonClickActionTypeByUser(actionType : String) {
+  val listOfItems = QuickActionItem.getListOfClickedItems()?.toMutableList() ?: mutableListOf()
+  listOfItems.add(actionType)
+  listOfItems.toList().let { it1 -> QuickActionItem.saveListOfClickedItems(it1) }
 }
 
 

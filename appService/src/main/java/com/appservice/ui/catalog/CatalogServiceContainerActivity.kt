@@ -87,7 +87,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.ECOMMERCE_SETTINGS, FragmentType.ECOMMERCE_DELIVERY_CONFIG, FragmentType.ECOMMERCE_PAYMENT_SETTINGS,
       FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_POLICIES, FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE, FragmentType.ECOMMERCE_CATALOG_SETTINGS,
       FragmentType.ECOMMERCE_ADD_ACCOUNT_DETAILS, FragmentType.CONSULTATION_APT_SETTINGS, FragmentType.ECOMMERCE_BUSINESS_VERIFICATION,
-      FragmentType.CAMERA_VIEW -> ContextCompat.getColor(this, R.color.colorAccent)
+      FragmentType.CAMERA_VIEW ->
+        ContextCompat.getColor(this, R.color.colorAccent)
       else -> super.getToolbarBackgroundColor()
     }
   }

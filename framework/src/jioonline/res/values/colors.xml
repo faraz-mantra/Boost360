@@ -3,6 +3,7 @@
     <color name="colorAccent">#0400A6</color>
     <color name="colorPrimary">#EC008C</color>
     <color name="colorAccentLight">#0400A6</color>
+    <color name="dr_score_summary">#0400A6</color>
     <color name="colorRedBgImg">#E39595</color>
 
     <color name="colorPrimary_10">#1A0400A6</color>
@@ -16,5 +17,7 @@
     <color name="color_ffb900_op40_jio_ec008c_op40">#66FFB900</color>
     <color name="boost_jio_website_card_color">@color/white</color>
     <color name="boost_jio_website_arrow_color">@color/gray_333333</color>
-
+    <color name="website_tab_url_color">#0400A6</color>
+    <color name="dash_bottom_nav_panel_active">#0400A6</color>
+    <color name="republish_progress_color">#EC008C</color>
 </resources>

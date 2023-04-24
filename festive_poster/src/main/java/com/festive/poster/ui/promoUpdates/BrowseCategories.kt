@@ -95,7 +95,7 @@ class BrowseCategoriesFragment :
         when (actionType) {
             RecyclerViewActionType.BROWSE_ALL_CAT_CLICKED.ordinal -> {
                 WebEngageController.trackEvent(Promotional_Update_View_More_Click)
-                addFragment(R.id.container, BrowseAllFragment.newInstance(), true, true)
+                addFragment(R.id.container, BrowseAllFragment.newInstance(position.toString(), true), true, true)
             }
         }
     }

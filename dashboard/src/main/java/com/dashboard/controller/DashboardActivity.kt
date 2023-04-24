@@ -17,7 +17,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.anachat.chatsdk.AnaCore
-import com.boost.dbcenterapi.utils.DataLoader
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.controller.ui.dashboard.DashboardFragmentV2
@@ -44,7 +43,6 @@ import com.framework.firebaseUtils.firestore.badges.BadgesModel
 import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
 import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager.getCartData
 import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager.initDataCart
-import com.framework.imagepicker.ImagePicker
 import com.framework.pref.*
 import com.framework.pref.Key_Preferences.KEY_FP_CART_COUNT
 import com.framework.utils.AppsFlyerUtils
@@ -58,7 +56,6 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
-import com.google.android.play.core.install.model.ActivityResult
 import com.google.android.play.core.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
 import com.inventoryorder.utils.DynamicLinkParams
@@ -70,7 +67,6 @@ import zendesk.core.AnonymousIdentity
 import zendesk.core.Zendesk
 import zendesk.support.Support
 import java.util.*
-import kotlin.concurrent.schedule
 import kotlin.concurrent.schedule
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener {
@@ -110,6 +106,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(this)
+
+
     session?.let { deepLinkUtil = DeepLinkUtil(this, it) }
     mNavController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
     val graph = mNavController.graph
@@ -156,9 +154,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun UserSessionManager.initializeWebEngageLogin() {
-    WebEngageController.setUserContactInfoProperties(this)
-    WebEngageController.setUserContactInfoProperties(this)
     WebEngageController.setFPTag(this.fpTag)
+    WebEngageController.setFpId(this.fPID)
+    WebEngageController.setUserContactInfoProperties(this)
     WebEngageController.trackAttribute(this)
   }
 
@@ -411,7 +409,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       4 -> showToolbar(getString(R.string.more))
       else -> {
         if (packageName.equals(APPLICATION_JIO_ID, ignoreCase = true).not()) {
-          changeTheme(R.color.colorPrimary, R.color.colorPrimary)
+          changeTheme(R.color.dashboard_status_bar_color, R.color.dashboard_status_bar_color)
         }
         getToolbar()?.apply { visibility = View.GONE }
       }
@@ -419,7 +417,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun showToolbar(title: String) {
-    changeTheme(R.color.black_4a4a4a_jio, R.color.black_4a4a4a_jio)
+    changeTheme(R.color.dash_fragment_toolbar_color, R.color.dash_fragment_toolbar_color)
     getToolbar()?.apply {
       visibility = View.VISIBLE
       supportActionBar?.setDisplayHomeAsUpEnabled(false)

@@ -2,10 +2,14 @@ package com.boost.payment.ui.confirmation
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProviders
 import com.boost.payment.PaymentActivity
 import com.boost.payment.R
@@ -17,10 +21,7 @@ import com.boost.payment.utils.WebEngageController
 import com.framework.analytics.SentryController
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
-import com.framework.webengageconstant.ADDONS_MARKETPLACE_FAILED_PAYMENT_TRANSACTION_LOADED
-import com.framework.webengageconstant.FAILED_PAYMENT_TRANSACTION
-import com.framework.webengageconstant.MARKETPLACE_FALIURE_TRY_AGAIN_CLICK
-import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.*
 import kotlinx.android.synthetic.main.payment_failure_v3.*
 
 class FailedTransactionFragment : BaseFragment() {
@@ -47,7 +48,7 @@ class FailedTransactionFragment : BaseFragment() {
     ): View? {
 
        // root = inflater.inflate(R.layout.payment_failure_v3, container, false)
-
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_PAYMENT_FAILED, PAGE_VIEW, NO_EVENT_VALUE)
         session = UserSessionManager(activity as PaymentActivity)
         prefs = SharedPrefs(activity as PaymentActivity)
         razorPayWebView = RazorPayWebView.newInstance()
@@ -61,6 +62,12 @@ class FailedTransactionFragment : BaseFragment() {
 
         viewModel = ViewModelProviders.of(this).get(OrderConfirmationViewModel::class.java)
     //    viewModel.emptyCurrentCart((activity as PaymentActivity).application);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window = getActivity()!!.getWindow()
+            WindowInsetsControllerCompat(window, window.decorView).setAppearanceLightStatusBars(false)
+            window.statusBarColor = ResourcesCompat.getColor(resources, R.color.colorToolbar, null)
+        }
 
         contact_support.setOnClickListener {
             val callIntent = Intent(Intent.ACTION_DIAL)

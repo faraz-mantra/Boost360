@@ -59,8 +59,9 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   override fun customTheme(): Int? {
     return when (type) {
       FragmentType.DIGITAL_READINESS_SCORE -> R.style.DashboardThemeNew
-      FragmentType.FRAGMENT_WEBSITE_THEME, FragmentType.FRAGMENT_WEBSITE_NAV, FragmentType.FRAGMENT_USER_PROFILE, FragmentType.FRAGMENT_USER_PROFILE_IMAGE_CROP -> R.style.DashboardThemeNew
+      FragmentType.FRAGMENT_USER_PROFILE, FragmentType.FRAGMENT_USER_PROFILE_IMAGE_CROP -> R.style.DashboardThemeNew
       FragmentType.FRAGMENT_BUSINESS_PROFILE -> R.style.BusinessProfileTheme
+      FragmentType.FRAGMENT_WEBSITE_NAV, FragmentType.FRAGMENT_WEBSITE_THEME -> R.style.WebsiteCustomizationTheme
       else -> super.customTheme()
     }
   }
@@ -68,8 +69,9 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.ALL_BOOST_ADD_ONS -> ContextCompat.getColor(this, R.color.colorPrimary)
-      FragmentType.FRAGMENT_WEBSITE_THEME, FragmentType.FRAGMENT_WEBSITE_NAV, FragmentType.FRAGMENT_USER_PROFILE, FragmentType.FRAGMENT_USER_PROFILE_IMAGE_CROP,
+      FragmentType.FRAGMENT_USER_PROFILE, FragmentType.FRAGMENT_USER_PROFILE_IMAGE_CROP,
       FragmentType.FRAGMENT_BUSINESS_PROFILE -> ContextCompat.getColor(this, R.color.black_4a4a4a_jio)
+      FragmentType.FRAGMENT_WEBSITE_NAV, FragmentType.FRAGMENT_WEBSITE_THEME -> ContextCompat.getColor(this, R.color.website_custom_toolbar_color)
       else -> super.getToolbarBackgroundColor()
     }
   }

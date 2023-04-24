@@ -21,6 +21,8 @@ import android.widget.*
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -226,9 +228,12 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         viewModel = ViewModelProviders.of(requireActivity()).get(PaymentViewModel::class.java)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val window: Window = requireActivity().window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.setStatusBarColor(getResources().getColor(R.color.common_text_color))
+            WindowInsetsControllerCompat(
+                requireActivity().window,
+                requireActivity().window.decorView
+            ).setAppearanceLightStatusBars(false)
+            requireActivity().window.statusBarColor =
+                ResourcesCompat.getColor(resources, R.color.colorToolbar, null)
         }
         if (BuildConfig.FLAVOR.equals("jioonline")) {
             jio_footer.visibility = View.VISIBLE

@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/pad_30dp"
             android:layout_marginTop="@dimen/pad_30dp"
-            app:cardBackgroundColor="@color/colorPrimary1"
+            app:cardBackgroundColor="@color/common_text_color"
             app:cardCornerRadius="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv3">

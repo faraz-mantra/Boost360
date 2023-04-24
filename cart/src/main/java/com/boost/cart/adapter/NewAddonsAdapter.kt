@@ -43,8 +43,8 @@ class NewAddonsAdapter(
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
 
         if(upgradeList.get(position).feature_code.equals("DOMAINPURCHASE")
-            && upgradeList.get(position).name!!.contains(".")){
-            holder.name.setText(upgradeList.get(position).name)
+            && upgradeList.get(position).description_title!!.contains(".")){
+            holder.name.setText(upgradeList.get(position).description_title)
             holder.name.setTypeface(ResourcesCompat.getFont(context, R.font.bold))
             holder.notify.visibility = View.GONE
             val prefs = SharedPrefs(activity)
@@ -59,8 +59,8 @@ class NewAddonsAdapter(
             }
         }else if((upgradeList.get(position).feature_code.equals("CALLTRACKER"))
            // || upgradeList.get(position).feature_code.equals("IVR"))
-            && upgradeList.get(position).name!!.contains("[0-9]".toRegex())){
-            holder.name.setText(upgradeList.get(position).name)
+            && upgradeList.get(position).description!!.contains("[0-9]".toRegex())){
+            holder.name.setText(upgradeList.get(position).description)
             holder.name.setTypeface(ResourcesCompat.getFont(context, R.font.bold))
             holder.notify.visibility = View.GONE
             val prefs = SharedPrefs(activity)

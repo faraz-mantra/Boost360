@@ -22,7 +22,7 @@
         android:id="@+id/constraintLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black_4a4a4a_jio"
+        android:background="@color/teal_color"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/size_16"
         android:paddingBottom="@dimen/size_16"
@@ -114,7 +114,7 @@
       <View
         android:id="@+id/view3"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="@color/gray_white_jio" />
 
       <androidx.constraintlayout.widget.ConstraintLayout

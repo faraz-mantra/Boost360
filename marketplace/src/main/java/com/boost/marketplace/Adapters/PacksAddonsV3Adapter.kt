@@ -2,6 +2,8 @@ package com.boost.marketplace.Adapters
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,15 +38,28 @@ class PacksAddonsV3Adapter(
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
+        if(position==0)
+            holder.name.setText("Click on each pack icon for details")
+        else if(position==1){
+            holder.name.setText("Pack price*")
+            holder.name.setTextColor(Color.parseColor("#333333"))
+        }
+        else
         holder.name.setText(upgradeList.get(position).title)
-        val adapter = PacksAddonsV3ImageAdapter(upgradeList.get(position).packsAvailableIn, activity)
+        if (position <=1){
+            holder.name.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        }
+      //  holder.name.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        val adapter = PacksAddonsV3ImageAdapter(upgradeList.get(position).packsAvailableIn, myAddonsListener, activity)
         holder.recyclerView.adapter = adapter
+        myAddonsListener.onAllRecyclerView(holder.recyclerView, position == upgradeList.size-1)
         if(position == upgradeList.size-1){
             holder.dummyLine.visibility = View.GONE
         }
         holder.name.setOnClickListener {
-
-            myAddonsListener.onPaidAddonsClicked(upgradeList.get(position).featureCode)
+            if (!upgradeList.get(position).featureCode.isNullOrEmpty()){
+                myAddonsListener.onPaidAddonsClicked(upgradeList.get(position).featureCode)
+            }
         }
     }
 
