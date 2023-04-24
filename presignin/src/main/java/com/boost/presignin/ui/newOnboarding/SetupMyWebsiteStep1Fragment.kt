@@ -81,12 +81,11 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_SELECTION_SCREEN_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     setOnClickListeners()
     initialize()
-    loadLocalVerticalCategoryData()
-//    if (BuildConfig.FLAVOR.equals("partone") || BuildConfig.FLAVOR.equals("jioonline")) {
-//      loadLocalCategoryData()
-//    } else {
-//      loadLocalVerticalCategoryData()
-//    }
+    if (BuildConfig.FLAVOR.equals("partone") || BuildConfig.FLAVOR.equals("jioonline")) {
+      loadLocalCategoryData()
+    } else {
+      loadLocalVerticalCategoryData()
+    }
   }
 
   private fun loadLocalCategoryData() {
