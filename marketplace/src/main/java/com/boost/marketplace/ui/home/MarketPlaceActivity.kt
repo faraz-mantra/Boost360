@@ -93,6 +93,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     lateinit var addonsCategoryAdapter: AddonsCategoryAdapter
     lateinit var videosListAdapter: VideosListAdapter
 
+
     var badgeNumber = 0
     var fpRefferalCode: String = ""
     var feedBackLink: String? = null
