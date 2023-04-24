@@ -115,8 +115,6 @@ class ComparePacksV3Activity :
     private var purchasedVmnName: String? = null
     private var purchasedVmnActive: Boolean? = null
 
-    val dialogCard = ComparePacksLottieLoaderBottomSheet()
-
     companion object {
         fun newInstance() = ComparePacksV3Activity()
     }
@@ -233,12 +231,10 @@ class ComparePacksV3Activity :
                     }
                     args.putString("profileUrl", profileUrl)
                     dialogCard.arguments = args
-                    this.supportFragmentManager.let {
                         dialogCard.show(
-                            it,
+                            supportFragmentManager,
                             FeatureDetailsPopup::class.java.name
                         )
-                    }
                 } else if ((purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) &&
                     (!purchasedVmnName.isNullOrEmpty())
                 ) {
@@ -275,12 +271,10 @@ class ComparePacksV3Activity :
                     }
                     args.putString("profileUrl", profileUrl)
                     dialogCard.arguments = args
-                    this.supportFragmentManager.let {
                         dialogCard.show(
-                            it,
+                            supportFragmentManager,
                             FeatureDetailsPopup::class.java.name
                         )
-                    }
                 } else if ((!purchasedDomainType.isNullOrEmpty() || !purchasedDomainName?.contains("null")!! == true) &&
                     (purchasedVmnName.isNullOrEmpty())
                 ) {
@@ -317,12 +311,10 @@ class ComparePacksV3Activity :
                     }
                     args.putString("profileUrl", profileUrl)
                     dialogCard.arguments = args
-                    this.supportFragmentManager.let {
                         dialogCard.show(
-                            it,
+                            supportFragmentManager,
                             FeatureDetailsPopup::class.java.name
                         )
-                    }
                 } else {
                     // Move without popup
 
@@ -489,12 +481,10 @@ class ComparePacksV3Activity :
                     }
                     args.putString("profileUrl", profileUrl)
                     dialogCard.arguments = args
-                    this.supportFragmentManager.let {
                         dialogCard.show(
-                            it,
+                            supportFragmentManager,
                             FeatureDetailsPopup::class.java.name
                         )
-                    }
                 } else {
                     // Move without popup
 
@@ -662,12 +652,10 @@ class ComparePacksV3Activity :
                     }
                     args.putString("profileUrl", profileUrl)
                     dialogCard.arguments = args
-                    this.supportFragmentManager.let {
                         dialogCard.show(
-                            it,
+                            supportFragmentManager,
                             FeatureDetailsPopup::class.java.name
                         )
-                    }
                 } else {
                     // Move without popup
 
@@ -834,7 +822,15 @@ class ComparePacksV3Activity :
                         prefs.storeCartValidityMonths("1")
 //                        packsv3pricingAdapter.notifyDataSetChanged()
                         packsv3footerAdapter.notifyDataSetChanged()
+                        //clear all the previous listener
+                        scrollList.clear()
+                        for(count in 0 until recyclerViewList.size){
+                            Log.e("removeListnener","removed listener")
+                            recyclerViewList[count].clearOnScrollListeners()
+                        }
+                        recyclerViewList.clear()
                         packsAddonsAdapter.notifyDataSetChanged()
+//                        packsAddonsAdapter.updatePrice()
                     }
                     R.id.help_section -> {
 //                        val videoshelp = HelpVideosBottomSheet()
@@ -971,12 +967,11 @@ class ComparePacksV3Activity :
             if (it != null) {
                 binding?.packsData?.visibility = View.VISIBLE
                 binding?.shimmerViewPacksv3?.visibility = View.GONE
-                this.supportFragmentManager.let {
+                    val dialogCard = ComparePacksLottieLoaderBottomSheet()
                     dialogCard.show(
-                        it,
+                        supportFragmentManager,
                         ComparePacksLottieLoaderBottomSheet::class.java.name
                     )
-                }
             } else {
                 binding?.packsData?.visibility = View.GONE
                 binding?.shimmerViewPacksv3?.visibility = View.VISIBLE
@@ -1606,10 +1601,10 @@ class ComparePacksV3Activity :
     }
 
     val recyclerViewList: ArrayList<RecyclerView> = arrayListOf()
+    val scrollList = arrayListOf<RecyclerView.OnScrollListener>()
     override fun onAllRecyclerView(item: RecyclerView, endList: Boolean) {
         recyclerViewList.add(item)
         if (endList) {
-            val scrollList = arrayListOf<RecyclerView.OnScrollListener>()
             recyclerViewList.forEachIndexed { index, currentRecyclerView ->
                 scrollList.add(object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

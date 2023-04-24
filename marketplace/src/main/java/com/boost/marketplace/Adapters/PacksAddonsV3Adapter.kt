@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +39,7 @@ class PacksAddonsV3Adapter(
         else if(position==1){
             holder.name.setText("Pack price*")
             holder.name.setTextColor(Color.parseColor("#333333"))
+            holder.name.setTypeface(holder.name.getTypeface(), Typeface.BOLD)
         }
         else
         holder.name.setText(upgradeList.get(position).title)
@@ -61,6 +63,10 @@ class PacksAddonsV3Adapter(
     fun addupdates(upgradeModel: List<PackageAddonsCompares>) {
         upgradeList = upgradeModel
         notifyDataSetChanged()
+    }
+
+    fun updatePrice(){
+        notifyItemChanged(1)
     }
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

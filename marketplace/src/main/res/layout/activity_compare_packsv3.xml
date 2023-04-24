@@ -195,6 +195,7 @@
                             android:layout_height="wrap_content"
                             tools:itemCount="3"
                             android:overScrollMode="never"
+                            android:orientation="vertical"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             tools:listitem="@layout/item_packsv3_addons"
                             app:layout_constraintStart_toStartOf="parent"
