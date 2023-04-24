@@ -28,6 +28,8 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import kotlinx.android.synthetic.main.activity_splash.*
+import java.util.*
+import kotlin.concurrent.schedule
 
 class SplashActivity : AppCompatActivity() {
 
@@ -107,25 +109,36 @@ class SplashActivity : AppCompatActivity() {
   }
 
   private fun initLottieAnimation() {
-    animation_view.setAnimation(R.raw.boost_lottie2)
-    animation_view.addAnimatorListener(object : Animator.AnimatorListener {
-
-      override fun onAnimationStart(animation: Animator) {
-      }
-
-      override fun onAnimationEnd(animation: Animator) {
-        animation_view?.cancelAnimation()
+    if (BuildConfig.FLAVOR.equals("healthgro")) {
+      splash_image_view.visibility = View.VISIBLE
+      animation_view.visibility = View.GONE
+      splash_image_view.setImageResource(R.drawable.splash_healthgro)
+      Timer().schedule(2000) {
         checkForUpdate()
       }
+    }else {
+      splash_image_view.visibility = View.GONE
+      animation_view.visibility = View.VISIBLE
+      animation_view.setAnimation(R.raw.boost_lottie2)
+      animation_view.addAnimatorListener(object : Animator.AnimatorListener {
 
-      override fun onAnimationCancel(animation: Animator) {
-      }
+        override fun onAnimationStart(animation: Animator) {
+        }
 
-      override fun onAnimationRepeat(animation: Animator) {
-      }
+        override fun onAnimationEnd(animation: Animator) {
+          animation_view?.cancelAnimation()
+          checkForUpdate()
+        }
 
-    })
-    animation_view.playAnimation()
+        override fun onAnimationCancel(animation: Animator) {
+        }
+
+        override fun onAnimationRepeat(animation: Animator) {
+        }
+
+      })
+      animation_view.playAnimation()
+    }
   }
 
   fun gotToNextScreen(){

@@ -131,5 +131,5 @@
 
   <color name="color_FF9900">#EC008C</color>
 
-  <!--  red type color-->
+  <color name="website_custom_toolbar_color">@color/colorPrimary</color>
 </resources>

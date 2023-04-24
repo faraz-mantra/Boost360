@@ -292,12 +292,13 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawableStart="@drawable/ic_clock_white"
+                        app:drawableTint="@color/website_tab_text_color"
                         android:drawablePadding="@dimen/size_8"
                         android:fontFamily="@font/semi_bold"
                         android:gravity="center_vertical"
                         android:maxLines="2"
                         android:text="@string/business_timings"
-                        android:textColor="@color/text_color_light_white"
+                        android:textColor="@color/website_tab_text_color"
                         android:textSize="@dimen/text_13"
                         tools:targetApi="p" />
 
@@ -352,12 +353,13 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawableStart="@drawable/ic_palette_white"
+                        app:drawableTint="@color/website_tab_text_color"
                         android:drawablePadding="@dimen/size_8"
                         android:fontFamily="@font/semi_bold"
                         android:gravity="center_vertical"
                         android:maxLines="2"
                         android:text="@string/website_customisation"
-                        android:textColor="@color/text_color_light_white"
+                        android:textColor="@color/website_tab_text_color"
                         android:textSize="@dimen/text_13"
                         tools:targetApi="p" />
 

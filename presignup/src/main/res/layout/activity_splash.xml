@@ -17,6 +17,15 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     app:lottie_autoPlay="true" />
+
+  <ImageView
+      android:id="@+id/splash_image_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:src="@drawable/splash_healthgro"
+      android:scaleType="centerCrop"
+      />
+
   <!--        app:lottie_url="https://assets4.lottiefiles.com/packages/lf20_hhTfJl.json"-->
 
   <!--    <com.airbnb.lottie.BackgroundColorView-->

@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="themeColor">#001D85</color>
+    <color name="primaryColor">#001D85</color>
+    <color name="primaryColorDark">#409F94</color>
+    <color name="colorAccent">#409F94</color>
+    <color name="colorPrimary">#409F94</color>
+    <color name="orange">#409F94</color>
+    <color name="colorPrimaryDark">#409F94</color>
 </resources>

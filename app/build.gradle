@@ -67,7 +67,7 @@ android {
         checkReleaseBuilds false
     }
     defaultConfig {
-        applicationId 'com.biz2.nowfloats'
+//        applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 2020020156
