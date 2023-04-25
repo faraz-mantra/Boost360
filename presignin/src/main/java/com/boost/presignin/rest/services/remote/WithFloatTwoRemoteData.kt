@@ -5,10 +5,7 @@ import com.boost.presignin.model.authToken.AccessTokenResponse
 import com.boost.presignin.model.fpList.FPListResponse
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 import com.boost.presignin.model.location.LocationResponse
-import com.boost.presignin.model.login.ForgotPassRequest
-import com.boost.presignin.model.login.UserProfileVerificationRequest
-import com.boost.presignin.model.login.VerificationRequestResult
-import com.boost.presignin.model.login.VerifyOtpResponse
+import com.boost.presignin.model.login.*
 import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.userprofile.BusinessProfileResponse
 import com.boost.presignin.model.userprofile.ConnectUserProfileResponse
@@ -120,7 +117,7 @@ interface WithFloatTwoRemoteData {
 
   @Headers("Content-Type: application/json")
   @POST(EndPoints.VERTICAL_VERIFY_LOGIN)
-  fun verifyUserProfileVertical(@Body userProfileVerificationRequest: UserProfileVerificationRequest): Observable<Response<VerificationRequestResult>>
+  fun verifyUserProfileVertical(@Body userProfileVerificationRequest: UserProfileVerificationRequest): Observable<Response<VerificationRequestResultV3>>
 
   @GET(EndPoints.GET_VERTICAL_CATEGORIES)
   fun getVerticalCategories(

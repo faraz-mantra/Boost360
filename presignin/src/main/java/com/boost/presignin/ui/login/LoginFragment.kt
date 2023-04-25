@@ -29,6 +29,7 @@ import android.widget.Toast
 import android.view.View.OnFocusChangeListener
 import androidx.lifecycle.LiveData
 import com.boost.presignin.BuildConfig
+import com.boost.presignin.model.login.VerificationRequestResultV3
 import com.framework.pref.APPLICATION_JIO_ID
 import com.framework.base.BaseResponse
 
@@ -118,7 +119,11 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
     verifyUsernamePassword?.observeOnce(viewLifecycleOwner) {
       hideProgress()
-      val response = it as? VerificationRequestResult
+      val response: VerificationRequestResult = if (BuildConfig.FLAVOR.equals("partone") || BuildConfig.FLAVOR.equals("jioonline")) (it as? VerificationRequestResult)!! else (it as? VerificationRequestResultV3)!!.result!!
+      if ((BuildConfig.FLAVOR.equals("partone") || BuildConfig.FLAVOR.equals("jioonline")).not()) {
+        //set status from statusCode
+        response.status = (it as? VerificationRequestResultV3)!!.StatusCode
+      }
       if (response?.isSuccess() == true && response.loginId.isNullOrEmpty().not() && response.authTokens.isNullOrEmpty().not()) {
 //        if(BuildConfig.FLAVOR.equals("boosthealth"))
         storeUserDetail(response)
