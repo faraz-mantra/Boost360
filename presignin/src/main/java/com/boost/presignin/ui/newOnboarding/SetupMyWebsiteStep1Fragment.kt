@@ -102,29 +102,85 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
 
   private fun loadLocalVerticalCategoryData() {
     adapterLocalCategory()
-    viewModel?.getVerticalCategories("HOT")?.observeOnce(viewLifecycleOwner) { it0 ->
-      val response = it0.anyResponse as? List<CategoriesItem>
-      if (it0.isSuccess() && response.isNullOrEmpty().not()) {
-        val mainCategories = response?.filter { it -> it.info != null }
+    val appExerienceCode = when (BuildConfig.FLAVOR) {
+      "healthgro" -> "DOC"
+      "ardhim" -> "MFG"
+      "checkkinn" -> "HOT"
+      else -> "MFG"
+    }
+    if (appExerienceCode=="DOC"){
+      showProgress("Please wait ...")
+      viewModel?.getVerticalCategories(appExerienceCode)?.observeOnce(viewLifecycleOwner) { it0 ->
+        val response = it0.anyResponse as? List<CategoriesItem>
         val categoryListTemp = ArrayList<CategoryDataModel>()
-        mainCategories?.forEach { it ->
-          val categoryItem = CategoryDataModel(
-            experience_code = it.appexperiencecodes[0],
-            webTemplateId = it.websiteid,
-            category_key = null,
-            category_Name = it.name,
-            category_descriptor = "",
-            icon = it.info.icon,
-            sections = null,
-          )
-          categoryListTemp.add(categoryItem)
+        if (it0.isSuccess() && response.isNullOrEmpty().not()) {
+          val mainCategories = response?.filter { it -> it.info != null }
+          mainCategories?.forEach { it ->
+            val categoryItem = CategoryDataModel(
+              experience_code = it.appexperiencecodes[0],
+              webTemplateId = it.websiteid,
+              category_key = null,
+              category_Name = it.name,
+              category_descriptor = "",
+              icon = it.info.icon,
+              sections = null,
+            )
+            categoryListTemp.add(categoryItem)
+          }
         }
-        categoryList = ArrayList(categoryListTemp.map {
-          it.recyclerViewItem = RecyclerViewItemType.CATEGORY_ITEM_OV2.getLayout();it
-        })
-        categoryNoDataList =
-          ArrayList(categoryList.filter { (it.experience_code == "RTL" || it.experience_code == "SVC") })
-        adapterCategoryLocal?.notify(categoryList)
+        viewModel?.getVerticalCategories("HOS")?.observeOnce(viewLifecycleOwner) { it0 ->
+          val response = it0.anyResponse as? List<CategoriesItem>
+          if (it0.isSuccess() && response.isNullOrEmpty().not()) {
+            val mainCategories = response?.filter { it -> it.info != null }
+            mainCategories?.forEach { it ->
+              val categoryItem = CategoryDataModel(
+                experience_code = it.appexperiencecodes[0],
+                webTemplateId = it.websiteid,
+                category_key = null,
+                category_Name = it.name,
+                category_descriptor = "",
+                icon = it.info.icon,
+                sections = null,
+              )
+              categoryListTemp.add(categoryItem)
+            }
+          }
+          hideProgress()
+          categoryList = ArrayList(categoryListTemp.map {
+            it.recyclerViewItem = RecyclerViewItemType.CATEGORY_ITEM_OV2.getLayout();it
+          })
+          categoryNoDataList =
+            ArrayList(categoryList.filter { (it.experience_code == "RTL" || it.experience_code == "SVC") })
+          adapterCategoryLocal?.notify(categoryList)
+        }
+      }
+    }else{
+      showProgress("Please wait ...")
+      viewModel?.getVerticalCategories(appExerienceCode)?.observeOnce(viewLifecycleOwner) { it0 ->
+        hideProgress()
+        val response = it0.anyResponse as? List<CategoriesItem>
+        if (it0.isSuccess() && response.isNullOrEmpty().not()) {
+          val mainCategories = response?.filter { it -> it.info != null }
+          val categoryListTemp = ArrayList<CategoryDataModel>()
+          mainCategories?.forEach { it ->
+            val categoryItem = CategoryDataModel(
+              experience_code = it.appexperiencecodes[0],
+              webTemplateId = it.websiteid,
+              category_key = null,
+              category_Name = it.name,
+              category_descriptor = "",
+              icon = it.info.icon,
+              sections = null,
+            )
+            categoryListTemp.add(categoryItem)
+          }
+          categoryList = ArrayList(categoryListTemp.map {
+            it.recyclerViewItem = RecyclerViewItemType.CATEGORY_ITEM_OV2.getLayout();it
+          })
+          categoryNoDataList =
+            ArrayList(categoryList.filter { (it.experience_code == "RTL" || it.experience_code == "SVC") })
+          adapterCategoryLocal?.notify(categoryList)
+        }
       }
     }
   }
