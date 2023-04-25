@@ -213,41 +213,41 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
   }
 
   fun verify() {
-    showBusinessWhatsapp()
-//    if (isSuccessApi) {
-//      if (this.resultLogin != null) apiWhatsappOptin() else moveToWelcomeScreen(phoneNumber)
-//    } else {
-//      showProgress(getString(R.string.verify_otp))
-//      WebEngageController.trackEvent(PS_VERIFY_OTP_VERIFY, OTP_VERIFY_CLICK, NO_EVENT_VALUE)
-//      val otp = binding?.pinOtpVerify?.otp
-//      var verifyOtp:LiveData<BaseResponse>? = null
-//      if (BuildConfig.FLAVOR.equals("partone") || BuildConfig.FLAVOR.equals("jioonline")) {
-//        verifyOtp = viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId)
-//      }else{
-//        verifyOtp = viewModel?.verifyLoginOtpVertical(number = phoneNumber, otp, clientId)
-//      }
-//      verifyOtp?.observeOnce(viewLifecycleOwner) {
-//        hideProgress()
-//        this.resultLogin = null
-//        if (it.isSuccess()) {
-//          val result = it as? VerifyOtpResponse
-//          binding?.tvResendOtpIn?.gone()
-//          if (result?.Result?.authTokens.isNullOrEmpty().not() && result?.Result?.authTokens?.size!! >= 1) {
-//            this.resultLogin = result.Result
-//            loginId = resultLogin?.loginId
-//            if (binding?.linearWhatsApp?.visibility == View.VISIBLE) apiWhatsappOptin() else showBusinessWhatsapp()
-//          } else {
-//            if (binding?.linearWhatsApp?.visibility == View.VISIBLE) moveToWelcomeScreen(phoneNumber) else showBusinessWhatsapp()
-//          }
-//        } else showLongToast(getString(R.string.wrong_otp_tv))
-//      }
-//    }
+//    showBusinessWhatsapp()
+    if (isSuccessApi) {
+      if (this.resultLogin != null) apiWhatsappOptin() else moveToWelcomeScreen(phoneNumber)
+    } else {
+      showProgress(getString(R.string.verify_otp))
+      WebEngageController.trackEvent(PS_VERIFY_OTP_VERIFY, OTP_VERIFY_CLICK, NO_EVENT_VALUE)
+      val otp = binding?.pinOtpVerify?.otp
+      var verifyOtp:LiveData<BaseResponse>? = null
+      if (BuildConfig.FLAVOR.equals("partone") || BuildConfig.FLAVOR.equals("jioonline")) {
+        verifyOtp = viewModel?.verifyLoginOtp(number = phoneNumber, otp, clientId)
+      }else{
+        verifyOtp = viewModel?.verifyLoginOtpVertical(number = phoneNumber, otp, clientId)
+      }
+      verifyOtp?.observeOnce(viewLifecycleOwner) {
+        hideProgress()
+        this.resultLogin = null
+        if (it.isSuccess()) {
+          val result = it as? VerifyOtpResponse
+          binding?.tvResendOtpIn?.gone()
+          if (result?.Result?.authTokens.isNullOrEmpty().not() && result?.Result?.authTokens?.size!! >= 1) {
+            this.resultLogin = result.Result
+            loginId = resultLogin?.loginId
+            if (binding?.linearWhatsApp?.visibility == View.VISIBLE) apiWhatsappOptin() else showBusinessWhatsapp()
+          } else {
+            if (binding?.linearWhatsApp?.visibility == View.VISIBLE) moveToWelcomeScreen(phoneNumber) else showBusinessWhatsapp()
+          }
+        } else showLongToast(getString(R.string.wrong_otp_tv))
+      }
+    }
   }
 
   private fun showBusinessWhatsapp() {
     isSuccessApi = true
     binding?.linearWhatsApp?.visible()
-    moveToWelcomeScreen(phoneNumber)
+//    moveToWelcomeScreen(phoneNumber)
   }
 
   private fun apiWhatsappOptin() {

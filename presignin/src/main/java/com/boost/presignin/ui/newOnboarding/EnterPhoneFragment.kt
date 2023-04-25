@@ -80,23 +80,23 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
 
 
   private fun sendOtp(phoneNumber: String?) {
-    startFragmentFromNewOnBoardingActivity(
-      activity = baseActivity, type = FragmentType.VERIFY_PHONE_FRAGMENT,
-      bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }
-    )
+//    startFragmentFromNewOnBoardingActivity(
+//      activity = baseActivity, type = FragmentType.VERIFY_PHONE_FRAGMENT,
+//      bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }
+//    )
 
-//    WebEngageController.trackEvent(PS_LOGIN_NUMBER_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
-//    baseActivity.hideKeyBoard()
-//    showProgress(getString(R.string.sending_otp))
-//    viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner) {
-//      if (it.isSuccess() && it.parseResponse()) {
-//        startFragmentFromNewOnBoardingActivity(
-//          activity = baseActivity, type = FragmentType.VERIFY_PHONE_FRAGMENT,
-//          bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }
-//        )
-//      } else showShortToast(if (it.message.isNullOrEmpty().not()) it.message else getString(R.string.otp_not_sent))
-//      hideProgress()
-//    }
+    WebEngageController.trackEvent(PS_LOGIN_NUMBER_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
+    baseActivity.hideKeyBoard()
+    showProgress(getString(R.string.sending_otp))
+    viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner) {
+      if (it.isSuccess() && it.parseResponse()) {
+        startFragmentFromNewOnBoardingActivity(
+          activity = baseActivity, type = FragmentType.VERIFY_PHONE_FRAGMENT,
+          bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }
+        )
+      } else showShortToast(if (it.message.isNullOrEmpty().not()) it.message else getString(R.string.otp_not_sent))
+      hideProgress()
+    }
   }
 
 
