@@ -17,6 +17,7 @@
     <item name="searchViewStyle">@style/ThemeOverlay.SearchView</item>
     <item name="editTextStyle">@style/ComposeEditText</item>
     <item name="android:textViewStyle">@style/TextViewDefaultFont</item>
+    <item name="android:statusBarColor">@color/primaryColorDark</item>
   </style>
 
   <style name="DashboardThemeNew" parent="DashboardTheme">

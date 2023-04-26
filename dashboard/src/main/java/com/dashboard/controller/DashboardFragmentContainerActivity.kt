@@ -70,7 +70,8 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
     return when (type) {
       FragmentType.ALL_BOOST_ADD_ONS -> ContextCompat.getColor(this, R.color.colorPrimary)
       FragmentType.FRAGMENT_USER_PROFILE, FragmentType.FRAGMENT_USER_PROFILE_IMAGE_CROP,
-      FragmentType.FRAGMENT_BUSINESS_PROFILE -> ContextCompat.getColor(this, R.color.black_4a4a4a_jio)
+      FragmentType.FRAGMENT_BUSINESS_PROFILE ->
+        ContextCompat.getColor(this, R.color.colorPrimary)
       FragmentType.FRAGMENT_WEBSITE_NAV, FragmentType.FRAGMENT_WEBSITE_THEME -> ContextCompat.getColor(this, R.color.website_custom_toolbar_color)
       else -> super.getToolbarBackgroundColor()
     }
