@@ -9,4 +9,5 @@
     <color name="orange">#409F94</color>
     <color name="colorPrimaryDark">#409F94</color>
     <color name="yellow_ffb900">@color/primaryColorDark</color>
+    <color name="ButtoncolorAccent">#001D85</color>
 </resources>

@@ -6,4 +6,5 @@
     <color name="buttonTint">#001D85</color>
     <color name="colorAccent">#001D85</color>
     <color name="back_button_color">@color/colorAccentLight</color>
+    <color name="ButtoncolorAccent">#001D85</color>
 </resources>
