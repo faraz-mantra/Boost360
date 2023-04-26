@@ -59,7 +59,7 @@ public class ShortcutHelper {
         ShortcutInfo shortcut = new ShortcutInfo.Builder(mContext, "create_update")
                 .setShortLabel("Add Update")
                 .setLongLabel("Post an Update")
-                .setIcon(Icon.createWithResource(mContext, R.drawable.ria))
+                .setIcon(Icon.createWithResource(mContext, R.drawable.ria_old))
                 .setIntent(i)
                 .build();
 

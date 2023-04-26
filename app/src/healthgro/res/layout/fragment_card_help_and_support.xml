@@ -38,7 +38,7 @@
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
           app:layout_constraintVertical_chainStyle="packed"
-          app:srcCompat="@drawable/ria" />
+          app:srcCompat="@drawable/ic_ria_new_variant" />
 
         <EditText
           android:id="@+id/tv_person_name"

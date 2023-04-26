@@ -107,7 +107,7 @@
     android:layout_height="@dimen/_80sdp"
     android:layout_marginTop="@dimen/_28sdp"
     android:layout_marginEnd="@dimen/_2sdp"
-    android:src="@drawable/ria"
+    android:src="@drawable/ria_old"
     app:layout_constraintEnd_toStartOf="@+id/endGuideline"
     app:layout_constraintStart_toStartOf="@+id/startGuideline"
     app:layout_constraintTop_toTopOf="@+id/view3" />

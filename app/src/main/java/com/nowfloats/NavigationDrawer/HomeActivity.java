@@ -116,7 +116,6 @@ import com.nowfloats.Analytics_Screen.OrderSummaryActivity;
 import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
 import com.nowfloats.Analytics_Screen.ShowVmnCallActivity;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
-import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
 import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
 import com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
@@ -207,10 +206,6 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import zendesk.core.AnonymousIdentity;
-import zendesk.core.Identity;
-import zendesk.core.Zendesk;
-import zendesk.support.Support;
 
 @Deprecated
 public class HomeActivity extends AppCompatActivity implements SidePanelFragment.OnItemClickListener
@@ -1343,7 +1338,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 .setThemeColor(R.color.primary)
                 .setToolBarDescription("Available")
                 .setToolBarTittle(getString(R.string.support_name) + " Chat")
-                .setToolBarLogo(R.drawable.ria)
+                .setToolBarLogo(R.drawable.ria_old)
                 .start();
           }
 
