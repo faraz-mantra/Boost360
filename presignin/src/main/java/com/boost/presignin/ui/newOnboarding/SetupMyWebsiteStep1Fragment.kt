@@ -3,6 +3,7 @@ package com.boost.presignin.ui.newOnboarding
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableStringBuilder
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -119,7 +120,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
             val categoryItem = CategoryDataModel(
               experience_code = it.appexperiencecodes[0],
               webTemplateId = it.websiteid,
-              category_key = null,
+              category_key = it.name,
               category_Name = it.name,
               category_descriptor = "",
               icon = it.info.icon,
@@ -136,7 +137,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
               val categoryItem = CategoryDataModel(
                 experience_code = it.appexperiencecodes[0],
                 webTemplateId = it.websiteid,
-                category_key = null,
+                category_key = it.name,
                 category_Name = it.name,
                 category_descriptor = "",
                 icon = it.info.icon,
@@ -166,7 +167,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
             val categoryItem = CategoryDataModel(
               experience_code = it.appexperiencecodes[0],
               webTemplateId = it.websiteid,
-              category_key = null,
+              category_key = it.name,
               category_Name = it.name,
               category_descriptor = "",
               icon = it.info.icon,
