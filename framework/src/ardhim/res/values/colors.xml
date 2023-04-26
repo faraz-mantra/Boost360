@@ -86,4 +86,5 @@
   <color name="green_409F94">#409F94</color>
   <color name="dash_bottom_nav_panel_active">#F5991E</color>
   <color name="shimmer_color">@color/colorPrimary</color>
+  <color name="gray_toolbar_color">@color/colorPrimary</color>
 </resources>
