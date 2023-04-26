@@ -20,4 +20,6 @@
     <color name="website_tab_url_color">#0400A6</color>
     <color name="dash_bottom_nav_panel_active">#0400A6</color>
     <color name="republish_progress_color">#EC008C</color>
+    <color name="shimmer_color">@color/black_4a4a4a</color>
+    <color name="gray_toolbar_color">#EC008C</color>
 </resources>

@@ -84,5 +84,6 @@
   <color name="boost_jio_website_arrow_color">@color/white</color>
   <color name="green_light">#00C42D</color>
   <color name="dash_bottom_nav_panel_active">#5F2892</color>
-
+  <color name="shimmer_color">@color/colorPrimary</color>
+  <color name="gray_toolbar_color">#FF8427</color>
 </resources>

@@ -22,7 +22,7 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_38"
-                android:background="@color/black_4a4a4a"
+                android:background="@color/color_4a4a4a_jio_ec008c"
                 android:orientation="horizontal">
 
                 <LinearLayout
