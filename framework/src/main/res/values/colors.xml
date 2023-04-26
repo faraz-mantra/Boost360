@@ -87,5 +87,5 @@
   <color name="website_tab_url_color">#ffb900</color>
   <color name="dash_bottom_nav_panel_active">#ffb900</color>
   <color name="republish_progress_color">#ffb900</color>
-
+  <color name="shimmer_color">@color/black_4a4a4a</color>
 </resources>
