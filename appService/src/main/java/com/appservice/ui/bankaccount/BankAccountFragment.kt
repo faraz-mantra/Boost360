@@ -230,16 +230,20 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       registeredBusinessAddress = AccountCreateRequest().setAddressBlankValue(), registeredBusinessContactDetails = AccountCreateRequest().setContactDetailBlankValue(),
       taxDetails = AccountCreateRequest().setTaxBlankValue()
     )
-    viewModel?.createAccount(request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.createAccount(request)?.observeOnce(viewLifecycleOwner) {
       val response = it as? AccountCreateResponse
       if (response?.isSuccess() == true) {
         getUserDetails(isServiceCreation = isServiceCreation)
-        WebEngageController.trackEvent(BANK_ACCOUNT_SUBMITTED_FOR_VERIFICATION, BANK_ACCOUNT, event_value = FLOATING_POINT_ID)
+        WebEngageController.trackEvent(
+          BANK_ACCOUNT_SUBMITTED_FOR_VERIFICATION,
+          BANK_ACCOUNT,
+          event_value = FLOATING_POINT_ID
+        )
       } else {
         hideProgress()
         showLongToast(response?.errorN?.getMessage())
       }
-    })
+    }
   }
 
   private fun updateApiAccount() {
