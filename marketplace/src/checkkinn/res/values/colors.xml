@@ -3,9 +3,13 @@
 
     <color name="colorPrimary1">#4A4A4A</color>
     <color name="colorPrimaryDark1">#0F000000</color>
-    <color name="colorAccent1">#5F2892</color>
+    <color name="colorAccent1">#FF8427</color>
     <color name="themeColor">#5F2892</color>
     <color name="colorAccent2">#FFF3E9</color>
+    <color name="colorAccent4">#5F2892</color>
+    <color name="shimmer_bg_color_healthgro">#7F53A8</color>
+    <color name="colorToolbar">#5F2892</color>
+    <color name="colorSavings">#73FF8427</color>
     <color name="colorTransparentPrimary1">#FF4A4A4A</color>
 
 
@@ -350,7 +354,7 @@
     <color name="light_grey">#F0F0F0</color>
     <color name="grey1">#F8F8F8</color>
 
-    <color name="yellow">#5F2892</color>
+    <color name="yellow">#7F53A8</color>
 
     <color name="text_color_roboto_lt_30_edittext">#383838</color>
     <color name="hint_color_roboto_lt_30_edittext">#b6b6b6</color>
