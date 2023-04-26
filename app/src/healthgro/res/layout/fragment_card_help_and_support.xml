@@ -184,7 +184,7 @@
           <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorAccentLight"
             android:gravity="center"
             android:padding="15dp"
             android:text="@string/chat_now"

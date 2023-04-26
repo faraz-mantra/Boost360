@@ -46,7 +46,7 @@
 
   <color name="main_text_color">#606060</color>
 
-  <color name="dark_grey">#4d4d4d</color>
+  <color name="dark_grey">#001D85</color>
   <color name="login_bkg">#787878</color>
   <color name="retry_txt">#757575</color>
   <color name="inactive_text">#adadad</color>

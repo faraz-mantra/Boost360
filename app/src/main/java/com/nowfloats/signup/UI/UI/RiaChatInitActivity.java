@@ -42,7 +42,7 @@ public class RiaChatInitActivity extends AppCompatActivity
                 startActivity(new Intent(RiaChatInitActivity.this, PreSignUpActivity.class));
                 finish();
                 /*LoginAndSignUpFragment loginAndSignUpFragment = LoginAndSignUpFragment.newInstance();
-                getSupportFragmentManager()
+                getSupportFragmentManagerr()
                         .beginTransaction()
                         .replace(R.id.fragment_container, loginAndSignUpFragment)
                         .commit();*/
