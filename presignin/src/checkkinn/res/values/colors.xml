@@ -4,4 +4,5 @@
     <color name="colorPrimary">#FF8427</color>
     <color name="buttonTint">#FF8427</color>
     <color name="colorAccentLight">#FF8427</color>
+    <color name="back_button_color">@color/colorAccentLight</color>
 </resources>
