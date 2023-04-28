@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+  <color name="colorAccent">#012F6B</color>
   <color name="primaryColor">#F5991E</color>
   <color name="greenDark">#458b00</color>
   <color name="product_delete_btn">#ff3f3f</color>

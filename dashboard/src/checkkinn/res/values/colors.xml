@@ -15,4 +15,5 @@
     <color name="dash_fragment_toolbar_color">#5F2892</color>
     <color name="black_4a4a4a_jio">@color/colorAccent</color>
     <color name="gray_white_jio">#eeeeee</color>
+    <color name="website_manage_business_profile_color">@color/white</color>
 </resources>
