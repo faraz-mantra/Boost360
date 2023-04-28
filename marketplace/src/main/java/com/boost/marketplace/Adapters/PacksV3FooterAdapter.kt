@@ -60,7 +60,7 @@ class PacksV3FooterAdapter(
         val parentItem = list[position]
 
         if (selectedPosition == position) {
-            parentViewHolder.itemView.setBackgroundResource(R.drawable.mp_home_share_click_effect)
+            parentViewHolder.itemView.setBackgroundResource(R.drawable.comparepacks_v3_selected_bg)
         }else {
             parentViewHolder.itemView.setBackgroundResource(R.drawable.edit_txt_packsv3)
         }
