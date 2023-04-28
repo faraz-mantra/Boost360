@@ -121,14 +121,7 @@ class SplashActivity : AppCompatActivity() {
   }
 
   private fun initLottieAnimation() {
-    if (BuildConfig.FLAVOR.equals("healthgro")) {
-      splash_view.visibility = View.VISIBLE
-      animation_view.visibility = View.GONE
-      splash_view.setImageResource(R.drawable.splash_healthgro)
-      Timer().schedule(2000) {
-        checkForUpdate()
-      }
-    }else {
+    if(BuildConfig.FLAVOR.equals("partone") || BuildConfig.FLAVOR.equals("jioonline")){
       splash_view.visibility = View.GONE
       animation_view.visibility = View.VISIBLE
       animation_view.setAnimation(R.raw.boost_lottie2)
@@ -150,6 +143,20 @@ class SplashActivity : AppCompatActivity() {
 
       })
       animation_view.playAnimation()
+    }else{
+      splash_view.visibility = View.VISIBLE
+      animation_view.visibility = View.GONE
+      if(BuildConfig.FLAVOR.equals("arantoo"))
+        splash_view.setImageResource(R.drawable.splash_arantoo)
+      else if(BuildConfig.FLAVOR.equals("ardhim"))
+        splash_view.setImageResource(R.drawable.splash_ardhim)
+      else if(BuildConfig.FLAVOR.equals("checkkinn"))
+        splash_view.setImageResource(R.drawable.splash_checkkinn)
+      else if(BuildConfig.FLAVOR.equals("healthgro"))
+        splash_view.setImageResource(R.drawable.splash_healthgro)
+      Timer().schedule(2000) {
+        checkForUpdate()
+      }
     }
   }
 

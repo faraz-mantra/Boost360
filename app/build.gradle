@@ -53,6 +53,12 @@ android {
             storeFile file("../keystore/boost/my-release-key.keystore")
             storePassword 'NowFloatsManage2013'
         }
+        arantooConfig { //services
+            keyAlias 'nfmanage'
+            keyPassword 'NowFloatsManage2013'
+            storeFile file("../keystore/boost/my-release-key.keystore")
+            storePassword 'NowFloatsManage2013'
+        }
         jioConfig { //jio
             keyAlias 'jiomanage'
             keyPassword 'JioOnlineManage2023'
@@ -134,6 +140,19 @@ android {
             resValue "string", "referrals_bid_e", '355BCB8D72414FBD784338ADC28FCA09'
             buildConfigField "int", "REFERRAL_CAMPAIGN_CODE", '26277'
         }
+        arantoo {
+            //services
+            versionName "1.0.1.1"
+            applicationId "com.arantoo.nowfloats"
+            dimension "default"
+            buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
+            buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
+            buildConfigField "String", "google_map_key", '"AIzaSyB94ChvnYBv6REXPATdt4ud5dAlTL7jlic"'
+            resValue "string", "webengage_license_code", '~10a5cad2d'
+            resValue "string", "referrals_bid", '31445'
+            resValue "string", "referrals_bid_e", '355BCB8D72414FBD784338ADC28FCA09'
+            buildConfigField "int", "REFERRAL_CAMPAIGN_CODE", '26277'
+        }
         jioonline {
             //JioOnline
             versionName "1.0.1.5"
@@ -164,6 +183,7 @@ android {
             productFlavors.healthgro.signingConfig signingConfigs.healthgroConfig //health
             productFlavors.ardhim.signingConfig signingConfigs.ardhimConfig //manufacturing
             productFlavors.checkkinn.signingConfig signingConfigs.checkkinnConfig //hotels
+            productFlavors.arantoo.signingConfig signingConfigs.arantooConfig //service
             productFlavors.jioonline.signingConfig signingConfigs.jioConfig //jio
         }
 
@@ -176,6 +196,7 @@ android {
             productFlavors.healthgro.signingConfig signingConfigs.healthgroConfig //health
             productFlavors.ardhim.signingConfig signingConfigs.ardhimConfig //manufacturing
             productFlavors.checkkinn.signingConfig signingConfigs.checkkinnConfig //hotels
+            productFlavors.arantoo.signingConfig signingConfigs.arantooConfig //service
             productFlavors.jioonline.signingConfig signingConfigs.jioConfig //jio
         }
     }

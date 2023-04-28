@@ -48,6 +48,11 @@ android {
                 srcDirs 'src/checkkinn/res'
             }
         }
+        arantoo {
+            res {
+                srcDirs 'src/arantoo/res'
+            }
+        }
     }
 
     flavorDimensions "default"
@@ -66,6 +71,10 @@ android {
         }
         checkkinn {
             //hotels
+            dimension "default"
+        }
+        arantoo {
+            //service
             dimension "default"
         }
         jioonline {
