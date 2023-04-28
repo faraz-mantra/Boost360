@@ -70,8 +70,8 @@
   <color name="primary_color_dark">@color/primaryColorDark</color>
 
   <color name="success_green">#6DCA07</color>
-  <color name="black_4a4a4a_jio">#001D85</color>
-  <color name="website_custom_toolbar_color">#409F94</color>
-  <color name="themeColor">#409F94</color>
+  <color name="black_4a4a4a_jio">#FFB800</color>
+  <color name="website_custom_toolbar_color">#044BB1</color>
+  <color name="themeColor">#044BB1</color>
 
 </resources>

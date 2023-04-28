@@ -66,6 +66,8 @@
   <color name="primary_color_dark">@color/primaryColorDark</color>
 
   <color name="success_green">#6DCA07</color>
-
+  <color name="black_4a4a4a_jio">#012F6B</color>
+  <color name="website_custom_toolbar_color">#F5991E</color>
+  <color name="themeColor">#F5991E</color>
 
 </resources>

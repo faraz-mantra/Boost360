@@ -6,7 +6,7 @@
   <color name="colorRedBgImg">#E39595</color>
 
   <color name="primary_4a4a4a_jio">@color/black_4a4a4a</color>
-  <color name="colorPrimary_10">#1AFFB900</color>
+  <color name="colorPrimary_10">#E6EAF0</color>
   <color name="colorPrimaryDark">#F5991E</color>
   <color name="colorAccentLightDark">@color/colorPrimaryDark</color>
   <color name="accentLight_1">#FFD461</color>
@@ -25,8 +25,8 @@
   <color name="colorOnBackground">#212121</color>
   <color name="primary_text">#4a4a4a</color>
   <color name="secondary_text">#747474</color>
-  <color name="color_primary">@color/secondary_text</color>
-  <color name="color_primary_dark">#61605F</color>
+  <color name="color_primary">#012F6B</color>
+  <color name="color_primary_dark">#012F6B</color>
   <color name="light_grey_2">#ebebeb</color>
   <color name="snackbar_positive_color">#5DAC01</color>
   <color name="snackbar_negative_color">#E02200</color>
@@ -86,6 +86,6 @@
   <color name="green_409F94">#409F94</color>
   <color name="dash_bottom_nav_panel_active">#012F6B</color>
   <color name="shimmer_color">@color/colorPrimary</color>
-  <color name="gray_toolbar_color">@color/colorPrimary</color>
+  <color name="gray_toolbar_color">#012F6B</color>
   <color name="republish_progress_color">#012F6B</color>
 </resources>

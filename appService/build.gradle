@@ -42,7 +42,7 @@ android {
                 srcDirs 'src/checkkinn/res'
             }
         }
-        checkkinn {
+        arantoo {
             res {
                 srcDirs 'src/arantoo/res'
             }
