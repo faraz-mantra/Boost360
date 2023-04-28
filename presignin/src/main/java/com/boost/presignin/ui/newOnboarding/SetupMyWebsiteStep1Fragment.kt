@@ -106,6 +106,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     val appExerienceCode = when (BuildConfig.FLAVOR) {
       "healthgro" -> "DOC"
       "ardhim" -> "MFG"
+      "arantoo" -> "SVC"
       "checkkinn" -> "HOT"
       else -> "MFG"
     }
