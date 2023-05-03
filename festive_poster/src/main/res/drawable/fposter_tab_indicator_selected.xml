@@ -8,7 +8,7 @@
       <size
         android:width="16dp"
         android:height="2dp" />
-      <solid android:color="@color/colorAccentLight" />
+      <solid android:color="@color/update_studio_intro_color" />
       <corners android:radius="10dp" />
     </shape>
   </item>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:weightSum="1"
         android:orientation="vertical"
@@ -25,8 +26,7 @@
             android:layout_height="0dp"
             android:layout_weight="0.55"
             android:layout_marginTop="@dimen/size_10"
-            android:src="@drawable/update_studio_intro_2_v2"
-             />
+            app:srcCompat="@drawable/update_studio_intro_vertical_1" />
 
         <com.framework.views.customViews.CustomTextView
             style="@style/BlackRegularM"
