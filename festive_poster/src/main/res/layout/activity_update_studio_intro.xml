@@ -7,7 +7,7 @@
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_4a4a4a_jio_ec008c"
+        android:background="@color/update_studio_intro_color"
         app:layoutDescription="@xml/activity_update_studio_intro_xml_constraintlayout3_scene">
 
         <com.framework.views.customViews.CustomImageView
