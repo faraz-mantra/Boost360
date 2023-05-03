@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="themeColor">#F5991E</color>
+    <color name="themeColor">#012F6B</color>
     <color name="colorPrimary">#012F6B</color>
+    <color name="primaryColor">#012F6B</color>
+    <color name="primaryColorDark">#F5991E</color>
+    <color name="colorAccent">#F5991E</color>
+    <!--    <color name="colorPrimary">#F5991E</color>-->
+    <color name="orange">#F5991E</color>
+    <color name="colorPrimaryDark">#F5991E</color>
+    <color name="yellow_ffb900">@color/primaryColorDark</color>
+    <color name="ButtoncolorAccent">#012F6B</color>
 </resources>

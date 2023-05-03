@@ -296,7 +296,8 @@ class DashboardFragmentV2 : AppBaseFragment<FragmentDashboardV2Binding, Dashboar
           }
         }
       } else {
-        if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true)) (baseActivity as? DashboardActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimary)
+        if (baseActivity.packageName.equals(APPLICATION_JIO_ID, ignoreCase = true))
+                (baseActivity as? DashboardActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimary)
         showSimmerDrScore(retryView = true)
       }
     }

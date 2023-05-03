@@ -25,7 +25,7 @@
   <color name="colorOnBackground">#212121</color>
   <color name="primary_text">#4a4a4a</color>
   <color name="secondary_text">#747474</color>
-  <color name="color_primary">@color/colorAccentLight</color>
+  <color name="color_primary">#001D85</color>
   <color name="color_primary_dark">#001D85</color>
   <color name="light_grey_2">#ebebeb</color>
   <color name="snackbar_positive_color">#5DAC01</color>

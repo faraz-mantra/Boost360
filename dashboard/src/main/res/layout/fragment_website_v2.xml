@@ -193,12 +193,12 @@
                                 android:drawableStart="@drawable/ic_briefcase_white"
                                 android:drawableEnd="@drawable/ic_arrow_trans_website_d"
                                 android:drawablePadding="@dimen/size_8"
-                                android:drawableTint="@color/text_color_light_white"
+                                android:drawableTint="@color/website_manage_business_profile_color"
                                 android:fontFamily="@font/semi_bold"
                                 android:gravity="center_vertical"
                                 android:text="@string/business_profile_s"
                                 android:textAllCaps="false"
-                                android:textColor="@color/text_color_light_white"
+                                android:textColor="@color/website_manage_business_profile_color"
                                 android:textSize="@dimen/text_12"
                                 tools:ignore="RtlSymmetry" />
                         </androidx.appcompat.widget.LinearLayoutCompat>

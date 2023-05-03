@@ -155,7 +155,9 @@ abstract class AuthBaseFragment<Binding : ViewDataBinding> :
     }
 
     private fun validappExperienceCode(appExperienceCode: String?): Boolean {
-        if(BuildConfig.FLAVOR.equals("ardhim") && appExperienceCode!!.equals("MFG")){
+        if(BuildConfig.FLAVOR.equals("arantoo") && appExperienceCode!!.equals("SVC")){
+            return true
+        } else if(BuildConfig.FLAVOR.equals("ardhim") && appExperienceCode!!.equals("MFG")){
             return true
         } else if(BuildConfig.FLAVOR.equals("healthgro") && (appExperienceCode!!.equals("DOC") || appExperienceCode!!.equals("HOS"))){
             return true

@@ -38,6 +38,10 @@ android {
             //hotels
             dimension "default"
         }
+        arantoo {
+            //service
+            dimension "default"
+        }
         jioonline {
             //JioOnline
             dimension "default"
