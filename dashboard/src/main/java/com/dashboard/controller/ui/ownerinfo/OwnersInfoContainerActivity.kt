@@ -50,7 +50,7 @@ class OwnersInfoContainerActivity : AppBaseActivity<ActivityFragmentContainerBin
 
   override fun customTheme(): Int? {
     return when (type) {
-      DIGITAL_READINESS_SCORE -> R.style.DashboardThemeNew
+      DIGITAL_READINESS_SCORE -> R.style.DashboardThemeNewSecondaryStatus
       else -> super.customTheme()
     }
   }
