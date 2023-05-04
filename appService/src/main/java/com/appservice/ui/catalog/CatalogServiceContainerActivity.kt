@@ -78,7 +78,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
-      FragmentType.SERVICE_LISTING, FragmentType.CREATE_CATEGORY -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.SERVICE_LISTING, FragmentType.CREATE_CATEGORY -> ContextCompat.getColor(this, R.color.primary_toolbar_color)
       FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> ContextCompat.getColor(this, R.color.color_primary)
       FragmentType.SERVICE_CATALOG_HOME_FRAGMENT, FragmentType.APPOINTMENT_CATALOG_SETTINGS, FragmentType.APPOINTMENT_FRAGMENT_CUSTOMER_INVOICE,
       FragmentType.FRAGMENT_PRODUCT_LISTING, FragmentType.FRAGMENT_PRODUCT_HOME, FragmentType.FRAGMENT_PRODUCT_CATEGORY,
@@ -88,7 +88,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_POLICIES, FragmentType.ECOMMERCE_FRAGMENT_CUSTOMER_INVOICE, FragmentType.ECOMMERCE_CATALOG_SETTINGS,
       FragmentType.ECOMMERCE_ADD_ACCOUNT_DETAILS, FragmentType.CONSULTATION_APT_SETTINGS, FragmentType.ECOMMERCE_BUSINESS_VERIFICATION,
       FragmentType.CAMERA_VIEW ->
-        ContextCompat.getColor(this, R.color.colorAccent)
+        ContextCompat.getColor(this, R.color.primary_toolbar_color)
       else -> super.getToolbarBackgroundColor()
     }
   }

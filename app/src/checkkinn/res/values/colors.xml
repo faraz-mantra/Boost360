@@ -6,7 +6,7 @@
   <color name="greenDark">#458b00</color>
   <color name="product_delete_btn">#ff3f3f</color>
 
-  <color name="primaryColorDark">#d99d00</color>
+  <color name="primaryColorDark">#5F2892</color>
   <color name="accentColor">#615b5b</color>
 
   <color name="percentage_text_color">#c5c5c5</color>
@@ -42,7 +42,7 @@
 
   <color name="main_text_color">#606060</color>
 
-  <color name="dark_grey">#4d4d4d</color>
+  <color name="dark_grey">#FF8427</color>
   <color name="login_bkg">#787878</color>
   <color name="retry_txt">#757575</color>
   <color name="inactive_text">#adadad</color>

@@ -54,8 +54,12 @@
   </style>
 
   <style name="BackgroundImageTheme.Dark" parent="BackgroundImageTheme">
-    <item name="colorPrimary">@color/black_4a4a4a</item>
-    <item name="colorPrimaryDark">@color/black_4a4a4a</item>
+    <item name="colorPrimary">@color/secondary_toolbar_color</item>
+    <item name="colorPrimaryDark">@color/secondary_toolbar_color</item>
+  </style>
+
+  <style name="BackgroundImageTheme.Primary" parent="BackgroundImageTheme">
+    <item name="colorPrimaryDark">@color/primary_toolbar_color</item>
   </style>
 
   <style name="AddUpdateTheme" parent="UpdateTheme">
@@ -673,7 +677,7 @@
   </style>
 
   <style name="StatusBarYellowTheme">
-    <item name="android:statusBarColor">@color/colorPrimary</item>
+    <item name="android:statusBarColor">@color/primary_toolbar_color</item>
   </style>
 
   <style name="CustomYellowButton">

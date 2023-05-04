@@ -42,6 +42,7 @@ open class BackgroundImageContainerActivity : AppBaseActivity<ActivityFragmentCo
   override fun customTheme(): Int? {
     return when (type) {
       FragmentType.BACKGROUND_IMAGE_CROP_FRAGMENT, FragmentType.BACKGROUND_IMAGE_PREVIEW -> R.style.BackgroundImageTheme_Dark
+      FragmentType.BACKGROUND_IMAGE_FRAGMENT -> R.style.BackgroundImageTheme_Primary
       else -> return super.customTheme()
     }
   }
@@ -53,8 +54,8 @@ open class BackgroundImageContainerActivity : AppBaseActivity<ActivityFragmentCo
 
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
-      FragmentType.BACKGROUND_IMAGE_FRAGMENT -> ContextCompat.getColor(this, R.color.colorPrimary)
-      FragmentType.BACKGROUND_IMAGE_CROP_FRAGMENT, FragmentType.BACKGROUND_IMAGE_PREVIEW -> ContextCompat.getColor(this, R.color.black_4a4a4a)
+      FragmentType.BACKGROUND_IMAGE_FRAGMENT -> ContextCompat.getColor(this, R.color.primary_toolbar_color)
+      FragmentType.BACKGROUND_IMAGE_CROP_FRAGMENT, FragmentType.BACKGROUND_IMAGE_PREVIEW -> ContextCompat.getColor(this, R.color.secondary_toolbar_color)
       else -> super.getToolbarBackgroundColor()
     }
   }

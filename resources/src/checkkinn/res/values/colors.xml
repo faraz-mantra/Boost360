@@ -5,4 +5,5 @@
     <color name="teal_color">#5F2892</color>
     <color name="bg_dark_grey">#FF8427</color>
     <color name="accent_lemon">#FFF3E9</color>
+    <color name="light_shade_secondary">#FFF3E9</color>
 </resources>
