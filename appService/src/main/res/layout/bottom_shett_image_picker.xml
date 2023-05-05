@@ -47,8 +47,8 @@
           android:id="@+id/pop_up_camera_imag"
           android:layout_width="@dimen/size_32"
           android:layout_height="@dimen/size_32"
-          android:tint="@color/colorPrimary"
-          app:srcCompat="@drawable/circle_bakground" />
+          android:tint="@color/primary_toolbar_color"
+          app:srcCompat="@drawable/bg_circle_primary_color" />
 
         <com.framework.views.customViews.CustomImageView
           android:layout_width="@dimen/_10sdp"
@@ -91,8 +91,8 @@
           android:id="@+id/pop_gif"
           android:layout_width="@dimen/size_32"
           android:layout_height="@dimen/size_32"
-          android:tint="@color/colorPrimary"
-          app:srcCompat="@drawable/circle_bakground" />
+          android:tint="@color/primary_toolbar_color"
+          app:srcCompat="@drawable/bg_circle_primary_color" />
 
         <com.framework.views.customViews.CustomImageView
           android:layout_width="@dimen/_12sdp"
@@ -132,8 +132,8 @@
         <com.framework.views.customViews.CustomImageView
           android:layout_width="@dimen/size_32"
           android:layout_height="@dimen/size_32"
-          android:tint="@color/colorPrimary"
-          app:srcCompat="@drawable/circle_bakground" />
+          android:tint="@color/primary_toolbar_color"
+          app:srcCompat="@drawable/bg_circle_primary_color" />
 
         <com.framework.views.customViews.CustomImageView
           android:layout_width="@dimen/_12sdp"
@@ -175,8 +175,8 @@
         <com.framework.views.customViews.CustomImageView
           android:layout_width="@dimen/size_32"
           android:layout_height="@dimen/size_32"
-          android:tint="@color/colorPrimary"
-          app:srcCompat="@drawable/circle_bakground" />
+          android:tint="@color/primary_toolbar_color"
+          app:srcCompat="@drawable/bg_circle_primary_color" />
 
         <com.framework.views.customViews.CustomImageView
           android:layout_width="@dimen/_12sdp"
@@ -217,8 +217,8 @@
         <com.framework.views.customViews.CustomImageView
           android:layout_width="@dimen/size_32"
           android:layout_height="@dimen/size_32"
-          android:tint="@color/colorPrimary"
-          app:srcCompat="@drawable/circle_bakground" />
+          android:tint="@color/primary_toolbar_color"
+          app:srcCompat="@drawable/bg_circle_primary_color" />
 
         <com.framework.views.customViews.CustomImageView
           android:layout_width="@dimen/_12sdp"
