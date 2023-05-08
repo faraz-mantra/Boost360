@@ -34,7 +34,6 @@ import java.util.Map;
 
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
 import static com.framework.webengageconstant.EventNameKt.PS_FORGOT_PASSWORD_PAGE_LOAD;
-import static com.framework.webengageconstant.EventValueKt.FORGOT_PASSWORD_FAILED;
 import static com.framework.webengageconstant.EventValueKt.NULL;
 
 public class ForgotPassword extends Activity {
@@ -117,8 +116,6 @@ public class ForgotPassword extends Activity {
                     WebEngageController.trackEvent(PS_FORGOT_PASSWORD_PAGE_LOAD, EVENT_LABEL_NULL, NULL);
                 } else {
                     Toast.makeText(ForgotPassword.this, getString(R.string.enter_correct_user_name), Toast.LENGTH_SHORT);
-                    WebEngageController.trackEvent(PS_FORGOT_PASSWORD_PAGE_LOAD, EVENT_LABEL_NULL, FORGOT_PASSWORD_FAILED);
-
                 }
             }
         };

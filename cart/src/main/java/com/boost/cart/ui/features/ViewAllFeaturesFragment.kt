@@ -17,11 +17,6 @@ import com.boost.cart.adapter.AllFeatureAdaptor
 import com.boost.cart.base_class.BaseFragment
 import com.boost.dbcenterapi.upgradeDB.model.*
 import com.boost.dbcenterapi.data.remote.ApiInterface
-//import com.boost.dbcenterapi.database.LocalStorage
-import com.boost.cart.utils.WebEngageController
-import com.framework.webengageconstant.ADDONS_MARKETPLACE_ALL_FEATURES_LOADED
-import com.framework.webengageconstant.ALL_FEATURES
-import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.google.android.material.snackbar.Snackbar
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.view_all_features_fragment.*
@@ -93,12 +88,6 @@ class ViewAllFeaturesFragment : BaseFragment() {
     back_button2.setOnClickListener {
       (activity as CartActivity).onBackPressed()
     }
-
-    WebEngageController.trackEvent(
-      ADDONS_MARKETPLACE_ALL_FEATURES_LOADED,
-      ALL_FEATURES,
-      NO_EVENT_VALUE
-    )
   }
 
   fun loadDataByType(categoryType: String?) {

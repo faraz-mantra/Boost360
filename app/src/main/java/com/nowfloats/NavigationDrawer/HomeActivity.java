@@ -8,7 +8,6 @@ import static com.framework.webengageconstant.EventLabelKt.BIZ_KEYBOARD;
 import static com.framework.webengageconstant.EventLabelKt.CALLS;
 import static com.framework.webengageconstant.EventLabelKt.CONTENT_SHARING_SETTINGS;
 import static com.framework.webengageconstant.EventLabelKt.ENQUIRIES;
-import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
 import static com.framework.webengageconstant.EventLabelKt.MANAGE_CONTENT;
 import static com.framework.webengageconstant.EventLabelKt.ONLINE_ADVERTISING;
 import static com.framework.webengageconstant.EventLabelKt.ORDERS;
@@ -16,7 +15,6 @@ import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
 import static com.framework.webengageconstant.EventLabelKt.SITE_HEALTH;
 import static com.framework.webengageconstant.EventLabelKt.SUBSCRIPTIONS;
 import static com.framework.webengageconstant.EventLabelKt.SUPPORT;
-import static com.framework.webengageconstant.EventNameKt.CONTACT_NF;
 import static com.framework.webengageconstant.EventNameKt.HOME;
 import static com.framework.webengageconstant.EventNameKt.NAV_ABOUT_BOOST;
 import static com.framework.webengageconstant.EventNameKt.NAV_ACCOUNT_SETTINGS;
@@ -1332,7 +1330,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         } else if (nextScreen.equals(getString(R.string.chat))) {
           if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || BuildConfig.APPLICATION_ID.equals("com.redtim")) {
             MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CHAT, null);
-            WebEngageController.trackEvent(CONTACT_NF, EVENT_LABEL_NULL, session.getFpTag());
 
             PreferencesManager.getsInstance(HomeActivity.this).setUserName(session.getFpTag());
 

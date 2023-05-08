@@ -63,11 +63,8 @@ import java.util.HashMap;
 
 import static com.appservice.ui.bankaccount.AccountFragmentContainerActivityKt.startFragmentAccountActivityNew;
 import static com.appservice.ui.paymentgateway.PaymentGatewayContainerActivityKt.startFragmentPaymentActivityNew;
-import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_CHANGEPASSWORD;
 import static com.framework.webengageconstant.EventLabelKt.NO_EVENT_LABLE;
 import static com.framework.webengageconstant.EventNameKt.DOMAIN_EMAIL;
-import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_CHANGEPASSWORD;
-import static com.framework.webengageconstant.EventValueKt.NULL;
 
 /**
  * Created by Admin on 29-01-2018.
@@ -180,7 +177,6 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         break;
                     case "Change password":
                         changePassword();
-                        WebEngageController.trackEvent(EVENT_NAME_CHANGEPASSWORD, EVENT_LABEL_CHANGEPASSWORD, NULL);
                         return;
                     case "Log out":
                         logoutAlertDialog_Material();

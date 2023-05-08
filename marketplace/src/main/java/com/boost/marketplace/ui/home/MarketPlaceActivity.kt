@@ -704,32 +704,26 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 startActivity(intent)
             }
         })
-        viewModel.updatesError().observe(this, androidx.lifecycle.Observer {
+        viewModel.updatesError().observe(this) {
             longToast(applicationContext, "onFailure: " + it)
-        })
+        }
 
-        viewModel.getAllAvailableFeatures().observe(this, androidx.lifecycle.Observer {
-            WebEngageController.trackEvent(
-                ADDONS_MARKETPLACE_CART_ALL_FEATURE_LOADED,
-                PAGE_VIEW,
-                NO_EVENT_VALUE
-            )
-
+        viewModel.getAllAvailableFeatures().observe(this) {
             all_recommended_addons.visibility = View.VISIBLE
             updateRecycler(it)
             updateAddonCategoryRecycler(it)
-            if(screenType=="deeplinkRedirection"){
+            if (screenType == "deeplinkRedirection") {
                 if (progressDialog.isShowing) {
                     progressDialog.hide()
                 }
-                for(singleItem in it){
-                    if(singleItem.feature_code.equals(widgetFeatureCode)){
+                for (singleItem in it) {
+                    if (singleItem.feature_code.equals(widgetFeatureCode)) {
                         onAddonsClicked(singleItem)
                         break
                     }
                 }
             }
-            if(buyAddonWithIDAndGoToCart != null) {
+            if (buyAddonWithIDAndGoToCart != null) {
                 for (singleitem in it) {
                     if (singleitem.feature_code.equals(buyAddonWithIDAndGoToCart)) {
                         viewModel.addItemAndGoTOCart(singleitem, 1)
@@ -737,7 +731,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                     }
                 }
             }
-        })
+        }
 
         viewModel.getAllBundles().observe(this) {
             WebEngageController.trackEvent(

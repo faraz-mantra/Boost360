@@ -382,7 +382,6 @@ class AddUpdateBusinessFragment : AppBaseFragment<AddUpdateBusinessFragmentBindi
 
   private fun saveUpdatePost() {
     showProgress()
-    WebEngageController.trackEvent(POST_AN_UPDATE, EVENT_LABEL_NULL, sessionLocal.fpTag)
     var socialShare = ""
     if (fbStatusEnabled.value == true) socialShare += "FACEBOOK."
     if (fbPageStatusEnable.value == true) socialShare += "FACEBOOK_PAGE."

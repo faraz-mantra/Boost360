@@ -63,7 +63,6 @@ import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_COUNTRY;
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_PINCODE;
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_ADDRESS_ADDED;
 import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_ADDRESS;
-import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_CITY;
 import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_COUNTRY;
 import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_PINCODE;
 import static com.framework.webengageconstant.EventValueKt.NULL;
@@ -166,9 +165,6 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
     initializeData();
     country.setOnClickListener(v -> {
       WebEngageController.trackEvent(EVENT_NAME_COUNTRY, EVENT_LABEL_COUNTRY, NULL);
-    });
-    cityText.setOnClickListener(v -> {
-      WebEngageController.trackEvent(EVENT_NAME_CITY, EVENT_LABEL_CITY, NULL);
     });
     pincodeText.setOnClickListener(v -> {
       WebEngageController.trackEvent(EVENT_NAME_PINCODE, EVENT_LABEL_PINCODE, NULL);
