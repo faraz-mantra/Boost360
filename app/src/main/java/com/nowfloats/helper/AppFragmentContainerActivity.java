@@ -186,7 +186,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
       case MANAGE_CUSTOMER_VIEW:
       case SITE_METER_OLD_VIEW:
       default:
-        return ContextCompat.getColor(this, R.color.colorPrimary);
+        return ContextCompat.getColor(this, R.color.primary_toolbar_color);
     }
   }
 

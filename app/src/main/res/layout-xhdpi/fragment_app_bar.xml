@@ -4,7 +4,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="?attr/actionBarSize"
-  android:background="?attr/colorPrimary"
+  android:background="@color/primary_toolbar_color"
   app:navigationIcon="@drawable/ic_back_arrow_new"
   app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
   app:theme="@style/CustomToolbarTheme">
