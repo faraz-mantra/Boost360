@@ -4,12 +4,11 @@
   <color name="colorPrimary">#5F2892</color>
   <color name="colorAccentLight">#FF8427</color>
   <color name="colorRedBgImg">#E39595</color>
-
+  <color name="accentLight_1">#5F2892</color>
   <color name="primary_4a4a4a_jio">@color/black_4a4a4a</color>
   <color name="colorPrimary_10">#FFF3E9</color>
   <color name="colorPrimaryDark">#5F2892</color>
   <color name="colorAccentLightDark">@color/colorPrimaryDark</color>
-  <color name="accentLight_1">#FFD461</color>
   <color name="accentLight_2">#FFF1CC</color>
   <color name="colorPrimaryVariant">#5092F5</color>
   <color name="statusBarColor">@color/colorPrimaryVariant</color>

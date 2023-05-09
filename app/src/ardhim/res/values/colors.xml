@@ -6,6 +6,10 @@
   <color name="greenDark">#458b00</color>
   <color name="product_delete_btn">#ff3f3f</color>
 
+  <color name="colorPrimary">#F5991E</color>
+  <color name="colorPrimaryDark">#F5991E</color>
+  <color name="colorAccentLight">#001D85</color>
+
   <color name="primaryColorDark">#F5991E</color>
   <color name="accentColor">#615b5b</color>
 
