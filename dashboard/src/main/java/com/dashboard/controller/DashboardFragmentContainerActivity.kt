@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.FragmentType
-import com.dashboard.controller.ui.DemoToDoListFragment
 import com.dashboard.controller.ui.allAddOns.AllBoostAddonsFragment
 import com.dashboard.controller.ui.business.BusinessProfileFragment
 import com.dashboard.controller.ui.customisationnav.CustomisationNavFragment
@@ -58,8 +57,8 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
 
   override fun customTheme(): Int? {
     return when (type) {
-      FragmentType.DIGITAL_READINESS_SCORE -> R.style.DashboardThemeNew
-      FragmentType.FRAGMENT_USER_PROFILE, FragmentType.FRAGMENT_USER_PROFILE_IMAGE_CROP -> R.style.DashboardThemeNew
+      FragmentType.DIGITAL_READINESS_SCORE -> R.style.DashboardThemeNewSecondaryStatus
+      FragmentType.FRAGMENT_USER_PROFILE, FragmentType.FRAGMENT_USER_PROFILE_IMAGE_CROP -> R.style.DashboardThemeNewPrimaryStatus
       FragmentType.FRAGMENT_BUSINESS_PROFILE -> R.style.BusinessProfileTheme
       FragmentType.FRAGMENT_WEBSITE_NAV, FragmentType.FRAGMENT_WEBSITE_THEME -> R.style.WebsiteCustomizationTheme
       else -> super.customTheme()
@@ -68,9 +67,9 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
 
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
-      FragmentType.ALL_BOOST_ADD_ONS -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.ALL_BOOST_ADD_ONS -> ContextCompat.getColor(this, R.color.primary_toolbar_color)
       FragmentType.FRAGMENT_USER_PROFILE, FragmentType.FRAGMENT_USER_PROFILE_IMAGE_CROP,
-      FragmentType.FRAGMENT_BUSINESS_PROFILE -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.FRAGMENT_BUSINESS_PROFILE -> ContextCompat.getColor(this, R.color.website_custom_toolbar_color)
       FragmentType.FRAGMENT_WEBSITE_NAV, FragmentType.FRAGMENT_WEBSITE_THEME -> ContextCompat.getColor(this, R.color.website_custom_toolbar_color)
       else -> super.getToolbarBackgroundColor()
     }

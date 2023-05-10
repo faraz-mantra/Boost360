@@ -386,8 +386,8 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
       (baseActivity as? DigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorPrimary else R.color.colorAccent)
       (baseActivity as? ContainerDigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorPrimary else R.color.colorAccent)
     }else{
-      (baseActivity as? DigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorPrimary else R.color.black_4a4a4a)
-      (baseActivity as? ContainerDigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorPrimary else R.color.black_4a4a4a)
+      (baseActivity as? DigitalChannelActivity)?.changeTheme(if (isConnect) R.color.primary_toolbar_color else R.color.secondary_toolbar_color)
+      (baseActivity as? ContainerDigitalChannelActivity)?.changeTheme(if (isConnect) R.color.primary_toolbar_color else R.color.secondary_toolbar_color)
     }
     binding?.disconnectedBg?.visibility = if (isConnect) View.GONE else View.VISIBLE
     binding?.viewConnect?.visibility = if (isConnect) View.GONE else View.VISIBLE

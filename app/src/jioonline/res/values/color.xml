@@ -41,6 +41,7 @@
     <color name="colorAccentPositive">@color/ButtoncolorAccent</color>
     <color name="colorAccentNegative">@color/greyish_brown</color>
     <color name="accent_lemon">#1A03007F</color>
+    <color name="light_shade_secondary">#1A03007F</color>
     <color name="light_red">@color/greyish_brown</color>
     <color name="website_tab_text_color">@color/colorPrimaryDarkBlue</color>
 </resources>

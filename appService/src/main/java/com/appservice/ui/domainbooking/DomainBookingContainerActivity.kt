@@ -68,9 +68,9 @@ open class DomainBookingContainerActivity :
             /*FragmentType.BANK_ACCOUNT_DETAILS -> ContextCompat.getColor(this, R.color.color_primary)*/
             FragmentType.ACTIVE_DOMAIN_FRAGMENT -> ContextCompat.getColor(
                 this,
-                R.color.colorPrimary
+                R.color.primary_toolbar_color
             )
-            else -> ContextCompat.getColor(this, R.color.black_4a4a4a)
+            else -> ContextCompat.getColor(this, R.color.secondary_toolbar_color)
         }
     }
 

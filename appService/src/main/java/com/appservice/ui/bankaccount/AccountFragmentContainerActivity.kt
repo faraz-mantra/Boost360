@@ -53,7 +53,7 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
 
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
-      FragmentType.BANK_ACCOUNT_DETAILS -> ContextCompat.getColor(this, R.color.gray_toolbar_color)
+      FragmentType.BANK_ACCOUNT_DETAILS -> ContextCompat.getColor(this, R.color.secondary_toolbar_color)
       FragmentType.ADD_BANK_ACCOUNT_START -> ContextCompat.getColor(this, R.color.colorAccent)
       else -> super.getToolbarBackgroundColor()
     }

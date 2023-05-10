@@ -133,7 +133,7 @@
                 android:padding="@dimen/size_4"
                 android:text="@string/upload_pan_card_image"
                 android:textAllCaps="true"
-                android:textColor="@color/colorAccentLight"
+                android:textColor="@color/primary_toolbar_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

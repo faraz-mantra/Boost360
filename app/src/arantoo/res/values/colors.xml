@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <color name="colorAccent">#409F94</color>
-  <color name="primaryColor">#409F94</color>
-  <color name="colorPrimary">#409F94</color>
-  <color name="colorPrimaryDark">#409F94</color>
-  <color name="colorAccentLight">#001D85</color>
-  <color name="primaryColorDark">#409F94</color>
+  <color name="colorAccent">#044BB1</color>
+  <color name="primaryColor">#044BB1</color>
+  <color name="colorPrimary">#044BB1</color>
+  <color name="colorPrimaryDark">#044BB1</color>
+  <color name="colorAccentLight">#FFB800</color>
+  <color name="primaryColorDark">#044BB1</color>
 
   <color name="greenDark">#458b00</color>
   <color name="product_delete_btn">#ff3f3f</color>
@@ -25,7 +25,7 @@
   <color name="title_popup">#212121</color>
   <color name="gray">#565656</color>
   <color name="light_gray">#a1a1a1</color>
-  <color name="top_bar_color">#001D85</color>
+  <color name="top_bar_color">#FFB800</color>
   <color name="background_grey">#f0f0f0</color>
   <color name="background_grey_onclick">#d0d0d0</color>
   <color name="white">#ffffff</color>
@@ -35,7 +35,7 @@
   <color name="grey">#a4a4a4</color>
   <color name="transparent">#00ffffff</color>
   <color name="light_black">#505050</color>
-  <color name="home_yellow">#001D85</color>
+  <color name="home_yellow">#FFB800</color>
 
   <color name="pencil_shade">#aaaaaa</color>
   <color name="biz_msg_txt_color">#3c3c3c</color>
@@ -46,7 +46,7 @@
 
   <color name="main_text_color">#606060</color>
 
-  <color name="dark_grey">#001D85</color>
+  <color name="dark_grey">#FFB800</color>
   <color name="login_bkg">#787878</color>
   <color name="retry_txt">#757575</color>
   <color name="inactive_text">#adadad</color>

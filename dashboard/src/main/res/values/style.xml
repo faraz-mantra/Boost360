@@ -26,10 +26,25 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
+  <style name="DashboardThemeNewPrimaryStatus" parent="DashboardTheme">
+    <item name="colorPrimary">@color/black_4a4a4a_jio</item>
+    <item name="colorPrimaryDark">@color/black_4a4a4a_jio</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:statusBarColor">@color/primary_toolbar_color</item>
+  </style>
+
+  <style name="DashboardThemeNewSecondaryStatus" parent="DashboardTheme">
+    <item name="colorPrimary">@color/black_4a4a4a_jio</item>
+    <item name="colorPrimaryDark">@color/black_4a4a4a_jio</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:statusBarColor">@color/secondary_toolbar_color</item>
+  </style>
+
   <style name="WebsiteCustomizationTheme" parent="DashboardTheme">
     <item name="colorPrimary">@color/website_toolbar_color</item>
     <item name="colorPrimaryDark">@color/website_toolbar_color</item>
     <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:statusBarColor">@color/primary_toolbar_color</item>
   </style>
 
   <style name="BusinessProfileTheme" parent="DashboardThemeNew">

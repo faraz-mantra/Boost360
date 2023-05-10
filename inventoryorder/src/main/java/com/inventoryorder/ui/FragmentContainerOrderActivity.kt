@@ -108,7 +108,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   }
 
   override fun getToolbarBackgroundColor(): Int? {
-    return ContextCompat.getColor(this, R.color.colorPrimary)
+    return ContextCompat.getColor(this, R.color.primary_toolbar_color)
   }
 
   override fun getToolbarTitleColor(): Int? {

@@ -16,6 +16,7 @@
   <style name="AppTheme.domain" parent="AppTheme.cataloge">
     <item name="colorPrimary">@color/black_4a4a4a</item>
     <item name="colorPrimaryDark">@color/black_4a4a4a</item>
+    <item name="android:statusBarColor">@color/secondary_toolbar_color</item>
   </style>
 
   <style name="CatalogTheme" parent="BaseTheme">
@@ -25,12 +26,14 @@
     <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
     <item name="searchViewStyle">@style/ThemeOverlay.SearchView</item>
     <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:statusBarColor">@color/primary_toolbar_color</item>
   </style>
 
   <style name="TestimonialTheme" parent="BaseTheme">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:statusBarColor">@color/primary_toolbar_color</item>
   </style>
 
   <style name="ThemeOverlay.SearchView" parent="Widget.AppCompat.SearchView.ActionBar">
@@ -54,8 +57,12 @@
   </style>
 
   <style name="BackgroundImageTheme.Dark" parent="BackgroundImageTheme">
-    <item name="colorPrimary">@color/black_4a4a4a</item>
-    <item name="colorPrimaryDark">@color/black_4a4a4a</item>
+    <item name="colorPrimary">@color/secondary_toolbar_color</item>
+    <item name="colorPrimaryDark">@color/secondary_toolbar_color</item>
+  </style>
+
+  <style name="BackgroundImageTheme.Primary" parent="BackgroundImageTheme">
+    <item name="colorPrimaryDark">@color/primary_toolbar_color</item>
   </style>
 
   <style name="AddUpdateTheme" parent="UpdateTheme">
@@ -673,7 +680,7 @@
   </style>
 
   <style name="StatusBarYellowTheme">
-    <item name="android:statusBarColor">@color/colorPrimary</item>
+    <item name="android:statusBarColor">@color/primary_toolbar_color</item>
   </style>
 
   <style name="CustomYellowButton">
