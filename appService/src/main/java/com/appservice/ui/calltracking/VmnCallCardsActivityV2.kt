@@ -4,6 +4,7 @@ import android.content.Intent
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appservice.R
@@ -72,6 +73,10 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
     return getString(R.string.business_calls)
   }
 
+  override fun getToolbarBackgroundColor(): Int {
+    return ContextCompat.getColor(this, R.color.primary_toolbar_color)
+  }
+
   override fun onCreateView() {
     super.onCreateView()
     ExoPlayerUtils.newInstance() //required for call playback on list
@@ -80,7 +85,7 @@ class VmnCallCardsActivityV2 : AppBaseActivity<ActivityVmnCallCardsV2Binding, Vm
     addFragment(binding?.childContainer?.id, appFragmentZeroCase, false)
     WebEngageController.trackEvent(BUSINESS_CALLS, EVENT_LABEL_BUSINESS_CALLS, null)
     val phone = addPlus91(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER)) ?: ""
-    binding?.tvTrackedCall?.text = makeSectionOfTextBold(getString(R.string.tracked_calls) + " " + phone, phone, R.color.colorPrimary)
+    binding?.tvTrackedCall?.text = makeSectionOfTextBold(getString(R.string.tracked_calls) + " " + phone, phone, R.color.vmn_calls_highlight)
     setOnClickListener(binding?.seeMoreLess, binding?.websiteHelper, binding?.phoneHelper)
     showTrackedCalls()
     adapterCallView()

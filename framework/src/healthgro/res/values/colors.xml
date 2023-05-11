@@ -93,4 +93,5 @@
   <color name="update_studio_intro_button_color">#001D85</color>
   <color name="primary_toolbar_color">#409F94</color>
   <color name="secondary_toolbar_color">#001D85</color>
+  <color name="vmn_calls_highlight">#001D85</color>
 </resources>
