@@ -21,8 +21,14 @@ import com.boost.payment.utils.WebEngageController
 import com.framework.analytics.SentryController
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_FAILED_PAYMENT_TRANSACTION_LOADED
+import com.framework.webengageconstant.FAILED_PAYMENT_TRANSACTION
+import com.framework.webengageconstant.MARKETPLACE_FALIURE_TRY_AGAIN_CLICK
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.razorpay.Checkout
 import com.framework.webengageconstant.*
 import kotlinx.android.synthetic.main.payment_failure_v3.*
+import org.json.JSONObject
 
 class FailedTransactionFragment : BaseFragment() {
 
@@ -82,15 +88,11 @@ class FailedTransactionFragment : BaseFragment() {
                 FAILED_PAYMENT_TRANSACTION,
                 NO_EVENT_VALUE
             )
-            val args = Bundle()
-            args.putString("data", data)
-            razorPayWebView.arguments = args
-
-            //RazorPay web
-            razorPayWebView.show(
-                (activity as PaymentActivity).supportFragmentManager,
-                Constants.RAZORPAY_WEBVIEW_POPUP_FRAGMENT
-            )
+            val co = Checkout()
+            co.setKeyID(Constants.RAZORPAY_KEY)
+            val jsonString = requireArguments().getString("data")
+            val retryData = JSONObject(jsonString!!)
+            co.open(activity, retryData)
 
         }
 

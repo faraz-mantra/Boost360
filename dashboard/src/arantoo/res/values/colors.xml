@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccent">#F5991E</color>
+    <color name="colorPrimary">#F5991E</color>
+    <color name="colorPrimaryDark">#012F6B</color>
+    <color name="colorAccentLight">#012F6B</color>
+    <color name="dr_score_summary">#F5991E</color>
+    <color name="dashboard_business_url">#ffffff</color>
+    <color name="dr_improve_arrow">#F5991E</color>
+    <color name="colorAccent_jio">#F5991E</color>
+    <color name="website_toolbar_color">@color/dr_score_summary</color>
+    <color name="website_tab_text_color">#F5991E</color>
+    <color name="website_button_tint">@color/white</color>
+    <color name="dashboard_status_bar_color">#F5991E</color>
+    <color name="dash_fragment_toolbar_color">#F5991E</color>
+    <color name="black_4a4a4a_jio">@color/colorAccent</color>
+    <color name="gray_white_jio">#eeeeee</color>
+    <color name="website_manage_business_profile_color">#F5991E</color>
+</resources>
