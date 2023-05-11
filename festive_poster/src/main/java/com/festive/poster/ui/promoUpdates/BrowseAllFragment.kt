@@ -62,6 +62,7 @@ class BrowseAllFragment : AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesV
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(Promotional_Update_Browse_All_Loaded)
+    WebEngageController.trackEvent(Promotional_Update_View_More_Click)
     argTag = arguments?.getString(BK_SELECTED_POS_TAG)
     isCategorySelectionRedirection = arguments?.getBoolean(BK_IS_CAT_SELECTED_REDIRECTION)
     promoUpdatesViewModel = ViewModelProvider(requireActivity()).get(PromoUpdatesViewModel::class.java)

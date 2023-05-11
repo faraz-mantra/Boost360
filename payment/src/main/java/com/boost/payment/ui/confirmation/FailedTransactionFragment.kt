@@ -21,7 +21,10 @@ import com.framework.webengageconstant.ADDONS_MARKETPLACE_FAILED_PAYMENT_TRANSAC
 import com.framework.webengageconstant.FAILED_PAYMENT_TRANSACTION
 import com.framework.webengageconstant.MARKETPLACE_FALIURE_TRY_AGAIN_CLICK
 import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.razorpay.Checkout
+import com.framework.webengageconstant.*
 import kotlinx.android.synthetic.main.payment_failure_v3.*
+import org.json.JSONObject
 
 class FailedTransactionFragment : BaseFragment() {
 
@@ -47,7 +50,7 @@ class FailedTransactionFragment : BaseFragment() {
     ): View? {
 
        // root = inflater.inflate(R.layout.payment_failure_v3, container, false)
-
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_PAYMENT_FAILED, PAGE_VIEW, NO_EVENT_VALUE)
         session = UserSessionManager(activity as PaymentActivity)
         prefs = SharedPrefs(activity as PaymentActivity)
         razorPayWebView = RazorPayWebView.newInstance()
@@ -75,15 +78,11 @@ class FailedTransactionFragment : BaseFragment() {
                 FAILED_PAYMENT_TRANSACTION,
                 NO_EVENT_VALUE
             )
-            val args = Bundle()
-            args.putString("data", data)
-            razorPayWebView.arguments = args
-
-            //RazorPay web
-            razorPayWebView.show(
-                (activity as PaymentActivity).supportFragmentManager,
-                Constants.RAZORPAY_WEBVIEW_POPUP_FRAGMENT
-            )
+            val co = Checkout()
+            co.setKeyID(Constants.RAZORPAY_KEY)
+            val jsonString = requireArguments().getString("data")
+            val retryData = JSONObject(jsonString!!)
+            co.open(activity, retryData)
 
         }
 

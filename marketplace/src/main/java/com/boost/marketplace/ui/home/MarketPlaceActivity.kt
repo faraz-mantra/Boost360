@@ -709,6 +709,12 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         })
 
         viewModel.getAllAvailableFeatures().observe(this, androidx.lifecycle.Observer {
+            WebEngageController.trackEvent(
+                ADDONS_MARKETPLACE_CART_ALL_FEATURE_LOADED,
+                PAGE_VIEW,
+                NO_EVENT_VALUE
+            )
+
             all_recommended_addons.visibility = View.VISIBLE
             updateRecycler(it)
             updateAddonCategoryRecycler(it)
@@ -733,7 +739,12 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             }
         })
 
-        viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
+        viewModel.getAllBundles().observe(this) {
+            WebEngageController.trackEvent(
+                ADDONS_MARKETPLACE_CART_PACKAGE_BUNDLE_LOADED,
+                PAGE_VIEW,
+                NO_EVENT_VALUE
+            )
             val list = arrayListOf<Bundles>()
             for (item in it) {
                 val temp = Gson().fromJson<List<IncludedFeature>>(
@@ -762,10 +773,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                         ), Gson().fromJson<List<FrequentlyAskedQuestion>>(
                             item.frequently_asked_questions,
                             object : TypeToken<List<FrequentlyAskedQuestion>>() {}.type
-                        ),Gson().fromJson<List<String>>(
+                        ), Gson().fromJson<List<String>>(
                             item.benefits,
                             object : TypeToken<List<String>>() {}.type
-                        ),item.desc
+                        ), item.desc
                     )
                 )
             }
@@ -791,14 +802,14 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 package_compare_layout1.visibility = View.GONE
             }
             //go to particular package screen
-            if(isOpenPackageWithID!=null){
-                for(singleBundle in list){
-                    if(singleBundle._kid.equals(isOpenPackageWithID)){
+            if (isOpenPackageWithID != null) {
+                for (singleBundle in list) {
+                    if (singleBundle._kid.equals(isOpenPackageWithID)) {
                         onPackageClicked(singleBundle)
                     }
                 }
             }
-        })
+        }
 
         viewModel.getBackAllBundles().observe(this, androidx.lifecycle.Observer {
             val list = arrayListOf<Bundles>()

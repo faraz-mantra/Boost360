@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.utils.Utils
+import com.boost.cart.utils.WebEngageController
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.utils.SharedPrefs
@@ -19,6 +20,10 @@ import com.boost.marketplace.ui.home.MarketPlaceActivity
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
 import com.framework.utils.RootUtil
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_CART_EXPERT_CALL_CLICK
+import com.framework.webengageconstant.ADD_ON_MARKETPLACE_CARD_CLICK
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.PAGE_VIEW
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -66,13 +71,13 @@ class PackageViewPagerAdapter(
 //        }
 
     holder.itemView.setOnClickListener {
-      homeListener.onPackageClicked(list.get(position))
+      WebEngageController.trackEvent(ADD_ON_MARKETPLACE_CARD_CLICK, PAGE_VIEW, NO_EVENT_VALUE)
+      homeListener.onPackageClicked(list[position])
     }
-    holder.name.setText(list.get(position).name ?: "")
-
+    holder.name.text = list[position].name ?: ""
 
     try {
-      getPackageInfoFromDB(holder, list.get(position))
+      getPackageInfoFromDB(holder, list[position])
     } catch (e: Exception) {
       SentryController.captureException(e)
     }
