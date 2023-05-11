@@ -1141,7 +1141,7 @@
                                 android:paddingEnd="@dimen/_10sdp"
                                 android:text="Call Now"
                                 android:textAllCaps="true"
-                                android:textColor="@color/colorAccent1"
+                                android:textColor="@color/colorAccent4"
                                 android:textSize="11sp"
                                 android:textStyle="bold" />
 
