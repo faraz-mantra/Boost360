@@ -655,7 +655,10 @@ fun AppCompatActivity.startAddServiceProduct(session: UserSessionManager?) {
     val type = if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
       WebEngageController.trackEvent(ADD_SERVICE_PAGE, CLICK, TO_BE_ADDED)
       com.appservice.constant.FragmentType.SERVICE_DETAIL_VIEW
-    } else {
+    } else if (packageName.equals(APPLICATION_CHECKKINN_ID)){
+      WebEngageController.trackEvent(ADD_PRODUCT_PAGE, CLICK, TO_BE_ADDED)
+      com.appservice.constant.FragmentType.CHECKKINN_PRODUCT_DETAIL_VIEW
+    }else{
       WebEngageController.trackEvent(ADD_PRODUCT_PAGE, CLICK, TO_BE_ADDED)
       com.appservice.constant.FragmentType.PRODUCT_DETAIL_VIEW
     }

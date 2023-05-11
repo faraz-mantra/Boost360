@@ -6,6 +6,7 @@ enum class FragmentType {
   SERVICE_INFORMATION,
   PRODUCT_DETAIL_VIEW,
   PRODUCT_INFORMATION,
+  CHECKKINN_ROOM_PRODUCT_INFORMATION,
   DETAIL_KYC_VIEW,
   ADD_BANK_ACCOUNT_START,
   BANK_ACCOUNT_DETAILS,
@@ -75,7 +76,8 @@ enum class FragmentType {
   BACKGROUND_IMAGE_F_SCREEN_FRAGMENT,
   BACKGROUND_IMAGE_PREVIEW,
   SEARCH_DOMAIN_FRAGMENT,
-  CAMERA_VIEW;
+  CAMERA_VIEW,
+  CHECKKINN_PRODUCT_DETAIL_VIEW;
   companion object{
     fun fromValue(name: String): FragmentType? = values().firstOrNull { it.name.equals(name, ignoreCase = true) }
   }

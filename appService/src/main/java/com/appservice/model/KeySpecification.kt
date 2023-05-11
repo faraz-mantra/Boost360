@@ -13,7 +13,7 @@ data class KeySpecification(
 ) : AppBaseRecyclerViewItem, Serializable {
 
   //  @Transient
-  var recyclerViewType = RecyclerViewItemType.SPECIFICATION_ITEM.getLayout()
+  var recyclerViewType = RecyclerViewItemType.SPECIFICATION_ITEM_ROOM.getLayout()
   override fun getViewType(): Int {
     return recyclerViewType
   }

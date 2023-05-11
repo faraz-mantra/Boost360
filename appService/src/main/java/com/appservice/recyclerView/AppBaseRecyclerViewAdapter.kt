@@ -24,6 +24,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     return when (recyclerViewItemType) {
       PAGINATION_LOADER -> PagingViewHolder(binding as PaginationLoaderBinding)
       SPECIFICATION_ITEM -> SpecificationViewHolder(binding as RowLayoutAddedSpecsBinding)
+      SPECIFICATION_ITEM_ROOM -> SpecificationRoomViewHolder(binding as RowLayoutAddedSpecsRoomBinding)
       IMAGE_PREVIEW -> ImagePreviewViewHolder(binding as ItemPreviewImageBinding)
       GST_DETAILS_VIEW -> GstDetailViewHolder(binding as ItemGstDetailBinding)
       ADDITIONAL_FILE_VIEW -> AdditionalFileViewHolder(binding as ItemPdfFileBinding)

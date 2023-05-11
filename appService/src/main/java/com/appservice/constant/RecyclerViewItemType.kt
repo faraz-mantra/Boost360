@@ -6,6 +6,7 @@ import com.appservice.R
 enum class RecyclerViewItemType {
   PAGINATION_LOADER,
   SPECIFICATION_ITEM,
+  SPECIFICATION_ITEM_ROOM,
   IMAGE_PREVIEW,
   GST_DETAILS_VIEW,
   SESSION_ITEM_VIEW,
@@ -43,6 +44,7 @@ enum class RecyclerViewItemType {
     return when (this) {
       PAGINATION_LOADER -> R.layout.pagination_loader
       SPECIFICATION_ITEM -> R.layout.row_layout_added_specs
+      SPECIFICATION_ITEM_ROOM -> R.layout.row_layout_added_specs_room
       IMAGE_PREVIEW -> R.layout.item_preview_image
       GST_DETAILS_VIEW -> R.layout.item_gst_detail
       SESSION_ITEM_VIEW -> R.layout.recycler_item_session

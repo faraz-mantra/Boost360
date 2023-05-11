@@ -182,7 +182,9 @@
     <string name="other_information_n">Other Information</string>
     <string name="product_details">Product Details</string>
     <string name="product_details_n">Product Details</string>
+    <string name="room_details">Room Details</string>
     <string name="additional_information">Additional Info</string>
+    <string name="other_optional_info">Other Optional Info</string>
     <string name="testimonial_">Testimonial</string>
     <string name="testimonial_title">Testimonials</string>
     <string name="updates_title">Latest Updates</string>
@@ -277,9 +279,12 @@
     <string name="why_do_we_need_your_bank_account">Why do we need your bank account?</string>
     <string name="collect_boost_business_website_desc">This account is being used to send you money collected from your customers who are making payments on your boost Business website.</string>
     <string name="product_category_">Product category*</string>
+    <string name="room_category_">Room category*</string>
     <string name="select_or_create_a_service_category">Select or create a service category</string>
     <string name="write_the_name_of_your_product">Write the name of your product</string>
+    <string name="write_the_name_of_your_room">Write the name of your room</string>
     <string name="product_name_">Product name*</string>
+    <string name="room_name_">Room name*</string>
     <string name="this_information_is_required_if_you_select">This information is required if you select delivery service.</string>
     <string name="product_specifications">Product specifications</string>
     <string name="in_case_this_product_is_associated_with_certified_by_any_brand">In case this product is associated with/certified by any brand.</string>
@@ -308,6 +313,7 @@
     <string name="age">Age*</string>
     <string name="full_name">Full name</string>
     <string name="customers_can_only_view_and_enquire_about_this_product">Customers can only view and enquire about this product.</string>
+    <string name="customers_can_only_view_and_enquire_about_this_room">Customers can only view and enquire about this room.</string>
     <string name="remove_product_failed">Removing product failed, please try again.</string>
     <string name="product_removed_success">Product removed successfully.</string>
     <string name="information_not_saved">\"Information not saved!\"</string>
@@ -352,17 +358,25 @@
     <string name="brand_name_if_available">Brand name (if available)</string>
     <string name="add_the_brand_name_associated_with_this_product">Add the brand name associated with this product.</string>
     <string name="add_more_images_for_the_product">Add more images for the product.</string>
+    <string name="add_more_images_for_the_room">Add more images for the room.</string>
     <string name="applicable_gst_slab">Applicable GST slab</string>
     <string name="for_invoice">(for invoice)</string>
     <string name="product_tags">Product tags</string>
+    <string name="room_tags">Tags</string>
     <string name="tags_help_site_visitors_filter_products_in_your_catalogue">Tags help site visitors filter products in your catalogue.</string>
+    <string name="tags_help_site_visitors_filter_rooms_in_your_catalogue">Tags help site visitors filter rooms in your catlog.</string>
     <string name="type_a_tag_and_press_add">Type a tag and press \'Add\'</string>
     <string name="add">Add</string>
     <string name="it_appears_at_the_end_of_the_product_name_as_it_s_variant">It appears at the end of the product name as it’s variant</string>
+    <string name="it_appears_at_the_end_of_the_room_name_as_it_s_variant">It appears at the end of the room name as it’s variant</string>
     <string name="e_g_color">e.g. Color</string>
+    <string name="e_g_AC">e.g: AC</string>
     <string name="yellow_and_orange">Yellow and Orange</string>
+    <string name="available">Available</string>
     <string name="other_specifications">Other specifications</string>
+    <string name="other_amenities">Other amenities</string>
     <string name="this_list_appears_inside_the_product_details_page_on_your_website">This list appears inside the product details page on your website.</string>
+    <string name="this_appears_room_details_helps_customers_make_better">It appears along with room details and helps customers make better booking decisions.</string>
     <string name="error_service_image">Service image uploading error, please try again.</string>
     <string name="error_getting_service_details">Error while getting the service details.</string>
     <string name="error_getting_service_timing">Error while getting the service timing.</string>
@@ -774,9 +788,13 @@
     <string name="done_caps">Done</string>
     <string name="create_a_product_category">Create a product category</string>
     <string name="product_description_">Product description*</string>
-    <string name="describe_this_product_in_around_2000_characters_at_max">Describe this product in around 2000 characters at max...</string>
+    <string name="room_description_">Room description*</string>
+    <string name="describe_this_product_in_around_2000_characters_at_max">Describe this product in around 2000 characters at max…</string>
+    <string name="describe_this_room_in_around_2000_characters_at_max">Describe this room in around 2000 characters at max…</string>
     <string name="pricing_info">Pricing info</string>
+    <string name="tariff_info_per_night">Tariff Info per night</string>
     <string name="want_to_sell_this_product_online">Want to sell this product online?</string>
+    <string name="want_to_book_this_room_online">Do you want to book this room online?</string>
     <string name="price_includes_taxes">Price includes taxes</string>
     <string name="price_without_tax_inr">Price without tax (INR)</string>
     <string name="xx_xxx">XXXX</string>
@@ -799,6 +817,7 @@
     <string name="my_business_location_">My business Location</string>
     <string name="channels_product_specifications_product_category_etc">Channels, Product specifications, Product category, etc.</string>
     <string name="e_g_served_by">e.g. Served by</string>
+    <string name="e_g_smoking">e.g. Smoking</string>
     <string name="ms_shruti">Ms. Shruti</string>
     <string name="package_weight">Package weight</string>
     <string name="package_length">Package length</string>
@@ -833,6 +852,7 @@
     <string name="message_soon">Start talking about your business, now!</string>
     <string name="Message_empty">You can post an offer, news or upload your catalog. \nClick on the + button below to start posting.</string>
     <string name="add_product_image_n">Add product image*</string>
+    <string name="add_room_image_n">Add room image*</string>
     <string name="post_n">Post</string>
     <string name="refreshing_status">Refreshing status...</string>
     <string name="total_money_collected_till_date">Total money collected till date</string>
@@ -1284,4 +1304,7 @@
     <string name="do_you_want_your_customer_to_book_a_service_without_selecting_a_slot">Do you want your customer to book a service without selecting a slot?</string>
     <string name="are_your_services_timings_same_as_business_hours">Are your services timings same as business hours?</string>
     <string name="your_customers_will_be_able_to_book_service_as_per_your_business_timings">Your customers will be able to book service as per your business timings.</string>
+    <string name="have_you_listed_this_room_on_another_website">Have you listed this room on another website?</string>
+  <string name="if_this_room_is_also_listed_on_other_website_enter_website_url">If this room is also listed on some other website, enter the website name and URL below</string>
+  <string name="add_external_link">Add external link</string>
 </resources>
