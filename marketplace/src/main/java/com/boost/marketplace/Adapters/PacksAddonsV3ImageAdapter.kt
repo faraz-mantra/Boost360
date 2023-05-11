@@ -21,17 +21,12 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class PacksAddonsV3ImageAdapter(
-    cryptoCurrencies: List<AddonsPacksIn>?,
+    var compareList: List<AddonsPacksIn>,
     val myAddonsListener: AddonsListenerV3,
     val activity: Activity
 ) : RecyclerView.Adapter<PacksAddonsV3ImageAdapter.upgradeViewHolder>() {
 
-    private var compareList = ArrayList<AddonsPacksIn>()
     private lateinit var context: Context
-
-    init {
-        this.compareList = cryptoCurrencies as ArrayList<AddonsPacksIn>
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
         val itemView = LayoutInflater.from(parent?.context).inflate(
@@ -94,8 +89,7 @@ class PacksAddonsV3ImageAdapter(
     }
 
     fun addupdates(upgradeModel: List<AddonsPacksIn>) {
-        compareList.clear()
-        compareList.addAll(upgradeModel)
+        compareList = upgradeModel
         notifyDataSetChanged()
     }
 

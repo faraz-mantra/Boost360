@@ -551,6 +551,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
             //remove saved orderdetails and coupondetails from prefs
             prefs.storeCartOrderInfo(null)
             prefs.storeApplyedCouponDetails(null)
+            prefs.storeAutoRenewSubscriptionID("")
 //            totalCalculation()
             couponCode = ""
             couponServiceModel = null
