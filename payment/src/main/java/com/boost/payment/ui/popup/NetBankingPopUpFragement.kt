@@ -24,7 +24,7 @@ import com.framework.webengageconstant.NET_BANKING
 import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.razorpay.Razorpay
+//import com.razorpay.Razorpay
 import kotlinx.android.synthetic.main.netbanking_popup.*
 import org.json.JSONObject
 import java.util.*
@@ -39,7 +39,7 @@ class NetBankingPopUpFragement : DialogFragment(), NetBankingListener {
   val list = ArrayList<SingleNetBankData>()
 
   lateinit var netBankingPopUpAdaptor: NetBankingPopUpAdaptor
-  lateinit var razorpay: Razorpay
+//  lateinit var razorpay: Razorpay
 
   companion object {
     lateinit var listener: MoreBanksListener
@@ -62,7 +62,7 @@ class NetBankingPopUpFragement : DialogFragment(), NetBankingListener {
     savedInstanceState: Bundle?
   ): View? {
     root = inflater.inflate(R.layout.netbanking_popup, container, false)
-    razorpay = (activity as PaymentActivity).getRazorpayObject()
+//    razorpay = (activity as PaymentActivity).getRazorpayObject()
     netBankingPopUpAdaptor = NetBankingPopUpAdaptor(ArrayList(), this)
 
     return root
@@ -74,7 +74,7 @@ class NetBankingPopUpFragement : DialogFragment(), NetBankingListener {
     viewModel = ViewModelProviders.of(requireActivity()).get(PaymentViewModel::class.java)
 
 //        loadBanks()
-    viewModel.loadMoreBanks(razorpay)
+//    viewModel.loadMoreBanks(razorpay)
     initMvvm()
     initializeRecycler()
 

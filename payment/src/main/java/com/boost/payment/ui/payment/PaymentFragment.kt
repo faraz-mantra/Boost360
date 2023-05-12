@@ -2,6 +2,7 @@ package com.boost.payment.ui.payment
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Typeface
@@ -25,34 +26,22 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
 import com.boost.dbcenterapi.data.api_model.autorenew.OrderAutoRenewRequest
 import com.boost.dbcenterapi.data.api_model.customerId.get.Result
-import com.boost.dbcenterapi.data.api_model.datamodule.SingleNetBankData
-import com.boost.payment.BuildConfig
 import com.boost.payment.PaymentActivity
 import com.boost.payment.R
 import com.boost.payment.adapter.CardPaymentAdapter
-import com.boost.payment.adapter.WalletAdapter
 import com.boost.payment.base_class.BaseFragment
 import com.boost.payment.interfaces.*
 import com.boost.payment.ui.checkoutkyc.BusinessDetailsFragment
 import com.boost.payment.ui.confirmation.OrderConfirmationFragment
-import com.boost.payment.ui.popup.AddCardPopUpFragement
-import com.boost.payment.ui.popup.NetBankingPopUpFragement
-import com.boost.payment.ui.popup.StateListPopFragment
-import com.boost.payment.ui.popup.UPIPopUpFragement
+import com.boost.payment.ui.popup.*
 import com.boost.payment.ui.razorpay.RazorPayWebView
 import com.boost.payment.ui.webview.WebViewFragment
 import com.boost.payment.utils.*
-import com.boost.payment.utils.Constants.Companion.ADD_CARD_POPUP_FRAGMENT
 import com.boost.payment.utils.Constants.Companion.BUSINESS_DETAILS_FRAGMENT
-import com.boost.payment.utils.Constants.Companion.NETBANKING_POPUP_FRAGMENT
 import com.boost.payment.utils.Constants.Companion.RAZORPAY_WEBVIEW_POPUP_FRAGMENT
-import com.boost.payment.utils.Constants.Companion.UPI_POPUP_FRAGMENT
-import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
@@ -62,9 +51,8 @@ import com.framework.webengageconstant.*
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.razorpay.Razorpay
+import com.razorpay.Checkout
+//import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.payments_fragment.*
 import org.json.JSONObject
@@ -79,10 +67,10 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     lateinit var root: View
     private lateinit var viewModel: PaymentViewModel
 
-    lateinit var razorpay: Razorpay
+//    lateinit var razorpay: Razorpay
 
     lateinit var cardPaymentAdapter: CardPaymentAdapter
-    lateinit var walletAdapter: WalletAdapter
+//    lateinit var walletAdapter: WalletAdapter
 
     val razorPayWebView = RazorPayWebView()
 
@@ -90,7 +78,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
     var paymentData = JSONObject()
 
-    var netbankingList = arrayListOf<SingleNetBankData>()
+//    var netbankingList = arrayListOf<SingleNetBankData>()
 
     var totalAmount = 0.0
 
@@ -102,7 +90,6 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     var gstFlag = false
     lateinit var prefs: SharedPrefs
     private var gstResult: com.boost.dbcenterapi.data.api_model.gst.Result? = null
-    private lateinit var paymentLL: LinearLayout
     private lateinit var auto_renew_title:TextView
     private lateinit var upiLayout: ConstraintLayout
     private lateinit var netBankingLayout: ConstraintLayout
@@ -115,6 +102,7 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     var months:Int = 0
     val WebViewFragment = WebViewFragment()
 //    var subscriptionID = ""
+    lateinit var progressDialog: ProgressDialog
 
 
     companion object {
@@ -126,15 +114,9 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.payments_fragment, container, false)
-        paymentLL = root.findViewById(R.id.payment_mode_ll)
-        upiLayout = root.findViewById(R.id.upi_layout)
-        netBankingLayout = root.findViewById(R.id.netbanking_layout)
-        walletLayout = root.findViewById(R.id.wallet_layout)
-        savedCardsLayout = root.findViewById(R.id.saved_cards_layout)
-        payLinkLayout = root.findViewById(R.id.pay_by_link_section)
         auto_renew_title =  root.findViewById(R.id.auto_renew_title)
 
-
+        progressDialog = ProgressDialog(requireContext())
 
         totalAmount = requireArguments().getDouble("amount")
         months = requireArguments().getInt("monthValue")
@@ -150,57 +132,21 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
         lastUsedPaymentMethod = prefs.getLastUsedPaymentMode()
 
-
-        paymentLL.removeAllViews()
-
-        if (lastUsedPaymentMethod == "upi") {
-            paymentLL.addView(upiLayout)
-            paymentLL.addView(netBankingLayout)
-            paymentLL.addView(savedCardsLayout)
-            paymentLL.addView(walletLayout)
-            paymentLL.addView(payLinkLayout)
-        } else if (lastUsedPaymentMethod == "wallet") {
-            paymentLL.addView(walletLayout)
-            paymentLL.addView(upiLayout)
-            paymentLL.addView(netBankingLayout)
-            paymentLL.addView(savedCardsLayout)
-            paymentLL.addView(payLinkLayout)
-        } else if (lastUsedPaymentMethod == "netbanking") {
-            paymentLL.addView(netBankingLayout)
-            paymentLL.addView(upiLayout)
-            paymentLL.addView(savedCardsLayout)
-            paymentLL.addView(walletLayout)
-            paymentLL.addView(payLinkLayout)
-        } else if (lastUsedPaymentMethod == "card") {
-            paymentLL.addView(savedCardsLayout)
-            paymentLL.addView(upiLayout)
-            paymentLL.addView(netBankingLayout)
-            paymentLL.addView(walletLayout)
-            paymentLL.addView(payLinkLayout)
-        } else {
-            paymentLL.addView(upiLayout)
-            paymentLL.addView(netBankingLayout)
-            paymentLL.addView(savedCardsLayout)
-            paymentLL.addView(walletLayout)
-            paymentLL.addView(payLinkLayout)
-        }
-
-
 //        //this is a offer created from admin dashboard.
 //        cartCheckoutData.put("offer_id", arguments!!.getString("offer_F5hUaalR9tpSzn"))
 
-        razorpay = (activity as PaymentActivity).getRazorpayObject()
+//        razorpay = (activity as PaymentActivity).getRazorpayObject()
 
-        netbankingList = ArrayList<SingleNetBankData>()
-        netbankingList.add(SingleNetBankData("UTIB", "Axis", razorpay.getBankLogoUrl("UTIB")))
-        netbankingList.add(SingleNetBankData("ICIC", "ICICI", razorpay.getBankLogoUrl("ICIC")))
-        netbankingList.add(SingleNetBankData("HDFC", "HDFC", razorpay.getBankLogoUrl("HDFC")))
-        netbankingList.add(SingleNetBankData("CIUB", "City Union", razorpay.getBankLogoUrl("CIUB")))
-        netbankingList.add(SingleNetBankData("SBIN", "SBI", razorpay.getBankLogoUrl("SBIN")))
+//        netbankingList = ArrayList<SingleNetBankData>()
+//        netbankingList.add(SingleNetBankData("UTIB", "Axis", razorpay.getBankLogoUrl("UTIB")))
+//        netbankingList.add(SingleNetBankData("ICIC", "ICICI", razorpay.getBankLogoUrl("ICIC")))
+//        netbankingList.add(SingleNetBankData("HDFC", "HDFC", razorpay.getBankLogoUrl("HDFC")))
+//        netbankingList.add(SingleNetBankData("CIUB", "City Union", razorpay.getBankLogoUrl("CIUB")))
+//        netbankingList.add(SingleNetBankData("SBIN", "SBI", razorpay.getBankLogoUrl("SBIN")))
 
         cardPaymentAdapter = CardPaymentAdapter(requireActivity(), ArrayList())
 
-        walletAdapter = WalletAdapter(razorpay, ArrayList(), this)
+//        walletAdapter = WalletAdapter(razorpay, ArrayList(), this)
 
         return root
     }
@@ -208,11 +154,13 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
     private fun updateAutoRenewState() {
         if (autoRenewState) {
             //for auto renew sent subscription_id
+            Log.e("updateAutoRenewState","for auto renew sent subscription_id "+prefs.getAutoRenewSubscriptionID())
 //            cartCheckoutData.put("subscription_id", subscriptionID)
             cartCheckoutData.put("subscription_id", prefs.getAutoRenewSubscriptionID())
 //      cartCheckoutData.put("subscription_id", "sub_Io6LDbGj1FT515")
             if (cartCheckoutData.has("order_id")) cartCheckoutData.remove("order_id")
         } else {
+            Log.e("updateAutoRenewState","for single payment sent order_id "+requireArguments().getString("order_id"))
             cartCheckoutData.put("order_id", requireArguments().getString("order_id"))
 //      cartCheckoutData.put("order_id", "order_Io6NLckFM8ny8Z")
             if (cartCheckoutData.has("subscription_id")) cartCheckoutData.remove("subscription_id")
@@ -223,9 +171,14 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         super.onActivityCreated(savedInstanceState)
 
 //        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-//        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
 
         viewModel = ViewModelProviders.of(requireActivity()).get(PaymentViewModel::class.java)
+
+        if(totalAmount <= 5000 && !prefs.getYearPricing() &&
+            (prefs.getCartValidityMonths() != null && prefs.getCartValidityMonths()!!.toInt() == 1))
+            auto_renew_layout.visibility = VISIBLE
+        else
+            auto_renew_layout.visibility = GONE
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             WindowInsetsControllerCompat(
@@ -235,18 +188,18 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             requireActivity().window.statusBarColor =
                 ResourcesCompat.getColor(resources, R.color.colorToolbar, null)
         }
-        if (BuildConfig.FLAVOR.equals("jioonline")) {
-            jio_footer.visibility = View.VISIBLE
-        } else {
-            jio_footer.visibility = View.GONE
-        }
+//        if (BuildConfig.FLAVOR.equals("jioonline")) {
+//            jio_footer.visibility = View.VISIBLE
+//        } else {
+//            jio_footer.visibility = View.GONE
+//        }
         loadData()
         loadCustomerInfo()
         initMvvm()
 
-        initializeNetBankingSelector()
-        initializeCardRecycler()
-        initializeWalletRecycler()
+//        initializeNetBankingSelector()
+//        initializeCardRecycler()
+//        initializeWalletRecycler()
         updateSubscriptionDetails()
 
         WebEngageController.trackEvent(
@@ -274,155 +227,180 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         payment_amount_title.text = "Cart total (" + (activity as PaymentActivity).items  + " items)"
         prefs.storeFeaturesCountInLastOrder((activity as PaymentActivity).items)
 
-        payment_submit.setOnClickListener {
+        pay_btn.setOnClickListener {
+            paymentData = JSONObject()
+            for (key in cartCheckoutData.keys()) {
+                if (key != "customerId" && key != "transaction_id") {
+                    paymentData.put(key, cartCheckoutData.get(key))
+                }
+            }
             if (paymentData.length() > 0) {
                 payThroughRazorPay()
             }
         }
 
-        add_new_cards.setOnClickListener {
-            if (paymentProceedFlag) {
-                WebEngageController.trackEvent(
-                        ADDONS_MARKETPLACE_ADD_NEW_CARD_CLICK,
-                        ADDONS_MARKETPLACE_ADD_NEW_CARD,
-                        NO_EVENT_VALUE
-                )
-                val args = Bundle()
-                args.putString("customerId", cartCheckoutData.getString("customerId"))
-//                addCardPopUpFragement.arguments = args
-//                addCardPopUpFragement.show((activity as PaymentActivity).supportFragmentManager, ADD_CARD_POPUP_FRAGMENT)
-
-                val addCardFragement = AddCardPopUpFragement.newInstance(this)
-                addCardFragement.arguments = args
-                addCardFragement.show(
-                        (activity as PaymentActivity).supportFragmentManager,
-                        ADD_CARD_POPUP_FRAGMENT
-                )
-                payment_submit.visibility = View.VISIBLE
-            } else {
-                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
-//                payment_main_layout.fullScroll(View.FOCUS_FORWARD)
-                payment_main_layout.smoothScrollTo(0, 0)
-                val businessFragment = BusinessDetailsFragment.newInstance(this)
-                businessFragment.show(
-                    (activity as PaymentActivity).supportFragmentManager,
-                    BUSINESS_DETAILS_FRAGMENT
-                )
-            }
-        }
-
-        show_more_bank.setOnClickListener {
-            if (paymentProceedFlag) {
-                WebEngageController.trackEvent(
-                        ADDONS_MARKETPLACE_SHOW_MORE_BANK_CLICK,
-                        ADDONS_MARKETPLACE_SHOW_MORE_BANK,
-                        NO_EVENT_VALUE
-                )
-                /*netBankingPopUpFragement.show(
-                        (activity as PaymentActivity).supportFragmentManager,
-                        NETBANKING_POPUP_FRAGMENT
-                )*/
-                val netBankingFragement = NetBankingPopUpFragement.newInstance(this)
-                netBankingFragement.show(
-                        (activity as PaymentActivity).supportFragmentManager,
-                        NETBANKING_POPUP_FRAGMENT
-                )
-                payment_submit.visibility = View.VISIBLE
-            } else {
-                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
-                payment_main_layout.smoothScrollTo(0, 0)
-                val businessFragment = BusinessDetailsFragment.newInstance(this)
-                businessFragment.show(
-                    (activity as PaymentActivity).supportFragmentManager,
-                    BUSINESS_DETAILS_FRAGMENT
-                )
-            }
-        }
-
-        add_upi_layout.setOnClickListener {
-            if (paymentProceedFlag) {
-                WebEngageController.trackEvent(
-                        ADDONS_MARKETPLACE_UPI_CLICK,
-                        ADDONS_MARKETPLACE_UPI,
-                        NO_EVENT_VALUE
-                )
-                /* upiPopUpFragement.show(
-                     (activity as PaymentActivity).supportFragmentManager,
-                     UPI_POPUP_FRAGMENT
-                 )*/
-                val upiFragment = UPIPopUpFragement.newInstance(this)
-                upiFragment.setAmount("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
-                upiFragment.show(
-                        (activity as PaymentActivity).supportFragmentManager,
-                        UPI_POPUP_FRAGMENT
-                )
-                payment_submit.visibility = View.VISIBLE
-            } else {
-                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
-                payment_main_layout.smoothScrollTo(0, 0)
-                val businessFragment = BusinessDetailsFragment.newInstance(this)
-                businessFragment.show(
-                    (activity as PaymentActivity).supportFragmentManager,
-                    BUSINESS_DETAILS_FRAGMENT
-                )
-            }
-        }
-
-        phonePe_layout.setOnClickListener {
-            if (appInstalledOrNot("com.phonepe.app")) {
-                if (!autoRenewState) {
-                    cartCheckoutData.put("method", "upi");  //Method specific fields
-                    cartCheckoutData.put("_[flow]", "intent");
-                    cartCheckoutData.put("upi_app_package_name", "com.phonepe.app");
+        btn_auto_pay.setOnClickListener {
+            paymentData = JSONObject()
+            for (key in cartCheckoutData.keys()) {
+                if (key != "customerId" && key != "transaction_id") {
+                    paymentData.put(key, cartCheckoutData.get(key))
                 }
+            }
+            if (paymentData.length() > 0) {
                 payThroughRazorPay()
-            } else {
-                Toasty.info(requireContext(), "Install PhonePe to Continue").show()
             }
         }
 
-        google_pay_layout.setOnClickListener {
-            if (appInstalledOrNot("com.google.android.apps.nbu.paisa.user")) {
-                if (!autoRenewState) {
-                    cartCheckoutData.put("method", "upi");  //Method specific fields
-                    cartCheckoutData.put("_[flow]", "intent");
-//                    cartCheckoutData.put("upi_provider", "google_pay");
-                    cartCheckoutData.put(
-                            "upi_app_package_name",
-                            "com.google.android.apps.nbu.paisa.user"
-                    );
-                }
-                payThroughRazorPay()
-            } else {
-                Toasty.info(requireContext(), "Install GPay to Continue").show()
-            }
+        share_payment_link_btn.setOnClickListener {
+            viewModel.GetPaymentLink((activity as? PaymentActivity)?.getAccessToken() ?: "",
+                (activity as PaymentActivity).fpid!!,
+                (activity as PaymentActivity).clientid,
+                requireArguments().getString("transaction_id")!!)
         }
 
-        paytm_layout.setOnClickListener {
-            if (appInstalledOrNot("net.one97.paytm")) {
-                if (!autoRenewState) {
-                    cartCheckoutData.put("method", "upi");  //Method specific fields
-                    cartCheckoutData.put("_[flow]", "intent");
-                    cartCheckoutData.put("upi_app_package_name", "net.one97.paytm");
-                }
-                payThroughRazorPay()
-            } else {
-                Toasty.info(requireContext(), "Install PAYTM to Continue").show()
-            }
-        }
+//        add_new_cards.setOnClickListener {
+//            if (paymentProceedFlag) {
+//                WebEngageController.trackEvent(
+//                        ADDONS_MARKETPLACE_ADD_NEW_CARD_CLICK,
+//                        ADDONS_MARKETPLACE_ADD_NEW_CARD,
+//                        NO_EVENT_VALUE
+//                )
+//                val args = Bundle()
+//                args.putString("customerId", cartCheckoutData.getString("customerId"))
+////                addCardPopUpFragement.arguments = args
+////                addCardPopUpFragement.show((activity as PaymentActivity).supportFragmentManager, ADD_CARD_POPUP_FRAGMENT)
+//
+//                val addCardFragement = AddCardPopUpFragement.newInstance(this)
+//                addCardFragement.arguments = args
+//                addCardFragement.show(
+//                        (activity as PaymentActivity).supportFragmentManager,
+//                        ADD_CARD_POPUP_FRAGMENT
+//                )
+//                payment_submit.visibility = View.VISIBLE
+//            } else {
+//                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+////                payment_main_layout.fullScroll(View.FOCUS_FORWARD)
+//                payment_main_layout.smoothScrollTo(0, 0)
+//                val businessFragment = BusinessDetailsFragment.newInstance(this)
+//                businessFragment.show(
+//                    (activity as PaymentActivity).supportFragmentManager,
+//                    BUSINESS_DETAILS_FRAGMENT
+//                )
+//            }
+//        }
 
-        bhim_upi_layout.setOnClickListener {
-            if (appInstalledOrNot("in.org.npci.upiapp")) {
-                if (!autoRenewState) {
-                    cartCheckoutData.put("method", "upi");  //Method specific fields
-                    cartCheckoutData.put("_[flow]", "intent");
-                    cartCheckoutData.put("upi_app_package_name", "in.org.npci.upiapp");
-                }
-                payThroughRazorPay()
-            } else {
-                Toasty.info(requireContext(), "Install BHIM to Continue").show()
-            }
-        }
+//        show_more_bank.setOnClickListener {
+//            if (paymentProceedFlag) {
+//                WebEngageController.trackEvent(
+//                        ADDONS_MARKETPLACE_SHOW_MORE_BANK_CLICK,
+//                        ADDONS_MARKETPLACE_SHOW_MORE_BANK,
+//                        NO_EVENT_VALUE
+//                )
+//                /*netBankingPopUpFragement.show(
+//                        (activity as PaymentActivity).supportFragmentManager,
+//                        NETBANKING_POPUP_FRAGMENT
+//                )*/
+//                val netBankingFragement = NetBankingPopUpFragement.newInstance(this)
+//                netBankingFragement.show(
+//                        (activity as PaymentActivity).supportFragmentManager,
+//                        NETBANKING_POPUP_FRAGMENT
+//                )
+//                payment_submit.visibility = View.VISIBLE
+//            } else {
+//                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+//                payment_main_layout.smoothScrollTo(0, 0)
+//                val businessFragment = BusinessDetailsFragment.newInstance(this)
+//                businessFragment.show(
+//                    (activity as PaymentActivity).supportFragmentManager,
+//                    BUSINESS_DETAILS_FRAGMENT
+//                )
+//            }
+//        }
+
+//        add_upi_layout.setOnClickListener {
+//            if (paymentProceedFlag) {
+//                WebEngageController.trackEvent(
+//                        ADDONS_MARKETPLACE_UPI_CLICK,
+//                        ADDONS_MARKETPLACE_UPI,
+//                        NO_EVENT_VALUE
+//                )
+//                /* upiPopUpFragement.show(
+//                     (activity as PaymentActivity).supportFragmentManager,
+//                     UPI_POPUP_FRAGMENT
+//                 )*/
+//                val upiFragment = UPIPopUpFragement.newInstance(this)
+//                upiFragment.setAmount("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
+//                upiFragment.show(
+//                        (activity as PaymentActivity).supportFragmentManager,
+//                        UPI_POPUP_FRAGMENT
+//                )
+//                payment_submit.visibility = View.VISIBLE
+//            } else {
+//                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+//                payment_main_layout.smoothScrollTo(0, 0)
+//                val businessFragment = BusinessDetailsFragment.newInstance(this)
+//                businessFragment.show(
+//                    (activity as PaymentActivity).supportFragmentManager,
+//                    BUSINESS_DETAILS_FRAGMENT
+//                )
+//            }
+//        }
+
+//        phonePe_layout.setOnClickListener {
+//            if (appInstalledOrNot("com.phonepe.app")) {
+//                if (!autoRenewState) {
+//                    cartCheckoutData.put("method", "upi");  //Method specific fields
+//                    cartCheckoutData.put("_[flow]", "intent");
+//                    cartCheckoutData.put("upi_app_package_name", "com.phonepe.app");
+//                }
+//                payThroughRazorPay()
+//            } else {
+//                Toasty.info(requireContext(), "Install PhonePe to Continue").show()
+//            }
+//        }
+//
+//        google_pay_layout.setOnClickListener {
+//            if (appInstalledOrNot("com.google.android.apps.nbu.paisa.user")) {
+//                if (!autoRenewState) {
+//                    cartCheckoutData.put("method", "upi");  //Method specific fields
+//                    cartCheckoutData.put("_[flow]", "intent");
+////                    cartCheckoutData.put("upi_provider", "google_pay");
+//                    cartCheckoutData.put(
+//                            "upi_app_package_name",
+//                            "com.google.android.apps.nbu.paisa.user"
+//                    );
+//                }
+//                payThroughRazorPay()
+//            } else {
+//                Toasty.info(requireContext(), "Install GPay to Continue").show()
+//            }
+//        }
+//
+//        paytm_layout.setOnClickListener {
+//            if (appInstalledOrNot("net.one97.paytm")) {
+//                if (!autoRenewState) {
+//                    cartCheckoutData.put("method", "upi");  //Method specific fields
+//                    cartCheckoutData.put("_[flow]", "intent");
+//                    cartCheckoutData.put("upi_app_package_name", "net.one97.paytm");
+//                }
+//                payThroughRazorPay()
+//            } else {
+//                Toasty.info(requireContext(), "Install PAYTM to Continue").show()
+//            }
+//        }
+//
+//        bhim_upi_layout.setOnClickListener {
+//            if (appInstalledOrNot("in.org.npci.upiapp")) {
+//                if (!autoRenewState) {
+//                    cartCheckoutData.put("method", "upi");  //Method specific fields
+//                    cartCheckoutData.put("_[flow]", "intent");
+//                    cartCheckoutData.put("upi_app_package_name", "in.org.npci.upiapp");
+//                }
+//                payThroughRazorPay()
+//            } else {
+//                Toasty.info(requireContext(), "Install BHIM to Continue").show()
+//            }
+//        }
 
 //        generate_payment_link.setOnClickListener {
 //                WebEngageController.trackEvent(
@@ -454,11 +432,11 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 //                }
 //        }
 
-        payment_view_details.setOnClickListener {
-            payment_main_layout.post {
-                payment_main_layout.fullScroll(View.FOCUS_DOWN)
-            }
-        }
+//        payment_view_details.setOnClickListener {
+//            payment_main_layout.post {
+//                payment_main_layout.fullScroll(View.FOCUS_DOWN)
+//            }
+//        }
 
         coupon_discount_value.setOnClickListener {
 
@@ -514,7 +492,6 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         auto_renew_switch.setOnClickListener {
             if (autoRenewState) {
                 autoRenewState = false
-                netbanking_layout.visibility = View.VISIBLE
                 feature_validity.text = ""
                 validity_months.setText(
                     prefs.getValidityMonths() + Utils.yearOrMonthText(prefs.getValidityMonths()!!.toInt(), requireActivity(), true)
@@ -565,24 +542,12 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 )
 
                 auto_renew_description.setText(spannableText, TextView.BufferType.SPANNABLE)
-                upi_payment_title.text = "UPI"
-                netbanking_title.text = "Net Banking"
-                saved_cards_layout.visibility = View.VISIBLE
-                pay_by_link_section.visibility = View.VISIBLE
-                upi_list_layout.visibility = View.VISIBLE
-                upi_view_dummy.visibility = View.VISIBLE
-                auto_renewal_upi_layout.visibility = GONE
-                add_upi_layout.visibility = VISIBLE
-                layout_auto_renew_bank.visibility = GONE
-                payment_view_dummy.visibility = VISIBLE
-                netbanking_top_banks_layout.visibility = VISIBLE
-                payment_view_dummy2.visibility = VISIBLE
-                show_more_bank.visibility = VISIBLE
+                footer_auto_pay_layout.visibility = GONE
+                footer_payment_layout.visibility = VISIBLE
 
                 updateAutoRenewState()
             } else {
                 autoRenewState = true
-                netbanking_layout.visibility = View.GONE
                 feature_validity.text = "Renewal period"
                 validity_months.setText(
                     "Every "+prefs.getValidityMonths() + Utils.yearOrMonthText(prefs.getValidityMonths()!!.toInt(), requireActivity(), true)
@@ -608,17 +573,30 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                 val oneMonthFormat = SimpleDateFormat("dd MMM yy")
                 oneMonthFormat.setTimeZone(oneMonthFromNow.getTimeZone())
 
+                val validityMonths = if(!prefs.getValidityMonths().isNullOrEmpty()) {
+                    if(prefs.getYearPricing())
+                        prefs.getValidityMonths()!!.toDouble() / 12
+                    else
+                        prefs.getValidityMonths()!!.toDouble()
+                } else 0.0
+
                 if(prefs.getAutoRenewSubscriptionID().isNullOrEmpty()) {
+                    footer_auto_pay_layout.visibility = GONE
+                    footer_payment_layout.visibility = GONE
                     viewModel.markOrderForAutoRenewal(
                         (activity as? PaymentActivity)?.getAccessToken() ?: "",
                         OrderAutoRenewRequest(
                             true,
                             (activity as PaymentActivity).clientid,
                             (activity as PaymentActivity).fpid!!,
-                            requireArguments().getString("transaction_id")!!
+                            requireArguments().getString("transaction_id")!!,
+                            if(prefs.getYearPricing()) "year" else "month",
+                            if(validityMonths > validityMonths.toInt()) validityMonths.toInt() + 1 else validityMonths.toInt()
                         )
                     )
                 }else{
+                    footer_auto_pay_layout.visibility = VISIBLE
+                    footer_payment_layout.visibility = GONE
                     updateAutoRenewState()
                 }
 
@@ -647,68 +625,42 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
                         0,
                         0
                 )
-                auto_renewal_upi_layout.visibility = VISIBLE
-                layout_auto_renew_bank.visibility = VISIBLE
-                show_more_bank.visibility = GONE
-                upi_payment_title.text = "UPI Auto Renewal"
-                netbanking_title.text = "Bank Enabled Auto Renewal"
-                saved_cards_layout.visibility = View.GONE
-                pay_by_link_section.visibility = View.GONE
-                upi_list_layout.visibility = View.GONE
-                add_upi_layout.visibility = GONE
-                payment_view_dummy.visibility = GONE
-                upi_view_dummy.visibility = View.GONE
-                netbanking_top_banks_layout.visibility = GONE
-                payment_view_dummy2.visibility = GONE
 
             }
         }
-        btn_auto_renew_upi.setOnClickListener {
-            if (paymentProceedFlag) {
-                WebEngageController.trackEvent(
-                    ADDONS_MARKETPLACE_UPI_CLICK,
-                    ADDONS_MARKETPLACE_UPI,
-                    NO_EVENT_VALUE
-                )
-                /* upiPopUpFragement.show(
-                     (activity as PaymentActivity).supportFragmentManager,
-                     UPI_POPUP_FRAGMENT
-                 )*/
-                val upiFragment = UPIPopUpFragement.newInstance(this)
-                upiFragment.setAmount("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
-                upiFragment.show(
-                    (activity as PaymentActivity).supportFragmentManager,
-                    UPI_POPUP_FRAGMENT
-                )
-                payment_submit.visibility = View.VISIBLE
-            } else {
-                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
-                payment_main_layout.smoothScrollTo(0, 0)
-                val businessFragment = BusinessDetailsFragment.newInstance(this)
-                businessFragment.show(
-                    (activity as PaymentActivity).supportFragmentManager,
-                    BUSINESS_DETAILS_FRAGMENT
-                )
-            }
-            WebEngageController.trackEvent(
-                    MARKETPLACE_UPI_AUTO_RENEWAL_CLICK,
-                    PAYMENT_SCREEN,
-                    NO_EVENT_VALUE
-            )
-        }
-        btn_setup_bank_auto_renew.setOnClickListener {
-            WebEngageController.trackEvent(
-                    MARKETPLACE_AUTO_RENEW_BANK_CLICK,
-                    PAYMENT_SCREEN,
-                    NO_EVENT_VALUE
-            )
-        }
-        /*supply_place_button.setOnClickListener{
-            stateFragment.show(
-                (activity as PaymentActivity).supportFragmentManager,
-                STATE_LIST_FRAGMENT
-            )
-        }*/
+//        btn_auto_renew_upi.setOnClickListener {
+//            if (paymentProceedFlag) {
+//                WebEngageController.trackEvent(
+//                    ADDONS_MARKETPLACE_UPI_CLICK,
+//                    ADDONS_MARKETPLACE_UPI,
+//                    NO_EVENT_VALUE
+//                )
+//                /* upiPopUpFragement.show(
+//                     (activity as PaymentActivity).supportFragmentManager,
+//                     UPI_POPUP_FRAGMENT
+//                 )*/
+//                val upiFragment = UPIPopUpFragement.newInstance(this)
+//                upiFragment.setAmount("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
+//                upiFragment.show(
+//                    (activity as PaymentActivity).supportFragmentManager,
+//                    UPI_POPUP_FRAGMENT
+//                )
+//                payment_submit.visibility = View.VISIBLE
+//            } else {
+//                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+//                payment_main_layout.smoothScrollTo(0, 0)
+//                val businessFragment = BusinessDetailsFragment.newInstance(this)
+//                businessFragment.show(
+//                    (activity as PaymentActivity).supportFragmentManager,
+//                    BUSINESS_DETAILS_FRAGMENT
+//                )
+//            }
+//            WebEngageController.trackEvent(
+//                    MARKETPLACE_UPI_AUTO_RENEWAL_CLICK,
+//                    PAYMENT_SCREEN,
+//                    NO_EVENT_VALUE
+//            )
+//        }
         if (!prefs.getGstRegistered()) {
             business_gstin.text = "Have a GST number?"
 //            business_gstin_missing.text = "Not Registered with GST"
@@ -732,66 +684,66 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             }
         }
 
-        upi1.setOnClickListener {
-
-            if (clp2.visibility == View.GONE) {
-                TransitionManager.beginDelayedTransition(upi1, AutoTransition())
-                clp2.visibility = View.VISIBLE
-                arw2?.animate()?.rotation(0f)?.start()
-            } else {
-                TransitionManager.beginDelayedTransition(upi1, AutoTransition())
-                clp2?.visibility = View.GONE
-                arw2?.animate()?.rotation(180f)?.start()
-            }
-
-        }
-
-        upi2.setOnClickListener {
-
-            if (clp3.visibility == View.GONE) {
-                TransitionManager.beginDelayedTransition(upi2, AutoTransition())
-                clp3.visibility = View.VISIBLE
-                arw3?.animate()?.rotation(0f)?.start()
-            } else {
-                TransitionManager.beginDelayedTransition(upi2, AutoTransition())
-                clp3?.visibility = View.GONE
-                arw3?.animate()?.rotation(180f)?.start()
-            }
-
-        }
-
-        upi4.setOnClickListener {
-
-            if (clp4.visibility == View.GONE) {
-                TransitionManager.beginDelayedTransition(upi4, AutoTransition())
-                clp4.visibility = View.VISIBLE
-                arw4?.animate()?.rotation(0f)?.start()
-            } else {
-                TransitionManager.beginDelayedTransition(upi4, AutoTransition())
-                clp4?.visibility = View.GONE
-                arw4?.animate()?.rotation(180f)?.start()
-            }
-
-        }
-
-        upi5.setOnClickListener {
-
-            if (clp5.visibility == View.GONE) {
-                TransitionManager.beginDelayedTransition(upi5, AutoTransition())
-                clp5.visibility = View.VISIBLE
-                arw5?.animate()?.rotation(0f)?.start()
-            } else {
-                TransitionManager.beginDelayedTransition(upi5, AutoTransition())
-                clp5?.visibility = View.GONE
-                arw5?.animate()?.rotation(180f)?.start()
-                payment_main_layout.post {
-                    payment_main_layout.fullScroll(View.FOCUS_DOWN)
-                }
-            }
-            payment_main_layout.post {
-                payment_main_layout.fullScroll(View.FOCUS_DOWN)
-            }
-        }
+//        upi1.setOnClickListener {
+//
+//            if (clp2.visibility == View.GONE) {
+//                TransitionManager.beginDelayedTransition(upi1, AutoTransition())
+//                clp2.visibility = View.VISIBLE
+//                arw2?.animate()?.rotation(0f)?.start()
+//            } else {
+//                TransitionManager.beginDelayedTransition(upi1, AutoTransition())
+//                clp2?.visibility = View.GONE
+//                arw2?.animate()?.rotation(180f)?.start()
+//            }
+//
+//        }
+//
+//        upi2.setOnClickListener {
+//
+//            if (clp3.visibility == View.GONE) {
+//                TransitionManager.beginDelayedTransition(upi2, AutoTransition())
+//                clp3.visibility = View.VISIBLE
+//                arw3?.animate()?.rotation(0f)?.start()
+//            } else {
+//                TransitionManager.beginDelayedTransition(upi2, AutoTransition())
+//                clp3?.visibility = View.GONE
+//                arw3?.animate()?.rotation(180f)?.start()
+//            }
+//
+//        }
+//
+//        upi4.setOnClickListener {
+//
+//            if (clp4.visibility == View.GONE) {
+//                TransitionManager.beginDelayedTransition(upi4, AutoTransition())
+//                clp4.visibility = View.VISIBLE
+//                arw4?.animate()?.rotation(0f)?.start()
+//            } else {
+//                TransitionManager.beginDelayedTransition(upi4, AutoTransition())
+//                clp4?.visibility = View.GONE
+//                arw4?.animate()?.rotation(180f)?.start()
+//            }
+//
+//        }
+//
+//        upi5.setOnClickListener {
+//
+//            if (clp5.visibility == View.GONE) {
+//                TransitionManager.beginDelayedTransition(upi5, AutoTransition())
+//                clp5.visibility = View.VISIBLE
+//                arw5?.animate()?.rotation(0f)?.start()
+//            } else {
+//                TransitionManager.beginDelayedTransition(upi5, AutoTransition())
+//                clp5?.visibility = View.GONE
+//                arw5?.animate()?.rotation(180f)?.start()
+//                payment_main_layout.post {
+//                    payment_main_layout.fullScroll(View.FOCUS_DOWN)
+//                }
+//            }
+//            payment_main_layout.post {
+//                payment_main_layout.fullScroll(View.FOCUS_DOWN)
+//            }
+//        }
 
         gst_discount.setOnClickListener {
             showPopupWindow(it)
@@ -854,13 +806,8 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
 
     fun loadData() {
-        viewModel.loadpaymentMethods(razorpay)
+//        viewModel.loadpaymentMethods(razorpay)
 //        viewModel.getRazorPayToken(cartCheckoutData.getString("customerId"))
-
-        viewModel.GetPaymentLink((activity as? PaymentActivity)?.getAccessToken() ?: "",
-            (activity as PaymentActivity).fpid!!,
-            (activity as PaymentActivity).clientid,
-            requireArguments().getString("transaction_id")!!)
     }
     fun getAccessToken(): String {
         return context?.let { UserSessionManager(it).getAccessTokenAuth()?.barrierToken() } ?: ""
@@ -873,90 +820,93 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         viewModel.orderForAutoRenewalResult().observe(viewLifecycleOwner, Observer {
             //auto renew switch API call for payment
 //            subscriptionID = it.Result.SubscriptionId
+            footer_auto_pay_layout.visibility = VISIBLE
+            footer_payment_layout.visibility = GONE
             prefs.storeAutoRenewSubscriptionID(it.Result.SubscriptionId)
             updateAutoRenewState()
         })
 
+        viewModel.getLoaderStatus().observe(this, Observer {
+            if (it) {
+                showProgress("Loading Please wait...")
+            } else {
+                hideProgress()
+            }
+        })
+
         viewModel.updateLink().observe(viewLifecycleOwner,  Observer {
-//            generate_payment_link.setOnClickListener {
-//                final_payment_links.visibility=View.VISIBLE
-//                generate_payment_link.visibility=View.GONE
-//                payment_main_layout.post {
-//                    payment_main_layout.fullScroll(View.FOCUS_DOWN)
+            val paymentLinkPopup = PaymentLinkPopUpFragement()
+            paymentLinkPopup.setAmount(totalAmount.toString())
+            paymentLinkPopup.setPaymentLink(it.Result)
+            paymentLinkPopup.show(childFragmentManager, PaymentLinkPopUpFragement::class.java.name)
+        })
+
+//        viewModel.updateLink().observe(viewLifecycleOwner,  Observer {
+//            pay_link.text=it.Result
+//            val link = it.Result
+//                pay_link.setOnClickListener {
+//                    val customIntent = CustomTabsIntent.Builder()
+//
+//                    customIntent.setToolbarColor(
+//                        ContextCompat.getColor(
+//                            activity as PaymentActivity,
+//                            R.color.colorAccent1
+//                        )
+//                    )
+//                    openCustomTab(
+//                        activity as PaymentActivity,
+//                        customIntent.build(),
+//                        Uri.parse(link)
+//                    )
 //                }
+//
+//            copy_link.setOnClickListener {
+//                val clipboard: ClipboardManager =(activity as PaymentActivity).getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+//                val clip = ClipData.newPlainText(pay_link?.text, pay_link?.text)
+//                clipboard.setPrimaryClip(clip)
+//                Toast.makeText(
+//                    context,
+//                    "Link copied!!",
+//                    Toast.LENGTH_SHORT
+//                )
+//                    .show()
 //            }
-            pay_link.text=it.Result
-            val link = it.Result
-//            pay_link.setOnClickListener {
-//                val payFragment = WebViewFragment
-//                val args = Bundle()
-//                args.putString("link", link)
-//                payFragment.arguments = args
-//                (activity as PaymentActivity).addFragment(payFragment, Constants.WEB_VIEW_FRAGMENT)
+//            share.setOnClickListener {
+//                val txtIntent = Intent(Intent.ACTION_SEND)
+//                txtIntent.type = "text/link"
+//                txtIntent.putExtra(Intent.EXTRA_TEXT, pay_link?.text.toString())
+//                startActivity(Intent.createChooser(txtIntent, "Share via"))
+//            }
+//
+//        })
 
-                pay_link.setOnClickListener {
-                    val customIntent = CustomTabsIntent.Builder()
+//        viewModel.cardData().observe(this, Observer {
+//            Log.i("cardObserver >>>>>", it.toString())
+//            paymentData = it
+//            payThroughRazorPay()
+//        })
 
-                    customIntent.setToolbarColor(
-                        ContextCompat.getColor(
-                            activity as PaymentActivity,
-                            R.color.colorAccent1
-                        )
-                    )
-                    openCustomTab(
-                        activity as PaymentActivity,
-                        customIntent.build(),
-                        Uri.parse(link)
-                    )
-                }
+//        viewModel.netBankingData().observe(this, Observer {
+//            Log.i("netBankingObserver >", it.toString())
+//            paymentData = it
+//            payThroughRazorPay()
+////            payThroughRazorPayMoreBanks()
+//        })
 
-            copy_link.setOnClickListener {
-                val clipboard: ClipboardManager =(activity as PaymentActivity).getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val clip = ClipData.newPlainText(pay_link?.text, pay_link?.text)
-                clipboard.setPrimaryClip(clip)
-                Toast.makeText(
-                    context,
-                    "Link copied!!",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
-            }
-            share.setOnClickListener {
-                val txtIntent = Intent(Intent.ACTION_SEND)
-                txtIntent.type = "text/link"
-                txtIntent.putExtra(Intent.EXTRA_TEXT, pay_link?.text.toString())
-                startActivity(Intent.createChooser(txtIntent, "Share via"))
-            }
-
-        })
-
-        viewModel.cardData().observe(this, Observer {
-            Log.i("cardObserver >>>>>", it.toString())
-            paymentData = it
-            payThroughRazorPay()
-        })
-
-        viewModel.netBankingData().observe(this, Observer {
-            Log.i("netBankingObserver >", it.toString())
-            paymentData = it
-            payThroughRazorPay()
-//            payThroughRazorPayMoreBanks()
-        })
-
-        viewModel.upiPaymentData().observe(this, Observer {
-            Log.i("upiPaymentObserver >", it.toString())
-            paymentData = it
-            payThroughRazorPay()
-        })
-        viewModel.externalEmailPaymentData().observe(this, Observer {
-            Log.i("emailPaymentObserver >", it.toString())
-            paymentData = it
-            payViaPaymentLink()
-        })
-        viewModel.walletPaymentData().observe(this, Observer {
-            Log.i("walletPaymentObserver >", it.toString())
-            loadWallet(it)
-        })
+//        viewModel.upiPaymentData().observe(this, Observer {
+//            Log.i("upiPaymentObserver >", it.toString())
+//            paymentData = it
+//            payThroughRazorPay()
+//        })
+//        viewModel.externalEmailPaymentData().observe(this, Observer {
+//            Log.i("emailPaymentObserver >", it.toString())
+//            paymentData = it
+//            payViaPaymentLink()
+//        })
+//        viewModel.walletPaymentData().observe(this, Observer {
+//            Log.i("walletPaymentObserver >", it.toString())
+////            loadWallet(it)
+//        })
         viewModel.getPamentUsingExternalLink().observe(this, Observer {
 //            if (it != null && it.equals("SUCCESSFULLY ADDED TO QUEUE")) {
             if (it != null && it.equals("OK")) {
@@ -1515,23 +1465,42 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
     fun payThroughRazorPay() {
         try {
-            for (key in cartCheckoutData.keys()) {
-                if (key != "customerId" && key != "transaction_id") {
-                    paymentData.put(key, cartCheckoutData.get(key))
-                }
-            }
+            val co = Checkout()
+            co.setKeyID(Constants.RAZORPAY_KEY)
+//            for (key in cartCheckoutData.keys()) {
+//                if (key != "customerId" && key != "transaction_id") {
+//                    paymentData.put(key, cartCheckoutData.get(key))
+//                }
+//            }
             var firebaseAnalytics = Firebase.analytics
             firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_PAYMENT_INFO, null)
 
-            val args = Bundle()
-            args.putString("data", paymentData.toString())
-            razorPayWebView.arguments = args
+
+            val retryObj = JSONObject();
+            retryObj.put("enabled", true);
+            retryObj.put("max_count", 4);
+            paymentData.put("retry", retryObj);
+
+            val prefill = JSONObject()
+            prefill.put("email", paymentData.get("email"))
+            prefill.put("contact",paymentData.get("contact"))
+
+            paymentData.put("prefill",prefill)
+
+            (activity as PaymentActivity).setPayData(paymentData)
+
+            co.open(activity, paymentData)
+//            val args = Bundle()
+//            args.putString("data", paymentData.toString())
+//            razorPayWebView.arguments = args
+
+//            standard checkout
 
             //RazorPay web
-            razorPayWebView.show(
-                    (activity as PaymentActivity).supportFragmentManager,
-                    RAZORPAY_WEBVIEW_POPUP_FRAGMENT
-            )
+//            razorPayWebView.show(
+//                    (activity as PaymentActivity).supportFragmentManager,
+//                    RAZORPAY_WEBVIEW_POPUP_FRAGMENT
+//            )
 
             paymentData = JSONObject()
 
@@ -1573,87 +1542,87 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         }
     }
 
-    fun initializeCardRecycler() {
-        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
-        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        card_recycler.apply {
-            layoutManager = gridLayoutManager
-            card_recycler.adapter = cardPaymentAdapter
+//    fun initializeCardRecycler() {
+//        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
+//        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+//        card_recycler.apply {
+//            layoutManager = gridLayoutManager
+//            card_recycler.adapter = cardPaymentAdapter
+//
+//        }
+//    }
 
-        }
-    }
+//    fun initializeNetBankingSelector() {
+//
+//        Glide.with(requireContext()).load(netbankingList.get(0).bankImage).into(axis_bank_image)
+//        axis_bank_layout.setOnClickListener {
+//            Log.v("axis_bank_layout", " " + paymentProceedFlag)
+//            if (paymentProceedFlag) {
+//                netbankingSelected(netbankingList.get(0).bankCode)
+//                payment_submit.visibility = View.VISIBLE
+//            } else {
+//                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+//                payment_main_layout.smoothScrollTo(0, 0)
+//            }
+//        }
+//
+//        Glide.with(requireContext()).load(netbankingList.get(1).bankImage).into(icici_bank_image)
+//        icici_bank_layout.setOnClickListener {
+//            if (paymentProceedFlag) {
+//                netbankingSelected(netbankingList.get(1).bankCode)
+//                payment_submit.visibility = View.VISIBLE
+//            } else {
+//                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+//                payment_main_layout.smoothScrollTo(0, 0)
+//            }
+//
+//        }
+//
+//        Glide.with(requireContext()).load(netbankingList.get(2).bankImage).into(hdfc_bank_image)
+//        hdfc_bank_layout.setOnClickListener {
+//            if (paymentProceedFlag) {
+//                netbankingSelected(netbankingList.get(2).bankCode)
+//                payment_submit.visibility = View.VISIBLE
+//            } else {
+//                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+//                payment_main_layout.smoothScrollTo(0, 0)
+//            }
+//
+//        }
+//
+//        Glide.with(requireContext()).load(netbankingList.get(3).bankImage).into(citi_bank_image)
+//        citi_bank_layout.setOnClickListener {
+//            if (paymentProceedFlag) {
+//                netbankingSelected(netbankingList.get(3).bankCode)
+//                payment_submit.visibility = View.VISIBLE
+//            } else {
+//                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+//                payment_main_layout.smoothScrollTo(0, 0)
+//            }
+//
+//        }
+//
+//        Glide.with(requireContext()).load(netbankingList.get(4).bankImage).into(sbi_bank_image)
+//        sbi_bank_layout.setOnClickListener {
+//            if (paymentProceedFlag) {
+//                netbankingSelected(netbankingList.get(4).bankCode)
+//                payment_submit.visibility = View.VISIBLE
+//            } else {
+//                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
+//                payment_main_layout.smoothScrollTo(0, 0)
+//            }
+//
+//        }
+//    }
 
-    fun initializeNetBankingSelector() {
-
-        Glide.with(requireContext()).load(netbankingList.get(0).bankImage).into(axis_bank_image)
-        axis_bank_layout.setOnClickListener {
-            Log.v("axis_bank_layout", " " + paymentProceedFlag)
-            if (paymentProceedFlag) {
-                netbankingSelected(netbankingList.get(0).bankCode)
-                payment_submit.visibility = View.VISIBLE
-            } else {
-                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
-                payment_main_layout.smoothScrollTo(0, 0)
-            }
-        }
-
-        Glide.with(requireContext()).load(netbankingList.get(1).bankImage).into(icici_bank_image)
-        icici_bank_layout.setOnClickListener {
-            if (paymentProceedFlag) {
-                netbankingSelected(netbankingList.get(1).bankCode)
-                payment_submit.visibility = View.VISIBLE
-            } else {
-                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
-                payment_main_layout.smoothScrollTo(0, 0)
-            }
-
-        }
-
-        Glide.with(requireContext()).load(netbankingList.get(2).bankImage).into(hdfc_bank_image)
-        hdfc_bank_layout.setOnClickListener {
-            if (paymentProceedFlag) {
-                netbankingSelected(netbankingList.get(2).bankCode)
-                payment_submit.visibility = View.VISIBLE
-            } else {
-                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
-                payment_main_layout.smoothScrollTo(0, 0)
-            }
-
-        }
-
-        Glide.with(requireContext()).load(netbankingList.get(3).bankImage).into(citi_bank_image)
-        citi_bank_layout.setOnClickListener {
-            if (paymentProceedFlag) {
-                netbankingSelected(netbankingList.get(3).bankCode)
-                payment_submit.visibility = View.VISIBLE
-            } else {
-                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
-                payment_main_layout.smoothScrollTo(0, 0)
-            }
-
-        }
-
-        Glide.with(requireContext()).load(netbankingList.get(4).bankImage).into(sbi_bank_image)
-        sbi_bank_layout.setOnClickListener {
-            if (paymentProceedFlag) {
-                netbankingSelected(netbankingList.get(4).bankCode)
-                payment_submit.visibility = View.VISIBLE
-            } else {
-                payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
-                payment_main_layout.smoothScrollTo(0, 0)
-            }
-
-        }
-    }
-
-    fun initializeWalletRecycler() {
-        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
-        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        wallet_recycler.apply {
-            layoutManager = gridLayoutManager
-            wallet_recycler.adapter = walletAdapter
-        }
-    }
+//    fun initializeWalletRecycler() {
+//        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
+//        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+//        wallet_recycler.apply {
+//            layoutManager = gridLayoutManager
+//            wallet_recycler.adapter = walletAdapter
+//        }
+//    }
 
     fun netbankingSelected(bankCode: String) {
         clearPayment()
@@ -1671,41 +1640,6 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         payThroughRazorPay()
     }
 
-    override fun walletSelected(data: String) {
-        Log.i("walletSelected", data)
-        if (paymentProceedFlag) {
-            if(cartCheckoutData.has("upi_app_package_name")){
-                cartCheckoutData.remove("method")
-                cartCheckoutData.remove("_[flow]")
-                cartCheckoutData.remove("upi_app_package_name")
-            }
-            WebEngageController.trackEvent(ADDONS_MARKETPLACE_WALLET_SELECTED, data, NO_EVENT_VALUE)
-            val item = JSONObject()
-            item.put("method", "wallet");
-            item.put("wallet", data);
-            paymentData = item
-            payThroughRazorPay()
-            payment_submit.visibility = View.VISIBLE
-        } else {
-            payment_business_details_layout.setBackgroundResource(R.drawable.all_side_curve_bg_payment)
-            payment_main_layout.smoothScrollTo(0, 0)
-        }
-    }
-
-    private fun loadWallet(data: JSONObject) {
-        val paymentMethods = data.get("wallet") as JSONObject
-        val retMap: Map<String, Boolean> = Gson().fromJson(
-                paymentMethods.toString(), object : TypeToken<HashMap<String, Boolean>>() {}.type
-        )
-        val list = ArrayList<String>()
-        retMap.map {
-            if (it.value) {
-                list.add(it.key)
-            }
-        }
-        walletAdapter.addupdates(list)
-    }
-
 
     override fun onDestroy() {
         super.onDestroy()
@@ -1717,20 +1651,6 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 
         //cartOriginalPrice
         val cartOriginalPrice = prefs.getCartOriginalAmount()
-
-//        //coupon discount percentage
-//        val couponDiscountPercentage = prefs.getCouponDiscountPercentage()
-//        if(couponDiscountPercentage>0) {
-//            long_validity_discount_title.visibility = View.VISIBLE
-//            long_validity_discount_value.visibility = View.VISIBLE
-//            long_validity_discount_title.setText("Long validity discount (" + couponDiscountPercentage.toString() + "%)")
-//            long_validity_discount_value.setText(
-//                "-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(0)
-//            )
-//        }else{
-//            long_validity_discount_title.visibility = View.GONE
-//            long_validity_discount_value.visibility = View.GONE
-//        }
 
         //coupon discount amount
         if (!requireArguments().getString("couponTitle").isNullOrEmpty()) {
@@ -1770,35 +1690,15 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
         validity_period_value.setText(
             nowFormat.format(Calendar.getInstance().time) + " - " + nowFormat.format(oneMonthFromNow.time)
         )
-
-
-//        auto_renew_description.setText(
-//            "You are paying ₹" + totalAmount + " only for " +
-//                    if (prefs.getValidityMonths()!!.toInt() > 1) prefs.getValidityMonths() + " Months"
-//                    else prefs.getValidityMonths() + " Month"
-//                                + ". Your subscription will end on " +
-//                                nowFormat.format(oneMonthFromNow.time)
-//        )
-
-    //igsttin value
-//    val temp = ((cartOriginalPrice - couponDiscountAmount) * 18) / 100
-//    val taxValue = Math.round(temp * 100) / 100.0
-//    coupon_discount_title.setText("‘FESTIVE’ coupon discount")
-//    coupon_discount_value.setText("+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
-
-//    order_total_value.setText(
-//      "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
-//    )
         payment_subscription_details_title.setText(
                 "PAYABLE AMOUNT: ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
         )
         payment_total_value.setText(
                 "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
         )
-        items_cost.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
-//    paymentBannerAmount.setText(
-//      "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)
-//    )
+        pay_btn.setText(
+                "PAY ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount)+" now"
+        )
     }
 
     private fun loadCustomerInfo() {
@@ -1848,5 +1748,34 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
             cartCheckoutData.remove("upi_app_package_name")
         }
     }
+
+    override fun walletSelected(data: String) {
+//        ("Not yet implemented")
+    }
+
+    private fun showProgress(message: String = "Please wait...") {
+        try {
+            if (!progressDialog.isShowing) {
+                progressDialog.setMessage(message)
+                progressDialog.setCancelable(false)
+                progressDialog.show()
+            }
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+            e.printStackTrace()
+        }
+    }
+
+    private fun hideProgress() {
+        try {
+//      if (progressDialog.isShowing) progressDialog.hide()
+            if (progressDialog.isShowing) progressDialog.cancel()
+        } catch (e: Exception) {
+            SentryController.captureException(e)
+            e.printStackTrace()
+        }
+    }
+
+
 
 }

@@ -27,9 +27,9 @@ import com.boost.payment.base_class.BaseViewModel
 import com.framework.analytics.SentryController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.razorpay.BaseRazorpay
-import com.razorpay.PaymentMethodsCallback
-import com.razorpay.Razorpay
+//import com.razorpay.BaseRazorpay
+//import com.razorpay.PaymentMethodsCallback
+//import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -240,36 +240,36 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
     }
   }
 
-  fun loadpaymentMethods(razorpay: Razorpay) {
-    razorpay.getPaymentMethods(object : PaymentMethodsCallback {
-      override fun onPaymentMethodsReceived(result: String?) {
-        val paymentMethods = JSONObject(result!!)
-        Log.i("onPaymentMethods :", paymentMethods.toString())
-        _paymentMethods.postValue(paymentMethods)
-      }
+//  fun loadpaymentMethods(razorpay: Razorpay) {
+//    razorpay.getPaymentMethods(object : PaymentMethodsCallback {
+//      override fun onPaymentMethodsReceived(result: String?) {
+//        val paymentMethods = JSONObject(result!!)
+//        Log.i("onPaymentMethods :", paymentMethods.toString())
+//        _paymentMethods.postValue(paymentMethods)
+//      }
+//
+//      override fun onError(e: String?) {
+//        e?.let {Log.e("onError :", it)  }
+//      }
+//
+//    })
+//  }
 
-      override fun onError(e: String?) {
-        e?.let {Log.e("onError :", it)  }
-      }
-
-    })
-  }
-
-  fun loadMoreBanks(razorpay: Razorpay) {
-    razorpay.getPaymentMethods(object : PaymentMethodsCallback {
-      override fun onPaymentMethodsReceived(result: String?) {
-        val paymentMethods = JSONObject(result!!)
-        writeStringAsFile(paymentMethods.toString(), "loadMoreBanks.txt")
-        Log.i("onPaymentMethods :", paymentMethods.toString())
-        _paymentMoreBanksMethods.postValue(paymentMethods)
-      }
-
-      override fun onError(e: String?) {
-        Log.e("onError :", e!!)
-      }
-
-    })
-  }
+//  fun loadMoreBanks(razorpay: Razorpay) {
+//    razorpay.getPaymentMethods(object : PaymentMethodsCallback {
+//      override fun onPaymentMethodsReceived(result: String?) {
+//        val paymentMethods = JSONObject(result!!)
+//        writeStringAsFile(paymentMethods.toString(), "loadMoreBanks.txt")
+//        Log.i("onPaymentMethods :", paymentMethods.toString())
+//        _paymentMoreBanksMethods.postValue(paymentMethods)
+//      }
+//
+//      override fun onError(e: String?) {
+//        Log.e("onError :", e!!)
+//      }
+//
+//    })
+//  }
 
   fun getRazorPayToken(customerId: String) {
     val razorPayKey: String = BuildConfig.RAZORPAY_KEY
