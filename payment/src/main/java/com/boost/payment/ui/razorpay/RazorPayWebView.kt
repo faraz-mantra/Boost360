@@ -28,7 +28,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
 import com.razorpay.PaymentResultListener
-import com.razorpay.Razorpay
+//import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.razor_pay_web_view_fragment.*
 import org.json.JSONObject
@@ -38,7 +38,7 @@ class RazorPayWebView : DialogFragment() {
 
     lateinit var root: View
 
-    lateinit var razorpay: Razorpay
+//    lateinit var razorpay: Razorpay
 
     val failedTransactionFragment = FailedTransactionFragment()
 
@@ -70,7 +70,7 @@ class RazorPayWebView : DialogFragment() {
         root = inflater.inflate(R.layout.razor_pay_web_view_fragment, container, false)
         isOnSaveInstanceStateCalled = true
 
-        razorpay = (activity as PaymentActivity).getRazorpayObject()
+//        razorpay = (activity as PaymentActivity).getRazorpayObject()
 
         val jsonString = requireArguments().getString("data")
         data = JSONObject(jsonString!!)
@@ -168,29 +168,29 @@ class RazorPayWebView : DialogFragment() {
 
             try {
                 // Make webview visible before submitting payment details
-                razorpay.setWebView(razorpay_webview)
-                razorpay.submit(data, object : PaymentResultListener {
-
-                    override fun onPaymentSuccess(razorpayPaymentId: String) {
-                        // Razorpay payment ID is passed here after a successful payment
-                        razorPayId = razorpayPaymentId
-                        Log.i("onPaymentSuccess", razorpayPaymentId)
-                        if(!appState.equals("onPause")){
-                            onPaymentSuccessfull()
-                        }
-                    }
-
-                    override fun onPaymentError(p0: Int, p1: String?) {
-                        // Error code and description is passed here
-                        paymentFailure = p1
-                        Log.e("onPaymentFailure",p1.toString())
-                        if(!appState.equals("onPause")){
-                            onPaymentFailure()
-                        }
-                    }
-
-
-                })
+//                razorpay.setWebView(razorpay_webview)
+//                razorpay.submit(data, object : PaymentResultListener {
+//
+//                    override fun onPaymentSuccess(razorpayPaymentId: String) {
+//                        // Razorpay payment ID is passed here after a successful payment
+//                        razorPayId = razorpayPaymentId
+//                        Log.i("onPaymentSuccess", razorpayPaymentId)
+//                        if(!appState.equals("onPause")){
+//                            onPaymentSuccessfull()
+//                        }
+//                    }
+//
+//                    override fun onPaymentError(p0: Int, p1: String?) {
+//                        // Error code and description is passed here
+//                        paymentFailure = p1
+//                        Log.e("onPaymentFailure",p1.toString())
+//                        if(!appState.equals("onPause")){
+//                            onPaymentFailure()
+//                        }
+//                    }
+//
+//
+//                })
             } catch (e: Exception) {
                 e.printStackTrace()
                 SentryController.captureException(e)
@@ -203,7 +203,7 @@ class RazorPayWebView : DialogFragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 101) { //Razorpay.UPI_INTENT_REQUEST_CODE = 101
-            razorpay.onActivityResult(requestCode, resultCode, data);
+//            razorpay.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -237,7 +237,7 @@ class RazorPayWebView : DialogFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        razorpay.reset()
+//        razorpay.reset()
     }
 
 }

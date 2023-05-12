@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.lottie_loader_bottomsheet.*
 class ComparePacksLottieLoaderBottomSheet : DialogFragment() {
     lateinit var root: View
 
+    val handler = Handler()
     override fun onStart() {
         super.onStart()
         val width = ViewGroup.LayoutParams.MATCH_PARENT
@@ -37,13 +38,19 @@ class ComparePacksLottieLoaderBottomSheet : DialogFragment() {
         super.onActivityCreated(savedInstanceState)
         lotty_progress.pauseAnimation()
         lotty_progress.playAnimation()
-        Handler().postDelayed({
+        handler.postDelayed({
             dismiss()
             }, 5000)
 
         upi_popup_outer_layout1.setOnClickListener {
             dismiss()
         }
+    }
+
+    override fun onDestroy() {
+        handler.removeCallbacksAndMessages(null)
+        System.gc()
+        super.onDestroy()
     }
 
 }

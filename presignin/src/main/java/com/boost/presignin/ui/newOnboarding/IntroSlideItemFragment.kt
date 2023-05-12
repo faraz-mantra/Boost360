@@ -168,13 +168,17 @@ class IntroSlideItemFragment : AppBaseFragment<ItemIntroNewSlidesBinding, BaseVi
                 binding?.tvIntroTitle?.scaleY = 1F
             }
         }
+    animator.start()
+  }
+  override fun onResume() {
+    super.onResume()
+    binding?.lottieAnimationIntro?.playAnimation()
+    Log.i("scsdbcj", "skjdbsjd")
+  }
 
-        animator.start()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        binding.lottieAnimationIntro.playAnimation()
-        Log.i("scsdbcj", "skjdbsjd")
-    }
+  override fun onDestroy() {
+    super.onDestroy()
+    handler.removeCallbacks(runnable!!)
+    runnable = null
+  }
 }
