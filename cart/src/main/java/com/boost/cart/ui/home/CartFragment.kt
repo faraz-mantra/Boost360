@@ -57,6 +57,7 @@ import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.ExtendedProp
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PrimaryImage
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.CreatePurchaseOrderV12
+import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.PrePostPurchase
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.*
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.dbcenterapi.data.api_model.couponRequest.BulkPropertySegment
@@ -2421,6 +2422,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
             couponDiscountPercentage = couponServiceModel!!.couponDiscountAmt!!
         }
         val purchaseOrders = ArrayList<com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.PurchaseOrder>()
+        val prePostPurchase = ArrayList<PrePostPurchase>()
         val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
         if (renewalItems.isNullOrEmpty().not()) {
             val widgetList = ArrayList<String>()
@@ -2443,7 +2445,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                         )
                     ),
                     widgetList,
-                    netAmount
+                    netAmount,
+                    prePostPurchase
                 )
             )
         } else {
@@ -2486,12 +2489,69 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 totalValidityDays = 30 * default_validity_months
                 prefs.storeMonthsValidity(totalValidityDays)
                 if (item.item_type.equals("features")) {
+
+                    val outputExtendedPropsPostPurchase = ArrayList<Property>()
+                    outputExtendedPropsPostPurchase.addAll(outputExtendedProps)
+
+                    if (item.feature_code.equals("CALLTRACKER")) {
+                        if (prefs.getSelectedVMNName()
+                                .isNullOrEmpty() && !alreadypurchasedVmnName
+                        ) {
+                            //sending value for pre/post purchase of VMN
+                            if ((prefs.getSelectedVMNName()
+                                    .isNullOrEmpty()) && (!alreadypurchasedVmnName)
+                            ) {
+                                prePostPurchase.add(
+                                    PrePostPurchase(
+                                        item.item_id,
+                                        com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.Properties(
+                                            Key = "allowPostPurchase",
+                                            Value = if (prefs.getSelectedVMNName()
+                                                    .isNullOrEmpty()
+                                            ) "1" else "0"
+                                        )
+                                    )
+                                )
+                            }
+                        }
+                    }
                     featureWidgetList.add(item.item_id)
                 } else if (item.item_type.equals("bundles")) {
                     if (::bundlesList.isInitialized && bundlesList.size > 0) {
                         for (singleBundle in bundlesList) {
                             if (singleBundle.bundle_id.equals(item.item_id)) {
-                                cartBundle = singleBundle.bundle_id
+                                val includedFeatures = Gson().fromJson<List<IncludedFeature>>(
+                                    singleBundle.included_features,
+                                    object : TypeToken<List<IncludedFeature>>() {}.type
+                                )
+                                for (singleIndludedFeature in includedFeatures) {
+                                    for (singleFeature in featuresList) {
+                                        if (singleIndludedFeature.feature_code.equals(singleFeature.feature_code)) {
+                                            if (singleIndludedFeature.feature_code.equals("CALLTRACKER")) {
+                                                if (prefs.getSelectedVMNName().isNullOrEmpty() && !alreadypurchasedVmnName) {
+                                                    //sending value for pre/post purchase of VMN
+                                                    if ((prefs.getSelectedVMNName().isNullOrEmpty()) && (!alreadypurchasedVmnName)) {
+                                                        prePostPurchase.add(
+                                                            PrePostPurchase(
+                                                                item.item_id,
+                                                                com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.Properties(
+                                                                    Key = "allowPostPurchase",
+                                                                    Value = if (prefs.getSelectedVMNName()
+                                                                            .isNullOrEmpty()
+                                                                    ) "1" else "0"
+                                                                )
+                                                            )
+                                                        )
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+
+
+                                            cartBundle = singleBundle.bundle_id
                                 break
                             }
                         } //bundle forloop completion
@@ -2513,7 +2573,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                         )
                     ),
                     featureWidgetList,
-                    RootUtil.round(total,2)
+                    RootUtil.round(total,2),
+                    prePostPurchase
                 )
             )
         } // if end of new order

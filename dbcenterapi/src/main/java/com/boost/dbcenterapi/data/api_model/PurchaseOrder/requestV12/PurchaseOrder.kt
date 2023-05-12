@@ -6,5 +6,6 @@ data class PurchaseOrder(
     val Discount: Double,
     val Expiry: Expiry,
     val Features: List<String>,
-    val NetPrice: Double
+    val NetPrice: Double,
+    val PrePostPurchase: List<PrePostPurchase>
 )
