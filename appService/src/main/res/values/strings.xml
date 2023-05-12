@@ -665,10 +665,14 @@
     <string name="please_enter_valid_ifcs">Please enter valid IFSC code</string>
     <string name="bank_name_cant_empty">Bank name can\'t empty.</string>
     <string name="product_adding_error_try_again">Product adding error, please try again.</string>
+    <string name="room_adding_error_try_again">Room adding error, please try again.</string>
     <string name="product_updating_error_try_again">Product updating error, please try again.</string>
+    <string name="room_updating_error_try_again">Room updating error, please try again.</string>
     <string name="uploading_product_image">Uploading product image, please wait...</string>
     <string name="product_image_uploading_error">Product image uploading error, please try again.</string>
+    <string name="room_image_uploading_error">Room image uploading error, please try again.</string>
     <string name="secondary_product_image_uploading_error_please">Secondary Product image uploading error, please try again.</string>
+    <string name="secondary_room_image_uploading_error_please">Secondary Room image uploading error, please try again.</string>
     <string name="add_secondary_image_data_error_please_try_again">Add secondary image data error, please try again.</string>
     <string name="product_updated_successfully">Product updated successfully</string>
     <string name="product_saved_successfully">Product saved successfully</string>

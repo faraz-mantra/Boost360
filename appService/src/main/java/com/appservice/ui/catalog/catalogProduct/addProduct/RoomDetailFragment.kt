@@ -151,7 +151,6 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
 
 
     private fun setupUIColor() {
-        //changeColorOfSubstring(R.string.room_category_, R.color.black_4a4a4a, "*", binding.tvProductCategoryVw)
         changeColorOfSubstring(R.string.room_description_, R.color.black_4a4a4a, "*", binding.tvProductDescVw)
         changeColorOfSubstring(R.string.room_name_, R.color.black_4a4a4a, "*", binding.tvProductNameVw)
     }
@@ -164,7 +163,7 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
                 val data = it.arrayResponse as? Array<ProductItemsResponseItem>
                 if (data.isNullOrEmpty().not()) {
                     baseActivity.hideKeyBoard()
-                    showAlertCapLimit("Can't add the product catalogue, please activate your premium Add-ons plan.", CapLimitFeatureResponseItem.FeatureKey.PRODUCTCATALOGUE.name)
+                    showAlertCapLimit("Can't add the room catalogue, please activate your premium Add-ons plan.", CapLimitFeatureResponseItem.FeatureKey.PRODUCTCATALOGUE.name)
                 }
             }
         }
@@ -354,7 +353,7 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
                         WebEngageController.trackEvent(PRODUCT_CATALOGUE_CREATED, ADDED, NO_EVENT_VALUE)
                         productIdAdd = productId
                         addGstService(productId)
-                    } else showError(getString(R.string.product_adding_error_try_again))
+                    } else showError(getString(R.string.room_adding_error_try_again))
                 }
             }
         } else {
@@ -375,7 +374,7 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
                     updateGstService(product?.productId)
                 } else {
                     hideProgress()
-                    showError(getString(R.string.product_updating_error_try_again))
+                    showError(getString(R.string.room_updating_error_try_again))
                 }
             }
         }
@@ -393,7 +392,7 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
         viewModel?.updateProductGstDetail(request)?.observeOnce(viewLifecycleOwner, Observer {
             if ((it.isSuccess())) {
                 uploadImageSingle(productId)
-            } else showError(getString(R.string.product_updating_error_try_again))
+            } else showError(getString(R.string.room_updating_error_try_again))
         })
     }
 
@@ -410,7 +409,7 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
             } else {
                 if (isEdit == false) errorType = "addGstService"
                 hideProgress()
-                showError(getString(R.string.product_adding_error_try_again))
+                showError(getString(R.string.room_adding_error_try_again))
             }
         })
     }
@@ -430,7 +429,7 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
             else {
                 if (isEdit == false) errorType = "uploadImageSingle"
                 hideProgress()
-                showError(getString(R.string.product_image_uploading_error))
+                showError(getString(R.string.room_image_uploading_error))
             }
         }
     }
@@ -454,7 +453,7 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
                     if (it.isSuccess()) {
                         val response = getResponse(it.responseBody) ?: ""
                         if (response.isNotEmpty()) secondaryImageList.add(response)
-                    } else showError(getString(R.string.secondary_product_image_uploading_error_please))
+                    } else showError(getString(R.string.secondary_room_image_uploading_error_please))
                     if (checkPosition == images.size) {
                         addImageToProduct(productId, secondaryImageList)
                     }
