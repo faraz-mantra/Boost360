@@ -349,7 +349,7 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
         WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_SELECTION_MAIN_LOAD, CLICK, NO_EVENT_VALUE)
         val dataCategory = (item as? CategoryDataModel) ?: return
         if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
-          dataCategory.subCategoryName = selectedCategoryLive?.name.toString()
+          dataCategory.subCategoryName = dataCategory.category_Name!!
           binding.tvNextStep1.backgroundTintList= ContextCompat.getColorStateList(context!!, R.color.buttonTint)
           if (binding?.includeNoSearchResultFound?.root?.visibility == View.VISIBLE) {
             categoryNoDataList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
