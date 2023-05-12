@@ -119,16 +119,27 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
     verifyUsernamePassword?.observeOnce(viewLifecycleOwner) {
       hideProgress()
-      val response: VerificationRequestResult = if (BuildConfig.FLAVOR.equals("partone") || BuildConfig.FLAVOR.equals("jioonline")) (it as? VerificationRequestResult)!! else (it as? VerificationRequestResultV3)!!.result!!
-      if ((BuildConfig.FLAVOR.equals("partone") || BuildConfig.FLAVOR.equals("jioonline")).not()) {
-        //set status from statusCode
-        response.status = (it as? VerificationRequestResultV3)!!.StatusCode
-      }
-      if (response?.isSuccess() == true && response.loginId.isNullOrEmpty().not() && response.authTokens.isNullOrEmpty().not()) {
+      try {
+        val response: VerificationRequestResult? =
+          if (BuildConfig.FLAVOR.equals("partone") || BuildConfig.FLAVOR.equals("jioonline")) (it as? VerificationRequestResult) else (it as? VerificationRequestResultV3)!!.result
+        if(response!=null) {
+          if ((BuildConfig.FLAVOR.equals("partone") || BuildConfig.FLAVOR.equals("jioonline")).not()) {
+            //set status from statusCode
+            response.status = (it as? VerificationRequestResultV3)!!.StatusCode
+          }
+          if (response?.isSuccess() == true && response.loginId.isNullOrEmpty()
+              .not() && response.authTokens.isNullOrEmpty().not()
+          ) {
 //        if(BuildConfig.FLAVOR.equals("boosthealth"))
-        storeUserDetail(response)
-      } else {
-        showShortToast(getString(R.string.ensure_that_the_entered_username_and_password_))
+            storeUserDetail(response)
+          } else {
+            showShortToast(getString(R.string.ensure_that_the_entered_username_and_password_))
+          }
+        }else{
+          showShortToast(getString(R.string.ensure_that_the_entered_username_and_password_))
+        }
+      } catch (e: Exception){
+        e.printStackTrace()
       }
     }
   }

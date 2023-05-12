@@ -43,6 +43,10 @@ interface WithFloatTwoRemoteData {
   fun verifyUserProfile(@Body userProfileVerificationRequest: UserProfileVerificationRequest): Observable<Response<VerificationRequestResult>>
 
   @Headers("Content-Type: application/json")
+  @POST(EndPoints.VERTICAL_VERIFY_LOGIN)
+  fun verifyUserProfileVertical(@Body userProfileVerificationRequest: UserProfileVerificationRequest): Observable<Response<VerificationRequestResultV3>>
+
+  @Headers("Content-Type: application/json")
   @POST(EndPoints.FORGET_PASSWORD)
   fun forgotPassword(@Body request: ForgotPassRequest): Observable<Response<ResponseBody>>
 
@@ -114,10 +118,6 @@ interface WithFloatTwoRemoteData {
     @Query("mobileNumber") number: String?, @Query("otp") otp: String?,
     @Query(value = "clientId") clientId: String?,
   ): Observable<Response<VerifyOtpResponse>>
-
-  @Headers("Content-Type: application/json")
-  @POST(EndPoints.VERTICAL_VERIFY_LOGIN)
-  fun verifyUserProfileVertical(@Body userProfileVerificationRequest: UserProfileVerificationRequest): Observable<Response<VerificationRequestResultV3>>
 
   @GET(EndPoints.GET_VERTICAL_CATEGORIES)
   fun getVerticalCategories(
