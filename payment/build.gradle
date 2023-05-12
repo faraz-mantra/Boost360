@@ -79,7 +79,8 @@ dependencies {
 //  implementation project(name: "razorpay-android-3.8.8", ext: 'aar')
 //    implementation files('libs/razorpay-android-3.8.8.aar')
 //    implementation 'com.razorpay:checkout:1.6.19'
-    implementation 'com.razorpay:customui:3.9.11'
+    implementation 'com.razorpay:checkout:1.6.26'
+//    implementation 'com.razorpay:customui:3.9.11'
 
     //toasty
     implementation 'com.github.GrenderG:Toasty:1.4.2'

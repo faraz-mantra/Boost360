@@ -104,30 +104,30 @@ class AddCardPopUpFragement : DialogFragment() {
       dialog!!.dismiss()
     }
 
-    add_cart_payment_submit.setOnClickListener {
-      if (validateCardDetails()) {
-        val data = JSONObject()
-        data.put("method", "card")
-        data.put("card[name]", name_on_card_value.text.toString())
-        data.put("card[number]", cardNumber)
-        data.put("card[expiry_month]", expiry_mm_yyyy_value.text.split("/").get(0).toString())
-        data.put(
-          "card[expiry_year]",
-          expiry_mm_yyyy_value.text.split("/").get(1).toString()
-            .substring(Math.max(expiry_mm_yyyy_value.text.split("/").get(1).toString().length - 2, 0))
-        )
-        data.put("card[cvv]", add_card_cvv.text.toString())
-        if (save_card_for_fast_payment.isChecked) {
-          data.put("customer_id", customerId);
-//                    data.put("customer_id", "cust_ETcczL3iRGxBNt");
-          data.put("save", "1");
-        }
-//                viewModel.UpdateCardData(data)
-        listener.cardSelected(data)
-        clearData()
-        dialog!!.dismiss()
-      }
-    }
+//    add_cart_payment_submit.setOnClickListener {
+//      if (validateCardDetails()) {
+//        val data = JSONObject()
+//        data.put("method", "card")
+//        data.put("card[name]", name_on_card_value.text.toString())
+//        data.put("card[number]", cardNumber)
+//        data.put("card[expiry_month]", expiry_mm_yyyy_value.text.split("/").get(0).toString())
+//        data.put(
+//          "card[expiry_year]",
+//          expiry_mm_yyyy_value.text.split("/").get(1).toString()
+//            .substring(Math.max(expiry_mm_yyyy_value.text.split("/").get(1).toString().length - 2, 0))
+//        )
+//        data.put("card[cvv]", add_card_cvv.text.toString())
+//        if (save_card_for_fast_payment.isChecked) {
+//          data.put("customer_id", customerId);
+////                    data.put("customer_id", "cust_ETcczL3iRGxBNt");
+//          data.put("save", "1");
+//        }
+////                viewModel.UpdateCardData(data)
+//        listener.cardSelected(data)
+//        clearData()
+//        dialog!!.dismiss()
+//      }
+//    }
 
     expiry_mm_yyyy_value.addTextChangedListener(object : TextWatcher{
       override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -146,119 +146,119 @@ class AddCardPopUpFragement : DialogFragment() {
 
     })
 
-    card_number_value.addTextChangedListener(object : TextWatcher {
-
-      private val space = '-'
-
-      override fun afterTextChanged(s: Editable?) {
-
-        // Remove spacing char
-        if (s!!.length > 0 && s.length % 5 == 0) {
-          val c: Char = s[s.length - 1]
-          if (space == c) {
-            s.delete(s.length - 1, s.length)
-          }
-        } else if (s!!.length > 0 && s.length % 5 != 0) {
-          val c: Char = s[s.length - 1]
-          if (space == c) {
-            s.delete(s.length - 1, s.length)
-          }
-        }
-
-        // Insert char where needed.
-        if (s.length > 0 && s.length % 5 == 0) {
-          val c: Char = s[s.length - 1]
-          // Only if its a digit where there should be a space we insert a space
-          if (Character.isDigit(c) && TextUtils.split(
-              s.toString(),
-              java.lang.String.valueOf(space)
-            ).size <= 3
-          ) {
-            s.insert(s.length - 1, java.lang.String.valueOf(space))
-          }
-        }
-
-        if (s.length > 7 && s.length < 9) {
-          cardType = (requireActivity() as PaymentActivity).razorpay.getCardNetwork(
-            s.toString().replace("-", "")
-          )
-          Log.e("getCardNetwork", ">>>>>>>>>" + cardType)
-          when (cardType) {
-            "visa" -> {
-              card_type_image.setImageResource(R.drawable.visacard)
-            }
-            "mastercard" -> {
-              card_type_image.setImageResource(R.drawable.mastercard)
-            }
-            "maestro16" -> {
-              card_type_image.setImageResource(R.drawable.maestrocard)
-            }
-            "amex" -> {
-              card_type_image.setImageResource(R.drawable.amexcard)
-            }
-            "rupay" -> {
-              card_type_image.setImageResource(R.drawable.rupaycard)
-            }
-            "maestro" -> {
-              card_type_image.setImageResource(R.drawable.maestrocard)
-            }
-            "diners" -> {
-              card_type_image.setImageResource(R.drawable.dinerscard)
-            }
-            "unknown" -> {
-              card_type_image.setImageResource(R.drawable.card_numbers)
-            }
-          }
-        }
-
-        if (s.length <= 7) {
-          card_type_image.setImageResource(R.drawable.card_numbers)
-        }
-      }
-
-      override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        //nothing
-      }
-
-      override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        //nothing
-      }
-
-    })
+//    card_number_value.addTextChangedListener(object : TextWatcher {
+//
+//      private val space = '-'
+//
+//      override fun afterTextChanged(s: Editable?) {
+//
+//        // Remove spacing char
+//        if (s!!.length > 0 && s.length % 5 == 0) {
+//          val c: Char = s[s.length - 1]
+//          if (space == c) {
+//            s.delete(s.length - 1, s.length)
+//          }
+//        } else if (s!!.length > 0 && s.length % 5 != 0) {
+//          val c: Char = s[s.length - 1]
+//          if (space == c) {
+//            s.delete(s.length - 1, s.length)
+//          }
+//        }
+//
+//        // Insert char where needed.
+//        if (s.length > 0 && s.length % 5 == 0) {
+//          val c: Char = s[s.length - 1]
+//          // Only if its a digit where there should be a space we insert a space
+//          if (Character.isDigit(c) && TextUtils.split(
+//              s.toString(),
+//              java.lang.String.valueOf(space)
+//            ).size <= 3
+//          ) {
+//            s.insert(s.length - 1, java.lang.String.valueOf(space))
+//          }
+//        }
+//
+//        if (s.length > 7 && s.length < 9) {
+//          cardType = (requireActivity() as PaymentActivity).razorpay.getCardNetwork(
+//            s.toString().replace("-", "")
+//          )
+//          Log.e("getCardNetwork", ">>>>>>>>>" + cardType)
+//          when (cardType) {
+//            "visa" -> {
+//              card_type_image.setImageResource(R.drawable.visacard)
+//            }
+//            "mastercard" -> {
+//              card_type_image.setImageResource(R.drawable.mastercard)
+//            }
+//            "maestro16" -> {
+//              card_type_image.setImageResource(R.drawable.maestrocard)
+//            }
+//            "amex" -> {
+//              card_type_image.setImageResource(R.drawable.amexcard)
+//            }
+//            "rupay" -> {
+//              card_type_image.setImageResource(R.drawable.rupaycard)
+//            }
+//            "maestro" -> {
+//              card_type_image.setImageResource(R.drawable.maestrocard)
+//            }
+//            "diners" -> {
+//              card_type_image.setImageResource(R.drawable.dinerscard)
+//            }
+//            "unknown" -> {
+//              card_type_image.setImageResource(R.drawable.card_numbers)
+//            }
+//          }
+//        }
+//
+//        if (s.length <= 7) {
+//          card_type_image.setImageResource(R.drawable.card_numbers)
+//        }
+//      }
+//
+//      override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//        //nothing
+//      }
+//
+//      override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//        //nothing
+//      }
+//
+//    })
 
   }
 
-  fun validateCardDetails(): Boolean {
-    if (name_on_card_value.text.isEmpty() || card_number_value.text.isEmpty() || expiry_mm_yyyy_value.text.isEmpty()
-    ) {
-      Toast.makeText(requireContext(), "Fields are empty", Toast.LENGTH_SHORT).show()
-      return false
-    }
-    cardNumber = card_number_value.text.toString().replace("-", "", false)
-    if (cardNumber.length != 16) {
-      invalid_cardnumber.visibility = View.VISIBLE
-      return false
-    }
-    invalid_cardnumber.visibility = View.GONE
-    if(!expiry_mm_yyyy_value.text.contains("/")
-      || (expiry_mm_yyyy_value.text.split("/").get(0).length != 2
-      && expiry_mm_yyyy_value.text.split("/").get(1).length != 4 )){
-      Toast.makeText(requireContext(), "Invalid Expiry", Toast.LENGTH_LONG).show()
-      expiry_mm_yyyy_value.setBackgroundResource(R.drawable.edittext_border_red_line_bg)
-      expiry_mm_yyyy_value.text.clear()
-      expiry_mm_yyyy_value.requestFocus()
-      return false
-    }else{
-      expiry_mm_yyyy_value.setBackgroundResource(R.drawable.edittext_border_line_bg)
-    }
-    if ((requireActivity() as PaymentActivity).razorpay.isValidCardNumber(cardNumber)) {
-      invalid_cardnumber.visibility = View.GONE
-      return true
-    } else {
-      invalid_cardnumber.visibility = View.VISIBLE
-      return false
-    }
-  }
+//  fun validateCardDetails(): Boolean {
+//    if (name_on_card_value.text.isEmpty() || card_number_value.text.isEmpty() || expiry_mm_yyyy_value.text.isEmpty()
+//    ) {
+//      Toast.makeText(requireContext(), "Fields are empty", Toast.LENGTH_SHORT).show()
+//      return false
+//    }
+//    cardNumber = card_number_value.text.toString().replace("-", "", false)
+//    if (cardNumber.length != 16) {
+//      invalid_cardnumber.visibility = View.VISIBLE
+//      return false
+//    }
+//    invalid_cardnumber.visibility = View.GONE
+//    if(!expiry_mm_yyyy_value.text.contains("/")
+//      || (expiry_mm_yyyy_value.text.split("/").get(0).length != 2
+//      && expiry_mm_yyyy_value.text.split("/").get(1).length != 4 )){
+//      Toast.makeText(requireContext(), "Invalid Expiry", Toast.LENGTH_LONG).show()
+//      expiry_mm_yyyy_value.setBackgroundResource(R.drawable.edittext_border_red_line_bg)
+//      expiry_mm_yyyy_value.text.clear()
+//      expiry_mm_yyyy_value.requestFocus()
+//      return false
+//    }else{
+//      expiry_mm_yyyy_value.setBackgroundResource(R.drawable.edittext_border_line_bg)
+//    }
+//    if ((requireActivity() as PaymentActivity).razorpay.isValidCardNumber(cardNumber)) {
+//      invalid_cardnumber.visibility = View.GONE
+//      return true
+//    } else {
+//      invalid_cardnumber.visibility = View.VISIBLE
+//      return false
+//    }
+//  }
 
   fun clearData() {
     name_on_card_value.text.clear()
