@@ -484,7 +484,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="34dp"
                                 android:scaleType="fitXY"
-                                android:src="@drawable/ic_customer_call_tracking_ivr"
+                                android:src="@drawable/ic_customer_call_tracking_ivr1"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/title_bottomV3" />
 
