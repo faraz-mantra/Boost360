@@ -126,9 +126,8 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
 
 
   private fun initUI() {
-    if (BuildConfig.FLAVOR.equals("partone") || BuildConfig.FLAVOR.equals("jioonline")) {
-      initTncString()
-    }else{
+    initTncString()
+    if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
       binding.tvLoginWithEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
       binding.tvRequestOtp.backgroundTintList= ContextCompat.getColorStateList(context!!, R.color.buttonTint)
     }
