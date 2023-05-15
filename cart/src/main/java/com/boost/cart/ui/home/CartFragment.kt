@@ -2494,13 +2494,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     outputExtendedPropsPostPurchase.addAll(outputExtendedProps)
 
                     if (item.feature_code.equals("CALLTRACKER")) {
-                        if (prefs.getSelectedVMNName()
-                                .isNullOrEmpty() && !alreadypurchasedVmnName
-                        ) {
                             //sending value for pre/post purchase of VMN
-                            if ((prefs.getSelectedVMNName()
-                                    .isNullOrEmpty()) && (!alreadypurchasedVmnName)
-                            ) {
+                            if (!alreadypurchasedVmnName) {
                                 prePostPurchase.add(
                                     PrePostPurchase(
                                         item.item_id,
@@ -2513,7 +2508,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                     )
                                 )
                             }
-                        }
                     }
                     featureWidgetList.add(item.item_id)
                 } else if (item.item_type.equals("bundles")) {
@@ -2528,9 +2522,8 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                     for (singleFeature in featuresList) {
                                         if (singleIndludedFeature.feature_code.equals(singleFeature.feature_code)) {
                                             if (singleIndludedFeature.feature_code.equals("CALLTRACKER")) {
-                                                if (prefs.getSelectedVMNName().isNullOrEmpty() && !alreadypurchasedVmnName) {
                                                     //sending value for pre/post purchase of VMN
-                                                    if ((prefs.getSelectedVMNName().isNullOrEmpty()) && (!alreadypurchasedVmnName)) {
+                                                    if (!alreadypurchasedVmnName) {
                                                         prePostPurchase.add(
                                                             PrePostPurchase(
                                                                 item.item_id,
@@ -2543,7 +2536,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                                             )
                                                         )
                                                     }
-                                                }
                                             }
                                         }
                                     }
