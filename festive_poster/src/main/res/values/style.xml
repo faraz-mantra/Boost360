@@ -309,7 +309,7 @@
     <style name="primary_squared_button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/size_52</item>
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:background">@color/primary_toolbar_color</item>
         <item name="fontFamily">@font/bold</item>
         <item name="textSize">@dimen/text_16</item>
         <item name="android:gravity">center</item>

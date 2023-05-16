@@ -53,7 +53,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginStart="8dp"
-                        app:cardBackgroundColor="#FEEFD1"
+                        app:cardBackgroundColor="@color/color_ffb900_op10_jio_ec008c_op10"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="@dimen/size_0"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_cat_title"
