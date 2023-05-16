@@ -32,6 +32,22 @@ import kotlin.collections.ArrayList
 
 object Utils {
 
+  fun getDatabaseName(): String {
+    if(BuildConfig.FLAVOR.equals("partone"))
+      return "updates_db"
+     else if (BuildConfig.FLAVOR.equals("jioonline"))
+      return "jio_updates_db"
+    else if(BuildConfig.FLAVOR.equals("arantoo"))
+      return "arantoo_db"
+    else if(BuildConfig.FLAVOR.equals("ardhim"))
+      return "ardhim_db"
+    else if(BuildConfig.FLAVOR.equals("checkkinn"))
+      return "checkkinn_db"
+    else if(BuildConfig.FLAVOR.equals("healthgro"))
+      return "healthgro_db"
+    else
+      return "empty"
+  }
 
   //getting retrofit instance
   fun getRetrofit(
