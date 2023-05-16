@@ -885,7 +885,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/regular"
-                            android:text="@string/watch_boost_360_features_in_action"
+                            android:text="watch_arantoo_features_in_action"
                             android:textColor="@color/colorPrimary1"
                             android:textSize="16sp"
                             android:layout_marginStart="15dp"
