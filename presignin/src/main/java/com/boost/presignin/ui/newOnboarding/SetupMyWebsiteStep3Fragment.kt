@@ -38,6 +38,7 @@ import com.framework.extensions.visible
 import com.framework.pref.*
 import com.framework.views.blur.setBlur
 import com.framework.webengageconstant.*
+import com.google.gson.Gson
 import com.invitereferrals.invitereferrals.InviteReferralsApi
 import org.json.JSONObject
 
