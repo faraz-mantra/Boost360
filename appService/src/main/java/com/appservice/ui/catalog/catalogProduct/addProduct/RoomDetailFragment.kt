@@ -121,11 +121,10 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
         setupUIColor()
         getPickUpAddress()
         binding.vwChangeDeliverConfig.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-        binding.vwPaymentConfig.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        //binding.vwPaymentConfig.paintFlags = Paint.UNDERLINE_TEXT_FLAG
         setOnClickListener(
-            binding.vwChangeDeliverConfig, binding.vwChangeDeliverLocation,
-            binding.vwPaymentConfig, binding.vwSavePublish, binding.imageAddBtn,
-            binding.clearImage, binding.btnOtherInfo, binding.bankAccountView
+            binding.vwChangeDeliverConfig, binding.vwChangeDeliverLocation, binding.vwSavePublish, binding.imageAddBtn,
+            binding.clearImage, binding.btnOtherInfo
         )
         binding.toggleProduct.isOn = product?.isPriceToggleOn() ?: false
         binding.payProductView.visibility = View.GONE
@@ -212,13 +211,13 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
                 bankAccountDetail = response.result?.bankAccountDetails
             }
             if (isEdit == false) {
-                setBankAccountData()
+                //setBankAccountData()
                 getDefaultGst()
             } else getAddPreviousData()
         })
     }
 
-    private fun setBankAccountData() {
+    /**private fun setBankAccountData() {
         if (bankAccountDetail != null) {
             product?.paymentType = CatalogProduct.PaymentType.ASSURED_PURCHASE.value
             binding.txtPaymentType.text = resources.getString(R.string.boost_payment_gateway)
@@ -230,7 +229,7 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
             binding.titleBankAdded.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
             binding.titleBankAdded.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
         }
-    }
+    }*/
 
     private fun getAddPreviousData() {
         viewModel?.getProductImage(String.format("{'_pid':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner) {
@@ -253,7 +252,7 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
         binding.tvProductName.setText(product?.Name)
         binding.tvDesc.setText(product?.Description)
         binding.edtProductCategory.setText(product?.category)
-        if (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value) {
+        /**if (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value) {
             binding.txtPaymentType.text = resources.getString(R.string.external_url)
             binding.edtUrl.setText(product?.uniquePaymentUrl?.url ?: "")
             binding.edtNameDesc.setText(product?.uniquePaymentUrl?.description ?: "")
@@ -270,7 +269,7 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
             binding.bankAccountName.gone()
             binding.titleBankAdded.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
             binding.titleBankAdded.text = resources.getString(R.string.bank_account_not_added)
-        }
+        }*/
 
         when {
             (product?.Price ?: 0.0) <= 0.0 -> {
@@ -311,14 +310,13 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
     override fun onClick(v: View) {
         super.onClick(v)
         when (v) {
-            binding.bankAccountView -> {
+            /**binding.bankAccountView -> {
                 if (binding.bankAccountView.visibility == View.VISIBLE) goAddBankView()
-            }
+            }*/
             binding.imageAddBtn -> openImagePicker()
             binding.clearImage -> clearImage()
             binding.vwChangeDeliverConfig -> showServiceDeliveryConfigBottomSheet()
-//      binding?.vwChangeDeliverLocation -> showServiceDeliveryLocationBottomSheet()
-            binding.vwPaymentConfig -> showPaymentConfigBottomSheet()
+            /**binding.vwPaymentConfig -> showPaymentConfigBottomSheet()*/
             binding.btnOtherInfo -> {
                 WebEngageController.trackEvent(PRODUCT_OTHER_INFORMATION, CLICK, NO_EVENT_VALUE)
                 val bundle = Bundle()
@@ -512,8 +510,8 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
         val amount = binding.amountEdt.text.toString().toDoubleOrNull() ?: 0.0
         val discount = binding.discountEdt.text.toString().toDoubleOrNull() ?: 0.0
         val toggle = binding.toggleProduct.isOn ?: false
-        val externalUrlName = binding.edtNameDesc.text?.toString() ?: ""
-        val externalUrl = binding.edtUrl.text?.toString() ?: ""
+        /**val externalUrlName = binding.edtNameDesc.text?.toString() ?: ""
+        val externalUrl = binding.edtUrl.text?.toString() ?: ""*/
 
         if (productImage == null && product?.ImageUri.isNullOrEmpty()) {
             showLongToast(resources.getString(R.string.error_add_product_image))
@@ -533,13 +531,13 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
         } else if (toggle && (discount > amount)) {
             showLongToast(resources.getString(R.string.discount_amount_not_greater_than_price))
             return false
-        } else if (toggle && (product?.paymentType.isNullOrEmpty() || (product?.paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail == null))) {
+        } /**else if (toggle && (product?.paymentType.isNullOrEmpty() || (product?.paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail == null))) {
             showLongToast(resources.getString(R.string.please_add_bank_detail))
             return false
         } else if (toggle && (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value && ((externalUrlName.isNullOrEmpty() || externalUrl.isNullOrEmpty())  || ValidationUtils.isValidWebURL(externalUrl).not()))) {
             showLongToast(resources.getString(R.string.please_enter_valid_url_name))
             return false
-        }
+        }*/
 //    else if (!toggle || amount <= 0.0){
 //      showLongToast(resources.getString(R.string.product_with_price_zero_cannot_be_listed_for_sale))
 //      return false
@@ -553,9 +551,9 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
         product?.Price = if (toggle) amount else 0.0
         product?.DiscountAmount = if (toggle) discount else 0.0
         product?.isNotForSale = !toggle
-        if (toggle && (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value)) {
+        /**if(toggle && (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value)) {
             product?.uniquePaymentUrl = UniquePaymentUrlN(url = externalUrl, description = externalUrlName)
-        } else product?.uniquePaymentUrl = UniquePaymentUrlN()
+        } else product?.uniquePaymentUrl = UniquePaymentUrlN()*/
 
         if (isEdit == false) {
             product?.category = product?.category ?: ""
@@ -626,12 +624,12 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
             bankAccountDetail = data?.getSerializableExtra(IntentConstant.USER_BANK_DETAIL.name) as? BankAccountDetails
             if (bankAccountDetail != null) {
                 product?.paymentType = CatalogProduct.PaymentType.ASSURED_PURCHASE.value
-                binding.bankAccountView.visible()
+                /**binding.bankAccountView.visible()
                 binding.externalUrlView.gone()
                 binding.bankAccountName.visible()
                 binding.bankAccountName.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
                 binding.titleBankAdded.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-                binding.titleBankAdded.text = resources.getString(R.string.bank_account_added)
+                binding.titleBankAdded.text = resources.getString(R.string.bank_account_added)*/
             }
         }
     }
@@ -654,7 +652,7 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
         dialog.show(parentFragmentManager, ServiceDeliveryBottomSheet::class.java.name)
     }
 
-    private fun showPaymentConfigBottomSheet() {
+   /** private fun showPaymentConfigBottomSheet() {
         val dialog = PaymentConfigBottomSheet()
         dialog.onClicked = {
             product?.paymentType = it
@@ -698,7 +696,7 @@ class RoomDetailFragment : AppBaseFragment<FragmentRoomDetailsBinding, ProductVi
         }
         dialog.setDataPaymentGateway(bankAccountDetail, product?.paymentType)
         dialog.show(parentFragmentManager, PaymentConfigBottomSheet::class.java.name)
-    }
+    }*/
 
     private fun goAddBankView() {
         WebEngageController.trackEvent(ADD_UPDATE_BANK_ACCOUNT, CLICK, NO_EVENT_VALUE)

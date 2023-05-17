@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/size_8"
+        android:paddingTop="@dimen/size_10"
+        android:paddingRight="@dimen/size_5"
+        android:paddingBottom="@dimen/size_10">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.framework.views.customViews.CustomTextView
+                app:fontFamily="@font/light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/price_with_taxes_inr"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="12sp" />
+
+            <com.framework.views.customViews.CustomTextField
+                android:id="@+id/amount_edt"
+                tools:ignore="UnusedAttribute"
+                android:layout_width="@dimen/size_110"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_5"
+                android:background="@drawable/bg_rect_edit_txt"
+                android:hint="@string/xx_xxx"
+                android:inputType="number"
+                android:maxLength="7"
+                android:padding="@dimen/size_8"
+                android:singleLine="true"
+                android:textColor="@color/warm_grey_10"
+                android:textColorHint="@color/primary_grey"
+                android:textSize="13sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.framework.views.customViews.CustomTextView
+                app:fontFamily="@font/light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="@string/discount_inr"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="12sp" />
+
+            <com.framework.views.customViews.CustomTextField
+                android:id="@+id/discount_edt"
+                tools:ignore="UnusedAttribute"
+                android:layout_width="@dimen/size_110"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_5"
+                android:background="@drawable/bg_rect_edit_txt"
+                android:hint="@string/xxx"
+                android:inputType="number"
+                android:maxLength="6"
+                android:padding="@dimen/size_8"
+                android:singleLine="true"
+                android:textColor="@color/warm_grey_10"
+                android:textColorHint="@color/primary_grey"
+                android:textSize="13sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:orientation="vertical">
+
+            <com.framework.views.customViews.CustomTextView
+                app:fontFamily="@font/light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/final_price"
+                android:textColor="@color/black_4a4a4a"
+                android:textSize="12sp" />
+
+            <com.framework.views.customViews.CustomTextField
+                android:id="@+id/final_price_txt"
+                tools:ignore="UnusedAttribute"
+                android:layout_width="@dimen/size_110"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_5"
+                android:background="@null"
+                android:enabled="false"
+                android:hint="@string/inr_xx_xxx"
+                android:inputType="number"
+                android:paddingTop="@dimen/size_8"
+                android:paddingRight="@dimen/size_8"
+                android:paddingBottom="@dimen/size_8"
+                android:singleLine="true"
+                android:textColor="@color/warm_grey_10"
+                android:textColorHint="@color/primary_grey"
+                android:textSize="13sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

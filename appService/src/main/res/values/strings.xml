@@ -800,9 +800,11 @@
     <string name="want_to_sell_this_product_online">Want to sell this product online?</string>
     <string name="want_to_book_this_room_online">Do you want to book this room online?</string>
     <string name="price_includes_taxes">Price includes taxes</string>
+    <string name="price_with_taxes_inr">Price with tax (INR)</string>
     <string name="price_without_tax_inr">Price without tax (INR)</string>
     <string name="xx_xxx">XXXX</string>
     <string name="discount_amt_inr">Discount amt. (INR)</string>
+    <string name="discount_inr">Discount (INR)</string>
     <string name="xxx">XXX</string>
     <string name="final_price">Final price</string>
     <string name="inr_xx_xxx">INR XXXX</string>

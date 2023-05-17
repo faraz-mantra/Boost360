@@ -321,7 +321,7 @@
                                         <com.framework.views.customViews.CustomTextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@string/price_includes_taxes"
+                                            android:text="@string/price_with_taxes_inr"
                                             android:textColor="@color/black_4a4a4a"
                                             android:textSize="12sp"
                                             app:fontFamily="@font/light" />
@@ -357,7 +357,7 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:singleLine="true"
-                                            android:text="@string/discount_amt_inr"
+                                            android:text="@string/discount_inr"
                                             android:textColor="@color/black_4a4a4a"
                                             android:textSize="12sp"
                                             app:fontFamily="@font/light" />
@@ -420,11 +420,12 @@
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                                <com.framework.views.customViews.CustomTextView
+                                <!--<com.framework.views.customViews.CustomTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/size_8"
                                     android:layout_marginTop="@dimen/size_10"
+                                    android:visibility="gone"
                                     android:includeFontPadding="false"
                                     android:text="@string/select_how_you_want_to_receive_money"
                                     android:textColor="@color/warm_grey"
@@ -434,6 +435,7 @@
                                 <androidx.appcompat.widget.LinearLayoutCompat
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:visibility="gone"
                                     android:layout_marginLeft="@dimen/size_10"
                                     android:layout_marginTop="@dimen/size_2"
                                     android:layout_marginRight="@dimen/size_10"
@@ -602,7 +604,7 @@
 
                                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-                                </androidx.appcompat.widget.LinearLayoutCompat>
+                                </androidx.appcompat.widget.LinearLayoutCompat>-->
                             </LinearLayout>
 
                             <com.framework.views.customViews.CustomTextView
