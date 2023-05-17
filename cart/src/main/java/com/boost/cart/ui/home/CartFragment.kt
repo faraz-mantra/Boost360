@@ -2499,11 +2499,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                 prePostPurchase.add(
                                     PrePostPurchase(
                                         item.item_id,
-                                        com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.Properties(
-                                            Key = "allowPostPurchase",
-                                            Value = if (prefs.getSelectedVMNName()
-                                                    .isNullOrEmpty()
-                                            ) "1" else "0"
+                                        listOf(
+                                            com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.Properties(
+                                                Key = "allowPostPurchase",
+                                                Value = if (prefs.getSelectedVMNName()
+                                                        .isNullOrEmpty()
+                                                ) "1" else "0"
+                                            )
                                         )
                                     )
                                 )
@@ -2527,11 +2529,13 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                                         prePostPurchase.add(
                                                             PrePostPurchase(
                                                                 item.item_id,
-                                                                com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.Properties(
-                                                                    Key = "allowPostPurchase",
-                                                                    Value = if (prefs.getSelectedVMNName()
-                                                                            .isNullOrEmpty()
-                                                                    ) "1" else "0"
+                                                                listOf(
+                                                                    com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.Properties(
+                                                                        Key = "allowPostPurchase",
+                                                                        Value = if (prefs.getSelectedVMNName()
+                                                                                .isNullOrEmpty()
+                                                                        ) "1" else "0"
+                                                                    )
                                                                 )
                                                             )
                                                         )
