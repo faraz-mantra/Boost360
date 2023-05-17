@@ -1275,35 +1275,38 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         })
 
         viewModel.getExpertConnectDetails().observe(this, androidx.lifecycle.Observer {
-            Log.e("getYoutubeVideoDetails", it.toString())
+         //   Log.e("getYoutubeVideoDetails", it.toString())
             val expertConnectDetails = it
-            if (it.is_online) {
-                prefs.storeExpertContact(it.contact_number)
-                callnow_layout.visibility = View.VISIBLE
-                callnow_image.visibility = View.VISIBLE
-                callnow_title.setText(it.line1)
-                callnow_desc.setText(it.line2)
-                callnow_button.setOnClickListener {
-                    WebEngageController.trackEvent(
-                        ADDONS_MARKETPLACE_EXPERT_SPEAK,
-                        CLICK,
-                        NO_EVENT_VALUE
-                    )
-                    val callIntent = Intent(Intent.ACTION_DIAL)
-                    callIntent.data = Uri.parse("tel:" + expertConnectDetails.contact_number)
-                    startActivity(Intent.createChooser(callIntent, "Call by:"))
+            if (it!=null){
+                if (it.is_online) {
+                    prefs.storeExpertContact(it.contact_number)
+                    callnow_layout.visibility = View.VISIBLE
+                    callnow_image.visibility = View.VISIBLE
+                    callnow_title.setText(it.line1)
+                    callnow_desc.setText(it.line2)
+                    callnow_button.setOnClickListener {
+                        WebEngageController.trackEvent(
+                            ADDONS_MARKETPLACE_EXPERT_SPEAK,
+                            CLICK,
+                            NO_EVENT_VALUE
+                        )
+                        val callIntent = Intent(Intent.ACTION_DIAL)
+                        callIntent.data = Uri.parse("tel:" + expertConnectDetails.contact_number)
+                        startActivity(Intent.createChooser(callIntent, "Call by:"))
+                    }
+                    mp_talk_expert_tv.setOnClickListener {
+                        WebEngageController.trackEvent(
+                            ADDONS_MARKETPLACE_WAITING_CART_EXPERT_CALL_CLICKED,
+                            EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_EXPERT_CALL_CLICKED,
+                            NO_EVENT_VALUE
+                        )
+                        val callExpertIntent = Intent(Intent.ACTION_DIAL)
+                        callExpertIntent.data = Uri.parse("tel:" + expertConnectDetails.contact_number)
+                        startActivity(Intent.createChooser(callExpertIntent, "Call by:"))
+                    }
                 }
-                mp_talk_expert_tv.setOnClickListener {
-                    WebEngageController.trackEvent(
-                        ADDONS_MARKETPLACE_WAITING_CART_EXPERT_CALL_CLICKED,
-                        EVENT_LABEL_ADDONS_MARKETPLACE_WAITING_CART_EXPERT_CALL_CLICKED,
-                        NO_EVENT_VALUE
-                    )
-                    val callExpertIntent = Intent(Intent.ACTION_DIAL)
-                    callExpertIntent.data = Uri.parse("tel:" + expertConnectDetails.contact_number)
-                    startActivity(Intent.createChooser(callExpertIntent, "Call by:"))
-                }
-            } else {
+            }
+             else {
                 callnow_layout.visibility = View.GONE
                 callnow_image.visibility = View.GONE
 

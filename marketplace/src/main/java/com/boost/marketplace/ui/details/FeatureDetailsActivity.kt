@@ -275,7 +275,7 @@ class FeatureDetailsActivity :
                 loadNumberList()
                 val param = seleced_value_text.layoutParams as ViewGroup.MarginLayoutParams
                 if (singleWidgetKey!!.equals("CALLTRACKER")) {
-                    selected_value_image.setImageResource(R.drawable.ic_customer_call_tracking_ivr)
+                    selected_value_image.setImageResource(R.drawable.ic_customer_call_tracking_ivr1)
                     param.setMargins(
                         TypedValue.applyDimension(
                             TypedValue.COMPLEX_UNIT_DIP,
@@ -295,7 +295,7 @@ class FeatureDetailsActivity :
                         0
                     )
                 } else {
-                    selected_value_image.setImageResource(R.drawable.ic_customer_call_tracking_ivr)
+                    selected_value_image.setImageResource(R.drawable.ic_customer_call_tracking_ivr1)
                     param.setMargins(
                         TypedValue.applyDimension(
                             TypedValue.COMPLEX_UNIT_DIP,
@@ -317,7 +317,7 @@ class FeatureDetailsActivity :
                 }
                 seleced_value_text.layoutParams = param
             } else if (singleWidgetKey!!.contains("EMAILACCOUNTS")) {
-                selected_value_image.setImageResource(R.drawable.ic_customer_call_tracking_ivr)
+                selected_value_image.setImageResource(R.drawable.ic_customer_call_tracking_ivr1)
                 val param = seleced_value_text.layoutParams as ViewGroup.MarginLayoutParams
                 param.setMargins(
                     TypedValue.applyDimension(

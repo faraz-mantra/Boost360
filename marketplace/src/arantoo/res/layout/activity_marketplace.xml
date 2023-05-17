@@ -119,7 +119,7 @@
                             android:layout_height="60dp"
                             android:layout_marginTop="48dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_ardhim_logo" />
+                            android:src="@drawable/ic_arantoo_logo" />
 
                         <TextView
                             android:id="@+id/welcome_txt"
@@ -885,7 +885,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/regular"
-                            android:text="@string/watch_boost_360_features_in_action"
+                            android:text="watch_arantoo_features_in_action"
                             android:textColor="@color/colorPrimary1"
                             android:textSize="16sp"
                             android:layout_marginStart="15dp"
@@ -1141,7 +1141,7 @@
                                 android:paddingEnd="@dimen/_10sdp"
                                 android:text="Call Now"
                                 android:textAllCaps="true"
-                                android:textColor="@color/colorAccent1"
+                                android:textColor="@color/colorAccent4"
                                 android:textSize="11sp"
                                 android:textStyle="bold" />
 
@@ -1311,7 +1311,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:fontFamily="@font/bold"
-                                android:text="@string/help_us_make_nboost_better"
+                                android:text="Help us make\nArantoo better"
                                 android:textSize="18sp" />
 
                         </LinearLayout>
