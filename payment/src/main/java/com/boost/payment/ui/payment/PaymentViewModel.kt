@@ -570,6 +570,11 @@ class PaymentViewModel(application: Application) : BaseViewModel(application) {
           }, {
             updatesLoader.postValue(false)
             updatesError.postValue(it.message)
+            Toasty.error(
+              getApplication(),
+              "Failed to create Auto payment.Try Later!!",
+              Toast.LENGTH_LONG
+            ).show()
           })
     )
   }
