@@ -34,6 +34,7 @@ import com.framework.utils.onDone
 import com.framework.utils.onRightDrawableClicked
 import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
+import com.google.gson.Gson
 
 class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Binding, CategoryVideoModel>(), RecyclerItemClickListener {
 
@@ -121,9 +122,9 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
           val mainCategories = response?.filter { it -> it.info != null }
           mainCategories?.forEach { it ->
             val categoryItem = CategoryDataModel(
-              experience_code = it.appexperiencecodes[0],
-              webTemplateId = webTemplateIds[it.appexperiencecodes[0]],
-              category_key = primaryCategories[it.appexperiencecodes[0]],
+              experience_code = "DOC",
+              webTemplateId = webTemplateIds["DOC"],
+              category_key = primaryCategories["DOC"],
               category_Name = it.name,
               category_descriptor = "",
               icon = it.info.icon,
@@ -138,9 +139,9 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
             val mainCategories = response?.filter { it -> it.info != null }
             mainCategories?.forEach { it ->
               val categoryItem = CategoryDataModel(
-                experience_code = it.appexperiencecodes[0],
-                webTemplateId = webTemplateIds[it.appexperiencecodes[0]],
-                category_key = primaryCategories[it.appexperiencecodes[0]],
+                experience_code = "HOS",
+                webTemplateId = webTemplateIds["HOS"],
+                category_key = primaryCategories["HOS"],
                 category_Name = it.name,
                 category_descriptor = "",
                 icon = it.info.icon,
@@ -168,9 +169,9 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
           val categoryListTemp = ArrayList<CategoryDataModel>()
           mainCategories?.forEach { it ->
             val categoryItem = CategoryDataModel(
-              experience_code = it.appexperiencecodes[0],
-              webTemplateId = webTemplateIds[it.appexperiencecodes[0]],
-              category_key = primaryCategories[it.appexperiencecodes[0]],
+              experience_code = appExerienceCode,
+              webTemplateId = webTemplateIds[appExerienceCode],
+              category_key = primaryCategories[appExerienceCode],
               category_Name = it.name,
               category_descriptor = "",
               icon = it.info.icon,
@@ -423,7 +424,11 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
   }
 
   private fun setAdapterCategory(dataCategory: CategoryDataModel) {
-    categoryList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
+    if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
+      categoryList.forEach { it.isSelected = (it.category_Name == dataCategory.category_Name) }
+    }else{
+      categoryList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
+    }
     adapterCategoryLocal?.notifyDataSetChanged()
   }
 
