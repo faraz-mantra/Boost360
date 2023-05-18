@@ -51,6 +51,7 @@ class UpdateStudioSvgRenderCache:SvgRenderCacheUtil() {
         result= result?.replace("Lorumipsum.com",userWebsite)
         result= result?.replace("loreuminpsum.com",userWebsite)
         result= result?.replace("loreoispum.com",userWebsite)
+        result= result?.replace("loremipsum.com",userWebsite)
         result= result?.replace("+91 9999999999",userPhone)
         val imgIdIndex = result?.indexOf("data-name=\"biz_logo.png\"")
         imgIdIndex?:return result
