@@ -301,6 +301,11 @@
         {
           "quickActionType": "ADD_CUSTOM_PAGE",
           "title": "Add a\ncustom page"
+        },
+        {
+          "quickActionType": "ADD_EDUCATION_TESTIMONIAL",
+          "title": "Testimonials",
+          "isNew": false
         }
       ]
     },

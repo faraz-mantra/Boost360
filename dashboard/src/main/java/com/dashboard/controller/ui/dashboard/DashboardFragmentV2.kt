@@ -831,6 +831,7 @@ class DashboardFragmentV2 : AppBaseFragment<FragmentDashboardV2Binding, Dashboar
       QuickActionItem.QuickActionType.PLACE_ORDER_BOOKING -> baseActivity.startOrderCreate(session)
       QuickActionItem.QuickActionType.ADD_TABLE_BOOKING -> baseActivity.startBookTable(session, true)
       QuickActionItem.QuickActionType.ADD_STAFF_MEMBER -> baseActivity.startAddStaff(session)
+      QuickActionItem.QuickActionType.ADD_EDUCATION_TESTIMONIAL -> baseActivity.startTestimonial(session, false)
 
       QuickActionItem.QuickActionType.POST_STATUS_STORY,
       QuickActionItem.QuickActionType.ADD_SLIDER_BANNER,

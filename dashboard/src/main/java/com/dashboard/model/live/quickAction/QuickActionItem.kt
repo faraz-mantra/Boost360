@@ -45,7 +45,8 @@ class QuickActionItem(
     SERVICES_OFFERS(R.drawable.ic_new_post_an_offer),
     ADD_NEARBY_ATTRACTION(R.drawable.ic_add_nearby_attraction_d),
     ADD_PRODUCT(R.drawable.ic_add_product_d), ADD_SERVICE(R.drawable.ic_add_service_d), LIST_DRUG_MEDICINE(R.drawable.ic_add_product_d),
-    LIST_PRODUCT(R.drawable.ic_add_product_d), ADD_STAFF_PROFILE(R.drawable.ic_add_doctor_staff_member_d);
+    LIST_PRODUCT(R.drawable.ic_add_product_d), ADD_STAFF_PROFILE(R.drawable.ic_add_doctor_staff_member_d),
+    ADD_EDUCATION_TESTIMONIAL(R.drawable.ic_customer_testimonial_d);
 
     companion object {
       fun from(name: String): QuickActionType? = values().firstOrNull { it.name == name }
