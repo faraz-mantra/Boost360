@@ -462,7 +462,7 @@ class BusinessDetailsFragment : DialogFragment() {
 
       if (business_address.text.isEmpty()) {
         business_address.setBackgroundResource(R.drawable.et_validity_error)
-        Toasty.error(requireContext(), "Entered Business address is not valid!!", Toast.LENGTH_LONG)
+        Toasty.error(requireContext(), "Billing address can't be empty!!", Toast.LENGTH_LONG)
           .show()
         return false
       } else {

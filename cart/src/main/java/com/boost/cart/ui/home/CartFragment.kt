@@ -1673,7 +1673,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     }
                     Toasty.error(
                         requireContext(),
-                        "Entered Business address is not valid!!",
+                        "Billing address can't be empty!!",
                         Toast.LENGTH_LONG
                     )
                         .show()
