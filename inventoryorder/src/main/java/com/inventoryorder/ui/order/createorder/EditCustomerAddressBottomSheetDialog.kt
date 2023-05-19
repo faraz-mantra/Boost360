@@ -1,6 +1,7 @@
 package com.inventoryorder.ui.order.createorder
 
 import android.view.View
+import android.widget.Toast
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.inventoryorder.R
@@ -40,14 +41,19 @@ class EditCustomerAddressBottomSheetDialog(val address: Address) : BaseBottomShe
     super.onClick(v)
     when (v) {
       binding?.buttonDone -> {
-        val addressN = Address(
-          addressLine = binding?.layoutAddress?.editAddress?.text.toString(),
-          city = binding?.layoutAddress?.editCity?.text.toString(),
-          region = binding?.layoutAddress?.editState?.text.toString(),
-          zipcode = binding?.layoutAddress?.editPin?.text.toString(),
-        )
-        onClicked(addressN)
-        dismiss()
+        val zipCode = binding?.layoutAddress?.editPin?.text.toString()
+        if (zipCode.length == 6) {
+          val addressN = Address(
+            addressLine = binding?.layoutAddress?.editAddress?.text.toString(),
+            city = binding?.layoutAddress?.editCity?.text.toString(),
+            region = binding?.layoutAddress?.editState?.text.toString(),
+            zipcode = binding?.layoutAddress?.editPin?.text.toString(),
+          )
+          onClicked(addressN)
+          dismiss()
+        } else {
+          Toast.makeText(context, "Please enter a valid zip code!", Toast.LENGTH_SHORT).show()
+        }
       }
       binding?.layoutAddress?.editCity -> {
         val dialog = CitySearchDialog()
