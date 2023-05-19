@@ -1,8 +1,10 @@
 package com.boost.presignin.ui.login
 
+import a.a.b.a.f.w.b
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +30,8 @@ import android.widget.Toast
 
 import android.view.View.OnFocusChangeListener
 import com.framework.pref.APPLICATION_JIO_ID
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.safetynet.SafetyNet
 
 class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
@@ -65,7 +69,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
     WebEngageController.trackEvent(PS_LOGIN_USERNAME_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.usernameEt?.onTextChanged { onDataChanged() }
     binding?.passEt?.onTextChanged { onDataChanged() }
-    setOnClickListener(binding?.forgotTv, binding?.loginBt, binding?.loginWithNumberBtn, binding?.helpTv)
+    setOnClickListener(binding?.forgotTv, binding?.loginBt, binding?.loginWithNumberBtn, binding?.helpTv,binding?.verifyBt)
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
     backButton?.setOnClickListener { goBack() }
     binding?.passEt?.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
@@ -99,6 +103,9 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
       }
       binding?.helpTv -> {
         needHelp()
+      }
+      binding?.verifyBt -> {
+        verifyWithCaptcha()
       }
     }
   }
@@ -135,6 +142,27 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
   private fun onDataChanged() {
     val username = binding?.usernameEt?.text?.toString()
     val password = binding?.passEt?.text?.toString()
-    binding?.loginBt?.isEnabled = !username.isNullOrBlank() && !password.isNullOrBlank()
+    binding?.verifyBt?.isEnabled = !username.isNullOrBlank() && !password.isNullOrBlank()
+  }
+
+  private fun verifyWithCaptcha() {
+    val key = "6LfoGxQmAAAAAPjCeVIg4fqdVerlsUGYpbi7vNsi" //nowfloats
+
+    SafetyNet.getClient(context!!).verifyWithRecaptcha(key)
+      .addOnSuccessListener { response ->
+        val userResponseToken = response.tokenResult
+        if (userResponseToken?.isNotEmpty() == true) {
+          Toast.makeText(context!!, "Successfully Verified", Toast.LENGTH_SHORT).show()
+          binding.verifyBt.isEnabled = true
+        }
+      }
+      .addOnFailureListener { e ->
+        Toast.makeText(context!!, "Verification Failed", Toast.LENGTH_SHORT).show()
+        if (e is ApiException) {
+          Log.d("MainAct", "Error: e.statusCode}")
+        } else {
+          Log.d("MainAct", "Error: ${e.message}")
+        }
+      }
   }
 }

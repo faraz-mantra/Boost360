@@ -65,13 +65,23 @@
       tools:ignore="MissingConstraints" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/verify_bt"
+        style="@style/verify_button_style"
+        android:layout_marginTop="28dp"
+        android:enabled="true"
+        android:text="@string/verify"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@+id/pass_et"
+        tools:ignore="MissingConstraints" />
+
+    <com.google.android.material.button.MaterialButton
       android:id="@+id/login_bt"
       style="@style/material_button_style"
       android:layout_marginTop="28dp"
       android:enabled="false"
       android:text="@string/psn_login_to_boost_360"
       android:textAllCaps="false"
-      app:layout_constraintTop_toBottomOf="@+id/pass_et"
+      app:layout_constraintTop_toBottomOf="@+id/verify_bt"
       tools:ignore="MissingConstraints" />
 
     <com.framework.views.customViews.CustomTextView
