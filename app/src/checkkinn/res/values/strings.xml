@@ -33,6 +33,7 @@
   <string name="ps_sc8_lbl3">Get additional features \nfor your business website \nfrom the in-app Store.</string>
   <string name="ps_sc8_lbl4">Store</string>
   <string name="to_buy_pricing_plans_please_contact">If you are interested in buying a plan, please drop a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233.</string>
+  <string name="shared_user_key">com.checkkinn.kb.boostapp.sharedkey</string>
 
   <string-array name="weeks">
     <item>Week 1</item>
