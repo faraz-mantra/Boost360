@@ -83,12 +83,15 @@ import retrofit.client.Response;
 import static com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItemKt.filterFeature;
 import static com.framework.firebaseUtils.caplimit_feature.CapLimitFeatureResponseItemKt.getCapData;
 import static com.framework.utils.UtilKt.hideKeyBoard;
+import static com.framework.webengageconstant.EventLabelKt.CREATE_A_CUSTOMPAGE;
 import static com.framework.webengageconstant.EventLabelKt.FAILED_TO_UPDATE_CUSTOMPAGE;
+import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
 import static com.framework.webengageconstant.EventLabelKt.SOMETHING_WENT_WRONG_PLEASE_TRY_AGAIN;
 import static com.framework.webengageconstant.EventLabelKt.SUCCESSFULLY_ADDED_CUSTOMPAGE;
 import static com.framework.webengageconstant.EventLabelKt.UPDATE_A_CUSTOMPAGE;
 import static com.framework.webengageconstant.EventNameKt.POST_ACUSTOMPAGE;
 import static com.framework.webengageconstant.EventNameKt.UPDATE_CUSTOMPAGE;
+import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 
@@ -245,6 +248,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     });
 
     save.setOnClickListener(v -> {
+      WebEngageController.trackEvent(CREATE_A_CUSTOMPAGE, PAGE_VIEW, NO_EVENT_VALUE);
       if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
         Methods.showFeatureNotAvailDialog(CreateCustomPageActivity.this);
       } else {

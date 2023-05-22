@@ -5,6 +5,7 @@ import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_DELETE_BA
 import static com.framework.webengageconstant.EventLabelKt.UPDATED_BUINSESS_LOGO;
 import static com.framework.webengageconstant.EventLabelKt.UPDATE_BACKGROUND_IMAGE;
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_LOGO_ADDED;
+import static com.framework.webengageconstant.EventNameKt.CHANGE_LOGO;
 import static com.framework.webengageconstant.EventNameKt.DELETE_BACKGROUND_IMAGE;
 import static com.framework.webengageconstant.EventNameKt.UPLOAD_BACKGROUND_IMAGE;
 import static com.framework.webengageconstant.EventNameKt.UPLOAD_LOGO;
@@ -226,6 +227,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
         if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
             MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA, null);
             WebEngageController.trackEvent(UPLOAD_LOGO, UPDATED_BUINSESS_LOGO, session.getFpTag());
+            WebEngageController.trackEvent(CHANGE_LOGO, UPDATED_BUINSESS_LOGO, session.getFpTag());
             cameraIntent();
         } else if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())) {
             MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY, null);

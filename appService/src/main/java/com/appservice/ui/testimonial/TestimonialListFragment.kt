@@ -158,6 +158,7 @@ class TestimonialListFragment : BaseTestimonialFragment<FragmentTestimonialListB
 
   private fun addTestimonial() {
     WebEngageController.trackEvent(TESTIMONIAL_ADD_CLICK, CLICK, sessionLocal.fpTag)
+    WebEngageController.trackEvent(ADD_TESTIMONIAL_PAGE, CLICK, sessionLocal.fpTag)
     startTestimonialFragmentActivity(FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT, isResult = true)
   }
 

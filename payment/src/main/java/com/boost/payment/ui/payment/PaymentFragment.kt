@@ -894,10 +894,15 @@ class PaymentFragment : BaseFragment(), PaymentListener, BusinessDetailListener,
 //                payFragment.arguments = args
 //                (activity as PaymentActivity).addFragment(payFragment, Constants.WEB_VIEW_FRAGMENT)
 
-                pay_link.setOnClickListener {
-                    val customIntent = CustomTabsIntent.Builder()
+            pay_link.setOnClickListener {
+                WebEngageController.trackEvent(
+                    ADDONS_MARKETPLACE_PAYMENT_LINK_CLICK,
+                    ADDONS_MARKETPLACE_PAYMENT_LINK,
+                    NO_EVENT_VALUE
+                )
+                val customIntent = CustomTabsIntent.Builder()
 
-                    customIntent.setToolbarColor(
+                customIntent.setToolbarColor(
                         ContextCompat.getColor(
                             activity as PaymentActivity,
                             R.color.colorAccent1

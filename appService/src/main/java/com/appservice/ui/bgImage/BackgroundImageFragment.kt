@@ -16,8 +16,6 @@ import com.appservice.model.ImageData
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.ui.catalog.widgets.ClickType
-import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.openImagePicker
 import com.appservice.viewmodel.BackgroundImageViewModel
@@ -29,7 +27,6 @@ import com.framework.imagepicker.ImagePicker
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.utils.convertListObjToString
-import com.framework.utils.fetchString
 import com.framework.webengageconstant.*
 
 class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, BackgroundImageViewModel>(), RecyclerItemClickListener {
@@ -147,7 +144,7 @@ class BackgroundImageFragment : AppBaseFragment<FragmentBackgroundImageBinding, 
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as? List<String>
       if (mPaths.isNullOrEmpty().not()) {
         WebEngageController.trackEvent(GALLERY_IMAGE_ADDED, ADDED, sessionLocal.fpTag)
-
+        WebEngageController.trackEvent(GALLERY_IMAGE_UPLOADED, ADDED, sessionLocal.fpTag)
         startBackgroundActivity(
           FragmentType.BACKGROUND_IMAGE_CROP_FRAGMENT,
           Bundle().apply {
