@@ -68,7 +68,7 @@
         android:id="@+id/verify_bt"
         style="@style/verify_button_style"
         android:layout_marginTop="28dp"
-        android:enabled="true"
+        android:enabled="false"
         android:text="@string/verify"
         android:textAllCaps="false"
         app:layout_constraintTop_toBottomOf="@+id/pass_et"
