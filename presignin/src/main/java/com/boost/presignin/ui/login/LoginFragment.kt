@@ -153,7 +153,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
         val userResponseToken = response.tokenResult
         if (userResponseToken?.isNotEmpty() == true) {
           Toast.makeText(context!!, "Successfully Verified", Toast.LENGTH_SHORT).show()
-          binding.verifyBt.isEnabled = true
+          binding.loginBt.isEnabled = true
         }
       }
       .addOnFailureListener { e ->
