@@ -14,7 +14,6 @@
     android:layout_height="wrap_content"
     android:background="@color/secondary_toolbar_color">
 
-
     <com.framework.views.customViews.CustomToolbar
       android:layout_width="0dp"
       android:layout_height="wrap_content"

@@ -26,6 +26,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.firebaseUtils.firestore.FirestoreManager
+import com.framework.pref.APPLICATION_ARANTOO_ID
 import com.framework.pref.clientId
 import com.framework.utils.ValidationUtils
 import com.framework.webengageconstant.BANK_ACCOUNT
@@ -219,7 +220,11 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     binding?.edtIfsc?.hint = if (isEditable) resources.getString(R.string.type_ifsc_code) else ""
     if (isEditable) {
       (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.adding_bank_account), resources.getDimensionPixelSize(R.dimen.size_36))
-      (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(R.color.color_primary, R.color.color_primary_dark)
+      if ((baseActivity as AccountFragmentContainerActivity).packageName.equals(APPLICATION_ARANTOO_ID, true)) {
+        (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(R.color.colorPrimaryDark, R.color.colorPrimaryDark)
+      } else {
+        (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(R.color.color_primary, R.color.color_primary_dark)
+      }
     }
   }
 

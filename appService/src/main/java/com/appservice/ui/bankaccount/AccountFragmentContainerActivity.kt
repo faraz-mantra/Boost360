@@ -47,6 +47,7 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
   override fun customTheme(): Int? {
     return when (type) {
       FragmentType.ADD_BANK_ACCOUNT_START -> R.style.CatalogTheme
+      FragmentType.BANK_ACCOUNT_DETAILS -> R.style.CatalogTheme
       else -> super.customTheme()
     }
   }
