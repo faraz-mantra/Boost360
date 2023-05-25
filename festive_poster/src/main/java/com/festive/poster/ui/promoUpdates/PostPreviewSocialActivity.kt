@@ -305,7 +305,7 @@ class PostPreviewSocialActivity : AppBaseActivity<ActivityPostPreviewSocialBindi
           val response = it1 as? ChannelAccessStatusResponse
           setDataRequestChannels(categoryData, response?.channels, floatingPoint, fpTag)
         }
-        it1.status == 404 || it1.status == 400 -> setDataRequestChannels(categoryData, null, floatingPoint, fpTag)
+        it1.status == 404 || it1.status == 400 || it1.status == 503 -> setDataRequestChannels(categoryData, null, floatingPoint, fpTag)
         else -> errorMessage(it1.message())
       }
     }
