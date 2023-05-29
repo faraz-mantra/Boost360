@@ -43,6 +43,7 @@
   <color name="color_dialog_bg">#FDFDFE</color>
   <color name="color_border_4a4a4a">#4a4a4a</color>
   <color name="color_border_ffb900">#001D85</color>
+  <color name="color_studio_tab_selected">#001D85</color>
   <color name="color_ffb900_op10_jio_ec008c_op10">#1A409F94</color>
   <color name="color_ffb900_op40_jio_ec008c_op40">#66409F94</color>
   <color name="color_ffb900_jio_ec008c">#001D85</color>
@@ -69,7 +70,7 @@
   <color name="grey_09121F">#ECEFF1</color>
   <color name="gray_333333">#333333</color>
   <color name="color_fcaf17_jio_0400a6">#409F94</color>
-  <color name="color_fcaf17_op70_jio_0400a6">#B3409F94</color>
+  <color name="color_fcaf17_op70_jio_0400a6">#B3001D85</color>
   <color name="colorPrimary_20">#33409F94</color>
   <color name="black_4a4a4a_20">#334A4A4A</color>
   <color name="black_09121F">#09121F</color>

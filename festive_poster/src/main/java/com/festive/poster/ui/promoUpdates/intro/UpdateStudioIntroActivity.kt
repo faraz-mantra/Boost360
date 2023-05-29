@@ -71,7 +71,7 @@ class UpdateStudioIntroActivity : AppBaseActivity<ActivityUpdateStudioIntroBindi
       ),
 
       IntroUpdateStudioItem(
-        getString(R.string.your_brand_templates_for_quick_posting), R.drawable.update_studio_intro_vertical_3, getString(R.string.this_premium_feature_is_available_in_online_classic_online_advanced_packs)
+        getString(R.string.your_brand_templates_for_quick_posting), R.drawable.update_studio_intro_vertical_2, getString(R.string.this_premium_feature_is_available_in_online_classic_online_advanced_packs)
       ),
 
       IntroUpdateStudioItem(

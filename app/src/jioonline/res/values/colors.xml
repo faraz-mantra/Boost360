@@ -125,6 +125,7 @@
 
   <color name="color_border_4a4a4a">@color/colorAccentLight</color>
   <color name="color_border_ffb900">#AFADFC</color>
+  <color name="color_studio_tab_selected">#AFADFC</color>
   <color name="wrongOTPColor">@color/colorAccentLight</color>
   <color name="red_button">@color/colorAccentLight</color>
   <color name="colorAccentLightDark">@color/colorAccentLight</color>

@@ -11,7 +11,7 @@
     <style name="TemplateTheme" parent="BaseTheme"/>
     <style name="TabTextStyle" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
-        <item name="tabSelectedTextColor">@color/color_border_ffb900</item>
+        <item name="tabSelectedTextColor">@color/color_studio_tab_selected</item>
         <item name="tabTextColor">@color/colorB3B3B3</item>
         <item name="textSize">14sp</item>
     </style>

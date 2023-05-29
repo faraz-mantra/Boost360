@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <color name="colorAccent">#044BB1</color>
+  <color name="colorAccent">#FFB800</color>
   <color name="primaryColor">#044BB1</color>
-  <color name="colorPrimary">#044BB1</color>
-  <color name="colorPrimaryDark">#044BB1</color>
-  <color name="colorAccentLight">#FFB800</color>
-  <color name="primaryColorDark">#044BB1</color>
-
   <color name="greenDark">#458b00</color>
   <color name="product_delete_btn">#ff3f3f</color>
-
+  <color name="colorPrimary">#044BB1</color>
+  <color name="colorPrimaryDark">#044BB1</color>
+  <color name="colorAccentLight">#001D85</color>
+  <color name="primaryColorDark">#044BB1</color>
   <color name="accentColor">#615b5b</color>
 
   <color name="percentage_text_color">#c5c5c5</color>
@@ -25,7 +23,7 @@
   <color name="title_popup">#212121</color>
   <color name="gray">#565656</color>
   <color name="light_gray">#a1a1a1</color>
-  <color name="top_bar_color">#FFB800</color>
+  <color name="top_bar_color">#044BB1</color>
   <color name="background_grey">#f0f0f0</color>
   <color name="background_grey_onclick">#d0d0d0</color>
   <color name="white">#ffffff</color>
@@ -35,7 +33,7 @@
   <color name="grey">#a4a4a4</color>
   <color name="transparent">#00ffffff</color>
   <color name="light_black">#505050</color>
-  <color name="home_yellow">#FFB800</color>
+  <color name="home_yellow">#044BB1</color>
 
   <color name="pencil_shade">#aaaaaa</color>
   <color name="biz_msg_txt_color">#3c3c3c</color>
@@ -73,5 +71,6 @@
   <color name="black_4a4a4a_jio">#FFB800</color>
   <color name="website_custom_toolbar_color">#044BB1</color>
   <color name="themeColor">#044BB1</color>
+
 
 </resources>
