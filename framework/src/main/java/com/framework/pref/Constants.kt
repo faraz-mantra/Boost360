@@ -6,6 +6,7 @@ import java.util.*
 
 var APPLICATION_JIO_ID = "com.jio.online"
 var APPLICATION_HEALTHGRO_ID = "com.healthgro.nowfloats"
+var APPLICATION_ARANTOO_ID = "com.arantoo.nowfloats"
 
 val REFERRAL_CAMPAIGN_CODE = 26277
 

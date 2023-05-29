@@ -34,6 +34,7 @@ import com.framework.utils.onDone
 import com.framework.utils.onRightDrawableClicked
 import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
+import com.google.gson.Gson
 
 class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Binding, CategoryVideoModel>(), RecyclerItemClickListener {
 
@@ -102,6 +103,8 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
   }
 
   private fun loadLocalVerticalCategoryData() {
+    val webTemplateIds: HashMap<String, String> = hashMapOf("DOC" to "59d74e153872831a6483491e","EDU" to "5a952f3dac626704fc9b6d86","HOS" to "597f48fd38728384d4b85cdd","SPA" to "5b34bd254030c804fbbd8414", "HOT" to "5b3b2b6aec3c7704fee7ae93","CAF" to "5ad9c409889084051f87a4b6","SAL" to "5b34bd254030c804fbbd8414","MFG" to "590b3f09ee786c1d88879129","RTL" to "5b864dd931bfd4054774ec1b","SVC" to "5eda2675d0c6770001f67d91")
+    val primaryCategories: HashMap<String, String> = hashMapOf("DOC" to "HEALTHCARE - GENERAL","EDU" to "EDUCATION","HOS" to "HEALTHCARE - CLINICS","SPA" to "SPA", "HOT" to "HOTEL & MOTELS","CAF" to "FOOD & BEVERAGES","SAL" to "SALON","MFG" to "MANUFACTURERS","RTL" to "OTHER RETAIL","SVC" to "OTHER SERVICES")
     adapterLocalCategory()
     val appExerienceCode = when (BuildConfig.FLAVOR) {
       "healthgro" -> "DOC"
@@ -119,9 +122,9 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
           val mainCategories = response?.filter { it -> it.info != null }
           mainCategories?.forEach { it ->
             val categoryItem = CategoryDataModel(
-              experience_code = it.appexperiencecodes[0],
-              webTemplateId = it.websiteid,
-              category_key = it.name,
+              experience_code = "DOC",
+              webTemplateId = webTemplateIds["DOC"],
+              category_key = primaryCategories["DOC"],
               category_Name = it.name,
               category_descriptor = "",
               icon = it.info.icon,
@@ -136,9 +139,9 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
             val mainCategories = response?.filter { it -> it.info != null }
             mainCategories?.forEach { it ->
               val categoryItem = CategoryDataModel(
-                experience_code = it.appexperiencecodes[0],
-                webTemplateId = it.websiteid,
-                category_key = it.name,
+                experience_code = "HOS",
+                webTemplateId = webTemplateIds["HOS"],
+                category_key = primaryCategories["HOS"],
                 category_Name = it.name,
                 category_descriptor = "",
                 icon = it.info.icon,
@@ -166,9 +169,9 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
           val categoryListTemp = ArrayList<CategoryDataModel>()
           mainCategories?.forEach { it ->
             val categoryItem = CategoryDataModel(
-              experience_code = it.appexperiencecodes[0],
-              webTemplateId = it.websiteid,
-              category_key = it.name,
+              experience_code = appExerienceCode,
+              webTemplateId = webTemplateIds[appExerienceCode],
+              category_key = primaryCategories[appExerienceCode],
               category_Name = it.name,
               category_descriptor = "",
               icon = it.info.icon,
@@ -349,13 +352,13 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
         WebEngageController.trackEvent(PS_SIGNUP_CATEGORY_SELECTION_MAIN_LOAD, CLICK, NO_EVENT_VALUE)
         val dataCategory = (item as? CategoryDataModel) ?: return
         if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
-          dataCategory.subCategoryName = selectedCategoryLive?.name.toString()
+          dataCategory.subCategoryName = dataCategory.category_Name!!
           binding.tvNextStep1.backgroundTintList= ContextCompat.getColorStateList(context!!, R.color.buttonTint)
           if (binding?.includeNoSearchResultFound?.root?.visibility == View.VISIBLE) {
-            categoryNoDataList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
+            categoryNoDataList.forEach { it.isSelected = (it.category_Name == dataCategory.category_Name) }
             noCatListAdapter?.notifyDataSetChanged()
           } else {
-            categoryList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
+            categoryList.forEach { it.isSelected = (it.category_Name == dataCategory.category_Name) }
             adapterCategoryLocal?.notifyDataSetChanged()
           }
           selectedCategoryLive = null
@@ -421,7 +424,11 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
   }
 
   private fun setAdapterCategory(dataCategory: CategoryDataModel) {
-    categoryList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
+    if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
+      categoryList.forEach { it.isSelected = (it.category_Name == dataCategory.category_Name) }
+    }else{
+      categoryList.forEach { it.isSelected = (it.category_key == dataCategory.category_key) }
+    }
     adapterCategoryLocal?.notifyDataSetChanged()
   }
 

@@ -11,7 +11,7 @@
     <style name="TemplateTheme" parent="BaseTheme"/>
     <style name="TabTextStyle" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
-        <item name="tabSelectedTextColor">@color/color_border_ffb900</item>
+        <item name="tabSelectedTextColor">@color/color_studio_tab_selected</item>
         <item name="tabTextColor">@color/colorB3B3B3</item>
         <item name="textSize">14sp</item>
     </style>
@@ -309,7 +309,7 @@
     <style name="primary_squared_button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/size_52</item>
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:background">@color/primary_toolbar_color</item>
         <item name="fontFamily">@font/bold</item>
         <item name="textSize">@dimen/text_16</item>
         <item name="android:gravity">center</item>

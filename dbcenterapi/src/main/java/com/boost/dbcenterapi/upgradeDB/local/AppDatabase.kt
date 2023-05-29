@@ -7,6 +7,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.boost.dbcenterapi.upgradeDB.dao.*
 import com.boost.dbcenterapi.upgradeDB.model.*
+import com.boost.dbcenterapi.utils.Utils.getDatabaseName
 
 @Database(entities = [FeaturesModel::class, WidgetModel::class, BundlesModel::class, CartModel::class, CouponsModel::class, YoutubeVideoModel::class, MarketOfferModel::class], version = 29, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
@@ -19,7 +20,7 @@ abstract class AppDatabase : RoomDatabase() {
                     if (instance == null) {
                         instance = Room.databaseBuilder(
                             context,
-                            AppDatabase::class.java, "updates_db"
+                            AppDatabase::class.java, getDatabaseName()
                         ).fallbackToDestructiveMigration().build()
                     }
                 }

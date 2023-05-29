@@ -406,7 +406,12 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       1 -> showToolbar(getString(R.string.website))
       2 -> showToolbar(getString(R.string.enquiry))
       3 -> if (this.packageName.equals(APPLICATION_JIO_ID, true)) showToolbar(getString(R.string.more))
-      4 -> showToolbar(getString(R.string.more))
+      4 -> {
+        showToolbar(getString(R.string.more))
+        if (this.packageName.equals(APPLICATION_ARANTOO_ID, true)) {
+          changeTheme(R.color.colorPrimaryDark, R.color.colorPrimaryDark)
+        }
+      }
       else -> {
         if (packageName.equals(APPLICATION_JIO_ID, ignoreCase = true).not()) {
           changeTheme(R.color.dashboard_status_bar_color, R.color.dashboard_status_bar_color)

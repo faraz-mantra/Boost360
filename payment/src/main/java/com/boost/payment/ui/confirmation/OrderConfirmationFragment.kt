@@ -103,6 +103,8 @@ class OrderConfirmationFragment : BaseFragment() {
       prefs.storeFirstTimePurchase(false)
     }
 
+    footer_details.text = "A copy of the GST Invoice was also sent on your registered email address ("+UserSessionManager(requireContext()).userProfileEmail+") and mobile ("+UserSessionManager(requireContext()).userProfileMobile+")."
+
 
     try {
       if (arguments != null) {

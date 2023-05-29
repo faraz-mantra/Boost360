@@ -10,4 +10,5 @@
     <color name="colorPrimaryDark">#044BB1</color>
     <color name="yellow_ffb900">@color/primaryColorDark</color>
     <color name="ButtoncolorAccent">#FFB800</color>
+    <color name="secondary_toolbar_color">@color/primaryColorDark</color>
 </resources>

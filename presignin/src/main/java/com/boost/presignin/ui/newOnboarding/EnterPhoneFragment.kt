@@ -126,11 +126,10 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
 
 
   private fun initUI() {
-    if (BuildConfig.FLAVOR.equals("partone") || BuildConfig.FLAVOR.equals("jioonline")) {
-      initTncString()
-    }else{
+    initTncString()
+    if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
       binding.tvLoginWithEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
-      binding.tvRequestOtp.backgroundTintList= ContextCompat.getColorStateList(context!!, R.color.buttonTint)
+      binding.tvRequestOtp.backgroundTintList= ContextCompat.getColorStateList(context!!, R.color.disable_enable_button_selector)
     }
   }
 
@@ -139,7 +138,7 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
   }
 
   private fun initTncString() {
-    binding.acceptTncPhone.text = fromHtml("${getString(R.string.enter_phone_t_n_c)} <b><u><font color=#ffb900>Terms of Use</font></u></b> and <b><u><font color=#ffb900>Privacy Policy</font></u></b>")
+    binding.acceptTncPhone.text = fromHtml("${getString(R.string.enter_phone_t_n_c)} <b><u><font color=#001D85>Terms of Use</font></u></b> and <b><u><font color=#001D85>Privacy Policy</font></u></b>")
     binding.acceptTncPhone.makeLinks(
       Pair("Terms of Use", View.OnClickListener {
         WebEngageController.trackEvent(BOOST_360_TERMS_CLICK, CLICKED, NO_EVENT_VALUE)

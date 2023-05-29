@@ -11,6 +11,8 @@ import android.text.Spanned
 import android.text.style.ClickableSpan
 import android.text.style.StyleSpan
 import android.view.View
+import android.view.Window
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
@@ -20,7 +22,6 @@ import com.appservice.databinding.ActivityDomainBookingBinding
 import com.appservice.databinding.BsheetDomainIntegrationOptionsBinding
 import com.appservice.databinding.BsheetInputOwnDomainBinding
 import com.appservice.databinding.BsheetInputSubDomainBinding
-import com.appservice.model.domainBooking.DomainDetailsResponse
 import com.appservice.model.domainBooking.request.ExistingDomainRequest
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
@@ -30,13 +31,14 @@ import com.appservice.utils.WebEngageController
 import com.appservice.utils.getDomainSplitValues
 import com.appservice.utils.removeWWWFromDomain
 import com.appservice.viewmodel.DomainBookingViewModel
-import com.framework.base.BaseActivity
 import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.firebaseUtils.FirebaseRemoteConfigUtil.featureDomainEnable
 import com.framework.firebaseUtils.firestore.FirestoreManager
+import com.framework.pref.APPLICATION_ARANTOO_ID
+import com.framework.pref.APPLICATION_JIO_ID
 import com.framework.pref.Key_Preferences.GET_FP_DETAILS_CATEGORY
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
@@ -46,6 +48,7 @@ import com.framework.utils.fromHtml
 import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
+
 
 class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, DomainBookingViewModel>(), RecyclerItemClickListener {
 
@@ -68,6 +71,12 @@ class DomainBookingActivity : AppBaseActivity<ActivityDomainBookingBinding, Doma
     binding?.tvDomainAssigned?.text = domainSplit?.domainExtension
     setupUI()
     onClickListeners()
+
+    // setting status bar color
+    if (packageName.equals(APPLICATION_ARANTOO_ID, ignoreCase = true).not()) {
+      val window: Window = this.window
+      window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
+    }
   }
 
   private fun onClickListeners() {

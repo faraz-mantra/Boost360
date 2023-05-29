@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boost.payment.R
 import com.boost.payment.interfaces.PaymentListener
 import com.bumptech.glide.Glide
-import com.razorpay.Razorpay
+//import com.razorpay.Razorpay
 
 
 class WalletAdapter(
-  razorpay: Razorpay,
+//  razorpay: Razorpay,
   itemList: ArrayList<String>,
   val listener: PaymentListener
 ) :
@@ -22,11 +22,11 @@ class WalletAdapter(
 
   private var list = ArrayList<String>()
   private lateinit var context: Context
-  private lateinit var razorpay: Razorpay
+//  private lateinit var razorpay: Razorpay
 
   init {
     this.list = itemList
-    this.razorpay = razorpay
+//    this.razorpay = razorpay
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -48,7 +48,7 @@ class WalletAdapter(
     holder.itemView.setOnClickListener {
       listener.walletSelected(list.get(position))
     }
-    Glide.with(context).load(razorpay.getWalletSqLogoUrl(list.get(position))).into(holder.image)
+//    Glide.with(context).load(razorpay.getWalletSqLogoUrl(list.get(position))).into(holder.image)
     if (list.size - 1 == position) {
       holder.view.visibility = View.GONE
     }

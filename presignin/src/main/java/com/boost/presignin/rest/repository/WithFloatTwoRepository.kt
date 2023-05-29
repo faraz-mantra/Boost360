@@ -73,6 +73,10 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.verifyUserProfile(request), TaskCode.VERIFY_USER_PROFILE)
   }
 
+  fun verifyUserProfileVertical(request: UserProfileVerificationRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.verifyUserProfileVertical(request), TaskCode.VERIFY_USER_PROFILE)
+  }
+
   fun forgotPassword(request: ForgotPassRequest): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.forgotPassword(request), TaskCode.FORGOT_PASSWORD)
   }
@@ -108,10 +112,6 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
 
   fun verifyLoginOtpVertical(number: String?, otp: String?, clientId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.verifyLoginOtpVertical(number, otp, clientId = clientId), TaskCode.VERIFY_LOGIN_OTP)
-  }
-
-  fun verifyUserProfileVertical(request: UserProfileVerificationRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.verifyUserProfileVertical(request), TaskCode.VERIFY_USER_PROFILE)
   }
 
   fun getVerticalCategories(appExperienceCode: String?): Observable<BaseResponse> {

@@ -80,7 +80,7 @@ class VerifyPhoneFragment : AuthBaseFragment<FragmentVerifyPhoneBinding>(), SMSR
     Handler().postDelayed({ onCodeSent() }, 500)
     SmsManager.initManager(baseActivity, this)
     if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
-      binding.tvVerifyOtp.backgroundTintList= ContextCompat.getColorStateList(context!!, R.color.buttonTint)
+      binding.tvVerifyOtp.backgroundTintList= ContextCompat.getColorStateList(context!!, R.color.disable_enable_button_selector)
       binding.chkWhatsapp.buttonTintList = ContextCompat.getColorStateList(context!!, R.color.buttonTint)
     }
   }
