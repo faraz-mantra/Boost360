@@ -103,7 +103,7 @@ android {
         }
         healthgro {
             //healthcare
-            versionName "1.0.1.1"
+            versionName "1.0.1.2"
             applicationId "com.healthgro.nowfloats"
             dimension "default"
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'

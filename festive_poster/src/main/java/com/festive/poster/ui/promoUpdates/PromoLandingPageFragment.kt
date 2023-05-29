@@ -147,7 +147,7 @@ class PromoLandingPageFragment : AppBaseFragment<FragmentPromoLandingPageBinding
           }
           1 -> WebEngageController.trackEvent(Update_studio_Create_custom_update_click)
         }
-        val tabIconColor: Int = ContextCompat.getColor(requireActivity(), R.color.colorPrimary)
+        val tabIconColor: Int = ContextCompat.getColor(requireActivity(), R.color.color_studio_tab_selected)
         if (tab?.position == 1) {
           tab.icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_create_new_update_active)
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {

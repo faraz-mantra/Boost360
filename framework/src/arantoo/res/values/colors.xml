@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorAccent">#F5991E</color>
-  <color name="colorPrimary">#F5991E</color>
-  <color name="colorAccentLight">#F5991E</color>
+  <color name="colorAccent">#044BB1</color>
+  <color name="colorPrimary">#044BB1</color>
+  <color name="colorAccentLight">#FFB800</color>
   <color name="colorRedBgImg">#E39595</color>
-
+  <color name="accentLight_1">#044BB1</color>
   <color name="primary_4a4a4a_jio">@color/black_4a4a4a</color>
   <color name="colorPrimary_10">#FFF8E6</color>
-  <color name="colorPrimaryDark">#F5991E</color>
+  <color name="colorPrimaryDark">#044BB1</color>
   <color name="colorAccentLightDark">@color/colorPrimaryDark</color>
-  <color name="accentLight_1">#FFD461</color>
   <color name="accentLight_2">#FFF1CC</color>
   <color name="colorPrimaryVariant">#5092F5</color>
   <color name="statusBarColor">@color/colorPrimaryVariant</color>
@@ -42,11 +41,12 @@
   <color name="shadow">#33000000</color>
   <color name="color_dialog_bg">#FDFDFE</color>
   <color name="color_border_4a4a4a">#4a4a4a</color>
-  <color name="color_border_ffb900">#F5991E</color>
+  <color name="color_border_ffb900">#044BB1</color>
+  <color name="color_studio_tab_selected">#FFB800</color>
   <color name="color_ffb900_op10_jio_ec008c_op10">#1A044BB1</color>
   <color name="color_ffb900_op40_jio_ec008c_op40">#66044BB1</color>
-  <color name="color_ffb900_jio_ec008c">#F5991E</color>
-  <color name="color_ffb900_jio_0400A6">#F5991E</color>
+  <color name="color_ffb900_jio_ec008c">#044BB1</color>
+  <color name="color_ffb900_jio_0400A6">#044BB1</color>
 
   <!-- fab-->
   <color name="colorFabText">#F5F5F5</color>
@@ -80,13 +80,13 @@
   <color name="color_f4f4f4">#F4F4F4</color>
   <color name="color_ffffff">#FFFFFF</color>
   <color name="color_f2f2f2">#f2f2f2</color>
-  <color name="boost_jio_website_card_color">@color/transparent</color>
+  <color name="boost_jio_website_card_color">@color/white</color>
   <color name="boost_jio_website_arrow_color">@color/white</color>
   <color name="green_light">#00C42D</color>
-  <color name="green_409F94">#409F94</color>
-  <color name="dash_bottom_nav_panel_active">#F5991E</color>
+  <color name="dash_bottom_nav_panel_active">#FFB800</color>
   <color name="shimmer_color">@color/colorPrimary</color>
   <color name="gray_toolbar_color">#FFB800</color>
+  <color name="republish_progress_color">#FFB800</color>
   <color name="update_studio_intro_color">#044BB1</color>
   <color name="update_studio_intro_button_color">#FFB800</color>
   <color name="primary_toolbar_color">#044BB1</color>
