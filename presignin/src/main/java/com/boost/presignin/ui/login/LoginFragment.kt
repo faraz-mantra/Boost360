@@ -157,7 +157,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
       ?.addOnSuccessListener { response ->
         val userResponseToken = response.tokenResult
         if (userResponseToken?.isNotEmpty() == true) {
-          Toast.makeText(context!!, "Validity of the verification will be valid for 1 minute.", Toast.LENGTH_SHORT).show()
+          Toast.makeText(baseActivity, "Validity of the verification will be valid for 1 minute.", Toast.LENGTH_SHORT).show()
           binding.verificationSuccessLayout.visibility = View.VISIBLE
           binding.verifyBt.visibility = View.GONE
           binding.loginBt.isEnabled = true
@@ -180,7 +180,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
       binding.verificationSuccessLayout.visibility = View.GONE
       binding.verifyBt.visibility = View.VISIBLE
       binding.loginBt.isEnabled = false
-      showShortToast(getString(R.string.verification_failure))
+      Toast.makeText(baseActivity, "Verification from Captcha expired. Please complete it again!", Toast.LENGTH_SHORT).show()
     }
   }
 }
