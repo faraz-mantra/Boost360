@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="clevertap_account_id">867-6ZR-Z86Z</string>
+  <string name="clevertap_token">216-a6b</string>
+  <string name="clevertap_google_ad_id">1</string>
   <string name="website_domain_name">.nowfloats.com</string>
   <string name="app_name">Ardhim Biz</string>
   <string name="action_settings">Settings</string>

@@ -93,8 +93,6 @@ fun startOrderCreateN(mContext: Context) {
 fun startTestimonialN(mContext: Context, isAdd: Boolean = false) {
   try {
     if (isInstall(mContext)) return
-    val text = if (isAdd) ADD_TESTIMONIAL_PAGE else TESTIMONIAL_PAGE
-    WebEngageController.trackEvent(text, CLICK, TO_BE_ADDED)
     val type = if (isAdd) com.appservice.constant.FragmentType.TESTIMONIAL_ADD_EDIT_FRAGMENT else com.appservice.constant.FragmentType.TESTIMONIAL_LIST_FRAGMENT
     val intent = Intent(mContext, TestimonialContainerActivity::class.java)
     intent.setFragmentType(type)

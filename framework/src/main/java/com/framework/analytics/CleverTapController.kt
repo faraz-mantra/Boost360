@@ -16,7 +16,7 @@ object CleverTapController {
         get() {
             return if (weAnalytics.activity!=null) weAnalytics.activity.get() else BaseApplication.currentActivity()
         }
-    var weUser = HashMap<String, String>()
+    var weUser = HashMap<String, Any>()
     private var isUserLoggedIn = false
     private val TAG = "NFController"
 
@@ -147,6 +147,10 @@ object CleverTapController {
         val cleverTapInstance = CleverTapAPI.getDefaultInstance(WebEngage.getApplicationContext())
         if (userId != null && !userId.isNullOrEmpty()) {
             Log.d(TAG, "Initiating User login$userId")
+            weUser["MSG-email"] = false;        // Disable email notifications
+            weUser["MSG-push"] = true;          // Enable push notifications
+            weUser["MSG-sms"] = false;          // Disable SMS notifications
+            weUser["MSG-whatsapp"] = true;      // Enable WhatsApp notifications
             cleverTapInstance?.onUserLogin(weUser as Map<String, Any>?);
 
             //Firebase Analytics User Session Event.

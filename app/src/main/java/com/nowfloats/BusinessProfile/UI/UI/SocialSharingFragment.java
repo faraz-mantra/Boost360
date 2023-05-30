@@ -104,21 +104,16 @@ import retrofit.client.Response;
 import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.framework.webengageconstant.EventLabelKt.CONNECT_FACEBOOKPAGE;
-import static com.framework.webengageconstant.EventLabelKt.CONNECT_FACEBOOK_SHOP;
 import static com.framework.webengageconstant.EventLabelKt.CONNECT_GMB;
 import static com.framework.webengageconstant.EventLabelKt.CONNECT_TWITTER;
 import static com.framework.webengageconstant.EventLabelKt.CONNECT_WHATSAPP_FOR_BUSINESS;
 import static com.framework.webengageconstant.EventLabelKt.DISCONNECT_FACEBOOKPAGE;
-import static com.framework.webengageconstant.EventLabelKt.DISCONNECT_FACEBOOK_SHOP;
 import static com.framework.webengageconstant.EventLabelKt.DISCONNECT_GMB;
 import static com.framework.webengageconstant.EventLabelKt.DISCONNECT_WHATSAPP_FOR_BUSINESS;
-import static com.framework.webengageconstant.EventLabelKt.DISONNECT_TWITTER;
 import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_CONTENT_SHARING;
 import static com.framework.webengageconstant.EventNameKt.CONTENT_SHARING;
 import static com.framework.webengageconstant.EventNameKt.FACEBOOKPAGE;
-import static com.framework.webengageconstant.EventNameKt.FACEBOOKSHOP;
 import static com.framework.webengageconstant.EventNameKt.GMB;
-import static com.framework.webengageconstant.EventNameKt.TWITTER;
 import static com.framework.webengageconstant.EventNameKt.WHATSAPPFORBUSINESS;
 
 public class SocialSharingFragment extends Fragment implements NfxRequestClient.NfxCallBackListener, TwitterConnection.TwitterResult, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -355,7 +350,6 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                     Toast.makeText(getContext(), getString(R.string.facebook_is_not_working), Toast.LENGTH_SHORT).show();
                 } else if (facebookHomeCheckBox.isChecked()) {
                     facebookHomeCheckBox.setChecked(false);
-                    WebEngageController.trackEvent(FACEBOOKSHOP, CONNECT_FACEBOOK_SHOP, session.getFpTag());
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -364,7 +358,6 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                         }
                     }, 200);
                 } else {
-                    WebEngageController.trackEvent(FACEBOOKSHOP, DISCONNECT_FACEBOOK_SHOP, session.getFpTag());
                     NfxRequestClient requestClient = new NfxRequestClient(SocialSharingFragment.this)
                             .setmFpId(session.getFPID())
                             .setmType("facebookusertimeline")
@@ -439,7 +432,6 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
             public void onClick(View v) {
 
                 if (twitterCheckBox.isChecked()) {
-                    WebEngageController.trackEvent(TWITTER, CONNECT_TWITTER, session.getFpTag());
                     twitterCheckBox.setChecked(false);
                     if (!Methods.isOnline(getActivity())) {
                         showAlertBox();
@@ -451,7 +443,6 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                     }
                     //Rahul twitter
                 } else {
-                    WebEngageController.trackEvent(TWITTER, DISONNECT_TWITTER, session.getFpTag());
                     NfxRequestClient requestClient1 = new NfxRequestClient(SocialSharingFragment.this)
                             .setmFpId(session.getFPID())
                             .setmType("twitter")

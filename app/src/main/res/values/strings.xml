@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="clevertap_account_id">6Z8-R69-876Z</string>
+    <string name="clevertap_token">c62-b16</string>
+    <string name="clevertap_google_ad_id">1</string>
     <string name="noti_msg_calls" translatable="false">Reach out to these customers before they go somewhere else!</string>
     <string name="noti_msg_enquires" translatable="false">Respond to these enquiries before it\'s too late!</string>
     <string name="noti_msg_orders" translatable="false">New order details, click to take action!</string>

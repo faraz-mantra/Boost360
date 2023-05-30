@@ -60,8 +60,6 @@ import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_CARD_EDIT_DETAILS_SAVE_INFO_CLICK;
 import static com.framework.webengageconstant.EventNameKt.BUSINESS_CONTACT_ADDED;
 import static com.framework.webengageconstant.EventNameKt.DISPLAY_CONTACT_1;
-import static com.framework.webengageconstant.EventNameKt.DISPLAY_CONTACT_2;
-import static com.framework.webengageconstant.EventNameKt.DISPLAY_CONTACT_3;
 import static com.framework.webengageconstant.EventNameKt.EMAIL_ADDRESS;
 import static com.framework.webengageconstant.EventNameKt.FACEBOOK_PAGE_URL;
 import static com.framework.webengageconstant.EventNameKt.OTHER_WEBSITE;
@@ -106,12 +104,6 @@ public class ContactInformationActivity extends BaseActivity {
         });
         binding.editDisplayContactNumber1.setOnClickListener(v -> {
             WebEngageController.trackEvent(DISPLAY_CONTACT_1, EVENT_LABEL_NULL, NULL);
-        });
-        binding.editDisplayContactNumber1.setOnClickListener(v -> {
-            WebEngageController.trackEvent(DISPLAY_CONTACT_2, EVENT_LABEL_NULL, NULL);
-        });
-        binding.editDisplayContactNumber1.setOnClickListener(v -> {
-            WebEngageController.trackEvent(DISPLAY_CONTACT_3, EVENT_LABEL_NULL, NULL);
         });
         binding.editWhatsappNumber.setOnClickListener(v -> {
             WebEngageController.trackEvent(WHATSAPP_FOR_BUSINESS_NUMBER, EVENT_LABEL_NULL, NULL);

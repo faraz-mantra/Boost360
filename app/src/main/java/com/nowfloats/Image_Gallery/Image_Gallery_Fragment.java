@@ -4,6 +4,7 @@ import static com.dashboard.utils.ActivityUtilsKt.startHelpSupportVideoActivity;
 import static com.framework.webengageconstant.EventLabelKt.MANAGE_CONTENT;
 import static com.framework.webengageconstant.EventLabelKt.UPDATE_GALLERY_IMAGES;
 import static com.framework.webengageconstant.EventNameKt.GALLERY_IMAGE_ADDED;
+import static com.framework.webengageconstant.EventNameKt.GALLERY_IMAGE_UPLOADED;
 import static com.framework.webengageconstant.EventNameKt.UPLOAD_GALLERY_IMAGE;
 
 import android.Manifest;
@@ -476,6 +477,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 imageUrl = getRealPathFromURI(imageUri);
                 path = imageUrl;
                 WebEngageController.trackEvent(GALLERY_IMAGE_ADDED, MANAGE_CONTENT, session.getFpTag());
+                WebEngageController.trackEvent(GALLERY_IMAGE_UPLOADED, MANAGE_CONTENT, session.getFpTag());
                 UploadPictureAsyncTask upload = new UploadPictureAsyncTask(activity, imageUrl);
                 upload.setOnUploadListener(Image_Gallery_Fragment.this);
                 upload.execute();
@@ -519,6 +521,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 Uri extras2 = data.getData();
                 // if (extras2 != null) {
                 WebEngageController.trackEvent(GALLERY_IMAGE_ADDED, MANAGE_CONTENT, session.getFpTag());
+                WebEngageController.trackEvent(GALLERY_IMAGE_UPLOADED, MANAGE_CONTENT, session.getFpTag());
                 String filepath = "";
                 UploadPictureAsyncTask upload = null;
                 if (data.getData() != null) {

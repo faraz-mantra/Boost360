@@ -43,9 +43,6 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
-import static com.framework.webengageconstant.EventNameKt.ROI_SUMMARY_ENQUIRY;
 import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 
 /**
@@ -172,7 +169,6 @@ public class ManageInboxFragment extends Fragment {
         Intent i = new Intent(getActivity(), BusinessEnquiryActivity.class);
         startActivity(i);
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        WebEngageController.trackEvent(ROI_SUMMARY_ENQUIRY, EVENT_LABEL_NULL, session.getFpTag());
       });
 
       tvBusinessCalls.setOnClickListener(v -> {
