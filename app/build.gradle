@@ -65,7 +65,7 @@ android {
     flavorDimensions "default"
     productFlavors {
         partone {
-            versionName "6.1.42.3"
+            versionName "6.1.42.5"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
