@@ -1,9 +1,7 @@
 package com.boost.presignin.ui.login
 
-import a.a.b.a.f.w.b
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -23,7 +21,6 @@ import com.framework.base.FRAGMENT_TYPE
 import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
 import com.framework.pref.clientId
-import com.framework.utils.ValidationUtils
 import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
 import android.widget.Toast
@@ -32,10 +29,19 @@ import android.view.View.OnFocusChangeListener
 import com.framework.pref.APPLICATION_JIO_ID
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.safetynet.SafetyNet
+import com.google.android.gms.safetynet.SafetyNetClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
   private var resultLogin: VerificationRequestResult? = null
+  private var safeNetClient: SafetyNetClient? = null
+  private val googleRecaptchakey = "6LfoGxQmAAAAAPjCeVIg4fqdVerlsUGYpbi7vNsi" //nowfloats
+  private val clickedTime: Long = 0L
 
   companion object {
     @JvmStatic
@@ -66,6 +72,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
   override fun onCreateView() {
     super.onCreateView()
+    safeNetClient = SafetyNet.getClient(context!!)
     WebEngageController.trackEvent(PS_LOGIN_USERNAME_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     binding?.usernameEt?.onTextChanged { onDataChanged() }
     binding?.passEt?.onTextChanged { onDataChanged() }
@@ -146,17 +153,17 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
   }
 
   private fun verifyWithCaptcha() {
-    val key = "6LfoGxQmAAAAAPjCeVIg4fqdVerlsUGYpbi7vNsi" //nowfloats
-
-    SafetyNet.getClient(context!!).verifyWithRecaptcha(key)
-      .addOnSuccessListener { response ->
+    safeNetClient?.verifyWithRecaptcha(googleRecaptchakey)
+      ?.addOnSuccessListener { response ->
         val userResponseToken = response.tokenResult
         if (userResponseToken?.isNotEmpty() == true) {
-          Toast.makeText(context!!, "Successfully Verified", Toast.LENGTH_SHORT).show()
+          binding.verificationSuccessLayout.visibility = View.VISIBLE
+          binding.verifyBt.visibility = View.GONE
           binding.loginBt.isEnabled = true
+          enableValidatedView()
         }
       }
-      .addOnFailureListener { e ->
+      ?.addOnFailureListener { e ->
         Toast.makeText(context!!, "Verification Failed", Toast.LENGTH_SHORT).show()
         if (e is ApiException) {
           Log.d("MainAct", "Error: e.statusCode}")
@@ -164,5 +171,15 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
           Log.d("MainAct", "Error: ${e.message}")
         }
       }
+  }
+
+  private fun enableValidatedView() {
+    CoroutineScope(Dispatchers.Main).launch {
+      delay(60_000) // delay 1 minute
+      binding.verificationSuccessLayout.visibility = View.GONE
+      binding.verifyBt.visibility = View.VISIBLE
+      binding.loginBt.isEnabled = false
+      showShortToast(getString(R.string.verification_failure))
+    }
   }
 }

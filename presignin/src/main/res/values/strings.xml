@@ -32,7 +32,7 @@
   <string name="almost_there">Almost there...</string>
 
   <string name="code_sent_hint"> Type the 4-digit code you received on your entered mobile number %s.</string>
-  <string name="verify">Verify</string>
+  <string name="verify">Click to verify</string>
   <string name="psn_resend_hint">Resend OTP</string>
   <string name="psn_resend">Resend</string>
   <string name="psn_resend_in">Resend OTP in %d s</string>
@@ -226,4 +226,6 @@
   <string name="website_name_format_invalid_toast">Website name should contain only alphabets &amp; digits only. No special characters and symbols allowed!</string>
   <string name="business_name_format_invalid_toast">Business name should contain only alphabets &amp; digits only. No special characters and symbols allowed!</string>
   <string name="did_you_mean">Did you mean:</string>
+  <string name="verification_sucsess">Verification sucsess</string>
+  <string name="verification_failure">Verification from Captcha expired. Please complete it again!</string>
 </resources>
