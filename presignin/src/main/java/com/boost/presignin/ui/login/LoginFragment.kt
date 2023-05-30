@@ -157,6 +157,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
       ?.addOnSuccessListener { response ->
         val userResponseToken = response.tokenResult
         if (userResponseToken?.isNotEmpty() == true) {
+          Toast.makeText(context!!, "Verification will be valid for 1 minute.", Toast.LENGTH_SHORT).show()
           binding.verificationSuccessLayout.visibility = View.VISIBLE
           binding.verifyBt.visibility = View.GONE
           binding.loginBt.isEnabled = true
