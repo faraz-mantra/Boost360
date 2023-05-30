@@ -2556,7 +2556,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                                     ) {
                                                         prePostPurchase.add(
                                                             PrePostPurchase(
-                                                                item.item_id,
+                                                                singleIndludedFeature._kid,
                                                                 listOf(
                                                                     com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.Properties(
                                                                         Key = "allowPostPurchase",
