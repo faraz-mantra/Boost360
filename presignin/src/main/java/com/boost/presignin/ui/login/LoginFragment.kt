@@ -41,7 +41,14 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
   private var resultLogin: VerificationRequestResult? = null
   private var safeNetClient: SafetyNetClient? = null
   private val googleRecaptchakey = "6LfoGxQmAAAAAPjCeVIg4fqdVerlsUGYpbi7vNsi" //nowfloats
-  private val clickedTime: Long = 0L
+
+  private val job = CoroutineScope(Dispatchers.Main).launch {
+    delay(60_000) // delay 1 minute
+    binding.verificationSuccessLayout.visibility = View.GONE
+    binding.verifyBt.visibility = View.VISIBLE
+    binding.loginBt.isEnabled = false
+    Toast.makeText(baseActivity, "Verification from Captcha expired. Please complete it again!", Toast.LENGTH_SHORT).show()
+  }
 
   companion object {
     @JvmStatic
@@ -123,6 +130,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
       hideProgress()
       val response = it as? VerificationRequestResult
       if (response?.isSuccess() == true && response.loginId.isNullOrEmpty().not() && response.authTokens.isNullOrEmpty().not()) {
+        job.cancel()
         storeUserDetail(response)
       } else {
         showShortToast(getString(R.string.ensure_that_the_entered_username_and_password_))
@@ -175,12 +183,6 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
   }
 
   private fun enableValidatedView() {
-    CoroutineScope(Dispatchers.Main).launch {
-      delay(60_000) // delay 1 minute
-      binding.verificationSuccessLayout.visibility = View.GONE
-      binding.verifyBt.visibility = View.VISIBLE
-      binding.loginBt.isEnabled = false
-      Toast.makeText(baseActivity, "Verification from Captcha expired. Please complete it again!", Toast.LENGTH_SHORT).show()
-    }
+    job.start()
   }
 }
