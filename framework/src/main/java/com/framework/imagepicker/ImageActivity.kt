@@ -81,7 +81,7 @@ open class ImageActivity : AppCompatActivity() {
     mImgConfig.isImgFromCamera = false
     val photoPickerIntent = Intent(Intent.ACTION_PICK)
     photoPickerIntent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
-    photoPickerIntent.type = if (isGif.not()) "image/jpeg, image/jpg, image/png" else "image/gif"
+    photoPickerIntent.type = if (isGif.not()) "image/*" else "image/gif"
     startActivityForResult(photoPickerIntent, ImageTags.IntentCode.REQUEST_CODE_SELECT_PHOTO)
     if (mImgConfig.debug) Log.d(ImageTags.Tags.TAG, "Gallery Start with Single Image mode")
   }
