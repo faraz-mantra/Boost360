@@ -33,6 +33,7 @@ class BrowseAllFragment : AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesV
   private var selectedPos: Int = 0
   private val DEFAULT_SELECTED_POS = 0
   private var argTag: String? = null
+  private var isCategorySelectionRedirection: Boolean? = null
   private var posterRvAdapter: AppBaseRecyclerViewAdapter<BrowseAllTemplate>? = null
   private var categoryAdapter: AppBaseRecyclerViewAdapter<BrowseAllCategory>? = null
   var categoryList = ArrayList<BrowseAllCategory>()
@@ -47,9 +48,11 @@ class BrowseAllFragment : AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesV
 
   companion object {
     val BK_SELECTED_POS_TAG = "BK_SELECTED_POS"
-    fun newInstance(selectedPosTag: String? = null): BrowseAllFragment {
+    val BK_IS_CAT_SELECTED_REDIRECTION = "BK_IS_CAT_SELECTED_REDIRECTION"
+    fun newInstance(selectedPosTag: String? = null, isCategorySelectionRedirection: Boolean = false): BrowseAllFragment {
       val bundle = Bundle()
       bundle.putString(BK_SELECTED_POS_TAG, selectedPosTag)
+      bundle.putBoolean(BK_IS_CAT_SELECTED_REDIRECTION, isCategorySelectionRedirection)
       val fragment = BrowseAllFragment()
       fragment.arguments = bundle
       return fragment
@@ -59,7 +62,9 @@ class BrowseAllFragment : AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesV
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(Promotional_Update_Browse_All_Loaded)
+    WebEngageController.trackEvent(Promotional_Update_View_More_Click)
     argTag = arguments?.getString(BK_SELECTED_POS_TAG)
+    isCategorySelectionRedirection = arguments?.getBoolean(BK_IS_CAT_SELECTED_REDIRECTION)
     promoUpdatesViewModel = ViewModelProvider(requireActivity()).get(PromoUpdatesViewModel::class.java)
     initUi()
     getTemplatesData()
@@ -112,8 +117,14 @@ class BrowseAllFragment : AppBaseFragment<FragmentBrowseAllBinding, PostUpdatesV
     selectedPos = if (argTag == null) {
       DEFAULT_SELECTED_POS
     } else {
-      data.indexOfFirst { it.id == argTag }
+      if (isCategorySelectionRedirection == true) argTag.toString().toInt() else data.indexOfFirst { it.id == argTag }
+
     }
+    /*selectedPos = if (argTag == null) {
+      DEFAULT_SELECTED_POS
+    } else {
+      data.indexOfFirst { it.id == argTag }
+    }*/
   }
 
   override fun onResume() {

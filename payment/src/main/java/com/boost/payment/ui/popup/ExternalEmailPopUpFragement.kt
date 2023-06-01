@@ -14,7 +14,7 @@ import com.boost.payment.ui.payment.PaymentViewModel
 import com.boost.payment.utils.Utils
 import com.boost.payment.utils.WebEngageController
 import com.framework.webengageconstant.*
-import com.razorpay.Razorpay
+//import com.razorpay.Razorpay
 import kotlinx.android.synthetic.main.add_external_email_popup.*
 import org.json.JSONObject
 
@@ -23,7 +23,7 @@ class ExternalEmailPopUpFragement : DialogFragment() {
   lateinit var root: View
   private lateinit var viewModel: PaymentViewModel
 
-  lateinit var razorpay: Razorpay
+//  lateinit var razorpay: Razorpay
 
   var validatingStatus = false
 
@@ -49,7 +49,7 @@ class ExternalEmailPopUpFragement : DialogFragment() {
   ): View? {
     root = inflater.inflate(R.layout.add_external_email_popup, container, false)
 
-    razorpay = (activity as PaymentActivity).getRazorpayObject()
+//    razorpay = (activity as PaymentActivity).getRazorpayObject()
 
     return root
 

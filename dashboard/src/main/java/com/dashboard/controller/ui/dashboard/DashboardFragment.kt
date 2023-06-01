@@ -286,13 +286,13 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           drScoreSetupList?.map { it1 ->
             it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout()
           }
-          binding?.pagerBusinessSetupLow?.apply {
+          binding.pagerBusinessSetupLow.apply {
 //            binding?.motionOne?.transitionToStart()
             adapterBusinessContent =
               AppBaseRecyclerViewAdapter(baseActivity, drScoreSetupList!!, this@DashboardFragment)
             offscreenPageLimit = 3
             adapter = adapterBusinessContent
-            binding?.dotIndicator?.setViewPager2(this)
+            binding.dotIndicator.setViewPager2(this)
             setPageTransformer { page, position ->
               OffsetPageTransformer().transformPage(page, position)
             }
@@ -507,11 +507,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     )
     data.map { it.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_HIGH_ITEM_VIEW.getLayout() }
     if (adapterPagerBusinessUpdate == null) {
-      binding?.pagerBusinessSetupHigh?.apply {
+      binding.pagerBusinessSetupHigh.apply {
         adapterPagerBusinessUpdate = AppBaseRecyclerViewAdapter(baseActivity, data, this@DashboardFragment)
         offscreenPageLimit = 3
         adapter = adapterPagerBusinessUpdate
-        binding?.dotIndicatorBusinessHigh?.setViewPager2(this)
+        binding.dotIndicatorBusinessHigh.setViewPager2(this)
         setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
       }
     } else adapterPagerBusinessUpdate?.notify(data)
@@ -606,18 +606,18 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun setDataRiaAcademy(academyBanner: ArrayList<DashboardAcademyBanner>) {
-    binding?.pagerRiaAcademy?.apply {
+    binding.pagerRiaAcademy.apply {
       if (academyBanner.isNotEmpty()) {
         academyBanner.map { it.recyclerViewItemType = RecyclerViewItemType.RIA_ACADEMY_ITEM_VIEW.getLayout() }
-        binding?.riaAcademyView?.visible()
+        binding.riaAcademyView.visible()
         if (adapterAcademy == null) {
           adapterAcademy = AppBaseRecyclerViewAdapter(baseActivity, academyBanner, this@DashboardFragment)
           offscreenPageLimit = 3
           adapter = adapterAcademy
-          binding?.dotIndicatorAcademy?.setViewPager2(this)
+          binding.dotIndicatorAcademy.setViewPager2(this)
           setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
         } else adapterAcademy?.notify(academyBanner)
-      } else binding?.riaAcademyView?.gone()
+      } else binding.riaAcademyView.gone()
     }
   }
 
@@ -632,15 +632,15 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun setDataMarketBanner(marketBannerFilter: ArrayList<DashboardMarketplaceBanner>) {
-    binding?.pagerBoostPremium?.apply {
+    binding.pagerBoostPremium.apply {
       if (marketBannerFilter.isNotEmpty()) {
         marketBannerFilter.map { it.recyclerViewItemType = RecyclerViewItemType.BOOST_PREMIUM_ITEM_VIEW.getLayout() }
-        binding?.boostPremiumView?.visible()
+        binding.boostPremiumView.visible()
         if (adapterMarketBanner == null) {
           adapterMarketBanner = AppBaseRecyclerViewAdapter(baseActivity, marketBannerFilter, this@DashboardFragment)
           offscreenPageLimit = 3
           adapter = adapterMarketBanner
-          binding?.dotIndicatorPremium?.setViewPager2(this)
+          binding.dotIndicatorPremium.setViewPager2(this)
           setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
         } else adapterMarketBanner?.notify(marketBannerFilter)
       } else binding?.boostPremiumView?.gone()

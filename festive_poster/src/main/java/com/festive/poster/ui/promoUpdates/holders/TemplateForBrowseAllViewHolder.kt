@@ -10,10 +10,7 @@ import com.festive.poster.recyclerView.BaseRecyclerViewItem
 import com.festive.poster.ui.promoUpdates.edit_post.EditPostActivity
 import com.festive.poster.utils.SvgUtils
 import com.festive.poster.utils.WebEngageController
-import com.framework.webengageconstant.Browse_All_Promotional_Update_Social_Accounts_Connect_Click
-import com.framework.webengageconstant.Promotional_Update_Edit_Click
-import com.framework.webengageconstant.Promotional_Update_Post_Click
-import com.framework.webengageconstant.Promotional_Update_WhatsApp_Share_Click
+import com.framework.webengageconstant.*
 
 
 class TemplateForBrowseAllViewHolder(binding: ListItemTemplateForRvBinding):
@@ -53,6 +50,7 @@ class TemplateForBrowseAllViewHolder(binding: ListItemTemplateForRvBinding):
         }
         binding.btnEdit.setOnClickListener {
             WebEngageController.trackEvent(Promotional_Update_Edit_Click)
+            WebEngageController.trackEvent(Promotional_Update_Edit_Caption_Click)
 
             EditPostActivity.launchActivity(binding.root.context,model)
         }

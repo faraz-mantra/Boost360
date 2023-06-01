@@ -159,13 +159,17 @@ class UserProfileFragment : AppBaseFragment<FragmentUserProfileBinding, UserProf
         }
       }
 
-      binding?.viewWhatsappNo, binding?.verifyWhatsappNo, binding?.txtWhatsappNo -> {
+      binding.viewWhatsappNo, binding.verifyWhatsappNo, binding.txtWhatsappNo -> {
         WebEngageController.trackEvent(USER_MERCHANT_PROFILE_WHATSAPP, CLICK, NO_EVENT_VALUE)
         startProfileEditWhatsappSheet(userProfileData?.FloatingPointDetails?.first()?.WhatsAppNumber)
       }
-      binding?.btnLogout -> {
+      binding.btnLogout -> {
         WebEngageController.trackEvent(USER_MERCHANT_PROFILE_LOGOUT, CLICK, NO_EVENT_VALUE)
-        startLogoutSheet()
+        if (binding.txtMobileNumber.text.isNullOrEmpty().not()) {
+          startLogoutSheet()
+        }else{
+          showLongToast(getString(R.string.please_fill_all_mandatory_field_before_logging_out))
+        }
       }
     }
   }

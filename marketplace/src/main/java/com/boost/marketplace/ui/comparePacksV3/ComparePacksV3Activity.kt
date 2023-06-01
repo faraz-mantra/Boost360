@@ -37,6 +37,7 @@ import com.boost.marketplace.databinding.ActivityComparePacksv3Binding
 import com.boost.marketplace.interfaces.*
 import com.boost.marketplace.ui.Compare_Plans.ComparePacksViewModel
 import com.boost.marketplace.ui.feature_details_popup.FeatureDetailsPopup
+import com.boost.marketplace.ui.popup.ComparePacksLottieLoaderBottomSheet
 import com.boost.marketplace.ui.popup.call_track.CallTrackingHelpBottomSheet
 import com.boost.marketplace.ui.popup.call_track.RequestCallbackBottomSheet
 import com.boost.marketplace.ui.popup.removeItems.RemoveFeatureBottomSheet
@@ -54,7 +55,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_feature_details.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class ComparePacksV3Activity :
@@ -108,9 +108,9 @@ class ComparePacksV3Activity :
     private var cartItems = listOf<CartModel>()
     lateinit var howToUseAdapter: PacksV3HowToUseAdapter
     lateinit var faqAdapter: PacksFaqAdapter
-    lateinit var packsv3Adapter: PacksV3Adapter
+//    lateinit var packsv3Adapter: PacksV3Adapter
     lateinit var packsv3footerAdapter: PacksV3FooterAdapter
-    lateinit var packsv3pricingAdapter: PacksV3PricingAdapter
+//    lateinit var packsv3pricingAdapter: PacksV3PricingAdapter
     lateinit var packsAddonsAdapter: PacksAddonsV3Adapter
     private var purchasedVmnName: String? = null
     private var purchasedVmnActive: Boolean? = null
@@ -151,9 +151,9 @@ class ComparePacksV3Activity :
         viewModel = ViewModelProviders.of(this).get(ComparePacksViewModel::class.java)
         howToUseAdapter = PacksV3HowToUseAdapter(this, ArrayList())
         faqAdapter = PacksFaqAdapter(this, ArrayList())
-        packsv3Adapter = PacksV3Adapter(ArrayList(), this, this)
+//        packsv3Adapter = PacksV3Adapter(ArrayList(), this, this)
         packsv3footerAdapter = PacksV3FooterAdapter(ArrayList(), this, this)
-        packsv3pricingAdapter = PacksV3PricingAdapter(ArrayList(), this)
+//        packsv3pricingAdapter = PacksV3PricingAdapter(ArrayList(), this)
         packsAddonsAdapter = PacksAddonsV3Adapter(ArrayList(), this, this)
 
 
@@ -231,12 +231,10 @@ class ComparePacksV3Activity :
                     }
                     args.putString("profileUrl", profileUrl)
                     dialogCard.arguments = args
-                    this.supportFragmentManager.let {
                         dialogCard.show(
-                            it,
+                            supportFragmentManager,
                             FeatureDetailsPopup::class.java.name
                         )
-                    }
                 } else if ((purchasedDomainType.isNullOrEmpty() || purchasedDomainName?.contains("null") == true) &&
                     (!purchasedVmnName.isNullOrEmpty())
                 ) {
@@ -273,12 +271,10 @@ class ComparePacksV3Activity :
                     }
                     args.putString("profileUrl", profileUrl)
                     dialogCard.arguments = args
-                    this.supportFragmentManager.let {
                         dialogCard.show(
-                            it,
+                            supportFragmentManager,
                             FeatureDetailsPopup::class.java.name
                         )
-                    }
                 } else if ((!purchasedDomainType.isNullOrEmpty() || !purchasedDomainName?.contains("null")!! == true) &&
                     (purchasedVmnName.isNullOrEmpty())
                 ) {
@@ -315,12 +311,10 @@ class ComparePacksV3Activity :
                     }
                     args.putString("profileUrl", profileUrl)
                     dialogCard.arguments = args
-                    this.supportFragmentManager.let {
                         dialogCard.show(
-                            it,
+                            supportFragmentManager,
                             FeatureDetailsPopup::class.java.name
                         )
-                    }
                 } else {
                     // Move without popup
 
@@ -487,12 +481,10 @@ class ComparePacksV3Activity :
                     }
                     args.putString("profileUrl", profileUrl)
                     dialogCard.arguments = args
-                    this.supportFragmentManager.let {
                         dialogCard.show(
-                            it,
+                            supportFragmentManager,
                             FeatureDetailsPopup::class.java.name
                         )
-                    }
                 } else {
                     // Move without popup
 
@@ -660,12 +652,10 @@ class ComparePacksV3Activity :
                     }
                     args.putString("profileUrl", profileUrl)
                     dialogCard.arguments = args
-                    this.supportFragmentManager.let {
                         dialogCard.show(
-                            it,
+                            supportFragmentManager,
                             FeatureDetailsPopup::class.java.name
                         )
-                    }
                 } else {
                     // Move without popup
 
@@ -830,9 +820,17 @@ class ComparePacksV3Activity :
                             prefs.storeYearPricing(true)
                         }
                         prefs.storeCartValidityMonths("1")
-                        packsv3pricingAdapter.notifyDataSetChanged()
+//                        packsv3pricingAdapter.notifyDataSetChanged()
                         packsv3footerAdapter.notifyDataSetChanged()
+                        //clear all the previous listener
+                        scrollList.clear()
+                        for(count in 0 until recyclerViewList.size){
+                            Log.e("removeListnener","removed listener")
+                            recyclerViewList[count].clearOnScrollListeners()
+                        }
+                        recyclerViewList.clear()
                         packsAddonsAdapter.notifyDataSetChanged()
+//                        packsAddonsAdapter.updatePrice()
                     }
                     R.id.help_section -> {
 //                        val videoshelp = HelpVideosBottomSheet()
@@ -969,6 +967,11 @@ class ComparePacksV3Activity :
             if (it != null) {
                 binding?.packsData?.visibility = View.VISIBLE
                 binding?.shimmerViewPacksv3?.visibility = View.GONE
+                    val dialogCard = ComparePacksLottieLoaderBottomSheet()
+                    dialogCard.show(
+                        supportFragmentManager,
+                        ComparePacksLottieLoaderBottomSheet::class.java.name
+                    )
             } else {
                 binding?.packsData?.visibility = View.GONE
                 binding?.shimmerViewPacksv3?.visibility = View.VISIBLE
@@ -1012,10 +1015,10 @@ class ComparePacksV3Activity :
                     )
                 }
                 if (listItem.size > 0) {
-                    updatePackageRecycler(listItem)
+//                    updatePackageRecycler(listItem)
                     updatePackageAddons(listItem)
                     updatePackageFooterRecycler(listItem)
-                    updatePackagePricingRecycler(listItem)
+//                    updatePackagePricingRecycler(listItem)
                     // updateHowToUseRecycler(listItem.steps)
                     this.selectedBundle = listItem.get(0)
 
@@ -1089,7 +1092,6 @@ class ComparePacksV3Activity :
                 // packsv3footerAdapter.updateCartItem(cartList!!)
                 if (refreshViewPager) {
                     refreshViewPager = false
-                    packsv3footerAdapter.updateCartItem(cartList!!)
                 }
 
                 if (cartList?.size!! > 0) {
@@ -1147,7 +1149,6 @@ class ComparePacksV3Activity :
                 packageInCartStatus = false
                 if (refreshViewPager) {
                     refreshViewPager = false
-                    packsv3footerAdapter.updateCartItem(arrayListOf())
                 }
             }
         })
@@ -1240,10 +1241,10 @@ class ComparePacksV3Activity :
 //        }
 //    }
 
-    fun updatePackageRecycler(list: List<Bundles>) {
-        Log.v("updatePackageViewPager", " " + list.size)
-        packsv3Adapter.addupdates(list)
-    }
+//    fun updatePackageRecycler(list: List<Bundles>) {
+//        Log.v("updatePackageViewPager", " " + list.size)
+//        packsv3Adapter.addupdates(list)
+//    }
 
     private fun initializePacksV3FooterRecycler() {
         val linearLayoutManager = LinearLayoutManager(applicationContext)
@@ -1256,7 +1257,6 @@ class ComparePacksV3Activity :
 
     fun updatePackageFooterRecycler(list: List<Bundles>) {
         Log.v("updatePackageViewPager", " " + list.size)
-        packsv3footerAdapter.addupdates(list)
         binding?.buyPack?.setTextColor(this.resources.getColor(R.color.white))
         binding?.buyPack?.background = ContextCompat.getDrawable(
             this.applicationContext,
@@ -1278,10 +1278,10 @@ class ComparePacksV3Activity :
 //        }
 //    }
 
-    fun updatePackagePricingRecycler(list: List<Bundles>) {
-        Log.v("updatePackageViewPager", " " + list.size)
-        packsv3pricingAdapter.addupdates(list)
-    }
+//    fun updatePackagePricingRecycler(list: List<Bundles>) {
+//        Log.v("updatePackageViewPager", " " + list.size)
+//        packsv3pricingAdapter.addupdates(list)
+//    }
 
 
     private fun initializePacksAddonsRecycler() {
@@ -1295,6 +1295,7 @@ class ComparePacksV3Activity :
 
     fun updatePackageAddons(bundleList: ArrayList<Bundles>) {
         val addonsListTemp = ArrayList<PackageAddonsCompares>()
+        val footerValues = arrayListOf<String>()
         val totalList = ArrayList<String>()
         //get total listing for all the packages
         for (singleBundle in bundleList) {
@@ -1398,6 +1399,7 @@ class ComparePacksV3Activity :
 //            else "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
 //                .format(offeredBundlePrice.toInt()) + "/month"
             tempBundlePrice.add(AddonsPacksIn(offeredBundlePrice.toString(), true, -1))
+            footerValues.add(bundles._kid+"##"+bundles.name!!+"##"+offeredBundlePrice.toString())
         }
         addonsList.add(PackageAddonsCompares(tempBundlePrice, "", "Bundle price"))
 
@@ -1418,6 +1420,7 @@ class ComparePacksV3Activity :
             totalSize -= 1
         }
         packsAddonsAdapter.addupdates(addonsList)
+        packsv3footerAdapter.addFooterUpdates(footerValues)
     }
 
     override fun onPackageItemClicked(name: String) {
@@ -1473,9 +1476,12 @@ class ComparePacksV3Activity :
     }
 
 
-    override fun onSelectedPack(selectedBundle: Bundles, itemList1: List<CartModel>?) {
+    override fun onSelectedPack(selectedBundleID: String) {
         itemInCart = false
-        this.selectedBundle = selectedBundle
+        for(singleBundle in upgradeList!!) {
+            if(singleBundle._kid.equals(selectedBundleID))
+                this.selectedBundle = singleBundle
+        }
         //disabling marketplace gaps
         //getAllowPackageToCart()
 
@@ -1505,23 +1511,23 @@ class ComparePacksV3Activity :
             offeredBundlePrice = originalBundlePrice
 
         // binding?.buyPack?.text = "Buy" + selectedBundle.name?.toLowerCase()
-        var originalText = selectedBundle.name
+        var originalText = selectedBundle!!.name
         originalText = originalText?.lowercase(Locale.getDefault())
         binding?.buyPack?.text = "Buy " + originalText
 //        selectedBundle.how_to_activate?.let { updateHowToUseRecycler(it) }
 //        howToUseAdapter.notifyDataSetChanged()
 
-        if (selectedBundle.how_to_activate != null) {
+        if (selectedBundle!!.how_to_activate != null) {
             binding?.howToUseContainer?.visibility = View.VISIBLE
-            updateHowToUseRecycler(selectedBundle.how_to_activate!!)
-            howToUseAdapter.addupdates(selectedBundle.how_to_activate!!)
+            updateHowToUseRecycler(selectedBundle!!.how_to_activate!!)
+            howToUseAdapter.addupdates(selectedBundle!!.how_to_activate!!)
             howToUseAdapter.notifyDataSetChanged()
         }
 
-        if (selectedBundle.frequently_asked_questions != null) {
+        if (selectedBundle!!.frequently_asked_questions != null) {
             binding?.faqContainer?.visibility = View.VISIBLE
-            updateFAQRecycler(selectedBundle.frequently_asked_questions!!)
-            faqAdapter.addupdates(selectedBundle.frequently_asked_questions!!)
+            updateFAQRecycler(selectedBundle!!.frequently_asked_questions!!)
+            faqAdapter.addupdates(selectedBundle!!.frequently_asked_questions!!)
             faqAdapter.notifyDataSetChanged()
         }
         //   selectedBundle?.frequently_asked_questions?.let { updateFAQRecycler(it) }
@@ -1544,7 +1550,7 @@ class ComparePacksV3Activity :
                 this.applicationContext,
                 R.drawable.ic_cart_continue_bg
             )
-            var originalText = selectedBundle.name
+            var originalText = selectedBundle!!.name
             originalText = originalText?.lowercase(Locale.getDefault())
             binding?.buyPack?.text = "Buy " + originalText
             //  binding?.buyPack?.setText("Buy ${selectedBundle!!.name}".toLowerCase())
@@ -1595,10 +1601,10 @@ class ComparePacksV3Activity :
     }
 
     val recyclerViewList: ArrayList<RecyclerView> = arrayListOf()
+    val scrollList = arrayListOf<RecyclerView.OnScrollListener>()
     override fun onAllRecyclerView(item: RecyclerView, endList: Boolean) {
         recyclerViewList.add(item)
         if (endList) {
-            val scrollList = arrayListOf<RecyclerView.OnScrollListener>()
             recyclerViewList.forEachIndexed { index, currentRecyclerView ->
                 scrollList.add(object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

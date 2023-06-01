@@ -208,7 +208,19 @@ class MarketPlaceHomeViewModel() : BaseViewModel() {
                         Log.e("GetAllFeatures", response.toString())
                         var data = arrayListOf<FeaturesModel>()
                         for (item in response!!.Data[0].features) {
-                            if (item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) {
+
+                            var applicableToClientId = false
+                            if ((item.exclusive_to_clientids != null && item.exclusive_to_clientids!!.size > 0)) {
+                                for (singleClientId in item.exclusive_to_clientids!!) {
+                                    if (singleClientId.equals(clientId, true)) {
+                                        applicableToClientId = true
+                                        break
+                                    }
+                                }
+                                if (!applicableToClientId)
+                                    continue
+                            }
+                            if ((item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) && !applicableToClientId) {
                                 var applicableToCurrentExpCode = false
                                 for (code in item.exclusive_to_categories!!) {
                                     if (code.equals(experienceCode, true))
