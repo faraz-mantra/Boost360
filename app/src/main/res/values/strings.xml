@@ -1222,7 +1222,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="auto_share_to_social_networks">Auto share<br />to social networks</string>
     <string name="pick_up_address" translatable="false">Pickup address</string>
     <string name="website_posts">Website\nPosts</string>
-    <string name="to">to</string>
+    <string name="to">To</string>
     <string name="facebook">Facebook</string>
     <string name="twitter">Twitter</string>
     <string name="auto_update_from_social_network">Auto-Update\nFrom Social Networks</string>

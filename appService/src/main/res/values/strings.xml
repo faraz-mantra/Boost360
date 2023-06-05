@@ -300,7 +300,7 @@
     <string name="u_add_session_u"><u>Add session</u></string>
     <string name="business_hours_timing"><b>Note:</b> Since business hours are from 9:30 am to 7:30 pm, all your sessions will be between same. </string>
     <string name="from">From</string>
-    <string name="to">to</string>
+    <string name="to">To</string>
     <string name="edit_">Edit</string>
     <string name="apply_same_on_all_days">Apply same on all days</string>
     <string name="dropdown_options_1_1_2_3_4_5_5"><![CDATA[Dropdown options: <1, 1, 2, 3, 4, 5, 5+]]></string>
