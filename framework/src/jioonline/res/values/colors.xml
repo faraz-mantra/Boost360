@@ -27,4 +27,5 @@
     <color name="primary_toolbar_color">#EC008C</color>
     <color name="secondary_toolbar_color">#0400A6</color>
     <color name="vmn_calls_highlight">#0400A6</color>
+    <color name="progress_dialog">#0400A6</color>
 </resources>

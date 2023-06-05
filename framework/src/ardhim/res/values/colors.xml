@@ -94,4 +94,5 @@
   <color name="primary_toolbar_color">#F5991E</color>
   <color name="secondary_toolbar_color">#012F6B</color>
   <color name="vmn_calls_highlight">#012F6B</color>
+  <color name="progress_dialog">#012F6B</color>
 </resources>
