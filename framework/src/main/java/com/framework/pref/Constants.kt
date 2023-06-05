@@ -10,6 +10,10 @@ var APPLICATION_ARANTOO_ID = "com.arantoo.nowfloats"
 var APPLICATION_ARDHIM_ID = "com.ardhim.nowfloats"
 var APPLICATION_CHECKKINN_ID = "com.checkkinn.nowfloats"
 
+enum class VARIANT_NAMES {
+
+}
+
 val REFERRAL_CAMPAIGN_CODE = 26277
 
 var PREF_NAME = "nowfloatsPrefs"
