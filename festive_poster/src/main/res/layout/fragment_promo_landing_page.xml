@@ -94,6 +94,8 @@
                 android:id="@+id/tab_layout"
                 style="@style/TabTextStyle"
                 android:layout_width="match_parent"
+                app:tabSelectedTextColor="@color/color_studio_tab_selected"
+                app:tabIndicatorColor="@color/color_studio_tab_selected"
                 android:layout_height="41dp"
                 android:layout_alignParentTop="true"
                 android:textSize="14sp"
