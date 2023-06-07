@@ -8,5 +8,7 @@
   <color name="black_50">#80000000</color>
   <color name="live_red">#FF3144</color>
   <color name="ButtoncolorAccent">@color/colorAccentLight</color>
+  <color name="button_color_dark_gradient_1">#FFF06428</color>
+  <color name="button_color_dark_gradient_2">#FFFFA029</color>
 
 </resources>
