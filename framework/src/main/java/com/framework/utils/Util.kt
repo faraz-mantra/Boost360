@@ -604,7 +604,7 @@ fun sendNotification(
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE else PendingIntent.FLAG_UPDATE_CURRENT)
   val notificationBuilder: NotificationCompat.Builder =
     NotificationCompat.Builder(c, "111")
-      .setSmallIcon(R.drawable.app_launcher2)
+      .setSmallIcon(R.drawable.app_launcher)
       .setLargeIcon(
         BitmapFactory.decodeResource(
           c.resources,
