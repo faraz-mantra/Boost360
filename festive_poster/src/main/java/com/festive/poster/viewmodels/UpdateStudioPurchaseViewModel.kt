@@ -98,7 +98,7 @@ class UpdateStudioPurchaseViewModel: BaseViewModel() {
             bundle.included_features.find {feature->
                 feature.feature_code== Constants.UPDATES_STUDIO_WIDGET_KEY
             }!=null &&
-                    bundle.exclusive_to_categories.find {
+                    bundle?.exclusive_to_categories?.find {
                             exp->exp==session.fP_AppExperienceCode }!=null
         }
 
