@@ -150,7 +150,7 @@ interface ApiInterface {
   ):Observable<PaymentLink>
 
   @Headers("Content-Type: application/json")
-  @POST("https://api.withfloats.com/payment/v1/floatingpoint/markOrderForAutoRenewal")
+  @POST("https://api.withfloats.com/payment/v2/floatingpoint/markOrderForAutoRenewal")
   fun MarkOrderForAutoRenewal(
     @Header("Authorization") auth: String,
     @Body request: OrderAutoRenewRequest
