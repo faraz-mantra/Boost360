@@ -43,7 +43,7 @@
 
     <string name="app_name">template</string>
     <string name="promo_updates">Promo updates</string>
-    <string name="update_studios">Boost studio</string>
+    <string name="update_studios">Update studio</string>
     <string name="for_today">For today</string>
     <string name="ready_made">Ready-made</string>
     <string name="browse">Browse</string>
@@ -108,7 +108,7 @@
     <string name="you_ve_new_email_update_from">You\'ve new email update from</string>
     <string name="explore_the_premium_update_specially_designed_for_you">Explore the premium update specially designed for you.</string>
     <string name="for_regular_free_updates_click_on_create_and_keep_posting_like_always">For regular FREE updates, click on ‘Create’ and keep posting like always.</string>
-    <string name="type_what_you_re_looking_for">Type what you’re looking for...</string>
+    <string name="type_what_you_re_looking_for">Type what you’re looking for…</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="view_more2">View more</string>
