@@ -231,7 +231,7 @@ fun CustomTextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
     }
     startIndexOfLink = this.text.toString().indexOf(link.first, startIndexOfLink + 1)
 //      if(startIndexOfLink == -1) continue //TODO if you want to verify your texts contains links text
-    spannableString.setSpan(clickableSpan, startIndexOfLink, startIndexOfLink + link.first.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    spannableString.setSpan(clickableSpan, startIndexOfLink, startIndexOfLink + link.first.length + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
   }
   this.movementMethod = LinkMovementMethod.getInstance() // without LinkMovementMethod, link can not click
   this.setText(spannableString, TextView.BufferType.SPANNABLE)
