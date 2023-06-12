@@ -1100,7 +1100,7 @@
                                     android:lineHeight="24dp"
                                     android:paddingTop="12dp"
                                     android:paddingBottom="12dp"
-                                    android:text="Setup UPI autopay"
+                                    android:text="Setup Auto Renewal"
                                     android:textColor="@color/white"
                                     android:textFontWeight="700"
                                     android:textSize="@dimen/txt_16sp"
