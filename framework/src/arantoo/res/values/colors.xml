@@ -94,4 +94,6 @@
   <color name="secondary_toolbar_color">#FFB800</color>
   <color name="vmn_calls_highlight">#FFB800</color>
   <color name="progress_dialog">#FFB800</color>
+  <color name="status_bar_color_vertical">#044BB1</color>
+
 </resources>

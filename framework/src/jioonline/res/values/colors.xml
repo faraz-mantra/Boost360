@@ -29,4 +29,5 @@
     <color name="secondary_toolbar_color">#0400A6</color>
     <color name="vmn_calls_highlight">#0400A6</color>
     <color name="progress_dialog">#0400A6</color>
+    <color name="status_bar_color_vertical">#0400A6</color>
 </resources>
