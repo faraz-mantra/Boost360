@@ -195,7 +195,7 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
                 view.review_selection_layout.visibility = View.VISIBLE
                 selectedNames()
                 view.topImageView.setImageResource(com.boost.cart.R.drawable.review_selection_point)
-                view.tv_title_number.text = selectedNum
+                listener.featureDetailsPopup1(selectedNum!!)
             }, 1000)
         }
 
@@ -476,6 +476,7 @@ class FeatureDetailsPopup(val listener: MarketPlacePopupListener, val homeListen
             tv_call_expert_select_domain.text = prefs.getSelectedVMNName()
             tv_empty_select_number.text = prefs.getSelectedVMNName()
             tv_title_number.text = prefs.getSelectedVMNName()
+            tv_vmn_selected_txt.text=prefs.getSelectedVMNName()
         }
     }
 

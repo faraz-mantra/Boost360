@@ -114,7 +114,7 @@ class ConfirmedCustomDomainBottomSheet(val activity: CustomDomainActivity) :
                 return@setOnClickListener
             }
             if (doDomainBooking) {
-                viewModel?.bookDomainActivation(blockedItem!!, requireActivity().application, requireActivity())
+                viewModel?.bookDomainActivation(blockedItem!!, requireArguments().getInt("validityInDays") ,requireActivity().application, requireActivity())
             } else {
 
                 if(itemInCartStatus == true){
