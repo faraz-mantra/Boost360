@@ -239,6 +239,16 @@
     <item name="iconStartPadding">@dimen/size_12</item>
   </style>
 
+  <style name="verify_button_style" parent="psn_button_style">
+    <item name="android:theme">@style/Theme.MaterialComponents.Light</item>
+    <item name="android:letterSpacing">0</item>
+    <item name="iconTint">@color/white</item>
+    <item name="iconGravity">textEnd</item>
+    <item name="android:textCursorDrawable">@color/pinkish_grey</item>
+    <item name="backgroundTint">@color/material_button_background_state</item>
+    <item name="iconStartPadding">@dimen/size_12</item>
+  </style>
+
   <style name="material_button_dashboard" parent="psn_button_style">
     <item name="android:theme">@style/Theme.MaterialComponents.Light</item>
     <item name="android:letterSpacing">0</item>

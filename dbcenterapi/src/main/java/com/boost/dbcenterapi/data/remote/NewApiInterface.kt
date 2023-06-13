@@ -98,7 +98,7 @@ interface NewApiInterface {
 
     //Edgecases
     @Headers("Content-Type: application/json")
-    @GET("https://api2.withfloats.com/discover/v1/GetFeatureDetailForEdgeCases?")
+    @GET("https://api2.withfloats.com/discover/v2/GetFeatureDetailForEdgeCases?")
     fun getEdgeCases(
         @Query("fpId") floatingPointId: String,
         @Query("clientId") clientId: String,

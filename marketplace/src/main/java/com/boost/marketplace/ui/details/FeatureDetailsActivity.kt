@@ -137,6 +137,7 @@ class FeatureDetailsActivity :
     var actionRequired: Int? = null
     var featureState: Int? = null
     var featureCode: String? = null
+    var validityInDays:Int? = null
     var ExpiryDate: String = ""
 
     var deepLinkViewType: String = ""
@@ -676,6 +677,7 @@ class FeatureDetailsActivity :
                 featureState = it.Result.FeatureDetails.FeatureState
                 ExpiryDate = it.Result.FeatureDetails.ExpiryDate
                 featureCode= it.Result.FeatureDetails.FeatureKey
+                validityInDays = it.Result.FeatureDetails.ExtraDetails.ValidityInDays.toInt()
                 primary_layout.visibility = View.VISIBLE
                 second_layout.visibility = View.GONE
                 app_bar_layout.background = ContextCompat.getDrawable(this, R.color.colorPrimary1)
@@ -1453,6 +1455,7 @@ class FeatureDetailsActivity :
                     || featureState == 5 || featureState == 6)
         ) {
             intent.putExtra("doDomainBooking", true)
+            intent.putExtra("validityInDays", validityInDays)
         }
         startActivity(intent)
     }

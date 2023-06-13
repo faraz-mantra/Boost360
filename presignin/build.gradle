@@ -98,4 +98,5 @@ android {
 dependencies {
     api project(path: ':appService')
     implementation project(path: ':dbcenterapi')
+    implementation("com.google.android.gms:play-services-safetynet:18.0.1")
 }

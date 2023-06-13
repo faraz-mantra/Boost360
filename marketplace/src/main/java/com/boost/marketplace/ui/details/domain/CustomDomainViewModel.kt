@@ -133,7 +133,7 @@ class CustomDomainViewModel() : BaseViewModel() {
             .subscribe()
     }
 
-    fun bookDomainActivation(blockedItem: String, app: Application, activity: Activity) {
+    fun bookDomainActivation(blockedItem: String, validityInDays: Int, app: Application, activity: Activity) {
 
         updatesLoader.postValue("Domain Activation Is in Progress")
         val pref = app.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
@@ -143,20 +143,23 @@ class CustomDomainViewModel() : BaseViewModel() {
         var domainName = ""
         var domainType = "."
         val prefs = SharedPrefs(activity)
-        var validityInYears = "1"
-        var months: Double = 0.0
-        if (prefs.getYearPricing()) {
-            //do the yearly calculation here
-            months = (if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toDouble() else 1.toDouble() * 12).toDouble()
-        } else {
-            months = if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toDouble() else 1.toDouble()
-        }
-        val tempMonth: Double = months / 12.0
-        if (tempMonth.toInt() < tempMonth) { //example 1 < 1.2
-            validityInYears = (tempMonth.toInt() + 1).toString()
-        } else {
-            validityInYears = (tempMonth.toInt()).toString()
-        }
+        val tempDays = validityInDays/365.0  //days in a year
+        val validityInYears = if(tempDays > tempDays.toInt()) (tempDays.toInt()+1).toString() else (tempDays.toInt()).toString()
+        //======================= old
+//        var months: Double = 0.0
+//        if (prefs.getYearPricing()) {
+//            //do the yearly calculation here
+//            months = (if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toDouble() else 1.toDouble() * 12).toDouble()
+//        } else {
+//            months = if (prefs.getCartValidityMonths() != null) prefs.getCartValidityMonths()!!.toDouble() else 1.toDouble()
+//        }
+//        val tempMonth: Double = months / 12.0
+//        if (tempMonth.toInt() < tempMonth) { //example 1 < 1.2
+//            validityInYears = (tempMonth.toInt() + 1).toString()
+//        } else {
+//            validityInYears = (tempMonth.toInt()).toString()
+//        }
+        //========================
         splitStr.forEachIndexed { index, element ->
             if (splitStr.size > 2) {
                 if (index == splitStr.size - 1) {

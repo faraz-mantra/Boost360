@@ -1,7 +1,5 @@
 package com.boost.marketplace.ui.home
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
@@ -19,9 +17,6 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.Slide
-import androidx.transition.Transition
-import androidx.transition.TransitionManager
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.SimplePageTransformer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
@@ -57,7 +52,6 @@ import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
 import com.boost.marketplace.ui.videos.HomeVideosBottomSheet
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.framework.analytics.SentryController
-import com.framework.extensions.isVisible
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
@@ -77,7 +71,6 @@ import kotlinx.android.synthetic.main.activity_marketplace.*
 import kotlinx.android.synthetic.main.activity_marketplace.package_layout
 import kotlinx.android.synthetic.main.activity_marketplace.package_viewpager
 import kotlinx.android.synthetic.main.layout_details_popup.view.*
-import zendesk.support.requestlist.RequestListViewModule_ViewFactory.view
 import java.lang.reflect.Field
 import java.lang.reflect.Method
 
@@ -2259,11 +2252,16 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                            } else deepLinkUtil?.deepLinkPage(item.cta_web_link!!, "", false)
 
                         } else {
-
-                            val intent = Intent(this, WebViewActivity::class.java)
-                            intent.putExtra("title", "")
-                            intent.putExtra("link", item!!.cta_web_link)
-                            startActivity(intent)
+                            if(item!!.cta_web_link.contains("cadigital.icicibank.com")){
+                                val i = Intent(Intent.ACTION_VIEW)
+                                i.data = Uri.parse(item!!.cta_web_link)
+                                startActivity(i)
+                            }else {
+                                val intent = Intent(this, WebViewActivity::class.java)
+                                intent.putExtra("title", "")
+                                intent.putExtra("link", item!!.cta_web_link)
+                                startActivity(intent)
+                            }
                         }
 
 

@@ -90,9 +90,10 @@ android {
     productFlavors {
         partone {
             //Boost 360
-            versionName "6.1.40.2"
+            versionName "6.1.43.2"
             applicationId "com.biz2.nowfloats"
             dimension "default"
+            isDefault true
             buildConfigField "String", "URL_SHORTENER_GOOGLE", '"AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8"'
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
             buildConfigField "String", "google_map_key", '"AIzaSyB94ChvnYBv6REXPATdt4ud5dAlTL7jlic"'

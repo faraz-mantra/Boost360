@@ -73,6 +73,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
     lateinit var prefs: SharedPrefs
     var domainPrice: String? = null
     var pricing: String? = null
+    var validityInDays: Int = 1
 
     override fun getLayout(): Int {
         return R.layout.activity_custom_domain
@@ -89,6 +90,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
     override fun onCreateView() {
         super.onCreateView()
 
+        validityInDays = intent.getIntExtra("validityInDays", 1)
         experienceCode = intent.getStringExtra("expCode")
         fpid = intent.getStringExtra("fpid")
         doDomainBooking = intent.getBooleanExtra("doDomainBooking", false)
@@ -148,6 +150,7 @@ class CustomDomainActivity : AppBaseActivity<ActivityCustomDomainBinding, Custom
                 bundle.putString("isOpenCardFragment", isOpenCardFragment.toString())
                 bundle.putString("accountType", accountType)
                 bundle.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+                bundle.putInt("validityInDays", validityInDays)
                 if (email != null) {
                     intent.putExtra("email", email)
                 } else {

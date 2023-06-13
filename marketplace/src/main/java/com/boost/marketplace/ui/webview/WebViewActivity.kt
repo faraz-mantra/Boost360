@@ -35,13 +35,12 @@ class WebViewActivity : AppBaseActivity<ActivityWebsiteViewBinding, WebViewViewM
     webview?.settings?.loadWithOverviewMode = true
     webview?.settings?.useWideViewPort = true
     webview?.settings?.allowFileAccess = true
+    webview?.settings?.domStorageEnabled = true
+    webview?.settings?.javaScriptCanOpenWindowsAutomatically = true
+    webview?.settings?.setSupportMultipleWindows(true)
+    webview?.settings?.cacheMode = WebSettings.LOAD_DEFAULT
     webview?.scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
     webview?.webChromeClient = WebChromeClient()
-    val webSettings = webview?.settings
-    webSettings?.javaScriptCanOpenWindowsAutomatically = true
-    webSettings?.setSupportMultipleWindows(true)
-    webSettings?.cacheMode = WebSettings.LOAD_DEFAULT
-    webSettings?.domStorageEnabled = true
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       val window: Window = this.window

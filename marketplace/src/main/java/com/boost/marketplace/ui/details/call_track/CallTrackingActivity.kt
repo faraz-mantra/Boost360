@@ -132,7 +132,7 @@ class CallTrackingActivity :
         val pref = this.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
             fpTag = pref?.getString("GET_FP_DETAILS_TAG", null)
 
-        if(doVMNBooking || vmnSelectionForPack ||vmnSelectionForCart){
+        if(doVMNBooking || vmnSelectionForPack || vmnSelectionForCart){
             binding?.tvSkip?.visibility = View.GONE
         }else {
             binding?.tvSkip?.visibility = View.VISIBLE
