@@ -184,7 +184,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
   private fun onDataChanged() {
     val username = binding?.usernameEt?.text?.toString()
     val password = binding?.passEt?.text?.toString()
-    binding?.verifyBt?.isEnabled = !username.isNullOrBlank() && !password.isNullOrBlank()
+    binding?.loginBt?.isEnabled = !username.isNullOrBlank() && !password.isNullOrBlank()
   }
 
   private fun verifyWithCaptcha() {
