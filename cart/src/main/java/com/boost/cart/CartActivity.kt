@@ -17,11 +17,15 @@ import com.boost.cart.utils.Constants.Companion.MYADDONS_FRAGMENT
 import com.boost.cart.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.cart.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.cart.utils.SharedPrefs
+import com.boost.payment.utils.WebEngageController
 import com.framework.analytics.SentryController
 import com.framework.firebaseUtils.firestore.marketplaceCart.CartFirestoreManager
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId
 import com.framework.pref.getAccessTokenAuth
+import com.framework.webengageconstant.ADDONS_MARKETPLACE
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_CLICKED_BACK_BUTTON_CART_SCREEN
+import com.framework.webengageconstant.NO_EVENT_VALUE
 import java.lang.IllegalStateException
 
 class CartActivity : AppCompatActivity() {
@@ -97,7 +101,14 @@ class CartActivity : AppCompatActivity() {
             supportFragmentManager.fragments
         for (f in fragments) {
             if (f != null && f is BaseFragment)
+            {
+                WebEngageController.trackEvent(
+                    ADDONS_MARKETPLACE_CLICKED_BACK_BUTTON_CART_SCREEN,
+                    ADDONS_MARKETPLACE,
+                    NO_EVENT_VALUE
+                )
                 f.onBackPressed()
+            }
         }
     }
 
