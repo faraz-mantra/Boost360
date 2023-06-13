@@ -177,7 +177,7 @@
               <com.framework.views.customViews.CustomTextView
                 style="@style/wrap_match"
                 android:layout_gravity="center"
-                android:drawableStart="@drawable/ic_bank_transparent"
+                android:drawableStart="@drawable/my_bank_account"
                 android:drawablePadding="@dimen/size_8"
                 android:gravity="center"
                 android:text="@string/add_a_bank_account"

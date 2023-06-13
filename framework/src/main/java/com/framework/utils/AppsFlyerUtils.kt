@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.Log
 import com.appsflyer.AppsFlyerConversionListener
 import com.appsflyer.AppsFlyerLib
+import com.framework.BuildConfig
+
 
 class AppsFlyerUtils : AppsFlyerConversionListener {
 
@@ -15,7 +17,7 @@ class AppsFlyerUtils : AppsFlyerConversionListener {
 
     @JvmStatic
     fun initAppsFlyer(context: Context?, devKey: String?) {
-      AppsFlyerLib.getInstance().init(devKey!!, AppsFlyerUtils(), context!!)
+      AppsFlyerLib.getInstance().init(BuildConfig.APPSFLAYER_DEV_KEY, AppsFlyerUtils(), context!!)
       //Start the SDK
       AppsFlyerLib.getInstance().start(context)
       //Enable Debugging

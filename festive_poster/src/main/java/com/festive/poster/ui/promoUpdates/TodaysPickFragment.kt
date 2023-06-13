@@ -134,15 +134,15 @@ class TodaysPickFragment : AppBaseFragment<FragmentTodaysPickBinding, FestivePos
     }
   }
 
-//  override fun onClick(v: View) {
-//    super.onClick(v)
-//    when (v) {
-//      binding?.cardBrowseAllTemplate -> {
-//        WebEngageController.trackEvent(Promotional_Update_View_More_Click)
-//        addFragment(R.id.container, BrowseAllFragment.newInstance(), true, true)
-//      }
-//    }
-//  }
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when (v) {
+      binding?.cardBrowseAllTemplate -> {
+        WebEngageController.trackEvent(Promotional_Update_View_More_Click)
+        addFragment(R.id.container, BrowseCategoriesFragment.newInstance(), true, true)
+      }
+    }
+  }
 
 
   private fun startShimmer() {

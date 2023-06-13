@@ -14,7 +14,7 @@
   <string name="digital_readiness_score_n">Website Readiness Score</string>
   <string name="use_tools_improve_business">Most frequently used actions to manage</string>
   <string name="ria_academy">Boost academy</string>
-  <string name="learn_how_boost_360_work">Learn how to make Boost 360 work for you</string>
+  <string name="learn_how_boost_360_work">Learn how to make Checkkinn work for you</string>
   <string name="addon_marketplace_explore_tools">Explore tools that can help you run your business better</string>
   <string name="patient_enquiries">My patient enquiries</string>
   <string name="customer_enquiries">My customer enquiries</string>
@@ -57,7 +57,7 @@
   <string name="nowfloats">NowFloats</string>
   <string name="add_on_marketplace_banner">Marketplace offers</string>
   <string name="perform_online_business">How your business has performed online</string>
-  <string name="website_report_description">Learn how to make Boost 360 work for you</string>
+  <string name="website_report_description">Learn how to make Checkkinn work for you</string>
   <string name="share_business_card">Share business card</string>
   <string name="press_again_exit">Press again to exit</string>
   <string name="download_file_banner">Downloading the file...</string>
@@ -159,7 +159,7 @@
   <string name="business_description_">Business description</string>
   <string name="save_description">Save description</string>
   <string name="business_category_is_locked">Business category is locked</string>
-  <string name="business_category_is_to_be_selected_only_once_while_setting_up_your_business_account_on_boost_360_to_know_more_contact_support">Business category is to be selected only once while setting up your business account on Boost 360. To know more contact support.</string>
+  <string name="business_category_is_to_be_selected_only_once_while_setting_up_your_business_account_on_boost_360_to_know_more_contact_support">Business category is to be selected only once while setting up your business account on Checkkinn. To know more contact support.</string>
   <string name="contact_support_n">Contact support</string>
   <string name="what_is_a_business_featured_image">What is a business image?</string>
   <string name="please_enter_valid_business_name">please enter valid business name</string>
@@ -180,13 +180,13 @@
   <string name="your_email_mobile_no_username_password_payment_info_etc"><![CDATA[Your email, mobile no., username & password, payment info etc.]]></string>
   <string name="currently_managing">Currently managing</string>
   <string name="new_offers">New offers</string>
-  <string name="my_boost_360_subscription">My Boost 360 subscription</string>
+  <string name="my_boost_360_subscription">My Checkkinn subscription</string>
   <string name="useful_links">Helpful resources</string>
   <string name="need_action">Need action</string>
   <string name="verified">Verified</string>
-  <string name="about_boost_360">About Boost 360</string>
+  <string name="about_boost_360">About Checkkinn</string>
   <string name="what_s_new_in_latest_version">What’s new in latest version</string>
-  <string name="run_boost_360_account_on_your_wordpress_website">Run Boost 360 account on your wordpress website.</string>
+  <string name="run_boost_360_account_on_your_wordpress_website">Run Checkkinn account on your wordpress website.</string>
   <string name="we_re_listening">We’re listening :)</string>
   <string name="product_training_link">https://calendly.com/boost360-ria/training</string>
   <string name="restricted_access">Restricted Access</string>
@@ -199,7 +199,7 @@
   <string name="unable_to_open_facebook">Unable to open facebook</string>
   <string name="unable_to_open_twitter">Unable to open Twitter</string>
   <string name="super_admin">Super admin</string>
-  <string name="boost_360_is_proudly_made_in_india">Boost 360 is Proudly made in INDIA</string>
+  <string name="boost_360_is_proudly_made_in_india">Checkkinn is Proudly made in INDIA</string>
   <string name="fonts_and_color_styles">Font &amp; Color Styles</string>
   <string name="manage_your_current_plan_or_upgrade_to_a_recommended_plan_with_better_features">Upgrade website with great features, offers for you, current plan, purchase history, invoice and more.</string>
   <string name="google_form_help_business_boost">https://forms.gle/F1tj5tETRHBdR2AaA</string>
@@ -278,7 +278,7 @@
   <string name="xxxxxxxxxx">XXXXXXXXXX</string>
   <string name="changing_mobile_number">Changing mobile number</string>
   <string name="save_amp_opt_in_for_updates"><![CDATA[Save & opt-in for updates]]></string>
-  <string name="i_agree_to_receive_important_business_updates_from_boost_360_via_whatsapp">I agree to receive important business updates from Boost 360 via WhatsApp.</string>
+  <string name="i_agree_to_receive_important_business_updates_from_boost_360_via_whatsapp">I agree to receive important business updates from Checkkinn via WhatsApp.</string>
   <string name="remove_whatsapp_number">Remove Whatsapp number</string>
   <string name="changing_whatsapp_number">Changing Whatsapp number?</string>
   <string name="your_whatsapp_number">Your WhatsApp number</string>
@@ -314,7 +314,7 @@
   <string name="content_click_here_text">To view &amp; post new content on the pages of your website, select the ‘Content’ tab or <u><b>click here</b></u></string>
   <string name="click_here">click here</string>
   <string name="website_engagement">Website engagement</string>
-  <string name="explore_what_all_things_boost_360_allows_you_to_do">Explore what all things Boost 360 allows you to do.</string>
+  <string name="explore_what_all_things_boost_360_allows_you_to_do">Explore what all things Checkkinn allows you to do.</string>
   <string name="explore_all">Explore all</string>
   <string name="my_to_do_list">My To-Do list</string>
   <string name="most_frequently_used_actions_to_manage">Most frequently used actions to manage</string>

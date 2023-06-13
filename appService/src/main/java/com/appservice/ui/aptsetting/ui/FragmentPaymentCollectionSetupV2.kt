@@ -107,7 +107,7 @@ class FragmentPaymentCollectionSetupV2 : AppBaseFragment<FragmentPaymentCollecti
       else -> {
         binding?.addViewBank?.visible()
         binding?.connectedViewBank?.gone()
-        binding?.bankAccountTnc?.makeLinks(Pair("Read TnC", View.OnClickListener { showShortToast(getString(R.string.coming_soon)) }))
+        binding?.bankAccountTnc?.makeLinks(Pair("Read TnC.", View.OnClickListener { showShortToast(getString(R.string.coming_soon)) }))
       }
     }
   }
