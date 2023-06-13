@@ -62,6 +62,7 @@ android {
             buildConfigField "String", "USER_EXPERIOR_LIVE_KEY", '"0efa1c36-15ec-43ba-93e7-e00ff1355f4b"'
 //            buildConfigField "String", "USER_EXPERIOR_DEV_KEY", '"971021d8-3b0a-45e0-80f1-212150a16791"'
             buildConfigField "String", "SMARTLOOK_API_KEY", '"2976fda0fc620d3186eca19884bd55ac125b56e4"'
+            buildConfigField "String", "APPSFLAYER_DEV_KEY", '"8PD2DC7BbVdr7aLnRE8wHY"'
         }
         healthgro {
             //healthcare
@@ -71,6 +72,7 @@ android {
             buildConfigField "String", "USER_EXPERIOR_LIVE_KEY", '"0efa1c36-15ec-43ba-93e7-e00ff1355f4b"'
 //            buildConfigField "String", "USER_EXPERIOR_DEV_KEY", '"971021d8-3b0a-45e0-80f1-212150a16791"'
             buildConfigField "String", "SMARTLOOK_API_KEY", '"2976fda0fc620d3186eca19884bd55ac125b56e4"'
+            buildConfigField "String", "APPSFLAYER_DEV_KEY", '"TknnTow3iHtAFd7aaZg4eS"'
         }
         ardhim {
             //manufacturing
@@ -80,6 +82,7 @@ android {
             buildConfigField "String", "USER_EXPERIOR_LIVE_KEY", '"0efa1c36-15ec-43ba-93e7-e00ff1355f4b"'
 //            buildConfigField "String", "USER_EXPERIOR_DEV_KEY", '"971021d8-3b0a-45e0-80f1-212150a16791"'
             buildConfigField "String", "SMARTLOOK_API_KEY", '"2976fda0fc620d3186eca19884bd55ac125b56e4"'
+            buildConfigField "String", "APPSFLAYER_DEV_KEY", '"TknnTow3iHtAFd7aaZg4eS"'
         }
         checkkinn {
             //hotels
@@ -89,6 +92,7 @@ android {
             buildConfigField "String", "USER_EXPERIOR_LIVE_KEY", '"0efa1c36-15ec-43ba-93e7-e00ff1355f4b"'
 //            buildConfigField "String", "USER_EXPERIOR_DEV_KEY", '"971021d8-3b0a-45e0-80f1-212150a16791"'
             buildConfigField "String", "SMARTLOOK_API_KEY", '"2976fda0fc620d3186eca19884bd55ac125b56e4"'
+            buildConfigField "String", "APPSFLAYER_DEV_KEY", '"TknnTow3iHtAFd7aaZg4eS"'
         }
         arantoo {
             //service
@@ -98,6 +102,7 @@ android {
             buildConfigField "String", "USER_EXPERIOR_LIVE_KEY", '"0efa1c36-15ec-43ba-93e7-e00ff1355f4b"'
 //            buildConfigField "String", "USER_EXPERIOR_DEV_KEY", '"971021d8-3b0a-45e0-80f1-212150a16791"'
             buildConfigField "String", "SMARTLOOK_API_KEY", '"2976fda0fc620d3186eca19884bd55ac125b56e4"'
+            buildConfigField "String", "APPSFLAYER_DEV_KEY", '"TknnTow3iHtAFd7aaZg4eS"'
         }
         jioonline {
             //JioOnline
@@ -107,6 +112,7 @@ android {
             buildConfigField "String", "USER_EXPERIOR_LIVE_KEY", '"0efa1c36-15ec-43ba-93e7-e00ff1355f4b"'
 //            buildConfigField "String", "USER_EXPERIOR_DEV_KEY", '"971021d8-3b0a-45e0-80f1-212150a16791"'
             buildConfigField "String", "SMARTLOOK_API_KEY", '"2976fda0fc620d3186eca19884bd55ac125b56e4"'
+            buildConfigField "String", "APPSFLAYER_DEV_KEY", '"8PD2DC7BbVdr7aLnRE8wHY"'
         }
     }
 }
