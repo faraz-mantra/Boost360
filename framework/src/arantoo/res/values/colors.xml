@@ -69,6 +69,7 @@
   <color name="grey_09121F">#ECEFF1</color>
   <color name="gray_333333">#333333</color>
   <color name="color_fcaf17_jio_0400a6">#044BB1</color>
+  <color name="color_post_btn_studio">#044BB1</color>
   <color name="color_fcaf17_op70_jio_0400a6">#B3044BB1</color>
   <color name="colorPrimary_20">#33044BB1</color>
   <color name="black_4a4a4a_20">#334A4A4A</color>
@@ -93,4 +94,6 @@
   <color name="secondary_toolbar_color">#FFB800</color>
   <color name="vmn_calls_highlight">#FFB800</color>
   <color name="progress_dialog">#FFB800</color>
+  <color name="status_bar_color_vertical">#044BB1</color>
+
 </resources>

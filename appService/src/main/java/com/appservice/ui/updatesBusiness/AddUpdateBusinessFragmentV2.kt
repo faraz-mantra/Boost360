@@ -19,7 +19,6 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -113,7 +112,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       })
 
     setOnClickListener(
-      binding!!.btnAddImage, binding.btnEdit, binding.ivMic, binding.ivHashtagCross,
+      binding.btnAddImage, binding.btnEdit, binding.ivMic, binding.ivHashtagCross,
       binding.tvPreviewAndPost, binding.ivCross
     )
   }
@@ -219,10 +218,10 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     posterImagePath = path
     sessionLocal.storeFPDetails(imagePost,path)
     if (path.isNullOrEmpty()){
-      binding!!.ivImg.setImageResource(0)
-      binding!!.ivImg.gone()
-      binding!!.btnEdit.gone()
-      binding!!.btnAddImage.visible()
+      binding.ivImg.setImageResource(0)
+      binding.ivImg.gone()
+      binding.btnEdit.gone()
+      binding.btnAddImage.visible()
       binding.tvImgReq.visible()
       binding.etUpdate.hint=getString(R.string.write_about_your_customer_location_recent_updates_timing_etc)
     }else{
@@ -269,7 +268,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
           )
         )
         addHashTagFunction()
-        binding.tvCount.text = (textPost.length ?: 0).toString()
+        binding.tvCount.text = textPost.length.toString()
 
         lifecycleScope.launch {
           withContext(Dispatchers.IO) {
@@ -296,17 +295,17 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       }
 
       KeyboardVisibilityEvent.setEventListener(
-        requireActivity(),
-        KeyboardVisibilityEventListener {
-          // Ah... at last. do your thing :)
-          if (it) {
-            binding.cardInput.strokeColor =
-              ContextCompat.getColor(requireActivity(), R.color.black_4a4a4a)
-          } else {
-            binding.cardInput.strokeColor =
-              ContextCompat.getColor(requireActivity(), R.color.colorAFAFAF)
-          }
-        })
+        requireActivity()
+      ) {
+        // Ah... at last. do your thing :)
+        if (it) {
+          binding.cardInput.strokeColor =
+            ContextCompat.getColor(requireActivity(), R.color.black_4a4a4a)
+        } else {
+          binding.cardInput.strokeColor =
+            ContextCompat.getColor(requireActivity(), R.color.colorAFAFAF)
+        }
+      }
 
       toggleContinue()
 
@@ -314,26 +313,28 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   }
 
   fun toggleContinue(){
-    if (binding!!.etUpdate.text.toString().isNullOrEmpty()){
+    if (binding.etUpdate.text.toString().isEmpty()){
       disableContinue()
     }else{
       enableContinue()
     }
   }
   fun disableContinue(){
-    binding!!.tvPreviewAndPost.isEnabled = false
-    binding!!.tvPreviewAndPost.setBackgroundColor(ContextCompat.getColor(requireActivity(),R.color.gray_DADADA))
+    binding.tvPreviewAndPost.isEnabled = false
+    binding.tvPreviewAndPost.setBackgroundColor(ContextCompat.getColor(requireActivity(),R.color.gray_DADADA))
   }
 
   fun enableContinue(){
-    binding!!.tvPreviewAndPost.isEnabled = true
-    binding!!.tvPreviewAndPost.setBackgroundColor(ContextCompat.getColor(requireActivity(),R.color.colorPrimary))
+    binding.tvPreviewAndPost.isEnabled = true
+    binding.tvPreviewAndPost.setBackgroundColor(ContextCompat.getColor(requireActivity(),R.color.colorPrimary))
   }
 
   private fun initStt() {
     sttUtils = STTUtils(object : STTUtils.Callbacks{
       override fun onDone(text: String?) {
-        binding?.etUpdate?.append((text ?: "") + ". ")
+        val fullStopStr = if(text.isNullOrEmpty()) "" else ". "
+        val finalTextNext = (text ?: "") + fullStopStr
+        binding.etUpdate.append(finalTextNext)
 
       }
     })
@@ -370,7 +371,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
       override fun afterTextChanged(s: Editable?) {
         sessionLocal.storeFPDetails(msgPost,s.toString())
 
-        binding!!.tvCount.text = s.toString().length.toString()
+        binding.tvCount.text = s.toString().length.toString()
         toggleContinue()
       }
     })
@@ -399,11 +400,11 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
   override fun onClick(v: View) {
     super.onClick(v)
     when(v){
-      binding!!.btnAddImage->{
+      binding.btnAddImage->{
          WebEngageController.trackEvent(Added_Photo_In_Update, CLICKED,NULL)
          chooseOption()
       }
-      binding!!.btnEdit->{
+      binding.btnEdit->{
         UpdateCropImageActivity.launchActivity(
           posterImagePath!!,
           requireActivity(),
@@ -411,18 +412,18 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
         )
       }
 
-      binding!!.ivMic->{
+      binding.ivMic->{
         sttUtils?.promptSpeechInput()
       }
 
-      binding!!.ivHashtagCross->{
-        binding!!.layoutHashtagTip.animate().alpha(0F).setListener(object :Animator.AnimatorListener{
+      binding.ivHashtagCross->{
+        binding.layoutHashtagTip.animate().alpha(0F).setListener(object :Animator.AnimatorListener{
           override fun onAnimationStart(p0: Animator) {
 
           }
 
           override fun onAnimationEnd(p0: Animator) {
-            binding!!.layoutHashtagTip.gone()
+            binding.layoutHashtagTip.gone()
 
           }
 
@@ -434,20 +435,20 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
 
         })
       }
-      binding!!.tvPreviewAndPost->{
+      binding.tvPreviewAndPost->{
         WebEngageController.trackEvent(Update_Preview_post_click, CLICKED,NULL)
         WebEngageController.trackEvent(Promotional_Update_Preview_Post_Click, CLICKED,NULL)
         startActivity(Intent(requireActivity(), Class.forName(
           "com.festive.poster.ui.promoUpdates.PostPreviewSocialActivity"))
           .putExtra(IntentConstants.MARKET_PLACE_ORIGIN_NAV_DATA, Bundle().apply {
-            putString(IntentConstants.IK_CAPTION_KEY,binding!!.etUpdate.text.toString())
+            putString(IntentConstants.IK_CAPTION_KEY, binding.etUpdate.text.toString())
             putString(IntentConstants.IK_POSTER, posterImagePath)
             putString(IntentConstants.IK_UPDATE_TYPE,
               if (posterImagePath == null) IntentConstants.UpdateType.UPDATE_TEXT.name
               else IntentConstants.UpdateType.UPDATE_IMAGE_TEXT.name
             )
           }))
-        Log.i(TAG, "onClick: ${binding!!.etUpdate.text.toString().extractHashTag()}")
+        Log.i(TAG, "onClick: ${binding.etUpdate.text.toString().extractHashTag()}")
       }
 
       binding.ivCross->{
@@ -456,7 +457,7 @@ class AddUpdateBusinessFragmentV2 : AppBaseFragment<AddUpdateBusinessFragmentV2B
     }
   }
 
-  public fun chooseOption() {
+  fun chooseOption() {
     UpdateImagePickerBSheet.newInstance(object : UpdateImagePickerBSheet.Callbacks {
       override fun onImagePicked(path: String) {
         if (path == "higher") {

@@ -76,35 +76,35 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
   }
 
   private fun showHideServicesText() {
-    when (staffDetails?.serviceIds?.size ?: 0 > 0) {
-      true -> binding?.ctvServices?.visibility = View.VISIBLE
-      else -> binding?.ctvServices?.visibility = View.GONE
+    when ((staffDetails?.serviceIds?.size ?: 0) > 0) {
+      true -> binding.ctvServices.visibility = View.VISIBLE
+      else -> binding.ctvServices.visibility = View.GONE
     }
   }
 
   override fun onCreateView() {
     super.onCreateView()
     setOnClickListener(
-      binding?.rlConsultationHour, binding?.rlServiceProvided, binding?.btnOtherInfo, binding?.btnUploadSignature,
-      binding?.imageAddBtn, binding?.changeImage, binding?.ctfBookingWindow, binding?.btnSave
+      binding.rlConsultationHour, binding.rlServiceProvided, binding.btnOtherInfo, binding.btnUploadSignature,
+      binding.imageAddBtn, binding.changeImage, binding.ctfBookingWindow, binding.btnSave
     )
     getBundleData()
     setupUIColor()
   }
 
   private fun setupUIColor() {
-    changeColorOfSubstring(R.string.name_doctor, R.color.black_4a4a4a, "*", binding?.tvDoctorName!!)
-    changeColorOfSubstring(R.string.description, R.color.black_4a4a4a, "*", binding?.tvDoctorDesc!!)
-    changeColorOfSubstring(R.string.speciality, R.color.black_4a4a4a, "*", binding?.tvDoctorSpeciality!!)
-    changeColorOfSubstring(R.string.business_license, R.color.black_4a4a4a, "*", binding?.tvDoctorLicense!!)
-    changeColorOfSubstring(R.string.upload_signature_, R.color.black_4a4a4a, "*", binding?.tvDoctorUploadSignature!!)
-    changeColorOfSubstring(R.string.appointment_booking_window_for_patients, R.color.black_4a4a4a, "*", binding?.tvDoctorBookingWindow!!)
+    changeColorOfSubstring(R.string.name_doctor, R.color.black_4a4a4a, "*", binding.tvDoctorName)
+    changeColorOfSubstring(R.string.description, R.color.black_4a4a4a, "*", binding.tvDoctorDesc)
+    changeColorOfSubstring(R.string.speciality, R.color.black_4a4a4a, "*", binding.tvDoctorSpeciality)
+    changeColorOfSubstring(R.string.business_license, R.color.black_4a4a4a, "*", binding.tvDoctorLicense)
+    changeColorOfSubstring(R.string.upload_signature_, R.color.black_4a4a4a, "*", binding.tvDoctorUploadSignature)
+    changeColorOfSubstring(R.string.appointment_booking_window_for_patients, R.color.black_4a4a4a, "*", binding.tvDoctorBookingWindow)
   }
 
   private fun checkDoctorAdded() {
     val request = GetStaffListingRequest(FilterBy(offset = 0, limit = 2), sessionLocal.fpTag, "")
     viewModel?.getStaffList(request)?.observeOnce(viewLifecycleOwner) {
-      if ((it as? GetStaffListingResponse)?.result?.paging?.count ?: 0 >= 1) showAlertAddOneDoctor()
+      if (((it as? GetStaffListingResponse)?.result?.paging?.count ?: 0) >= 1) showAlertAddOneDoctor()
     }
   }
 
@@ -135,46 +135,46 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
     val speciality = staffDetails?.speciality ?: ""
     setImage(listOf(staffDetails?.getUrlImage().toString()), true)
     setSignatureView(staffDetails?.getUrlSignature() ?: "", true)
-    binding?.ctfStaffName?.setText(staffDetails?.name)
-    binding?.ctfStaffDesc?.setText(staffDetails?.description)
-    binding?.tvBusinessLicense?.setText(staffDetails?.businessLicence)
-    binding?.ctfStaffSpeciality?.setText(staffDetails?.speciality)
-    binding?.ctfBookingWindow?.setText("${staffDetails?.getBookingWindowN()}")
+    binding.ctfStaffName.setText(staffDetails?.name)
+    binding.ctfStaffDesc.setText(staffDetails?.description)
+    binding.tvBusinessLicense.setText(staffDetails?.businessLicence)
+    binding.ctfStaffSpeciality.setText(staffDetails?.speciality)
+    binding.ctfBookingWindow.setText("${staffDetails?.getBookingWindowN()}")
     showHideServicesText()
     if (staffDetails?.timings.isNullOrEmpty().not()) {
       val textStaffDays = AppointmentModel().getStringStaffActive(staffDetails?.timings)
-      binding?.ctvTiming?.visibility = if (textStaffDays.isEmpty()) View.GONE else View.VISIBLE
-      binding?.ctvTiming?.text = textStaffDays
-    } else binding?.ctvTiming?.gone()
+      binding.ctvTiming.visibility = if (textStaffDays.isEmpty()) View.GONE else View.VISIBLE
+      binding.ctvTiming.text = textStaffDays
+    } else binding.ctvTiming.gone()
 
-    if (speciality.isNotEmpty()) binding?.ctfStaffSpeciality?.setText(speciality)
-    binding?.btnSave?.text = getString(R.string.update)
+    if (speciality.isNotEmpty()) binding.ctfStaffSpeciality.setText(speciality)
+    binding.btnSave.text = getString(R.string.update)
     if (resultCode != AppCompatActivity.RESULT_OK) setServicesList()
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.imageAddBtn, binding?.changeImage -> {
+      binding.imageAddBtn, binding.changeImage -> {
         isSignatureSelection = false;openImagePicker()
       }
-      binding?.rlConsultationHour -> {
+      binding.rlConsultationHour -> {
         consultationHourFragment()
       }
-      binding?.rlServiceProvided -> {
+      binding.rlServiceProvided -> {
         selectServicesFragment()
       }
-      binding?.btnOtherInfo -> {
+      binding.btnOtherInfo -> {
         startAdditionalInfoFragment()
       }
-      binding?.btnUploadSignature -> {
+      binding.btnUploadSignature -> {
         isSignatureSelection = true
         openImagePicker()
       }
-      binding?.ctfBookingWindow -> {
+      binding.ctfBookingWindow -> {
         openBookingWindowBottomSheet()
       }
-      binding?.btnSave -> {
+      binding.btnSave -> {
         if (!isEdit && isValid()) createStaffProfile()
         if (isEdit && isValid()) updateStaffProfile()
       }
@@ -184,7 +184,7 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
   private fun openBookingWindowBottomSheet() {
     val appointmentBookingBottomSheet = AppointmentBookingBottomSheet()
     appointmentBookingBottomSheet.onClicked = {
-      binding?.ctfBookingWindow?.setText(it)
+      binding.ctfBookingWindow.setText(it)
       staffDetails?.bookingWindow = it?.replace("days", "")?.trim()?.toIntOrNull() ?: 0
     }
     val bundle = Bundle()
@@ -283,12 +283,12 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
   }
 
   private fun isValid(): Boolean {
-    this.speciality = binding?.ctfStaffSpeciality?.text.toString()
+    this.speciality = binding.ctfStaffSpeciality.text.toString()
     this.specializationList = ArrayList()
     this.yearOfExperience = staffDetails?.experience.toString()
-    this.staffName = binding?.ctfStaffName?.text.toString()
-    this.staffDescription = binding?.ctfStaffDesc?.text.toString()
-    this.businessLicense = binding?.tvBusinessLicense?.text.toString()
+    this.staffName = binding.ctfStaffName.text.toString()
+    this.staffDescription = binding.ctfStaffDesc.text.toString()
+    this.businessLicense = binding.tvBusinessLicense.text.toString()
     if (servicesList.isNullOrEmpty().not()) {
       staffDetails?.serviceIds = ArrayList()
       servicesList?.forEach { items -> if (items.id.isNullOrEmpty().not()) staffDetails?.serviceIds?.add(items.id!!) }
@@ -328,7 +328,7 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
     this.staffImage = StaffImage(
       image = "data:image/png;base64,${Base64.encodeToString(imageToByteArray, Base64.DEFAULT)}",
       fileName = "$staffName$imageExtension",
-      imageFileType = imageExtension?.removePrefix(".")
+      imageFileType = imageExtension.removePrefix(".")
     )
   }
 
@@ -471,7 +471,7 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
           servicesList?.forEach { dataItem -> if (dataItem.id.isNullOrEmpty().not()) staffDetails?.serviceIds?.add(dataItem.id!!) }
 
         }
-        binding?.ctvServices?.text = (servicesList?.map { it.name })?.joinToString(", ", limit = 5, truncated = "+${servicesList?.size?.minus(5)} more")
+        binding.ctvServices.text = (servicesList?.map { it.name })?.joinToString(", ", limit = 5, truncated = "+${servicesList?.size?.minus(5)} more")
         showHideServicesText()
       }
       requestCode == Constants.REQUEST_CODE_STAFF_TIMING && resultCode == AppCompatActivity.RESULT_OK -> {
@@ -479,9 +479,9 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
           data?.extras?.get(IntentConstant.STAFF_TIMINGS.name) as? StaffDetailsResult
         if (staffDetails?.timings.isNullOrEmpty().not()) {
           val textStaffDays = AppointmentModel().getStringStaffActiveN(staffDetails?.timings)
-          binding?.ctvTiming?.visibility = if (textStaffDays.isEmpty()) View.GONE else View.VISIBLE
-          binding?.ctvTiming?.text = textStaffDays
-        } else binding?.ctvTiming?.gone()
+          binding.ctvTiming.visibility = if (textStaffDays.isEmpty()) View.GONE else View.VISIBLE
+          binding.ctvTiming.text = textStaffDays
+        } else binding.ctvTiming.gone()
         isTimingUpdated = true
       }
       //staff additional details
@@ -511,15 +511,15 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
     this.profileimageUri = Uri.parse(path)
     this.staffProfileFile = File(path)
     if (path != "null" && path.isNotEmpty() && this.profileimageUri != null) {
-      binding?.imageAddBtn?.gone()
-      binding?.staffImageView?.visible()
-      binding?.changeImage?.visible()
-      binding?.staffImageView?.let { activity?.glideLoad(it, profileimageUri.toString(), R.drawable.placeholder_image_n) }
+      binding.imageAddBtn.gone()
+      binding.staffImageView.visible()
+      binding.changeImage.visible()
+      binding.staffImageView.let { activity?.glideLoad(it, profileimageUri.toString(), R.drawable.placeholder_image_n) }
       if (isUrl.not() && path.isNotEmpty()) profileImageUpdated()
     } else {
-      binding?.imageAddBtn?.visible()
-      binding?.staffImageView?.gone()
-      binding?.changeImage?.gone()
+      binding.imageAddBtn.visible()
+      binding.staffImageView.gone()
+      binding.changeImage.gone()
     }
   }
 
@@ -542,25 +542,26 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
     this.signatureUri = Uri.parse(path)
     this.staffSignatureFile = File(path)
     if (path != "null" && path.isNotEmpty() && signatureUri != null) {
-      binding?.layoutItemPreview?.root?.visible()
-      binding?.btnUploadSignature?.gone()
-      binding?.layoutItemPreview?.image?.let { activity?.glideLoad(it, signatureUri.toString(), R.drawable.placeholder_image_n) }
+      binding.layoutItemPreview.root.visible()
+      binding.btnUploadSignature.gone()
+      binding.layoutItemPreview.image.let { activity?.glideLoad(it, signatureUri.toString(), R.drawable.placeholder_image_n) }
     } else {
-      binding?.layoutItemPreview?.root?.gone()
-      binding?.btnUploadSignature?.visible()
+      binding.layoutItemPreview.root.gone()
+      binding.btnUploadSignature.visible()
     }
 
-    binding?.layoutItemPreview?.crossIcon?.setOnClickListener {
-      binding?.layoutItemPreview?.root?.gone()
-      binding?.btnUploadSignature?.visible()
-      binding?.layoutItemPreview?.image?.setImageBitmap(null)
+    binding.layoutItemPreview.crossIcon.setOnClickListener {
+      binding.layoutItemPreview.root.gone()
+      binding.btnUploadSignature.visible()
+      binding.layoutItemPreview.image.setImageBitmap(null)
     }
     if (staffSignatureFile != null && staffSignatureFile?.size?.equals(0.0) == false)
-      binding?.layoutItemPreview?.ctvSize?.text = "${staffSignatureFile?.sizeInKb} Kb"
-    else binding?.layoutItemPreview?.ctvSize?.text = this.signatureUri.toString().subSequence(signatureUri?.toString()?.lastIndexOf("/")!! + 1, signatureUri?.toString()?.length!!)
-    binding?.layoutItemPreview?.cbChange?.setOnClickListener {
-      binding?.layoutItemPreview?.root?.gone()
+      binding.layoutItemPreview.ctvSize.text = "${staffSignatureFile?.sizeInKb} Kb"
+    else binding.layoutItemPreview.ctvSize.text = this.signatureUri.toString().subSequence(signatureUri?.toString()?.lastIndexOf("/")!! + 1, signatureUri?.toString()?.length!!)
+    binding.layoutItemPreview.cbChange.setOnClickListener {
+      binding.layoutItemPreview.root.gone()
       isSignatureSelection = true
+      binding.btnUploadSignature.visible()
       openImagePicker()
     }
   }

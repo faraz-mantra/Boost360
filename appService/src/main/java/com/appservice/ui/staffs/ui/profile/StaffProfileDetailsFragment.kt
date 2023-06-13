@@ -139,27 +139,27 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
   private fun setViewBackgrounds() {
     when (staffDetails?.isAvailable) {
       null, true -> {
-        binding?.ctvEdit?.visibility = View.VISIBLE
-        binding?.ctvEditServices?.visibility = View.VISIBLE
-        binding?.civMenu?.visibility = View.VISIBLE
-        binding?.civStaffProfileImg?.clearColorFilter()
-        binding?.ctvEditTiming?.visibility = View.VISIBLE
-        binding?.ctvBusinessAppointment?.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_747474))
-        binding?.ctvBusinessAppointmentHeading?.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_4a4a4a))
-        binding?.ctvBusinessLicenseHeading?.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_4a4a4a))
-        binding?.ctvBusinessLicense?.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_747474))
-        binding?.ctvHeadingExperience?.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_4a4a4a))
-        binding?.ctvExperience?.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_747474))
-        binding?.ctvAboutStaff?.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_747474))
-        binding?.ctvExperience?.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_747474))
-        binding?.ctvAboutHeading?.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_4a4a4a))
-        binding?.ctvHeadingServices?.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_4a4a4a))
-        binding?.ctvHeadingSpecialization?.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_4a4a4a))
-        binding?.ctvSpecialization?.setTextColor(ContextCompat.getColor(baseActivity, R.color.gray_4e4e4e))
-        binding?.ctvHeadingTiming?.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_4a4a4a))
-        binding?.rlStaffContainer?.setBackgroundColor(ContextCompat.getColor(baseActivity, R.color.yellow_ffb900))
+        binding.ctvEdit.visibility = View.VISIBLE
+        binding.ctvEditServices.visibility = View.VISIBLE
+        binding.civMenu.visibility = View.VISIBLE
+        binding.civStaffProfileImg.clearColorFilter()
+        binding.ctvEditTiming.visibility = View.VISIBLE
+        binding.ctvBusinessAppointment.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_747474))
+        binding.ctvBusinessAppointmentHeading.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_4a4a4a))
+        binding.ctvBusinessLicenseHeading.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_4a4a4a))
+        binding.ctvBusinessLicense.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_747474))
+        binding.ctvHeadingExperience.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_4a4a4a))
+        binding.ctvExperience.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_747474))
+        binding.ctvAboutStaff.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_747474))
+        binding.ctvExperience.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_747474))
+        binding.ctvAboutHeading.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_4a4a4a))
+        binding.ctvHeadingServices.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_4a4a4a))
+        binding.ctvHeadingSpecialization.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_4a4a4a))
+        binding.ctvSpecialization.setTextColor(ContextCompat.getColor(baseActivity, R.color.gray_4e4e4e))
+        binding.ctvHeadingTiming.setTextColor(ContextCompat.getColor(baseActivity, R.color.black_4a4a4a))
+        binding.rlStaffContainer.setBackgroundColor(ContextCompat.getColor(baseActivity, R.color.yellow_ffb900))
         (requireActivity() as StaffFragmentContainerActivity).getToolbar()?.setBackgroundColor(ContextCompat.getColor(baseActivity, R.color.yellow_ffb900))
-        (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor = ContextCompat.getColor(baseActivity, R.color.yellow_f5b200)
+        (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor = ContextCompat.getColor(baseActivity, R.color.status_bar_color_vertical)
 
       }
       else -> {
