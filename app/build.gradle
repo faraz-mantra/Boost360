@@ -65,7 +65,7 @@ android {
     flavorDimensions "default"
     productFlavors {
         partone {
-            versionName "6.1.43.1"
+            versionName "6.1.43.2"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             isDefault true
