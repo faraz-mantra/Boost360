@@ -90,6 +90,27 @@
         app:layout_constraintTop_toBottomOf="@+id/pin_otp_verify"
         tools:text="Resend OTP in 24s" />
 
+    <com.framework.views.customViews.CustomTextView
+        android:id="@+id/accept_tnc_phone"
+        style="@style/psn_subheading_style"
+        android:layout_width="0dp"
+        android:layout_marginBottom="@dimen/size_20"
+        android:fontFamily="@font/regular"
+        android:gravity="bottom"
+        android:lineSpacingExtra="4sp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:visibility="visible"
+        android:textColor="@color/black_2A2A2A"
+        android:textColorHighlight="@color/greyish_brown"
+        android:textColorLink="@color/colorAccentLight"
+        android:textSize="@dimen/text_11"
+        app:layout_constraintBottom_toTopOf="@+id/linearWhatsApp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/startGuide"
+        app:layout_constraintTop_toBottomOf="@+id/tv_resend_otp_in"
+        tools:text="@string/enter_phone_t_n_c" />
+
     <LinearLayout
       android:id="@+id/linearWhatsApp"
       android:layout_width="wrap_content"
@@ -101,14 +122,14 @@
       app:layout_constraintEnd_toStartOf="@+id/endGuide"
       app:layout_constraintHorizontal_bias="0"
       app:layout_constraintStart_toStartOf="@+id/startGuide"
-      app:layout_constraintTop_toBottomOf="@+id/tv_resend_otp_in">
+      app:layout_constraintTop_toBottomOf="@+id/accept_tnc_phone">
 
       <com.framework.views.customViews.CustomCheckBox
           android:id="@+id/chk_whatsapp"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:buttonTint="@color/colorPrimary"
-          android:checked="false"
+          android:checked="true"
           android:fontFamily="@font/regular"
           android:text="@string/send_me_business_updates_via"
           android:textColor="@color/black_2A2A2A"

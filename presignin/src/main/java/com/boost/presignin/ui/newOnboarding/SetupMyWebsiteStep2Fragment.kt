@@ -1,7 +1,9 @@
 package com.boost.presignin.ui.newOnboarding
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.RadioButton
 import androidx.core.content.ContextCompat
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.capitalizeUtil
@@ -10,17 +12,25 @@ import com.boost.presignin.R
 import com.boost.presignin.base.AppBaseFragment
 import com.boost.presignin.constant.IntentConstant
 import com.boost.presignin.databinding.LayoutSetUpMyWebsiteStep2Binding
-import com.boost.presignin.extensions.validateLetters
 import com.boost.presignin.model.category.CategoryDataModel
+import com.boost.presignin.model.onBoardingInfo.Data
+import com.boost.presignin.model.onBoardingInfo.OnBoardingInfo
+import com.boost.presignin.viewmodel.LoginSignUpViewModel
 import com.framework.extensions.afterTextChanged
-import com.framework.models.BaseViewModel
+import com.framework.extensions.observeOnce
+import com.framework.pref.UserSessionManager
+import com.framework.pref.clientId2
 import com.framework.utils.fromHtml
 import com.framework.utils.showKeyBoard
 import com.framework.views.blur.setBlur
 import com.framework.webengageconstant.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
-class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Binding, BaseViewModel>() {
 
+class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Binding, LoginSignUpViewModel>() {
+  private var session: UserSessionManager? = null
+  private var selectedType: String? = null
   companion object {
     @JvmStatic
     fun newInstance(bundle: Bundle? = null): SetupMyWebsiteStep2Fragment {
@@ -62,39 +72,73 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
     return R.layout.layout_set_up_my_website_step_2
   }
 
-  override fun getViewModelClass(): Class<BaseViewModel> {
-    return BaseViewModel::class.java
+  override fun getViewModelClass(): Class<LoginSignUpViewModel> {
+    return LoginSignUpViewModel::class.java
   }
 
   override fun onCreateView() {
     super.onCreateView()
     WebEngageController.trackEvent(PS_BUSINESS_PROFILE_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
+    session = UserSessionManager(baseActivity)
     binding?.includeMobileView?.blurView?.setBlur(baseActivity, 1F)
     binding?.includeMobileView?.tvCategoryName?.text = categoryModel?.getCategoryWithoutNewLine() ?: ""
     if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
       binding.tvNextStep2.backgroundTintList= ContextCompat.getColorStateList(context!!, R.color.buttonTint)
+      if (BuildConfig.FLAVOR.equals("healthgro")) {
+        binding.tvCategory.visibility = View.VISIBLE
+        binding.categoryRGroup.visibility = View.VISIBLE
+
+        binding.categoryRGroup.setOnCheckedChangeListener { group, checkedId ->
+          val selectedId: Int = group.checkedRadioButtonId
+          val radioButton = binding.categoryRGroup.findViewById<View>(selectedId) as RadioButton
+          selectedType = radioButton.tag.toString()
+        }
+      }
     }
     setOnClickListeners()
   }
 
   private fun setOnClickListeners() {
-    binding?.tvNextStep2?.setOnClickListener {
-      if (binding?.businessNameInputLayout?.etInput?.text.toString().validateLetters()) {
-        WebEngageController.trackEvent(PS_BUSINESS_PROFILE_CLICK_NEW_UPPERCASE, CLICK, NO_EVENT_VALUE)
-        addFragment(
-          R.id.inner_container, SetupMyWebsiteStep3Fragment.newInstance(
-            Bundle().apply {
-              putString(IntentConstant.DESKTOP_PREVIEW.name, desktopPreview)
-              putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
-              putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
-              putString(IntentConstant.CATEGORY_SUGG_UI.name, categoryLiveName)
-              putString(IntentConstant.SUB_CATEGORY_ID.name, subCategoryID)
-              putSerializable(IntentConstant.CATEGORY_DATA.name, categoryModel)
-              putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent ?: false)
-              putString(IntentConstant.EXTRA_BUSINESS_NAME.name, binding?.businessNameInputLayout?.etInput?.text.toString())
-            }), true
-        )
-      } else showShortToast(getString(R.string.business_name_format_invalid_toast))
+    binding.tvNextStep2.setOnClickListener {
+      val bName = binding.businessNameInputLayout.etInput.text.toString()
+      if (validateBusinessName(bName)) {
+        if (checkForConsecutiveDigits(bName)) {
+          if (checkForConsecutiveSpecialCharacters(bName)) {
+            if (selectedType != null && selectedType != "") {
+              WebEngageController.trackEvent(
+                PS_BUSINESS_PROFILE_CLICK_NEW_UPPERCASE,
+                CLICK,
+                NO_EVENT_VALUE
+              )
+              addFragment(
+                R.id.inner_container, SetupMyWebsiteStep3Fragment.newInstance(
+                  Bundle().apply {
+                    putString(IntentConstant.DESKTOP_PREVIEW.name, desktopPreview)
+                    putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
+                    putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+                    putString(IntentConstant.CATEGORY_SUGG_UI.name, categoryLiveName)
+                    putString(IntentConstant.SUB_CATEGORY_ID.name, subCategoryID)
+                    putSerializable(IntentConstant.CATEGORY_DATA.name, categoryModel)
+                    putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent ?: false)
+                    putString(IntentConstant.SIGNUP_TYPE.name, selectedType)
+                    putString(
+                      IntentConstant.EXTRA_BUSINESS_NAME.name,
+                      binding.businessNameInputLayout.etInput.text.toString()
+                    )
+                  }), true
+              )
+            }else{
+              showShortToast(getString(R.string.select_type))
+            }
+          } else {
+            showShortToast(getString(R.string.businessname_special_characters_invalid_toast))
+          }
+        } else {
+          showShortToast(getString(R.string.businessname_digits_invalid_toast))
+        }
+      } else {
+        showShortToast(getString(R.string.businessname_format_invalid_toast))
+      }
     }
 
     binding?.businessNameInputLayout?.etInput?.afterTextChanged {
@@ -131,4 +175,63 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
     binding?.businessNameInputLayout?.etInput?.run { baseActivity.showKeyBoard(this) }
   }
 
+  private fun validateBusinessName(bName: String): Boolean {
+    val regex= "^[a-zA-Z0-9*@,.:;#\\-&\\s]*$"
+    val p: Pattern = Pattern.compile(regex)
+    val m: Matcher = p.matcher(bName)
+    return m.matches()
+  }
+
+  private fun checkForConsecutiveDigits(bName: String): Boolean {
+    val digitsArray = bName.replace("[a-zA-Z*@,.:;#\\-&]".toRegex(), " ").replace("\\s+".toRegex(), " ").split(" ")
+
+    var result = true
+    for (element in digitsArray) {
+      if (!element.matches("[0-9]{0,4}".toRegex())){
+        result = false;
+        break
+      }
+    }
+    return result
+  }
+
+  private fun checkForConsecutiveSpecialCharacters(bName: String): Boolean {
+    val specialCharArray = bName.replace("[a-zA-Z0-9]".toRegex(), " ").replace("\\s+".toRegex(), " ").split(" ")
+
+    var result = true
+    for (element in specialCharArray) {
+      if (!element.matches("[*@,.:;#\\-&]{0,3}".toRegex())) {
+        result = false;
+        break
+      }
+    }
+    return result
+  }
+
+  override fun onPause() {
+    super.onPause()
+    val onBoardingParameters = Data()
+    onBoardingParameters.desktopPreview = desktopPreview!!
+    onBoardingParameters.mobilePreview = mobilePreview!!
+    onBoardingParameters.phoneNumber = phoneNumber!!
+    onBoardingParameters.categoryLiveName = categoryLiveName!!
+    onBoardingParameters.subCategoryID = subCategoryID!!
+    onBoardingParameters.selectedCategory = categoryModel.toString()
+    onBoardingParameters.whatsappConsent = whatsappConsent!!
+    onBoardingParameters.businessName = binding?.businessNameInputLayout?.etInput?.text.toString()
+    onBoardingParameters.domainName = ""
+    onBoardingParameters.screen = "One"
+    val onBoardingData = OnBoardingInfo(
+      phoneNumber!!, onBoardingParameters, session?.fPEmail!!,
+      clientId2
+    )
+    viewModel?.storeNewOnBoardingData(onBoardingData)
+      ?.observeOnce(viewLifecycleOwner) {
+        if (it.isSuccess()) {
+          Log.d("KAKAKAKAKAKAKAKAK", "Success")
+        } else {
+          Log.d("KAKAKAKAKAKAKAKAK", "Failure")
+        }
+      }
+  }
 }

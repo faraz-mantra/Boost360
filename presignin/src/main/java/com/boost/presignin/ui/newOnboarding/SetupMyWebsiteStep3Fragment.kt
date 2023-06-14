@@ -23,6 +23,8 @@ import com.boost.presignin.model.authToken.saveAuthTokenData
 import com.boost.presignin.model.business.BusinessCreateRequest
 import com.boost.presignin.model.category.CategoryDataModel
 import com.boost.presignin.model.location.LocationResponse
+import com.boost.presignin.model.onBoardingInfo.Data
+import com.boost.presignin.model.onBoardingInfo.OnBoardingInfo
 import com.boost.presignin.model.onboardingRequest.CategoryFloatsRequest
 import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.onboardingRequest.saveCategoryRequest
@@ -91,6 +93,10 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     arguments?.getString(IntentConstant.EXTRA_BUSINESS_NAME.name)
   }
 
+  private val signupType by lazy {
+    arguments?.getString(IntentConstant.SIGNUP_TYPE.name)
+  }
+
   override fun getLayout(): Int {
     return R.layout.layout_set_up_my_website_step_3
   }
@@ -111,7 +117,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     }
     setOnClickListeners()
     binding?.addressInputLayout?.etInput?.setText(businessName?.replace("\\s+".toRegex(), "")?.lowercase())
-    apiCheckDomain { websiteNameFieldUiVisibility(websiteNameFieldVisibility = 1) }
+    apiCheckDomain { websiteNameFieldUiVisibility(websiteNameFieldVisibility = 0) }
     fetchLocationAndSendWEEvent()
   }
 
@@ -135,13 +141,35 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
   }
 
   private fun setOnClickListeners() {
-    binding?.tvNextStep3?.setOnClickListener {
-      if (binding?.addressInputLayout?.etInput?.text?.trim().toString().validateLetters()) {
-        if (binding?.tvNextStep3?.text == getString(R.string.launch_my_website)) {
-          WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK_NEW_UPPERCASE, CLICK, NO_EVENT_VALUE)
-        }
-        apiCheckDomain { apiHitCreateMerchantProfile() }
-      } else showShortToast(getString(R.string.website_name_format_invalid_toast))
+//    binding?.tvNextStep3?.setOnClickListener {
+//      if (binding?.addressInputLayout?.etInput?.text?.trim().toString().validateLetters()) {
+//        if (binding?.tvNextStep3?.text == getString(R.string.launch_my_website)) {
+//          WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK_NEW_UPPERCASE, CLICK, NO_EVENT_VALUE)
+//        }
+//        apiCheckDomain { apiHitCreateMerchantProfile() }
+//      } else showShortToast(getString(R.string.website_name_format_invalid_toast))
+//    }
+
+    binding.tvNextStep3.setOnClickListener {
+      sendLocationData()
+      addFragment(
+        R.id.inner_container, SetupMyWebsiteStep1Fragment.newInstance(
+          Bundle().apply {
+            putString(IntentConstant.DESKTOP_PREVIEW.name, desktopPreview)
+            putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)
+            putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber)
+            putString(IntentConstant.CATEGORY_SUGG_UI.name, categoryLiveName)
+            putString(IntentConstant.SUB_CATEGORY_ID.name, subCategoryID)
+            putSerializable(IntentConstant.CATEGORY_DATA.name, categoryModel)
+            putBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name, whatsappConsent ?: false)
+            putString(IntentConstant.EXTRA_BUSINESS_NAME.name, businessName)
+            putString(IntentConstant.SIGNUP_TYPE.name, signupType)
+            putString(
+              IntentConstant.BUSINESS_DOMAIN.name,
+              binding.addressInputLayout.etInput.text?.toString() ?: ""
+            )
+          }), true
+      )
     }
 
     binding?.addressInputLayout?.etInput?.afterTextChanged {
@@ -350,5 +378,40 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         }
       }
     }
+  }
+
+  private fun sendLocationData() {
+    if (session?.userLocationIP != null) {
+      val eventValue = HashMap<String, Any>()
+      eventValue["test1"] = session?.userLocationIP!!
+      NFWebEngageController.trackAttribute(eventValue)
+    }
+  }
+
+  override fun onPause() {
+    super.onPause()
+    val onBoardingParameters = Data()
+    onBoardingParameters.desktopPreview = desktopPreview!!
+    onBoardingParameters.mobilePreview = mobilePreview!!
+    onBoardingParameters.phoneNumber = phoneNumber!!
+    onBoardingParameters.categoryLiveName = categoryLiveName!!
+    onBoardingParameters.subCategoryID = subCategoryID!!
+    onBoardingParameters.selectedCategory = categoryModel.toString()
+    onBoardingParameters.whatsappConsent = whatsappConsent!!
+    onBoardingParameters.businessName = businessName!!
+    onBoardingParameters.domainName = ""
+    onBoardingParameters.screen = "Two"
+    val onBoardingData = OnBoardingInfo(
+      phoneNumber!!, onBoardingParameters, session?.fPEmail!!,
+      clientId2
+    )
+    viewModel?.storeNewOnBoardingData(onBoardingData)
+      ?.observeOnce(viewLifecycleOwner) {
+        if (it.isSuccess()) {
+          Log.d("KAKAKAKAKAKAKAKAK", "Success")
+        } else {
+          Log.d("KAKAKAKAKAKAKAKAK", "Failure")
+        }
+      }
   }
 }

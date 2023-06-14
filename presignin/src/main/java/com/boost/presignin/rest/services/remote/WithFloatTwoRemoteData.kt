@@ -6,6 +6,7 @@ import com.boost.presignin.model.fpList.FPListResponse
 import com.boost.presignin.model.fpdetail.UserFpDetailsResponse
 import com.boost.presignin.model.location.LocationResponse
 import com.boost.presignin.model.login.*
+import com.boost.presignin.model.onBoardingInfo.OnBoardingInfo
 import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.userprofile.BusinessProfileResponse
 import com.boost.presignin.model.userprofile.ConnectUserProfileResponse
@@ -123,4 +124,16 @@ interface WithFloatTwoRemoteData {
   fun getVerticalCategories(
     @Path("appExperienceCode") appECode: String?
   ): Observable<Response<Categories>>
+
+  @GET(EndPoints.GET_STORED_DATA)
+  fun getOnBoardingData(
+    @Query("mobilenumber") mobileNumber: String?,
+    @Query("clientId") client_id: String?
+  ): Observable<Response<OnBoardingInfo>>
+
+  @Headers("Content-Type: application/json-patch+json")
+  @POST(EndPoints.STORE_ONBOARDING_DATA)
+  fun storeOnBoardingData(
+    @Body onBoardingData: OnBoardingInfo
+  ): Observable<Response<String?>>
 }

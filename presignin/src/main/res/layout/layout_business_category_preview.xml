@@ -160,7 +160,7 @@
     <com.framework.views.customViews.CustomMaterialButton
       android:id="@+id/tv_next_step"
       style="@style/yellow_squared_button"
-      android:text="@string/next"
+      android:text="Launch my website"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />

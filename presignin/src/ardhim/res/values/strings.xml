@@ -6,4 +6,9 @@
     <string name="new_into_4_title">Collect payments with multiple payment methods</string>
     <string name="use_your_phone_number_to_login">You can use your phone number to login or sign up to Ardhim Biz</string>
     <string name="psn_login_to_boost_360">Login to Ardhim Biz</string>
+    <string name="login_with_other_number">Login with other number</string>
+    <string name="businessname_format_invalid_toast">Business name should contain only alphabets, digits &amp; these only. No special characters and symbols allowed!</string>
+    <string name="businessname_digits_invalid_toast">Business name should not contain more that four digits continuously!</string>
+    <string name="businessname_special_characters_invalid_toast">Business name should not contain more that three special characters continuously!</string>
+    <string name="select_type">Select the type</string>
 </resources>

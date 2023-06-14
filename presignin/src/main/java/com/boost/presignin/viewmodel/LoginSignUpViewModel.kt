@@ -8,6 +8,7 @@ import com.boost.presignin.model.activatepurchase.ActivatePurchasedOrderRequest
 import com.boost.presignin.model.business.BusinessCreateRequest
 import com.boost.presignin.model.login.ForgotPassRequest
 import com.boost.presignin.model.login.UserProfileVerificationRequest
+import com.boost.presignin.model.onBoardingInfo.OnBoardingInfo
 import com.boost.presignin.model.onboardingRequest.CreateProfileRequest
 import com.boost.presignin.model.verification.RequestValidateEmail
 import com.boost.presignin.model.verification.RequestValidatePhone
@@ -109,5 +110,13 @@ class LoginSignUpViewModel : BaseViewModel() {
 
   fun verifyUserProfileVertical(request: UserProfileVerificationRequest): LiveData<BaseResponse> {
     return WithFloatTwoRepository.verifyUserProfileVertical(request).toLiveData()
+  }
+
+  fun getNewOnBoardingData(phoneNumber: String, clientId:String): LiveData<BaseResponse>  {
+    return WithFloatTwoRepository.getOnBoardingData(phoneNumber,clientId).toLiveData()
+  }
+
+  fun storeNewOnBoardingData(onBoardingData: OnBoardingInfo): LiveData<BaseResponse>  {
+    return WithFloatTwoRepository.storeNewOnBoardingData(onBoardingData).toLiveData()
   }
 }

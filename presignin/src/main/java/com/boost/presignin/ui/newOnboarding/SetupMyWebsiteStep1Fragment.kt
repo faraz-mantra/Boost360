@@ -68,6 +68,9 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
     arguments?.getBoolean(IntentConstant.WHATSAPP_CONSENT_FLAG.name)
   }
 
+  private val signupType by lazy {
+    arguments?.getString(IntentConstant.SIGNUP_TYPE.name)
+  }
 
   override fun getLayout(): Int {
     return R.layout.layout_set_up_my_website_step_1
@@ -113,18 +116,18 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
       "checkkinn" -> "HOT"
       else -> "MFG"
     }
-    if (appExerienceCode=="DOC"){
+    if (appExerienceCode == "DOC") {
       showProgress("Please wait ...")
-      viewModel?.getVerticalCategories(appExerienceCode)?.observeOnce(viewLifecycleOwner) { it0 ->
+      viewModel?.getVerticalCategories(signupType)?.observeOnce(viewLifecycleOwner) { it0 ->
         val response = it0.anyResponse as? List<CategoriesItem>
         val categoryListTemp = ArrayList<CategoryDataModel>()
         if (it0.isSuccess() && response.isNullOrEmpty().not()) {
           val mainCategories = response?.filter { it -> it.info != null }
           mainCategories?.forEach { it ->
             val categoryItem = CategoryDataModel(
-              experience_code = "DOC",
-              webTemplateId = webTemplateIds["DOC"],
-              category_key = primaryCategories["DOC"],
+              experience_code = signupType,
+              webTemplateId = webTemplateIds[signupType],
+              category_key = primaryCategories[signupType],
               category_Name = it.name,
               category_descriptor = "",
               icon = it.info.icon,
@@ -133,31 +136,13 @@ class SetupMyWebsiteStep1Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep1Bin
             categoryListTemp.add(categoryItem)
           }
         }
-        viewModel?.getVerticalCategories("HOS")?.observeOnce(viewLifecycleOwner) { it0 ->
-          val response = it0.anyResponse as? List<CategoriesItem>
-          if (it0.isSuccess() && response.isNullOrEmpty().not()) {
-            val mainCategories = response?.filter { it -> it.info != null }
-            mainCategories?.forEach { it ->
-              val categoryItem = CategoryDataModel(
-                experience_code = "HOS",
-                webTemplateId = webTemplateIds["HOS"],
-                category_key = primaryCategories["HOS"],
-                category_Name = it.name,
-                category_descriptor = "",
-                icon = it.info.icon,
-                sections = null,
-              )
-              categoryListTemp.add(categoryItem)
-            }
-          }
-          hideProgress()
-          categoryList = ArrayList(categoryListTemp.map {
-            it.recyclerViewItem = RecyclerViewItemType.CATEGORY_ITEM_OV2.getLayout();it
-          })
-          categoryNoDataList =
-            ArrayList(categoryList.filter { (it.experience_code == "RTL" || it.experience_code == "SVC") })
-          adapterCategoryLocal?.notify(categoryList)
-        }
+        hideProgress()
+        categoryList = ArrayList(categoryListTemp.map {
+          it.recyclerViewItem = RecyclerViewItemType.CATEGORY_ITEM_OV2.getLayout();it
+        })
+        categoryNoDataList =
+          ArrayList(categoryList.filter { (it.experience_code == "RTL" || it.experience_code == "SVC") })
+        adapterCategoryLocal?.notify(categoryList)
       }
     }else{
       showProgress("Please wait ...")

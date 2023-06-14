@@ -15,10 +15,52 @@
       android:background="@color/white_F5F8FD">
 
       <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_category"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_12"
+          android:fontFamily="@font/semi_bold"
+          android:text="Signing up as"
+          android:textAlignment="gravity"
+          android:textColor="@color/black_4a4a4a"
+          android:textSize="@dimen/text_20"
+          android:visibility="gone"
+          app:layout_constraintEnd_toStartOf="@id/endGuide"
+          app:layout_constraintStart_toEndOf="@id/startGuide"
+          app:layout_constraintTop_toTopOf="parent" />
+
+      <RadioGroup
+          android:id="@+id/categoryRGroup"
+          android:layout_width="0dp"
+          android:visibility="gone"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          app:layout_constraintEnd_toStartOf="@id/endGuide"
+          app:layout_constraintStart_toEndOf="@id/startGuide"
+          app:layout_constraintTop_toBottomOf="@+id/tv_category">
+
+        <RadioButton
+            android:id="@+id/single"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:tag="DOC"
+            android:text="Single practitioner clinic" />
+
+        <RadioButton
+            android:id="@+id/multiple"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:tag="HOS"
+            android:text="Multi-speciality hospital" />
+
+      </RadioGroup>
+      <com.framework.views.customViews.CustomTextView
         android:id="@+id/tv_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_12"
         android:fontFamily="@font/semi_bold"
         android:gravity="start"
         android:text="@string/what_is_the_name_of_your_business"
@@ -27,7 +69,7 @@
         android:textSize="@dimen/text_18"
         app:layout_constraintEnd_toStartOf="@id/endGuide"
         app:layout_constraintStart_toEndOf="@id/startGuide"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/categoryRGroup"/>
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/tv_subtitle"
@@ -62,7 +104,7 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/endGuide"
-        app:layout_constraintHeight_percent="0.5"
+        app:layout_constraintHeight_percent="0.45"
         app:layout_constraintStart_toStartOf="@+id/startGuide"
         app:layout_constraintTop_toBottomOf="@+id/business_name_input_layout"
         app:layout_constraintVertical_bias="1.0" />

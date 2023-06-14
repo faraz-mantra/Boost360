@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.appservice.base.AppBaseFragment
 import com.boost.presignin.R
@@ -37,7 +39,9 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
 
   private val TAG = "EnterPhoneFragment"
   private val NUMBER_PICKER_RC = 100
-
+  var callIconItem: ImageView? = null
+  var helpTextItem: TextView? = null
+  var menuItem: MenuItem? = null
   companion object {
     @JvmStatic
     fun newInstance(bundle: Bundle? = null): EnterPhoneFragment {
@@ -80,23 +84,23 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
 
 
   private fun sendOtp(phoneNumber: String?) {
-//    startFragmentFromNewOnBoardingActivity(
-//      activity = baseActivity, type = FragmentType.VERIFY_PHONE_FRAGMENT,
-//      bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }
-//    )
+    startFragmentFromNewOnBoardingActivity(
+      activity = baseActivity, type = FragmentType.VERIFY_PHONE_FRAGMENT,
+      bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }
+    )
 
-    WebEngageController.trackEvent(PS_LOGIN_NUMBER_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
-    baseActivity.hideKeyBoard()
-    showProgress(getString(R.string.sending_otp))
-    viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner) {
-      if (it.isSuccess() && it.parseResponse()) {
-        startFragmentFromNewOnBoardingActivity(
-          activity = baseActivity, type = FragmentType.VERIFY_PHONE_FRAGMENT,
-          bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }
-        )
-      } else showShortToast(if (it.message.isNullOrEmpty().not()) it.message else getString(R.string.otp_not_sent))
-      hideProgress()
-    }
+//    WebEngageController.trackEvent(PS_LOGIN_NUMBER_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
+//    baseActivity.hideKeyBoard()
+//    showProgress(getString(R.string.sending_otp))
+//    viewModel?.sendOtpIndia(phoneNumber?.toLong(), clientId)?.observeOnce(viewLifecycleOwner) {
+//      if (it.isSuccess() && it.parseResponse()) {
+//        startFragmentFromNewOnBoardingActivity(
+//          activity = baseActivity, type = FragmentType.VERIFY_PHONE_FRAGMENT,
+//          bundle = Bundle().apply { putString(IntentConstant.EXTRA_PHONE_NUMBER.name, phoneNumber) }
+//        )
+//      } else showShortToast(if (it.message.isNullOrEmpty().not()) it.message else getString(R.string.otp_not_sent))
+//      hideProgress()
+//    }
   }
 
 
@@ -126,7 +130,7 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
 
 
   private fun initUI() {
-    initTncString()
+//    initTncString()
     if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
       binding.tvLoginWithEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
       binding.tvRequestOtp.backgroundTintList= ContextCompat.getColorStateList(context!!, R.color.disable_enable_button_selector)
@@ -134,22 +138,31 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
   }
 
   private fun setOnListeners() {
-    binding?.phoneEt?.afterTextChanged { binding?.tvRequestOtp?.isEnabled = it.isPhoneValid() }
+    binding.phoneEt.afterTextChanged {
+      if (it.length == 10){
+        callIconItem?.setPadding(0,0,0,0)
+        helpTextItem?.visibility = View.VISIBLE
+      }else{
+        callIconItem?.setPadding(0,0,66,0)
+        helpTextItem?.visibility = View.GONE
+      }
+      binding.tvRequestOtp.isEnabled = it.isPhoneValid()
+    }
   }
 
-  private fun initTncString() {
-    binding.acceptTncPhone.text = fromHtml("${getString(R.string.enter_phone_t_n_c)} <b><u><font color=#001D85>Terms of Use</font></u></b> and <b><u><font color=#001D85>Privacy Policy</font></u></b>")
-    binding.acceptTncPhone.makeLinks(
-      Pair("Terms of Use", View.OnClickListener {
-        WebEngageController.trackEvent(BOOST_360_TERMS_CLICK, CLICKED, NO_EVENT_VALUE)
-        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.terms_of_use))
-      }),
-      Pair("Privacy Policy", View.OnClickListener {
-        WebEngageController.trackEvent(BOOST_360_CONDITIONS_CLICK, CLICKED, NO_EVENT_VALUE)
-        openTNCDialog("https://www.getboost360.com/privacy?src=android&stage=presignup", resources.getString(R.string.privacy_policy))
-      })
-    )
-  }
+//  private fun initTncString() {
+//    binding.acceptTncPhone.text = fromHtml("${getString(R.string.enter_phone_t_n_c)} <b><u><font color=#001D85>Terms of Use</font></u></b> and <b><u><font color=#001D85>Privacy Policy</font></u></b>")
+//    binding.acceptTncPhone.makeLinks(
+//      Pair("Terms of Use", View.OnClickListener {
+//        WebEngageController.trackEvent(BOOST_360_TERMS_CLICK, CLICKED, NO_EVENT_VALUE)
+//        openTNCDialog("https://www.getboost360.com/tnc?src=android&stage=presignup", resources.getString(R.string.terms_of_use))
+//      }),
+//      Pair("Privacy Policy", View.OnClickListener {
+//        WebEngageController.trackEvent(BOOST_360_CONDITIONS_CLICK, CLICKED, NO_EVENT_VALUE)
+//        openTNCDialog("https://www.getboost360.com/privacy?src=android&stage=presignup", resources.getString(R.string.privacy_policy))
+//      })
+//    )
+//  }
 
   private fun openTNCDialog(url: String, title: String) {
     val webViewDialog = WebViewDialog()
@@ -161,12 +174,14 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.menu_help_setup_my_website, menu)
-    val menuItem: MenuItem? = menu.findItem(R.id.help_new)
-    val menuLabel = menuItem?.actionView?.findViewById<CustomTextView>(R.id.help_label)
+    menuItem = menu.findItem(R.id.help_new)
+    callIconItem = menuItem?.actionView?.findViewById(R.id.helpCall) as ImageView
+    helpTextItem = menuItem?.actionView?.findViewById(R.id.helpLabel) as TextView
     if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
-      menuLabel?.setTextColor(ContextCompat.getColorStateList(context!!, R.color.buttonTint))
+      helpTextItem?.setTextColor(ContextCompat.getColorStateList(context!!, R.color.buttonTint))
     }
-    menuItem?.actionView?.setOnClickListener { menu.performIdentifierAction(menuItem.itemId, 0) }
+    helpTextItem?.visibility = View.GONE
+    menuItem?.actionView?.setOnClickListener { menu.performIdentifierAction(menuItem!!.itemId, 0) }
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
