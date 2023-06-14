@@ -9,6 +9,6 @@
     <color name="live_red">#FF3144</color>
     <color name="ButtoncolorAccent">@color/colorAccentLight</color>
     <color name="button_color_dark_gradient_1">#FF012F6B</color>
-    <color name="button_color_dark_gradient_2">#FF3F5ECD</color>
+    <color name="button_color_dark_gradient_2">#FF054DB6</color>
 
 </resources>
