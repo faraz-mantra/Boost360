@@ -3,8 +3,6 @@ package com.onboarding.nowfloats.ui.updateChannel.digitalChannel
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import com.framework.analytics.SentryController
 import com.framework.base.BaseDialogFragment
 import com.framework.extensions.gone
 import com.framework.extensions.underlineText
@@ -21,6 +19,7 @@ import com.onboarding.nowfloats.databinding.DialogDigitalChannelInfoBinding
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
+import com.onboarding.nowfloats.utils.openChannelFacebookPage
 
 class DigitalChannelInfoDialog :
   BaseDialogFragment<DialogDigitalChannelInfoBinding, BaseViewModel>() {
@@ -125,26 +124,29 @@ class DigitalChannelInfoDialog :
 
   private fun openBrowser() {
     var url: String? = null
+    var openWebView = true
     if (channelModel != null) {
       if (channelModel!!.isTwitterChannel() && channelModel?.channelAccessToken?.userAccountName.isNullOrEmpty()
           .not()
       ) {
         url = "https://twitter.com/${channelModel?.channelAccessToken?.userAccountName?.trim()}"
-      } else if (channelModel!!.isFacebookPage() && channelModel?.channelAccessToken?.userAccountId.isNullOrEmpty()
-          .not()
-      ) {
+      } else if (channelModel!!.isFacebookPage() && channelModel?.channelAccessToken?.userAccountId.isNullOrEmpty().not()) {
+        openWebView = false
         url = "https://www.facebook.com/${channelModel?.channelAccessToken?.userAccountId}"
-      } else if (channelModel!!.isGoogleSearch() && channelModel?.websiteUrl.isNullOrEmpty()
-          .not()
-      ) {
+        val pageURL = "https://www.facebook.com/${channelModel?.channelAccessToken?.userAccountId}"
+        val pageIdURI = "fb://page/${channelModel?.channelAccessToken?.userAccountId}"
+        openChannelFacebookPage(baseActivity, pageURL = pageURL, pageIdURI = pageIdURI)
+      } else if (channelModel!!.isGoogleSearch() && channelModel?.websiteUrl.isNullOrEmpty().not()) {
         url = channelModel?.websiteUrl
       }
     }
-    url?.let {
-      val bundle = Bundle()
-      bundle.putString(IntentConstant.DOMAIN_URL.name, url)
-      navigator?.startActivity(WebViewActivity::class.java, bundle)
-      this.dismiss()
+    if (openWebView) {
+      url?.let {
+        val bundle = Bundle()
+        bundle.putString(IntentConstant.DOMAIN_URL.name, url)
+        navigator?.startActivity(WebViewActivity::class.java, bundle)
+        this.dismiss()
+      }
     }
   }
 
