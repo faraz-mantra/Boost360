@@ -517,9 +517,10 @@ fun AppCompatActivity.startEcommerceAppointmentSetting(session: UserSessionManag
   try {
     val type = if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
       com.appservice.constant.FragmentType.APPOINTMENT_SETTINGS
-    } else {
+    } else if (session?.isSelfBrandedKycAdd == true) {
       com.appservice.constant.FragmentType.ECOMMERCE_SETTINGS
-    }
+    } else com.appservice.constant.FragmentType.ECOMMERCE_BUSINESS_VERIFICATION
+
     startFragmentActivity(type)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()

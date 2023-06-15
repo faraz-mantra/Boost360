@@ -231,7 +231,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.client_logos_d -> baseActivity.startAddImageGallery(session, false)
     ManageBusinessData.BusinessType.ria_digital_assistant -> session?.let { baseActivity.startHelpAndSupportActivity(it) }
     ManageBusinessData.BusinessType.custom_payment_gateway -> baseActivity.startSelfBrandedGateway(session)
-    ManageBusinessData.BusinessType.business_kyc_verification -> baseActivity.startBusinessKycBoost(session)
+    ManageBusinessData.BusinessType.business_kyc_verification -> baseActivity.startEcommerceAppointmentSetting(session)
     ManageBusinessData.BusinessType.my_bank_account -> baseActivity.startMyBankAccount(session)
     ManageBusinessData.BusinessType.ic_digital_brochures -> baseActivity.startListDigitalBrochure(session)
     ManageBusinessData.BusinessType.places_look_around_d -> baseActivity.startNearByView(session)

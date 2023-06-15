@@ -215,7 +215,7 @@ class MoreFragment : AppBaseFragment<FragmentMoreBinding, DashboardViewModel>(),
 
   private fun clickUsefulButton(type: UsefulLinksItem.IconType) {
     when (type) {
-      UsefulLinksItem.IconType.business_kyc -> baseActivity.startBusinessKycBoost(session)
+      UsefulLinksItem.IconType.business_kyc -> baseActivity.startEcommerceAppointmentSetting(session)
       UsefulLinksItem.IconType.boost_extension -> baseActivity.startBoostExtension(session)
       UsefulLinksItem.IconType.boost_academy -> showShortToast("Coming soon.")
       UsefulLinksItem.IconType.boost_keyboard -> baseActivity.startKeyboardActivity(session!!)
