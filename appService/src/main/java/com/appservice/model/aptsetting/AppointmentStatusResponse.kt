@@ -229,9 +229,9 @@ data class CatalogSetup(
   }
 
   fun getSubtitle(): Spanned? {
-    val s = UserSessionManager(BaseApplication.instance)
+    val session = UserSessionManager(BaseApplication.instance)
 
-    return fromHtml("Tax slab: <i><b>${if ((this.isDefaultGSTSlabSelected == false && this.defaultGSTSlab == null).not()|| isDoctorClinicProfile(s.fP_AppExperienceCode)) "${this.getGstSlabInt()}%" else "<font color='#${getColorString()}'>Not selected</font>"}</b></i>")
+    return fromHtml("Tax slab: <i><b>${if(isDoctorClinicProfile(session.fP_AppExperienceCode)) "Not Applicable" else if ((this.isDefaultGSTSlabSelected == false && this.defaultGSTSlab == null).not()) "${this.getGstSlabInt()}%" else "<font color='#${getColorString()}'>Not selected</font>"}</b></i>")
   }
 
   fun isEmptyData(): Boolean {
