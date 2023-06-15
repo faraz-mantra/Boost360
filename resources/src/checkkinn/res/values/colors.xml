@@ -6,4 +6,5 @@
     <color name="bg_dark_grey">#FFB800</color>
     <color name="accent_lemon">#FFF3E9</color>
     <color name="light_shade_secondary">#FFF3E9</color>
+    <color name="gray_white_text_jio">@color/white</color>
 </resources>
