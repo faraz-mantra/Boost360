@@ -156,7 +156,8 @@ class EditDoctorsDetailsFragment : AppBaseFragment<FragmentEditDoctorInfoBinding
     super.onClick(v)
     when (v) {
       binding?.imageAddBtn, binding?.changeImage -> {
-        isSignatureSelection = false;openImagePicker()
+        isSignatureSelection = false;
+        openImagePicker()
       }
       binding?.rlConsultationHour -> {
         consultationHourFragment()

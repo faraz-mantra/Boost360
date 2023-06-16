@@ -67,17 +67,6 @@ class OrderConfirmationViewModel : ViewModel() {
                 }
               }
 
-//              val bookingRequest = DomainBookingRequest(
-//                domainOrderType,
-//                0,
-//                clientid,
-//                1,
-//                domainName,
-//                domainType,
-//                fpTag!!,
-//                validityInYears
-//              )
-
               val auth = UserSessionManager(activity.applicationContext).getAccessTokenAuth()?.barrierToken() ?: ""
               CompositeDisposable().add(
                 ApiService.buyDomainBooking1(auth,domainName,2,

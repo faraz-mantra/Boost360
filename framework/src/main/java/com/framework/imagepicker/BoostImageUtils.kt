@@ -41,7 +41,11 @@ object BoostImageUtils {
     }
 
     fun isImageGalleryValid(activity: Activity, imgFile: File): String {
-        if ((imgFile.extension.equals("JPEG", ignoreCase = true) ||
+        if (imgFile.path == "higher") {
+            return "Image is greater than 5 MB"
+        } else if (imgFile.path == "invalidFile") {
+            return "Invalid Image type!!"
+        } else if ((imgFile.extension.equals("JPEG", ignoreCase = true) ||
                     imgFile.extension.equals("JPG", ignoreCase = true) ||
                     imgFile.extension.equals("PNG", ignoreCase = true)
                     ).not()) {
@@ -61,10 +65,6 @@ object BoostImageUtils {
 
         val file_size: Int = (imgFile.length() / 1024).toString().toInt()
         Log.i("savedImageSize->", file_size.toString())
-
-        if ((imgFile.sizeInMb <= 5).not()) {
-            return activity.getString(R.string.image_cannot_be_bigger_that_5_mb)
-        }
 
         return ""
     }

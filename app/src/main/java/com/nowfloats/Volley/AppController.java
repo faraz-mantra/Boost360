@@ -21,6 +21,7 @@ import com.boost.dbcenterapi.DBCenterAPIApplication;
 import com.boost.marketplace.MarketplaceApplication;
 import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignup.locale.LocaleManager;
+import com.clevertap.android.sdk.ActivityLifecycleCallback;
 import com.clevertap.android.sdk.CleverTapAPI;
 import com.dashboard.AppDashboardApplication;
 import com.facebook.FacebookSdk;
@@ -122,6 +123,7 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
 
     @Override
     public void onCreate() {
+        ActivityLifecycleCallback.register(this);
         super.onCreate();
 //        SmartLookController.initiateSmartLook(this.getString(R.string.samrt_look_api_key));
         FirebaseApp.initializeApp(this.getApplicationContext());
@@ -147,7 +149,7 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
         MarketplaceApplication.instance = this;
         MarketplaceApplication.initModule(this);
         initWebEngage();
-        initCleverTap();
+//        initCleverTap();
         UserExperiorController.INSTANCE.startRecording(this);
 
         //Invite Referral
@@ -217,11 +219,11 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
         registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this, webEngageConfig));
     }
 
-    void initCleverTap() {
-        //Set Debug level for CleverTap
-        CleverTapAPI.setDebugLevel(VERBOSE);
-        clevertapDefaultInstance = CleverTapAPI.getDefaultInstance(getApplicationContext());
-    }
+//    void initCleverTap() {
+//        //Set Debug level for CleverTap
+//        CleverTapAPI.setDebugLevel(VERBOSE);
+//        clevertapDefaultInstance = CleverTapAPI.getDefaultInstance(getApplicationContext());
+//    }
 
     @SuppressWarnings({"unused"})
     public enum LogLevel {

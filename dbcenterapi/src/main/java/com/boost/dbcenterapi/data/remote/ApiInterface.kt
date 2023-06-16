@@ -5,6 +5,7 @@ import com.boost.dbcenterapi.data.api_model.GetPaymentLink.PaymentLink
 import com.boost.dbcenterapi.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
 import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentPriorityEmailRequestBody
 import com.boost.dbcenterapi.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
+import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.CreatePurchaseOrderV12
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.dbcenterapi.data.api_model.RazorpayToken.RazorpayTokenResponse
@@ -49,8 +50,8 @@ interface ApiInterface {
 //    fun CreatePurchaseOrder(@Body createPurchaseOrderRequest: CreatePurchaseOrderRequest): Observable<CreatePurchaseOrderResponse>
 
   @Headers("Content-Type: application/json")
-  @POST("https://api2.withfloats.com/Payment/v10/floatingpoint/CreatePurchaseOrder")
-  fun CreatePurchaseOrder(@Header("Authorization") auth: String, @Body createPurchaseOrderV2: CreatePurchaseOrderV2): Observable<CreatePurchaseOrderResponse>
+  @POST("https://api2.withfloats.com/Payment/v12/floatingpoint/CreatePurchaseOrder")
+  fun CreatePurchaseOrder(@Header("Authorization") auth: String, @Body createPurchaseOrderV12: CreatePurchaseOrderV12): Observable<CreatePurchaseOrderResponse>
 
   @Headers("Content-Type: application/json")
   @POST("https://api2.withfloats.com/Payment/v11/floatingpoint/CreatePurchaseOrder")
@@ -149,7 +150,7 @@ interface ApiInterface {
   ):Observable<PaymentLink>
 
   @Headers("Content-Type: application/json")
-  @POST("https://api.withfloats.com/payment/v1/floatingpoint/markOrderForAutoRenewal")
+  @POST("https://api.withfloats.com/payment/v2/floatingpoint/markOrderForAutoRenewal")
   fun MarkOrderForAutoRenewal(
     @Header("Authorization") auth: String,
     @Body request: OrderAutoRenewRequest

@@ -28,6 +28,7 @@ import com.framework.utils.zoom
 import com.framework.webengageconstant.ADDED
 import com.framework.webengageconstant.BACKGROUND_IMAGE_CROP_LOAD
 import com.framework.webengageconstant.GALLERY_IMAGE_ADDED
+import com.framework.webengageconstant.GALLERY_IMAGE_UPLOADED
 import com.framework.webengageconstant.START_VIEW
 
 class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewModel>() {
@@ -192,6 +193,7 @@ class BGImageCropFragment : AppBaseFragment<FragmentCropZoomBinding, BaseViewMod
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as? List<String>
       if (mPaths.isNullOrEmpty().not()) {
         WebEngageController.trackEvent(GALLERY_IMAGE_ADDED, ADDED, sessionLocal.fpTag)
+        WebEngageController.trackEvent(GALLERY_IMAGE_UPLOADED, ADDED, sessionLocal.fpTag)
         imagePath = mPaths?.get(0)
         setImageOnUi()
       }
