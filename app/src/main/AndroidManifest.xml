@@ -58,9 +58,10 @@
         <meta-data
             android:name="CLEVERTAP_TOKEN"
             android:value="@string/clevertap_token"/>
-        <meta-data
-            android:name="CLEVERTAP_REGION"
-            android:value="in1"/>
+
+<!--        <meta-data-->
+<!--            android:name="CLEVERTAP_REGION"-->
+<!--            android:value="in1"/>-->
 
         <!-- IMPORTANT: To force use Google AD ID to uniquely identify  users, use the following meta tag. GDPR mandates that if you are using this tag, there is prominent disclousure to your end customer in their application. Read more about GDPR here - https://clevertap.com/blog/in-preparation-of-gdpr-compliance/ -->
 <!--        <meta-data-->

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="clevertap_account_id">RZ5-6ZR-Z86Z</string>
-  <string name="clevertap_token">216-512</string>
+  <string name="clevertap_account_id">TEST-ZZ6-6K6-K86Z</string>
+  <string name="clevertap_token">TEST-636-611</string>
+  <string name="clevertap_passcode">GVC-SWY-GIUL</string>
   <string name="clevertap_google_ad_id">1</string>
   <string name="website_domain_name">.nowfloats.com</string>
   <string name="app_name">Healthgro Practice</string>
