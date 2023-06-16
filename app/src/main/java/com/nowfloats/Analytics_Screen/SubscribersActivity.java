@@ -328,13 +328,26 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
       if (!checkIsEmailOrNumber(email.getText().toString().trim())) {
         Toast.makeText(SubscribersActivity.this,"Add a valid email Id", Toast.LENGTH_SHORT).show();
       } else {
-        addSubscriber(email.getText().toString().trim(), subscriberDialog);
+        if(checkIfAlreadySubscribed(email.getText().toString().trim())) {
+          Toast.makeText(SubscribersActivity.this,"User already Subscribed.", Toast.LENGTH_SHORT).show();
+        } else {
+          addSubscriber(email.getText().toString().trim(), subscriberDialog);
+        }
       }
     });
 
     cancelBtn.setOnClickListener(view1 -> subscriberDialog.dismiss());
 
     subscriberDialog.show();
+  }
+
+  private boolean checkIfAlreadySubscribed(String email) {
+    for (SubscriberModel subscriberModel : mSubscriberList) {
+      if (subscriberModel.getUserMobile().equals(email)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   @Override
