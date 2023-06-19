@@ -606,18 +606,31 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
-      val mPaths = (data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as? List<String>) ?: listOf()
+      val mPaths =
+        (data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as? List<String>) ?: listOf()
       if (mPaths.isNotEmpty()) {
-        productImage = File(mPaths[0])
-        binding.imageAddBtn.gone()
-        binding.clearImage.visible()
-        binding.productImg?.visible()
+        val pathImage = mPaths[0];
+        if (pathImage.contains(ImagePicker.Extension.GIF.value) || pathImage.contains(ImagePicker.Extension.PNG.value) || pathImage.contains(ImagePicker.Extension.JPG.value)){
+         productImage = File(pathImage)
+         binding.imageAddBtn.gone()
+         binding.clearImage.visible()
+         binding.productImg?.visible()
         if (productImage?.getExtension()?.contains("gif", true) == true) {
-          binding.productImg?.let { ImageService(requireContext()).loadGif(it, productImage!!, R.drawable.placeholder_image_n, {}, {}) }
+          binding.productImg?.let {
+            ImageService(requireContext()).loadGif(
+              it,
+              productImage!!,
+              R.drawable.placeholder_image_n,
+              {},
+              {})
+          }
         } else {
           productImage?.getBitmap()?.let { binding.productImg?.setImageBitmap(it) }
         }
-      }
+      }else {
+          showShortToast(getString(R.string.image_format_is_not_supported_please_use_jpeg_jpg_or_png_or_gif))
+        }
+    }
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == RC_PRODCUT_INFO) {
       product = data?.getSerializableExtra(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct
       secondaryImage = (data?.getSerializableExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>) ?: ArrayList()

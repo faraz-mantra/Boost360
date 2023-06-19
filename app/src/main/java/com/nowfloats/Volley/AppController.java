@@ -217,12 +217,11 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
         registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this, webEngageConfig));
     }
 
-//    void initCleverTap() {
-//        //Set Debug level for CleverTap
-//        CleverTapAPI.setDebugLevel(VERBOSE);
-//
-//        clevertapDefaultInstance = CleverTapAPI.getDefaultInstance(getApplicationContext());
-//    }
+    void initCleverTap() {
+        //Set Debug level for CleverTap
+        CleverTapAPI.setDebugLevel(VERBOSE);
+        clevertapDefaultInstance = CleverTapAPI.getDefaultInstance(getApplicationContext());
+    }
 
     @SuppressWarnings({"unused"})
     public enum LogLevel {

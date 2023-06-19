@@ -56,6 +56,8 @@ import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.ExtendedProperty
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.PrimaryImage
+import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.CreatePurchaseOrderV12
+import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.PrePostPurchase
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.*
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.dbcenterapi.data.api_model.couponRequest.BulkPropertySegment
@@ -121,6 +123,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
     lateinit var renewalList: List<RenewalResult>
 
     var bundles_in_cart = false
+    var incrementDecrementClicked = false
     var default_validity_months = 1
     var package_validity_months = 1
 
@@ -1016,6 +1019,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         totalValidityDays = 30 * 1
         prefs.storeMonthsValidity(totalValidityDays)
         months_validity_edit_inc.setOnClickListener {
+            if ((prefs.getYearPricing() && default_validity_months == 5) || (!prefs.getYearPricing() && default_validity_months == 60)) {
+                return@setOnClickListener
+            }
             if (!bundles_in_cart) {
 //                if (default_validity_months < 12){
 //                    default_validity_months++
@@ -1069,7 +1075,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 Log.v("cart_amount_value1", " " + total)
                 //clear previous coupon
                 couponServiceModel = null
+                incrementDecrementClicked = couponCode.isNotEmpty()
                 totalCalculationAfterCoupon()
+                incrementDecrementClicked = false
                 if (couponCode.isNotEmpty())
                     viewModel.getCouponRedeem(
                         RedeemCouponRequest(
@@ -1078,7 +1086,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                             (activity as CartActivity).fpid!!
                         ), couponCode
                     )
-                else {
+                 else {
                     loadOfferCoupons()
                 }
 //                Toasty.success(requireContext(), "Validity increased by 1 month.", Toast.LENGTH_SHORT, true).show()
@@ -1139,7 +1147,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 Log.v("cart_amount_value1", " " + total)
                 //clear previous coupon
                 couponServiceModel = null
+                incrementDecrementClicked = couponCode.isNotEmpty()
                 totalCalculationAfterCoupon()
+                incrementDecrementClicked = false
                 if (couponCode.isNotEmpty())
                     viewModel.getCouponRedeem(
                         RedeemCouponRequest(
@@ -1164,6 +1174,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         }
 
         months_validity_edit_dsc.setOnClickListener {
+            if(default_validity_months == 1) return@setOnClickListener
             if (!bundles_in_cart) {
                 if (default_validity_months > 1) {
 //                    default_validity_months--
@@ -1210,8 +1221,10 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
 
                     //clear previous coupon
                     couponServiceModel = null
+                    incrementDecrementClicked = couponCode.isNotEmpty()
                     totalCalculationAfterCoupon()
-                    if (couponCode.isNotEmpty()) {
+                    incrementDecrementClicked = false
+                    if (couponCode.isNotEmpty())
                         viewModel.getCouponRedeem(
                             RedeemCouponRequest(
                                 coupontotal,
@@ -1219,7 +1232,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                 (activity as CartActivity).fpid!!
                             ), couponCode
                         )
-                    } else {
+                     else {
                         loadOfferCoupons()
                     }
                 }
@@ -1297,7 +1310,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     )
                     //clear previous coupon
                     couponServiceModel = null
+                    incrementDecrementClicked = couponCode.isNotEmpty()
                     totalCalculationAfterCoupon()
+                    incrementDecrementClicked = false
                     if (couponCode.isNotEmpty())
                         viewModel.getCouponRedeem(
                             RedeemCouponRequest(
@@ -1386,7 +1401,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                         prefs.storeMonthsValidity(totalValidityDays)
                         prefs.storeCartOrderInfo(null)
                         prefs.storeAutoRenewSubscriptionID(null)
+                        incrementDecrementClicked = couponCode.isNotEmpty()
                         totalCalculationAfterCoupon()
+                        incrementDecrementClicked = false
                         if (couponCode.isNotEmpty())
                             viewModel.getCouponRedeem(
                                 RedeemCouponRequest(
@@ -1405,7 +1422,9 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                         prefs.storeMonthsValidity(totalValidityDays)
                         prefs.storeCartOrderInfo(null)
                         prefs.storeAutoRenewSubscriptionID(null)
+                        incrementDecrementClicked = couponCode.isNotEmpty()
                         totalCalculationAfterCoupon()
+                        incrementDecrementClicked = false
                         if (couponCode.isNotEmpty())
                             viewModel.getCouponRedeem(
                                 RedeemCouponRequest(
@@ -1671,7 +1690,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                     }
                     Toasty.error(
                         requireContext(),
-                        "Entered Business address is not valid!!",
+                        "Billing address can't be empty!!",
                         Toast.LENGTH_LONG
                     )
                         .show()
@@ -2419,112 +2438,39 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
             couponCode = couponServiceModel!!.coupon_key
             couponDiscountPercentage = couponServiceModel!!.couponDiscountAmt!!
         }
-        val purchaseOrders = ArrayList<PurchaseOrder>()
+        val purchaseOrders = ArrayList<com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.PurchaseOrder>()
+        val prePostPurchase = ArrayList<PrePostPurchase>()
         val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
         if (renewalItems.isNullOrEmpty().not()) {
-            val widgetList = ArrayList<Widget>()
+            val widgetList = ArrayList<String>()
             var netAmount = 0.0
             renewalItems?.forEach { item ->
-                val data = renewalList.firstOrNull { it.widgetId == item.item_id }
                 netAmount += item.price
-
-                var extendPropsRenew: List<ExtendedProperty>? = null
-                var outputExtendedPropsRenew = ArrayList<Property>()
-
-                if (item.extended_properties != null && item.extended_properties!!.length > 0) {
-                    try {
-                        val objectType = object : TypeToken<List<ExtendedProperty>>() {}.type
-                        extendPropsRenew = Gson().fromJson<List<ExtendedProperty>>(
-                            item.extended_properties,
-                            objectType
-                        )
-
-                        if (extendPropsRenew != null) {
-                            for (prop in extendPropsRenew) {
-                                if (prop.key != null && prop.value != null) {
-                                    outputExtendedPropsRenew.add(
-                                        Property(
-                                            Key = prop.key!!,
-                                            Value = prop.value!!
-                                        )
-                                    )
-                                }
-                            }
-                        }
-
-                    } catch (ex: Exception) {
-                        SentryController.captureException(ex)
-                        ex.printStackTrace()
-                    }
-                }
-
-                if (item.feature_code.equals("CALLTRACKER")) {
-                    if (prefs.getSelectedVMNName()
-                            .isNullOrEmpty() && !alreadypurchasedVmnName
-                    ) {
-                        //sending value for pre/post purchase of VMN
-                        if ((prefs.getSelectedVMNName()
-                                .isNullOrEmpty()) && (!alreadypurchasedVmnName)
-                        ) {
-                            outputExtendedPropsRenew.add(
-                                Property(
-                                    Key = "allowPostPurchase",
-                                    Value = if (prefs.getSelectedVMNName()
-                                            .isNullOrEmpty()
-                                    ) "1" else "0"
-                                )
-                            )
-                        }
-                    }
-                }
-
-
-                val widget = Widget(
-                    data?.category
-                        ?: "",
-                    ConsumptionConstraint("DAYS", 30),
-                    "",
-                    item.description_title,
-                    couponDiscountPercent,
-                    Expiry(
+                widgetList.add(item.item_id)
+            }
+            purchaseOrders.add(
+                com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.PurchaseOrder(
+                    null,
+                    couponCode,
+                    couponDiscountPercentage,
+                    com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.Expiry(
                         "MONTHS",
                         Utils.expiryCalculator(
                             default_validity_months,
-                            item.widget_type,
+                            "",
                             requireActivity()
                         )
                     ),
-                    listOf(),
-                    true,
-                    true,
-                    item.item_name
-                        ?: "",
-                    item.price,
-                    item.MRPPrice,
-                    if (outputExtendedPropsRenew.size > 0) outputExtendedPropsRenew else null,
-                    1,
-                    "MONTHLY",
-                    item.feature_code
-                        ?: "",
-                    item.item_id
-                )
-                widgetList.add(widget)
-            }
-            purchaseOrders.add(
-                PurchaseOrder(
-                    couponCode,
-                    couponDiscountPercentage,
-                    null,
+                    widgetList,
                     netAmount,
-                    widgetList
+                    prePostPurchase
                 )
             )
         } else {
-            val featureWidgetList = ArrayList<Widget>()
+            val featureWidgetList = ArrayList<String>()
+            var cartBundle:String? = null
             var featureNetPrice = 0.0
             for (item in cartList) {
-//        val widgetList = ArrayList<Widget>()
-                val bundleWidgetList = ArrayList<Widget>()
                 var extendProps: List<ExtendedProperty>? = null
                 var outputExtendedProps = ArrayList<Property>()
                 var extraPurchaseOrderDetails: ExtraPurchaseOrderDetails? = null
@@ -2560,24 +2506,7 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 totalValidityDays = 30 * default_validity_months
                 prefs.storeMonthsValidity(totalValidityDays)
                 if (item.item_type.equals("features")) {
-                    var mrp_price = item.MRPPrice
-                    val discount = 100 - item.discount
-                    var netPrice = (discount * mrp_price) / 100.0
 
-                    var validity_days = 30
-                    var net_quantity = 1
-//                    if(outputExtendedProps.isNullOrEmpty().not()){
-//                        val actualQuantity = outputExtendedProps.find { it.Key =="LIMIT" }?.Value
-//                        if (actualQuantity.isNullOrEmpty().not()){
-//                            net_quantity = actualQuantity?.toInt()!!
-//                        }
-//                        else{
-//                            net_quantity = 1
-//                        }
-//                    }
-//                    else{
-//                        net_quantity = 1
-//                    }
                     val outputExtendedPropsPostPurchase = ArrayList<Property>()
                     outputExtendedPropsPostPurchase.addAll(outputExtendedProps)
 
@@ -2589,87 +2518,27 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                             if ((prefs.getSelectedVMNName()
                                     .isNullOrEmpty()) && (!alreadypurchasedVmnName)
                             ) {
-                                outputExtendedPropsPostPurchase.add(
-                                    Property(
-                                        Key = "allowPostPurchase",
-                                        Value = if (prefs.getSelectedVMNName()
-                                                .isNullOrEmpty()
-                                        ) "1" else "0"
+                                prePostPurchase.add(
+                                    PrePostPurchase(
+                                        item.item_id,
+                                        listOf(
+                                            com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.Properties(
+                                                Key = "allowPostPurchase",
+                                                Value = if (prefs.getSelectedVMNName()
+                                                        .isNullOrEmpty()
+                                                ) "1" else "0"
+                                            )
+                                        )
                                     )
                                 )
                             }
                         }
                     }
-
-
-                    if (!bundles_in_cart && default_validity_months > 1) {
-                        validity_days = 30 * default_validity_months
-                        totalValidityDays =
-                            monthCalculatorForAddons(validity_days, item.widget_type)
-                        Log.v("totalValidityDays", " " + totalValidityDays)
-                    //    netPrice = netPrice * default_validity_months
-//                        net_quantity =
-//                            monthCalculatorForAddons(default_validity_months, item.widget_type)
-//                        mrp_price = mrp_price * default_validity_months
-                    }
-
-                    //adding widget netprice to featureNetprice to get GrandTotal In netPrice.
-                    featureNetPrice += priceCalculatorForYear(
-                        netPrice*default_validity_months,
-                        item.widget_type,
-                        requireActivity()
-                    )
-
-                    featureWidgetList.add(
-                        Widget(
-                            "",
-                            ConsumptionConstraint(
-                                "DAYS",
-                                30
-                            ),
-                            "",
-                            item.description_title,
-                            couponDiscountPercent,
-                            Expiry(
-                                "MONTHS",
-                                Utils.expiryCalculator(
-                                    default_validity_months,
-                                    item.widget_type,
-                                    requireActivity()
-                                )
-                            ),
-                            listOf(),
-                            true,
-                            true,
-                            item.item_name!!,
-                            netPrice,
-                            mrp_price,
-                            if (outputExtendedPropsPostPurchase.size > 0) outputExtendedPropsPostPurchase else null,
-                            1,
-                            "MONTHLY",
-                            item.feature_code!!,
-                            item.item_id
-                        )
-                    )
+                    featureWidgetList.add(item.item_id)
                 } else if (item.item_type.equals("bundles")) {
                     if (::bundlesList.isInitialized && bundlesList.size > 0) {
                         for (singleBundle in bundlesList) {
-
                             if (singleBundle.bundle_id.equals(item.item_id)) {
-                                val outputBundleProps: ArrayList<Property> = arrayListOf()
-                                outputBundleProps.add(
-                                    Property(
-                                        Key = singleBundle.bundle_id,
-                                        Value = singleBundle.name!!
-                                    )
-                                )
-                                extraPurchaseOrderDetails = ExtraPurchaseOrderDetails(
-                                    null,
-                                    singleBundle.primary_image,
-                                    singleBundle.name,
-                                    outputBundleProps
-                                )
-                                bundleDiscount = singleBundle.overall_discount_percent
                                 val includedFeatures = Gson().fromJson<List<IncludedFeature>>(
                                     singleBundle.included_features,
                                     object : TypeToken<List<IncludedFeature>>() {}.type
@@ -2677,10 +2546,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                 for (singleIndludedFeature in includedFeatures) {
                                     for (singleFeature in featuresList) {
                                         if (singleIndludedFeature.feature_code.equals(singleFeature.feature_code)) {
-
-                                            val outputExtendedPropsPostPurchase = ArrayList<Property>()
-                                            outputExtendedPropsPostPurchase.addAll(outputExtendedProps)
-
                                             if (singleIndludedFeature.feature_code.equals("CALLTRACKER")) {
                                                 if (prefs.getSelectedVMNName()
                                                         .isNullOrEmpty() && !alreadypurchasedVmnName
@@ -2689,161 +2554,76 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                                                     if ((prefs.getSelectedVMNName()
                                                             .isNullOrEmpty()) && (!alreadypurchasedVmnName)
                                                     ) {
-                                                        outputExtendedPropsPostPurchase.add(
-                                                            Property(
-                                                                Key = "allowPostPurchase",
-                                                                Value = if (prefs.getSelectedVMNName()
-                                                                        .isNullOrEmpty()
-                                                                ) "1" else "0"
+                                                        prePostPurchase.add(
+                                                            PrePostPurchase(
+                                                                singleIndludedFeature._kid,
+                                                                listOf(
+                                                                    com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.Properties(
+                                                                        Key = "allowPostPurchase",
+                                                                        Value = if (prefs.getSelectedVMNName()
+                                                                                .isNullOrEmpty()
+                                                                        ) "1" else "0"
+                                                                    )
+                                                                )
                                                             )
                                                         )
                                                     }
                                                 }
                                             }
-
-                                            val netPrice = RootUtil.round(
-                                                ((singleFeature.price - ((singleFeature.price * singleIndludedFeature.feature_price_discount_percent) / 100.0))),
-                                                2
-                                            )
-
-                                            //adding bundle netPrice
-//                      bundleNetPrice += netPrice * singleBundle.min_purchase_months
-
-                                            var singleWidgetNetPrice = 0.0
-                                            singleWidgetNetPrice =
-                                                (netPrice * singleBundle.min_purchase_months).toDouble()
-
-                                            //-----------------------//discount implementation
-                                            if (bundleDiscount > 0) {
-                                                singleWidgetNetPrice = RootUtil.round(
-                                                    singleWidgetNetPrice - ((singleWidgetNetPrice * bundleDiscount) / 100),
-                                                    2
-                                                )
-                                            }
-                                            featureNetPrice += priceCalculatorForYear(
-                                                singleWidgetNetPrice,
-                                                singleFeature.widget_type,
-                                                requireActivity()
-                                            )
-
-//                      bundleWidgetList.add(Widget(
-                                            featureWidgetList.add(
-                                                Widget(
-                                                    "",
-                                                    ConsumptionConstraint(
-                                                        "DAYS",
-                                                        30 * singleBundle.min_purchase_months
-                                                    ),
-                                                    "",
-                                                    singleFeature.description_title,
-                                                    couponDiscountPercent,
-                                                    Expiry(
-                                                        "MONTHS",
-                                                        Utils.expiryCalculator(
-                                                            default_validity_months,
-                                                            item.widget_type,
-                                                            requireActivity()
-                                                        )
-                                                    ),
-                                                    listOf(),
-                                                    true,
-                                                    true,
-                                                    singleFeature.name!!,
-//                          netPrice.toDouble() * singleBundle.min_purchase_months,
-                                                    singleWidgetNetPrice,
-                                                    singleFeature.price.toDouble(),
-                                                    if (outputExtendedPropsPostPurchase.size > 0) outputExtendedPropsPostPurchase else null,
-                                                    1,
-                                                    "MONTHLY",
-                                                    singleFeature.feature_code!!,
-                                                    singleFeature.feature_id
-                                                )
-                                            )
-                                            break
                                         }
                                     }
                                 }
-//                //bundle level discount
-//                if (bundleDiscount > 0) {
-//                  bundleNetPrice = Math.round(bundleNetPrice - ((bundleNetPrice * bundleDiscount) / 100)).toDouble()
-//                }
+
+
+
+                                            cartBundle = singleBundle.bundle_id
                                 break
                             }
                         } //bundle forloop completion
-
-//            purchaseOrders.add(
-//                PurchaseOrder(
-//                    couponCode,
-//                    bundleDiscount, //Discount of the bundle/package/order without tax.
-//                    null, //extraPurchaseOrderDetails,
-//                    bundleNetPrice,
-//                    bundleWidgetList
-//                )
-//            )
-
                     }// bundle end
                 }//bundle type if end
-
-
-//        purchaseOrders.add(
-//            PurchaseOrder(
-//                couponCode,
-//                bundleDiscount, //Discount of the bundle/package/order without tax.
-//                extraPurchaseOrderDetails,
-//                bundleNetPrice,
-//                widgetList
-//            )
-//        )
             }// end of cart item for loop
 
             purchaseOrders.add(
-                PurchaseOrder(
+                com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.PurchaseOrder(
+                    cartBundle,
                     couponCode,
-                    RootUtil.round(couponDiscountPercentage, 2), //showing couponcode percentage
-                    null,
-                    RootUtil.round(featureNetPrice, 2),
-                    featureWidgetList
+                    couponDiscountAmount,
+                    com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.Expiry(
+                        "MONTHS",
+                        Utils.expiryCalculator(
+                            default_validity_months,
+                            "",
+                            requireActivity()
+                        )
+                    ),
+                    featureWidgetList,
+                    RootUtil.round(total,2),
+                    prePostPurchase
                 )
             )
         } // if end of new order
 
-        var keysToBeActivated = ArrayList<String>()
-
-        for (item in purchaseOrders) {
-            if (item.Widgets != null) {
-                for (widget in item.Widgets) {
-                    if (!keysToBeActivated.contains(widget.WidgetKey)) {
-                        keysToBeActivated.add(widget.WidgetKey)
-                    }
-                }
-            }
-        }
-        prefs.storeFeatureKeysInLastOrder(keysToBeActivated.toMutableSet())
         prefs.storeFeaturesCountInLastOrder(purchaseOrders.count())
 
         viewModel.InitiatePurchaseOrder(
             (activity as? CartActivity)?.getAccessToken() ?: "",
-            CreatePurchaseOrderV2(
+            CreatePurchaseOrderV12(
+                (cartStateId ?: ""),
                 (activity as CartActivity).clientid,
                 (activity as CartActivity).fpid!!,
-                PaymentDetails(
+                com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.PaymentDetails(
                     "INR",
-                    RootUtil.round(
-                        couponDiscountPercentage,
-                        2
-                    ), //[Double] Discount Percentage of the the payment(Coupon code discount)
+                    couponDiscountAmount, //[Double] Discount Percentage of the the payment(Coupon code discount)
                     "RAZORPAY",
-                    TaxDetails(
-                        GSTINNumber,
+                    com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.TaxDetails(
                         0,
-                        null,
                         18
                     ),
-                    grandTotal
+                    RootUtil.round(grandTotal,2)
                 ),
                 (if (cartStateId.isNullOrEmpty()) "NEW" else "RENEWAL"),
                 purchaseOrders,
-                (cartStateId ?: "")
             )
         )
     }
@@ -3463,8 +3243,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 } else {
                     loadOfferCoupons()
                 }
-//                totalCalculationAfterCoupon()
-//                loadOfferCoupons()
 
                 event_attributes.put("cart size", it.size.toDouble())
                 cartFullItems.clear()
@@ -4085,13 +3863,6 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
         if (::cartList.isInitialized) {
             total = 0.0
             couponDiscountAmount = 0.0
-            var couponDisount = 0
-//            if (validCouponCode != null) {
-//                couponDisount = validCouponCode!!.discount_percent
-//                coupon_discount_title.text = "Discount(" + couponDisount.toString() + "%)"
-//            } else {
-//                coupon_discount_title.text = "Discount"
-//            }
             if (cartList != null && cartList.size > 0) {
                 for (item in cartList) {
                     if (!bundles_in_cart && item.item_type.equals("features"))
@@ -4125,19 +3896,18 @@ class CartFragment : BaseFragment(), CartFragmentListener, ApplyCouponListener,
                 val temp = (total * 18) / 100
                 taxValue = Math.round(temp * 100) / 100.0
                 grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
-                cart_amount_title.text = "Cart total (" + cartList.size + " items)"
-                cart_amount.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
-                    .format(RootUtil.round((couponDiscountAmount + total + taxValue), 2))
                 coupontotal = total
-                //       igst_value.text = "+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue)
-//                order_total_value.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
-                cart_grand_total.text =
-                    "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
-                footer_grand_total.text =
-                    "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
-                header_grand_total.text =
-                    "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
-
+                if(!incrementDecrementClicked) {
+                    cart_amount_title.text = "Cart total (" + cartList.size + " items)"
+                    cart_amount.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH)
+                        .format(RootUtil.round((couponDiscountAmount + total + taxValue), 2))
+                    cart_grand_total.text =
+                        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
+                    footer_grand_total.text =
+                        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
+                    header_grand_total.text =
+                        "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
+                }
                 val revenue = Math.round(grandTotal * 100).toInt() / 100
                 event_attributes.put("total amount", revenue)
                 event_attributes.put(

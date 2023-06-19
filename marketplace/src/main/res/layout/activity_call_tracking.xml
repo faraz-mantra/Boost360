@@ -195,6 +195,12 @@
                     android:textSize="@dimen/txt_12sp"
                     app:layout_constraintTop_toBottomOf="@id/et_layout" />
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/container_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title">
+
                 <TextView
                     android:id="@+id/tv_available_no"
                     android:layout_width="wrap_content"
@@ -208,8 +214,7 @@
                     android:textFontWeight="600"
                     android:textSize="@dimen/txt_16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_title" />
-
+                    app:layout_constraintTop_toTopOf="parent"/>
                 <TextView
                     android:id="@+id/tv_search_result"
                     android:layout_width="wrap_content"
@@ -225,7 +230,6 @@
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_available_no" />
-
                 <TextView
                     android:id="@+id/tv_other_available_no"
                     android:layout_width="wrap_content"
@@ -241,7 +245,6 @@
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_available_no" />
-
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/card_list_exact_match"
                     android:layout_width="match_parent"
@@ -281,7 +284,6 @@
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/layout_number_list" />
                 </com.google.android.material.card.MaterialCardView>
-
                 <TextView
                     android:id="@+id/tv_search_result_for_related_combination"
                     android:layout_width="wrap_content"
@@ -297,7 +299,6 @@
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/card_list_exact_match" />
-
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/card_list_related"
                     android:layout_width="match_parent"
@@ -318,6 +319,8 @@
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/layout_number_list" />
                 </com.google.android.material.card.MaterialCardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <TextView
                     android:id="@+id/tvSkip"
                     android:layout_width="wrap_content"
@@ -330,10 +333,12 @@
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent1"
                     android:textFontWeight="600"
+                    android:padding="10dp"
                     android:textSize="@dimen/txt_14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/card_list" />
+                    app:layout_constraintTop_toBottomOf="@id/container_list" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
         <com.facebook.shimmer.ShimmerFrameLayout
