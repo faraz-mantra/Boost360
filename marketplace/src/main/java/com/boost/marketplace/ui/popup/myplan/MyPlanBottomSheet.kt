@@ -41,6 +41,7 @@ class MyPlanBottomSheet :
     var fpid: String? = null
     lateinit var prefs: SharedPrefs
     lateinit var featureCode:String
+    var validityInDays:Int? = null
 
     override fun getLayout(): Int {
         return R.layout.bottom_sheet_myplan
@@ -140,7 +141,7 @@ class MyPlanBottomSheet :
                 val actionRequired = it.Result.ActionNeeded.ActionNeeded
                 val featureState = it.Result.FeatureDetails.FeatureState
                 featureCode= it.Result.FeatureDetails.FeatureKey
-
+                validityInDays = it.Result.FeatureDetails.ExtraDetails.ValidityInDays.toInt()
                 featureEdgeCase(actionRequired, featureState,featureCode)
             }
 
@@ -235,6 +236,7 @@ class MyPlanBottomSheet :
         intent.putExtra("email", "ria@nowfloats.com")
         intent.putExtra("mobileNo", "9160004303")
         intent.putExtra("itemId", singleAddon.boost_widget_key)
+        intent.putExtra("validityInDays", validityInDays)
         startActivity(intent)
         dismiss()
     }

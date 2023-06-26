@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/regular"
-        android:text="Basicasdfasdfadfadfadsfasdfadsfasdf"
+        android:text="Online Basic"
         android:textColor="@color/main_color_gray_dk"
         android:textFontWeight="600"
         android:layout_marginStart="5dp"
@@ -32,32 +32,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/packs_image1" />
-
-<!--    <androidx.appcompat.widget.AppCompatTextView-->
-<!--        android:id="@+id/pack_price1"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="9dp"-->
-<!--        android:fontFamily="@font/regular"-->
-<!--        android:text="₹4810.04"-->
-<!--        android:textColor="@color/main_color_gray_dk"-->
-<!--        android:textFontWeight="600"-->
-<!--        android:textSize="12sp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/pack_title1" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/mrpPrice"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="/month"-->
-<!--        android:visibility="gone"-->
-<!--        android:textColor="@color/copy_coupon_text_color"-->
-<!--        android:textFontWeight="400"-->
-<!--        android:textSize="12sp"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/pack_price1"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/pack_price1"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/pack_price1" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

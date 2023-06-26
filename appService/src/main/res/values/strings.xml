@@ -1171,6 +1171,7 @@
     <string name="write_about_your_customer_location_recent_updates_timing_etc">Write about your customer, location, recent updates, timing, etc.</string>
     <string name="add_image_optional">Add image (optional)</string>
     <string name="image_format_is_not_supported_please_use_jpeg_jpg_or_png">Image format is not supported. Please use JPEG, JPG, or PNG</string>
+    <string name="image_format_is_not_supported_please_use_jpeg_jpg_or_png_or_gif">Image format is not supported. Please use JPEG, JPG, PNG or GIF.</string>
     <string name="image_resolution_is_smaller_than_800_x_800_px">Image resolution is smaller than 800 X 800 px</string>
     <string name="image_resolution_is_smaller_than_400_x_400_px">Image resolution is smaller than 400 X 400 px</string>
     <string name="image_file_size_is_bigger_than_2mb">Image file size is bigger than 2MB</string>
@@ -1263,7 +1264,7 @@
     <string name="data_updated_successfully">Data updated successfully</string>
     <string name="please_fill_data_in_the_fields_highlighted_in_red">Please fill data in the fields highlighted in red</string>
     <string name="please_fill_valid_dates">Please fill valid dates. End time cannot be equal or before start Time !</string>
-
+    <string name="please_fill_all_mandatory_field_before_logging_out">Please fill all mandatory fields before logging out.</string>
     <string name="cat_0_all_updates">All updates</string>
     <string name="cat_1_promotional_posts">Promotional posts</string>
     <string name="cat_2_image_text">Images + Text</string>

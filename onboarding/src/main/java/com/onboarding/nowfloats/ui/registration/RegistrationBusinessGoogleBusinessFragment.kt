@@ -96,12 +96,13 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
                 gotoNextScreen(true)
             }
             binding.linkGoogle -> {
+                WebEngageController.trackEvent(GOOGLE_MY_BUSINESS_CLICK_TO_CONNECT, GOOGLE_MY_BUSINESS, NO_EVENT_VALUE)
                 if (channelAccessToken.isLinkedGoogleBusiness()) {
                     gotoNextScreen()
                 } else if (!NetworkUtils.isNetworkConnected()) {
                     InternetErrorDialog().show(parentFragmentManager, InternetErrorDialog::class.java.name)
                 } else {
-                    WebEngageController.trackEvent(GOOGLE_MY_BUSINESS_CLICK_TO_CONNECT, GOOGLE_MY_BUSINESS, NO_EVENT_VALUE)
+
                     googleLoginCallback(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
                 }
             }

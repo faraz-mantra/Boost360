@@ -1,5 +1,7 @@
 package com.nowfloats.Volley;
 
+import static com.nowfloats.util.BoostLog.VERBOSE;
+
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -19,6 +21,7 @@ import com.boost.dbcenterapi.DBCenterAPIApplication;
 import com.boost.marketplace.MarketplaceApplication;
 import com.boost.presignin.AppPreSignInApplication;
 import com.boost.presignup.locale.LocaleManager;
+import com.clevertap.android.sdk.CleverTapAPI;
 import com.dashboard.AppDashboardApplication;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
@@ -58,6 +61,7 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
     private LocaleManager localeManager;
+    CleverTapAPI clevertapDefaultInstance;
 
     public static synchronized AppController getInstance() {
         return mInstance;
@@ -143,6 +147,7 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
         MarketplaceApplication.instance = this;
         MarketplaceApplication.initModule(this);
         initWebEngage();
+//        initCleverTap();
         UserExperiorController.INSTANCE.startRecording(this);
 
         //Invite Referral
@@ -210,6 +215,30 @@ public class AppController extends BaseApplication/* implements IAviaryClientCre
                 .setDebugMode(false)
                 .build();
         registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this, webEngageConfig));
+    }
+
+//    void initCleverTap() {
+//        //Set Debug level for CleverTap
+//        CleverTapAPI.setDebugLevel(VERBOSE);
+//        clevertapDefaultInstance = CleverTapAPI.getDefaultInstance(getApplicationContext());
+//    }
+
+    @SuppressWarnings({"unused"})
+    public enum LogLevel {
+        OFF(-1),
+        INFO(0),
+        DEBUG(2),
+        VERBOSE(3);
+
+        private final int value;
+
+        LogLevel(final int newValue) {
+            value = newValue;
+        }
+
+        public int intValue() {
+            return value;
+        }
     }
 
     public RequestQueue getRequestQueue() {

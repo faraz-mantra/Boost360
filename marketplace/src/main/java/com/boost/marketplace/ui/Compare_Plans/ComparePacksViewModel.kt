@@ -183,7 +183,7 @@ class ComparePacksViewModel: BaseViewModel() {
         return customDomainsResult
     }
 
-    fun loadPackageUpdates() {
+    fun loadPackageUpdates(sourceClientId: String?) {
         updatesLoader.postValue(true)
         if (Utils.isConnectedToInternet(getApplicationContext())) {
             CompositeDisposable().add(
@@ -196,29 +196,42 @@ class ComparePacksViewModel: BaseViewModel() {
                             val bundles = arrayListOf<BundlesModel>()
                             val tempBundles = Utils.getBundlesFromJsonFile(getApplicationContext())
                              for (item in it.Data[0].bundles) {
-                           // for (item in tempBundles) {
-                                if (item.exclusive_for_customers != null && item.exclusive_for_customers!!.size > 0) {
-                                    var applicableToCurrentFPTag = false
-                                    for (code in item.exclusive_for_customers!!) {
-                                        if (code.equals(_fpTag, true)) {
-                                            applicableToCurrentFPTag = true
-                                            break
-                                        }
-                                    }
-                                    if (!applicableToCurrentFPTag)
-                                        continue
-                                }
-                                if (item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) {
-                                    var applicableToCurrentExpCode = false
-                                    for (code in item.exclusive_to_categories!!) {
-                                        if (code.equals(experienceCode, true)) {
-                                            applicableToCurrentExpCode = true
-                                            break
-                                        }
-                                    }
-                                    if (!applicableToCurrentExpCode)
-                                        continue
-                                }
+                                 //  for (item in tempBundles) {
+                                 var applicableToClientId = false
+                                 if ((item.exclusive_to_clientids != null && item.exclusive_to_clientids!!.size > 0)) {
+                                     for (singleClientId in item.exclusive_to_clientids!!) {
+                                         if (singleClientId.equals(sourceClientId, true)) {
+                                             applicableToClientId = true
+                                             break
+                                         }
+                                     }
+                                     if (!applicableToClientId)
+                                         continue
+                                 }
+                                 if ((item.exclusive_for_customers != null && item.exclusive_for_customers!!.size > 0) && !applicableToClientId) {
+                                     var applicableToCurrentFPTag = false
+                                     for (code in item.exclusive_for_customers!!) {
+                                         if (code.equals(_fpTag, true)) {
+                                             applicableToCurrentFPTag = true
+                                             break
+                                         }
+                                     }
+                                     if (!applicableToCurrentFPTag)
+                                         continue
+                                 }
+
+
+                                 if ((item.exclusive_to_categories != null && item.exclusive_to_categories!!.size > 0) && !applicableToClientId) {
+                                     var applicableToCurrentExpCode = false
+                                     for (code in item.exclusive_to_categories!!) {
+                                         if (code.equals(experienceCode, true)) {
+                                             applicableToCurrentExpCode = true
+                                             break
+                                         }
+                                     }
+                                     if (!applicableToCurrentExpCode)
+                                         continue
+                                 }
                                 bundles.add(
                                     BundlesModel(
                                         item._kid,

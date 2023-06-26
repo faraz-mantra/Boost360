@@ -90,7 +90,6 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
     when (v) {
       binding?.tvNextStep -> {
         WebEngageController.trackEvent(PS_BUSINESS_CATEGORY_CLICK, NEXT_CLICK, NO_EVENT_VALUE)
-        WebEngageController.trackEvent(SIGNUP_CATEGORY_SELECTED, NEXT_CLICK, NO_EVENT_VALUE)
         addFragment(R.id.inner_container, SetupMyWebsiteStep2Fragment.newInstance(Bundle().apply {
           putString(IntentConstant.DESKTOP_PREVIEW.name, desktopPreview)
           putString(IntentConstant.MOBILE_PREVIEW.name, mobilePreview)

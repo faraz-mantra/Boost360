@@ -4,10 +4,13 @@ import android.text.SpannableString
 import android.text.style.StrikethroughSpan
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.cart.utils.Utils
+import com.boost.cart.utils.WebEngageController
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.dbcenterapi.upgradeDB.local.AppDatabase
 import com.boost.dbcenterapi.utils.SharedPrefs
@@ -17,12 +20,16 @@ import com.boost.marketplace.ui.home.MarketPlaceActivity
 import com.bumptech.glide.Glide
 import com.framework.analytics.SentryController
 import com.framework.utils.RootUtil
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_CART_EXPERT_CALL_CLICK
+import com.framework.webengageconstant.ADD_ON_MARKETPLACE_CARD_CLICK
+import com.framework.webengageconstant.NO_EVENT_VALUE
+import com.framework.webengageconstant.PAGE_VIEW
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.lang.StringBuilder
 import java.text.NumberFormat
 import java.util.*
+
 
 class PackageViewPagerAdapter(
   val list: ArrayList<Bundles>, val activity: MarketPlaceActivity, val homeListener: HomeListener
@@ -64,13 +71,13 @@ class PackageViewPagerAdapter(
 //        }
 
     holder.itemView.setOnClickListener {
-      homeListener.onPackageClicked(list.get(position))
+      WebEngageController.trackEvent(ADD_ON_MARKETPLACE_CARD_CLICK, PAGE_VIEW, NO_EVENT_VALUE)
+      homeListener.onPackageClicked(list[position])
     }
-    holder.name.setText(list.get(position).name ?: "")
-
+    holder.name.text = list[position].name ?: ""
 
     try {
-      getPackageInfoFromDB(holder, list.get(position))
+      getPackageInfoFromDB(holder, list[position])
     } catch (e: Exception) {
       SentryController.captureException(e)
     }
@@ -94,6 +101,7 @@ class PackageViewPagerAdapter(
 
   class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val name = itemView.findViewById<TextView>(R.id.name)
+    val item_package_name = itemView.findViewById<LinearLayout>(R.id.item_package_name)
     val offerPrice = itemView.findViewById<TextView>(R.id.offer_price)
     val origCost = itemView.findViewById<TextView>(R.id.orig_cost)
 
@@ -107,6 +115,7 @@ class PackageViewPagerAdapter(
     val image1=itemView.findViewById<ImageView>(R.id.image1)
     val image2=itemView.findViewById<ImageView>(R.id.image2)
     val image3=itemView.findViewById<ImageView>(R.id.image3)
+    val arrw1=itemView.findViewById<ImageView>(R.id.arrw1)
 //        val bundlePriceLabel = itemView.findViewById<TextView>(R.id.bundle_price_label)
   }
 
@@ -164,6 +173,14 @@ class PackageViewPagerAdapter(
             } else {
               offeredBundlePrice = originalBundlePrice
               holder.bundleDiscount.visibility = View.GONE
+              setMargins(holder.item_package_name, 15, 32, 0, 0);
+              if(it.size>3){
+                setMargins(holder.arrw1, 0, 12, 40, 0);
+              }else{
+                holder.arrw1.visibility=View.GONE
+              }
+
+
 //                                        holder.bundlePriceLabel.visibility = View.VISIBLE
             }
 
@@ -256,5 +273,12 @@ class PackageViewPagerAdapter(
       0
     )
     holder.origCost.setText(origCost)
+  }
+  private fun setMargins(view: View, left: Int, top: Int, right: Int, bottom: Int) {
+    if (view.layoutParams is MarginLayoutParams) {
+      val p = view.layoutParams as MarginLayoutParams
+      p.setMargins(left, top, right, bottom)
+      view.requestLayout()
+    }
   }
 }

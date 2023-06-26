@@ -76,7 +76,6 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
     binding?.tvNextStep2?.setOnClickListener {
       if (binding?.businessNameInputLayout?.etInput?.text.toString().validateLetters()) {
         WebEngageController.trackEvent(PS_BUSINESS_PROFILE_CLICK_NEW_UPPERCASE, CLICK, NO_EVENT_VALUE)
-        WebEngageController.trackEvent(SIGNUP_WEBSITE_CONFIRM, CLICK, NO_EVENT_VALUE)
         addFragment(
           R.id.inner_container, SetupMyWebsiteStep3Fragment.newInstance(
             Bundle().apply {

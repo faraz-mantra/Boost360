@@ -27,6 +27,7 @@ import com.boost.presignin.model.onboardingRequest.saveCategoryRequest
 import com.boost.presignin.model.signup.FloatingPointCreateResponse
 import com.boost.presignin.model.userprofile.BusinessProfileResponse
 import com.boost.presignin.viewmodel.LoginSignUpViewModel
+import com.framework.analytics.CleverTapController
 import com.framework.analytics.NFWebEngageController
 import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
@@ -123,6 +124,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
       val eventValue = HashMap<String, Any>()
       eventValue["test1"] = session?.userLocationIP!!
       NFWebEngageController.trackAttribute(eventValue)
+      CleverTapController.trackAttributeCleverTap(eventValue)
     }
   }
 
@@ -131,7 +133,6 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
       if (binding?.addressInputLayout?.etInput?.text?.trim().toString().validateLetters()) {
         if (binding?.tvNextStep3?.text == getString(R.string.launch_my_website)) {
           WebEngageController.trackEvent(PS_BUSINESS_WEBSITE_CLICK_NEW_UPPERCASE, CLICK, NO_EVENT_VALUE)
-          WebEngageController.trackEvent(SIGNUP_COMPLETED, CLICK, NO_EVENT_VALUE)
         }
         apiCheckDomain { apiHitCreateMerchantProfile() }
       } else showShortToast(getString(R.string.website_name_format_invalid_toast))

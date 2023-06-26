@@ -18,6 +18,7 @@ import com.boost.dbcenterapi.data.api_model.CustomDomain.DomainRequest
 import com.boost.dbcenterapi.data.api_model.Domain.AlreadyPurchasedDomainResponse.PurchasedDomainResponse
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.ExpertConnect
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
+import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV12.CreatePurchaseOrderV12
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.dbcenterapi.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.dbcenterapi.data.api_model.SomethingWentWrong
@@ -360,15 +361,15 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    fun InitiatePurchaseOrder(auth: String, createPurchaseOrderV2: CreatePurchaseOrderV2) {
-        Log.d("InitiatePurchaseOld", " " + createPurchaseOrderV2)
+    fun InitiatePurchaseOrder(auth: String, createPurchaseOrder: CreatePurchaseOrderV12) {
+        Log.d("InitiatePurchaseOld", " " + createPurchaseOrder)
         if (Utils.isConnectedToInternet(getApplication())) {
 //            var sample = Gson().toJson(createPurchaseOrderV2)
 //            writeStringAsFile(sample, "initiatePurchase.txt")
             updatesLoader.postValue(true)
             APIRequestStatus = "Order registration in progress..."
             compositeDisposable.add(
-                ApiService.CreatePurchaseOrder(auth, createPurchaseOrderV2)
+                ApiService.CreatePurchaseOrder(auth, createPurchaseOrder)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(

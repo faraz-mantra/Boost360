@@ -2,6 +2,9 @@ package com.boost.marketplace.Adapters
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,16 +15,11 @@ import com.boost.marketplace.R
 import com.boost.marketplace.interfaces.AddonsListenerV3
 
 class PacksAddonsV3Adapter(
-    cryptoCurrencies: List<PackageAddonsCompares>?,
+    var upgradeList: List<PackageAddonsCompares>,
     val activity: Activity,var myAddonsListener: AddonsListenerV3
 ) : RecyclerView.Adapter<PacksAddonsV3Adapter.upgradeViewHolder>() {
 
-    private var upgradeList = ArrayList<PackageAddonsCompares>()
     private lateinit var context: Context
-
-    init {
-        this.upgradeList = cryptoCurrencies as ArrayList<PackageAddonsCompares>
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
         val itemView = LayoutInflater.from(parent?.context).inflate(
@@ -36,23 +34,39 @@ class PacksAddonsV3Adapter(
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
+        if(position==0)
+            holder.name.setText("Click on each pack icon for details")
+        else if(position==1){
+            holder.name.setText("Pack price*")
+            holder.name.setTextColor(Color.parseColor("#333333"))
+            holder.name.setTypeface(holder.name.getTypeface(), Typeface.BOLD)
+        }
+        else
         holder.name.setText(upgradeList.get(position).title)
-        val adapter = PacksAddonsV3ImageAdapter(upgradeList.get(position).packsAvailableIn, activity)
+        if (position <=1){
+            holder.name.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        }
+      //  holder.name.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        val adapter = PacksAddonsV3ImageAdapter(upgradeList.get(position).packsAvailableIn, myAddonsListener, activity)
         holder.recyclerView.adapter = adapter
+        myAddonsListener.onAllRecyclerView(holder.recyclerView, position == upgradeList.size-1)
         if(position == upgradeList.size-1){
             holder.dummyLine.visibility = View.GONE
         }
         holder.name.setOnClickListener {
-
-            myAddonsListener.onPaidAddonsClicked(upgradeList.get(position).featureCode)
+            if (!upgradeList.get(position).featureCode.isNullOrEmpty()){
+                myAddonsListener.onPaidAddonsClicked(upgradeList.get(position).featureCode)
+            }
         }
     }
 
     fun addupdates(upgradeModel: List<PackageAddonsCompares>) {
-        val initPosition = upgradeList.size
-        upgradeList.clear()
-        upgradeList.addAll(upgradeModel)
-        notifyItemRangeInserted(initPosition, upgradeList.size)
+        upgradeList = upgradeModel
+        notifyDataSetChanged()
+    }
+
+    fun updatePrice(){
+        notifyItemChanged(1)
     }
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

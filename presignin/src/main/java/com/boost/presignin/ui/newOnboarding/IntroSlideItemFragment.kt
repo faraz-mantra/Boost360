@@ -148,4 +148,10 @@ class IntroSlideItemFragment : AppBaseFragment<ItemIntroNewSlidesBinding, BaseVi
     binding?.lottieAnimationIntro?.playAnimation()
     Log.i("scsdbcj", "skjdbsjd")
   }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    handler.removeCallbacks(runnable!!)
+    runnable = null
+  }
 }

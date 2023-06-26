@@ -93,6 +93,7 @@ import java.util.*
 
 const val IS_FIRST_LOAD = "isFirsLoad"
 const val IS_DR_HIGH_DIALOG = "isDrHighDialog"
+const val READY_MADE_UPDATES = "READY_MADE_UPDATES"
 
 class DashboardFragmentV2 : AppBaseFragment<FragmentDashboardV2Binding, DashboardViewModel>(), RecyclerItemClickListener {
 
@@ -157,7 +158,7 @@ class DashboardFragmentV2 : AppBaseFragment<FragmentDashboardV2Binding, Dashboar
     getAllDashboardSummary()
     getPremiumBanner()
     getChannelAccessToken()
-    displayFestiveButtonView()
+    //displayFestiveButtonView()
     //todoListItems()
     lifecycleScope.launch {
       MutableDataUtils.openBusinessCard.collect { if (it) binding.profileView.btnVisitingCard.performClick() }
@@ -185,6 +186,7 @@ class DashboardFragmentV2 : AppBaseFragment<FragmentDashboardV2Binding, Dashboar
     if (festivePosterVisibility()) {
       binding.profileView.btnFestive.visibility = View.VISIBLE
       binding.profileView.customFestivalTv.text = festivePosterName()?.capitalizeUtil()
+      binding.profileView.lottieNewFestival.visibility = View.VISIBLE
     } else binding.profileView.btnFestive.visibility = View.GONE
   }
 
@@ -253,6 +255,7 @@ class DashboardFragmentV2 : AppBaseFragment<FragmentDashboardV2Binding, Dashboar
     setBusinessManageTask()
     getNotificationCount()
     refreshAllDashboardSummary()
+    displayFestiveButtonView()
   }
 
   private fun setSummaryDrScore(isLoadingShimmerDr: Boolean = false) {
@@ -642,6 +645,7 @@ class DashboardFragmentV2 : AppBaseFragment<FragmentDashboardV2Binding, Dashboar
         actionChannelClick(data)
       }
       RecyclerViewActionType.PROMO_BANNER_CLICK.ordinal -> {
+        WebEngageController.trackEvent(GET_FESTIVAL_POSTER_PACK_CLICK, NO_EVENT_VALUE)
         val data = item as? DashboardMarketplaceBanner ?: return
         marketPlaceBannerClick(data)
       }
@@ -721,6 +725,7 @@ class DashboardFragmentV2 : AppBaseFragment<FragmentDashboardV2Binding, Dashboar
         //TODO activate Post update journey for this as Asked by Product team
         //baseActivity.startFestivePosterActivity()
         //enable update studio on demand
+        //addButtonClickActionTypeByUser(READY_MADE_UPDATES)
         baseActivity.startPostUpdate(session)
       }
       binding.recommendedTask.btnShowAll -> {

@@ -295,6 +295,7 @@
 
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/footer_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -302,7 +303,7 @@
             android:fontFamily="@font/regular"
             android:gravity="center"
             android:lineSpacingExtra="2sp"
-            android:text="@string/invoice_txt"
+            tools:text="@string/invoice_txt"
             android:textColor="@color/common_text_color"
             android:textSize="@dimen/txt_10sp" />
 

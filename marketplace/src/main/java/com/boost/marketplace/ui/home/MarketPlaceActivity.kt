@@ -1,7 +1,5 @@
 package com.boost.marketplace.ui.home
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
@@ -19,9 +17,6 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.Slide
-import androidx.transition.Transition
-import androidx.transition.TransitionManager
 import com.boost.cart.CartActivity
 import com.boost.cart.adapter.SimplePageTransformer
 import com.boost.dbcenterapi.data.api_model.GetAllFeatures.response.*
@@ -58,7 +53,6 @@ import com.boost.marketplace.ui.videos.HelpVideosBottomSheet
 import com.boost.marketplace.ui.videos.HomeVideosBottomSheet
 import com.boost.marketplace.ui.webview.WebViewActivity
 import com.framework.analytics.SentryController
-import com.framework.extensions.isVisible
 import com.framework.pref.Key_Preferences
 import com.framework.pref.UserSessionManager
 import com.framework.pref.getAccessTokenAuth
@@ -78,7 +72,6 @@ import kotlinx.android.synthetic.main.activity_marketplace.*
 import kotlinx.android.synthetic.main.activity_marketplace.package_layout
 import kotlinx.android.synthetic.main.activity_marketplace.package_viewpager
 import kotlinx.android.synthetic.main.layout_details_popup.view.*
-import zendesk.support.requestlist.RequestListViewModule_ViewFactory.view
 import java.lang.reflect.Field
 import java.lang.reflect.Method
 
@@ -658,7 +651,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 viewModel.loadUpdates(
                     getAccessToken() ?: "",
                     this.fpid!!,
-                    this.clientid,
+                    UserSessionManager(this).sourceClientId!!,
                     this.experienceCode,
                     this.fpTag
                 )
@@ -711,6 +704,12 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
         })
 
         viewModel.getAllAvailableFeatures().observe(this, androidx.lifecycle.Observer {
+            WebEngageController.trackEvent(
+                ADDONS_MARKETPLACE_CART_ALL_FEATURE_LOADED,
+                PAGE_VIEW,
+                NO_EVENT_VALUE
+            )
+
             all_recommended_addons.visibility = View.VISIBLE
             updateRecycler(it)
             updateAddonCategoryRecycler(it)
@@ -735,7 +734,12 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
             }
         })
 
-        viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
+        viewModel.getAllBundles().observe(this) {
+            WebEngageController.trackEvent(
+                ADDONS_MARKETPLACE_CART_PACKAGE_BUNDLE_LOADED,
+                PAGE_VIEW,
+                NO_EVENT_VALUE
+            )
             val list = arrayListOf<Bundles>()
             for (item in it) {
                 val temp = Gson().fromJson<List<IncludedFeature>>(
@@ -755,7 +759,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                             item.exclusive_to_categories,
                             object : TypeToken<List<String>>() {}.type
                         ),
-                        null, Gson().fromJson<List<HowToActivate>>(
+                        null, null, Gson().fromJson<List<HowToActivate>>(
                             item.how_to_activate,
                             object : TypeToken<List<HowToActivate>>() {}.type
                         ), Gson().fromJson<List<Testimonial>>(
@@ -764,10 +768,10 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                         ), Gson().fromJson<List<FrequentlyAskedQuestion>>(
                             item.frequently_asked_questions,
                             object : TypeToken<List<FrequentlyAskedQuestion>>() {}.type
-                        ),Gson().fromJson<List<String>>(
+                        ), Gson().fromJson<List<String>>(
                             item.benefits,
                             object : TypeToken<List<String>>() {}.type
-                        ),item.desc
+                        ), item.desc
                     )
                 )
             }
@@ -793,14 +797,14 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                 package_compare_layout1.visibility = View.GONE
             }
             //go to particular package screen
-            if(isOpenPackageWithID!=null){
-                for(singleBundle in list){
-                    if(singleBundle._kid.equals(isOpenPackageWithID)){
+            if (isOpenPackageWithID != null) {
+                for (singleBundle in list) {
+                    if (singleBundle._kid.equals(isOpenPackageWithID)) {
                         onPackageClicked(singleBundle)
                     }
                 }
             }
-        })
+        }
 
         viewModel.getBackAllBundles().observe(this, androidx.lifecycle.Observer {
             val list = arrayListOf<Bundles>()
@@ -822,7 +826,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                             item.exclusive_to_categories,
                             object : TypeToken<List<String>>() {}.type
                         ),
-                        null, null,null,null,null,item.desc
+                        null, null,null,null,null, null, item.desc
                     )
                 )
             }
@@ -1244,7 +1248,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                         item.exclusive_to_categories,
                                         object : TypeToken<List<String>>() {}.type
                                     ),
-                                    null, null,null,null,null,item.desc
+                                    null, null,null,null,null, null,item.desc
                                 )
                             )
                         }
@@ -1977,7 +1981,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                                 TypeToken<List<String>>() {}.type
                                                         ),
                                                         null,
-                                                        null, null,null,null,item.desc
+                                                        null, null,null,null, null,item.desc
                                                     )
                                                     val intent = Intent(
                                                         this,
@@ -2052,7 +2056,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                             TypeToken<List<String>>() {}.type
                                                     ),
                                                     null,
-                                                    null, null,null,null,item.desc
+                                                    null, null,null,null, null, item.desc
                                                 )
                                                 val intent = Intent(
                                                     this,
@@ -2099,11 +2103,16 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
 //                            } else deepLinkUtil?.deepLinkPage(item.cta_web_link!!, "", false)
 
                         } else {
-
-                            val intent = Intent(this, WebViewActivity::class.java)
-                            intent.putExtra("title", "")
-                            intent.putExtra("link", item!!.cta_web_link)
-                            startActivity(intent)
+                            if(item!!.cta_web_link.contains("cadigital.icicibank.com")){
+                                val i = Intent(Intent.ACTION_VIEW)
+                                i.data = Uri.parse(item!!.cta_web_link)
+                                startActivity(i)
+                            }else {
+                                val intent = Intent(this, WebViewActivity::class.java)
+                                intent.putExtra("title", "")
+                                intent.putExtra("link", item!!.cta_web_link)
+                                startActivity(intent)
+                            }
                         }
 
 
@@ -2563,7 +2572,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                 object : TypeToken<List<String>>() {}.type
                                             ),
                                             null,
-                                            null, null,null,null,item.desc
+                                            null, null,null,null, null, item.desc
                                         )
                                         val intent = Intent(this, ComparePacksV3Activity::class.java)
                                         intent.putExtra("bundleData", Gson().toJson(selectedBundle))
@@ -2648,7 +2657,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
                                                 object : TypeToken<List<String>>() {}.type
                                             ),
                                             null,
-                                            null, null,null,null,item.desc
+                                            null, null, null,null,null,item.desc
                                         )
                                         val intent = Intent(this, ComparePacksV3Activity::class.java)
                                         intent.putExtra("bundleData", Gson().toJson(selectedBundle))

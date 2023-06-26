@@ -30,15 +30,10 @@ import com.framework.pref.UserSessionManager
 import com.framework.utils.getResponse
 import com.framework.utils.runOnUi
 import com.framework.utils.saveAsImageToAppFolder
-import com.framework.webengageconstant.CUSTOM_UPDATE_INITIATED
-import com.framework.webengageconstant.NULL
-import com.framework.webengageconstant.PAGE_VIEW
-import com.framework.webengageconstant.STUDIO_UPDATE_SHARED
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
-import java.util.HashMap
 
 
 fun isPromoWidgetActive(): Boolean{
@@ -49,9 +44,6 @@ fun isPromoWidgetActive(): Boolean{
 fun posterWhatsappShareClicked(childItem:TemplateUi,activity: BaseActivity<*,*>){
     if (isPromoWidgetActive()){
         saveTemplateAction(TemplateSaveActionBody.ActionType.SHARE,childItem)
-        val hashMap = HashMap<String, Any>()
-        hashMap.put("template id", childItem.id)
-        WebEngageController.trackEvent(STUDIO_UPDATE_SHARED, PAGE_VIEW, hashMap)
         SvgUtils.shareUncompressedSvg(childItem.primarySvgUrl,
             childItem.primaryText,
             PackageNames.WHATSAPP)

@@ -16,8 +16,8 @@ class UpdateStudioSvgRenderCache:SvgRenderCacheUtil() {
     private  val TAG = "FestivePosterSvgRenderC"
 
     val session = UserSessionManager(application())
-    val userWebsite = session.getDomainName(true)?:""
-    val userPhone = session.userPrimaryMobile?:""
+    var userWebsite = session.getDomainName(true)?:""
+    var userPhone = session.userPrimaryMobile?:""
     val profileUrl = session.getFPDetails(PreferencesKey.GET_FP_DETAILS_LogoUrl.name)
     val base64 = Glide.with(application()).asBitmap().load(if (profileUrl.isNullOrEmpty())"https://cdn.nowfloats.com/nf/v1/favicon.png" else profileUrl).submit().get().toBase64()
 
@@ -47,10 +47,12 @@ class UpdateStudioSvgRenderCache:SvgRenderCacheUtil() {
 
         var result= svgString
 
-
+        userWebsite = session.getDomainName(true)?:""
+        userPhone = session.userPrimaryMobile?:""
         result= result?.replace("Lorumipsum.com",userWebsite)
         result= result?.replace("loreuminpsum.com",userWebsite)
         result= result?.replace("loreoispum.com",userWebsite)
+        result= result?.replace("loremipsum.com",userWebsite)
         result= result?.replace("+91 9999999999",userPhone)
         val imgIdIndex = result?.indexOf("data-name=\"biz_logo.png\"")
         imgIdIndex?:return result

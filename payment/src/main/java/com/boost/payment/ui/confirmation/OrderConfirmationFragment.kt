@@ -58,11 +58,11 @@ class OrderConfirmationFragment : BaseFragment() {
 //        event_attributes.put("couponIds", Utils.filterQuotes(prefs.getCouponIds().toString()))
 //        event_attributes.put("validity",prefs.getValidityMonths().toString())
 //
-//        WebEngageController.trackEvent(
-//          EVENT_NAME_ADDONS_MARKETPLACE_ORDER_CONFIRM,
-//          PAGE_VIEW,
-//          event_attributes
-//        )
+        WebEngageController.trackEvent(
+          EVENT_NAME_ADDONS_MARKETPLACE_ORDER_CONFIRM,
+          PAGE_VIEW,
+          NO_EVENT_VALUE
+        )
 //      } catch (e: Exception) {
 //      }
 //    }
@@ -97,6 +97,8 @@ class OrderConfirmationFragment : BaseFragment() {
       InAppReviewUtils.showInAppReview(requireActivity(), InAppReviewUtils.Events.in_app_review_first_purchase)
       prefs.storeFirstTimePurchase(false)
     }
+
+    footer_details.text = "A copy of the GST Invoice was also sent on your registered email address ("+UserSessionManager(requireContext()).userProfileEmail+") and mobile ("+UserSessionManager(requireContext()).userProfileMobile+")."
 
 
     try {

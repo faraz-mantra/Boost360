@@ -2,7 +2,7 @@ package com.boost.presignin.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -21,18 +21,34 @@ import com.framework.base.FRAGMENT_TYPE
 import com.framework.extensions.observeOnce
 import com.framework.extensions.onTextChanged
 import com.framework.pref.clientId
-import com.framework.utils.ValidationUtils
 import com.framework.utils.showKeyBoard
 import com.framework.webengageconstant.*
 import android.widget.Toast
 
 import android.view.View.OnFocusChangeListener
-import com.facebook.login.Login
 import com.framework.pref.APPLICATION_JIO_ID
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.safetynet.SafetyNet
+import com.google.android.gms.safetynet.SafetyNetClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
   private var resultLogin: VerificationRequestResult? = null
+  private var safeNetClient: SafetyNetClient? = null
+  private val googleRecaptchakey = "6LfoGxQmAAAAAPjCeVIg4fqdVerlsUGYpbi7vNsi" //nowfloats
+
+  private val job = CoroutineScope(Dispatchers.Main).launch {
+    delay(60_000) // delay 1 minute
+    binding.verificationSuccessLayout.visibility = View.GONE
+    binding.verifyBt.visibility = View.VISIBLE
+    binding.loginBt.isEnabled = false
+    Toast.makeText(baseActivity, "Verification from Captcha expired. Please complete it again!", Toast.LENGTH_SHORT).show()
+  }
 
   companion object {
     @JvmStatic
@@ -63,11 +79,11 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
 
   override fun onCreateView() {
     super.onCreateView()
+    safeNetClient = SafetyNet.getClient(context!!)
     WebEngageController.trackEvent(PS_LOGIN_USERNAME_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
-    WebEngageController.trackEvent(LOGIN_INITIATED, TYPE, USER_NAME)
     binding?.usernameEt?.onTextChanged { onDataChanged() }
     binding?.passEt?.onTextChanged { onDataChanged() }
-    setOnClickListener(binding?.forgotTv, binding?.loginBt, binding?.loginWithNumberBtn, binding?.helpTv)
+    setOnClickListener(binding?.forgotTv, binding?.loginBt, binding?.loginWithNumberBtn, binding?.helpTv,binding?.verifyBt)
     val backButton = binding?.toolbar?.findViewById<ImageView>(R.id.back_iv)
     backButton?.setOnClickListener { goBack() }
     binding?.passEt?.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
@@ -90,7 +106,6 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
       }
       binding?.loginBt -> {
         WebEngageController.trackEvent(PS_LOGIN_FORGOT_PASSWORD_CLICK, CLICK, NO_EVENT_VALUE)
-        WebEngageController.trackEvent(LOGIN_COMPLETED, TYPE, USER_NAME)
         loginApiVerify(
           binding?.usernameEt?.text?.toString()?.trim(),
           binding?.passEt?.text?.toString()?.trim()
@@ -103,6 +118,9 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
       binding?.helpTv -> {
         needHelp()
       }
+      binding?.verifyBt -> {
+        verifyWithCaptcha()
+      }
     }
   }
 
@@ -112,7 +130,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
       hideProgress()
       val response = it as? VerificationRequestResult
       if (response?.isSuccess() == true && response.loginId.isNullOrEmpty().not() && response.authTokens.isNullOrEmpty().not()) {
-        WebEngageController.trackEvent(LOGIN_COMPLETED, TYPE, USER_NAME)
+        job.cancel()
         storeUserDetail(response)
       } else {
         showShortToast(getString(R.string.ensure_that_the_entered_username_and_password_))
@@ -139,6 +157,32 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
   private fun onDataChanged() {
     val username = binding?.usernameEt?.text?.toString()
     val password = binding?.passEt?.text?.toString()
-    binding?.loginBt?.isEnabled = !username.isNullOrBlank() && !password.isNullOrBlank()
+    binding?.verifyBt?.isEnabled = !username.isNullOrBlank() && !password.isNullOrBlank()
+  }
+
+  private fun verifyWithCaptcha() {
+    safeNetClient?.verifyWithRecaptcha(googleRecaptchakey)
+      ?.addOnSuccessListener { response ->
+        val userResponseToken = response.tokenResult
+        if (userResponseToken?.isNotEmpty() == true) {
+          Toast.makeText(baseActivity, "Validity of the verification will be valid for 1 minute.", Toast.LENGTH_SHORT).show()
+          binding.verificationSuccessLayout.visibility = View.VISIBLE
+          binding.verifyBt.visibility = View.GONE
+          binding.loginBt.isEnabled = true
+          enableValidatedView()
+        }
+      }
+      ?.addOnFailureListener { e ->
+        Toast.makeText(context!!, "Verification Failed", Toast.LENGTH_SHORT).show()
+        if (e is ApiException) {
+          Log.d("MainAct", "Error: e.statusCode}")
+        } else {
+          Log.d("MainAct", "Error: ${e.message}")
+        }
+      }
+  }
+
+  private fun enableValidatedView() {
+    job.start()
   }
 }
