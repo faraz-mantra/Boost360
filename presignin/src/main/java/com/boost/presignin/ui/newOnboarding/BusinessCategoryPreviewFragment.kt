@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentTransaction
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import com.boost.presignin.BuildConfig
@@ -56,7 +57,7 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
   private var session: UserSessionManager? = null
   private var responseCreateProfile: BusinessProfileResponse? = null
   var categoryFloatsReq: CategoryFloatsRequest? = null
-  val fragmentTtansaction = activity?.supportFragmentManager!!.beginTransaction()
+  lateinit var fragmentTtansaction: FragmentTransaction
   val progressFragment: DialogFragment = ProgressFragment()
   companion object {
     @JvmStatic
@@ -132,6 +133,7 @@ class BusinessCategoryPreviewFragment : AppBaseFragment<LayoutBusinessCategoryPr
     if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
       binding.tvNextStep.backgroundTintList= ContextCompat.getColorStateList(context!!, R.color.buttonTint)
     }
+    fragmentTtansaction = activity?.supportFragmentManager!!.beginTransaction()
   }
 
   override fun onClick(v: View) {

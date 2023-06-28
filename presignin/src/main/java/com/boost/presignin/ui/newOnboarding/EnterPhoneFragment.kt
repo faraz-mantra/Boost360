@@ -164,12 +164,12 @@ class EnterPhoneFragment : AppBaseFragment<FragmentEnterPhoneBinding, LoginSignU
 //    )
 //  }
 
-  private fun openTNCDialog(url: String, title: String) {
-    val webViewDialog = WebViewDialog()
-    webViewDialog.setData(isAcceptDeclineShow = false, url, title, isNewFlow = true)
-    webViewDialog.onClickType = {}
-    webViewDialog.show(requireActivity().supportFragmentManager, title)
-  }
+//  private fun openTNCDialog(url: String, title: String) {
+//    val webViewDialog = WebViewDialog()
+//    webViewDialog.setData(isAcceptDeclineShow = false, url, title, isNewFlow = true)
+//    webViewDialog.onClickType = {}
+//    webViewDialog.show(requireActivity().supportFragmentManager, title)
+//  }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)

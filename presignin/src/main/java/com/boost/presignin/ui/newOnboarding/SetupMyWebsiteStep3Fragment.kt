@@ -117,7 +117,7 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
     }
     setOnClickListeners()
     binding?.addressInputLayout?.etInput?.setText(businessName?.replace("\\s+".toRegex(), "")?.lowercase())
-    apiCheckDomain { websiteNameFieldUiVisibility(websiteNameFieldVisibility = 0) }
+    apiCheckDomain { websiteNameFieldUiVisibility(websiteNameFieldVisibility = 3) }
     fetchLocationAndSendWEEvent()
   }
 
@@ -359,6 +359,21 @@ class SetupMyWebsiteStep3Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep3Bin
         binding?.tvNameNotAvailableError?.visible()
         binding?.linearSecureWrapper?.gone()
         binding?.tvNextStep3?.text = getString(R.string.launch_my_website)
+        binding?.addressInputLayout?.etInput?.apply {
+          layoutParams?.width = ViewGroup.LayoutParams.WRAP_CONTENT
+          isEnabled = false
+        }
+      }
+      3 -> {
+        binding?.addressInputLayout?.tvWebsiteExtension?.visible()
+        binding?.addressInputLayout?.ivStatus?.visible()
+        binding?.addressInputLayout?.ivIcon?.visible()
+        binding?.addressInputLayout?.ivStatus?.setImageResource(R.drawable.ic_domain_tick)
+        binding?.addressInputLayout?.inputLayout?.setBackgroundResource(R.drawable.bg_green_stroke_et)
+        binding?.tvNextStep3?.isEnabled = true
+        binding?.tvNameNotAvailableError?.gone()
+        binding?.linearSecureWrapper?.visible()
+        binding?.tvNextStep3?.text = "Continue to business category"
         binding?.addressInputLayout?.etInput?.apply {
           layoutParams?.width = ViewGroup.LayoutParams.WRAP_CONTENT
           isEnabled = false

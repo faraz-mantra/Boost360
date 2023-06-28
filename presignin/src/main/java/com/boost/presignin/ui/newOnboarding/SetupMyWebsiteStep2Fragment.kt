@@ -1,10 +1,14 @@
 package com.boost.presignin.ui.newOnboarding
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.RadioButton
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.capitalizeUtil
 import com.boost.presignin.BuildConfig
@@ -21,9 +25,11 @@ import com.framework.extensions.observeOnce
 import com.framework.pref.UserSessionManager
 import com.framework.pref.clientId2
 import com.framework.utils.fromHtml
+import com.framework.utils.hideKeyBoard
 import com.framework.utils.showKeyBoard
 import com.framework.views.blur.setBlur
 import com.framework.webengageconstant.*
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil.hideKeyboard
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -80,6 +86,9 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
     super.onCreateView()
     WebEngageController.trackEvent(PS_BUSINESS_PROFILE_PAGE_LOAD, PAGE_VIEW, NO_EVENT_VALUE)
     session = UserSessionManager(baseActivity)
+
+    baseActivity.hideKeyBoard()
+
     binding?.includeMobileView?.blurView?.setBlur(baseActivity, 1F)
     binding?.includeMobileView?.tvCategoryName?.text = categoryModel?.getCategoryWithoutNewLine() ?: ""
     if (!BuildConfig.FLAVOR.equals("partone") || !BuildConfig.FLAVOR.equals("jioonline")) {
@@ -104,7 +113,12 @@ class SetupMyWebsiteStep2Fragment : AppBaseFragment<LayoutSetUpMyWebsiteStep2Bin
       if (validateBusinessName(bName)) {
         if (checkForConsecutiveDigits(bName)) {
           if (checkForConsecutiveSpecialCharacters(bName)) {
-            if (selectedType != null && selectedType != "") {
+            val checkSelectionType = if (BuildConfig.FLAVOR.equals("healthgro")) {
+              selectedType != null && selectedType != ""
+            } else {
+              true
+            }
+            if (checkSelectionType) {
               WebEngageController.trackEvent(
                 PS_BUSINESS_PROFILE_CLICK_NEW_UPPERCASE,
                 CLICK,

@@ -11,4 +11,5 @@
     <string name="businessname_digits_invalid_toast">Business name should not contain more that four digits continuously!</string>
     <string name="businessname_special_characters_invalid_toast">Business name should not contain more that three special characters continuously!</string>
     <string name="select_type">Select the type</string>
+    <string name="can_t_see_your_category_listed_search_it_below">Can’t see your category listed. Search it below.</string>
 </resources>
