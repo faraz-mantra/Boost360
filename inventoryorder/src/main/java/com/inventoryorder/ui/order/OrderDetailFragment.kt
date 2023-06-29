@@ -166,6 +166,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     }
   }
 
+
   private fun setAdapter(orderItems: ArrayList<ItemN>) {
     binding?.recyclerViewOrderDetails?.post {
       val adapter = AppBaseRecyclerViewAdapter(baseActivity, orderItems)
