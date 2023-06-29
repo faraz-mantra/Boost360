@@ -196,7 +196,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
           binding.verificationSuccessLayout.visibility = View.VISIBLE
           binding.verifyBt.visibility = View.GONE
           binding.loginBt.isEnabled = true
-          enableValidatedView()
+//          enableValidatedView()
         }
       }
       ?.addOnFailureListener { e ->
@@ -209,7 +209,7 @@ class LoginFragment : AuthBaseFragment<FragmentLoginBinding>() {
       }
   }
 
-  private fun enableValidatedView() {
-    job.start()
-  }
+//  private fun enableValidatedView() {
+//    job.start()
+//  }
 }

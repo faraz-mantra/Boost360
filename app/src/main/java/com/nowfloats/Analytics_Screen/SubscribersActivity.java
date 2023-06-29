@@ -46,6 +46,7 @@ import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivitySubscribersBinding;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -272,7 +273,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
       public void failure(RetrofitError error) {
         Log.v("ggg", error.getMessage());
         byte[] responseBytes=(TypedByteArray) error.getResponse().getBody() != null ? ((TypedByteArray) error.getResponse().getBody()).getBytes() : null;
-        String statusString = responseBytes != null ? String.valueOf(responseBytes) : "";
+        String statusString = responseBytes != null ? new String(responseBytes, StandardCharsets.UTF_8) : "";
         mProgressBar.setVisibility(View.GONE);
         progressDialog.dismiss();
         dialog.dismiss();
