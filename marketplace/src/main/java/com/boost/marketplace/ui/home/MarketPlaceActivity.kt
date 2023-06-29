@@ -106,6 +106,7 @@ class MarketPlaceActivity : AppBaseActivity<ActivityMarketplaceBinding, MarketPl
     private var packsArrayList: ArrayList<String>? = ArrayList()
     private var itemTypeArrayList: ArrayList<String>? = ArrayList()
 
+
     var experienceCode: String? = null
     var screenType: String? = null
     var fpName: String? = null
