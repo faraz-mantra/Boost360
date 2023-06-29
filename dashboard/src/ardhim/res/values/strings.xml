@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
   <string name="dashboard">Dashboard</string>
   <string name="website">Website</string>
   <string name="my_website">My Website</string>
@@ -202,7 +202,7 @@
   <string name="boost_360_is_proudly_made_in_india">Ardhim is Proudly made in INDIA</string>
   <string name="fonts_and_color_styles">Font &amp; Color Styles</string>
   <string name="manage_your_current_plan_or_upgrade_to_a_recommended_plan_with_better_features">Upgrade website with great features, offers for you, current plan, purchase history, invoice and more.</string>
-  <string name="google_form_help_business_boost">https://forms.gle/F1tj5tETRHBdR2AaA</string>
+  <string name="google_form_help_business_boost">https://forms.gle/wLZCina8wzAdra6H8</string>
   <string name="save_details">Save details</string>
   <string name="owner_s_description">Owner’s description</string>
   <string name="type_owner_s_description_in_around_2000_characters_at_max">Type owner’s description in around 2000 characters at max…</string>
